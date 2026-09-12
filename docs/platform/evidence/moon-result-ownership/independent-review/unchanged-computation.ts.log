@@ -1,0 +1,43 @@
+{
+    const engine = await loadEngine();
+    const hasTime = time !== '';
+    let utc: Date;
+    let dayStart: Date;
+    let dayEnd: Date;
+    if (city) {
+        utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
+        dayStart = resolveLocalToUtc(date, '00:00', city.tz).utc;
+        dayEnd = resolveLocalToUtc(date, '23:59', city.tz).utc;
+    }
+    else {
+        utc = new Date(`${date}T${hasTime ? time : '12:00'}:00Z`);
+        dayStart = new Date(`${date}T00:00:00Z`);
+        dayEnd = new Date(`${date}T23:59:00Z`);
+    }
+    const lon = engine.bodyLongitude('Moon', utc);
+    const sunLon = engine.bodyLongitude('Sun', utc);
+    const angle = (((lon - sunLon) % 360) + 360) % 360;
+    let altLon: number | null = null;
+    if (!hasTime) {
+        const early = engine.bodyLongitude('Moon', dayStart);
+        const late = engine.bodyLongitude('Moon', dayEnd);
+        if (signForLongitude(early).slug !== signForLongitude(late).slug) {
+            altLon = signForLongitude(lon).slug === signForLongitude(early).slug ? late : early;
+        }
+    }
+    const caption = city && hasTime
+        ? ''
+        : city
+            ? t(locale, 'middayLocalCaption')
+            : hasTime
+                ? t(locale, 'utcTimeCaption')
+                : t(locale, 'middayUtcCaption');
+    setResult({
+        phase: moonPhaseName(utc),
+        angle,
+        illum: moonIlluminationFromAngle(angle),
+        lon,
+        altLon,
+        caption,
+    });
+}

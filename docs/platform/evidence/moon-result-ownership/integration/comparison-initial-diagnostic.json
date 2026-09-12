@@ -1,0 +1,101 @@
+{
+  "failure": "Initial exact comparison assertion failed; individual comparisons follow. No threshold or source change.",
+  "rows": [
+    {
+      "locale": "en",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "es",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "fr",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "fr",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "it",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "it",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": false,
+      "ownership": true
+    },
+    {
+      "locale": "pt",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    },
+    {
+      "locale": "ru",
+      "width": 390,
+      "matchingCase": true,
+      "textEqual": true,
+      "pixelsEqual": true,
+      "ownership": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Faq from '../../../components/Faq.astro';
+import MoonPhaseTool from '../../../islands/MoonPhaseTool';
+import '../../../styles/calculator.css';
+
+const faq = [
+  {
+    q: 'Em que fase está a Lua hoje?',
+    a: 'O indicador no início da página faz o cálculo ao vivo no seu dispositivo: ele mostra o nome da fase atual, o percentual de iluminação e o signo em que a Lua está agora, com o horário em tempo universal.',
+  },
+  {
+    q: 'Qual era a fase da Lua no dia do meu aniversário?',
+    a: 'Informe sua data de nascimento na busca. A fase pode ser calculada com precisão a partir da data porque a Lua leva cerca de 29,5 dias para completar seu ciclo. A astrologia interpreta a fase natal como uma nuance do temperamento: diz-se que pessoas nascidas na Lua nova iniciam coisas e que pessoas nascidas na Lua cheia vivem de forma mais pública.',
+  },
+  {
+    q: 'Com que frequência acontece uma Lua cheia?',
+    a: 'A cada 29,5 dias, em média: esse período é chamado de mês sinódico. Como ele não acompanha exatamente o calendário, a Lua cheia muda de data a cada mês e, às vezes, ocorre uma segunda Lua cheia no mesmo mês civil, a chamada Lua azul.',
+  },
+  {
+    q: 'A fase da Lua afeta meu signo lunar?',
+    a: 'São duas medidas diferentes. A fase compara a Lua com o Sol; o signo lunar indica onde a Lua estava no zodíaco. Pode haver Lua cheia em qualquer um dos doze signos. É o signo lunar que a astrologia interpreta como uma descrição do temperamento emocional.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@type': 'WebApplication',
+    name: 'Ferramenta de fases da Lua',
+    url: 'https://zodiacs.org/pt/moon-phase/',
+    applicationCategory: 'LifestyleApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    inLanguage: 'pt-BR',
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'FAQPage',
+    inLanguage: 'pt-BR',
+    mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+<Base
+  clientUi
+  title="Fase da Lua hoje e no seu aniversário | Zodiacs.org"
+  description="Consulte a fase da Lua hoje e em qualquer data: fase, iluminação e signo lunar, grátis e no seu dispositivo."
+  path="/pt/moon-phase/"
+  locale="pt"
+  image="/assets/og/v2/tool/moon-phase.png"
+  imageAlt="Fase da Lua hoje e em qualquer data — Zodiacs.org"
+  jsonLd={jsonLd}
+>
+  <section class="section--tight container">
+    <div class="tool-hero">
+      <h1 class="display">A Lua, hoje e em qualquer noite.</h1>
+      <p>A fase desta noite, calculada ao vivo. Abaixo, consulte a Lua do seu nascimento ou de qualquer outra data importante.</p>
+    </div>
+    <MoonPhaseTool locale="pt" client:load />
+    <noscript>
+      <p>Esta calculadora de fases da Lua precisa de JavaScript. Ative-o e recarregue a página para ver a fase de hoje ou consultar outra data.</p>
+    </noscript>
+  </section>
+
+  <section class="section--tight container container--narrow">
+    <Faq items={faq} heading="Perguntas sobre as fases da Lua" />
+  </section>
+</Base>
+
+<style>
+  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
+  .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+</style>

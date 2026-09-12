@@ -1,0 +1,77 @@
+import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const out=import.meta.dirname;
+const require=createRequire(root+'/package.json');
+const ts=require('typescript');
+const hash=(b)=>createHash('sha256').update(b).digest('hex');
+const base='30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14';
+const file='src/islands/ChartCalculator.tsx';
+const source=execFileSync('git',['show',base+':'+file],{cwd:root,encoding:'utf8'});
+await writeFile(out+'/ChartCalculator-base.tsx.log',source);
+const ast=ts.createSourceFile(file,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+const functions={};let initialize;
+function visit(node){
+ if(ts.isFunctionDeclaration(node)&&node.name)functions[node.name.text]=node;
+ if(ts.isCallExpression(node)&&node.expression.getText(ast)==='useEffect'&&node.arguments[0]?.getText(ast).includes('const hash = window.location.hash;'))initialize=node.arguments[0];
+ ts.forEachChild(node,visit);
+}visit(ast);
+if(!initialize)throw Error('Shared initialization callback missing');
+const transform=(node)=>{
+ const result=ts.transform(node,[(context)=>{
+  const visitor=(n)=>ts.isCallExpression(n)&&n.expression.kind===ts.SyntaxKind.ImportKeyword
+   ?ts.factory.updateCallExpression(n,ts.factory.createIdentifier('reviewImport'),n.typeArguments,n.arguments)
+   :ts.visitEachChild(n,visitor,context);
+  return root=>ts.visitNode(root,visitor);
+ }]);
+ const text=ts.createPrinter().printNode(ts.EmitHint.Unspecified,result.transformed[0],ast);result.dispose();return text;
+};
+const compiled={};
+for(const [name,node]of Object.entries({initialize,openShareOptions:functions.openShareOptions,shareChartFromAction:functions.shareChartFromAction})){
+ const input=transform(node);
+ const emitted=ts.transpile('('+input+')',{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext}).trim().replace(/;$/,'');
+ compiled[name]=emitted;await writeFile(out+'/'+name+'-extracted.js.log',emitted+'\n');
+}
+const bind=(name,context)=>new Function('context','with(context){return '+compiled[name]+';}')(context);
+const deferred=()=>{let resolve,reject;const promise=new Promise((yes,no)=>{resolve=yes;reject=no});return{promise,resolve,reject};};
+const settle=async()=>{await Promise.resolve();await Promise.resolve();await Promise.resolve();};
+const rows=[];
+for(const variant of ['valid-positions','invalid-positions','conflicting-link']){
+ const pending=deferred();const events=[];
+ const state={chart:null,positionsOnly:null,error:'',shareInput:null,computedInput:null};
+ const location={hash:variant==='conflicting-link'?'#c=synthetic&p=synthetic':'#p=synthetic',pathname:'/birth-chart/',search:''};
+ const context={mode:'full',locale:'en',window:{location},history:{replaceState(){events.push('clearFragment');location.hash='';}},URLSearchParams,
+  subjectModeFromHash:()=> 'self',mineHandoffFromHash:()=>null,profileHandoffOriginsFromHash:()=>({mine:false}),reviewImport:()=>pending.promise,
+  shareRuntimeRef:{current:{}},primaryProfileOriginRef:{current:false},primaryProfileChartIdRef:{current:null},mineProfileOriginRef:{current:false},inputRevisionRef:{current:0},runChartIdRef:{current:0},
+  clearReceiptExport(){events.push('clearReceiptExport');},track(){events.push('track');},t:()=> 'fallback-error'};
+ for(const name of ['Chart','Signature','RegistryRecordSlug','ShareInput','ComputedInput','PositionsOnly','SubjectMode','MineHandoff','Error'])context['set'+name]=(value)=>{state[name[0].toLowerCase()+name.slice(1)]=value;events.push('set'+name);};
+ const cleanup=bind('initialize',context)();
+ // Controlled later user intent: a new form run completed while the original
+ // shared-surface module was pending. No initial-effect unmount occurs.
+ state.chart={id:'later-user-chart'};state.shareInput={date:'2000-01-01'};state.computedInput={date:'2000-01-01'};context.inputRevisionRef.current++;context.runChartIdRef.current++;
+ pending.resolve({decodePositionsToken:()=>variant==='invalid-positions'?null:{id:'old-imported-positions'},shareText:(_locale,key)=>key});
+ await settle();
+ rows.push({name:variant,events,state,fragment:location.hash,oldInitializationPublished:variant==='valid-positions'?state.chart===null&&state.positionsOnly?.id==='old-imported-positions':state.error!==''});
+ cleanup?.();
+}
+{
+ const pending=deferred();const state={card:'idle'};const events=[];
+ const context={shareRuntimeRef:{current:{primary:{artifact:{id:'old-chart-artifact'},share(){events.push('shareOldArtifact');return pending.promise;}}}},mode:'full',card:'idle',setCard(value){state.card=value;events.push('setCard:'+value);},openShareOptions:()=>{throw Error('Unexpected fallback');}};
+ bind('shareChartFromAction',context)();
+ state.card='busy';events.push('newChartStarted');pending.resolve('saved');await settle();
+ rows.push({name:'old-share-completion',state,events,oldCompletionChangedNewCard:state.card==='saved',qualification:'Does not undo or deny the old user-authorized share; demonstrates only stale UI completion.'});
+}
+{
+ const pending=deferred();const state={dialogOpen:false,card:'idle'};
+ class Element{}
+ const context={chart:{id:'old-chart'},shareInput:{date:'1990-01-01'},shareReturnRef:{current:null},document:{activeElement:null},HTMLElement:Element,reviewImport:()=>pending.promise,shareRuntimeRef:{current:{}},setShareDialogOpen(value){state.dialogOpen=value;},setCard(value){state.card=value;},console:{error(){}}};
+ const completion=bind('openShareOptions',context)();
+ context.chart={id:'new-chart'};context.shareInput={date:'2000-01-01'};
+ pending.resolve({default:()=>null});await completion;
+ rows.push({name:'old-dialog-intent',state,oldDialogOpensForNewChart:state.dialogOpen,qualification:'Loading/caching the component is harmless; reopening the dialog is the stale intent.'});
+}
+if(!rows.every(row=>row.oldInitializationPublished??row.oldCompletionChangedNewCard??row.oldDialogOpensForNewChart))throw Error('Baseline counterexample did not reproduce');
+const result={at:new Date().toISOString(),node:process.version,base,file,sourceSha256:hash(source),method:'Exact source callbacks parsed by TypeScript and executed with explicit controlled closure state; import expressions replaced by bounded review promises. No component DOM, browser or candidate verdict is claimed.',controls:rows,extracted:Object.fromEntries(Object.entries(compiled).map(([name,value])=>[name,hash(value)]))};
+await writeFile(out+'/baseline-results.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result));

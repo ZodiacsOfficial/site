@@ -1,0 +1,37 @@
+[
+  {
+    "path": "candidate/src/lib/i18n/ui/growth.ts",
+    "bytes": 4309,
+    "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/en.ts",
+    "bytes": 22136,
+    "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/es.ts",
+    "bytes": 24319,
+    "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/fr.ts",
+    "bytes": 27902,
+    "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/it.ts",
+    "bytes": 26682,
+    "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/pt.ts",
+    "bytes": 25854,
+    "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5"
+  },
+  {
+    "path": "candidate/src/lib/i18n/ui/ru.ts",
+    "bytes": 38540,
+    "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338"
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-09-07T22:36:53.368Z",
+  "browser": "152.0.7977.83",
+  "scope": "One fixed positive and one deliberately untabbable attribution control. No retrying keystrokes, no production or source mutation.",
+  "results": [
+    {
+      "label": "positive-strict-sequence",
+      "attributionFocused": true,
+      "parentAfterFirstTab": {
+        "tag": "IFRAME",
+        "href": null
+      },
+      "childAfterFirstTab": {
+        "tag": "A",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "hasFocus": true
+      },
+      "fallbackAfterSecondTab": true,
+      "pass": true
+    },
+    {
+      "label": "negative-untabbable-attribution",
+      "focusWaitError": "TimeoutError",
+      "attributionFocused": false,
+      "parentAfterFirstTab": {
+        "tag": "A",
+        "href": "https://zodiacs.org/today/"
+      },
+      "childAfterFirstTab": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "pass": true
+    }
+  ]
+}

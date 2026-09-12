@@ -1,0 +1,524 @@
+{
+  "startedAt": "2026-09-08T05:10:15.061Z",
+  "completedAt": "2026-09-08T05:10:20.578Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "source": {
+    "freeze": 1,
+    "timestamp": "2026-09-08T05:08:32.722709+00:00",
+    "baseCommit": "dcc4e437a99f812666cd19dc85e6d781dbb3bedc",
+    "sourceCheckout": "/private/tmp/zodiacs-platform-saved-record",
+    "files": {
+      "src/lib/profile/saved-record.ts": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33",
+      "src/lib/profile/saved-record-store.ts": "f691ee57e20ba25b8cd164a96b8fac60f3641a4680164a2dcf15484d9935e7a2",
+      "src/lib/profile/saved-record.test.ts": "6a64ad4e3d2769d67c2a03784f1afc1238793728b11f4f93a21b3a51366fdb95",
+      "src/lib/profile/saved-record-store.test.ts": "af0a4f168b683a634300911cd2778fbad69d542d7c1dbda62aa05325af022c92"
+    },
+    "patchSha256": "5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5",
+    "packageVersion": "0.1.1-rc.5",
+    "artifactSha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+    "focusedTestCount": 74,
+    "nativeBrowserStatus": "pending independent review",
+    "rootEdited": false,
+    "supportFiles": {
+      "src/lib/engine/portable.ts": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "src/lib/engine/chart-adapter.ts": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "src/lib/engine/types.ts": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "src/lib/account-v2/storage-identity.ts": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab",
+      "package.json": "4a8117977ede5eca16ce1117d725b4e6cb04ad937ff9efda7ab15c1f14980a23",
+      "package-lock.json": "e54056616ffb38803e73f542848b026acacd250addd769570759dc91d51d7069"
+    },
+    "engineFiles": {
+      "LICENSING.md": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096",
+      "LICENSE": "9a8ab25f278db9d59a00ee82d1a82d63ee4891a9c417c53b4e2b9942aaab10df",
+      "CHANGELOG.md": "8dded1aea3cc4318a0a07f2777892584709a7543a3d33f2b773fb92d132c93fe",
+      "NOTICE": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450",
+      "README.md": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c",
+      "package.json": "84206969fb8c9c78c1abee1cfb4ebeda6b862c77bff0e5f7effc2ebc47826387",
+      "dist/internal-math-2qAGGDMX.d.ts": "2eb16b632345cade067e9a415b4d5d96252af3dbb247b8c24fecfe2840dc64a0",
+      "dist/chunk-PD4H342X.js": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0",
+      "dist/types-CHoIZzek.d.ts": "08b23ad16ae93803ed08f9b9dda797e8c46fa3d14dac3bae5debd3f984288a85",
+      "dist/chunk-INI453VG.js": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+      "dist/internal.js": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52",
+      "dist/geo.js": "9d45088e73e9dadf8083c3673d12e5e8affedd17d1796a6fb0f3b0ec6ae679f5",
+      "dist/internal-math.d.ts": "0a648b1bba45a089192ef6804dfb640ba45e07f307807a64f48e3b3c99c0248c",
+      "dist/index.js": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b",
+      "dist/internal-math.js": "8c058be3014be9d5443a87cd09413ecec21af89fe599ebe9ed4e58a8cda9870a",
+      "dist/chunk-K5MRTCWE.js": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+      "dist/chunk-CPALRSPC.js": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+      "dist/internal.d.ts": "68eacb2ef7bc5be384d027cba266256baa440460c94539f36edbde95f9b1649e",
+      "dist/geo.d.ts": "0454dda71c0559da5a0f792ed592d07f610132a601e67c8ed37eddf2d22b774d",
+      "dist/chunk-4YKOFVM6.js": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803",
+      "dist/index.d.ts": "3c4063793f944f3cb0b1e07338c4c24becb6480aacede5cf3199bd18186403fa",
+      "dist/receipt.js": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+      "dist/receipt.d.ts": "7ca8a71659c70c1fb15a98506bd63d0e77f32f7018c914d4ba0ace1ec7ad7d54"
+    },
+    "astronomyFiles": {
+      "astronomy.min.js": "6268029496ec7072e91a6ee3588dc645144dccc91ddbaa03b7f646fa0959da59",
+      "README.md": "73c2de22668374bafd2d238ef43bccd96017550d47ba05afaedd969a00490b1f",
+      "package.json": "d035702763839ae11f41600cf4b8210005672658dcb19cea4a09591078af4931",
+      "astronomy.js": "729c0ce37cc1a8096034a689039a5f04585ee8184177c638e8c74dec4fa3185a",
+      "astronomy.d.ts": "fc5f1ede68dbebc32ce2f3f878cb3b261dc1bf8c16422451f0c4092c41fc871e",
+      "astronomy.browser.js": "a2cfab19cab1a15843e4c8cc7410b6cbaafd0907122a8698c25d63d00c2774e4",
+      "astronomy.browser.min.js": "f41139a87941ea017ab902b954c9389fa27ea72083d7fab4971756d7769d14e6",
+      "esm/astronomy.js": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+    }
+  },
+  "origin": "http://127.0.0.1:57665",
+  "results": [
+    {
+      "name": "import-no-database-open",
+      "status": "passed",
+      "openCount": 0
+    },
+    {
+      "name": "no-label-roundtrip",
+      "status": "passed",
+      "detail": {
+        "created": true,
+        "read": true,
+        "exported": true,
+        "missing": true
+      },
+      "milliseconds": 92.69999999925494,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "authority-reentrant-revoke",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "access-denied",
+          "mayHaveCommitted": false
+        },
+        "calls": 1,
+        "openCount": 0
+      },
+      "milliseconds": 14.800000000745058,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "authority-getter-revoke",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "access-denied",
+          "mayHaveCommitted": false
+        },
+        "openCount": 0
+      },
+      "milliseconds": 0.40000000037252903,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "epoch-ABA",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "access-denied",
+          "mayHaveCommitted": false
+        }
+      },
+      "milliseconds": 0.40000000037252903,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "revoke-before-native-commit",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": false
+        },
+        "rows": 0
+      },
+      "milliseconds": 18.399999999441206,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "stale-after-native-commit",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": true
+        },
+        "committedRows": 1
+      },
+      "milliseconds": 27.100000000558794,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "late-native-open-success-after-revoke",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": false
+        },
+        "lateSuccessClosed": true
+      },
+      "milliseconds": 3.3999999994412065,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "future-database-version",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "unsupported-storage",
+          "mayHaveCommitted": false
+        }
+      },
+      "milliseconds": 2.1000000005587935,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "wrong-native-index-schema",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "unsupported-storage",
+          "mayHaveCommitted": false
+        }
+      },
+      "milliseconds": 2.5,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "queued-open-revocation",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": false
+        },
+        "settledWhileBlocked": {
+          "settled": true,
+          "result": {
+            "ok": false,
+            "code": "stale",
+            "mayHaveCommitted": false
+          }
+        },
+        "lateConnectionClosed": true
+      },
+      "milliseconds": 34.799999999813735,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "native-abort-rolls-back",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": false
+        }
+      },
+      "milliseconds": 18.40000000037253,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "native-cap-two-connections",
+      "status": "passed",
+      "detail": {
+        "outcomes": [
+          "saved",
+          "full"
+        ],
+        "count": 40
+      },
+      "milliseconds": 326.80000000074506,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "owner-isolation-same-id",
+      "status": "passed",
+      "detail": {
+        "sameIdPartitioned": true
+      },
+      "milliseconds": 23,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "corrupt-future-rows",
+      "status": "passed",
+      "detail": {
+        "observations": [
+          {
+            "name": "future-v2",
+            "result": {
+              "ok": false,
+              "code": "unsupported-record",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "name": "future-v10",
+            "result": {
+              "ok": false,
+              "code": "unsupported-record",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "name": "bad-envelope",
+            "result": {
+              "ok": false,
+              "code": "corrupt-record",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "name": "future-inner-version",
+            "result": {
+              "ok": false,
+              "code": "unsupported-record",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "name": "future-required-feature",
+            "result": {
+              "ok": false,
+              "code": "unsupported-record",
+              "mayHaveCommitted": false
+            }
+          }
+        ]
+      },
+      "milliseconds": 20.40000000037253,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "over-cap-corruption-and-explicit-clear",
+      "status": "passed",
+      "detail": {
+        "read": {
+          "ok": false,
+          "code": "corrupt-record",
+          "mayHaveCommitted": false
+        },
+        "create": {
+          "ok": false,
+          "code": "corrupt-record",
+          "mayHaveCommitted": false
+        },
+        "remaining": 0
+      },
+      "milliseconds": 35.200000000186265,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "two-permitted-concurrent-creates",
+      "status": "passed",
+      "detail": {
+        "created": 2,
+        "retained": 2
+      },
+      "milliseconds": 18.200000000186265,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "failed-clear-consumes-handle",
+      "status": "passed",
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "unsupported-storage",
+          "mayHaveCommitted": false
+        },
+        "later": {
+          "ok": false,
+          "code": "access-denied",
+          "mayHaveCommitted": false
+        },
+        "closed": true
+      },
+      "milliseconds": 2.800000000745058,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "noncanonical-identifiers",
+      "status": "passed",
+      "detail": {
+        "observations": [
+          {
+            "field": "owner",
+            "suffix": "\n",
+            "result": {
+              "ok": false,
+              "code": "access-denied",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "field": "id",
+            "suffix": "\n",
+            "result": {
+              "ok": false,
+              "code": "invalid-input",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "field": "owner",
+            "suffix": "\r",
+            "result": {
+              "ok": false,
+              "code": "access-denied",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "field": "id",
+            "suffix": "\r",
+            "result": {
+              "ok": false,
+              "code": "invalid-input",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "field": "owner",
+            "suffix": "\r\n",
+            "result": {
+              "ok": false,
+              "code": "access-denied",
+              "mayHaveCommitted": false
+            }
+          },
+          {
+            "field": "id",
+            "suffix": "\r\n",
+            "result": {
+              "ok": false,
+              "code": "invalid-input",
+              "mayHaveCommitted": false
+            }
+          }
+        ]
+      },
+      "milliseconds": 18.799999999813735,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "consumptive-clear-closes-handle",
+      "status": "passed",
+      "detail": {
+        "cleared": true,
+        "consumed": true,
+        "closed": true
+      },
+      "milliseconds": 16.399999999441206,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "clear-other-handle-limit",
+      "status": "passed",
+      "detail": {
+        "declaredLimit": "clear consumes only its own handle; no durable account erasure claimed",
+        "laterCreateSucceeded": true
+      },
+      "milliseconds": 19.600000000558794,
+      "pageErrors": [],
+      "externalRequests": []
+    },
+    {
+      "name": "native-quota-exceeded",
+      "status": "passed",
+      "before": {
+        "usage": 73728,
+        "quota": 1118388155,
+        "overrideActive": false,
+        "usageBreakdown": [
+          {
+            "storageType": "file_systems",
+            "usage": 0
+          },
+          {
+            "storageType": "indexeddb",
+            "usage": 73728
+          },
+          {
+            "storageType": "cache_storage",
+            "usage": 0
+          },
+          {
+            "storageType": "service_workers",
+            "usage": 0
+          }
+        ]
+      },
+      "after": {
+        "usage": 73728,
+        "quota": 73728,
+        "overrideActive": true,
+        "usageBreakdown": [
+          {
+            "storageType": "file_systems",
+            "usage": 0
+          },
+          {
+            "storageType": "indexeddb",
+            "usage": 73728
+          },
+          {
+            "storageType": "cache_storage",
+            "usage": 0
+          },
+          {
+            "storageType": "service_workers",
+            "usage": 0
+          }
+        ]
+      },
+      "attempt": {
+        "result": {
+          "ok": false,
+          "code": "quota-exceeded",
+          "mayHaveCommitted": false
+        },
+        "recordsAfterAttempt": 0
+      }
+    }
+  ],
+  "passed": 22,
+  "failed": 0,
+  "environmentBlocked": 0,
+  "harnessFiles": {
+    "driver.mjs": "2cf8761f575674a5f517c23974d5db95953298f2a6b82a5d15aac6ee23b48f14",
+    "browser-cases.mjs": "e94cf56030b780b566fe69186fec0a04d9c55d39fd3168e9bc3e0ee74872f0e4",
+    "native-hooks.mjs": "ba73a1628fe384dda19520a659a457c107a10765b75696d549b901f3c766f866",
+    "subject.js": "a8e89d71bb205c493a22d33e575849122831b6d02dc20dbd058848805ee4be57"
+  }
+}

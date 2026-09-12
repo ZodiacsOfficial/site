@@ -1,0 +1,97 @@
+{
+  "checks": [
+    {
+      "name": "Five privacy/error response status, headers and body controls byte-identical",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T06:17:00.000Z full numerical JSON and public token unchanged",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T06:17:00.000Z full response/consumer values differ only by permitted text",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T06:17:00.000Z html artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T06:17:00.000Z inspector artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T06:17:00.000Z receiver artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T18:43:00.000Z full numerical JSON and public token unchanged",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T18:43:00.000Z full response/consumer values differ only by permitted text",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T18:43:00.000Z html artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T18:43:00.000Z inspector artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "reference 2000-01-15T18:43:00.000Z receiver artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T06:17:00.000Z full numerical JSON and public token unchanged",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T06:17:00.000Z full response/consumer values differ only by permitted text",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T06:17:00.000Z html artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T06:17:00.000Z inspector artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T06:17:00.000Z receiver artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T18:43:00.000Z full numerical JSON and public token unchanged",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T18:43:00.000Z full response/consumer values differ only by permitted text",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T18:43:00.000Z html artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T18:43:00.000Z inspector artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "supplied 2000-01-15T18:43:00.000Z receiver artifact identities and only allowed text difference",
+      "passed": true
+    },
+    {
+      "name": "Eight actual native image groups passed",
+      "passed": true
+    },
+    {
+      "name": "Known-time downloaded PNG byte-identical",
+      "passed": true
+    }
+  ],
+  "qualification": "Only own retained actual consumer and PNG evidence is reconciled. No generated production build, metadata manifest, full component ownership, remote deployment, or date-wide completeness claim."
+}

@@ -1,0 +1,209 @@
+{
+  "projectId": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+  "sourceTool": "vercel_list_deployments",
+  "rawToolResultSha256": "e5dee0a50fe9fd76aeb8bb4dd4bcad0059dbebb64268e0e19a29cad7c42e8397",
+  "projection": "Release identity fields only; creator/account metadata omitted",
+  "deployments": [
+    {
+      "id": "dpl_ABQQ4PctrxuPN6R9eyTDFuMf6YRg",
+      "url": "zodiacs-habvxf4h5-zodiacsofficial.vercel.app",
+      "created": 1788868022534,
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "3d769698d387a7fbdbb5d57935b75cb7431d58ee",
+      "sourceRef": "main",
+      "pullRequest": null
+    },
+    {
+      "id": "dpl_45PkxnjQnydkyk3Y2mdpFHJZnzbs",
+      "url": "zodiacs-1okfvj2pr-zodiacsofficial.vercel.app",
+      "created": 1788868010786,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "2c9f2cb66bfd6dc07563e0e9f7b68d6ec9311f41",
+      "sourceRef": "publish/archive-registry-market-snapshot-2026-09-08-34222423316",
+      "pullRequest": "436"
+    },
+    {
+      "id": "dpl_HAJ4JzQd5wyNRPicr2YX6cLDqi7u",
+      "url": "zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "created": 1788866506755,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+      "sourceRef": "codex/platform-local-date-reference",
+      "pullRequest": "435"
+    },
+    {
+      "id": "dpl_9PyqUeR6weQFUdYnAREXYEQjUAMZ",
+      "url": "zodiacs-ecj7uiwv8-zodiacsofficial.vercel.app",
+      "created": 1788864848099,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+      "sourceRef": "codex/platform-chart-result-ownership",
+      "pullRequest": "434"
+    },
+    {
+      "id": "dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t",
+      "url": "zodiacs-280vhfvby-zodiacsofficial.vercel.app",
+      "created": 1788859193470,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+      "sourceRef": "codex/platform-chart-result-ownership",
+      "pullRequest": "434"
+    },
+    {
+      "id": "dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g",
+      "url": "zodiacs-2xip7m0w9-zodiacsofficial.vercel.app",
+      "created": 1788858018316,
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "79410401ce839b8a87a94a4d9c6da34ba312faa6",
+      "sourceRef": "main",
+      "pullRequest": null
+    },
+    {
+      "id": "dpl_EChqmYbLGtQGLAWpYiw6FGuCJuZ4",
+      "url": "zodiacs-kh8vd0hco-zodiacsofficial.vercel.app",
+      "created": 1788858005953,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "05fb09740e4151cafb9361479584c3d88b1ae4f1",
+      "sourceRef": "publish/archive-registry-market-snapshot-2026-09-08-34207449537",
+      "pullRequest": "433"
+    },
+    {
+      "id": "dpl_4tadCbE3GTvRTNtwQ7LMW7uhX3FG",
+      "url": "zodiacs-myori5d5x-zodiacsofficial.vercel.app",
+      "created": 1788857919440,
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "2fd0b75fe3200841736d30b6d7a1ac4699a1eba2",
+      "sourceRef": "main",
+      "pullRequest": null
+    },
+    {
+      "id": "dpl_VkMe4iJA1p42eKqLHZ6yZLFiyT3t",
+      "url": "zodiacs-h4vhq8jg4-zodiacsofficial.vercel.app",
+      "created": 1788857908371,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "a9af4fcda4acd468ea8dc3a76373047b1b1d52ce",
+      "sourceRef": "publish/daily-sky-2026-09-08-34207271310",
+      "pullRequest": "432"
+    },
+    {
+      "id": "dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C",
+      "url": "zodiacs-rcmeayim6-zodiacsofficial.vercel.app",
+      "created": 1788857080255,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+      "sourceRef": "codex/platform-runtime-claims",
+      "pullRequest": "431"
+    },
+    {
+      "id": "dpl_J3sNfFzjSA6Q8RjRLW9fXLnZJ9kH",
+      "url": "zodiacs-q2i4dgo63-zodiacsofficial.vercel.app",
+      "created": 1788855966206,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+      "sourceRef": "codex/platform-moon-result-ownership",
+      "pullRequest": "430"
+    },
+    {
+      "id": "dpl_GLVF1b21yYBFfMo8eWXfGAbMaxBr",
+      "url": "zodiacs-e3j5fcv5g-zodiacsofficial.vercel.app",
+      "created": 1788853600137,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+      "sourceRef": "codex/platform-local-date-intervals",
+      "pullRequest": "429"
+    },
+    {
+      "id": "dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11",
+      "url": "zodiacs-4qqy7ml63-zodiacsofficial.vercel.app",
+      "created": 1788852939536,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+      "sourceRef": "codex/platform-engine-rc6",
+      "pullRequest": "428"
+    },
+    {
+      "id": "dpl_CdGmdz6nP8HhCm4TX8WQ7epja2JH",
+      "url": "zodiacs-c3afqubvj-zodiacsofficial.vercel.app",
+      "created": 1788849735011,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "804c70309d2508e67e8462df526b5f9e71a112e9",
+      "sourceRef": "codex/platform-receipt-export",
+      "pullRequest": "427"
+    },
+    {
+      "id": "dpl_GQrqdYYHrJ3xiobaKZMyRewXeCBk",
+      "url": "zodiacs-8bv44tqh0-zodiacsofficial.vercel.app",
+      "created": 1788849141500,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "46b36e2c887405efc70762297e1087f6d14195f9",
+      "sourceRef": "codex/platform-saved-records",
+      "pullRequest": "426"
+    },
+    {
+      "id": "dpl_bhx76pgozg4Djw3mbBayzay7VrxS",
+      "url": "zodiacs-9wi4nsxk8-zodiacsofficial.vercel.app",
+      "created": 1788845368490,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "a0bf55176dd4df4d27763bfeb2cf97e36abe4d15",
+      "sourceRef": "codex/platform-saved-records",
+      "pullRequest": "426"
+    },
+    {
+      "id": "dpl_6BpyUMCdxokZPFuWYWoZuPWQyKHJ",
+      "url": "zodiacs-emr92ugj1-zodiacsofficial.vercel.app",
+      "created": 1788843030708,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+      "sourceRef": "codex/platform-portable-calculation",
+      "pullRequest": "425"
+    },
+    {
+      "id": "dpl_5X7uR9haSVZFWS8aNqYt9MtJBJ8z",
+      "url": "zodiacs-qi1su4rwh-zodiacsofficial.vercel.app",
+      "created": 1788842278037,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "dcc4e437a99f812666cd19dc85e6d781dbb3bedc",
+      "sourceRef": "codex/platform-portable-calculation",
+      "pullRequest": "425"
+    },
+    {
+      "id": "dpl_HeHN67is4Bad6cxuGsPJXBJgDiY1",
+      "url": "zodiacs-cm3c4mco2-zodiacsofficial.vercel.app",
+      "created": 1788841299761,
+      "state": "READY",
+      "target": null,
+      "sourceCommit": "6ab85278bea708337e20947966a54a5072ad0627",
+      "sourceRef": "codex/platform-engine-rc5",
+      "pullRequest": "422"
+    },
+    {
+      "id": "dpl_3y3YkRfSkdXYQSH3NwQaMidDFC9R",
+      "url": "zodiacs-4qbtdwew2-zodiacsofficial.vercel.app",
+      "created": 1788841144959,
+      "state": "READY",
+      "target": "production",
+      "sourceCommit": "75d036ae365a4c469e234046b0592a80f0dbc311",
+      "sourceRef": "main",
+      "pullRequest": null
+    }
+  ],
+  "toolResultRecordedAtUTC": "2026-09-08T12:07:03.642088+00:00"
+}

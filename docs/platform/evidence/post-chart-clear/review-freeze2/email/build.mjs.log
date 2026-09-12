@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {transform} from 'esbuild';
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const files=process.argv.slice(2);if(files.length!==2)throw Error('Pass variant and exact source path');
+const [variant,path]=files, source=fs.readFileSync(path,'utf8');
+const match=source.match(/^<script>\s*([\s\S]*?)\s*<\/script>\s*$/);if(!match)throw Error('Expected one actual Astro script and no removed markup');
+const result=await transform(match[1],{loader:'ts',format:'iife',target:'es2022',sourcefile:path});
+fs.writeFileSync(`${variant}.js`,result.code);fs.writeFileSync(`${variant}-build.json`,JSON.stringify({sourcePath:path,sourceSha256:hash(source),scriptSha256:hash(match[1]),outputSha256:hash(result.code),method:'Transpile full actual Astro script to JS without changing program statements; no AST callback substitutions.',warnings:result.warnings},null,2)+'\n');
+console.log(JSON.stringify({variant,sourceSha256:hash(source),outputSha256:hash(result.code),warnings:result.warnings}));

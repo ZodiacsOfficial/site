@@ -37,16 +37,6 @@ function fixtureDay(date: string, dayIndex: number): Daily {
     moon.degree = 3.25 + dayIndex / 10;
     moon.lon = SIGN_SLUGS.indexOf(sign) * 30 + moon.degree;
   }
-  // Venus is pinned too, so the anchor day (index 6, Moon in Libra) always
-  // exercises the shared-sign love reading instead of depending on where the
-  // live edition's Venus happens to be on the day the suite runs.
-  const venus = daily.bodies.find((body) => body.body === 'Venus');
-  if (venus) {
-    venus.sign = 'libra';
-    venus.degree = 12.5;
-    venus.lon = SIGN_SLUGS.indexOf('libra') * 30 + venus.degree;
-    venus.retrograde = false;
-  }
   return daily;
 }
 
@@ -125,11 +115,16 @@ describe('horoscope program domain', () => {
   });
 
   it('keeps love actions distinct when Venus and the Moon share a sign', () => {
-    const anchor = input.dailySnapshots.find(({ date }) => date === input.anchorDate);
-    expect(anchor?.bodies.find(({ body }) => body === 'Moon')?.sign)
-      .toBe(anchor?.bodies.find(({ body }) => body === 'Venus')?.sign);
+    const sameSignInput = clone(input);
+    const anchor = sameSignInput.dailySnapshots.find(({ date }) => date === sameSignInput.anchorDate)!;
+    const moon = anchor.bodies.find(({ body }) => body === 'Moon')!;
+    const venus = anchor.bodies.find(({ body }) => body === 'Venus')!;
+    // Plant the condition explicitly; the real daily Venus sign changes.
+    venus.sign = moon.sign;
+    venus.lon = SIGN_SLUGS.indexOf(venus.sign) * 30 + venus.degree;
+    expect(moon.sign).toBe(venus.sign);
 
-    const failures = verifyHoroscopeProgramCopy(buildHoroscopeProgram(input))
+    const failures = verifyHoroscopeProgramCopy(buildHoroscopeProgram(sameSignInput))
       .filter(({ path }) => path.includes('.readings.love.'));
     expect(failures).toEqual([]);
   });

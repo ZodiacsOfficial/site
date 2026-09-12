@@ -1,0 +1,176 @@
+{
+  "commit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "base": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "frozenProductFilesMatched": 16,
+  "records": [
+    {
+      "path": ".github/phase1-scope-allowance.json",
+      "bytes": 1196,
+      "sha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95",
+      "gitBlob": "3ca580de667ea3594c8af9aa15be0ac9b174d891"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "bytes": 16285,
+      "sha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a",
+      "gitBlob": "fadb21a55ce29f20a768bae3fe84fa6f6ad2350b"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 436565,
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+      "gitBlob": "f5e7eda0a5c9d1cd734e52e12ac58cd90eb9a859"
+    },
+    {
+      "path": "package.json",
+      "bytes": 11388,
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "gitBlob": "c9937adda131fe547f841453fd99cda08665d053"
+    },
+    {
+      "path": "src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "gitBlob": "efd49ef3c179381076b05db46c3acea6cc9dc908"
+    },
+    {
+      "path": "src/islands/ChartCalculator.confidence.test.ts",
+      "bytes": 10063,
+      "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb",
+      "gitBlob": "d107daf101784c0bb6d2ccf22e06f590b7bcb579"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20641,
+      "sha256": "a6c463f6b42f5757b3d65b2a5dac0391f4dc11c1b25c050c5f5638fce4208aac",
+      "gitBlob": "7b3d3ecc39f16dd0a290e581de785ead28e7ccd9"
+    },
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "bytes": 1765,
+      "sha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d",
+      "gitBlob": "2685b481bd8eca9cf747c2ba3e5fbc20756f593b"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120334,
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+      "gitBlob": "095c966b6b10977349947acbb6a69fad23d2eace"
+    },
+    {
+      "path": "src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2",
+      "gitBlob": "2f93324855271e6ffe31448cd7f5b4a73b3ca898"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "bytes": 1879,
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936",
+      "gitBlob": "0cbf4e0eff5293bfbf2751dbbf301bf959ae8494"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "gitBlob": "c031b8c1af8b8afd04758c4bdd75a64498494af8"
+    },
+    {
+      "path": "src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba",
+      "gitBlob": "cb45785d30d6834367ca2463e168b67eaad7f712"
+    },
+    {
+      "path": "src/lib/i18n/index.test.ts",
+      "bytes": 15646,
+      "sha256": "51a77f3a712d087e26e951bc637205598c093275e22df109cce8806452c6f96e",
+      "gitBlob": "73c781b6a5d7b5696b813f153a805e63bd2c067a"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "bytes": 22131,
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+      "gitBlob": "1362bdee08284a1d00c6aaa7b172550f1c308512"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "bytes": 24192,
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+      "gitBlob": "ed5482aa3a0fd421e5a971ffa43ab29dc852e1ed"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "bytes": 27888,
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+      "gitBlob": "26c6b7b49f7063f550cecc7a1dbab1ea2f324e3e"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "bytes": 26712,
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+      "gitBlob": "6a7e8e172bc8114e3a7fb1baf04536baa26af0b7"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "bytes": 25812,
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+      "gitBlob": "2054f2eeb3c53d4b6759cce8f810c1442a792b52"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.test.ts",
+      "bytes": 5247,
+      "sha256": "feeedfe74b08f939e0143e97d566d62878fe1cec7926be41463a206dc165ff44",
+      "gitBlob": "b24e584ebaaecd2cd3b6df8a3fc216bd4cb6091d"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38609,
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+      "gitBlob": "d12b1c3cb0858f8f13e2086575c5c461cdc3d7ee"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "gitBlob": "51fdb4a4638cdd817e040cbf2ccb84f81a52edfb"
+    },
+    {
+      "path": "src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "gitBlob": "1137a44af892c41d36bafc8c2202c28b53f95184"
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "gitBlob": "f8692d07fb3b91971c9de3d34ab3c41efcd0b715"
+    },
+    {
+      "path": "tests/chart-reference-confidence-drive.mjs",
+      "bytes": 22843,
+      "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6",
+      "gitBlob": "de2498001a446b3bb828cdaf4934d60f8bac98c3"
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "bytes": 22380,
+      "sha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19",
+      "gitBlob": "9f0e6ceae5c7318f1a6b12526d176967051456d2"
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "bytes": 66986,
+      "sha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28",
+      "gitBlob": "6fab10486621395017eac710b4445d9c8f3eda5e"
+    },
+    {
+      "path": "tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a",
+      "gitBlob": "4f2695cbc377aa554db3401dac260dc4864989b9"
+    }
+  ],
+  "qualification": "Selected immutable Git blobs. Browser executes actual deployed modules, not this source snapshot; no local build or source injection."
+}

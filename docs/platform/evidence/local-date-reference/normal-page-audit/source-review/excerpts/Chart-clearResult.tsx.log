@@ -1,0 +1,28 @@
+function clearResult(): void {
+    savePromptGenerationRef.current += 1;
+    resultOwnerRef.current = null;
+    clearReceiptExport();
+    chartContextIdRef.current += 1;
+    clearPostChartContext();
+    shareRuntimeRef.current.primary = undefined;
+    setChart(null);
+    setComputedInput(null);
+    setShareInput(null);
+    setSignature(null);
+    setRegistryRecordSlug(null);
+    setPositionsOnly(null);
+    setMoonAmbiguous(false);
+    setCard('idle');
+    setSaved('idle');
+    setMatchedName(null);
+    setSavePromptOpen(false);
+    setShareDialogOpen(false);
+    setA2hsHint(null);
+    resetLens();
+    exitTour();
+    cancelSpotlightArrival();
+    setSelection(null);
+    setSpotlight(null);
+    setAnnounce('');
+    setDepthOpen(false);
+  }

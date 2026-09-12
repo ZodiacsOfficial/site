@@ -1,0 +1,5 @@
+function advanceInputRevision(): void {
+    clearReceiptExport();
+    inputRevisionRef.current += 1;
+    setInputRevision(inputRevisionRef.current);
+  }

@@ -1,0 +1,28 @@
+{
+  "patchSha256": "69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45",
+  "artifactSha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+  "authorIdentitySha256": "d00129271f35e7e000f1a7ebf0651f0388f179dbaa4f2f1502fb53ccaa6e3c79",
+  "sourceFiles": {
+    "src/lib/engine/chart-adapter.ts": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+    "src/lib/engine/full.ts": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+    "src/lib/engine/portable.ts": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+    "src/lib/engine/portable.test.ts": "47bd2c343a888bbcf647bb92b32cd2140d19259ffdfeff816af0ecdfeb78aec9"
+  },
+  "loadedInputs": {
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/index.js": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+    "src/lib/engine/chart-adapter.ts": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+    "src/lib/engine/portable.ts": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+    "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal.js": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52",
+    "src/lib/engine/full.ts": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+  },
+  "bundleSha256": "39f9bc0414dc9f66a547648a1a46eb4bcc89e99a956a80bfa6fb02fa60b92add",
+  "harnessSha256": "d250cb6f0ed7846e91658cc680fb9302642a791bf23b7d02982ac747b1850226",
+  "sourceUnchangedAfterRun": true
+}

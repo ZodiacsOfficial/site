@@ -1,0 +1,4 @@
+onInput={(e) => {
+                  invalidateLookup();
+                  setDate((e.target as HTMLInputElement).value);
+                }}

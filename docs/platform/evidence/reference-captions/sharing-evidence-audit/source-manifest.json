@@ -1,0 +1,105 @@
+{
+  "records": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 4149,
+      "sha256": "5ac45bf8db68d98714450472f23118a678958259592d592f2a093a0c5ee851cc"
+    },
+    {
+      "path": "audit-result.json",
+      "bytes": 3243,
+      "sha256": "148575847aa221d52f51799ccd5b72a2f9595b1f55e96b81d745e7ed9ea30b7e"
+    },
+    {
+      "path": "final-source/tests/t17-positions-share.mjs.log",
+      "bytes": 66990,
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31"
+    },
+    {
+      "path": "git-attempts.json",
+      "bytes": 1769,
+      "sha256": "356e3bb9a5251f298465b5af203442b1be5e8789a1175d52757e42865094a9d8"
+    },
+    {
+      "path": "prior-c015-delivered.log",
+      "bytes": 2801,
+      "sha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119"
+    },
+    {
+      "path": "prior-c015-sharing.log",
+      "bytes": 2801,
+      "sha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119"
+    },
+    {
+      "path": "root-COMMANDS.md",
+      "bytes": 3479,
+      "sha256": "0031ac0685bef863d498dbede35fd55b94d1781886ffd9d8ebe8cd808308046f"
+    },
+    {
+      "path": "root-README.md",
+      "bytes": 5434,
+      "sha256": "78bc5721c5216bd74d919301650ebdfe0b5d8010534aba1306601d5b5352ffcd"
+    },
+    {
+      "path": "root-manifest.json",
+      "bytes": 2354,
+      "sha256": "f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273"
+    },
+    {
+      "path": "root-raw-members.json",
+      "bytes": 96172,
+      "sha256": "cfc7df0d1bbc5c8ab6b592631cd3eac38e718a1b8498fbfa18e069efe21c3d0c"
+    },
+    {
+      "path": "root-sharing-image-disposition.json",
+      "bytes": 956,
+      "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5"
+    },
+    {
+      "path": "selected-records.json",
+      "bytes": 2539,
+      "sha256": "6d30845280df22b26878ed8f3ac12ea65c921ee8061d51618364ed2462f26916"
+    },
+    {
+      "path": "sharing-33-percent-baseline.png",
+      "bytes": 145280,
+      "sha256": "dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7"
+    },
+    {
+      "path": "sharing-33-percent.png",
+      "bytes": 202543,
+      "sha256": "fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38"
+    },
+    {
+      "path": "sharing-baseline-source.ts.log",
+      "bytes": 55757,
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649"
+    },
+    {
+      "path": "sharing-candidate-source.ts.log",
+      "bytes": 55760,
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c"
+    },
+    {
+      "path": "sharing-image-comparison.json",
+      "bytes": 710,
+      "sha256": "46f91348f9f783f59fd823f92f8b5a6e02a79d2f11ee0007cde24c59f1be2a28"
+    },
+    {
+      "path": "sharing-image-diff.png",
+      "bytes": 55220,
+      "sha256": "0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b"
+    },
+    {
+      "path": "sharing-image-disposition.json",
+      "bytes": 956,
+      "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5"
+    },
+    {
+      "path": "sharing.log",
+      "bytes": 2902,
+      "sha256": "72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c"
+    }
+  ],
+  "qualification": "Bounded read-only root sharing evidence supplement. Original root sealed records unchanged. Fresh historical Git reproduction unavailable; retained root provenance attributed."
+}

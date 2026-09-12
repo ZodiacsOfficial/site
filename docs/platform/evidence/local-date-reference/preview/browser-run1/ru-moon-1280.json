@@ -1,0 +1,509 @@
+{
+  "name": "ru-moon-1280",
+  "mode": "moon",
+  "width": 1280,
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "location": {
+        "url": "https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "text": "Error: Could not establish a calculation time within the local date.\n    at X (https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app/_astro/MoonPhaseTool.DGpJwGUo.js:1:1712)\n    at HTMLFormElement.<anonymous> (https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+      "location": {
+        "url": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app/_astro/MoonPhaseTool.DGpJwGUo.js",
+        "line": 0,
+        "column": 2593,
+        "lineNumber": 0,
+        "columnNumber": 2593
+      }
+    }
+  ],
+  "browserRequests": [
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/ru/moon-phase/",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/fonts/golos-text-cyr-a.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/fonts/golos-text-cyr-b.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-cyrillic-500-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/Base.Bryss0yT.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/calculator.MBHg3tIV.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "blocked": true
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/MoonPhaseTool.DGpJwGUo.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/fonts/jetbrains-mono-cyrillic-400-500.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/guide-avatar.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/EvidenceDisclosure.LNSfDkU7.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/dates.D4PDcYt5.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/favicon.svg",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/data/cities/index.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/site-footer.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/data/cities/a.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/48/aries.avif",
+      "blocked": false
+    }
+  ],
+  "blocked": [
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    }
+  ],
+  "requestFailures": [
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "knownFooterTeardown": false
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "ru-moon-1280-refused.png",
+      "bytes": 122158,
+      "sha256": "bb1b3da0ce7fbc643705545ccd46f27e62d76dac961de4478ce0d8be17a82464"
+    },
+    {
+      "path": "ru-moon-1280-recovered.png",
+      "bytes": 189110,
+      "sha256": "5f5527bbec05c1a032178739b2472643748ec68998ef25b7fda6ed08978fcbab"
+    }
+  ],
+  "passed": true,
+  "locale": "ru",
+  "path": "/ru/moon-phase/",
+  "offlineOption": "Apia\nTuamasaga, Samoa",
+  "ordinary": {
+    "date": "2011-12-29",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": true,
+    "resultText": "Фаза ЛуныРастущий серп28% освещеноЛуна в: РыбахКак мы считаем11°42′ РыбыСчитано на полдень местного времени — точное время суток закрепит градус.Построить натальную карту на эту дату↗",
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Фаза Луны"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "baselineMoonText": "Фаза ЛуныРастущий серп28% освещеноЛуна в: РыбахКак мы считаем11°42′ РыбыСчитано на полдень местного времени — точное время суток закрепит градус.Построить натальную карту на эту дату↗",
+  "edited": {
+    "date": "2011-12-30",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "INPUT",
+      "id": "mp-date",
+      "role": null,
+      "text": ""
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "refused": {
+    "date": "2011-12-30",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "error": "Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.",
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "P",
+      "id": "",
+      "role": "alert",
+      "text": "Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место."
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "beforeRetry": {
+    "date": "2011-12-31",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "INPUT",
+      "id": "mp-date",
+      "role": null,
+      "text": ""
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "recovered": {
+    "date": "2011-12-31",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": true,
+    "resultText": "Фаза ЛуныПервая четверть37% освещеноЛуна в: Рыбах или ОвенКак мы считаем24°01′ РыбыВ этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.Построить натальную карту на эту дату↗",
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Фаза Луны"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "baselineRecoveredMoonText": "Фаза ЛуныПервая четверть37% освещеноЛуна в: Рыбах или ОвенКак мы считаем24°01′ РыбыВ этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.Построить натальную карту на эту дату↗",
+  "events": {
+    "computed": [],
+    "cleared": []
+  },
+  "final": {
+    "date": "2011-12-31",
+    "time": "",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": true,
+    "resultText": "Фаза ЛуныПервая четверть37% освещеноЛуна в: Рыбах или ОвенКак мы считаем24°01′ РыбыВ этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.Построить натальную карту на эту дату↗",
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Фаза Луны"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "expectedRefusalDiagnostics": 1,
+  "contextClosed": true
+}

@@ -1,0 +1,179 @@
+{
+  "siteMain": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "acceptedCloseout": "60f9c779b69935e93dd14b7f8aac90dbbd4a6d35",
+  "mergeBase": "d4d5717d132a28cd6d7cda3007e3b898bb74669f",
+  "selected": [
+    {
+      "number": 469,
+      "headRefOid": "35301d24907b6eb7117a1f4b0ae690ca42c57de6",
+      "headRefName": "codex/platform-release-maintenance",
+      "baseRefName": "codex/platform-reference-captions-delivery",
+      "isDraft": true,
+      "title": "Fix release advisories and current-edition Registry integration",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 438,
+      "headRefOid": "9912e37bee3f20de691b6bed8165ff36189d1eca",
+      "headRefName": "codex/platform-reference-captions-delivery",
+      "baseRefName": "codex/platform-reference-confidence",
+      "isDraft": true,
+      "title": "Make chart and Moon reference captions match their data",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 437,
+      "headRefOid": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+      "headRefName": "codex/platform-reference-confidence",
+      "baseRefName": "codex/platform-local-date-reference",
+      "isDraft": true,
+      "title": "Withhold unverified Moon certainty for unknown birth times",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 435,
+      "headRefOid": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+      "headRefName": "codex/platform-local-date-reference",
+      "baseRefName": "codex/platform-chart-result-ownership",
+      "isDraft": true,
+      "title": "Reject unknown-time references outside the selected local date",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 434,
+      "headRefOid": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+      "headRefName": "codex/platform-chart-result-ownership",
+      "baseRefName": "codex/platform-runtime-claims",
+      "isDraft": true,
+      "title": "Prevent obsolete birth-chart results and delayed action updates",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 431,
+      "headRefOid": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+      "headRefName": "codex/platform-runtime-claims",
+      "baseRefName": "codex/platform-moon-result-ownership",
+      "isDraft": true,
+      "title": "Keep runtime support claims tied to current candidate evidence",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 430,
+      "headRefOid": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+      "headRefName": "codex/platform-moon-result-ownership",
+      "baseRefName": "codex/platform-local-date-intervals",
+      "isDraft": true,
+      "title": "Prevent stale Moon lookup results and retain regression coverage",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 429,
+      "headRefOid": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+      "headRefName": "codex/platform-local-date-intervals",
+      "baseRefName": "codex/platform-engine-rc6",
+      "isDraft": true,
+      "title": "Add exact local-date intervals as an inactive prerequisite",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 428,
+      "headRefOid": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+      "headRefName": "codex/platform-engine-rc6",
+      "baseRefName": "codex/platform-receipt-export",
+      "isDraft": true,
+      "title": "Correct historical seconds and adopt verified engine rc.6",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 427,
+      "headRefOid": "804c70309d2508e67e8462df526b5f9e71a112e9",
+      "headRefName": "codex/platform-receipt-export",
+      "baseRefName": "codex/platform-portable-calculation",
+      "isDraft": true,
+      "title": "Add local calculation receipt download and preserve shared birth inputs",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 425,
+      "headRefOid": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+      "headRefName": "codex/platform-portable-calculation",
+      "baseRefName": "codex/platform-engine-rc5",
+      "isDraft": true,
+      "title": "Preserve complete receipts at the site calculation boundary",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 422,
+      "headRefOid": "6ab85278bea708337e20947966a54a5072ad0627",
+      "headRefName": "codex/platform-engine-rc5",
+      "baseRefName": "codex/platform-receipt-contract",
+      "isDraft": true,
+      "title": "Adopt verified engine rc.5 and preserve developer reflow",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 419,
+      "headRefOid": "ba65375a34cee6a85f94b53ba45861f1b81f34ef",
+      "headRefName": "codex/platform-receipt-contract",
+      "baseRefName": "codex/platform-civil-inputs",
+      "isDraft": true,
+      "title": "Add local natal receipt portability to the developer starter",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 418,
+      "headRefOid": "a4284d8d6289ed6abfe30d2da883ad07edcfc7bd",
+      "headRefName": "codex/platform-civil-inputs",
+      "baseRefName": "codex/platform-developer-entry",
+      "isDraft": true,
+      "title": "Reject invalid civil imports and implicit host timezones",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 417,
+      "headRefOid": "8343f173e4db2e8ab6628bd04590e41b056872ce",
+      "headRefName": "codex/platform-developer-entry",
+      "baseRefName": "codex/platform-stage-a",
+      "isDraft": true,
+      "title": "Add reproducible developer integration paths and support matrix",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    },
+    {
+      "number": 415,
+      "headRefOid": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+      "headRefName": "codex/platform-stage-a",
+      "baseRefName": "main",
+      "isDraft": true,
+      "title": "Integrate shared engine candidate and verify sky freshness",
+      "ancestorOfAcceptedCloseout": true,
+      "ancestryExit": 0
+    }
+  ],
+  "excluded": [
+    {
+      "number": 426,
+      "head": "46b36e2c887405efc70762297e1087f6d14195f9",
+      "reason": "L3 not authorized"
+    },
+    {
+      "number": 416,
+      "head": "b17d6804960b6b30bb48208aff0f783b03768152",
+      "reason": "Separate concurrent verification"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+# C-015 two-file metadata proposal review
+
+Accepted as a bounded proposal, with driver/candidate compatibility still to be checked against the author freeze. Exact patch `408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4` applies cleanly to independently copied before files from immutable base `f803d2543ad81343b22d49326b8b46d0e2ea03a0` and produces the exact supplied after files.
+
+The workflow change is precisely four lines adding `tests/chart-reference-confidence-drive.mjs`, a five-minute timeout, and output under `tests/visual/artifacts/chart-reference-confidence`. The existing Node 22 setup, pinned action/browser dependencies, read-only permissions, triggers, installation steps and always-run artifact collection are unchanged. After SHA-256: `1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a`.
+
+The allowance changes only `id`, `baseCommit` and explanatory `authorization`. It retains exactly the same eight unique sorted catalog/count-test paths. Its new authorization text describes 419→420 and the unverified Moon-range notice; it does not claim a demonstrated sign crossing or complete date coverage. After SHA-256: `1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95`. This is pinned only to `f803`; a different actual integration base needs its own review.
+
+Ten independent controls execute the actual unchanged scope-guard exports. The exact base resolves in Git and the declared complete eight-path protected set is accepted. Old comparison base, old allowance base, missing protected path, extra locale path, extra SDK path, duplicate allowance path and metadata-only changed scope are rejected. An unchanged allowance grants zero protected-path authorization. These are direct guard controls using the declared proposal scope, not a claim that an unseen candidate's full diff passes.
+
+No root/source/remote changes, package install, browser run or CI execution occurred. The only patch application writes an isolated two-file fixture. Actual frozen driver dependencies/portability/artifacts, actual candidate full-diff CLI, semantic catalog-copy approval and native results remain pending at this proposal checkpoint; these will be recorded separately after the exact freeze is examined. Raw source/patch identities, applied bytes, guard source, controls and logs are retained. Root remains integrator.

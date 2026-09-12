@@ -1,0 +1,118 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import http from 'node:http';
+import assert from 'node:assert/strict';
+import ts from 'typescript';
+import * as esbuild from 'esbuild';
+import { chromium } from 'playwright-core';
+
+const root=process.cwd(),hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const out=path.resolve(process.env.OUT_DIR??'native-final');fs.mkdirSync(out,{recursive:true});
+const candidate=fs.readFileSync('source/src/islands/ChartCalculator.tsx','utf8');
+const original=fs.readFileSync('ChartCalculator.original.tsx','utf8');
+const hook=fs.readFileSync('source/src/lib/hooks/useProfileAccessGeneration.ts','utf8');
+const relevant=['clearReceiptExport','advanceInputRevision','resultIsCurrent','currentResultOwner','clearResult','invalidateProfileHandoff','chartIdentity','isConnectedSaveControl','saveFocusFallback','closeSavePrompt','commitSave'];
+function parse(source){return ts.createSourceFile('subject.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX)}
+function collect(source){
+ const ast=parse(source),items={},rows=[];let revoke,runCurrent;
+ function visit(n){
+  if(ts.isFunctionDeclaration(n)&&relevant.includes(n.name?.text)){items[n.name.text]=n.getText(ast);rows.push({name:n.name.text,startLine:ast.getLineAndCharacterOfPosition(n.getStart(ast)).line+1,sha256:hash(n.getText(ast))})}
+  if(ts.isCallExpression(n)&&n.expression.getText(ast)==='useProfileAccessGeneration')revoke=n.arguments[0].getText(ast);
+  if(ts.isVariableDeclaration(n)&&n.name.getText(ast)==='runIsCurrent')runCurrent=n.initializer.getText(ast);
+  ts.forEachChild(n,visit);
+ }visit(ast);assert(revoke);assert(runCurrent);
+ rows.push({name:'onRevoke',sha256:hash(revoke)},{name:'runIsCurrent',sha256:hash(runCurrent)});
+ let code=Object.values(items).join('\n');
+ assert.equal((items.commitSave.match(/import\(/g)||[]).length,2);
+ code=code.replace("import('../lib/profile/store')",'loadStore()').replace("import('../lib/a2hs')",'loadA2hs()');
+ code+=`\nconst onRevoke=${revoke}; const makeRunCurrent=()=>${runCurrent};return {${Object.keys(items).join(',')},onRevoke,makeRunCurrent};`;
+ return{code,rows};
+}
+const hookAst=parse(hook);let onAccess;
+function hookVisit(n){if(ts.isVariableDeclaration(n)&&n.name.getText(hookAst)==='onAccess')onAccess=n.initializer.getText(hookAst);ts.forEachChild(n,hookVisit)}hookVisit(hookAst);assert(onAccess);
+const callbacks={};const identities={};
+for(const [name,source] of Object.entries({original,candidate})){
+ const c=collect(source);identities[name]={sourceSha256:hash(source),callbacks:c.rows};
+ callbacks[name]=(await esbuild.transform(c.code,{loader:'ts',target:'es2022'})).code;
+}
+const nativeHook=(await esbuild.transform(`const onAccess=${onAccess};return onAccess;`,{loader:'ts',target:'es2022'})).code;
+const base=fs.readFileSync('source/src/layouts/Base.astro','utf8');
+const providerStart=base.indexOf('var profileAccountId = '),providerEnd=base.indexOf('\n      </script>',providerStart);
+assert(providerStart>0&&providerEnd>providerStart);const providerCode=base.slice(providerStart,providerEnd);
+fs.writeFileSync(path.join(out,'callback-identity.json'),JSON.stringify({identities,hookOnAccessSha256:hash(onAccess),actualBaseProviderSha256:hash(providerCode),scope:'Exact extracted component functions and revoke/access callbacks; only two dynamic import expressions replaced with controlled promises. Surrounding state setters are observation probes, not a rendered island.'},null,2)+'\n');
+const entry=`import * as store from './source/src/lib/profile/store';import * as context from './source/src/lib/profile/post-chart-context';import * as a2hs from './source/src/lib/a2hs';import * as reader from './source/src/lib/account-v2/profile-access-reader';window.reviewModules={store,context,a2hs,reader};`;
+const build=await esbuild.build({stdin:{contents:entry,resolveDir:root},bundle:true,write:false,platform:'browser',format:'iife',target:'es2022',external:['./sync'],define:{'import.meta.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED':'"1"','import.meta.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK':'"1"','import.meta.env.PUBLIC_SUPABASE_URL':'""'},metafile:true});
+const bundle=build.outputFiles[0].contents;fs.writeFileSync(path.join(out,'actual-modules.js'),bundle);
+fs.writeFileSync(path.join(out,'bundle-inputs.json'),JSON.stringify(Object.keys(build.metafile.inputs).filter(p=>!p.startsWith('<')).map(p=>({path:p,sha256:hash(fs.readFileSync(p))})),null,2)+'\n');
+fs.writeFileSync(path.join(out,'callback-code.json'),JSON.stringify({callbacks,nativeHook,providerCode},null,2)+'\n');
+const server=http.createServer((req,res)=>{res.setHeader('Content-Type','text/html');res.end('<!doctype html><title>Owned profile save callback review</title><main id="result"><button id="save" data-save-chart>Save</button><button id="other" data-save-chart>Other save</button><input id="typing"></main>')});
+await new Promise((ok,fail)=>{server.once('error',fail);server.listen(0,'127.0.0.1',ok)});
+const origin=`http://127.0.0.1:${server.address().port}`;let browser;
+const report={runtime:process.version,source:identities,groups:[],pageErrors:[],externalRequests:[],origin};
+try{
+ browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--disable-background-networking']});report.browser=browser.version();
+ for(const name of ['original','candidate']){
+  const ctx=await browser.newContext({userAgent:'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1',reducedMotion:'reduce'});
+  await ctx.route('**/*',route=>new URL(route.request().url()).origin===origin?route.continue():(report.externalRequests.push(route.request().url()),route.abort()));
+  const page=await ctx.newPage();page.on('pageerror',e=>report.pageErrors.push({name,error:String(e)}));await page.goto(origin);await page.addScriptTag({content:Buffer.from(bundle).toString()});
+  const result=await page.evaluate(async({name,code,nativeHook,providerCode})=>{
+   const {store,context,a2hs,reader}=window.reviewModules;
+   const make=new Function('env',`with(env){${code}}`);
+   const makeAccess=new Function('env',`with(env){${nativeHook}}`);
+   const fail=(test,message)=>{if(!test)throw Error(message)};
+   const tick=()=>new Promise(ok=>requestAnimationFrame(()=>requestAnimationFrame(()=>ok())));
+   const micro=()=>new Promise(ok=>setTimeout(ok,0));
+   const defer=()=>{let resolve,reject;const promise=new Promise((a,b)=>{resolve=a;reject=b});return{promise,resolve,reject}};
+   let previousCleanup=()=>{};
+   function setup({primary=true,mine=false,publicMine=false}={}){
+    previousCleanup();localStorage.clear();sessionStorage.clear();context.clearPostChartContext();document.documentElement.setAttribute('data-account-sync-v2','');
+    const ui={chart:null,date:'1990-01-01',time:'12:00',timeKnown:true,city:{name:'Synthetic UTC',admin1:'',country:'',lat:0,lon:0,tz:'UTC'},saved:'idle',matchedName:null,a2hsHint:null,savePromptOpen:true,busy:false},events=[];let allowed=true;
+    const refs={};for(const key of ['inputRevisionRef','runChartIdRef','chartContextIdRef','profileAccessGeneration','profileHandoffIdRef'])refs[key]={current:1};
+    refs.primaryProfileOriginRef={current:primary};refs.primaryProfileChartIdRef={current:primary?'10000000-0000-4000-8000-000000000001':null};refs.mineProfileOriginRef={current:mine};refs.receiptExportRef={current:{synthetic:true}};
+    refs.focusAfterComputeRef={current:true};refs.shareRuntimeRef={current:{primary:{synthetic:true}}};refs.saveOriginRef={current:'free'};refs.saveReturnRef={current:document.getElementById('save')};refs.saveButtonRef={current:document.getElementById('save')};refs.resultRef={current:document.getElementById('result')};
+    const chart={input:{utc:new Date('1990-01-01T12:00:00Z')},houses:{system:'whole'},bodies:[{body:'Sun',lon:280,retrograde:false}],angles:null,flags:[]};ui.chart=chart;ui.computedInput={date:ui.date,time:ui.time,timeKnown:true,city:ui.city,houseSystem:'whole'};ui.mineHandoff=mine?{kind:'saved',id:'20000000-0000-4000-8000-000000000002'}:publicMine?{kind:'input',input:{date:'1980-01-01'}}:null;ui.shareInput={date:ui.date};
+    refs.resultOwnerRef={current:{chart,runId:1,inputRevision:1,accessGeneration:1,requiresProfileAccess:primary}};
+    const storeGate=defer(),a2hsGate=defer();
+    const env={...refs,chart,computedInput:ui.computedInput,subjectMode:'self',autoName:'Captured synthetic A',matchedName:null,ENGINE_VERSION:'0.1.1-rc.6',sunSign:{slug:'capricorn'},locale:'en',track:(event,props)=>events.push({event,props}),publishPostChartContext:context.publishPostChartContext,clearPostChartContext:context.clearPostChartContext,profileAccessAllowed:reader.profileAccessAllowed,loadStore:()=>storeGate.promise,loadA2hs:()=>a2hsGate.promise,loadPushOptIn:()=>events.push({event:'push-import-requested'}),readFirstReadingProgress:()=>({}),resetLens:()=>{},exitTour:()=>{},cancelSpotlightArrival:()=>{}};
+    for(const key of ['ReceiptExport','ReceiptDownloadError','InputRevision','Chart','ComputedInput','ShareInput','Signature','RegistryRecordSlug','PositionsOnly','MoonAmbiguous','Card','Saved','MatchedName','SavePromptOpen','ShareDialogOpen','A2hsHint','Selection','Spotlight','Announce','DepthOpen','SaveDraft','SaveInitial','SaveSource','MineHandoff','Date','Time','TimeKnown','City','HouseSystem','FromLink','LinkName','SubjectMode','Error','FieldErrors','Busy','FirstReading']){const stateKey=key[0].toLowerCase()+key.slice(1);env['set'+key]=value=>{ui[stateKey]=value;events.push({setter:stateKey,value})}}
+    const api=make(env),access=makeAccess({generation:refs.profileAccessGeneration,onRevokeRef:{current:api.onRevoke},profileAccessAllowed:reader.profileAccessAllowed});
+    window.zodiacsProfileAccess={canRead:()=>allowed};window.addEventListener('zodiacs:profile-access',access);previousCleanup=()=>window.removeEventListener('zodiacs:profile-access',access);
+    const revoke=()=>{allowed=false;window.dispatchEvent(new Event('zodiacs:profile-access'))};
+    const grant=()=>{allowed=true;window.dispatchEvent(new Event('zodiacs:profile-access'))};
+    const snapshot=()=>({ui,events,accessGeneration:refs.profileAccessGeneration.current,runId:refs.runChartIdRef.current,contextId:refs.chartContextIdRef.current,resultOwnerPresent:refs.resultOwnerRef.current!==null,primaryOrigin:refs.primaryProfileOriginRef.current,mineOrigin:refs.mineProfileOriginRef.current,allowed,context:context.currentPostChartContext(),profile:JSON.parse(localStorage.getItem('zodiacs.profile.v1')??'null'),a2hsClaim:localStorage.getItem(a2hs.A2HS_HINT_KEY),focus:document.activeElement?.id??''});
+    document.getElementById('typing').focus();
+    return{api,env,refs,ui,events,storeGate,a2hsGate,revoke,grant,snapshot};
+   }
+   const groups=[];
+   async function group(label,action){let p;try{p=setup(action.options);await action(p);groups.push({label,passed:true,evidence:p.snapshot()})}catch(error){groups.push({label,passed:false,error:String(error.stack??error),evidence:p?.snapshot()})}}
+   await group('current-save-control',async p=>{const saving=p.api.commitSave(undefined,'skip');p.storeGate.resolve(store);await saving;p.a2hsGate.resolve(a2hs);await tick();const s=p.snapshot();fail(s.profile.charts.length===1,'one stored chart');fail(s.ui.saved==='saved','saved label');fail(s.context?.contextId===1,'same context');fail(s.a2hsClaim==='1','current hint claimed');fail(s.focus==='save','ordinary focus return')});
+   await group('requested-save-import-settles-after-edit',async p=>{const saving=p.api.commitSave(undefined,'skip');p.api.invalidateProfileHandoff();p.ui.date='1991-01-01';p.storeGate.resolve(store);await saving;await tick();const s=p.snapshot();fail(s.profile?.charts[0].birth.date==='1990-01-01','explicitly requested old chart is still saved exactly once');fail(s.ui.saved==='idle'&&s.ui.matchedName===null&&s.context===null,'obsolete completion suppressed');fail(s.focus==='typing','old completion did not steal focus')});
+   await group('pending-save-profile-revoke',async p=>{const saving=p.api.commitSave(undefined,'skip');p.revoke();p.storeGate.resolve(store);await saving;await tick();const s=p.snapshot();fail(s.profile===null,'revoked generation prevents write');fail(s.ui.saved==='idle','old error is suppressed');fail(s.context===null,'no old context')});
+   const regrant=async p=>{const saving=p.api.commitSave(undefined,'skip');p.revoke();p.grant();p.storeGate.resolve(store);await saving;await tick();const s=p.snapshot();fail(s.profile===null,'changed generation prevents write after regrant');fail(s.ui.saved==='idle','old error suppressed')};regrant.options={primary:false};await group('pending-save-independent-primary-revoke-regrant',regrant);
+   await group('actual-storage-commit-event-revokes-profile',async p=>{window.addEventListener('zodiacs:profile',p.revoke,{once:true});const saving=p.api.commitSave(undefined,'skip');p.storeGate.resolve(store);await saving;p.a2hsGate.resolve(a2hs);await tick();const s=p.snapshot();fail(s.profile?.charts.length===1,'already committed save remains persisted');fail(s.allowed===false,'access is revoked');fail(s.ui.chart===null&&s.ui.saved==='idle'&&s.ui.matchedName===null&&s.context===null,'post-commit completion stays scrubbed');fail(s.a2hsClaim===null&&s.ui.a2hsHint===null,'stale hint never claimed');fail(s.focus==='typing','no stale focus')});
+   await group('actual-storage-commit-event-edits-result',async p=>{window.addEventListener('zodiacs:profile',()=>p.api.invalidateProfileHandoff(),{once:true});const saving=p.api.commitSave(undefined,'skip');p.storeGate.resolve(store);await saving;p.a2hsGate.resolve(a2hs);await tick();const s=p.snapshot();fail(s.profile?.charts.length===1,'completed save preserved');fail(s.ui.saved==='idle'&&s.context===null,'old UI suppressed after reentrant edit')});
+   for(const boundary of ['edit','revoke'])await group('committed-save-delayed-A2HS-after-'+boundary,async p=>{const saving=p.api.commitSave(undefined,'skip');p.storeGate.resolve(store);await saving;await tick();if(boundary==='edit')p.api.invalidateProfileHandoff();else p.revoke();document.getElementById('typing').focus();p.a2hsGate.resolve(a2hs);await tick();const s=p.snapshot();fail(s.profile?.charts.length===1,'save remains committed');fail(s.a2hsClaim===null&&s.ui.a2hsHint===null,'obsolete one-time hint not claimed');fail(s.context===null,'context stays cleared')});
+   await group('queued-close-frame-after-edit',async p=>{p.api.closeSavePrompt();p.api.invalidateProfileHandoff();p.refs.saveReturnRef.current=document.getElementById('other');await tick();const s=p.snapshot();fail(s.focus==='typing','old close frame does not focus replacement');fail(p.refs.saveReturnRef.current?.id==='other','old frame does not clear replacement return target')});
+   await group('primary-profile-revoke-scrubs-result-and-input',async p=>{p.revoke();const s=p.snapshot();fail(s.ui.date===''&&s.ui.time===''&&s.ui.city===null,'input scrubbed');fail(s.ui.chart===null&&s.ui.computedInput===null&&s.ui.shareInput===null,'private result scrubbed');fail(s.primaryOrigin===false&&s.context===null,'origin/context cleared')});
+   const mineOnly=async p=>{const previous=p.refs.runChartIdRef.current;p.revoke();const s=p.snapshot();fail(s.ui.chart===p.env.chart&&s.ui.date==='1990-01-01','independent primary preserved');fail(s.ui.mineHandoff===null&&!s.mineOrigin,'profile secondary cleared');fail(s.runId===previous,'primary pending/result run not cancelled')};mineOnly.options={primary:false,mine:true};await group('mine-only-revoke-preserves-independent-primary',mineOnly);
+   const publicMine=async p=>{p.revoke();const s=p.snapshot();fail(s.ui.chart===p.env.chart&&s.ui.mineHandoff?.kind==='input','unmarked public input context preserved')};publicMine.options={primary:false,publicMine:true};await group('public-input-mine-revoke-control',publicMine);
+   const closeRevoke=async p=>{const saving=p.api.commitSave(undefined,'skip');p.storeGate.resolve(store);await saving;p.revoke();document.getElementById('typing').focus();p.refs.saveReturnRef.current=document.getElementById('other');await tick();const s=p.snapshot();fail(s.profile?.charts.length===1,'save remains committed');fail(s.ui.chart===p.env.chart,'independent primary remains');fail(s.ui.saved==='idle','save UI was scrubbed');fail(s.focus==='typing','obsolete save focus callback does not run after access generation changes');fail(p.refs.saveReturnRef.current?.id==='other','old frame preserves replacement return target')};closeRevoke.options={primary:false,mine:true};await group('queued-committed-save-close-after-mine-only-revoke',closeRevoke);
+   await group('conditional-reentrant-reader-is-qualified',async p=>{let calls=0;
+    window.zodiacsProfileAccess={canRead:()=>{calls++;if(calls===1){p.revoke();return true}return false}};
+    p.env.runId=1;p.env.runInputRevision=1;p.env.accessGeneration=1;p.env.requiresProfileAccess=true;
+    const admitted=p.api.makeRunCurrent()();fail(admitted===true,'exact arrow condition retains documented synthetic true-return reentrancy');p.events.push({event:'synthetic-reader-qualified',admitted,calls,ordinaryProviderBypassEstablished:false});
+   });
+   previousCleanup();
+   const keys=['synthetic.access','synthetic.owner','synthetic.retained'];
+   localStorage.clear();sessionStorage.clear();new Function('profileAccessKey','profileOwnerKey','profileRetainedOwnerKey',providerCode)(...keys);
+   const provider=window.zodiacsProfileAccess,A='10000000-0000-4000-8000-000000000001',B='20000000-0000-4000-8000-000000000002';
+   sessionStorage.setItem(keys[0],JSON.stringify({version:1,mode:'account',accountId:A}));localStorage.setItem(keys[1],JSON.stringify({version:1,accountId:A}));
+   const actualReader={beforeLease:provider.canRead()};provider.activateLease();actualReader.matchingOwner=provider.canRead();localStorage.setItem(keys[1],JSON.stringify({version:1,accountId:B}));actualReader.mismatchedOwner=provider.canRead();provider.revokeLease();actualReader.afterRevoke=provider.canRead();
+   fail(JSON.stringify(actualReader)===JSON.stringify({beforeLease:false,matchingOwner:true,mismatchedOwner:false,afterRevoke:false}),'actual Base provider authority controls');
+   return{name,groups,actualReader,qualification:'Native Chrome execution of exact extracted callbacks with unchanged actual store, native localStorage/sessionStorage/EventTarget/RAF and actual Base reader. No full ChartCalculator render or hook mount-timing claim. Captured synthetic records only; persisted saves not cancelled.'};
+  },{name,code:callbacks[name],nativeHook,providerCode});
+  report.groups.push(result);await ctx.close();
+ }
+}catch(error){report.error=String(error.stack??error);process.exitCode=1}
+finally{await browser?.close();await new Promise(ok=>server.close(ok));report.cleanup={browserClosed:true,serverClosed:true};report.driverSha256=hash(fs.readFileSync(import.meta.filename));fs.writeFileSync(path.join(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({out,browser:report.browser,groups:report.groups.map(r=>({name:r.name,passed:r.groups.filter(g=>g.passed).length,failed:r.groups.filter(g=>!g.passed).map(g=>g.label)})),error:report.error}));if(report.groups.find(g=>g.name==='candidate')?.groups.some(g=>!g.passed))process.exitCode=1}

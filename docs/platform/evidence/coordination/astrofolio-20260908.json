@@ -1,0 +1,197 @@
+{
+  "baseRefName": "main",
+  "files": [
+    {
+      "path": "docs/astrofolio-trust/EVIDENCE-GAPS.md",
+      "additions": 37,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/STATUS.md",
+      "additions": 168,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evaluation-fixtures.json",
+      "additions": 442,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/browser-initial-findings.json",
+      "additions": 29,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/browser-preview-results-layout-1280.json",
+      "additions": 27,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/browser-results-real-service-worker-offline-never-reuses-match.json",
+      "additions": 23,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/browser-results.json",
+      "additions": 121,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/build-node22.log",
+      "additions": 4526,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/check-node22.log",
+      "additions": 77,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/ci-scope-excerpt.log",
+      "additions": 4,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/first-test-timeouts.log",
+      "additions": 586,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/focused-node22.log",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/log-integrity.json",
+      "additions": 42,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/scope-guard.log",
+      "additions": 2,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/source-grounded-evaluation.json",
+      "additions": 376,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/tests-node22.log",
+      "additions": 490,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/upstream-overlap.json",
+      "additions": 29,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-1280-hero.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-1280.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-320-hero.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-320.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-390-hero.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-390.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/evidence/verification-records-390.png",
+      "additions": 0,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/integration/README.md",
+      "additions": 37,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/integration/phase1-allowance.patch",
+      "additions": 25,
+      "deletions": 0
+    },
+    {
+      "path": "docs/astrofolio-trust/integration/registry-context-link.patch",
+      "additions": 10,
+      "deletions": 0
+    },
+    {
+      "path": "src/pages/registry/verify/index.astro",
+      "additions": 119,
+      "deletions": 0
+    },
+    {
+      "path": "src/registry/astrofolio-verification/checker.ts",
+      "additions": 217,
+      "deletions": 0
+    },
+    {
+      "path": "src/registry/astrofolio-verification/client.ts",
+      "additions": 85,
+      "deletions": 0
+    },
+    {
+      "path": "src/registry/astrofolio-verification/evidence.ts",
+      "additions": 273,
+      "deletions": 0
+    },
+    {
+      "path": "src/registry/astrofolio-verification/page.css",
+      "additions": 14,
+      "deletions": 0
+    },
+    {
+      "path": "tests/astrofolio-verification/browser.mjs",
+      "additions": 398,
+      "deletions": 0
+    },
+    {
+      "path": "tests/astrofolio-verification/checker.test.ts",
+      "additions": 193,
+      "deletions": 0
+    },
+    {
+      "path": "tests/astrofolio-verification/evidence.test.ts",
+      "additions": 172,
+      "deletions": 0
+    },
+    {
+      "path": "tests/astrofolio-verification/rendered.test.ts",
+      "additions": 69,
+      "deletions": 0
+    }
+  ],
+  "headRefName": "codex/astrofolio-verification",
+  "headRefOid": "b17d6804960b6b30bb48208aff0f783b03768152",
+  "isDraft": true,
+  "number": 416,
+  "title": "Add Astrofolio verification with source-backed claims and failure-safe checks",
+  "url": "https://github.com/ZodiacsOfficial/site/pull/416",
+  "checkedAt": "2026-09-08T04:35:42.385980+00:00",
+  "purpose": "Owner-directed no-overlap checkpoint; not content approval or integration",
+  "sourceScopeMatchesOwnerReservedPaths": true,
+  "integrationPatchFilesAreProposalsNotAppliedSharedChanges": true,
+  "rootRemainsSharedFileIntegrator": true,
+  "reviewIndependentOfSdkPublicationHold": true
+}

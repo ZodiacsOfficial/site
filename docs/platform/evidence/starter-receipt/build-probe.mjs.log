@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import { cp, mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { spawnSync } from 'node:child_process';
+import { join } from 'node:path';
+const source='/Users/chiburashka/.codex/worktrees/4806/site/examples/platform';
+const evidence='/private/tmp/zodiacs-platform-starter-build-review/final';
+const scratch=await mkdtemp(join(evidence,'scratch-'));
+const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const buildBytes=await readFile(join(source,'scripts/build.mjs'));
+const paths=['candidate.json','npm-shrinkwrap.json','node_modules/astronomy-engine/package.json'];
+const originals=new Map(await Promise.all(paths.map(async path=>[path,await readFile(join(source,path))])));
+for(const name of ['src','scripts','node_modules','vendor','candidate.json','npm-shrinkwrap.json','package.json'])await cp(join(source,name),join(scratch,name),{recursive:true,dereference:false});
+assert.equal(hash(await readFile(join(scratch,'scripts/build.mjs'))),hash(buildBytes));
+const cases=[
+ {name:'correct-control',status:0},
+ {name:'candidate-version-mismatch',path:'candidate.json',mutate:value=>{value.ephemeris.version='2.1.18'},error:'Resolved ephemeris version does not match the locked candidate facts.'},
+ {name:'lock-version-mismatch',path:'npm-shrinkwrap.json',mutate:value=>{value.packages['node_modules/astronomy-engine'].version='2.1.18'},error:'Resolved ephemeris version does not match the locked candidate facts.'},
+ {name:'installed-version-mismatch',path:'node_modules/astronomy-engine/package.json',mutate:value=>{value.version='2.1.18'},error:'Resolved ephemeris version does not match the locked candidate facts.'},
+ {name:'installed-name-mismatch',path:'node_modules/astronomy-engine/package.json',mutate:value=>{value.name='synthetic-other-package'},error:'Resolved ephemeris version does not match the locked candidate facts.'},
+ {name:'nested-same-version',nested:true,error:'Bundled ephemeris does not match the verified candidate installation.'},
+];
+const result=[];
+for(const sample of cases){
+ for(const [path,bytes]of originals)await writeFile(join(scratch,path),bytes);
+ if(sample.path){const value=JSON.parse(originals.get(sample.path));sample.mutate(value);await writeFile(join(scratch,sample.path),JSON.stringify(value,null,2)+'\n')}
+ if(sample.nested){const target=join(scratch,'node_modules/@zodiacs/engine/node_modules/astronomy-engine');await mkdir(join(target,'..'),{recursive:true});await cp(join(scratch,'node_modules/astronomy-engine'),target,{recursive:true});const top=JSON.parse(await readFile(join(scratch,'node_modules/astronomy-engine/package.json')));const nested=JSON.parse(await readFile(join(target,'package.json')));assert.equal(top.version,nested.version);assert.equal(top.version,'2.1.19');}
+ let before=null;try{before=hash(await readFile(join(scratch,'dist/app.js')))}catch(error){if(error.code!=='ENOENT')throw error}
+ const run=spawnSync(process.execPath,['scripts/build.mjs'],{cwd:scratch,encoding:'utf8',timeout:30000,maxBuffer:1024*1024,env:{...process.env,NODE_OPTIONS:''}});
+ const output=(run.stdout??'')+(run.stderr??'');
+ await writeFile(join(evidence,sample.name+'.log'),output);
+ assert.equal(run.error,undefined);assert.equal(run.signal,null);
+ if(sample.status===0){assert.equal(run.status,0,output);assert.match(output,/Built three examples with candidate 0\.1\.1-rc\.3/)}else{assert.notEqual(run.status,0);assert.ok(output.includes(sample.error),output);assert.equal(output.includes('Built three examples'),false)}
+ let after=null;try{after=hash(await readFile(join(scratch,'dist/app.js')))}catch(error){if(error.code!=='ENOENT')throw error}
+ if(sample.status!==0)assert.equal(after,before,'Rejected build must preserve prior valid dist/app.js');
+ result.push({name:sample.name,passed:true,exitCode:run.status,command:[process.execPath,'scripts/build.mjs'],cwd:scratch,expectedRejection:sample.error??null,outputLog:sample.name+'.log',distAppBefore:before,distAppAfter:after,distAppChanged:before!==after});
+}
+for(const path of paths)assert.deepEqual(await readFile(join(source,path)),originals.get(path),'Shared workspace metadata was not modified');
+assert.equal(hash(await readFile(join(source,'scripts/build.mjs'))),hash(buildBytes),'Shared build source remained stable during probe');
+const report={status:'passed',runtime:process.version,source:'examples/platform/scripts/build.mjs',sourceSHA256:hash(buildBytes),scratch,sharedWorkspaceMutations:false,results:result,scope:'Installed version/identity and actual bundled dependency-path guard only; not authentication of arbitrary modified dependency content.'};
+await writeFile(join(evidence,'result.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

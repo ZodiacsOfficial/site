@@ -1,0 +1,29 @@
+{
+  "node": "v22.23.2",
+  "beforeSha256": "286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9",
+  "afterSha256": "5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0",
+  "onlyChange": "      - name: Unknown-time local date reference\n        timeout-minutes: 5\n        run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs\n\n",
+  "step": {
+    "name": "Unknown-time local date reference",
+    "timeout-minutes": 5,
+    "run": "OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs"
+  },
+  "driverSha256": "2ea7036618df0451ee087e902296d4bff8b8d086ceb75b62c107bcd0d9eb15dd",
+  "syntax": "passed",
+  "templateRejected": true,
+  "permission": {
+    "contents": "read"
+  },
+  "upload": {
+    "name": "Upload Phase 1 browser and performance evidence",
+    "if": "always()",
+    "uses": "actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+    "with": {
+      "name": "phase-1-browser-performance-${{ github.run_id }}",
+      "path": "tests/visual/artifacts/\ndocs/acceptance/phase4-sharing/chart-sheet-33-percent.png\n",
+      "if-no-files-found": "ignore",
+      "retention-days": 90
+    }
+  },
+  "qualification": "Independent YAML/byte/source/guard checks, not remote CI or Linux execution. Final-base scope was executed separately on the exact detached scratch clone."
+}

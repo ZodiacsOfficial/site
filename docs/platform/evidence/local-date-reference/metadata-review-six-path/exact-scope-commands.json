@@ -1,0 +1,115 @@
+[
+  {
+    "command": "git",
+    "args": [
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/Users/chiburashka/.codex/worktrees/4806/site",
+      "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "sparse-checkout",
+      "init",
+      "--no-cone"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "sparse-checkout",
+      "set",
+      "--no-cone",
+      "/src/islands/ChartCalculator.ownership.test.ts",
+      "/src/islands/ChartCalculator.tsx",
+      "/src/islands/MoonPhaseTool.tsx",
+      "/src/lib/i18n/ui/en.ts",
+      "/src/lib/i18n/ui/es.ts",
+      "/src/lib/i18n/ui/fr.ts",
+      "/src/lib/i18n/ui/it.ts",
+      "/src/lib/i18n/ui/pt.ts",
+      "/src/lib/i18n/ui/ru.ts",
+      "/src/lib/time/localDateContainsUtc.test.ts",
+      "/src/lib/time/localToUtc.ts",
+      "/tests/local-date-reference-drive.mjs",
+      "/scripts/phase1-scope-guard.mjs",
+      "/.github/phase1-scope-allowance.json",
+      "/.github/workflows/site-check.yml"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "checkout",
+      "--detach",
+      "3845a04bcea822da3c30a18848ef3d8d133b7b66"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "apply",
+      "--check",
+      "/private/tmp/zodiacs-platform-local-date-reference-evidence/implementation.patch"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "apply",
+      "/private/tmp/zodiacs-platform-local-date-reference-evidence/implementation.patch"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "args": [
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "3845a04bcea822da3c30a18848ef3d8d133b7b66"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": "phase1-scope-guard: PASS — 14 changed path(s); 6 protected path(s) covered by the changed one-time allowance\n"
+  },
+  {
+    "command": "git",
+    "args": [
+      "diff",
+      "--check"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": ""
+  },
+  {
+    "command": "git",
+    "args": [
+      "status",
+      "--short"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-reference-wiring-review/exact-base-checkout",
+    "exit": 0,
+    "stdout": " M .github/phase1-scope-allowance.json\n M .github/workflows/site-check.yml\n M src/islands/ChartCalculator.ownership.test.ts\n M src/islands/ChartCalculator.tsx\n M src/islands/MoonPhaseTool.tsx\n M src/lib/i18n/ui/en.ts\n M src/lib/i18n/ui/es.ts\n M src/lib/i18n/ui/fr.ts\n M src/lib/i18n/ui/it.ts\n M src/lib/i18n/ui/pt.ts\n M src/lib/i18n/ui/ru.ts\n M src/lib/time/localToUtc.ts\n?? src/lib/time/localDateContainsUtc.test.ts\n?? tests/local-date-reference-drive.mjs\n"
+  }
+]

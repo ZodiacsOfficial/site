@@ -1,0 +1,15 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-engine-rc5
+
+ ✓ src/lib/engine/server-ephemeris.test.ts (2 tests) 169ms
+ ✓ src/lib/scene/scene.test.ts (15 tests) 68ms
+ ✓ src/lib/engine/package-integration.test.ts (6 tests) 323ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 118ms
+ ✓ src/lib/profile/polar-repair.test.ts (36 tests) 131ms
+ ✓ scripts/platform-starter.test.mjs (113 tests) 1133ms
+
+ Test Files  6 passed (6)
+      Tests  225 passed (225)
+   Start at  07:03:57
+   Duration  1.95s (transform 1.60s, setup 0ms, collect 2.79s, tests 1.94s, environment 1ms, prepare 443ms)
+

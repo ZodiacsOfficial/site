@@ -1,0 +1,93 @@
+{
+  "source": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "checks": 13,
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "requests": 478,
+  "nonGET": 0,
+  "blockedExternal": [
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    },
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "external": true
+    }
+  ],
+  "temporaryAuthFileAbsent": true,
+  "at": "2026-09-08T08:52:06.179865+00:00",
+  "credentialLikeShareUrls": 0,
+  "limitations": [
+    "Isolated temporary-auth bootstrap excluded from request observer",
+    "Existing Plausible loader attempts blocked",
+    "Original literal-marker scan failed on public historical scanner source, not a token; diagnostic retained",
+    "Credential-like pattern scan is not an exact-secret scan after deletion",
+    "No new Phase1 captures or numerical oracle",
+    "No production deployment"
+  ]
+}

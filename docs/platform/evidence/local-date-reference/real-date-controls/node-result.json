@@ -1,0 +1,703 @@
+{
+  "runtime": "v22.23.2",
+  "icu": "78.2",
+  "tzdb": "2026a",
+  "rows": [
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "reason": "retained omitted initial half-hour",
+      "noon": {
+        "utc": "1919-03-31T16:00:00.000Z",
+        "wall": "1919-03-31T12:00:00.000",
+        "offsetMinutes": -240,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1919-03-31T05:00:00.000Z",
+        "endInclusive": "1919-04-01T03:59:59.999Z",
+        "startWall": "1919-03-31T01:00:00.000",
+        "endWall": "1919-03-31T23:59:59.999",
+        "nominalMilliseconds": 82800000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1919-03-31T05:00:00.000Z",
+          "wall": "1919-03-31T01:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1919-04-01T03:59:00.000Z",
+          "wall": "1919-03-31T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "2009-11-01",
+      "zone": "America/St_Johns",
+      "reason": "retained disconnected date",
+      "noon": {
+        "utc": "2009-11-01T15:30:00.000Z",
+        "wall": "2009-11-01T12:00:00.000",
+        "offsetMinutes": -210,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "2009-11-01T02:30:00.000Z",
+        "endInclusive": "2009-11-02T03:29:59.999Z",
+        "startWall": "2009-11-01T00:00:00.000",
+        "endWall": "2009-11-01T23:59:59.999",
+        "nominalMilliseconds": 90000000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "2009-11-01T02:30:00.000Z",
+          "wall": "2009-11-01T00:00:00.000",
+          "flags": [
+            "dst-fold"
+          ]
+        },
+        "lastMinute": {
+          "utc": "2009-11-02T03:29:00.000Z",
+          "wall": "2009-11-01T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "reason": "retained returning date tail",
+      "noon": {
+        "utc": "2009-10-31T14:30:00.000Z",
+        "wall": "2009-10-31T12:00:00.000",
+        "offsetMinutes": -150,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "2009-10-31T02:30:00.000Z",
+        "endInclusive": "2009-11-01T02:29:59.999Z",
+        "startWall": "2009-10-31T00:00:00.000",
+        "endWall": "2009-10-31T23:59:59.999",
+        "nominalMilliseconds": 86400000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "2009-10-31T02:30:00.000Z",
+          "wall": "2009-10-31T00:00:00.000",
+          "flags": []
+        },
+        "lastMinute": {
+          "utc": "2009-11-01T02:29:00.000Z",
+          "wall": "2009-10-31T23:59:00.000",
+          "flags": [
+            "dst-fold"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "reason": "retained 48-hour repeated date",
+      "noon": {
+        "utc": "1892-07-03T23:26:56.000Z",
+        "wall": "1892-07-04T12:00:00.000",
+        "offsetMinutes": 753.0666666666667,
+        "flags": [
+          "dst-fold",
+          "lmt"
+        ],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1892-07-03T11:26:56.000Z",
+        "endInclusive": "1892-07-05T11:26:55.999Z",
+        "startWall": "1892-07-04T00:00:00.000",
+        "endWall": "1892-07-04T23:59:59.999",
+        "nominalMilliseconds": 172800000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1892-07-03T11:26:56.000Z",
+          "wall": "1892-07-04T00:00:00.000",
+          "flags": [
+            "dst-fold",
+            "lmt"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1892-07-04T11:25:56.000Z",
+          "wall": "1892-07-04T23:59:00.000",
+          "flags": [
+            "dst-fold",
+            "lmt"
+          ]
+        }
+      }
+    },
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "reason": "retained empty date",
+      "noon": {
+        "utc": "2011-12-30T22:00:00.000Z",
+        "wall": "2011-12-31T12:00:00.000",
+        "offsetMinutes": 840,
+        "flags": [
+          "dst-gap"
+        ],
+        "sameRequestedDate": false
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "2011-12-30T10:00:00.000Z",
+        "endInclusive": "2011-12-30T09:59:59.999Z",
+        "startWall": "2011-12-31T00:00:00.000",
+        "endWall": "2011-12-29T23:59:59.999",
+        "nominalMilliseconds": 0
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "2011-12-30T10:00:00.000Z",
+          "wall": "2011-12-31T00:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "2011-12-31T09:59:00.000Z",
+          "wall": "2011-12-31T23:59:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1969-09-30",
+      "zone": "Pacific/Kwajalein",
+      "reason": "bounded repeated-date control",
+      "noon": {
+        "utc": "1969-09-30T01:00:00.000Z",
+        "wall": "1969-09-30T12:00:00.000",
+        "offsetMinutes": 660,
+        "flags": [
+          "dst-fold"
+        ],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1969-09-29T13:00:00.000Z",
+        "endInclusive": "1969-10-01T11:59:59.999Z",
+        "startWall": "1969-09-30T00:00:00.000",
+        "endWall": "1969-09-30T23:59:59.999",
+        "nominalMilliseconds": 169200000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1969-09-29T13:00:00.000Z",
+          "wall": "1969-09-30T00:00:00.000",
+          "flags": []
+        },
+        "lastMinute": {
+          "utc": "1969-09-30T12:59:00.000Z",
+          "wall": "1969-09-30T23:59:00.000",
+          "flags": [
+            "dst-fold"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1867-10-18",
+      "zone": "America/Juneau",
+      "reason": "bounded Alaska date-line control",
+      "noon": {
+        "utc": "1867-10-17T20:57:41.000Z",
+        "wall": "1867-10-18T12:00:00.000",
+        "offsetMinutes": 902.3166666666667,
+        "flags": [
+          "lmt"
+        ],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1867-10-17T08:57:41.000Z",
+        "endInclusive": "1867-10-18T08:57:40.999Z",
+        "startWall": "1867-10-18T00:00:00.000",
+        "endWall": "1867-10-18T23:59:59.999",
+        "nominalMilliseconds": 86400000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1867-10-17T08:57:41.000Z",
+          "wall": "1867-10-18T00:00:00.000",
+          "flags": [
+            "lmt"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1867-10-18T08:56:41.000Z",
+          "wall": "1867-10-18T23:59:00.000",
+          "flags": [
+            "dst-fold",
+            "lmt"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1867-10-19",
+      "zone": "America/Juneau",
+      "reason": "adjacent Alaska date-line control",
+      "noon": {
+        "utc": "1867-10-18T20:57:41.000Z",
+        "wall": "1867-10-19T12:00:00.000",
+        "offsetMinutes": 902.3166666666667,
+        "flags": [
+          "dst-fold",
+          "lmt"
+        ],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1867-10-18T08:57:41.000Z",
+        "endInclusive": "1867-10-20T08:57:40.999Z",
+        "startWall": "1867-10-19T00:00:00.000",
+        "endWall": "1867-10-19T23:59:59.999",
+        "nominalMilliseconds": 172800000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1867-10-18T08:57:41.000Z",
+          "wall": "1867-10-19T00:00:00.000",
+          "flags": [
+            "dst-fold",
+            "lmt"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1867-10-20T08:56:41.000Z",
+          "wall": "1867-10-19T23:59:00.000",
+          "flags": [
+            "lmt"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1956-01-01",
+      "zone": "Antarctica/McMurdo",
+      "reason": "bounded Antarctic fixed-date probe",
+      "noon": {
+        "utc": "1956-01-01T00:00:00.000Z",
+        "wall": "1956-01-01T12:00:00.000",
+        "offsetMinutes": 720,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1955-12-31T12:00:00.000Z",
+        "endInclusive": "1956-01-01T11:59:59.999Z",
+        "startWall": "1956-01-01T00:00:00.000",
+        "endWall": "1956-01-01T23:59:59.999",
+        "nominalMilliseconds": 86400000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1955-12-31T12:00:00.000Z",
+          "wall": "1956-01-01T00:00:00.000",
+          "flags": []
+        },
+        "lastMinute": {
+          "utc": "1956-01-01T11:59:00.000Z",
+          "wall": "1956-01-01T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "1899-11-01",
+      "zone": "Antarctica/Macquarie",
+      "reason": "bounded Antarctic fixed-date probe",
+      "noon": {
+        "utc": "1899-11-01T02:00:00.000Z",
+        "wall": "1899-11-01T12:00:00.000",
+        "offsetMinutes": 600,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1899-11-01T00:00:00.000Z",
+        "endInclusive": "1899-11-01T13:59:59.999Z",
+        "startWall": "1899-11-01T10:00:00.000",
+        "endWall": "1899-11-01T23:59:59.999",
+        "nominalMilliseconds": 50400000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1899-11-01T00:00:00.000Z",
+          "wall": "1899-11-01T10:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1899-11-01T13:59:00.000Z",
+          "wall": "1899-11-01T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "1947-01-01",
+      "zone": "Antarctica/DumontDUrville",
+      "reason": "bounded Antarctic fixed-date probe",
+      "noon": {
+        "utc": "1947-01-01T02:00:00.000Z",
+        "wall": "1947-01-01T12:00:00.000",
+        "offsetMinutes": 600,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1946-12-31T14:00:00.000Z",
+        "endInclusive": "1947-01-01T13:59:59.999Z",
+        "startWall": "1947-01-01T00:00:00.000",
+        "endWall": "1947-01-01T23:59:59.999",
+        "nominalMilliseconds": 86400000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1946-12-31T14:00:00.000Z",
+          "wall": "1947-01-01T00:00:00.000",
+          "flags": []
+        },
+        "lastMinute": {
+          "utc": "1947-01-01T13:59:00.000Z",
+          "wall": "1947-01-01T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "1969-01-01",
+      "zone": "Antarctica/Casey",
+      "reason": "bounded Antarctic fixed-date probe",
+      "noon": {
+        "utc": "1969-01-01T04:00:00.000Z",
+        "wall": "1969-01-01T12:00:00.000",
+        "offsetMinutes": 480,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1969-01-01T00:00:00.000Z",
+        "endInclusive": "1969-01-01T15:59:59.999Z",
+        "startWall": "1969-01-01T08:00:00.000",
+        "endWall": "1969-01-01T23:59:59.999",
+        "nominalMilliseconds": 57600000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1969-01-01T00:00:00.000Z",
+          "wall": "1969-01-01T08:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1969-01-01T15:59:00.000Z",
+          "wall": "1969-01-01T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "1993-08-21",
+      "zone": "Pacific/Kwajalein",
+      "reason": "bounded skipped-date control",
+      "noon": {
+        "utc": "1993-08-22T00:00:00.000Z",
+        "wall": "1993-08-22T12:00:00.000",
+        "offsetMinutes": 720,
+        "flags": [
+          "dst-gap"
+        ],
+        "sameRequestedDate": false
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1993-08-21T12:00:00.000Z",
+        "endInclusive": "1993-08-21T11:59:59.999Z",
+        "startWall": "1993-08-22T00:00:00.000",
+        "endWall": "1993-08-20T23:59:59.999",
+        "nominalMilliseconds": 0
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1993-08-21T12:00:00.000Z",
+          "wall": "1993-08-22T00:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1993-08-22T11:59:00.000Z",
+          "wall": "1993-08-22T23:59:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1994-12-31",
+      "zone": "Pacific/Kiritimati",
+      "reason": "bounded skipped-date control",
+      "noon": {
+        "utc": "1994-12-31T22:00:00.000Z",
+        "wall": "1995-01-01T12:00:00.000",
+        "offsetMinutes": 840,
+        "flags": [
+          "dst-gap"
+        ],
+        "sameRequestedDate": false
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1994-12-31T10:00:00.000Z",
+        "endInclusive": "1994-12-31T09:59:59.999Z",
+        "startWall": "1995-01-01T00:00:00.000",
+        "endWall": "1994-12-30T23:59:59.999",
+        "nominalMilliseconds": 0
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1994-12-31T10:00:00.000Z",
+          "wall": "1995-01-01T00:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1995-01-01T09:59:00.000Z",
+          "wall": "1995-01-01T23:59:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1844-12-31",
+      "zone": "Pacific/Guam",
+      "reason": "bounded date-line control",
+      "noon": {
+        "utc": "1845-01-01T02:21:00.000Z",
+        "wall": "1845-01-01T12:00:00.000",
+        "offsetMinutes": 579,
+        "flags": [
+          "dst-gap"
+        ],
+        "sameRequestedDate": false
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1844-12-31T14:21:00.000Z",
+        "endInclusive": "1844-12-31T14:20:59.999Z",
+        "startWall": "1845-01-01T00:00:00.000",
+        "endWall": "1844-12-30T23:59:59.999",
+        "nominalMilliseconds": 0
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1844-12-31T14:21:00.000Z",
+          "wall": "1845-01-01T00:00:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1845-01-01T14:20:00.000Z",
+          "wall": "1845-01-01T23:59:00.000",
+          "flags": [
+            "dst-gap"
+          ]
+        }
+      }
+    },
+    {
+      "date": "1972-01-07",
+      "zone": "Africa/Monrovia",
+      "reason": "retained subminute historical gap control",
+      "noon": {
+        "utc": "1972-01-07T12:00:00.000Z",
+        "wall": "1972-01-07T12:00:00.000",
+        "offsetMinutes": 0,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "1972-01-07T00:44:30.000Z",
+        "endInclusive": "1972-01-07T23:59:59.999Z",
+        "startWall": "1972-01-07T00:44:30.000",
+        "endWall": "1972-01-07T23:59:59.999",
+        "nominalMilliseconds": 83730000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "1972-01-07T00:44:30.000Z",
+          "wall": "1972-01-07T00:44:30.000",
+          "flags": [
+            "dst-gap"
+          ]
+        },
+        "lastMinute": {
+          "utc": "1972-01-07T23:59:00.000Z",
+          "wall": "1972-01-07T23:59:00.000",
+          "flags": []
+        }
+      }
+    },
+    {
+      "date": "2024-03-10",
+      "zone": "America/New_York",
+      "reason": "ordinary DST date control",
+      "noon": {
+        "utc": "2024-03-10T16:00:00.000Z",
+        "wall": "2024-03-10T12:00:00.000",
+        "offsetMinutes": -240,
+        "flags": [],
+        "sameRequestedDate": true
+      },
+      "intervals": {
+        "status": "unresolved",
+        "reason": "provider-unavailable"
+      },
+      "existingEndpointHelper": {
+        "start": "2024-03-10T05:00:00.000Z",
+        "endInclusive": "2024-03-11T03:59:59.999Z",
+        "startWall": "2024-03-10T00:00:00.000",
+        "endWall": "2024-03-10T23:59:59.999",
+        "nominalMilliseconds": 82800000
+      },
+      "independentClockProbes": {
+        "midnight": {
+          "utc": "2024-03-10T05:00:00.000Z",
+          "wall": "2024-03-10T00:00:00.000",
+          "flags": []
+        },
+        "lastMinute": {
+          "utc": "2024-03-11T03:59:00.000Z",
+          "wall": "2024-03-10T23:59:00.000",
+          "flags": []
+        }
+      }
+    }
+  ],
+  "summary": {
+    "count": 17,
+    "noonDateMismatches": [
+      {
+        "date": "2011-12-30",
+        "zone": "Pacific/Apia",
+        "status": "unresolved",
+        "noonWall": "2011-12-31T12:00:00.000"
+      },
+      {
+        "date": "1993-08-21",
+        "zone": "Pacific/Kwajalein",
+        "status": "unresolved",
+        "noonWall": "1993-08-22T12:00:00.000"
+      },
+      {
+        "date": "1994-12-31",
+        "zone": "Pacific/Kiritimati",
+        "status": "unresolved",
+        "noonWall": "1995-01-01T12:00:00.000"
+      },
+      {
+        "date": "1844-12-31",
+        "zone": "Pacific/Guam",
+        "status": "unresolved",
+        "noonWall": "1845-01-01T12:00:00.000"
+      }
+    ],
+    "nonemptyNoonDateMismatches": [],
+    "sameDateNoonCoverageCounterexamples": [],
+    "unresolvedCount": 17
+  },
+  "forcedUnavailable": {
+    "status": "unresolved",
+    "reason": "provider-unavailable"
+  },
+  "qualification": "Exactly the listed17 real-zone/date inputs, host data only. A matching representative date does not certify complete civil-date coverage; unresolved is not empty. No known-time product-policy or public positions change is inferred."
+}

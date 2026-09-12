@@ -1,0 +1,1597 @@
+{
+  "variant": "baseline",
+  "clearEvent": "zodiacs:chart-context-cleared",
+  "node": "v22.23.2",
+  "subjectSha256": "4fbd17d533bbfc7806f29275be5f8c501ed2b4948aaf42e14f040d5f375ac0dc",
+  "groups": [
+    {
+      "label": "ordinary chart success and native reset",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "chart"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "ordinary chart failure preserves input and retries",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "first@example.invalid",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": true,
+          "button": "Working",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          },
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "clear hides chart and preserves typed email and other surfaces",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Clear did not hide chart/preserve typed email\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:191)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "first@example.invalid",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "footer@example.invalid",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "late success after clear has no obsolete UI mutation",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old success changed cleared form {\"actual\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Success\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"first@example.invalid\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:161)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "chart"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "late rejection after clear has no obsolete error or finalizer",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old rejection changed cleared form {\"actual\":{\"hidden\":false,\"email\":\"first@example.invalid\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Retry later\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"first@example.invalid\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:160)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "first@example.invalid",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Retry later",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "late success cannot reset a new chart or edited address",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old success reset replacement chart/input {\"actual\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Success\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"replacement@example.invalid\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:225)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "chart"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "old failure cannot end a newer pending submit",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old rejection mutated newer pending form {\"actual\":{\"hidden\":false,\"email\":\"replacement@example.invalid\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Retry later\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"replacement@example.invalid\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:235)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "replacement@example.invalid",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            "leo"
+          ],
+          "title": "For leo",
+          "summary": "Using leo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Retry later",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          },
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=replacement%40example.invalid&sign=leo"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "old success cannot end a newer pending submit",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old success mutated newer pending form {\"actual\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Success\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"replacement@example.invalid\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:236)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          },
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=replacement%40example.invalid&sign=leo"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "chart"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "queued chart chooser focus is fenced after clear",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old frame focused a cleared chart chooser\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:95)\n    at UtilityScript.evaluate (<anonymous>:305:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": false,
+          "expanded": "true",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": "chart",
+          "name": "sign",
+          "value": "cancer"
+        }
+      }
+    },
+    {
+      "label": "queued chart chooser focus is fenced after replacement",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            "leo"
+          ],
+          "title": "For leo",
+          "summary": "Using leo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": true,
+          "shell": null,
+          "name": null,
+          "value": ""
+        }
+      }
+    },
+    {
+      "label": "queued reset cannot collapse newly opened replacement chooser",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Old reset microtask rerendered new chooser {\"actual\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":false,\"expanded\":\"true\",\"status\":\"\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:186)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            "leo"
+          ],
+          "title": "For leo",
+          "summary": "Using leo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "current reset and focus controls remain functional",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            "leo"
+          ],
+          "title": "For leo",
+          "summary": "Using leo",
+          "summaryHidden": false,
+          "chooserHidden": false,
+          "expanded": "true",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": "chart",
+          "name": "sign",
+          "value": "leo"
+        }
+      }
+    },
+    {
+      "label": "footer pending success survives unrelated chart lifecycle",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=footer%40example.invalid&sign=leo"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "footer"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "horoscope pending success preserves standalone sign",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "leo",
+          "defaultSigns": [
+            "leo"
+          ],
+          "title": "For leo",
+          "summary": "Using leo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=horoscope%40example.invalid&sign=virgo"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "non-chart queued chooser focus survives chart clear",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": false,
+          "expanded": "true",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": "horoscopes",
+          "name": "sign",
+          "value": "virgo"
+        }
+      }
+    },
+    {
+      "label": "replacement computed alone invalidates old submit UI",
+      "outcome": "failed",
+      "error": "page.evaluate: Error: Next computed without clear admitted obsolete success {\"actual\":{\"hidden\":false,\"email\":\"\",\"website\":\"\",\"checked\":\"cancer\",\"defaultSigns\":[\"cancer\"],\"title\":\"For cancer\",\"summary\":\"Using cancer\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"Success\",\"disabled\":false,\"button\":\"Subscribe\",\"personalized\":\"true\"},\"expected\":{\"hidden\":false,\"email\":\"replacement@example.invalid\",\"website\":\"\",\"checked\":\"leo\",\"defaultSigns\":[\"leo\"],\"title\":\"For leo\",\"summary\":\"Using leo\",\"summaryHidden\":false,\"chooserHidden\":true,\"expanded\":\"false\",\"status\":\"\",\"disabled\":true,\"button\":\"Working\",\"personalized\":\"true\"}}\n    at review.check (eval at evaluate (:303:30), <anonymous>:1:47)\n    at review.equal (eval at evaluate (:303:30), <anonymous>:1:98)\n    at eval (eval at evaluate (:303:30), <anonymous>:1:215)\n    at async <anonymous>:329:30\n    at /private/tmp/zodiacs-platform-downstream-context-independent-review/email/native-review.mjs:34:439",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Success",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [
+          {
+            "url": "https://example.invalid/api/email/subscribe",
+            "method": "POST",
+            "body": "locale=en&website=&email=first%40example.invalid&sign=cancer"
+          }
+        ],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          },
+          {
+            "name": "email_subscribed",
+            "props": {
+              "placement": "chart"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    },
+    {
+      "label": "native invalid-email and daily-sign validation preserved",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": false,
+          "email": "invalid",
+          "website": "",
+          "checked": "cancer",
+          "defaultSigns": [
+            "cancer"
+          ],
+          "title": "For cancer",
+          "summary": "Using cancer",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "Invalid email",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "valid@example.invalid",
+          "website": "",
+          "checked": null,
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "Choose sign",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": "horoscopes",
+          "name": "sign",
+          "value": "aries"
+        }
+      }
+    },
+    {
+      "label": "positions computed does not reveal hidden chart capture",
+      "outcome": "passed",
+      "snapshot": {
+        "chart": {
+          "hidden": true,
+          "email": "",
+          "website": "",
+          "checked": null,
+          "defaultSigns": [],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "footer": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "",
+          "defaultSigns": [
+            ""
+          ],
+          "title": "Default title",
+          "summary": "",
+          "summaryHidden": true,
+          "chooserHidden": false,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": null
+        },
+        "horoscopes": {
+          "hidden": false,
+          "email": "",
+          "website": "",
+          "checked": "virgo",
+          "defaultSigns": [
+            "virgo"
+          ],
+          "title": "For virgo",
+          "summary": "Using virgo",
+          "summaryHidden": false,
+          "chooserHidden": true,
+          "expanded": "false",
+          "status": "",
+          "disabled": false,
+          "button": "Subscribe",
+          "personalized": "true"
+        },
+        "requests": [],
+        "analytics": [
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "footer"
+            }
+          },
+          {
+            "name": "email_capture_viewed",
+            "props": {
+              "placement": "horoscopes"
+            }
+          }
+        ],
+        "active": {
+          "outside": false,
+          "shell": null,
+          "name": null,
+          "value": null
+        }
+      }
+    }
+  ],
+  "requests": [],
+  "pageErrors": [],
+  "browser": "152.0.7977.83",
+  "passed": 9,
+  "failed": 9,
+  "outcome": "failed",
+  "cleanup": "All owned blank native contexts and browser closed. Deferred fetch never sent to network."
+}

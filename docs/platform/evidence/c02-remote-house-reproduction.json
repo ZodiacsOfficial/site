@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-07T20:31:02.891Z",
+  "siteHead": "8343f173e4db2e8ab6628bd04590e41b056872ce",
+  "sourcePath": "src/lib/account-v2/remote-chart.ts",
+  "sourceSHA256": "74bd4bf17e810712d8f5406971f8e98fe467cbc11a1bf87de33a84525135cb8b",
+  "publicEngineEntry": "The installed package exports[\".\"].import resolves to ./dist/index.js; no internal engine entry is used by the reference calculation.",
+  "engineVersion": "0.1.1-rc.1",
+  "engineArchiveSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+  "runtime": {
+    "node": "v22.23.2",
+    "icu": "78.2",
+    "tz": "2026a",
+    "hostTimezone": "Asia/Bangkok"
+  },
+  "scope": "Synthetic decrypted projections only. Sentinel remote positions identify recomputation and are not astronomical reference data. No network, account credentials, persistence writes, schema changes, or production source edits.",
+  "cases": [
+    {
+      "name": "polar-requested-placidus",
+      "inputHouseSystem": "placidus",
+      "expectedComputedHouseSystem": "whole",
+      "expectedSummaryHouseSystem": "whole",
+      "restoredSummaryHouseSystem": "placidus",
+      "restoredEngineVersion": "0.1.1-rc.1",
+      "restoredFlags": [
+        "polar-fallback"
+      ],
+      "ascendant": 23.871984112302016,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": true,
+      "nextResolveSavedChart": {
+        "houseSystem": "placidus",
+        "loaderCalls": 0
+      },
+      "nextUploadDerived": {
+        "houseSystem": "placidus",
+        "h": "p",
+        "engineVersion": "0.1.1-rc.1"
+      },
+      "mismatchConfirmed": true
+    },
+    {
+      "name": "polar-requested-whole",
+      "inputHouseSystem": "whole",
+      "expectedComputedHouseSystem": "whole",
+      "expectedSummaryHouseSystem": "whole",
+      "restoredSummaryHouseSystem": "whole",
+      "restoredEngineVersion": "0.1.1-rc.1",
+      "restoredFlags": [],
+      "ascendant": 23.871984112302016,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": true,
+      "nextResolveSavedChart": {
+        "houseSystem": "whole",
+        "loaderCalls": 0
+      },
+      "nextUploadDerived": {
+        "houseSystem": "whole",
+        "h": "w",
+        "engineVersion": "0.1.1-rc.1"
+      },
+      "mismatchConfirmed": false
+    },
+    {
+      "name": "ordinary-requested-placidus",
+      "inputHouseSystem": "placidus",
+      "expectedComputedHouseSystem": "placidus",
+      "expectedSummaryHouseSystem": "placidus",
+      "restoredSummaryHouseSystem": "placidus",
+      "restoredEngineVersion": "0.1.1-rc.1",
+      "restoredFlags": [],
+      "ascendant": 312.9891497690659,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": true,
+      "nextResolveSavedChart": {
+        "houseSystem": "placidus",
+        "loaderCalls": 0
+      },
+      "nextUploadDerived": {
+        "houseSystem": "placidus",
+        "h": "p",
+        "engineVersion": "0.1.1-rc.1"
+      },
+      "mismatchConfirmed": false
+    },
+    {
+      "name": "unknown-time-requested-placidus",
+      "inputHouseSystem": "placidus",
+      "expectedComputedHouseSystem": null,
+      "expectedSummaryHouseSystem": "placidus",
+      "restoredSummaryHouseSystem": "placidus",
+      "restoredEngineVersion": "0.1.1-rc.1",
+      "restoredFlags": [
+        "no-time"
+      ],
+      "ascendant": null,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": true,
+      "nextResolveSavedChart": {
+        "houseSystem": "placidus",
+        "loaderCalls": 0
+      },
+      "nextUploadDerived": {
+        "houseSystem": "placidus",
+        "h": "p",
+        "engineVersion": "0.1.1-rc.1"
+      },
+      "mismatchConfirmed": false
+    },
+    {
+      "name": "no-place-original-projection",
+      "inputHouseSystem": "placidus",
+      "expectedComputedHouseSystem": null,
+      "expectedSummaryHouseSystem": "placidus",
+      "restoredSummaryHouseSystem": "placidus",
+      "restoredEngineVersion": "synthetic-remote-v1",
+      "restoredFlags": [],
+      "ascendant": 42,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": null,
+      "nextResolveSavedChart": {
+        "houseSystem": "placidus",
+        "loaderCalls": 0
+      },
+      "nextUploadDerived": {
+        "houseSystem": "placidus",
+        "h": "p",
+        "engineVersion": "synthetic-remote-v1"
+      },
+      "mismatchConfirmed": false
+    },
+    {
+      "name": "failed-resolution-original-projection",
+      "inputHouseSystem": "placidus",
+      "expectedComputedHouseSystem": null,
+      "expectedSummaryHouseSystem": "placidus",
+      "restoredSummaryHouseSystem": "placidus",
+      "restoredEngineVersion": "synthetic-remote-v1",
+      "restoredFlags": [],
+      "ascendant": 42,
+      "originalProjectionUnchanged": true,
+      "idBirthRevisionAndTimestampsPreserved": true,
+      "freshBodiesAnglesAndFlagsMatchPublicEngine": null,
+      "nextResolveSavedChart": {
+        "houseSystem": "placidus",
+        "loaderCalls": 1
+      },
+      "nextUploadDerived": {
+        "houseSystem": "placidus",
+        "h": "p",
+        "engineVersion": "synthetic-remote-v1"
+      },
+      "mismatchConfirmed": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "editorial:daily:build"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-rc1-visual-control/site",
+    "startedAt": "2026-09-08T04:09:40.087190+00:00",
+    "name": "daily-provenance",
+    "exitCode": 254,
+    "seconds": 0.252
+  }
+]

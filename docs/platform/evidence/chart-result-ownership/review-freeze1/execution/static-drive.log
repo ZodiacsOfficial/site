@@ -1,0 +1,4 @@
+{"name":"unchanged-shared-init-en","passed":true}
+{"name":"unchanged-shared-init-ru","passed":true}
+{"name":"positions-only-production-graph","passed":true}
+{"name":"controls-retry-after-new-result","passed":false,"error":"locator.waitFor: Timeout 10000ms exceeded."}

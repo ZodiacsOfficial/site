@@ -1,0 +1,5 @@
+import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';import {createHash} from 'node:crypto';
+const base=path.dirname(new URL(import.meta.url).pathname);const {build}=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json')('esbuild');
+const result=await build({entryPoints:[path.join(base,'entry.ts')],outfile:path.join(base,'subject.js'),bundle:true,format:'esm',platform:'browser',target:'es2022',metafile:true});
+fs.writeFileSync(path.join(base,'bundle-inputs.json'),JSON.stringify(Object.fromEntries(Object.keys(result.metafile.inputs).map(p=>[p,{sha256:createHash('sha256').update(fs.readFileSync(p)).digest('hex')} ])),null,2)+'\n');
+console.log(JSON.stringify({inputs:Object.keys(result.metafile.inputs).length,subjectSha256:createHash('sha256').update(fs.readFileSync(path.join(base,'subject.js'))).digest('hex')}));

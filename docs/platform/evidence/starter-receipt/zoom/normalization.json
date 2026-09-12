@@ -1,0 +1,99 @@
+{
+  "sourceToEvidence": [
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/result.json",
+      "evidence": "initial-floating-equality.json",
+      "sha256": "9ed1782c98040e2b28eb8fdeeb60a4a2ef1a69357a6547f57ba5b5231a56fadc"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/final/result.json",
+      "evidence": "intermediate-scroll-sampling.json",
+      "sha256": "6724143be1819f1dad5a4e38794fa52710456a234861e7ce26cef913c0cc0118"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-reading-2.png",
+      "evidence": "native-4x-reading-2.png",
+      "sha256": "c784bc233bf3fafdff71bdae80fb70210ae0c94694261fef44720ec972933daa"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-reading-3.png",
+      "evidence": "native-4x-reading-3.png",
+      "sha256": "01945edb6d90b731e7da98c985bad9681dffaa26ac0bdce4eadd047acf671a24"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-2x-file-focus.png",
+      "evidence": "native-2x-file-focus.png",
+      "sha256": "b6f2c8949b73a4e8d03b8af1771fff870dedb15d77c9c4283b44c47bc0d026b4"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-reading-1.png",
+      "evidence": "native-4x-reading-1.png",
+      "sha256": "329918faeec0ef63979116e9a4a2bb7b2e98edc872a2ea7e834b2196a4725723"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/verify.log",
+      "evidence": "verify.log",
+      "sha256": "b3175043fbc275a7b791e19cbb7602e4b6044475ee8222f655bc85a38f105bf2"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/result.json",
+      "evidence": "result.json",
+      "sha256": "19d6c1b9b042e6ec4e8e3e487b46c0ed47a9439db7c910d382c15ff46de54e59"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-2x-reading-1.png",
+      "evidence": "native-2x-reading-1.png",
+      "sha256": "00e1666ac258b94281d6a3fcbe6f1d33081426cd2cb71c21106122917e8db063"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-file-focus.png",
+      "evidence": "native-4x-file-focus.png",
+      "sha256": "ceb5056d49d74861f16e23bd1cf25e9cb08e9d1914c3e8f8326be9f3ed228761"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/verify.mjs",
+      "evidence": "verify.mjs.log",
+      "sha256": "7815c3700fd54b16b601668d1b9af516b26581e2019fdb356983b92f6916617c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-diagnostic-focus.png",
+      "evidence": "native-4x-diagnostic-focus.png",
+      "sha256": "aa33b1e8d122f624501d7df89db047c5a4fdd1f78ab6d2b0c149e83a570a433e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-2x-export-focus.png",
+      "evidence": "native-2x-export-focus.png",
+      "sha256": "d56e9f2753d751305eed749240ded0e9d50d3787d45db46843a59b61934c7892"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-import-focus.png",
+      "evidence": "native-4x-import-focus.png",
+      "sha256": "49b686726ad741fe376a82f5d7ad8fe8ea846c151b02a770ec2f4839bec69ee3"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/REVIEW.md",
+      "evidence": "REVIEW.md",
+      "sha256": "d5d4c20a81d7b1717202835dd6beaf6e4c63175ade2675994bd7e9454a27c60b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-2x-import-focus.png",
+      "evidence": "native-2x-import-focus.png",
+      "sha256": "269a0946de03bad0d2cc40baba7243ca12a2a79ebcba0a47b9b015409b79827d"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-4x-export-focus.png",
+      "evidence": "native-4x-export-focus.png",
+      "sha256": "7926d80c38eaa3007982afb128a5024be91c2cae62c03ffb1cafa15f27bdac04"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-zoom/complete/native-2x-diagnostic-focus.png",
+      "evidence": "native-2x-diagnostic-focus.png",
+      "sha256": "fd2c864fd67f38938c8d77f5ecd774d26cc51dacdcee4f8d0d5526b5f17aa86a"
+    }
+  ],
+  "normalization": "Exact bytes retained; executable scratch probe saved as .mjs.log. No browser profile or authentication state copied.",
+  "rootVisualInspection": [
+    "native-4x-file-focus.png",
+    "native-4x-reading-3.png"
+  ]
+}

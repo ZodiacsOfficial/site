@@ -1,0 +1,62 @@
+{
+  "purpose": "Readonly runtime discrepancy diagnosis; no product or tolerance changes",
+  "records": [
+    {
+      "path": "COMMANDS.md.log",
+      "bytes": 3498,
+      "sha256": "a6f5647783415bb2d7a519cc86b46f3192b16d79f677d6b824d48c49afce553b"
+    },
+    {
+      "path": "ECMASCRIPT-SOURCES.md.log",
+      "bytes": 913,
+      "sha256": "2b02f8c10188fe40b8dc9812afdfd8021f05a5cc142c7b43afac001c6b823034"
+    },
+    {
+      "path": "RESULTS.json.log",
+      "bytes": 36143,
+      "sha256": "f1ed624703ed647e72d57b84426548a5cff1bc6259fb77fa2f816367c5a6088d"
+    },
+    {
+      "path": "REVIEW.md.log",
+      "bytes": 5681,
+      "sha256": "7b3fac0dfdad05e87e8d04eb8d2a17f341fdc3081a44b6d0c84e90498d84aa81"
+    },
+    {
+      "path": "analysis.log.log",
+      "bytes": 780,
+      "sha256": "9d8afca272b9ab444b82804f5cd60e86b5d4ae4346324487f335d9c84bde5983"
+    },
+    {
+      "path": "initial-copy-manifest.json.log",
+      "bytes": 1894,
+      "sha256": "9b3bde33635da4fba646539ce240607a30777db4e20a991672a6781d560ea589"
+    },
+    {
+      "path": "numerical-source-identity.json.log",
+      "bytes": 472,
+      "sha256": "6529f8067d79072a9e019b70035fe782a0692414cf2f9025d6f917a5fee448ec"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 23283664,
+      "sha256": "cda03978e6b4d24b6b1ac8e4e8cee3cfa2296af27bdd4683a4f7b7589e604fb4"
+    },
+    {
+      "path": "raw-member-manifest.json",
+      "bytes": 10325,
+      "sha256": "36006babb257955279fdc84f7235439a9fc8e10f2d8520ea9c6f7c167c87daca"
+    },
+    {
+      "path": "root-installed-archive-verification.json.log",
+      "bytes": 4474,
+      "sha256": "4a8e36bde8e43493189d7c52e6e51b515039f7d953cc2400e1666b81a4987cc9"
+    },
+    {
+      "path": "runtime-probe.png",
+      "bytes": 15177,
+      "sha256": "55c93f69750305753043d276b7aa5e2c0acb2922d75c8b94970abc67b44c17f8"
+    }
+  ],
+  "count": 11,
+  "bytes": 23363021
+}

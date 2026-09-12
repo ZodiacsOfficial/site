@@ -1,0 +1,118 @@
+{
+  "at": "2026-09-08T05:24:07.412Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tzdb": "2026a",
+  "purpose": "Actual baseline resolver + delivered portable codec, reviewer context arithmetic control; not author patch acceptance or broad historical accuracy certification",
+  "passed": 7,
+  "results": [
+    {
+      "name": "ordinary",
+      "date": "1990-06-15",
+      "time": "14:30",
+      "timeZone": "America/New_York",
+      "timeKnown": true,
+      "instant": "1990-06-15T18:30:00.000Z",
+      "offsetMinutes": -240,
+      "gapShiftMinutes": 0,
+      "flags": [],
+      "reference": "supplied-instant",
+      "sourceInstant": null,
+      "houseAbsence": null
+    },
+    {
+      "name": "gap-hour",
+      "date": "2024-03-10",
+      "time": "02:30",
+      "timeZone": "America/New_York",
+      "timeKnown": true,
+      "instant": "2024-03-10T07:30:00.000Z",
+      "offsetMinutes": -240,
+      "gapShiftMinutes": 60,
+      "flags": [
+        "dst-gap"
+      ],
+      "reference": "supplied-instant",
+      "sourceInstant": null,
+      "houseAbsence": null
+    },
+    {
+      "name": "fold-earlier",
+      "date": "2024-11-03",
+      "time": "01:30",
+      "timeZone": "America/New_York",
+      "timeKnown": true,
+      "instant": "2024-11-03T05:30:00.000Z",
+      "offsetMinutes": -240,
+      "gapShiftMinutes": 0,
+      "flags": [
+        "dst-fold"
+      ],
+      "reference": "supplied-instant",
+      "sourceInstant": null,
+      "houseAbsence": null
+    },
+    {
+      "name": "gap-half-hour",
+      "date": "2024-10-06",
+      "time": "02:15",
+      "timeZone": "Australia/Lord_Howe",
+      "timeKnown": true,
+      "instant": "2024-10-05T15:45:00.000Z",
+      "offsetMinutes": 660,
+      "gapShiftMinutes": 30,
+      "flags": [
+        "dst-gap"
+      ],
+      "reference": "supplied-instant",
+      "sourceInstant": null,
+      "houseAbsence": null
+    },
+    {
+      "name": "gap-whole-day-unknown",
+      "date": "2011-12-30",
+      "time": "12:00",
+      "timeZone": "Pacific/Apia",
+      "timeKnown": false,
+      "instant": "2011-12-30T22:00:00.000Z",
+      "offsetMinutes": 840,
+      "gapShiftMinutes": 1440,
+      "flags": [
+        "dst-gap"
+      ],
+      "reference": "local-noon",
+      "sourceInstant": null,
+      "houseAbsence": "unknown-time"
+    },
+    {
+      "name": "LMT-seconds",
+      "date": "1907-07-06",
+      "time": "08:30",
+      "timeZone": "America/Mexico_City",
+      "timeKnown": true,
+      "instant": "1907-07-06T15:06:36.000Z",
+      "offsetMinutes": -396.6,
+      "gapShiftMinutes": 0,
+      "flags": [
+        "lmt"
+      ],
+      "reference": "supplied-instant",
+      "sourceInstant": null,
+      "houseAbsence": null
+    },
+    {
+      "name": "early-Gregorian",
+      "date": "0099-06-15",
+      "time": "12:00",
+      "timeZone": "Etc/UTC",
+      "timeKnown": false,
+      "instant": "0099-06-15T12:00:00.000Z",
+      "offsetMinutes": 0,
+      "gapShiftMinutes": 0,
+      "flags": [],
+      "reference": "local-noon",
+      "sourceInstant": null,
+      "houseAbsence": "unknown-time"
+    }
+  ]
+}

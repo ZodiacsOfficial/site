@@ -1,0 +1,532 @@
+{
+  "node": "v24.19.0",
+  "passed": true,
+  "count": 41,
+  "legacyNegatives": 16,
+  "correctedPositives": 16,
+  "additionalPositives": 5,
+  "unchangedFallbacks": 4,
+  "results": [
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Caracas",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Caracas",
+      "natalCalls": 1,
+      "instant": "1890-01-01T04:27:44.000Z",
+      "flags": [
+        "dst-gap",
+        "lmt"
+      ],
+      "gapShiftMinutes": 0.06666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1884-01-01",
+      "time": "00:00",
+      "zone": "America/Dawson_Creek",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1884-01-01",
+      "time": "00:00",
+      "zone": "America/Dawson_Creek",
+      "natalCalls": 1,
+      "instant": "1884-01-01T08:00:56.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.9333333333333333,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "America/Goose_Bay",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "America/Goose_Bay",
+      "natalCalls": 1,
+      "instant": "1935-03-30T03:30:52.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.8666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1914-01-01",
+      "time": "00:00",
+      "zone": "America/Manaus",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1914-01-01",
+      "time": "00:00",
+      "zone": "America/Manaus",
+      "natalCalls": 1,
+      "instant": "1914-01-01T04:00:04.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.06666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1935-01-01",
+      "time": "00:00",
+      "zone": "America/Paramaribo",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1935-01-01",
+      "time": "00:00",
+      "zone": "America/Paramaribo",
+      "natalCalls": 1,
+      "instant": "1935-01-01T03:40:52.000Z",
+      "flags": [
+        "dst-gap",
+        "lmt"
+      ],
+      "gapShiftMinutes": 0.26666666666666666,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Port-au-Prince",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Port-au-Prince",
+      "natalCalls": 1,
+      "instant": "1890-01-01T04:49:20.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.3333333333333333,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Punta_Arenas",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1890-01-01",
+      "time": "00:00",
+      "zone": "America/Punta_Arenas",
+      "natalCalls": 1,
+      "instant": "1890-01-01T04:43:40.000Z",
+      "flags": [
+        "dst-gap",
+        "lmt"
+      ],
+      "gapShiftMinutes": 0.9166666666666666,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "America/St_Johns",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "America/St_Johns",
+      "natalCalls": 1,
+      "instant": "1935-03-30T03:30:52.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.8666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1900-08-20",
+      "time": "00:00",
+      "zone": "America/Whitehorse",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1900-08-20",
+      "time": "00:00",
+      "zone": "America/Whitehorse",
+      "natalCalls": 1,
+      "instant": "1900-08-20T09:00:12.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.2,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1880-01-01",
+      "time": "00:00",
+      "zone": "Asia/Colombo",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1880-01-01",
+      "time": "00:00",
+      "zone": "Asia/Colombo",
+      "natalCalls": 1,
+      "instant": "1879-12-31T18:40:36.000Z",
+      "flags": [
+        "dst-gap",
+        "lmt"
+      ],
+      "gapShiftMinutes": 0.13333333333333333,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1924-05-02",
+      "time": "00:00",
+      "zone": "Asia/Tbilisi",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1924-05-02",
+      "time": "00:00",
+      "zone": "Asia/Tbilisi",
+      "natalCalls": 1,
+      "instant": "1924-05-01T21:00:49.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.8166666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1914-01-01",
+      "time": "00:00",
+      "zone": "Brazil/West",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1914-01-01",
+      "time": "00:00",
+      "zone": "Brazil/West",
+      "natalCalls": 1,
+      "instant": "1914-01-01T04:00:04.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.06666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "Canada/Newfoundland",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1935-03-30",
+      "time": "00:00",
+      "zone": "Canada/Newfoundland",
+      "natalCalls": 1,
+      "instant": "1935-03-30T03:30:52.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.8666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1900-08-20",
+      "time": "00:00",
+      "zone": "Canada/Yukon",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1900-08-20",
+      "time": "00:00",
+      "zone": "Canada/Yukon",
+      "natalCalls": 1,
+      "instant": "1900-08-20T09:00:12.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.2,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1901-01-01",
+      "time": "00:00",
+      "zone": "Pacific/Norfolk",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1901-01-01",
+      "time": "00:00",
+      "zone": "Pacific/Norfolk",
+      "natalCalls": 1,
+      "instant": "1900-12-31T12:48:08.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.13333333333333333,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "legacy-inconsistent-flags-refused",
+      "date": "1945-09-10",
+      "time": "00:00",
+      "zone": "Pacific/Tongatapu",
+      "natalCalls": 0,
+      "returnedNull": true
+    },
+    {
+      "kind": "corrected-seconds-context-captured",
+      "date": "1945-09-10",
+      "time": "00:00",
+      "zone": "Pacific/Tongatapu",
+      "natalCalls": 1,
+      "instant": "1945-09-09T11:40:48.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "gapShiftMinutes": 0.8,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "legacyChartEqual": true,
+      "replayInstantEqual": true
+    },
+    {
+      "kind": "additional-captured",
+      "date": "1914-01-01",
+      "time": "12:00",
+      "zone": "America/Manaus",
+      "known": false,
+      "natalCalls": 1,
+      "flags": [],
+      "instant": "1914-01-01T16:00:00.000Z",
+      "gapShiftMinutes": 0
+    },
+    {
+      "kind": "additional-captured",
+      "date": "1972-01-07",
+      "time": "00:30",
+      "zone": "Africa/Monrovia",
+      "known": true,
+      "natalCalls": 1,
+      "flags": [
+        "dst-gap"
+      ],
+      "instant": "1972-01-07T01:14:30.000Z",
+      "gapShiftMinutes": 44.5
+    },
+    {
+      "kind": "additional-captured",
+      "date": "1916-10-01",
+      "time": "02:30",
+      "zone": "Europe/Dublin",
+      "known": true,
+      "natalCalls": 1,
+      "flags": [
+        "dst-fold",
+        "lmt"
+      ],
+      "instant": "1916-10-01T01:55:21.000Z",
+      "gapShiftMinutes": 0
+    },
+    {
+      "kind": "additional-captured",
+      "date": "1911-03-10",
+      "time": "23:55",
+      "zone": "Europe/Paris",
+      "known": true,
+      "natalCalls": 1,
+      "flags": [
+        "dst-fold",
+        "lmt"
+      ],
+      "instant": "1911-03-10T23:45:39.000Z",
+      "gapShiftMinutes": 0
+    },
+    {
+      "kind": "additional-captured",
+      "date": "1906-01-01",
+      "time": "00:01",
+      "zone": "Asia/Kolkata",
+      "known": true,
+      "natalCalls": 1,
+      "flags": [
+        "dst-gap"
+      ],
+      "instant": "1905-12-31T18:39:50.000Z",
+      "gapShiftMinutes": 8.833333333333334
+    },
+    {
+      "kind": "fixed-offset-legacy-path-preserved",
+      "zone": "+01:00",
+      "natalCalls": 0
+    },
+    {
+      "kind": "fixed-offset-legacy-path-preserved",
+      "zone": "-02:30",
+      "natalCalls": 0
+    },
+    {
+      "kind": "exact-pole-legacy-path-preserved",
+      "latitude": -90,
+      "natalCalls": 0
+    },
+    {
+      "kind": "exact-pole-legacy-path-preserved",
+      "latitude": 90,
+      "natalCalls": 0
+    }
+  ]
+}

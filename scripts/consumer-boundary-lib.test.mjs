@@ -162,6 +162,34 @@ const description = 'A free astrology calculator.';
       .toContain('unsanctioned wing link');
   });
 
+  it('limits the developer SDK bridge to two exact pages and approved references', () => {
+    for (const file of ['src/pages/developers/index.astro', 'src/pages/developers/support/index.astro']) {
+      expect(findConsumerBoundaryViolations('<a href="/sdk/">Optional ownership SDK</a>', file)).toEqual([]);
+      for (const href of ['/sdk/market/', '/terminal/', '/registry/', '/astrofolio/how-to-buy/']) {
+        expect(rules(`<a href="${href}">Reference</a>`, file)).toContain('unsanctioned wing link');
+      }
+      expect(rules('<p>Use the crypto market.</p>', file)).toContain('market vocabulary');
+      expect(rules('<a href="https://jup.ag/">Open</a>', file)).toContain('external wing or acquisition destination');
+    }
+    expect(findConsumerBoundaryViolations('<a href="/sdk/engine/">API reference</a>', 'src/pages/developers/support/index.astro')).toEqual([]);
+    expect(rules('<a href="/sdk/engine/">API reference</a>', 'src/pages/developers/index.astro')).toContain('unsanctioned wing link');
+    for (const file of ['src/pages/developers/examples/index.astro', 'src/pages/developers/support/other.astro', 'src/pages/about/index.astro']) {
+      expect(rules('<a href="/sdk/">SDK</a>', file)).toContain('unsanctioned wing link');
+    }
+  });
+
+  it('recognizes only the Node hashing import in the displayed starter setup', () => {
+    const block = (code, name = 'setup') => `---\nconst ${name} = \`node <<'JS'\n${code}\nJS\`;\n---\n<pre>{${name}}</pre>`;
+    const file = 'src/pages/developers/examples/index.astro';
+    const moduleImport = "import { createHash } from 'node:crypto';";
+    expect(findConsumerBoundaryViolations(block(moduleImport), file)).toEqual([]);
+    expect(rules(block(moduleImport + "\nconsole.log('Use the crypto market');"), file)).toContain('market vocabulary');
+    expect(rules(block(moduleImport + "\nconsole.log('/registry/');"), file)).toContain('unsanctioned wing link');
+    expect(rules(block(moduleImport, 'promotion'), file)).toContain('crypto vocabulary');
+    expect(rules(block(moduleImport), 'src/pages/index.astro')).toContain('crypto vocabulary');
+    expect(rules(block("import { x } from 'node:crypto-market';"), file)).toContain('crypto vocabulary');
+  });
+
   it('finds raw and fenced MDX wing links before stripping markup', () => {
     expect(rules('<a href="/registry/">Record</a>', 'src/content/example.mdx'))
       .toContain('unsanctioned wing link');

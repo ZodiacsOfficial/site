@@ -1,0 +1,92 @@
+[
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/REVIEW.md",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/REVIEW.md.log",
+    "sha256": "1eebf3cf4b12ed5071fcd7284330aa5692fb0c27c1b4589fc0b76c2e60d09ed5"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/acceptance-final.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/acceptance-final.log",
+    "sha256": "5d2da8395aa19895d44fddf592634c043197719e87f268202f86729522e1ea4b"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/artifact-response.headers",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/artifact-response.headers.log",
+    "sha256": "7c1aa01321f800688fc9b971485412e14feb755b7414767b15f0e9380e525106"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/focused-typecheck-final.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/focused-typecheck-final.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/focused-typecheck.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/focused-typecheck.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/identity.json",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/identity.json.log",
+    "sha256": "33ad7c4ca12800e8d94ef56072dc8e838c211f1b458e7868c7d6d07e2d948544"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/install-final.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/install-final.log",
+    "sha256": "3858f444240815134726f10a93f4305cde3f467c8a07ef7978ec2c12ca83e74a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/install-isolated-cache.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/install-isolated-cache.log",
+    "sha256": "ab16cbfd7655d6eb864cd1e165a324074f3ff2a82a2579afc554d8b8d34fda12"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/install-merged-cache.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/install-merged-cache.log",
+    "sha256": "c28cba8826c3436c5bca86e614e9f0ef2578c4b73fe3a62aa8dc05e76ac79c1a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/install.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/install.log",
+    "sha256": "66a40f363cfbc0c22984ae1831bcbdac116deb2f7583dde97cb968382b62cd9b"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/lock-update-isolated-cache.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/lock-update-isolated-cache.log",
+    "sha256": "0c0c60688cec88646256ef59f98df2563be640be660d13db1079f28c07b95d4f"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/lock-update.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/lock-update.log",
+    "sha256": "78a6c96c2b5b4621b6d20543bba39bd32f29a9cfb316b7e454b0f28fa26d1e37"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/scene-version-update.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/scene-version-update.log",
+    "sha256": "399877cc78490fe40b369329240d444a08efe2a47f969ce6eba2f645a2036ff5"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/source.patch",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/source.patch.log",
+    "sha256": "1de2da9d936c030e5035db156169015bf4aa97e7103fa72c1c8897389753b56c"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/starter-verifier.json",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/starter-verifier.json.log",
+    "sha256": "3039b7eb176c22522e863ea8f76664fef1328cc6d546cf482d8690293be64d78"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/targeted-corrected.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/targeted-corrected.log",
+    "sha256": "da575037db5fc6f60aee843f0d0db5090685ae66cb848663fb23717121f3c0be"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/targeted-final.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/targeted-final.log",
+    "sha256": "e1f220be63ec2ab2180d9e81a2f6de442c05fdb2db97fda40c77a3adc5c5d1ca"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-site-engine-rc5-evidence/targeted-initial.log",
+    "stored": "docs/platform/evidence/site-engine-rc5/implementation/targeted-initial.log",
+    "sha256": "ac5ce060ebcd466b3ebe25afd4d1d6e7484ceca30ebff61f6dd218959c77bf62"
+  }
+]

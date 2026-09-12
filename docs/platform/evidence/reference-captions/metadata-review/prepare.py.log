@@ -1,0 +1,16 @@
+from pathlib import Path
+import shutil,subprocess,json,hashlib
+r=Path(__file__).resolve().parent;repo='/Users/chiburashka/.codex/worktrees/4806/site';base='9d180c9f1a2f66893ccd6d73fcda106cb3894674';proposal=Path('/private/tmp/zodiacs-platform-reference-caption-metadata');review=Path('/private/tmp/zodiacs-platform-reference-caption-review')
+for p in ['integration.patch','source-identity.json']:(r/p).write_bytes((proposal/p).read_bytes())
+for d in ['before','after','generation']:shutil.copytree(proposal/d,r/d)
+assert hashlib.sha256((r/'integration.patch').read_bytes()).hexdigest()=='a0c52aa23c1464858abada3db1b5bbfb4a8cedd5db7e409fb04016b84197d637'
+for file in ['scripts/phase1-scope-guard.mjs','scripts/build-i18n-additions.mjs','tests/visual/browser.mjs','package.json','package-lock.json']:
+ b=subprocess.check_output(['git','-C',repo,'show',base+':'+file]);p=r/'fixture'/file;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+shutil.copytree(review/'source/src',r/'fixture/src');f=json.loads((review/'freeze.json').read_text());(r/'author-freeze.json').write_bytes((review/'freeze.json').read_bytes())
+for p,v in f['files'].items():
+ b=(review/'candidate-source'/p).read_bytes();assert hashlib.sha256(b).hexdigest()==v['sha256'];t=r/'fixture'/p;t.parent.mkdir(parents=True,exist_ok=True);t.write_bytes(b)
+for p in ['.github/phase1-scope-allowance.json','.github/workflows/site-check.yml']:
+ before=(r/'before'/p).read_bytes();assert before==subprocess.check_output(['git','-C',repo,'show',base+':'+p]);t=r/'fixture'/p;t.parent.mkdir(parents=True,exist_ok=True);t.write_bytes((r/'after'/p).read_bytes())
+(r/'fixture/i18n-additions.md').write_bytes((r/'generation/before/i18n-additions.md').read_bytes())
+(r/'fixture/node_modules').symlink_to(Path('/Users/chiburashka/.codex/worktrees/4806/site/node_modules'),target_is_directory=True)
+print(json.dumps({'exactBase':base,'frozenFiles':len(f['files']),'generatorAndGuardFromGit':True,'metadataProposedOnly':True}))

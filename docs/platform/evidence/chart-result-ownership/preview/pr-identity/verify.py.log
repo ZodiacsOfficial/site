@@ -1,0 +1,50 @@
+from pathlib import Path
+import subprocess,json,hashlib
+root=Path('/Users/chiburashka/.codex/worktrees/4806/site');out=Path(__file__).parent
+expected='c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3'
+def git(*args):return subprocess.check_output(['git',*args],cwd=root)
+def sha(data):return hashlib.sha256(data).hexdigest()
+pr=json.loads((out/'pr-raw.json').read_text());pages=json.loads((out/'files-pages-raw.json').read_text());remote=sum(pages,[])
+assert pr['head']['sha']==expected and pr['number']==434 and pr['state']=='open' and pr['draft'] is True
+base=pr['base']['sha'];assert len(remote)==pr['changed_files'];assert len({r['filename'] for r in remote})==len(remote)
+merge=git('merge-base',base,expected).decode().strip();assert merge==base
+tree={}
+for record in git('ls-tree','-r','-z',expected).split(b'\0'):
+ if not record:continue
+ header,name=record.split(b'\t',1);mode,kind,blob=header.decode().split();tree[name.decode()]=dict(mode=mode,kind=kind,sha=blob)
+localNames=set(x.decode() for x in git('diff','--name-only','-z','--find-renames',base+'...'+expected).split(b'\0') if x)
+assert localNames=={r['filename'] for r in remote}
+statusRaw=git('diff','--name-status','-z','--find-renames',base+'...'+expected);(out/'local-name-status.raw').write_bytes(statusRaw)
+parts=[x.decode() for x in statusRaw.split(b'\0') if x];statuses={};i=0
+while i<len(parts):
+ code=parts[i];i+=1
+ if code.startswith(('R','C')):previous,name=parts[i:i+2];i+=2
+ else:name=parts[i];previous=None;i+=1
+ statuses[name]={'code':code,'previous':previous}
+records=[]
+for r in remote:
+ name=r['filename'];local=tree.get(name);status=statuses[name]['code']
+ assert r['status'] in ['added','modified']
+ assert local and local['sha']==r['sha'] and local['kind']=='blob'
+ assert status=={'added':'A','modified':'M'}[r['status']]
+ records.append({'path':name,'status':r['status'],'localStatus':status,'remoteBlob':r['sha'],'localBlob':local['sha'],'isDocumentation':name.startswith('docs/') or name.lower().endswith('.md'),'verified':True})
+freezePath=Path('/private/tmp/zodiacs-platform-chart-ownership-evidence/freeze2/freeze.json');freeze=json.loads(freezePath.read_text());(out/'reviewed-freeze2.json').write_bytes(freezePath.read_bytes())
+frozen=[]
+for r in freeze['files']:
+ name=r['path'];data=git('show',expected+':'+name);assert sha(data)==r['sha256']
+ target=out/'source'/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(data)
+ frozen.append({'path':name,'remoteAndLocalBlob':tree[name]['sha'],'expectedFreezeSha256':r['sha256'],'actualSha256':sha(data),'verified':True})
+workflow='.github/workflows/site-check.yml'
+before=git('show',base+':'+workflow);after=git('show',expected+':'+workflow)
+addition=b'      - name: Birth chart result ownership\n        timeout-minutes: 5\n        run: OUT_DIR=tests/visual/artifacts/chart-ownership node tests/chart-ownership-drive.mjs\n\n'
+anchor=b'      - name: Engine accuracy vectors\n'
+assert before.count(anchor)==1 and before.replace(anchor,addition+anchor)==after
+for name,data in [('workflow-base.yml',before),('workflow-head.yml',after),('workflow.patch',git('diff',base+'...'+expected,'--',workflow))]:(out/name).write_bytes(data)
+browserHelper='tests/visual/browser.mjs';assert git('rev-parse',base+':'+browserHelper)==git('rev-parse',expected+':'+browserHelper)
+(out/'browser-helper.mjs').write_bytes(git('show',expected+':'+browserHelper))
+assert b'permissions:\n  contents: read' in after
+assert b'OUT_DIR=tests/visual/artifacts/chart-ownership' in after
+assert b'if: always()' in after and b'            tests/visual/artifacts/' in after
+result={'expectedHead':expected,'remoteHead':pr['head']['sha'],'remoteBase':base,'baseRef':pr['base']['ref'],'mergeBase':merge,'state':pr['state'],'draft':pr['draft'],'title':pr['title'],'pages':[len(x) for x in pages],'totalChangedFiles':len(remote),'allChangedNamesMatchLocal':True,'allChangedBlobIdentitiesMatchLocal':True,'nonDocumentationCount':sum(not r['isDocumentation'] for r in records),'nonDocumentationFiles':[r for r in records if not r['isDocumentation']],'allFiles':records,'frozenSourceFiles':frozen,'ci':{'onlyFourLineAddition':True,'workflowHeadBlob':tree[workflow]['sha'],'workflowHeadSha256':sha(after),'existingPermissionsUnchanged':True,'browserHelperUnchanged':True,'artifactDirectoryWithinExistingAlwaysUpload':True,'timeoutMinutes':5},'scope':'Read-only exact PR identity and wiring review; remote preview/runtime/CI success are separate.'}
+(out/'identity-result.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({k:result[k] for k in ['remoteHead','remoteBase','pages','totalChangedFiles','nonDocumentationCount','allChangedNamesMatchLocal','allChangedBlobIdentitiesMatchLocal','frozenSourceFiles','ci']}))

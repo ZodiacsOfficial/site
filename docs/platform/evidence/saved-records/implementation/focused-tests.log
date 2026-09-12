@@ -1,0 +1,13 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-saved-record
+
+ ✓ src/lib/account-v2/chart-wire.test.ts (4 tests) 9ms
+ ✓ src/lib/profile/saved-record.test.ts (17 tests) 14ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 208ms
+ ✓ src/lib/profile/saved-record-store.test.ts (32 tests) 346ms
+
+ Test Files  4 passed (4)
+      Tests  74 passed (74)
+   Start at  12:05:48
+   Duration  906ms (transform 483ms, setup 0ms, collect 808ms, tests 577ms, environment 1ms, prepare 360ms)
+

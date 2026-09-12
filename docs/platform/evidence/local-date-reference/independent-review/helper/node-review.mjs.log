@@ -1,0 +1,6 @@
+import fs from 'node:fs';import {runInNewContext} from 'node:vm';
+const original=Intl.DateTimeFormat;let intlCalls=0;Intl.DateTimeFormat=new Proxy(original,{construct(target,args,newTarget){intlCalls++;return Reflect.construct(target,args,newTarget)},apply(target,self,args){intlCalls++;return Reflect.apply(target,self,args)}});
+let api;try{api=await import('./subject.mjs')}finally{Intl.DateTimeFormat=original}
+if(intlCalls)throw Error('Unexpected Intl work importing helper');
+const interval=await import('./interval.mjs');const cross=runInNewContext("new Date('2000-01-01T00:00:00.000Z')");const result={node:process.version,icu:process.versions.icu,tzdb:process.versions.tz,importIntlCalls:intlCalls,...api.runIndependentChecks(api,interval,cross)};
+fs.writeFileSync(process.env.RESULT_PATH??'node-result.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({node:result.node,checks:result.checks,importIntlCalls:intlCalls,coercions:result.coercionOrOverrideCalls}));

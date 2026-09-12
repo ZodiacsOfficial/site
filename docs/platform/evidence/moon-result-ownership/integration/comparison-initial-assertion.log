@@ -1,0 +1,6 @@
+Original initial comparison ran as Python on stdin. Its direct output was:
+Traceback (most recent call last):
+  File "<stdin>", line 6, in <module>
+AssertionError
+
+The inline loop checked case identity, result text, screenshot SHA256 and edit recovery. Individual follow-up comparisons identify Italian390 screenshot bytes as the sole mismatch. The shell later ran read-only scope/diff checks, so its final exit0 did not mean the Python comparison passed. No source was committed or pushed on that failed assertion. Original before/after images and diagnostic records are retained. No test tolerance, mask, baseline or product source was changed to address the variance.

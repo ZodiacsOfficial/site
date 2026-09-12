@@ -1,0 +1,795 @@
+{
+  "sourceManifestSha256": "a1cd83f207c7490037a3078038a0b21191b548e18648edd01433bdd667b88d1e",
+  "verifiedRecords": 197,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "actual-changed-paths.json",
+      "path": "actual-changed-paths.json"
+    },
+    {
+      "sourcePath": "actual-scope-cli.log",
+      "path": "actual-scope-cli.log"
+    },
+    {
+      "sourcePath": "assemble-result.log",
+      "path": "assemble-result.log"
+    },
+    {
+      "sourcePath": "assemble.py",
+      "path": "assemble.py.log"
+    },
+    {
+      "sourcePath": "assembled-identity.json",
+      "path": "assembled-identity.json"
+    },
+    {
+      "sourcePath": "assembly.log",
+      "path": "assembly.log"
+    },
+    {
+      "sourcePath": "baseline-ChartCalculator.tsx",
+      "path": "baseline-ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "build.log",
+      "path": "build.log"
+    },
+    {
+      "sourcePath": "build.mjs",
+      "path": "build.mjs.log"
+    },
+    {
+      "sourcePath": "bundle-metafile.json",
+      "path": "bundle-metafile.json"
+    },
+    {
+      "sourcePath": "candidate-ChartCalculator.tsx",
+      "path": "candidate-ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "captured-input-map.json",
+      "path": "captured-input-map.json"
+    },
+    {
+      "sourcePath": "catalog-build.log",
+      "path": "catalog-build.log"
+    },
+    {
+      "sourcePath": "catalog-build.mjs",
+      "path": "catalog-build.mjs.log"
+    },
+    {
+      "sourcePath": "catalog-input-identities.json",
+      "path": "catalog-input-identities.json"
+    },
+    {
+      "sourcePath": "catalog-metafile.json",
+      "path": "catalog-metafile.json"
+    },
+    {
+      "sourcePath": "catalog-probe.cjs",
+      "path": "catalog-probe.cjs.log"
+    },
+    {
+      "sourcePath": "catalog-probe.ts",
+      "path": "catalog-probe.ts.log"
+    },
+    {
+      "sourcePath": "catalog-result.json",
+      "path": "catalog-result.json"
+    },
+    {
+      "sourcePath": "catalog.stderr",
+      "path": "catalog.stderr"
+    },
+    {
+      "sourcePath": "confidence-baseline.ts",
+      "path": "confidence-baseline.ts.log"
+    },
+    {
+      "sourcePath": "confidence-candidate.ts",
+      "path": "confidence-candidate.ts.log"
+    },
+    {
+      "sourcePath": "consumed-input-identities.json",
+      "path": "consumed-input-identities.json"
+    },
+    {
+      "sourcePath": "consumer-source-locations.log",
+      "path": "consumer-source-locations.log"
+    },
+    {
+      "sourcePath": "consumer-verification.json",
+      "path": "consumer-verification.json"
+    },
+    {
+      "sourcePath": "consumer-verification.log",
+      "path": "consumer-verification.log"
+    },
+    {
+      "sourcePath": "dependency-packages/@zodiacs/engine/package.json",
+      "path": "dependency-packages/@zodiacs/engine/package.json"
+    },
+    {
+      "sourcePath": "dependency-packages/astronomy-engine/package.json",
+      "path": "dependency-packages/astronomy-engine/package.json"
+    },
+    {
+      "sourcePath": "dependency-packages/esbuild/package.json",
+      "path": "dependency-packages/esbuild/package.json"
+    },
+    {
+      "sourcePath": "dependency-packages/preact/package.json",
+      "path": "dependency-packages/preact/package.json"
+    },
+    {
+      "sourcePath": "dependency-packages/preact-render-to-string/package.json",
+      "path": "dependency-packages/preact-render-to-string/package.json"
+    },
+    {
+      "sourcePath": "dependency-packages/typescript/package.json",
+      "path": "dependency-packages/typescript/package.json"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-CPALRSPC.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-GBH7JIYF.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-H7RJKCBO.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-INI453VG.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-K5MRTCWE.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/index.js",
+      "path": "dependency-source/@zodiacs/engine/dist/index.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/internal-math.js",
+      "path": "dependency-source/@zodiacs/engine/dist/internal-math.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/internal.js",
+      "path": "dependency-source/@zodiacs/engine/dist/internal.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/receipt.js",
+      "path": "dependency-source/@zodiacs/engine/dist/receipt.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/astronomy-engine/esm/astronomy.js",
+      "path": "dependency-source/astronomy-engine/esm/astronomy.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/dist/preact.mjs",
+      "path": "dependency-source/preact/dist/preact.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/hooks/dist/hooks.mjs",
+      "path": "dependency-source/preact/hooks/dist/hooks.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/jsx-runtime/dist/jsxRuntime.mjs",
+      "path": "dependency-source/preact/jsx-runtime/dist/jsxRuntime.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact-render-to-string/dist/index.mjs",
+      "path": "dependency-source/preact-render-to-string/dist/index.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-versions.json",
+      "path": "dependency-versions.json"
+    },
+    {
+      "sourcePath": "driver-source/catalog-probe.ts",
+      "path": "driver-source/catalog-probe.ts.log"
+    },
+    {
+      "sourcePath": "driver-source/confidence-baseline.ts",
+      "path": "driver-source/confidence-baseline.ts.log"
+    },
+    {
+      "sourcePath": "driver-source/confidence-candidate.ts",
+      "path": "driver-source/confidence-candidate.ts.log"
+    },
+    {
+      "sourcePath": "driver-source/probe.ts",
+      "path": "driver-source/probe.ts.log"
+    },
+    {
+      "sourcePath": "extract.mjs",
+      "path": "extract.mjs.log"
+    },
+    {
+      "sourcePath": "extraction-identity.json",
+      "path": "extraction-identity.json"
+    },
+    {
+      "sourcePath": "extraction.log",
+      "path": "extraction.log"
+    },
+    {
+      "sourcePath": "final-frozen-source-parity.json",
+      "path": "final-frozen-source-parity.json"
+    },
+    {
+      "sourcePath": "freeze2-identity.json",
+      "path": "freeze2-identity.json"
+    },
+    {
+      "sourcePath": "freeze2.patch",
+      "path": "freeze2.patch"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-baseline-inspector.html",
+      "path": "markup/Bangkok-ordinary-baseline-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-baseline-positions.html",
+      "path": "markup/Bangkok-ordinary-baseline-positions.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-baseline-readingPath.html",
+      "path": "markup/Bangkok-ordinary-baseline-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-baseline-shareDialog.html",
+      "path": "markup/Bangkok-ordinary-baseline-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-inspector.html",
+      "path": "markup/Bangkok-ordinary-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-positions.html",
+      "path": "markup/Bangkok-ordinary-positions.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-readingPath.html",
+      "path": "markup/Bangkok-ordinary-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Bangkok-ordinary-shareDialog.html",
+      "path": "markup/Bangkok-ordinary-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-baseline-inspector.html",
+      "path": "markup/Juneau-baseline-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-baseline-positions.html",
+      "path": "markup/Juneau-baseline-positions.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-baseline-readingPath.html",
+      "path": "markup/Juneau-baseline-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-baseline-shareDialog.html",
+      "path": "markup/Juneau-baseline-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-inspector.html",
+      "path": "markup/Juneau-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-positions.html",
+      "path": "markup/Juneau-positions.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-readingPath.html",
+      "path": "markup/Juneau-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Juneau-shareDialog.html",
+      "path": "markup/Juneau-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-baseline-inspector.html",
+      "path": "markup/London-two-candidates-baseline-inspector.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-baseline-positions.html",
+      "path": "markup/London-two-candidates-baseline-positions.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-baseline-readingPath.html",
+      "path": "markup/London-two-candidates-baseline-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-baseline-shareDialog.html",
+      "path": "markup/London-two-candidates-baseline-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-inspector.html",
+      "path": "markup/London-two-candidates-inspector.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-positions.html",
+      "path": "markup/London-two-candidates-positions.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-readingPath.html",
+      "path": "markup/London-two-candidates-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/London-two-candidates-shareDialog.html",
+      "path": "markup/London-two-candidates-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-baseline-inspector.html",
+      "path": "markup/Toronto-baseline-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-baseline-positions.html",
+      "path": "markup/Toronto-baseline-positions.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-baseline-readingPath.html",
+      "path": "markup/Toronto-baseline-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-baseline-shareDialog.html",
+      "path": "markup/Toronto-baseline-shareDialog.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-inspector.html",
+      "path": "markup/Toronto-inspector.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-positions.html",
+      "path": "markup/Toronto-positions.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-readingPath.html",
+      "path": "markup/Toronto-readingPath.html"
+    },
+    {
+      "sourcePath": "markup/Toronto-shareDialog.html",
+      "path": "markup/Toronto-shareDialog.html"
+    },
+    {
+      "sourcePath": "metadata-apply.log",
+      "path": "metadata-apply.log"
+    },
+    {
+      "sourcePath": "metadata-identity.json",
+      "path": "metadata-identity.json"
+    },
+    {
+      "sourcePath": "metadata.patch",
+      "path": "metadata.patch"
+    },
+    {
+      "sourcePath": "node22-result.json",
+      "path": "node22-result.json"
+    },
+    {
+      "sourcePath": "node22.stderr",
+      "path": "node22.stderr"
+    },
+    {
+      "sourcePath": "node24-result.json",
+      "path": "node24-result.json"
+    },
+    {
+      "sourcePath": "node24.stderr",
+      "path": "node24.stderr"
+    },
+    {
+      "sourcePath": "probe.cjs",
+      "path": "probe.cjs.log"
+    },
+    {
+      "sourcePath": "probe.ts",
+      "path": "probe.ts.log"
+    },
+    {
+      "sourcePath": "seal.py",
+      "path": "seal.py.log"
+    },
+    {
+      "sourcePath": "signature-context-check.json",
+      "path": "signature-context-check.json"
+    },
+    {
+      "sourcePath": "source/src/components/AspectGlyph.tsx",
+      "path": "source/src/components/AspectGlyph.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/components/PlanetGlyph.tsx",
+      "path": "source/src/components/PlanetGlyph.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/data/context-help.ts",
+      "path": "source/src/data/context-help.ts.log"
+    },
+    {
+      "sourcePath": "source/src/islands/AstroTerm.tsx",
+      "path": "source/src/islands/AstroTerm.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartCalculator.confidence.test.ts",
+      "path": "source/src/islands/ChartCalculator.confidence.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartCalculator.ownership.test.ts",
+      "path": "source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartCalculator.registry-bridge.test.ts",
+      "path": "source/src/islands/ChartCalculator.registry-bridge.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartCalculator.tsx",
+      "path": "source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartShareDialog.tsx",
+      "path": "source/src/islands/ChartShareDialog.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/CopyLinkButton.tsx",
+      "path": "source/src/islands/CopyLinkButton.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/LearningPractice.css",
+      "path": "source/src/islands/LearningPractice.css"
+    },
+    {
+      "sourcePath": "source/src/islands/PositionsShareSurface.tsx",
+      "path": "source/src/islands/PositionsShareSurface.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/SignChip.tsx",
+      "path": "source/src/islands/SignChip.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/Inspector.tsx",
+      "path": "source/src/islands/explorer/Inspector.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/LearningPractice.tsx",
+      "path": "source/src/islands/explorer/LearningPractice.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/ReadingPath.css",
+      "path": "source/src/islands/explorer/ReadingPath.css"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/ReadingPath.tsx",
+      "path": "source/src/islands/explorer/ReadingPath.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/learning-exercises.ts",
+      "path": "source/src/islands/explorer/learning-exercises.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/account-v2/profile-access-reader.ts",
+      "path": "source/src/lib/account-v2/profile-access-reader.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/analytics-config.mjs",
+      "path": "source/src/lib/analytics-config.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/lib/analytics.ts",
+      "path": "source/src/lib/analytics.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/approach.ts",
+      "path": "source/src/lib/approach.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/brand-icons.mjs",
+      "path": "source/src/lib/brand-icons.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/lib/chart-context.ts",
+      "path": "source/src/lib/chart-context.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/chart-date-certainty.ts",
+      "path": "source/src/lib/chart-date-certainty.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/chart-shape.ts",
+      "path": "source/src/lib/chart-shape.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/chart-signature.ts",
+      "path": "source/src/lib/chart-signature.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/communication.ts",
+      "path": "source/src/lib/communication.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/compat.ts",
+      "path": "source/src/lib/compat.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/context-help-client.ts",
+      "path": "source/src/lib/context-help-client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/dignities.ts",
+      "path": "source/src/lib/dignities.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/aspects.ts",
+      "path": "source/src/lib/engine/aspects.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/calculator-receipt.ts",
+      "path": "source/src/lib/engine/calculator-receipt.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/chart-adapter.ts",
+      "path": "source/src/lib/engine/chart-adapter.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/full.ts",
+      "path": "source/src/lib/engine/full.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/houses.ts",
+      "path": "source/src/lib/engine/houses.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/portable.ts",
+      "path": "source/src/lib/engine/portable.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/synastry.ts",
+      "path": "source/src/lib/engine/synastry.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/types.ts",
+      "path": "source/src/lib/engine/types.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/glyphs/paths.ts",
+      "path": "source/src/lib/glyphs/paths.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/astrology.ts",
+      "path": "source/src/lib/i18n/astrology.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/core.ts",
+      "path": "source/src/lib/i18n/core.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/english-only.ts",
+      "path": "source/src/lib/i18n/english-only.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/index.test.ts",
+      "path": "source/src/lib/i18n/index.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/index.ts",
+      "path": "source/src/lib/i18n/index.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/plural.ts",
+      "path": "source/src/lib/i18n/plural.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/client.ts",
+      "path": "source/src/lib/i18n/ru-runtime/client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/index.ts",
+      "path": "source/src/lib/i18n/ru-runtime/index.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/server.ts",
+      "path": "source/src/lib/i18n/ru-runtime/server.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/client.ts",
+      "path": "source/src/lib/i18n/ui/client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/en.ts",
+      "path": "source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/es.ts",
+      "path": "source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/fr.ts",
+      "path": "source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/growth.ts",
+      "path": "source/src/lib/i18n/ui/growth.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/it.ts",
+      "path": "source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/pt.ts",
+      "path": "source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/ru.test.ts",
+      "path": "source/src/lib/i18n/ui/ru.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/ru.ts",
+      "path": "source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/server.ts",
+      "path": "source/src/lib/i18n/ui/server.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/interpretations.ts",
+      "path": "source/src/lib/interpretations.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/learning-input-identity.ts",
+      "path": "source/src/lib/learning-input-identity.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/learning-progress.ts",
+      "path": "source/src/lib/learning-progress.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/learning-source.ts",
+      "path": "source/src/lib/learning-source.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/moon-certainty.ts",
+      "path": "source/src/lib/moon-certainty.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/natal-context.ts",
+      "path": "source/src/lib/natal-context.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/natal.ts",
+      "path": "source/src/lib/natal.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/profile/polar-repair.ts",
+      "path": "source/src/lib/profile/polar-repair.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/profile/read-store.ts",
+      "path": "source/src/lib/profile/read-store.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/profile/schema.ts",
+      "path": "source/src/lib/profile/schema.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/build.ts",
+      "path": "source/src/lib/scene/build.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/emphasis.ts",
+      "path": "source/src/lib/scene/emphasis.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/layout.ts",
+      "path": "source/src/lib/scene/layout.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/types.ts",
+      "path": "source/src/lib/scene/types.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-brand.ts",
+      "path": "source/src/lib/share-card-brand.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-copy.ts",
+      "path": "source/src/lib/share-card-copy.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-pastel-icons.ts",
+      "path": "source/src/lib/share-card-pastel-icons.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card.ts",
+      "path": "source/src/lib/share-card.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-positions-reading.ts",
+      "path": "source/src/lib/share-positions-reading.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-positions.ts",
+      "path": "source/src/lib/share-positions.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share.ts",
+      "path": "source/src/lib/share.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/signs.ts",
+      "path": "source/src/lib/signs.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/time/civil-date.ts",
+      "path": "source/src/lib/time/civil-date.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/time/localToUtc.ts",
+      "path": "source/src/lib/time/localToUtc.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/time/technical-locales.ts",
+      "path": "source/src/lib/time/technical-locales.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/use-learning-progress.ts",
+      "path": "source/src/lib/use-learning-progress.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/use-learning-sources.ts",
+      "path": "source/src/lib/use-learning-sources.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/TechnicalWheel.tsx",
+      "path": "source/src/lib/wheel/TechnicalWheel.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/Wheel.tsx",
+      "path": "source/src/lib/wheel/Wheel.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/body-leader.ts",
+      "path": "source/src/lib/wheel/body-leader.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/technical-layout.ts",
+      "path": "source/src/lib/wheel/technical-layout.ts.log"
+    },
+    {
+      "sourcePath": "source/src/styles/context-help.css",
+      "path": "source/src/styles/context-help.css"
+    },
+    {
+      "sourcePath": "source/tests/chart-reference-confidence-drive.mjs",
+      "path": "source/tests/chart-reference-confidence-drive.mjs.log"
+    },
+    {
+      "sourcePath": "source/tests/local-date-reference-drive.mjs",
+      "path": "source/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "sourcePath": "source/tests/t17-positions-share.mjs",
+      "path": "source/tests/t17-positions-share.mjs.log"
+    },
+    {
+      "sourcePath": "verify-consumers.mjs",
+      "path": "verify-consumers.mjs.log"
+    }
+  ]
+}

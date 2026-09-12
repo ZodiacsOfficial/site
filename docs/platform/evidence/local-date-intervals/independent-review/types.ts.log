@@ -1,0 +1,20 @@
+import {resolveLocalDateIntervals,createNativeTemporalTransitionProvider,type CompleteTransitionProvider,type LocalDateIntervalsResult} from './source/src/lib/time/local-date-intervals.js';
+const source:CompleteTransitionProvider={completeness:'complete-transitions-v1',offsetMilliseconds:()=>0,nextTransitionMilliseconds:()=>null};
+const result:LocalDateIntervalsResult=resolveLocalDateIntervals('0000-02-29','UTC',source);
+if(result.status==='existing'){
+ const first:number=result.intervals[0].start;
+ const end:number=result.intervals[0].endExclusive;
+ // @ts-expect-error Result intervals are readonly.
+ result.intervals[0].start=0;
+ void[first,end];
+}else if(result.status==='empty'){
+ const empty:readonly[]=result.intervals;void empty;
+}else{
+ const reason:string=result.reason;
+ // @ts-expect-error Unresolved must not expose partial intervals.
+ result.intervals;
+ void reason;
+}
+// @ts-expect-error A sampled provider cannot claim the required marker.
+const invalid:CompleteTransitionProvider={completeness:'sampled',offsetMilliseconds:()=>0,nextTransitionMilliseconds:()=>null};
+void[invalid,createNativeTemporalTransitionProvider];

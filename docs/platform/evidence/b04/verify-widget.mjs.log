@@ -1,0 +1,81 @@
+import { createRequire } from 'node:module';
+import fs from 'node:fs/promises';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json');
+const { chromium }=require('playwright-core');
+const root='/private/tmp/zodiacs-platform-b04';
+const browser=await chromium.connectOverCDP('ws://127.0.0.1:54810/devtools/browser/129f51db-2a35-4272-90ef-dabd695f458f');
+const context=browser.contexts()[0];
+const settings=await context.newPage();
+await settings.goto('chrome://settings/appearance');
+const originalZoom=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+const observations=[],failures=[],scenarios=[];
+let page;
+function check(name,pass,evidence){observations.push({name,pass,evidence});if(!pass)failures.push({name,evidence});}
+async function zoom(factor){await settings.evaluate(factor=>new Promise(resolve=>chrome.settingsPrivate.setDefaultZoom(factor,resolve)),factor);return settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));}
+async function snapshot(target){return target.evaluate(async()=>({url:location.href,innerWidth,innerHeight,dpr:devicePixelRatio,scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth,scrollHeight:document.documentElement.scrollHeight,scrollY,bodyText:document.body.innerText,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,animations:document.getAnimations().length,bodyStyle:{font:getComputedStyle(document.body).font,color:getComputedStyle(document.body).color,background:getComputedStyle(document.body).backgroundColor},links:Array.from(document.querySelectorAll('a')).map(a=>({text:a.innerText,href:a.href,rect:a.getBoundingClientRect().toJSON(),color:getComputedStyle(a).color,font:getComputedStyle(a).font})),storage:{local:Object.keys(localStorage),session:Object.keys(sessionStorage),cookies:document.cookie,indexedDB:(await indexedDB.databases()).map(x=>x.name),cache:await caches.keys(),workers:(await navigator.serviceWorker.getRegistrations()).map(x=>x.scope)}}));}
+async function focusState(){const active=await page.evaluate(()=>({tag:document.activeElement?.tagName,id:document.activeElement?.id,text:document.activeElement?.textContent?.trim(),href:document.activeElement?.href,rect:document.activeElement?.getBoundingClientRect().toJSON()}));if(active.tag==='IFRAME'){const frame=page.frames().find(f=>f.url().startsWith('https://zodiacs.org/embed/sky/'));if(frame)active.frame=await frame.evaluate(()=>({tag:document.activeElement?.tagName,text:document.activeElement?.textContent?.trim(),href:document.activeElement?.href,rect:document.activeElement?.getBoundingClientRect().toJSON(),scrollX,scrollY,innerWidth,innerHeight}));}return active;}
+try{
+for(const [width,factor,theme,reduced] of [[1280,1,'dark',false],[1280,2,'dark',true],[1280,4,'dark',true],[1280,4,'light',true],[390,1,'light',true]]){
+ const label=`w${width}-nativeZoom${factor}-${theme}-${reduced?'reduce':'normal'}`;
+ await zoom(factor);
+ page=await context.newPage();await page.setViewportSize({width,height:900});await page.emulateMedia({reducedMotion:reduced?'reduce':'no-preference'});
+ const requests=[],response=[],errors=[];
+ page.on('request',r=>requests.push({url:r.url(),method:r.method(),type:r.resourceType(),referer:r.headers().referer??null,postData:r.postData()}));
+ page.on('response',r=>response.push({url:r.url(),status:r.status()}));page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:54770/widget.html',{waitUntil:'networkidle'});
+ check(`${label}: no external request before Load widget`,requests.every(r=>r.url.startsWith('http://127.0.0.1:54770/'))&&page.frames().length===1,requests.slice());
+ if(theme==='light')await page.getByLabel('Theme').selectOption('light');
+ // Real keystrokes from the previous field, then activation.
+ await page.getByLabel('Accent — six-digit opaque color').focus();await page.keyboard.press('Tab');
+ check(`${label}: Tab reaches Load widget`,(await focusState()).id==='load-widget',await focusState());
+ await page.keyboard.press('Enter');
+ await page.locator('iframe').waitFor();
+ const frame=await (await page.locator('iframe').elementHandle()).contentFrame();
+ await frame.getByRole('link',{name:/Powered by Zodiacs.org/}).waitFor({timeout:25000});
+ await frame.waitForLoadState('networkidle');
+ const parent=await snapshot(page),child=await snapshot(frame);
+ const actualZoom=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+ check(`${label}: actual browser zoom configured`,Math.abs(actualZoom-factor)<1e-9,{factor:actualZoom,innerWidth:parent.innerWidth,dpr:parent.dpr});
+ check(`${label}: parent reflows without horizontal overflow`,parent.scrollWidth<=parent.clientWidth+1,{width:parent.clientWidth,scrollWidth:parent.scrollWidth});
+ check(`${label}: frame reflows without horizontal overflow`,child.scrollWidth<=child.clientWidth+1,{width:child.clientWidth,scrollWidth:child.scrollWidth});
+ check(`${label}: native viewport at high zoom`,factor===1||parent.innerWidth<width,{width,zoom:factor,innerWidth:parent.innerWidth});
+ check(`${label}: reduced motion matches and has no running animations`,child.reduced===reduced&&parent.reduced===reduced&&child.animations===0&&parent.animations===0,{parent:parent.reduced,frame:child.reduced,parentAnimations:parent.animations,frameAnimations:child.animations});
+ check(`${label}: no persistent app state in either document`,[parent,child].every(s=>s.storage.local.length===0&&s.storage.session.length===0&&s.storage.cookies===''&&s.storage.indexedDB.length===0&&s.storage.cache.length===0&&s.storage.workers.length===0),{parent:parent.storage,frame:child.storage});
+ const postLoad=requests.filter(r=>!r.url.startsWith('http://127.0.0.1:54770/'));
+ check(`${label}: widget requests only declared hosted document and icons`,postLoad.every(r=>r.method==='GET'&&r.postData===null&&(/^https:\/\/zodiacs.org\/embed\/sky\/\?theme=(dark|light)&accent=%23[0-9A-Fa-f]{6}$/.test(r.url)||/^https:\/\/zodiacs.org\/assets\/zodiac-icons\/48\/[a-z]+\.webp$/.test(r.url))),postLoad);
+ const embedRequest=postLoad.find(r=>r.type==='document');check(`${label}: embed referrer includes only origin`,embedRequest?.referer==='http://127.0.0.1:54770/',embedRequest);
+ // Start again at the load button, then traverse the actual cross-origin iframe.
+ await page.getByRole('button',{name:'Load widget'}).focus();const keys=[];
+ for(let i=0;i<5;i++){await page.keyboard.press('Tab');keys.push(await focusState());if(keys.at(-1).href==='https://zodiacs.org/today/')break;}
+ const attribution=keys.find(k=>k.frame?.href?.includes('utm_source=embed'));const fallback=keys.find(k=>k.href==='https://zodiacs.org/today/');
+ check(`${label}: Tab enters required attribution and escapes to fallback`,Boolean(attribution&&fallback),keys);
+ if(attribution)check(`${label}: focused attribution is fully within frame viewport`,attribution.frame.rect.x>=-1&&attribution.frame.rect.right<=attribution.frame.innerWidth+1&&attribution.frame.rect.y>=-1&&attribution.frame.rect.bottom<=attribution.frame.innerHeight+1,attribution.frame);
+ // Home-page styles intentionally conflict with the embed's own selectors and variables.
+ const beforeStyle={body:child.bodyStyle,links:child.links.map(x=>({color:x.color,font:x.font}))};
+ await page.evaluate(()=>{const sheet=document.styleSheets[0];sheet.insertRule(':root { --w-bg: #ff00ff; --w-text: #ff0000; --w-accent: #00ff00; }',sheet.cssRules.length);sheet.insertRule('body, p, a, span, strong { color: rgb(255, 0, 0) !important; font-family: monospace !important; letter-spacing: 1px !important; }',sheet.cssRules.length);});
+ const afterHost=await page.evaluate(()=>getComputedStyle(document.body).color);const after=await snapshot(frame);const afterStyle={body:after.bodyStyle,links:after.links.map(x=>({color:x.color,font:x.font}))};
+ check(`${label}: adversarial host text styles do not penetrate iframe`,afterHost==='rgb(255, 0, 0)'&&JSON.stringify(beforeStyle)===JSON.stringify(afterStyle),{host:afterHost,beforeStyle,afterStyle});
+ await page.evaluate(()=>{const sheet=document.styleSheets[0];sheet.deleteRule(sheet.cssRules.length-1);sheet.deleteRule(sheet.cssRules.length-1);});
+ await page.locator('iframe').scrollIntoViewIfNeeded();await page.screenshot({path:`${root}/${label}.png`,fullPage:true});
+ check(`${label}: no page errors`,errors.length===0,errors);
+ scenarios.push({label,parent,frame:child,requests,responses:response,keyboard:keys,errors});
+ await page.close();page=null;
+}
+// Actual offline networking, after initial parent load. No mocked remote response.
+await zoom(1);page=await context.newPage();await page.setViewportSize({width:390,height:844});await page.goto('http://127.0.0.1:54770/widget.html',{waitUntil:'networkidle'});
+const offlineFailures=[];page.on('requestfailed',r=>offlineFailures.push({url:r.url(),failure:r.failure()?.errorText}));
+await context.setOffline(true);await page.getByRole('button',{name:'Load widget'}).click();await page.waitForTimeout(750);
+const offlineState=await snapshot(page);
+await page.getByRole('button',{name:'Load widget'}).focus();const offlineKeys=[];for(let i=0;i<5;i++){await page.keyboard.press('Tab');offlineKeys.push(await focusState());if(offlineKeys.at(-1).href==='https://zodiacs.org/today/')break;}
+check('offline-before-first-frame: actual network failure observed',offlineFailures.some(r=>r.failure==='net::ERR_INTERNET_DISCONNECTED'),offlineFailures);
+check('offline-before-first-frame: fallback remains keyboard reachable',offlineKeys.some(k=>k.href==='https://zodiacs.org/today/'),offlineKeys);
+check('offline-before-first-frame: parent does not claim load success/current data',offlineState.bodyText.includes('External widget requested. Check its displayed date; use the link below if it is unavailable or stale.'),offlineState.bodyText);
+await page.screenshot({path:`root/offline-before-first-frame.png`.replace('root',root),fullPage:true});
+scenarios.push({label:'offline-before-first-frame',parent:offlineState,requestFailures:offlineFailures,keyboard:offlineKeys});
+await context.setOffline(false);await page.close();page=null;
+// Already loaded hosted card retains its displayed timestamp when connectivity drops.
+page=await context.newPage();await page.goto('http://127.0.0.1:54770/widget.html',{waitUntil:'networkidle'});await page.getByRole('button',{name:'Load widget'}).click();const frame=await (await page.locator('iframe').elementHandle()).contentFrame();await frame.getByRole('link',{name:/Powered by Zodiacs.org/}).waitFor();const before=await snapshot(frame);await context.setOffline(true);const after=await snapshot(frame);
+check('offline-after-hosted-load: static data retains its date and attribution',before.bodyText===after.bodyText&&/\d{4}-\d{2}-\d{2}/.test(after.bodyText),{before:before.bodyText,after:after.bodyText});
+scenarios.push({label:'offline-after-hosted-load',frame:after});
+} catch(error){failures.push({name:'driver stopped unexpectedly',message:error.message,stack:error.stack});}
+finally{await context.setOffline(false).catch(()=>{});await zoom(originalZoom).catch(()=>{});if(page)await page.close().catch(()=>{});await settings.close().catch(()=>{});const report={observedAt:new Date().toISOString(),browser:browser.version(),node:process.version,originalZoom,scope:'Actual isolated Chrome browser; native default zoom changed only in its temporary profile and restored; immutable starter rc.2 extracted and source-checked, local build with existing verified rc.2 dependencies. Live public frame; offline cases use actual network emulation, host CSS injection is synthetic. No source changes, external user study or publication.',observations,failures,scenarios};await fs.writeFile(`${root}/browser.json`,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({checks:observations.length,failures,report:`${root}/browser.json`},null,2));await browser.close();process.exitCode=failures.length?1:0;}

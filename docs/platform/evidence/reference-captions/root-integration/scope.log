@@ -1,0 +1,5 @@
+
+> zodiacs-org@1.0.0 test:phase1:scope
+> node scripts/phase1-scope-guard.mjs
+
+phase1-scope-guard: PASS — 327 changed path(s); 13 protected path(s) covered by the changed one-time allowance

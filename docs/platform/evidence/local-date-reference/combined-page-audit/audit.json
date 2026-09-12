@@ -1,0 +1,21 @@
+{
+  "deliveryManifest": "83cde38f600bc15dee184718b95d27461cc62eeea6787240d2795e9a58904397",
+  "verifiedPayloads": 69,
+  "verifiedRegularArchiveMembers": 76,
+  "verifiedCurrentSourceRecords": 11187,
+  "verifiedFrozenOverlayFiles": 18,
+  "resultSha256": "c3311a118e8f52ddc818c5455a539bf508c434494c9a125c94723729aa332bbe",
+  "measurement": {
+    "startupAttemptedPosts": 1,
+    "startupBlockedPosts": 1,
+    "flowAttemptedPosts": 0,
+    "allNetworkIssuedMutations": 0,
+    "allNetworkCompletedMutations": 0,
+    "preferenceReadsBeforeRefusal": 1,
+    "preferenceReadsAtRefusal": 1,
+    "preferenceReadsAfterRecovery": 2,
+    "profileBytesUnchanged": true,
+    "flowProfileWrites": 0
+  },
+  "observations": "Read actual driver/request interception/assertions and all four checkpoints; inspected refusal screenshot. Source and raw hashes reverified independently. No repeated browser execution by main; this audits the genuinely independent child native run."
+}

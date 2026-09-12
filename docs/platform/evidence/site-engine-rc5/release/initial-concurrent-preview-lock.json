@@ -1,0 +1,36 @@
+{
+  "status": "failed",
+  "timestamp": "2026-09-08T04:07:26.989Z",
+  "runtime": {
+    "node": "v22.23.2",
+    "chrome": "152.0.7977.83"
+  },
+  "scope": "Actual native Chrome 200%/400% zoom, developer entry/support, finite keyboard/reflow/reduced-motion/canonical-footer controls. No CSS zoom substitute or human accessibility certification.",
+  "buildReceipt": {
+    "schema": "zodiacs.phase1-build-receipt.v1",
+    "builtAt": "2026-09-08T03:59:54.415Z",
+    "templateSourceSha256": "60cfc37957b23caaf5f8ed329ef3f3fa51a176c8b339daa255f49430a3dfbcd5",
+    "dailyDate": "2026-09-08",
+    "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+    "renderPayloadSha256": {
+      "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+      "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+      "dailyPublicationManifest": "98e66d195156dd081c459f0b19737c0a4a0860305160cadc59048e0bc2b784d1",
+      "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+    }
+  },
+  "checks": [],
+  "cases": [],
+  "failures": [
+    {
+      "message": "Astro preview exited with code 1.\nAnother astro preview server is already running.\n\n  URL:  http://127.0.0.1:4327\n  PID:  10049\n\nRun `astro preview stop` to stop it, or use `astro preview --force` to replace it.\n  Location:\n    /Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/preview/index.js:82:11\n  Stack trace:\n    at preview (file:///Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/preview/index.js:82:11)\n    at async cli (file:///Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/index.js:220:5)\n",
+      "stack": "Error: Astro preview exited with code 1.\nAnother astro preview server is already running.\n\n  URL:  http://127.0.0.1:4327\n  PID:  10049\n\nRun `astro preview stop` to stop it, or use `astro preview --force` to replace it.\n  Location:\n    /Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/preview/index.js:82:11\n  Stack trace:\n    at preview (file:///Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/preview/index.js:82:11)\n    at async cli (file:///Users/chiburashka/.codex/worktrees/4806/site/node_modules/astro/dist/cli/index.js:220:5)\n\n    at waitForPreview (file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs:37:13)\n    at async startPreview (file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs:91:3)\n    at async withPreview (file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs:103:19)\n    at async file:///private/tmp/zodiacs-platform-resume/zoom-diagnostic.mjs:24:2"
+    }
+  ],
+  "cleanup": {
+    "ownedProfile": true,
+    "copiedAuthentication": false,
+    "restoredZoom": true,
+    "browserClosed": true
+  }
+}

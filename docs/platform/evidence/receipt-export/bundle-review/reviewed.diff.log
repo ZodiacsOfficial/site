@@ -1,0 +1,124 @@
+--- /private/tmp/zodiacs-platform-bundle-gate-independent-review/baseline-report-bundles.mjs	2026-09-08 13:04:39
++++ /private/tmp/zodiacs-platform-bundle-gate-independent-review/frozen/scripts/report-bundles.mjs	2026-09-08 13:04:39
+@@ -13,6 +13,7 @@
+ import { fileURLToPath } from 'node:url';
+ import { dirname, extname, join, relative, resolve, sep } from 'node:path';
+ import { gzipSync } from 'node:zlib';
++import ts from 'typescript';
+ 
+ const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+ const dist = resolve(repo, 'dist');
+@@ -72,6 +73,16 @@
+   return found;
+ }
+ 
++// Built JavaScript needs syntax-aware closure discovery: side-effect imports
++// may contain whitespace/comments and shared engine modules may be re-exported.
++function staticJavaScriptImports(source) {
++  const tree = ts.createSourceFile('chunk.js', source, ts.ScriptTarget.Latest, false, ts.ScriptKind.JS);
++  return tree.statements.flatMap((node) =>
++    (ts.isImportDeclaration(node) || ts.isExportDeclaration(node))
++      && node.moduleSpecifier && ts.isStringLiteralLike(node.moduleSpecifier)
++      ? [node.moduleSpecifier.text] : []);
++}
++
+ function htmlModuleRoots(html, route) {
+   const roots = new Set();
+   const add = (specifier) => {
+@@ -103,7 +114,7 @@
+   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
+     const tag = `<script${match[1]}>`;
+     if ((attr(tag, 'type') ?? '').toLowerCase() !== 'module') continue;
+-    for (const specifier of staticImportSpecifiers(match[2])) add(specifier);
++    for (const specifier of staticJavaScriptImports(match[2])) add(specifier);
+   }
+ 
+   return roots;
+@@ -165,7 +176,7 @@
+       return;
+     }
+     closure.add(path);
+-    for (const specifier of staticImportSpecifiers(chunk.source)) {
++    for (const specifier of staticJavaScriptImports(chunk.source)) {
+       const dependency = localJsPath(specifier, path);
+       if (dependency) visit(dependency, path);
+     }
+@@ -202,10 +213,12 @@
+ 
+ const engineChunks = chunkRows.filter(({ path }) => /\/_astro\/full\.[^/]+\.js$/.test(path));
+ const engineChunk = engineChunks[0];
++const engineClosure = engineChunk ? routeClosure([engineChunk.path], "engine-chunk") : new Set();
++const engineGzip = [...engineClosure].reduce((sum, path) => sum + chunks.get(path).gzip, 0);
+ if (engineChunks.length !== 1) {
+   fail(`engine-chunk: expected one full.*.js chunk, found ${engineChunks.length}`);
+-} else if (engineChunk.gzip > budgets['engine-chunk'] * 1024) {
+-  fail(`engine-chunk: ${engineChunk.path} is ${kb(engineChunk.gzip)} KB gz (limit ${budgets['engine-chunk']} KB)`);
++} else if (engineGzip > budgets['engine-chunk'] * 1024) {
++  fail(`engine-chunk: ${engineChunk.path} is ${kb(engineGzip)} KB gz (static closure) (limit ${budgets['engine-chunk']} KB)`);
+ }
+ 
+ // Browser production source must consume the vendored engine package and keep
+@@ -260,9 +273,31 @@
+ const homepageMarkerChunks = homepage
+   ? [...homepage.closure].filter((path) => engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))
+   : [];
++// The receipt's inert ephemeris name is data, not a browser dependency. Parse
++// actual module-loading syntax so comments/strings cannot impersonate imports.
++function hasExternalEphemerisImport(source) {
++  if (!source.includes('astronomy-engine')) return false;
++  const tree = ts.createSourceFile('chunk.js', source, ts.ScriptTarget.Latest, false, ts.ScriptKind.JS);
++  const vendor = (node) => node && ts.isStringLiteralLike(node)
++    && (node.text === 'astronomy-engine' || node.text.startsWith('astronomy-engine/'));
++  let found = false;
++  const visit = (node) => {
++    if (found) return;
++    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && vendor(node.moduleSpecifier)) {
++      found = true;
++    } else if (ts.isCallExpression(node)
++      && (node.expression.kind === ts.SyntaxKind.ImportKeyword
++        || (ts.isIdentifier(node.expression) && node.expression.text === 'require'))
++      && vendor(node.arguments[0])) {
++      found = true;
++    } else ts.forEachChild(node, visit);
++  };
++  visit(tree);
++  return found;
++}
+ const serverOnlyMarkerChunks = chunkRows
+-  .filter(({ source }) => ['astronomy-engine', 'node:module', 'createRequire']
+-    .some((marker) => source.includes(marker)))
++  .filter(({ source }) => ['node:module', 'createRequire'].some((marker) => source.includes(marker))
++    || hasExternalEphemerisImport(source))
+   .map(({ path }) => path);
+ if (homepageMarkerChunks.length) {
+   fail(`homepage engine isolation: engine marker found in ${homepageMarkerChunks.join(', ')}`);
+@@ -270,8 +305,8 @@
+ if (serverOnlyMarkerChunks.length) {
+   fail(`browser engine isolation: server-only import marker found in ${serverOnlyMarkerChunks.join(', ')}`);
+ }
+-if (engineChunk && !engineMarkers.every((marker) => engineChunk.source.includes(marker))) {
+-  fail(`engine marker fingerprint missing from ${engineChunk.path}`);
++if (engineChunk && !engineMarkers.every((marker) => [...engineClosure].some((path) => chunks.get(path).source.includes(marker)))) {
++  fail(`engine marker fingerprint missing from static closure of ${engineChunk.path}`);
+ }
+ 
+ if (registryAura) {
+@@ -289,7 +324,8 @@
+   ];
+   const found = forbiddenAuraMarkers.filter((marker) => auraSource.includes(marker));
+   if (found.length) fail(`Registry Collection client boundary contains forbidden markers: ${found.join(', ')}`);
+-  if ([...registryAura.closure].some((path) => /\/_astro\/full\.[^/]+\.js$/.test(path))) {
++  if ([...registryAura.closure].some((path) => /\/_astro\/full\.[^/]+\.js$/.test(path)
++    || engineMarkers.some((marker) => chunks.get(path).source.includes(marker)))) {
+     fail('Registry Collection eagerly loads the full astronomy engine chunk');
+   }
+ }
+@@ -303,7 +339,7 @@
+   console.log(`  ${'chunk-max'.padEnd(16)} ${kb(largestChunk.gzip).padStart(6)} KB / ${String(budgets['chunk-max']).padStart(4)} KB  (${largestChunk.path})`);
+ }
+ if (engineChunk) {
+-  console.log(`  ${'engine-chunk'.padEnd(16)} ${kb(engineChunk.gzip).padStart(6)} KB / ${String(budgets['engine-chunk']).padStart(4)} KB  (${engineChunk.path})`);
++  console.log(`  ${'engine-chunk'.padEnd(16)} ${kb(engineGzip).padStart(6)} KB / ${String(budgets['engine-chunk']).padStart(4)} KB  (${engineChunk.path}; ${engineClosure.size} static chunks)`);
+ }
+ const sourceBoundaryClear = directVendorImporters.length === allowedDirectVendorImporters.length
+   && directVendorImporters.every((path, index) => path === allowedDirectVendorImporters[index])

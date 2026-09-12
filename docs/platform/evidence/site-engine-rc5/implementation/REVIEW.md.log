@@ -1,0 +1,75 @@
+# Isolated site engine rc.5 adoption
+
+Source is frozen in `../zodiacs-platform-site-engine-rc5`. `source.patch` contains
+only ten source/pin/test/documentation files; it excludes the six evidence/artifact
+files already copied by the integrator into site commit
+`d63773a3be2b4d40ff28a1075b9aaa9cb6c10793`. `identity.json` records every source
+SHA-256 and the patch digest. Base source is delivered site `921cd0d…`; no shared
+checkout, central status/plan/decision record, account/storage source, commit,
+push, generated TypeDoc, or prior immutable artifact was changed here.
+
+## Implemented scope
+
+- Exact anonymous SDK archive rc.5 download, SHA-256 verification, and clean
+  installation in a detached temporary site checkout. The only lock changes are
+  the root engine spec and engine package version/resolution/SHA-512.
+- Explicit source, artifact carrier/repository path, and site evidence identities.
+  The fixed candidate schema checks canonical URL/path/hash/commit shapes and
+  rejects extra fields. Tests check all 23 installed archive members byte-for-byte.
+- Public/internal site adapter comparison and optional public `/receipt` smoke.
+  The receipt control uses a fresh full SDK Chart, not the site's reduced body
+  shape. It preserves requested Placidus fallback, exact unknown 08:30 reference,
+  round-trip results, and fixed redaction. No account or local-record adapter
+  is introduced. Future receipt creation must retain native fresh Chart data.
+- esbuild input-graph controls for root, internal, receipt, and the three eager
+  site math adapters. Receipt/geo stay optional; eager math and receipt have no
+  astronomy-engine import; ownership stays absent from these graphs.
+- Current consumer documentation names rc.5 and links its immutable README and
+  existing draft specification. The untouched generated TypeDoc is labelled an
+  archived rc.1 reference. The standalone starter/engine rc.3 remains independent.
+
+## Executed checks
+
+Node 22.23.2 and Vitest 3.2.6:
+
+```sh
+node node_modules/vitest/vitest.mjs run src/lib/engine/package-integration.test.ts src/lib/engine/engine.test.ts src/lib/engine/server-ephemeris.test.ts src/lib/profile/polar-repair.test.ts src/lib/scene/scene.test.ts scripts/platform-candidate-docs.test.mjs scripts/platform-starter.test.mjs
+node node_modules/typescript/bin/tsc --noEmit --target ES2022 --module ESNext --moduleResolution Bundler --types node --skipLibCheck src/lib/engine/package-integration.test.ts
+node scripts/verify-platform-starter.mjs
+git diff --check
+```
+
+Final result: **247/247 tests, seven files** (`acceptance-final.log`), focused
+TypeScript and whitespace checks exit 0; starter verifier passes all 21 source
+members with original starter SHA `facafd75…` and engine rc.3 SHA `aeab6879…`.
+`starter-verifier.json` records its runtime and identities. This is not a fresh
+starter install or an additional browser walkthrough.
+
+The unchanged `scripts/platform-engine-report.mjs` passed on Node 22.23.2 and
+24.19.0 against the original frozen reference and tolerance files. The new reports
+and finite scope are in the integrator's evidence-first commit. Report generator
+SHA `77d45abf45f7db9343320cd8ff85438d42360d1ead654f27c03f7e69394e7144`.
+
+## Preserved initial failures and corrections
+
+- `lock-update.log` / `install.log`: inherited npm configuration selected a cache
+  outside the writable sandbox (EPERM). No ownership/permissions were changed.
+- `install-isolated-cache.log` / `install-merged-cache.log`: offline cache misses.
+  The successful `install-final.log` used an isolated copied cache, empty user and
+  global npm configs, Node 22, and `npm ci --ignore-scripts --no-audit --no-fund`.
+  Exact locked registry dependencies were fetched as needed. No auth was copied.
+- The lock-only npm command proposed unrelated optional-dependency cleanup.
+  That churn was discarded; the original lock structure was restored with only
+  the generated rc.5 engine entry and dependency spec changed before clean `ci`.
+- `targeted-initial.log`: 109/110 assertions passed. Only the current scene
+  snapshot's engineVersion differed. `--update` changed that one version line;
+  no numerical/layout value changed (`scene-version-update.log`).
+- `targeted-final.log`: 224/225 assertions passed. The newly written receipt
+  replay assertion compared omitted input flags with the codec's explicit empty
+  array. `targeted-corrected.log` records the corrected exact expectation, with
+  all result data still compared. No product/SDK change followed this harness fix.
+
+No concrete whole-package compatibility defect was found within these controls.
+Full site tests/build/check, generated-data drift, real browser checks, review,
+publication, deployment and external adoption are not established by this
+subtask. The accountable integrator performs the remaining release gates.

@@ -1,0 +1,59 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {resolveLocalDateIntervals as resolve} from './subject.mjs';
+const D=86400000;
+function civil(date){const [y,m,d]=date.split('-').map(Number),dt=new Date(0);dt.setUTCFullYear(y,m-1,d);dt.setUTCHours(0,0,0,0);return dt.getTime();}
+function provider(initial,changes){let calls=0;return{completeness:'complete-transitions-v1',offsetMilliseconds(_,t){calls++;let value=initial;for(const [at,next]of changes)if(at<=t)value=next;return value;},nextTransitionMilliseconds(_,t){calls++;return changes.find(([at])=>at>t)?.[0]??null;},calls:()=>calls};}
+function oracle(midnight,initial,changes){
+ const lower=midnight-D,upper=midnight+2*D,offsets=[...new Set([initial,...changes.map(x=>x[1])])];
+ const points=[...new Set([lower,upper,...changes.map(x=>x[0]),...offsets.flatMap(off=>[midnight-off,midnight+D-off])])].filter(t=>t>=lower&&t<=upper).sort((a,b)=>a-b);
+ const at=t=>{let offset=initial;for(const[instant,next]of changes)if(instant<=t)offset=next;return offset;};
+ const member=t=>t+at(t)>=midnight&&t+at(t)<midnight+D;
+ const intervals=[];
+ for(let i=0;i<points.length-1;i++){
+  const start=points[i],endExclusive=points[i+1],first=member(start);assert.equal(member(endExclusive-1),first,'Critical-point partition missed a membership change');
+  if(!first)continue;const previous=intervals.at(-1);if(previous?.endExclusive===start)previous.endExclusive=endExclusive;else intervals.push({start,endExclusive});
+ }
+ return{status:intervals.length?'existing':'empty',intervals};
+}
+let state=0x6fc61a29;function random(n){state^=state<<13;state^=state>>>17;state^=state<<5;return(state>>>0)%n;}
+const offsets=[-D+1,-D+2,-23*3600000,-41216000,-23796000,-1,0,1,999,1000,45184000,23*3600000,D-2,D-1];
+const dates=['1970-01-01','0000-01-01','0000-02-29','0099-12-31','0100-01-01','1800-01-01','2199-12-31','9999-12-31'];
+const rows=[];
+for(let n=0;n<1500;n++){
+ const date=dates[n%dates.length],midnight=civil(date),lower=midnight-D,upper=midnight+2*D;
+ const initial=offsets[random(offsets.length)],count=random(33),raw=[];
+ for(let i=0;i<count;i++)raw.push([midnight+random(7*D)-3*D,offsets[random(offsets.length)]]);
+ raw.sort((a,b)=>a[0]-b[0]);let last=initial;const changes=raw.filter((row,index)=>{if(index&&row[0]===raw[index-1][0])return false;if(row[1]===last)return false;last=row[1];return true;});
+ const p=provider(initial,changes),actual=resolve(date,'Synthetic/Complete',p),expected=oracle(midnight,initial,changes);assert.deepEqual(actual,expected);
+ assert.ok(Object.isFrozen(actual)&&Object.isFrozen(actual.intervals));assert.ok(actual.intervals.every(x=>Object.isFrozen(x)&&Number.isSafeInteger(x.start)&&Number.isSafeInteger(x.endExclusive)&&x.start>lower&&x.endExclusive<upper));
+ rows.push({n,date,initial,changes,result:actual,providerCalls:p.calls()});
+}
+const explicit=[];
+for(const offset of [-D+1,D-1])for(const date of dates){const actual=resolve(date,'Synthetic',provider(offset,[]));assert.deepEqual(actual,oracle(civil(date),offset,[]));explicit.push({kind:'near-offset-bound',date,offset,result:actual});}
+for(const[initial,changes]of [
+ [0,[[-D,1],[0,-1],[D,1],[2*D,-1]]],
+ [-D+1,[[D-1,D-1],[D,-D+1],[D+1,D-1]]],
+ [D-1,[[-D+1,-D+1],[-D+2,D-1]]],
+ [0,[[-1,1],[0,0],[1,-1],[2,0]]],
+]){const actual=resolve('1970-01-01','Synthetic',provider(initial,changes));assert.deepEqual(actual,oracle(0,initial,changes));explicit.push({kind:'millisecond-and-window-edges',initial,changes,result:actual});}
+const limit=[];
+for(const count of [31,32,33,34]){const changes=Array.from({length:count},(_,i)=>[i*2,i%2?0:1]);const p=provider(0,changes),actual=resolve('1970-01-01','Synthetic',p);if(count<=32)assert.deepEqual(actual,oracle(0,0,changes));else assert.deepEqual(actual,{status:'unresolved',reason:'transition-limit'});limit.push({count,result:actual,providerCalls:p.calls()});}
+const exhausted=resolve('1970-01-01','Synthetic',provider(0,Array.from({length:33},(_,i)=>[-D+1+i,i%2?0:1])));assert.deepEqual(exhausted,{status:'unresolved',reason:'transition-limit'});limit.push({name:'exhaustion-before-date-membership',result:exhausted});
+const atUpper=provider(0,[...Array.from({length:32},(_,i)=>[i*2,i%2?0:1]),[2*D,1]]);assert.equal(resolve('1970-01-01','Synthetic',atUpper).status,'existing');limit.push({name:'33rd-at-exclusive-window-end-not-counted',status:'existing'});
+const violations=[];
+for(const mode of ['throw-after-append','duplicate-after-append','promise-after-append','nonintegral-offset-after-append','same-offset-transition']){
+ const p=provider(0,[[1,1],[2,0]]);let reads=0;
+ const original=p.nextTransitionMilliseconds;
+ if(mode==='throw-after-append')p.nextTransitionMilliseconds=function(...args){if(reads++)throw new Error('private synthetic input');return original.apply(this,args)};
+ if(mode==='duplicate-after-append')p.nextTransitionMilliseconds=()=>1;
+ if(mode==='promise-after-append')p.nextTransitionMilliseconds=function(...args){return reads++?Promise.resolve(null):original.apply(this,args)};
+ if(mode==='nonintegral-offset-after-append'){const originalOffset=p.offsetMilliseconds;p.offsetMilliseconds=function(zone,t){return t===1?0.5:originalOffset.call(this,zone,t)};}
+ if(mode==='same-offset-transition')p.offsetMilliseconds=()=>0;
+ const result=resolve('1970-01-01','Synthetic',p);assert.equal(result.status,'unresolved');assert.equal('intervals'in result,false);assert.equal(JSON.stringify(result).includes('private'),false);violations.push({mode,result});
+}
+// A marker is not proof. This provider deliberately violates completeness by hiding a returning pair.
+const omittedPair=provider(0,[[-59000,60000],[-58000,0]]);omittedPair.nextTransitionMilliseconds=()=>null;
+const admitted=resolve('1970-01-01','Synthetic',omittedPair),truth=oracle(0,0,[[-59000,60000],[-58000,0]]);assert.notDeepEqual(admitted,truth);
+const result={node:process.version,seed:'0x6fc61a29',randomSchedules:rows.length,randomExisting:rows.filter(x=>x.result.status==='existing').length,randomEmpty:rows.filter(x=>x.result.status==='empty').length,randomDisjoint:rows.filter(x=>x.result.intervals.length>1).length,maxIntervals:Math.max(...rows.map(x=>x.result.intervals.length)),explicit,limit,violations,declaredCompletenessLimit:{providerDeliberatelyViolatesContract:true,admitted,actualMembership:truth,classification:'Documented trust boundary, not an implementation defect under the complete-provider contract.'},rows};
+fs.writeFileSync(process.argv[2],JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({...result,rows:undefined,explicit:explicit.length,limit:limit.length,violations:violations.length,declaredCompletenessLimit:'demonstrated documented limit'}));

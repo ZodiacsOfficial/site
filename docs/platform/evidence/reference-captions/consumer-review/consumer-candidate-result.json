@@ -1,0 +1,429 @@
+{
+  "variant": "candidate",
+  "privacyCases": [
+    {
+      "name": "post",
+      "status": 405,
+      "headers": {
+        "cache-control": "no-store, max-age=0",
+        "content-type": "text/plain; charset=utf-8",
+        "referrer-policy": "no-referrer",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
+      },
+      "text": "Chart preview unavailable."
+    },
+    {
+      "name": "extraBirthField",
+      "status": 400,
+      "headers": {
+        "cache-control": "no-store, max-age=0",
+        "content-type": "text/plain; charset=utf-8",
+        "referrer-policy": "no-referrer",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
+      },
+      "text": "Chart preview unavailable."
+    },
+    {
+      "name": "duplicateToken",
+      "status": 400,
+      "headers": {
+        "cache-control": "no-store, max-age=0",
+        "content-type": "text/plain; charset=utf-8",
+        "referrer-policy": "no-referrer",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
+      },
+      "text": "Chart preview unavailable."
+    },
+    {
+      "name": "malformed",
+      "status": 400,
+      "headers": {
+        "cache-control": "no-store, max-age=0",
+        "content-type": "text/plain; charset=utf-8",
+        "referrer-policy": "no-referrer",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
+      },
+      "text": "Chart preview unavailable."
+    },
+    {
+      "name": "absent",
+      "status": 400,
+      "headers": {
+        "cache-control": "no-store, max-age=0",
+        "content-type": "text/plain; charset=utf-8",
+        "referrer-policy": "no-referrer",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive"
+      },
+      "text": "Chart preview unavailable."
+    }
+  ],
+  "runtime": {
+    "node": "v22.23.2",
+    "icu": "78.2",
+    "tz": "2026a"
+  },
+  "qualification": "Actual UTC engine calls, public codec/model/local HTML response, share-caption helpers and actual consumer SSR. Arbitrary non-noon reference instants are valid library/codec inputs; this does not claim the current Chart UI selects these clocks. No network request is issued by constructing Request and calling the local handler. No OG image rasterization, browser UI, date-wide proof, or author Khartoum probe is performed. Public positions receiver does not use Inspector; Inspector check covers its clockless scene contract separately.",
+  "rows": [
+    {
+      "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445569,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124566,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.030822871237489835,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-security-policy": "default-src 'none'; img-src 'self'; script-src 'nonce-chart-preview'; style-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+          "content-type": "text/html; charset=utf-8",
+          "referrer-policy": "no-referrer",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "noindex, nofollow, noarchive"
+        }
+      },
+      "timeKnown": false,
+      "input": {
+        "utc": "2000-01-15T06:17:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjM5NywzMy4yNTcsMjkzLjg5NCwyNTguMjkzLDMzOC42MzIsMjYuMTI2LDQwLjI5OCwzMTUuNTM1LDMwMy43MDEsMjUxLjkxMSwxMjMuNzM4LDMwMy43MzhdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42In0",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 24 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "3 deg 15 min"
+          }
+        ],
+        "settings": "Reference positions / No houses / Tropical"
+      },
+      "notes": [
+        "Reference positions · Birth time unknown",
+        "My Moon may change signs without an exact birth time."
+      ],
+      "settings": "Reference positions · Apparent geocentric · Tropical of date · No houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · Birth time unknown · Reference positions",
+        "0.0000°N · 0.0000°E · UTC",
+        "Reference UTC · 2000-01-15 06:17 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "moonSignCandidates",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "reference-0617-html.html",
+          "sha256": "9000a64dbe9ecca0100b60c31cdee6bec0a53a270105e091601113db5476fcb1",
+          "bytes": 1914
+        },
+        "inspector": {
+          "file": "reference-0617-inspector.html",
+          "sha256": "d2aaf8abbbb09079ed574eb402c9b671a58f2f009115401dd9097937d6959654",
+          "bytes": 1435
+        },
+        "receiver": {
+          "file": "reference-0617-receiver.html",
+          "sha256": "71ee173b4c821d1eb853e695e71511ccbb18326f31b4a49985220aecca70e26c",
+          "bytes": 30390
+        }
+      }
+    },
+    {
+      "numerical": "{\"input\":{\"utc\":\"2000-01-15T18:43:00.000Z\",\"timeKnown\":false,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.9244119466652,\"lat\":0.000003907575526540045,\"speed\":1.0184137262679087,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":40.4948337898424,\"lat\":-5.254582824937283,\"speed\":14.068828718124223,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":294.74956277333007,\"lat\":-1.9897117221993408,\"speed\":1.6532746608651223,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.92504371196515,\"lat\":1.5531946079466117,\"speed\":1.221125095450816,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":339.03344708895366,\"lat\":-0.886211369557666,\"speed\":0.7739484985814897,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.17005244201647,\"lat\":-1.1884625460010827,\"speed\":0.08664105982165893,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.301047348639486,\"lat\":-2.375004607874083,\"speed\":0.006759541562018967,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.5637497365552,\"lat\":-0.6569473925732766,\"speed\":0.05533910041481249,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.7203476006461,\"lat\":0.23410146948399055,\"speed\":0.037627285035114255,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.9264941323205,\"lat\":10.884909732003017,\"speed\":0.03063832446378001,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73383732464202,\"lat\":0,\"speed\":-0.008901434769882144,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7338373246421,\"lat\":0,\"speed\":-0.008901434769882144,\"retrograde\":true}],\"angles\":null,\"houses\":null,\"aspects\":[{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.17484917333513295,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":0.1937864412029171,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.2456404953512674,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.267600259685878,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.4204896686864004,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Mars\",\"type\":\"sextile\",\"orb\":1.4613867008887382,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":2.8930470433668347,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":3.3612939754099216,\"applying\":false},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.637255604234724,\"applying\":false},{\"a\":\"Moon\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.068915946712821,\"applying\":true},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.262702387915738,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.580699747993378,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.7744861891962955,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.998549579644646,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":8.795935653980905,\"applying\":true}],\"flags\":[\"no-time\"],\"engineVersion\":\"0.1.1-rc.6\",\"moonSignCandidates\":[]}",
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-security-policy": "default-src 'none'; img-src 'self'; script-src 'nonce-chart-preview'; style-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+          "content-type": "text/html; charset=utf-8",
+          "referrer-policy": "no-referrer",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "noindex, nofollow, noarchive"
+        }
+      },
+      "timeKnown": false,
+      "input": {
+        "utc": "2000-01-15T18:43:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjkyNCw0MC40OTUsMjk0Ljc1LDI1OC45MjUsMzM5LjAzMywyNi4xNyw0MC4zMDEsMzE1LjU2NCwzMDMuNzIsMjUxLjkyNiwxMjMuNzM0LDMwMy43MzRdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42In0",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 55 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "10 deg 30 min"
+          }
+        ],
+        "settings": "Reference positions / No houses / Tropical"
+      },
+      "notes": [
+        "Reference positions · Birth time unknown",
+        "My Moon may change signs without an exact birth time."
+      ],
+      "settings": "Reference positions · Apparent geocentric · Tropical of date · No houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · Birth time unknown · Reference positions",
+        "0.0000°N · 0.0000°E · UTC",
+        "Reference UTC · 2000-01-15 18:43 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "moonSignCandidates",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "reference-1843-html.html",
+          "sha256": "a6b2ea49407db8a8dabdbf697f0e32feccb8be7ccfbe5a98e2aaae06200f8b59",
+          "bytes": 1894
+        },
+        "inspector": {
+          "file": "reference-1843-inspector.html",
+          "sha256": "06b2301cfce8b5953372bad18cc034c7e8694b9491ca07ab6e76d67bd39e40ae",
+          "bytes": 1436
+        },
+        "receiver": {
+          "file": "reference-1843-receiver.html",
+          "sha256": "fac0afe35c5f4b85abce9231ac489490cdf2f69af2d7d7c6a3874da0c94de801",
+          "bytes": 30538
+        }
+      }
+    },
+    {
+      "numerical": "{\"input\":{\"utc\":\"2000-01-15T06:17:00.000Z\",\"timeKnown\":true,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.39679211975715,\"lat\":0.000003809792251612145,\"speed\":1.0185097157269638,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":33.257034987628685,\"lat\":-5.290966144445569,\"speed\":13.872895614330446,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":293.8941959509673,\"lat\":-1.9704602888732432,\"speed\":1.6489545902138616,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.2925224539057,\"lat\":1.5751533814497916,\"speed\":1.2207793021361795,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":338.6324637870947,\"lat\":-0.8929169945788252,\"speed\":0.7740823214380725,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.125573361473812,\"lat\":-1.1909898651124566,\"speed\":0.08507221764580208,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.297799401256896,\"lat\":-2.3775783206338446,\"speed\":0.005779220368481219,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.53511788952346,\"lat\":-0.6570162562950547,\"speed\":0.05519594385214077,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.70086699802494,\"lat\":0.23420412633806548,\"speed\":0.037578781091269775,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.91057387068952,\"lat\":10.883539382502057,\"speed\":0.030822871237489835,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73752859678132,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7375285967813,\"lat\":0,\"speed\":-0.005190138781813403,\"retrograde\":true}],\"angles\":{\"asc\":296.26281244485284,\"mc\":210.3776063087584,\"dsc\":116.26281244485284,\"ic\":30.377606308758402},\"houses\":{\"system\":\"whole\",\"cusps\":[270,300,330,0,30,60,90,120,150,180,210,240]},\"aspects\":[{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":0.44383201039624964,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.5025961687898644,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.6653356141621316,\"applying\":true},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.7287812417166606,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":2.231377410506525,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":2.7574045643822274,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":3.278110083594811,\"applying\":true},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.6245440188339444,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.237318488266567,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.381948583216172,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.5969324032319605,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":7.04076441362821,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Jupiter\",\"type\":\"conjunction\",\"orb\":7.131461626154874,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":9.304074878267784,\"applying\":true}],\"flags\":[],\"engineVersion\":\"0.1.1-rc.6\"}",
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-security-policy": "default-src 'none'; img-src 'self'; script-src 'nonce-chart-preview'; style-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+          "content-type": "text/html; charset=utf-8",
+          "referrer-policy": "no-referrer",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "noindex, nofollow, noarchive"
+        }
+      },
+      "timeKnown": true,
+      "input": {
+        "utc": "2000-01-15T06:17:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjM5NywzMy4yNTcsMjkzLjg5NCwyNTguMjkzLDMzOC42MzIsMjYuMTI2LDQwLjI5OCwzMTUuNTM1LDMwMy43MDEsMjUxLjkxMSwxMjMuNzM4LDMwMy43MzhdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzI5Ni4yNjMsMjEwLjM3OF19",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 24 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "3 deg 15 min"
+          },
+          {
+            "label": "Rising",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "26 deg 16 min"
+          }
+        ],
+        "settings": "Whole sign / Tropical"
+      },
+      "notes": [],
+      "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · 06:17 local",
+        "0.0000°N · 0.0000°E · UTC",
+        "Resolved UTC · 2000-01-15 06:17 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "known-0617-html.html",
+          "sha256": "e4cc76fd44609e989b39d790c13fa4ff831e7665b9f72ccadbfc998d690b10bf",
+          "bytes": 2057
+        },
+        "inspector": {
+          "file": "known-0617-inspector.html",
+          "sha256": "2c7df7f85f1c6b579987734d8a2f5f598bcac737cf7461b32959148216b222f5",
+          "bytes": 4273
+        },
+        "receiver": {
+          "file": "known-0617-receiver.html",
+          "sha256": "b0a028ebf268f5e9eaafc7db4f24968d83df67d830a6b621c4f16ef7f03ea02c",
+          "bytes": 36046
+        }
+      }
+    },
+    {
+      "numerical": "{\"input\":{\"utc\":\"2000-01-15T18:43:00.000Z\",\"timeKnown\":true,\"houseSystem\":\"whole\",\"latitude\":0,\"longitude\":0},\"bodies\":[{\"body\":\"Sun\",\"lon\":294.9244119466652,\"lat\":0.000003907575526540045,\"speed\":1.0184137262679087,\"retrograde\":false},{\"body\":\"Moon\",\"lon\":40.4948337898424,\"lat\":-5.254582824937283,\"speed\":14.068828718124223,\"retrograde\":false},{\"body\":\"Mercury\",\"lon\":294.74956277333007,\"lat\":-1.9897117221993408,\"speed\":1.6532746608651223,\"retrograde\":false},{\"body\":\"Venus\",\"lon\":258.92504371196515,\"lat\":1.5531946079466117,\"speed\":1.221125095450816,\"retrograde\":false},{\"body\":\"Mars\",\"lon\":339.03344708895366,\"lat\":-0.886211369557666,\"speed\":0.7739484985814897,\"retrograde\":false},{\"body\":\"Jupiter\",\"lon\":26.17005244201647,\"lat\":-1.1884625460010827,\"speed\":0.08664105982165893,\"retrograde\":false},{\"body\":\"Saturn\",\"lon\":40.301047348639486,\"lat\":-2.375004607874083,\"speed\":0.006759541562018967,\"retrograde\":false},{\"body\":\"Uranus\",\"lon\":315.5637497365552,\"lat\":-0.6569473925732766,\"speed\":0.05533910041481249,\"retrograde\":false},{\"body\":\"Neptune\",\"lon\":303.7203476006461,\"lat\":0.23410146948399055,\"speed\":0.037627285035114255,\"retrograde\":false},{\"body\":\"Pluto\",\"lon\":251.9264941323205,\"lat\":10.884909732003017,\"speed\":0.03063832446378001,\"retrograde\":false},{\"body\":\"North Node\",\"lon\":123.73383732464202,\"lat\":0,\"speed\":-0.008901434769882144,\"retrograde\":true},{\"body\":\"South Node\",\"lon\":303.7338373246421,\"lat\":0,\"speed\":-0.008901434769882144,\"retrograde\":true}],\"angles\":{\"asc\":122.99092451767928,\"mc\":37.63969368028046,\"dsc\":302.99092451767933,\"ic\":217.63969368028052},\"houses\":{\"system\":\"whole\",\"cusps\":[120,150,180,210,240,270,300,330,0,30,60,90]},\"aspects\":[{\"a\":\"Sun\",\"b\":\"Mercury\",\"type\":\"conjunction\",\"orb\":0.17484917333513295,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Saturn\",\"type\":\"conjunction\",\"orb\":0.1937864412029171,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.2456404953512674,\"applying\":true},{\"a\":\"Mars\",\"b\":\"Saturn\",\"type\":\"sextile\",\"orb\":1.267600259685878,\"applying\":true},{\"a\":\"Mercury\",\"b\":\"Jupiter\",\"type\":\"square\",\"orb\":1.4204896686864004,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Mars\",\"type\":\"sextile\",\"orb\":1.4613867008887382,\"applying\":false},{\"a\":\"Mars\",\"b\":\"Pluto\",\"type\":\"square\",\"orb\":2.8930470433668347,\"applying\":true},{\"a\":\"Venus\",\"b\":\"Uranus\",\"type\":\"sextile\",\"orb\":3.3612939754099216,\"applying\":false},{\"a\":\"Uranus\",\"b\":\"Pluto\",\"type\":\"sextile\",\"orb\":3.637255604234724,\"applying\":false},{\"a\":\"Moon\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.068915946712821,\"applying\":true},{\"a\":\"Saturn\",\"b\":\"Uranus\",\"type\":\"square\",\"orb\":5.262702387915738,\"applying\":false},{\"a\":\"Saturn\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.580699747993378,\"applying\":true},{\"a\":\"Moon\",\"b\":\"Neptune\",\"type\":\"square\",\"orb\":6.7744861891962955,\"applying\":false},{\"a\":\"Venus\",\"b\":\"Pluto\",\"type\":\"conjunction\",\"orb\":6.998549579644646,\"applying\":false},{\"a\":\"Sun\",\"b\":\"Neptune\",\"type\":\"conjunction\",\"orb\":8.795935653980905,\"applying\":true}],\"flags\":[],\"engineVersion\":\"0.1.1-rc.6\"}",
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store, max-age=0",
+          "content-security-policy": "default-src 'none'; img-src 'self'; script-src 'nonce-chart-preview'; style-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'",
+          "content-type": "text/html; charset=utf-8",
+          "referrer-policy": "no-referrer",
+          "x-content-type-options": "nosniff",
+          "x-robots-tag": "noindex, nofollow, noarchive"
+        }
+      },
+      "timeKnown": true,
+      "input": {
+        "utc": "2000-01-15T18:43:00.000Z",
+        "latitude": 0,
+        "longitude": 0,
+        "timezoneForProvenance": "UTC"
+      },
+      "token": "2.eyJiIjpbMjk0LjkyNCw0MC40OTUsMjk0Ljc1LDI1OC45MjUsMzM5LjAzMywyNi4xNyw0MC4zMDEsMzE1LjU2NCwzMDMuNzIsMjUxLjkyNiwxMjMuNzM0LDMwMy43MzRdLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzEyMi45OTEsMzcuNjRdfQ",
+      "decodedKeys": [
+        "angles",
+        "bodies",
+        "engineVersion",
+        "houseSystem"
+      ],
+      "decodedHasClock": false,
+      "model": {
+        "placements": [
+          {
+            "label": "Sun",
+            "sign": "Capricorn",
+            "hue": "#C0DEA8",
+            "degree": "24 deg 55 min"
+          },
+          {
+            "label": "Moon",
+            "sign": "Taurus",
+            "hue": "#B9D4BE",
+            "degree": "10 deg 30 min"
+          },
+          {
+            "label": "Rising",
+            "sign": "Leo",
+            "hue": "#E0A9B4",
+            "degree": "2 deg 59 min"
+          }
+        ],
+        "settings": "Whole sign / Tropical"
+      },
+      "notes": [],
+      "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+      "hidden": [
+        "Birth details hidden"
+      ],
+      "visible": [
+        "2000-01-15 · 18:43 local",
+        "0.0000°N · 0.0000°E · UTC",
+        "Resolved UTC · 2000-01-15 18:43 UTC"
+      ],
+      "sceneKeys": [
+        "anchor",
+        "angles",
+        "aspects",
+        "bodies",
+        "engineVersion",
+        "flags",
+        "houseSystem",
+        "houses",
+        "signs"
+      ],
+      "artifacts": {
+        "html": {
+          "file": "known-1843-html.html",
+          "sha256": "d15262f13253884eaae4be199069954157c015add9395d5ea55fd8adbeda78c9",
+          "bytes": 2027
+        },
+        "inspector": {
+          "file": "known-1843-inspector.html",
+          "sha256": "4c29783e74a9be8ef56cc35ca30b9523735c96988271edc64b41e840df074195",
+          "bytes": 5011
+        },
+        "receiver": {
+          "file": "known-1843-receiver.html",
+          "sha256": "e5a8d0d760836f448d52981d1efbda816fc3a9a520d52f9397b740706684335b",
+          "bytes": 36090
+        }
+      }
+    }
+  ]
+}

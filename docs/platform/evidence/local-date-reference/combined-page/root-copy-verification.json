@@ -1,0 +1,284 @@
+{
+  "sourceManifestSha256": "83cde38f600bc15dee184718b95d27461cc62eeea6787240d2795e9a58904397",
+  "recordsVerified": 69,
+  "ordinaryArchiveMembersVerified": 76,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "C-012-implementation.patch",
+      "path": "C-012-implementation.patch"
+    },
+    {
+      "sourcePath": "C-012-source-freeze2.json",
+      "path": "C-012-source-freeze2.json"
+    },
+    {
+      "sourcePath": "C-014-implementation.patch",
+      "path": "C-014-implementation.patch"
+    },
+    {
+      "sourcePath": "C-014-source-freeze.json",
+      "path": "C-014-source-freeze.json"
+    },
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "MAIN-ACCEPTED.txt",
+      "path": "MAIN-ACCEPTED.txt"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "assemble.py",
+      "path": "assemble.py.log"
+    },
+    {
+      "sourcePath": "assembly-initial-error.log",
+      "path": "assembly-initial-error.log"
+    },
+    {
+      "sourcePath": "assembly.log",
+      "path": "assembly.log"
+    },
+    {
+      "sourcePath": "assistant-build.log",
+      "path": "assistant-build.log"
+    },
+    {
+      "sourcePath": "astro-build.log",
+      "path": "astro-build.log"
+    },
+    {
+      "sourcePath": "browser-artifacts-manifest.json",
+      "path": "browser-artifacts-manifest.json"
+    },
+    {
+      "sourcePath": "browser-artifacts.tar.gz",
+      "path": "browser-artifacts.tar.gz"
+    },
+    {
+      "sourcePath": "build-artifact-manifest.json",
+      "path": "build-artifact-manifest.json"
+    },
+    {
+      "sourcePath": "build-summary.log",
+      "path": "build-summary.log"
+    },
+    {
+      "sourcePath": "build.mjs",
+      "path": "build.mjs.log"
+    },
+    {
+      "sourcePath": "city-identity.json",
+      "path": "city-identity.json"
+    },
+    {
+      "sourcePath": "combined-page-drive.mjs",
+      "path": "combined-page-drive.mjs.log"
+    },
+    {
+      "sourcePath": "final-identity.json",
+      "path": "final-identity.json"
+    },
+    {
+      "sourcePath": "fixture-build-env.json",
+      "path": "fixture-build-env.json"
+    },
+    {
+      "sourcePath": "frozen-source/src/components/EmailCaptureEnhancement.astro",
+      "path": "frozen-source/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/ChartCalculator.ownership.test.ts",
+      "path": "frozen-source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/ChartCalculator.tsx",
+      "path": "frozen-source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/MoonPhaseTool.tsx",
+      "path": "frozen-source/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/PostChartDailyBrief.tsx",
+      "path": "frozen-source/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/en.ts",
+      "path": "frozen-source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/es.ts",
+      "path": "frozen-source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/fr.ts",
+      "path": "frozen-source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/it.ts",
+      "path": "frozen-source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/pt.ts",
+      "path": "frozen-source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/ru.ts",
+      "path": "frozen-source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/profile/post-chart-context.test.ts",
+      "path": "frozen-source/src/lib/profile/post-chart-context.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/profile/post-chart-context.ts",
+      "path": "frozen-source/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/localDateContainsUtc.test.ts",
+      "path": "frozen-source/src/lib/time/localDateContainsUtc.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/localToUtc.ts",
+      "path": "frozen-source/src/lib/time/localToUtc.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/tests/local-date-reference-drive.mjs",
+      "path": "frozen-source/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "sourcePath": "frozen-source/tests/post-chart-context-clear-drive.mjs",
+      "path": "frozen-source/tests/post-chart-context-clear-drive.mjs.log"
+    },
+    {
+      "sourcePath": "frozen-source/tests/post-chart-daily-drive.mjs",
+      "path": "frozen-source/tests/post-chart-daily-drive.mjs.log"
+    },
+    {
+      "sourcePath": "initial-run/combined-page-drive.mjs",
+      "path": "initial-run/combined-page-drive.mjs.log"
+    },
+    {
+      "sourcePath": "initial-run/manifest.json",
+      "path": "initial-run/manifest.json"
+    },
+    {
+      "sourcePath": "initial-run/native/failure.png",
+      "path": "initial-run/native/failure.png"
+    },
+    {
+      "sourcePath": "initial-run/native/initial.png",
+      "path": "initial-run/native/initial.png"
+    },
+    {
+      "sourcePath": "initial-run/native/refusal.png",
+      "path": "initial-run/native/refusal.png"
+    },
+    {
+      "sourcePath": "initial-run/native/result.json",
+      "path": "initial-run/native/result.json"
+    },
+    {
+      "sourcePath": "initial-run/native-run.log",
+      "path": "initial-run/native-run.log"
+    },
+    {
+      "sourcePath": "native/initial.png",
+      "path": "native/initial.png"
+    },
+    {
+      "sourcePath": "native/recovered.png",
+      "path": "native/recovered.png"
+    },
+    {
+      "sourcePath": "native/refusal.png",
+      "path": "native/refusal.png"
+    },
+    {
+      "sourcePath": "native/result.json",
+      "path": "native/result.json"
+    },
+    {
+      "sourcePath": "native-run.log",
+      "path": "native-run.log"
+    },
+    {
+      "sourcePath": "policy-source/CLAUDE.md",
+      "path": "policy-source/CLAUDE.md"
+    },
+    {
+      "sourcePath": "policy-source/src/lib/email/post-chart-state.test.ts",
+      "path": "policy-source/src/lib/email/post-chart-state.test.ts.log"
+    },
+    {
+      "sourcePath": "policy-source/src/lib/email/post-chart-state.ts",
+      "path": "policy-source/src/lib/email/post-chart-state.ts.log"
+    },
+    {
+      "sourcePath": "policy-source/src/lib/profile/sync.ts",
+      "path": "policy-source/src/lib/profile/sync.ts.log"
+    },
+    {
+      "sourcePath": "policy-source/src/lib/supabase/client.ts",
+      "path": "policy-source/src/lib/supabase/client.ts.log"
+    },
+    {
+      "sourcePath": "postbuild-source-verification.json",
+      "path": "postbuild-source-verification.json"
+    },
+    {
+      "sourcePath": "preparation/base-identity.json",
+      "path": "preparation/base-identity.json"
+    },
+    {
+      "sourcePath": "preparation/base-source/public/data/cities/a.json",
+      "path": "preparation/base-source/public/data/cities/a.json"
+    },
+    {
+      "sourcePath": "preparation/base-source/public/data/cities/index.json",
+      "path": "preparation/base-source/public/data/cities/index.json"
+    },
+    {
+      "sourcePath": "preparation/base-source/src/islands/BirthFields.tsx",
+      "path": "preparation/base-source/src/islands/BirthFields.tsx.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/src/islands/PlaceSearch.tsx",
+      "path": "preparation/base-source/src/islands/PlaceSearch.tsx.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/src/lib/email/daily-config.ts",
+      "path": "preparation/base-source/src/lib/email/daily-config.ts.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/src/lib/geo/search.ts",
+      "path": "preparation/base-source/src/lib/geo/search.ts.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/tests/post-chart-daily-drive.mjs",
+      "path": "preparation/base-source/tests/post-chart-daily-drive.mjs.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/tests/post-chart-daily.mjs",
+      "path": "preparation/base-source/tests/post-chart-daily.mjs.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/tests/visual/browser.mjs",
+      "path": "preparation/base-source/tests/visual/browser.mjs.log"
+    },
+    {
+      "sourcePath": "preparation/base-source/tests/visual/preview-server.mjs",
+      "path": "preparation/base-source/tests/visual/preview-server.mjs.log"
+    },
+    {
+      "sourcePath": "source-identity.json",
+      "path": "source-identity.json"
+    }
+  ]
+}

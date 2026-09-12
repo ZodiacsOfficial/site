@@ -1,0 +1,159 @@
+{
+  "sourceManifestSha256": "d4f22fa1bfc1f811ff24d0801dc8a84f7d27d49e3e6cf5434a046feaa5cd51ea",
+  "recordsVerified": 38,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "exact-scope-commands.json",
+      "path": "exact-scope-commands.json"
+    },
+    {
+      "sourcePath": "exact-scope-result.json",
+      "path": "exact-scope-result.json"
+    },
+    {
+      "sourcePath": "exact-scope.log",
+      "path": "exact-scope.log"
+    },
+    {
+      "sourcePath": "exact-scope.mjs.log",
+      "path": "exact-scope.mjs.log"
+    },
+    {
+      "sourcePath": "final-base-allowance.json",
+      "path": "final-base-allowance.json"
+    },
+    {
+      "sourcePath": "final-base-workflow.yml.log",
+      "path": "final-base-workflow.yml.log"
+    },
+    {
+      "sourcePath": "guard-snapshot.mjs.log",
+      "path": "guard-snapshot.mjs.log"
+    },
+    {
+      "sourcePath": "probe.mjs.log",
+      "path": "probe.mjs.log"
+    },
+    {
+      "sourcePath": "proposal/REVIEW.md.log",
+      "path": "proposal/REVIEW.md.log"
+    },
+    {
+      "sourcePath": "proposal/allowance-before.json.log",
+      "path": "proposal/allowance-before.json.log"
+    },
+    {
+      "sourcePath": "proposal/allowance-template.patch.log",
+      "path": "proposal/allowance-template.patch.log"
+    },
+    {
+      "sourcePath": "proposal/apply-check.log.log",
+      "path": "proposal/apply-check.log.log"
+    },
+    {
+      "sourcePath": "proposal/apply.log.log",
+      "path": "proposal/apply.log.log"
+    },
+    {
+      "sourcePath": "proposal/clone.log",
+      "path": "proposal/clone.log"
+    },
+    {
+      "sourcePath": "proposal/current-comparison-allowance.json.log",
+      "path": "proposal/current-comparison-allowance.json.log"
+    },
+    {
+      "sourcePath": "proposal/manifest.json",
+      "path": "proposal/manifest.json"
+    },
+    {
+      "sourcePath": "proposal/phase1-scope-allowance.template.json.log",
+      "path": "proposal/phase1-scope-allowance.template.json.log"
+    },
+    {
+      "sourcePath": "proposal/prepare.py.log",
+      "path": "proposal/prepare.py.log"
+    },
+    {
+      "sourcePath": "proposal/result.json.log",
+      "path": "proposal/result.json.log"
+    },
+    {
+      "sourcePath": "proposal/scope-current-comparison.log.log",
+      "path": "proposal/scope-current-comparison.log.log"
+    },
+    {
+      "sourcePath": "proposal/site-check.proposed.yml.log",
+      "path": "proposal/site-check.proposed.yml.log"
+    },
+    {
+      "sourcePath": "proposal/source-identities.json.log",
+      "path": "proposal/source-identities.json.log"
+    },
+    {
+      "sourcePath": "proposal/unchanged-phase1-scope-guard.mjs.log",
+      "path": "proposal/unchanged-phase1-scope-guard.mjs.log"
+    },
+    {
+      "sourcePath": "proposal/verify.log.log",
+      "path": "proposal/verify.log.log"
+    },
+    {
+      "sourcePath": "proposal/verify.mjs.log",
+      "path": "proposal/verify.mjs.log"
+    },
+    {
+      "sourcePath": "proposal/workflow-before.yml.log",
+      "path": "proposal/workflow-before.yml.log"
+    },
+    {
+      "sourcePath": "proposal/workflow.patch.log",
+      "path": "proposal/workflow.patch.log"
+    },
+    {
+      "sourcePath": "scope-probe-final.log",
+      "path": "scope-probe-final.log"
+    },
+    {
+      "sourcePath": "scope-probe-original.json",
+      "path": "scope-probe-original.json"
+    },
+    {
+      "sourcePath": "scope-probe-original.log",
+      "path": "scope-probe-original.log"
+    },
+    {
+      "sourcePath": "scope-probe.json",
+      "path": "scope-probe.json"
+    },
+    {
+      "sourcePath": "scope-probe.log",
+      "path": "scope-probe.log"
+    },
+    {
+      "sourcePath": "workflow-proof-initial.log",
+      "path": "workflow-proof-initial.log"
+    },
+    {
+      "sourcePath": "workflow-proof-initial.mjs.log",
+      "path": "workflow-proof-initial.mjs.log"
+    },
+    {
+      "sourcePath": "workflow-proof.json",
+      "path": "workflow-proof.json"
+    },
+    {
+      "sourcePath": "workflow-proof.log",
+      "path": "workflow-proof.log"
+    },
+    {
+      "sourcePath": "workflow-proof.mjs.log",
+      "path": "workflow-proof.mjs.log"
+    }
+  ]
+}

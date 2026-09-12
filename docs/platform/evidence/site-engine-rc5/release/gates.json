@@ -1,0 +1,71 @@
+{
+  "commit": "7266b131f12d5cf16bbfb8a56ae07b362443293c",
+  "node": "v22.23.2",
+  "dirtySource": [
+    ".github/phase1-scope-allowance.json",
+    "src/data/daily-publication-manifest.json"
+  ],
+  "steps": [
+    {
+      "name": "phase1-capture",
+      "command": [
+        "npm",
+        "run",
+        "test:phase1:acceptance"
+      ],
+      "startedAt": "2026-09-08T04:00:31.710355+00:00",
+      "elapsedSeconds": 57.065,
+      "exitCode": 0,
+      "log": "phase1-capture.log"
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--fileParallelism=false"
+      ],
+      "startedAt": "2026-09-08T04:01:28.797708+00:00",
+      "elapsedSeconds": 120.22,
+      "exitCode": 0,
+      "log": "test.log"
+    },
+    {
+      "name": "check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-09-08T04:03:29.037071+00:00",
+      "elapsedSeconds": 31.242,
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "scripts/phase1-scope-guard.mjs",
+        "--base",
+        "ba65375a34cee6a85f94b53ba45861f1b81f34ef"
+      ],
+      "startedAt": "2026-09-08T04:04:00.305230+00:00",
+      "elapsedSeconds": 0.181,
+      "exitCode": 0,
+      "log": "scope.log"
+    },
+    {
+      "name": "developers",
+      "command": [
+        "node",
+        "tests/platform-developers-drive.mjs"
+      ],
+      "startedAt": "2026-09-08T04:04:00.506617+00:00",
+      "elapsedSeconds": 6.957,
+      "exitCode": 1,
+      "log": "developers.log"
+    }
+  ]
+}

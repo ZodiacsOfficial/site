@@ -1,0 +1,7 @@
+Actual commands, working directory /private/tmp/zodiacs-platform-rc6-public-consumer-review. Every final command exited 0. Initial Node 22 harness failure is retained separately.
+python3 /private/tmp/zodiacs-platform-rc6-public-consumer-review/setup.py > /private/tmp/zodiacs-platform-rc6-public-consumer-review/setup.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node public-consumer.mjs node22-result.json > node22.log 2>&1
+/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node public-consumer.mjs node24-result.json > node24.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc -p tsconfig.json --pretty false --listFiles > types-node22.log 2>&1
+/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/typescript/bin/tsc -p tsconfig.json --pretty false --listFiles > types-node24.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node finalize.mjs

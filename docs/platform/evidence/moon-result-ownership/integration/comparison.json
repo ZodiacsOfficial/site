@@ -1,0 +1,354 @@
+{
+  "baseCommit": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+  "moonCases": [
+    {
+      "locale": "en",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "es",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "fr",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "fr",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "it",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "it",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": false,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "pt",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    },
+    {
+      "locale": "ru",
+      "width": 390,
+      "resultTextIdentical": true,
+      "initialScreenshotByteIdentical": true,
+      "editAndRecoveryPassed": true
+    }
+  ],
+  "initialScreenshotComparison": "11/12 exact; Italian390 had367 differing pixels confined to existing32px Guide portrait canvas",
+  "sameFrozenCandidateRepeat": {
+    "cases": 3,
+    "allByteIdenticalToOriginalBaseline": true,
+    "initialVarianceRetained": true,
+    "sourceSha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+    "diagnostic": {
+      "before": {
+        "width": 350,
+        "height": 1358
+      },
+      "after": {
+        "width": 350,
+        "height": 1358
+      },
+      "differingPixels": 367,
+      "bounds": {
+        "x0": 319,
+        "x1": 348,
+        "y0": 1235,
+        "y1": 1264
+      },
+      "examples": [
+        {
+          "x": 335,
+          "y": 1235,
+          "before": [
+            10,
+            10,
+            12,
+            255
+          ],
+          "after": [
+            10,
+            11,
+            11,
+            255
+          ]
+        },
+        {
+          "x": 332,
+          "y": 1236,
+          "before": [
+            26,
+            14,
+            11,
+            255
+          ],
+          "after": [
+            27,
+            14,
+            11,
+            255
+          ]
+        },
+        {
+          "x": 333,
+          "y": 1236,
+          "before": [
+            26,
+            17,
+            12,
+            255
+          ],
+          "after": [
+            26,
+            17,
+            13,
+            255
+          ]
+        },
+        {
+          "x": 334,
+          "y": 1236,
+          "before": [
+            26,
+            17,
+            15,
+            255
+          ],
+          "after": [
+            26,
+            18,
+            14,
+            255
+          ]
+        },
+        {
+          "x": 335,
+          "y": 1236,
+          "before": [
+            25,
+            14,
+            11,
+            255
+          ],
+          "after": [
+            25,
+            15,
+            11,
+            255
+          ]
+        },
+        {
+          "x": 328,
+          "y": 1237,
+          "before": [
+            31,
+            40,
+            37,
+            255
+          ],
+          "after": [
+            31,
+            40,
+            38,
+            255
+          ]
+        },
+        {
+          "x": 331,
+          "y": 1237,
+          "before": [
+            31,
+            20,
+            16,
+            255
+          ],
+          "after": [
+            31,
+            20,
+            17,
+            255
+          ]
+        },
+        {
+          "x": 332,
+          "y": 1237,
+          "before": [
+            213,
+            126,
+            100,
+            255
+          ],
+          "after": [
+            214,
+            127,
+            101,
+            255
+          ]
+        }
+      ]
+    },
+    "unchangedOverlaySources": [
+      {
+        "path": "src/lib/assistant/guide-bootstrap.ts",
+        "sha256": "3fb1f57a2cd0ffb65ae0a1ae7df596a2f87aa6f3ba8786a127da2f8a7eef31d3",
+        "baseByteIdentical": true
+      },
+      {
+        "path": "src/lib/assistant/guide-bootstrap.css",
+        "sha256": "fac934a1c3d5d4f27bd3bd61629e2294a2ff2384ee7f200fddd06cc0a456ceae",
+        "baseByteIdentical": true
+      },
+      {
+        "path": "public/assets/guide-avatar.webp",
+        "sha256": "9970c7c5d7d20343e20a7f59422f3647c2ff3bf38a0565ac145d5bed0f96bb11",
+        "baseByteIdentical": true
+      }
+    ]
+  },
+  "acceptanceCaptures": [
+    {
+      "path": "docs/acceptance/phase1/screenshots/career-1280.png",
+      "sha256": "e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/career-360.png",
+      "sha256": "28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/daily-1280.png",
+      "sha256": "6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/daily-360.png",
+      "sha256": "a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+      "sha256": "240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+      "sha256": "943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/love-1280.png",
+      "sha256": "683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/love-360.png",
+      "sha256": "8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/monthly-1280.png",
+      "sha256": "976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/monthly-360.png",
+      "sha256": "449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/today-1280.png",
+      "sha256": "df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/today-360.png",
+      "sha256": "bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+      "sha256": "ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/tomorrow-360.png",
+      "sha256": "a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/weekly-1280.png",
+      "sha256": "0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/weekly-360.png",
+      "sha256": "9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/yearly-1280.png",
+      "sha256": "cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e",
+      "baseByteIdentical": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/yearly-360.png",
+      "sha256": "0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67",
+      "baseByteIdentical": true
+    }
+  ],
+  "noProductMaskBaselineOrToleranceChange": true,
+  "conclusion": "All12successfulresulttexts and18acceptancecaptures exact. Initial portrait raster variance is not stable across identical-source renders; three repeats equal baseline. No Moon geometry/content drift observed. No all12initial-byte-identity claim."
+}

@@ -1,0 +1,46 @@
+{
+  "records": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 2643,
+      "sha256": "2eb321680dfcea6007a4fdf834f4c09a1526cf7d6e821e57cdba505683dac502"
+    },
+    {
+      "path": "cleanup.json",
+      "bytes": 270,
+      "sha256": "97badc3cb4b9725dff5be81dcd2766ee0801091613b7e6ef0edb8e04ebc5c56c"
+    },
+    {
+      "path": "deployment-after.json",
+      "bytes": 275,
+      "sha256": "5399d09efda952e1d8a62de93fdf53b4498cdad03aa46d4d48d655044b6ade4e"
+    },
+    {
+      "path": "deployment-before.json",
+      "bytes": 400,
+      "sha256": "f8159ef72f88ae289e068e3697470cea3eba7dfcf6f5544839ab190f41ee8a68"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 4363487,
+      "sha256": "c669dff7f232e4fc520da309d1539038d5ff8cd0d4d31e6a3ce40e1237cf50cb"
+    },
+    {
+      "path": "raw-members.json",
+      "bytes": 35226,
+      "sha256": "d9a31c7daa693e7f119eaf08f731964fe0536f2f20383c3eb9ac880d9f318957"
+    },
+    {
+      "path": "run1.log",
+      "bytes": 599,
+      "sha256": "f6cb948cebc08850ec628ff8911dfef65971db06efecca3a4a991d28d78bcb4b"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 613,
+      "sha256": "643b50f168a9de5092cd9dda57eaa939d8ffced9e47eeb8ae8880800c1ce6ae9"
+    }
+  ],
+  "originalRecords": 123,
+  "ordinaryArchiveMembers": 123
+}

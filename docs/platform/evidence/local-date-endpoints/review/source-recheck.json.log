@@ -1,0 +1,78 @@
+{
+  "at": "2026-09-08T06:48:07.357029+00:00",
+  "rows": [
+    {
+      "file": "site/src/lib/i18n/core.ts",
+      "expected": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760",
+      "actual": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/i18n/ru-runtime/client.ts",
+      "expected": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72",
+      "actual": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/i18n/ui/ru.ts",
+      "expected": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+      "actual": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/i18n/ru-runtime/server.ts",
+      "expected": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e",
+      "actual": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/i18n/ru-runtime/index.ts",
+      "expected": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc",
+      "actual": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/signs.ts",
+      "expected": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "actual": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/time/technical-locales.ts",
+      "expected": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "actual": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/time/civil-date.ts",
+      "expected": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "actual": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/time/localToUtc.ts",
+      "expected": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+      "actual": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+      "match": true
+    },
+    {
+      "file": "site/src/lib/chart-date-certainty.ts",
+      "expected": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "actual": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "match": true
+    },
+    {
+      "file": "sdk/packages/engine/src/birth-input.ts",
+      "expected": "144fd683942ec434088c6a214dbe1f0b87cba13f545c38deaca8e5fcaf12581e",
+      "actual": "144fd683942ec434088c6a214dbe1f0b87cba13f545c38deaca8e5fcaf12581e",
+      "match": true
+    },
+    {
+      "file": "sdk/packages/engine/src/geo/timezone.ts",
+      "expected": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494",
+      "actual": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494",
+      "match": true
+    }
+  ],
+  "allMatch": true
+}

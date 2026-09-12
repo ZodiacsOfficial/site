@@ -1,0 +1,2709 @@
+{
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "driverSha256": "a8d2fad0512c1cf6c0bddf0a030610b187c528db73111e1d5152c3cb114214e9",
+  "qualification": "Actual frozen or original ChartCalculator with actual Preact/BirthFields/PlaceSearch and native DOM. Only import promises, geosearch results, engine load and share artifact effects are controlled at explicit wrapper boundaries; actual rc.6 calculation and existing codecs/context store run. IIFE bundle is not production import-graph evidence.",
+  "results": [
+    {
+      "kind": "candidate",
+      "name": "control-known",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "rendered": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "control-unknown",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "bodies",
+            "utc": "1990-01-03T17:00:00.000Z"
+          },
+          {
+            "type": "bodies",
+            "utc": "1990-01-04T16:59:59.999Z"
+          }
+        ],
+        "coveragePolicyUnchanged": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "bodies",
+            "utc": "1990-01-03T17:00:00.000Z"
+          },
+          {
+            "type": "bodies",
+            "utc": "1990-01-04T16:59:59.999Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-engine-date-edit",
+      "passed": true,
+      "evidence": {
+        "noObsoleteNatal": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          }
+        ],
+        "errors": [],
+        "active": "birth-date",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-receipt-place-clear",
+      "passed": true,
+      "evidence": {
+        "clearedSelectionFencesNatal": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "signature-rejection-while-engine-pending",
+      "passed": true,
+      "evidence": {
+        "optionalSignatureFailureObservedImmediately": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-signature-after-edit",
+      "passed": true,
+      "evidence": {
+        "signatureNotCalculatedForAbandonedResult": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "birth-time",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-share-preparation-after-edit",
+      "passed": true,
+      "evidence": {
+        "oldPreparedArtifactNotRestored": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-context-match-after-edit",
+      "passed": true,
+      "evidence": {
+        "staleContextNotPublished": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "birth-date",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "old-share-completion-newer-result",
+      "passed": true,
+      "evidence": {
+        "newShareButton": "Share your chart↗",
+        "oldAuthorizedShareMayHaveCompleted": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T06:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 11
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T06:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T06:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 11
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "old-dialog-intent-after-edit",
+      "passed": true,
+      "evidence": {
+        "staleDialogNotOpened": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "load",
+            "key": "./ChartShareDialog"
+          }
+        ],
+        "errors": [],
+        "active": "birth-date",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "current-failure-clears-old-result",
+      "passed": true,
+      "evidence": {
+        "oldResultClearedAndRetrySucceeded": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 13
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 13
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "positions-only-control",
+      "passed": true,
+      "evidence": {
+        "readOnly": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result calc__positions-only"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/scorpio.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/leo.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-valid-positions-after-new-run",
+      "passed": true,
+      "evidence": {
+        "newResultSurvives": true,
+        "hash": "#p=2.eyJiIjpbMjgzLjU3NSwxMC40OTYsMjk0LjE1MiwzMDUuNzE0LDI1MS45MDgsOTQuNzg3LDI4NS45NzgsMjc1Ljk0NiwyODIuMTQsMjI3LjE2NiwzMTYuOTI3LDEzNi45MjddLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzExLjAwNSwyNzguMzEzXX0"
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "#p=2.eyJiIjpbMjgzLjU3NSwxMC40OTYsMjk0LjE1MiwzMDUuNzE0LDI1MS45MDgsOTQuNzg3LDI4NS45NzgsMjc1Ljk0NiwyODIuMTQsMjI3LjE2NiwzMTYuOTI3LDEzNi45MjddLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzExLjAwNSwyNzguMzEzXX0",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-invalid-positions-after-new-run",
+      "passed": true,
+      "evidence": {
+        "newResultSurvives": true,
+        "hash": "#p=invalid"
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "#p=invalid",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-conflicting-positions-after-new-run",
+      "passed": true,
+      "evidence": {
+        "newResultSurvives": true,
+        "hash": ""
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "stale-controls-retry-focus",
+      "passed": true,
+      "evidence": {
+        "obsoleteRetryDidNotStealFocus": true
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T06:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 7
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 7
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 11
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T06:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T06:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 11
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "birth-date",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-mine-revoke",
+      "passed": true,
+      "evidence": {
+        "publicPositionsPreserved": true,
+        "revokedOpaqueMineNotRecaptured": true,
+        "links": [
+          "/compatibility/#a=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0"
+        ]
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-unchanged-profile",
+      "passed": true,
+      "evidence": {
+        "publicPositionsPreserved": true,
+        "kind": "unchanged-profile",
+        "links": [
+          "/compatibility/?a=10000000-0000-4000-8000-000000000001#b=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0"
+        ]
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result calc__positions-only"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/scorpio.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/leo.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-regrant-profile",
+      "passed": true,
+      "evidence": {
+        "publicPositionsPreserved": true,
+        "kind": "regrant-profile",
+        "links": [
+          "/compatibility/#a=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0"
+        ]
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-revoked-public-id",
+      "passed": true,
+      "evidence": {
+        "publicPositionsPreserved": true,
+        "kind": "revoked-public-id",
+        "links": [
+          "/compatibility/?a=10000000-0000-4000-8000-000000000001#b=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0"
+        ]
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-positions-revoked-public-input",
+      "passed": true,
+      "evidence": {
+        "publicPositionsPreserved": true,
+        "kind": "revoked-public-input",
+        "links": [
+          "/compatibility/#a=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0&b=1.eyJkIjoiMTk5MC0wMS0wNCIsInoiOiJBc2lhL0Jhbmdrb2siLCJsYSI6MTMuNzUsImxvIjoxMDAuNSwidCI6IjEyOjAwIiwicCI6IlN5bnRoZXRpYyBCYW5na29rIn0"
+        ]
+      },
+      "observation": {
+        "calls": [
+          {
+            "type": "portable-natal",
+            "utc": "1990-01-04T05:00:00.000Z"
+          }
+        ],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          },
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "load",
+            "key": "./CalendarSubscribe"
+          },
+          {
+            "type": "load",
+            "key": "./CommunicationRead"
+          },
+          {
+            "type": "load",
+            "key": "./ApproachRead"
+          },
+          {
+            "type": "load",
+            "key": "./PwaInstallPrompt"
+          },
+          {
+            "type": "computed-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "contextId": 8
+            }
+          },
+          {
+            "type": "signature",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "load",
+            "key": "../lib/profile/store"
+          },
+          {
+            "type": "prepare-share",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "type": "context-event",
+            "detail": {
+              "mode": "full",
+              "sunSign": "capricorn",
+              "chartId": null,
+              "contextId": 8
+            }
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png",
+        "http://owned-review.invalid/assets/app-icons/v3/icon-512.png"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "unmount-pending-receipt",
+      "passed": true,
+      "evidence": {
+        "unmountedRunDidNotCalculate": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          },
+          {
+            "type": "load",
+            "key": "../lib/chart-signature"
+          },
+          {
+            "type": "load",
+            "key": "./ChartActionDock"
+          },
+          {
+            "type": "load",
+            "key": "../lib/engine/calculator-receipt"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": ""
+      },
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "contextsClosed": true,
+    "noExternalRequestsExecuted": true
+  }
+}

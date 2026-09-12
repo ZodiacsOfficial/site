@@ -1,0 +1,38 @@
+const effectiveTime = input.timeKnown ? input.time : '12:00';
+const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
+const calculationInput = {
+    utc: resolved.utc,
+    latitude: input.city.lat,
+    longitude: input.city.lon,
+    houseSystem: input.houseSystem,
+    timeKnown: input.timeKnown,
+    flags: resolved.flags,
+};
+const portable = receiptModule?.computeCalculatorReceipt(calculationInput, {
+    date: input.date,
+    time: effectiveTime,
+    timeZone: input.city.tz,
+    offsetMinutes: resolved.offsetMinutes,
+    reference: input.timeKnown ? 'supplied-instant' : 'local-noon',
+});
+const result = portable ? portable.chart : engine.computeChart(calculationInput);
+if (!runIsCurrent())
+    return;
+const computedSun = result.bodies.find((body) => body.body === 'Sun');
+const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
+let nextMoonAmbiguous = false;
+let nextRegistryRecordSlug = mode === 'full' && input.timeKnown ? computedSunSlug : null;
+if (!input.timeKnown) {
+    // Compute the local civil date's endpoints once. Moon uncertainty
+    // reaches result/share notices; Sun uncertainty fails the singular
+    // Registry bridge closed instead of trusting the noon reference.
+    const endpoints = localDateEndpointsUtc(input.date, input.city.tz);
+    const startBodies = engine.computeBodies(endpoints.start);
+    const endBodies = engine.computeBodies(endpoints.end);
+    result.moonSignCandidates = moonCandidatesFromEndpoints(startBodies, endBodies);
+    nextMoonAmbiguous = moonIsUncertain(result);
+    const stableSunSlug = stableBodySignSlug('Sun', startBodies, endBodies);
+    nextRegistryRecordSlug = mode === 'full' && stableSunSlug === computedSunSlug
+        ? stableSunSlug
+        : null;
+}

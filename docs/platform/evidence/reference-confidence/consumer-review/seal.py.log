@@ -1,0 +1,62 @@
+from pathlib import Path
+import hashlib,json,shutil
+r=Path(__file__).resolve().parent
+d=r.parent/'delivery-freeze2'
+assert not d.exists()
+d.mkdir()
+def sha(b): return hashlib.sha256(b).hexdigest()
+def copy(source,dest):
+    target=d/dest;target.parent.mkdir(parents=True,exist_ok=True)
+    b=source.read_bytes()
+    if target.exists(): assert target.read_bytes()==b
+    else: target.write_bytes(b)
+files=['REVIEW.md','assemble.py','assembly.log','assemble-result.log','metadata-apply.log','assembled-identity.json','actual-changed-paths.json','actual-scope-cli.log','freeze2-identity.json','freeze2.patch','metadata-identity.json','metadata.patch','extract.mjs','extraction.log','extraction-identity.json','baseline-ChartCalculator.tsx','candidate-ChartCalculator.tsx','confidence-baseline.ts','confidence-candidate.ts','probe.ts','build.mjs','build.log','probe.cjs','bundle-metafile.json','consumed-input-identities.json','node22-result.json','node22.stderr','node24-result.json','node24.stderr','verify-consumers.mjs','consumer-verification.json','consumer-verification.log','consumer-source-locations.log','catalog-probe.ts','catalog-build.mjs','catalog-build.log','catalog-probe.cjs','catalog-result.json','catalog.stderr','catalog-metafile.json','catalog-input-identities.json','signature-context-check.json','seal.py']
+for name in files:copy(r/name,name)
+for p in (r/'markup').glob('*.html'):copy(p,'markup/'+p.name)
+source_manifest=[]
+freeze=json.loads((r/'freeze2-identity.json').read_text())
+author=Path('/private/tmp/zodiacs-platform-chart-reference-confidence-evidence/source-freeze2')
+for name,expected in freeze['files'].items():
+    own=r/'site'/name
+    assert sha(own.read_bytes())==expected['sha256']==sha((author/name).read_bytes())
+    copy(own,'source/'+name)
+    source_manifest.append({'path':name,**expected,'copiedFrozenSourceMatches':True})
+(d/'final-frozen-source-parity.json').write_text(json.dumps(source_manifest,indent=2)+'\n')
+consumed=[]
+for manifest in ['consumed-input-identities.json','catalog-input-identities.json']:
+    for item in json.loads((r/manifest).read_text()):
+        p=(r/item['path']).resolve();assert sha(p.read_bytes())==item['sha256']
+        if item['path'].startswith('site/'):
+            dest='source/'+item['path'][5:]
+        elif '/node_modules/' in str(p):
+            dest='dependency-source/'+str(p).split('/node_modules/',1)[1]
+        else: dest='driver-source/'+p.name
+        copy(p,dest);consumed.append({'originalPath':item['path'],'capturedPath':dest,'sha256':item['sha256'],'bytes':item['bytes']})
+(d/'captured-input-map.json').write_text(json.dumps(consumed,indent=2)+'\n')
+deps=Path('/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules')
+versions=[]
+for pkg in ['@zodiacs/engine','astronomy-engine','preact','preact-render-to-string','esbuild','typescript']:
+    p=deps/pkg/'package.json';data=json.loads(p.read_text());copy(p,'dependency-packages/'+pkg+'/package.json');versions.append({'name':data['name'],'version':data['version'],'sha256':sha(p.read_bytes())})
+(d/'dependency-versions.json').write_text(json.dumps(versions,indent=2)+'\n')
+(d/'COMMANDS.md').write_text('''# Actual local review execution
+
+All working commands ran in the owned freeze2 scratch. assemble.py created a local shared-object detached checkout at f803, copied and verified all author files, and applied author and metadata patches with git apply --check before applying them. The unchanged scope CLI was executed at that exact base; raw command/result records are retained in assembly and scope logs. The separate metadata delivery contains the exact Node22 driver --check command and result.
+
+1. Node22 extract.mjs > extraction.log 2>&1
+2. The retained probe.ts was adapted from the previous immutable preparation probe to call the actual extracted branches, include London and actual consumer SSR; build.mjs uses the prior owned esbuild runtime and no installs.
+3. Node22 build.mjs > build.log 2>&1
+4. Node22 probe.cjs > node22-result.json 2> node22.stderr
+5. Node24 probe.cjs > node24-result.json 2> node24.stderr
+6. Node22 verify-consumers.mjs > consumer-verification.log 2>&1
+7. Node22 catalog-build.mjs > catalog-build.log 2>&1
+8. Node22 catalog-probe.cjs > catalog-result.json 2> catalog.stderr
+9. A direct JSON/artifact assertion checked signature bodies exclude Moon and Moon context is unresolved with null house and no dignities in both runtimes; signature-context-check.json retains all eight actual outcomes.
+10. python3 seal.py copied exact raw evidence, rehashed original author and own frozen files, and captured all consumed inputs. No full site, node_modules tree, or generated site was archived.
+
+Node22 = /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node.
+Node24 = /Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.
+Both numerical/SSR probes and the catalog probe completed on their first execution; build warnings are preserved. No browser, network, remote mutation or product-source edit was performed by this review.
+''')
+records=[{'path':str(p.relative_to(d)),'bytes':p.stat().st_size,'sha256':sha(p.read_bytes())} for p in sorted(d.rglob('*')) if p.is_file()]
+(d/'manifest.json').write_text(json.dumps({'records':records,'count':len(records),'bytes':sum(x['bytes'] for x in records)},indent=2)+'\n')
+print(json.dumps({'delivery':str(d),'manifestSha256':sha((d/'manifest.json').read_bytes()),'count':len(records),'bytes':sum(x['bytes'] for x in records)},indent=2))

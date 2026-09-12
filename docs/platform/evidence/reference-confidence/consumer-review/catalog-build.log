@@ -1,0 +1,11 @@
+▲ [WARNING] Cannot find base config file "astro/tsconfigs/strict" [tsconfig.json]
+
+    site/tsconfig.json:2:13:
+      2 │   "extends": "astro/tsconfigs/strict",
+        ╵              ~~~~~~~~~~~~~~~~~~~~~~~~
+
+1 warning
+
+  catalog-probe.cjs  217.7kb
+
+⚡ Done in 12ms

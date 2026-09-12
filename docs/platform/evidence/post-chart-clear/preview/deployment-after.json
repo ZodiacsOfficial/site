@@ -1,0 +1,54 @@
+{
+  "deployment": {
+    "id": "dpl_9PyqUeR6weQFUdYnAREXYEQjUAMZ",
+    "name": "zodiacs-org",
+    "url": "zodiacs-ecj7uiwv8-zodiacsofficial.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1788864848099,
+    "creator": {
+      "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+      "username": "zodiacs-org"
+    },
+    "project": {
+      "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+      "name": "zodiacs-org",
+      "framework": null
+    },
+    "meta": {
+      "githubCommitAuthorName": "diasmal917",
+      "githubCommitAuthorEmail": "diasmal917@gmail.com",
+      "githubCommitMessage": "Clear chart-linked prompts and fence delayed work to current context",
+      "githubCommitOrg": "ZodiacsOfficial",
+      "githubCommitRef": "codex/platform-chart-result-ownership",
+      "githubCommitRepo": "site",
+      "githubCommitSha": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+      "githubDeployment": "1",
+      "githubOrg": "ZodiacsOfficial",
+      "githubRepo": "site",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1251096896",
+      "githubRepoId": "1251096896",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "diasmal917",
+      "githubPrId": "434",
+      "githubCommitVerification": "unverified",
+      "repoPushedAt": "1788864844000",
+      "branchAlias": "zodiacs-org-git-codex-platform-chart-res-c3fea5-zodiacsofficial.vercel.app",
+      "lambdaRuntimeStats": "{\"nodejs\":12}"
+    },
+    "alias": [
+      "zodiacs-org-git-codex-platform-chart-res-c3fea5-zodiacsofficial.vercel.app"
+    ],
+    "target": null,
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1788864849229,
+    "ready": 1788865005631,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

@@ -1,0 +1,320 @@
+{
+  "sourceSha256": "1d690aec157e3c7d2adc89ddd5c446047390b7c49e50a0535fe334ed567b6a52",
+  "bundleSha256": "d13f7e6da079fbefe418d449c443539e1f093f894d5291d3912ebf382944e515",
+  "bundleBytes": 8559,
+  "browser": "152.0.7977.83",
+  "requests": [
+    "/",
+    "/subject.js"
+  ],
+  "errors": [],
+  "checks": [
+    {
+      "name": "untouched controls admit shared initialization",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "1990-06-15",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "14:30",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "placidus",
+          "checked": null,
+          "selected": [
+            false,
+            true
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "1990-06-15",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "14:30",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "placidus",
+          "checked": null,
+          "selected": [
+            false,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "explicit reset to blank survives first recapture",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "eventless late autofill survives hydration",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "autofill present at directive start survives",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "autofilled",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "native normalized defaults stay untouched",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "80",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "20",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "80",
+          "checked": false,
+          "selected": null
+        },
+        {
+          "value": "20",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "newer edit during commit wins",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "latest",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "latest",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "replaced controls retain edit by id",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "edited",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "edited",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "textarea eventless edit survives",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "edited",
+          "checked": null,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "edited",
+          "checked": null,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "checked reset remains explicit",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "yes",
+          "checked": false,
+          "selected": null
+        }
+      ],
+      "expected": [
+        {
+          "value": "yes",
+          "checked": false,
+          "selected": null
+        }
+      ]
+    },
+    {
+      "name": "untouched selected defaults admit initialization",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "C",
+          "checked": null,
+          "selected": [
+            false,
+            false,
+            true
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "C",
+          "checked": null,
+          "selected": [
+            false,
+            false,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "multiple select restores every selected option",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "B",
+          "checked": null,
+          "selected": [
+            false,
+            true,
+            true
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "B",
+          "checked": null,
+          "selected": [
+            false,
+            true,
+            true
+          ]
+        }
+      ]
+    },
+    {
+      "name": "select reset remains explicit",
+      "pass": true,
+      "loads": 1,
+      "actual": [
+        {
+          "value": "A",
+          "checked": null,
+          "selected": [
+            true,
+            false
+          ]
+        }
+      ],
+      "expected": [
+        {
+          "value": "A",
+          "checked": null,
+          "selected": [
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "name": "load retry preserves edit and replays one queued submit",
+      "pass": true,
+      "loads": 2,
+      "submits": 1,
+      "submittedValue": "edited",
+      "submitter": "Go"
+    },
+    {
+      "name": "hydrate retry preserves edit and replays one queued submit",
+      "pass": true,
+      "loads": 2,
+      "submits": 1,
+      "submittedValue": "edited",
+      "submitter": "Go"
+    }
+  ],
+  "cleanup": {
+    "browser": true,
+    "server": true
+  }
+}
+interaction-replay-drive: 14 native controls passed

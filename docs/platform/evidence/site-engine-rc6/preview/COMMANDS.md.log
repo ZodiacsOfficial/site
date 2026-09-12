@@ -1,0 +1,13 @@
+# Commands and provider inspection
+
+Read-only provider tools: vercel_list_teams, vercel_list_projects, vercel_list_deployments for zodiacs-org, then vercel_get_deployment for dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11. The first state was BUILDING. Preparation and a 45-second bounded wait preceded the READY inspection; no busy polling. The final inspection after browser completion still matched READY and the exact full source commit.
+
+The original root receipt driver was copied and a minimal evidence/source declaration diff retained in driver-changes.patch. Source snapshot bytes were exported using `git show 30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14:<path>`; no checkout was changed. A syntax check passed with the pinned Node executable.
+
+Actual browser invocation (temporary credential path contained no secret text and is now deleted):
+
+```
+ZODIACS_RECEIPT_ROOT=/private/tmp/zodiacs-platform-rc6-preview-review/source ZODIACS_TEST_BASE_URL=https://zodiacs-4qqy7ml63-zodiacsofficial.vercel.app ZODIACS_PREVIEW_AUTH_FILE=/private/tmp/zodiacs-platform-rc6-preview-auth/access.json /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-rc6-preview-review/receipt-drive.mjs > /private/tmp/zodiacs-platform-rc6-preview-review/receipt-preview.log 2>&1
+```
+
+The connected Vercel temporary access tool supplied the bootstrap URL, retained only in the isolated secret file. The final Python evidence audit counted actual downloaded files/screenshots/requests, asserted no secret or token matched any evidence byte, deleted only that owned temporary secret file/directory, and recorded cleanup proof. `Google Chrome --version` confirmed 152.0.7977.83. No development server was started.

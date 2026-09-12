@@ -1,0 +1,32 @@
+{
+  "sourceManifestSha256": "4c06ea0ad9f0d93924ba720590fa8e7233391f42b56a658659387e8f5e4d8d92",
+  "verifiedRecords": 6,
+  "verifiedArchiveMembers": 355,
+  "fileMap": [
+    {
+      "sourcePath": "AUTHOR.md.log",
+      "path": "AUTHOR.md.log"
+    },
+    {
+      "sourcePath": "COMMANDS.md.log",
+      "path": "COMMANDS.md.log"
+    },
+    {
+      "sourcePath": "archive-members.json",
+      "path": "archive-members.json"
+    },
+    {
+      "sourcePath": "author-raw-evidence.tar.gz",
+      "path": "author-raw-evidence.tar.gz"
+    },
+    {
+      "sourcePath": "implementation-freeze2.patch.log",
+      "path": "implementation-freeze2.patch.log"
+    },
+    {
+      "sourcePath": "source-freeze2.json.log",
+      "path": "source-freeze2.json.log"
+    }
+  ],
+  "sourceBytesUnchanged": true
+}

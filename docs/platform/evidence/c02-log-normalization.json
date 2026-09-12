@@ -1,0 +1,50 @@
+{
+  "operation": "Strip terminal ANSI and trailing line whitespace; retain one final newline. No result rewriting.",
+  "files": [
+    {
+      "file": "c02-final-focused-node22.log",
+      "rawSha256": "27057ec45ba0c88622fdbb49f29429e93117fdf4613fc2f81d32e420b02326e1",
+      "storedSha256": "85cdb2870ca02d8e9705304660d7317372863153ce55fb8ce843d7332fa8424c"
+    },
+    {
+      "file": "c02-final-focused-node24.log",
+      "rawSha256": "951d35aa5ce02936478125cdd69e66834a60d9087f763be45ec4311c9ba4e4a9",
+      "storedSha256": "a5f1b9c4dba7a245423bb1d9a79ea5b1677c0a3792a9d04390fefd38d301b822"
+    },
+    {
+      "file": "c02-final-build.log",
+      "rawSha256": "05ccbbdb9aa5615979696607513f6d26eca5fe1d5132fdce81bebf8d05f41ec0",
+      "storedSha256": "7c98854d601e86c1cf46251e8562d0c3b8dc110d37cc5aef3f27d4386f54343c"
+    },
+    {
+      "file": "c02-final-push-build.log",
+      "rawSha256": "f174961d4c9d7aa0077fa524825b1d4c2e249376de9d272b1ad553e2cbf66a73",
+      "storedSha256": "8c9cc528c8220143724164044ca3d15fa5233d054d6ba8da8e7276ad652286f7"
+    },
+    {
+      "file": "c02-final-check.log",
+      "rawSha256": "8456ee78c1c8cbced3f93d82bbe314bd0870d199efe40e242cce102e4ee381e9",
+      "storedSha256": "90e8ff8b34d249f72132e1dde23f44669a7660e1173926a101f087d27f897be5"
+    },
+    {
+      "file": "c02-final-tests.log",
+      "rawSha256": "a57787e96c01824d0fd9180da9b0d6bca175a1dc74417583ddbbe22d374efdd1",
+      "storedSha256": "a77836071d09a5252828af402db6d5c655da369cfc105e585d63d82546cf0b2a"
+    },
+    {
+      "file": "c02-final-phase1.log",
+      "rawSha256": "58102027db6978ef1280633f048b027d66f29226102976d84a617cc34c3cef55",
+      "storedSha256": "58102027db6978ef1280633f048b027d66f29226102976d84a617cc34c3cef55"
+    },
+    {
+      "file": "c02-final-t17.log",
+      "rawSha256": "72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c",
+      "storedSha256": "72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c"
+    },
+    {
+      "file": "c02-final-compatibility.log",
+      "rawSha256": "70311cc5c8cbafbf71c5088013fc7ba6514faed54094bc66a1333b8e508f7251",
+      "storedSha256": "d0458f5375ff24809a45800bc126fc6725e65246b80c12c98e431a68516e7f8f"
+    }
+  ]
+}

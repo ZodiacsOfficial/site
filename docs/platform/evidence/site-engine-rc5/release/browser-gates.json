@@ -1,0 +1,39 @@
+{
+  "runtime": "Node22.23.2",
+  "change": "Developer tab predecessor updated to new final archived API reference link; original failed run retained in gates.json/developers.log.",
+  "steps": [
+    {
+      "name": "developers-corrected",
+      "command": [
+        "node",
+        "tests/platform-developers-drive.mjs"
+      ],
+      "startedAt": "2026-09-08T04:05:13.503960+00:00",
+      "elapsedSeconds": 13.823,
+      "exitCode": 0,
+      "log": "developers-corrected.log"
+    },
+    {
+      "name": "share",
+      "command": [
+        "node",
+        "tests/platform-share-boundary-drive.mjs"
+      ],
+      "startedAt": "2026-09-08T04:05:27.328213+00:00",
+      "elapsedSeconds": 20.819,
+      "exitCode": 0,
+      "log": "share.log"
+    },
+    {
+      "name": "native-zoom",
+      "command": [
+        "node",
+        "/private/tmp/zodiacs-platform-resume/native-zoom.mjs"
+      ],
+      "startedAt": "2026-09-08T04:05:48.148206+00:00",
+      "elapsedSeconds": 8.182,
+      "exitCode": 1,
+      "log": "native-zoom.log"
+    }
+  ]
+}

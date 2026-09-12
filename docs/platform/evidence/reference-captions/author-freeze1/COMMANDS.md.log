@@ -1,0 +1,69 @@
+# C016 executed command ledger
+
+Checkout: `/private/tmp/zodiacs-platform-reference-caption`. Evidence root: `/private/tmp/zodiacs-platform-reference-caption-evidence`.
+
+Node 22: `/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node` (22.23.2). Node 24: `/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node` (24.19.0). Browser: repository findChromium selected actual Chrome 152.0.7977.83. No runtime or package was installed.
+
+The setup log records the shared isolated clone and detached checkout of `9d180c9f1a2f66893ccd6d73fcda106cb3894674`. All product writes were to this checkout. `apply-source.py` preserves the initial authored copy transformation; the frozen source/patch is the final authority, including the later comment corrections and scoped tests.
+
+The initial affected command, with Node 22 and stdout/stderr to baseline-focused.log, was:
+
+```
+node node_modules/vitest/vitest.mjs run src/lib/share-card.test.ts src/lib/share-card-copy.test.ts src/lib/moon-certainty.test.tsx src/islands/explorer/Inspector.test.tsx tests/api/og-chart.test.ts scripts/build-i18n-additions.test.mjs src/lib/i18n/index.test.ts src/lib/i18n/ui/ru.test.ts
+```
+
+The identical command after product edits produced candidate-initial-focused.log, retaining all six failures.
+
+The new/affected focused command produced focused-second.log (test alias failure), focused-third.log (142 passed), and focused-node24.log (142 passed using Node 24):
+
+```
+node node_modules/vitest/vitest.mjs run src/islands/MoonPhaseTool.reference.test.ts src/lib/reference-captions.test.tsx src/lib/share-card.test.ts src/lib/share-card-copy.test.ts src/lib/moon-certainty.test.tsx src/islands/explorer/Inspector.test.tsx tests/api/og-chart.test.ts src/lib/i18n/index.test.ts src/lib/i18n/ui/ru.test.ts
+```
+
+Native caption acceptance, with the unmodified native-driver-initial.mjs copy retained before execution:
+
+```
+OUT_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/native-initial REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/baseline-source node tests/reference-caption-drive.mjs
+```
+
+The baseline-source directory contains exactly 23 `git show 9d180c9f1a2f66893ccd6d73fcda106cb3894674:<path>` snapshots, recorded in baseline-identity.json. The driver preserves exact generated bundles, input hashes, all output observations, screenshots, PNG files and cleanup. No local product code was injected into a remote deployment; this is an owned local static fixture.
+
+Type checks, in order:
+
+```
+node node_modules/typescript/bin/tsc --noEmit
+node node_modules/astro/bin/astro.mjs sync
+node node_modules/typescript/bin/tsc --noEmit
+node node_modules/astro/bin/astro.mjs check
+```
+
+Logs are typecheck-initial.log, astro-sync.log, typecheck-after-sync.log and astro-check.log. The initial missing generated content types are retained.
+
+Independent owned static fixtures were then run through existing repository drivers:
+
+```
+OUT_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/moon-ownership node tests/moon-result-ownership-drive.mjs
+OUT_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/local-date REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/baseline-source node tests/local-date-reference-drive.mjs
+```
+
+The latter intentionally retains the wrong-baseline invocation and its 23/35 result. After matching the required before-C014 baseline components/catalogs and their snapshot loader, the corrected invocation was:
+
+```
+OUT_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/local-date-corrected REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-reference-caption-evidence/before-c014-source node tests/local-date-reference-drive.mjs
+```
+
+before-c014-identity.json records every selected source and the full 3845a04b commit. The final native result is 35/35; its build input hashes include the actual selected catalogs.
+
+The full unit attempt (before a normal dist build and root metadata generation) was:
+
+```
+node node_modules/vitest/vitest.mjs run
+```
+
+full-suite.log retains all failures, including missing dist pages, generated manifest/fingerprint checks, a comment-coupled Registry test and the two external-symlink module errors. dependency-isolation.json records byte identity for all eight copied Astronomy Engine files. No package change was made. The final expanded affected command, after the isolated package-path and test fixes, was:
+
+```
+node node_modules/vitest/vitest.mjs run src/lib/engine/engine.test.ts tests/legacy-polar-fixture.test.mjs src/islands/ChartCalculator.registry-bridge.test.ts src/islands/ChartCalculator.confidence.test.ts src/islands/MoonPhaseTool.reference.test.ts src/lib/reference-captions.test.tsx src/lib/share-card.test.ts src/lib/share-card-copy.test.ts src/lib/moon-certainty.test.tsx src/islands/explorer/Inspector.test.tsx tests/api/og-chart.test.ts src/lib/i18n/index.test.ts src/lib/i18n/ui/ru.test.ts
+```
+
+affected-final.log records 227/227. `git diff --check` and `git apply --reverse --check freeze1.patch` succeeded. A normal build, current capture manifest, generated catalog manifest and final full suite are integrator-owned, not silently assumed completed here.

@@ -1,0 +1,89 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+import { findChromium, STABLE_CHROMIUM_ARGS } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+import { readPackageArchive } from '/Users/chiburashka/.codex/worktrees/4806/site/scripts/verify-platform-starter.mjs';
+const out='/private/tmp/zodiacs-platform-starter-receipt-zoom/complete';
+const consumer='/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-platform-consumer-G7UHiL/package';
+const archive='/Users/chiburashka/.codex/worktrees/4806/site/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz';
+const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const archiveBytes=await readFile(archive);
+assert.equal(hash(archiveBytes),'facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a');
+const members=readPackageArchive(archiveBytes);
+for(const [file,bytes]of members)assert.deepEqual(await readFile(join(consumer,file)),bytes,`Consumer matches actual archive: ${file}`);
+const candidate=JSON.parse(await readFile(join(consumer,'candidate.json'),'utf8'));
+const bundleBytes=await readFile(join(consumer,'dist/app.js'));
+const profile=await mkdtemp(join(out,'chrome-profile-'));
+const {startServer}=await import(pathToFileURL(join(consumer,'scripts/server.mjs')).href);
+const checks=[],cases=[],failures=[];
+const check=(name,pass,detail=null)=>{checks.push({name,pass:Boolean(pass),detail});if(!pass)throw new Error(`Check failed: ${name}`)};
+const cleanup={profile,ownsProfile:true,copiedAuthentication:false,restoredZoom:false,browserClosed:false,serverClosed:false};
+let context,settings,page,server,originalZoom,browserVersion;
+const shot=async(cdp,file)=>{const {data}=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});const bytes=Buffer.from(data,'base64');await writeFile(join(out,file),bytes);const capture={file,width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20),sha256:hash(bytes)};assert.equal(capture.width,1280);assert.equal(capture.height,900);return capture};
+const focusState=page=>page.evaluate(()=>{const node=document.activeElement;const rect=node.getBoundingClientRect();const css=getComputedStyle(node);return {id:node.id,tag:node.tagName,visibleFocus:node.matches(':focus-visible'),outlineStyle:css.outlineStyle,outlineWidth:css.outlineWidth,outlineColor:css.outlineColor,rect:rect.toJSON(),innerWidth,innerHeight,scrollX,scrollY,visible:rect.left>=0&&rect.top>=0&&rect.right<=innerWidth+1&&rect.bottom<=innerHeight+1,uncovered:document.elementFromPoint(rect.left+rect.width/2,rect.top+rect.height/2)===node}});
+const dimensions=page=>page.evaluate(()=>({innerWidth,innerHeight,dpr:devicePixelRatio,visualViewport:{width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale},clientWidth:document.documentElement.clientWidth,scrollWidth:document.documentElement.scrollWidth,scrollX,scrollY,reduced:matchMedia('(prefers-reduced-motion: reduce)').matches,animations:document.getAnimations().length,htmlZoom:getComputedStyle(document.documentElement).zoom,bodyZoom:getComputedStyle(document.body).zoom}));
+try{
+ server=await startServer(0);const baseURL=`http://127.0.0.1:${server.address().port}`;cleanup.serverPort=server.address().port;
+ context=await chromium.launchPersistentContext(profile,{executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS,viewport:{width:1280,height:900},deviceScaleFactor:1,acceptDownloads:true,reducedMotion:'reduce'});
+ browserVersion=context.browser()?.version()??'unknown';
+ await context.route('**/*',route=>{const url=new URL(route.request().url());return ['http:','https:'].includes(url.protocol)&&url.origin!==baseURL?route.abort():route.continue()});
+ settings=await context.newPage();await settings.goto('chrome://settings/appearance');
+ await settings.waitForFunction(()=>typeof chrome.settingsPrivate?.getDefaultZoom==='function');
+ originalZoom=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+ for(const factor of [2,4]){
+  const record={factor,keyboard:[],captures:[],reading:[],requests:[],errors:[]};cases.push(record);
+  await settings.evaluate(factor=>new Promise(resolve=>chrome.settingsPrivate.setDefaultZoom(factor,resolve)),factor);
+  const configured=await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve)));
+  page=await context.newPage();await page.setViewportSize({width:1280,height:900});await page.emulateMedia({reducedMotion:'reduce'});
+  page.on('pageerror',error=>record.errors.push(error.message));page.on('console',message=>{if(message.type()==='error')record.errors.push(message.text())});
+  page.on('request',request=>record.requests.push({url:new URL(request.url()).pathname,method:request.method(),type:request.resourceType()}));
+  const response=await page.goto(baseURL+'/natal.html',{waitUntil:'networkidle'});
+  check(`${factor}x: actual archive page loads`,response.status()===200&&await page.locator('#calculate').isEnabled()&&await page.locator('h1').textContent()==='Calculate a natal chart locally');
+  const cdp=await context.newCDPSession(page);record.viewport=await dimensions(page);
+  check(`${factor}x: native Chrome zoom confirmed`,Math.abs(configured-factor)<1e-9&&record.viewport.innerWidth===1280/factor&&record.viewport.dpr===factor,{configured,...record.viewport});
+  check(`${factor}x: no CSS zoom substituted`,record.viewport.htmlZoom==='1'&&record.viewport.bodyZoom==='1');
+  check(`${factor}x: reflow and reduced motion`,record.viewport.scrollWidth<=record.viewport.clientWidth+1&&record.viewport.reduced&&record.viewport.animations===0);
+  await page.locator('#houseSystem').focus();await page.keyboard.press('Tab');
+  check(`${factor}x: keyboard reaches Calculate`,(await focusState(page)).id==='calculate');
+  await page.keyboard.press('Enter');
+  check(`${factor}x: synthetic calculation ready`,await page.locator('#exportEnvelope').isEnabled()&&await page.locator('#error').textContent()==='');
+  const tabTo=async id=>{await page.keyboard.press('Tab');const state=await focusState(page);record.keyboard.push(state);check(`${factor}x: Tab reaches visible ${id}`,state.id===id&&state.visibleFocus&&state.visible&&state.uncovered&&parseFloat(state.outlineWidth)>0&&state.outlineStyle!=='none',state);return state};
+  await tabTo('exportEnvelope');record.captures.push(await shot(cdp,`native-${factor}x-export-focus.png`));
+  const downloadPending=page.waitForEvent('download');await page.keyboard.press('Enter');const downloaded=await downloadPending;
+  check(`${factor}x: keyboard export uses generic filename`,downloaded.suggestedFilename()==='zodiacs-natal-envelope-draft-v1.json');
+  const stream=await downloaded.createReadStream();assert(stream);const chunks=[];for await(const chunk of stream)chunks.push(chunk);const json=Buffer.concat(chunks);
+  check(`${factor}x: keyboard export contains actual draft`,JSON.parse(json).schema==='zodiacs.natal-envelope.draft-v1');
+  await tabTo('importFile');record.captures.push(await shot(cdp,`native-${factor}x-file-focus.png`));
+  const chooserPending=page.waitForEvent('filechooser');await page.keyboard.press('Enter');const chooser=await chooserPending;
+  await chooser.setFiles({name:'synthetic-natal.json',mimeType:'application/json',buffer:json});
+  check(`${factor}x: keyboard file chooser selection accepted`,await page.locator('#importFile').evaluate(node=>node.files.length===1));
+  await tabTo('importEnvelope');record.captures.push(await shot(cdp,`native-${factor}x-import-focus.png`));
+  await page.keyboard.press('Enter');await page.waitForFunction(()=>document.getElementById('status').textContent.includes('Imported stored result'));
+  check(`${factor}x: keyboard import displays unverified stored receipt`,await page.locator('#error').textContent()===''&&(await page.locator('#status').textContent()).includes('unverified claims'));
+  await tabTo('showDiagnostic');await page.keyboard.press('Enter');
+  const diagnostic=JSON.parse(await page.locator('#diagnostic').textContent());
+  check(`${factor}x: keyboard diagnostic action works`,diagnostic.status==='redacted-not-anonymous');
+  record.captures.push(await shot(cdp,`native-${factor}x-diagnostic-focus.png`));
+  for(let step=0;step<6;step++){
+   const before=await page.evaluate(()=>scrollY);await page.keyboard.press('PageDown');await page.waitForTimeout(400);
+   const state=await page.locator('#diagnostic').evaluate(node=>({scrollY,innerHeight,rect:node.getBoundingClientRect().toJSON(),scrollWidth:document.documentElement.scrollWidth,clientWidth:document.documentElement.clientWidth}));
+   record.reading.push(state);check(`${factor}x: PageDown ${step+1} scrolls and preserves reflow`,state.scrollY>before&&state.scrollWidth<=state.clientWidth+1,state);
+   record.captures.push(await shot(cdp,`native-${factor}x-reading-${step+1}.png`));
+   if(state.rect.bottom<=state.innerHeight&&state.rect.bottom>0)break;
+  }
+  check(`${factor}x: diagnostic end reachable by scrolling`,record.reading.some(state=>state.rect.bottom<=state.innerHeight&&state.rect.bottom>0));
+  await page.keyboard.press('Shift+Tab');check(`${factor}x: reverse Tab returns to visible import control`,(await focusState(page)).id==='importEnvelope'&&(await focusState(page)).visible);
+  check(`${factor}x: no page errors`,record.errors.length===0,record.errors);
+  record.finalViewport=await dimensions(page);await page.close();page=null;
+ }
+}catch(error){failures.push({message:error.message,stack:error.stack});if(page){try{const cdp=await context.newCDPSession(page);await shot(cdp,'failure-viewport.png')}catch{}}}
+finally{
+ if(settings&&originalZoom!==undefined){try{await settings.evaluate(factor=>new Promise(resolve=>chrome.settingsPrivate.setDefaultZoom(factor,resolve)),originalZoom);cleanup.restoredZoom=(await settings.evaluate(()=>new Promise(resolve=>chrome.settingsPrivate.getDefaultZoom(resolve))))===originalZoom}catch(error){cleanup.zoomError=error.message}}
+ if(context){await context.close();cleanup.browserClosed=true}
+ if(server){await new Promise((resolve,reject)=>server.close(error=>error?reject(error):resolve()));cleanup.serverClosed=true}
+ const report={status:failures.length?'failed':'passed',scope:'Two finite native Chrome zoom cases for new receipt controls using the actual fresh rc.3 archive consumer. Keyboard actions and raw viewport captures; no CSS zoom, copied authentication, product-source edits, ordinary browser matrix, hosted widget testing, or new numerical accuracy claim.',runtime:{node:process.version,chrome:browserVersion},identity:{archive,archiveSHA256:hash(archiveBytes),consumer,archiveMembersVerified:members.size,starterVersion:'0.1.0-rc.3',candidate,distAppSHA256:hash(bundleBytes)},originalZoom,checks,cases,failures,cleanup};
+ await writeFile(join(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({status:report.status,checks:checks.length,failures,cleanup,report:join(out,'result.json')},null,2));if(failures.length)process.exitCode=1;
+}

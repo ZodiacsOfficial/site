@@ -1,0 +1,10 @@
+import { build } from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js';
+import { writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const cwd=dirname(fileURLToPath(import.meta.url));
+const result=await build({absWorkingDir:cwd,entryPoints:['catalog-probe.ts'],outfile:'catalog-probe.cjs',bundle:true,platform:'node',format:'cjs',target:'node22',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env.SSR':'true'},loader:{'.css':'empty'},nodePaths:['/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules'],metafile:true,logLevel:'info'});
+writeFileSync(join(cwd,'catalog-metafile.json'),JSON.stringify(result.metafile,null,2)+'\n');
+const inputs=Object.keys(result.metafile.inputs).map(path=>{const b=readFileSync(resolve(cwd,path));return {path,bytes:b.length,sha256:createHash('sha256').update(b).digest('hex')}});
+writeFileSync(join(cwd,'catalog-input-identities.json'),JSON.stringify(inputs,null,2)+'\n');

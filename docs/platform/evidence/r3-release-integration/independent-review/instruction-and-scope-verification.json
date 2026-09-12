@@ -1,0 +1,13 @@
+{
+  "at": "2026-09-12T15:27:22.939700+00:00",
+  "main": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "mainTreeEntries": 9397,
+  "mainTreeTruncated": false,
+  "instructions": [
+    "CLAUDE.md"
+  ],
+  "scopeGuardResult": "PASS \u20144437changedpaths;102protectedpaths",
+  "engineComputedIntegrity": "sha512-W3zxJPAjG699AP/9xLXf5iKxSg9o+DMSUQzyLf5yrCjlubr/mWGIO4SOOHfx1VKFC9k+s5bqt34kMi4E2j5n5g==",
+  "engineLockIntegrity": "sha512-W3zxJPAjG699AP/9xLXf5iKxSg9o+DMSUQzyLf5yrCjlubr/mWGIO4SOOHfx1VKFC9k+s5bqt34kMi4E2j5n5g==",
+  "integrityMatches": true
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/lib/engine/calculator-receipt.test.ts",
+    "src/lib/receipt-download.test.ts",
+    "src/lib/engine/portable.test.ts",
+    "src/islands/ChartCalculator.actions.test.ts",
+    "src/islands/ChartCalculator.locale.test.ts",
+    "src/islands/ChartCalculator.registry-bridge.test.ts",
+    "src/lib/i18n/ui/client.test.ts",
+    "src/lib/i18n/ui/ru.test.ts"
+  ],
+  "exitCode": 1
+}

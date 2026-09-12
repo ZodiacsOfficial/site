@@ -1,0 +1,554 @@
+{
+  "status": "failed",
+  "scope": "Two finite native Chrome zoom cases for new receipt controls using the actual fresh rc.3 archive consumer. Keyboard actions and raw viewport captures; no CSS zoom, copied authentication, product-source edits, ordinary browser matrix, hosted widget testing, or new numerical accuracy claim.",
+  "runtime": {
+    "node": "v22.23.2",
+    "chrome": "152.0.7977.83"
+  },
+  "identity": {
+    "archive": "/Users/chiburashka/.codex/worktrees/4806/site/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+    "archiveSHA256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a",
+    "consumer": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-platform-consumer-G7UHiL/package",
+    "archiveMembersVerified": 21,
+    "starterVersion": "0.1.0-rc.3",
+    "candidate": {
+      "package": "@zodiacs/engine",
+      "version": "0.1.1-rc.3",
+      "status": "Unpublished npm release candidate; review and publication gates remain open",
+      "artifactRepository": "https://github.com/ZodiacsOfficial/sdk",
+      "artifactCommit": "2000377b1b537c1b08c873889059acc8edacc4fe",
+      "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+      "sourceCommit": "aaade67d0d49e8b10d1bc5c59cf345d6106dc270",
+      "url": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/2000377b1b537c1b08c873889059acc8edacc4fe/artifacts/zodiacs-engine-0.1.1-rc.3.tgz",
+      "sha256": "aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17",
+      "schemaVersion": 1,
+      "artifactPath": "artifacts/zodiacs-engine-0.1.1-rc.3.tgz",
+      "sourcePackagePath": "packages/engine",
+      "ephemeris": {
+        "name": "astronomy-engine",
+        "version": "2.1.19"
+      }
+    },
+    "distAppSHA256": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4"
+  },
+  "originalZoom": 1,
+  "checks": [
+    {
+      "name": "2x: actual archive page loads",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: native Chrome zoom confirmed",
+      "pass": true,
+      "detail": {
+        "configured": 2,
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "dpr": 2,
+        "visualViewport": {
+          "width": 640,
+          "height": 450,
+          "scale": 1
+        },
+        "clientWidth": 640,
+        "scrollWidth": 640,
+        "scrollX": 0,
+        "scrollY": 0,
+        "reduced": true,
+        "animations": 0,
+        "htmlZoom": "1",
+        "bodyZoom": "1"
+      }
+    },
+    {
+      "name": "2x: no CSS zoom substituted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: reflow and reduced motion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: keyboard reaches Calculate",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: synthetic calculation ready",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: Tab reaches visible exportEnvelope",
+      "pass": true,
+      "detail": {
+        "id": "exportEnvelope",
+        "tag": "BUTTON",
+        "visibleFocus": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(53, 71, 137)",
+        "rect": {
+          "x": 36.1953125,
+          "y": 203.765625,
+          "width": 137.8359375,
+          "height": 42.390625,
+          "top": 203.765625,
+          "right": 174.03125,
+          "bottom": 246.15625,
+          "left": 36.1953125
+        },
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "scrollX": 0,
+        "scrollY": 851,
+        "visible": true,
+        "uncovered": true
+      }
+    },
+    {
+      "name": "2x: keyboard export uses generic filename",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: keyboard export contains actual draft",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: Tab reaches visible importFile",
+      "pass": true,
+      "detail": {
+        "id": "importFile",
+        "tag": "INPUT",
+        "visibleFocus": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(53, 71, 137)",
+        "rect": {
+          "x": 36.1953125,
+          "y": 295.75,
+          "width": 567.609375,
+          "height": 39.390625,
+          "top": 295.75,
+          "right": 603.8046875,
+          "bottom": 335.140625,
+          "left": 36.1953125
+        },
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "scrollX": 0,
+        "scrollY": 851,
+        "visible": true,
+        "uncovered": true
+      }
+    },
+    {
+      "name": "2x: keyboard file chooser selection accepted",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: Tab reaches visible importEnvelope",
+      "pass": true,
+      "detail": {
+        "id": "importEnvelope",
+        "tag": "BUTTON",
+        "visibleFocus": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(53, 71, 137)",
+        "rect": {
+          "x": 36.1953125,
+          "y": 335.140625,
+          "width": 116.0625,
+          "height": 42.390625,
+          "top": 335.140625,
+          "right": 152.2578125,
+          "bottom": 377.53125,
+          "left": 36.1953125
+        },
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "scrollX": 0,
+        "scrollY": 851,
+        "visible": true,
+        "uncovered": true
+      }
+    },
+    {
+      "name": "2x: keyboard import displays unverified stored receipt",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: Tab reaches visible showDiagnostic",
+      "pass": true,
+      "detail": {
+        "id": "showDiagnostic",
+        "tag": "BUTTON",
+        "visibleFocus": true,
+        "outlineStyle": "solid",
+        "outlineWidth": "2px",
+        "outlineColor": "rgb(53, 71, 137)",
+        "rect": {
+          "x": 36.1953125,
+          "y": 204.03125,
+          "width": 206.625,
+          "height": 42.390625,
+          "top": 204.03125,
+          "right": 242.8203125,
+          "bottom": 246.421875,
+          "left": 36.1953125
+        },
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "scrollX": 0,
+        "scrollY": 1152.5,
+        "visible": true,
+        "uncovered": true
+      }
+    },
+    {
+      "name": "2x: keyboard diagnostic action works",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: PageDown 1 scrolls and preserves reflow",
+      "pass": true,
+      "detail": {
+        "scrollY": 1563,
+        "innerHeight": 450,
+        "rect": {
+          "x": 36.1953125,
+          "y": -60.078125,
+          "width": 567.609375,
+          "height": 368,
+          "top": -60.078125,
+          "right": 603.8046875,
+          "bottom": 307.921875,
+          "left": 36.1953125
+        },
+        "scrollWidth": 640,
+        "clientWidth": 640
+      }
+    },
+    {
+      "name": "2x: diagnostic end reachable by scrolling",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: reverse Tab returns to visible import control",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x: no page errors",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "4x: actual archive page loads",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "4x: native Chrome zoom confirmed",
+      "pass": false,
+      "detail": {
+        "configured": 3.9999999999999996,
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "dpr": 4,
+        "visualViewport": {
+          "width": 320,
+          "height": 225,
+          "scale": 1
+        },
+        "clientWidth": 320,
+        "scrollWidth": 320,
+        "scrollX": 0,
+        "scrollY": 0,
+        "reduced": true,
+        "animations": 0,
+        "htmlZoom": "1",
+        "bodyZoom": "1"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "factor": 2,
+      "keyboard": [
+        {
+          "id": "exportEnvelope",
+          "tag": "BUTTON",
+          "visibleFocus": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(53, 71, 137)",
+          "rect": {
+            "x": 36.1953125,
+            "y": 203.765625,
+            "width": 137.8359375,
+            "height": 42.390625,
+            "top": 203.765625,
+            "right": 174.03125,
+            "bottom": 246.15625,
+            "left": 36.1953125
+          },
+          "innerWidth": 640,
+          "innerHeight": 450,
+          "scrollX": 0,
+          "scrollY": 851,
+          "visible": true,
+          "uncovered": true
+        },
+        {
+          "id": "importFile",
+          "tag": "INPUT",
+          "visibleFocus": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(53, 71, 137)",
+          "rect": {
+            "x": 36.1953125,
+            "y": 295.75,
+            "width": 567.609375,
+            "height": 39.390625,
+            "top": 295.75,
+            "right": 603.8046875,
+            "bottom": 335.140625,
+            "left": 36.1953125
+          },
+          "innerWidth": 640,
+          "innerHeight": 450,
+          "scrollX": 0,
+          "scrollY": 851,
+          "visible": true,
+          "uncovered": true
+        },
+        {
+          "id": "importEnvelope",
+          "tag": "BUTTON",
+          "visibleFocus": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(53, 71, 137)",
+          "rect": {
+            "x": 36.1953125,
+            "y": 335.140625,
+            "width": 116.0625,
+            "height": 42.390625,
+            "top": 335.140625,
+            "right": 152.2578125,
+            "bottom": 377.53125,
+            "left": 36.1953125
+          },
+          "innerWidth": 640,
+          "innerHeight": 450,
+          "scrollX": 0,
+          "scrollY": 851,
+          "visible": true,
+          "uncovered": true
+        },
+        {
+          "id": "showDiagnostic",
+          "tag": "BUTTON",
+          "visibleFocus": true,
+          "outlineStyle": "solid",
+          "outlineWidth": "2px",
+          "outlineColor": "rgb(53, 71, 137)",
+          "rect": {
+            "x": 36.1953125,
+            "y": 204.03125,
+            "width": 206.625,
+            "height": 42.390625,
+            "top": 204.03125,
+            "right": 242.8203125,
+            "bottom": 246.421875,
+            "left": 36.1953125
+          },
+          "innerWidth": 640,
+          "innerHeight": 450,
+          "scrollX": 0,
+          "scrollY": 1152.5,
+          "visible": true,
+          "uncovered": true
+        }
+      ],
+      "captures": [
+        {
+          "file": "native-2x-export-focus.png",
+          "width": 1280,
+          "height": 900,
+          "sha256": "d56e9f2753d751305eed749240ded0e9d50d3787d45db46843a59b61934c7892"
+        },
+        {
+          "file": "native-2x-file-focus.png",
+          "width": 1280,
+          "height": 900,
+          "sha256": "b6f2c8949b73a4e8d03b8af1771fff870dedb15d77c9c4283b44c47bc0d026b4"
+        },
+        {
+          "file": "native-2x-import-focus.png",
+          "width": 1280,
+          "height": 900,
+          "sha256": "269a0946de03bad0d2cc40baba7243ca12a2a79ebcba0a47b9b015409b79827d"
+        },
+        {
+          "file": "native-2x-diagnostic-focus.png",
+          "width": 1280,
+          "height": 900,
+          "sha256": "fd2c864fd67f38938c8d77f5ecd774d26cc51dacdcee4f8d0d5526b5f17aa86a"
+        },
+        {
+          "file": "native-2x-reading-1.png",
+          "width": 1280,
+          "height": 900,
+          "sha256": "ccfd01657e86fa212e27359e3997caf290bb56be5f0ef5f0ce651f4137ed9c35"
+        }
+      ],
+      "reading": [
+        {
+          "scrollY": 1563,
+          "innerHeight": 450,
+          "rect": {
+            "x": 36.1953125,
+            "y": -60.078125,
+            "width": 567.609375,
+            "height": 368,
+            "top": -60.078125,
+            "right": 603.8046875,
+            "bottom": 307.921875,
+            "left": 36.1953125
+          },
+          "scrollWidth": 640,
+          "clientWidth": 640
+        }
+      ],
+      "requests": [
+        {
+          "url": "/natal.html",
+          "method": "GET",
+          "type": "document"
+        },
+        {
+          "url": "/styles.css",
+          "method": "GET",
+          "type": "stylesheet"
+        },
+        {
+          "url": "/app.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "url": "/favicon.svg",
+          "method": "GET",
+          "type": "other"
+        }
+      ],
+      "errors": [],
+      "viewport": {
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "dpr": 2,
+        "visualViewport": {
+          "width": 640,
+          "height": 450,
+          "scale": 1
+        },
+        "clientWidth": 640,
+        "scrollWidth": 640,
+        "scrollX": 0,
+        "scrollY": 0,
+        "reduced": true,
+        "animations": 0,
+        "htmlZoom": "1",
+        "bodyZoom": "1"
+      },
+      "finalViewport": {
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "dpr": 2,
+        "visualViewport": {
+          "width": 640,
+          "height": 450,
+          "scale": 1
+        },
+        "clientWidth": 640,
+        "scrollWidth": 640,
+        "scrollX": 0,
+        "scrollY": 1006.5,
+        "reduced": true,
+        "animations": 0,
+        "htmlZoom": "1",
+        "bodyZoom": "1"
+      }
+    },
+    {
+      "factor": 4,
+      "keyboard": [],
+      "captures": [],
+      "reading": [],
+      "requests": [
+        {
+          "url": "/natal.html",
+          "method": "GET",
+          "type": "document"
+        },
+        {
+          "url": "/styles.css",
+          "method": "GET",
+          "type": "stylesheet"
+        },
+        {
+          "url": "/app.js",
+          "method": "GET",
+          "type": "script"
+        }
+      ],
+      "errors": [],
+      "viewport": {
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "dpr": 4,
+        "visualViewport": {
+          "width": 320,
+          "height": 225,
+          "scale": 1
+        },
+        "clientWidth": 320,
+        "scrollWidth": 320,
+        "scrollX": 0,
+        "scrollY": 0,
+        "reduced": true,
+        "animations": 0,
+        "htmlZoom": "1",
+        "bodyZoom": "1"
+      }
+    }
+  ],
+  "failures": [
+    {
+      "message": "Check failed: 4x: native Chrome zoom confirmed",
+      "stack": "Error: Check failed: 4x: native Chrome zoom confirmed\n    at check (file:///private/tmp/zodiacs-platform-starter-receipt-zoom/verify.mjs:22:100)\n    at file:///private/tmp/zodiacs-platform-starter-receipt-zoom/verify.mjs:46:3"
+    }
+  ],
+  "cleanup": {
+    "profile": "/private/tmp/zodiacs-platform-starter-receipt-zoom/chrome-profile-P8RBLp",
+    "ownsProfile": true,
+    "copiedAuthentication": false,
+    "restoredZoom": true,
+    "browserClosed": true,
+    "serverClosed": true,
+    "serverPort": 59087
+  }
+}

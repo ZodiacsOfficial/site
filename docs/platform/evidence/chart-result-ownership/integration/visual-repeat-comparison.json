@@ -1,0 +1,24 @@
+{
+  "sameSource": true,
+  "cases": [
+    {
+      "path": "birth-chart-kahlo-mobile.actual.png",
+      "sha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "beforeSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "byteIdentical": true
+    },
+    {
+      "path": "birth-chart-kahlo-desktop.actual.png",
+      "sha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "beforeSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "byteIdentical": true
+    },
+    {
+      "path": "birth-chart-kahlo-desktop-reduced-motion.actual.png",
+      "sha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "beforeSha256": "852cdbe9b993e7fe9fd07ef9941feb59165ff274ec0a2cebb9b5f746fe2c4db8",
+      "byteIdentical": false
+    }
+  ],
+  "allByteIdentical": false
+}

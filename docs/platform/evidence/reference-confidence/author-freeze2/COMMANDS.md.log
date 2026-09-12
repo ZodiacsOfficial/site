@@ -1,0 +1,32 @@
+# Exact execution ledger
+
+Working directory: `/private/tmp/zodiacs-platform-chart-reference-confidence`, detached delivered base f803d2543ad81343b22d49326b8b46d0e2ea03a0. Root checkout/dist never served or edited. Node22: `/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node`; Node24: `/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node`.
+
+- `node22 node_modules/vitest/vitest.mjs run src/islands/ChartCalculator.ownership.test.ts src/islands/ChartCalculator.registry-bridge.test.ts src/lib/chart-date-certainty.test.ts src/lib/moon-certainty.test.tsx src/lib/i18n/index.test.ts src/lib/i18n/ui/ru.test.ts` → `baseline-focused.log` (77 pass).
+- Product edits followed by the four affected original suites → `obsolete-expectations-original-failure.log` (four obsolete expectations fail, 51 pass).
+- Initial caller extraction and test declarations → `focused-first.log`, `confidence-second.log`, `types-first.log`; all original extraction/type errors retained.
+- Focused seven-suite commands (above plus `src/islands/ChartCalculator.confidence.test.ts`) with Node22 and Node24 → `focused-node22-final.log` / `focused-node24-final.log` (portable/legacy input-order comparator error retained), then `focused-node22-freeze2.log` / `focused-node24-freeze2.log` (93/93 each).
+- `PATH=/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:$PATH npm run build` → `build-first.log` (complete prebuild/build/postbuild success).
+- Same PATH, `npm run check` → `check.log` (new test annotation error), corrected → `check-final.log` (0 errors, 0 warnings, 11 hints).
+- `node22 node_modules/typescript/bin/tsc --noEmit` → `types-first.log`, `types-final.log`, `types-freeze2.log`, `types-freeze2-final.log`. Final three successful; first includes missing generated Astro types and the initial test annotation error.
+- `node22 node_modules/vitest/vitest.mjs run` → `full-suite-first.log` (dist absent, linked ESM suites, stale capture fingerprint), `full-suite-after-build.log` (dist issue resolved), `full-suite-freeze2.log` (same-byte package path isolated, 5039 pass/one stale capture fingerprint).
+- Exact baseline clone setup → `baseline-gates-setup.log`; bounded baseline run `node22 .../node_modules/vitest/vitest.mjs run --root /private/tmp/zodiacs-platform-chart-confidence-baseline-gates scripts/phase1-acceptance-evidence.test.mjs src/lib/engine/engine.test.ts tests/legacy-polar-fixture.test.mjs` → `baseline-affected-gates.log`. Five capture evidence tests pass; both ESM suite failures reproduce.
+- Replaced only scratch `node_modules` top-level symlink with package-level links, an identical eight-file local Astronomy Engine copy and owned caches. Exact original/copy file hashes in `dependency-path-isolation.json`. `node22 node_modules/vitest/vitest.mjs run src/lib/engine/engine.test.ts tests/legacy-polar-fixture.test.mjs` → `isolated-engine-gates.log` (67 pass).
+
+# Native execution
+
+`OUT_DIR=<evidence>/<run> CONFIDENCE_BASELINE_DIR=<evidence>/baseline node22 tests/chart-reference-confidence-drive.mjs`
+
+- `native-first` / `native-first.log`: 6 pass, 14 fail; actual initial source saved as `native-first-driver.mjs`.
+- `native-second` / `native-second.log`: 6 pass, 14 fail; source saved as `native-second-driver.mjs`.
+- `native-third` / `native-third.log`: 18 pass, two mode harness failures; source saved as `native-third-driver.mjs`.
+- `native-final` / `native-final.log`: 19 pass, Rising checkbox harness failure; source saved as `native-fourth-driver.mjs`.
+- `native-accepted` / `native-accepted.log`: 20/20 pass; exact final driver in `source-freeze2/tests/chart-reference-confidence-drive.mjs`. Its start/end source identities match. Complete bundles, original/instrumented hashes, controlled entry, downloads, screenshots, requests, reports and cleanup evidence are retained. Earlier report driver hash fields were read at completion during later harness edits; the above saved version mapping is the authoritative historical driver source, qualified rather than silently rewritten.
+
+`OUT_DIR=<evidence>/native-local-date node22 tests/local-date-reference-drive.mjs` → `native-local-date.log`, 35/35.
+
+`PATH=/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:$PATH node22 tests/t17-positions-share.mjs` → `t17.log`; owned normal-build preview terminated by existing harness.
+
+`OUT_DIR=<evidence>/native-ownership node22 tests/chart-ownership-drive.mjs` → `native-ownership.log`; 17/17 against owned normal dist. Full served asset hashes, source snapshot and browser evidence are inside its timestamped directory.
+
+`structural-checks.json`: actual TypeScript printer with comments removed proves helper executable AST equality; removing only added key lines restores each catalog byte. Node22 native Temporal is undefined. `final-source-check.json` rehashes all frozen files.

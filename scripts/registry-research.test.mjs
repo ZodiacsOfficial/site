@@ -48,22 +48,40 @@ function withFixtureEvent(inputs) {
   return { inputs: cloned, at };
 }
 
-// Pilot-window fixtures. The approval manifest's pilot has a fixed calendar
-// window (2026-08-10 to 2026-09-08); the publication rule under test is a
-// function of whether an item's day falls inside it, so the tests set the
-// window explicitly relative to the committed edition rather than trusting
-// the date the suite happens to run on.
+// Behavioral tests must not depend on today's provider coverage or on the
+// production pilot still being active. These synthetic prices and review dates
+// stay in memory; the committed-input integration test below uses real artifacts.
+async function controlledInputs() {
+  const inputs = await committedInputs();
+  const snapshot = deepClone(inputs.marketHistory.snapshots.at(-1));
+  snapshot.date = inputs.daily.date;
+  snapshot.source.readAt = `${inputs.daily.date}T12:00:00.000Z`;
+  for (const asset of snapshot.assets) {
+    asset.priceUsd = 100;
+    asset.marketCapUsd = 1000;
+    asset.liquidityUsd = 1000;
+  }
+  inputs.marketHistory.snapshots = [snapshot];
+  inputs.approvalManifest.approvals = [];
+  inputs.approvalManifest.pilot.startsOn = inputs.daily.date;
+  inputs.approvalManifest.pilot.endsOn = new Date(
+    Date.parse(`${inputs.daily.date}T00:00:00.000Z`) + 8 * DAY_MS,
+  ).toISOString().slice(0, 10);
+  return inputs;
+}
+
 function withPilotCovering(inputs) {
   const cloned = deepClone(inputs);
-  cloned.approvalManifest.pilot.endsOn = '2099-12-31';
+  cloned.approvalManifest.pilot.startsOn = inputs.daily.date;
+  cloned.approvalManifest.pilot.endsOn = new Date(Date.parse(`${inputs.daily.date}T00:00:00.000Z`) + 8 * DAY_MS).toISOString().slice(0, 10);
   return cloned;
 }
 
 function withPilotEndedBefore(inputs) {
   const cloned = deepClone(inputs);
-  const dayBefore = new Date(Date.parse(`${inputs.daily.date}T00:00:00.000Z`) - DAY_MS).toISOString().slice(0, 10);
-  cloned.approvalManifest.pilot.startsOn = '2026-08-10';
-  cloned.approvalManifest.pilot.endsOn = dayBefore < '2026-08-10' ? '2026-08-10' : dayBefore;
+  const start = Date.parse(`${inputs.daily.date}T00:00:00.000Z`);
+  cloned.approvalManifest.pilot.startsOn = new Date(start - 30 * DAY_MS).toISOString().slice(0, 10);
+  cloned.approvalManifest.pilot.endsOn = new Date(start - DAY_MS).toISOString().slice(0, 10);
   return cloned;
 }
 
@@ -100,7 +118,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('proves that market fixture changes cannot alter sky scores or sky/traditional copy', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const changed = deepClone(inputs);
     for (const snapshot of changed.marketHistory.snapshots) {
       for (const asset of snapshot.assets) {
@@ -114,6 +132,8 @@ describe('Registry Research deterministic publication', () => {
     const original = originalLedger.items.find((item) => item.kind === 'daily-market-brief');
     const mutated = changedLedger.items.find((item) => item.kind === 'daily-market-brief');
 
+    expect(original.market.available).toBe(true);
+    expect(mutated.market.available).toBe(true);
     expect(mutated.symbolicScore).toEqual(original.symbolicScore);
     expect(mutated.sections.skyFact).toEqual(original.sections.skyFact);
     expect(mutated.sections.traditionalReading).toEqual(original.sections.traditionalReading);
@@ -121,7 +141,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('keeps the sky brief intact when paired market data is missing and rejects misdated market evidence', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const missing = deepClone(inputs);
     missing.marketHistory.snapshots = missing.marketHistory.snapshots.filter((snapshot) => snapshot.date !== inputs.daily.date);
     const ledger = buildRegistryResearchLedger(missing);
@@ -138,13 +158,11 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('keeps pilot drafts out of public feeds until their exact artifact hashes are reviewed', async () => {
-    // The committed manifest's pilot ended on 2026-09-08. Pin the pilot over
-    // the committed edition so this rule is tested on every calendar day
-    // instead of only during the pilot window itself.
-    const inputs = withPilotCovering(await committedInputs());
+    const inputs = await controlledInputs();
     const ledger = buildRegistryResearchLedger(inputs);
     const draftOnly = publishRegistryResearch({ ledger, approvalManifest: inputs.approvalManifest });
     expect(draftOnly.feed.items).toEqual([]);
+    expect(draftOnly.publication.items).toEqual([]);
 
     const item = ledger.items.find((candidate) => candidate.kind === 'daily-market-brief');
     const approvedManifest = deepClone(inputs.approvalManifest);
@@ -169,7 +187,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('publishes only allowlisted deterministic templates once the pilot has ended', async () => {
-    const inputs = withPilotEndedBefore(await committedInputs());
+    const inputs = withPilotEndedBefore(await controlledInputs());
     const ledger = buildRegistryResearchLedger(inputs);
     const { allowlist, published } = (() => {
       const result = publishRegistryResearch({ ledger, approvalManifest: inputs.approvalManifest });
@@ -200,7 +218,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('freezes automatically published items so a later same-day observation cannot rewrite them', async () => {
-    const inputs = withPilotEndedBefore(await committedInputs());
+    const inputs = withPilotEndedBefore(await controlledInputs());
     const first = buildRegistryResearchLedger(inputs);
     const firstBrief = first.items.find((item) => item.kind === 'daily-market-brief');
     expect(firstBrief).toBeDefined();
@@ -229,7 +247,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
-    const fixture = withFixtureEvent(await committedInputs());
+    const fixture = withFixtureEvent(await controlledInputs());
     const inputs = fixture.inputs;
     const ledger = buildRegistryResearchLedger(inputs);
     // The ledger clock is the latest market snapshot's read time, which can
@@ -258,14 +276,16 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('rejects stale approval hashes and preserves an already approved immutable item during replay', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const first = buildRegistryResearchLedger(inputs);
     const item = first.items.find((candidate) => candidate.kind === 'daily-market-brief');
     const approvedManifest = deepClone(inputs.approvalManifest);
     approvedManifest.approvals.push(approvalFor(item));
 
     const changed = deepClone(inputs);
-    changed.marketHistory.snapshots.at(-1).assets[0].priceUsd *= 5;
+    for (const asset of changed.marketHistory.snapshots.at(-1).assets) asset.priceUsd *= 5;
+    const regenerated = buildRegistryResearchLedger(changed);
+    expect(regenerated.items.find((candidate) => candidate.id === item.id).artifactHash).not.toBe(item.artifactHash);
     changed.existingLedger = first;
     changed.approvalManifest = approvedManifest;
     const replay = buildRegistryResearchLedger(changed);
@@ -278,7 +298,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('appends observations using the first qualifying archive snapshot and reports actual elapsed time', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const first = buildRegistryResearchLedger(inputs);
     const futureInputs = deepClone(inputs);
     const latest = deepClone(futureInputs.marketHistory.snapshots.at(-1));
@@ -287,9 +307,14 @@ describe('Registry Research deterministic publication', () => {
     latest.date = latest.source.readAt.slice(0, 10);
     const sign = strongestMarketCheck(first).market.sign;
     const changedAsset = latest.assets.find((asset) => asset.sign === sign);
+    expect(changedAsset).toBeDefined();
     changedAsset.priceUsd *= 1.1;
     changedAsset.liquidityUsd *= 0.9;
-    futureInputs.marketHistory.snapshots.push(latest);
+    const later = deepClone(latest);
+    later.source.readAt = new Date(baseMs + 49 * 3_600_000).toISOString();
+    later.date = later.source.readAt.slice(0, 10);
+    later.assets.find((asset) => asset.sign === sign).priceUsd *= 2;
+    futureInputs.marketHistory.snapshots.push(latest, later);
     futureInputs.existingLedger = first;
 
     const replay = buildRegistryResearchLedger(futureInputs);
@@ -302,7 +327,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('allows only disclosed deterministic templates after the pilot', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const postPilot = deepClone(inputs.approvalManifest);
     postPilot.pilot.startsOn = '2026-01-01';
     postPilot.pilot.endsOn = '2026-01-30';
@@ -317,7 +342,7 @@ describe('Registry Research deterministic publication', () => {
   });
 
   it('rejects directional claims and XML-escapes published summaries', async () => {
-    const inputs = await committedInputs();
+    const inputs = await controlledInputs();
     const ledger = buildRegistryResearchLedger(inputs);
     const item = ledger.items[0];
     expect(() => validateRegistryResearchItem({ ...item, title: 'A bullish price target' }, { requireHash: false }))

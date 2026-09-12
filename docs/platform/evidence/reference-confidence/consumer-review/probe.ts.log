@@ -1,0 +1,98 @@
+import assert from 'node:assert/strict';
+import {writeFileSync,mkdirSync} from 'node:fs';
+import {applyConfidence as applyBaseline} from './confidence-baseline';
+import {applyConfidence as applyCandidate} from './confidence-candidate';
+import {h} from 'preact';
+import {render} from 'preact-render-to-string';
+import {buildSceneModel} from './site/src/lib/scene/build';
+import Inspector from './site/src/islands/explorer/Inspector';
+import ReadingPath from './site/src/islands/explorer/ReadingPath';
+import ChartShareDialog from './site/src/islands/ChartShareDialog';
+import {PositionsOnlyResult} from './site/src/islands/PositionsShareSurface';
+mkdirSync('/private/tmp/zodiacs-platform-reference-confidence-independent-review/freeze2/markup',{recursive:true});
+import { createHash } from 'node:crypto';
+import { resolveLocalToUtc, localDateContainsUtc } from './site/src/lib/time/localToUtc';
+import { localDateEndpointsUtc, stableBodySignSlug } from './site/src/lib/chart-date-certainty';
+import { computeBodies, bodyLongitude } from './site/src/lib/engine/full';
+import { computeCalculatorReceipt } from './site/src/lib/engine/calculator-receipt';
+import { moonCandidates, moonIsUncertain, moonCandidatesFromEndpoints } from './site/src/lib/moon-certainty';
+import { buildChartContext } from './site/src/lib/chart-context';
+import { approachRead } from './site/src/lib/approach';
+import { communicationRead } from './site/src/lib/communication';
+import { chartSignature } from './site/src/lib/chart-signature';
+import { bigThreePlacements, signatureCardContent, communicationCardContent, approachCardContent } from './site/src/lib/share-card';
+import { encodePositionsLink, decodePositionsLink } from './site/src/lib/share-positions';
+import { positionsReading } from './site/src/lib/share-positions-reading';
+import { encodeChartLink, decodeChartLink } from './site/src/lib/share';
+import { signForLongitude } from './site/src/lib/signs';
+const sha=(s:string)=>createHash('sha256').update(s).digest('hex');
+const numerical=(chart:any)=>{const {moonSignCandidates,...rest}=chart;return JSON.stringify(rest)};
+const fmt=(zone:string,instant:Date)=>new Intl.DateTimeFormat('en-GB-u-ca-gregory-nu-latn', {timeZone:zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,hourCycle:'h23'}).format(instant);
+const controls=[
+ {name:'Toronto',date:'1919-03-31',zone:'America/Toronto',lat:43.6532,lon:-79.3832,witness:'1919-03-31T04:30:00.000Z',previous:'1919-03-31T04:29:59.999Z',sign:'pisces',candidate:'aries'},
+ {name:'Juneau',date:'1867-10-18',zone:'America/Juneau',lat:58.3019,lon:-134.4197,witness:'1867-10-19T00:31:13.000Z',previous:'1867-10-19T00:31:12.999Z',sign:'cancer',candidate:'gemini'},
+ {name:'Bangkok ordinary',date:'2000-01-01',zone:'Asia/Bangkok',lat:13.7563,lon:100.5018},
+ {name:'London two candidates',date:'1990-01-01',zone:'Europe/London',lat:51.5074,lon:-0.1278},
+];
+function consumers(chart:any){
+ const context=buildChartContext({bodies:chart.bodies,timeKnown:chart.input.timeKnown,moonSignCandidates:chart.moonSignCandidates,angles:chart.angles,houses:chart.houses});
+ return {candidates:moonCandidates(chart),uncertain:moonIsUncertain(chart),moonContext:context.placements.find(p=>p.body==='Moon'),approach:approachRead(chart),communication:communicationRead(chart),signature:chartSignature(chart),bigThree:bigThreePlacements(chart),signatureCard:signatureCardContent(chart),communicationCard:communicationCardContent(chart),approachCard:approachCardContent(chart)};
+}
+function renderConsumers(chart:any,name:string,candidates:string[],verify=true){
+ const scene=buildSceneModel(chart);
+ const token=encodePositionsLink({bodies:chart.bodies,angles:chart.angles,houseSystem:'whole',engineVersion:chart.engineVersion});const received=decodePositionsLink(token!);assert(received);
+ const markup={
+ inspector:render(h(Inspector,{scene,selection:{kind:'body',body:'Moon'},onSelect:()=>{},locale:'en'})),
+ shareDialog:render(h(ChartShareDialog,{chart,locale:'en',mode:'moon',card:'idle',moonAmbiguous:moonIsUncertain(chart),onCardStateChange:()=>{},onClose:()=>{}})),
+ readingPath:render(h(ReadingPath,{placements:chart.bodies.filter((b:any)=>!b.body.includes('Node')).map((b:any)=>({...b,house:null})),topAspects:[{a:'Sun',b:'Moon',type:'sextile',orb:0.1,applying:false}],weather:{elements:{fire:0,earth:0,air:0,water:10},modalities:{cardinal:10,fixed:0,mutable:0},lines:['Unverified ten-planet claim']},risingLon:null,housesKnown:false,moonSignCandidates:candidates,onShowOnChart:()=>{}})),
+ positions:render(h(PositionsOnlyResult,{chart:received,locale:'en'})),
+ };
+ if(verify){
+  assert(markup.inspector.includes('Needs a birth time'));assert(!markup.inspector.includes('How the sign shapes it'));
+  assert(markup.shareDialog.includes('Needs a birth time'));assert(!markup.shareDialog.includes('calc-share-dialog__placement-glyph'));
+  assert(markup.readingPath.includes('Needs a birth time'));assert(!markup.readingPath.includes('/learn/placements/moon-in-'));assert(!markup.readingPath.includes('Sun sextile Moon'));assert(!markup.readingPath.includes('Unverified ten-planet claim'));
+  assert(markup.positions.includes('Needs a birth time'));
+ }
+ const record:any={};for(const [surface,text] of Object.entries(markup)){const file=name.replaceAll(' ','-')+'-'+surface+'.html';writeFileSync('/private/tmp/zodiacs-platform-reference-confidence-independent-review/freeze2/markup/'+file,text);record[surface]={file,sha256:sha(text),bytes:Buffer.byteLength(text)};}return record;
+}
+const rows=[];
+for(const input of controls){
+ const resolved=resolveLocalToUtc(input.date,'12:00',input.zone);assert(localDateContainsUtc(input.date,resolved.utc,input.zone));
+ const portable=computeCalculatorReceipt({utc:resolved.utc,latitude:input.lat,longitude:input.lon,houseSystem:'whole',timeKnown:false,flags:resolved.flags}, {date:input.date,time:'12:00',timeZone:input.zone,offsetMinutes:resolved.offsetMinutes,reference:'local-noon'});assert(portable);
+ const chart=portable.chart, originalNumeric=numerical(chart), originalReceipt=portable.envelopeJson;
+ const endpoints=localDateEndpointsUtc(input.date,input.zone),start=computeBodies(endpoints.start),end=computeBodies(endpoints.end);
+ const baselineEvents:any[]=[],candidateEvents:any[]=[];
+ const captured={date:input.date,city:{tz:input.zone},timeKnown:false};
+ const baselineBranch=applyBaseline(chart,captured,'full',baselineEvents);assert(baselineBranch);
+ const before=consumers(chart), policy={...chart},candidateBranch=applyCandidate(policy,captured,'full',candidateEvents),after=consumers(policy);
+ assert(candidateBranch);assert.equal(candidateBranch.nextMoonAmbiguous,true);assert.equal(candidateBranch.nextRegistryRecordSlug,null);assert.equal(candidateEvents.length,0);assert.equal(baselineEvents.length,3);
+ const markup=renderConsumers(policy,input.name,after.candidates);
+ const baselineMarkup=renderConsumers(chart,input.name+' baseline',before.candidates,false);
+ assert.equal(numerical(policy),originalNumeric);assert.equal(portable.envelopeJson,originalReceipt);
+ assert.deepEqual(after.candidates,[]);assert.equal(after.moonContext?.status,'unresolved');assert.equal(after.moonContext?.sign,null);
+ assert.equal(after.approach.moon,null);assert.equal(after.communication.moonSign,null);assert(after.communication.aspects.every(x=>x.target!=='Moon'));
+ assert.equal(after.bigThree.find(x=>x.kind==='moon')?.slug,'');
+ assert.equal(after.communicationCard.rows.find(x=>x.body==='Moon')?.slug,'');
+ assert.equal(after.approachCard.rows.find(x=>x.body==='Moon')?.slug,'');
+ const pos=(c:any)=>encodePositionsLink({bodies:c.bodies,angles:c.angles,houseSystem:'whole',engineVersion:c.engineVersion});
+ assert.equal(pos(chart),pos(policy));const decoded=decodePositionsLink(pos(policy)!);assert(decoded);assert(moonIsUncertain(decoded));
+ assert(positionsReading(decoded).topAspects.every(a=>a.a!=='Moon'&&a.b!=='Moon'));
+ const birth={date:input.date,time:null,timeKnown:false,lat:input.lat,lon:input.lon,tz:input.zone,houseSystem:'whole' as const};
+ const birthToken=encodeChartLink(birth);assert.equal(decodeChartLink(birthToken)?.timeKnown,false);
+ const savedProjection=(c:any)=>JSON.stringify({birth:{date:input.date,time:null,timeKnown:false,place:{lat:input.lat,lon:input.lon,tz:input.zone}},summary:{engineVersion:c.engineVersion,utcISO:c.input.utc.toISOString(),houseSystem:c.houses?.system??c.input.houseSystem,bodies:c.bodies.map((b:any)=>({body:b.body,lon:b.lon,retrograde:b.retrograde})),angles:c.angles?{asc:c.angles.asc,mc:c.angles.mc}:null,flags:c.flags}});
+ assert.equal(savedProjection(chart),savedProjection(policy));
+ let witness=null;
+ if(input.witness){
+  const utc=new Date(input.witness),previous=new Date(input.previous!);const longitude=bodyLongitude('Moon',utc);
+  assert(localDateContainsUtc(input.date,utc,input.zone));assert(!localDateContainsUtc(input.date,previous,input.zone));
+  assert.equal(signForLongitude(longitude).slug,input.sign);assert.deepEqual(before.candidates,[input.candidate]);assert(!before.candidates.includes(input.sign!));
+  witness={utc:utc.toISOString(),local:fmt(input.zone,utc),member:true,moonLongitude:longitude,sign:signForLongitude(longitude).slug,previous:{utc:previous.toISOString(),local:fmt(input.zone,previous),member:false}};
+ }
+ rows.push({input,confidenceBranches:{baseline:{nextMoonAmbiguous:baselineBranch.nextMoonAmbiguous,nextRegistryRecordSlug:baselineBranch.nextRegistryRecordSlug,events:baselineEvents},candidate:{nextMoonAmbiguous:candidateBranch.nextMoonAmbiguous,nextRegistryRecordSlug:candidateBranch.nextRegistryRecordSlug,events:candidateEvents}},markup,baselineMarkup,reference:{utc:resolved.utc.toISOString(),local:fmt(input.zone,resolved.utc),offsetMinutes:resolved.offsetMinutes,flags:resolved.flags},endpoints:{start:endpoints.start.toISOString(),end:endpoints.end.toISOString(),startLocal:fmt(input.zone,endpoints.start),endLocal:fmt(input.zone,endpoints.end)},witness,before,policy:after,unchanged:{numericalJsonSha256:sha(originalNumeric),receiptSha256:sha(originalReceipt),positionsTokenSha256:sha(pos(chart)!),birthTokenSha256:sha(birthToken),savedProjectionSha256:sha(savedProjection(policy))},currentRegistrySun:{endpointSlug:stableBodySignSlug('Sun',start,end),referenceSlug:signForLongitude(chart.bodies.find(b=>b.body==='Sun')!.lon).slug},policyRegistrySun:null});
+}
+const known=[];
+for(const input of controls.slice(0,2)){
+ const resolved=resolveLocalToUtc(input.date,'12:00',input.zone);const p=computeCalculatorReceipt({utc:resolved.utc,latitude:input.lat,longitude:input.lon,houseSystem:'whole',timeKnown:true,flags:resolved.flags},{date:input.date,time:'12:00',timeZone:input.zone,offsetMinutes:resolved.offsetMinutes,reference:'supplied-instant'});assert(p);const original=JSON.stringify(p.chart);const events:any[]=[];const branch=applyCandidate(p.chart,{date:input.date,city:{tz:input.zone},timeKnown:true},'full',events);assert(branch);assert.equal(JSON.stringify(p.chart),original);assert.equal(branch.nextMoonAmbiguous,false);assert.equal(branch.nextRegistryRecordSlug,signForLongitude(p.chart.bodies.find(b=>b.body==='Sun')!.lon).slug);assert.deepEqual(events,[]);const c=consumers(p.chart);assert(!c.uncertain);assert.equal(c.moonContext?.status,'established');known.push({input,candidates:c.candidates,moonStatus:c.moonContext?.status,moonAdvicePresent:!!c.approach.moon,numericalSha256:sha(numerical(p.chart)),receiptSha256:sha(p.envelopeJson)});
+}
+const skipped=resolveLocalToUtc('2011-12-30','12:00','Pacific/Apia');assert(!localDateContainsUtc('2011-12-30',skipped.utc,'Pacific/Apia'));
+console.log(JSON.stringify({runtime:{node:process.version,versions:process.versions,temporalAvailable:typeof (globalThis as any).Temporal!=='undefined'},qualification:'Actual AST-bounded baseline/frozen confidence span execution in declared synchronous wrappers, actual unchanged consumer helpers and four actual Preact consumer SSR components. No full ChartCalculator/DOM/async ownership execution, no independent ephemeris oracle, no full-date completeness, no persistence or network calls. Coordinates are explicit finite fixture coordinates, not a city-data lookup. Prior preparation numerical/receipt projection assertions retained as additional limited checks, not browser save proof.',unknown:rows,known,skipped:{date:'2011-12-30',zone:'Pacific/Apia',reference:skipped.utc.toISOString(),member:false}},null,2));

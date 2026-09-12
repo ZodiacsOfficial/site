@@ -1,0 +1,1 @@
+src/lib/receipt-download.test.ts(29,54): error TS2493: Tuple type '[]' of length '0' has no element at index '0'.

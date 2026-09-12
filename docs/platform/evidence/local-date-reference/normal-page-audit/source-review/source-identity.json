@@ -1,0 +1,130 @@
+{
+  "rootHeadAtCapture": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "c7": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "base": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "capturedUtc": "2026-09-08T11:18:42.305993+00:00",
+  "records": [
+    {
+      "version": "c7",
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "bytes": 120491
+    },
+    {
+      "version": "c7",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+      "bytes": 11616
+    },
+    {
+      "version": "c7",
+      "path": "src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "bytes": 3543
+    },
+    {
+      "version": "c7",
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905",
+      "bytes": 1468
+    },
+    {
+      "version": "c7",
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "sha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1",
+      "bytes": 13369
+    },
+    {
+      "version": "c7",
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b",
+      "bytes": 8891
+    },
+    {
+      "version": "head3845",
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "bytes": 120491
+    },
+    {
+      "version": "head3845",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+      "bytes": 11616
+    },
+    {
+      "version": "head3845",
+      "path": "src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "bytes": 3543
+    },
+    {
+      "version": "head3845",
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "bytes": 1676
+    },
+    {
+      "version": "head3845",
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "bytes": 14534
+    },
+    {
+      "version": "head3845",
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "bytes": 10545
+    },
+    {
+      "version": "root",
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263",
+      "bytes": 120926
+    },
+    {
+      "version": "root",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "bytes": 12032
+    },
+    {
+      "version": "root",
+      "path": "src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "bytes": 3543
+    },
+    {
+      "version": "root",
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "bytes": 1676
+    },
+    {
+      "version": "root",
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "bytes": 14534
+    },
+    {
+      "version": "root",
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "bytes": 10545
+    },
+    {
+      "version": "frozen",
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263",
+      "bytes": 120926
+    },
+    {
+      "version": "frozen",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "bytes": 12032
+    }
+  ],
+  "rootChartAndMoonExactlyMatchC014Freeze": true,
+  "c012ChangesNeitherIslandNorBirthFields": true
+}

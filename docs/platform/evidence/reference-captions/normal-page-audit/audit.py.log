@@ -1,0 +1,64 @@
+import pathlib,json,hashlib,tarfile,collections,struct
+from urllib.parse import urlsplit,unquote
+p=pathlib.Path('/Users/chiburashka/.codex/worktrees/4806/site/docs/platform/evidence/reference-captions/root-integration')
+out=pathlib.Path(__file__).resolve().parent
+h=lambda b:hashlib.sha256(b).hexdigest()
+assert h((p/'manifest.json').read_bytes())=='f2219750f04a88c1b69c05b1c59b0c4dd44a0cab30f43b07aebf33b94a451273'
+manifest=json.loads((p/'manifest.json').read_text());assert len(manifest['records'])==14
+for r in manifest['records']:
+ b=(p/r['path']).read_bytes();assert len(b)==r['bytes'] and h(b)==r['sha256']
+mapping=json.loads((p/'raw-members.json').read_text())
+with tarfile.open(p/'raw-evidence.tar.gz') as tf:
+ members=tf.getmembers();assert len(members)==321 and all(m.isfile() for m in members)
+ objects={m.name:tf.extractfile(m).read() for m in members}
+ assert all(name=='objects/'+h(b)+'.log' for name,b in objects.items())
+raw={r['path']:objects[r['archiveMember']] for r in mapping['records']}
+assert len(raw)==340 and len(objects)==321
+for r in mapping['records']:assert len(raw[r['path']])==r['bytes'] and h(raw[r['path']])==r['sha256']
+report=json.loads(raw['normal-pages/result.json']);cats=json.loads((out/'catalog-values.json').read_text());checks=[]
+def check(name,condition,detail=None):
+ assert condition,name
+ checks.append({'name':name,'passed':True,'detail':detail})
+rows=report['results'];check('24 unique complete locale/mode/width groups',len(rows)==24 and {(r['locale'],r['mode'],r['width']) for r in rows}=={(l,m,w) for l in cats for m in ['tool','moon-mode'] for w in [1280,390]})
+check('Single actual passing execution and per-group records',report['outcome']=='passed' and all(r['passed'] and r['contextClosed'] and json.loads(raw['normal-pages/'+r['name']+'.json'])==r for r in rows))
+before=report['sourceBefore'];after=report['sourceAfter'];source=json.loads(raw['source-manifest.json'])['records'];final=json.loads(raw['final-source-manifest.json'])['records']
+check('46 before/after exact source records',len(before)==46 and before==after==source and report['freezeSha256']==h(raw['source-manifest.json']))
+for r in final:check('Final source bytes '+r['path'],len(raw['final-source/'+r['path']])==r['bytes'] and h(raw['final-source/'+r['path']])==r['sha256'])
+final_by={r['path']:r for r in final}
+check('All46 measured sources preserved in final51',len(final)==51 and all(r==final_by[r['path']] for r in before))
+frozen_path=pathlib.Path('/private/tmp/zodiacs-platform-reference-caption-review/delivery/freeze.json')
+frozen_bytes=frozen_path.read_bytes();assert h(frozen_bytes)=='c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644'
+frozen=json.loads(frozen_bytes)
+check('Final root33 match independently accepted immutable author freeze',len(frozen['files'])==33 and all(final_by[path]['sha256']==v['sha256'] and final_by[path]['bytes']==v['bytes'] for path,v in frozen['files'].items()))
+driver=raw['normal-pages.mjs'];old=raw['normal-pages.preflight1.mjs'];check('Executed driver exact hash and one preflight method fix',h(driver)==report['driverSha256'] and old.count(b'row.requests.filter(r=>r.method()')==1 and old.replace(b'row.requests.filter(r=>r.method()',b'row.requests.filter(r=>r.method')==driver)
+check('No actual original-method driver execution claimed',b'preflight' in raw['README.md'] and b'before the first run' in raw['README.md'])
+captures=[];flow=[]
+for r in rows:
+ states={k:v for k,v in r.items() if isinstance(v,dict) and 'profile' in v}
+ check(r['name']+' observed clean state domain',all(s['profile'] is None and s['error'] is None and not s['overflow'] for s in states.values()))
+ check(r['name']+' page/console errors absent',r['pageErrors']==[] and r['consoleErrors']==[])
+ for cap in r['captures']:
+  b=raw['normal-pages/'+cap['path']];assert b[:8]==b'\x89PNG\r\n\x1a\n';width,height=struct.unpack('>II',b[16:24]);assert width==r['width'] and height==1000
+  assert len(b)==cap['bytes'] and h(b)==cap['sha256'];captures.append(cap)
+ if r['mode']=='tool':
+  for state,key in [('utcReference','referenceUtcCaption'),('utcKnown','utcTimeCaption'),('localReference','referenceLocalCaption'),('returnToUtc','utcTimeCaption')]:
+   s=r[state];assert s['result'] and s['notices']==[{'text':cats[r['locale']][key],'visible':True,'insideDetails':False}] and s['openDetails']==0
+  assert r['localKnown']['result'] and r['localKnown']['notices']==[] and r['localKnown']['openDetails']==0
+  assert all(r['localKnown'][key]==r['localReference'][key] for key in ['phaseTool','illumination','signline'])
+  assert not r['utcEdit']['result'] and not r['cityEdit']['result']
+  flow.append({'group':r['name'],'localReferenceMatchesKnown1300Display':True,'knownUTCNoticeVisible':True,'knownLocalCaptionEmpty':True,'clockAndPlaceEditsClear':True})
+ else:
+  a=cats[r['locale']]['moonPhaseAtReference'];b=cats[r['locale']]['moonPhaseAtBirth'];assert r['reference']['phase'].startswith(a+': ') and r['known']['phase'].startswith(b+': ') and r['reference']['phase'][len(a):]==r['known']['phase'][len(b):]
+  flow.append({'group':r['name'],'unknownReferenceLabelAndKnownBirthLabel':True,'phaseDisplaySuffixExact':True})
+check('48 exact screenshot records and PNG dimensions',len(captures)==48 and len({c['path'] for c in captures})==48)
+served=report['served'];check('104 distinct served bytes',len(served)==104 and len({s['path'] for s in served})==104)
+for s in served:assert h(raw['normal-served-files/'+s['path']])==s['sha256'] and len(raw['normal-served-files/'+s['path']])==s['bytes']
+index=json.loads(raw['normal-served-files/data/cities/index.json']);city_rows=json.loads(raw['normal-served-files/data/cities/k.json']);city=[r for r in city_rows if r[0]=='Khartoum' and index['tz'][r[6]]=='Africa/Khartoum'];check('Unique actual served Khartoum choice',len(city)==1 and report['city']['zone']=='Africa/Khartoum' and report['city']['name']=='Khartoum',report['city'])
+requests=[q for r in rows for q in r['requests']];server=report['serverRequests'];origin=report['origin'];check('1586 actual observed local GET requests',len(requests)==len(server)==1586 and all(q['method']=='GET' and not q['blocked'] and q['url'].startswith(origin+'/') and not urlsplit(q['url']).path.startswith('/api/') for q in requests) and all(q['method']=='GET' and q['status']==200 for q in server))
+check('Browser and server request multisets agree',collections.Counter((q['method'],unquote(urlsplit(q['url']).path)) for q in requests)==collections.Counter((q['method'],q['path']) for q in server))
+failures=[f for r in rows for f in r['failures']];check('Any request failures explicitly classified',all(f['knownFooterTeardown'] for f in failures),{'recordedFailures':len(failures)})
+focus=collections.Counter(s['focus']['tag'] for r in rows for s in r.values() if isinstance(s,dict) and s.get('result') is True and 'focus' in s)
+check('Native result focus observations are headings',set(focus)=={'H2'},dict(focus))
+check('Owned cleanup recorded',report['cleanup']=={'contextsClosed':True,'browserClosed':True,'serverClosed':True})
+result={'sourcePackageManifestSha256':h((p/'manifest.json').read_bytes()),'checks':checks,'flowGroups':flow,'normalGroupCount':24,'screenshotsVerified':48,'servedFilesVerified':104,'sourceBeforeAfter':46,'finalSourcesVerified':51,'browserAndServerRequests':1586,'resultFocusObservations':dict(focus),'preflightCorrectionOnly':True,'method':'Read and independently reconcile sealed driver/results/source/catalog literals/raw PNG hashes and served bytes; no browser rerun or numerical recomputation.','limits':['Observed display equality at Khartoum is not a numerical oracle or whole-date proof.','Focus is read from recorded snapshots, not an independent accessibility test.','Configured blocking and observed zero attempted external/API/nonGET requests apply to these fresh anonymous measured flows only.']}
+(out/'audit-result.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n');print(json.dumps({k:v for k,v in result.items() if k not in ['checks','flowGroups','limits']})[:-1]+',"checks":'+str(len(checks))+'}')

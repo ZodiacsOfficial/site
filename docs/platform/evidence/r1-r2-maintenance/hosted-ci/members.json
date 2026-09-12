@@ -1,0 +1,42 @@
+[
+  {
+    "path": "ci-final.json",
+    "bytes": 28743,
+    "sha256": "85fc888ddb8be5b8e6e69e6eb75191e3019713ff260c1b58459a7af1e82d976b"
+  },
+  {
+    "path": "ci-artifacts.json",
+    "bytes": 1499,
+    "sha256": "bde540ac23987482bfe6e9a7c53039b1f103e21ebc3e3c46636ba430d9ff1d58"
+  },
+  {
+    "path": "ci-build-final.log",
+    "bytes": 1419998,
+    "sha256": "fa11d90cd9a3bec46388086e67670b7ca94fc2ecb62627fa2320bb3a92f71c79"
+  },
+  {
+    "path": "pr-final.json",
+    "bytes": 5157,
+    "sha256": "bba798817e074c722e75679e8e19b0a842f7235ae777106f044bdd1a7bca93f9"
+  },
+  {
+    "path": "pr-files.json",
+    "bytes": 1124927,
+    "sha256": "3a7d0b969ac6753429a022d5ce06501017a86d445643233c7485f6b42568637c"
+  },
+  {
+    "path": "pr-file-verification.json",
+    "bytes": 2812,
+    "sha256": "973edafa2592d13030814b8a83a167367e669637cbd6d00a7d469d91a024ea43"
+  },
+  {
+    "path": "hosted-summary.json",
+    "bytes": 5554,
+    "sha256": "63805dfa584015796fdc2ef81c1081e75ceb736334c46bec9be1cd5f40591632"
+  },
+  {
+    "path": "check-final.log",
+    "bytes": 4449,
+    "sha256": "fcdb5fc652c14eb0760e754d177537115090f8de567949faf4625f7e679d9094"
+  }
+]

@@ -1,0 +1,97 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3563,
+    "sha256": "fdf3f588b20d4ef292cba546d77c883eaea52a8797d171d1acc40f1b1dafb78e"
+  },
+  {
+    "path": "build-receipt-final.json",
+    "bytes": 710,
+    "sha256": "553b1bf1ff70c86675353e8f124af45ce0bc1044294c4a0fdec91d6660b7e5b6"
+  },
+  {
+    "path": "build.log",
+    "bytes": 282741,
+    "sha256": "ab5af08ae5f6f4024ed435e4553a54fd5204e49651cff854fc7165cba1c319c5"
+  },
+  {
+    "path": "capture-comparison-final.json",
+    "bytes": 5176,
+    "sha256": "925145e2904bca4969afaa49498ef733cfcd253f31b4096917cd8f28ae20cc18"
+  },
+  {
+    "path": "chart-ownership.log",
+    "bytes": 1162,
+    "sha256": "33e46c4c4e8c7b1cf71470582a9de72e8b8cf24f7c466fb7cd1e386ba8061292"
+  },
+  {
+    "path": "check-final.log",
+    "bytes": 4438,
+    "sha256": "74c632c7e2da81a8b0ed1181e1000fedb1419e15cad5f9a5b0933915c50401f5"
+  },
+  {
+    "path": "final-source-identity.json",
+    "bytes": 2916,
+    "sha256": "b519f9c88ab5b4af597a9bc9ee519808fa026ae7eb317b0f8bf751744b1fc951"
+  },
+  {
+    "path": "moon-ownership.log",
+    "bytes": 13928,
+    "sha256": "2ebfd844dca033dc15f616c1aa21e5016fde6724db9e70c672e6ff617647f7b9"
+  },
+  {
+    "path": "native.log",
+    "bytes": 2042,
+    "sha256": "2aca8db551701ce9c6f1656957075260c77b2cd0e8dd9fcff9a73414bdf9caa5"
+  },
+  {
+    "path": "normal-chart-harness-correction.json",
+    "bytes": 1240,
+    "sha256": "c6b033390df51c5d5e7354de6911d85c0c2d418e3b0efd8150524f32975ee933"
+  },
+  {
+    "path": "normal-chart-run2.log",
+    "bytes": 506,
+    "sha256": "b14a4978e37f064c933a3a977d4da99bf003f332300a8304d7dfa8644568708d"
+  },
+  {
+    "path": "normal-page-final-analysis.json",
+    "bytes": 16689,
+    "sha256": "19de1cdbaf5f4e055ed9835458265524f5b854912ee6300bfe64ba2856d068af"
+  },
+  {
+    "path": "normal-page-run1.log",
+    "bytes": 969,
+    "sha256": "3fd0cc7ca042b845a2e347fbb6859e6b34000206fa26098ed948442549fca3ed"
+  },
+  {
+    "path": "phase1-manifest-final.json",
+    "bytes": 12353,
+    "sha256": "48bf096c3b33245f60838fdf0f4bf038009e600f4d7a32c8ee0dc9a353a63f1d"
+  },
+  {
+    "path": "phase1.log",
+    "bytes": 1513,
+    "sha256": "17c8a58aceced0bc21599e416dfa29326ca272f53c758d2d1faf8fc9f7c7c9a8"
+  },
+  {
+    "path": "raw-members.json",
+    "bytes": 37427,
+    "sha256": "f08631d14635a36c4520809405bcb3626bbdcae4a8f27c04dc3aa449a8b3a156"
+  },
+  {
+    "path": "raw.tar.gz",
+    "bytes": 13587224,
+    "sha256": "eda066242c86316a859696389a1b9e90d2e38a852445795dd2b7a55ea041be69"
+  },
+  {
+    "path": "scope-final.log",
+    "bytes": 112,
+    "sha256": "6c6a5a1656cae08adaaef0352fb7e139311819d325f2211b9f04b1f7476ff540"
+  },
+  {
+    "path": "test-final.log",
+    "bytes": 34369,
+    "sha256": "dea79d13546f1cf3aba70084aca47f03dfe3183271310fe852898f709be41630"
+  }
+]

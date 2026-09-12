@@ -1,0 +1,8 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+import {runAcceptance} from './acceptance-checks.mjs';
+const out='/private/tmp/zodiacs-platform-site-seconds-adoption-evidence';
+const identity=JSON.parse(await readFile(out+'/source-freeze1-identity.json','utf8'));
+for(const [file,hash] of Object.entries(identity.files))if(createHash('sha256').update(await readFile(identity.sourceCheckout+'/'+file)).digest('hex')!==hash)throw Error('Source changed');
+const report={runtime:process.version,versions:process.versions,checksSha256:createHash('sha256').update(await readFile(out+'/acceptance-checks.mjs')).digest('hex'),subjectIdentity:JSON.parse(await readFile(out+'/acceptance-subject-identity.json','utf8')),attribution:'Author acceptance, not independent human review',...runAcceptance(JSON.parse(await readFile(out+'/historical-counterexamples.json','utf8')))};
+await writeFile(out+'/'+process.argv[2],JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({runtime:report.runtime,engineVersion:report.engineVersion,totals:report.totals,retainedSignedZoneLimitation:report.retainedSignedZoneLimitation}));

@@ -1,0 +1,40 @@
+import ts from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/typescript/lib/typescript.js';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+const root = new URL('./', import.meta.url).pathname;
+const base = 'f803d2543ad81343b22d49326b8b46d0e2ea03a0';
+const path = 'src/islands/ChartCalculator.tsx';
+const records = [];
+for (const variant of ['baseline', 'candidate']) {
+  const source = variant === 'baseline'
+    ? execFileSync('git', ['show', `${base}:${path}`], { cwd: root + 'site', encoding: 'utf8' })
+    : readFileSync(root + 'site/' + path, 'utf8');
+  const ast = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let run;
+  function visit(node) { if (ts.isFunctionDeclaration(node) && node.name?.text === 'runChart') run = node; ts.forEachChild(node, visit); }
+  visit(ast);
+  if (!run) throw Error('runChart absent');
+  const block = run.body.statements.find(ts.isTryStatement).tryBlock;
+  const start = block.statements.find(node => ts.isVariableStatement(node) && node.declarationList.declarations.some(d => d.name.getText(ast) === 'computedSun'));
+  const owner = block.statements.find(node => ts.isVariableStatement(node) && node.declarationList.declarations.some(d => d.name.getText(ast) === 'owner'));
+  if (!start || !owner) throw Error('Extraction boundary absent');
+  const snippet = source.slice(start.getStart(ast), owner.getStart(ast));
+  const wrapper = `import { signForLongitude } from './site/src/lib/signs';
+import { moonIsUncertain, moonCandidatesFromEndpoints } from './site/src/lib/moon-certainty';
+import { localDateEndpointsUtc as actualEndpoints, stableBodySignSlug } from './site/src/lib/chart-date-certainty';
+import { computeBodies as actualBodies } from './site/src/lib/engine/full';
+export function applyConfidence(result:any,input:any,mode:string,events:any[]) {
+ const runIsCurrent = () => true;
+ const localDateEndpointsUtc = (...args:Parameters<typeof actualEndpoints>) => { events.push({kind:'endpoints',args}); return actualEndpoints(...args); };
+ const engine = {computeBodies: (utc:Date) => {events.push({kind:'computeBodies',utc:utc.toISOString()});return actualBodies(utc);}};
+ ${snippet}
+ return {result,nextMoonAmbiguous,nextRegistryRecordSlug};
+}
+`;
+  writeFileSync(root + `confidence-${variant}.ts`, wrapper);
+  writeFileSync(root + `${variant}-ChartCalculator.tsx`, source);
+  records.push({variant,sourcePath:path,sourceSha256:createHash('sha256').update(source).digest('hex'),startLine:ast.getLineAndCharacterOfPosition(start.getStart(ast)).line+1,endLine:ast.getLineAndCharacterOfPosition(owner.getStart(ast)).line,extractedBytes:Buffer.byteLength(snippet),snippetSha256:createHash('sha256').update(snippet).digest('hex'),wrapperSha256:createHash('sha256').update(wrapper).digest('hex')});
+}
+writeFileSync(root+'extraction-identity.json',JSON.stringify({qualification:'Exact contiguous AST-bounded source span, unchanged inside independent wrapper. The wrapper fixes runIsCurrent true and instruments existing endpoint/body calls only; this is not complete component or asynchronous ownership execution.',records},null,2)+'\n');
+console.log(JSON.stringify(records,null,2));

@@ -13,6 +13,7 @@ const harness = vi.hoisted(() => ({
   pending: [] as Array<() => void>,
   writes: vi.fn(),
   load: vi.fn(),
+  loadContacts: vi.fn(),
   track: vi.fn(),
   savedHint: false,
 }));
@@ -136,6 +137,7 @@ beforeEach(async () => {
   harness.savedHint = false;
   harness.writes.mockClear();
   harness.load.mockReset().mockResolvedValue(moduleValue);
+  harness.loadContacts.mockReset().mockResolvedValue(undefined);
   harness.track.mockClear();
   profile([], false);
   const stored = new Map<string, string>();
@@ -150,12 +152,17 @@ beforeEach(async () => {
     documentElement: { hasAttribute: (name: string) => name === 'data-today-saved-chart' && harness.savedHint },
   });
   vi.doMock('../../lib/transits', () => harness.load());
+  vi.doMock('../../lib/engine/aspects', async (importOriginal) => {
+    await harness.loadContacts();
+    return importOriginal();
+  });
   TodayBrief = (await import('./TodayBrief')).default;
 });
 
 afterEach(() => {
   harness.effects.forEach((effect) => effect.cleanup?.());
   vi.doUnmock('../../lib/transits');
+  vi.doUnmock('../../lib/engine/aspects');
   vi.unstubAllGlobals();
 });
 
@@ -167,6 +174,7 @@ describe('Today saved-chart transit loading', () => {
     render();
     await vi.dynamicImportSettled();
     expect(harness.load).not.toHaveBeenCalled();
+    expect(harness.loadContacts).not.toHaveBeenCalled();
     expect(view.props['data-today-state']).toBe('empty');
     expect(comparisonUnavailable(view)).toBe(false);
     expect(harness.track).toHaveBeenCalledExactlyOnceWith('today_view', {});
@@ -179,10 +187,26 @@ describe('Today saved-chart transit loading', () => {
     render();
     await vi.dynamicImportSettled();
     expect(harness.load).not.toHaveBeenCalled();
+    expect(harness.loadContacts).not.toHaveBeenCalled();
     profile([chart('A')]);
     render();
     await vi.dynamicImportSettled();
     expect(harness.load).toHaveBeenCalledOnce();
+    expect(harness.loadContacts).toHaveBeenCalledOnce();
+    expect(render().props['data-today-state']).toBe('chart');
+  });
+
+  it('starts contact arithmetic while transit phrasing is still loading', async () => {
+    const pending = deferredLoad();
+    profile([chart('A')]);
+    render();
+    await started();
+    await vi.waitFor(() => expect(harness.loadContacts).toHaveBeenCalledOnce());
+    // Both dependencies start together; the view still waits for the whole
+    // calculation/phrasing pair before showing a personalized reading.
+    expect(render().props['data-today-state']).not.toBe('chart');
+    pending.resolve();
+    await vi.dynamicImportSettled();
     expect(render().props['data-today-state']).toBe('chart');
   });
 
@@ -266,6 +290,19 @@ describe('Today saved-chart transit loading', () => {
     // its new passive loading effect is still waiting to run.
     expect(comparisonUnavailable(render())).toBe(false);
     await vi.dynamicImportSettled();
+  });
+
+  it('shows the same fallback when contact arithmetic fails to load, without a retry loop', async () => {
+    harness.loadContacts.mockRejectedValue(new Error('contact chunk unavailable'));
+    profile([chart('A')]);
+    expect(comparisonUnavailable(render())).toBe(false);
+    await vi.dynamicImportSettled();
+    expect(comparisonUnavailable(render())).toBe(true);
+    render();
+    await vi.dynamicImportSettled();
+    expect(harness.loadContacts).toHaveBeenCalledOnce();
+    profile([]);
+    expect(comparisonUnavailable(render())).toBe(false);
   });
 
   it('preserves the malformed-profile DOM-hint fallback without loading transit code', async () => {

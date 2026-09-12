@@ -1,0 +1,61 @@
+from pathlib import Path
+import json,hashlib,subprocess,re,shutil,struct
+root=Path('/Users/chiburashka/.codex/worktrees/4806/site'); release=Path('/private/tmp/zodiacs-platform-runtime-claims-release');out=Path(__file__).parent
+head='abcf1a44e52040db79a369b49bc9b55d78099b22';base='4227bb0758d4b34cbd761a3cddd273cbea6c2c1b'
+def git(*args):return subprocess.check_output(['git',*args],cwd=root)
+def sha(b):return hashlib.sha256(b).hexdigest()
+def save(name,data):
+ p=out/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+inputs=['REVIEW.md','pr.json','diff-verification.json','preview-summary.json','preview/result.json','deployment-before.json','deployment-after.json','preview-drive.mjs','credential-scan-initial-failure.log','preview.log','files.pages.json','moon-files.pages.json','preview/support-1280.png','preview/entry-320.png']
+identities=[]
+for name in inputs:
+ data=(release/name).read_bytes();save('reviewed-records/'+name,data);identities.append({'path':name,'bytes':len(data),'sha256':sha(data)})
+snapshot=out/'reviewed-records';load=lambda name:json.loads((snapshot/name).read_text())
+source=git('show',head+':src/pages/developers/support/index.astro');candidate_bytes=git('show',head+':src/data/platform-engine-candidate.json');candidate=json.loads(candidate_bytes)
+assert git('rev-parse',head+'^').decode().strip()==base
+paths=git('diff','--name-only',base,head).decode().splitlines();pages=json.loads((out/'pr431-files-pages-raw.json').read_text());rows=[row for page in pages for row in page]
+assert [len(page) for page in pages]==[100,83]
+assert len({row['filename'] for row in rows})==183
+assert sorted(row['filename'] for row in rows)==sorted(paths)==sorted(load('diff-verification.json')['paths'])==sorted(row['filename'] for row in load('files.pages.json'))
+assert len(paths)==load('diff-verification.json')['changedFiles']==183
+assert [path for path in paths if not path.startswith('docs/platform/')]==['src/pages/developers/support/index.astro']
+blobChecks=[]
+for row in rows:
+ actual=git('rev-parse',head+':'+row['filename']).decode().strip(); assert row['sha']==actual;blobChecks.append({'path':row['filename'],'sha':actual})
+current=json.loads((out/'pr431-current.json').read_text());assert current['head']['sha']==head and current['base']['ref']=='codex/platform-moon-result-ownership' and current['changed_files']==183 and current['draft']
+recorded=load('pr.json');assert recorded['headRefOid']==head and recorded['isDraft'] and recorded['number']==431
+for name in ['deployment-before.json','deployment-after.json']:
+ d=load(name);assert d['sourceCommit']==head and d['state']=='READY' and d['target'] is None and d['id']=='dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C'
+report=load('preview/result.json');summary=load('preview-summary.json');assert report['source']==head and report['result']=='passed' and report['deployment']==d['id'] and len(report['checks'])==13==summary['checks']
+checks=report['checks'];expected={(width,path) for width in [1280,390,320] for path in ['/developers/','/developers/support/','/developers/examples/','/birth-chart/']}
+assert {(row.get('width'),row['path']) for row in checks if row['path']!='/api/v1/sky/today.json'}==expected
+for row in checks:
+ if row['path']=='/birth-chart/':assert row['syntheticResultVersion']==candidate['version'] and row['noSavedProfile']
+ elif 'layout' in row:assert row['status']==200 and row['layout']=={'width':row['width'],'scrollWidth':row['width'],'reduced':True}
+ else:assert row=={'path':'/api/v1/sky/today.json','status':200,'date':'2026-09-08'}
+assert len(report['errorsByPage'])==9 and all(row['status']==200 and row['footers']==1 and row['path']==row['actualPath'] for row in report['errorsByPage'])
+requests=report['observedRequests'];assert len(requests)==summary['requests']==478 and all(row['method']=='GET' for row in requests)
+external=[row for row in requests if row['external']];assert len(external)==12 and external==summary['blockedExternal'];assert all(row['origin']=='https://plausible.io' and row['path']=='/js/pa-HwF2IBb5Sw8eboNPSOgHv.js' for row in external)
+assert report['capturedAt']>load('deployment-before.json')['checkedAt'] and report['capturedAt']<load('deployment-after.json')['checkedAt']
+driver=(snapshot/'preview-drive.mjs').read_text();assert 'await observe(context)' in driver and 'No production' in driver
+assert 'public-download consumer check' in driver and 'candidate.evidenceCommit' in driver and 'candidate.evidencePaths.publicConsumer' in driver
+assert 'Recorded runtime checks' in source.decode() and 'Node 20 and 22' not in source.decode()
+assert 'public-download consumer check' in source.decode() and 'public-download install receipt' not in source.decode()
+url=candidate['evidenceRepository']+'/blob/'+candidate['evidenceCommit']+'/'+candidate['evidencePaths']['publicConsumer'];consumer=git('show',candidate['evidenceCommit']+':'+candidate['evidencePaths']['publicConsumer']);parsed=json.loads(consumer[consumer.index(b'{'):])
+assert parsed['version']==candidate['version'] and parsed['sha256']==candidate['sha256'] and parsed['types']=='passed' and parsed['publicExamples']=='passed'
+assert [r['node'] for r in parsed['runtimes']]==['v22.23.2','v24.19.0'] and parsed['archiveFiles']==23
+assert json.loads((root/'src/data/platform-engine-candidate.json').read_text())==candidate
+sourceIdentity=json.loads(git('show',head+':docs/platform/evidence/runtime-claims/root-source-identity.json'));assert sourceIdentity['source'][0]['sha256']==sha(source)
+patch=git('diff',base,head,'--','src/pages/developers/support/index.astro');save('support-source.patch',patch)
+for name,data in [('support-source.astro',source),('candidate.json',candidate_bytes),('current-consumer.log',consumer),('root-source-identity.json',json.dumps(sourceIdentity,indent=2).encode()+b'\n')]:save('immutable-source/'+name,data)
+pngs=[]
+for name in ['preview/support-1280.png','preview/entry-320.png']:
+ data=(snapshot/name).read_bytes();assert data[:8]==b'\x89PNG\r\n\x1a\n';width,height=struct.unpack('>II',data[16:24]);pngs.append({'path':name,'width':width,'height':height,'bytes':len(data),'sha256':sha(data)})
+assert [r['width'] for r in pngs]==[1280,320]
+moon=load('moon-files.pages.json');literal=[row['filename'] for row in moon if '_vercel_share=' in row.get('patch','')];assert literal==['docs/platform/evidence/site-engine-rc6/hosted-integration/archive-followups.py.log']
+pattern=re.compile(rb'(?:_vercel_share|x-vercel-protection-bypass)=[A-Za-z0-9_-]{12,}')
+scan=[str(p.relative_to(snapshot)) for p in snapshot.rglob('*') if p.is_file() and pattern.search(p.read_bytes())];assert not scan
+assert summary['credentialLikeShareUrls']==0 and summary['temporaryAuthFileAbsent'] and any('not an exact-secret scan' in item for item in summary['limitations'])
+assert all(sha((release/row['path']).read_bytes())==row['sha256'] for row in identities)
+result={'verdict':'no blocker found in bounded read-only audit','reviewMode':'fresh paginated public GitHub metadata and immutable Git source checks; review of retained browser execution, not another browser run','source':head,'base':base,'supportSourceSha256':sha(source),'pr':431,'actualPagination':[100,83],'paths':183,'allPathNamesAndGitBlobsMatch':True,'productPaths':['src/pages/developers/support/index.astro'],'recordedPreviewGroups':13,'pageGroups':12,'separateApiGroup':1,'currentCarrierUrl':url,'consumerVersion':parsed['version'],'consumerRuntimeVersions':[r['node'] for r in parsed['runtimes']],'recordedPreviewNode':report['node'],'recordedPreviewBrowser':report['browser'],'scopedObservedRequests':478,'nonGET':0,'blockedPlausibleLoaderAttempts':12,'screenshots':pngs,'credentialLikePatternMatches':0,'qualifications':['No fresh browser run or numerical oracle in this audit.','Current carrier linked href is asserted in driver; this audit does not claim a new HTTP download of that report.','Driver request observer covers its twelve scoped pages. Authentication bootstrap and the separate APIRequestContext sky check are outside that browser observer; the sky request is explicitly GET in the driver.','Temporary-access deletion is retained root evidence; no credential read or renewed exact-secret scan was attempted after deletion.','Two fresh developer screenshots are retained; existing Phase1 captures are explicitly reused, not claimed as new.'],'reviewedRecordsUnchanged':True}
+(out/'RESULTS.json').write_text(json.dumps(result,indent=2)+'\n');(out/'reviewed-input-manifest.json').write_text(json.dumps(identities,indent=2)+'\n');(out/'pr431-files-pages.json').write_text(json.dumps([[{k:r[k] for k in ['filename','status','sha','additions','deletions']} for r in page] for page in pages],indent=2)+'\n');print(json.dumps(result,indent=2))

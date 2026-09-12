@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-09-07T22:05:36.818104+00:00",
+  "scope": "B04 bounded publisher widget acceptance; separate model agent with actual isolated browser. No source changes, external user review, package publication or deployment.",
+  "archiveSha256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420",
+  "archiveVersion": "0.1.0-rc.2",
+  "archiveFilesMatchSource": 20,
+  "browser": "152.0.7977.83",
+  "checks": {
+    "matrix": 74,
+    "matrixFailures": 0,
+    "nativeZoomFollowupCases": 3,
+    "nativeZoomFollowupPassed": true,
+    "privacyChecks": {
+      "privatePathAndFragmentNotDisclosed": true,
+      "referrerOnlyOrigin": true,
+      "iframeCannotReadParent": true,
+      "noCookies": true
+    }
+  },
+  "sourceSha256": {
+    "examples/platform/src/widget.html": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+    "examples/platform/src/widget.mjs": "96188d3be175b2a642319ed809529bc787ac20a1a22bdd9f6a83fae5159718a9",
+    "examples/platform/src/widget-contract.mjs": "e916ddbf8553eff378a371756fd8cb4ddce72c4ca8c7d7a6d5227fef40bddb07",
+    "examples/platform/src/styles.css": "5ac715811203e3284da51d1fa0a60b15a8b1915acb991bd8478b9976aeb19b39",
+    "src/components/EmbedSky.astro": "de430848f4c410c5fc5caba0e4b295224541fc2317d2ce0980b2a234cb2ccaf1",
+    "src/lib/widget-theme.ts": "73f7635284b82984ec0a8e8c803d33c4ae7927bec4a7294615b282a8f926af1c"
+  },
+  "hostedDocument": {
+    "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+    "status": 200,
+    "sha256": "809285f1b6bb071465a6d2f5c56dc896e41aa495ad9e5a863cba3fa5b0bc8169",
+    "bytes": 5559
+  },
+  "finding": "No concrete source defect reproduced within the checked cases. Smallest justified next change is durable evidence/status bookkeeping, not an immutable starter rewrite.",
+  "limitations": [
+    "Chromium 152 desktop engine only; no Safari, Firefox, assistive-technology certification or external user study.",
+    "The hosted document is independently deployed. These observations identify its exact fetched bytes, not an immutable widget release or future publication guarantee.",
+    "Existing B02 calculator privacy/ordinary mobile checks were reused as evidence rather than rerun.",
+    "Native Chrome default zoom was changed and restored only in an isolated temporary test profile.",
+    "Playwright full-page screenshot clips at native zoom greater than 1 were capture artifacts. Only raw 1280x900 nativeZoom*-viewport.png files are accepted high-zoom visual evidence.",
+    "Offline fallback is a reachable link, not a claim of network availability or cached offline navigation.",
+    "Host CSS isolation protects iframe document styles, not arbitrary publisher changes to the iframe element itself."
+  ],
+  "reports": [
+    "identity.json",
+    "browser.json",
+    "native-zoom-captures.json",
+    "privacy-boundary.json"
+  ]
+}

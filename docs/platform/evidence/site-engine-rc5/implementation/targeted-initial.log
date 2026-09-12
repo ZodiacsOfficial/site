@@ -1,0 +1,64 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-engine-rc5
+
+ ✓ src/lib/engine/package-integration.test.ts (4 tests) 137ms
+ ✓ src/lib/engine/server-ephemeris.test.ts (2 tests) 151ms
+ ❯ src/lib/scene/scene.test.ts (15 tests | 1 failed) 70ms
+   ✓ buildSceneModel parity > preserves every engine longitude exactly 39ms
+   ✓ buildSceneModel parity > applies the wheel conventions: no South Node, aspects under 6° orb 3ms
+   ✓ buildSceneModel parity > separates the crowded Venus/Pluto markers while keeping ticks true 3ms
+   ✓ buildSceneModel parity > houses carry span, midpoint, and occupants 3ms
+   ✓ buildSceneModel parity > anchors to the ASC by default and 0° Aries in teaching mode 5ms
+   × buildSceneModel parity > matches the committed Kahlo scene snapshot 8ms
+     → Snapshot `buildSceneModel parity > matches the committed Kahlo scene snapshot 1` mismatched
+   ✓ technicalCollisionFan > retains the technical export default of 11° 0ms
+   ✓ technicalCollisionFan > keeps crowded markers separated across 0° Aries without changing their order 0ms
+   ✓ technicalCollisionFan > leaves already legible placements at their exact longitude 1ms
+   ✓ entity ids > round-trips through entityId/parseEntityId 1ms
+   ✓ entity ids > rejects malformed ids instead of throwing 0ms
+   ✓ emphasisFor > lights nothing when nothing is selected 1ms
+   ✓ emphasisFor > a body lights itself and softens its sign, house, aspects, and partners 1ms
+   ✓ emphasisFor > an aspect lights the chord and both bodies 2ms
+   ✓ emphasisFor > an angle travels with its axis twin 2ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 87ms
+ ✓ src/lib/profile/polar-repair.test.ts (36 tests) 81ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/scene/scene.test.ts > buildSceneModel parity > matches the committed Kahlo scene snapshot
+Error: Snapshot `buildSceneModel parity > matches the committed Kahlo scene snapshot 1` mismatched
+
+- Expected
++ Received
+
+@@ -251,11 +251,11 @@
+        "sign": "cancer",
+        "signDegree": 23.4131361,
+        "speed": -0.0235342,
+      },
+    ],
+-   "engineVersion": "0.1.1-rc.1",
++   "engineVersion": "0.1.1-rc.5",
+    "flags": [
+      "lmt",
+    ],
+    "houseSystem": "whole",
+    "houses": [
+
+ ❯ src/lib/scene/scene.test.ts:91:54
+     89| 
+     90|   it('matches the committed Kahlo scene snapshot', () => {
+     91|     expect(stableSnapshot(buildSceneModel(kahlo()))).toMatchSnapshot();
+       |                                                      ^
+     92|   });
+     93| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+  Snapshots  1 failed
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 109 passed (110)
+   Start at  06:58:51
+   Duration  1.22s (transform 2.20s, setup 0ms, collect 2.95s, tests 527ms, environment 1ms, prepare 352ms)
+

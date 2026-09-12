@@ -1,0 +1,12 @@
+PASS historical year 0099 preserves the supplied year
+PASS two calculations retain isolated receipt and snapshot state
+PASS revoked context proxy produces only the fixed boundary error
+PASS canonical snapshot has no Date and is recursively frozen
+PASS context timing is explicitly after calculation, not atomic entry capture
+PASS each raw birth property is read once before canonical projection
+PASS context accessor is rejected without invocation
+PASS frozen receipt detaches every mutable chart branch and caller context
+PASS polar and unknown-time receipts preserve request, actual outcome and source spelling
+PASS shared full adapter preserves original input identity and numerical reference semantics
+PASS unknown-time noon and known-time missing location do not fabricate context
+{"passed":11,"failed":0}

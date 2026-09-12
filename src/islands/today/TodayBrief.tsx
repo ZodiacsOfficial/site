@@ -3,18 +3,15 @@ import { useProfile } from '../../lib/hooks/useProfile';
 import { explicitSelfChart } from '../../lib/profile/read-store';
 import { SIGNS, signForLongitude } from '../../lib/signs';
 import {
-  natalPointsForChart,
-  nearestTodayContact,
   newestSavedChart,
   recordTodayOpen,
-  selectTodayContacts,
   TODAY_STORAGE_KEY,
-} from '../../lib/today';
+} from '../../lib/today/state';
 import SunSignFallback from './SunSignFallback';
 import { datedEditionText } from '../../lib/edition-freshness';
 
 type PushOptInModule = typeof import('../PushOptIn');
-type TransitsModule = typeof import('../../lib/transits');
+type TransitsModule = typeof import('../../lib/transits') & typeof import('../../lib/today/contacts');
 type LivingMomentCaptureModule = typeof import('../living-chart/LivingMomentCapture');
 type LivingSelfChartChooserModule = typeof import('../living-chart/LivingSelfChartChooser');
 type ForecastSnapshotFactory = typeof import('../../lib/living-chart/forecast-snapshot')['createLivingForecastSnapshot'];
@@ -130,9 +127,11 @@ export default function TodayBrief({
     if (transitsModule) return;
     let active = true;
     setTransitsFailed(false);
-    void import('../../lib/transits')
-      .then((module) => {
-        if (active) setTransitsModule(module);
+    // Start arithmetic and phrasing together only when personalization needs
+    // them. Neither dependency waits for the other before its request starts.
+    void Promise.all([import('../../lib/transits'), import('../../lib/today/contacts')])
+      .then(([transits, contacts]) => {
+        if (active) setTransitsModule({ ...transits, ...contacts });
       })
       .catch(() => {
         if (active) setTransitsFailed(true);
@@ -150,10 +149,10 @@ export default function TodayBrief({
   const reading = useMemo(() => {
     if (!chart || !transitsModule) return null;
     try {
-      const natal = natalPointsForChart(chart);
+      const natal = transitsModule.natalPointsForChart(chart);
       return {
-        contacts: selectTodayContacts(natal, bodies, transitsModule.TRANSIT_ORB, 3),
-        nearest: nearestTodayContact(natal, bodies),
+        contacts: transitsModule.selectTodayContacts(natal, bodies, transitsModule.TRANSIT_ORB, 3),
+        nearest: transitsModule.nearestTodayContact(natal, bodies),
       };
     } catch {
       return null;

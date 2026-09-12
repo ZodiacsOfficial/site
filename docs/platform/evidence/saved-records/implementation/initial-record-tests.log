@@ -1,0 +1,91 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-saved-record
+
+ ❯ src/lib/profile/saved-record.test.ts (17 tests | 6 failed) 12ms
+   × immutable saved natal record > round-trips with optional label undefined 4ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: true, record: { …(5) } }
+   ✓ immutable saved natal record > round-trips with optional label Synthetic local label 2ms
+   × immutable saved natal record > preserves future v2 records with changed fields 0ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+   × immutable saved natal record > preserves future v9 records with changed fields 0ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+   × immutable saved natal record > preserves future v10 records with changed fields 0ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+   × immutable saved natal record > preserves future v11 records with changed fields 0ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+   × immutable saved natal record > preserves future v100 records with changed fields 0ms
+     → expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+   ✓ immutable saved natal record > rejects UUID and owner suffix "\n" 0ms
+   ✓ immutable saved natal record > rejects UUID and owner suffix "\r" 0ms
+   ✓ immutable saved natal record > rejects UUID and owner suffix "\r\n" 0ms
+   ✓ immutable saved natal record > rejects UUID and owner suffix " " 0ms
+   ✓ immutable saved natal record > rejects UUID and owner suffix " " 0ms
+   ✓ immutable saved natal record > accepts explicit canonical guest and account IDs without discovery or normalization 0ms
+   ✓ immutable saved natal record > bounds labels without leaking them into the receipt 1ms
+   ✓ immutable saved natal record > rejects malformed metadata, extra fields, accessors and wrong owners 1ms
+   ✓ immutable saved natal record > delegates inner future-version/feature/corrupt detection to the existing SDK codec 1ms
+   ✓ immutable saved natal record > cannot pass an immutable richer record through the existing v1 upload preparation 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > round-trips with optional label undefined
+AssertionError: expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: true, record: { …(5) } }
+
+- Expected
++ Received
+
+  {
+-   "ok": true,
+-   "record": {
+-     "createdAt": "2026-09-08T00:00:00.000Z",
+-     "envelopeJson": "{\"extensions\":{\"test\":{\"value\":\"synthetic\"}},\"receipt\":{\"conventions\":{\"angles\":\"gast-and-mean-obliquity\",\"aspects\":\"major-aspects;sun-moon-eight-planets;no-nodes\",\"calendar\":\"proleptic-gregorian\",\"longitudeUnit\":\"degrees-[0,360)\",\"moonNodes\":\"instantaneous-geocentric-moon-orbit-plane\",\"moonPosition\":\"astronomy-engine-ecliptic-geo-moon\",\"planetPositions\":\"apparent-geocentric-ecliptic-of-date\",\"speed\":\"degrees-per-day;central-difference-plus-minus-0.25-day\",\"zodiac\":\"tropical\"},\"coordinates\":{\"latitude\":78.2232,\"longitude\":15.6267},\"coverage\":{\"angleExclusions\":\"exact-geographic-poles-and-ecliptic-horizon-coincidence\",\"assessment\":\"finite-reference-cases-only\",\"broadDateRange\":\"not-certified\",\"inputSyntax\":\"not-an-astronomical-accuracy-guarantee\"},\"engine\":{\"name\":\"@zodiacs/engine\",\"version\":\"0.1.1-rc.5\"},\"houses\":{\"absenceReason\":\"unknown-time\",\"actual\":null,\"requested\":\"placidus\"},\"inputFlags\":[],\"instant\":\"2001-12-21T08:30:00.000Z\",\"localResolution\":null,\"provenance\":null,\"reference\":\"supplied-instant\",\"resultFlags\":[\"no-time\"],\"schema\":\"zodiacs.calculation-receipt.draft-v1\",\"sourceInstant\":\"2001-12-21T08:30:00-00:00\",\"timeKnown\":false},\"requiredFeatures\":[],\"result\":{\"angles\":null,\"aspects\":[{\"a\":\"Mercury\",\"applying\":true,\"b\":\"Mars\",\"orb\":0.33021886433778036,\"type\":\"sextile\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Jupiter\",\"orb\":0.9605720825566095,\"type\":\"trine\"},{\"a\":\"Mars\",\"applying\":true,\"b\":\"Saturn\",\"orb\":0.9812761954025291,\"type\":\"square\"},{\"a\":\"Venus\",\"applying\":false,\"b\":\"Uranus\",\"orb\":1.770685815938748,\"type\":\"sextile\"},{\"a\":\"Moon\",\"applying\":true,\"b\":\"Pluto\",\"orb\":2.5955884099206514,\"type\":\"square\"},{\"a\":\"Saturn\",\"applying\":true,\"b\":\"Neptune\",\"orb\":2.973484633698831,\"type\":\"trine\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Saturn\",\"orb\":2.981458467553921,\"type\":\"square\"},{\"a\":\"Mars\",\"applying\":true,\"b\":\"Jupiter\",\"orb\":3.0021625803998404,\"type\":\"trine\"},{\"a\":\"Mercury\",\"applying\":true,\"b\":\"Jupiter\",\"orb\":3.3323814447376208,\"type\":\"opposition\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Mars\",\"orb\":3.962734662956393,\"type\":\"conjunction\"},{\"a\":\"Moon\",\"applying\":false,\"b\":\"Mercury\",\"orb\":4.2929535272941735,\"type\":\"sextile\"},{\"a\":\"Saturn\",\"applying\":false,\"b\":\"Pluto\",\"orb\":5.577046877474487,\"type\":\"opposition\"},{\"a\":\"Sun\",\"applying\":true,\"b\":\"Venus\",\"orb\":5.774636831633643,\"type\":\"conjunction\"},{\"a\":\"Mars\",\"applying\":true,\"b\":\"Pluto\",\"orb\":6.558323072876988,\"type\":\"square\"},{\"a\":\"Sun\",\"applying\":false,\"b\":\"Mercury\",\"orb\":9.21738098953773,\"type\":\"conjunction\"}],\"bodies\":[{\"body\":\"Sun\",\"degree\":29.539313909688076,\"lat\":0.000003048621133282995,\"lon\":269.5393139096881,\"retrograde\":false,\"sign\":\"sagittarius\",\"speed\":1.0184336768711546},{\"body\":\"Moon\",\"degree\":13.04964842651998,\"lat\":-5.127060462952407,\"lon\":343.04964842652,\"retrograde\":false,\"sign\":\"pisces\",\"speed\":11.864049444487364},{\"body\":\"Mercury\",\"degree\":8.75669489922575,\"lat\":-2.1072958852061,\"lon\":278.7566948992258,\"retrograde\":false,\"sign\":\"capricorn\",\"speed\":1.589253262590887},{\"body\":\"Venus\",\"degree\":23.764677078054433,\"lat\":0.01923673050812598,\"lon\":263.76467707805443,\"retrograde\":false,\"sign\":\"sagittarius\",\"speed\":1.258579362518276},{\"body\":\"Mars\",\"degree\":9.086913763563643,\"lat\":-0.9198994643803803,\"lon\":339.0869137635636,\"retrograde\":false,\"sign\":\"pisces\",\"speed\":0.7319030189685236},{\"body\":\"Jupiter\",\"degree\":12.089076343963427,\"lat\":-0.020912709909901885,\"lon\":102.08907634396343,\"retrograde\":true,\"sign\":\"cancer\",\"speed\":-0.129730914521474},{\"body\":\"Saturn\",\"degree\":10.068189958966116,\"lat\":-1.8371901613168682,\"lon\":70.06818995896612,\"retrograde\":true,\"sign\":\"gemini\",\"speed\":-0.07477455903278951},{\"body\":\"Uranus\",\"degree\":21.993991262115742,\"lat\":-0.7072303794818832,\"lon\":321.9939912621157,\"retrograde\":false,\"sign\":\"aquarius\",\"speed\":0.040275108406262916},{\"body\":\"Neptune\",\"degree\":7.094705325267341,\"lat\":0.10947722374231121,\"lon\":307.0947053252673,\"retrograde\":false,\"sign\":\"aquarius\",\"speed\":0.03158233324711546},{\"body\":\"Pluto\",\"degree\":15.645236836440631,\"lat\":9.759342240867873,\"lon\":255.6452368364406,\"retrograde\":false,\"sign\":\"sagittarius\",\"speed\":0.037608759932311386},{\"body\":\"North Node\",\"degree\":27.143582463795383,\"lat\":0,\"lon\":87.14358246379538,\"retrograde\":true,\"sign\":\"gemini\",\"speed\":-0.0025362849715975244},{\"body\":\"South Node\",\"degree\":27.143582463795383,\"lat\":0,\"lon\":267.1435824637954,\"retrograde\":true,\"sign\":\"sagittarius\",\"speed\":-0.0025362849715975244}],\"houses\":null},\"schema\":\"zodiacs.natal-envelope.draft-v1\"}",
+-     "id": "10000000-0000-4000-8000-000000000001",
+-     "ownerKey": "account:10000000-0000-4000-8000-000000000001",
+-     "schema": "zodiacs.saved-natal.v1",
+-   },
++   "code": "corrupt-record",
++   "ok": false,
+  }
+
+ ❯ src/lib/profile/saved-record.test.ts:24:50
+     22|     expect(record).not.toBeNull();
+     23|     expect(Object.isFrozen(record)).toBe(true);
+     24|     expect(parseSavedNatalRecord(record, OWNER)).toEqual({ ok: true, r…
+       |                                                  ^
+     25|     expect(record.envelopeJson).toBe(serializeNatalEnvelope(calculatio…
+     26|     expect(parseNatalEnvelope(record.envelopeJson)).toEqual({ ok: true…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > preserves future v2 records with changed fields
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > preserves future v9 records with changed fields
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > preserves future v10 records with changed fields
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > preserves future v11 records with changed fields
+ FAIL  src/lib/profile/saved-record.test.ts > immutable saved natal record > preserves future v100 records with changed fields
+AssertionError: expected { ok: false, code: 'corrupt-record' } to deeply equal { ok: false, …(1) }
+
+- Expected
++ Received
+
+  {
+-   "code": "unsupported-record",
++   "code": "corrupt-record",
+    "ok": false,
+  }
+
+ ❯ src/lib/profile/saved-record.test.ts:34:8
+     32|   it.each(['2', '9', '10', '11', '100'])('preserves future v%s records…
+     33|     expect(parseSavedNatalRecord({ schema: `zodiacs.saved-natal.v${ver…
+     34|       .toEqual({ ok: false, code: 'unsupported-record' });
+       |        ^
+     35|   });
+     36| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  6 failed | 11 passed (17)
+   Start at  11:58:16
+   Duration  377ms (transform 102ms, setup 0ms, collect 137ms, tests 12ms, environment 0ms, prepare 36ms)
+

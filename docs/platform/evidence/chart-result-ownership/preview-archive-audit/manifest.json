@@ -1,0 +1,37 @@
+[
+  {
+    "path": "COMMANDS.md",
+    "bytes": 825,
+    "sha256": "616e91c97764e4e25ef4581989bf80edb7799ea1989c5340ca166c478501f54a"
+  },
+  {
+    "path": "REVIEW.md",
+    "bytes": 2591,
+    "sha256": "308848d0d55531bb8f1df6d2da2a56520b7ce39f14d6512f80e1d07566c04325"
+  },
+  {
+    "path": "audit-result.json",
+    "bytes": 2060,
+    "sha256": "0099467c69bc55f9eeb3a5531a23988ea8a38ea2ff5544b4587ba936b2d5885b"
+  },
+  {
+    "path": "audit.log",
+    "bytes": 1014,
+    "sha256": "a7a282dc36e70cff8496108ca14251d50c6b14dc4b9eb68d2db565409b1f0403"
+  },
+  {
+    "path": "audit.py.log",
+    "bytes": 5664,
+    "sha256": "e878e12c30ecbe0b81086f316add761442b220d102a5608eec8c01a40848c4c0"
+  },
+  {
+    "path": "member-manifest.json",
+    "bytes": 116186,
+    "sha256": "8ea3961f953fd4764b8dbda69ab3d2545e7208f527d1b4ae5359ab8e299f27fc"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 951,
+    "sha256": "4028b3b6e3d369bfd152befe15ab59345d85557a33632f67bd34ffe3cfe6aeb1"
+  }
+]

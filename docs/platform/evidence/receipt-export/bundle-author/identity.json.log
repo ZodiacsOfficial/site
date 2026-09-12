@@ -1,0 +1,12 @@
+{
+  "sourceRoot": "/private/tmp/zodiacs-platform-receipt-bundle-gate",
+  "siteBase": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "receiptFreeze2Patch": "d6639f7bd46ed9adce30c1d1f374394356350593234dacdcc82baa20086fa425",
+  "files": {
+    "scripts/report-bundles.mjs": "7f4f47fec33e97c2f6accb7f159c7d5e5e31994981246af49aa6540da69e9328",
+    "scripts/report-bundles.test.mjs": "3d8d52e01d89a12e52185ec0765f6fdd72ae440cd4915b731c21179dada912bd",
+    "budgets.json": "331bd2c7542a00e9b73ace5d834553e914107c102e7050b75233e9c7aeff3c2d"
+  },
+  "freeze": 2,
+  "tests": 26
+}

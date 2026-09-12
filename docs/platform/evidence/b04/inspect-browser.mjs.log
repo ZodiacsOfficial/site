@@ -1,0 +1,7 @@
+import { createRequire } from 'node:module';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json');
+const { chromium }=require('playwright-core');
+const browser=await chromium.connectOverCDP('ws://127.0.0.1:54810/devtools/browser/129f51db-2a35-4272-90ef-dabd695f458f');
+console.log({version:browser.version(),pages:browser.contexts().flatMap(c=>c.pages().map(p=>p.url()))});
+const page=await browser.contexts()[0].newPage();
+try{await page.goto('chrome://settings/appearance');console.log(await page.evaluate(()=>({api:typeof chrome.settingsPrivate,methods:chrome.settingsPrivate?Object.keys(chrome.settingsPrivate):[]})));}finally{await page.close();await browser.close();}

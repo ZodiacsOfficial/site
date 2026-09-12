@@ -1,0 +1,27 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url),esbuild=require('esbuild'),ts=require('typescript');
+const kind=process.argv[2]??'baseline';
+const input=process.env.CHART_SOURCE??'source/src/islands/ChartCalculator.tsx';
+const source=fs.readFileSync(input,'utf8');
+const ast=ts.createSourceFile('ChartCalculator.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+const transformed=ts.transform(ast,[(context)=>{
+ const visit=n=>ts.isCallExpression(n)&&n.expression.kind===ts.SyntaxKind.ImportKeyword
+ ?ts.factory.createCallExpression(ts.factory.createPropertyAccessExpression(ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('window'),'review'),'load'),undefined,[n.arguments[0],ts.factory.createArrowFunction(undefined,undefined,[],undefined,ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),n)])
+ :ts.visitEachChild(n,visit,context);
+ return node=>ts.visitNode(node,visit);
+}]);
+const instrumented=ts.createPrinter().printFile(transformed.transformed[0]);transformed.dispose();
+fs.writeFileSync(kind+'-instrumented.tsx.log',instrumented);
+const result=await esbuild.build({entryPoints:['fixture-entry.tsx'],outfile:kind+'.js',platform:'browser',format:'iife',bundle:true,target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,loader:{'.woff2':'dataurl','.svg':'dataurl','.webp':'dataurl','.png':'dataurl'},plugins:[{name:'owned-controls',setup(b){
+ b.onLoad({filter:/\/ChartCalculator\.tsx$/},({path:p})=>({contents:instrumented,loader:'tsx',resolveDir:path.dirname(p)}));
+ b.onResolve({filter:/lib\/hooks\/useEngine$/},()=>({path:'engine-loader',namespace:'owned'}));
+ b.onResolve({filter:/lib\/geo\/search$/},()=>({path:'search',namespace:'owned'}));
+ b.onLoad({filter:/.*/,namespace:'owned'},({path:p})=>({contents:p==='engine-loader'?'export function useEngine(){return ()=>window.review.engineLoad();}':`export const preloadIndex=async()=>{};export const searchCities=async(q)=>[{name:'Synthetic Bangkok',admin1:'',country:'TH',lat:13.75,lon:100.5,tz:'Asia/Bangkok',pop:0},{name:'Synthetic Toronto',admin1:'',country:'CA',lat:43.65,lon:-79.38,tz:'America/Toronto',pop:0}].filter(x=>x.name.toLowerCase().includes(q.toLowerCase()));`}));
+ }}]});
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const records=Object.keys(result.metafile.inputs).filter(p=>!p.startsWith('owned:')&&!p.startsWith('<')).map(p=>({path:p,actualSource:p.endsWith('/ChartCalculator.tsx')?input:p,sha256:hash(fs.readFileSync(p.endsWith('/ChartCalculator.tsx')?input:p))}));
+fs.writeFileSync(kind+'-build-identity.json',JSON.stringify({kind,input,sourceSha256:hash(source),instrumentedSha256:hash(instrumented),bundleSha256:hash(fs.readFileSync(kind+'.js')),inputs:records},null,2)+'\n');
+console.log(JSON.stringify({kind,inputs:records.length,sourceSha256:hash(source),bundleSha256:hash(fs.readFileSync(kind+'.js'))}));

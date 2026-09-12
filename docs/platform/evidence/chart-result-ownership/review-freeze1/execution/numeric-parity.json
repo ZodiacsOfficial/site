@@ -1,0 +1,5 @@
+{
+  "scope": "Exact parsed runChart numerical statements from effectiveTime through existing unknown-time endpoint branch; ownership guards inside this range are unchanged. No interval coverage correctness or policy certification.",
+  "identical": true,
+  "sha256": "095c181031ef2ab158bfb5f254427fbc013bac67432adb7d3f60466fc029ce98"
+}

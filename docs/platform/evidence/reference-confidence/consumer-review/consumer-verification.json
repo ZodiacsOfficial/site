@@ -1,0 +1,748 @@
+{
+  "checks": [
+    {
+      "name": "node22: four unknown / two known controls",
+      "passed": true
+    },
+    {
+      "name": "node22 Toronto: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node22 Toronto: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node22 Juneau: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node22 Juneau: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node22 Bangkok ordinary: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node22 Bangkok ordinary: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node22 London two candidates: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node24: four unknown / two known controls",
+      "passed": true
+    },
+    {
+      "name": "node24 Toronto: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node24 Toronto: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node24 Juneau: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node24 Juneau: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node24 Bangkok ordinary: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "node24 Bangkok ordinary: baseline singleton actually exposes Moon interpretation and share glyph; candidate removes them",
+      "passed": true
+    },
+    {
+      "name": "node24 London two candidates: all eight SSR artifacts retain exact captured hashes",
+      "passed": true
+    },
+    {
+      "name": "en: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "es: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "fr: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "it: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "pt: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "ru: exactly one new catalog property and all previous property text unchanged",
+      "passed": true
+    },
+    {
+      "name": "Every compiled input still matches recorded hash; all consumed site code equals base except exact catalog additions and helper comments",
+      "passed": true
+    },
+    {
+      "name": "Endpoint helper executable AST unchanged",
+      "passed": true
+    }
+  ],
+  "passed": 24,
+  "catalogs": [
+    {
+      "locale": "en",
+      "path": "src/lib/i18n/ui/en.ts",
+      "beforeSha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9",
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+    },
+    {
+      "locale": "es",
+      "path": "src/lib/i18n/ui/es.ts",
+      "beforeSha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464",
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento."
+    },
+    {
+      "locale": "fr",
+      "path": "src/lib/i18n/ui/fr.ts",
+      "beforeSha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162",
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis."
+    },
+    {
+      "locale": "it",
+      "path": "src/lib/i18n/ui/it.ts",
+      "beforeSha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf",
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento."
+    },
+    {
+      "locale": "pt",
+      "path": "src/lib/i18n/ui/pt.ts",
+      "beforeSha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc",
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento."
+    },
+    {
+      "locale": "ru",
+      "path": "src/lib/i18n/ui/ru.ts",
+      "beforeSha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828",
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+      "addedKey": "moonUnverifiedNotice",
+      "value": "Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента."
+    }
+  ],
+  "consumedSiteSourceIdentities": [
+    {
+      "path": "site/src/lib/i18n/core.ts",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760",
+      "baseSha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ru-runtime/client.ts",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72",
+      "baseSha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ui/ru.ts",
+      "bytes": 38609,
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+      "baseSha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ru-runtime/server.ts",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e",
+      "baseSha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ru-runtime/index.ts",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc",
+      "baseSha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/signs.ts",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "baseSha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ui/client.ts",
+      "bytes": 802,
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75",
+      "baseSha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ui/growth.ts",
+      "bytes": 4309,
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273",
+      "baseSha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/ui/en.ts",
+      "bytes": 22131,
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+      "baseSha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ui/es.ts",
+      "bytes": 24192,
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+      "baseSha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ui/pt.ts",
+      "bytes": 25812,
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+      "baseSha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ui/fr.ts",
+      "bytes": 27888,
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+      "baseSha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ui/it.ts",
+      "bytes": 26712,
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+      "baseSha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/i18n/ui/server.ts",
+      "bytes": 614,
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9",
+      "baseSha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/english-only.ts",
+      "bytes": 1516,
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef",
+      "baseSha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/plural.ts",
+      "bytes": 1657,
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d",
+      "baseSha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/index.ts",
+      "bytes": 8203,
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303",
+      "baseSha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/moon-certainty.ts",
+      "bytes": 1909,
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "baseSha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "baseSha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "baseSha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "baseSha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/chart-date-certainty.ts",
+      "bytes": 1879,
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936",
+      "baseSha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "unchanged": false
+    },
+    {
+      "path": "site/src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "baseSha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "baseSha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/houses.ts",
+      "bytes": 1476,
+      "sha256": "e4230eb4f6d3e904efdd871b6067a9ca6ef5da630d60a64a83df099e48301eb0",
+      "baseSha256": "e4230eb4f6d3e904efdd871b6067a9ca6ef5da630d60a64a83df099e48301eb0",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/dignities.ts",
+      "bytes": 3140,
+      "sha256": "7e8593064ff20e0229a7701186fc834002988ced88bc58e2701f1ca4081ca5ac",
+      "baseSha256": "7e8593064ff20e0229a7701186fc834002988ced88bc58e2701f1ca4081ca5ac",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/wheel/technical-layout.ts",
+      "bytes": 2394,
+      "sha256": "aa1914003559fde124e145a5b972d95671d7e466c3abd34ddb8c9a942bec410d",
+      "baseSha256": "aa1914003559fde124e145a5b972d95671d7e466c3abd34ddb8c9a942bec410d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/scene/types.ts",
+      "bytes": 7753,
+      "sha256": "3d7ac67528d4868cc26a56e35160183436012ecce153e6dc050069dc41f97702",
+      "baseSha256": "3d7ac67528d4868cc26a56e35160183436012ecce153e6dc050069dc41f97702",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/scene/layout.ts",
+      "bytes": 1245,
+      "sha256": "5545e3f2494bc58b4f4cba8c796c2b28057f4dbc870cad69c57e1e0b5e5f9532",
+      "baseSha256": "5545e3f2494bc58b4f4cba8c796c2b28057f4dbc870cad69c57e1e0b5e5f9532",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/scene/build.ts",
+      "bytes": 4409,
+      "sha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54",
+      "baseSha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/glyphs/paths.ts",
+      "bytes": 5378,
+      "sha256": "2d585e8f1f99597a472c27dbcc02cfc3210f55d19e98792a47eede8e9aedbb64",
+      "baseSha256": "2d585e8f1f99597a472c27dbcc02cfc3210f55d19e98792a47eede8e9aedbb64",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/components/PlanetGlyph.tsx",
+      "bytes": 1262,
+      "sha256": "714db46ffbd7985219251606e4d92244cf1cfca65d48ea633ec94d37ac76d0cd",
+      "baseSha256": "714db46ffbd7985219251606e4d92244cf1cfca65d48ea633ec94d37ac76d0cd",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/components/AspectGlyph.tsx",
+      "bytes": 1017,
+      "sha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b",
+      "baseSha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/data/context-help.ts",
+      "bytes": 9961,
+      "sha256": "9429dc45b49908325e74a6ac2098d12cac935d83a6e4f4c0c1a042b4a6847355",
+      "baseSha256": "9429dc45b49908325e74a6ac2098d12cac935d83a6e4f4c0c1a042b4a6847355",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/styles/context-help.css",
+      "bytes": 2308,
+      "sha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d",
+      "baseSha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/analytics-config.mjs",
+      "bytes": 5182,
+      "sha256": "7a3988a3ed916bfc24e30a2967f665ef2cd3c3f440b581f5af132eaaa31e51c5",
+      "baseSha256": "7a3988a3ed916bfc24e30a2967f665ef2cd3c3f440b581f5af132eaaa31e51c5",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/analytics.ts",
+      "bytes": 3597,
+      "sha256": "7aa279a8e86614023781a0d99f6aede1381decbcbd4d5238544e169a40a42b4a",
+      "baseSha256": "7aa279a8e86614023781a0d99f6aede1381decbcbd4d5238544e169a40a42b4a",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/context-help-client.ts",
+      "bytes": 4751,
+      "sha256": "e0a69e3683d6e5ef8c6aa48f8d1e6462848e49e0eb06b110628c838430c8b23d",
+      "baseSha256": "e0a69e3683d6e5ef8c6aa48f8d1e6462848e49e0eb06b110628c838430c8b23d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/AstroTerm.tsx",
+      "bytes": 2659,
+      "sha256": "49f7cb95fc3ee689ace060361f79329cb346d381008a904e5b2c27f4460daac5",
+      "baseSha256": "49f7cb95fc3ee689ace060361f79329cb346d381008a904e5b2c27f4460daac5",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/compat.ts",
+      "bytes": 7617,
+      "sha256": "e4a7e3225e5acf0bb652615cec3234fbb13f5ca413f325bfcee38c01ce3345a5",
+      "baseSha256": "e4a7e3225e5acf0bb652615cec3234fbb13f5ca413f325bfcee38c01ce3345a5",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/aspects.ts",
+      "bytes": 1393,
+      "sha256": "0faaa80258494bee18bb5247291a8ecbe0abc9554775c5f0c43b8d0f00c2660f",
+      "baseSha256": "0faaa80258494bee18bb5247291a8ecbe0abc9554775c5f0c43b8d0f00c2660f",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/synastry.ts",
+      "bytes": 4859,
+      "sha256": "e9ad789aa2ee2c125cd6d9d498cf957ee0c42e8934cedd820e3e7a8985fd4a8f",
+      "baseSha256": "e9ad789aa2ee2c125cd6d9d498cf957ee0c42e8934cedd820e3e7a8985fd4a8f",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/natal.ts",
+      "bytes": 18196,
+      "sha256": "2cdc6e9c43a40960e159e5898531ea7a095e9d37cf17c3ef397ac6aefaf83602",
+      "baseSha256": "2cdc6e9c43a40960e159e5898531ea7a095e9d37cf17c3ef397ac6aefaf83602",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/natal-context.ts",
+      "bytes": 5759,
+      "sha256": "2c5acde9b0b7be5114d4d926a20e912cf9931b64ad60b6289b1f17632e5d3d54",
+      "baseSha256": "2c5acde9b0b7be5114d4d926a20e912cf9931b64ad60b6289b1f17632e5d3d54",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/i18n/astrology.ts",
+      "bytes": 4740,
+      "sha256": "0c8b024837972934a5c92067008b4dd3a7e0a7871ad75839a318593fa0549c00",
+      "baseSha256": "0c8b024837972934a5c92067008b4dd3a7e0a7871ad75839a318593fa0549c00",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/explorer/Inspector.tsx",
+      "bytes": 27379,
+      "sha256": "e94bd7161b5193a0fe3ba01646271c1162e454a661ccc3a9598beb43f35d2759",
+      "baseSha256": "e94bd7161b5193a0fe3ba01646271c1162e454a661ccc3a9598beb43f35d2759",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/explorer/ReadingPath.css",
+      "bytes": 17022,
+      "sha256": "22553d426e66d62b3dcd95c8472652e7585542e95e41bace3877a788e50e9651",
+      "baseSha256": "22553d426e66d62b3dcd95c8472652e7585542e95e41bace3877a788e50e9651",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/account-v2/profile-access-reader.ts",
+      "bytes": 1335,
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048",
+      "baseSha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/profile/schema.ts",
+      "bytes": 1527,
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "baseSha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/types.ts",
+      "bytes": 2164,
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "baseSha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/profile/polar-repair.ts",
+      "bytes": 2394,
+      "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741",
+      "baseSha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/profile/read-store.ts",
+      "bytes": 1285,
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485",
+      "baseSha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/learning-input-identity.ts",
+      "bytes": 411,
+      "sha256": "8a8175bfbefbac6246d16c6183fa056f8ae2e4cdf0202364459b85f49d22ea5d",
+      "baseSha256": "8a8175bfbefbac6246d16c6183fa056f8ae2e4cdf0202364459b85f49d22ea5d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/learning-source.ts",
+      "bytes": 3629,
+      "sha256": "4f9bd87b4cb44cae38bbd93691a477b65b59e1a7b7f898b5ebff1b9fa491f590",
+      "baseSha256": "4f9bd87b4cb44cae38bbd93691a477b65b59e1a7b7f898b5ebff1b9fa491f590",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/use-learning-sources.ts",
+      "bytes": 1369,
+      "sha256": "ab83700cff04fd9368fae94d491ceb4457d7176ab5dac33d4ca8fda8ec9d7bce",
+      "baseSha256": "ab83700cff04fd9368fae94d491ceb4457d7176ab5dac33d4ca8fda8ec9d7bce",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/learning-progress.ts",
+      "bytes": 7432,
+      "sha256": "b7aa84be722b711b8a918a33d0fcad8bf998232cb85d095f234c7d09ed2cb0e7",
+      "baseSha256": "b7aa84be722b711b8a918a33d0fcad8bf998232cb85d095f234c7d09ed2cb0e7",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/use-learning-progress.ts",
+      "bytes": 1106,
+      "sha256": "52c64387fa04da3b6c3e0afdabc628b13f022d3d11f9125a9fa2c8f42940f50f",
+      "baseSha256": "52c64387fa04da3b6c3e0afdabc628b13f022d3d11f9125a9fa2c8f42940f50f",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/explorer/learning-exercises.ts",
+      "bytes": 4230,
+      "sha256": "4bdd4d5bee0e75706c45c2b7153f82f302d334f28511bd435e677a6c401f0833",
+      "baseSha256": "4bdd4d5bee0e75706c45c2b7153f82f302d334f28511bd435e677a6c401f0833",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/LearningPractice.css",
+      "bytes": 1626,
+      "sha256": "940340a7d9bff2fe72ebcd41326e8765ce544489dc353227d221306408cd9666",
+      "baseSha256": "940340a7d9bff2fe72ebcd41326e8765ce544489dc353227d221306408cd9666",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/explorer/LearningPractice.tsx",
+      "bytes": 7007,
+      "sha256": "86520bb37573736927169cb020d6f6e82f1c78dfb5244d4eb82be4602e49eb56",
+      "baseSha256": "86520bb37573736927169cb020d6f6e82f1c78dfb5244d4eb82be4602e49eb56",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/explorer/ReadingPath.tsx",
+      "bytes": 22526,
+      "sha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559",
+      "baseSha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-positions.ts",
+      "bytes": 7908,
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e",
+      "baseSha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/scene/emphasis.ts",
+      "bytes": 2867,
+      "sha256": "47d2d26ea61929f5b33a83121bea7910fbf3976e22257061693b8eb8e7d64558",
+      "baseSha256": "47d2d26ea61929f5b33a83121bea7910fbf3976e22257061693b8eb8e7d64558",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/wheel/body-leader.ts",
+      "bytes": 804,
+      "sha256": "ef92ac8a3922b2024ac558ad2c7327665a9c40eacdd1c5d76e54fa49d40f108b",
+      "baseSha256": "ef92ac8a3922b2024ac558ad2c7327665a9c40eacdd1c5d76e54fa49d40f108b",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/wheel/Wheel.tsx",
+      "bytes": 25902,
+      "sha256": "99e6a08137a0330baf7950375f5db31cb31c1fdea32c8898f00b029a0fbcd49e",
+      "baseSha256": "99e6a08137a0330baf7950375f5db31cb31c1fdea32c8898f00b029a0fbcd49e",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/wheel/TechnicalWheel.tsx",
+      "bytes": 8979,
+      "sha256": "0a8b556084173976085d1214f1a8973d5e5c0f8c65c41e944f37fda72d3d3c21",
+      "baseSha256": "0a8b556084173976085d1214f1a8973d5e5c0f8c65c41e944f37fda72d3d3c21",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-card-copy.ts",
+      "bytes": 11193,
+      "sha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9",
+      "baseSha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/interpretations.ts",
+      "bytes": 9856,
+      "sha256": "0c47a89f792b7669a238b5e8ced2be2a68b4a0258750132d41d2035d938fde60",
+      "baseSha256": "0c47a89f792b7669a238b5e8ced2be2a68b4a0258750132d41d2035d938fde60",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/communication.ts",
+      "bytes": 11339,
+      "sha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64",
+      "baseSha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/approach.ts",
+      "bytes": 8818,
+      "sha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22",
+      "baseSha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/chart-signature.ts",
+      "bytes": 11892,
+      "sha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c",
+      "baseSha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/brand-icons.mjs",
+      "bytes": 1557,
+      "sha256": "833876e4de95e2e715e2a6b7b9862b0ebbac2894651a145d6a56f5b83035be5b",
+      "baseSha256": "833876e4de95e2e715e2a6b7b9862b0ebbac2894651a145d6a56f5b83035be5b",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-card-brand.ts",
+      "bytes": 3339,
+      "sha256": "f202d7a026cadcde4ea2d3fc01b0f2ef1479cbfc8aa0ae3b9b6de5991b1c067e",
+      "baseSha256": "f202d7a026cadcde4ea2d3fc01b0f2ef1479cbfc8aa0ae3b9b6de5991b1c067e",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-card.ts",
+      "bytes": 55757,
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "baseSha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-card-pastel-icons.ts",
+      "bytes": 2940,
+      "sha256": "8634851a324fb0563aca1ad97b75a9a3b294aa9b320786377b0bc67f3f236162",
+      "baseSha256": "8634851a324fb0563aca1ad97b75a9a3b294aa9b320786377b0bc67f3f236162",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/CopyLinkButton.tsx",
+      "bytes": 1878,
+      "sha256": "9317497e11c45ff7e2763757817f9e47a9745bcae359f798435fdb8fe882b0e3",
+      "baseSha256": "9317497e11c45ff7e2763757817f9e47a9745bcae359f798435fdb8fe882b0e3",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share-positions-reading.ts",
+      "bytes": 2308,
+      "sha256": "fe987bd1af02d128b663f2802aabb0fd9b7f9657538558a99d8477202a81066a",
+      "baseSha256": "fe987bd1af02d128b663f2802aabb0fd9b7f9657538558a99d8477202a81066a",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/SignChip.tsx",
+      "bytes": 830,
+      "sha256": "e6d4b3ea57ba8e82b5cd42eabefcf732c10a4ca8f179b89769a13d8175b16a73",
+      "baseSha256": "e6d4b3ea57ba8e82b5cd42eabefcf732c10a4ca8f179b89769a13d8175b16a73",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/PositionsShareSurface.tsx",
+      "bytes": 19508,
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c",
+      "baseSha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/islands/ChartShareDialog.tsx",
+      "bytes": 17510,
+      "sha256": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b",
+      "baseSha256": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/portable.ts",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "baseSha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "baseSha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/chart-shape.ts",
+      "bytes": 6820,
+      "sha256": "d7396cbd6309d2148ff4aba098e45b5e51ccf9d4a9d043e11615ba6ea4aa7682",
+      "baseSha256": "d7396cbd6309d2148ff4aba098e45b5e51ccf9d4a9d043e11615ba6ea4aa7682",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/chart-context.ts",
+      "bytes": 7527,
+      "sha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a",
+      "baseSha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a",
+      "unchanged": true
+    },
+    {
+      "path": "site/src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "baseSha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "unchanged": true
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+# Author invocations
+
+Working directory for source commands: `/private/tmp/zodiacs-platform-local-date-reference`, exact starting commit `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. The scratch reuses installed dependency sources through its node_modules symlink; no dependency install or package-source edit was performed. Tool-generated dependency caches may be shared by that symlink. No build or command was run against root dist.
+
+The shell tool captured the initial shared clone/checkout and source-read mistakes in `initial-inspection-errors.log`. Additional exploratory reads tried nonexistent `src/lib/share-chart.ts` (actual module `src/lib/share.ts`) and `src/lib/profile.ts` (actual profile is a directory). These were read-only invocation mistakes, not repository failures.
+
+Initial focused tests (`focused-initial.log`):
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/vitest/vitest.mjs run src/lib/time/localDateContainsUtc.test.ts src/lib/time/localToUtc.test.ts src/lib/time/localToUtc-precision.test.ts src/islands/ChartCalculator.ownership.test.ts
+```
+
+Native fixture runs (`native-initial.log`, `native-final.log`, `native-complete.log` respectively; outputs were never overwritten):
+```
+OUT_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/native REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/baseline-source /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/local-date-reference-drive.mjs
+OUT_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/native-final REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/baseline-source /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/local-date-reference-drive.mjs
+OUT_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/native-complete REFERENCE_BASELINE_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/baseline-source /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/local-date-reference-drive.mjs
+```
+
+Type check and local generated types (`types-initial.log`, `astro-sync.log`, `astro-sync-corrected.log`, `types-final.log`):
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --noEmit
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/astro/astro.js sync
+ASTRO_TELEMETRY_DISABLED=1 /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/astro/bin/astro.mjs sync
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --noEmit
+```
+
+Final focused checks (`focused-final-node22.log`, `focused-final-node24.log`):
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/vitest/vitest.mjs run src/lib/time/localDateContainsUtc.test.ts src/lib/time/localToUtc.test.ts src/lib/time/localToUtc-precision.test.ts src/lib/chart-date-certainty.test.ts src/lib/engine/calculator-receipt.test.ts src/islands/ChartCalculator.ownership.test.ts src/islands/ChartCalculator.locale.test.ts
+/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/vitest/vitest.mjs run src/lib/time/localDateContainsUtc.test.ts src/lib/time/localToUtc.test.ts src/lib/time/localToUtc-precision.test.ts src/lib/chart-date-certainty.test.ts src/lib/engine/calculator-receipt.test.ts src/islands/ChartCalculator.ownership.test.ts src/islands/ChartCalculator.locale.test.ts
+```
+
+Retained native Moon ownership (`moon-ownership.log`):
+```
+OUT_DIR=/private/tmp/zodiacs-platform-local-date-reference-evidence/moon-ownership /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/moon-result-ownership-drive.mjs
+```
+
+Source sealing (own scratch index only; no commit or push):
+```
+git add -N src/lib/time/localDateContainsUtc.test.ts tests/local-date-reference-drive.mjs
+git diff --binary --no-ext-diff
+git diff --check
+/usr/bin/python3 /private/tmp/zodiacs-platform-local-date-reference-evidence/seal-source.py
+```
+
+All browser controls used repository `findChromium` and `STABLE_CHROMIUM_ARGS`, resolving actual Google Chrome 152.0.7977.83. They served owned static bundles; no development server, preview/production deployment, credential bootstrap or external API was used. The compressed raw archive includes exact drivers, instrumented sources, build input hashes, browser outputs and original failures. Member hashes permit verification without committing repeated large bundles as loose source files.

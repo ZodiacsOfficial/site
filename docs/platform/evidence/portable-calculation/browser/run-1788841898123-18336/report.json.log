@@ -1,0 +1,1202 @@
+{
+  "startedAt": "2026-09-08T04:31:38.123Z",
+  "runId": "run-1788841898123-18336",
+  "root": "/Users/chiburashka/.codex/worktrees/4806/site",
+  "sourceCommit": "6ab85278bea708337e20947966a54a5072ad0627",
+  "sourceBranch": "codex/platform-portable-calculation",
+  "runner": {
+    "path": "/private/tmp/zodiacs-platform-portable-browser/run.mjs",
+    "sha256": "baf3dd5efeb41c3ff3267e347441d2bcd7cddce12489164667652bbee8cee685"
+  },
+  "status": "passed",
+  "files": {
+    "src/lib/engine/chart-adapter.ts": {
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "bytes": 788
+    },
+    "src/lib/engine/full.ts": {
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "bytes": 1215
+    },
+    "src/lib/engine/portable.ts": {
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "bytes": 3084
+    },
+    "src/lib/engine/portable.test.ts": {
+      "sha256": "47bd2c343a888bbcf647bb92b32cd2140d19259ffdfeff816af0ecdfeb78aec9",
+      "bytes": 14906
+    },
+    "src/lib/engine/types.ts": {
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "bytes": 2164
+    }
+  },
+  "staticRequests": [
+    {
+      "phase": "load",
+      "method": "GET",
+      "path": "/",
+      "status": 200
+    },
+    {
+      "phase": "load",
+      "method": "GET",
+      "path": "/bundle.js",
+      "status": 200
+    },
+    {
+      "phase": "load",
+      "method": "GET",
+      "path": "/cases.js",
+      "status": 200
+    }
+  ],
+  "browserRequests": [
+    {
+      "phase": "load",
+      "url": "http://127.0.0.1:54103/",
+      "method": "GET",
+      "resourceType": "document"
+    },
+    {
+      "phase": "load",
+      "url": "http://127.0.0.1:54103/bundle.js",
+      "method": "GET",
+      "resourceType": "script"
+    },
+    {
+      "phase": "load",
+      "url": "http://127.0.0.1:54103/cases.js",
+      "method": "GET",
+      "resourceType": "script"
+    }
+  ],
+  "failedRequests": [],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "deniedRequests": [],
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true,
+    "ownedProfileRemoved": true
+  },
+  "artifact": {
+    "path": "/Users/chiburashka/.codex/worktrees/4806/site/vendor/zodiacs-engine-0.1.1-rc.5.tgz",
+    "sha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+    "members": [
+      {
+        "member": "LICENSE",
+        "bytes": 1068,
+        "sha256": "9a8ab25f278db9d59a00ee82d1a82d63ee4891a9c417c53b4e2b9942aaab10df"
+      },
+      {
+        "member": "NOTICE",
+        "bytes": 1378,
+        "sha256": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450"
+      },
+      {
+        "member": "dist/chunk-4YKOFVM6.js",
+        "bytes": 4644,
+        "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803"
+      },
+      {
+        "member": "dist/chunk-CPALRSPC.js",
+        "bytes": 1459,
+        "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+      },
+      {
+        "member": "dist/chunk-INI453VG.js",
+        "bytes": 4693,
+        "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+      },
+      {
+        "member": "dist/chunk-K5MRTCWE.js",
+        "bytes": 2593,
+        "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+      },
+      {
+        "member": "dist/chunk-PD4H342X.js",
+        "bytes": 4213,
+        "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0"
+      },
+      {
+        "member": "dist/geo.js",
+        "bytes": 11616,
+        "sha256": "9d45088e73e9dadf8083c3673d12e5e8affedd17d1796a6fb0f3b0ec6ae679f5"
+      },
+      {
+        "member": "dist/index.js",
+        "bytes": 13163,
+        "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b"
+      },
+      {
+        "member": "dist/internal-math.js",
+        "bytes": 591,
+        "sha256": "8c058be3014be9d5443a87cd09413ecec21af89fe599ebe9ed4e58a8cda9870a"
+      },
+      {
+        "member": "dist/internal.js",
+        "bytes": 245,
+        "sha256": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52"
+      },
+      {
+        "member": "dist/receipt.js",
+        "bytes": 24948,
+        "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+      },
+      {
+        "member": "package.json",
+        "bytes": 2154,
+        "sha256": "84206969fb8c9c78c1abee1cfb4ebeda6b862c77bff0e5f7effc2ebc47826387"
+      },
+      {
+        "member": "CHANGELOG.md",
+        "bytes": 5628,
+        "sha256": "8dded1aea3cc4318a0a07f2777892584709a7543a3d33f2b773fb92d132c93fe"
+      },
+      {
+        "member": "LICENSING.md",
+        "bytes": 2591,
+        "sha256": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096"
+      },
+      {
+        "member": "README.md",
+        "bytes": 15784,
+        "sha256": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c"
+      },
+      {
+        "member": "dist/geo.d.ts",
+        "bytes": 2172,
+        "sha256": "0454dda71c0559da5a0f792ed592d07f610132a601e67c8ed37eddf2d22b774d"
+      },
+      {
+        "member": "dist/index.d.ts",
+        "bytes": 4010,
+        "sha256": "3c4063793f944f3cb0b1e07338c4c24becb6480aacede5cf3199bd18186403fa"
+      },
+      {
+        "member": "dist/internal-math-2qAGGDMX.d.ts",
+        "bytes": 5630,
+        "sha256": "2eb16b632345cade067e9a415b4d5d96252af3dbb247b8c24fecfe2840dc64a0"
+      },
+      {
+        "member": "dist/internal-math.d.ts",
+        "bytes": 595,
+        "sha256": "0a648b1bba45a089192ef6804dfb640ba45e07f307807a64f48e3b3c99c0248c"
+      },
+      {
+        "member": "dist/internal.d.ts",
+        "bytes": 502,
+        "sha256": "68eacb2ef7bc5be384d027cba266256baa440460c94539f36edbde95f9b1649e"
+      },
+      {
+        "member": "dist/receipt.d.ts",
+        "bytes": 6522,
+        "sha256": "7ca8a71659c70c1fb15a98506bd63d0e77f32f7018c914d4ba0ace1ec7ad7d54"
+      },
+      {
+        "member": "dist/types-CHoIZzek.d.ts",
+        "bytes": 5013,
+        "sha256": "08b23ad16ae93803ed08f9b9dda797e8c46fa3d14dac3bae5debd3f984288a85"
+      }
+    ]
+  },
+  "versions": {
+    "engine": "0.1.1-rc.5",
+    "ephemeris": "2.1.19",
+    "node": "v22.23.2",
+    "playwright": "1.61.1",
+    "esbuild": "0.28.1"
+  },
+  "moduleGraph": [
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "bytes": 2593,
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+      "imports": []
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "bytes": 4693,
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+      "imports": []
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+      "bytes": 4213,
+      "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/astronomy-engine/esm/astronomy.js",
+      "bytes": 412025,
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7",
+      "imports": []
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+      "bytes": 4644,
+      "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+          "kind": "import-statement",
+          "original": "./chunk-PD4H342X.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/astronomy-engine/esm/astronomy.js",
+          "kind": "import-statement",
+          "original": "astronomy-engine"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "bytes": 1459,
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+      "imports": []
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/index.js",
+      "bytes": 13163,
+      "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+          "kind": "import-statement",
+          "original": "./chunk-K5MRTCWE.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+          "kind": "import-statement",
+          "original": "./chunk-4YKOFVM6.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+          "kind": "import-statement",
+          "original": "./chunk-PD4H342X.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+          "kind": "import-statement",
+          "original": "./chunk-CPALRSPC.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/receipt.js",
+      "bytes": 24948,
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+          "kind": "import-statement",
+          "original": "./chunk-CPALRSPC.js"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "imports": []
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/src/lib/engine/portable.ts",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/index.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/receipt.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/receipt"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/src/lib/engine/chart-adapter.ts",
+          "kind": "import-statement",
+          "original": "./chart-adapter"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/entry.mjs",
+      "bytes": 282,
+      "sha256": "6ca05a36735d87c51d5089a16a19f07f3ab98c3ee8beb896d6d94f29af587fa1",
+      "imports": [
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/src/lib/engine/portable.ts",
+          "kind": "import-statement",
+          "original": "./src/lib/engine/portable.ts"
+        },
+        {
+          "path": "../../../../../../private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/fixture/node_modules/@zodiacs/engine/dist/receipt.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/receipt"
+        }
+      ]
+    }
+  ],
+  "bundle": {
+    "sha256": "33f8bb250e61a39b986b2f1d4acc2e73f4a1ee4926e35c60027234cec5416515",
+    "bytes": 125683
+  },
+  "cases": {
+    "sha256": "c1e84b97e3aa92f5c1f24d7db6b5db9bb7ccc77588403389c87f0125a5ff1dab",
+    "bytes": 16965
+  },
+  "origin": "http://127.0.0.1:54103",
+  "chromeExecutable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "chromeVersion": "152.0.7977.83",
+  "initialPage": {
+    "title": "Portable calculation acceptance",
+    "body": "Portable calculation browser acceptance\n\nOwned synthetic test harness — no product UI, account or personal data.\n\nReady for offline acceptance\nReal rc.5 engine and the frozen site module load locally.",
+    "errorOverlay": false,
+    "bundleAPI": [
+      "computePortableChart",
+      "serializeNatalEnvelope",
+      "parseNatalEnvelope",
+      "natalReplayInput"
+    ],
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36"
+  },
+  "storageBefore": {
+    "local": 0,
+    "session": 0,
+    "cookie": ""
+  },
+  "negativeControls": [
+    {
+      "name": "fetch",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "fetch"
+        }
+      ]
+    },
+    {
+      "name": "XMLHttpRequest",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "XMLHttpRequest"
+        }
+      ]
+    },
+    {
+      "name": "WebSocket",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "WebSocket"
+        }
+      ]
+    },
+    {
+      "name": "EventSource",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "EventSource"
+        }
+      ]
+    },
+    {
+      "name": "Worker",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Worker"
+        }
+      ]
+    },
+    {
+      "name": "SharedWorker",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "SharedWorker"
+        }
+      ]
+    },
+    {
+      "name": "sendBeacon",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "sendBeacon"
+        }
+      ]
+    },
+    {
+      "name": "localStorage.get",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "localStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.getItem"
+        }
+      ]
+    },
+    {
+      "name": "sessionStorage.get",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "sessionStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.getItem"
+        }
+      ]
+    },
+    {
+      "name": "Storage.setItem",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "localStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.setItem"
+        }
+      ]
+    },
+    {
+      "name": "Storage.removeItem",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "localStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.removeItem"
+        }
+      ]
+    },
+    {
+      "name": "Storage.clear",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "localStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.clear"
+        }
+      ]
+    },
+    {
+      "name": "Storage.key",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "localStorage.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "Storage.key"
+        }
+      ]
+    },
+    {
+      "name": "indexedDB.open",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.open"
+        }
+      ]
+    },
+    {
+      "name": "indexedDB.deleteDatabase",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.deleteDatabase"
+        }
+      ]
+    },
+    {
+      "name": "indexedDB.databases",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "indexedDB.databases"
+        }
+      ]
+    },
+    {
+      "name": "caches.open",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "caches.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "caches.open"
+        }
+      ]
+    },
+    {
+      "name": "caches.match",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "caches.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "caches.match"
+        }
+      ]
+    },
+    {
+      "name": "caches.delete",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "caches.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "caches.delete"
+        }
+      ]
+    },
+    {
+      "name": "caches.has",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "caches.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "caches.has"
+        }
+      ]
+    },
+    {
+      "name": "caches.keys",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "caches.get"
+        },
+        {
+          "phase": "negative-control",
+          "name": "caches.keys"
+        }
+      ]
+    },
+    {
+      "name": "cookie.get",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "cookie.get"
+        }
+      ]
+    },
+    {
+      "name": "cookie.set",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "cookie.set"
+        }
+      ]
+    },
+    {
+      "name": "Intl.getCanonicalLocales",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.getCanonicalLocales"
+        }
+      ]
+    },
+    {
+      "name": "Intl.supportedValuesOf",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.supportedValuesOf"
+        }
+      ]
+    },
+    {
+      "name": "Intl.DateTimeFormat",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.DateTimeFormat"
+        }
+      ]
+    },
+    {
+      "name": "Intl.NumberFormat",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.NumberFormat"
+        }
+      ]
+    },
+    {
+      "name": "Intl.Collator",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.Collator"
+        }
+      ]
+    },
+    {
+      "name": "Intl.v8BreakIterator",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.v8BreakIterator"
+        }
+      ]
+    },
+    {
+      "name": "Intl.PluralRules",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.PluralRules"
+        }
+      ]
+    },
+    {
+      "name": "Intl.RelativeTimeFormat",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.RelativeTimeFormat"
+        }
+      ]
+    },
+    {
+      "name": "Intl.ListFormat",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.ListFormat"
+        }
+      ]
+    },
+    {
+      "name": "Intl.Locale",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.Locale"
+        }
+      ]
+    },
+    {
+      "name": "Intl.DisplayNames",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.DisplayNames"
+        }
+      ]
+    },
+    {
+      "name": "Intl.Segmenter",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.Segmenter"
+        }
+      ]
+    },
+    {
+      "name": "Intl.DurationFormat",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Intl.DurationFormat"
+        }
+      ]
+    },
+    {
+      "name": "Date.toLocaleString",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Date.toLocaleString"
+        }
+      ]
+    },
+    {
+      "name": "Date.toLocaleDateString",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Date.toLocaleDateString"
+        }
+      ]
+    },
+    {
+      "name": "Date.toLocaleTimeString",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Date.toLocaleTimeString"
+        }
+      ]
+    },
+    {
+      "name": "Number.toLocaleString",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "Number.toLocaleString"
+        }
+      ]
+    },
+    {
+      "name": "BigInt.toLocaleString",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "BigInt.toLocaleString"
+        }
+      ]
+    },
+    {
+      "name": "String.localeCompare",
+      "blocked": true,
+      "observed": [
+        {
+          "phase": "negative-control",
+          "name": "String.localeCompare"
+        }
+      ]
+    }
+  ],
+  "singleCalculation": {
+    "bodies": 12,
+    "nativeReceiptBodies": 12,
+    "houses": {
+      "absenceReason": null,
+      "actual": "whole",
+      "requested": "placidus"
+    },
+    "engine": {
+      "name": "@zodiacs/engine",
+      "version": "0.1.1-rc.5"
+    },
+    "instant": "2001-12-21T08:30:00.000Z"
+  },
+  "calculationCalls": {
+    "computePortableChart": 1,
+    "natalChart": 1,
+    "computeChart": 1,
+    "createNatalEnvelope": 1
+  },
+  "browserResult": {
+    "checks": [
+      {
+        "name": "complete receipt and compact chart retain the same full precision result",
+        "passed": true,
+        "detail": {
+          "bodies": 12,
+          "aspects": 15,
+          "engineVersion": "0.1.1-rc.5"
+        }
+      },
+      {
+        "name": "polar Placidus request survives actual Whole fallback",
+        "passed": true
+      },
+      {
+        "name": "unknown time keeps 08:30 and the explicit source ISO spelling",
+        "passed": true
+      },
+      {
+        "name": "codec serializes and parses the frozen receipt without recalculation",
+        "passed": true,
+        "detail": {
+          "encodedBytes": 4569
+        }
+      },
+      {
+        "name": "receipt and snapshot detach every mutable chart and input/context branch",
+        "passed": true
+      },
+      {
+        "name": "errors expose one fixed message/code without reading hostile private failures",
+        "passed": true
+      },
+      {
+        "name": "context accessors and revoked proxies fail without private diagnostics",
+        "passed": true
+      },
+      {
+        "name": "canonical request reads raw input getters once",
+        "passed": true,
+        "detail": {
+          "counts": {
+            "houseSystem": 1,
+            "timeKnown": 1,
+            "latitude": 1,
+            "longitude": 1,
+            "flags": 1,
+            "utc": 1
+          }
+        }
+      },
+      {
+        "name": "explicit context is captured after calculation and then detached",
+        "passed": true
+      },
+      {
+        "name": "explicit local resolution is preserved without current Intl reconstruction",
+        "passed": true
+      },
+      {
+        "name": "missing location and unknown-time noon retain separate absence semantics",
+        "passed": true
+      },
+      {
+        "name": "historical year 0099 remains year 0099 in browser UTC handling",
+        "passed": true
+      }
+    ],
+    "summary": {
+      "passed": 12,
+      "failed": 0
+    },
+    "observations": [
+      {
+        "phase": "negative-control",
+        "name": "fetch"
+      },
+      {
+        "phase": "negative-control",
+        "name": "XMLHttpRequest"
+      },
+      {
+        "phase": "negative-control",
+        "name": "WebSocket"
+      },
+      {
+        "phase": "negative-control",
+        "name": "EventSource"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Worker"
+      },
+      {
+        "phase": "negative-control",
+        "name": "SharedWorker"
+      },
+      {
+        "phase": "negative-control",
+        "name": "sendBeacon"
+      },
+      {
+        "phase": "negative-control",
+        "name": "localStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.getItem"
+      },
+      {
+        "phase": "negative-control",
+        "name": "sessionStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.getItem"
+      },
+      {
+        "phase": "negative-control",
+        "name": "localStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.setItem"
+      },
+      {
+        "phase": "negative-control",
+        "name": "localStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.removeItem"
+      },
+      {
+        "phase": "negative-control",
+        "name": "localStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.clear"
+      },
+      {
+        "phase": "negative-control",
+        "name": "localStorage.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Storage.key"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.open"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.deleteDatabase"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "indexedDB.databases"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.open"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.match"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.delete"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.has"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "caches.keys"
+      },
+      {
+        "phase": "negative-control",
+        "name": "cookie.get"
+      },
+      {
+        "phase": "negative-control",
+        "name": "cookie.set"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.getCanonicalLocales"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.supportedValuesOf"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.DateTimeFormat"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.NumberFormat"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.Collator"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.v8BreakIterator"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.PluralRules"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.RelativeTimeFormat"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.ListFormat"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.Locale"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.DisplayNames"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.Segmenter"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Intl.DurationFormat"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Date.toLocaleString"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Date.toLocaleDateString"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Date.toLocaleTimeString"
+      },
+      {
+        "phase": "negative-control",
+        "name": "Number.toLocaleString"
+      },
+      {
+        "phase": "negative-control",
+        "name": "BigInt.toLocaleString"
+      },
+      {
+        "phase": "negative-control",
+        "name": "String.localeCompare"
+      }
+    ],
+    "candidateObservations": [],
+    "offline": true
+  },
+  "storageAfter": {
+    "local": 0,
+    "session": 0,
+    "cookie": ""
+  },
+  "cookies": [],
+  "finalPage": "Portable calculation browser acceptance\n\nOwned synthetic test harness — no product UI, account or personal data.\n\n12/12 browser cases passed\nPASS — complete receipt and compact chart retain the same full precision result\nPASS — polar Placidus request survives actual Whole fallback\nPASS — unknown time keeps 08:30 and the explicit source ISO spelling\nPASS — codec serializes and parses the frozen receipt without recalculation\nPASS — receipt and snapshot detach every mutable chart and input/context branch\nPASS — errors expose one fixed message/code without reading hostile private failures\nPASS — context accessors and revoked proxies fail without private diagnostics\nPASS — canonical request reads raw input getters once\nPASS — explicit context is captured after calculation and then detached\nPASS — explicit local resolution is preserved without current Intl reconstruction\nPASS — missing location and unknown-time noon retain separate absence semantics\nPASS — historical year 0099 remains year 0099 in browser UTC handling",
+  "sourceUnchangedAfter": true,
+  "endedAt": "2026-09-08T04:31:39.492Z"
+}

@@ -1,0 +1,72 @@
+import { createRequire } from 'node:module';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { join } from 'node:path';
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const out=import.meta.dirname;
+const require=createRequire(join(root,'package.json'));
+const {build}=require('esbuild');
+const ts=require('typescript');
+const sha=(bytes)=>createHash('sha256').update(bytes).digest('hex');
+const compilation=await build({absWorkingDir:root,stdin:{contents:`
+export {resolveLocalToUtc} from './src/lib/time/localToUtc';
+export {localDateEndpointsUtc,stableBodySignSlug} from './src/lib/chart-date-certainty';
+export {moonCandidatesFromEndpoints,moonIsUncertain,moonLabel} from './src/lib/moon-certainty';
+export {computeBodies,computeChart} from './src/lib/engine/full';
+export {computeCalculatorReceipt} from './src/lib/engine/calculator-receipt';
+`,resolveDir:root},bundle:true,write:false,platform:'node',format:'esm',target:'node22',metafile:true});
+await writeFile(join(out,'subject.mjs'),compilation.outputFiles[0].contents);
+const inputs=[];
+for(const path of Object.keys(compilation.metafile.inputs).filter(x=>x!=='<stdin>')){
+ const bytes=await readFile(join(root,path));
+ inputs.push({path,sha256:sha(bytes),bytes:bytes.length});
+ if(!path.startsWith('node_modules/')){const target=join(out,'source',path);await mkdir(join(target,'..'),{recursive:true});await writeFile(target,bytes);}
+}
+const subject=await import('./subject.mjs');
+const cases=[['2011-12-30','Pacific/Apia'],['1892-07-04','Pacific/Apia'],['2009-10-31','America/St_Johns'],['1919-03-31','America/Toronto'],['1990-01-04','Asia/Bangkok']];
+const numerical=cases.map(([date,zone])=>{
+ const resolved=subject.resolveLocalToUtc(date,'12:00',zone);
+ const endpoints=subject.localDateEndpointsUtc(date,zone);
+ const start=subject.computeBodies(endpoints.start); const end=subject.computeBodies(endpoints.end);
+ const input={utc:resolved.utc,latitude:0,longitude:0,houseSystem:'whole',timeKnown:false,flags:resolved.flags};
+ const portable=subject.computeCalculatorReceipt(input,{date,time:'12:00',timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:'local-noon'});
+ const result=portable?.chart??subject.computeChart(input);
+ const candidates=subject.moonCandidatesFromEndpoints(start,end); result.moonSignCandidates=candidates;
+ return {date,zone,resolved,referenceWall:new Intl.DateTimeFormat('en-CA',{timeZone:zone,dateStyle:'full',timeStyle:'long'}).format(resolved.utc),endpoints,endpointDurationMs:endpoints.end.getTime()-endpoints.start.getTime()+1,candidates,moonUncertain:subject.moonIsUncertain(result),moonLabel:subject.moonLabel(result,'en'),stableSun:subject.stableBodySignSlug('Sun',start,end),receiptCreated:Boolean(portable),receiptContext:portable?JSON.parse(portable.envelopeJson).context:null};
+});
+
+// Execute the exact TypeScript-extracted runChart function with controlled
+// boundaries. This is source-level state probing, not a rendered-browser claim.
+const chartPath='src/islands/ChartCalculator.tsx';
+const source=await readFile(join(root,chartPath),'utf8');
+await mkdir(join(out,'source/src/islands'),{recursive:true});
+await writeFile(join(out,'source',chartPath),source);
+inputs.push({path:chartPath,sha256:sha(source),bytes:Buffer.byteLength(source)});
+const ast=ts.createSourceFile(chartPath,source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+let node;
+function visit(n){if(ts.isFunctionDeclaration(n)&&n.name?.text==='runChart')node=n;ts.forEachChild(n,visit);}visit(ast);
+if(!node)throw Error('runChart declaration missing');
+const extracted=node.getText(ast);
+const emitted=ts.transpile(extracted,{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ESNext});
+await writeFile(join(out,'runChart-extracted.js'),emitted);
+const state={chart:{identity:'previous-successful-chart',flags:[],bodies:[{body:'Sun',lon:10},{body:'Moon',lon:10}]},computedInput:{date:'1990-01-04',city:{tz:'Asia/Bangkok'}},shareInput:{date:'1990-01-04'},card:'idle',error:'',busy:false};
+const calls=[];
+const noop=()=>{};
+const context={
+ mode:'moon',showsEnglishInterpretation:false,locale:'en',chartActionDockModule:null,
+ inputRevisionRef:{current:0},profileAccessGeneration:{current:0},primaryProfileOriginRef:{current:false},runChartIdRef:{current:0},focusAfterComputeRef:{current:false},shareRuntimeRef:{current:{primary:{identity:'old-share'}}},chartContextIdRef:{current:0},
+ advanceInputRevision(){this.inputRevisionRef.current++;},profileAccessAllowed:()=>true,
+ resetLens:noop,requestChartControls:noop,
+ loadEngine:async()=>({computeChart(){calls.push('natal');return {bodies:[{body:'Sun',lon:20},{body:'Moon',lon:20}],flags:['no-time']};},computeBodies:()=>[]}),
+ resolveLocalToUtc:()=>({utc:new Date('2011-12-30T22:00Z'),offsetMinutes:840,flags:['dst-gap']}),
+ signForLongitude:()=>({slug:'aries'}),localDateEndpointsUtc(){calls.push('coverage');throw Error('synthetic coverage rejected');},
+ calculationError:()=> 'Date coverage unavailable',t:()=>'',console:{error:noop},
+};
+for(const name of ['Busy','Error','Saved','MatchedName','SavePromptOpen','A2hsHint','Card','Signature','PositionsOnly','ShareDialogOpen','MoonAmbiguous','RegistryRecordSlug','SubjectMode','MineHandoff','Chart','ComputedInput','ShareInput'])context[`set${name}`]=(value)=>{state[name[0].toLowerCase()+name.slice(1)]=value;calls.push(`set${name}`);};
+const runChart=new Function('context',`with(context){return (${emitted.trim()});}`)(context);
+await runChart({date:'2011-12-30',time:'',timeKnown:false,city:{tz:'Pacific/Apia',lat:0,lon:0,name:'Synthetic place'},houseSystem:'whole'},false);
+const rejectedRun={sourceSha256:sha(source),extractedSha256:sha(emitted),scope:'Exact extracted function, controlled engine/coverage boundaries, no DOM or native UI claims',calls,state,oldChartRetained:state.chart.identity==='previous-successful-chart',oldComputedInputRetained:state.computedInput.date==='1990-01-04',oldShareInputRetained:state.shareInput.date==='1990-01-04',chartComputedBeforeCoverage:calls.indexOf('natal')<calls.indexOf('coverage')};
+if(!rejectedRun.oldChartRetained||!rejectedRun.oldComputedInputRetained||!rejectedRun.chartComputedBeforeCoverage)throw Error('Expected lifecycle counterexample did not reproduce');
+const result={at:new Date().toISOString(),node:process.version,icu:process.versions.icu,tz:process.versions.tz,inputs,numerical,rejectedRun};
+await writeFile(join(out,'result.json'),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(result));

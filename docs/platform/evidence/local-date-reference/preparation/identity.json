@@ -1,0 +1,153 @@
+{
+  "at": "2026-09-08T09:04:01.972Z",
+  "head": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "qualification": "Selected current source bytes hashed; ChartCalculator Freeze2 is integrated but uncommitted during parent acceptance. Not a repository-wide immutable checkout claim. No product edits; private formatter export exists only in the probe bundle.",
+  "node": "v22.23.2",
+  "inputs": [
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "bytes": 4693,
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "bytes": 4213,
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+    },
+    {
+      "path": "node_modules/astronomy-engine/esm/astronomy.js",
+      "bytes": 412025,
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "bytes": 4644,
+      "sha256": "8578139013ab4f4c0d2811682e92d6b6818492e1a392ddee43aeea033a8ebfc3"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/internal.js",
+      "bytes": 245,
+      "sha256": "52403d7a8514ceea3d5ac1ad7f404f79ff1163d907bbc783600edf1574ff2e42"
+    },
+    {
+      "path": "src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "path": "src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "bytes": 1459,
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/receipt.js",
+      "bytes": 24948,
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "bytes": 2593,
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+    },
+    {
+      "path": "node_modules/@zodiacs/engine/dist/index.js",
+      "bytes": 13163,
+      "sha256": "585f25423b08830025e9f4bbdbbe3dffb3bbd4d79f2891952c110f2ebfcf0bbc"
+    },
+    {
+      "path": "src/lib/engine/portable.ts",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "path": "src/lib/i18n/core.ts",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/client.ts",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/server.ts",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/index.ts",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "path": "src/lib/signs.ts",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "src/islands/CalculationReload.tsx",
+      "bytes": 986,
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e"
+    }
+  ],
+  "bundles": [
+    {
+      "path": "time-subject.mjs",
+      "sha256": "ec628844fbd4f4637c2920a2baccd732685b747ea4c6de57a73b0a34f016c87b"
+    },
+    {
+      "path": "calculation-subject.mjs",
+      "sha256": "70ecafb389dc136b1787e08acbc92641e312713b83367653d36d3ea36ec2a20f"
+    }
+  ]
+}

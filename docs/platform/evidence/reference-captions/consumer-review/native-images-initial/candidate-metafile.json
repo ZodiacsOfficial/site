@@ -1,0 +1,1168 @@
+{
+  "inputs": {
+    "<define:import.meta.env>": {
+      "bytes": 25,
+      "imports": []
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+      "bytes": 4693,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js": {
+      "bytes": 4213,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/astronomy-engine/esm/astronomy.js": {
+      "bytes": 412025,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js": {
+      "bytes": 4644,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+          "kind": "import-statement",
+          "original": "./chunk-H7RJKCBO.js"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/astronomy-engine/esm/astronomy.js",
+          "kind": "import-statement",
+          "original": "astronomy-engine"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/internal.js": {
+      "bytes": 245,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+          "kind": "import-statement",
+          "original": "./chunk-GBH7JIYF.js"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+          "kind": "import-statement",
+          "original": "./chunk-H7RJKCBO.js"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/engine/chart-adapter.ts": {
+      "bytes": 788,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/engine/full.ts": {
+      "bytes": 1215,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/internal.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/internal"
+        },
+        {
+          "path": "src/lib/engine/chart-adapter.ts",
+          "kind": "import-statement",
+          "original": "./chart-adapter"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/dist/preact.module.js": {
+      "bytes": 11731,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/core.ts": {
+      "bytes": 4611,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ru-runtime/client.ts": {
+      "bytes": 465,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/ru.ts": {
+      "bytes": 38540,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ru-runtime/server.ts": {
+      "bytes": 6883,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/ru.ts",
+          "kind": "import-statement",
+          "original": "../ui/ru.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ru-runtime/index.ts": {
+      "bytes": 474,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ru-runtime/client.ts",
+          "kind": "import-statement",
+          "original": "./client.js"
+        },
+        {
+          "path": "src/lib/i18n/ru-runtime/server.ts",
+          "kind": "import-statement",
+          "original": "./server.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/signs.ts": {
+      "bytes": 16338,
+      "imports": [
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "./i18n/core.js"
+        },
+        {
+          "path": "src/lib/i18n/ru-runtime/index.ts",
+          "kind": "import-statement",
+          "original": "./i18n/ru-runtime/index.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/glyphs/paths.ts": {
+      "bytes": 5378,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/scene/types.ts": {
+      "bytes": 7753,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/scene/layout.ts": {
+      "bytes": 1245,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/scene/emphasis.ts": {
+      "bytes": 2867,
+      "imports": [
+        {
+          "path": "src/lib/scene/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/wheel/body-leader.ts": {
+      "bytes": 804,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js": {
+      "bytes": 1826,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/dist/preact.module.js",
+          "kind": "import-statement",
+          "original": "preact"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/dist/preact.module.js",
+          "kind": "import-statement",
+          "original": "preact"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/wheel/Wheel.tsx": {
+      "bytes": 25902,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "../signs"
+        },
+        {
+          "path": "src/lib/glyphs/paths.ts",
+          "kind": "import-statement",
+          "original": "../glyphs/paths"
+        },
+        {
+          "path": "src/lib/scene/types.ts",
+          "kind": "import-statement",
+          "original": "../scene/types"
+        },
+        {
+          "path": "src/lib/scene/layout.ts",
+          "kind": "import-statement",
+          "original": "../scene/layout"
+        },
+        {
+          "path": "src/lib/scene/emphasis.ts",
+          "kind": "import-statement",
+          "original": "../scene/emphasis"
+        },
+        {
+          "path": "src/lib/wheel/body-leader.ts",
+          "kind": "import-statement",
+          "original": "./body-leader"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+          "kind": "import-statement",
+          "original": "preact/jsx-runtime"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/wheel/technical-layout.ts": {
+      "bytes": 2394,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/wheel/TechnicalWheel.tsx": {
+      "bytes": 8979,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "../signs"
+        },
+        {
+          "path": "src/lib/glyphs/paths.ts",
+          "kind": "import-statement",
+          "original": "../glyphs/paths"
+        },
+        {
+          "path": "src/lib/wheel/technical-layout.ts",
+          "kind": "import-statement",
+          "original": "./technical-layout"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+          "kind": "import-statement",
+          "original": "preact/jsx-runtime"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/internal-math.js": {
+      "bytes": 591,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+          "kind": "import-statement",
+          "original": "./chunk-H7RJKCBO.js"
+        },
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/engine/aspects.ts": {
+      "bytes": 1393,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/internal/math"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/engine/houses.ts": {
+      "bytes": 1476,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/internal/math"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/share-card-copy.ts": {
+      "bytes": 11216,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/interpretations.ts": {
+      "bytes": 9856,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/client.ts": {
+      "bytes": 802,
+      "imports": [
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "../core"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/growth.ts": {
+      "bytes": 4309,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/en.ts": {
+      "bytes": 22136,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/es.ts": {
+      "bytes": 24319,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/pt.ts": {
+      "bytes": 25854,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/fr.ts": {
+      "bytes": 27902,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/it.ts": {
+      "bytes": 26682,
+      "imports": [
+        {
+          "path": "src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/ui/server.ts": {
+      "bytes": 614,
+      "imports": [
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "../core.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/en.ts",
+          "kind": "import-statement",
+          "original": "./en.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/es.ts",
+          "kind": "import-statement",
+          "original": "./es.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/pt.ts",
+          "kind": "import-statement",
+          "original": "./pt.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/fr.ts",
+          "kind": "import-statement",
+          "original": "./fr.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/it.ts",
+          "kind": "import-statement",
+          "original": "./it.js"
+        },
+        {
+          "path": "src/lib/i18n/ui/ru.ts",
+          "kind": "import-statement",
+          "original": "./ru.js"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/english-only.ts": {
+      "bytes": 1516,
+      "imports": [
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "./core"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/plural.ts": {
+      "bytes": 1657,
+      "imports": [
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "./core"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/i18n/index.ts": {
+      "bytes": 8203,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "../signs"
+        },
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "./core"
+        },
+        {
+          "path": "src/lib/i18n/ui/client.ts",
+          "kind": "import-statement",
+          "original": "./ui/client"
+        },
+        {
+          "path": "src/lib/i18n/ui/server.ts",
+          "kind": "import-statement",
+          "original": "./ui/server"
+        },
+        {
+          "path": "src/lib/i18n/core.ts",
+          "kind": "import-statement",
+          "original": "./core"
+        },
+        {
+          "path": "src/lib/i18n/ui/server.ts",
+          "kind": "import-statement",
+          "original": "./ui/server"
+        },
+        {
+          "path": "src/lib/i18n/english-only.ts",
+          "kind": "import-statement",
+          "original": "./english-only"
+        },
+        {
+          "path": "src/lib/i18n/plural.ts",
+          "kind": "import-statement",
+          "original": "./plural"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/moon-certainty.ts": {
+      "bytes": 1909,
+      "imports": [
+        {
+          "path": "src/lib/i18n/index.ts",
+          "kind": "import-statement",
+          "original": "./i18n"
+        },
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/communication.ts": {
+      "bytes": 11339,
+      "imports": [
+        {
+          "path": "src/lib/interpretations.ts",
+          "kind": "import-statement",
+          "original": "./interpretations"
+        },
+        {
+          "path": "src/lib/moon-certainty.ts",
+          "kind": "import-statement",
+          "original": "./moon-certainty"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/approach.ts": {
+      "bytes": 8818,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "src/lib/moon-certainty.ts",
+          "kind": "import-statement",
+          "original": "./moon-certainty"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/dignities.ts": {
+      "bytes": 3140,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/compat.ts": {
+      "bytes": 7617,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/engine/synastry.ts": {
+      "bytes": 4859,
+      "imports": [
+        {
+          "path": "src/lib/engine/aspects.ts",
+          "kind": "import-statement",
+          "original": "./aspects"
+        },
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "../signs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/natal.ts": {
+      "bytes": 18196,
+      "imports": [
+        {
+          "path": "src/lib/compat.ts",
+          "kind": "import-statement",
+          "original": "./compat"
+        },
+        {
+          "path": "src/lib/engine/synastry.ts",
+          "kind": "import-statement",
+          "original": "./engine/synastry"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/chart-signature.ts": {
+      "bytes": 11892,
+      "imports": [
+        {
+          "path": "src/lib/dignities.ts",
+          "kind": "import-statement",
+          "original": "./dignities"
+        },
+        {
+          "path": "src/lib/natal.ts",
+          "kind": "import-statement",
+          "original": "./natal"
+        },
+        {
+          "path": "src/lib/moon-certainty.ts",
+          "kind": "import-statement",
+          "original": "./moon-certainty"
+        },
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/brand-icons.mjs": {
+      "bytes": 1557,
+      "imports": [
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/share-card-brand.ts": {
+      "bytes": 3339,
+      "imports": [
+        {
+          "path": "src/lib/brand-icons.mjs",
+          "kind": "import-statement",
+          "original": "./brand-icons.mjs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/share-card.ts": {
+      "bytes": 55760,
+      "imports": [
+        {
+          "path": "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/dist/preact.module.js",
+          "kind": "import-statement",
+          "original": "preact"
+        },
+        {
+          "path": "src/lib/wheel/Wheel.tsx",
+          "kind": "import-statement",
+          "original": "./wheel/Wheel"
+        },
+        {
+          "path": "src/lib/wheel/TechnicalWheel.tsx",
+          "kind": "import-statement",
+          "original": "./wheel/TechnicalWheel"
+        },
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "src/lib/engine/aspects.ts",
+          "kind": "import-statement",
+          "original": "./engine/aspects"
+        },
+        {
+          "path": "src/lib/engine/houses.ts",
+          "kind": "import-statement",
+          "original": "./engine/houses"
+        },
+        {
+          "path": "src/lib/share-card-copy.ts",
+          "kind": "import-statement",
+          "original": "./share-card-copy"
+        },
+        {
+          "path": "src/lib/communication.ts",
+          "kind": "import-statement",
+          "original": "./communication"
+        },
+        {
+          "path": "src/lib/approach.ts",
+          "kind": "import-statement",
+          "original": "./approach"
+        },
+        {
+          "path": "src/lib/chart-signature.ts",
+          "kind": "import-statement",
+          "original": "./chart-signature"
+        },
+        {
+          "path": "src/lib/moon-certainty.ts",
+          "kind": "import-statement",
+          "original": "./moon-certainty"
+        },
+        {
+          "path": "src/lib/i18n/index.ts",
+          "kind": "import-statement",
+          "original": "./i18n"
+        },
+        {
+          "path": "src/lib/share-card-brand.ts",
+          "kind": "import-statement",
+          "original": "./share-card-brand"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/share-card-pastel-icons.ts": {
+      "bytes": 2940,
+      "imports": [
+        {
+          "path": "src/lib/signs.ts",
+          "kind": "import-statement",
+          "original": "./signs"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "<stdin>": {
+      "bytes": 1355,
+      "imports": [
+        {
+          "path": "src/lib/engine/full.ts",
+          "kind": "import-statement",
+          "original": "./src/lib/engine/full"
+        },
+        {
+          "path": "src/lib/share-card.ts",
+          "kind": "import-statement",
+          "original": "./src/lib/share-card"
+        },
+        {
+          "path": "src/lib/share-card-pastel-icons.ts",
+          "kind": "import-statement",
+          "original": "./src/lib/share-card-pastel-icons"
+        },
+        {
+          "path": "<define:import.meta.env>",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "../native-images/candidate.js": {
+      "imports": [],
+      "exports": [],
+      "entryPoint": "<stdin>",
+      "inputs": {
+        "<define:import.meta.env>": {
+          "bytesInOutput": 67
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+          "bytesInOutput": 4603
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js": {
+          "bytesInOutput": 4155
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/astronomy-engine/esm/astronomy.js": {
+          "bytesInOutput": 84670
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js": {
+          "bytesInOutput": 4327
+        },
+        "src/lib/engine/chart-adapter.ts": {
+          "bytesInOutput": 457
+        },
+        "src/lib/engine/full.ts": {
+          "bytesInOutput": 89
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/dist/preact.module.js": {
+          "bytesInOutput": 15843
+        },
+        "src/lib/i18n/core.ts": {
+          "bytesInOutput": 333
+        },
+        "src/lib/i18n/ru-runtime/client.ts": {
+          "bytesInOutput": 243
+        },
+        "src/lib/i18n/ui/ru.ts": {
+          "bytesInOutput": 91071
+        },
+        "src/lib/i18n/ru-runtime/server.ts": {
+          "bytesInOutput": 14289
+        },
+        "src/lib/i18n/ru-runtime/index.ts": {
+          "bytesInOutput": 131
+        },
+        "src/lib/signs.ts": {
+          "bytesInOutput": 5673
+        },
+        "src/lib/glyphs/paths.ts": {
+          "bytesInOutput": 3808
+        },
+        "src/lib/scene/types.ts": {
+          "bytesInOutput": 593
+        },
+        "src/lib/scene/layout.ts": {
+          "bytesInOutput": 753
+        },
+        "src/lib/scene/emphasis.ts": {
+          "bytesInOutput": 202
+        },
+        "src/lib/wheel/body-leader.ts": {
+          "bytesInOutput": 468
+        },
+        "../../zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js": {
+          "bytesInOutput": 529
+        },
+        "src/lib/wheel/Wheel.tsx": {
+          "bytesInOutput": 21831
+        },
+        "src/lib/wheel/technical-layout.ts": {
+          "bytesInOutput": 1973
+        },
+        "src/lib/wheel/TechnicalWheel.tsx": {
+          "bytesInOutput": 10202
+        },
+        "src/lib/engine/aspects.ts": {
+          "bytesInOutput": 156
+        },
+        "src/lib/engine/houses.ts": {
+          "bytesInOutput": 82
+        },
+        "src/lib/share-card-copy.ts": {
+          "bytesInOutput": 14462
+        },
+        "src/lib/i18n/ui/client.ts": {
+          "bytesInOutput": 549
+        },
+        "src/lib/i18n/ui/growth.ts": {
+          "bytesInOutput": 4419
+        },
+        "src/lib/i18n/ui/en.ts": {
+          "bytesInOutput": 22324
+        },
+        "src/lib/i18n/ui/es.ts": {
+          "bytesInOutput": 24892
+        },
+        "src/lib/i18n/ui/pt.ts": {
+          "bytesInOutput": 27550
+        },
+        "src/lib/i18n/ui/fr.ts": {
+          "bytesInOutput": 30350
+        },
+        "src/lib/i18n/ui/it.ts": {
+          "bytesInOutput": 27699
+        },
+        "src/lib/i18n/ui/server.ts": {
+          "bytesInOutput": 233
+        },
+        "src/lib/i18n/index.ts": {
+          "bytesInOutput": 1355
+        },
+        "src/lib/i18n/plural.ts": {
+          "bytesInOutput": 48
+        },
+        "src/lib/moon-certainty.ts": {
+          "bytesInOutput": 860
+        },
+        "src/lib/communication.ts": {
+          "bytesInOutput": 4640
+        },
+        "src/lib/approach.ts": {
+          "bytesInOutput": 1421
+        },
+        "src/lib/compat.ts": {
+          "bytesInOutput": 104
+        },
+        "src/lib/chart-signature.ts": {
+          "bytesInOutput": 203
+        },
+        "src/lib/brand-icons.mjs": {
+          "bytesInOutput": 561
+        },
+        "src/lib/share-card-brand.ts": {
+          "bytesInOutput": 2236
+        },
+        "src/lib/share-card.ts": {
+          "bytesInOutput": 21677
+        },
+        "src/lib/share-card-pastel-icons.ts": {
+          "bytesInOutput": 2343
+        },
+        "<stdin>": {
+          "bytesInOutput": 1227
+        }
+      },
+      "bytes": 459308
+    }
+  }
+}

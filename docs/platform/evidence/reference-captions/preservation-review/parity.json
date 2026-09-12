@@ -1,0 +1,1130 @@
+{
+  "perRuntimeExactLookupComparisons": 24,
+  "nodeRuntimeControls": 12,
+  "exactUnroundedPrimaryFields": [
+    "phase",
+    "angle",
+    "illum",
+    "lon"
+  ],
+  "nativeGroups": 15,
+  "nativeCandidateExecutions": 2,
+  "nativeInitialPassed": 14,
+  "nativeCorrectedGroupPassed": 1,
+  "nativePairedDisplayOrChartComparisons": 18,
+  "lookup": [
+    {
+      "runtime": "22",
+      "input": {
+        "name": "UTC phase boundary",
+        "date": "2024-01-09",
+        "time": "",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"Waning Crescent\",\"angle\":333.3346533658649,\"illum\":0.053178510034040005,\"lon\":262.0379535553318}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2024-01-09T12:00:00.000Z",
+          "value": 262.0379535553318
+        },
+        {
+          "body": "Sun",
+          "utc": "2024-01-09T12:00:00.000Z",
+          "value": 288.7033001894669
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday universal time — a time and place pin the degree exactly.",
+      "newCaption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Known non-noon UTC",
+        "date": "2024-04-07",
+        "time": "06:17",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":338.85827351825947,\"illum\":0.03365444272434032,\"lon\":356.78100101285395}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2024-04-07T06:17:00.000Z",
+          "value": 356.78100101285395
+        },
+        {
+          "body": "Sun",
+          "utc": "2024-04-07T06:17:00.000Z",
+          "value": 17.92272749459454
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "newCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Unknown shifted noon",
+        "date": "2000-01-15",
+        "time": "",
+        "zone": "Africa/Khartoum"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":100.85543901591933,\"illum\":0.594165840672007,\"lon\":35.40995647837468}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 35.40995647837468
+        },
+        {
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 294.55451746245535
+        }
+      ],
+      "oldAlternate": 28.491545157350515,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Known shifted noon",
+        "date": "2000-01-15",
+        "time": "12:00",
+        "zone": "Africa/Khartoum"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":100.85543901591933,\"illum\":0.594165840672007,\"lon\":35.40995647837468}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 35.40995647837468
+        },
+        {
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 294.55451746245535
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "",
+      "newCaption": "",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Toronto crossing midnight",
+        "date": "1919-03-31",
+        "time": "",
+        "zone": "America/Toronto"
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":357.02194679439486,\"illum\":0.0006752457709652826,\"lon\":6.908715565947205}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1919-03-31T16:00:00.000Z",
+          "value": 6.908715565947205
+        },
+        {
+          "body": "Sun",
+          "utc": "1919-03-31T16:00:00.000Z",
+          "value": 9.88676877155234
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Juneau repeated date",
+        "date": "1867-10-18",
+        "time": "",
+        "zone": "America/Juneau"
+      },
+      "primaryJson": "{\"phase\":\"Waning Gibbous\",\"angle\":236.67191455818536,\"illum\":0.7747162254713422,\"lon\":80.692820323055}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1867-10-17T20:57:41.000Z",
+          "value": 80.692820323055
+        },
+        {
+          "body": "Sun",
+          "utc": "1867-10-17T20:57:41.000Z",
+          "value": 204.02090576486964
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Skipped unknown date",
+        "date": "2011-12-30",
+        "time": "",
+        "zone": "Pacific/Apia"
+      },
+      "primaryJson": "null",
+      "primaryCalls": [],
+      "resolutionCalls": {
+        "baseline": 1,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Known skipped-date policy",
+        "date": "2011-12-30",
+        "time": "08:30",
+        "zone": "Pacific/Apia"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":73.54458932956226,\"illum\":0.3583654620479334,\"lon\":352.24995209665553}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2011-12-30T18:30:00.000Z",
+          "value": 352.24995209665553
+        },
+        {
+          "body": "Sun",
+          "utc": "2011-12-30T18:30:00.000Z",
+          "value": 278.7053627670933
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "",
+      "newCaption": "",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Historical seconds",
+        "date": "1911-01-01",
+        "time": "",
+        "zone": "America/Paramaribo"
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":10.911208553100153,\"illum\":0.00903914905376313,\"lon\":291.03986375581314}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1911-01-01T15:40:52.000Z",
+          "value": 291.03986375581314
+        },
+        {
+          "body": "Sun",
+          "utc": "1911-01-01T15:40:52.000Z",
+          "value": 280.128655202713
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "Half-hour region",
+        "date": "1985-10-27",
+        "time": "",
+        "zone": "Australia/Lord_Howe"
+      },
+      "primaryJson": "{\"phase\":\"Full Moon\",\"angle\":161.58474410151982,\"illum\":0.9743959657551433,\"lon\":15.140572427184964}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1985-10-27T01:00:00.000Z",
+          "value": 15.140572427184964
+        },
+        {
+          "body": "Sun",
+          "utc": "1985-10-27T01:00:00.000Z",
+          "value": 213.55582832566515
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "UI earliest UTC",
+        "date": "1800-01-01",
+        "time": "",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":73.76241474101556,\"illum\":0.3601895071604401,\"lon\":354.7016062403136}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1800-01-01T12:00:00.000Z",
+          "value": 354.7016062403136
+        },
+        {
+          "body": "Sun",
+          "utc": "1800-01-01T12:00:00.000Z",
+          "value": 280.93919149929803
+        }
+      ],
+      "oldAlternate": 0.8433210797430206,
+      "oldCaption": "Read at midday universal time — a time and place pin the degree exactly.",
+      "newCaption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "22",
+      "input": {
+        "name": "UI latest UTC",
+        "date": "2199-12-31",
+        "time": "23:59",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"Full Moon\",\"angle\":176.22072064172698,\"illum\":0.9989126852811978,\"lon\":96.55061846490219}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2199-12-31T23:59:00.000Z",
+          "value": 96.55061846490219
+        },
+        {
+          "body": "Sun",
+          "utc": "2199-12-31T23:59:00.000Z",
+          "value": 280.3298978231752
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "newCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "UTC phase boundary",
+        "date": "2024-01-09",
+        "time": "",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"Waning Crescent\",\"angle\":333.3346533658649,\"illum\":0.053178510034040005,\"lon\":262.0379535553318}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2024-01-09T12:00:00.000Z",
+          "value": 262.0379535553318
+        },
+        {
+          "body": "Sun",
+          "utc": "2024-01-09T12:00:00.000Z",
+          "value": 288.7033001894669
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday universal time — a time and place pin the degree exactly.",
+      "newCaption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Known non-noon UTC",
+        "date": "2024-04-07",
+        "time": "06:17",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":338.85827351825947,\"illum\":0.03365444272434032,\"lon\":356.78100101285395}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2024-04-07T06:17:00.000Z",
+          "value": 356.78100101285395
+        },
+        {
+          "body": "Sun",
+          "utc": "2024-04-07T06:17:00.000Z",
+          "value": 17.92272749459454
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "newCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Unknown shifted noon",
+        "date": "2000-01-15",
+        "time": "",
+        "zone": "Africa/Khartoum"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":100.85543901591933,\"illum\":0.594165840672007,\"lon\":35.40995647837468}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 35.40995647837468
+        },
+        {
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 294.55451746245535
+        }
+      ],
+      "oldAlternate": 28.491545157350515,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Known shifted noon",
+        "date": "2000-01-15",
+        "time": "12:00",
+        "zone": "Africa/Khartoum"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":100.85543901591933,\"illum\":0.594165840672007,\"lon\":35.40995647837468}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 35.40995647837468
+        },
+        {
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z",
+          "value": 294.55451746245535
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "",
+      "newCaption": "",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Toronto crossing midnight",
+        "date": "1919-03-31",
+        "time": "",
+        "zone": "America/Toronto"
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":357.02194679439486,\"illum\":0.0006752457709652826,\"lon\":6.908715565947205}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1919-03-31T16:00:00.000Z",
+          "value": 6.908715565947205
+        },
+        {
+          "body": "Sun",
+          "utc": "1919-03-31T16:00:00.000Z",
+          "value": 9.88676877155234
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Juneau repeated date",
+        "date": "1867-10-18",
+        "time": "",
+        "zone": "America/Juneau"
+      },
+      "primaryJson": "{\"phase\":\"Waning Gibbous\",\"angle\":236.67191455818536,\"illum\":0.7747162254713422,\"lon\":80.692820323055}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1867-10-17T20:57:41.000Z",
+          "value": 80.692820323055
+        },
+        {
+          "body": "Sun",
+          "utc": "1867-10-17T20:57:41.000Z",
+          "value": 204.02090576486964
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Skipped unknown date",
+        "date": "2011-12-30",
+        "time": "",
+        "zone": "Pacific/Apia"
+      },
+      "primaryJson": "null",
+      "primaryCalls": [],
+      "resolutionCalls": {
+        "baseline": 1,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Known skipped-date policy",
+        "date": "2011-12-30",
+        "time": "08:30",
+        "zone": "Pacific/Apia"
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":73.54458932956226,\"illum\":0.3583654620479334,\"lon\":352.24995209665553}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2011-12-30T18:30:00.000Z",
+          "value": 352.24995209665553
+        },
+        {
+          "body": "Sun",
+          "utc": "2011-12-30T18:30:00.000Z",
+          "value": 278.7053627670933
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "",
+      "newCaption": "",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Historical seconds",
+        "date": "1911-01-01",
+        "time": "",
+        "zone": "America/Paramaribo"
+      },
+      "primaryJson": "{\"phase\":\"New Moon\",\"angle\":10.911208553100153,\"illum\":0.00903914905376313,\"lon\":291.03986375581314}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1911-01-01T15:40:52.000Z",
+          "value": 291.03986375581314
+        },
+        {
+          "body": "Sun",
+          "utc": "1911-01-01T15:40:52.000Z",
+          "value": 280.128655202713
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "Half-hour region",
+        "date": "1985-10-27",
+        "time": "",
+        "zone": "Australia/Lord_Howe"
+      },
+      "primaryJson": "{\"phase\":\"Full Moon\",\"angle\":161.58474410151982,\"illum\":0.9743959657551433,\"lon\":15.140572427184964}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1985-10-27T01:00:00.000Z",
+          "value": 15.140572427184964
+        },
+        {
+          "body": "Sun",
+          "utc": "1985-10-27T01:00:00.000Z",
+          "value": 213.55582832566515
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "Read at midday local time — adding the clock time pins the degree exactly.",
+      "newCaption": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+      "resolutionCalls": {
+        "baseline": 3,
+        "candidate": 1
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "UI earliest UTC",
+        "date": "1800-01-01",
+        "time": "",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"First Quarter\",\"angle\":73.76241474101556,\"illum\":0.3601895071604401,\"lon\":354.7016062403136}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "1800-01-01T12:00:00.000Z",
+          "value": 354.7016062403136
+        },
+        {
+          "body": "Sun",
+          "utc": "1800-01-01T12:00:00.000Z",
+          "value": 280.93919149929803
+        }
+      ],
+      "oldAlternate": 0.8433210797430206,
+      "oldCaption": "Read at midday universal time — a time and place pin the degree exactly.",
+      "newCaption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    },
+    {
+      "runtime": "24",
+      "input": {
+        "name": "UI latest UTC",
+        "date": "2199-12-31",
+        "time": "23:59",
+        "zone": null
+      },
+      "primaryJson": "{\"phase\":\"Full Moon\",\"angle\":176.22072064172698,\"illum\":0.9989126852811978,\"lon\":96.55061846490219}",
+      "primaryCalls": [
+        {
+          "body": "Moon",
+          "utc": "2199-12-31T23:59:00.000Z",
+          "value": 96.55061846490219
+        },
+        {
+          "body": "Sun",
+          "utc": "2199-12-31T23:59:00.000Z",
+          "value": 280.3298978231752
+        }
+      ],
+      "oldAlternate": null,
+      "oldCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "newCaption": "The time is read as universal time — add a birthplace to convert your local clock.",
+      "resolutionCalls": {
+        "baseline": 0,
+        "candidate": 0
+      },
+      "preserved": true
+    }
+  ],
+  "native": [
+    {
+      "name": "shifted-noon",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "repeated-date",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "1867-10-17T20:57:41.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "1867-10-17T20:57:41.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "old-alternate",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "1990-01-01T12:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "1990-01-01T12:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "known-UTC",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2024-04-07T06:17:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2024-04-07T06:17:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": [
+        {
+          "text": "The time is read as universal time — add a birthplace to convert your local clock.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "unknown-UTC",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2024-01-09T12:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2024-01-09T12:00:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": [
+        {
+          "text": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "captured-caption-edits",
+      "key": "unknown",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Опорный результат для этой местной даты. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время рождения для расчёта на конкретный момент.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "captured-caption-edits",
+      "key": "knownLocal",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T11:11:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T11:11:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": []
+    },
+    {
+      "name": "captured-caption-edits",
+      "key": "knownUTC",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T11:11:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T11:11:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T14:11:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T14:11:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": [
+        {
+          "text": "Время читается как всемирное — добавьте место рождения, чтобы пересчитать ваши часы.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "shared-pending-loader-new-input",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T11:11:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T11:11:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": []
+    },
+    {
+      "name": "pending-loader-city-removal",
+      "key": "value",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [],
+      "oldNotices": [],
+      "newNotices": []
+    },
+    {
+      "name": "primary-failure-recovery",
+      "key": "first",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "primary-failure-recovery",
+      "key": "recovered",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2000-01-15T10:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2000-01-15T10:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "skipped-refusal-recovery",
+      "key": "first",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2011-12-29T22:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2011-12-29T22:00:00.000Z"
+        }
+      ],
+      "oldNotices": [],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "skipped-refusal-recovery",
+      "key": "recovered",
+      "primaryDisplayEqual": true,
+      "primaryFirstCalls": [
+        {
+          "type": "longitude",
+          "body": "Moon",
+          "utc": "2011-12-30T22:00:00.000Z"
+        },
+        {
+          "type": "longitude",
+          "body": "Sun",
+          "utc": "2011-12-30T22:00:00.000Z"
+        }
+      ],
+      "oldNotices": [
+        {
+          "text": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "visible": true
+        }
+      ],
+      "newNotices": [
+        {
+          "text": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "chart-moon-unknown",
+      "key": "value",
+      "completeChartJsonEqual": true,
+      "portableEnvelopeBytesEqual": false,
+      "oldPhaseCaption": "Moon phase at birth: First Quarter",
+      "newPhaseCaption": "Moon phase at reference time: First Quarter"
+    },
+    {
+      "name": "chart-moon-known",
+      "key": "value",
+      "completeChartJsonEqual": true,
+      "portableEnvelopeBytesEqual": false,
+      "oldPhaseCaption": "Moon phase at birth: First Quarter",
+      "newPhaseCaption": "Moon phase at birth: First Quarter"
+    },
+    {
+      "name": "chart-full-unknown",
+      "key": "value",
+      "completeChartJsonEqual": true,
+      "portableEnvelopeBytesEqual": true
+    },
+    {
+      "name": "chart-full-known",
+      "key": "value",
+      "completeChartJsonEqual": true,
+      "portableEnvelopeBytesEqual": true
+    }
+  ],
+  "qualification": "Baseline9d and exact Freeze1 compared within each runtime with strict string/value equality and no tolerances. Only MoonPhaseTool altLon/caption are separated from primary values; full Chart output JSON and portable envelope bytes are compared without removing fields. Native fixture renderer/loader/city qualifications remain in its report."
+}

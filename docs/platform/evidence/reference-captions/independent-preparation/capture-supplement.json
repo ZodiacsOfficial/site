@@ -1,0 +1,9 @@
+{
+  "path": "src/components/AspectGlyph.tsx",
+  "sha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b",
+  "command": [
+    "git",
+    "show",
+    "9d180c9f1a2f66893ccd6d73fcda106cb3894674:src/components/AspectGlyph.tsx"
+  ]
+}

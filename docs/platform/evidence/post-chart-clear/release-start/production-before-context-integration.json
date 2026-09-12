@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-09-08 10:37:22 UTC",
+  "productionDeployments": [
+    {
+      "id": "dpl_gBmYzHCpqwMCCH36DAToDMjRQ21g",
+      "url": "zodiacs-2xip7m0w9-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sha": "79410401ce839b8a87a94a4d9c6da34ba312faa6",
+      "branch": "main",
+      "created": 1788858018316
+    },
+    {
+      "id": "dpl_4tadCbE3GTvRTNtwQ7LMW7uhX3FG",
+      "url": "zodiacs-myori5d5x-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sha": "2fd0b75fe3200841736d30b6d7a1ac4699a1eba2",
+      "branch": "main",
+      "created": 1788857919440
+    },
+    {
+      "id": "dpl_3y3YkRfSkdXYQSH3NwQaMidDFC9R",
+      "url": "zodiacs-4qbtdwew2-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sha": "75d036ae365a4c469e234046b0592a80f0dbc311",
+      "branch": "main",
+      "created": 1788841144959
+    },
+    {
+      "id": "dpl_HCh1TLKAiYU6kP4dWjTwY1QdfaX8",
+      "url": "zodiacs-iwndokazu-zodiacsofficial.vercel.app",
+      "state": "READY",
+      "target": "production",
+      "sha": "651a251d4600d07766a7e6368353b3929b5760eb",
+      "branch": "main",
+      "created": 1788841082990
+    }
+  ],
+  "scope": "Read-only provider listing; no deployment or production mutation."
+}

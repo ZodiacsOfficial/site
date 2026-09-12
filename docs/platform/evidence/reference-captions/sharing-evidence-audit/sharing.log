@@ -1,0 +1,108 @@
+{
+  "schema": "zodiacs.t17-positions-share.v1",
+  "natalPairReadings": [
+    {
+      "label": "Sun opposition Mars · orb 0.0°",
+      "text": "Your Sun faces off with your Mars — pursuing your direction and answering a challenge can pull you into different positions. Decide what you want before letting a contest set the terms."
+    },
+    {
+      "label": "Sun conjunction Neptune · orb 1.0°",
+      "text": "Your Sun is fused to your Neptune — imagination can be woven into your sense of self, making possibilities feel personal. Let a vision guide an experiment without requiring it to explain your whole life."
+    },
+    {
+      "label": "Venus conjunction Pluto · orb 0.6°",
+      "text": "Your Venus is fused to your Pluto — affection and taste can invite deep investment. Make room to name what you want and to hear a different answer without turning closeness into a test."
+    },
+    {
+      "label": "Moon sextile Saturn · orb 2.3°",
+      "text": "Your Moon has an open line to your Saturn — your emotional life and your standards cooperate whenever you remember to ask."
+    }
+  ],
+  "fullFragment": "#c=1.",
+  "positionsFragment": "#p=2.",
+  "positionsWireKeys": [
+    "a",
+    "b",
+    "h",
+    "v"
+  ],
+  "positionsRows": 14,
+  "cardFilename": "zodiacs-chart-sheet.png",
+  "approachFilename": "zodiacs-how-to-approach-me.png",
+  "communicationFilename": "zodiacs-communication.png",
+  "fullCardPng": {
+    "width": 1800,
+    "height": 2400
+  },
+  "approachPng": {
+    "width": 1080,
+    "height": 1350
+  },
+  "communicationPng": {
+    "width": 1080,
+    "height": 1350
+  },
+  "fullCardMs": 32,
+  "events": [
+    {
+      "name": "chart_share",
+      "props": {
+        "variant": "full_chart_card"
+      }
+    },
+    {
+      "name": "share_card_downloaded",
+      "props": {
+        "variant": "full_chart_card"
+      }
+    },
+    {
+      "name": "chart_share",
+      "props": {
+        "variant": "signature_card"
+      }
+    },
+    {
+      "name": "share_card_downloaded",
+      "props": {
+        "variant": "signature_card"
+      }
+    },
+    {
+      "name": "chart_share",
+      "props": {
+        "variant": "approach_card"
+      }
+    },
+    {
+      "name": "share_card_downloaded",
+      "props": {
+        "variant": "approach_card"
+      }
+    },
+    {
+      "name": "chart_share",
+      "props": {
+        "variant": "communication_card"
+      }
+    },
+    {
+      "name": "share_card_downloaded",
+      "props": {
+        "variant": "communication_card"
+      }
+    }
+  ],
+  "hashesStripped": {
+    "positions": true,
+    "full": true,
+    "ambiguous": true
+  },
+  "partialShareModes": [
+    "moon",
+    "rising"
+  ],
+  "mobileNativeShare": "one-tap-prepared-chart-sheet",
+  "contextualNativeShare": "prepared-communication-image",
+  "zoomEvidence": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase4-sharing/chart-sheet-33-percent.png"
+}

@@ -1,0 +1,112 @@
+{
+  "at": "2026-09-08T08:13:24.643Z",
+  "node": "v22.23.2",
+  "base": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "file": "src/islands/ChartCalculator.tsx",
+  "sourceSha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+  "method": "Exact source callbacks parsed by TypeScript and executed with explicit controlled closure state; import expressions replaced by bounded review promises. No component DOM, browser or candidate verdict is claimed.",
+  "controls": [
+    {
+      "name": "valid-positions",
+      "events": [
+        "setChart",
+        "clearReceiptExport",
+        "setSignature",
+        "setRegistryRecordSlug",
+        "setShareInput",
+        "setComputedInput",
+        "setPositionsOnly",
+        "setSubjectMode",
+        "setMineHandoff",
+        "track",
+        "clearFragment"
+      ],
+      "state": {
+        "chart": null,
+        "positionsOnly": {
+          "id": "old-imported-positions"
+        },
+        "error": "",
+        "shareInput": null,
+        "computedInput": null,
+        "signature": null,
+        "registryRecordSlug": null,
+        "subjectMode": "self",
+        "mineHandoff": null
+      },
+      "fragment": "",
+      "oldInitializationPublished": true
+    },
+    {
+      "name": "invalid-positions",
+      "events": [
+        "setError"
+      ],
+      "state": {
+        "chart": {
+          "id": "later-user-chart"
+        },
+        "positionsOnly": null,
+        "error": "positionsLinkInvalid",
+        "shareInput": {
+          "date": "2000-01-01"
+        },
+        "computedInput": {
+          "date": "2000-01-01"
+        }
+      },
+      "fragment": "#p=synthetic",
+      "oldInitializationPublished": true
+    },
+    {
+      "name": "conflicting-link",
+      "events": [
+        "clearFragment",
+        "setError"
+      ],
+      "state": {
+        "chart": {
+          "id": "later-user-chart"
+        },
+        "positionsOnly": null,
+        "error": "shareLinkAmbiguous",
+        "shareInput": {
+          "date": "2000-01-01"
+        },
+        "computedInput": {
+          "date": "2000-01-01"
+        }
+      },
+      "fragment": "",
+      "oldInitializationPublished": true
+    },
+    {
+      "name": "old-share-completion",
+      "state": {
+        "card": "saved"
+      },
+      "events": [
+        "setCard:busy",
+        "shareOldArtifact",
+        "newChartStarted",
+        "setCard:saved"
+      ],
+      "oldCompletionChangedNewCard": true,
+      "qualification": "Does not undo or deny the old user-authorized share; demonstrates only stale UI completion."
+    },
+    {
+      "name": "old-dialog-intent",
+      "state": {
+        "dialogOpen": true,
+        "card": "idle"
+      },
+      "oldDialogOpensForNewChart": true,
+      "qualification": "Loading/caching the component is harmless; reopening the dialog is the stale intent."
+    }
+  ],
+  "extracted": {
+    "initialize": "99d9277ceb33cf88fcc883bc142f0132b08aa0858702ae39ff1efcd4deea4fd5",
+    "openShareOptions": "4d893f739f39fd12621ae9e4d61afa6ca097f313acb6915e17dc7eace73a0b8a",
+    "shareChartFromAction": "a5bb2c0fd4f1537a98f16269707261b3fcbad94b2fe785a5e352e52a1e04e756"
+  }
+}

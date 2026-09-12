@@ -1,0 +1,60 @@
+diff --git a/.github/phase1-scope-allowance.json b/.github/phase1-scope-allowance.json
+index 59ed8e1c..bf9cf01f 100644
+--- a/.github/phase1-scope-allowance.json
++++ b/.github/phase1-scope-allowance.json
+@@ -1,8 +1,8 @@
+ {
+   "version": 1,
+-  "id": "platform-calculation-receipt-localized-action",
+-  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+-  "authorization": "Owner-authorized Zodiacs Platform implementation mandate, C02 explicit portable calculation receipt download. Only the eight named locale catalog/test files add and verify the localized download, sensitive birth details, failure and unavailable copy. Approved layout, global navigation/styles, Registry, disclosure and Astrofolio sources remain untouched. This exact-base one-time allowance does not authorize publication or future protected edits. See docs/platform/evidence/receipt-export/.",
++  "id": "platform-unknown-time-local-date-reference",
++  "baseCommit": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
++  "authorization": "Owner-authorized Zodiacs Platform implementation mandate, C-014 unknown-time local date reference guard. Only the six named locale catalogs add the dedicated error for a calculation time that could not be established within the requested local date; the two named locale tests update the exact catalog-key count from 418 to 419 and its test title. No existing parity or interpolation assertion is removed. Conservative refusal does not claim an empty date or whole-date coverage. Approved design, global navigation/styles, Registry, SDK, Learn/sign guides and Astrofolio remain untouched. This exact-base one-time allowance does not authorize publication or future protected edits. See docs/platform/evidence/local-date-reference/.",
+   "protectedPaths": [
+     "src/lib/i18n/index.test.ts",
+     "src/lib/i18n/ui/en.ts",
+diff --git a/.github/workflows/site-check.yml b/.github/workflows/site-check.yml
+index 0483b69d..5eb2430e 100644
+--- a/.github/workflows/site-check.yml
++++ b/.github/workflows/site-check.yml
+@@ -121,6 +121,10 @@ jobs:
+         timeout-minutes: 5
+         run: OUT_DIR=tests/visual/artifacts/post-chart-context-clear node tests/post-chart-context-clear-drive.mjs
+ 
++      - name: Unknown-time local date reference
++        timeout-minutes: 5
++        run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs
++
+       - name: Engine accuracy vectors
+         run: npm test
+ 
+diff --git a/src/lib/i18n/index.test.ts b/src/lib/i18n/index.test.ts
+index f0a17191..03eb714b 100644
+--- a/src/lib/i18n/index.test.ts
++++ b/src/lib/i18n/index.test.ts
+@@ -29,9 +29,9 @@ import {
+ import { SIGN_SLUGS } from '../signs';
+ 
+ describe('i18n helpers', () => {
+-  it('keeps every localized UI catalog aligned with all 418 English keys', () => {
++  it('keeps every localized UI catalog aligned with all 419 English keys', () => {
+     const englishKeys = Object.keys(UI.en).sort();
+-    expect(englishKeys).toHaveLength(418);
++    expect(englishKeys).toHaveLength(419);
+     for (const locale of CATALOG_LOCALES) {
+       expect(Object.keys(UI[locale]).sort()).toEqual(englishKeys);
+     }
+diff --git a/src/lib/i18n/ui/ru.test.ts b/src/lib/i18n/ui/ru.test.ts
+index 5ca33378..c7499018 100644
+--- a/src/lib/i18n/ui/ru.test.ts
++++ b/src/lib/i18n/ui/ru.test.ts
+@@ -39,7 +39,7 @@ afterEach(() => {
+ describe('Russian staged catalog', () => {
+   it('covers every UI key and preserves every interpolation token', () => {
+     const englishKeys = Object.keys(en).sort() as UiKey[];
+-    expect(englishKeys).toHaveLength(418);
++    expect(englishKeys).toHaveLength(419);
+     expect(Object.keys(ru).sort()).toEqual(englishKeys);
+     for (const key of englishKeys) {
+       expect(placeholders(ru[key]), `ru.${key}`).toEqual(placeholders(en[key]));

@@ -1,0 +1,607 @@
+diff --git a/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/source/src/islands/ChartCalculator.tsx b/private/tmp/zodiacs-platform-chart-ownership-evidence/freeze2/source/src/islands/ChartCalculator.tsx
+index 28c52af5..bdc8d01e 100644
+--- a/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/source/src/islands/ChartCalculator.tsx
++++ b/private/tmp/zodiacs-platform-chart-ownership-evidence/freeze2/source/src/islands/ChartCalculator.tsx
+@@ -104,14 +104,16 @@ type ShareDialogModule = typeof import('./ChartShareDialog');
+ type ChartActionDockModule = typeof import('./ChartActionDock');
+ const loadChartControls = createModuleLoader(() => import('./ChartActionDock'));
+ const loadCalculatorReceipt = createModuleLoader(() => import('../lib/engine/calculator-receipt'));
+-interface ChartReceiptExport {
++interface ChartResultOwner {
+   chart: Chart;
+-  envelopeJson: string;
+   runId: number;
+   inputRevision: number;
+   accessGeneration: number;
+   requiresProfileAccess: boolean;
+ }
++interface ChartReceiptExport extends ChartResultOwner {
++  envelopeJson: string;
++}
+ type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
+ type PrimaryShareHandle = {
+   artifact: PreparedPrimaryShare;
+@@ -340,6 +342,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const [city, setCity] = useState<City | null>(null);
+   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
+   const [chart, setChart] = useState<Chart | null>(null);
++  const resultOwnerRef = useRef<ChartResultOwner | null>(null);
+   const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
+   const receiptExportRef = useRef<ChartReceiptExport | null>(null);
+   const [receiptDownloadError, setReceiptDownloadError] = useState(false);
+@@ -360,6 +363,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const [mineHandoff, setMineHandoff] = useState<MineHandoff | null>(null);
+   const [matchedName, setMatchedName] = useState<string | null>(null);
+   const [savePromptOpen, setSavePromptOpen] = useState(false);
++  const savePromptGenerationRef = useRef(0);
+   const [saveDraft, setSaveDraft] = useState('');
+   const [saveInitial, setSaveInitial] = useState('');
+   const [saveSource, setSaveSource] = useState<SavePrefillSource>('auto');
+@@ -399,6 +403,46 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     inputRevisionRef.current += 1;
+     setInputRevision(inputRevisionRef.current);
+   }
++  function resultIsCurrent(owner: ChartResultOwner | null): owner is ChartResultOwner {
++    return owner !== null && owner === resultOwnerRef.current
++      && owner.runId === runChartIdRef.current
++      && owner.inputRevision === inputRevisionRef.current
++      && (!owner.requiresProfileAccess || (
++        owner.accessGeneration === profileAccessGeneration.current && profileAccessAllowed()
++      ));
++  }
++  function currentResultOwner(): ChartResultOwner | null {
++    const owner = resultOwnerRef.current;
++    return resultIsCurrent(owner) && owner.chart === chart ? owner : null;
++  }
++  function clearResult(): void {
++    savePromptGenerationRef.current += 1;
++    resultOwnerRef.current = null;
++    clearReceiptExport();
++    chartContextIdRef.current += 1;
++    clearPostChartContext();
++    shareRuntimeRef.current.primary = undefined;
++    setChart(null);
++    setComputedInput(null);
++    setShareInput(null);
++    setSignature(null);
++    setRegistryRecordSlug(null);
++    setPositionsOnly(null);
++    setMoonAmbiguous(false);
++    setCard('idle');
++    setSaved('idle');
++    setMatchedName(null);
++    setSavePromptOpen(false);
++    setShareDialogOpen(false);
++    setA2hsHint(null);
++    resetLens();
++    exitTour();
++    cancelSpotlightArrival();
++    setSelection(null);
++    setSpotlight(null);
++    setAnnounce('');
++    setDepthOpen(false);
++  }
+   const registryBridgeImpressionChartRef = useRef<Chart | null>(null);
+   const primaryProfileOriginRef = useRef(false);
+   const primaryProfileChartIdRef = useRef<string | null>(null);
+@@ -406,11 +450,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   const runChartIdRef = useRef(0);
+   useEffect(() => () => {
+     runChartIdRef.current += 1;
++    chartContextIdRef.current += 1;
++    resultOwnerRef.current = null;
+     receiptExportRef.current = null;
++    shareRuntimeRef.current.primary = undefined;
++    clearPostChartContext();
+   }, []);
+   const profileHandoffIdRef = useRef(0);
+   const shareRuntimeRef = useRef<ShareRuntime>({});
+   const profileAccessGeneration = useProfileAccessGeneration(() => {
++    savePromptGenerationRef.current += 1;
+     setMatchedName(null);
+     setSaved('idle');
+     setSavePromptOpen(false);
+@@ -425,37 +474,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     primaryProfileOriginRef.current = false;
+     primaryProfileChartIdRef.current = null;
+     runChartIdRef.current += 1;
+-    chartContextIdRef.current += 1;
+     advanceInputRevision();
+-    clearPostChartContext();
++    clearResult();
+     setDate('');
+     setTime('');
+     setTimeKnown(true);
+     setCity(null);
+     setHouseSystem('whole');
+-    setChart(null);
+-    setSignature(null);
+-    setRegistryRecordSlug(null);
+-    setComputedInput(null);
+-    setShareInput(null);
+-    setPositionsOnly(null);
+     setFromLink(false);
+     setLinkName(null);
+     setSubjectMode('self');
+-    setCard('idle');
+-    setShareDialogOpen(false);
+-    shareRuntimeRef.current.primary = undefined;
+-    setMoonAmbiguous(false);
+     setError('');
+     setFieldErrors({});
+-    resetLens();
+-    exitTour();
+-    cancelSpotlightArrival();
+-    setSelection(null);
+-    setSpotlight(null);
+-    setAnnounce('');
+-    setDepthOpen(false);
+-    setA2hsHint(null);
+     setBusy(false);
+     focusAfterComputeRef.current = false;
+     try {
+@@ -467,9 +497,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     advanceInputRevision();
+     profileHandoffIdRef.current += 1;
+     primaryProfileChartIdRef.current = null;
+-    if (!primaryProfileOriginRef.current) return;
+     runChartIdRef.current += 1;
++    clearResult();
+     setBusy(false);
++    focusAfterComputeRef.current = false;
+   }
+ 
+   // ── Chart Explorer state (full mode) ──
+@@ -574,9 +605,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   async function startTour(kind: 'quick' | 'full' = 'full') {
+-    if (!chartActionDockModule) return;
++    const owner = currentResultOwner();
++    if (!owner || !chartActionDockModule) return;
+     try {
+       const mod = tourMod ?? await import('./explorer/tour');
++      if (!resultIsCurrent(owner)) return;
+       setTourMod(mod);
+       resetLens(); // the tour teaches the natal wheel; a lens ring would contradict it
+       if (selection) applySelect(null);
+@@ -585,6 +618,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       if (kind === 'full') track('tour_start', { variant: 'v1' });
+       keepWheelAboveTour();
+     } catch {
++      if (!resultIsCurrent(owner)) return;
+       setTourKind(null);
+       setError(t(locale, 'chartError'));
+     }
+@@ -623,6 +657,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setLensRing(null);
+   }
+   async function selectLens(next: 'natal' | LensId) {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     if (next === lens) return;
+     if (next === 'natal') {
+       resetLens();
+@@ -631,11 +667,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     }
+     try {
+       const mod = lensMod ?? await import('./explorer/lens/ChartLens');
++      if (!resultIsCurrent(owner)) return;
+       setLensMod(mod);
+       setLens(next);
+       track('lens_change', { lens: next });
+     } catch {
+-      setError(t(locale, 'chartError'));
++      if (resultIsCurrent(owner)) setError(t(locale, 'chartError'));
+     }
+   }
+ 
+@@ -644,16 +681,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+    * default reading, and this chunk never reaches a reader who does not ask.
+    */
+   async function toggleDepth() {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     if (depthOpen) {
+       setDepthOpen(false);
+       return;
+     }
+     try {
+       const mod = depthMod ?? await import('./chart3d/EclipticView');
++      if (!resultIsCurrent(owner)) return;
+       setDepthMod(mod);
+       setDepthOpen(true);
+     } catch {
+-      setError(t(locale, 'chartError'));
++      if (resultIsCurrent(owner)) setError(t(locale, 'chartError'));
+     }
+   }
+ 
+@@ -995,48 +1035,51 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       };
+     }
+ 
++    let active = true;
++    const revision = inputRevisionRef.current;
++    const initialRun = runChartIdRef.current;
++    const importAccessGeneration = profileAccessGeneration.current;
++    const importIsCurrent = () => active && revision === inputRevisionRef.current
++      && initialRun === runChartIdRef.current;
++
+     if (params.has('c') && params.has('p')) {
+       clearFragment();
+-      let active = true;
+       import('./PositionsShareSurface')
+         .then((surface) => {
+-          if (active) setError(surface.shareText(locale, 'shareLinkAmbiguous'));
++          if (importIsCurrent()) setError(surface.shareText(locale, 'shareLinkAmbiguous'));
+         })
+         .catch(() => {
+-          if (active) setError(t(locale, 'chartError'));
++          if (importIsCurrent()) setError(t(locale, 'chartError'));
+         });
+       return () => { active = false; };
+     }
+ 
+     if (params.has('p')) {
+       const token = params.get('p') ?? '';
+-      let active = true;
+       import('./PositionsShareSurface')
+         .then((surface) => {
+-          if (!active) return;
++          if (!importIsCurrent()) return;
+           const decoded = surface.decodePositionsToken(token);
+           if (!decoded) {
+             setError(surface.shareText(locale, 'positionsLinkInvalid'));
+             return;
+           }
+-          setChart(null);
+-          clearReceiptExport();
+-          setSignature(null);
+-          setRegistryRecordSlug(null);
+-          setShareInput(null);
+-          setComputedInput(null);
++          const admittedMine = !handoffOrigins.mine || (profileAccessAllowed()
++            && importAccessGeneration === profileAccessGeneration.current)
++            ? nextMineHandoff : null;
++          clearResult();
+           shareRuntimeRef.current.surface = surface;
+           setPositionsOnly(decoded);
+           setSubjectMode(nextSubjectMode);
+-          setMineHandoff(nextMineHandoff);
++          setMineHandoff(admittedMine);
+           primaryProfileOriginRef.current = false;
+           primaryProfileChartIdRef.current = null;
+-          mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
++          mineProfileOriginRef.current = handoffOrigins.mine && admittedMine !== null;
+           track('chart_computed', { mode, source: 'shared_positions' });
+           clearFragment();
+         })
+         .catch(() => {
+-          if (active) setError(t(locale, 'chartError'));
++          if (importIsCurrent()) setError(t(locale, 'chartError'));
+         });
+       return () => { active = false; };
+     }
+@@ -1090,9 +1133,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     source: ChartComputedSource = 'fresh',
+   ) {
+     advanceInputRevision();
+-    const receiptInputRevision = inputRevisionRef.current;
++    clearResult();
++    const runInputRevision = inputRevisionRef.current;
+     const signatureModule = mode === 'full' && showsEnglishInterpretation
+-      ? import('../lib/chart-signature')
++      ? import('../lib/chart-signature').catch(() => null)
+       : null;
+     const accessGeneration = profileAccessGeneration.current;
+     const requiresProfileAccess = primaryProfileOriginRef.current;
+@@ -1100,6 +1144,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     runChartIdRef.current = runId;
+     const runIsCurrent = () => (
+       runId === runChartIdRef.current
++      && runInputRevision === inputRevisionRef.current
+       && (!requiresProfileAccess || (
+         accessGeneration === profileAccessGeneration.current
+         && profileAccessAllowed()
+@@ -1113,13 +1158,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setSavePromptOpen(false);
+     setA2hsHint(null);
+     setCard('busy');
+-    setSignature(null);
+-    shareRuntimeRef.current.primary = undefined;
+-    resetLens();
+-    setPositionsOnly(null);
+-    setShareDialogOpen(false);
+-    setMoonAmbiguous(false);
+-    setRegistryRecordSlug(null);
+     setSubjectMode(input.subjectMode ?? 'self');
+     setMineHandoff(input.mine ?? null);
+     if (mode === 'full' && !chartActionDockModule) requestChartControls();
+@@ -1173,23 +1211,40 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           ? stableSunSlug
+           : null;
+       }
++      if (!runIsCurrent()) return;
++      const owner: ChartResultOwner = {
++        chart: result, runId, inputRevision: runInputRevision, accessGeneration, requiresProfileAccess,
++      };
++      resultOwnerRef.current = owner;
+       setChart(result);
+-      if (portable && receiptInputRevision === inputRevisionRef.current) {
++      if (portable) {
+         const captured: ChartReceiptExport = {
+-          chart: result, envelopeJson: portable.envelopeJson, runId,
+-          inputRevision: receiptInputRevision, accessGeneration, requiresProfileAccess,
++          ...owner, envelopeJson: portable.envelopeJson,
+         };
+         receiptExportRef.current = captured;
+         setReceiptExport(captured);
+       }
+       if (signatureModule) {
+-        void signatureModule.then(({ chartSignature }) => {
+-          if (runIsCurrent()) setSignature(chartSignature(result, locale));
++        void signatureModule.then((module) => {
++          if (!runIsCurrent() || !module) return;
++          const nextSignature = module.chartSignature(result, locale);
++          if (runIsCurrent()) setSignature(nextSignature);
+         }, () => {});
+       }
+       setMoonAmbiguous(nextMoonAmbiguous);
+       setRegistryRecordSlug(nextRegistryRecordSlug);
+       setComputedInput({ ...input, city: { ...input.city } });
++      setShareInput({
++        date: input.date,
++        time: input.timeKnown ? input.time : null,
++        timeKnown: input.timeKnown,
++        lat: input.city.lat,
++        lon: input.city.lon,
++        tz: input.city.tz,
++        place: input.city.name || undefined,
++        houseSystem: input.houseSystem,
++        ...(input.name ? { name: input.name } : {}),
++      });
+       void import('./PositionsShareSurface').then(async (surface) => {
+         if (!runIsCurrent()) return;
+         const prepared = await surface.preparePrimaryShareArtifact(result, mode, locale, nextMoonAmbiguous);
+@@ -1221,24 +1276,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           contextId,
+         },
+       }));
+-      setShareInput({
+-        date: input.date,
+-        time: input.timeKnown ? input.time : null,
+-        timeKnown: input.timeKnown,
+-        lat: input.city.lat,
+-        lon: input.city.lon,
+-        tz: input.city.tz,
+-        place: input.city.name || undefined,
+-        houseSystem: input.houseSystem,
+-        ...(input.name ? { name: input.name } : {}),
++      requestAnimationFrame(() => {
++        if (runIsCurrent()) resultRef.current?.scrollIntoView({
++          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
++          block: 'start',
++        });
+       });
+-
+-      requestAnimationFrame(() => resultRef.current?.scrollIntoView({
+-        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+-        block: 'start',
+-      }));
+     } catch (err) {
+       if (!runIsCurrent()) return;
++      runChartIdRef.current += 1;
++      clearResult();
++      setBusy(false);
+       setError(calculationError(err, locale, t(locale, 'chartError')));
+       console.error(err);
+     } finally {
+@@ -1301,13 +1349,24 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   function requestChartControls(returnFocus = false) {
++    const owner = currentResultOwner();
++    const runId = runChartIdRef.current;
++    const revision = inputRevisionRef.current;
++    const requestIsCurrent = () => runId === runChartIdRef.current
++      && revision === inputRevisionRef.current;
+     setControlsError(false);
+     void loadChartControls().then((module) => {
++      // The module remains useful across results; focus belongs to this retry.
+       setChartActionDockModule(module);
+-      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLSelectElement>('[data-explorer-entity-picker]')?.focus());
++      if (returnFocus && resultIsCurrent(owner)) requestAnimationFrame(() => {
++        if (resultIsCurrent(owner)) resultRef.current?.querySelector<HTMLSelectElement>('[data-explorer-entity-picker]')?.focus();
++      });
+     }, () => {
++      if (!requestIsCurrent()) return;
+       setControlsError(true);
+-      if (returnFocus) requestAnimationFrame(() => resultRef.current?.querySelector<HTMLButtonElement>('[data-chart-controls-retry]')?.focus());
++      if (returnFocus && resultIsCurrent(owner)) requestAnimationFrame(() => {
++        if (resultIsCurrent(owner)) resultRef.current?.querySelector<HTMLButtonElement>('[data-chart-controls-retry]')?.focus();
++      });
+     });
+   }
+ 
+@@ -1317,21 +1376,25 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     })}`;
+ 
+   async function openShareOptions() {
+-    if (!chart || !shareInput) return;
++    const owner = currentResultOwner();
++    if (!owner || !shareInput) return;
+     shareReturnRef.current = document.activeElement instanceof HTMLElement
+       ? document.activeElement
+       : null;
+     try {
+       const surface = await import('./ChartShareDialog');
++      if (!resultIsCurrent(owner)) return;
+       shareRuntimeRef.current.dialog = surface.default;
+       setShareDialogOpen(true);
+     } catch (err) {
+       console.error(err);
+-      setCard('error');
++      if (resultIsCurrent(owner)) setCard('error');
+     }
+   }
+ 
+   function shareChartFromAction() {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     const primary = shareRuntimeRef.current.primary;
+     if (!primary) {
+       void openShareOptions();
+@@ -1341,12 +1404,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     setCard('busy');
+     // This call reaches navigator.share before yielding, preserving the
+     // exact tap's activation on iOS. Rendering happened after computation.
+-    void primary.share(primary.artifact, mode).then(setCard);
++    void primary.share(primary.artifact, mode).then((state) => {
++      if (resultIsCurrent(owner)) setCard(state);
++    }, () => {
++      if (resultIsCurrent(owner)) setCard('error');
++    });
+   }
+ 
+   function closeShareDialog(): void {
++    const owner = currentResultOwner();
++    if (!owner) return;
+     setShareDialogOpen(false);
+     requestAnimationFrame(() => {
++      if (!resultIsCurrent(owner)) return;
+       const returnTo = shareReturnRef.current;
+       if (returnTo?.isConnected) returnTo.focus();
+       else wheelboxRef.current?.focus();
+@@ -1399,7 +1469,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     : '/birth-chart/someone-else/';
+ 
+   useEffect(() => {
+-    if (!chart || !computedInput || mode !== 'full') return;
++    const owner = currentResultOwner();
++    if (!owner || !chart || !computedInput || mode !== 'full') return;
+     let active = true;
+     const contextId = chartContextIdRef.current;
+     const accessGeneration = profileAccessGeneration.current;
+@@ -1422,10 +1493,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     void import('../lib/profile/store').then(({ findMatchingChart }) => {
+       if (
+         !active
++        || !resultIsCurrent(owner)
+         || contextId !== chartContextIdRef.current
+         || accessGeneration !== profileAccessGeneration.current
+       ) return;
+       const match = findMatchingChart(identity);
++      if (!resultIsCurrent(owner) || accessGeneration !== profileAccessGeneration.current) return;
+       setMatchedName(match?.name ?? null);
+       publishPostChartContext({
+         mode: 'full',
+@@ -1442,7 +1515,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }, [savePromptOpen]);
+ 
+   function chartIdentity() {
+-    if (!chart || !computedInput) return null;
++    if (!currentResultOwner() || !chart || !computedInput) return null;
+     return {
+       birth: {
+         date: computedInput.date,
+@@ -1475,8 +1548,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   function closeSavePrompt() {
++    const owner = currentResultOwner();
++    if (!owner) return;
++    const accessGeneration = profileAccessGeneration.current;
++    const saveGeneration = savePromptGenerationRef.current;
+     setSavePromptOpen(false);
+     requestAnimationFrame(() => {
++      if (!resultIsCurrent(owner) || accessGeneration !== profileAccessGeneration.current
++        || saveGeneration !== savePromptGenerationRef.current) return;
+       const returnTarget = isConnectedSaveControl(saveReturnRef.current)
+         ? saveReturnRef.current
+         : saveFocusFallback();
+@@ -1493,6 +1572,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     saveOriginRef.current = origin;
+     if (subjectMode === 'self') return void commitSave(undefined, 'skip');
+     if (!chartIdentity()) return;
++    savePromptGenerationRef.current += 1;
+     const source: SavePrefillSource = linkName ? 'link' : matchedName ? 'match' : 'auto';
+     const prefill = (linkName ?? matchedName ?? autoName).slice(0, NAME_MAX);
+     setSaveSource(source);
+@@ -1505,11 +1585,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+   }
+ 
+   async function commitSave(explicitName: string | undefined, via: 'prompt' | 'link' | 'skip') {
++    const owner = currentResultOwner();
+     const identity = chartIdentity();
+-    if (!chart || !computedInput || !identity) return;
++    if (!owner || !chart || !computedInput || !identity) return;
+     track('chart_save', { source: saveOriginRef.current });
+     const now = new Date().toISOString();
+     const accessGeneration = profileAccessGeneration.current;
++    const saveGeneration = savePromptGenerationRef.current;
++    const saveUiIsCurrent = () => resultIsCurrent(owner)
++      && accessGeneration === profileAccessGeneration.current
++      && saveGeneration === savePromptGenerationRef.current;
+     try {
+       const { findMatchingChart, saveChart } = await import('../lib/profile/store');
+       if (accessGeneration !== profileAccessGeneration.current) throw new Error();
+@@ -1529,11 +1614,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           flags: chart.flags,
+         },
+       }, explicitName ? { explicitName } : undefined);
++      // The requested write may already have completed. Only its UI belongs
++      // to this result; an edit does not undo or retry persistence.
++      if (!saveUiIsCurrent()) return;
+       setSaved(status === 'updated' ? 'saved' : status);
+       if (status === 'saved' || status === 'updated') {
+         track('chart_saved', { source: saveOriginRef.current });
+         track('chart_name_set', { via });
+         const match = findMatchingChart(identity);
++        if (!saveUiIsCurrent()) return;
+         setMatchedName(match?.name ?? explicitName ?? matchedName ?? autoName);
+         publishPostChartContext({
+           mode: 'full',
+@@ -1542,15 +1631,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           contextId: chartContextIdRef.current,
+         });
+         void import('../lib/a2hs').then(({ claimA2hsHint }) => {
++          if (!saveUiIsCurrent()) return;
+           const hint = claimA2hsHint(locale, navigator.userAgent, localStorage);
+           const standalone = (navigator as Navigator & { standalone?: boolean }).standalone === true
+             || window.matchMedia('(display-mode: standalone)').matches;
++          if (!saveUiIsCurrent()) return;
+           if (hint && !standalone) setA2hsHint(hint);
+           else loadPushOptIn();
+         }).catch(() => {});
+       }
+-    } catch { setSaved('error'); }
+-    closeSavePrompt();
++    } catch { if (saveUiIsCurrent()) setSaved('error'); }
++    if (saveUiIsCurrent()) closeSavePrompt();
+   }
+ 
+   function submitSaveName(e: Event) {
+@@ -1643,6 +1734,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+ 
+   const PositionsOnlyView = shareRuntimeRef.current.surface?.PositionsOnlyResult;
+   const ShareDialog = shareRuntimeRef.current.dialog;
++  const displayedResultOwner = currentResultOwner();
+   const ChartActionDock = chartActionDockModule?.default;
+   const EntityPicker = chartActionDockModule?.EntityPicker;
+   const ReadingPath = chartActionDockModule?.ReadingPath;
+@@ -2566,8 +2658,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+           locale={locale}
+           mode={mode}
+           card={card}
+-          onCardStateChange={setCard}
+-          onClose={closeShareDialog}
++          onCardStateChange={(state) => {
++            if (resultIsCurrent(displayedResultOwner)) setCard(state);
++          }}
++          onClose={() => {
++            if (resultIsCurrent(displayedResultOwner)) closeShareDialog();
++          }}
+           detailsUrl={shareUrl()}
+           receiverPath={localizePath(locale, '/birth-chart/')}
+           birthDetails={computedInput ? {

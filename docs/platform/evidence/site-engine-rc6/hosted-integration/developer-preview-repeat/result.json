@@ -1,0 +1,125 @@
+{
+  "result": "passed",
+  "capturedAt": "2026-09-08T07:47:49.723Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "deployment": "dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11",
+  "source": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "base": "https://zodiacs-4qqy7ml63-zodiacsofficial.vercel.app",
+  "checks": [
+    {
+      "width": 1280,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 1280,
+        "scrollWidth": 1280,
+        "reduced": true
+      }
+    },
+    {
+      "width": 1280,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "width": 390,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 390,
+        "scrollWidth": 390,
+        "reduced": true
+      }
+    },
+    {
+      "width": 390,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "width": 320,
+      "path": "/developers/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/support/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/developers/examples/",
+      "status": 200,
+      "layout": {
+        "width": 320,
+        "scrollWidth": 320,
+        "reduced": true
+      }
+    },
+    {
+      "width": 320,
+      "path": "/birth-chart/",
+      "syntheticResultVersion": "0.1.1-rc.6",
+      "noSavedProfile": true
+    },
+    {
+      "path": "/api/v1/sky/today.json",
+      "status": 200,
+      "date": "2026-09-08"
+    }
+  ],
+  "scope": "Exact-source READY rc6 review preview using synthetic inputs. No production or account operations. This flow does not establish whole-site zero network activity."
+}
