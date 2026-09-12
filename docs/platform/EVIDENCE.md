@@ -2728,3 +2728,29 @@ stops only its identified read-only checks and clones exact remote9d180c9f into
 an isolated temporary delivery checkout. No shared Git repair, metadata deletion,
 concurrent process termination or source rollback is performed. Source-equivalent
 delivery must match all accepted hashes and actual changed paths.
+
+## C-016 finite closeout — 2026-09-12
+
+Draft[#438](https://github.com/ZodiacsOfficial/site/pull/438) remains at9912e37
+above9d180c9f. All722 actual path/status/blob identities match, with36 accepted
+non-documentation files. [Exact hosted preview](evidence/reference-captions/hosted-preview/REVIEW.md)
+passes14 groups;28 screenshots and72 served bodies verify, with four unavailable
+image bodies and unobserved isolated access bootstrap explicitly retained.
+Root manifest:`3645221710fd195c5d79500f612e3ce9fe62f2ca5a6efbb6951c10be58468f89`.
+No prior unchanged numerical/preservation matrix or full local suite is repeated.
+
+[Initial hosted CI](evidence/reference-captions/hosted-ci-initial/README.md) has
+13 passing jobs and two failed performance samples in its build job. Six original
+Lighthouse member records justify one unchanged-source retry; full archive
+verification is not claimed for range retrieval. Attempt2 fails on newly reported
+production dependency advisories. [Preserved maintenance proposal](evidence/reference-captions/release-blockers/REVIEW.md)
+clears audit gates but cannot complete a fresh build without current paired
+publication data, which exposes three Registry research test failures. It is
+preserved and restored out of the candidate; no source, threshold or gate is
+weakened. Blocker manifest:`f427f88d0cc3f8b7c147216b8c0b762f90bc90952ea1a003f757a6ac0b19583c`.
+
+[Final closeout](evidence/reference-captions/closeout/README.md) records implemented,
+locally tested and preview-verified status, with hosted release acceptance still
+blocked. SDK#5 remains explicitly held. [Finite checklist](REMAINING.md) separates
+release blockers, later work and external authority/evidence. No C017, new audit,
+merge, npm publication, production promotion or external adoption follows.

@@ -1,0 +1,57 @@
+{
+  "restoredTrackedPaths": [
+    "package-lock.json",
+    "public/assets/data/registry-research/index.json",
+    "public/assets/registry-outlook.json",
+    "public/assets/registry-research-feed.json",
+    "src/data/daily-publication-manifest.json",
+    "src/data/daily-publication.json",
+    "src/data/daily.json",
+    "src/data/horoscope-program.json",
+    "src/data/registry-research/drafts.json",
+    "src/data/registry-research/publication.json"
+  ],
+  "preservedNewFiles": [
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-12.json",
+      "bytes": 3964,
+      "sha256": "b3766618fc88c869f2b74d7ff8dc04711624d7ec49f8171dc7021558ab927b43"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto.json",
+      "bytes": 4144,
+      "sha256": "5271613f58f57e659a05c3bcc8b61434ed804d029e76e9a521ea19db8a186070"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune.json",
+      "bytes": 4199,
+      "sha256": "060510a1e47f3b5a0eea29bb019a6650120ced6d45e924aa223863c248ad4b37"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus.json",
+      "bytes": 4148,
+      "sha256": "bb4195a85cc6deb7d0a69dd434a7d651eb4f0c6b6716730e35c80a0633d42164"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto.json",
+      "bytes": 4150,
+      "sha256": "00ac4a9a43c640ef72bb575625556ad7b5c065f71c99595bddf4bd95d10f2575"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto.json",
+      "bytes": 4158,
+      "sha256": "09361d7b4255419304735e4864d34f6520bd31a712ad2383c4db56549a0cfbda"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn.json",
+      "bytes": 4191,
+      "sha256": "d52316b9a7b273efd811ab5e7c6e55ed099a576e418215fba81359e90d3fbc24"
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-12.json",
+      "bytes": 3623,
+      "sha256": "d1ad742d34bb6e76f9a4f883df1ca9deb90ae6eabe63c33864072a6b3dbca128"
+    }
+  ],
+  "qualification": "Only this task's generated maintenance proposal is restored to acceptedHEAD after preserving exact patch and new payloads. No shared checkout/concurrent work touched."
+}

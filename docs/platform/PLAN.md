@@ -26,6 +26,17 @@ reviewable release to resolution of the unrelated engine publication hold.
 | 11 | D01/D02 diagnostics/agents | Depends on safe portable receipts. Seed competing/ambiguous causes and honest abstention; verify an actual supported client before claiming interoperability. |
 | 12 | E01–E03 reference/adoption | Prepare small source-backed review/contribution/partner materials after stable integration paths. Human review, outreach, paying pilots and retained external use require actual authority/evidence. |
 
+## Current closeout boundary — 2026-09-12
+
+The owner limits this turn to C-016 completion and its required hosted checks.
+The [finite13-item checklist](REMAINING.md) is the current next-work list; the
+older entries below retain their original checkpoint context. Draft#438 at9912e37
+has722 verified paths and14 passing exact-preview groups. The one justified hosted
+retry stopped on new dependency advisories. A separately preserved maintenance
+proposal also exposes current paired-edition/Registry test blockers. The accepted
+source is unchanged;13 passing jobs and valid local/independent evidence are reused.
+Do not start C-017 or another broad audit during this closeout.
+
 ## Bounded follow-ups found during review
 
 The following records retain their original version/run context. Current state is

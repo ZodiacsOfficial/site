@@ -71,3 +71,14 @@ is a delivery carrier change, not a new product patch.
 
 [Isolated delivery proof](delivery-carrier/README.md) binds the copied files to
 the accepted source identities and retains the original Git-read constraint.
+
+
+## Final bounded closeout — 2026-09-12
+
+Draft[#438](https://github.com/ZodiacsOfficial/site/pull/438) is delivered at9912e37.
+[Hosted preview](hosted-preview/REVIEW.md) passes14 actual groups. [Hosted CI](hosted-ci-initial/README.md)
+and its one retry identify [unresolved release blockers](release-blockers/REVIEW.md);
+they do not establish release-ready status. The attempted maintenance proposal is
+preserved separately and not integrated. [Closeout](closeout/README.md) and the
+[finite remaining checklist](../../REMAINING.md) are authoritative over earlier
+pending checkpoints. Source9912 remains unchanged; no further workstream starts.

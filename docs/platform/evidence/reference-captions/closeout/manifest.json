@@ -1,0 +1,19 @@
+{
+  "records": [
+    {
+      "path": "README.md",
+      "bytes": 2063,
+      "sha256": "74a07af622649487dc3abede60e786413ec5c34f22d2b232f5512911dec5865b"
+    },
+    {
+      "path": "ci-final-blocked.json",
+      "bytes": 28881,
+      "sha256": "f145d07c78d54ee5098a28d05b9310f5ad7ebf9fa7f3cfa8db442230ed9cfd48"
+    },
+    {
+      "path": "pr-final.json",
+      "bytes": 280,
+      "sha256": "da5ec0fcb55ea8fa77268292270587cc3039e4ef057698b74b0b2748197ad6ce"
+    }
+  ]
+}
