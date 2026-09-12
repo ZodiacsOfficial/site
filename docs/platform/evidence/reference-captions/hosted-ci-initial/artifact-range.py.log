@@ -1,0 +1,27 @@
+import urllib.request,urllib.error,subprocess,json,struct,zlib,hashlib,re
+from pathlib import Path
+out=Path('/private/tmp/zodiacs-c016-lighthouse-original');out.mkdir(exist_ok=True)
+class NoRedirect(urllib.request.HTTPRedirectHandler):
+ def redirect_request(self,*args,**kwargs):return None
+token=subprocess.check_output(['gh','auth','token'],text=True).strip()
+req=urllib.request.Request('https://api.github.com/repos/ZodiacsOfficial/site/actions/artifacts/10059936208/zip',headers={'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json'})
+try: urllib.request.build_opener(NoRedirect).open(req,timeout=30);raise Exception('Expected archive redirect')
+except urllib.error.HTTPError as e:
+ assert e.code==302;url=e.headers['Location']
+token=None
+requests=[]
+def part(a,b):
+ req=urllib.request.Request(url,headers={'Range':f'bytes={a}-{b}'})
+ with urllib.request.urlopen(req,timeout=60) as r:
+  assert r.status==206;d=r.read();assert len(d)==b-a+1;requests.append({'start':a,'end':b,'bytes':len(d),'sha256':hashlib.sha256(d).hexdigest()});return d
+size=129013887;tail=part(size-65536,size-1);i=tail.rfind(b'PK\x05\x06');assert i>=0
+end=struct.unpack_from('<4s4H2IH',tail,i);count,cdsize,cdoff=end[4],end[5],end[6];central=part(cdoff,cdoff+cdsize-1)
+entries=[];at=0
+while at<len(central):
+ vals=struct.unpack_from('<4s6H3I5H2I',central,at);assert vals[0]==b'PK\x01\x02';n,x,c=vals[10:13];name=central[at+46:at+46+n].decode();entries.append({'name':name,'method':vals[4],'compressed':vals[8],'bytes':vals[9],'offset':vals[16],'crc32':vals[7]});at+=46+n+x+c
+assert len(entries)==count
+selected=[e for e in entries if re.search(r'/lighthouse/(today|ru-birth-chart)-[123]\.json$',e['name'])];assert len(selected)==6,[e['name'] for e in selected]
+for e in selected:
+ head=part(e['offset'],e['offset']+29);v=struct.unpack('<4s5H3I2H',head);assert v[0]==b'PK\x03\x04';start=e['offset']+30+v[-2]+v[-1];compressed=part(start,start+e['compressed']-1);data=zlib.decompress(compressed,-15) if e['method']==8 else compressed;assert len(data)==e['bytes'] and zlib.crc32(data)==e['crc32'];e['sha256']=hashlib.sha256(data).hexdigest();(out/Path(e['name']).name).write_bytes(data)
+(out/'range-provenance.json').write_text(json.dumps({'artifactId':10059936208,'artifactSize':size,'centralEntries':count,'selected':selected,'rangeRequests':requests,'qualification':'Six CRC-checked members fetched by HTTP range; not a full archive SHA256 verification. Authorization and signed URL not retained.'},indent=2)+'\n')
+print(json.dumps({'members':len(selected),'bytesTransferred':sum(x['bytes'] for x in requests)}))

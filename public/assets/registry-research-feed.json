@@ -1,12 +1,307 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-08T00:15:32.254Z",
+  "generatedAt": "2026-09-12T10:27:07.897Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-09T00:00:00.000Z",
-    "endsBefore": "2026-09-16T00:00:00.000Z"
+    "startsAt": "2026-08-13T00:00:00.000Z",
+    "endsBefore": "2026-09-20T00:00:00.000Z"
   },
-  "items": []
+  "items": [
+    {
+      "id": "zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn",
+      "slug": "event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-18T09:58:30.048Z",
+      "title": "Mercury Opposition Saturn · event brief",
+      "summary": "Mercury Opposition Saturn becomes exact at 2026-09-18T09:58:30.048Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn/",
+      "signs": [
+        "aries",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto",
+      "slug": "event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-16T08:31:12.865Z",
+      "title": "Neptune Sextile Pluto · event brief",
+      "summary": "Neptune Sextile Pluto becomes exact at 2026-09-16T08:31:12.865Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto/",
+      "signs": [
+        "aries",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto",
+      "slug": "event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-15T18:41:31.944Z",
+      "title": "Venus Square Pluto · event brief",
+      "summary": "Venus Square Pluto becomes exact at 2026-09-15T18:41:31.944Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto/",
+      "signs": [
+        "scorpio",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
+      "slug": "event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-14T02:39:54.936Z",
+      "title": "Mercury Trine Uranus · event brief",
+      "summary": "Mercury Trine Uranus becomes exact at 2026-09-14T02:39:54.936Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus/",
+      "signs": [
+        "gemini",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune",
+      "slug": "event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-12T16:41:18.624Z",
+      "title": "Mercury Opposition Neptune · event brief",
+      "summary": "Mercury Opposition Neptune becomes exact at 2026-09-12T16:41:18.624Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune/",
+      "signs": [
+        "aries",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto",
+      "slug": "event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-12T15:59:18.579Z",
+      "title": "Mercury Trine Pluto · event brief",
+      "summary": "Mercury Trine Pluto becomes exact at 2026-09-12T15:59:18.579Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto/",
+      "signs": [
+        "libra",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-daily-market-brief-2026-09-12",
+      "slug": "daily-market-brief-2026-09-12",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T12:00:00.000Z",
+      "visibleAt": "2026-09-12T12:00:00.000Z",
+      "title": "Mercury opposition Neptune · daily market brief",
+      "summary": "Mercury opposition Neptune leads the disclosed symbolic index; Libra market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-12/",
+      "signs": [
+        "libra",
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-01-observation-168h",
+      "slug": "market-check-2026-09-01-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Aries 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (253.94 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-01-observation-168h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-02-observation-168h",
+      "slug": "market-check-2026-09-02-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (238.69 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-02-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-03-observation-168h",
+      "slug": "market-check-2026-09-03-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (214.7 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-03-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-04-observation-168h",
+      "slug": "market-check-2026-09-04-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (190.67 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-04-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-07-observation-24h",
+      "slug": "market-check-2026-09-07-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Virgo 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (117.39 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-07-observation-24h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-08-observation-24h",
+      "slug": "market-check-2026-09-08-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Virgo 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (106.19 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-08-observation-24h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-12",
+      "slug": "market-check-2026-09-12",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-12T10:27:07.897Z",
+      "visibleAt": "2026-09-12T10:27:07.897Z",
+      "title": "Libra market check · 2026-09-12",
+      "summary": "Libra price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-12/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    }
+  ]
 }

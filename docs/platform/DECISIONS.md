@@ -702,3 +702,46 @@ Broader home/methodology/compatibility/transit/return/wallet clock prose, comple
 date coverage and reference-Sun personalization remain separate. No SDK, receipt
 schema, positions codec, canonical Registry/Astrofolio, account or publication
 change follows from this decision.
+
+## C-016 release-maintenance extension — 2026-09-12
+
+The accepted caption implementation stays frozen. Required hosted attempt2
+stops on newly reported advisories for Astro, Sharp, js-yaml, smol-toml and SVGO.
+Resolve only this gate with a lockfile update to the advisory-fixed versions:
+Astro7.2.8,Sharp0.35.4,js-yaml4.3.2,smol-toml1.7.1,SVGO4.1.0. Keep package.json
+ranges, the immutable engine artifact and all33 frozen caption files unchanged.
+The initial scratch resolver selected unrelated newer versions and is rejected;
+temporary exact constraints are removed after resolving the compatible lockfile.
+No overrides, force-fix, vulnerability suppression or test thresholds are added.
+Production audit must have zero findings; the unchanged full-tree high-severity
+gate may retain its two moderate dev-only Vitest findings without claiming zero.
+
+Astro's minimum patched release also updates compiler dependencies, so the old
+render/build evidence cannot alone certify this dependency tree. Run the existing
+build/type/unit/capture/sharing and required hosted gates for the new tree; reuse
+unchanged numerical-source/preservation evidence rather than rerunning its matrix.
+
+The build verifies a provenance hash containing package-lock.json and refuses a
+September8 edition on September12. Use only the existing generators to refresh
+the dependency provenance and explicit September12 daily/publication/program data.
+Do not change calculation/editorial logic, advance dates on stale facts, loosen
+freshness policy or touch concurrent main's data. This is isolated candidate
+release maintenance, not production publication or a new feature workstream.
+Fresh capture artifacts must describe the refreshed edition honestly; previous
+pixel equality is retained only for the original accepted candidate.
+
+The attempted release-maintenance extension is subsequently **not accepted or
+integrated**. Its current paired-edition build fails three existing Registry
+research tests. Preserve the proposal and failures, restore only owned temporary
+source changes, and close C016 with explicit release blockers. This respects the
+owner's finite closeout boundary; do not turn the encountered integration debt
+into another active workstream or claim all required hosted checks pass.
+
+
+## R1/R2: preserve policy; isolate mutable test conditions — 2026-09-12
+
+The owner explicitly authorized completing R1 and R2 together, from the preserved
+minimum-version proposal and existing failures. The new draft stays stacked on
+C-016; R3 and L1–L6, merges, publication and production deployment are excluded.
+[Maintenance record](evidence/r1-r2-maintenance/README.md) tracks the corrected
+source, evidence reuse, new failures and required hosted results.

@@ -1,0 +1,14 @@
+{
+  "id": "dpl_42iL979pobWWCgELp1X4vAmtL953",
+  "url": "zodiacs-r66b95wkw-zodiacsofficial.vercel.app",
+  "state": "READY",
+  "readyState": "READY",
+  "target": null,
+  "createdAt": 1788874502498,
+  "ready": 1788874765146,
+  "meta": {
+    "githubCommitSha": "9912e37bee3f20de691b6bed8165ff36189d1eca",
+    "githubCommitRef": "codex/platform-reference-captions-delivery",
+    "githubPrId": "438"
+  }
+}

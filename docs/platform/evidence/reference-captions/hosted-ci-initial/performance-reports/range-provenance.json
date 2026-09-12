@@ -1,0 +1,148 @@
+{
+  "artifactId": 10059936208,
+  "artifactSize": 129013887,
+  "centralEntries": 561,
+  "selected": [
+    {
+      "name": "tests/visual/artifacts/lighthouse/ru-birth-chart-1.json",
+      "method": 8,
+      "compressed": 116245,
+      "bytes": 473887,
+      "offset": 84573418,
+      "crc32": 2301500214,
+      "sha256": "3fd0717ee68f534e47ff9ba0d6f7b9583fed0cb955fdecaa9e128d234f4883cf"
+    },
+    {
+      "name": "tests/visual/artifacts/lighthouse/ru-birth-chart-2.json",
+      "method": 8,
+      "compressed": 115971,
+      "bytes": 472234,
+      "offset": 85031801,
+      "crc32": 3595621239,
+      "sha256": "645e8940a69848cb221bfa572c5c5156231f7587865620d4f37e35ed6290e482"
+    },
+    {
+      "name": "tests/visual/artifacts/lighthouse/ru-birth-chart-3.json",
+      "method": 8,
+      "compressed": 115966,
+      "bytes": 472285,
+      "offset": 85450564,
+      "crc32": 3901404354,
+      "sha256": "7884cb512fa638fa461e63d3018f707b3f309426772149940f16a1faf65adf7d"
+    },
+    {
+      "name": "tests/visual/artifacts/lighthouse/today-1.json",
+      "method": 8,
+      "compressed": 152131,
+      "bytes": 521908,
+      "offset": 93850327,
+      "crc32": 2613516561,
+      "sha256": "e14b9b8fb0feaedc97e4034800fcec9c60978c3301d31529b66ce399985789f5"
+    },
+    {
+      "name": "tests/visual/artifacts/lighthouse/today-2.json",
+      "method": 8,
+      "compressed": 153868,
+      "bytes": 521840,
+      "offset": 94477643,
+      "crc32": 1748734567,
+      "sha256": "e7a57ed38f7f0ee12e9af7f995456cd680c271c6674948f881fb26fe976a5063"
+    },
+    {
+      "name": "tests/visual/artifacts/lighthouse/today-3.json",
+      "method": 8,
+      "compressed": 152075,
+      "bytes": 521966,
+      "offset": 94631603,
+      "crc32": 3820960767,
+      "sha256": "6f7f3be868f292e0ab059074c2b6f4bcf36ae9dd63f37d7ec75dc51480bb5d30"
+    }
+  ],
+  "rangeRequests": [
+    {
+      "start": 128948351,
+      "end": 129013886,
+      "bytes": 65536,
+      "sha256": "7a9b9609fcaeb02ed8e9ecf021c5862bee43981345ab301ea055cb03f1986483"
+    },
+    {
+      "start": 128953161,
+      "end": 129013864,
+      "bytes": 60704,
+      "sha256": "d6f49aa30939fb28f8e0e73fa34b3d41d4b7e70f7efecc69c246eef8c93a2657"
+    },
+    {
+      "start": 84573418,
+      "end": 84573447,
+      "bytes": 30,
+      "sha256": "041127668ced8a7de81e255a9f4f0f7626493ed043974f9b363ee750490c44c0"
+    },
+    {
+      "start": 84573503,
+      "end": 84689747,
+      "bytes": 116245,
+      "sha256": "0ae20447d007b100cec87dd41738365ff0561b2ec3fba65a26d86f1b50e4fdc6"
+    },
+    {
+      "start": 85031801,
+      "end": 85031830,
+      "bytes": 30,
+      "sha256": "a1025cc7d16c262f8a59de9278177f96a52b97f4d69dd7a8603e16f1624c6bcb"
+    },
+    {
+      "start": 85031886,
+      "end": 85147856,
+      "bytes": 115971,
+      "sha256": "f3cf11942fa4be2128c469e376a51f744f2aeebc0865fcff299fa4d16c285134"
+    },
+    {
+      "start": 85450564,
+      "end": 85450593,
+      "bytes": 30,
+      "sha256": "8c56b7ef5642e8d5553895fc673f6fbc1efbd1d611a435f85f88a6cdeea6167f"
+    },
+    {
+      "start": 85450649,
+      "end": 85566614,
+      "bytes": 115966,
+      "sha256": "b3b314a9625ed7f189d4723d24ad1406a771c5f12e20bedaf91abb1fd03ad3ce"
+    },
+    {
+      "start": 93850327,
+      "end": 93850356,
+      "bytes": 30,
+      "sha256": "a59f1eee064d4e2dd74c9ef347de76984c102c026e46f12a3d0af142c1c76e2c"
+    },
+    {
+      "start": 93850403,
+      "end": 94002533,
+      "bytes": 152131,
+      "sha256": "4743a436bc7f95505fd6e3f1496ae13a75b69282a94c56c35651c64135450f3e"
+    },
+    {
+      "start": 94477643,
+      "end": 94477672,
+      "bytes": 30,
+      "sha256": "69dd92998c783b417ab441a0b351efd99f9932e823c00b4c3370a912e8fac76a"
+    },
+    {
+      "start": 94477719,
+      "end": 94631586,
+      "bytes": 153868,
+      "sha256": "8ef7cecd71f0c505461f7bdcf895f8f073636ee95c93004ff3a9cff494999cc9"
+    },
+    {
+      "start": 94631603,
+      "end": 94631632,
+      "bytes": 30,
+      "sha256": "03acec848a3b55706e9ee0d1568961c5055e455d9224fba639d69975177e0397"
+    },
+    {
+      "start": 94631679,
+      "end": 94783753,
+      "bytes": 152075,
+      "sha256": "f74e2bb5599b901755d3a0685f2a7c15b7d8224e078fec851f6c6f18cd9a17ad"
+    }
+  ],
+  "qualification": "Six CRC-checked members fetched by HTTP range; not a full archive SHA256 verification. Authorization and signed URL not retained."
+}
