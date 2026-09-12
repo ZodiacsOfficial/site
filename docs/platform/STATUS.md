@@ -1,10 +1,22 @@
 # Zodiacs Platform status
 
 Checkpoint:2026-09-12 UTC. Root remains the accountable shared-file integrator.
-Current instruction: finish the accepted C-016 slice and required hosted checks,
-reuse valid unchanged-source evidence, then stop with a finite remaining checklist.
-No additional implementation stream is active. The accepted slice is delivered;
-required hosted verification has identified unresolved release blockers.
+Current instruction: complete R1 and R2 as one bounded maintenance draft stacked
+on C-016. R3 and L1–L6 are explicitly outside this effort. No merge, publication
+or production deployment is authorized. Maintenance is in progress; historical
+C-016 evidence and failures below remain valid within their original scope.
+
+## R1/R2 maintenance — in progress
+
+The preserved minimum-version dependency proposal is integrated in an isolated
+checkout based on C-016 `9912e37`, with prior closeout records at `062da26`.
+Both dependency audit gates pass. Existing generators pair the September 12
+Daily Sky, horoscope and Registry artifacts with a real September 12 market
+snapshot. Behavioral tests now explicitly establish pilot and market conditions;
+production approval and provenance rules are unchanged. A further horoscope
+same-sign fixture exposed by the new edition is corrected in memory only.
+Required build, render and hosted verification is underway. This is not yet
+release-ready. See [maintenance record](evidence/r1-r2-maintenance/README.md).
 
 ## C-016 — Reference captions
 

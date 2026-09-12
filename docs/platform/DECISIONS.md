@@ -736,3 +736,12 @@ research tests. Preserve the proposal and failures, restore only owned temporary
 source changes, and close C016 with explicit release blockers. This respects the
 owner's finite closeout boundary; do not turn the encountered integration debt
 into another active workstream or claim all required hosted checks pass.
+
+
+## R1/R2: preserve policy; isolate mutable test conditions — 2026-09-12
+
+The owner explicitly authorized completing R1 and R2 together, from the preserved
+minimum-version proposal and existing failures. The new draft stays stacked on
+C-016; R3 and L1–L6, merges, publication and production deployment are excluded.
+[Maintenance record](evidence/r1-r2-maintenance/README.md) tracks the corrected
+source, evidence reuse, new failures and required hosted results.

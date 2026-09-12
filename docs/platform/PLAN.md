@@ -194,3 +194,12 @@ Git objects are unavailable; preserve the original worktree and concurrent work.
 Next, assess the separately sealed full/lite phase-category preparation before
 selecting a new bounded implementation. Engine publication and Astrofolio remain
 separate gates and workstreams.
+
+
+## R1/R2 bounded maintenance resumption — 2026-09-12
+
+The owner explicitly authorized completing R1 and R2 together, from the preserved
+minimum-version proposal and existing failures. The new draft stays stacked on
+C-016; R3 and L1–L6, merges, publication and production deployment are excluded.
+[Maintenance record](evidence/r1-r2-maintenance/README.md) tracks the corrected
+source, evidence reuse, new failures and required hosted results.

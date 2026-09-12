@@ -1,7 +1,7 @@
 # Finite remaining platform checklist
 
-Checkpoint:2026-09-12. This closes C-016; it does not start another audit or
-implementation stream. [STATUS](STATUS.md) is the current release record;
+Checkpoint:2026-09-12. The owner has authorized R1 and R2 as one bounded maintenance effort.
+R3 and L1–L6 remain outside the current scope. [STATUS](STATUS.md) is the current release record;
 [PLAN](PLAN.md) preserves the longer dependency history. Checked engineering
 work is distinct from permission, public release and external adoption.
 
@@ -66,5 +66,5 @@ work is distinct from permission, public release and external adoption.
   and outreach; record real integrations, feedback and retained use. No external
   adoption, paying pilot, endorsement or commercial agreement is established here.
 
-This closeout starts no additional workstream and claims no background
-continuation, spending, outreach or production change.
+Only R1/R2 maintenance is active. No background continuation, spending, outreach
+or production change is claimed.
