@@ -3,10 +3,10 @@
 Checkpoint:2026-09-12 UTC. Root remains the accountable shared-file integrator.
 Current instruction: complete R1 and R2 as one bounded maintenance draft stacked
 on C-016. R3 and L1–L6 are explicitly outside this effort. No merge, publication
-or production deployment is authorized. Maintenance is in progress; historical
+or production deployment is authorized. This bounded maintenance is complete; historical
 C-016 evidence and failures below remain valid within their original scope.
 
-## R1/R2 maintenance — in progress
+## R1/R2 maintenance — complete for draft review
 
 The preserved minimum-version dependency proposal is integrated in an isolated
 checkout based on C-016 `9912e37`, with prior closeout records at `062da26`.
@@ -15,10 +15,19 @@ Daily Sky, horoscope and Registry artifacts with a real September 12 market
 snapshot. Behavioral tests now explicitly establish pilot and market conditions;
 production approval and provenance rules are unchanged. A further horoscope
 same-sign fixture exposed by the new edition is corrected in memory only.
-Required build, render and hosted verification is underway. This is not yet
-release-ready. See [maintenance record](evidence/r1-r2-maintenance/README.md).
+Draft [#469](https://github.com/ZodiacsOfficial/site/pull/469) is delivered at
+`35301d24907b6eb7117a1f4b0ae690ca42c57de6`. Final build/typecheck, 5,091 tests
+and 18 fresh captures pass. The exact READY preview passes 22 view groups and
+five served-artifact comparisons. All fourteen jobs pass in
+[Site Check 34688849189](https://github.com/ZodiacsOfficial/site/actions/runs/34688849189),
+including visual regression, all 30 Lighthouse routes and both widget gates.
+R1/R2 have no remaining blocker. This candidate is implemented, tested and
+review-ready; the whole platform still requires R3 and owner/external gates.
+It is not merged, npm-published, production-deployed or externally adopted.
+Final closeout records are local/mirrored; the remote draft stays on the exact
+green source, with final results recorded in its PR description. See [maintenance record](evidence/r1-r2-maintenance/README.md).
 
-## C-016 — Reference captions
+## C-016 — Historical reference-caption checkpoint
 
 Draft[#438](https://github.com/ZodiacsOfficial/site/pull/438), **Make chart and Moon
 reference captions match their data**, is delivered at

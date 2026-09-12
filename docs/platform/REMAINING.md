@@ -7,18 +7,18 @@ work is distinct from permission, public release and external adoption.
 
 ## Release blockers and integration work
 
-- [ ] **R1 — Security and current-edition integration.** The accepted draft's
-  audit now reports five vulnerable production packages. A preserved minimum-
-  version lockfile proposal clears both audit gates, but its fresh build requires
-  current paired daily/Registry publication data and exposes three existing
-  Registry research test failures. Resolve this bounded integration without
-  weakening freshness, approval, immutable-item or market-provenance assertions.
-  The proposal is not integrated into[#438](https://github.com/ZodiacsOfficial/site/pull/438).
-- [ ] **R2 — Close remaining hosted gates after R1.** Complete performance and
-  the previously skipped foreign-origin/widget-performance checks on the corrected
-  tree, plus the build/render checks and preview that its dependency/data changes
-  invalidate. Retain valid unchanged-source evidence. Attempt1's two performance
-  outliers and attempt2's advisory failure remain; no blind retry or lowered budget.
+- [x] **R1 — Security and current-edition integration.** Completed in draft
+  [#469](https://github.com/ZodiacsOfficial/site/pull/469) at `35301d2`: minimum
+  advisory fixes, paired September 12 artifacts, three research failures and
+  the edition-invalidated horoscope fixture. Both audit gates, build/typecheck
+  and 5,091 tests pass. No freshness, approval, immutable-item or provenance
+  assertion was weakened. The original #438 source remains unchanged.
+- [x] **R2 — Close remaining hosted gates after R1.** All 14 hosted jobs pass
+  in [run 34688849189](https://github.com/ZodiacsOfficial/site/actions/runs/34688849189),
+  including visual regression, 30 Lighthouse routes, foreign-origin widgets
+  and widget performance. Fresh 18-view captures and 22 exact-source hosted
+  preview groups pass. Unchanged evidence is reused; no budget relaxation or
+  hosted retry. [Evidence](evidence/r1-r2-maintenance/README.md).
 - [ ] **R3 — Final release-stack integration.** Reconcile the selected reviewed
   site/SDK branches against the then-current main branches in an isolated branch,
   preserve concurrent work, verify final artifact/pins/rollback, and run only
@@ -66,5 +66,5 @@ work is distinct from permission, public release and external adoption.
   and outreach; record real integrations, feedback and retained use. No external
   adoption, paying pilot, endorsement or commercial agreement is established here.
 
-Only R1/R2 maintenance is active. No background continuation, spending, outreach
-or production change is claimed.
+R1/R2 maintenance is complete. No further workstream is active; no background
+continuation, spending, outreach or production change is claimed.

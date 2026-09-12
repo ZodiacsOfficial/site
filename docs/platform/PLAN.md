@@ -203,3 +203,14 @@ minimum-version proposal and existing failures. The new draft stays stacked on
 C-016; R3 and L1–L6, merges, publication and production deployment are excluded.
 [Maintenance record](evidence/r1-r2-maintenance/README.md) tracks the corrected
 source, evidence reuse, new failures and required hosted results.
+
+### R1/R2 closed — 2026-09-12
+
+Draft #469 at `35301d24907b6eb7117a1f4b0ae690ca42c57de6` passes all 14 hosted
+jobs (34688849189), including the unchanged performance and widget gates.
+Final local build/typecheck, 5,091 tests and 18 captures pass; the exact preview
+passes 22 groups and five served-artifact comparisons.
+[Complete evidence and qualifications](evidence/r1-r2-maintenance/README.md).
+R1/R2 are complete for review. R3 and L1–L6 remain untouched, and all owner,
+human and publication gates remain. Final documents are local/mirrored; no
+documentation-only hosted rerun is requested and no release is performed.

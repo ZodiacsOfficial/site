@@ -1,6 +1,6 @@
 # R1/R2 bounded maintenance
 
-2026-09-12. In progress; not release-ready or published. Base C-016
+2026-09-12. R1/R2 complete for draft review; not merged, published or production-deployed. Base C-016
 `9912e37bee3f20de691b6bed8165ff36189d1eca`; prior closeout records `062da26`.
 
 ## Scope and decisions
@@ -58,3 +58,24 @@ The 51 affected tests pass, and exact-base scope verification covers precisely
 the thirteen authorized protected paths. No test or policy assertion was removed.
 Raw local successes and initial invalidated failures are archived with member
 hashes in `local-verification.tar.gz` / `local-members.json`.
+
+## Hosted closeout
+
+Draft [#469](https://github.com/ZodiacsOfficial/site/pull/469) is frozen at
+`35301d24907b6eb7117a1f4b0ae690ca42c57de6`, with all 110 actual PR files
+matching local Git blobs (40 non-documentation files). All 14 required hosted
+jobs pass in [run 34688849189](https://github.com/ZodiacsOfficial/site/actions/runs/34688849189),
+including unchanged visual, 30-route worst-of-three Lighthouse, foreign-origin
+widget and three widget Lighthouse gates. [Hosted CI records](hosted-ci/README.md).
+
+The exact READY [preview](https://zodiacs-dafnwih1r-zodiacsofficial.vercel.app)
+passes 22 view groups, 36 screenshots and five committed/served Registry
+artifact comparisons. All 73 source identities remain equal.
+[Preview records and qualifications](hosted-preview/README.md).
+
+R1 and R2 have no remaining maintenance blocker. R3 and L1–L6 were not started.
+Owner/human/SDK publication gates remain; no merge, npm publication, production
+deployment, outreach, spending or adoption is claimed. Final closeout documents
+are retained locally and mirrored to the shared workspace, separately from the
+frozen green draft, to reuse valid source evidence without a documentation-only
+CI replay. The remote PR description records the completed hosted outcome.
