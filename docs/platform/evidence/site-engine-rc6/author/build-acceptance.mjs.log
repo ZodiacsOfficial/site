@@ -1,0 +1,25 @@
+import {createRequire} from 'node:module';
+import {readFile,writeFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
+const root='/private/tmp/zodiacs-platform-site-seconds-adoption';
+const out='/private/tmp/zodiacs-platform-site-seconds-adoption-evidence';
+const req=createRequire(root+'/package.json');const {build}=req('esbuild');
+const frozenPath='/private/tmp/zodiacs-platform-site-receipt-export/src/lib/engine/calculator-receipt.ts';
+const frozen=await readFile(frozenPath,'utf8');
+const baseline=await readFile(out+'/site-timezone-baseline.ts','utf8');
+const sha=b=>createHash('sha256').update(b).digest('hex');
+if(sha(frozen)!=='21c1a94b6aadc77b28bfc1081de526f22e2514dbf4f30224049adb76564ca410')throw Error('Receipt helper identity mismatch');
+const oldEngine='/Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/index.js';
+const result=await build({stdin:{contents:`export {computeCalculatorReceipt} from 'frozen-receipt';
+export {resolveLocalToUtc as resolveBaseline} from 'baseline-time';
+export {resolveLocalToUtc as resolveSite} from './src/lib/time/localToUtc.ts';
+export {resolveLocalToUtc as resolvePackage} from '@zodiacs/engine/geo';
+export {natalChart,ENGINE_VERSION} from '@zodiacs/engine';
+export {natalChart as oldNatalChart,ENGINE_VERSION as OLD_ENGINE_VERSION} from ${JSON.stringify(oldEngine)};
+export {parseNatalEnvelope,natalReplayInput} from '@zodiacs/engine/receipt';`,resolveDir:root},bundle:true,write:false,metafile:true,platform:'browser',format:'esm',target:'es2022',plugins:[{name:'immutable-review-fixtures',setup(build){
+ build.onResolve({filter:/^(frozen-receipt|baseline-time)$/},args=>({path:args.path,namespace:'review-fixture'}));
+ build.onLoad({filter:/.*/,namespace:'review-fixture'},args=>({contents:args.path==='frozen-receipt'?frozen:baseline,loader:'ts',resolveDir:root+'/src/lib/'+(args.path==='frozen-receipt'?'engine':'time')}));
+}}]});
+await writeFile(out+'/acceptance-subject.mjs',result.outputFiles[0].contents);
+await writeFile(out+'/acceptance-subject-identity.json',JSON.stringify({frozenReceiptPath:frozenPath,frozenReceiptSha256:sha(frozen),baselineResolverSha256:sha(baseline),bundleSha256:sha(result.outputFiles[0].contents),bundleBytes:result.outputFiles[0].contents.length,metafile:result.metafile},null,2)+'\n');
+console.log('Built actual rc6 + site resolver + unchanged frozen receipt helper; baseline rc5 comparison retained');

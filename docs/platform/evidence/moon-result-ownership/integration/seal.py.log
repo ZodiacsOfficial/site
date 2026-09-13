@@ -1,0 +1,20 @@
+from pathlib import Path
+import hashlib,json,shutil
+root=Path.cwd();base=root/'docs/platform/evidence/moon-result-ownership'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+src=Path('/private/tmp/zodiacs-platform-moon-result-ownership-ci-wiring-review');identity=json.loads((src/'identity.json').read_text())
+for r in identity['files']:assert sha(root/r['path'])==r['sha256']
+for folder,source in [('ci-wiring-review',src),('integration',Path('/private/tmp/zodiacs-platform-moon-integration'))]:
+ dest=base/folder;dest.mkdir(parents=True,exist_ok=True);records=[]
+ for p in sorted(source.rglob('*')):
+  if not p.is_file():continue
+  assert 'auth' not in p.name.lower()
+  target=dest/p.relative_to(source)
+  if p.suffix in ['.py','.mjs','.js','.ts','.tsx']:target=target.with_name(target.name+'.log')
+  target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target);assert sha(p)==sha(target)
+  records.append({'sourcePath':str(p.relative_to(source)),'path':str(target.relative_to(dest)),'bytes':target.stat().st_size,'sha256':sha(target)})
+ (dest/'manifest.json').write_text(json.dumps({'records':records},indent=2)+'\n');print(folder,len(records),sha(dest/'manifest.json'))
+i=json.loads(Path('/private/tmp/zodiacs-platform-moon-result-ownership-evidence/source-freeze1-identity.json').read_text())
+for r in i['files']:assert sha(root/r['path'])==r['sha256']
+i.update(rootBaseCommit='65418003c07efc0c435ce1010e3c9ec05b478eb4',evidenceCarrierCommit='11e75bab0f92ea2e02ba38ea8385a7cebed6a64b',reviewStatus='Author, independent and root local verification passed with documented existing Guide portrait variance; hosted CI pending',rootCiIntegration={'.github/workflows/site-check.yml':sha(root/'.github/workflows/site-check.yml')},captureManifestSha256=sha(root/'docs/acceptance/phase1/screenshots/manifest.json'))
+(base/'root-source-identity.json').write_text(json.dumps(i,indent=2)+'\n')

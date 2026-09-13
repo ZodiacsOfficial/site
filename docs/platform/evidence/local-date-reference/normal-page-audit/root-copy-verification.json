@@ -1,0 +1,312 @@
+{
+  "sourceManifestSha256": "6e195b2b5de944a8d9b1e2016ca8575c1b63a370934a5428ee95c13879c62a86",
+  "recordsVerified": 76,
+  "verifiedOrdinaryArchiveMembers": 0,
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "audit-result.json",
+      "path": "audit-result.json"
+    },
+    {
+      "sourcePath": "audit.log",
+      "path": "audit.log"
+    },
+    {
+      "sourcePath": "audit.py.log",
+      "path": "audit.py.log"
+    },
+    {
+      "sourcePath": "copy-mapping.json",
+      "path": "copy-mapping.json"
+    },
+    {
+      "sourcePath": "original-input-manifest.json",
+      "path": "original-input-manifest.json"
+    },
+    {
+      "sourcePath": "root-records/build-receipt-final.json",
+      "path": "root-records/build-receipt-final.json"
+    },
+    {
+      "sourcePath": "root-records/capture-comparison-final.json",
+      "path": "root-records/capture-comparison-final.json"
+    },
+    {
+      "sourcePath": "root-records/normal-build-drive.mjs.log",
+      "path": "root-records/normal-build-drive.mjs.log"
+    },
+    {
+      "sourcePath": "root-records/normal-build-drive.original.mjs.log",
+      "path": "root-records/normal-build-drive.original.mjs.log"
+    },
+    {
+      "sourcePath": "root-records/normal-chart-corrected-drive.mjs.log",
+      "path": "root-records/normal-chart-corrected-drive.mjs.log"
+    },
+    {
+      "sourcePath": "root-records/normal-chart-harness-correction.json",
+      "path": "root-records/normal-chart-harness-correction.json"
+    },
+    {
+      "sourcePath": "root-records/normal-chart-run2/result.json",
+      "path": "root-records/normal-chart-run2/result.json"
+    },
+    {
+      "sourcePath": "root-records/normal-chart-run2/served-files.json",
+      "path": "root-records/normal-chart-run2/served-files.json"
+    },
+    {
+      "sourcePath": "root-records/normal-chart-run2.log",
+      "path": "root-records/normal-chart-run2.log"
+    },
+    {
+      "sourcePath": "root-records/normal-page-final-analysis.json",
+      "path": "root-records/normal-page-final-analysis.json"
+    },
+    {
+      "sourcePath": "root-records/normal-page-run1/result.json",
+      "path": "root-records/normal-page-run1/result.json"
+    },
+    {
+      "sourcePath": "root-records/normal-page-run1/served-files.json",
+      "path": "root-records/normal-page-run1/served-files.json"
+    },
+    {
+      "sourcePath": "root-records/normal-page-run1.log",
+      "path": "root-records/normal-page-run1.log"
+    },
+    {
+      "sourcePath": "source-review/COMMANDS.md",
+      "path": "source-review/COMMANDS.md"
+    },
+    {
+      "sourcePath": "source-review/REVIEW.md",
+      "path": "source-review/REVIEW.md"
+    },
+    {
+      "sourcePath": "source-review/ast-result-initial.json",
+      "path": "source-review/ast-result-initial.json"
+    },
+    {
+      "sourcePath": "source-review/ast-result.json",
+      "path": "source-review/ast-result.json"
+    },
+    {
+      "sourcePath": "source-review/ast-review-initial.log",
+      "path": "source-review/ast-review-initial.log"
+    },
+    {
+      "sourcePath": "source-review/ast-review.log",
+      "path": "source-review/ast-review.log"
+    },
+    {
+      "sourcePath": "source-review/ast-review.mjs.log",
+      "path": "source-review/ast-review.mjs.log"
+    },
+    {
+      "sourcePath": "source-review/c012-island-field-diff.patch.log",
+      "path": "source-review/c012-island-field-diff.patch.log"
+    },
+    {
+      "sourcePath": "source-review/c014-island-diff.patch.log",
+      "path": "source-review/c014-island-diff.patch.log"
+    },
+    {
+      "sourcePath": "source-review/capture.log",
+      "path": "source-review/capture.log"
+    },
+    {
+      "sourcePath": "source-review/capture.py.log",
+      "path": "source-review/capture.py.log"
+    },
+    {
+      "sourcePath": "source-review/context-clear-source-references.log",
+      "path": "source-review/context-clear-source-references.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-advanceInputRevision.tsx.log",
+      "path": "source-review/excerpts/Chart-advanceInputRevision.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-cancelSpotlightArrival.tsx.log",
+      "path": "source-review/excerpts/Chart-cancelSpotlightArrival.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-clearReceiptExport.tsx.log",
+      "path": "source-review/excerpts/Chart-clearReceiptExport.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-clearResult.tsx.log",
+      "path": "source-review/excerpts/Chart-clearResult.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-compute.tsx.log",
+      "path": "source-review/excerpts/Chart-compute.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-exitTour.tsx.log",
+      "path": "source-review/excerpts/Chart-exitTour.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-invalidateProfileHandoff.tsx.log",
+      "path": "source-review/excerpts/Chart-invalidateProfileHandoff.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-onCityChange.tsx.log",
+      "path": "source-review/excerpts/Chart-onCityChange.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-onDateChange.tsx.log",
+      "path": "source-review/excerpts/Chart-onDateChange.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-onTimeChange.tsx.log",
+      "path": "source-review/excerpts/Chart-onTimeChange.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-onTimeKnownChange.tsx.log",
+      "path": "source-review/excerpts/Chart-onTimeKnownChange.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-post-compute-focus-effect.tsx.log",
+      "path": "source-review/excerpts/Chart-post-compute-focus-effect.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Chart-resetLens.tsx.log",
+      "path": "source-review/excerpts/Chart-resetLens.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Moon-date-input.tsx.log",
+      "path": "source-review/excerpts/Moon-date-input.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Moon-invalidateLookup.tsx.log",
+      "path": "source-review/excerpts/Moon-invalidateLookup.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Moon-place-selection.tsx.log",
+      "path": "source-review/excerpts/Moon-place-selection.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Moon-post-compute-focus-effect.tsx.log",
+      "path": "source-review/excerpts/Moon-post-compute-focus-effect.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/excerpts/Moon-time-input.tsx.log",
+      "path": "source-review/excerpts/Moon-time-input.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/final-source-rehash.json",
+      "path": "source-review/final-source-rehash.json"
+    },
+    {
+      "sourcePath": "source-review/harness-third-snippet-span.json",
+      "path": "source-review/harness-third-snippet-span.json"
+    },
+    {
+      "sourcePath": "source-review/inputs/c014-source-freeze.json",
+      "path": "source-review/inputs/c014-source-freeze.json"
+    },
+    {
+      "sourcePath": "source-review/inputs/normal-chart-harness-correction.json",
+      "path": "source-review/inputs/normal-chart-harness-correction.json"
+    },
+    {
+      "sourcePath": "source-review/manifest.json",
+      "path": "source-review/manifest.json"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/components/EmailCaptureEnhancement.astro.log",
+      "path": "source-review/source/c7/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/islands/BirthFields.tsx.log",
+      "path": "source-review/source/c7/src/islands/BirthFields.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/islands/ChartCalculator.tsx.log",
+      "path": "source-review/source/c7/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/islands/MoonPhaseTool.tsx.log",
+      "path": "source-review/source/c7/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/islands/PostChartDailyBrief.tsx.log",
+      "path": "source-review/source/c7/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/c7/src/lib/profile/post-chart-context.ts.log",
+      "path": "source-review/source/c7/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "source-review/source/frozen/src/islands/ChartCalculator.tsx.log",
+      "path": "source-review/source/frozen/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/frozen/src/islands/MoonPhaseTool.tsx.log",
+      "path": "source-review/source/frozen/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/components/EmailCaptureEnhancement.astro.log",
+      "path": "source-review/source/head3845/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/islands/BirthFields.tsx.log",
+      "path": "source-review/source/head3845/src/islands/BirthFields.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/islands/ChartCalculator.tsx.log",
+      "path": "source-review/source/head3845/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/islands/MoonPhaseTool.tsx.log",
+      "path": "source-review/source/head3845/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/islands/PostChartDailyBrief.tsx.log",
+      "path": "source-review/source/head3845/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/head3845/src/lib/profile/post-chart-context.ts.log",
+      "path": "source-review/source/head3845/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/components/EmailCaptureEnhancement.astro.log",
+      "path": "source-review/source/root/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/islands/BirthFields.tsx.log",
+      "path": "source-review/source/root/src/islands/BirthFields.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/islands/ChartCalculator.tsx.log",
+      "path": "source-review/source/root/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/islands/MoonPhaseTool.tsx.log",
+      "path": "source-review/source/root/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/islands/PostChartDailyBrief.tsx.log",
+      "path": "source-review/source/root/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "source-review/source/root/src/lib/profile/post-chart-context.ts.log",
+      "path": "source-review/source/root/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "source-review/source-identity.json",
+      "path": "source-review/source-identity.json"
+    },
+    {
+      "sourcePath": "verified-driver-diff.log",
+      "path": "verified-driver-diff.log"
+    }
+  ]
+}

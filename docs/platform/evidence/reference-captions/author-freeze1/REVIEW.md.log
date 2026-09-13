@@ -1,0 +1,62 @@
+# C016 author delivery — Freeze 1
+
+The approved correction is implemented in an isolated checkout of `9d180c9f1a2f66893ccd6d73fcda106cb3894674`. Unknown-time Moon tool results now visibly describe a captured reference moment, without an inferred exhaustive alternate sign. Shared chart, Inspector, image and preview copy no longer invent a noon clock. The primary calculations, existing known-time labels, receipt contract and positions wire are unchanged.
+
+Freeze identity: `freeze1-identity.json`, SHA256 `c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644`. Patch: `freeze1.patch`, SHA256 `0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36`. `source-freeze1/` contains the exact 33 files: 23 approved product/copy sources and 10 scoped tests/drivers. Reverse-application checking succeeded. No root checkout, root dist, shared docs, SDK, account data, publication or external service was modified.
+
+## Implemented behavior
+
+MoonPhaseTool retains its current reference UTC selection, C014 point-membership refusal, two primary full-engine Sun/Moon calls, full angle and illumination, and existing lite phase name. It removes private altLon, unused day-start/day-end resolutions and the two endpoint Moon samples. The exact longitude remains in the disclosure; the captured qualification is now a visible existing-style notice. Known-time/no-city UTC-conversion wording is shown visibly. Known-time/selected-city results retain their empty caption. Existing revision fences, pending-load handling, result/error focus and recovery are unchanged.
+
+ChartCalculator changes only the unknown-time Moon-mode phase label (plus the corresponding comment). Its known-time label remains “Moon phase at birth.” Shared noTimeNotice and explanatory help use generic reference-position wording without a clock or zone claim; Inspector receives that notice through its existing catalog dependency. The two Explorer copy tables no longer assert noon or that every other planet's birth sign is certainly right.
+
+Six Moon-page FAQ answers now distinguish a reference moment from a whole date; the additional English paragraph is corrected. Each existing FAQ source still feeds both visible and structured content. There are no layout/style/navigation changes.
+
+Six share-card referenceTimeNote translations, two chart-sheet settings/provenance phrases and their option comment are corrected. The two server preview edits are strings only: no-angle settings and description. Route/query validation, response headers, privacy behavior, model shape, rendering logic and wire fields are untouched. PT/FR/IT exact-key translation counterparts were changed to keep their existing byte-parity contract. Root owns the generated i18n-additions.md refresh through the unchanged generator.
+
+The UI catalogs retain exactly 420 keys. Three keys retire one-for-one: middayLocalCaption → referenceLocalCaption, middayUtcCaption → referenceUtcCaption, moonChangedNotice → moonPhaseAtReference. All old runtime uses are gone. The six previously existing known-time UTC captions are unchanged.
+
+## Executed acceptance
+
+* Baseline affected unit tests: 99/99 on Node 22.23.2.
+* Candidate focused tests: 142/142 on Node 22.23.2 and 142/142 on Node 24.19.0.
+* Final expanded affected set: 227/227 on Node 22, including existing engine/polar tests and Chart confidence/Registry contracts.
+* Strict project TypeScript check: exit 0 after the normal Astro type synchronization. No tsconfig or unrelated source change was made.
+* Astro check: 1,047 files, zero errors, zero warnings and eleven existing hints.
+* New `tests/reference-caption-drive.mjs`: 34/34 actual Chrome 152.0.7977.83 groups, using exact prior and candidate source copies in the same browser.
+* Existing Moon ownership native driver: 20/20, no page errors.
+* Existing local-date caller native driver: 35/35 with the explicitly required before-C014 source and its matching catalogs. It retains skipped-date and ownership negative controls and exact primary comparisons.
+
+The new native driver checks ten full Moon caller cases, six localized visible-caption groups, six Chart Moon-mode label groups, four skipped-date refusal/recovery groups and eight actual Canvas/download groups. There are ten exact Moon primary JSON comparisons, twelve exact Chart numerical JSON comparisons, eight exact chart/token image-input comparisons, and sixteen actual baseline/candidate PNG downloads. The known-time PNG bytes match exactly. The seven reference-image pairs intentionally change text; the driver records each image hash and asserts the actual canvas text separately. It does not treat a changed reference caption as a numerical mismatch.
+
+Primary comparisons retain phase, full angle, illumination and longitude in their original JSON property order and retain every first Moon/Sun call's body, exact ISO UTC and numeric value. Only the named removed altLon/caption metadata and endpoint samples are separated. No numeric rounding, tolerance change, sorting or cross-runtime bit-equality promise is introduced.
+
+The native cases include the actual Khartoum 2000-01-15 reference shifted to 13:00 local, ordinary singleton and old two-sign cases, Toronto/Juneau historical omitted members, repeated local date, known local gap, known UTC and existing known skipped-date behavior. Four real skipped dates still refuse before numerical work; previous result/caption is cleared and recovery succeeds. The pre-existing phase-category crossing fixtures remain explicit finite witnesses, not coverage proofs.
+
+The 34-group driver records all 23 source hashes before and after execution, complete bundle input hashes and state/loader instrumentation. It ran 480 owned GET requests, with no external/non-GET requests or saved profile. Every owned browser context/server was closed. The fixtures use actual Preact, numerical modules and Canvas, with declared synthetic place search, loader and state observers. They do not load the complete site theme and are not normal-build layout certification. Root separately owns normal full-page/capture/download acceptance.
+
+## Preserved failures and their disposition
+
+1. First candidate affected run: 93/99 passed. Five old-noon snapshot assertions correctly failed (three share-card, one OG, one Inspector-related assertion); they now assert the intended reference text while retaining numerical/privacy/known-time assertions. The sixth failure is the root-owned generated-manifest currency check, still intentionally unresolved in this author source patch.
+2. The first new copy-test attempt imported the Italian catalog as `it`, shadowing the Vitest function. It failed before executing that suite. The source test alias was corrected to `itUi`; no product behavior changed. The original stack/log remains.
+3. Raw TypeScript checking before Astro sync reported 19 missing generated content-type errors in unchanged feed/sitemap sources. Normal `astro sync` generated the local type artifacts; the same strict TypeScript command then passed. No unrelated fixes were made.
+4. The first full unit run completed 4,999 passing tests, 12 failing tests and 13 skipped tests, with two additional suite-load failures. Nine failures came from absent normal-build dist pages; one from the generated manifest, one from the new source fingerprint needing root's capture carrier, and one from a Registry test's old comment anchor. The Registry anchor was updated without changing its semantic assertions. The two suite-load failures were the already diagnosed Vite external-symlink path problem for Astronomy Engine. The exact same eight package files were copied into the isolated checkout's own node_modules; all byte hashes match, no package installation/version change occurred, and both suites passed in the final 227-test affected run. The original full result is retained and is **not** presented as a green full-suite run.
+5. The first optional C014 native comparison was invoked with 9d180c9, even though that driver's baseline control deliberately requires pre-C014 skipped-date success. Eight failures reflected that wrong baseline. Four additional old-Moon failures arose because its retired keys were being resolved against the candidate catalogs. The original 23/35 report remains. The corrected run uses immutable `3845a04b` (full hash in before-c014-identity.json) with all eight matching component/catalog sources and their executed hashes; all 35 controls pass. No refusal or numerical expectation was weakened. The driver now substitutes the baseline's own catalogs when its optional historical baseline is requested.
+
+The new 34-group native caption/image driver passed on its first execution. Its initially copied driver bytes are retained and match the final frozen driver. The source was not edited during that run. All later source-freeze checks are explicit.
+
+## Integrator-owned remaining gates
+
+Root will regenerate i18n-additions.md, apply the exact-base protected-path/locale allowance and CI wiring, run the normal fresh build and captures, and execute the final full suite. No generator/capture/dist assertions were weakened or silently skipped in the authored patch. The author test and browser evidence establishes bounded implementation readiness for independent review, not final release readiness.
+
+The existing additive translation contract passes its runtime/counterpart checks; only its checked-in generated-manifest freshness awaits root's normal generation. The exact affected CI filename is `tests/reference-caption-drive.mjs`; it accepts OUT_DIR and optional REFERENCE_BASELINE_DIR, uses existing findChromium/STABLE_CHROMIUM_ARGS and installs nothing.
+
+## Qualifications
+
+There is no verified full-date Moon range, complete local-date interval or new phase algorithm. The lite phase category and full-engine angle are separate existing algorithms; their known near-boundary disagreement remains explicitly open. Supplying a known time retains the existing civil gap/fold policy. The portable receipt's `reference: 'local-noon'` request convention and all wire/schema/API contracts remain unchanged.
+
+Unrelated noon wording on home/birth-chart/methodology/glossary, compatibility, transit, solar-return and wallet surfaces remains separately tracked. Authentic noon timestamps in datasets, docs/examples, date-format anchors and request-selection code were not mechanically changed. Reference Sun downstream summaries remain the separately recorded boundary. This work does not claim those outputs are fixed.
+
+The React skill checklist was applied as a source review: no new effects, state ownership, render-time imports or event listeners were introduced; captured result metadata remains owned by the existing run; the visible notice uses the existing live-status semantics. This is author review, not independent signoff. Independent review is being performed by the root-coordinated reviewers against the exact freeze.
+
+Implemented and bounded-tested; not published, deployed or externally adopted by this author task.

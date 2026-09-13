@@ -1,0 +1,56 @@
+{
+  "observedAt": "2026-09-07T22:03:47.110Z",
+  "scope": "Synthetic URL sentinels in an isolated browser, no personal data; live public widget document.",
+  "requests": [
+    {
+      "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+      "referrer": "http://127.0.0.1:54770/"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    },
+    {
+      "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+      "referrer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8"
+    }
+  ],
+  "hostedResponse": {
+    "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+    "status": 200,
+    "sha256": "809285f1b6bb071465a6d2f5c56dc896e41aa495ad9e5a863cba3fa5b0bc8169",
+    "bytes": 5559,
+    "displayedText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →"
+  },
+  "crossOrigin": {
+    "childRead": "SecurityError",
+    "parentDocumentUnavailable": true
+  },
+  "cookies": [],
+  "checks": {
+    "privatePathAndFragmentNotDisclosed": true,
+    "referrerOnlyOrigin": true,
+    "iframeCannotReadParent": true,
+    "noCookies": true
+  }
+}

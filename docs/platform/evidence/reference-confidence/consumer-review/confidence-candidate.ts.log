@@ -1,0 +1,23 @@
+import { signForLongitude } from './site/src/lib/signs';
+import { moonIsUncertain, moonCandidatesFromEndpoints } from './site/src/lib/moon-certainty';
+import { localDateEndpointsUtc as actualEndpoints, stableBodySignSlug } from './site/src/lib/chart-date-certainty';
+import { computeBodies as actualBodies } from './site/src/lib/engine/full';
+export function applyConfidence(result:any,input:any,mode:string,events:any[]) {
+ const runIsCurrent = () => true;
+ const localDateEndpointsUtc = (...args:Parameters<typeof actualEndpoints>) => { events.push({kind:'endpoints',args}); return actualEndpoints(...args); };
+ const engine = {computeBodies: (utc:Date) => {events.push({kind:'computeBodies',utc:utc.toISOString()});return actualBodies(utc);}};
+ const computedSun = result.bodies.find((body) => body.body === 'Sun');
+      const computedSunSlug = computedSun ? signForLongitude(computedSun.lon).slug : null;
+      let nextMoonAmbiguous = false;
+      const nextRegistryRecordSlug = mode === 'full' && input.timeKnown ? computedSunSlug : null;
+      if (!input.timeKnown) {
+        // A reference instant does not verify the Moon's possible signs across
+        // the birth date. Empty candidates use the existing unresolved state;
+        // the numerical chart and portable receipt remain the reference result.
+        result.moonSignCandidates = [];
+        nextMoonAmbiguous = moonIsUncertain(result);
+      }
+      if (!runIsCurrent()) return;
+      
+ return {result,nextMoonAmbiguous,nextRegistryRecordSlug};
+}

@@ -1,0 +1,16 @@
+{
+  "baseFilesChecked": 10087,
+  "changedExistingFiles": [],
+  "newFiles": [
+    "src/lib/time/local-date-intervals.test.ts",
+    "src/lib/time/local-date-intervals.ts",
+    "tests/local-date-intervals-drive.mjs"
+  ],
+  "expectedNewFiles": [
+    "src/lib/time/local-date-intervals.ts",
+    "src/lib/time/local-date-intervals.test.ts",
+    "tests/local-date-intervals-drive.mjs"
+  ],
+  "passed": true,
+  "dependencyMethod": "node_modules symlink to existing root; Vitest cacheDir redirected to evidence; no install or dependency change"
+}

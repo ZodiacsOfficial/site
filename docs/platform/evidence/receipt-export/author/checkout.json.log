@@ -1,0 +1,28 @@
+[
+  {
+    "command": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/Users/chiburashka/.codex/worktrees/4806/site",
+      "/private/tmp/zodiacs-platform-site-receipt-export"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "Cloning into '/private/tmp/zodiacs-platform-site-receipt-export'...\ndone.\n"
+  },
+  {
+    "command": [
+      "git",
+      "-C",
+      "/private/tmp/zodiacs-platform-site-receipt-export",
+      "checkout",
+      "--detach",
+      "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf"
+    ],
+    "status": 0,
+    "stdout": "",
+    "stderr": "HEAD is now at c761a49c Record all fourteen rc.5 CI jobs passing\n"
+  }
+]

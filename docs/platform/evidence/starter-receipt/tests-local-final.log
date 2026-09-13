@@ -1,0 +1,249 @@
+
+> zodiacs-platform-starter@0.1.0-rc.3 test
+> node scripts/build.mjs && node --test tests/*.check.mjs
+
+Built three examples with candidate 0.1.1-rc.3; artifact SHA256 aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17
+TAP version 13
+# Subtest: real candidate returns coherent polar fallback and provenance
+ok 1 - real candidate returns coherent polar fallback and provenance
+  ---
+  duration_ms: 27.902791
+  type: 'test'
+  ...
+# Subtest: offset equivalent instants calculate identically and keep entered provenance
+ok 2 - offset equivalent instants calculate identically and keep entered provenance
+  ---
+  duration_ms: 4.033084
+  type: 'test'
+  ...
+# Subtest: unknown time uses stated UTC noon and suppresses angles and houses
+ok 3 - unknown time uses stated UTC noon and suppresses angles and houses
+  ---
+  duration_ms: 1.656
+  type: 'test'
+  ...
+# Subtest: transit snapshot uses the actual public API result and explicit instant
+ok 4 - transit snapshot uses the actual public API result and explicit instant
+  ---
+  duration_ms: 5.45625
+  type: 'test'
+  ...
+# Subtest: public API rejects impossible calendar dates before rollover and preserves leap days
+ok 5 - public API rejects impossible calendar dates before rollover and preserves leap days
+  ---
+  duration_ms: 2.937333
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: ""
+ok 6 - rejects unresolved or malformed instants: ""
+  ---
+  duration_ms: 0.084584
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: " "
+ok 7 - rejects unresolved or malformed instants: " "
+  ---
+  duration_ms: 0.111375
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21"
+ok 8 - rejects unresolved or malformed instants: "2001-12-21"
+  ---
+  duration_ms: 0.212917
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00"
+ok 9 - rejects unresolved or malformed instants: "2001-12-21T09:00:00"
+  ---
+  duration_ms: 0.409666
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00Z\\n"
+ok 10 - rejects unresolved or malformed instants: "2001-12-21T09:00:00Z\\n"
+  ---
+  duration_ms: 0.323917
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00+25:00"
+ok 11 - rejects unresolved or malformed instants: "2001-12-21T09:00:00+25:00"
+  ---
+  duration_ms: 0.888291
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: ""
+ok 12 - rejects empty/nonfinite or nondecimal coordinates: ""
+  ---
+  duration_ms: 0.077167
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: " "
+ok 13 - rejects empty/nonfinite or nondecimal coordinates: " "
+  ---
+  duration_ms: 0.073916
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "NaN"
+ok 14 - rejects empty/nonfinite or nondecimal coordinates: "NaN"
+  ---
+  duration_ms: 0.047625
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "Infinity"
+ok 15 - rejects empty/nonfinite or nondecimal coordinates: "Infinity"
+  ---
+  duration_ms: 0.032958
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "0x10"
+ok 16 - rejects empty/nonfinite or nondecimal coordinates: "0x10"
+  ---
+  duration_ms: 0.029
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "1e999"
+ok 17 - rejects empty/nonfinite or nondecimal coordinates: "1e999"
+  ---
+  duration_ms: 0.028708
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "12\\n"
+ok 18 - rejects empty/nonfinite or nondecimal coordinates: "12\\n"
+  ---
+  duration_ms: 0.026584
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: undefined
+ok 19 - rejects empty/nonfinite or nondecimal coordinates: undefined
+  ---
+  duration_ms: 0.025792
+  type: 'test'
+  ...
+# Subtest: rejects out-of-range and unsupported exact-pole inputs and invalid options
+ok 20 - rejects out-of-range and unsupported exact-pole inputs and invalid options
+  ---
+  duration_ms: 0.128917
+  type: 'test'
+  ...
+# Subtest: recalculation works with network and persistent storage APIs unavailable
+ok 21 - recalculation works with network and persistent storage APIs unavailable
+  ---
+  duration_ms: 4.844083
+  type: 'test'
+  ...
+# Subtest: fresh natal calculation adds the draft without dropping existing result or metadata
+ok 22 - fresh natal calculation adds the draft without dropping existing result or metadata
+  ---
+  duration_ms: 27.440583
+  type: 'test'
+  ...
+# Subtest: the existing unknown-date calculation explicitly declares UTC noon without inventing source spelling
+ok 23 - the existing unknown-date calculation explicitly declares UTC noon without inventing source spelling
+  ---
+  duration_ms: 1.873541
+  type: 'test'
+  ...
+# Subtest: offset-equivalent fresh results retain the exact captured source spelling
+ok 24 - offset-equivalent fresh results retain the exact captured source spelling
+  ---
+  duration_ms: 2.767625
+  type: 'test'
+  ...
+# Subtest: transits retain their existing snapshot contract without a misleading natal-only envelope
+ok 25 - transits retain their existing snapshot contract without a misleading natal-only envelope
+  ---
+  duration_ms: 2.238
+  type: 'test'
+  ...
+# Subtest: local file round trip preserves requested houses, full precision, and unknown optional JSON
+ok 26 - local file round trip preserves requested houses, full precision, and unknown optional JSON
+  ---
+  duration_ms: 7.9985
+  type: 'test'
+  ...
+# Subtest: unknown 08:30 is imported and re-exported without passing through the noon-only birth form
+ok 27 - unknown 08:30 is imported and re-exported without passing through the noon-only birth form
+  ---
+  duration_ms: 2.552666
+  type: 'test'
+  ...
+# Subtest: valid known-time receipt without coordinates remains importable even though the birth form requires them
+ok 28 - valid known-time receipt without coordinates remains importable even though the birth form requires them
+  ---
+  duration_ms: 2.834167
+  type: 'test'
+  ...
+# Subtest: imported engine and artifact claims are preserved without upgrading them to this candidate
+ok 29 - imported engine and artifact claims are preserved without upgrading them to this candidate
+  ---
+  duration_ms: 2.317625
+  type: 'test'
+  ...
+# Subtest: redaction excludes precise input, results, extensions, and claimed provenance
+ok 30 - redaction excludes precise input, results, extensions, and claimed provenance
+  ---
+  duration_ms: 3.120375
+  type: 'test'
+  ...
+# Subtest: rejects a file over 64 KiB before reading its contents or name
+ok 31 - rejects a file over 64 KiB before reading its contents or name
+  ---
+  duration_ms: 0.299792
+  type: 'test'
+  ...
+# Subtest: accepts the exact UTF-8 byte limit and checks actual bytes after the read
+ok 32 - accepts the exact UTF-8 byte limit and checks actual bytes after the read
+  ---
+  duration_ms: 4.440083
+  type: 'test'
+  ...
+# Subtest: UTF-8, absent-file, read failures, and filenames never leak supplied text
+ok 33 - UTF-8, absent-file, read failures, and filenames never leak supplied text
+  ---
+  duration_ms: 0.510708
+  type: 'test'
+  ...
+# Subtest: duplicate decoded keys, unknown versions, and required features fail closed
+ok 34 - duplicate decoded keys, unknown versions, and required features fail closed
+  ---
+  duration_ms: 2.565542
+  type: 'test'
+  ...
+# Subtest: hostile keys, excessive depth, and forged derived flags are rejected with fixed codes
+ok 35 - hostile keys, excessive depth, and forged derived flags are rejected with fixed codes
+  ---
+  duration_ms: 1.964459
+  type: 'test'
+  ...
+# Subtest: file parsing and redaction work with fetch, Intl, and storage unavailable
+ok 36 - file parsing and redaction work with fetch, Intl, and storage unavailable
+  ---
+  duration_ms: 4.192833
+  type: 'test'
+  ...
+# Subtest: localhost server serves only exact built assets and never accepts submissions
+ok 37 - localhost server serves only exact built assets and never accepts submissions
+  ---
+  duration_ms: 31.012083
+  type: 'test'
+  ...
+# Subtest: widget URL has only constrained display inputs at the canonical HTTPS origin
+ok 38 - widget URL has only constrained display inputs at the canonical HTTPS origin
+  ---
+  duration_ms: 2.608708
+  type: 'test'
+  ...
+# Subtest: local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available
+ok 39 - local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available
+  ---
+  duration_ms: 5.316417
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 145.739375

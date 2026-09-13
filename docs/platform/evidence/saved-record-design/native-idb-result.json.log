@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-09-08T04:43:57.644Z",
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "origin": "http://127.0.0.1:55302",
+  "adapterSHA256": "a60aa7e7b945490c34ff01922fd3084891c122682b77cf24f15fad7a1fb79491",
+  "controls": [
+    {
+      "name": "actual-existing-adapter-atomic-cap",
+      "outcomes": [
+        "saved",
+        "full"
+      ],
+      "recordCount": 1
+    },
+    {
+      "name": "actual-existing-adapter-CAS-callback",
+      "outcomes": [
+        "updated",
+        "conflict"
+      ],
+      "final": [
+        {
+          "id": "10000000-0000-4000-8000-000000000001",
+          "revision": 2,
+          "label": "first"
+        }
+      ]
+    },
+    {
+      "name": "counterexample-close-does-not-abort-active-native-transaction",
+      "outcome": "saved",
+      "committedRecords": 1
+    },
+    {
+      "name": "counterexample-upgrading-existing-database-breaks-exact-v1-adapter",
+      "errorName": "VersionError",
+      "oldReaderSucceeded": false
+    }
+  ],
+  "scope": "Actual frozen IndexedDbLivingChartAdapter executed against native Chromium IndexedDB in a disposable browser context. Hypothetical version2 upgrade only in that context; no site or user storage touched."
+}

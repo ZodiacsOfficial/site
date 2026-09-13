@@ -1,0 +1,15 @@
+.learning-practice { padding: clamp(18px, 3vw, 28px); margin-block: 24px; border: 1px solid var(--hair-2); border-radius: var(--r-lg, 18px); background: var(--surface-1, transparent); color: var(--text); }
+.learning-practice h3 { font: 500 clamp(24px, 3vw, 32px)/1.15 var(--font-serif); margin: 0 0 12px; }
+.learning-practice p { color: var(--muted); line-height: 1.6; }
+.learning-practice label { display: grid; gap: 8px; font: 500 14px/1.5 var(--font-sans); }
+.learning-practice select { min-height: 44px; max-width: 100%; width: 100%; padding: 10px 12px; color: var(--text); background: var(--bg, #08090b); border: 1px solid var(--hair-2); border-radius: 10px; font: inherit; }
+.learning-practice button, .learning-practice a { min-height: 44px; }
+.learning-practice--entry > button { margin-top: 14px; }
+.learning-practice__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-block: 12px; }
+.learning-practice__actions button { white-space: normal; text-align: left; padding: 10px 14px; }
+.learning-practice fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.learning-practice legend { font: 500 18px/1.5 var(--font-sans); margin-bottom: 10px; }
+.learning-practice__options { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; }
+.learning-practice__options label { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px; border: 1px solid var(--hair-2); border-radius: 8px; }
+.learning-practice :is(button, a, select, input):focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.learning-practice__status { min-height: 24px; }

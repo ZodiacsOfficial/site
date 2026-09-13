@@ -1,0 +1,30 @@
+from pathlib import Path
+import json,hashlib,shutil,tarfile,subprocess,datetime
+root=Path('/Users/chiburashka/.codex/worktrees/4806/site')
+base=root/'docs/platform/evidence/site-engine-rc6'
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+delivery=Path('/private/tmp/zodiacs-platform-rc6-runtime-review/delivery')
+m=json.loads((delivery/'manifest.json').read_text())
+assert sha(delivery/'manifest.json')=='2afc64d1aa2fb5b86d54936aba278c234467bb9d7f29ffdf41cff53ca3734948'
+for r in m['records']:
+ p=delivery/r['path'];assert p.stat().st_size==r['bytes'] and sha(p)==r['sha256']
+shutil.copytree(delivery,base/'runtime-math',dirs_exist_ok=True)
+source=Path('/private/tmp/zodiacs-platform-rc6-integration')
+dest=base/'integration';dest.mkdir(exist_ok=True)
+records=[]
+for p in sorted(source.rglob('*')):
+ if not p.is_file():continue
+ assert 'auth' not in p.name.lower()
+ rel=p.relative_to(source);target=dest/rel
+ if p.suffix in ['.mjs','.py']:target=target.with_name(target.name+'.log')
+ target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target)
+ assert sha(p)==sha(target)
+ records.append({'sourcePath':str(rel),'path':str(target.relative_to(dest)),'bytes':target.stat().st_size,'sha256':sha(target)})
+(dest/'manifest.json').write_text(json.dumps({'recordedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'baseCommit':'804c70309d2508e67e8462df526b5f9e71a112e9','records':records},indent=2)+'\n')
+identities={}
+for file in ['source-freeze1-identity.json','receipt-companion-freeze1-identity.json','metadata-freeze1-identity.json']:
+ i=json.loads((Path('/private/tmp/zodiacs-platform-site-seconds-adoption-evidence')/file).read_text())
+ for p,h in i['files'].items():assert sha(root/p)==h;identities[p]=h
+for p in ['src/data/daily-publication-manifest.json','docs/acceptance/phase1/screenshots/manifest.json']:identities[p]=sha(root/p)
+(base/'root-source-identity.json').write_text(json.dumps({'baseCommit':'804c70309d2508e67e8462df526b5f9e71a112e9','evidenceCarrierCommit':'68412f16140f9986b11767d271eda6e14b6aba48','reviewedSourceFiles':13,'generatedManifests':2,'files':identities},indent=2)+'\n')
+print(json.dumps({'mathRecordsVerified':len(m['records']),'integrationRecordsVerified':len(records),'integrationManifestSha256':sha(dest/'manifest.json'),'rootSourceFilesVerified':len(identities)}))

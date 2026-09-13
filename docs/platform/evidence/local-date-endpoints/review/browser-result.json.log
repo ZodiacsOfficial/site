@@ -1,0 +1,1941 @@
+{
+  "at": "2026-09-08T06:43:07.634Z",
+  "runtime": {
+    "browser": true
+  },
+  "model": "Reviewer-only piecewise-constant offset interval algebra; offsets discovered at hourly UTC probes in a five-day window, changed cells bisected to1ms. Assumes no hidden pair of transitions within one probe cell and all applicable offsets inside48h. Complete for these discovered schedules, not a proof of all host Intl histories.",
+  "rows": [
+    {
+      "date": "2000-01-01",
+      "zone": "Asia/Tokyo",
+      "actual": {
+        "start": "1999-12-31T15:00:00.000Z",
+        "end": "2000-01-01T14:59:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2000,
+          "month": 1,
+          "day": 1,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1999-12-31T15:00:00.000Z",
+            "endExclusive": "2000-01-01T15:00:00.000Z",
+            "last": "2000-01-01T14:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "1999-12-31T15:00:00.000Z",
+        "last": "2000-01-01T14:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [],
+      "checks": [
+        {
+          "instant": "1999-12-31T15:00:00.000Z",
+          "wall": {
+            "year": 2000,
+            "month": 1,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2000-01-01T14:59:59.999Z",
+          "wall": {
+            "year": 2000,
+            "month": 1,
+            "day": 1,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 240
+    },
+    {
+      "date": "2024-03-10",
+      "zone": "America/New_York",
+      "actual": {
+        "start": "2024-03-10T05:00:00.000Z",
+        "end": "2024-03-11T03:59:59.999Z",
+        "durationMs": 82800000,
+        "startWall": {
+          "year": 2024,
+          "month": 3,
+          "day": 10,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2024,
+          "month": 3,
+          "day": 10,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2024-03-10T05:00:00.000Z",
+            "endExclusive": "2024-03-11T04:00:00.000Z",
+            "last": "2024-03-11T03:59:59.999Z",
+            "durationMs": 82800000
+          }
+        ],
+        "first": "2024-03-10T05:00:00.000Z",
+        "last": "2024-03-11T03:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "2024-03-10T07:00:00.000Z",
+          "before": {
+            "year": 2024,
+            "month": 3,
+            "day": 10,
+            "hour": 1,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2024,
+            "month": 3,
+            "day": 10,
+            "hour": 3,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -18000000,
+          "afterOffset": -14400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2024-03-10T05:00:00.000Z",
+          "wall": {
+            "year": 2024,
+            "month": 3,
+            "day": 10,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2024-03-11T03:59:59.999Z",
+          "wall": {
+            "year": 2024,
+            "month": 3,
+            "day": 10,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "2024-11-03",
+      "zone": "America/New_York",
+      "actual": {
+        "start": "2024-11-03T04:00:00.000Z",
+        "end": "2024-11-04T04:59:59.999Z",
+        "durationMs": 90000000,
+        "startWall": {
+          "year": 2024,
+          "month": 11,
+          "day": 3,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2024,
+          "month": 11,
+          "day": 3,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2024-11-03T04:00:00.000Z",
+            "endExclusive": "2024-11-04T05:00:00.000Z",
+            "last": "2024-11-04T04:59:59.999Z",
+            "durationMs": 90000000
+          }
+        ],
+        "first": "2024-11-03T04:00:00.000Z",
+        "last": "2024-11-04T04:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "2024-11-03T06:00:00.000Z",
+          "before": {
+            "year": 2024,
+            "month": 11,
+            "day": 3,
+            "hour": 1,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2024,
+            "month": 11,
+            "day": 3,
+            "hour": 1,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -14400000,
+          "afterOffset": -18000000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2024-11-03T04:00:00.000Z",
+          "wall": {
+            "year": 2024,
+            "month": 11,
+            "day": 3,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2024-11-04T04:59:59.999Z",
+          "wall": {
+            "year": 2024,
+            "month": 11,
+            "day": 3,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "1919-03-30",
+      "zone": "America/Toronto",
+      "actual": {
+        "start": "1919-03-30T05:00:00.000Z",
+        "end": "1919-03-31T04:59:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 1919,
+          "month": 3,
+          "day": 30,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1919,
+          "month": 3,
+          "day": 31,
+          "hour": 0,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1919-03-30T05:00:00.000Z",
+            "endExclusive": "1919-03-31T04:30:00.000Z",
+            "last": "1919-03-31T04:29:59.999Z",
+            "durationMs": 84600000
+          }
+        ],
+        "first": "1919-03-30T05:00:00.000Z",
+        "last": "1919-03-31T04:29:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [
+        {
+          "instant": "1919-03-31T04:30:00.000Z",
+          "before": {
+            "year": 1919,
+            "month": 3,
+            "day": 30,
+            "hour": 23,
+            "minute": 29,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 1919,
+            "month": 3,
+            "day": 31,
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -18000000,
+          "afterOffset": -14400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "1919-03-30T05:00:00.000Z",
+          "wall": {
+            "year": 1919,
+            "month": 3,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1919-03-31T04:29:59.999Z",
+          "wall": {
+            "year": 1919,
+            "month": 3,
+            "day": 30,
+            "hour": 23,
+            "minute": 29,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "actual": {
+        "start": "1919-03-31T05:00:00.000Z",
+        "end": "1919-04-01T03:59:59.999Z",
+        "durationMs": 82800000,
+        "startWall": {
+          "year": 1919,
+          "month": 3,
+          "day": 31,
+          "hour": 1,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1919,
+          "month": 3,
+          "day": 31,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1919-03-31T04:30:00.000Z",
+            "endExclusive": "1919-04-01T04:00:00.000Z",
+            "last": "1919-04-01T03:59:59.999Z",
+            "durationMs": 84600000
+          }
+        ],
+        "first": "1919-03-31T04:30:00.000Z",
+        "last": "1919-04-01T03:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [
+        {
+          "instant": "1919-03-31T04:30:00.000Z",
+          "before": {
+            "year": 1919,
+            "month": 3,
+            "day": 30,
+            "hour": 23,
+            "minute": 29,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 1919,
+            "month": 3,
+            "day": 31,
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -18000000,
+          "afterOffset": -14400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "1919-03-31T04:30:00.000Z",
+          "wall": {
+            "year": 1919,
+            "month": 3,
+            "day": 31,
+            "hour": 0,
+            "minute": 30,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1919-04-01T03:59:59.999Z",
+          "wall": {
+            "year": 1919,
+            "month": 3,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "2011-12-29",
+      "zone": "Pacific/Apia",
+      "actual": {
+        "start": "2011-12-29T10:00:00.000Z",
+        "end": "2011-12-30T09:59:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 29,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 29,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2011-12-29T10:00:00.000Z",
+            "endExclusive": "2011-12-30T10:00:00.000Z",
+            "last": "2011-12-30T09:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "2011-12-29T10:00:00.000Z",
+        "last": "2011-12-30T09:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "2011-12-30T10:00:00.000Z",
+          "before": {
+            "year": 2011,
+            "month": 12,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2011,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -36000000,
+          "afterOffset": 50400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2011-12-29T10:00:00.000Z",
+          "wall": {
+            "year": 2011,
+            "month": 12,
+            "day": 29,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2011-12-30T09:59:59.999Z",
+          "wall": {
+            "year": 2011,
+            "month": 12,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "actual": {
+        "start": "2011-12-30T10:00:00.000Z",
+        "end": "2011-12-30T09:59:59.999Z",
+        "durationMs": 0,
+        "startWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 31,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 29,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "empty",
+        "segments": [],
+        "first": null,
+        "last": null
+      },
+      "actualMatches": false,
+      "transitions": [
+        {
+          "instant": "2011-12-30T10:00:00.000Z",
+          "before": {
+            "year": 2011,
+            "month": 12,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2011,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -36000000,
+          "afterOffset": 50400000
+        }
+      ],
+      "checks": [],
+      "queries": 262
+    },
+    {
+      "date": "2011-12-31",
+      "zone": "Pacific/Apia",
+      "actual": {
+        "start": "2011-12-30T10:00:00.000Z",
+        "end": "2011-12-31T09:59:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 31,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2011,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2011-12-30T10:00:00.000Z",
+            "endExclusive": "2011-12-31T10:00:00.000Z",
+            "last": "2011-12-31T09:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "2011-12-30T10:00:00.000Z",
+        "last": "2011-12-31T09:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "2011-12-30T10:00:00.000Z",
+          "before": {
+            "year": 2011,
+            "month": 12,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2011,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -36000000,
+          "afterOffset": 50400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2011-12-30T10:00:00.000Z",
+          "wall": {
+            "year": 2011,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2011-12-31T09:59:59.999Z",
+          "wall": {
+            "year": 2011,
+            "month": 12,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "actual": {
+        "start": "2009-10-31T02:30:00.000Z",
+        "end": "2009-11-01T02:29:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 2009,
+          "month": 10,
+          "day": 31,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2009,
+          "month": 10,
+          "day": 31,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2009-10-31T02:30:00.000Z",
+            "endExclusive": "2009-11-01T02:30:00.000Z",
+            "last": "2009-11-01T02:29:59.999Z",
+            "durationMs": 86400000
+          },
+          {
+            "start": "2009-11-01T02:31:00.000Z",
+            "endExclusive": "2009-11-01T03:30:00.000Z",
+            "last": "2009-11-01T03:29:59.999Z",
+            "durationMs": 3540000
+          }
+        ],
+        "first": "2009-10-31T02:30:00.000Z",
+        "last": "2009-11-01T03:29:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [
+        {
+          "instant": "2009-11-01T02:31:00.000Z",
+          "before": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 23,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -9000000,
+          "afterOffset": -12600000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2009-10-31T02:30:00.000Z",
+          "wall": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-01T02:29:59.999Z",
+          "wall": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-01T02:31:00.000Z",
+          "wall": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 23,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-01T03:29:59.999Z",
+          "wall": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "2009-11-01",
+      "zone": "America/St_Johns",
+      "actual": {
+        "start": "2009-11-01T02:30:00.000Z",
+        "end": "2009-11-02T03:29:59.999Z",
+        "durationMs": 90000000,
+        "startWall": {
+          "year": 2009,
+          "month": 11,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 2009,
+          "month": 11,
+          "day": 1,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "2009-11-01T02:30:00.000Z",
+            "endExclusive": "2009-11-01T02:31:00.000Z",
+            "last": "2009-11-01T02:30:59.999Z",
+            "durationMs": 60000
+          },
+          {
+            "start": "2009-11-01T03:30:00.000Z",
+            "endExclusive": "2009-11-02T03:30:00.000Z",
+            "last": "2009-11-02T03:29:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "2009-11-01T02:30:00.000Z",
+        "last": "2009-11-02T03:29:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "2009-11-01T02:31:00.000Z",
+          "before": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 2009,
+            "month": 10,
+            "day": 31,
+            "hour": 23,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -9000000,
+          "afterOffset": -12600000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "2009-11-01T02:30:00.000Z",
+          "wall": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-01T02:30:59.999Z",
+          "wall": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-01T03:30:00.000Z",
+          "wall": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "2009-11-02T03:29:59.999Z",
+          "wall": {
+            "year": 2009,
+            "month": 11,
+            "day": 1,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "1988-10-29",
+      "zone": "America/Goose_Bay",
+      "actual": {
+        "start": "1988-10-29T02:00:00.000Z",
+        "end": "1988-10-30T01:59:59.999Z",
+        "durationMs": 86400000,
+        "startWall": {
+          "year": 1988,
+          "month": 10,
+          "day": 29,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1988,
+          "month": 10,
+          "day": 29,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1988-10-29T02:00:00.000Z",
+            "endExclusive": "1988-10-30T02:00:00.000Z",
+            "last": "1988-10-30T01:59:59.999Z",
+            "durationMs": 86400000
+          },
+          {
+            "start": "1988-10-30T02:01:00.000Z",
+            "endExclusive": "1988-10-30T04:00:00.000Z",
+            "last": "1988-10-30T03:59:59.999Z",
+            "durationMs": 7140000
+          }
+        ],
+        "first": "1988-10-29T02:00:00.000Z",
+        "last": "1988-10-30T03:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [
+        {
+          "instant": "1988-10-30T02:01:00.000Z",
+          "before": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 22,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -7200000,
+          "afterOffset": -14400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "1988-10-29T02:00:00.000Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-30T01:59:59.999Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-30T02:01:00.000Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 22,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-30T03:59:59.999Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "1988-10-30",
+      "zone": "America/Goose_Bay",
+      "actual": {
+        "start": "1988-10-30T02:00:00.000Z",
+        "end": "1988-10-31T03:59:59.999Z",
+        "durationMs": 93600000,
+        "startWall": {
+          "year": 1988,
+          "month": 10,
+          "day": 30,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1988,
+          "month": 10,
+          "day": 30,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1988-10-30T02:00:00.000Z",
+            "endExclusive": "1988-10-30T02:01:00.000Z",
+            "last": "1988-10-30T02:00:59.999Z",
+            "durationMs": 60000
+          },
+          {
+            "start": "1988-10-30T04:00:00.000Z",
+            "endExclusive": "1988-10-31T04:00:00.000Z",
+            "last": "1988-10-31T03:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "1988-10-30T02:00:00.000Z",
+        "last": "1988-10-31T03:59:59.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "1988-10-30T02:01:00.000Z",
+          "before": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 1988,
+            "month": 10,
+            "day": 29,
+            "hour": 22,
+            "minute": 1,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": -7200000,
+          "afterOffset": -14400000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "1988-10-30T02:00:00.000Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-30T02:00:59.999Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-30T04:00:00.000Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1988-10-31T03:59:59.999Z",
+          "wall": {
+            "year": 1988,
+            "month": 10,
+            "day": 30,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "actual": {
+        "start": "1892-07-03T11:26:56.000Z",
+        "end": "1892-07-05T11:26:55.999Z",
+        "durationMs": 172800000,
+        "startWall": {
+          "year": 1892,
+          "month": 7,
+          "day": 4,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1892,
+          "month": 7,
+          "day": 4,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "1892-07-03T11:26:56.000Z",
+            "endExclusive": "1892-07-05T11:26:56.000Z",
+            "last": "1892-07-05T11:26:55.999Z",
+            "durationMs": 172800000
+          }
+        ],
+        "first": "1892-07-03T11:26:56.000Z",
+        "last": "1892-07-05T11:26:55.999Z"
+      },
+      "actualMatches": true,
+      "transitions": [
+        {
+          "instant": "1892-07-04T11:26:56.000Z",
+          "before": {
+            "year": 1892,
+            "month": 7,
+            "day": 4,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "after": {
+            "year": 1892,
+            "month": 7,
+            "day": 4,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "beforeOffset": 45184000,
+          "afterOffset": -41216000
+        }
+      ],
+      "checks": [
+        {
+          "instant": "1892-07-03T11:26:56.000Z",
+          "wall": {
+            "year": 1892,
+            "month": 7,
+            "day": 4,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "1892-07-05T11:26:55.999Z",
+          "wall": {
+            "year": 1892,
+            "month": 7,
+            "day": 4,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 262
+    },
+    {
+      "date": "0000-01-01",
+      "zone": "UTC",
+      "actual": {
+        "start": "0000-01-01T00:00:00.000Z",
+        "end": "1900-01-01T23:59:59.999Z",
+        "durationMs": 59958316800000,
+        "startWall": {
+          "year": 0,
+          "month": 1,
+          "day": 1,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1900,
+          "month": 1,
+          "day": 1,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "0000-01-01T00:00:00.000Z",
+            "endExclusive": "0000-01-02T00:00:00.000Z",
+            "last": "0000-01-01T23:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "0000-01-01T00:00:00.000Z",
+        "last": "0000-01-01T23:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [],
+      "checks": [
+        {
+          "instant": "0000-01-01T00:00:00.000Z",
+          "wall": {
+            "year": 0,
+            "month": 1,
+            "day": 1,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "0000-01-01T23:59:59.999Z",
+          "wall": {
+            "year": 0,
+            "month": 1,
+            "day": 1,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 240
+    },
+    {
+      "date": "0000-02-29",
+      "zone": "UTC",
+      "actual": {
+        "start": "0000-02-29T00:00:00.000Z",
+        "end": "1900-03-01T23:59:59.999Z",
+        "durationMs": 59958316800000,
+        "startWall": {
+          "year": 0,
+          "month": 2,
+          "day": 29,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1900,
+          "month": 3,
+          "day": 1,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "0000-02-29T00:00:00.000Z",
+            "endExclusive": "0000-03-01T00:00:00.000Z",
+            "last": "0000-02-29T23:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "0000-02-29T00:00:00.000Z",
+        "last": "0000-02-29T23:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [],
+      "checks": [
+        {
+          "instant": "0000-02-29T00:00:00.000Z",
+          "wall": {
+            "year": 0,
+            "month": 2,
+            "day": 29,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "0000-02-29T23:59:59.999Z",
+          "wall": {
+            "year": 0,
+            "month": 2,
+            "day": 29,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 240
+    },
+    {
+      "date": "0099-12-31",
+      "zone": "UTC",
+      "actual": {
+        "start": "0099-12-31T00:00:00.000Z",
+        "end": "1999-12-31T23:59:59.999Z",
+        "durationMs": 59958230400000,
+        "startWall": {
+          "year": 99,
+          "month": 12,
+          "day": 31,
+          "hour": 0,
+          "minute": 0,
+          "second": 0,
+          "millisecond": 0
+        },
+        "endWall": {
+          "year": 1999,
+          "month": 12,
+          "day": 31,
+          "hour": 23,
+          "minute": 59,
+          "second": 59,
+          "millisecond": 999
+        }
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "0099-12-31T00:00:00.000Z",
+            "endExclusive": "0100-01-01T00:00:00.000Z",
+            "last": "0099-12-31T23:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "0099-12-31T00:00:00.000Z",
+        "last": "0099-12-31T23:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [],
+      "checks": [
+        {
+          "instant": "0099-12-31T00:00:00.000Z",
+          "wall": {
+            "year": 99,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "0099-12-31T23:59:59.999Z",
+          "wall": {
+            "year": 99,
+            "month": 12,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 240
+    },
+    {
+      "date": "9999-12-31",
+      "zone": "UTC",
+      "actual": {
+        "error": "RangeError: resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time."
+      },
+      "reference": {
+        "kind": "existing",
+        "segments": [
+          {
+            "start": "9999-12-31T00:00:00.000Z",
+            "endExclusive": "+010000-01-01T00:00:00.000Z",
+            "last": "9999-12-31T23:59:59.999Z",
+            "durationMs": 86400000
+          }
+        ],
+        "first": "9999-12-31T00:00:00.000Z",
+        "last": "9999-12-31T23:59:59.999Z"
+      },
+      "actualMatches": false,
+      "transitions": [],
+      "checks": [
+        {
+          "instant": "9999-12-31T00:00:00.000Z",
+          "wall": {
+            "year": 9999,
+            "month": 12,
+            "day": 31,
+            "hour": 0,
+            "minute": 0,
+            "second": 0,
+            "millisecond": 0
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        },
+        {
+          "instant": "9999-12-31T23:59:59.999Z",
+          "wall": {
+            "year": 9999,
+            "month": 12,
+            "day": 31,
+            "hour": 23,
+            "minute": 59,
+            "second": 59,
+            "millisecond": 999
+          },
+          "dateMatches": true,
+          "arithmeticAgrees": true
+        }
+      ],
+      "queries": 240
+    }
+  ],
+  "nativeTemporal": "object",
+  "temporal": [
+    {
+      "date": "2000-01-01",
+      "zone": "Asia/Tokyo",
+      "nativeSegments": [
+        {
+          "start": "1999-12-31T15:00:00.000Z",
+          "endExclusive": "2000-01-01T15:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "1999-12-31T15:00:00Z",
+      "actualDate": "2000-01-01",
+      "nextStart": "2000-01-01T15:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "1951-09-08T15:00:00Z"
+    },
+    {
+      "date": "2024-03-10",
+      "zone": "America/New_York",
+      "nativeSegments": [
+        {
+          "start": "2024-03-10T05:00:00.000Z",
+          "endExclusive": "2024-03-11T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2024-03-10T05:00:00Z",
+      "actualDate": "2024-03-10",
+      "nextStart": "2024-03-11T04:00:00Z",
+      "hoursInDay": 23,
+      "previousTransition": "2023-11-05T06:00:00Z",
+      "nextTransition": "2024-03-10T07:00:00Z"
+    },
+    {
+      "date": "2024-11-03",
+      "zone": "America/New_York",
+      "nativeSegments": [
+        {
+          "start": "2024-11-03T04:00:00.000Z",
+          "endExclusive": "2024-11-04T05:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2024-11-03T04:00:00Z",
+      "actualDate": "2024-11-03",
+      "nextStart": "2024-11-04T05:00:00Z",
+      "hoursInDay": 25,
+      "previousTransition": "2024-03-10T07:00:00Z",
+      "nextTransition": "2024-11-03T06:00:00Z"
+    },
+    {
+      "date": "1919-03-30",
+      "zone": "America/Toronto",
+      "nativeSegments": [
+        {
+          "start": "1919-03-30T05:00:00.000Z",
+          "endExclusive": "1919-03-31T04:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1919-03-30T05:00:00Z",
+      "actualDate": "1919-03-30",
+      "nextStart": "1919-03-31T04:30:00Z",
+      "hoursInDay": 23.5,
+      "previousTransition": "1918-10-27T06:00:00Z",
+      "nextTransition": "1919-03-31T04:30:00Z"
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "nativeSegments": [
+        {
+          "start": "1919-03-31T04:30:00.000Z",
+          "endExclusive": "1919-04-01T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1919-03-31T04:30:00Z",
+      "actualDate": "1919-03-31",
+      "nextStart": "1919-04-01T04:00:00Z",
+      "hoursInDay": 23.5,
+      "previousTransition": "1918-10-27T06:00:00Z",
+      "nextTransition": "1919-10-26T04:00:00Z"
+    },
+    {
+      "date": "2011-12-29",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "2011-12-29T10:00:00.000Z",
+          "endExclusive": "2011-12-30T10:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-29T10:00:00Z",
+      "actualDate": "2011-12-29",
+      "nextStart": "2011-12-30T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2011-12-30T10:00:00Z"
+    },
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-30T10:00:00Z",
+      "actualDate": "2011-12-31",
+      "nextStart": "2011-12-30T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2012-03-31T14:00:00Z"
+    },
+    {
+      "date": "2011-12-31",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "2011-12-30T10:00:00.000Z",
+          "endExclusive": "2011-12-31T10:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2011-12-30T10:00:00Z",
+      "actualDate": "2011-12-31",
+      "nextStart": "2011-12-31T10:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2011-09-24T14:00:00Z",
+      "nextTransition": "2012-03-31T14:00:00Z"
+    },
+    {
+      "date": "2009-10-31",
+      "zone": "America/St_Johns",
+      "nativeSegments": [
+        {
+          "start": "2009-10-31T02:30:00.000Z",
+          "endExclusive": "2009-11-01T02:30:00.000Z"
+        },
+        {
+          "start": "2009-11-01T02:31:00.000Z",
+          "endExclusive": "2009-11-01T03:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2009-10-31T02:30:00Z",
+      "actualDate": "2009-10-31",
+      "nextStart": "2009-11-01T02:30:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "2009-03-08T03:31:00Z",
+      "nextTransition": "2009-11-01T02:31:00Z"
+    },
+    {
+      "date": "2009-11-01",
+      "zone": "America/St_Johns",
+      "nativeSegments": [
+        {
+          "start": "2009-11-01T02:30:00.000Z",
+          "endExclusive": "2009-11-01T02:31:00.000Z"
+        },
+        {
+          "start": "2009-11-01T03:30:00.000Z",
+          "endExclusive": "2009-11-02T03:30:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "2009-11-01T02:30:00Z",
+      "actualDate": "2009-11-01",
+      "nextStart": "2009-11-02T03:30:00Z",
+      "hoursInDay": 25,
+      "previousTransition": "2009-03-08T03:31:00Z",
+      "nextTransition": "2009-11-01T02:31:00Z"
+    },
+    {
+      "date": "1988-10-29",
+      "zone": "America/Goose_Bay",
+      "nativeSegments": [
+        {
+          "start": "1988-10-29T02:00:00.000Z",
+          "endExclusive": "1988-10-30T02:00:00.000Z"
+        },
+        {
+          "start": "1988-10-30T02:01:00.000Z",
+          "endExclusive": "1988-10-30T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1988-10-29T02:00:00Z",
+      "actualDate": "1988-10-29",
+      "nextStart": "1988-10-30T02:00:00Z",
+      "hoursInDay": 24,
+      "previousTransition": "1988-04-03T04:01:00Z",
+      "nextTransition": "1988-10-30T02:01:00Z"
+    },
+    {
+      "date": "1988-10-30",
+      "zone": "America/Goose_Bay",
+      "nativeSegments": [
+        {
+          "start": "1988-10-30T02:00:00.000Z",
+          "endExclusive": "1988-10-30T02:01:00.000Z"
+        },
+        {
+          "start": "1988-10-30T04:00:00.000Z",
+          "endExclusive": "1988-10-31T04:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1988-10-30T02:00:00Z",
+      "actualDate": "1988-10-30",
+      "nextStart": "1988-10-31T04:00:00Z",
+      "hoursInDay": 26,
+      "previousTransition": "1988-04-03T04:01:00Z",
+      "nextTransition": "1988-10-30T02:01:00Z"
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "nativeSegments": [
+        {
+          "start": "1892-07-03T11:26:56.000Z",
+          "endExclusive": "1892-07-05T11:26:56.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 2,
+      "start": "1892-07-03T11:26:56Z",
+      "actualDate": "1892-07-04",
+      "nextStart": "1892-07-05T11:26:56Z",
+      "hoursInDay": 48,
+      "nextTransition": "1892-07-04T11:26:56Z"
+    },
+    {
+      "date": "0000-01-01",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0000-01-01T00:00:00.000Z",
+          "endExclusive": "0000-01-02T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0000-01-01T00:00:00Z",
+      "actualDate": "0000-01-01",
+      "nextStart": "0000-01-02T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "0000-02-29",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0000-02-29T00:00:00.000Z",
+          "endExclusive": "0000-03-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0000-02-29T00:00:00Z",
+      "actualDate": "0000-02-29",
+      "nextStart": "0000-03-01T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "0099-12-31",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "0099-12-31T00:00:00.000Z",
+          "endExclusive": "0100-01-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "0099-12-31T00:00:00Z",
+      "actualDate": "0099-12-31",
+      "nextStart": "0100-01-01T00:00:00Z",
+      "hoursInDay": 24
+    },
+    {
+      "date": "9999-12-31",
+      "zone": "UTC",
+      "nativeSegments": [
+        {
+          "start": "9999-12-31T00:00:00.000Z",
+          "endExclusive": "+010000-01-01T00:00:00.000Z"
+        }
+      ],
+      "sampledMatchesNative": true,
+      "transitionQueries": 1,
+      "start": "9999-12-31T00:00:00Z",
+      "actualDate": "9999-12-31",
+      "nextStart": "+010000-01-01T00:00:00Z",
+      "hoursInDay": 24
+    }
+  ],
+  "browser": "152.0.7977.83",
+  "errors": [],
+  "requests": [
+    "/",
+    "/subject.js",
+    "/favicon.ico"
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "harnessSha256": "b28a24fbada9916a9bcfc8c4b690ea7ad4cc8b9543d84283de0337d5dc1239d6",
+  "bundleSha256": "c446c2c9e8164eb5c57061eddccf7039e2ece785b65510bff1cd199d63f51b67"
+}

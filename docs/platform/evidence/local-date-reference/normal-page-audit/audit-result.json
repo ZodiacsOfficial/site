@@ -1,0 +1,368 @@
+{
+  "auditedAt": "2026-09-08T11:22:49.769860+00:00",
+  "outcome": "accepted for the stated finite local normal-page scope",
+  "noBrowserRerun": true,
+  "originalRun": {
+    "passed": 12,
+    "failed": 12,
+    "allFailures": "unchanged Chart pre-retry error persistence contradicted harness assertion"
+  },
+  "correctedChartRun": {
+    "passed": 12,
+    "failed": 0
+  },
+  "acceptedGroups": 24,
+  "executedGroupsAcrossBothRuns": 36,
+  "sourceFilesBeforeAfterAndCurrentVerified": 18,
+  "exactFrozenFiles": 12,
+  "screenshotsVerified": 72,
+  "servedUniqueFiles": [
+    131,
+    108
+  ],
+  "commonServedFilesIdentical": 108,
+  "currentDistFilesRehashed": 131,
+  "genericExpectedConsoleErrorsAcceptedGroups": 24,
+  "genericExpectedConsoleErrorsAllExecutions": 36,
+  "unexpectedConsoleErrors": 0,
+  "pageErrors": 0,
+  "requestFailures": 0,
+  "blockedRequests": 0,
+  "nonGetRequests": 0,
+  "explicitKnownTimeControls": 2,
+  "captureIdentitiesVerified": 18,
+  "templateSourceSha256": "e664d1d35eeae647eff10cc775f058d16e179bea4f0006313a91f3f0d4a3b3b7",
+  "groups": [
+    {
+      "run": "normal-page-run1",
+      "name": "en-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 117,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "en-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 117,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "en-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 42,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": true
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "en-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 42,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "es-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "es-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "es-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 54,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "es-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 48,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "fr-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "fr-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "fr-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 54,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "fr-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 42,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "it-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "it-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "it-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 54,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "it-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 54,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "pt-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "pt-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "pt-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 54,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "pt-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 48,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "ru-chart-1280",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "ru-chart-390",
+      "accepted": false,
+      "screenshots": 2,
+      "requests": 107,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "ru-moon-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 52,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-page-run1",
+      "name": "ru-moon-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 40,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "en-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 149,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": true
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "en-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 136,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "es-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "es-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "fr-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "fr-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "it-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "it-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "pt-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "pt-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "ru-chart-1280",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    },
+    {
+      "run": "normal-chart-run2",
+      "name": "ru-chart-390",
+      "accepted": true,
+      "screenshots": 2,
+      "requests": 120,
+      "expectedConsoleErrors": 1,
+      "knownTimeControl": false
+    }
+  ],
+  "limits": [
+    "Independent evidence and source audit of root-executed browser controls; no new browser execution.",
+    "24 accepted groups are from two executions, not one fully passing 24-group execution.",
+    "No numerical-call counts, independent numerical oracle, empty-date proof, whole-date completeness, signed-in lifecycle, remote preview, publication or deployment claim.",
+    "Expected generic console errors are retained; no exposed formatter details in these observations.",
+    "HTTP request observations and server response records are not claims that every browser request completed."
+  ]
+}

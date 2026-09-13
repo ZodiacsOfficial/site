@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-09-08T06:52:30.914523+00:00",
+  "freeze": 1,
+  "baseCommit": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "sourceCheckout": "/private/tmp/zodiacs-platform-site-seconds-receipt-companion",
+  "files": {
+    "src/lib/engine/calculator-receipt.ts": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+    "src/lib/engine/calculator-receipt.test.ts": "aeeb9ee59ed3093a7f2b375be4c53a5f60d1577e4ab2da10ef2930a338c10168"
+  },
+  "patchSha256": "95f0a05ed8faa02797785c5ead8d42fee3d12e4d3e708b4ad5857b952f70d1cb",
+  "testOverlay": "Exact original8file source-freeze1, unchanged",
+  "helperChange": "comment only; no runtime behavior change",
+  "historicalTests": "16 deliberate legacy-flag negatives retained;16 current-resolver same-calculation positives added",
+  "strictTypecheckExitCode": 0
+}

@@ -1,0 +1,5 @@
+function clearReceiptExport(): void {
+    receiptExportRef.current = null;
+    setReceiptExport(null);
+    setReceiptDownloadError(false);
+  }

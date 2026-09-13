@@ -1,0 +1,297 @@
+// src/lib/signs.ts
+var SIGNS = [
+  { slug: "aries", name: "Aries", glyph: "\u2648", dates: "Mar 21 \u2013 Apr 19", start: [3, 21], end: [4, 19], element: "fire", modality: "cardinal", ruler: "Mars", polarity: "day", house: 1, hue: "#DE8E79", essence: "First out of the gate \u2014 direct, fast, unafraid to start." },
+  { slug: "taurus", name: "Taurus", glyph: "\u2649", dates: "Apr 20 \u2013 May 20", start: [4, 20], end: [5, 20], element: "earth", modality: "fixed", ruler: "Venus", polarity: "night", house: 2, hue: "#B9D4BE", essence: "Steady hands, good taste, and a long memory for comfort." },
+  { slug: "gemini", name: "Gemini", glyph: "\u264A", dates: "May 21 \u2013 Jun 20", start: [5, 21], end: [6, 20], element: "air", modality: "mutable", ruler: "Mercury", polarity: "day", house: 3, hue: "#B29DD0", essence: "Quick, curious, wired for conversation." },
+  { slug: "cancer", name: "Cancer", glyph: "\u264B", dates: "Jun 21 \u2013 Jul 22", start: [6, 21], end: [7, 22], element: "water", modality: "cardinal", ruler: "Moon", polarity: "night", house: 4, hue: "#B6D4E4", essence: "Feels first, remembers everything, protects what it loves." },
+  { slug: "leo", name: "Leo", glyph: "\u264C", dates: "Jul 23 \u2013 Aug 22", start: [7, 23], end: [8, 22], element: "fire", modality: "fixed", ruler: "Sun", polarity: "day", house: 5, hue: "#E0A9B4", essence: "Warm-hearted, expressive, born for the spotlight." },
+  { slug: "virgo", name: "Virgo", glyph: "\u264D", dates: "Aug 23 \u2013 Sep 22", start: [8, 23], end: [9, 22], element: "earth", modality: "mutable", ruler: "Mercury", polarity: "night", house: 6, hue: "#B7D9B0", essence: "Precise, useful, quietly running the whole operation." },
+  { slug: "libra", name: "Libra", glyph: "\u264E", dates: "Sep 23 \u2013 Oct 22", start: [9, 23], end: [10, 22], element: "air", modality: "cardinal", ruler: "Venus", polarity: "day", house: 7, hue: "#D3A9DE", essence: "Balance-seeking, charming, allergic to unfairness." },
+  { slug: "scorpio", name: "Scorpio", glyph: "\u264F", dates: "Oct 23 \u2013 Nov 21", start: [10, 23], end: [11, 21], element: "water", modality: "fixed", ruler: "Pluto", classicRuler: "Mars", polarity: "night", house: 8, hue: "#B9DCE8", essence: "Intense, private, all-or-nothing." },
+  { slug: "sagittarius", name: "Sagittarius", glyph: "\u2650", dates: "Nov 22 \u2013 Dec 21", start: [11, 22], end: [12, 21], element: "fire", modality: "mutable", ruler: "Jupiter", polarity: "day", house: 9, hue: "#E0B080", essence: "Restless, honest, aimed at the horizon." },
+  { slug: "capricorn", name: "Capricorn", glyph: "\u2651", dates: "Dec 22 \u2013 Jan 19", start: [12, 22], end: [1, 19], element: "earth", modality: "cardinal", ruler: "Saturn", polarity: "night", house: 10, hue: "#C0DEA8", essence: "Patient, ambitious, building something that lasts." },
+  { slug: "aquarius", name: "Aquarius", glyph: "\u2652", dates: "Jan 20 \u2013 Feb 18", start: [1, 20], end: [2, 18], element: "air", modality: "fixed", ruler: "Uranus", classicRuler: "Saturn", polarity: "day", house: 11, hue: "#AE8FC9", essence: "Independent, inventive, loyal to the future." },
+  { slug: "pisces", name: "Pisces", glyph: "\u2653", dates: "Feb 19 \u2013 Mar 20", start: [2, 19], end: [3, 20], element: "water", modality: "mutable", ruler: "Neptune", classicRuler: "Jupiter", polarity: "night", house: 12, hue: "#A9D4C4", essence: "Porous, imaginative, tuned to what goes unspoken." }
+];
+var SIGN_SLUGS = SIGNS.map((s) => s.slug);
+
+// src/lib/time/technical-locales.ts
+var TECHNICAL_OFFSET_LOCALE = "en-US";
+var TECHNICAL_WALL_LOCALE = "en-CA";
+
+// src/lib/time/civil-date.ts
+function parseCivilDate(value) {
+  if (typeof value !== "string" || value.length !== 10) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) return null;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = month === 2 ? leap ? 29 : 28 : [4, 6, 9, 11].includes(month) ? 30 : 31;
+  return day <= days ? { year, month, day } : null;
+}
+function parseCivilTime(value) {
+  if (typeof value !== "string" || value.length !== 5) return null;
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  return hour <= 23 && minute <= 59 ? { hour, minute } : null;
+}
+
+// src/lib/time/localToUtc.ts
+var offsetFormatters = /* @__PURE__ */ new Map();
+var wallFormatters = /* @__PURE__ */ new Map();
+function offsetFormatter(tz) {
+  if (typeof tz !== "string" || tz.length === 0) {
+    throw new RangeError("An explicit supported timezone is required.");
+  }
+  let f = offsetFormatters.get(tz);
+  if (!f) {
+    try {
+      f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: "longOffset" });
+    } catch {
+      throw new RangeError("An explicit supported timezone is required.");
+    }
+    offsetFormatters.set(tz, f);
+  }
+  return f;
+}
+function wallFormatter(tz) {
+  let f = wallFormatters.get(tz);
+  if (!f) {
+    f = new Intl.DateTimeFormat(TECHNICAL_WALL_LOCALE, {
+      timeZone: tz,
+      calendar: "gregory",
+      numberingSystem: "latn",
+      era: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23"
+    });
+    wallFormatters.set(tz, f);
+  }
+  return f;
+}
+function offsetAt(tz, utcMs) {
+  const parts = offsetFormatter(tz).formatToParts(utcMs);
+  const name = parts.find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+  const m = name.match(/GMT([+-])?(\d{1,2})?(?::(\d{2}))?(?::(\d{2}))?/);
+  if (!m) return 0;
+  const sign = m[1] === "-" ? -1 : 1;
+  const h = Number(m[2] ?? 0);
+  const min = Number(m[3] ?? 0);
+  const s = Number(m[4] ?? 0);
+  return sign * (h * 60 + min + s / 60);
+}
+function wallStringAt(tz, utcMs) {
+  const parts = wallFormatter(tz).formatToParts(utcMs);
+  const part = (type) => parts.find((candidate) => candidate.type === type)?.value ?? "";
+  const era = part("era");
+  if (era !== "AD" && era !== "BC") throw new RangeError("Could not read Gregorian era.");
+  const year = era === "BC" ? 1 - Number(part("year")) : Number(part("year"));
+  const isoYear = year >= 0 && year <= 9999 ? String(year).padStart(4, "0") : `${year < 0 ? "-" : "+"}${String(Math.abs(year)).padStart(6, "0")}`;
+  return `${isoYear}-${part("month")}-${part("day")}T${part("hour")}:${part("minute")}`;
+}
+function resolveLocalToUtc(date, time, tz) {
+  const civilDate = parseCivilDate(date);
+  const civilTime = parseCivilTime(time);
+  if (!civilDate || !civilTime) {
+    throw new RangeError("resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time.");
+  }
+  const wallDate = /* @__PURE__ */ new Date(0);
+  wallDate.setUTCFullYear(civilDate.year, civilDate.month - 1, civilDate.day);
+  wallDate.setUTCHours(civilTime.hour, civilTime.minute, 0, 0);
+  const wallMs = wallDate.getTime();
+  const wallStr = `${date}T${time}`;
+  const sampled = [
+    offsetAt(tz, wallMs - 36 * 36e5),
+    offsetAt(tz, wallMs),
+    offsetAt(tz, wallMs + 36 * 36e5)
+  ];
+  const candidates = [...new Set(sampled)];
+  const matches = [];
+  for (const off of candidates) {
+    const utcMs = wallMs - off * 6e4;
+    if (wallStringAt(tz, utcMs) === wallStr) {
+      matches.push({ utcMs, offset: offsetAt(tz, utcMs) });
+    }
+  }
+  const flags = [];
+  let chosen;
+  if (matches.length === 1) {
+    chosen = matches[0];
+  } else if (matches.length > 1) {
+    matches.sort((a, b) => a.utcMs - b.utcMs);
+    chosen = matches[0];
+    flags.push("dst-fold");
+  } else {
+    const before = offsetAt(tz, wallMs - 36 * 36e5);
+    const utcMs = wallMs - before * 6e4;
+    chosen = { utcMs, offset: offsetAt(tz, utcMs) };
+    flags.push("dst-gap");
+  }
+  if (Math.abs(chosen.offset % 1) > 1e-9) flags.push("lmt");
+  return { utc: new Date(chosen.utcMs), offsetMinutes: chosen.offset, flags };
+}
+
+// src/lib/chart-date-certainty.ts
+function nextIsoDate(date) {
+  const [year, month, day] = date.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
+}
+function localDateEndpointsUtc(date, timeZone) {
+  const start = resolveLocalToUtc(date, "00:00", timeZone).utc;
+  const nextStart = resolveLocalToUtc(nextIsoDate(date), "00:00", timeZone).utc;
+  return { start, end: new Date(nextStart.getTime() - 1) };
+}
+
+// ../../../../../../private/tmp/zodiacs-platform-sdk-seconds/packages/engine/src/geo/timezone.ts
+var offsetFormatters2 = /* @__PURE__ */ new Map();
+var wallFormatters2 = /* @__PURE__ */ new Map();
+function validateTimeZone(timeZone) {
+  if (typeof timeZone !== "string" || timeZone.trim().length === 0) {
+    throw new RangeError("timeZone must be an explicit nonempty timezone string.");
+  }
+}
+function offsetFormatter2(timeZone) {
+  validateTimeZone(timeZone);
+  let formatter = offsetFormatters2.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      calendar: "gregory",
+      numberingSystem: "latn",
+      timeZoneName: "longOffset"
+    });
+    offsetFormatters2.set(timeZone, formatter);
+  }
+  return formatter;
+}
+function wallFormatter2(timeZone) {
+  validateTimeZone(timeZone);
+  let formatter = wallFormatters2.get(timeZone);
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone,
+      calendar: "gregory",
+      numberingSystem: "latn",
+      era: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 3,
+      hourCycle: "h23"
+    });
+    wallFormatters2.set(timeZone, formatter);
+  }
+  return formatter;
+}
+function offsetAt2(timeZone, utcMilliseconds) {
+  if (typeof utcMilliseconds !== "number" || !Number.isFinite(utcMilliseconds)) {
+    throw new RangeError("utcMilliseconds must be a finite epoch-millisecond timestamp.");
+  }
+  const name = offsetFormatter2(timeZone).formatToParts(utcMilliseconds).find((part) => part.type === "timeZoneName")?.value;
+  const match = (name ?? "GMT").match(/^GMT(?:([+-])(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?)?$/u);
+  if (!match) {
+    throw new RangeError(`Could not read UTC offset for timezone: ${timeZone}`);
+  }
+  const sign = match[1] === "-" ? -1 : 1;
+  return sign * (Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0) + Number(match[4] ?? 0) / 60);
+}
+function wallStringAt2(timeZone, utcMilliseconds) {
+  const parts = wallFormatter2(timeZone).formatToParts(utcMilliseconds);
+  const part = (type) => parts.find((candidate) => candidate.type === type)?.value ?? "";
+  const era = part("era");
+  if (era !== "AD" && era !== "BC") {
+    throw new RangeError(`Could not read Gregorian era for timezone: ${timeZone}`);
+  }
+  const year = era === "BC" ? 1 - Number(part("year")) : Number(part("year"));
+  const isoYear = year >= 0 && year <= 9999 ? String(year).padStart(4, "0") : `${year < 0 ? "-" : "+"}${String(Math.abs(year)).padStart(6, "0")}`;
+  return `${isoYear}-${part("month").padStart(2, "0")}-${part("day").padStart(2, "0")}T${part("hour").padStart(2, "0")}:${part("minute").padStart(2, "0")}:${part("second").padStart(2, "0")}.${part("fractionalSecond").padStart(3, "0")}`;
+}
+function wallMilliseconds(date, time) {
+  if (typeof date !== "string" || typeof time !== "string") {
+    throw new RangeError("Local date/time must use YYYY-MM-DD and HH:MM strings.");
+  }
+  const dateMatch = date.match(/^(\d{4})-(\d{2})-(\d{2})$/u);
+  const timeMatch = time.match(/^(\d{2}):(\d{2})$/u);
+  if (!dateMatch || dateMatch[0] !== date || !timeMatch || timeMatch[0] !== time) {
+    throw new RangeError("Local date/time must use YYYY-MM-DD and HH:MM.");
+  }
+  const year = Number(dateMatch[1]);
+  const month = Number(dateMatch[2]);
+  const day = Number(dateMatch[3]);
+  const hour = Number(timeMatch[1]);
+  const minute = Number(timeMatch[2]);
+  if (month < 1 || month > 12 || hour > 23 || minute > 59) {
+    throw new RangeError("Local date/time contains an out-of-range field.");
+  }
+  const check = /* @__PURE__ */ new Date(0);
+  check.setUTCFullYear(year, month - 1, day);
+  check.setUTCHours(hour, minute, 0, 0);
+  if (check.getUTCFullYear() !== year || check.getUTCMonth() !== month - 1 || check.getUTCDate() !== day) {
+    throw new RangeError("Local date is not a calendar date.");
+  }
+  return check.getTime();
+}
+function resolveLocalToUtc2(date, time, timeZone) {
+  const localMilliseconds = wallMilliseconds(date, time);
+  const wall = `${date}T${time}:00.000`;
+  const sampledOffsets = [
+    offsetAt2(timeZone, localMilliseconds - 36 * 36e5),
+    offsetAt2(timeZone, localMilliseconds),
+    offsetAt2(timeZone, localMilliseconds + 36 * 36e5)
+  ];
+  const candidates = [...new Set(sampledOffsets)];
+  const matches = [];
+  for (const offset of candidates) {
+    const utcMilliseconds = localMilliseconds - Math.round(offset * 6e4);
+    if (wallStringAt2(timeZone, utcMilliseconds) === wall) {
+      matches.push({
+        utcMilliseconds,
+        offset: offsetAt2(timeZone, utcMilliseconds)
+      });
+    }
+  }
+  const flags = [];
+  let chosen;
+  if (matches.length === 1) {
+    const match = matches[0];
+    if (!match) throw new Error("Timezone match disappeared.");
+    chosen = match;
+  } else if (matches.length > 1) {
+    matches.sort((a, b) => a.utcMilliseconds - b.utcMilliseconds);
+    const match = matches[0];
+    if (!match) throw new Error("Timezone fold match disappeared.");
+    chosen = match;
+    flags.push("dst-fold");
+  } else {
+    const before = offsetAt2(timeZone, localMilliseconds - 36 * 36e5);
+    const utcMilliseconds = localMilliseconds - Math.round(before * 6e4);
+    chosen = {
+      utcMilliseconds,
+      offset: offsetAt2(timeZone, utcMilliseconds)
+    };
+    flags.push("dst-gap");
+  }
+  if (Math.abs(chosen.offset % 1) > 1e-9) flags.push("lmt");
+  return {
+    utc: new Date(chosen.utcMilliseconds),
+    offsetMinutes: chosen.offset,
+    flags
+  };
+}
+export {
+  localDateEndpointsUtc,
+  offsetAt2 as offsetAt,
+  resolveLocalToUtc2 as resolveLocalToUtc
+};

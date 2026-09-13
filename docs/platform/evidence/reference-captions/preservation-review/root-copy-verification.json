@@ -1,0 +1,9 @@
+{
+  "sourceManifestSha256": "81e2baa15e9abca55dea69ea41e4604485c872f0f24d7b38f6dc1ccbe7cfecdb",
+  "verifiedPayloads": 12,
+  "verifiedOrdinaryArchiveMembers": {
+    "executed-inputs": 267,
+    "raw-evidence": 101
+  },
+  "copiedPayloadsUnchanged": true
+}

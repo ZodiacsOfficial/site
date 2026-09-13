@@ -1,0 +1,87 @@
+{
+  "archive": "/Users/chiburashka/.codex/worktrees/4806/site/public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+  "sha256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420",
+  "files": [
+    {
+      "file": "README.md",
+      "sha256": "9df034ad39dcc8a7be56addf2ffe12db7f73e79725e4983fd237d28f00e725a1"
+    },
+    {
+      "file": "candidate.json",
+      "sha256": "6d2d5ebabbff4311c9bb38307fe7eef69566cfaab128c82ca4e1a26421181930"
+    },
+    {
+      "file": "npm-shrinkwrap.json",
+      "sha256": "1f09af67f438c10a2e363dd979aa5c9910679f36562f4fa2fc45e8ac916a0fce"
+    },
+    {
+      "file": "package.json",
+      "sha256": "9268a9efc3e602b370f6eb97359e556c60512d0d07143715d48a97bb6eaae29f"
+    },
+    {
+      "file": "scripts/build.mjs",
+      "sha256": "0fda00af3c12685e4a9c00eced4c5d00f93a4eb181dc16cbbcab9ba48cde1032"
+    },
+    {
+      "file": "scripts/fetch-engine.mjs",
+      "sha256": "688f3130dbbca3112c3a00eb79f88a4cf700609c9720a0b38b80119b057e16a7"
+    },
+    {
+      "file": "scripts/server.mjs",
+      "sha256": "423dcc75dae07d0a5a5903bfd434f7883cdd2a6ed3bb39067221599a6563d2bd"
+    },
+    {
+      "file": "src/app.mjs",
+      "sha256": "95f821301a962f515b6323eb56c0ded299a11e621cc55fac7c1e32c390982b83"
+    },
+    {
+      "file": "src/calculate.mjs",
+      "sha256": "dd27540c00556414bf86db98e1615ae221046141aefc1e5cdc3becfaab15663b"
+    },
+    {
+      "file": "src/favicon.svg",
+      "sha256": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe"
+    },
+    {
+      "file": "src/natal.html",
+      "sha256": "9189dd23900ecbf42eb85c0269d24d380d1eb64b9b4994196060eda8178b04bf"
+    },
+    {
+      "file": "src/styles.css",
+      "sha256": "5ac715811203e3284da51d1fa0a60b15a8b1915acb991bd8478b9976aeb19b39"
+    },
+    {
+      "file": "src/transits.html",
+      "sha256": "16f559faaaade2976cbb2d04a220db7da118b3843335b65ec2fe81f47d535c10"
+    },
+    {
+      "file": "src/widget-contract.mjs",
+      "sha256": "e916ddbf8553eff378a371756fd8cb4ddce72c4ca8c7d7a6d5227fef40bddb07"
+    },
+    {
+      "file": "src/widget.html",
+      "sha256": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08"
+    },
+    {
+      "file": "src/widget.mjs",
+      "sha256": "96188d3be175b2a642319ed809529bc787ac20a1a22bdd9f6a83fae5159718a9"
+    },
+    {
+      "file": "tests/calculate.check.mjs",
+      "sha256": "ffb24b48754250c2633f4c9d6195fde217bb74b58a0b5bb971958a77ae0928bb"
+    },
+    {
+      "file": "tests/server.check.mjs",
+      "sha256": "fab28ccce6d78ca7b20a5c0197d370d0d6a48a3b40d359e9ad02cea6ab631e1e"
+    },
+    {
+      "file": "tests/widget.check.mjs",
+      "sha256": "b7fe3f861a17e248921ea7991bfb5680c1c161c0121f16e8b9f8ae4745486c46"
+    },
+    {
+      "file": "vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+      "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17"
+    }
+  ],
+  "scope": "Exact immutable archive extracted into scratch; source files checked against site. Existing rc.2 consumer dependencies reused through scratch symlink for local build only; no fresh installation claim."
+}

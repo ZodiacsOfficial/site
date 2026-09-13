@@ -1,0 +1,4045 @@
+{
+  "type": "internal archive-consumer browser acceptance; not external adoption",
+  "startedAt": "2026-09-07T20:01:33.892Z",
+  "completedAt": "2026-09-07T20:02:05.131Z",
+  "consumer": "/private/tmp/zodiacs-platform-starter-rc2-consumer-mb7sxL/package",
+  "starterArchive": "/Users/chiburashka/.codex/worktrees/4806/site/public/examples/zodiacs-platform-starter-0.1.0-rc.2.tgz",
+  "starterArchiveHash": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420",
+  "candidate": {
+    "package": "@zodiacs/engine",
+    "version": "0.1.1-rc.1",
+    "status": "Unpublished npm release candidate; review and publication gates remain open",
+    "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+    "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+    "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+    "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d",
+    "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+    "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17"
+  },
+  "engineHash": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+  "node": "v22.23.2",
+  "results": [
+    {
+      "name": "natal-390: initial page and bundle load",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: no form submission, named input or embedded third party",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: reduced motion and no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: initial assets are local GETs without query or body",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/natal.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "natal-390: keyboard reaches birthInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: keyboard reaches latitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: keyboard reaches longitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: keyboard reaches houseSystem",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: keyboard reaches calculate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: default via keyboard has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: 12 positions and exact candidate provenance",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: requested Placidus, actual whole sign and polar flag",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: independently specified corrected polar ASC",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: result fits viewport",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: equivalent explicit offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: equivalent offset preserves identical results and submitted value",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: missing offset clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after missing offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: empty coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after empty coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: nonfinite coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after nonfinite coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: HTML injection input clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after HTML injection input has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: injected input creates no HTML or script execution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: unknown time has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: unknown time is noon UTC without actual houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: unknown time has null angles and houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: unknown-time impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: recovery after unknown-time impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: offline after load has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: offline changed input produces a new result",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-390: all calculations attempt zero network requests",
+      "ok": true,
+      "detail": {
+        "requests": 0,
+        "apiCalls": []
+      }
+    },
+    {
+      "name": "natal-390: inputs never enter storage, cookies or URL",
+      "ok": true,
+      "detail": {
+        "storage": {
+          "local": [],
+          "session": [],
+          "databases": [],
+          "caches": [],
+          "serviceWorkers": 0
+        },
+        "cookies": [],
+        "url": "http://127.0.0.1:60898/natal.html"
+      }
+    },
+    {
+      "name": "natal-390: no page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/natal.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/app.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "transits-390: initial page and bundle load",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: no form submission, named input or embedded third party",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: reduced motion and no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: initial assets are local GETs without query or body",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/transits.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "transits-390: keyboard reaches birthInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: keyboard reaches latitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: keyboard reaches longitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: keyboard reaches houseSystem",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: keyboard reaches transitInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: keyboard reaches calculate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: default via keyboard has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: 12 positions and exact candidate provenance",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: requested Placidus, actual whole sign and polar flag",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: explicit transit instant and moving-to-natal aspects",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: result fits viewport",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: equivalent explicit offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: equivalent offset preserves identical results and submitted value",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: changed transit instant has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: changed transit changes positions",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: missing offset clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after missing offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: empty coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after empty coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: nonfinite coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after nonfinite coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: HTML injection input clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after HTML injection input has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: injected input creates no HTML or script execution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: unknown time has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: unknown time is noon UTC without actual houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: unknown-time impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: recovery after unknown-time impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: offline after load has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: offline changed input produces a new result",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-390: all calculations attempt zero network requests",
+      "ok": true,
+      "detail": {
+        "requests": 0,
+        "apiCalls": []
+      }
+    },
+    {
+      "name": "transits-390: inputs never enter storage, cookies or URL",
+      "ok": true,
+      "detail": {
+        "storage": {
+          "local": [],
+          "session": [],
+          "databases": [],
+          "caches": [],
+          "serviceWorkers": 0
+        },
+        "cookies": [],
+        "url": "http://127.0.0.1:60898/transits.html"
+      }
+    },
+    {
+      "name": "transits-390: no page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/transits.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/app.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "natal-1280: initial page and bundle load",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: no form submission, named input or embedded third party",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: reduced motion and no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: initial assets are local GETs without query or body",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/natal.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "natal-1280: keyboard reaches birthInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: keyboard reaches latitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: keyboard reaches longitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: keyboard reaches houseSystem",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: keyboard reaches calculate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: default via keyboard has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: 12 positions and exact candidate provenance",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: requested Placidus, actual whole sign and polar flag",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: independently specified corrected polar ASC",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: result fits viewport",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: equivalent explicit offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: equivalent offset preserves identical results and submitted value",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: missing offset clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after missing offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: empty coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after empty coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: nonfinite coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after nonfinite coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: HTML injection input clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after HTML injection input has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: injected input creates no HTML or script execution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: unknown time has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: unknown time is noon UTC without actual houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: unknown time has null angles and houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: unknown-time impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: recovery after unknown-time impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: offline after load has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: offline changed input produces a new result",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "natal-1280: all calculations attempt zero network requests",
+      "ok": true,
+      "detail": {
+        "requests": 0,
+        "apiCalls": []
+      }
+    },
+    {
+      "name": "natal-1280: inputs never enter storage, cookies or URL",
+      "ok": true,
+      "detail": {
+        "storage": {
+          "local": [],
+          "session": [],
+          "databases": [],
+          "caches": [],
+          "serviceWorkers": 0
+        },
+        "cookies": [],
+        "url": "http://127.0.0.1:60898/natal.html"
+      }
+    },
+    {
+      "name": "natal-1280: no page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/natal.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/app.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "transits-1280: initial page and bundle load",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: no form submission, named input or embedded third party",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: reduced motion and no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: initial assets are local GETs without query or body",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/transits.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "transits-1280: keyboard reaches birthInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: keyboard reaches latitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: keyboard reaches longitude",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: keyboard reaches houseSystem",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: keyboard reaches transitInstant",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: keyboard reaches calculate",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: default via keyboard has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: 12 positions and exact candidate provenance",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: requested Placidus, actual whole sign and polar flag",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: explicit transit instant and moving-to-natal aspects",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: result fits viewport",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: equivalent explicit offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: equivalent offset preserves identical results and submitted value",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: changed transit instant has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: changed transit changes positions",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: missing offset clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after missing offset has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: empty coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after empty coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: nonfinite coordinate clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after nonfinite coordinate has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: HTML injection input clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after HTML injection input has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: injected input creates no HTML or script execution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: unknown time has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: unknown time is noon UTC without actual houses",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: unknown-time impossible date clears stale output and reports an error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: recovery after unknown-time impossible date has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: offline after load has no calculation error",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: offline changed input produces a new result",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "transits-1280: all calculations attempt zero network requests",
+      "ok": true,
+      "detail": {
+        "requests": 0,
+        "apiCalls": []
+      }
+    },
+    {
+      "name": "transits-1280: inputs never enter storage, cookies or URL",
+      "ok": true,
+      "detail": {
+        "storage": {
+          "local": [],
+          "session": [],
+          "databases": [],
+          "caches": [],
+          "serviceWorkers": 0
+        },
+        "cookies": [],
+        "url": "http://127.0.0.1:60898/transits.html"
+      }
+    },
+    {
+      "name": "transits-1280: no page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/transits.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/app.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "script blocked: no birth submission or URL values",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "widget-390-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:51.654Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "name": "widget-390-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 599.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "name": "widget-390-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:52.466Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "name": "widget-390-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 19.1875,
+        "y": 508.75,
+        "width": 351.625,
+        "height": 300
+      }
+    },
+    {
+      "name": "widget-390-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-390: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "widget-1280: no external request or frame before selection",
+      "ok": true,
+      "detail": [
+        {
+          "url": "http://127.0.0.1:60898/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ]
+    },
+    {
+      "name": "widget-1280-dark: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:56.231Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        "actualTheme": "dark",
+        "validAccent": true
+      }
+    },
+    {
+      "name": "widget-1280-dark: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-dark: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-dark: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-dark: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 595.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "name": "widget-1280-dark: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-light: live canonical frame and constrained settings",
+      "ok": true,
+      "detail": {
+        "variant": {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:56.998Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        },
+        "actualTheme": "light",
+        "validAccent": true
+      }
+    },
+    {
+      "name": "widget-1280-light: official sandbox and referrer policy",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-light: displayed date and intact reachable attribution",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-light: parent and frame have no horizontal overflow",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280-light: frame fits responsive bounds",
+      "ok": true,
+      "detail": {
+        "x": 176,
+        "y": 372.75,
+        "width": 480,
+        "height": 300
+      }
+    },
+    {
+      "name": "widget-1280-light: Tab reaches inside-frame branding and fallback",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280: invalid accent requests no new frame",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget-1280: no unexpected page/console/request failures",
+      "ok": true,
+      "detail": {
+        "requests": [
+          {
+            "url": "http://127.0.0.1:60898/widget.html",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/styles.css",
+            "method": "GET",
+            "type": "stylesheet",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/widget.js",
+            "method": "GET",
+            "type": "script",
+            "hasBody": false
+          },
+          {
+            "url": "http://127.0.0.1:60898/favicon.svg",
+            "method": "GET",
+            "type": "other",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+            "method": "GET",
+            "type": "document",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          },
+          {
+            "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+            "method": "GET",
+            "type": "image",
+            "hasBody": false
+          }
+        ],
+        "failures": [],
+        "errors": []
+      }
+    },
+    {
+      "name": "widget blocked: permanent fallback stays visible and safely targeted",
+      "ok": true,
+      "detail": null
+    },
+    {
+      "name": "widget blocked: fallback opens the intended URL (synthetic response)",
+      "ok": true,
+      "detail": null
+    }
+  ],
+  "fatal": [],
+  "localRuns": [
+    {
+      "mode": "natal",
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/natal.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "calculations": [
+        {
+          "name": "default via keyboard",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T09:00:00Z",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "equivalent explicit offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after missing offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after empty coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after nonfinite coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after HTML injection input",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "unknown time",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after unknown-time impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "offline after load",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-22T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        }
+      ],
+      "networkAPIcalls": [],
+      "storage": {
+        "local": [],
+        "session": [],
+        "databases": [],
+        "caches": [],
+        "serviceWorkers": 0
+      },
+      "cookies": [],
+      "calculationRequestCount": 0
+    },
+    {
+      "mode": "transits",
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/transits.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "calculations": [
+        {
+          "name": "default via keyboard",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T09:00:00Z",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-07T12:00:00Z",
+            "transitUtc": "2026-09-07T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "equivalent explicit offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-07T12:00:00Z",
+            "transitUtc": "2026-09-07T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "changed transit instant",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after missing offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after empty coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after nonfinite coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after HTML injection input",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "unknown time",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after unknown-time impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "offline after load",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-09T12:00:00Z",
+            "transitUtc": "2026-09-09T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        }
+      ],
+      "networkAPIcalls": [],
+      "storage": {
+        "local": [],
+        "session": [],
+        "databases": [],
+        "caches": [],
+        "serviceWorkers": 0
+      },
+      "cookies": [],
+      "calculationRequestCount": 0
+    },
+    {
+      "mode": "natal",
+      "width": 1280,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/natal.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "calculations": [
+        {
+          "name": "default via keyboard",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T09:00:00Z",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "equivalent explicit offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after missing offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after empty coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after nonfinite coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after HTML injection input",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "unknown time",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after unknown-time impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "offline after load",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-22T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": null,
+            "transitUtc": null,
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": null
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        }
+      ],
+      "networkAPIcalls": [],
+      "storage": {
+        "local": [],
+        "session": [],
+        "databases": [],
+        "caches": [],
+        "serviceWorkers": 0
+      },
+      "cookies": [],
+      "calculationRequestCount": 0
+    },
+    {
+      "mode": "transits",
+      "width": 1280,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/transits.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/app.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "calculations": [
+        {
+          "name": "default via keyboard",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T09:00:00Z",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-07T12:00:00Z",
+            "transitUtc": "2026-09-07T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "equivalent explicit offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-07T12:00:00Z",
+            "transitUtc": "2026-09-07T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "changed transit instant",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after missing offset",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after empty coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after nonfinite coordinate",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after HTML injection input",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": "2001-12-21T14:30:00+05:30",
+            "birthUtc": "2001-12-21T09:00:00.000Z",
+            "birthTimeKnown": true,
+            "unknownTimeConvention": null,
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": "whole",
+            "flags": [
+              "polar-fallback"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "unknown time",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "recovery after unknown-time impossible date",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-08T12:00:00Z",
+            "transitUtc": "2026-09-08T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        },
+        {
+          "name": "offline after load",
+          "receipt": {
+            "engine": {
+              "package": "@zodiacs/engine",
+              "version": "0.1.1-rc.1",
+              "status": "Unpublished npm release candidate; review and publication gates remain open",
+              "artifactURL": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+              "artifactSHA256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
+              "artifactRepository": "https://github.com/ZodiacsOfficial/site",
+              "artifactCommit": "40d3f9647a31afc20db007b7cd5269eb4ef73b6a",
+              "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+              "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d"
+            },
+            "submittedBirthInstant": null,
+            "birthUtc": "2001-12-21T12:00:00.000Z",
+            "birthTimeKnown": false,
+            "unknownTimeConvention": "12:00 UTC on the entered date; approximate positions, no angles or houses",
+            "coordinates": {
+              "latitude": 78.2232,
+              "longitude": 15.6267
+            },
+            "requestedHouseSystem": "placidus",
+            "actualHouseSystem": null,
+            "flags": [
+              "no-time"
+            ],
+            "submittedTransitInstant": "2026-09-09T12:00:00Z",
+            "transitUtc": "2026-09-09T12:00:00.000Z",
+            "conventions": {
+              "calendar": "Proleptic Gregorian; explicit offsets are resolved instants, not birthplace timezone verification",
+              "zodiac": "Tropical ecliptic of date",
+              "positions": "Apparent geocentric; no topocentric parallax",
+              "units": "Longitude degrees in [0, 360); speed degrees per day",
+              "nodes": "True lunar nodes",
+              "transitAspects": "Moving bodies to natal bodies; no natal ASC/MC contacts; instantaneous snapshot"
+            },
+            "limitations": "Finite reference coverage; accepted date syntax is not a broad date-range accuracy claim. This is example metadata, not a complete durable calculation receipt."
+          },
+          "positionCount": 12
+        }
+      ],
+      "networkAPIcalls": [],
+      "storage": {
+        "local": [],
+        "session": [],
+        "databases": [],
+        "caches": [],
+        "serviceWorkers": 0
+      },
+      "cookies": [],
+      "calculationRequestCount": 0
+    }
+  ],
+  "widgetRuns": [
+    {
+      "width": 390,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:51.654Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:52.466Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "hasBody": false
+        }
+      ],
+      "failures": [],
+      "errors": [],
+      "variants": [
+        {
+          "theme": "dark",
+          "accent": "#7B6DA8",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:56.231Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(127,113,171)",
+          "contrast": 4.519896671017333
+        },
+        {
+          "theme": "light",
+          "accent": "#123456",
+          "status": 200,
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%23123456",
+          "displayedDate": "2026-09-07",
+          "observedAt": "2026-09-07T20:01:56.998Z",
+          "currentUTCDate": "2026-09-07",
+          "isCurrentUTCDate": true,
+          "effectiveAccent": "rgb(18,52,86)",
+          "contrast": 12.18388514796609
+        }
+      ]
+    },
+    {
+      "scenario": "mocked blocked iframe and mocked fallback response",
+      "requests": [
+        {
+          "url": "http://127.0.0.1:60898/widget.html",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/widget.js",
+          "method": "GET",
+          "type": "script",
+          "hasBody": false
+        },
+        {
+          "url": "http://127.0.0.1:60898/favicon.svg",
+          "method": "GET",
+          "type": "other",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        },
+        {
+          "url": "https://zodiacs.org/today/",
+          "method": "GET",
+          "type": "document",
+          "hasBody": false
+        }
+      ],
+      "failures": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "failure": "net::ERR_BLOCKED_BY_CLIENT"
+        }
+      ],
+      "errors": []
+    }
+  ]
+}

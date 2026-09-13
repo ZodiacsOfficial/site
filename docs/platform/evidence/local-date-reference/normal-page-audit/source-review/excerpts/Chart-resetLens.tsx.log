@@ -1,0 +1,4 @@
+function resetLens() {
+    setLens('natal');
+    setLensRing(null);
+  }

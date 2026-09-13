@@ -1,0 +1,85 @@
+# Optional portable calculation boundary — implementation evidence
+
+Implemented in an isolated checkout on 2026-09-08; not integrated, released,
+published, deployed, connected to active storage, or externally adopted by this
+subtask. Root remains the accountable integrator. SDK PR #5 hold is unchanged.
+
+## Scope
+
+Four-file frozen patch: `src/lib/engine/{chart-adapter.ts,full.ts,portable.ts,portable.test.ts}`.
+The source checkout starts at site `d63773a3be2b4d40ff28a1075b9aaa9cb6c10793`
+plus the current reviewed, uncommitted rc.5 adoption source. Only these four files
+belong to this slice; the copied adoption diff is excluded from the patch.
+`identity.json` records the original full adapter, final files, patch, runtime,
+and exact rc.5 artifact identities.
+
+`computePortableChart(input, context?)` executes the actual public `natalChart`
+exactly once. The same complete native Chart is supplied to the SDK receipt
+creator and projected into the existing compact site Chart shape. The snapshot
+comes only from validated receipt fields, retaining requested houses even when
+the actual system falls back to Whole or is absent. No native Chart is rebuilt
+from an abbreviated saved summary, and no second calculation is used.
+
+The shared pure mapper preserves existing `full.ts` synchronous behavior,
+caller input identity, and numerical-reference behavior. It has no runtime SDK
+or ephemeris import. The optional boundary is not imported by full/math or any
+UI/account/storage/server entry. No active C02 saving, export, migration or
+remote-account behavior is changed.
+
+## Privacy and historical-time boundaries
+
+The receipt and canonical JSON input snapshot are detached and recursively
+frozen; the presentation chart remains mutable, with a separate Date and flags
+array. The snapshot uses an ISO string rather than a frozen-but-still-mutable
+Date. The envelope uses shallow readonly TypeScript properties plus documented
+recursive runtime freezing so existing SDK serialization remains type-safe.
+
+Source spelling, local resolution, reference convention and provenance must be
+provided explicitly. An unknown-time 08:30 input remains 08:30; an unknown-time
+noon input does not establish a noon convention. The SDK validates and detaches
+context after calculation. This is not an atomic entry-time snapshot across
+caller-owned getters: an input getter can change context before receipt
+creation. A regression documents the timing. Provenance remains unauthenticated
+caller assertions, and current Intl/tzdb is never used to reconstruct context.
+
+Errors have one fixed message/code, with no raw error inspection, logging or
+cause. Same-realm getters/proxies are not sandboxed. No account, persistent
+storage, network request, external publication or production change is involved.
+
+## Tests
+
+`final-focused-test.log`: 80/80 passed on Node 22.23.2, Vitest 3.2.6:
+
+- 21 new boundary cases: actual calculation/receipt object and call counts;
+  requested-vs-actual houses; unknown 08:30 and source ISO spelling; missing
+  location; canonical defaults and flags; one-read raw getters and getter-induced
+  caller mutation; explicit context timing; immutable detached outputs and
+  mutable-chart mutation across every numerical branch; source Date/flags/context
+  mutation; context accessors/cycles/non-JSON/oversize data; fixed private errors
+  including a thrown hostile Proxy; no current Intl or network/storage calls;
+  SDK codec round trip; unchanged full adapter references; browser module graphs.
+- 53 unchanged engine reference tests, with unchanged fixtures and tolerances.
+- 6 installed rc.5 package integration tests, copied with the adoption prerequisite.
+
+`final-typecheck.log`: focused strict TypeScript check passed for all four files.
+`final-diff-check.log`: whitespace check passed. `final-runs.json` records exact
+commands and exit codes. No complete site test/build/browser/CI or production
+claim is made here; the integrator must perform release gates after integration.
+
+## Preserved earlier attempts
+
+- `initial-test.log`: initial 16-case boundary suite passed.
+- `focused-test.log`: 26 tests passed but the unchanged engine suite could not
+  load Astronomy Engine's ESM file through a scratch dependency symlink. The
+  referenced root file existed. No implementation or tolerance was altered.
+- The scratch-only Astronomy Engine symlink was replaced with a local copy;
+  `scratch-astronomy-copy.json` records byte equality and member hashes. The
+  unchanged engine suite then passed (`focused-test-local-dependency.log`,
+  79/79 including 20 boundary cases before the timing regression was added).
+- `typecheck.log`, `typecheck-confirmed.log`, `diff-check.log` and
+  `focused-runs.json` retain earlier successful checks. Final files are identified
+  separately in `identity.json`; no earlier failure is represented as a pass.
+
+The dependency symlinks read existing installed packages; caches and copied
+Astronomy Engine files are confined to the scratch checkout. The root workspace
+was not edited by this subtask.

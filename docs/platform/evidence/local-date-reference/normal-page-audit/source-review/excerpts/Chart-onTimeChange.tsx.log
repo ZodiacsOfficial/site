@@ -1,0 +1,5 @@
+onTimeChange={(value) => {
+                invalidateProfileHandoff();
+                setTime(value);
+                setFieldErrors((current) => current.time ? { ...current, time: false } : current);
+              }}

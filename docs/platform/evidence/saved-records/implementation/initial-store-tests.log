@@ -1,0 +1,11 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-saved-record
+
+ ✓ src/lib/profile/saved-record.test.ts (17 tests) 10ms
+ ✓ src/lib/profile/saved-record-store.test.ts (30 tests) 336ms
+
+ Test Files  2 passed (2)
+      Tests  47 passed (47)
+   Start at  12:02:58
+   Duration  756ms (transform 206ms, setup 0ms, collect 344ms, tests 346ms, environment 0ms, prepare 95ms)
+

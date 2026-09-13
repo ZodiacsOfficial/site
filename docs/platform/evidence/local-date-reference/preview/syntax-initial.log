@@ -1,0 +1,8 @@
+/private/tmp/zodiacs-platform-local-date-preview-review/preview-drive.mjs:29
+async function snapshot(page,mode){return page.evaluate(({mode,actionSelector})=>({
+^
+
+SyntaxError: Identifier 'snapshot' has already been declared
+    at checkSyntax (node:internal/main/check_syntax:74:5)
+
+Node.js v22.23.2

@@ -1,0 +1,1283 @@
+{
+  "scope": "Source-only AST and byte comparison; no product execution or new tests",
+  "chartDateEditRetainsSeparateError": true,
+  "chartDateEditClearsFieldErrorOnly": true,
+  "chartComputeClearsErrorBeforeValidationReturnWhenNotBusy": true,
+  "chartRunStartClearsErrorBeforeAsyncAwait": true,
+  "moonDateEditClearsError": true,
+  "moonLookupStartsWithErrorClearAfterNonemptyDateGuard": true,
+  "dateEditAndResetPathsUnchangedFromC014Base": true,
+  "c012IslandAndFieldsBytesUnchanged": true,
+  "chartFocusEffectDisarmedByInvalidateProfileHandoff": true,
+  "qualification": "Ordinary date edit after a settled refusal. A separate primary-profile revocation explicitly clears error, and submit while busy returns early. Source shows focus is not requested on this edit; actual DOM focus and 24 browser outcomes are parent evidence.",
+  "birthFieldsDateInput": {
+    "startLine": 63,
+    "endLine": 63,
+    "sha256": "5c8af5a9579ab3ac49a5ecda99e116ef8b7b17a025c22cdbd3914aad38b49afd",
+    "text": "onInput={(e) => onDateChange((e.target as HTMLInputElement).value)}",
+    "calls": [
+      {
+        "callee": "onDateChange",
+        "arguments": [
+          "(e.target as HTMLInputElement).value"
+        ]
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "label": "Chart clearReceiptExport",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 396,
+        "endLine": 400,
+        "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42",
+        "text": "function clearReceiptExport(): void {\n    receiptExportRef.current = null;\n    setReceiptExport(null);\n    setReceiptDownloadError(false);\n  }",
+        "calls": [
+          {
+            "callee": "setReceiptExport",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setReceiptDownloadError",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 396,
+        "endLine": 400,
+        "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42",
+        "text": "function clearReceiptExport(): void {\n    receiptExportRef.current = null;\n    setReceiptExport(null);\n    setReceiptDownloadError(false);\n  }",
+        "calls": [
+          {
+            "callee": "setReceiptExport",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setReceiptDownloadError",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart advanceInputRevision",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 401,
+        "endLine": 405,
+        "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c",
+        "text": "function advanceInputRevision(): void {\n    clearReceiptExport();\n    inputRevisionRef.current += 1;\n    setInputRevision(inputRevisionRef.current);\n  }",
+        "calls": [
+          {
+            "callee": "clearReceiptExport",
+            "arguments": []
+          },
+          {
+            "callee": "setInputRevision",
+            "arguments": [
+              "inputRevisionRef.current"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 401,
+        "endLine": 405,
+        "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c",
+        "text": "function advanceInputRevision(): void {\n    clearReceiptExport();\n    inputRevisionRef.current += 1;\n    setInputRevision(inputRevisionRef.current);\n  }",
+        "calls": [
+          {
+            "callee": "clearReceiptExport",
+            "arguments": []
+          },
+          {
+            "callee": "setInputRevision",
+            "arguments": [
+              "inputRevisionRef.current"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart clearResult",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 418,
+        "endLine": 445,
+        "sha256": "976a42a0233c8ae81bc7c6c5b864b1fd4dae74856af13213ee9b8486a41b8de8",
+        "text": "function clearResult(): void {\n    savePromptGenerationRef.current += 1;\n    resultOwnerRef.current = null;\n    clearReceiptExport();\n    chartContextIdRef.current += 1;\n    clearPostChartContext();\n    shareRuntimeRef.current.primary = undefined;\n    setChart(null);\n    setComputedInput(null);\n    setShareInput(null);\n    setSignature(null);\n    setRegistryRecordSlug(null);\n    setPositionsOnly(null);\n    setMoonAmbiguous(false);\n    setCard('idle');\n    setSaved('idle');\n    setMatchedName(null);\n    setSavePromptOpen(false);\n    setShareDialogOpen(false);\n    setA2hsHint(null);\n    resetLens();\n    exitTour();\n    cancelSpotlightArrival();\n    setSelection(null);\n    setSpotlight(null);\n    setAnnounce('');\n    setDepthOpen(false);\n  }",
+        "calls": [
+          {
+            "callee": "clearReceiptExport",
+            "arguments": []
+          },
+          {
+            "callee": "clearPostChartContext",
+            "arguments": []
+          },
+          {
+            "callee": "setChart",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setComputedInput",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setShareInput",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSignature",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setRegistryRecordSlug",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setPositionsOnly",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setMoonAmbiguous",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setCard",
+            "arguments": [
+              "'idle'"
+            ]
+          },
+          {
+            "callee": "setSaved",
+            "arguments": [
+              "'idle'"
+            ]
+          },
+          {
+            "callee": "setMatchedName",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSavePromptOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setShareDialogOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setA2hsHint",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "resetLens",
+            "arguments": []
+          },
+          {
+            "callee": "exitTour",
+            "arguments": []
+          },
+          {
+            "callee": "cancelSpotlightArrival",
+            "arguments": []
+          },
+          {
+            "callee": "setSelection",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSpotlight",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setAnnounce",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "setDepthOpen",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 418,
+        "endLine": 445,
+        "sha256": "976a42a0233c8ae81bc7c6c5b864b1fd4dae74856af13213ee9b8486a41b8de8",
+        "text": "function clearResult(): void {\n    savePromptGenerationRef.current += 1;\n    resultOwnerRef.current = null;\n    clearReceiptExport();\n    chartContextIdRef.current += 1;\n    clearPostChartContext();\n    shareRuntimeRef.current.primary = undefined;\n    setChart(null);\n    setComputedInput(null);\n    setShareInput(null);\n    setSignature(null);\n    setRegistryRecordSlug(null);\n    setPositionsOnly(null);\n    setMoonAmbiguous(false);\n    setCard('idle');\n    setSaved('idle');\n    setMatchedName(null);\n    setSavePromptOpen(false);\n    setShareDialogOpen(false);\n    setA2hsHint(null);\n    resetLens();\n    exitTour();\n    cancelSpotlightArrival();\n    setSelection(null);\n    setSpotlight(null);\n    setAnnounce('');\n    setDepthOpen(false);\n  }",
+        "calls": [
+          {
+            "callee": "clearReceiptExport",
+            "arguments": []
+          },
+          {
+            "callee": "clearPostChartContext",
+            "arguments": []
+          },
+          {
+            "callee": "setChart",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setComputedInput",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setShareInput",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSignature",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setRegistryRecordSlug",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setPositionsOnly",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setMoonAmbiguous",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setCard",
+            "arguments": [
+              "'idle'"
+            ]
+          },
+          {
+            "callee": "setSaved",
+            "arguments": [
+              "'idle'"
+            ]
+          },
+          {
+            "callee": "setMatchedName",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSavePromptOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setShareDialogOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setA2hsHint",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "resetLens",
+            "arguments": []
+          },
+          {
+            "callee": "exitTour",
+            "arguments": []
+          },
+          {
+            "callee": "cancelSpotlightArrival",
+            "arguments": []
+          },
+          {
+            "callee": "setSelection",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setSpotlight",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setAnnounce",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "setDepthOpen",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart invalidateProfileHandoff",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 496,
+        "endLine": 504,
+        "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5",
+        "text": "function invalidateProfileHandoff(): void {\n    advanceInputRevision();\n    profileHandoffIdRef.current += 1;\n    primaryProfileChartIdRef.current = null;\n    runChartIdRef.current += 1;\n    clearResult();\n    setBusy(false);\n    focusAfterComputeRef.current = false;\n  }",
+        "calls": [
+          {
+            "callee": "advanceInputRevision",
+            "arguments": []
+          },
+          {
+            "callee": "clearResult",
+            "arguments": []
+          },
+          {
+            "callee": "setBusy",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 496,
+        "endLine": 504,
+        "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5",
+        "text": "function invalidateProfileHandoff(): void {\n    advanceInputRevision();\n    profileHandoffIdRef.current += 1;\n    primaryProfileChartIdRef.current = null;\n    runChartIdRef.current += 1;\n    clearResult();\n    setBusy(false);\n    focusAfterComputeRef.current = false;\n  }",
+        "calls": [
+          {
+            "callee": "advanceInputRevision",
+            "arguments": []
+          },
+          {
+            "callee": "clearResult",
+            "arguments": []
+          },
+          {
+            "callee": "setBusy",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart resetLens",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 655,
+        "endLine": 658,
+        "sha256": "ddfcbc137154bb331c04aec1344cf1c998c3eff5a0e0a98553e4fa9f4a6c51e4",
+        "text": "function resetLens() {\n    setLens('natal');\n    setLensRing(null);\n  }",
+        "calls": [
+          {
+            "callee": "setLens",
+            "arguments": [
+              "'natal'"
+            ]
+          },
+          {
+            "callee": "setLensRing",
+            "arguments": [
+              "null"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 655,
+        "endLine": 658,
+        "sha256": "ddfcbc137154bb331c04aec1344cf1c998c3eff5a0e0a98553e4fa9f4a6c51e4",
+        "text": "function resetLens() {\n    setLens('natal');\n    setLensRing(null);\n  }",
+        "calls": [
+          {
+            "callee": "setLens",
+            "arguments": [
+              "'natal'"
+            ]
+          },
+          {
+            "callee": "setLensRing",
+            "arguments": [
+              "null"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart exitTour",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 626,
+        "endLine": 630,
+        "sha256": "e26cadf1d1df4a9bc375ead9bf82b7f5b898cb7b11b518443aa6516100076f89",
+        "text": "function exitTour() {\n    setTourOpen(false);\n    setTourKind(null);\n    setTourVisual(null);\n  }",
+        "calls": [
+          {
+            "callee": "setTourOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setTourKind",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setTourVisual",
+            "arguments": [
+              "null"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 626,
+        "endLine": 630,
+        "sha256": "e26cadf1d1df4a9bc375ead9bf82b7f5b898cb7b11b518443aa6516100076f89",
+        "text": "function exitTour() {\n    setTourOpen(false);\n    setTourKind(null);\n    setTourVisual(null);\n  }",
+        "calls": [
+          {
+            "callee": "setTourOpen",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setTourKind",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setTourVisual",
+            "arguments": [
+              "null"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart cancelSpotlightArrival",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 729,
+        "endLine": 732,
+        "sha256": "621e6fcbf21d8abeea512a0d9d931e897c729f935818283e2b6ef75c80d6ebdc",
+        "text": "function cancelSpotlightArrival() {\n    spotlightArrivalCleanupRef.current?.();\n    spotlightArrivalCleanupRef.current = null;\n  }",
+        "calls": [
+          {
+            "callee": "spotlightArrivalCleanupRef.current",
+            "arguments": []
+          }
+        ]
+      },
+      "base": {
+        "startLine": 729,
+        "endLine": 732,
+        "sha256": "621e6fcbf21d8abeea512a0d9d931e897c729f935818283e2b6ef75c80d6ebdc",
+        "text": "function cancelSpotlightArrival() {\n    spotlightArrivalCleanupRef.current?.();\n    spotlightArrivalCleanupRef.current = null;\n  }",
+        "calls": [
+          {
+            "callee": "spotlightArrivalCleanupRef.current",
+            "arguments": []
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart compute",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1320,
+        "endLine": 1356,
+        "sha256": "7b8fe0bd4f895fd394095e4549630ebe17a3585a129737645628ca0ca7fd6012",
+        "text": "function compute(e: Event) {\n    e.preventDefault();\n    if (busy) return;\n    const dateInput = formRef.current?.querySelector<HTMLInputElement>('#birth-date');\n    const nextFieldErrors: FormFieldErrors = {\n      date: date === '' ? 'required' : dateInput?.validity.valid === false ? 'range' : undefined,\n      time: timeKnown && time === '',\n      place: city === null,\n    };\n    setFieldErrors(nextFieldErrors);\n    setError('');\n    const firstIncomplete = nextFieldErrors.date\n      ? 'birth-date'\n      : nextFieldErrors.time\n        ? 'birth-time'\n        : nextFieldErrors.place ? 'place' : null;\n    if (firstIncomplete) {\n      requestAnimationFrame(() => {\n        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();\n      });\n      return;\n    }\n    if (!city) return;\n    invalidateProfileHandoff();\n    setFromLink(false);\n    if (subjectMode === 'self') setLinkName(null);\n    runChart({\n      date,\n      time,\n      timeKnown,\n      city,\n      houseSystem,\n      subjectMode,\n      mine: mineHandoff,\n      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),\n    }, true);\n  }",
+        "calls": [
+          {
+            "callee": "e.preventDefault",
+            "arguments": []
+          },
+          {
+            "callee": "formRef.current?.querySelector",
+            "arguments": [
+              "'#birth-date'"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "nextFieldErrors"
+            ]
+          },
+          {
+            "callee": "setError",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "requestAnimationFrame",
+            "arguments": [
+              "() => {\n        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();\n      }"
+            ]
+          },
+          {
+            "callee": "formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "formRef.current?.querySelector",
+            "arguments": [
+              "`#${firstIncomplete}`"
+            ]
+          },
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setFromLink",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setLinkName",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "runChart",
+            "arguments": [
+              "{\n      date,\n      time,\n      timeKnown,\n      city,\n      houseSystem,\n      subjectMode,\n      mine: mineHandoff,\n      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),\n    }",
+              "true"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1313,
+        "endLine": 1349,
+        "sha256": "7b8fe0bd4f895fd394095e4549630ebe17a3585a129737645628ca0ca7fd6012",
+        "text": "function compute(e: Event) {\n    e.preventDefault();\n    if (busy) return;\n    const dateInput = formRef.current?.querySelector<HTMLInputElement>('#birth-date');\n    const nextFieldErrors: FormFieldErrors = {\n      date: date === '' ? 'required' : dateInput?.validity.valid === false ? 'range' : undefined,\n      time: timeKnown && time === '',\n      place: city === null,\n    };\n    setFieldErrors(nextFieldErrors);\n    setError('');\n    const firstIncomplete = nextFieldErrors.date\n      ? 'birth-date'\n      : nextFieldErrors.time\n        ? 'birth-time'\n        : nextFieldErrors.place ? 'place' : null;\n    if (firstIncomplete) {\n      requestAnimationFrame(() => {\n        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();\n      });\n      return;\n    }\n    if (!city) return;\n    invalidateProfileHandoff();\n    setFromLink(false);\n    if (subjectMode === 'self') setLinkName(null);\n    runChart({\n      date,\n      time,\n      timeKnown,\n      city,\n      houseSystem,\n      subjectMode,\n      mine: mineHandoff,\n      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),\n    }, true);\n  }",
+        "calls": [
+          {
+            "callee": "e.preventDefault",
+            "arguments": []
+          },
+          {
+            "callee": "formRef.current?.querySelector",
+            "arguments": [
+              "'#birth-date'"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "nextFieldErrors"
+            ]
+          },
+          {
+            "callee": "setError",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "requestAnimationFrame",
+            "arguments": [
+              "() => {\n        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();\n      }"
+            ]
+          },
+          {
+            "callee": "formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "formRef.current?.querySelector",
+            "arguments": [
+              "`#${firstIncomplete}`"
+            ]
+          },
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setFromLink",
+            "arguments": [
+              "false"
+            ]
+          },
+          {
+            "callee": "setLinkName",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "runChart",
+            "arguments": [
+              "{\n      date,\n      time,\n      timeKnown,\n      city,\n      houseSystem,\n      subjectMode,\n      mine: mineHandoff,\n      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),\n    }",
+              "true"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart onDateChange",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1807,
+        "endLine": 1811,
+        "sha256": "90921783e665938d95ec06ba5ef4cce8c7291b61f7e9d45913b53654e4162378",
+        "text": "onDateChange={(value) => {\n                invalidateProfileHandoff();\n                setDate(value);\n                setFieldErrors((current) => current.date ? { ...current, date: undefined } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setDate",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.date ? { ...current, date: undefined } : current"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1800,
+        "endLine": 1804,
+        "sha256": "90921783e665938d95ec06ba5ef4cce8c7291b61f7e9d45913b53654e4162378",
+        "text": "onDateChange={(value) => {\n                invalidateProfileHandoff();\n                setDate(value);\n                setFieldErrors((current) => current.date ? { ...current, date: undefined } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setDate",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.date ? { ...current, date: undefined } : current"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart onTimeChange",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1812,
+        "endLine": 1816,
+        "sha256": "dadb84e8afce11d4488024127e1a9fd3330c2b21f28efe9ef3e2fe7bbb3165fe",
+        "text": "onTimeChange={(value) => {\n                invalidateProfileHandoff();\n                setTime(value);\n                setFieldErrors((current) => current.time ? { ...current, time: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setTime",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.time ? { ...current, time: false } : current"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1805,
+        "endLine": 1809,
+        "sha256": "dadb84e8afce11d4488024127e1a9fd3330c2b21f28efe9ef3e2fe7bbb3165fe",
+        "text": "onTimeChange={(value) => {\n                invalidateProfileHandoff();\n                setTime(value);\n                setFieldErrors((current) => current.time ? { ...current, time: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setTime",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.time ? { ...current, time: false } : current"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart onTimeKnownChange",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1817,
+        "endLine": 1821,
+        "sha256": "d8ffeb70cb3e1b39aea53a9d7aa584f358f55ab013f78b62493a57363a15ff19",
+        "text": "onTimeKnownChange={(value) => {\n                invalidateProfileHandoff();\n                setTimeKnown(value);\n                if (!value) setFieldErrors((current) => current.time ? { ...current, time: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setTimeKnown",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.time ? { ...current, time: false } : current"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1810,
+        "endLine": 1814,
+        "sha256": "d8ffeb70cb3e1b39aea53a9d7aa584f358f55ab013f78b62493a57363a15ff19",
+        "text": "onTimeKnownChange={(value) => {\n                invalidateProfileHandoff();\n                setTimeKnown(value);\n                if (!value) setFieldErrors((current) => current.time ? { ...current, time: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setTimeKnown",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.time ? { ...current, time: false } : current"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart onCityChange",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1822,
+        "endLine": 1826,
+        "sha256": "d31ae8933cafb076b954170a5058dc852ea090e347f25a4a1d932a80183c6d2b",
+        "text": "onCityChange={(value) => {\n                invalidateProfileHandoff();\n                setCity(value);\n                setFieldErrors((current) => current.place ? { ...current, place: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setCity",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.place ? { ...current, place: false } : current"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1815,
+        "endLine": 1819,
+        "sha256": "d31ae8933cafb076b954170a5058dc852ea090e347f25a4a1d932a80183c6d2b",
+        "text": "onCityChange={(value) => {\n                invalidateProfileHandoff();\n                setCity(value);\n                setFieldErrors((current) => current.place ? { ...current, place: false } : current);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateProfileHandoff",
+            "arguments": []
+          },
+          {
+            "callee": "setCity",
+            "arguments": [
+              "value"
+            ]
+          },
+          {
+            "callee": "setFieldErrors",
+            "arguments": [
+              "(current) => current.place ? { ...current, place: false } : current"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart post-compute focus effect",
+      "path": "src/islands/ChartCalculator.tsx",
+      "root": {
+        "startLine": 1117,
+        "endLine": 1128,
+        "sha256": "047861a4fbc0571ad01100eab2bd7ca3e8702c9181cd61018ba6d8603680b514",
+        "text": "useEffect(() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (chart) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }, [busy, error, chart])",
+        "calls": [
+          {
+            "callee": "useEffect",
+            "arguments": [
+              "() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (chart) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }",
+              "[busy, error, chart]"
+            ]
+          },
+          {
+            "callee": "errorRef.current?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "resultHeadingRef.current?.focus",
+            "arguments": []
+          }
+        ]
+      },
+      "base": {
+        "startLine": 1117,
+        "endLine": 1128,
+        "sha256": "047861a4fbc0571ad01100eab2bd7ca3e8702c9181cd61018ba6d8603680b514",
+        "text": "useEffect(() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (chart) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }, [busy, error, chart])",
+        "calls": [
+          {
+            "callee": "useEffect",
+            "arguments": [
+              "() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (chart) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }",
+              "[busy, error, chart]"
+            ]
+          },
+          {
+            "callee": "errorRef.current?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "resultHeadingRef.current?.focus",
+            "arguments": []
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Moon invalidateLookup",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "root": {
+        "startLine": 91,
+        "endLine": 97,
+        "sha256": "a2c6901c706e313438f0fc118ebd5d0b0fd97837898713575feec31ae32eb1de",
+        "text": "function invalidateLookup(): void {\n    lookupRevisionRef.current += 1;\n    focusAfterComputeRef.current = false;\n    setResult(null);\n    setError('');\n    setBusy(false);\n  }",
+        "calls": [
+          {
+            "callee": "setResult",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setError",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "setBusy",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 91,
+        "endLine": 97,
+        "sha256": "a2c6901c706e313438f0fc118ebd5d0b0fd97837898713575feec31ae32eb1de",
+        "text": "function invalidateLookup(): void {\n    lookupRevisionRef.current += 1;\n    focusAfterComputeRef.current = false;\n    setResult(null);\n    setError('');\n    setBusy(false);\n  }",
+        "calls": [
+          {
+            "callee": "setResult",
+            "arguments": [
+              "null"
+            ]
+          },
+          {
+            "callee": "setError",
+            "arguments": [
+              "''"
+            ]
+          },
+          {
+            "callee": "setBusy",
+            "arguments": [
+              "false"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Moon date input",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "root": {
+        "startLine": 221,
+        "endLine": 224,
+        "sha256": "534689b2dde87323a02acaed573ad2eb7f5b612eda3ee21b888dcc42d8491008",
+        "text": "onInput={(e) => {\n                  invalidateLookup();\n                  setDate((e.target as HTMLInputElement).value);\n                }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setDate",
+            "arguments": [
+              "(e.target as HTMLInputElement).value"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 214,
+        "endLine": 217,
+        "sha256": "534689b2dde87323a02acaed573ad2eb7f5b612eda3ee21b888dcc42d8491008",
+        "text": "onInput={(e) => {\n                  invalidateLookup();\n                  setDate((e.target as HTMLInputElement).value);\n                }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setDate",
+            "arguments": [
+              "(e.target as HTMLInputElement).value"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Moon time input",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "root": {
+        "startLine": 232,
+        "endLine": 235,
+        "sha256": "59c2ab9d43bbde212b8314dca43b84afd3c207f3bb1603bf6c3e2f73cc3cb815",
+        "text": "onInput={(e) => {\n                  invalidateLookup();\n                  setTime((e.target as HTMLInputElement).value);\n                }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setTime",
+            "arguments": [
+              "(e.target as HTMLInputElement).value"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 225,
+        "endLine": 228,
+        "sha256": "59c2ab9d43bbde212b8314dca43b84afd3c207f3bb1603bf6c3e2f73cc3cb815",
+        "text": "onInput={(e) => {\n                  invalidateLookup();\n                  setTime((e.target as HTMLInputElement).value);\n                }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setTime",
+            "arguments": [
+              "(e.target as HTMLInputElement).value"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Moon place selection",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "root": {
+        "startLine": 240,
+        "endLine": 243,
+        "sha256": "203aa724cf466d01ac4598ea0472a008c7bda58fd2dd51f87ad41a994fc40442",
+        "text": "onSelect={(value) => {\n                invalidateLookup();\n                setCity(value);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setCity",
+            "arguments": [
+              "value"
+            ]
+          }
+        ]
+      },
+      "base": {
+        "startLine": 233,
+        "endLine": 236,
+        "sha256": "203aa724cf466d01ac4598ea0472a008c7bda58fd2dd51f87ad41a994fc40442",
+        "text": "onSelect={(value) => {\n                invalidateLookup();\n                setCity(value);\n              }}",
+        "calls": [
+          {
+            "callee": "invalidateLookup",
+            "arguments": []
+          },
+          {
+            "callee": "setCity",
+            "arguments": [
+              "value"
+            ]
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Moon post-compute focus effect",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "root": {
+        "startLine": 171,
+        "endLine": 182,
+        "sha256": "4cb16bea9a290adbb8b2865dd1061bd2133d29b8d05a65421de8437649e715cf",
+        "text": "useEffect(() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (result) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }, [busy, error, result])",
+        "calls": [
+          {
+            "callee": "useEffect",
+            "arguments": [
+              "() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (result) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }",
+              "[busy, error, result]"
+            ]
+          },
+          {
+            "callee": "errorRef.current?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "resultHeadingRef.current?.focus",
+            "arguments": []
+          }
+        ]
+      },
+      "base": {
+        "startLine": 164,
+        "endLine": 175,
+        "sha256": "4cb16bea9a290adbb8b2865dd1061bd2133d29b8d05a65421de8437649e715cf",
+        "text": "useEffect(() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (result) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }, [busy, error, result])",
+        "calls": [
+          {
+            "callee": "useEffect",
+            "arguments": [
+              "() => {\n    if (busy || !focusAfterComputeRef.current) return;\n    if (error) {\n      errorRef.current?.focus();\n      focusAfterComputeRef.current = false;\n      return;\n    }\n    if (result) {\n      resultHeadingRef.current?.focus();\n      focusAfterComputeRef.current = false;\n    }\n  }",
+              "[busy, error, result]"
+            ]
+          },
+          {
+            "callee": "errorRef.current?.focus",
+            "arguments": []
+          },
+          {
+            "callee": "resultHeadingRef.current?.focus",
+            "arguments": []
+          }
+        ]
+      },
+      "byteIdentical": true
+    },
+    {
+      "label": "Chart run start",
+      "path": "src/islands/ChartCalculator.tsx",
+      "statementsBeforeFirstTryIgnoringOnlyNewFailureSentinel": [
+        "advanceInputRevision();",
+        "clearResult();",
+        "const runInputRevision = inputRevisionRef.current;",
+        "const signatureModule = mode === 'full' && showsEnglishInterpretation\n      ? import('../lib/chart-signature').catch(() => null)\n      : null;",
+        "const accessGeneration = profileAccessGeneration.current;",
+        "const requiresProfileAccess = primaryProfileOriginRef.current;",
+        "const runId = runChartIdRef.current + 1;",
+        "runChartIdRef.current = runId;",
+        "const runIsCurrent = () => (\n      runId === runChartIdRef.current\n      && runInputRevision === inputRevisionRef.current\n      && (!requiresProfileAccess || (\n        accessGeneration === profileAccessGeneration.current\n        && profileAccessAllowed()\n      ))\n    );",
+        "focusAfterComputeRef.current = focusAfterCompute;",
+        "setBusy(true);",
+        "setError('');",
+        "setSaved('idle');",
+        "setMatchedName(null);",
+        "setSavePromptOpen(false);",
+        "setA2hsHint(null);",
+        "setCard('busy');",
+        "setSubjectMode(input.subjectMode ?? 'self');",
+        "setMineHandoff(input.mine ?? null);",
+        "if (mode === 'full' && !chartActionDockModule) requestChartControls();"
+      ],
+      "baseSame": true
+    },
+    {
+      "label": "Moon lookup start",
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "statementsBeforeFirstTryIgnoringOnlyNewFailureSentinel": [
+        "e.preventDefault();",
+        "if (!date) return;",
+        "const revision = ++lookupRevisionRef.current;",
+        "const isCurrent = () => revision === lookupRevisionRef.current;",
+        "focusAfterComputeRef.current = true;",
+        "setBusy(true);",
+        "setError('');",
+        "setResult(null);"
+      ],
+      "baseSame": true
+    }
+  ],
+  "harnessSnippetHashDefinitions": [
+    {
+      "function": "advanceInputRevision",
+      "claimedSha256": "7ecd8d2f7c41a23c83d44ac5fa46fcadb0091d12a7c4209737e0ad26486e2d55",
+      "variants": {
+        "ast-getText": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c",
+        "line-start-through-node-end": "60b24aaaf1f1e5c5e6a49c1e9fcebcfac2f19d03b4fdc94beacd9524ceb828ff",
+        "ast-getText-plus-newline": "b053742dd06a34c3d232de647de747932a48dbf2533be9adf6b3f41732bc711c",
+        "line-start-through-node-end-plus-newline": "7ecd8d2f7c41a23c83d44ac5fa46fcadb0091d12a7c4209737e0ad26486e2d55",
+        "line-start-through-node-end-plus-two-newlines": "24b25388b214beea5dbd19ceabab54dc6e0db65bd897a9eda7d321a7ece0d7f6"
+      },
+      "matchingDefinitions": [
+        "line-start-through-node-end-plus-newline"
+      ]
+    },
+    {
+      "function": "clearResult",
+      "claimedSha256": "a10dcb83e77e2d9e0db8ac8940479f27086a094d120d301bf52ffc8d8b619af8",
+      "variants": {
+        "ast-getText": "976a42a0233c8ae81bc7c6c5b864b1fd4dae74856af13213ee9b8486a41b8de8",
+        "line-start-through-node-end": "7cef6e7f8729b7ae9054701bce9774f001fd063810bbae02d3908964e0127983",
+        "ast-getText-plus-newline": "4a48b848f5873a11b39bde509cad01e53507e7a86c085eed195de9edffe39aaf",
+        "line-start-through-node-end-plus-newline": "a10dcb83e77e2d9e0db8ac8940479f27086a094d120d301bf52ffc8d8b619af8",
+        "line-start-through-node-end-plus-two-newlines": "2b28fb3ecc3cf82d80634959a6a84fbf53493a53b119950c8d65e8f6b82ed425"
+      },
+      "matchingDefinitions": [
+        "line-start-through-node-end-plus-newline"
+      ]
+    },
+    {
+      "function": "invalidateProfileHandoff",
+      "claimedSha256": "cfef931079b665cf1a88a7c4f59c534dc6e8d64490dee8dff64180c5ff3d1cfd",
+      "variants": {
+        "ast-getText": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5",
+        "line-start-through-node-end": "ce42fe2a5a78e565668c32ac5855016e8a27689601eea31fed94bb806161be87",
+        "ast-getText-plus-newline": "6503070c8b03a8221da6f6d4c33f018158c9108081a88b8ced484bf0dcd980d1",
+        "line-start-through-node-end-plus-newline": "750d8fda211292680fd23b22376d77c682d5e16f29194a8d7c4157aabffd354f",
+        "line-start-through-node-end-plus-two-newlines": "cfef931079b665cf1a88a7c4f59c534dc6e8d64490dee8dff64180c5ff3d1cfd"
+      },
+      "matchingDefinitions": [
+        "line-start-through-node-end-plus-two-newlines"
+      ]
+    }
+  ]
+}

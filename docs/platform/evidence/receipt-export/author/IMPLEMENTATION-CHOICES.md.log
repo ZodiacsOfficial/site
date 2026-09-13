@@ -1,0 +1,33 @@
+# Local calculation receipt export — author implementation choices
+
+## Scope and identities
+
+The 14-file receipt patch is Freeze 2, based on site c761a49c55d125bca48ff38d81b0a9ff6fd5adcf. The separately frozen two-file interaction correction is Interaction Freeze 1. Their identity JSON files enumerate every source/test SHA-256 and patch digest. The author worked only in /private/tmp/zodiacs-platform-site-receipt-export; the root agent owns integration, release gates and delivery.
+
+## Receipt boundary and privacy
+
+The full calculator lazily loads a small calculator-receipt helper after the existing engine loader. It calculates a native chart once through delivered computePortableChart, uses that same calculation for the existing site chart, and serializes the validated existing SDK envelope once. Unknown-time Sun/Moon endpoint checks remain separate existing computeBodies operations. The download click never calculates again. Optional helper import failure falls back before natal execution; an execution or serialization failure never triggers a second calculation.
+
+The helper captures actual local date/time, resolved zone spelling and offset, arithmetic gap shift and explicit known/unknown reference. The existing unknown-time flow deliberately uses local 12:00; its receipt says local-noon. Source instant and provenance remain absent/null because the calculator does not have those claims. Local midnight arithmetic uses setUTCFullYear, preserving years 0–99. No new Intl resolution, guessed offset, fixed one-hour gap, fake zone, rounded historical seconds or synthesized provenance is introduced.
+
+Known unsupported receipt inputs are admitted to the existing chart before natal calculation but do not offer a receipt: signed fixed-offset zone strings accepted by current Intl/link parsing, known-time exact poles, and truthful civil gap-shift/flag disagreement or a negative shift. The interface gives a concise localized unavailable note. This narrow preservation path neither changes the SDK codec nor exports an envelope with dropped civil context.
+
+Receipt bytes are an immutable string bound to the committed chart object, run ID, input revision and applicable profile-access generation. Input edits synchronously clear the state and ref; new runs, positions-only imports, profile scrub and unmount also invalidate it. The click repeats the fences before creating a Blob. A legacy or positions-only summary never gains an invented historical receipt. A fresh calculation from real saved birth inputs is a new calculation, subject to the same fences.
+
+The existing result More actions disclosure contains a keyboard-accessible local JSON action using existing styles and six locale catalogs. Its label identifies a calculation receipt, and its privacy note explicitly says the file includes sensitive birth details and chart data. The generic filename includes no name, local record ID or owner ID. A synchronous anchor click preserves the user gesture; finally blocks remove the anchor and schedule URL revocation, including failure paths. Allocation/download failure has fixed localized wording. A browser download event establishes initiation, not durable filesystem persistence, and the UI claims no save success.
+
+There are no added analytics, network/storage services, SDK/store activation, account APIs, root guides, global styles/navigation, canonical Registry or Astrofolio edits. Existing save/share and ownership behavior remain intact.
+
+## Interaction replay correction
+
+The real Russian shared-chart flow exposed an existing replay boundary: client:interaction captured untouched SSR blank fields, shared-link initialization filled them, then replay dispatched the old blanks as edits. The receipt fence correctly prevented an obsolete download. Weakening that fence or changing the route hydration policy was rejected.
+
+The correction tracks dirty controls explicitly. A first-hydration recapture merges prior dirty marks so a deliberate edit back to empty/default remains intentional. A detached clone reset with native form semantics detects eventless autofill and normalized defaults without changing live controls. Only dirty controls are replayed; untouched controls admit shared/profile initialization. Tracking continues through takeover, failed hydrate retries retain captured edits, and queued submissions still wait for commit barriers. Single-select value behavior is retained; multiple selected values use values rather than old option indexes so reordered options cannot change the selected value. The fixed eagerHash:false policy, intent/fallback scheduling, retry behavior and timeout-backed hidden-tab barrier remain unchanged.
+
+The first replay draft used selected-option indexes; independent real Chrome review demonstrated wrong selection when hydration reordered options. That draft and reproduction remain evidence. The frozen correction uses stable values and passes the same independent negative controls. This correction is separately reviewable from the 14 receipt files.
+
+## Explicit unresolved work
+
+Sixteen historical minute-resolution counterexamples remain a pre-existing shared resolver defect, including America/Manaus 1914-01-01 00:00 resolving four seconds forward without dst-gap. Adjacent false-fold flags also require a separate numerical correction. The receipt boundary preserves existing chart behavior and refuses the inconsistent civil receipt; it does not certify the resolver.
+
+Signed fixed-offset receipt syntax and exact-pole angle coverage remain declared SDK receipt limitations. Active richer saved-record lifecycle, durable cross-tab owner revocation/erasure, account integration, migration, publication, production deployment and external adoption are outside this slice. Root owns the bundle-gate correction needed for the real static full-engine closure; the author did not weaken the gate.

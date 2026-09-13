@@ -1,0 +1,188 @@
+{
+  "candidatePassed": 19,
+  "candidateFailed": 0,
+  "baselineAcceptedAcrossExecutions": 19,
+  "originalBaselineFixtureFailuresRetained": 2,
+  "numericalByteComparisons": 15,
+  "portableEnvelopeByteComparisons": 12,
+  "ordinaryLocalSaveComparisons": 2,
+  "extraOwnershipComparisons": 2,
+  "nativeBlobBytesEqual": true,
+  "frozenFilesRehashed": 16,
+  "baselineInputs": 211,
+  "candidateInputs": 210,
+  "removedFixtureInput": "source/src/lib/chart-date-certainty.ts",
+  "addedFixtureInputs": [],
+  "unchangedCommonInputHashes": 203,
+  "changedFixtureInputHashes": [
+    "source/src/lib/i18n/ui/ru.ts",
+    "source/src/lib/i18n/ui/en.ts",
+    "source/src/lib/i18n/ui/es.ts",
+    "source/src/lib/i18n/ui/pt.ts",
+    "source/src/lib/i18n/ui/fr.ts",
+    "source/src/lib/i18n/ui/it.ts",
+    "source/src/islands/ChartCalculator.tsx"
+  ],
+  "namedFunctionsUnchanged": 42,
+  "largeRunSpansUnchanged": 2,
+  "helperExecutableAstUnchanged": true,
+  "parity": [
+    {
+      "name": "new-york-unknown",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "new-york-known",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": null,
+      "candidates": null
+    },
+    {
+      "name": "bangkok-leap-unknown",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "sagittarius",
+        "capricorn"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "paris-historical-seconds",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "capricorn"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "manaus-historical-unknown",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "apia-long-reference",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "libra",
+        "scorpio"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "north-pole-unknown",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "north-pole-known-legacy",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": false,
+      "priorCandidates": null,
+      "candidates": null
+    },
+    {
+      "name": "signed-offset-legacy",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": false,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "moon-mode-unknown",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": false,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "actual-local-save-false",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": [],
+      "savedBirthSummaryEqual": true
+    },
+    {
+      "name": "actual-local-save-true",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": null,
+      "candidates": null,
+      "savedBirthSummaryEqual": true
+    },
+    {
+      "name": "receipt-native-download",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "capricorn"
+      ],
+      "candidates": [],
+      "nativeBlobBytesEqual": true
+    },
+    {
+      "name": "replacement-during-receipt-loader",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces",
+        "aries"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "known-to-unknown-registry-clears",
+      "numericalBytesEqual": true,
+      "portableEnvelopePresent": true,
+      "priorCandidates": [
+        "pisces"
+      ],
+      "candidates": []
+    },
+    {
+      "name": "skipped-refusal-stays-before-primary"
+    },
+    {
+      "name": "public-positions-no-confidence-run"
+    },
+    {
+      "name": "extra-requested-save-after-edit",
+      "savedBirthSummaryEqual": true,
+      "extraOwnershipDetailsEqual": true
+    },
+    {
+      "name": "extra-profile-revoke-pending-engine",
+      "extraOwnershipDetailsEqual": true
+    }
+  ],
+  "limits": [
+    "Actual native Preact fixture, not production graph/layout or remote preview.",
+    "Exact reference compatibility, not independent ephemeris accuracy or whole-date confidence.",
+    "Saved reference Sun remains unchanged and open; no observed false Sun claimed.",
+    "Conditional profile reader absence exercised, not real account authorization.",
+    "Root owns CI, full checks, captures, scope and release."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "runtime": "v22.23.2",
+  "sourceSHA256": "3da4170d63ab93cf1cd6b87e36fa79696c2785bd1d19718a801770fecbadc903",
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "scripts/build.mjs"
+  ],
+  "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+  "exitCode": 1,
+  "outputFilesChecked": 8,
+  "before": {
+    "THIRD_PARTY_NOTICES.txt": "4f63b4496d1ff20b24a254810eac02d91648c3f5fbdc8f9df34223fd58fa3349",
+    "app.js": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+    "favicon.svg": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe",
+    "natal.html": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7",
+    "styles.css": "307ae0993c62cea0a4d8b8cb70b4f676b7077fa1eb5fc6de3b508e875deef5bb",
+    "transits.html": "67c4ef1233f3d6ac6bba140c7cc31d6f53cbac5bd20d01b9b58f5371fe685adc",
+    "widget.html": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+    "widget.js": "65364309b33b5812aa246dfd88f9846bd5b5eb1e3d420bb3d71fbfd089ebf46b"
+  },
+  "after": {
+    "THIRD_PARTY_NOTICES.txt": "4f63b4496d1ff20b24a254810eac02d91648c3f5fbdc8f9df34223fd58fa3349",
+    "app.js": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+    "favicon.svg": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe",
+    "natal.html": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7",
+    "styles.css": "307ae0993c62cea0a4d8b8cb70b4f676b7077fa1eb5fc6de3b508e875deef5bb",
+    "transits.html": "67c4ef1233f3d6ac6bba140c7cc31d6f53cbac5bd20d01b9b58f5371fe685adc",
+    "widget.html": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+    "widget.js": "65364309b33b5812aa246dfd88f9846bd5b5eb1e3d420bb3d71fbfd089ebf46b"
+  }
+}

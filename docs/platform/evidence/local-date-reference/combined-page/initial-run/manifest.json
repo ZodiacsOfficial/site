@@ -1,0 +1,34 @@
+{
+  "records": [
+    {
+      "path": "combined-page-drive.mjs",
+      "bytes": 12539,
+      "sha256": "bb64cbaa41467fa6542f0f2f4cdcd6b7871f1544f995e600e466e7fc0ff35a76"
+    },
+    {
+      "path": "native/failure.png",
+      "bytes": 1295029,
+      "sha256": "a055a751617aff8c197d4596bb75006e9e52b3381afee6e1c81e52baf0533ff7"
+    },
+    {
+      "path": "native/initial.png",
+      "bytes": 1332262,
+      "sha256": "490285b90ed0553ff079397ca92b37e88091b94e839fea0d39a81d414d837af8"
+    },
+    {
+      "path": "native/refusal.png",
+      "bytes": 307003,
+      "sha256": "00c41b19353a4bde9933bc0fe0e2192b71ea2033a329e4dc333a810225ea3ce4"
+    },
+    {
+      "path": "native/result.json",
+      "bytes": 37036,
+      "sha256": "770a07fa2ae2e76d846527d8e6f053af9f776eb838fb128e838b254f961a4167"
+    },
+    {
+      "path": "native-run.log",
+      "bytes": 613,
+      "sha256": "2629b8007c60e3fc9396128e293eaf76fd0887bc25490085bb20539248d6c2c8"
+    }
+  ]
+}

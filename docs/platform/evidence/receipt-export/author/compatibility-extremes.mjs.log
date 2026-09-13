@@ -1,0 +1,37 @@
+import { createRequire } from 'node:module';
+import { readFile, writeFile } from 'node:fs/promises';
+import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+const root='/private/tmp/zodiacs-platform-site-receipt-export';
+const evidence='/private/tmp/zodiacs-platform-site-receipt-export-evidence';
+const require=createRequire(root+'/package.json');
+const {build}=require('esbuild');
+const result=await build({stdin:{contents:`export {computeCalculatorReceipt} from './src/lib/engine/calculator-receipt'; export {computeChart} from './src/lib/engine/full'; export {resolveLocalToUtc} from './src/lib/time/localToUtc'; export {parseNatalEnvelope} from '@zodiacs/engine/receipt';`,resolveDir:root,sourcefile:'compatibility-entry.ts',loader:'ts'},bundle:true,format:'esm',platform:'node',write:false,metafile:true});
+await writeFile(evidence+'/compatibility-subject.mjs',result.outputFiles[0].contents);
+await writeFile(evidence+'/compatibility-inputs.json',JSON.stringify(result.metafile.inputs,null,2)+'\n');
+const {computeCalculatorReceipt,computeChart,resolveLocalToUtc,parseNatalEnvelope}=await import(pathToFileURL(evidence+'/compatibility-subject.mjs'));
+const index=JSON.parse(await readFile(root+'/public/data/cities/index.json','utf8'));
+const outcomes=[];
+for(const zone of index.tz) for(const date of ['1800-01-01','2199-12-31']) for(const [time,known] of [['00:00',true],['23:59',true],['12:00',false]]) {
+ const row={zone,date,time,timeKnown:known};
+ try {
+  const resolved=resolveLocalToUtc(date,time,zone);
+  const input={utc:resolved.utc,latitude:51.5,longitude:0,houseSystem:'placidus',timeKnown:known,flags:resolved.flags};
+  let legacy;
+  try {legacy=computeChart(input);}catch{row.status='legacy-rejected';outcomes.push(row);continue;}
+  try {
+   const captured=computeCalculatorReceipt(input,{date,time,timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:known?'supplied-instant':'local-noon'});
+   assert.deepEqual(captured.chart,legacy);
+   const parsed=parseNatalEnvelope(captured.envelopeJson);assert.equal(parsed.ok,true);
+   row.status='compatible';row.utc=resolved.utc.toISOString();row.offsetMinutes=resolved.offsetMinutes;row.flags=resolved.flags;row.gapShiftMinutes=parsed.envelope.receipt.localResolution.gapShiftMinutes;
+  }catch(error){row.status='legacy-success-new-failure';row.errorName=error.name;row.errorMessage=error.message;}
+ }catch(error){row.status='resolver-rejected';row.errorName=error.name;row.errorMessage=error.message;}
+ outcomes.push(row);
+}
+const counts=Object.fromEntries([...new Set(outcomes.map(r=>r.status))].map(key=>[key,outcomes.filter(r=>r.status===key).length]));
+const source={};for(const file of ['src/lib/engine/calculator-receipt.ts','src/lib/engine/portable.ts','src/lib/time/localToUtc.ts','public/data/cities/index.json'])source[file]=createHash('sha256').update(await readFile(root+'/'+file)).digest('hex');
+const report={timestamp:new Date().toISOString(),node:process.version,icu:process.versions.icu,tz:process.versions.tz,zoneCount:index.tz.length,caseCount:outcomes.length,counts,scope:'Host resolver to actual legacy and portable engine compatibility; no independent astronomical or historical timezone truth oracle. Synthetic coordinates51.5,0 for every zone.',source,outcomes};
+await writeFile(evidence+'/compatibility-extremes-result.json',JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({zoneCount:report.zoneCount,caseCount:report.caseCount,counts,failures:outcomes.filter(r=>r.status==='legacy-success-new-failure')},null,2));
+if(counts['legacy-success-new-failure'])process.exitCode=1;

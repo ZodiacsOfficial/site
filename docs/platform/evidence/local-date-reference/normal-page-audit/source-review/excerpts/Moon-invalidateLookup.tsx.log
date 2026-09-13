@@ -1,0 +1,7 @@
+function invalidateLookup(): void {
+    lookupRevisionRef.current += 1;
+    focusAfterComputeRef.current = false;
+    setResult(null);
+    setError('');
+    setBusy(false);
+  }

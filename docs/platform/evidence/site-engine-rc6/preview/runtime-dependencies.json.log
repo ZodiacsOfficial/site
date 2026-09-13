@@ -1,0 +1,18 @@
+{
+  "node": "v22.23.2",
+  "chrome": "152.0.7977.83",
+  "modules": {
+    "@zodiacs/engine/package.json": {
+      "bytes": 2154,
+      "sha256": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc"
+    },
+    "@zodiacs/engine/dist/receipt.js": {
+      "bytes": 24948,
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+    },
+    "playwright-core/package.json": {
+      "bytes": 876,
+      "sha256": "759e376f995bf39edd4810d699b99469bab1d7428b6fbc78d41912f367df7ba9"
+    }
+  }
+}

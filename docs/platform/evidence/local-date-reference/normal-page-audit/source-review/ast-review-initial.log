@@ -1,0 +1,22 @@
+{
+  "sourceComparisons": 20,
+  "allRelevantPathsIdentical": true,
+  "claimedSnippetHashes": [
+    {
+      "function": "advanceInputRevision",
+      "matches": [
+        "line-start-through-node-end-plus-newline"
+      ]
+    },
+    {
+      "function": "clearResult",
+      "matches": [
+        "line-start-through-node-end-plus-newline"
+      ]
+    },
+    {
+      "function": "invalidateProfileHandoff",
+      "matches": []
+    }
+  ]
+}

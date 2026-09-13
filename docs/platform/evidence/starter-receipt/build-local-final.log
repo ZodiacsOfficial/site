@@ -1,0 +1,5 @@
+
+> zodiacs-platform-starter@0.1.0-rc.3 build
+> node scripts/build.mjs
+
+Built three examples with candidate 0.1.1-rc.3; artifact SHA256 aeab68793129517abe7498c5f5a17197d387eed7cbdaa9614f3b8cd939b11a17

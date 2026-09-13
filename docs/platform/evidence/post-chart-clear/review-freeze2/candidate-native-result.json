@@ -1,0 +1,1597 @@
+{
+  "variant": "candidate",
+  "browser": "152.0.7977.83",
+  "groups": 19,
+  "passed": 19,
+  "results": [
+    {
+      "name": "clear signal is synchronous data-free and deletes context before observers",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "device-only clear cannot be revived by cached profile or auth refresh",
+      "passed": true,
+      "requests": [],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "pending clear preserves typed values and synchronously fences old resend DOM",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "active clear hides the old personalized state",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "late native preference GET after clear cannot reveal cached result",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "cleared pending import avoids starting the session read",
+      "passed": true,
+      "requests": [],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "late preference from prior same-ID object cannot override replacement active state",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "active"
+        },
+        "body": "The personal daily brief is on for this saved chart. Manage it in your profile.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    },
+    {
+      "name": "already-issued resend survives once but clear suppresses refresh and focus",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "outside",
+            "text": ""
+          }
+        ],
+        "active": "outside"
+      }
+    },
+    {
+      "name": "fresh same-contextId republish owns enabled UI and drops old resend completion",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "outside",
+            "text": ""
+          }
+        ],
+        "active": "outside",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "new same-account token owns replacement view and cannot restore old credentials",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-B"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "ordinary resend completes one POST with pending status and focus",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link\n\nAnother confirmation link is on its way. The newest link is the one that works.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "outside",
+            "text": ""
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "ordinary failed resend stays retryable without automatic second POST",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link\n\nCouldn't resend the link. Please try again.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "same-credential session clone preserves ordinary in-flight completion",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link\n\nAnother confirmation link is on its way. The newest link is the one that works.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "same-state profile sync preserves ordinary in-flight completion",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link\n\nAnother confirmation link is on its way. The newest link is the one that works.",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          },
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "allowed profile-access epoch drops old resend and clears inherited busy",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "actual fail-closed profile reader absence scrubs pending view and old response",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": ""
+      }
+    },
+    {
+      "name": "unmount suppresses already-issued resend refresh and detaches subscriptions",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        },
+        {
+          "method": "POST",
+          "body": "{\"action\":\"resend\"}",
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "auth-unsubscribe"
+          }
+        ],
+        "focuses": [
+          {
+            "id": "",
+            "text": "Resend the link"
+          }
+        ],
+        "active": ""
+      }
+    },
+    {
+      "name": "non-full computed event preserves ordinary pending context",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "pending"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\nAlmost on.\n\nConfirm from the email we sent to a***@example.invalid and the daily brief begins.\n\nResend the link",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [],
+        "active": "",
+        "buttonDisabled": false
+      }
+    },
+    {
+      "name": "contradictory preference never re-solicits the user as an empty subscription",
+      "passed": true,
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": true
+        },
+        "body": "",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    }
+  ],
+  "scope": "Real Preact controller/context/helper/profile access/client; native fetch to fulfilled owned endpoint. Synthetic auth/Supabase boundary, structural DOM and declared import delay gates. No backend/public page claim."
+}

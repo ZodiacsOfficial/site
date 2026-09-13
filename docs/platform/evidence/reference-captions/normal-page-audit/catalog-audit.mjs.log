@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {createRequire} from 'node:module';
+import assert from 'node:assert/strict';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json'),ts=require('typescript');
+const wanted=['referenceUtcCaption','referenceLocalCaption','utcTimeCaption','moonPhaseAtReference','moonPhaseAtBirth'];
+const catalogs={};
+for(const locale of ['en','es','fr','it','pt','ru']){
+ const file=`raw/final-source/src/lib/i18n/ui/${locale}.ts.log`,text=fs.readFileSync(file,'utf8');
+ const ast=ts.createSourceFile(file,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TS),values={};
+ function visit(n){if(ts.isPropertyAssignment(n)&&n.name){const key=n.name.text;if(wanted.includes(key)){assert.ok(ts.isStringLiteral(n.initializer)||ts.isNoSubstitutionTemplateLiteral(n.initializer));assert.equal(values[key],undefined);values[key]=n.initializer.text;}}ts.forEachChild(n,visit);}visit(ast);assert.deepEqual(Object.keys(values).sort(),wanted.slice().sort());catalogs[locale]=values;
+}
+fs.writeFileSync('catalog-values.json',JSON.stringify(catalogs,null,2)+'\n');
+console.log(JSON.stringify({locales:6,literalProperties:30,source:'Exact frozen catalog AST literals; no browser or expected-output bundle executed.'}));

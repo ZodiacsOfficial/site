@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-07T21:17:49.908Z",
+  "node": "v22.23.2",
+  "scope": "Pure local calls using synthetic values; no request, account, storage or source mutation.",
+  "baseline": {
+    "wireAccepted": true,
+    "plaintextAccepted": true,
+    "readyProjectionAccepted": true
+  },
+  "extensions": {
+    "birthExtraRejected": true,
+    "derivedExtraRejected": true,
+    "plaintextExtraRejected": true,
+    "plaintextV2RejectedByV1": true,
+    "readyExtraRejected": true,
+    "serializerDropsExtraBirth": true,
+    "serializerDropsExtraDerived": true
+  },
+  "indistinguishableOldWrites": {
+    "fallbackOriginalRequest": "placidus",
+    "explicitNewRequest": "whole",
+    "actualSystemForBoth": "whole",
+    "oldWiresIdentical": true,
+    "canonicalBytesIdentical": true,
+    "mutationFingerprintsIdentical": true,
+    "fingerprint": "a269bd9d3ffebe03c7587e197379738e8a0ff348cbc76bf9d69e4e0426cc78cc"
+  },
+  "conclusion": "An unchanged old-client write cannot identify whether retained richer request metadata should survive or be replaced. Use a version-aware safe downgrade/write policy, not inference.",
+  "checkpointScope": {
+    "selectedImplementation": "Additive natal receipt codec only; account sync v1 and profile storage unchanged.",
+    "proposalsImplemented": false,
+    "protocolAdoptionClaimed": false,
+    "legacyIntentInferred": false,
+    "review": "Model-assisted source review, not human or practitioner review.",
+    "probeNetworkRequests": 0,
+    "liveDatabaseOrAccountQueries": 0
+  },
+  "observedSources": {
+    "observedAt": "2026-09-07T21:22:30.306Z",
+    "head": "5f645d9cb9b8f8f55b51689cec25cecaa362317c",
+    "statusAtCompletion": "",
+    "files": [
+      {
+        "path": "src/lib/profile/schema.ts",
+        "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+      },
+      {
+        "path": "src/lib/profile/store.ts",
+        "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+      },
+      {
+        "path": "src/lib/profile/resolve.ts",
+        "sha256": "c94bcbdc638593b74b52caa02060292651a6610c626d20eee0ebbc05a0f0d9b1"
+      },
+      {
+        "path": "src/lib/profile/profile-chart-handoff.ts",
+        "sha256": "e1df154c323b6990857df47ff5a3aa722ec033903c285ac8a9f993543cb17304"
+      },
+      {
+        "path": "src/lib/profile/merge.ts",
+        "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+      },
+      {
+        "path": "src/lib/profile/sync.ts",
+        "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+      },
+      {
+        "path": "src/lib/share-positions.ts",
+        "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e"
+      },
+      {
+        "path": "src/lib/share.ts",
+        "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+      },
+      {
+        "path": "src/lib/account-v2/chart-wire.ts",
+        "sha256": "56fa915f8e2c588cc1e6e3901482ef4938b51ea0c634e6d99955b58db142f950"
+      },
+      {
+        "path": "src/lib/account-v2/remote-chart.ts",
+        "sha256": "74bd4bf17e810712d8f5406971f8e98fe467cbc11a1bf87de33a84525135cb8b"
+      },
+      {
+        "path": "src/lib/account-v2/mutation-fingerprint.ts",
+        "sha256": "1c04d2a4f28215b713ce14ec8114719e742bfd457bbd943904e09ca5905c85a8"
+      },
+      {
+        "path": "src/lib/account-v2/client.ts",
+        "sha256": "5098a63e7618b2453ce42277104fd46ca45eed35bd5ded52a95a0687a43642bf"
+      },
+      {
+        "path": "src/lib/account-v2/pending-operation.ts",
+        "sha256": "5c9003b6463a7c408c6c2a82a9e9d4ddfc7bc13ced76ef4e69ce94b786a317b4"
+      },
+      {
+        "path": "src/lib/account-api/sync-wire.ts",
+        "sha256": "9b8a09e9d79f2dd353d197927b0f5c5a135a607ad2ed3889eae3c7446a06f822"
+      },
+      {
+        "path": "src/lib/account-api/sync-server.ts",
+        "sha256": "3e38f64355635890a612f2a7923f9e37fbeabad5b48c3a69aaf1a31df11d307b"
+      },
+      {
+        "path": "src/lib/account-api/server.ts",
+        "sha256": "69972923d73c236c59dccaa330897db151f75300843ebe0b1a5fb2d60d37beb2"
+      },
+      {
+        "path": "src/lib/account-api/types.ts",
+        "sha256": "ed96a3d6c36c6c1df8c7fe64872fe40effd320be4a4f1c9d4bedd8ef8a73df8c"
+      },
+      {
+        "path": "src/islands/ChartCalculator.tsx",
+        "sha256": "5dda4f013b779ee4ce9e1e0d5f33dd6453a3eb4d2342255b80c353d5a854763f"
+      },
+      {
+        "path": "src/islands/AccountSyncV2Panel.tsx",
+        "sha256": "d1a9b4ee88a64fb99bded2f698f518d20b6586a839c68fbdffb9dba93cafc392"
+      },
+      {
+        "path": "supabase/migrations/20260811153303_account_sync_v2_foundation.sql",
+        "sha256": "a647f1dbcd2aa821cfbe3a305a5c2a81307d0e8333f3f56712f3f88fb7dc51b3"
+      }
+    ],
+    "review": "HOUSE-COMPATIBILITY.md",
+    "probe": "compatibility-boundary.json",
+    "scope": "Read-only repository and public documentation; no live account/DB queries or source changes."
+  },
+  "reproduction": {
+    "source": "import assert from 'node:assert/strict';\nimport { writeFileSync } from 'node:fs';\nimport { selfChartPutWire } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-v2/chart-wire.ts';\nimport { parseReadyRemoteChart } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-v2/remote-chart.ts';\nimport { parseAccountSyncInput, parseSerializedAccountPrivateChartPayload } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-api/sync-wire.ts';\nimport { serializePrivateChartPayloadV1, putChartMutationFingerprintV1 } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-v2/mutation-fingerprint.ts';\nimport { POSITION_BODY_ORDER } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/share-positions.ts';\n\nconst uuid='11111111-1111-4111-8111-111111111111';\nconst chart:any={id:uuid,name:'Synthetic compatibility',createdAt:'2026-01-01T00:00:00.000Z',updatedAt:'2026-01-01T00:00:00.000Z',birth:{date:'2001-12-21',time:'09:00',timeKnown:true,place:{name:'Synthetic place',admin1:'',country:'',lat:78.2232,lon:15.6267,tz:'Etc/UTC'}},summary:{engineVersion:'synthetic-v1',utcISO:'2001-12-21T09:00:00.000Z',houseSystem:'whole',bodies:POSITION_BODY_ORDER.map((body,index)=>({body,lon:index*20,retrograde:false})),angles:{asc:42,mc:140},flags:['polar-fallback']}};\nconst request=(body:any)=>({headers:{'content-type':'application/json'},body});\nconst wire=selfChartPutWire(chart,uuid,uuid,3)!;\nassert.ok(wire);\nassert.ok(parseAccountSyncInput('chart-put',request(wire)));\nconst raw=serializePrivateChartPayloadV1(wire);\nassert.ok(parseSerializedAccountPrivateChartPayload(raw));\nconst hasExtraBirth={...wire,birth:{...wire.birth,requestedHouseSystem:'placidus'}};\nconst hasExtraDerived={...wire,derived:{...wire.derived,requestedHouseSystem:'placidus'}};\nassert.equal(parseAccountSyncInput('chart-put',request(hasExtraBirth)),null);\nassert.equal(parseAccountSyncInput('chart-put',request(hasExtraDerived)),null);\nassert.equal(serializePrivateChartPayloadV1(hasExtraBirth),raw);\nassert.equal(serializePrivateChartPayloadV1(hasExtraDerived),raw);\nassert.equal(parseSerializedAccountPrivateChartPayload(JSON.stringify({...JSON.parse(raw),schema:'zodiacs.account.private-chart.v2'})),null);\nconst plainWithExtra=JSON.parse(raw);plainWithExtra.derived.requestedHouseSystem='placidus';\nassert.equal(parseSerializedAccountPrivateChartPayload(JSON.stringify(plainWithExtra)),null);\nconst remote={outcome:'ready',chart_id:uuid,label:wire.label,subject_kind:'self',subject_attestation:'self_declared_v1',revision:4,created_at:chart.createdAt,updated_at:chart.updatedAt,birth:wire.birth,derived:{positions:wire.derived.positions,time_known:wire.derived.timeKnown,sun_sign:wire.derived.sunSign,engine_version:wire.derived.engineVersion,house_system:wire.derived.houseSystem}};\nassert.ok(parseReadyRemoteChart(remote));\nassert.equal(parseReadyRemoteChart({...remote,derived:{...remote.derived,requested_house_system:'placidus'}}),null);\nconst fallbackResave=structuredClone(chart);fallbackResave.summary.requestedHouseSystem='placidus';\nconst explicitWhole=structuredClone(chart);explicitWhole.summary.requestedHouseSystem='whole';explicitWhole.summary.flags=[];\nconst oldFallbackWire=selfChartPutWire(fallbackResave,uuid,uuid,3)!;\nconst oldExplicitWire=selfChartPutWire(explicitWhole,uuid,uuid,3)!;\nassert.deepEqual(oldFallbackWire,oldExplicitWire);\nassert.equal(serializePrivateChartPayloadV1(oldFallbackWire),serializePrivateChartPayloadV1(oldExplicitWire));\nconst fingerprint=await putChartMutationFingerprintV1(oldFallbackWire);\nassert.equal(fingerprint,await putChartMutationFingerprintV1(oldExplicitWire));\nconst report={schemaVersion:1,observedAt:new Date().toISOString(),node:process.version,scope:'Pure local calls using synthetic values; no request, account, storage or source mutation.',baseline:{wireAccepted:true,plaintextAccepted:true,readyProjectionAccepted:true},extensions:{birthExtraRejected:true,derivedExtraRejected:true,plaintextExtraRejected:true,plaintextV2RejectedByV1:true,readyExtraRejected:true,serializerDropsExtraBirth:true,serializerDropsExtraDerived:true},indistinguishableOldWrites:{fallbackOriginalRequest:'placidus',explicitNewRequest:'whole',actualSystemForBoth:'whole',oldWiresIdentical:true,canonicalBytesIdentical:true,mutationFingerprintsIdentical:true,fingerprint},conclusion:'An unchanged old-client write cannot identify whether retained richer request metadata should survive or be replaced. Use a version-aware safe downgrade/write policy, not inference.'};\nwriteFileSync('/private/tmp/zodiacs-platform-c02-remote/compatibility-boundary.json',JSON.stringify(report,null,2)+'\\n');\nconsole.log(JSON.stringify(report,null,2));\n",
+    "execution": "Node22.23.2 with the installed site vite-node. The original command is recorded below. Substitute the reviewed site checkout and scratch paths when replaying elsewhere.",
+    "limitations": [
+      "Pure-function synthetic compatibility proof, not a live protocol or database round-trip.",
+      "The candidate shape alternatives in the linked Markdown are not implemented by this checkpoint."
+    ],
+    "workingDirectory": "/private/tmp/zodiacs-platform-c02-remote",
+    "command": "PATH=/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:/private/tmp/zodiacs-platform-runtime/node_modules/.bin:$PATH /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /Users/chiburashka/.codex/worktrees/4806/site/node_modules/vite-node/vite-node.mjs --root /private/tmp/zodiacs-platform-c02-remote --config /private/tmp/zodiacs-platform-c02-remote/vite.config.mjs --script compatibility-boundary.ts"
+  }
+}

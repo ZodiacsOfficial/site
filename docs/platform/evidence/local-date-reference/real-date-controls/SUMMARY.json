@@ -1,0 +1,141 @@
+{
+  "observedBase": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "headAtFinalRecheck": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "copiedSourceChecks": [
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "copiedSha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd",
+      "currentRootStillMatches": true
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "copiedSha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313",
+      "currentRootStillMatches": true
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "copiedSha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "currentRootStillMatches": true
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "copiedSha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "currentRootStillMatches": true
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "copiedSha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "currentRootStillMatches": true
+    }
+  ],
+  "node": {
+    "version": "v22.23.2",
+    "icu": "78.2",
+    "tzdb": "2026a",
+    "summary": {
+      "count": 17,
+      "noonDateMismatches": [
+        {
+          "date": "2011-12-30",
+          "zone": "Pacific/Apia",
+          "status": "unresolved",
+          "noonWall": "2011-12-31T12:00:00.000"
+        },
+        {
+          "date": "1993-08-21",
+          "zone": "Pacific/Kwajalein",
+          "status": "unresolved",
+          "noonWall": "1993-08-22T12:00:00.000"
+        },
+        {
+          "date": "1994-12-31",
+          "zone": "Pacific/Kiritimati",
+          "status": "unresolved",
+          "noonWall": "1995-01-01T12:00:00.000"
+        },
+        {
+          "date": "1844-12-31",
+          "zone": "Pacific/Guam",
+          "status": "unresolved",
+          "noonWall": "1845-01-01T12:00:00.000"
+        }
+      ],
+      "nonemptyNoonDateMismatches": [],
+      "sameDateNoonCoverageCounterexamples": [],
+      "unresolvedCount": 17
+    }
+  },
+  "native": {
+    "browser": "152.0.7977.83",
+    "summary": {
+      "count": 17,
+      "noonDateMismatches": [
+        {
+          "date": "2011-12-30",
+          "zone": "Pacific/Apia",
+          "status": "empty",
+          "noonWall": "2011-12-31T12:00:00.000"
+        },
+        {
+          "date": "1993-08-21",
+          "zone": "Pacific/Kwajalein",
+          "status": "empty",
+          "noonWall": "1993-08-22T12:00:00.000"
+        },
+        {
+          "date": "1994-12-31",
+          "zone": "Pacific/Kiritimati",
+          "status": "empty",
+          "noonWall": "1995-01-01T12:00:00.000"
+        },
+        {
+          "date": "1844-12-31",
+          "zone": "Pacific/Guam",
+          "status": "empty",
+          "noonWall": "1845-01-01T12:00:00.000"
+        }
+      ],
+      "nonemptyNoonDateMismatches": [],
+      "sameDateNoonCoverageCounterexamples": [
+        {
+          "date": "1919-03-31",
+          "zone": "America/Toronto",
+          "extraMilliseconds": 0,
+          "missingMilliseconds": 1800000,
+          "intervalCount": 1
+        },
+        {
+          "date": "2009-11-01",
+          "zone": "America/St_Johns",
+          "extraMilliseconds": 3540000,
+          "missingMilliseconds": 0,
+          "intervalCount": 2
+        },
+        {
+          "date": "2009-10-31",
+          "zone": "America/St_Johns",
+          "extraMilliseconds": 0,
+          "missingMilliseconds": 3540000,
+          "intervalCount": 2
+        },
+        {
+          "date": "1867-10-18",
+          "zone": "America/Juneau",
+          "extraMilliseconds": 0,
+          "missingMilliseconds": 30388000,
+          "intervalCount": 2
+        },
+        {
+          "date": "1867-10-19",
+          "zone": "America/Juneau",
+          "extraMilliseconds": 30388000,
+          "missingMilliseconds": 0,
+          "intervalCount": 2
+        }
+      ],
+      "unresolvedCount": 0
+    },
+    "finiteIntlMembershipChecks": 85
+  },
+  "status": "read-only preparation; no activation"
+}

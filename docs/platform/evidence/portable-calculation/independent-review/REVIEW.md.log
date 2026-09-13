@@ -1,0 +1,53 @@
+# Independent portable calculation review
+
+Result: **11/11 independent probe groups passed** against frozen patch
+`69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45`.
+No blocking finding remains from this bounded code and runtime review.
+
+The actual implementation, shared adapter, current full adapter, installed SDK
+and ephemeris were bundled in memory with esbuild and executed under Node
+22.23.2. No calculator or receipt mock replaced those functions. `identities.json`
+records all four frozen source hashes, the patch and candidate archive hashes,
+the actual loaded module paths/hashes, and the harness/bundle identities. Source
+hashes were checked before and after the run. Some installed dependency paths
+resolve through the scratch checkout's links to the root checkout; their actual
+paths and bytes are recorded. The archive was hashed; this probe does not itself
+repeat the separate full installed-package-to-archive member comparison.
+
+The independent cases cover historical year 0099, state isolation between
+calculations, fixed errors for revoked context proxies, frozen snapshots without
+Date objects, exact once-only input property reads, accessor rejection without
+invocation, detachment from mutable chart/input/context branches, requested versus
+actual polar houses, unknown time with explicit source spelling, preserved full
+adapter input identity and reference semantics, and missing-location/noon defaults.
+Raw results are in `probe.log` and `result.json`; `probe.mjs` is the executable
+harness. All data is synthetic. No product file or user storage was edited.
+
+The review identified one wording boundary, now documented and regression-tested
+in the frozen source: context is captured **after calculation**, so a caller-owned
+input getter can change context before capture. The independent timing case
+confirms this behavior and subsequent detachment. The function does not promise
+an atomic entry-time snapshot or authenticate provenance claims. No duplicate
+context validator or same-realm sandbox was added.
+
+The shared mapper retains existing `full.ts` input identity and angle/house/aspect
+references. Its body and flag projections remain fresh arrays. The portable path
+uses receipt-derived canonical input and freezes the detached receipt/snapshot,
+while its presentation chart remains mutable. `Readonly<NatalEnvelope>` provides
+shallow compile-time protection and remains compatible with the SDK serializer;
+recursive immutability is enforced at runtime. This review does not claim deep
+compile-time readonly SDK arrays.
+
+To reproduce with the same checkout, author evidence and installed dependencies:
+
+```sh
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-portable-review/probe.mjs /private/tmp/zodiacs-platform-portable-calculation /private/tmp/zodiacs-platform-portable-evidence > /private/tmp/zodiacs-platform-portable-review/probe.log 2>&1
+```
+
+The harness writes only beside itself. Reproduction requires the frozen author's
+`source.patch` and `identity.json`; it fails before running cases on mismatched
+source or patch bytes. Output timestamps change on a rerun.
+
+This is independent agent review and finite Node execution evidence. It is not
+human approval, broad astronomical/historical certification, browser verification,
+account migration acceptance, publication, deployment or external adoption.

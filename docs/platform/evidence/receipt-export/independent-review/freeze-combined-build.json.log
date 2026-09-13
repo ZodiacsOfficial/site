@@ -1,0 +1,10 @@
+{
+  "staticRoot": "/private/tmp/zodiacs-platform-site-receipt-export/dist",
+  "at": "2026-09-08T06:13:00.953607+00:00",
+  "subject": "receipt Freeze 2 plus interaction Freeze 1",
+  "buildLogs": {
+    "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-astro-build.log": "d11b3fa75278020c759ae10699820de38e59220998fffbc5057436dcbdad0596",
+    "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-static-guide-build.log": "97f6f954b2c9e2b0d7079d4a7f82163a51ab8a64f2d45e153ff636bf52ec9465"
+  },
+  "helperSha256": "191e125ef6bb163412662bcf2313dc37d542aff47686615081f7064b626e4588"
+}

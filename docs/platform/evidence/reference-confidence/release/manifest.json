@@ -1,0 +1,32 @@
+[
+  {
+    "path": "ci-runs.json",
+    "bytes": 194,
+    "sha256": "2d9b4d213c6af326b8f884276e2ba9edbe062e2a8a3a6f28ea0e47ec13cfeca7"
+  },
+  {
+    "path": "existing-pr.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "path": "pr-body.md",
+    "bytes": 3139,
+    "sha256": "bb345d4e0bf4f614ced9113a40d45ed8bfe91d22e9a32f7182390409eda54be2"
+  },
+  {
+    "path": "pr-files.json",
+    "bytes": 5253191,
+    "sha256": "627824e590dca19da0ca32ab3cac50aff94eb7a551abfc77735eb7de1d94d8d8"
+  },
+  {
+    "path": "pr-verification.json",
+    "bytes": 1109,
+    "sha256": "0ac314f6b387d29b134427cd6caaa0974d6a5f97280b3619f9eca03e896023d3"
+  },
+  {
+    "path": "pr.json",
+    "bytes": 387,
+    "sha256": "6e4aaabea0718f87f8f9dd8861bddcbd712963aedaf1ec6016578fe9e5865705"
+  }
+]

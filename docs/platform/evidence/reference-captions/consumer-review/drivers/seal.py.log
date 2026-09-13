@@ -1,0 +1,55 @@
+import json, hashlib, shutil
+from pathlib import Path
+r=Path(__file__).parent
+d=r/'delivery-freeze1'
+assert not d.exists()
+d.mkdir()
+def sha(b):return hashlib.sha256(b).hexdigest()
+def cp(src,dest):
+ assert src.is_file() and not src.is_symlink(),str(src)
+ out=d/dest;out.parent.mkdir(parents=True,exist_ok=True);out.write_bytes(src.read_bytes())
+records=json.loads((r/'freeze1-identity.json').read_text())
+assert sha((r/'freeze1-identity.json').read_bytes())=='c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644'
+assert sha((r/'freeze1.patch').read_bytes())=='0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36'
+source=set()
+for path,info in records['files'].items():
+ assert sha((r/'candidate'/path).read_bytes())==info['sha256']
+ for variant in ['baseline','candidate']:
+  if (r/variant/path).exists():source.add((variant,path))
+used_inputs=[]
+for variant in ['baseline','candidate']:
+ for item in json.loads((r/f'consumer-{variant}-inputs.json').read_text()):
+  p=(r/item['path']).resolve();assert sha(p.read_bytes())==item['sha256'];used_inputs.append(item)
+  if p.is_relative_to(r/variant):source.add((variant,str(p.relative_to(r/variant))))
+for item in json.loads((r/'native-images/input-identities.json').read_text()):
+ variant=item['variant'];p=(r/variant/item['path']).resolve();assert sha(p.read_bytes())==item['sha256'];used_inputs.append(item)
+ if p.is_relative_to(r/variant):source.add((variant,str(p.relative_to(r/variant))))
+for item in json.loads((r/'catalog-runtime-inputs.json').read_text()):
+ p=(r/item['path']).resolve();assert sha(p.read_bytes())==item['sha256'];used_inputs.append(item)
+ if p.is_relative_to(r/'candidate'):source.add(('candidate',str(p.relative_to(r/'candidate'))))
+for variant in ['baseline','candidate']:
+ source.add((variant,'src/styles/tokens.css'))
+for variant,path in sorted(source):cp(r/variant/path,'source/'+variant+'/'+path+'.log')
+image=json.loads((r/'native-images/result.json').read_text())
+assert sha((r/'image-drive.mjs').read_bytes())==image['driverSha256']
+for row in image['rows']:
+ b=(r/'native-images'/row['image']['file']).read_bytes();assert sha(b)==row['image']['sha256'];assert len(b)==row['image']['bytes']
+for path,info in image['assetIdentities'].items():
+ b=(r/'candidate/public'/path.lstrip('/')).read_bytes();assert sha(b)==info['sha256'];cp(r/'candidate/public'/path.lstrip('/'),'native-assets'+path)
+files=['REVIEW.md','C-016-decision.md','freeze1-identity.json','freeze1.patch','assembled-source-identity.json','apply.log','consumer-build.log','consumer-baseline-result.json','consumer-candidate-result.json','consumer-baseline.stderr','consumer-candidate.stderr','consumer-baseline-metafile.json','consumer-candidate-metafile.json','consumer-baseline-inputs.json','consumer-candidate-inputs.json','source-audit-result.json','source-audit.log','source-audit.initial.log','reconcile-result.json','reconcile.log','catalog-runtime-metafile.json','catalog-runtime-inputs.json','catalog-runtime-result.json','catalog-runtime.log','image-drive.log','image-drive.initial.log']
+for f in files:cp(r/f,f)
+for f in ['image-drive.mjs','image-drive.initial.mjs.log','consumer-build.mjs','consumer-baseline.tsx','consumer-candidate.tsx','consumer-baseline.mjs','consumer-candidate.mjs','source-audit.mjs','source-audit.initial.mjs.log','reconcile.py','catalog-runtime-audit.mjs','catalog-runtime-entry.ts.log','catalog-runtime-bundle.mjs','seal.py']:
+ cp(r/f,'drivers/'+f+('' if f.endswith('.log') else '.log'))
+for dirname in ['native-images','native-images-initial','consumer-output-baseline','consumer-output-candidate']:
+ for p in sorted((r/dirname).rglob('*')):
+  if p.is_file():cp(p,str(p.relative_to(r))+('.log' if p.suffix in ['.js','.html'] else ''))
+summary={'frozenFiles':33,'sourceSnapshots':len(source),'rehashedInputRecords':len(used_inputs),'nativeImageGroups':len(image['rows']),'observedRequests':len(image['requests']),'observedAllowedGetRequests':sum(x['allowed'] and x['method']=='GET' for x in image['requests']),'assets':len(image['assetIdentities']),'sourceChecks':26,'reconciliationChecks':23,'runtimeCatalogs':6,'runtimeKeysEach':420,'identitySha256':sha((r/'freeze1-identity.json').read_bytes()),'patchSha256':sha((r/'freeze1.patch').read_bytes()),'qualification':'All observed fixture requests are same loopback origin GETs; context route controls are not a claim about all browser process background traffic. No live account/auth or remote source request occurred. No author or shared source edited.'}
+(d/'seal-verification.json').write_text(json.dumps(summary,indent=2)+'\n')
+manifest=[]
+for p in sorted(d.rglob('*')):
+ if p.is_file():
+  b=p.read_bytes();manifest.append({'path':str(p.relative_to(d)),'bytes':len(b),'sha256':sha(b)})
+content=json.dumps({'files':manifest,'records':len(manifest),'bytes':sum(x['bytes'] for x in manifest)},indent=2)+'\n'
+(d/'manifest.json').write_text(content)
+for row in manifest:assert sha((d/row['path']).read_bytes())==row['sha256']
+print(json.dumps({'delivery':str(d),'manifestSha256':sha(content.encode()),'records':len(manifest),'bytes':sum(x['bytes'] for x in manifest),'summary':summary},indent=2))

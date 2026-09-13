@@ -1,0 +1,104 @@
+{
+  "parities": [
+    {
+      "case": "reference Toronto",
+      "oldConfidence": [
+        "aries"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "aries",
+      "newRegistry": null,
+      "referenceSunContext": "aries",
+      "nativeSha256": "6a063d175da360ff6ae78b4365e85de00d8b160fcdb64909a4b2054833270005",
+      "envelopeSha256": "4b6c55ef931c05c4b8184ab5c40ddf6ef22c1f7ae64b4c741a3d7a631a1813bd",
+      "positionsSha256": "04755025ca6a88712d056f45b8e5fadcdd03f88716560496335e1e396909710d",
+      "witness": {
+        "member": true,
+        "longitude": 359.7145003582242,
+        "sign": "pisces"
+      }
+    },
+    {
+      "case": "reference Juneau",
+      "oldConfidence": [
+        "gemini"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "libra",
+      "newRegistry": null,
+      "referenceSunContext": "libra",
+      "nativeSha256": "8a6929cbd5546ab8d57cc58278e758efdd83a80a18285a88e5a45b62e8a19d9c",
+      "envelopeSha256": "0fcb106d5b49c79b7b267f5dd7471031a60095c1b4d2b74b9a708d3800b67a85",
+      "positionsSha256": "1f6ea6eb09739ace4bf5a355c8d9027f6444778876500a9af241af000e8698fd",
+      "witness": {
+        "member": true,
+        "longitude": 97.12696569323725,
+        "sign": "cancer"
+      }
+    },
+    {
+      "case": "reference ordinary singleton",
+      "oldConfidence": [
+        "aries"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "capricorn",
+      "newRegistry": null,
+      "referenceSunContext": "capricorn",
+      "nativeSha256": "0af65463da3833dd464eb7fdf38eec129056a5db0a03669010ba3b9ad2460c0f",
+      "envelopeSha256": "2f4e952f9ac38df974e3099239b7cb0aa978d20341409e7376710b03860f130f",
+      "positionsSha256": "8b946ffa15e743832e458e8e7214c2c91b4d7535d02ae7c29eeba2be606b45b5",
+      "witness": null
+    },
+    {
+      "case": "reference ordinary two signs",
+      "oldConfidence": [
+        "aquarius",
+        "pisces"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "capricorn",
+      "newRegistry": null,
+      "referenceSunContext": "capricorn",
+      "nativeSha256": "98f60ca67fcba0b4e6dfe8de8b4cf1470fcc7d0384c4c886b51db2c3b4bb7722",
+      "envelopeSha256": "178e1853efe15e72e0aa7f5f596177c503461e9e4aa8830146985cffe07639d2",
+      "positionsSha256": "cbb2344133143f38a20b0ac3753eedc013ac5f6845cc22c4eedbe0f5b55bbecb",
+      "witness": null
+    },
+    {
+      "case": "reference same-date gap",
+      "oldConfidence": [
+        "scorpio"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "libra",
+      "newRegistry": null,
+      "referenceSunContext": "libra",
+      "nativeSha256": "dd8ebe317b0a7761f4d94ad5c543f3db77938b2c0ab8bdbd75b4b9f601d3547f",
+      "envelopeSha256": "491d6847b17eebbdec48fddd6c3559dc46894796a0a04f07b999fbc763aff828",
+      "positionsSha256": "293a2107d741aa976fc8e316ce45c9a6d34c9cc283d77641682a5f21b0ab1fe7",
+      "witness": null
+    },
+    {
+      "case": "reference repeated Apia",
+      "oldConfidence": [
+        "libra",
+        "scorpio"
+      ],
+      "newConfidence": [],
+      "oldRegistry": "cancer",
+      "newRegistry": null,
+      "referenceSunContext": "cancer",
+      "nativeSha256": "9d8dad09c3dfebc53fb71dc92bc2c05ac3eb9b66564c8aeab3bc4d5c857e7983",
+      "envelopeSha256": "b2fe180f2e981d1fadd4aadaf2009bf3728928bd6c9842dcfc81e84e404296d1",
+      "positionsSha256": "2e157899f98b3dc80bb3cca8a0eebbcd01c570dad732c8a0b7a2ae11779604ad",
+      "witness": null
+    }
+  ],
+  "requests": {
+    "total": 861,
+    "nonGet": 0,
+    "blocked": 0
+  },
+  "allSourceIdentitiesMatched": true
+}

@@ -1,0 +1,11 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ✓ packages/engine/src/geo.test.ts (3 tests) 79ms
+ ✓ packages/engine/src/houses-regression.test.ts (6 tests) 303ms
+ ✓ packages/engine/src/engine.test.ts (24 tests) 240ms
+
+ Test Files  3 passed (3)
+      Tests  33 passed (33)
+   Start at  00:56:59
+   Duration  1.42s (transform 561ms, setup 0ms, collect 841ms, tests 623ms, environment 0ms, prepare 425ms)

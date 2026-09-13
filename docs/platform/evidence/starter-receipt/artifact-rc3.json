@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "7da2bdb3a5bc6d65921997ba1cb79609f330c765",
+  "version": "0.1.0-rc.3",
+  "file": "zodiacs-platform-starter-0.1.0-rc.3.tgz",
+  "sha256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a",
+  "integrity": "sha512-DZNSfDY9Wv/JKZP1c9CmzM3Lw72By3YXjcbHI7c7HfNMAJ2gPv+EpwcUX6BMFLZ948ien+e6mkET6+RAw2A3dg==",
+  "files": 21,
+  "packedBytes": 56135,
+  "unpackedBytes": 113407,
+  "publishedToNpm": false,
+  "publicDownloadVerified": false
+}

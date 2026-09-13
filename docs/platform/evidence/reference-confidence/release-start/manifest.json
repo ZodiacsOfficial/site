@@ -1,0 +1,27 @@
+[
+  {
+    "path": "astrofolio.json",
+    "bytes": 3635,
+    "sha256": "35a8803265f42f5fde2396cb7e302faf4863bcb084bdd03f7b08b4fee80ffe19"
+  },
+  {
+    "path": "deployment-state.json",
+    "bytes": 7304,
+    "sha256": "264427dfaf2e3016d378bb95b5e6be3becac93a5532d1c7371a50513d4e3e746"
+  },
+  {
+    "path": "sdk-hold.json",
+    "bytes": 1544,
+    "sha256": "68e9a9890fa1c30c392730d257881dc4b82c723fd6b0849a71443245f505292b"
+  },
+  {
+    "path": "sdk-main.json",
+    "bytes": 316,
+    "sha256": "c1e7b0b19d435e185d7b871b683979c185fe5d1e33a1b8711c6da272af93cde6"
+  },
+  {
+    "path": "site-main.json",
+    "bytes": 137,
+    "sha256": "341271d0e9309eda4f6bbaa7d263a206703e24fb947e5117c268338b6f41fdba"
+  }
+]

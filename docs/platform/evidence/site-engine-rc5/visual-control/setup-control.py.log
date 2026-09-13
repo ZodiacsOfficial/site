@@ -1,0 +1,23 @@
+from pathlib import Path
+import subprocess,tarfile,json,shutil,hashlib,datetime
+root=Path('/Users/chiburashka/.codex/worktrees/4806/site');out=Path(__file__).resolve().parent;site=out/'site';base='ba65375a34cee6a85f94b53ba45861f1b81f34ef';main='d4d5717d132a28cd6d7cda3007e3b898bb74669f';oldmain='7f953e3fca0e7d5009e5602a1dad69edff0f54cc';sha=lambda b:hashlib.sha256(b).hexdigest()
+with tarfile.open(out/'base-source.tar') as tar:
+ for m in tar.getmembers():
+  assert not Path(m.name).is_absolute() and '..' not in Path(m.name).parts
+  assert m.isfile() or m.isdir() or m.issym(), (m.name,m.type)
+  if m.issym(): assert (site/m.name).parent.joinpath(m.linkname).resolve().is_relative_to(site.resolve())
+ tar.extractall(site)
+subprocess.run(['cp','-cR',str(root/'node_modules'),str(site/'node_modules')],check=True)
+shutil.rmtree(site/'node_modules/@zodiacs/engine');engine=site/'node_modules/@zodiacs/engine';engine.mkdir(parents=True)
+with tarfile.open(site/'vendor/zodiacs-engine-0.1.1-rc.1.tgz') as tar:
+ for m in tar.getmembers():
+  assert m.isfile() and m.name.startswith('package/') and '..' not in Path(m.name).parts
+  p=engine/m.name[len('package/'):];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(tar.extractfile(m).read())
+paths=subprocess.check_output(['git','diff','--name-only',oldmain,main],cwd=root,text=True).splitlines();assert len(paths)==22,paths
+receipt=[]
+for p in paths:
+ b=subprocess.check_output(['git','show',f'{main}:{p}'],cwd=root);dest=site/p;dest.parent.mkdir(parents=True,exist_ok=True);before=sha(dest.read_bytes()) if dest.exists() else None;dest.write_bytes(b);receipt.append({'path':p,'baseSHA256':before,'upstreamSHA256':sha(b)})
+shutil.copytree(root/'tests/visual/artifacts/visual',out/'current-candidate-visual')
+shutil.copy2(root/'docs/platform/evidence/site-engine-rc5/release/visual.log',out/'current-candidate-visual.log')
+identity={'createdAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'baseCommit':base,'datedUpstream':main,'previousMain':oldmain,'baseSourceArchiveSHA256':sha((out/'base-source.tar').read_bytes()),'engine':json.loads((engine/'package.json').read_text())['version'],'engineArtifactSHA256':sha((site/'vendor/zodiacs-engine-0.1.1-rc.1.tgz').read_bytes()),'astronomyEngine':json.loads((site/'node_modules/astronomy-engine/package.json').read_text())['version'],'upstreamFiles':receipt,'baselineHashes':{str(p.relative_to(site)):sha(p.read_bytes()) for p in (site/'tests/visual/baselines/darwin').rglob('*.png')}}
+(out/'identity.json').write_text(json.dumps(identity,indent=2)+'\n');print(json.dumps({'out':str(out),'engine':identity['engine'],'upstreamFiles':len(receipt),'baselineImages':len(identity['baselineHashes'])}))

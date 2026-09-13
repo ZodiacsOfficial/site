@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-09-08T04:45:56.068089+00:00",
+  "rootHead": "dcc4e437a99f812666cd19dc85e6d781dbb3bedc",
+  "files": {
+    "src/lib/profile/store.ts": {
+      "snapshot": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3",
+      "current": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    "src/lib/profile/read-store.ts": {
+      "snapshot": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485",
+      "current": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    "src/lib/profile/schema.ts": {
+      "snapshot": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+      "current": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    "src/lib/account-v2/profile-boundary.ts": {
+      "snapshot": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829",
+      "current": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829"
+    },
+    "src/lib/account-v2/profile-lease.ts": {
+      "snapshot": "be434eba4d19ed65e439609dd627108538d15c12a78b36e999e6d75adc0a30ef",
+      "current": "be434eba4d19ed65e439609dd627108538d15c12a78b36e999e6d75adc0a30ef"
+    },
+    "src/lib/account-v2/profile-access-reader.ts": {
+      "snapshot": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048",
+      "current": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    "src/lib/account-v2/auth-epoch.ts": {
+      "snapshot": "a0c848ec383be9023e17a13bd22a781b61778fcc0d3812b6ee9d3495d81e3ae8",
+      "current": "a0c848ec383be9023e17a13bd22a781b61778fcc0d3812b6ee9d3495d81e3ae8"
+    },
+    "src/lib/account-v2/local-state.ts": {
+      "snapshot": "94133384e3e9184282c8350f038ab7cce5a95f815bd6e8f50d7778f5f916e345",
+      "current": "94133384e3e9184282c8350f038ab7cce5a95f815bd6e8f50d7778f5f916e345"
+    },
+    "src/lib/living-chart/store.ts": {
+      "snapshot": "47d7d834bff25a8d1b288a33bba72b5116bbf8c66fb54234c70573115b86c676",
+      "current": "47d7d834bff25a8d1b288a33bba72b5116bbf8c66fb54234c70573115b86c676"
+    },
+    "src/lib/living-chart/owner.ts": {
+      "snapshot": "d22af6676482d11d0c30ad5ac71ecc0b4fdc98cfba9f4e57b8f8b5b1d25e619a",
+      "current": "d22af6676482d11d0c30ad5ac71ecc0b4fdc98cfba9f4e57b8f8b5b1d25e619a"
+    },
+    "src/islands/AccountProfileAccessBootstrap.tsx": {
+      "snapshot": "f8d1512644736523e143390acfc5f8e55a9fb1a05d57dcd6e000711a4ded3cbd",
+      "current": "f8d1512644736523e143390acfc5f8e55a9fb1a05d57dcd6e000711a4ded3cbd"
+    },
+    "src/islands/AccountSyncV2Panel.tsx": {
+      "snapshot": "d1a9b4ee88a64fb99bded2f698f518d20b6586a839c68fbdffb9dba93cafc392",
+      "current": "d1a9b4ee88a64fb99bded2f698f518d20b6586a839c68fbdffb9dba93cafc392"
+    }
+  }
+}

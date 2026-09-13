@@ -1,0 +1,17 @@
+from pathlib import Path
+import json,hashlib,shutil,subprocess,datetime
+root=Path.cwd();source=Path('/private/tmp/zodiacs-platform-local-date-intervals-integration');dest=root/'docs/platform/evidence/local-date-intervals/integration';dest.mkdir(parents=True,exist_ok=True)
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+records=[]
+for p in sorted(source.rglob('*')):
+ if not p.is_file():continue
+ rel=p.relative_to(source);target=dest/rel
+ if p.suffix in ['.py','.mjs','.js','.ts']:target=target.with_name(target.name+'.log')
+ target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target);assert sha(p)==sha(target)
+ records.append({'sourcePath':str(rel),'path':str(target.relative_to(dest)),'bytes':target.stat().st_size,'sha256':sha(target)})
+(dest/'manifest.json').write_text(json.dumps({'baseCommit':'30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14','records':records},indent=2)+'\n')
+i=json.loads(Path('/private/tmp/zodiacs-platform-local-date-intervals-evidence/source-freeze1-identity.json').read_text())
+for r in i['files']:assert sha(root/r['path'])==r['sha256']
+i.update(rootBaseCommit='30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14',reviewStatus='Author, independent and root local acceptance passed; hosted release checks pending',captureManifestSha256=sha(root/'docs/acceptance/phase1/screenshots/manifest.json'))
+(dest.parent/'root-source-identity.json').write_text(json.dumps(i,indent=2)+'\n')
+print('Root integration records',len(records),'manifest',sha(dest/'manifest.json'))

@@ -1,0 +1,157 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "records": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "verified": true
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14534,
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "verified": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.test.ts",
+      "bytes": 1993,
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e",
+      "verified": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "verified": true
+    },
+    {
+      "path": "tests/post-chart-context-clear-drive.mjs",
+      "bytes": 23894,
+      "sha256": "3e98393b5ce53e0f15d9ccc6a49fd6da199186da7076e35f9a22938daec9ccfe",
+      "verified": true
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "bytes": 44367,
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654",
+      "verified": true
+    }
+  ],
+  "product": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "beforeSha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b",
+      "afterSha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb",
+      "moduleSpecifiersUnchanged": []
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "beforeSha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1",
+      "afterSha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "moduleSpecifiersUnchanged": [
+        {
+          "kind": "static",
+          "value": "@supabase/supabase-js"
+        },
+        {
+          "kind": "static",
+          "value": "preact/hooks"
+        },
+        {
+          "kind": "static",
+          "value": "../lib/account-v2/profile-access-reader"
+        },
+        {
+          "kind": "static",
+          "value": "../lib/hooks/useProfileAccessGeneration"
+        },
+        {
+          "kind": "static",
+          "value": "../lib/email/post-chart-state"
+        },
+        {
+          "kind": "static",
+          "value": "../lib/profile/post-chart-context"
+        },
+        {
+          "kind": "dynamic",
+          "value": "../lib/profile/sync"
+        },
+        {
+          "kind": "dynamic",
+          "value": "../lib/profile/daily-email-client"
+        },
+        {
+          "kind": "dynamic",
+          "value": "../lib/profile/store"
+        },
+        {
+          "kind": "dynamic",
+          "value": "../lib/profile/sync"
+        },
+        {
+          "kind": "dynamic",
+          "value": "../lib/profile/daily-email-client"
+        }
+      ]
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "beforeSha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905",
+      "afterSha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "moduleSpecifiersUnchanged": []
+    }
+  ],
+  "unchanged": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/profile/daily-email-client.ts",
+      "sha256": "19c31b36c3fd0996259cfbf3567a5a8a57f1abb31bb6062948933468c44dd20a",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/profile/sync.ts",
+      "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/profile/store.ts",
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/account-v2/profile-access-reader.ts",
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/hooks/useProfileAccessGeneration.ts",
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    },
+    {
+      "path": "src/lib/email/post-chart-state.ts",
+      "sha256": "cc49feb8b3633d082abcf7db7d0b198de8e45d631a924cb7116a427ae355aaec",
+      "candidateOverlay": false,
+      "fixtureMatchesBase": true
+    }
+  ],
+  "scope": "Exactly six frozen overlay files; three product files. Unchanged module specifiers; no changed request client, auth implementation, account access, astronomy or calculator source. Source comparison is not a production emitted bundle or backend authority proof."
+}

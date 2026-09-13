@@ -1,0 +1,11 @@
+{
+  "search": "Exact declared start through at most next 2000 source characters, for supplied SHA-256 only",
+  "found": [
+    {
+      "start": 23278,
+      "end": 23553,
+      "length": 275,
+      "text": "  function invalidateProfileHandoff(): void {\n    advanceInputRevision();\n    profileHandoffIdRef.current += 1;\n    primaryProfileChartIdRef.current = null;\n    runChartIdRef.current += 1;\n    clearResult();\n    setBusy(false);\n    focusAfterComputeRef.current = false;\n  }\n\n"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/private/tmp/zodiacs-platform-reference-caption-consumer-review/freeze1.patch"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "apply",
+      "/private/tmp/zodiacs-platform-reference-caption-consumer-review/freeze1.patch"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

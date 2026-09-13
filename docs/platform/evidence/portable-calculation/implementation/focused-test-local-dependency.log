@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-portable-calculation
+
+ ✓ src/lib/engine/portable.test.ts (20 tests) 92ms
+ ✓ src/lib/engine/package-integration.test.ts (6 tests) 131ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 56ms
+
+ Test Files  3 passed (3)
+      Tests  79 passed (79)
+   Start at  11:01:22
+   Duration  505ms (transform 308ms, setup 0ms, collect 558ms, tests 279ms, environment 0ms, prepare 109ms)
+

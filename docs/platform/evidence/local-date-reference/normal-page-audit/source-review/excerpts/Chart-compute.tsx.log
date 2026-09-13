@@ -1,0 +1,37 @@
+function compute(e: Event) {
+    e.preventDefault();
+    if (busy) return;
+    const dateInput = formRef.current?.querySelector<HTMLInputElement>('#birth-date');
+    const nextFieldErrors: FormFieldErrors = {
+      date: date === '' ? 'required' : dateInput?.validity.valid === false ? 'range' : undefined,
+      time: timeKnown && time === '',
+      place: city === null,
+    };
+    setFieldErrors(nextFieldErrors);
+    setError('');
+    const firstIncomplete = nextFieldErrors.date
+      ? 'birth-date'
+      : nextFieldErrors.time
+        ? 'birth-time'
+        : nextFieldErrors.place ? 'place' : null;
+    if (firstIncomplete) {
+      requestAnimationFrame(() => {
+        formRef.current?.querySelector<HTMLElement>(`#${firstIncomplete}`)?.focus();
+      });
+      return;
+    }
+    if (!city) return;
+    invalidateProfileHandoff();
+    setFromLink(false);
+    if (subjectMode === 'self') setLinkName(null);
+    runChart({
+      date,
+      time,
+      timeKnown,
+      city,
+      houseSystem,
+      subjectMode,
+      mine: mineHandoff,
+      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
+    }, true);
+  }

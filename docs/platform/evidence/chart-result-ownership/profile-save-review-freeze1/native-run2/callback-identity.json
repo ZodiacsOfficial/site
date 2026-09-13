@@ -1,0 +1,128 @@
+{
+  "identities": {
+    "original": {
+      "sourceSha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "callbacks": [
+        {
+          "name": "clearReceiptExport",
+          "startLine": 392,
+          "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42"
+        },
+        {
+          "name": "advanceInputRevision",
+          "startLine": 397,
+          "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c"
+        },
+        {
+          "name": "invalidateProfileHandoff",
+          "startLine": 466,
+          "sha256": "cb7861caa796b6a2d91c7a3873858d3e732f8d05edaf3e86e27692e2aa79d327"
+        },
+        {
+          "name": "chartIdentity",
+          "startLine": 1444,
+          "sha256": "a4e8dc70fa165b8b389ebc0e2b47a108fb69522ea5d80ed322185d95e97f966d"
+        },
+        {
+          "name": "isConnectedSaveControl",
+          "startLine": 1464,
+          "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b"
+        },
+        {
+          "name": "saveFocusFallback",
+          "startLine": 1470,
+          "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905"
+        },
+        {
+          "name": "closeSavePrompt",
+          "startLine": 1477,
+          "sha256": "0d20cbd7b91f8d73a50ec118d03271408c45ff58063d82ce74552de22e13c5a8"
+        },
+        {
+          "name": "commitSave",
+          "startLine": 1507,
+          "sha256": "410d25e1ca2b58a840ed2f9ed49b14c1e281322077eeb5e84f867373c5b9901b"
+        },
+        {
+          "name": "onRevoke",
+          "sha256": "7c59c3bfa86e0558165914d79133f49419b12bc1bda3728811ee8a709e13727b"
+        },
+        {
+          "name": "runIsCurrent",
+          "sha256": "62b5b1f2b1d350b4bba2a685e65000c323a26dcb234f60ffb203e647d2ab9720"
+        }
+      ]
+    },
+    "candidate": {
+      "sourceSha256": "6d954dd0994e019408e5c23cae7ffab9853939d774eb0d8e7df9ca4a51aa920b",
+      "callbacks": [
+        {
+          "name": "clearReceiptExport",
+          "startLine": 395,
+          "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42"
+        },
+        {
+          "name": "advanceInputRevision",
+          "startLine": 400,
+          "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c"
+        },
+        {
+          "name": "resultIsCurrent",
+          "startLine": 405,
+          "sha256": "d598fc0edfc8039e0fab3284007f585f812996054c0e704f5678fead9ec4c441"
+        },
+        {
+          "name": "currentResultOwner",
+          "startLine": 413,
+          "sha256": "6f3266e248b2418d31cbeb2cf99e7e059bd8db2830d1a479fa0c67cff2874e64"
+        },
+        {
+          "name": "clearResult",
+          "startLine": 417,
+          "sha256": "107c94806d4ff8ccf0984c2b9922b301a2c67f478d53342342dc9519d1603045"
+        },
+        {
+          "name": "invalidateProfileHandoff",
+          "startLine": 493,
+          "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5"
+        },
+        {
+          "name": "chartIdentity",
+          "startLine": 1499,
+          "sha256": "20d36ce773750c3f1b648850742af5bcc227ad3c449503b0c2c010c8fd1b741d"
+        },
+        {
+          "name": "isConnectedSaveControl",
+          "startLine": 1519,
+          "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b"
+        },
+        {
+          "name": "saveFocusFallback",
+          "startLine": 1525,
+          "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905"
+        },
+        {
+          "name": "closeSavePrompt",
+          "startLine": 1532,
+          "sha256": "b89b0d6092ff2ca59b20a76f42493c4566b26f11ec83a8fb8ea5e46c34fe5b4c"
+        },
+        {
+          "name": "commitSave",
+          "startLine": 1565,
+          "sha256": "2b0c54a66d9b5b5165ae26335818cde519ac835b8f8cb061526b86e126b8a8f3"
+        },
+        {
+          "name": "onRevoke",
+          "sha256": "1908f7101ea893ef3039d270623cf42694a5f739bcb4b8bf14b8093bf00d66d9"
+        },
+        {
+          "name": "runIsCurrent",
+          "sha256": "5c5483d7b4bf147d4ac7d024c6d03ee7be7891063f4047f7de88cd99a848afbd"
+        }
+      ]
+    }
+  },
+  "hookOnAccessSha256": "36ac0309826d4e963e3951de5fef1ecb47f91ff24853bcdc14b243b864be4ba9",
+  "actualBaseProviderSha256": "9ba131ba5554f93bf6953d31edebedb1b855702b5edf5dee25c51c71645e4781",
+  "scope": "Exact extracted component functions and revoke/access callbacks; only two dynamic import expressions replaced with controlled promises. Surrounding state setters are observation probes, not a rendered island."
+}

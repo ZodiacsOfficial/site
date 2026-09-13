@@ -1,0 +1,26 @@
+{
+  "time": "2026-09-08T06:34:12.528520+00:00",
+  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "files": {
+    "src/islands/ChartCalculator.actions.test.ts": "a5291e6c274afb02c462de68e22df45f4598e5aea36dfb7ca2499f870af1a902",
+    "src/islands/ChartCalculator.tsx": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+    "src/lib/engine/calculator-receipt.test.ts": "58b4a803c2f579e2d1c72ca27334270e4dc726620b369a2f280e40218fc50fe6",
+    "src/lib/engine/calculator-receipt.ts": "21c1a94b6aadc77b28bfc1081de526f22e2514dbf4f30224049adb76564ca410",
+    "src/lib/i18n/index.test.ts": "5d5435b23bdc12d9a35ae23af75f41b47c1d40a2d0d9534fed74f78051b171c4",
+    "src/lib/i18n/ui/en.ts": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+    "src/lib/i18n/ui/es.ts": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f",
+    "src/lib/i18n/ui/fr.ts": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f",
+    "src/lib/i18n/ui/it.ts": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5",
+    "src/lib/i18n/ui/pt.ts": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3",
+    "src/lib/i18n/ui/ru.test.ts": "30e63d628acb48176abf238ed41b661bb37b662d781cbd9f7f18bdcd97e63809",
+    "src/lib/i18n/ui/ru.ts": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+    "src/lib/receipt-download.test.ts": "a3f039e77b4a234f7ab6dc46afa9819f7dd1c5de10a97a330654fb727b973ac6",
+    "src/lib/receipt-download.ts": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d",
+    "src/client-directives/interaction.ts": "ea5784fcd35b661ea9584e510fb680a00955ba481b1abf16084d3848dfc74fc7",
+    "tests/interaction-replay-drive.mjs": "611651b6d74d5901adc2680bb6f26c0896cb19ec5af884af463f78b0c61e4a58",
+    "scripts/report-bundles.mjs": "7f4f47fec33e97c2f6accb7f159c7d5e5e31994981246af49aa6540da69e9328",
+    "scripts/report-bundles.test.mjs": "3d8d52e01d89a12e52185ec0765f6fdd72ae440cd4915b731c21179dada912bd",
+    ".github/phase1-scope-allowance.json": "13ad105085414839848b0059c4597e612ecc7e0e4aedc0441c918fe4f791b152"
+  },
+  "budgetsUnchanged": true
+}

@@ -1,0 +1,7 @@
+commit abcf1a44e52040db79a369b49bc9b55d78099b22
+Author:     diasmal917 <diasmal917@gmail.com>
+AuthorDate: Tue Sep 8 15:44:29 2026 +0700
+Commit:     diasmal917 <diasmal917@gmail.com>
+CommitDate: Tue Sep 8 15:44:29 2026 +0700
+
+    Make runtime support claims follow current candidate evidence

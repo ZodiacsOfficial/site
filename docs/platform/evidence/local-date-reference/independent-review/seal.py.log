@@ -1,0 +1,72 @@
+import io,json,gzip,tarfile,hashlib,pathlib,shutil
+root=pathlib.Path(__file__).resolve().parent
+native=root/'native'; delivery=root/'delivery'; delivery.mkdir(exist_ok=True)
+sha=lambda b:hashlib.sha256(b).hexdigest()
+def readj(p): return json.loads(p.read_text())
+freeze=readj(native/'freeze.json')
+for row in freeze['files']:
+    for p in [native/'source'/row['path'],pathlib.Path('/private/tmp/zodiacs-platform-local-date-reference')/row['path']]:
+        b=p.read_bytes(); assert sha(b)==row['sha256'] and len(b)==row['bytes']
+initial=readj(native/'result-initial.json'); corrected=readj(native/'result-chart-recovery-corrected.json')
+assert len([r for r in initial['rows'] if r['kind']=='candidate' and r['passed']])==25
+assert [r['name'] for r in initial['rows'] if r['kind']=='candidate' and not r['passed']]==['chart-old-result-refusal-recovery']
+assert [r['passed'] for r in corrected['rows'] if r['kind']=='candidate']==[True]
+assert all(r['equal'] for r in initial['parity']) and len(initial['parity'])==9
+child_dir=root/'helper/delivery'; child_bytes=(child_dir/'manifest.json').read_bytes(); child= json.loads(child_bytes)
+for row in child['records']:
+    p=pathlib.PurePosixPath(row['path']); assert not p.is_absolute() and '..' not in p.parts
+    b=(child_dir/row['path']).read_bytes(); assert len(b)==row['bytes'] and sha(b)==row['sha256']
+raw={}
+def add(name,p):
+    b=p.read_bytes()
+    if name in raw: assert raw[name]==b
+    raw[name]=b
+for p in native.iterdir():
+    if p.is_file() and p.name not in ['result.json']:
+        add('native/'+p.name,p)
+for folder in ['baseline','baseline-transformed','candidate-transformed']:
+    for p in (native/folder).rglob('*'):
+        if p.is_file(): add('native/'+str(p.relative_to(native)),p)
+for row in freeze['files']: add('native/source/'+row['path'],native/'source'/row['path'])
+input_map=[]
+for kind in ['baseline','candidate']:
+    identity=readj(native/(kind+'-identity.json'))
+    assert len(identity['inputs'])==213
+    assert sha((native/(kind+'.js')).read_bytes())==identity['bundleSha256']
+    for row in identity['inputs']:
+        p=pathlib.Path(row['selected'])
+        if not p.is_absolute(): p=native/p
+        b=p.read_bytes(); assert sha(b)==row['sha256'],str(p)
+        name='build-input-by-sha/'+row['sha256']+'.log'; raw[name]=b
+        input_map.append({'variant':kind,'sourcePath':row['path'],'selected':row['selected'],'archivePath':name,'bytes':len(b),'sha256':row['sha256']})
+raw['build-input-map.json']=(json.dumps({'records':input_map},indent=2)+'\n').encode()
+members=[{'path':k,'bytes':len(v),'sha256':sha(v)} for k,v in sorted(raw.items())]
+archive=delivery/'caller-raw.tar.gz'
+with archive.open('wb') as f:
+    with gzip.GzipFile(filename='',fileobj=f,mode='wb',mtime=0) as gz:
+        with tarfile.open(fileobj=gz,mode='w',format=tarfile.PAX_FORMAT) as tar:
+            for name,b in sorted(raw.items()):
+                info=tarfile.TarInfo(name); info.size=len(b); info.mode=0o644; info.mtime=0
+                tar.addfile(info,io.BytesIO(b))
+with tarfile.open(archive,'r:gz') as tar:
+    actual=tar.getmembers(); assert len(actual)==len(members)
+    for info,row in zip(actual,members):
+        assert info.isfile() and info.name==row['path'] and info.size==row['bytes']
+        assert sha(tar.extractfile(info).read())==row['sha256']
+(delivery/'caller-raw-manifest.json').write_text(json.dumps({'records':members,'archiveConstruction':'Python explicit ordinary file members, fixed modes/timestamps, no extended attributes or AppleDouble entries.'},indent=2)+'\n')
+for name in ['REVIEW.md','COMMANDS.md','PREPARATION-RUNTIME-CORRIGENDUM.md']:
+    shutil.copyfile(root/name,delivery/name)
+shutil.copyfile(root/'seal.py',delivery/'seal.py.log')
+for name in ['freeze.json','source-review.json','native-initial.log','native-chart-recovery-corrected.log']:
+    shutil.copyfile(native/name,delivery/name)
+for row in child['records']:
+    target=delivery/'helper'/row['path'];target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(child_dir/row['path'],target)
+shutil.copyfile(child_dir/'manifest.json',delivery/'helper/manifest.json')
+summary={'freezeSha256':sha((native/'freeze.json').read_bytes()),'candidateAcceptedControls':26,'initialCandidatePassed':25,'correctedAffectedCasePassed':1,'baselineAcceptedCriteria':13,'outputParities':9,'helper':{'manifestSha256':sha(child_bytes),'recordsRehashed':len(child['records']),'controlsPerRuntime':92,'runtimes':['Node22.23.2 ICU78.2 tzdb2026a','Node24.19.0 ICU78.3 tzdb2026b','Chrome152.0.7977.83']},'rawOrdinaryFileMembers':len(members),'rawArchiveSha256':sha(archive.read_bytes()),'noAppleDoubleOrMetadataMembers':True,'rootAuthorFrozenSourceUnchanged':True}
+(delivery/'summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+records=[]
+for p in sorted(delivery.rglob('*')):
+    if p.is_file() and p!=delivery/'manifest.json':
+        b=p.read_bytes();records.append({'path':str(p.relative_to(delivery)),'bytes':len(b),'sha256':sha(b)})
+b=(json.dumps({'records':records},indent=2)+'\n').encode();(delivery/'manifest.json').write_bytes(b)
+print(json.dumps({**summary,'deliveryRecords':len(records),'deliveryBytes':sum(r['bytes'] for r in records),'deliveryManifestSha256':sha(b)}))

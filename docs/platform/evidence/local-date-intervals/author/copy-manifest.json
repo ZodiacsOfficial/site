@@ -1,0 +1,143 @@
+{
+  "originalManifestSha256": "4e596e14248a9c6f48c59536ce1f1e7b3c1fd826c7ef2b3bb19be8ec1634f895",
+  "records": [
+    {
+      "sourcePath": "AUTHOR.md",
+      "path": "AUTHOR.md.log",
+      "bytes": 6806,
+      "sha256": "7de34d473be53c93f3b0082ba57d45bcfbbb029f591f64ce8f961f772a4b751b"
+    },
+    {
+      "sourcePath": "base.json",
+      "path": "base.json.log",
+      "bytes": 244,
+      "sha256": "33925190abd48fae4b5f7977644f18ae5cac478efd4b321f48edfe9f33c0f5ec"
+    },
+    {
+      "sourcePath": "bundled-inputs/src/lib/time/civil-date.ts",
+      "path": "bundled-inputs/src/lib/time/civil-date.ts.log",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "sourcePath": "bundled-inputs/src/lib/time/local-date-intervals.ts",
+      "path": "bundled-inputs/src/lib/time/local-date-intervals.ts.log",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "sourcePath": "bundled-inputs/src/lib/time/localToUtc.ts",
+      "path": "bundled-inputs/src/lib/time/localToUtc.ts.log",
+      "bytes": 6469,
+      "sha256": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64"
+    },
+    {
+      "sourcePath": "bundled-inputs/src/lib/time/technical-locales.ts",
+      "path": "bundled-inputs/src/lib/time/technical-locales.ts.log",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "sourcePath": "commands.json",
+      "path": "commands.json.log",
+      "bytes": 2309,
+      "sha256": "92581fc3501126d4e928505d58087c13493283ae5aa58f7575e899791d209f9b"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/local-date-intervals.test.ts",
+      "path": "frozen-source/src/lib/time/local-date-intervals.test.ts.log",
+      "bytes": 14027,
+      "sha256": "f15c17acc7c338aadbdb77452be4edbf9c8473b8e8b22c98b665b377ccd769cc"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/local-date-intervals.ts",
+      "path": "frozen-source/src/lib/time/local-date-intervals.ts.log",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "sourcePath": "frozen-source/tests/local-date-intervals-drive.mjs",
+      "path": "frozen-source/tests/local-date-intervals-drive.mjs.log",
+      "bytes": 11138,
+      "sha256": "fcdff2844a7912754b36cf9f4563762443b8e9060f5bc679f8014fd3fd40b32c"
+    },
+    {
+      "sourcePath": "native-freeze1/result.json",
+      "path": "native-freeze1/result.json.log",
+      "bytes": 35486,
+      "sha256": "574062788ef31956a06f3fedf367bd2c947f95d90805b244f927ff73e7336eab"
+    },
+    {
+      "sourcePath": "native-freeze1/subject.js",
+      "path": "native-freeze1/subject.js.log",
+      "bytes": 8587,
+      "sha256": "ea3c7f92e929dd144cb21348993c1a8817d006eab0d39e403dad0bd57488dcf2"
+    },
+    {
+      "sourcePath": "native-freeze1.log",
+      "path": "native-freeze1.log",
+      "bytes": 19396,
+      "sha256": "68389975b4d5d4482ffa9206d92b29990ed42b0a12eca391473e3ce6f630d33d"
+    },
+    {
+      "sourcePath": "patch-check.log",
+      "path": "patch-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "scope-verification.json",
+      "path": "scope-verification.json.log",
+      "bytes": 538,
+      "sha256": "16a4e5017d82066f7e83c43fd3a1146f61d4e7f1c02b1fd5c98c8572da4c0b22"
+    },
+    {
+      "sourcePath": "source-freeze1-identity.json",
+      "path": "source-freeze1-identity.json.log",
+      "bytes": 900,
+      "sha256": "358aa231e7a2118303ef4b3f3e6f9feec7a966d85049bffd21e3dac5d5951b0a"
+    },
+    {
+      "sourcePath": "source-freeze1.patch",
+      "path": "source-freeze1.patch.log",
+      "bytes": 35666,
+      "sha256": "9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78"
+    },
+    {
+      "sourcePath": "typecheck-final.log",
+      "path": "typecheck-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "typecheck-initial.log",
+      "path": "typecheck-initial.log",
+      "bytes": 621,
+      "sha256": "20d53c5fcf51ca039f1942ae5c5600000b781995872c217c8dbbdd64253486d1"
+    },
+    {
+      "sourcePath": "unit-final.log",
+      "path": "unit-final.log",
+      "bytes": 311,
+      "sha256": "85e883bbdcb8da864acb1a93de9616c602be122edfbf1adbe1280eea3a0679d9"
+    },
+    {
+      "sourcePath": "unit-initial.log",
+      "path": "unit-initial.log",
+      "bytes": 311,
+      "sha256": "994121333df1580dab5df23c0c490b82ce91bc2df2e3a6405cc23e7d1766671b"
+    },
+    {
+      "sourcePath": "vitest.config.mjs",
+      "path": "vitest.config.mjs.log",
+      "bytes": 304,
+      "sha256": "8ed8dfa71f3bdeb3c7453c6437f5a9dd2e08badc2d1a38f10e6e88b8eb119927"
+    },
+    {
+      "sourcePath": "manifest.json",
+      "path": "manifest.json.log",
+      "bytes": 3764,
+      "sha256": "4e596e14248a9c6f48c59536ce1f1e7b3c1fd826c7ef2b3bb19be8ec1634f895"
+    }
+  ]
+}

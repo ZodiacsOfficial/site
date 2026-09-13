@@ -1,0 +1,44 @@
+[
+  {
+    "format": "esm",
+    "inputs": [
+      {
+        "file": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "file": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "file": "source/src/lib/time/localToUtc.ts",
+        "sha256": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64"
+      },
+      {
+        "file": "source/src/lib/time/local-date-intervals.ts",
+        "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+      }
+    ]
+  },
+  {
+    "format": "iife",
+    "inputs": [
+      {
+        "file": "source/src/lib/time/civil-date.ts",
+        "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+      },
+      {
+        "file": "source/src/lib/time/technical-locales.ts",
+        "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+      },
+      {
+        "file": "source/src/lib/time/localToUtc.ts",
+        "sha256": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64"
+      },
+      {
+        "file": "source/src/lib/time/local-date-intervals.ts",
+        "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+      }
+    ]
+  }
+]

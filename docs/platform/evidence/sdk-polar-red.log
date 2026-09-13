@@ -1,0 +1,73 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ❯ packages/engine/src/houses-regression.test.ts (6 tests | 6 failed) 47ms
+   × shared rising intersection > selects the eastern intersection at latitude 80 4ms
+     → expected 180 to be less than 1e-10
+   × shared rising intersection > selects the eastern intersection at latitude -80 0ms
+     → expected 180 to be less than 1e-10
+   × shared rising intersection > satisfies the horizon and rising-direction geometry in both hemispheres 1ms
+     → expected -0.012089298269164057 to be greater than 0
+   × shared rising intersection > anchors public natal whole houses after correction 38ms
+     → expected 241.52222326627157 to be less than 180
+   × shared rising intersection > anchors public natal placidus houses after correction 2ms
+     → expected 241.52222326627157 to be less than 180
+   × Placidus convergence > converges near the supported latitude boundary 0ms
+     → expected 0.000556148096279685 to be less than 1e-7
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  packages/engine/src/houses-regression.test.ts > shared rising intersection > selects the eastern intersection at latitude 80
+ FAIL  packages/engine/src/houses-regression.test.ts > shared rising intersection > selects the eastern intersection at latitude -80
+AssertionError: expected 180 to be less than 1e-10
+ ❯ packages/engine/src/houses-regression.test.ts:30:77
+     28|   ])("selects the eastern intersection at latitude $latitude", ({ expe…
+     29|     const angles = computeAngles({ ...input, longitude: 0, obliquity: …
+     30|     expect(Math.abs(normalizeLongitude(angles.asc - expected + 180) - …
+       |                                                                             ^
+     31|   });
+     32|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL  packages/engine/src/houses-regression.test.ts > shared rising intersection > satisfies the horizon and rising-direction geometry in both hemispheres
+AssertionError: expected -0.012089298269164057 to be greater than 0
+ ❯ packages/engine/src/houses-regression.test.ts:40:26
+     38|         const asc = projections(angles.asc, input);
+     39|         expect(Math.abs(asc.horizon)).toBeLessThan(1e-12);
+     40|         expect(asc.east).toBeGreaterThan(0);
+       |                          ^
+     41|         expect(projections(angles.dsc, input).east).toBeLessThan(0);
+     42|         expect(normalizeLongitude(angles.dsc - angles.asc)).toBeCloseT…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL  packages/engine/src/houses-regression.test.ts > shared rising intersection > anchors public natal whole houses after correction
+ FAIL  packages/engine/src/houses-regression.test.ts > shared rising intersection > anchors public natal placidus houses after correction
+AssertionError: expected 241.52222326627157 to be less than 180
+ ❯ packages/engine/src/houses-regression.test.ts:58:74
+     56|         expect(chart.flags.includes("polar-fallback")).toBe(houseSyste…
+     57|         expect(chart.houses?.cusps[0]).toBe(Math.floor(chart.angles!.a…
+     58|         expect(normalizeLongitude(chart.angles!.asc - chart.angles!.mc…
+       |                                                                          ^
+     59|       }
+     60|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL  packages/engine/src/houses-regression.test.ts > Placidus convergence > converges near the supported latitude boundary
+AssertionError: expected 0.000556148096279685 to be less than 1e-7
+ ❯ packages/engine/src/houses-regression.test.ts:82:45
+     80|     const alpha = (low + high) / 2 * radians;
+     81|     const expected = normalizeLongitude(Math.atan2(Math.sin(alpha), Ma…
+     82|     expect(Math.abs(cusps![1]! - expected)).toBeLessThan(1e-7);
+       |                                             ^
+     83|   });
+     84| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ Test Files  1 failed (1)
+      Tests  6 failed (6)
+   Start at  00:55:22
+   Duration  882ms (transform 247ms, setup 0ms, collect 289ms, tests 47ms, environment 0ms, prepare 85ms)

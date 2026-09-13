@@ -1,0 +1,42 @@
+{
+  "original-receipt-browser.log": {
+    "source": "/private/tmp/zodiacs-platform-rc6-integration/receipt-browser.log",
+    "bytes": 2187,
+    "sha256": "027bbb052982cbb77b2354c5311f09c3843fec54bbe106844e7c3aeb2bc52fee"
+  },
+  "original-receipt-drive.mjs": {
+    "source": "/private/tmp/zodiacs-platform-rc6-integration/receipt-drive.mjs",
+    "bytes": 16717,
+    "sha256": "252141e0ee138267d466022e9afbeb95f70b17c06a2d913fe1e9c0ea9e58cf94"
+  },
+  "root-Caracas-envelope.json": {
+    "source": "/private/tmp/zodiacs-platform-rc6-integration/browser-1788851392756/historical-America-Caracas.json",
+    "bytes": 4915,
+    "sha256": "a8920b11733330016d26c9e4df48f26ce45e3023e2fe58ab28d08242e4273e16"
+  },
+  "author-Chrome.json": {
+    "source": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/browser-acceptance.json",
+    "bytes": 205646,
+    "sha256": "7b58ac57c555faa1a46d4b951adebcff02f538c30b0a17df1617ff74194018c2"
+  },
+  "author-Node22.json": {
+    "source": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/node22-parity.json",
+    "bytes": 204107,
+    "sha256": "aeeb580ed6bb78fabca768b419f08b7a0df612058fe48a57d669f3e59a178b50"
+  },
+  "author-Node24.json": {
+    "source": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/node24-parity.json",
+    "bytes": 204143,
+    "sha256": "ef6df2b71c895f8c669f8abc9547380c9813ffb54da8479d4d41e3acfa4968fc"
+  },
+  "acceptance-subject.mjs": {
+    "source": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/acceptance-subject.mjs",
+    "bytes": 238053,
+    "sha256": "19f4c6c1b2315527602cf33bb33338be0f2ec639a08492ba8d411b2c77d2df5d"
+  },
+  "acceptance-subject-identity.json": {
+    "source": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/acceptance-subject-identity.json",
+    "bytes": 14803,
+    "sha256": "4859a5af40727ed17954c6954e86ab6ae27d860c01a6b2df9f58a054383f3005"
+  }
+}

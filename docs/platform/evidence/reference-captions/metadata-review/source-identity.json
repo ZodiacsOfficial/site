@@ -1,0 +1,35 @@
+{
+  "baseCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "guardSha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d",
+  "protectedPaths": [
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/pages/es/moon-phase/index.astro",
+    "src/pages/fr/moon-phase/index.astro",
+    "src/pages/it/moon-phase/index.astro",
+    "src/pages/pt/moon-phase/index.astro",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
+  ],
+  "files": {
+    ".github/phase1-scope-allowance.json": {
+      "beforeSha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95",
+      "afterSha256": "ca347fa6deb0cd07f9f28c08a543deaca0d7c84f1abd2f5593e1f519f47cd8aa",
+      "beforeBytes": 1196,
+      "afterBytes": 1505
+    },
+    ".github/workflows/site-check.yml": {
+      "beforeSha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a",
+      "afterSha256": "5eda3577f373103788d2305fe8ae898393efa89b2bd38d0f0e5142d29ab6c166",
+      "beforeBytes": 16285,
+      "afterBytes": 16456
+    }
+  },
+  "patchSha256": "a0c52aa23c1464858abada3db1b5bbfb4a8cedd5db7e409fb04016b84197d637",
+  "state": "Proposed metadata; not applied. Actual final frozen path set and driver must be verified independently."
+}

@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {resolve} from 'node:path';
+const root=resolve(import.meta.dirname,'site');
+if(!fs.existsSync(resolve(import.meta.dirname,'source-identity.json')))throw Error('Exact source overlay required');
+// Same documented P3 provider values; all are synthetic. No real environment
+// credentials or feature flags are inherited into this isolated fixture build.
+const fixtureEnv={PATH:process.env.PATH,HOME:process.env.HOME,TMPDIR:process.env.TMPDIR,LANG:'en_US.UTF-8',NODE_ENV:'production',
+ DAILY_EMAIL_ENABLED:'1',EMAIL_PROVIDER:'resend',STANDALONE_WEEKLY_EMAIL_ENABLED:'1',
+ RESEND_API_KEY:'re_fixture_sending_not_a_secret',RESEND_CONTACTS_API_KEY:'re_fixture_contacts_not_a_secret',RESEND_SEGMENT_ID:'fixture_weekly_segment',RESEND_FROM_EMAIL:'Zodiacs.org <fixture@zodiacs.org>',
+ EMAIL_CONFIRM_SECRET:'fixture-confirm-secret-000000000000000000000000',EMAIL_CONFIRM_BASE_URL:'https://zodiacs.org',DAILY_EMAIL_UNSUBSCRIBE_SECRET:'fixture-unsubscribe-secret-0000000000000000000',DAILY_EMAIL_RECIPIENT_HASH_SECRET:'fixture-recipient-secret-000000000000000000000',RESEND_DAILY_SEGMENT_ID:'fixture_daily_sun_segment',
+ PUBLIC_SUPABASE_URL:'https://phase3-test.supabase.co',PUBLIC_SUPABASE_PUBLISHABLE_KEY:'sb_publishable_fixture',SUPABASE_SERVICE_ROLE_KEY:'service_fixture_not_a_secret',PUBLIC_WEB_PUSH_ENABLED:'0',ASTRO_TELEMETRY_DISABLED:'1'};
+fs.writeFileSync(resolve(import.meta.dirname,'fixture-build-env.json'),JSON.stringify({node:process.version,keys:Object.keys(fixtureEnv),syntheticValues:Object.fromEntries(Object.entries(fixtureEnv).filter(([k])=>!['PATH','HOME','TMPDIR'].includes(k)))},null,2)+'\n');
+for(const [name,entry] of [['astro','node_modules/astro/bin/astro.mjs'],['assistant','scripts/build-assistant-ui.mjs']]){
+ const out=fs.openSync(resolve(import.meta.dirname,`${name}-build.log`),'w');
+ const r=spawnSync(process.execPath,[resolve(root,entry),...(name==='astro'?['build']:[])],{cwd:root,env:fixtureEnv,stdio:['ignore',out,out]});fs.closeSync(out);
+ console.log(JSON.stringify({name,status:r.status,error:r.error?.message}));if(r.status!==0)process.exit(r.status??1);
+}

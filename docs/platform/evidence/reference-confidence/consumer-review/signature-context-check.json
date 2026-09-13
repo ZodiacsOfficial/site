@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "runtime": "node22",
+      "control": "Toronto",
+      "passed": true,
+      "signatureBodies": [
+        "Mercury",
+        "Saturn"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node22",
+      "control": "Juneau",
+      "passed": true,
+      "signatureBodies": [
+        "Mercury",
+        "Uranus"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node22",
+      "control": "Bangkok ordinary",
+      "passed": true,
+      "signatureBodies": [
+        "Sun",
+        "Saturn"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node22",
+      "control": "London two candidates",
+      "passed": true,
+      "signatureBodies": [
+        "Jupiter"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node24",
+      "control": "Toronto",
+      "passed": true,
+      "signatureBodies": [
+        "Mercury",
+        "Saturn"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node24",
+      "control": "Juneau",
+      "passed": true,
+      "signatureBodies": [
+        "Mercury",
+        "Uranus"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node24",
+      "control": "Bangkok ordinary",
+      "passed": true,
+      "signatureBodies": [
+        "Sun",
+        "Saturn"
+      ],
+      "moonStatus": "unresolved"
+    },
+    {
+      "runtime": "node24",
+      "control": "London two candidates",
+      "passed": true,
+      "signatureBodies": [
+        "Jupiter"
+      ],
+      "moonStatus": "unresolved"
+    }
+  ],
+  "passed": 8
+}

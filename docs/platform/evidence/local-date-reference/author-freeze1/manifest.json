@@ -1,0 +1,44 @@
+{
+  "description": "C-014 bounded unknown-time local-date membership author delivery, Freeze 1; independent review and root integration pending.",
+  "sourceBase": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "records": [
+    {
+      "path": "AUTHOR.md.log",
+      "bytes": 10692,
+      "sha256": "475fab95759f7bbcf47ce00868176143afd80e868920757c277ecf817e54fa09"
+    },
+    {
+      "path": "commands.md.log",
+      "bytes": 4586,
+      "sha256": "202b4a4f98dd97a8931fcd24df9a0266cdecbaf2809b68f7683ad8987f620e15"
+    },
+    {
+      "path": "implementation.patch.log",
+      "bytes": 40918,
+      "sha256": "41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 7773189,
+      "sha256": "5917083fd3b01193f3d9fe85cb5ba8716c0e8b917c92c5a76e961f9c70c0bf1b"
+    },
+    {
+      "path": "raw-members.json.log",
+      "bytes": 23472,
+      "sha256": "5f46c6183452b8569a07347a898f54c9ae62b1e60775dc3ae65207678fd7f727"
+    },
+    {
+      "path": "scope-proof.json.log",
+      "bytes": 2652,
+      "sha256": "37056aab07ba0112be2a103101929af034515aeb0625048708a9cac8cd291aa8"
+    },
+    {
+      "path": "source-freeze.json.log",
+      "bytes": 2624,
+      "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+    }
+  ],
+  "totalBytes": 7858133,
+  "archiveMemberCount": 135,
+  "archiveUncompressedBytes": 22062960
+}

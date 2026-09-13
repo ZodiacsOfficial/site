@@ -1,0 +1,31 @@
+{
+  "commit": "68412f16140f9986b11767d271eda6e14b6aba48",
+  "files": [
+    {
+      "repositoryPath": "docs/platform/evidence/site-engine-rc6/README.md",
+      "source": "/private/tmp/zodiacs-platform-site-seconds-adoption/docs/platform/evidence/site-engine-rc6/README.md",
+      "bytes": 3616,
+      "sha256": "adc6509aeb00e240d5a3cd94dc6f44f4b3c79beb79590af9b2eb20089fa302e2"
+    },
+    {
+      "repositoryPath": "docs/platform/evidence/site-engine-rc6/node22-parity.json",
+      "source": "/private/tmp/zodiacs-platform-site-seconds-adoption/docs/platform/evidence/site-engine-rc6/node22-parity.json",
+      "bytes": 204107,
+      "sha256": "aeeb580ed6bb78fabca768b419f08b7a0df612058fe48a57d669f3e59a178b50"
+    },
+    {
+      "repositoryPath": "docs/platform/evidence/site-engine-rc6/node24-parity.json",
+      "source": "/private/tmp/zodiacs-platform-site-seconds-adoption/docs/platform/evidence/site-engine-rc6/node24-parity.json",
+      "bytes": 204143,
+      "sha256": "ef6df2b71c895f8c669f8abc9547380c9813ffb54da8479d4d41e3acfa4968fc"
+    },
+    {
+      "repositoryPath": "docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log",
+      "source": "/private/tmp/zodiacs-platform-site-seconds-adoption/docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log",
+      "bytes": 4201,
+      "sha256": "05c4eed6f9e10d7ddfb4ea0de43ab9530e24ded58ade1711f4cd844a7b272c9e"
+    }
+  ],
+  "count": 4,
+  "bytes": 416067
+}

@@ -1,0 +1,6 @@
+{
+  "sameBytes": true,
+  "sha256": "23ea7efc525a3dab44f7429b5318539585e9afa6b54994c306d43fff2586da03",
+  "localLiteralSetupTest": "onboarding/onboarding.json",
+  "scope": "Actual READY preview rendered exactly the setup already executed against the public artifact. No remote browser authentication or cookies are included."
+}

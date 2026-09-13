@@ -1,0 +1,191 @@
+{
+  "originalManifestSha256": "f04478c508027ed8fe5d6ac1cb8d8fa842087de155cf7f4c26d01a065768a014",
+  "records": [
+    {
+      "sourcePath": "PRIMARY-SOURCE.md",
+      "path": "PRIMARY-SOURCE.md.log",
+      "bytes": 1046,
+      "sha256": "3a48f0d4613802b248cee716d3b6b57023949d33581e8b4978b294c4dffccc00"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md.log",
+      "bytes": 5200,
+      "sha256": "5294f2647597e0c91511908e2a74180d8c442e9e0865b80486f8289e092d8456"
+    },
+    {
+      "sourcePath": "SUMMARY.json",
+      "path": "SUMMARY.json.log",
+      "bytes": 2028,
+      "sha256": "35f939b0fa789e8acebe464dcb428e0b8a5013eb24f727d9e25318fe8064de50"
+    },
+    {
+      "sourcePath": "algebra-node22.log",
+      "path": "algebra-node22.log",
+      "bytes": 240,
+      "sha256": "b71d4f4f66f20ca0cfacecae6181a18b23eebf2dac300f3581dbfcb70cdacdce"
+    },
+    {
+      "sourcePath": "algebra-node24.log",
+      "path": "algebra-node24.log",
+      "bytes": 240,
+      "sha256": "e1a8a42b812125f0ea683e1ee71353ef7160d8a941f9a14662c14806dda6b9d2"
+    },
+    {
+      "sourcePath": "algebra-review.mjs.log",
+      "path": "algebra-review.mjs.log",
+      "bytes": 6690,
+      "sha256": "aede95e15aa17f536b23b2b553bf4d0a21e63d0eb2216af3887c67b55477562d"
+    },
+    {
+      "sourcePath": "build-inputs.json",
+      "path": "build-inputs.json.log",
+      "bytes": 1380,
+      "sha256": "bfdfd5dad4aeb37355d109ace620ea20648da4c2e69d680d7a525d2a8cb629c9"
+    },
+    {
+      "sourcePath": "build.log",
+      "path": "build.log",
+      "bytes": 1061,
+      "sha256": "c0f1dd15f6e281d4b868eed6f0d543c8d48dea82e79b0de3f1109849ab441d52"
+    },
+    {
+      "sourcePath": "build.mjs.log",
+      "path": "build.mjs.log",
+      "bytes": 847,
+      "sha256": "0f48fe5af0434a77fb98ac8774fd93fa9c13fbfec9ab1ea6827bfe3a421fce6f"
+    },
+    {
+      "sourcePath": "commands.log",
+      "path": "commands.log",
+      "bytes": 1158,
+      "sha256": "ac5fb7d41a6eaf8e902c89287076379bf2cad45b95dced1d6c21b04484a00af0"
+    },
+    {
+      "sourcePath": "final-source-recheck.json",
+      "path": "final-source-recheck.json.log",
+      "bytes": 1609,
+      "sha256": "57a4ea15c453c3a2088228c759296f7b1721501842162cdc0c5f4f8b6449cbbf"
+    },
+    {
+      "sourcePath": "finalize.mjs.log",
+      "path": "finalize.mjs.log",
+      "bytes": 10331,
+      "sha256": "79019ef20bf379f45418104753948ff4443ca117b33aec6fb561af502a193d90"
+    },
+    {
+      "sourcePath": "frozen-source-and-raw-algebra.tgz",
+      "path": "frozen-source-and-raw-algebra.tgz.log",
+      "bytes": 528255,
+      "sha256": "8ea57c5d996edc84c38bfd460d9c3b3d247f892c81e49a3daa026a0e6e4595a3"
+    },
+    {
+      "sourcePath": "initial-setup-error.log",
+      "path": "initial-setup-error.log",
+      "bytes": 1852,
+      "sha256": "77d31930a7d2037c4415a54aff3ee26bb59b7bc6a360ed2690b46ea5116cebb5"
+    },
+    {
+      "sourcePath": "initial-setup.mjs.log",
+      "path": "initial-setup.mjs.log",
+      "bytes": 2743,
+      "sha256": "47b8933241b3b2915a90e3bb45d73ab5dcde4a1f203db0ccd76892ce2d2e59fb"
+    },
+    {
+      "sourcePath": "native-result.json",
+      "path": "native-result.json.log",
+      "bytes": 9994,
+      "sha256": "d716c9cb4a7c21952981c6a6d5fedf52b3a5e8e1e631a4878d3bef5a87729c4f"
+    },
+    {
+      "sourcePath": "native-review.mjs.log",
+      "path": "native-review.mjs.log",
+      "bytes": 8417,
+      "sha256": "e0efe103e8f03b75ec2a60d671bdc3373085c5aa0f2285543e2b806955ff91d7"
+    },
+    {
+      "sourcePath": "native-sandbox-launch-error.log",
+      "path": "native-sandbox-launch-error.log",
+      "bytes": 6608,
+      "sha256": "bfa7d9173850be7552400b5039a9536a86e1eabfd7c19f2abf2e16f50de32a18"
+    },
+    {
+      "sourcePath": "native.log",
+      "path": "native.log",
+      "bytes": 98,
+      "sha256": "830fc4a12e0dce746d17d58e42ce2a03eb2cfe5506600c3dd207c13d97302efa"
+    },
+    {
+      "sourcePath": "package.json",
+      "path": "package.json.log",
+      "bytes": 33,
+      "sha256": "a90fc33418afa2b9cbf4768524b021135b965ecdf993457505bfae3ac44a8428"
+    },
+    {
+      "sourcePath": "setup-identity.json",
+      "path": "setup-identity.json.log",
+      "bytes": 43892,
+      "sha256": "dc88b69f5e59bbc95b1f1b7e03b200eec17cf64589a77fe178c8d5af8bb42ce1"
+    },
+    {
+      "sourcePath": "setup.log",
+      "path": "setup.log",
+      "bytes": 137,
+      "sha256": "dda4b808ec1eade24100d53c96ca4b4419089f2d9ed3100d8b0bb58fbaba3d46"
+    },
+    {
+      "sourcePath": "setup.mjs.log",
+      "path": "setup.mjs.log",
+      "bytes": 2799,
+      "sha256": "cbe5a57f592a81002cc8aa1183dc53ddb36da13f41025d20def53ccfac5b54ea"
+    },
+    {
+      "sourcePath": "source-freeze1-identity.json",
+      "path": "source-freeze1-identity.json.log",
+      "bytes": 900,
+      "sha256": "358aa231e7a2118303ef4b3f3e6f9feec7a966d85049bffd21e3dac5d5951b0a"
+    },
+    {
+      "sourcePath": "source-freeze1.patch",
+      "path": "source-freeze1.patch.log",
+      "bytes": 35666,
+      "sha256": "9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78"
+    },
+    {
+      "sourcePath": "subject.js",
+      "path": "subject.js.log",
+      "bytes": 8691,
+      "sha256": "eb3bd75eb75cbdf3cadbdcd1cadb5b1506ef37b4c46de1c5b5adc45313f8ffff"
+    },
+    {
+      "sourcePath": "subject.mjs.log",
+      "path": "subject.mjs.log",
+      "bytes": 7240,
+      "sha256": "98b3b214479136f558e6c0c8fff37bff89f83e7e2d3ba5430a6474a2113a8c21"
+    },
+    {
+      "sourcePath": "tsconfig.json",
+      "path": "tsconfig.json.log",
+      "bytes": 225,
+      "sha256": "ecef15de0efef55edbd639a2c8fdd8a51dce28b9275ff8b68114fe0746659e33"
+    },
+    {
+      "sourcePath": "types.log",
+      "path": "types.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "types.ts.log",
+      "path": "types.ts.log",
+      "bytes": 1144,
+      "sha256": "7f671095b96bdb7858e1460e23353b3e67fe2d8866cf62501f16116f69ed0470"
+    },
+    {
+      "sourcePath": "manifest.json",
+      "path": "manifest.json.log",
+      "bytes": 4569,
+      "sha256": "f04478c508027ed8fe5d6ac1cb8d8fa842087de155cf7f4c26d01a065768a014"
+    }
+  ]
+}

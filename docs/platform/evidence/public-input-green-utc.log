@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ✓ packages/engine/src/public-input.test.ts (77 tests) 39ms
+
+ Test Files  1 passed (1)
+      Tests  77 passed (77)
+   Start at  17:59:35
+   Duration  462ms (transform 131ms, setup 0ms, collect 159ms, tests 39ms, environment 0ms, prepare 41ms)

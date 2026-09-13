@@ -1,0 +1,69 @@
+export function runIndependentChecks(api,intervalApi,crossRealmDate){
+ const errorMessage='Could not determine local-date membership from the supplied date, instant and explicit timezone.';
+ const records=[];let coercions=0;
+ const check=(yes,message)=>{if(!yes)throw Error(message)};
+ const call=(label,date,instant,zone,expected)=>{const actual=api.localDateContainsUtc(date,instant,zone);check(actual===expected,label+' membership mismatch');records.push({label,kind:'membership',expected,actual})};
+ const bad=(label,date,instant,zone)=>{let caught;try{api.localDateContainsUtc(date,instant,zone)}catch(e){caught=e}check(caught instanceof RangeError,label+' must throw RangeError');check(caught.message===errorMessage,label+' changed fixed error');check(caught.cause===undefined,label+' error retains cause');check(!String(caught).includes('PRIVATE_SENTINEL'),label+' leaks input');records.push({label,kind:'rejected',name:caught.name,message:caught.message,causeAbsent:true})};
+ const normal=new Date('2000-01-01T00:00:00.000Z');
+ for(const [label,date]of [
+  ['missing',undefined],['null',null],['boxed',new String('2000-01-01')],['array',['2000-01-01']],['unicode-fullwidth','２０００-０１-０１'],['arabic-digits','٢٠٠٠-٠١-٠١'],['year-signed','+000000-01-01'],['negative-zero','-0000-01-01'],['leap-century','0100-02-29'],['year-zero-invalid-day','0000-02-30'],['empty',''],['embedded-newline','2000\n01-01'],['trailing-space','2000-01-01 '],['extended-year','10000-01-01'],['coercible-object',{toString(){coercions++;throw Error('PRIVATE_SENTINEL')}}],
+ ])bad('date-'+label,date,normal,'UTC');
+ const proxyDate=new Proxy(normal,{get(){coercions++;throw Error('PRIVATE_SENTINEL proxy get')}});
+ const revocable=Proxy.revocable(normal,{});revocable.revoke();
+ const forged={getTime(){coercions++;return normal.getTime()},[Symbol.toStringTag]:'Date'};
+ for(const [label,instant]of [['number',0],['string','2000-01-01T00:00Z'],['null',null],['undefined',undefined],['bigint',0n],['symbol',Symbol('PRIVATE_SENTINEL')],['invalid-Date',new Date(NaN)],['forged-tag',forged],['prototype-only',Object.create(Date.prototype)],['proxy-Date',proxyDate],['revoked-proxy-Date',revocable.proxy]])bad('instant-'+label,'2000-01-01',instant,'UTC');
+ for(const [label,zone]of [['undefined',undefined],['null',null],['boolean',false],['number',0],['boxed',new String('UTC')],['object',{toString(){coercions++;throw Error('PRIVATE_SENTINEL zone')}}],['empty',''],['leading-space',' UTC'],['trailing-newline','UTC\n'],['offset-plus24','+24:00'],['offset-minus24','-24:00'],['offset-seconds','+01:00:30'],['Temporal-timeZoneLike','2000-01-01T00:00[UTC]'],['prototype-name','__proto__'],['constructor-name','constructor'],['unknown','PRIVATE_SENTINEL/Unknown']])bad('zone-'+label,'2000-01-01',normal,zone);
+ check(coercions===0,'Rejected domain invoked coercion/property traps');
+ const internal=Date.prototype.getTime;
+ const overridden=new Date(normal.getTime());Object.defineProperty(overridden,'getTime',{get(){coercions++;throw Error('PRIVATE_SENTINEL overridden getter')}});
+ class Subclass extends Date{getTime(){coercions++;throw Error('PRIVATE_SENTINEL subclass')}valueOf(){coercions++;throw Error('PRIVATE_SENTINEL valueOf')}get [Symbol.toStringTag](){coercions++;throw Error('PRIVATE_SENTINEL tag')}}
+ const noPrototype=new Date(normal.getTime());Object.setPrototypeOf(noPrototype,null);
+ const frozen=Object.freeze(new Date(normal.getTime()));
+ for(const [label,value]of [['overridden-getter',overridden],['subclass',new Subclass(normal.getTime())],['no-prototype',noPrototype],['frozen-Date',frozen],['cross-realm-Date',crossRealmDate]]){const before=internal.call(value);call(label,'2000-01-01',value,'UTC',true);check(internal.call(value)===before,'Mutated Date internal value')}
+ Object.defineProperty(crossRealmDate,'getTime',{get(){coercions++;throw Error('PRIVATE_SENTINEL foreign getter')}});call('cross-realm-overridden-getter','2000-01-01',crossRealmDate,'UTC',true);check(coercions===0,'Actual Date override invoked');
+ const boundaries=[
+  ['zero-first','0000-01-01','0000-01-01T00:00:00.000Z','UTC',true],
+  ['zero-before','0000-01-01','-000001-12-31T23:59:59.999Z','UTC',false],
+  ['zero-last','0000-01-01','0000-01-01T23:59:59.999Z','UTC',true],
+  ['zero-after','0000-01-01','0000-01-02T00:00:00.000Z','UTC',false],
+  ['zero-leap-last','0000-02-29','0000-02-29T23:59:59.999Z','UTC',true],
+  ['zero-leap-after','0000-02-29','0000-03-01T00:00:00.000Z','UTC',false],
+  ['zero-plus-offset-first','0000-01-01','-000001-12-31T00:01:00.000Z','+23:59',true],
+  ['zero-plus-offset-before','0000-01-01','-000001-12-31T00:00:59.999Z','+23:59',false],
+  ['year99-last','0099-12-31','0099-12-31T23:59:59.999Z','UTC',true],
+  ['year99-after','0099-12-31','0100-01-01T00:00:00.000Z','UTC',false],
+  ['maximum-last','9999-12-31','9999-12-31T23:59:59.999Z','UTC',true],
+  ['maximum-after','9999-12-31','+010000-01-01T00:00:00.000Z','UTC',false],
+  ['maximum-minus-offset-last','9999-12-31','+010000-01-01T23:58:59.999Z','-23:59',true],
+  ['maximum-minus-offset-after','9999-12-31','+010000-01-01T23:59:00.000Z','-23:59',false],
+  ['LMT-before-midnight','1907-07-06','1907-07-06T06:36:35.999Z','America/Mexico_City',false],
+  ['LMT-exact-midnight','1907-07-06','1907-07-06T06:36:36.000Z','America/Mexico_City',true],
+  ['LMT-last-millisecond','1907-07-06','1907-07-07T06:36:35.999Z','America/Mexico_City',true],
+  ['LMT-next-midnight','1907-07-06','1907-07-07T06:36:36.000Z','America/Mexico_City',false],
+  ['Monrovia-before-short-date','1972-01-07','1972-01-07T00:44:29.999Z','Africa/Monrovia',false],
+  ['Monrovia-first-short-date','1972-01-07','1972-01-07T00:44:30.000Z','Africa/Monrovia',true],
+  ['Toronto-omitted-start-member','1919-03-31','1919-03-31T04:30:00.000Z','America/Toronto',true],
+  ['StJohns-interruption-before','2009-11-01','2009-11-01T02:30:59.999Z','America/St_Johns',true],
+  ['StJohns-interruption-start','2009-11-01','2009-11-01T02:31:00.000Z','America/St_Johns',false],
+  ['StJohns-return-before','2009-11-01','2009-11-01T03:29:59.999Z','America/St_Johns',false],
+  ['StJohns-return-start','2009-11-01','2009-11-01T03:30:00.000Z','America/St_Johns',true],
+ ];for(const [label,date,instant,zone,expected]of boundaries)call(label,date,new Date(instant),zone,expected);
+ call('Date-scale-positive-limit-not-9999','9999-12-31',new Date(8640000000000000),'UTC',false);call('Date-scale-negative-limit-not-zero','0000-01-01',new Date(-8640000000000000),'UTC',false);
+ const zoneAdmission=[];
+ for(const zone of ['utc','US/Eastern','Etc/GMT+12','GMT','+01','+0100','+01:00','-00:00','Pacific/Kiritimati']){
+  const date=new Date('2000-01-01T23:30:00.000Z'),f=new Intl.DateTimeFormat('en-US',{timeZone:zone,calendar:'gregory',numberingSystem:'latn',year:'numeric',month:'2-digit',day:'2-digit'}),parts=f.formatToParts(date),p=type=>parts.find(x=>x.type===type).value,requested=`${p('year')}-${p('month')}-${p('day')}`;
+  call('host-identifier-'+zone,requested,date,zone,true);zoneAdmission.push({zone,canonical:f.resolvedOptions().timeZone,requested});
+ }
+ const originalFormat=Intl.DateTimeFormat,originalParts=Intl.DateTimeFormat.prototype.formatToParts;
+ try{Intl.DateTimeFormat=new Proxy(originalFormat,{construct(){throw Error('PRIVATE_SENTINEL constructor')}});bad('host-constructor-failure','2000-01-01',normal,'Etc/GMT-4')}finally{Intl.DateTimeFormat=originalFormat}
+ try{Intl.DateTimeFormat.prototype.formatToParts=function(){throw Error('PRIVATE_SENTINEL cached formatter')};bad('host-cached-formatter-failure','2000-01-01',normal,'UTC')}finally{Intl.DateTimeFormat.prototype.formatToParts=originalParts}
+ const skipped=[];for(const [date,zone]of [['2011-12-30','Pacific/Apia'],['1993-08-21','Pacific/Kwajalein'],['1994-12-31','Pacific/Kiritimati'],['1844-12-31','Pacific/Guam']]){const result=api.resolveLocalToUtc(date,'12:00',zone);call('real-selected-noon-refusal-'+zone,date,result.utc,zone,false);skipped.push({date,zone,utc:result.utc.toISOString(),flags:result.flags,qualification:'Refuses this selected instant; existence proof is separate'})}
+ const transition=Date.parse('2000-01-01T00:00Z'),syntheticZone='Synthetic/IndependentForward15Hours',offset=t=>t<transition?0:15*3600000;
+ const utcFormatter=new originalFormat('en-US',{timeZone:'UTC',calendar:'gregory',numberingSystem:'latn',era:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,hourCycle:'h23'});let synthetic;
+ try{Intl.DateTimeFormat=new Proxy(originalFormat,{construct(target,args,newTarget){const opts=args[1];if(opts?.timeZone!==syntheticZone)return Reflect.construct(target,args,newTarget);return{formatToParts(value){const ms=Number(value);return opts.timeZoneName==='longOffset'?[{type:'timeZoneName',value:offset(ms)===0?'GMT':'GMT+15:00'}]:utcFormatter.formatToParts(ms+offset(ms))}}}});
+  const noon=api.resolveLocalToUtc('2000-01-01','12:00',syntheticZone);call('synthetic-nonempty-date-noon-refusal','2000-01-01',noon.utc,syntheticZone,false);call('synthetic-nonempty-date-actual-member','2000-01-01',new Date(transition),syntheticZone,true);
+  const interval=intervalApi.resolveLocalDateIntervals('2000-01-01',syntheticZone,{completeness:'complete-transitions-v1',offsetMilliseconds:(_,t)=>offset(t),nextTransitionMilliseconds:(_,after)=>after<transition?transition:null});check(interval.status==='existing'&&interval.intervals.length===1&&interval.intervals[0].start===transition&&interval.intervals[0].endExclusive===transition+9*3600000,'Synthetic complete model mismatch');synthetic={noon: noon.utc.toISOString(),syntheticNoonWall:new Date(noon.utc.getTime()+offset(noon.utc.getTime())).toISOString(),interval,notRealZone:true};
+ }finally{Intl.DateTimeFormat=originalFormat}
+ check(coercions===0,'Domain checking invoked caller coercion');
+ return{checks:records.length,records,coercionOrOverrideCalls:coercions,crossRealmInstanceofCurrentDate:crossRealmDate instanceof Date,zoneAdmission,skipped,synthetic,qualification:'Independent helper-domain and exact membership controls; no caller, whole-date candidate, new ephemeris, SDK API, or hostile-global-sandbox claim.'};
+}

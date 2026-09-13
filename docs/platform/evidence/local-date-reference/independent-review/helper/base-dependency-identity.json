@@ -1,0 +1,18 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "files": [
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    }
+  ],
+  "baseResolverSha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+}

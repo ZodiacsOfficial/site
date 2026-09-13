@@ -1,0 +1,518 @@
+diff --git a/src/islands/ChartCalculator.ownership.test.ts b/src/islands/ChartCalculator.ownership.test.ts
+index 8dcbbe09..bdf8f4a5 100644
+--- a/src/islands/ChartCalculator.ownership.test.ts
++++ b/src/islands/ChartCalculator.ownership.test.ts
+@@ -66,6 +66,7 @@ function harness() {
+     readFirstReadingProgress: () => ({}),
+     track: () => {}, signForLongitude: () => ({ slug: 'aries' }),
+     resolveLocalToUtc: (date: string) => ({ utc: new Date(date + 'T14:30:00Z'), offsetMinutes: 0, flags: [] }),
++    localDateContainsUtc: () => true,
+     localDateEndpointsUtc: () => ({ start: new Date(0), end: new Date(1) }),
+     moonCandidatesFromEndpoints: () => ['aries'], moonIsUncertain: () => false, stableBodySignSlug: () => 'aries',
+   };
+diff --git a/src/islands/ChartCalculator.tsx b/src/islands/ChartCalculator.tsx
+index bdc8d01e..3cd92b3f 100644
+--- a/src/islands/ChartCalculator.tsx
++++ b/src/islands/ChartCalculator.tsx
+@@ -35,7 +35,7 @@ import {
+ } from '../lib/scene/types';
+ import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
+ import { bigThree } from '../lib/interpretations';
+-import { resolveLocalToUtc } from '../lib/time/localToUtc';
++import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+ import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
+ import { houseOf } from '../lib/engine/houses';
+ import { moonPhaseName } from '../lib/engine/lite';
+@@ -1135,6 +1135,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     advanceInputRevision();
+     clearResult();
+     const runInputRevision = inputRevisionRef.current;
++    const localDateReferenceFailure = new Error('Could not establish a calculation time within the local date.');
+     const signatureModule = mode === 'full' && showsEnglishInterpretation
+       ? import('../lib/chart-signature').catch(() => null)
+       : null;
+@@ -1176,6 +1177,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       }
+       const effectiveTime = input.timeKnown ? input.time : '12:00';
+       const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
++      if (!input.timeKnown) {
++        try {
++          if (!localDateContainsUtc(input.date, resolved.utc, input.city.tz)) throw localDateReferenceFailure;
++        } catch { throw localDateReferenceFailure; }
++      }
+       const calculationInput = {
+         utc: resolved.utc,
+         latitude: input.city.lat,
+@@ -1287,7 +1293,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       runChartIdRef.current += 1;
+       clearResult();
+       setBusy(false);
+-      setError(calculationError(err, locale, t(locale, 'chartError')));
++      setError(err === localDateReferenceFailure ? t(locale, 'localDateReferenceError')
++        : calculationError(err, locale, t(locale, 'chartError')));
+       console.error(err);
+     } finally {
+       if (runId === runChartIdRef.current) setBusy(false);
+diff --git a/src/islands/MoonPhaseTool.tsx b/src/islands/MoonPhaseTool.tsx
+index 574e10e8..720b5797 100644
+--- a/src/islands/MoonPhaseTool.tsx
++++ b/src/islands/MoonPhaseTool.tsx
+@@ -12,7 +12,7 @@ import {
+ } from '../lib/engine/lite';
+ import type { MoonPhaseName } from '../lib/engine/lite';
+ import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
+-import { resolveLocalToUtc } from '../lib/time/localToUtc';
++import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+ import type { City } from '../lib/geo/search';
+ import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
+ import { formatDateTime } from '../lib/i18n/dates';
+@@ -100,6 +100,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+     e.preventDefault();
+     if (!date) return;
+     const revision = ++lookupRevisionRef.current;
++    const localDateReferenceFailure = new Error('Could not establish a calculation time within the local date.');
+     const isCurrent = () => revision === lookupRevisionRef.current;
+     focusAfterComputeRef.current = true;
+     setBusy(true);
+@@ -114,6 +115,11 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+       let dayEnd: Date;
+       if (city) {
+         utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
++        if (!hasTime) {
++          try {
++            if (!localDateContainsUtc(date, utc, city.tz)) throw localDateReferenceFailure;
++          } catch { throw localDateReferenceFailure; }
++        }
+         dayStart = resolveLocalToUtc(date, '00:00', city.tz).utc;
+         dayEnd = resolveLocalToUtc(date, '23:59', city.tz).utc;
+       } else {
+@@ -154,7 +160,8 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+     } catch (err) {
+       if (!isCurrent()) return;
+       setResult(null);
+-      setError(calculationError(err, locale, t(locale, 'moonError')));
++      setError(err === localDateReferenceFailure ? t(locale, 'localDateReferenceError')
++        : calculationError(err, locale, t(locale, 'moonError')));
+       console.error(err);
+     } finally {
+       if (isCurrent()) setBusy(false);
+diff --git a/src/lib/i18n/ui/en.ts b/src/lib/i18n/ui/en.ts
+index 206f9894..aba69f4d 100644
+--- a/src/lib/i18n/ui/en.ts
++++ b/src/lib/i18n/ui/en.ts
+@@ -104,6 +104,7 @@ const en = {
+     searchGeo: 'Search covers ~34,000 places · GeoNames (CC BY 4.0)',
+     chartError: 'Something went wrong computing the chart. Please try again.',
+     moonError: 'Something went wrong computing that moon. Please try again.',
++  localDateReferenceError: 'We couldn’t establish a calculation time within this local date. Check the date and place.',
+     returnError: 'Something went wrong computing the return. Please try again.',
+     transitError: 'Something went wrong computing the transits. Please try again.',
+     compareError: 'Something went wrong comparing the charts. Please try again.',
+diff --git a/src/lib/i18n/ui/es.ts b/src/lib/i18n/ui/es.ts
+index af3949ea..29071a6e 100644
+--- a/src/lib/i18n/ui/es.ts
++++ b/src/lib/i18n/ui/es.ts
+@@ -104,6 +104,7 @@ const es = {
+     searchGeo: 'La búsqueda cubre ~34,000 lugares · GeoNames (CC BY 4.0)',
+     chartError: 'Algo salió mal al calcular la carta. Inténtalo otra vez.',
+     moonError: 'Algo salió mal al calcular esa Luna. Inténtalo otra vez.',
++  localDateReferenceError: 'No pudimos establecer una hora de cálculo dentro de esta fecha local. Comprueba la fecha y el lugar.',
+     returnError: 'Algo salió mal al calcular el retorno. Inténtalo otra vez.',
+     transitError: 'Algo salió mal al calcular los tránsitos. Inténtalo otra vez.',
+     compareError: 'Algo salió mal al comparar las cartas. Inténtalo otra vez.',
+diff --git a/src/lib/i18n/ui/fr.ts b/src/lib/i18n/ui/fr.ts
+index 1400f936..8380f067 100644
+--- a/src/lib/i18n/ui/fr.ts
++++ b/src/lib/i18n/ui/fr.ts
+@@ -104,6 +104,7 @@ const fr = {
+   searchGeo: 'La recherche couvre environ 34 000 lieux · GeoNames (CC BY 4.0)',
+   chartError: 'Un problème est survenu pendant le calcul du thème. Réessaie.',
+   moonError: 'Un problème est survenu pendant le calcul de la Lune. Réessaie.',
++  localDateReferenceError: 'Nous n’avons pas pu déterminer une heure de calcul correspondant à cette date locale. Vérifie la date et le lieu.',
+   returnError: 'Un problème est survenu pendant le calcul du retour. Réessaie.',
+   transitError: 'Un problème est survenu pendant le calcul des transits. Réessaie.',
+   compareError: 'Un problème est survenu pendant la comparaison des thèmes. Réessaie.',
+diff --git a/src/lib/i18n/ui/it.ts b/src/lib/i18n/ui/it.ts
+index 134f8d27..fcf158d1 100644
+--- a/src/lib/i18n/ui/it.ts
++++ b/src/lib/i18n/ui/it.ts
+@@ -110,6 +110,7 @@ const it = {
+     "Si è verificato un problema durante il calcolo del tema. Riprova.",
+   moonError:
+     "Si è verificato un problema durante il calcolo della Luna. Riprova.",
++  localDateReferenceError: 'Non è stato possibile stabilire un orario di calcolo all’interno di questa data locale. Controlla la data e il luogo.',
+   returnError:
+     "Si è verificato un problema durante il calcolo del ritorno. Riprova.",
+   transitError:
+diff --git a/src/lib/i18n/ui/pt.ts b/src/lib/i18n/ui/pt.ts
+index 5f90419c..ddf4464c 100644
+--- a/src/lib/i18n/ui/pt.ts
++++ b/src/lib/i18n/ui/pt.ts
+@@ -104,6 +104,7 @@ const pt = {
+   searchGeo: 'A busca cobre cerca de 34.000 lugares · GeoNames (CC BY 4.0)',
+   chartError: 'Algo deu errado ao calcular o mapa. Tente de novo.',
+   moonError: 'Algo deu errado ao calcular a Lua. Tente de novo.',
++  localDateReferenceError: 'Não foi possível estabelecer um horário de cálculo dentro desta data local. Verifique a data e o local.',
+   returnError: 'Algo deu errado ao calcular o retorno. Tente de novo.',
+   transitError: 'Algo deu errado ao calcular os trânsitos. Tente de novo.',
+   compareError: 'Algo deu errado ao comparar os mapas. Tente de novo.',
+diff --git a/src/lib/i18n/ui/ru.ts b/src/lib/i18n/ui/ru.ts
+index e83663ee..9247fabf 100644
+--- a/src/lib/i18n/ui/ru.ts
++++ b/src/lib/i18n/ui/ru.ts
+@@ -157,6 +157,7 @@ const ru = {
+   searchGeo: 'Поиск по ~34 000 мест · GeoNames (CC BY 4.0)',
+   chartError: 'Не получилось рассчитать карту. Попробуйте ещё раз.',
+   moonError: 'Не получилось рассчитать эту Луну. Попробуйте ещё раз.',
++  localDateReferenceError: 'Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.',
+   returnError: 'Не получилось рассчитать возвращение. Попробуйте ещё раз.',
+   transitError: 'Не получилось рассчитать транзиты. Попробуйте ещё раз.',
+   compareError: 'Не получилось сравнить карты. Попробуйте ещё раз.',
+diff --git a/src/lib/time/localDateContainsUtc.test.ts b/src/lib/time/localDateContainsUtc.test.ts
+new file mode 100644
+index 00000000..dfaf3e9d
+--- /dev/null
++++ b/src/lib/time/localDateContainsUtc.test.ts
+@@ -0,0 +1,102 @@
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import { runInNewContext } from 'node:vm';
++import { localDateContainsUtc, resolveLocalToUtc } from './localToUtc';
++import { resolveLocalDateIntervals } from './local-date-intervals';
++import { UI, CATALOG_LOCALES } from '../i18n';
++
++const message = 'Could not determine local-date membership from the supplied date, instant and explicit timezone.';
++afterEach(() => vi.restoreAllMocks());
++
++describe('local date membership of a selected instant', () => {
++  it.each([
++    ['2011-12-30', 'Pacific/Apia'], ['1993-08-21', 'Pacific/Kwajalein'],
++    ['1994-12-31', 'Pacific/Kiritimati'], ['1844-12-31', 'Pacific/Guam'],
++  ])('refuses the out-of-date noon selected for %s in %s', (date, zone) => {
++    const resolved = resolveLocalToUtc(date, '12:00', zone);
++    expect(localDateContainsUtc(date, resolved.utc, zone)).toBe(false);
++    expect(resolved.flags).toContain('dst-gap'); // Existing resolution policy is unchanged.
++  });
++
++  it.each([
++    ['2000-02-29', 'UTC'], ['2026-03-08', 'America/New_York'],
++    ['2024-10-06', 'Australia/Lord_Howe'], ['1892-07-04', 'Pacific/Apia'],
++    ['1969-09-30', 'Pacific/Kwajalein'], ['1867-10-18', 'America/Juneau'],
++    ['1919-03-31', 'America/Toronto'], ['2009-11-01', 'America/St_Johns'],
++    ['1990-01-04', 'US/Eastern'], ['1990-01-04', '+0100'],
++  ])('admits a reference on %s in %s without making a coverage claim', (date, zone) => {
++    expect(localDateContainsUtc(date, resolveLocalToUtc(date, '12:00', zone).utc, zone)).toBe(true);
++  });
++
++  it.each([
++    ['0000-01-01', 'UTC'], ['0000-02-29', 'UTC'], ['0099-12-31', 'UTC'],
++    ['9999-12-31', 'UTC'], ['0000-01-01', '+23:59'], ['9999-12-31', '-23:59'],
++    ['1907-07-06', 'America/Mexico_City'], ['1883-11-17', 'America/Denver'],
++    ['1900-01-01', 'Asia/Colombo'],
++  ])('uses exact era-aware midnight membership for %s in %s', (date, zone) => {
++    const midnight = resolveLocalToUtc(date, '00:00', zone).utc;
++    expect(localDateContainsUtc(date, midnight, zone)).toBe(true);
++    expect(localDateContainsUtc(date, new Date(midnight.getTime() - 1), zone)).toBe(false);
++  });
++
++  it('does not compare the UTC date or round a historical seconds offset', () => {
++    const utc = new Date('1907-07-06T06:36:36.000Z');
++    expect(localDateContainsUtc('1907-07-06', utc, 'America/Mexico_City')).toBe(true);
++    expect(localDateContainsUtc('1907-07-06', new Date(utc.getTime() - 1), 'America/Mexico_City')).toBe(false);
++    expect(localDateContainsUtc('2000-01-01', new Date('1999-12-31T23:30Z'), '+01:00')).toBe(true);
++  });
++
++  it.each([undefined, null, '', ' ', 'Private/unsupported', '+01:00:30', {}, 0])('never falls back for an invalid or missing explicit zone (%j)', (zone) => {
++    expect(() => localDateContainsUtc('2000-01-01', new Date('2000-01-01Z'), zone as string)).toThrow(message);
++  });
++
++  it.each(['2000-1-01', '2000-02-30', '1900-02-29', '10000-01-01', '2000-01-01\n', '', null, {}])('rejects noncanonical or impossible requested dates (%j)', (date) => {
++    expect(() => localDateContainsUtc(date as string, new Date(), 'UTC')).toThrow(message);
++  });
++
++  it.each([new Date(NaN), '2000-01-01T00:00Z', 0, null, {}, { getTime: (): number => 0 }])('requires a finite actual Date (%j)', (instant) => {
++    expect(() => localDateContainsUtc('2000-01-01', instant as Date, 'UTC')).toThrow(message);
++  });
++
++  it('accepts cross-realm Dates and ignores overridden getters', () => {
++    const crossRealm = runInNewContext("new Date('2000-01-01T00:00:00Z')") as Date;
++    expect(localDateContainsUtc('2000-01-01', crossRealm, 'UTC')).toBe(true);
++    Object.defineProperty(crossRealm, 'getTime', { get() { throw Error('Private getter'); } });
++    expect(localDateContainsUtc('2000-01-01', crossRealm, 'UTC')).toBe(true);
++    expect(crossRealm.toISOString()).toBe('2000-01-01T00:00:00.000Z');
++  });
++
++  it('sanitizes formatter failures without claiming a different or empty date', () => {
++    vi.spyOn(Intl.DateTimeFormat.prototype, 'formatToParts').mockImplementation(() => { throw Error('Private zone and instant'); });
++    let caught: unknown;
++    try { localDateContainsUtc('2000-01-01', new Date('2000-01-01Z'), 'UTC'); } catch (error) { caught = error; }
++    expect(caught).toBeInstanceOf(RangeError); expect((caught as Error).message).toBe(message);
++    expect((caught as Error).cause).toBeUndefined(); expect(String(caught)).not.toContain('Private');
++  });
++
++  it('retains the synthetic nonempty-date conservative refusal counterexample', () => {
++    const zone = 'Synthetic/ReferenceMembershipForward15', date = '2000-01-01';
++    const transition = Date.parse('2000-01-01T00:00Z');
++    const offset = (instant: number) => instant < transition ? 0 : 15 * 3_600_000;
++    const Original = Intl.DateTimeFormat;
++    const wall = new Original('en-US', { timeZone: 'UTC', calendar: 'gregory', numberingSystem: 'latn', era: 'short', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3, hourCycle: 'h23' });
++    vi.spyOn(Intl, 'DateTimeFormat').mockImplementation(((locales, options) => {
++      if (options?.timeZone !== zone) return new Original(locales, options);
++      return { formatToParts(value: number) { return options.timeZoneName === 'longOffset'
++        ? [{ type: 'timeZoneName', value: offset(Number(value)) === 0 ? 'GMT' : 'GMT+15:00' }]
++        : wall.formatToParts(Number(value) + offset(Number(value))); } } as Intl.DateTimeFormat;
++    }) as typeof Intl.DateTimeFormat);
++    const noon = resolveLocalToUtc(date, '12:00', zone);
++    expect(localDateContainsUtc(date, noon.utc, zone)).toBe(false);
++    expect(localDateContainsUtc(date, new Date(transition), zone)).toBe(true);
++    expect(resolveLocalDateIntervals(date, zone, {
++      completeness: 'complete-transitions-v1', offsetMilliseconds: (_zone, instant) => offset(instant),
++      nextTransitionMilliseconds: (_zone, after) => after < transition ? transition : null,
++    })).toEqual({ status: 'existing', intervals: [{ start: transition, endExclusive: transition + 9 * 3_600_000 }] });
++  });
++
++  it.each(CATALOG_LOCALES)('supplies a dedicated localized unresolved-reference message for %s', (locale) => {
++    expect(UI[locale].localDateReferenceError.length).toBeGreaterThan(40);
++    expect(UI[locale].localDateReferenceError).not.toBe(UI[locale].chartError);
++    if (locale !== 'en') expect(UI[locale].localDateReferenceError).not.toBe(UI.en.localDateReferenceError);
++  });
++});
+diff --git a/src/lib/time/localToUtc.ts b/src/lib/time/localToUtc.ts
+index f2445649..f8692d07 100644
+--- a/src/lib/time/localToUtc.ts
++++ b/src/lib/time/localToUtc.ts
+@@ -84,6 +84,27 @@ function wallStringAt(tz: string, utcMs: number): string {
+   return `${isoYear}-${part('month')}-${part('day')}T${part('hour')}:${part('minute')}:${part('second')}.${part('fractionalSecond')}`;
+ }
+ 
++/**
++ * Whether this instant belongs to the requested local Gregorian date under
++ * the host's timezone data. A false result refuses this representative; it
++ * does not prove that the date is empty or establish whole-date coverage.
++ * Invalid input or unavailable formatting throws without exposing input data.
++ */
++export function localDateContainsUtc(date: string, utc: Date, timeZone: string): boolean {
++  try {
++    if (!parseCivilDate(date) || typeof timeZone !== 'string' || timeZone.length === 0) {
++      throw new RangeError();
++    }
++    // Read the Date's internal value once, including cross-realm Dates. Do not
++    // invoke a caller's getTime override or normalize a date-like string.
++    const instant = Date.prototype.getTime.call(utc);
++    if (!Number.isFinite(instant)) throw new RangeError();
++    return wallStringAt(timeZone, instant).split('T')[0] === date;
++  } catch {
++    throw new RangeError('Could not determine local-date membership from the supplied date, instant and explicit timezone.');
++  }
++}
++
+ /**
+  * Resolve a wall-clock date + time in an IANA zone to UTC.
+  * Inputs must be a real proleptic Gregorian YYYY-MM-DD (0000–9999) and
+diff --git a/tests/local-date-reference-drive.mjs b/tests/local-date-reference-drive.mjs
+new file mode 100644
+index 00000000..1dffa8f1
+--- /dev/null
++++ b/tests/local-date-reference-drive.mjs
+@@ -0,0 +1,202 @@
++/** Native caller regression: actual islands, resolver, receipt and ephemeris.
++ * Only loader timing, synthetic city search and explicitly recorded fault/call
++ * probes are controlled. No complete-date or numerical-oracle claim follows.
++ */
++import assert from 'node:assert/strict';
++import { readFile, writeFile, mkdir } from 'node:fs/promises';
++import { createHash } from 'node:crypto';
++import { createServer } from 'node:http';
++import { resolve, dirname } from 'node:path';
++import { build } from 'esbuild';
++import { chromium } from 'playwright-core';
++import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
++const root = resolve(import.meta.dirname, '..');
++const out = resolve(process.env.OUT_DIR ?? resolve(root, 'tests/visual/artifacts/local-date-reference'));
++const baseline = process.env.REFERENCE_BASELINE_DIR;
++await mkdir(out, { recursive: true });
++const hash = bytes => createHash('sha256').update(bytes).digest('hex');
++const sourcePaths = ['src/lib/time/localToUtc.ts', 'src/islands/ChartCalculator.tsx', 'src/islands/MoonPhaseTool.tsx', ...['en','es','fr','it','pt','ru'].map(locale=>`src/lib/i18n/ui/${locale}.ts`)];
++const identity = await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))})));
++const entry = `
++import { h, render } from 'preact';
++import ChartCalculator from './src/islands/ChartCalculator';
++import MoonPhaseTool from './src/islands/MoonPhaseTool';
++import * as actual from './src/lib/engine/full';
++import en from './src/lib/i18n/ui/en';import es from './src/lib/i18n/ui/es';import fr from './src/lib/i18n/ui/fr';import it from './src/lib/i18n/ui/it';import pt from './src/lib/i18n/ui/pt';import ru from './src/lib/i18n/ui/ru';
++import { RUSSIAN_RUNTIME } from './src/lib/i18n/ru-runtime/server';
++const catalogs={en,es,fr,it,pt,ru};
++window.__referenceEvents=[];window.__referenceOutputs={};let pending=null;
++const engine={...actual,
++ computeChart(input){window.__referenceEvents.push({kind:'legacyNatal'});const result=actual.computeChart(input);window.__referenceOutputs.chart=JSON.stringify(result);return result;},
++ computeBodies(utc){window.__referenceEvents.push({kind:'bodies',utc:utc.toISOString()});const result=actual.computeBodies(utc);(window.__referenceOutputs.endpoints??=[]).push(result);return result;},
++ bodyLongitude(body,utc){const value=actual.bodyLongitude(body,utc);window.__referenceEvents.push({kind:'body',body,utc:utc.toISOString(),value});(window.__referenceOutputs.bodies??=[]).push({body,utc:utc.toISOString(),value});return value;},
++};
++window.referenceLoadEngine=()=>pending?pending.promise:Promise.resolve(engine);
++window.fixture={city:null,failMembership:false,
++ reset(){window.__referenceEvents=[];window.__referenceOutputs={};},
++ hold(){let done;const promise=new Promise(resolve=>done=resolve);pending={promise,done};},
++ release(){const old=pending;pending=null;old?.done(engine);},
++ mount(mode,locale){window.__ZDX_UI__={locale,messages:catalogs[locale]};window.__ZDX_RU__={locale:'ru',data:RUSSIAN_RUNTIME};render(h(mode==='chart'?ChartCalculator:MoonPhaseTool,mode==='chart'?{mode:'full',locale}:{locale}),document.getElementById('mount'));},
++ unmount(){render(null,document.getElementById('mount'));},
++};
++if(window.__referenceBootstrap?.holdEngine)window.fixture.hold();
++const params=new URL(location.href).searchParams;window.fixture.mount(params.get('mode')??'chart',params.get('locale')??'en');
++`;
++const bundles = new Map();
++for (const variant of baseline ? ['baseline', 'candidate'] : ['candidate']) {
++ const instrumentation=[];
++ const result=await build({absWorkingDir:root,stdin:{contents:entry,resolveDir:root},outfile:resolve(out,variant+'.js'),bundle:true,write:false,platform:'browser',format:'iife',target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,
++ plugins:[{name:'declared-caller-probes',setup(builder){
++  builder.onResolve({filter:/lib\/hooks\/useEngine$/},()=>({path:'loader',namespace:'reference'}));
++  builder.onResolve({filter:/lib\/geo\/search$/},()=>({path:'places',namespace:'reference'}));
++  builder.onLoad({filter:/.*/,namespace:'reference'},({path})=>({contents:path==='loader'?'export function useEngine(){return ()=>window.referenceLoadEngine();}':'export const preloadIndex=async()=>{};export const searchCities=async q=>q? [window.fixture.city].filter(Boolean):[];'}));
++  builder.onLoad({filter:/\/(?:ChartCalculator|MoonPhaseTool)\.tsx$/},async({path})=>{
++   const relative=path.slice(root.length+1),selected=variant==='baseline'?resolve(baseline,relative):path;
++   return {contents:await readFile(selected,'utf8'),loader:'tsx',resolveDir:dirname(path)};
++  });
++  builder.onLoad({filter:/\/lib\/(?:chart-date-certainty|time\/localToUtc|engine\/(?:portable|calculator-receipt))\.ts$/},async({path})=>{
++   let text=await readFile(path,'utf8');const originalSha256=hash(text);
++   if(path.endsWith('/localToUtc.ts')){
++    text=text.replace('): LocalTimeResolution {',"): LocalTimeResolution {\n  window.__referenceEvents.push({kind:'resolve',date,time,zone:tz});");
++    text=text.replace('export function localDateContainsUtc(date: string, utc: Date, timeZone: string): boolean {\n  try {',"export function localDateContainsUtc(date: string, utc: Date, timeZone: string): boolean {\n  window.__referenceEvents.push({kind:'contains'});\n  try {\n    if(window.fixture.failMembership)throw new Error('Synthetic private formatter failure');");
++   } else if(path.endsWith('/chart-date-certainty.ts')){
++    text=text.replace('export function localDateEndpointsUtc(date: string, timeZone: string): LocalDateEndpoints {',"export function localDateEndpointsUtc(date: string, timeZone: string): LocalDateEndpoints {\n  window.__referenceEvents.push({kind:'endpoints'});");
++   } else if(path.endsWith('/portable.ts')){
++    text=text.replace('const nativeChart = natalChart(input);',"window.__referenceEvents.push({kind:'publicNatal'});\n    const nativeChart = natalChart(input);\n    window.__referenceOutputs.native=JSON.stringify(nativeChart);");
++   } else {
++    text=text.replace('export function computeCalculatorReceipt(input: BirthInput, local: CalculatorWallTime) {',"export function computeCalculatorReceipt(input: BirthInput, local: CalculatorWallTime) {\n  window.__referenceEvents.push({kind:'receiptBoundary'});");
++   }
++   instrumentation.push({path:path.slice(root.length+1),originalSha256,instrumentedSha256:hash(text)});
++   await writeFile(resolve(out,variant+'-'+path.split('/').at(-1)+'.probe-source.log'),text);
++   return {contents:text,loader:'ts',resolveDir:dirname(path)};
++  });
++ }}]});
++ const script=result.outputFiles.find(file=>file.path.endsWith('.js')).contents;
++ const css=result.outputFiles.find(file=>file.path.endsWith('.css'))?.contents??new Uint8Array();
++ const inputs=await Promise.all(Object.keys(result.metafile.inputs).filter(path=>!path.startsWith('<')&&!path.startsWith('reference:')).map(async path=>{
++  const override=variant==='baseline'&&['src/islands/ChartCalculator.tsx','src/islands/MoonPhaseTool.tsx'].includes(path)?resolve(baseline,path):resolve(root,path);
++  const bytes=await readFile(override);return {path,bytes:bytes.length,sha256:hash(bytes),...(override!==resolve(root,path)?{sourceOverride:override}:{})};
++ }));
++ bundles.set(variant,{script,css});await writeFile(resolve(out,variant+'.js'),script);await writeFile(resolve(out,variant+'.css'),css);
++ await writeFile(resolve(out,variant+'-build.json'),JSON.stringify({bundleSha256:hash(script),cssSha256:hash(css),inputs,instrumentation,metafile:result.metafile},null,2)+'\n');
++}
++await writeFile(resolve(out,'fixture-entry.tsx.log'),entry);
++const server=createServer((req,res)=>{
++ const url=new URL(req.url,'http://local'),variant=url.pathname.includes('baseline')?'baseline':'candidate',bundle=bundles.get(variant);
++ if(url.pathname.endsWith('.js')){res.setHeader('Content-Type','text/javascript');res.end(bundle.script);}
++ else if(url.pathname.endsWith('.css')){res.setHeader('Content-Type','text/css');res.end(bundle.css);}
++ else{res.setHeader('Content-Type','text/html');res.end(`<!doctype html><title>Local-date reference fixture</title><link rel="stylesheet" href="/${variant}.css"><div id="mount"></div><script src="/${variant}.js"></script>`);}
++});
++let browser,origin;const contexts=[],results=[],requests=[];
++const skipped=[['2011-12-30','Pacific/Apia',-13.83,-171.77],['1993-08-21','Pacific/Kwajalein',9.08,167.33],['1994-12-31','Pacific/Kiritimati',1.87,-157.43],['1844-12-31','Pacific/Guam',13.46,144.75]];
++async function setup(mode,variant='candidate',locale='en',fragment='',bootstrap=null){
++ const context=await browser.newContext({viewport:{width:1280,height:900},reducedMotion:'reduce',timezoneId:'UTC'});contexts.push(context);
++ await context.route('**/*',route=>{const url=route.request().url();requests.push({variant,mode,url,method:route.request().method()});return url.startsWith(origin+'/')?route.continue():route.abort();});
++ if(bootstrap)await context.addInitScript(value=>{
++  window.__referenceBootstrap=value;localStorage.setItem('zodiacs.profile.v1',JSON.stringify(value.profile));window.__referenceAccess=true;
++  const reader=Object.freeze({canRead:()=>window.__referenceAccess});Object.defineProperty(window,'zodiacsProfileAccess',{get:()=>reader,set:()=>{},configurable:true});
++ },bootstrap);
++ const page=await context.newPage(),errors=[];page.on('pageerror',error=>errors.push(String(error)));
++ await page.goto(origin+'/'+variant+'?mode='+mode+'&locale='+locale+fragment);await page.locator(mode==='chart'?'#birth-date':'#mp-date').waitFor();
++ await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));
++ return {context,page,mode,variant,locale,errors};
++}
++async function fill(s,date,zone='UTC',known=false,coords=[13.75,100.5]){
++ const {page,mode}=s;await page.locator(mode==='chart'?'#birth-date':'#mp-date').fill(date);
++ if(mode==='chart')await page.locator('.calc__form input[type=checkbox]').setChecked(!known);
++ if(known)await page.locator(mode==='chart'?'#birth-time':'#mp-time').fill('12:00');
++ else if(mode==='moon')await page.locator('#mp-time').fill('');
++ if(zone){
++  if(await page.locator('.place__clear').count())await page.locator('.place__clear').click();
++  await page.evaluate(({zone,coords})=>{window.fixture.city={name:'Synthetic place',admin1:'',country:'',tz:zone,lat:coords[0],lon:coords[1],pop:0};},{zone,coords});
++  await page.locator(mode==='chart'?'#place':'#mp-place').fill('Synthetic');await page.locator('[role=listbox] [role=option]').first().click();
++ }
++}
++async function settle(s){await s.page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');await s.page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));}
++async function submit(s){await s.page.locator('.calc__submit').click();await settle(s);}
++async function data(s){return s.page.evaluate(()=>({events:window.__referenceEvents,outputs:window.__referenceOutputs,result:!!document.querySelector('.calc__result'),context:window.zodiacsPostChartContext??null,error:document.querySelector('.calc__error')?.textContent??'',receipt:!!document.querySelector('[data-calculation-receipt-export]'),share:!!document.querySelector('[data-share-card]'),save:!!document.querySelector('[data-save-chart]'),profile:localStorage.getItem('zodiacs.profile.v1')}));}
++function assertCleared(value){assert.equal(value.result,false);assert.equal(value.context,null);assert.equal(value.receipt,false);assert.equal(value.share,false);assert.equal(value.save,false);assert.equal(value.profile,null);}
++async function group(name,fn){try{const detail=await fn();results.push({name,passed:true,detail});}catch(error){results.push({name,passed:false,error:String(error.stack??error)});}console.log(JSON.stringify({name,passed:results.at(-1).passed}));}
++try{
++ await new Promise(done=>server.listen(0,'127.0.0.1',done));origin=`http://127.0.0.1:${server.address().port}`;
++ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});
++ for(const mode of ['chart','moon'])for(const [date,zone,lat,lon] of skipped)await group(mode+' skipped '+zone,async()=>{
++  let original=null;
++  if(baseline){const old=await setup(mode,'baseline');try{await fill(old,date,zone,false,[lat,lon]);await submit(old);original=await data(old);assert.equal(original.result,true);assert.ok(original.events.some(row=>['publicNatal','legacyNatal','body'].includes(row.kind)));assert.deepEqual(old.errors,[]);await old.page.screenshot({path:resolve(out,mode+'-'+zone.replaceAll('/','-')+'-original.png'),fullPage:true});}finally{await old.context.close();}}
++  const s=await setup(mode);try{
++   await fill(s,'2000-01-01',zone,false,[lat,lon]);await submit(s);const initial=await data(s);assert.equal(initial.result,true);if(mode==='chart'){assert.equal(initial.receipt,true);assert.ok(initial.context);}
++   await fill(s,date,zone,false,[lat,lon]);await s.page.evaluate(()=>window.fixture.reset());await submit(s);
++   await s.page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__error'));
++   const rejected=await data(s);assertCleared(rejected);
++   assert.equal(rejected.error,'We couldn’t establish a calculation time within this local date. Check the date and place.');
++   assert.deepEqual(rejected.events.map(row=>row.kind),['resolve','contains']);assert.equal(rejected.events[0].time,'12:00');
++   assert.equal(await s.page.locator(mode==='chart'?'#birth-date':'#mp-date').inputValue(),date);
++   await s.page.screenshot({path:resolve(out,mode+'-'+zone.replaceAll('/','-')+'-rejected.png'),fullPage:true});
++   await fill(s,'2000-01-02',zone,false,[lat,lon]);await s.page.evaluate(()=>window.fixture.reset());await submit(s);assert.equal((await data(s)).result,true);assert.deepEqual(s.errors,[]);
++   return {original,rejected,recovered:await data(s)};
++  }finally{await s.context.close();}
++ });
++ const positives=[['ordinary','2000-02-29','UTC',false],['repeated-Apia','1892-07-04','Pacific/Apia',false],['repeated-Kwajalein','1969-09-30','Pacific/Kwajalein',false],['same-date-gap','2024-10-06','Australia/Lord_Howe',false],['known-skipped','2011-12-30','Pacific/Apia',true]];
++ for(const mode of ['chart','moon'])for(const [label,date,zone,known] of positives)await group(mode+' preserved '+label,async()=>{
++  const observations={};for(const variant of bundles.keys()){
++   const s=await setup(mode,variant);try{await fill(s,date,zone,known);await submit(s);const value=await data(s);assert.equal(value.result,true);assert.deepEqual(s.errors,[]);observations[variant]=value;}finally{await s.context.close();}
++  }
++  if(observations.baseline)assert.deepEqual(observations.candidate.outputs,observations.baseline.outputs);
++  if(mode==='chart'){
++   assert.equal(observations.candidate.events.filter(row=>row.kind==='publicNatal').length,1);
++   assert.equal(observations.candidate.events.filter(row=>row.kind==='endpoints').length,known?0:1);
++   assert.equal(observations.candidate.receipt,true);
++  }
++  if(known)assert.ok(observations.candidate.events.every(row=>row.kind!=='contains'));
++  return {sameBrowserBaselineEquality:!!observations.baseline,observations};
++ });
++ await group('no-city UTC Moon remains independent',async()=>{
++  const s=await setup('moon');try{await fill(s,'2011-12-30',null,false);await submit(s);const value=await data(s);assert.equal(value.result,true);assert.ok(value.events.every(row=>!['resolve','contains'].includes(row.kind)));return value;}finally{await s.context.close();}
++ });
++ for(const locale of ['en','es','fr','it','pt','ru'])await group('dedicated message '+locale,async()=>{
++  const s=await setup('moon','candidate',locale);try{await fill(s,'2011-12-30','Pacific/Apia');await submit(s);const value=await data(s);assert.equal(value.result,false);const expected=await s.page.evaluate(()=>window.__ZDX_UI__.messages.localDateReferenceError);assert.equal(value.error,expected);return {message:value.error,events:value.events};}finally{await s.context.close();}
++ });
++ for(const mode of ['chart','moon'])await group(mode+' formatter-failure before numerical work',async()=>{
++  const s=await setup(mode);try{await fill(s,'2000-01-01');await submit(s);assert.equal((await data(s)).result,true);await s.page.evaluate(()=>{window.fixture.reset();window.fixture.failMembership=true;});await submit(s);const value=await data(s);assertCleared(value);assert.deepEqual(value.events.map(row=>row.kind),['resolve','contains']);assert.equal(value.error,'We couldn’t establish a calculation time within this local date. Check the date and place.');await s.page.evaluate(()=>{window.fixture.reset();window.fixture.failMembership=false;});await submit(s);assert.equal((await data(s)).result,true);return {value,sameInputRetrySucceeded:true};}finally{await s.context.close();}
++ });
++ for(const mode of ['chart','moon'])for(const action of ['edit','replacement','unmount'])await group(mode+' delayed skipped reference '+action,async()=>{
++  const s=await setup(mode);try{
++   await fill(s,'2011-12-30','Pacific/Apia');await s.page.evaluate(()=>{window.fixture.reset();window.fixture.hold();});await s.page.locator('.calc__submit').click();
++   assert.equal(await s.page.locator('.calc__form').getAttribute('aria-busy'),'true');
++   if(action==='unmount')await s.page.evaluate(()=>window.fixture.unmount());
++   else await s.page.locator(mode==='chart'?'#birth-date':'#mp-date').fill('2000-01-01');
++   if(action==='replacement')await s.page.locator('.calc__submit').click();
++   await s.page.evaluate(()=>window.fixture.release());
++   if(action==='unmount')await s.page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));else await settle(s);
++   const value=await data(s);
++   if(action==='replacement'){
++    assert.equal(value.result,true);assert.equal(value.error,'');assert.equal(value.events.filter(row=>row.kind==='contains').length,1);
++    assert.ok(value.events.filter(row=>row.kind==='resolve').every(row=>row.date!=='2011-12-30'));
++    if(mode==='chart')assert.equal(value.events.filter(row=>row.kind==='publicNatal').length,1);
++   }else{
++    assertCleared(value);assert.deepEqual(value.events,[]);assert.equal(value.error,'');
++    if(action==='unmount'){assert.equal(await s.page.locator('#mount').innerText(),'');await s.page.evaluate(mode=>window.fixture.mount(mode,'en'),mode);await fill(s,'2000-01-01');}
++    await submit(s);assert.equal((await data(s)).result,true);
++   }
++   assert.deepEqual(s.errors,[]);return {stale:value,recoverySucceeded:true};
++  }finally{await s.context.close();}
++ });
++ await group('positions-only imports perform no date or numerical work',async()=>{
++  const token='2.'+Buffer.from(JSON.stringify({b:Array.from({length:12},(_,index)=>index*27),h:'w',v:'0.1.1-rc.6'})).toString('base64url');
++  const s=await setup('chart','candidate','en','#p='+token);try{await s.page.locator('[data-positions-only]').waitFor();const value=await data(s);assert.deepEqual(value.events,[]);assert.equal(value.receipt,false);assert.equal(value.context,null);assert.equal(value.profile,null);assert.deepEqual(s.errors,[]);return value;}finally{await s.context.close();}
++ });
++ await group('profile revoke fences a pending unknown-time skipped reference',async()=>{
++  const id='10000000-0000-4000-8000-000000000001',stamp='2026-01-01T00:00:00.000Z';
++  const profile={version:1,settings:{houseSystem:'whole'},charts:[{id,name:'Synthetic private chart',relationship:'self',createdAt:stamp,updatedAt:stamp,birth:{date:'2011-12-30',time:null,timeKnown:false,place:{name:'Synthetic Apia',admin1:'',country:'WS',lat:-13.83,lon:-171.77,tz:'Pacific/Apia'}},summary:{engineVersion:'0.1.1-rc.6',utcISO:'2011-12-30T22:00:00.000Z',houseSystem:'whole',bodies:[],angles:null,flags:['no-time']}}]};
++  const s=await setup('chart','candidate','en','#profileChartId='+id,{profile,holdEngine:true});try{
++   await s.page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='true');const storedBefore=await s.page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1'));
++   await s.page.evaluate(()=>{document.documentElement.setAttribute('data-account-sync-v2','');window.__referenceAccess=false;dispatchEvent(new Event('zodiacs:profile-access'));window.fixture.release();});await settle(s);
++   const value=await data(s);assertCleared({...value,profile:null});assert.equal(value.profile,storedBefore);assert.deepEqual(value.events,[]);assert.equal(value.error,'');assert.equal(await s.page.locator('#birth-date').inputValue(),'');
++   await fill(s,'2000-01-01');await submit(s);assert.equal((await data(s)).result,true);assert.deepEqual(s.errors,[]);return {revoked:value,syntheticStoredBytesPreserved:true,anonymousRecoverySucceeded:true,qualification:'Application access policy is controlled; this is not authentication or storage-erasure proof.'};
++  }finally{await s.context.close();}
++ });
++}finally{
++ for(const context of contexts)await context.close().catch(()=>{});const browserVersion=browser?.version();await browser?.close();await new Promise(done=>server.close(done));
++ const report={node:process.version,browser:browserVersion,identity,finalIdentity:await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))}))),driverSha256:hash(await readFile(new URL(import.meta.url))),baselineDirectory:baseline??null,results,requests,passed:results.filter(row=>row.passed).length,failed:results.filter(row=>!row.passed).length,qualification:'Actual Preact callers and actual rc6 numerical/receipt modules in an owned static fixture. Explicit loader/city/call/fault instrumentation is retained; no production graph/layout, complete-date coverage or numerical oracle claim.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
++ await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed}));if(report.failed)process.exitCode=1;
++}

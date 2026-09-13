@@ -1,0 +1,10 @@
+{
+  "sameDeploymentId": "dpl_DCezqWrsukzWV3F7NotmTQCq4ENp",
+  "sourceCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "stateBefore": "READY",
+  "stateAfter": "READY",
+  "previewTarget": null,
+  "projectId": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+  "privateDirectoryStillAbsent": true,
+  "actualCodecVersion": "0.1.1-rc.6"
+}

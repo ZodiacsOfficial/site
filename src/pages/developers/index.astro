@@ -4,6 +4,8 @@ import { iframeEmbedCode } from '../../lib/widgets';
 import { WIDGET_EN } from '../../strings/widgets';
 import { completeTransitYears } from '../../lib/sky-api/build';
 import { PLANET_SLUGS } from '../../lib/sky-api/meta';
+import skyQuickStart from '../../lib/sky-api/examples/today.mjs?raw';
+import candidate from '../../data/platform-engine-candidate.json';
 
 // The same month snapshots the generator reads decide which year files exist,
 // so this page and the deployed API can never disagree about coverage.
@@ -15,9 +17,9 @@ const lastYear = years.at(-1);
 const yearRange = `{${firstYear}–${lastYear}}`;
 
 const dailyEndpoints = [
-  ['/api/v1/sky/today.json', "Today's positions for the Sun, Moon, and eight planets (raw longitudes and formatted labels like 14°53′ Virgo), moon phase and illumination, the active retrograde windows, the next new and full moon with signs and traditional names, the day's exact events, and a plain-language summary. Positions are a 12:00 UTC snapshot; the file is republished at 00:00 UTC."],
+  ['/api/v1/sky/today.json', "Today's positions for the Sun, Moon, and eight planets (raw longitudes and formatted labels like 14°53′ Virgo), moon phase and illumination, the active retrograde windows, the next new and full moon with signs and traditional names, the day's exact events, and a plain-language summary. Positions are a 12:00 UTC snapshot. Daily publication is scheduled from 00:00 UTC; check the payload date because delivery can be delayed."],
   ['/api/v1/sky/upcoming.json', 'Every lunation, sign ingress, station, eclipse, and exact aspect in the next 60 days in order, plus the next occurrence of each kind and the current and next Mercury retrograde.'],
-  [`/api/v1/planets/{${PLANET_SLUGS.join('|')}}.json`, 'One body: position now, whether it is retrograde, its current and next retrograde window, every window in coverage, and its next sign ingress and station.'],
+  [`/api/v1/planets/{${PLANET_SLUGS.join('|')}}.json`, 'One body: position at the daily snapshot, whether it is retrograde, its current and next retrograde window, every window in coverage, and its next sign ingress and station.'],
   ['/api/v1/signs.json', 'The twelve signs: element, modality, ruler and traditional ruler, polarity, house, conventional dates, the computed Sun season for this year, and which bodies occupy each sign today.'],
 ];
 
@@ -40,50 +42,81 @@ const documents = [
 
 const skyEmbed = iframeEmbedCode({ origin: 'https://zodiacs.org', kind: 'sky', theme: 'dark', title: WIDGET_EN.widgetTitleSky });
 
-const description = 'Free sky data under CC BY 4.0, built for people and AI agents alike: today\'s sky and the next 60 days, one file per planet, the twelve signs, and per-year retrogrades, stations, ingresses, moon phases, eclipses, and aspects as self-describing JSON with JSON Schemas, OpenAPI, and an agent guide. No key, no signup.';
+const description = 'Build with Zodiacs: evaluate the local TypeScript chart engine, fetch free shared-sky JSON, or embed a moon, sky, or mini-chart widget. Current support, release status, and calculation limits in one place.';
 
 const jsonLd = [{
   '@type': 'WebPage',
-  name: 'Sky data API for developers and AI agents',
+  name: 'Zodiacs developer tools: charts, sky data, and embeds',
   url: 'https://zodiacs.org/developers/',
-  description: 'Free machine-readable astronomy data from zodiacs.org: self-describing JSON for today’s sky, upcoming events, planets, signs, retrogrades, ingresses, moon phases, eclipses, and aspects, with JSON Schemas, OpenAPI, and an agent guide, under CC BY 4.0.',
+  description,
 }];
 ---
 <Base
-  title="Free Sky Data API — Retrogrades, Eclipses, Moon Phases & Today's Sky as JSON | Zodiacs.org"
+  title="Developer Tools — Local Charts, Sky Data & Embeds | Zodiacs.org"
   description={description}
   path="/developers/"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">For developers and AI agents</em>
-    <h1 class="dev-title display">Machine-readable sky data.</h1>
+    <h1 class="dev-title display">Charts, data, and embeds.</h1>
 
+    <nav aria-label="Developer integration paths">
+      <ul class="dev-paths">
+        <li>
+          <p class="dev-status">{candidate.releaseLabel} · {candidate.version}</p>
+          <h2><a href="/developers/examples/#natal">Calculate locally</a></h2>
+          <p>Use TypeScript or JavaScript for tropical charts, transits, and synastry in your own browser or Node.js app. Core calculations make no network requests.</p>
+        </li>
+        <li>
+          <p class="dev-status">Available · public files</p>
+          <h2><a href="#sky-data">Fetch shared sky data</a></h2>
+          <p>Read the daily sky and dated events as JSON. No account or API key; check the edition and snapshot before displaying them.</p>
+        </li>
+        <li>
+          <p class="dev-status">Available · hosted embeds</p>
+          <h2><a href="/widgets/">Embed a tool</a></h2>
+          <p>Choose a Moon, sky, or mini birth-chart iframe. Set its theme and size, and keep the built-in Zodiacs.org credit.</p>
+        </li>
+        <li>
+          <p class="dev-status">Planned · no public endpoint</p>
+          <h2><a href="/developers/support/#hosted">Use hosted computation</a></h2>
+          <p>A personalized chart API is planned. Its input contract, privacy limits, and release approval remain open.</p>
+        </li>
+      </ul>
+    </nav>
+    <div class="prose">
+      <p><a href="/developers/examples/">Run the three examples</a>: local natal chart, personalized transits, and a publisher widget.</p>
+      <p><a href="/developers/support/">Compare support, runtime requirements, and known limits</a> before choosing an integration.</p>
+      <p>
+        The <a href="/sdk/">optional ownership SDK</a> is a separate,
+        read-only integration for registry verification and public ownership
+        reads. Charts, sky data, and widgets do not require it or a wallet.
+      </p>
+    </div>
+
+    <h2 id="sky-data" class="dev-h2">Shared sky data</h2>
     <div class="prose dev-intro">
       <p>
         The computed dates behind this site's calendars — today's sky, the
         weeks ahead, retrograde windows, stations, sign ingresses, moon phases,
         eclipses, and exact aspects — are published as versioned JSON. The
         files are static, cached at the edge, and open to any origin. There is
-        no key, no signup, and no rate ceiling beyond ordinary CDN behavior,
-        and none of it involves anyone's birth data: these endpoints describe
+        no key or signup. These files contain no personal birth data: they describe
         the shared sky, and{' '}
         <a href="/methodology/">chart calculation stays on the device</a>.
       </p>
     </div>
 
     <h2 class="dev-h2">Quick start</h2>
-    <pre class="dev-code" is:raw><code>const sky = await fetch('https://zodiacs.org/api/v1/sky/today.json')
-  .then((response) => response.json());
-
-console.log(sky.summary);
-// Monday, September 7, 2026, snapshot at 12:00 UTC. The Sun is at 14°53′ Virgo. …
-
-for (const body of sky.bodies) {
-  console.log(body.body, body.position, body.retrograde ? 'Rx' : '');
-}</code></pre>
+    <pre class="dev-code" tabindex="0" role="region" aria-label="JavaScript quick start"><code>{skyQuickStart}</code></pre>
     <p class="dev-note">
-      Or from a terminal: <code>curl -s https://zodiacs.org/api/v1/sky/today.json</code>
+      This example checks the payload kind, fields used here, and current UTC
+      edition before displaying its computed snapshot. Keep the snapshot time visible; before
+      noon, it describes positions computed for later that day.
+    </p>
+    <p class="dev-note">
+      Or from a terminal: <code>curl --fail --silent --show-error https://zodiacs.org/api/v1/sky/today.json</code>
     </p>
 
     <h2 class="dev-h2">Built for AI agents</h2>
@@ -149,8 +182,8 @@ for (const body of sky.bodies) {
         Positions are apparent geocentric tropical longitudes from the same
         engine the calculators use, tested against NASA JPL Horizons reference
         data. Today's positions are a single snapshot taken at 12:00 UTC
-        (<code>snapshotAt</code>); the daily files are republished at the 00:00
-        UTC publication boundary. All instants are UTC in ISO 8601, and signs
+        (<code>snapshotAt</code>). Publication is scheduled from 00:00 UTC;
+        jobs, deployment, or caches can delay availability. All instants are UTC in ISO 8601, and signs
         are lowercase slugs with an English <code>signName</code> beside them.
       </p>
       <p>
@@ -165,6 +198,28 @@ for (const body of sky.bodies) {
         underlying data is extended; read{' '}
         <a href="/api/v1/index.json"><code>index.json</code></a> rather than
         assuming which years exist.
+      </p>
+    </div>
+
+    <h2 class="dev-h2">Freshness and caching</h2>
+    <div class="prose">
+      <p>
+        Check the file you consume: <code>date</code> identifies the UTC edition
+        for today's sky, planet files, and signs; <code>snapshotAt</code> is
+        its noon snapshot. Upcoming events use <code>from</code> as the snapshot
+        instant. <code>generatedAt</code> records the file build time and can
+        change without a new edition. The index's <code>coverage.dailyDate</code>
+        describes the index; separately cached files can have different dates.
+        Label an older edition by its date or wait for a current one before
+        presenting it as today's sky.
+      </p>
+      <p>
+        Current cache lifetimes are 300 seconds for <code>sky/today.json</code>,
+        3,600 seconds for <code>index.json</code>, and 86,400 seconds for the
+        remaining API files, including upcoming events, planets, signs, and
+        Markdown twins. Revalidation can refresh a cached response; always
+        check its edition date as well. Yearly files remain byte-stable between
+        data refreshes.
       </p>
     </div>
 
@@ -208,6 +263,13 @@ for (const body of sky.bodies) {
 <style>
   .dev-title { margin: var(--s-1) 0 var(--s-4); }
   .dev-intro { max-width: 68ch; }
+  .dev-paths { list-style: none; padding: 0; margin: var(--s-8) 0; display: grid; gap: var(--s-6); }
+  .dev-paths li { min-width: 0; padding-top: var(--s-4); border-top: 1px solid var(--hair-2); }
+  .dev-paths h2 { margin: var(--s-2) 0; font-size: var(--text-lg); }
+  .dev-paths p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.65; }
+  .dev-paths .dev-status { font-size: 12px; color: var(--text-2); }
+  .dev-paths a:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  @media (min-width: 700px) { .dev-paths { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .dev-h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); }
   .dev-code {
     margin: 0;
@@ -225,6 +287,7 @@ for (const body of sky.bodies) {
     font-family: var(--font-mono);
     font-size: .92em;
   }
+  .dev-note code { overflow-wrap: anywhere; }
   .dev-endpoints {
     list-style: none;
     margin: 0;

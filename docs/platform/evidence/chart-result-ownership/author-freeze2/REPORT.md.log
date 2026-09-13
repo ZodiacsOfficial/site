@@ -1,0 +1,50 @@
+# ChartCalculator ownership — corrected author Freeze 2
+
+Freeze 2 addresses the three actual independent Freeze 1 findings within the same four-file scope. The exact patch is `32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f`; component SHA-256 is `fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0`. Base remains `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`.
+
+This is a corrected author candidate, with independent rerun requested. It is not integrated, release-ready, published or deployed by this author. Freeze 1 and its raw failures remain unchanged. The independent original findings are copied here with their separate reviewer attribution.
+
+## Corrections
+
+1. A delayed public positions import now captures the existing access generation. Valid public positions remain available, while profile-derived optional mine context is admitted only when access is still allowed and the captured generation remains current. Revocation followed by regrant cannot resurrect the old opaque UUID. Unmarked public mine context retains its existing semantics. This is stale-context prevention, not authentication or a data-read bypass fix.
+2. Controls-module loading may still populate its harmless module cache. Retry focus belongs to its captured result and is checked both on completion and in its animation frame. An obsolete failed request cannot replace a newer controls error state. Successful current retry and existing numerical calculation behavior remain unchanged.
+3. Save UI has a prompt generation in addition to captured access generation and result ownership. Opening a replacement prompt, clearing a result, or revoking access invalidates older UI work. A queued close frame cannot focus or clear a newer return target after mine-only revocation. A requested save keeps its exact existing storage authority, identity and write call even if its UI becomes stale; no rollback, cancellation or retry was added.
+
+Closing a current prompt intentionally does not advance the prompt generation: a completed ordinary save's already scheduled A2HS hint remains eligible. During author reasoning an intermediate draft incorrectly advanced it on close; that draft is preserved, then corrected before Freeze 2. A positive durable test verifies one current write, ordinary focus, one hint claim, saved status and closed prompt together. It also verifies one earlier write cannot close a replacement prompt on the same result.
+
+The browser driver now uses the existing `findChromium` and `STABLE_CHROMIUM_ARGS` helpers, accepts `OUT_DIR` (and the existing evidence environment override), and defaults to the platform-neutral `tests/visual/artifacts/chart-ownership` directory. No workflow was changed. Historical driver bytes and hashes remain in prior evidence.
+
+## Executed evidence
+
+- **134/134 focused tests**, including **27 actual-component-function execution controls**. The added controls exercise controls retry before completion and before frame, mine-only save-close revocation, same-result replacement prompt, revoked/regranted/current/public mine admission, and ordinary save focus/hint behavior. These are author controls, not independent review or a complete rendered component.
+- Strict project TypeScript check: passed.
+- Astro production compilation and the existing critical-style postprocessor: passed. This is not the complete npm pre/post build pipeline; root owns final integration gates.
+- Actual Chrome **152.0.7977.83** / Node **22.23.2**: **17/17 static production-page groups pass**. The fifteen prior groups pass again. Two new actual-form controls hold PositionsShareSurface, revoke (or revoke/regrant), retain the public positions, then calculate an anonymous other chart using the actual Bangkok city search. The comparison href excludes the revoked UUID; no v1 profile is written. These controls use actual product modules, no source/response rewriting.
+- Native precise coverage still reports exactly one natal calculation per admitted result and zero for cancelled pending calculations. Failed serialization + retry remains three calls across initial success, deliberate failed new calculation and successful recovery. This does not claim new numerical accuracy.
+- Final native run `browser-1788857124161/result.json` retains exact source before/after, served asset bytes/hashes, controls and raw coverage. There were 1,596 observed GET requests, no external requests, no non-GET requests and no uncaught page errors. All contexts/browser/owned static server were closed.
+- The exact calculation and existing unknown-time endpoint substring is byte-identical to independently reviewed Freeze 1; hashes are in `unchanged-numerical-block.json`. No date-interval activation, certainty change, SDK, receipt helper, locale copy, style, navigation, account format or root file was changed.
+
+## Failure preservation and qualifications
+
+The newly added execution controls were first run against unchanged Freeze 1 and reproduced six failures: two controls-focus timings, mine-only save-close focus, replacement prompt closure, and two revoked-mine admission variants. The first harness pass lacked a no-op scrollIntoView on the synthetic result element, masking two focus assertions; that harness and log are preserved. After completing that stub, all six failures were the intended assertions. The corrected candidate passes all 27 controls. The initial 133-test pass before adding the ordinary-save positive control is also retained.
+
+The independent reviewer had confirmed controls retry with actual Preact plus controlled module promises; its separate production-transport retry attempts did not establish that exact failure because browser/preload failure caching prevented the setup. This author does not relabel its pure callback tests as an actual production retry transport test. Root will request the same independent native rerun for the frozen correction.
+
+The synthetic canRead reentrancy counterexample remains separately qualified. The actual Base provider uses a frozen object and synchronous native lease/grant/owner storage reads without dispatching an application event. The independent native reader controls and author exact-source inspection do not establish an ordinary auth bypass. No unnecessary shared reader/currentness rewrite was included. See `reader-evaluation.md` and the three retained unchanged reader sources.
+
+Freeze 1 evidence stays immutable under `/private/tmp/zodiacs-platform-chart-ownership-evidence/delivery` (manifest SHA-256 `265615d918b92c5eb322a452b2174a09ffa857b3736662baacbf466cba006490`). Its original three-case browser-driver byte-copy limitation remains as stated there. This supplement preserves every new executed driver/source/log. Initial inspection used two wrong guessed reader-file paths; those read-only path errors had no implementation effect.
+
+## Exact commands
+
+Working directory `/private/tmp/zodiacs-platform-chart-ownership`:
+
+```sh
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/vitest/vitest.mjs run src/islands/ChartCalculator.ownership.test.ts src/islands/ChartCalculator.actions.test.ts src/islands/ChartCalculator.locale.test.ts src/islands/ChartCalculator.registry-bridge.test.ts src/lib/engine/calculator-receipt.test.ts src/lib/engine/portable.test.ts > /private/tmp/zodiacs-platform-chart-ownership-evidence/round2/focused-suite-final.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --noEmit --pretty false > /private/tmp/zodiacs-platform-chart-ownership-evidence/round2/typecheck.log 2>&1
+PATH=/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:$PATH /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/astro/bin/astro.mjs build > /private/tmp/zodiacs-platform-chart-ownership-evidence/round2/astro-build.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node scripts/inline-critical-styles.mjs > /private/tmp/zodiacs-platform-chart-ownership-evidence/round2/critical-styles.log 2>&1
+OUT_DIR=/private/tmp/zodiacs-platform-chart-ownership-evidence/round2 /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/chart-ownership-drive.mjs > /private/tmp/zodiacs-platform-chart-ownership-evidence/round2/browser.log 2>&1
+git diff --check
+```
+
+The before-fix commands run only ChartCalculator.ownership.test.ts with the same pinned Node/Vitest path and the retained before-fix output names. No dependency/runtime installation or external mutation was performed. The exact four-file freeze and compressed raw member hash list make this supplement copy-ready.

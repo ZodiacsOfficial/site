@@ -1,0 +1,707 @@
+{
+  "node": "v24.19.0",
+  "icu": "78.3",
+  "tzdb": "2026b",
+  "importIntlCalls": 0,
+  "checks": 92,
+  "records": [
+    {
+      "label": "date-missing",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-null",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-boxed",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-array",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-unicode-fullwidth",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-arabic-digits",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-year-signed",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-negative-zero",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-leap-century",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-year-zero-invalid-day",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-empty",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-embedded-newline",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-trailing-space",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-extended-year",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "date-coercible-object",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-number",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-string",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-null",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-undefined",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-bigint",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-symbol",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-invalid-Date",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-forged-tag",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-prototype-only",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-proxy-Date",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "instant-revoked-proxy-Date",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-undefined",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-null",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-boolean",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-number",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-boxed",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-object",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-empty",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-leading-space",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-trailing-newline",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-offset-plus24",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-offset-minus24",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-offset-seconds",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-Temporal-timeZoneLike",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-prototype-name",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-constructor-name",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "zone-unknown",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "overridden-getter",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "subclass",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "no-prototype",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "frozen-Date",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "cross-realm-Date",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "cross-realm-overridden-getter",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "zero-first",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "zero-before",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "zero-last",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "zero-after",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "zero-leap-last",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "zero-leap-after",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "zero-plus-offset-first",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "zero-plus-offset-before",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "year99-last",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "year99-after",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "maximum-last",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "maximum-after",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "maximum-minus-offset-last",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "maximum-minus-offset-after",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "LMT-before-midnight",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "LMT-exact-midnight",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "LMT-last-millisecond",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "LMT-next-midnight",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "Monrovia-before-short-date",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "Monrovia-first-short-date",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "Toronto-omitted-start-member",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "StJohns-interruption-before",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "StJohns-interruption-start",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "StJohns-return-before",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "StJohns-return-start",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "Date-scale-positive-limit-not-9999",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "Date-scale-negative-limit-not-zero",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "host-identifier-utc",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-US/Eastern",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-Etc/GMT+12",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-GMT",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-+01",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-+0100",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-+01:00",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier--00:00",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-identifier-Pacific/Kiritimati",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    },
+    {
+      "label": "host-constructor-failure",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "host-cached-formatter-failure",
+      "kind": "rejected",
+      "name": "RangeError",
+      "message": "Could not determine local-date membership from the supplied date, instant and explicit timezone.",
+      "causeAbsent": true
+    },
+    {
+      "label": "real-selected-noon-refusal-Pacific/Apia",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "real-selected-noon-refusal-Pacific/Kwajalein",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "real-selected-noon-refusal-Pacific/Kiritimati",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "real-selected-noon-refusal-Pacific/Guam",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "synthetic-nonempty-date-noon-refusal",
+      "kind": "membership",
+      "expected": false,
+      "actual": false
+    },
+    {
+      "label": "synthetic-nonempty-date-actual-member",
+      "kind": "membership",
+      "expected": true,
+      "actual": true
+    }
+  ],
+  "coercionOrOverrideCalls": 0,
+  "crossRealmInstanceofCurrentDate": false,
+  "zoneAdmission": [
+    {
+      "zone": "utc",
+      "canonical": "UTC",
+      "requested": "2000-01-01"
+    },
+    {
+      "zone": "US/Eastern",
+      "canonical": "America/New_York",
+      "requested": "2000-01-01"
+    },
+    {
+      "zone": "Etc/GMT+12",
+      "canonical": "Etc/GMT+12",
+      "requested": "2000-01-01"
+    },
+    {
+      "zone": "GMT",
+      "canonical": "UTC",
+      "requested": "2000-01-01"
+    },
+    {
+      "zone": "+01",
+      "canonical": "+01:00",
+      "requested": "2000-01-02"
+    },
+    {
+      "zone": "+0100",
+      "canonical": "+01:00",
+      "requested": "2000-01-02"
+    },
+    {
+      "zone": "+01:00",
+      "canonical": "+01:00",
+      "requested": "2000-01-02"
+    },
+    {
+      "zone": "-00:00",
+      "canonical": "+00:00",
+      "requested": "2000-01-01"
+    },
+    {
+      "zone": "Pacific/Kiritimati",
+      "canonical": "Pacific/Kiritimati",
+      "requested": "2000-01-02"
+    }
+  ],
+  "skipped": [
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "utc": "2011-12-30T22:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "qualification": "Refuses this selected instant; existence proof is separate"
+    },
+    {
+      "date": "1993-08-21",
+      "zone": "Pacific/Kwajalein",
+      "utc": "1993-08-22T00:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "qualification": "Refuses this selected instant; existence proof is separate"
+    },
+    {
+      "date": "1994-12-31",
+      "zone": "Pacific/Kiritimati",
+      "utc": "1994-12-31T22:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "qualification": "Refuses this selected instant; existence proof is separate"
+    },
+    {
+      "date": "1844-12-31",
+      "zone": "Pacific/Guam",
+      "utc": "1845-01-01T02:21:00.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "qualification": "Refuses this selected instant; existence proof is separate"
+    }
+  ],
+  "synthetic": {
+    "noon": "2000-01-01T12:00:00.000Z",
+    "syntheticNoonWall": "2000-01-02T03:00:00.000Z",
+    "interval": {
+      "status": "existing",
+      "intervals": [
+        {
+          "start": 946684800000,
+          "endExclusive": 946717200000
+        }
+      ]
+    },
+    "notRealZone": true
+  },
+  "qualification": "Independent helper-domain and exact membership controls; no caller, whole-date candidate, new ephemeris, SDK API, or hostile-global-sandbox claim."
+}

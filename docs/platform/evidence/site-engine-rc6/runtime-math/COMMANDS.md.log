@@ -1,0 +1,34 @@
+# Executed commands and retained invocation failures
+
+All commands used this owned scratch path; root product source was read only. No dependency installation, product change, tolerance change or publication was performed.
+
+Pinned Node 22:
+`/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node`
+
+Pinned Node 24:
+`/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node`
+
+Final executions (working directory is irrelevant because scripts use import.meta.url):
+
+```
+NODE22 /private/tmp/zodiacs-platform-rc6-runtime-review/run-node.mjs > node22.log 2>&1
+NODE24 /private/tmp/zodiacs-platform-rc6-runtime-review/run-node.mjs > node24.log 2>&1
+NODE22 /private/tmp/zodiacs-platform-rc6-runtime-review/run-chrome.mjs > chrome.log 2>&1
+NODE22 /private/tmp/zodiacs-platform-rc6-runtime-review/run-public.mjs > public-node22.log 2>&1
+NODE24 /private/tmp/zodiacs-platform-rc6-runtime-review/run-public.mjs > public-node24.log 2>&1
+NODE22 /private/tmp/zodiacs-platform-rc6-runtime-review/analyze.mjs > analysis.log 2>&1
+```
+
+NODE22/NODE24 above stand for the exact absolute executables listed above; actual invocations used the full paths. Browser calls used existing root Playwright-core with the actual installed Chrome executable, an ephemeral loopback-only static server and a new disposable context. They were auto-approved. All processes and contexts were closed in finally blocks. No external requests were allowed; calculations ran after setting the context offline.
+
+The initial comparison and archive-member verification were executed using Python 3 inline scripts. `analyze.mjs` independently rechecks all final JSON equalities. `root-installed-archive-verification.json` records each of the 23 tar member hashes and exact installed comparison; `initial-copy-manifest.json` preserves every initial copied byte identity. `seal.py` records and verifies the lossless compressed delivery.
+
+Retained failures are identified by prefixes:
+
+1. `original-*`: root's extra Node-vs-Chrome whole-envelope assertion failed. This is the investigated failure, not a product regression finding.
+2. `initial-fixture-shape-failure-*`: first browser driver passed its own derived rows rather than the original row shape, leaving the probe UTC undefined. Native SDK correctly rejected it. Mapping corrected before acceptance.
+3. `initial-negative-zero-serialization-*`, `replay-failure2-*`, and `replay-cache-diagnostic-*`: first replay used an already-warmed Astronomy Engine module, which changed cached e_tilt call arguments. The initial negative-zero hypothesis was disproved by the unchanged failure after explicit number encoding. Exact diagnostics showed actual abs argument 0.24999999920692062 versus recorded 0. Fresh independent module instances fixed the cache mismatch; no numerical condition was relaxed. The exact trace encoding still preserves negative zero and nonfinite sentinels.
+4. `initial-Date-transport-failure-*`: causal replay matched numerically but the Node assertion compared a Playwright-transported Date object to the retained report's ISO string. Applying identical JSON transport on the observed chart fixed the harness representation mismatch.
+5. `passed-all-Math-replay-*`: first complete causal replay passed. Final rerun also proves the narrower trig-only substitution while other Math functions remain native.
+
+No failure record was rewritten as a pass. The fresh final logs and reports are separate from the retained failed invocations.

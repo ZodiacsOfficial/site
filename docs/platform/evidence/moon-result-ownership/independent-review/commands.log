@@ -1,0 +1,7 @@
+Actual working directory /private/tmp/zodiacs-platform-moon-result-ownership-independent-review:
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node setup.mjs > setup.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node build.mjs > build.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node native-review.mjs > native.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node source-parity.mjs > source-parity.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node finalize.mjs
+All final commands exited 0. Browser launch used approved require_escalated execution only for isolated Chrome; all page requests were blocked. Initial fixture failures and original source are retained.

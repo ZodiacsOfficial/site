@@ -1,0 +1,14 @@
+
+import {computeChart} from './src/lib/engine/full';
+import {prepareBigThreeCard,prepareChartSheet,downloadPreparedChartCard,shareCardTimeNotes,chartSheetProvenanceLines,chartSheetSettings} from './src/lib/share-card';
+import {ensurePastelZodiacIconEmbedding} from './src/lib/share-card-pastel-icons';
+let ready=null;
+window.prepareImage=async({known,sheet,hidden})=>{
+ const chart=computeChart({utc:new Date('2000-01-15T06:17:00.000Z'),timeKnown:known,houseSystem:'whole',latitude:0,longitude:0});
+ if(!known)chart.moonSignCandidates=[];
+ const details={date:'2000-01-15',time:'06:17',timeKnown:known,city:'Fixture privacy marker',timezone:'UTC'};
+ if(sheet){await ensurePastelZodiacIconEmbedding();ready=await prepareChartSheet(chart,{locale:'en',hideBirthDetails:hidden,birthDetails:details,moonAmbiguous:!known});}
+ else ready=await prepareBigThreeCard(chart,'en',{referenceTime:!known,moonAmbiguous:!known});
+ return {numerical:JSON.stringify(chart),filename:ready.filename,type:ready.blob.type,bytes:ready.blob.size,notes:shareCardTimeNotes('en',{referenceTime:!known,moonAmbiguous:!known}),provenance:chartSheetProvenanceLines(chart,details,hidden),settings:chartSheetSettings(chart),fontStatus:document.fonts.status};
+};
+document.querySelector('#download').onclick=()=>{if(!ready)throw Error('Image not ready');downloadPreparedChartCard(ready);};

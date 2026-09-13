@@ -1,0 +1,2138 @@
+{
+  "checks": [
+    {
+      "name": "provider exact immutable READY preview identity",
+      "passed": true
+    },
+    {
+      "name": "provider exact immutable READY preview identity",
+      "passed": true
+    },
+    {
+      "name": "run records exact source/deployment/browser identity",
+      "passed": true
+    },
+    {
+      "name": "run records exact source/deployment/browser identity",
+      "passed": true
+    },
+    {
+      "name": "driver identities match each native run",
+      "passed": true
+    },
+    {
+      "name": "complete driver correction equals only selector scope + bounded rerun selection/count",
+      "passed": true
+    },
+    {
+      "name": "ReadingPath exact source contains independent uncertainty marker",
+      "passed": true
+    },
+    {
+      "name": "28 source blobs match exact Git objects; all 16 frozen files present",
+      "passed": true
+    },
+    {
+      "name": "initial outcome remains six accepted of eight; corrected outcome is two of two",
+      "passed": true
+    },
+    {
+      "name": "two initial failures are exactly English hero-marker 2-vs-1 assertions",
+      "passed": true
+    },
+    {
+      "name": "eight distinct accepted groups cover EN/RU x chart/positions x two widths",
+      "passed": true
+    },
+    {
+      "name": "exactly four unavailable 200 image bodies; zero missing JS/city bodies",
+      "passed": true
+    },
+    {
+      "name": "all 68 JavaScript and four city bodies rehash and match across both runs",
+      "passed": true
+    },
+    {
+      "name": "all 1150 observed request events are GET and none target API",
+      "passed": true
+    },
+    {
+      "name": "exactly ten blocked observed requests are configured analytics GETs",
+      "passed": true
+    },
+    {
+      "name": "16 actual downloaded receipt files match recorded bytes and four input classes agree across locales/widths",
+      "passed": true
+    }
+  ],
+  "passed": 16,
+  "acceptedNames": [
+    "ru-chart-1280",
+    "ru-chart-390",
+    "en-positions-1280",
+    "en-positions-390",
+    "ru-positions-1280",
+    "ru-positions-390",
+    "en-chart-1280",
+    "en-chart-390"
+  ],
+  "initialFailedNames": [
+    "en-chart-1280",
+    "en-chart-390"
+  ],
+  "source": [
+    {
+      "path": ".github/phase1-scope-allowance.json",
+      "sha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95",
+      "gitBlob": "3ca580de667ea3594c8af9aa15be0ac9b174d891"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "sha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a",
+      "gitBlob": "fadb21a55ce29f20a768bae3fe84fa6f6ad2350b"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+      "gitBlob": "f5e7eda0a5c9d1cd734e52e12ac58cd90eb9a859"
+    },
+    {
+      "path": "package.json",
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "gitBlob": "c9937adda131fe547f841453fd99cda08665d053"
+    },
+    {
+      "path": "src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "gitBlob": "efd49ef3c179381076b05db46c3acea6cc9dc908"
+    },
+    {
+      "path": "src/islands/ChartCalculator.confidence.test.ts",
+      "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb",
+      "gitBlob": "d107daf101784c0bb6d2ccf22e06f590b7bcb579"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "sha256": "a6c463f6b42f5757b3d65b2a5dac0391f4dc11c1b25c050c5f5638fce4208aac",
+      "gitBlob": "7b3d3ecc39f16dd0a290e581de785ead28e7ccd9"
+    },
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "sha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d",
+      "gitBlob": "2685b481bd8eca9cf747c2ba3e5fbc20756f593b"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+      "gitBlob": "095c966b6b10977349947acbb6a69fad23d2eace"
+    },
+    {
+      "path": "src/islands/PlaceSearch.tsx",
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2",
+      "gitBlob": "2f93324855271e6ffe31448cd7f5b4a73b3ca898"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936",
+      "gitBlob": "0cbf4e0eff5293bfbf2751dbbf301bf959ae8494"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "gitBlob": "c031b8c1af8b8afd04758c4bdd75a64498494af8"
+    },
+    {
+      "path": "src/lib/geo/search.ts",
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba",
+      "gitBlob": "cb45785d30d6834367ca2463e168b67eaad7f712"
+    },
+    {
+      "path": "src/lib/i18n/index.test.ts",
+      "sha256": "51a77f3a712d087e26e951bc637205598c093275e22df109cce8806452c6f96e",
+      "gitBlob": "73c781b6a5d7b5696b813f153a805e63bd2c067a"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+      "gitBlob": "1362bdee08284a1d00c6aaa7b172550f1c308512"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+      "gitBlob": "ed5482aa3a0fd421e5a971ffa43ab29dc852e1ed"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+      "gitBlob": "26c6b7b49f7063f550cecc7a1dbab1ea2f324e3e"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+      "gitBlob": "6a7e8e172bc8114e3a7fb1baf04536baa26af0b7"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+      "gitBlob": "2054f2eeb3c53d4b6759cce8f810c1442a792b52"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.test.ts",
+      "sha256": "feeedfe74b08f939e0143e97d566d62878fe1cec7926be41463a206dc165ff44",
+      "gitBlob": "b24e584ebaaecd2cd3b6df8a3fc216bd4cb6091d"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+      "gitBlob": "d12b1c3cb0858f8f13e2086575c5c461cdc3d7ee"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "gitBlob": "51fdb4a4638cdd817e040cbf2ccb84f81a52edfb"
+    },
+    {
+      "path": "src/lib/share.ts",
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "gitBlob": "1137a44af892c41d36bafc8c2202c28b53f95184"
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "gitBlob": "f8692d07fb3b91971c9de3d34ab3c41efcd0b715"
+    },
+    {
+      "path": "tests/chart-reference-confidence-drive.mjs",
+      "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6",
+      "gitBlob": "de2498001a446b3bb828cdaf4934d60f8bac98c3"
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "sha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19",
+      "gitBlob": "9f0e6ceae5c7318f1a6b12526d176967051456d2"
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "sha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28",
+      "gitBlob": "6fab10486621395017eac710b4445d9c8f3eda5e"
+    },
+    {
+      "path": "tests/visual/browser.mjs",
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a",
+      "gitBlob": "4f2695cbc377aa554db3401dac260dc4864989b9"
+    }
+  ],
+  "payloads": [
+    {
+      "capturedPath": "browser-run1/remote-modules/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "path": "/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "bytes": 773,
+      "sha256": "e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/preload-helper.L5lOfJxi.js",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "bytes": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/client.DPkn9Lbl.js",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "bytes": 1447,
+      "sha256": "d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/analytics.CH5T6e-b.js",
+      "path": "/_astro/analytics.CH5T6e-b.js",
+      "bytes": 4190,
+      "sha256": "56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/context-help-client.BqVrBbz0.js",
+      "path": "/_astro/context-help-client.BqVrBbz0.js",
+      "bytes": 2472,
+      "sha256": "52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/preact.module.Bjq9tLsx.js",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "bytes": 10499,
+      "sha256": "796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/ChartCalculator.Cj-rBB1B.js",
+      "path": "/_astro/ChartCalculator.Cj-rBB1B.js",
+      "bytes": 58870,
+      "sha256": "b89fee101cf6ab657dc9b1b4abddd704abd0df8b7d7d2dfb33bad6eabadf344c"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/profile-access-reader.DoQqlSjt.js",
+      "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+      "bytes": 438,
+      "sha256": "ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/signs.BMXPKoMF.js",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "bytes": 11693,
+      "sha256": "21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chunk-H7RJKCBO.BUIGSNBz.js",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "bytes": 1763,
+      "sha256": "512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/jsxRuntime.module.BG9KJlGc.js",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "bytes": 430,
+      "sha256": "7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/hooks.module.C0_8FjiD.js",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "bytes": 2875,
+      "sha256": "70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/share.BRlg0eGS.js",
+      "path": "/_astro/share.BRlg0eGS.js",
+      "bytes": 2132,
+      "sha256": "f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/SignChip.Dx3tQVZl.js",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "bytes": 550,
+      "sha256": "646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/i18n.Cg_lCJuc.js",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "bytes": 6936,
+      "sha256": "70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chunk-INI453VG.BxjMUPBs.js",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "bytes": 2569,
+      "sha256": "efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/technical-locales.DDKucXXd.js",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "bytes": 46,
+      "sha256": "69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/rolldown-runtime.DK3Fl9T5.js",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/civil-date.CpOZUt7Z.js",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "bytes": 533,
+      "sha256": "74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/AspectGlyph.DMIAGIQV.js",
+      "path": "/_astro/AspectGlyph.DMIAGIQV.js",
+      "bytes": 488,
+      "sha256": "ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/CalculationReload.DXyGkRsn.js",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "bytes": 763,
+      "sha256": "7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/useEngine.BV92cVg4.js",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "bytes": 504,
+      "sha256": "36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/astrology.BHib5efU.js",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "bytes": 3245,
+      "sha256": "e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/AstroTerm.7K8SAipO.js",
+      "path": "/_astro/AstroTerm.7K8SAipO.js",
+      "bytes": 9025,
+      "sha256": "17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/PlanetGlyph.BhITbtcc.js",
+      "path": "/_astro/PlanetGlyph.BhITbtcc.js",
+      "bytes": 575,
+      "sha256": "57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/BirthFields.VmY_J4-2.js",
+      "path": "/_astro/BirthFields.VmY_J4-2.js",
+      "bytes": 1752,
+      "sha256": "19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/useProfileAccessGeneration.w2JLb1F6.js",
+      "path": "/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "bytes": 340,
+      "sha256": "8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/localToUtc.CKDDLf-o.js",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "bytes": 2589,
+      "sha256": "888b1c21076bf60e9867f16ec0035f959dca72531834f47f56a4bcfc0e009245"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chart-handoff.Dvz2AAcL.js",
+      "path": "/_astro/chart-handoff.Dvz2AAcL.js",
+      "bytes": 2042,
+      "sha256": "6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/technical-layout.DQIjXHHb.js",
+      "path": "/_astro/technical-layout.DQIjXHHb.js",
+      "bytes": 860,
+      "sha256": "68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/houses.5SlbILVS.js",
+      "path": "/_astro/houses.5SlbILVS.js",
+      "bytes": 213,
+      "sha256": "2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/lite.DKWHZC5_.js",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "bytes": 831,
+      "sha256": "476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/dignities.D6lQGYrR.js",
+      "path": "/_astro/dignities.D6lQGYrR.js",
+      "bytes": 1627,
+      "sha256": "2aa5196e6ed999cd3730533461930d3a0d585a43621a0c28fa9c941414252fb7"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/Wheel.RNRSqGob.js",
+      "path": "/_astro/Wheel.RNRSqGob.js",
+      "bytes": 12355,
+      "sha256": "d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/post-chart-context.cHI09JaB.js",
+      "path": "/_astro/post-chart-context.cHI09JaB.js",
+      "bytes": 730,
+      "sha256": "f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/learning-input-identity.C-WLv51I.js",
+      "path": "/_astro/learning-input-identity.C-WLv51I.js",
+      "bytes": 146,
+      "sha256": "5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/interpretations.BaZkYN67.js",
+      "path": "/_astro/interpretations.BaZkYN67.js",
+      "bytes": 8979,
+      "sha256": "5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/assistant-ui.js",
+      "path": "/assets/assistant-ui.js",
+      "bytes": 4088,
+      "sha256": "238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/paths.DYbAuceH.js",
+      "path": "/_astro/paths.DYbAuceH.js",
+      "bytes": 1629,
+      "sha256": "77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/PlaceSearch.D1WsU_jW.js",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "bytes": 3472,
+      "sha256": "9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/full.AQ--_mi-.js",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "bytes": 392,
+      "sha256": "b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chart-adapter.K-QfJlbI.js",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "bytes": 50306,
+      "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/search.BXcwbrsc.js",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "bytes": 1096,
+      "sha256": "eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/read-store.CIuzJaHq.js",
+      "path": "/_astro/read-store.CIuzJaHq.js",
+      "bytes": 1301,
+      "sha256": "680103dc780e645458b2546ccd6af93f51351bfb6960910b2493fc5afb45691e"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/schema.DqKqbGHb.js",
+      "path": "/_astro/schema.DqKqbGHb.js",
+      "bytes": 99,
+      "sha256": "2d3a1ca10f5d7cb644905a1ee3d1dbd8a2dffdfaaad03cdd722453c51b4b4c53"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/AspectPatternFeature.DeT1XR8E.js",
+      "path": "/_astro/AspectPatternFeature.DeT1XR8E.js",
+      "bytes": 1978,
+      "sha256": "6d10fe7039b1744a47c0f7fe7c07ab011a2e9216819f995e8940dc3db3dad73d"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chart-signature.o0kdVHcC.js",
+      "path": "/_astro/chart-signature.o0kdVHcC.js",
+      "bytes": 6020,
+      "sha256": "e16cfcbcba99b46b71cdfb4c918f09130ed70c8434092d0133139cb0c5dd46d9"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/use-learning-sources.DJlsz2nj.js",
+      "path": "/_astro/use-learning-sources.DJlsz2nj.js",
+      "bytes": 2796,
+      "sha256": "f13d8df48d62e14c72f75619e32ecb3fecca0b8fdd86c3e886693309b474f654"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/synastry.rhUg9_9F.js",
+      "path": "/_astro/synastry.rhUg9_9F.js",
+      "bytes": 1349,
+      "sha256": "c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/LearningPractice.CSqTNZrv.js",
+      "path": "/_astro/LearningPractice.CSqTNZrv.js",
+      "bytes": 3156,
+      "sha256": "63ee2d2f4bc68cc5c5b81ae686b8eecdc6e08e687b1aa6adf6dc162119568709"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/aspects.BNC-J2iD.js",
+      "path": "/_astro/aspects.BNC-J2iD.js",
+      "bytes": 286,
+      "sha256": "9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/ChartActionDock.Bl4xOwIo.js",
+      "path": "/_astro/ChartActionDock.Bl4xOwIo.js",
+      "bytes": 49982,
+      "sha256": "28a0fee41a3f63ec535c75e303641c3bfa75ee4366ca25e1cc26572144672022"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/compat.Bjc3uaB7.js",
+      "path": "/_astro/compat.Bjc3uaB7.js",
+      "bytes": 1242,
+      "sha256": "77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/chart-context-copy.UBOz97Jz.js",
+      "path": "/_astro/chart-context-copy.UBOz97Jz.js",
+      "bytes": 27575,
+      "sha256": "f8ca6b3ad758a7f70d34b779c66627c4b6ee9621a2269f0e141d87f182a3318a"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/calculator-receipt.Sj7p-7nE.js",
+      "path": "/_astro/calculator-receipt.Sj7p-7nE.js",
+      "bytes": 16370,
+      "sha256": "7c0fc529b892d3bdca5e34221a22fb551fd687312a04ec11c61205faabb0d5b6"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/natal.D7JKDSdx.js",
+      "path": "/_astro/natal.D7JKDSdx.js",
+      "bytes": 13113,
+      "sha256": "7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/PwaInstallPrompt.BCohgdPv.js",
+      "path": "/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "bytes": 4062,
+      "sha256": "a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/share-positions.D3o0ugj4.js",
+      "path": "/_astro/share-positions.D3o0ugj4.js",
+      "bytes": 2554,
+      "sha256": "71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/ApproachRead.DkcphY4q.js",
+      "path": "/_astro/ApproachRead.DkcphY4q.js",
+      "bytes": 4282,
+      "sha256": "d631adb0a8e9c1fae2f4d634d70ca50a14bcbe7f4e4a020fd40c770d56189214"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/CommunicationRead.OjTpj_tl.js",
+      "path": "/_astro/CommunicationRead.OjTpj_tl.js",
+      "bytes": 4211,
+      "sha256": "ba94d01f31708199d0da94e5ce5b634543f668873af153080537e6f577be4d57"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/share-card-brand.CJKZtcRK.js",
+      "path": "/_astro/share-card-brand.CJKZtcRK.js",
+      "bytes": 1434,
+      "sha256": "36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/share-card-copy.D0c42nic.js",
+      "path": "/_astro/share-card-copy.D0c42nic.js",
+      "bytes": 9572,
+      "sha256": "f1b7a708bc6151f1c0bdab37332a11c0355a2e9239c45fb49f85eafbaecc075b"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/a2hs.WonhOqdm.js",
+      "path": "/_astro/a2hs.WonhOqdm.js",
+      "bytes": 2797,
+      "sha256": "944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/CalendarSubscribe.DXtj1Bbr.js",
+      "path": "/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "bytes": 5142,
+      "sha256": "002553e4521b4da36a4819c8897ec7f383309f924a2e9d94f8e7e0badd55ba7e"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/share-card.6rw5NcG3.js",
+      "path": "/_astro/share-card.6rw5NcG3.js",
+      "bytes": 46135,
+      "sha256": "7364e0539b9cdb31df7e14c2db50261568bd5ed7d8154c352f3d02c819568ae5"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/store.B9KwR70B.js",
+      "path": "/_astro/store.B9KwR70B.js",
+      "bytes": 4061,
+      "sha256": "f67add5c559fc4c16ca67b522be9a54b7e6586ff4fa0ffbe9f6114c6c6b2eece"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/deletions.DUQYISzq.js",
+      "path": "/_astro/deletions.DUQYISzq.js",
+      "bytes": 958,
+      "sha256": "28744fcc33ddb02b6df893a9579135219176d767bf768f625f65e13c51cae82b"
+    },
+    {
+      "capturedPath": "browser-run1/remote-modules/PositionsShareSurface.jcTwHV77.js",
+      "path": "/_astro/PositionsShareSurface.jcTwHV77.js",
+      "bytes": 17938,
+      "sha256": "c85fbb6b1ceb6f9a0310086d7faaead3c9f0fe0ca0967df281fd7be7a39881c1"
+    },
+    {
+      "capturedPath": "browser-run1/remote-data/index.json",
+      "path": "/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6"
+    },
+    {
+      "capturedPath": "browser-run1/remote-data/t.json",
+      "path": "/data/cities/t.json",
+      "bytes": 83011,
+      "sha256": "451369386fff0190629494ba51902a38ce2a6053daa6e295104bc413fd9a0871"
+    },
+    {
+      "capturedPath": "browser-run1/remote-data/j.json",
+      "path": "/data/cities/j.json",
+      "bytes": 30936,
+      "sha256": "2ddcd1bd7d328449cee9542814eb5748a29abf9e268220d2993f783affc90b66"
+    },
+    {
+      "capturedPath": "browser-run1/remote-data/a.json",
+      "path": "/data/cities/a.json",
+      "bytes": 101875,
+      "sha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "path": "/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "bytes": 773,
+      "sha256": "e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/preload-helper.L5lOfJxi.js",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "bytes": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/client.DPkn9Lbl.js",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "bytes": 1447,
+      "sha256": "d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/ChartCalculator.Cj-rBB1B.js",
+      "path": "/_astro/ChartCalculator.Cj-rBB1B.js",
+      "bytes": 58870,
+      "sha256": "b89fee101cf6ab657dc9b1b4abddd704abd0df8b7d7d2dfb33bad6eabadf344c"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/analytics.CH5T6e-b.js",
+      "path": "/_astro/analytics.CH5T6e-b.js",
+      "bytes": 4190,
+      "sha256": "56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/context-help-client.BqVrBbz0.js",
+      "path": "/_astro/context-help-client.BqVrBbz0.js",
+      "bytes": 2472,
+      "sha256": "52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/preact.module.Bjq9tLsx.js",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "bytes": 10499,
+      "sha256": "796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/hooks.module.C0_8FjiD.js",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "bytes": 2875,
+      "sha256": "70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/profile-access-reader.DoQqlSjt.js",
+      "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+      "bytes": 438,
+      "sha256": "ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/signs.BMXPKoMF.js",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "bytes": 11693,
+      "sha256": "21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/CalculationReload.DXyGkRsn.js",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "bytes": 763,
+      "sha256": "7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/jsxRuntime.module.BG9KJlGc.js",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "bytes": 430,
+      "sha256": "7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/PlanetGlyph.BhITbtcc.js",
+      "path": "/_astro/PlanetGlyph.BhITbtcc.js",
+      "bytes": 575,
+      "sha256": "57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chunk-H7RJKCBO.BUIGSNBz.js",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "bytes": 1763,
+      "sha256": "512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/share.BRlg0eGS.js",
+      "path": "/_astro/share.BRlg0eGS.js",
+      "bytes": 2132,
+      "sha256": "f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/useEngine.BV92cVg4.js",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "bytes": 504,
+      "sha256": "36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/astrology.BHib5efU.js",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "bytes": 3245,
+      "sha256": "e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/lite.DKWHZC5_.js",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "bytes": 831,
+      "sha256": "476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chart-handoff.Dvz2AAcL.js",
+      "path": "/_astro/chart-handoff.Dvz2AAcL.js",
+      "bytes": 2042,
+      "sha256": "6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/useProfileAccessGeneration.w2JLb1F6.js",
+      "path": "/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "bytes": 340,
+      "sha256": "8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/localToUtc.CKDDLf-o.js",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "bytes": 2589,
+      "sha256": "888b1c21076bf60e9867f16ec0035f959dca72531834f47f56a4bcfc0e009245"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/technical-layout.DQIjXHHb.js",
+      "path": "/_astro/technical-layout.DQIjXHHb.js",
+      "bytes": 860,
+      "sha256": "68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/post-chart-context.cHI09JaB.js",
+      "path": "/_astro/post-chart-context.cHI09JaB.js",
+      "bytes": 730,
+      "sha256": "f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/i18n.Cg_lCJuc.js",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "bytes": 6936,
+      "sha256": "70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/dignities.D6lQGYrR.js",
+      "path": "/_astro/dignities.D6lQGYrR.js",
+      "bytes": 1627,
+      "sha256": "2aa5196e6ed999cd3730533461930d3a0d585a43621a0c28fa9c941414252fb7"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/BirthFields.VmY_J4-2.js",
+      "path": "/_astro/BirthFields.VmY_J4-2.js",
+      "bytes": 1752,
+      "sha256": "19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/AspectGlyph.DMIAGIQV.js",
+      "path": "/_astro/AspectGlyph.DMIAGIQV.js",
+      "bytes": 488,
+      "sha256": "ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/learning-input-identity.C-WLv51I.js",
+      "path": "/_astro/learning-input-identity.C-WLv51I.js",
+      "bytes": 146,
+      "sha256": "5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/AstroTerm.7K8SAipO.js",
+      "path": "/_astro/AstroTerm.7K8SAipO.js",
+      "bytes": 9025,
+      "sha256": "17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/houses.5SlbILVS.js",
+      "path": "/_astro/houses.5SlbILVS.js",
+      "bytes": 213,
+      "sha256": "2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/interpretations.BaZkYN67.js",
+      "path": "/_astro/interpretations.BaZkYN67.js",
+      "bytes": 8979,
+      "sha256": "5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/SignChip.Dx3tQVZl.js",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "bytes": 550,
+      "sha256": "646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/Wheel.RNRSqGob.js",
+      "path": "/_astro/Wheel.RNRSqGob.js",
+      "bytes": 12355,
+      "sha256": "d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/paths.DYbAuceH.js",
+      "path": "/_astro/paths.DYbAuceH.js",
+      "bytes": 1629,
+      "sha256": "77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/civil-date.CpOZUt7Z.js",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "bytes": 533,
+      "sha256": "74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/rolldown-runtime.DK3Fl9T5.js",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/technical-locales.DDKucXXd.js",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "bytes": 46,
+      "sha256": "69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/PlaceSearch.D1WsU_jW.js",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "bytes": 3472,
+      "sha256": "9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chunk-INI453VG.BxjMUPBs.js",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "bytes": 2569,
+      "sha256": "efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/full.AQ--_mi-.js",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "bytes": 392,
+      "sha256": "b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chart-adapter.K-QfJlbI.js",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "bytes": 50306,
+      "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/search.BXcwbrsc.js",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "bytes": 1096,
+      "sha256": "eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/assistant-ui.js",
+      "path": "/assets/assistant-ui.js",
+      "bytes": 4088,
+      "sha256": "238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/LearningPractice.CSqTNZrv.js",
+      "path": "/_astro/LearningPractice.CSqTNZrv.js",
+      "bytes": 3156,
+      "sha256": "63ee2d2f4bc68cc5c5b81ae686b8eecdc6e08e687b1aa6adf6dc162119568709"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/natal.D7JKDSdx.js",
+      "path": "/_astro/natal.D7JKDSdx.js",
+      "bytes": 13113,
+      "sha256": "7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/AspectPatternFeature.DeT1XR8E.js",
+      "path": "/_astro/AspectPatternFeature.DeT1XR8E.js",
+      "bytes": 1978,
+      "sha256": "6d10fe7039b1744a47c0f7fe7c07ab011a2e9216819f995e8940dc3db3dad73d"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/aspects.BNC-J2iD.js",
+      "path": "/_astro/aspects.BNC-J2iD.js",
+      "bytes": 286,
+      "sha256": "9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chart-signature.o0kdVHcC.js",
+      "path": "/_astro/chart-signature.o0kdVHcC.js",
+      "bytes": 6020,
+      "sha256": "e16cfcbcba99b46b71cdfb4c918f09130ed70c8434092d0133139cb0c5dd46d9"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/use-learning-sources.DJlsz2nj.js",
+      "path": "/_astro/use-learning-sources.DJlsz2nj.js",
+      "bytes": 2796,
+      "sha256": "f13d8df48d62e14c72f75619e32ecb3fecca0b8fdd86c3e886693309b474f654"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/ChartActionDock.Bl4xOwIo.js",
+      "path": "/_astro/ChartActionDock.Bl4xOwIo.js",
+      "bytes": 49982,
+      "sha256": "28a0fee41a3f63ec535c75e303641c3bfa75ee4366ca25e1cc26572144672022"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/calculator-receipt.Sj7p-7nE.js",
+      "path": "/_astro/calculator-receipt.Sj7p-7nE.js",
+      "bytes": 16370,
+      "sha256": "7c0fc529b892d3bdca5e34221a22fb551fd687312a04ec11c61205faabb0d5b6"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/synastry.rhUg9_9F.js",
+      "path": "/_astro/synastry.rhUg9_9F.js",
+      "bytes": 1349,
+      "sha256": "c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/read-store.CIuzJaHq.js",
+      "path": "/_astro/read-store.CIuzJaHq.js",
+      "bytes": 1301,
+      "sha256": "680103dc780e645458b2546ccd6af93f51351bfb6960910b2493fc5afb45691e"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/compat.Bjc3uaB7.js",
+      "path": "/_astro/compat.Bjc3uaB7.js",
+      "bytes": 1242,
+      "sha256": "77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/chart-context-copy.UBOz97Jz.js",
+      "path": "/_astro/chart-context-copy.UBOz97Jz.js",
+      "bytes": 27575,
+      "sha256": "f8ca6b3ad758a7f70d34b779c66627c4b6ee9621a2269f0e141d87f182a3318a"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/share-positions.D3o0ugj4.js",
+      "path": "/_astro/share-positions.D3o0ugj4.js",
+      "bytes": 2554,
+      "sha256": "71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/share-card-brand.CJKZtcRK.js",
+      "path": "/_astro/share-card-brand.CJKZtcRK.js",
+      "bytes": 1434,
+      "sha256": "36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/PositionsShareSurface.jcTwHV77.js",
+      "path": "/_astro/PositionsShareSurface.jcTwHV77.js",
+      "bytes": 17938,
+      "sha256": "c85fbb6b1ceb6f9a0310086d7faaead3c9f0fe0ca0967df281fd7be7a39881c1"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/share-card.6rw5NcG3.js",
+      "path": "/_astro/share-card.6rw5NcG3.js",
+      "bytes": 46135,
+      "sha256": "7364e0539b9cdb31df7e14c2db50261568bd5ed7d8154c352f3d02c819568ae5"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/ApproachRead.DkcphY4q.js",
+      "path": "/_astro/ApproachRead.DkcphY4q.js",
+      "bytes": 4282,
+      "sha256": "d631adb0a8e9c1fae2f4d634d70ca50a14bcbe7f4e4a020fd40c770d56189214"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/a2hs.WonhOqdm.js",
+      "path": "/_astro/a2hs.WonhOqdm.js",
+      "bytes": 2797,
+      "sha256": "944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/share-card-copy.D0c42nic.js",
+      "path": "/_astro/share-card-copy.D0c42nic.js",
+      "bytes": 9572,
+      "sha256": "f1b7a708bc6151f1c0bdab37332a11c0355a2e9239c45fb49f85eafbaecc075b"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/CalendarSubscribe.DXtj1Bbr.js",
+      "path": "/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "bytes": 5142,
+      "sha256": "002553e4521b4da36a4819c8897ec7f383309f924a2e9d94f8e7e0badd55ba7e"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/CommunicationRead.OjTpj_tl.js",
+      "path": "/_astro/CommunicationRead.OjTpj_tl.js",
+      "bytes": 4211,
+      "sha256": "ba94d01f31708199d0da94e5ce5b634543f668873af153080537e6f577be4d57"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/PwaInstallPrompt.BCohgdPv.js",
+      "path": "/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "bytes": 4062,
+      "sha256": "a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/deletions.DUQYISzq.js",
+      "path": "/_astro/deletions.DUQYISzq.js",
+      "bytes": 958,
+      "sha256": "28744fcc33ddb02b6df893a9579135219176d767bf768f625f65e13c51cae82b"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/store.B9KwR70B.js",
+      "path": "/_astro/store.B9KwR70B.js",
+      "bytes": 4061,
+      "sha256": "f67add5c559fc4c16ca67b522be9a54b7e6586ff4fa0ffbe9f6114c6c6b2eece"
+    },
+    {
+      "capturedPath": "browser-run2/remote-modules/schema.DqKqbGHb.js",
+      "path": "/_astro/schema.DqKqbGHb.js",
+      "bytes": 99,
+      "sha256": "2d3a1ca10f5d7cb644905a1ee3d1dbd8a2dffdfaaad03cdd722453c51b4b4c53"
+    },
+    {
+      "capturedPath": "browser-run2/remote-data/index.json",
+      "path": "/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6"
+    },
+    {
+      "capturedPath": "browser-run2/remote-data/t.json",
+      "path": "/data/cities/t.json",
+      "bytes": 83011,
+      "sha256": "451369386fff0190629494ba51902a38ce2a6053daa6e295104bc413fd9a0871"
+    },
+    {
+      "capturedPath": "browser-run2/remote-data/j.json",
+      "path": "/data/cities/j.json",
+      "bytes": 30936,
+      "sha256": "2ddcd1bd7d328449cee9542814eb5748a29abf9e268220d2993f783affc90b66"
+    },
+    {
+      "capturedPath": "browser-run2/remote-data/a.json",
+      "path": "/data/cities/a.json",
+      "bytes": 101875,
+      "sha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc"
+    }
+  ],
+  "unavailableImageBodies": [
+    {
+      "case": "en-chart-1280",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    },
+    {
+      "case": "en-chart-1280",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    },
+    {
+      "case": "en-chart-1280",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    },
+    {
+      "case": "en-positions-390",
+      "path": "/assets/guide-avatar.webp",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    }
+  ],
+  "receipts": [
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-1280-toronto-receipt.json",
+      "label": "toronto",
+      "sha256": "157b7c32a345439e411e097d2a458ad1624989c2c502df529cefac88daab7659",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1919-03-31T16:00:00.000Z",
+        "localResolution": {
+          "date": "1919-03-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-1280-juneau-receipt.json",
+      "label": "juneau",
+      "sha256": "b2028a8c3131969ef8a0948b1f914573c0fdf4637248748d339afb06fb4d13cf",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 58.3,
+          "longitude": -134.42
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [
+          "lmt"
+        ],
+        "instant": "1867-10-17T20:57:41.000Z",
+        "localResolution": {
+          "date": "1867-10-18",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 902.3166666666667,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Juneau"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "lmt",
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-1280-known-receipt.json",
+      "label": "known",
+      "sha256": "281eb1124fee90b36a8736b02e8425a54cff6353b220423aace5e6c1619bd683",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": null,
+          "actual": "whole",
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1990-06-15T12:30:00.000Z",
+        "localResolution": {
+          "date": "1990-06-15",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "08:30",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "supplied-instant",
+        "resultFlags": [],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": true
+      },
+      "case": "ru-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-1280-recovered-receipt.json",
+      "label": "recovered",
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": -13.83,
+          "longitude": -171.77
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "2011-12-30T22:00:00.000Z",
+        "localResolution": {
+          "date": "2011-12-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 840,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "Pacific/Apia"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-390-toronto-receipt.json",
+      "label": "toronto",
+      "sha256": "157b7c32a345439e411e097d2a458ad1624989c2c502df529cefac88daab7659",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1919-03-31T16:00:00.000Z",
+        "localResolution": {
+          "date": "1919-03-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-390-juneau-receipt.json",
+      "label": "juneau",
+      "sha256": "b2028a8c3131969ef8a0948b1f914573c0fdf4637248748d339afb06fb4d13cf",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 58.3,
+          "longitude": -134.42
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [
+          "lmt"
+        ],
+        "instant": "1867-10-17T20:57:41.000Z",
+        "localResolution": {
+          "date": "1867-10-18",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 902.3166666666667,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Juneau"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "lmt",
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-390-known-receipt.json",
+      "label": "known",
+      "sha256": "281eb1124fee90b36a8736b02e8425a54cff6353b220423aace5e6c1619bd683",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": null,
+          "actual": "whole",
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1990-06-15T12:30:00.000Z",
+        "localResolution": {
+          "date": "1990-06-15",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "08:30",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "supplied-instant",
+        "resultFlags": [],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": true
+      },
+      "case": "ru-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run1/ru-chart-390-recovered-receipt.json",
+      "label": "recovered",
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": -13.83,
+          "longitude": -171.77
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "2011-12-30T22:00:00.000Z",
+        "localResolution": {
+          "date": "2011-12-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 840,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "Pacific/Apia"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "ru-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-1280-toronto-receipt.json",
+      "label": "toronto",
+      "sha256": "157b7c32a345439e411e097d2a458ad1624989c2c502df529cefac88daab7659",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1919-03-31T16:00:00.000Z",
+        "localResolution": {
+          "date": "1919-03-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-1280-juneau-receipt.json",
+      "label": "juneau",
+      "sha256": "b2028a8c3131969ef8a0948b1f914573c0fdf4637248748d339afb06fb4d13cf",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 58.3,
+          "longitude": -134.42
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [
+          "lmt"
+        ],
+        "instant": "1867-10-17T20:57:41.000Z",
+        "localResolution": {
+          "date": "1867-10-18",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 902.3166666666667,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Juneau"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "lmt",
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-1280-known-receipt.json",
+      "label": "known",
+      "sha256": "281eb1124fee90b36a8736b02e8425a54cff6353b220423aace5e6c1619bd683",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": null,
+          "actual": "whole",
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1990-06-15T12:30:00.000Z",
+        "localResolution": {
+          "date": "1990-06-15",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "08:30",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "supplied-instant",
+        "resultFlags": [],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": true
+      },
+      "case": "en-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-1280-recovered-receipt.json",
+      "label": "recovered",
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": -13.83,
+          "longitude": -171.77
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "2011-12-30T22:00:00.000Z",
+        "localResolution": {
+          "date": "2011-12-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 840,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "Pacific/Apia"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-1280"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-390-toronto-receipt.json",
+      "label": "toronto",
+      "sha256": "157b7c32a345439e411e097d2a458ad1624989c2c502df529cefac88daab7659",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1919-03-31T16:00:00.000Z",
+        "localResolution": {
+          "date": "1919-03-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-390-juneau-receipt.json",
+      "label": "juneau",
+      "sha256": "b2028a8c3131969ef8a0948b1f914573c0fdf4637248748d339afb06fb4d13cf",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 58.3,
+          "longitude": -134.42
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [
+          "lmt"
+        ],
+        "instant": "1867-10-17T20:57:41.000Z",
+        "localResolution": {
+          "date": "1867-10-18",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 902.3166666666667,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Juneau"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "lmt",
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-390-known-receipt.json",
+      "label": "known",
+      "sha256": "281eb1124fee90b36a8736b02e8425a54cff6353b220423aace5e6c1619bd683",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": null,
+          "actual": "whole",
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1990-06-15T12:30:00.000Z",
+        "localResolution": {
+          "date": "1990-06-15",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "08:30",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "supplied-instant",
+        "resultFlags": [],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": true
+      },
+      "case": "en-chart-390"
+    },
+    {
+      "capturedPath": "captured/browser-run2/en-chart-390-recovered-receipt.json",
+      "label": "recovered",
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0",
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": -13.83,
+          "longitude": -171.77
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "2011-12-30T22:00:00.000Z",
+        "localResolution": {
+          "date": "2011-12-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 840,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "Pacific/Apia"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "case": "en-chart-390"
+    }
+  ],
+  "sourceCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "providerId": "dpl_DCezqWrsukzWV3F7NotmTQCq4ENp",
+  "browser": "152.0.7977.83",
+  "requestEvents": 1150,
+  "blockedRequests": [
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    }
+  ],
+  "qualification": "Read-only independent audit of captured native executions. No browser rerun or private authorization material was read. Parent cleanup exact-secret scan is retained as attributed evidence, not independently repeated."
+}

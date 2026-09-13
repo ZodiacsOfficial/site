@@ -1,0 +1,2 @@
+git show c761a49c55d125bca48ff38d81b0a9ff6fd5adcf:AGENTS.md
+fatal: path 'AGENTS.md' does not exist in 'c761a49c55d125bca48ff38d81b0a9ff6fd5adcf'

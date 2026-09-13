@@ -1,0 +1,141 @@
+[
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "tests/interaction-replay-drive.mjs"
+    ],
+    "node": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "env": {
+      "OUT_DIR": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-baseline"
+    },
+    "log": "interaction-baseline.log",
+    "exitCode": 1,
+    "meaning": "Old source fails 3 of 12 native fixtures; browser/server closed"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "tests/interaction-replay-drive.mjs"
+    ],
+    "node": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "env": {
+      "OUT_DIR": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-corrected"
+    },
+    "log": "interaction-corrected.log",
+    "exitCode": 0,
+    "meaning": "Intermediate indexed-selection draft passes 14 fixtures, later rejected by independent option-reordering probe"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "tests/interaction-replay-drive.mjs"
+    ],
+    "node": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "env": {
+      "OUT_DIR": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-final"
+    },
+    "log": "interaction-final.log",
+    "exitCode": 0,
+    "meaning": "Frozen correction passes 16 native fixtures"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--target",
+      "ES2022",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,astro/client",
+      "src/client-directives/interaction.ts"
+    ],
+    "log": "interaction-final-typecheck.log",
+    "exitCode": 0,
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/astro/bin/astro.mjs",
+      "check"
+    ],
+    "log": "interaction-astro-check.log",
+    "exitCode": 0,
+    "meaning": "Intermediate interaction draft; final option-value correction separately strict-typechecked",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/astro/bin/astro.mjs",
+      "build"
+    ],
+    "log": "interaction-astro-build.log",
+    "exitCode": 0,
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/build-assistant-ui.mjs"
+    ],
+    "log": "interaction-static-guide-build.log",
+    "exitCode": 0,
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "tests/i18n-r2-ru-drive.mjs"
+    ],
+    "env": {
+      "OUT_DIR": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-existing-ru"
+    },
+    "log": "interaction-existing-ru.log",
+    "exitCode": 1,
+    "meaning": "Raw Astro output lacks required postbuild deferred-style declarations; not source acceptance",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-receipt-export-evidence/browser-combined-drive.mjs"
+    ],
+    "log": "browser-combined-drive.log",
+    "exitCode": 0,
+    "meaning": "12 receipt groups; owned raw static build, all source hashes checked before/after",
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/inline-critical-styles.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "log": "interaction-inline-critical-styles.log",
+    "exitCode": 0,
+    "meaning": "Existing postbuild generated-output pass, unchanged source/styles"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "tests/i18n-r2-ru-drive.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-receipt-export",
+    "env": {
+      "OUT_DIR": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-existing-ru-final"
+    },
+    "log": "interaction-existing-ru-final.log",
+    "exitCode": 0,
+    "meaning": "Unchanged existing Russian drive passes on existing stylesheet postbuild output; 26 public routes plus noindex404 at360/1280, including interaction takeover/retries/queued submit"
+  }
+]

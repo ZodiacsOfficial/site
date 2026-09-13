@@ -1,0 +1,93 @@
+from pathlib import Path
+import hashlib,json,subprocess,datetime,os
+OUT=Path(__file__).parent
+SITE=OUT/'site'
+NODE='/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node'
+BASE='3845a04bcea822da3c30a18848ef3d8d133b7b66'
+commands=[]
+def sha(b):return hashlib.sha256(b).hexdigest()
+def git(*a):return subprocess.check_output(['git',*a],cwd=SITE)
+def run(label,args,expected):
+ start=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ with (OUT/(label+'.log')).open('w') as f:
+  p=subprocess.run(args,cwd=SITE,stdout=f,stderr=subprocess.STDOUT)
+ commands.append({'label':label,'startedUtc':start,'cwd':str(SITE),'argv':args,'exitCode':p.returncode,'expectedExitCode':expected,'log':label+'.log'})
+ (OUT/'commands.json').write_text(json.dumps(commands,indent=2)+'\n')
+ assert p.returncode==expected,(label,p.returncode,expected)
+
+assembly=json.loads((OUT/'assembly-identity.json').read_text())
+for r in assembly['records']:
+ assert sha((SITE/r['path']).read_bytes())==r['sha256']
+prior=Path('/private/tmp/zodiacs-platform-local-date-reference-wiring-review/delivery')
+old_allowance=(prior/'final-base-allowance.json').read_bytes()
+assert sha(old_allowance)=='7b7bcb5bb33d19790c06d427c665c9e3dd709fdaed057c4d880c1aeebc6046d4'
+(OUT/'inputs/prior-six-path-allowance.json').write_bytes(old_allowance)
+workflow='.github/workflows/site-check.yml'
+assert (SITE/workflow).read_bytes()==(prior/'proposal/site-check.proposed.yml.log').read_bytes()
+assert sha((SITE/workflow).read_bytes())=='5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0'
+allowance_path=SITE/'.github/phase1-scope-allowance.json'
+candidate_allowance=allowance_path.read_bytes()
+old=json.loads(old_allowance);new=json.loads(candidate_allowance)
+assert new['baseCommit']==old['baseCommit']==BASE
+added=['src/lib/i18n/index.test.ts','src/lib/i18n/ui/ru.test.ts']
+assert new['protectedPaths']==sorted(old['protectedPaths']+added)
+assert len(new['protectedPaths'])==8
+assert new['id']==old['id'] and new['version']==old['version']==1
+assert set(new)==set(old)
+
+test_paths=['src/lib/i18n/index.test.ts','src/lib/i18n/ui/ru.test.ts']
+for name in test_paths:
+ b=git('show',BASE+':'+name)
+ expected=b.replace(b'toHaveLength(418)',b'toHaveLength(419)')
+ assert b.count(b'toHaveLength(418)')==1
+ if name.endswith('/index.test.ts'):
+  assert b.count(b'all 418 English keys')==1
+  expected=expected.replace(b'all 418 English keys',b'all 419 English keys')
+ assert (SITE/name).read_bytes()==expected
+
+# Keep the rejected original count tests as a true control against the exact six
+# frozen 419-key catalogs; then restore the independently captured supplement.
+for name in test_paths:(SITE/name).write_bytes(git('show',BASE+':'+name))
+run('baseline-tests',[NODE,str(SITE/'node_modules/vitest/vitest.mjs'),'run',*test_paths,
+ '--reporter=json','--outputFile='+str(OUT/'baseline-results.json')],1)
+baseline=json.loads((OUT/'baseline-results.json').read_text())
+assert baseline['numFailedTests']==2
+for name in test_paths:(SITE/name).write_bytes((OUT/'frozen-source'/name).read_bytes())
+run('candidate-tests',[NODE,str(SITE/'node_modules/vitest/vitest.mjs'),'run',*test_paths,
+ '--reporter=json','--outputFile='+str(OUT/'candidate-results.json')],0)
+candidate=json.loads((OUT/'candidate-results.json').read_text())
+assert candidate['numFailedTests']==0 and candidate['numTotalTests']==baseline['numTotalTests']
+
+# The unchanged real scope CLI observes the complete exact-base checkout diff.
+run('scope-eight-paths',[NODE,'scripts/phase1-scope-guard.mjs','--base',BASE],0)
+try:
+ allowance_path.write_bytes(old_allowance)
+ run('scope-prior-six-rejected',[NODE,'scripts/phase1-scope-guard.mjs','--base',BASE],1)
+ assert 'does not exactly match the protected diff' in (OUT/'scope-prior-six-rejected.log').read_text()
+finally:allowance_path.write_bytes(candidate_allowance)
+run('scope-wrong-base-rejected',[NODE,'scripts/phase1-scope-guard.mjs','--base','abcf1a44e52040db79a369b49bc9b55d78099b22'],1)
+assert 'pinned to a different base' in (OUT/'scope-wrong-base-rejected.log').read_text()
+run('scope-final-eight-paths',[NODE,'scripts/phase1-scope-guard.mjs','--base',BASE],0)
+
+tracked=[x.decode() for x in git('diff','--name-only','-z','HEAD').split(b'\0') if x]
+untracked=[x.decode() for x in git('ls-files','--others','--exclude-standard','-z').split(b'\0') if x]
+assert set(tracked+untracked)=={r['path'] for r in assembly['records']}
+assert len(set(tracked+untracked))==16
+for r in assembly['records']:
+ assert sha((SITE/r['path']).read_bytes())==r['sha256']
+guard='scripts/phase1-scope-guard.mjs'
+assert (SITE/guard).read_bytes()==git('show',BASE+':'+guard)
+(OUT/'inputs/unchanged-scope-guard.mjs').write_bytes((SITE/guard).read_bytes())
+(OUT/'final-name-status.raw').write_bytes(git('diff','--name-status','-z','HEAD'))
+(OUT/'final-untracked.raw').write_bytes(git('ls-files','--others','--exclude-standard','-z'))
+result={'status':'passed','base':BASE,'patchSha256':'50330a5cc5865f44872f607795b1135bf5c98a0a1ffd06113ccf6cfcebff5922',
+ 'supplementFiles':4,'combinedFrozenFiles':16,'originalC014FilesStillByteIdentical':12,
+ 'testChangesExactlyTwoConstantsAndOneTitle':True,'oldCatalogCounts':418,'newCatalogCounts':419,
+ 'baselineTests':{'total':baseline['numTotalTests'],'passed':baseline['numPassedTests'],'failed':baseline['numFailedTests']},
+ 'candidateTests':{'total':candidate['numTotalTests'],'passed':candidate['numPassedTests'],'failed':candidate['numFailedTests']},
+ 'priorReviewedWorkflowByteIdentical':True,'allowanceExactlyOldSixPlusTwoCountTests':True,
+ 'actualCli':{'final16ChangedPaths8ProtectedPass':True,'oldSixPathAllowanceRejected':True,'wrongComparisonBaseRejected':True},
+ 'guardSourceByteIdenticalToBase':True,'finalFrozenHashesIntact':True,'changedPaths':sorted(set(tracked+untracked)),
+ 'qualification':'Supplemental locale-test/count and exact-base scope review only; no new product, native, full-suite, CI or deployment claim.'}
+(OUT/'result.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

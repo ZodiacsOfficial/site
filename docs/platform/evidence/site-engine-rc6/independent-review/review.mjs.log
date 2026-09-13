@@ -1,0 +1,55 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import * as baseline from './baseline-resolver.mjs';
+import * as candidate from './candidate-resolver.mjs';
+import * as sdk from '../zodiacs-platform-rc6-public-consumer-review/node_modules/@zodiacs/engine/dist/geo.js';
+import {transitionChecks} from './retained-checks.mjs';
+const retained=JSON.parse(fs.readFileSync('retained-controls-and-model.json')).results;
+const transitions=transitionChecks(baseline,candidate,retained);
+for(const row of retained)assert.deepEqual(candidate.resolveLocalToUtc(row.date,row.time,row.zone),sdk.resolveLocalToUtc(row.date,row.time,row.zone));
+const fmt=new Map();
+function wall(zone,ms){
+ if(!fmt.has(zone))fmt.set(zone,new Intl.DateTimeFormat('en-US',{timeZone:zone,calendar:'gregory',numberingSystem:'latn',era:'short',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',fractionalSecondDigits:3,hourCycle:'h23'}));
+ const ps=fmt.get(zone).formatToParts(ms),p=t=>ps.find(x=>x.type===t)?.value;
+ const d=new Date(0);d.setUTCFullYear(p('era')==='BC'?1-Number(p('year')):Number(p('year')),Number(p('month'))-1,Number(p('day')));d.setUTCHours(Number(p('hour')),Number(p('minute')),Number(p('second')),Number(p('fractionalSecond')));return d.getTime();
+}
+function civil(date,time){const d=new Date(0),[y,m,day]=date.split('-').map(Number),[h,min]=time.split(':').map(Number);d.setUTCFullYear(y,m-1,day);d.setUTCHours(h,min,0,0);return d.getTime();}
+const groups=[
+ ['Europe/Paris','1911-03-10',['23:40','23:49','23:50','23:51','23:55','23:59']],
+ ['Europe/Paris','1911-03-11',['00:00','00:01','12:00']],
+ ['Europe/Dublin','1916-10-01',['02:00','02:25','02:26','02:30','02:59','03:00','12:00']],
+ ['Africa/Monrovia','1972-01-07',['00:00','00:01','00:30','00:44','00:45','00:46','12:00']],
+ ['Asia/Kathmandu','1919-12-31',['23:40','23:48','23:49','23:50','23:59']],
+ ['Asia/Kathmandu','1920-01-01',['00:00','00:01','12:00']],
+ ['Asia/Kolkata','1906-01-01',['00:00','00:01','00:08','00:09','00:10','12:00']],
+ ['Asia/Yangon','1920-01-01',['00:00','00:01','00:05','00:06','12:00']],
+ ['Europe/Amsterdam','1937-07-01',['00:00','00:01','00:20','12:00']],
+ ['Pacific/Auckland','1868-11-02',['00:00','00:01','00:10','12:00']],
+ ['America/New_York','2024-03-10',['01:59','02:00','02:30','02:59','03:00']],
+ ['America/New_York','2024-11-03',['00:59','01:00','01:30','01:59','02:00']],
+ ['Australia/Lord_Howe','2024-10-06',['01:59','02:00','02:15','02:29','02:30']],
+];
+const additional=[];
+for(const[zone,date,times]of groups)for(const time of times){
+ const typed=civil(date,time),fresh=candidate.resolveLocalToUtc(date,time,zone),old=baseline.resolveLocalToUtc(date,time,zone),publicResult=sdk.resolveLocalToUtc(date,time,zone);
+ assert.deepEqual(fresh,publicResult);
+ // Independent finite reference: obtain offsets from complete wall parts at 145 hourly instants, not longOffset parsing or the implementation's three sample points.
+ const offsets=[...new Set(Array.from({length:145},(_,i)=>{const t=typed+(i-72)*3600000;return wall(zone,t)-t;}))];
+ const exact=offsets.map(offset=>typed-offset).filter(ms=>wall(zone,ms)===typed).sort((a,b)=>a-b);
+ const actualWall=wall(zone,fresh.utc.getTime()),shift=actualWall-typed;
+ assert.equal(actualWall-fresh.utc.getTime(),Math.round(fresh.offsetMinutes*60000));assert.ok(shift>=0);assert.equal(fresh.flags.includes('dst-gap'),shift>0);
+ if(exact.length){assert.equal(fresh.utc.getTime(),exact[0]);assert.equal(shift,0);assert.equal(fresh.flags.includes('dst-fold'),exact.length>1);}else{assert.ok(shift>0);assert.equal(fresh.flags.includes('dst-fold'),false);}
+ assert.equal(fresh.utc.getUTCMilliseconds(),0);
+ additional.push({zone,date,time,instant:fresh.utc.toISOString(),offsetMinutes:fresh.offsetMinutes,flags:fresh.flags,actualWall:new Date(actualWall).toISOString(),shiftMilliseconds:shift,independentlyFoundExactCandidates:exact.map(x=>new Date(x).toISOString()),independentOffsetCount:offsets.length,baselineInstantDeltaMs:fresh.utc.getTime()-old.utc.getTime(),baselineFlags:old.flags});
+}
+const validBoundaries=[];
+for(const date of ['0000-01-01','0000-02-29','0099-12-31','0100-01-01','1800-01-01','2199-12-31','9999-12-31'])for(const zone of ['UTC','Pacific/Kiritimati','America/Adak'])for(const time of ['00:00','23:59']){
+ const fresh=candidate.resolveLocalToUtc(date,time,zone),old=baseline.resolveLocalToUtc(date,time,zone);assert.deepEqual(fresh,sdk.resolveLocalToUtc(date,time,zone));assert.equal(fresh.utc.getTime(),old.utc.getTime());assert.equal(wall(zone,fresh.utc.getTime()),civil(date,time));assert.equal(fresh.flags.includes('dst-gap'),false);assert.equal(fresh.flags.includes('dst-fold'),false);validBoundaries.push({date,time,zone,instant:fresh.utc.toISOString(),flags:fresh.flags});
+}
+const malformed=[
+ ['2001-02-29','08:30','UTC'],['1900-02-29','08:30','UTC'],['2024-01-01\n','08:30','UTC'],['-0001-01-01','08:30','UTC'],['10000-01-01','08:30','UTC'],['2024-13-01','08:30','UTC'],['2024-01-00','08:30','UTC'],
+ ['2024-01-01','24:00','UTC'],['2024-01-01','08:60','UTC'],['2024-01-01','8:30','UTC'],['2024-01-01','08:30:00','UTC'],['2024-01-01','08:30\n','UTC'],['2024-01-01','08:30',''],['2024-01-01','08:30',undefined],['2024-01-01','08:30',null],['2024-01-01','08:30','Synthetic/Invalid'],[null,'08:30','UTC'],[2024,'08:30','UTC'],['2024-01-01',null,'UTC']
+];
+const rejected=malformed.map(args=>{const errors=[baseline,candidate,sdk].map(mod=>{try{mod.resolveLocalToUtc(...args)}catch(error){assert.ok(error instanceof RangeError);return error.message;}assert.fail('Expected rejection');});assert.equal(errors[0],errors[1]);return{args:args.map(x=>x===undefined?'<undefined>':x),baselineRejected:true,candidateRejected:true,publicSdkRejected:true,baselineCandidateDiagnosticUnchanged:true};});
+const result={node:process.version,icu:process.versions.icu,tzdb:process.versions.tz,transitions,publicSdkMatches:retained.length+additional.length+validBoundaries.length,additional,validBoundaries,rejected,limitations:['Finite runtime-Intl behavior checks; not historical timezone truth or astronomical accuracy certification.','The existing three-offset sampler remains unchanged; the finite 145-hour reference is not a complete transition proof.','Year 0000/9999 are library syntax checks outside calculator UI dates 1800–2199.','Date interval endpoints, unknown-date candidate completeness, publication and deployment excluded.']};
+fs.writeFileSync(process.argv[2]??'node22-result.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({node:result.node,icu:result.icu,tzdb:result.tzdb,retainedControls:transitions.count,correctedFlags:transitions.corrected,retainedInstantChanges:transitions.instantsChanged,additionalControls:additional.length,additionalChanges:additional.filter(x=>x.baselineInstantDeltaMs!==0||JSON.stringify(x.flags)!==JSON.stringify(x.baselineFlags)).length,validBoundaries:validBoundaries.length,rejected:rejected.length,publicSdkMatches:result.publicSdkMatches}));

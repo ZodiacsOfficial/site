@@ -1,0 +1,8 @@
+{
+  "operation": "get_deployment",
+  "deployment": "dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t",
+  "scope": "team_Uq1tMupykbm3cGYm0cfgsj7B",
+  "scopeQualification": "Initial unverified scope value; not the configured accessible team.",
+  "outcome": "403 forbidden: Not authorized to access the resource under this scope.",
+  "recovery": "list_teams discovered team_Ue0ac8HT1b3TAzaDDZBTFhQt; the following before/after deployment requests succeeded. No state mutation."
+}

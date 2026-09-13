@@ -1,0 +1,33 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-seconds-adoption
+
+ ✓ src/lib/time/localToUtc.test.ts (53 tests) 19ms
+ ✓ src/lib/time/localToUtc-precision.test.ts (27 tests) 110ms
+ ✓ src/lib/chart-date-certainty.test.ts (8 tests) 55ms
+ ✓ src/lib/scene/scene.test.ts (15 tests) 54ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 125ms
+ ✓ src/lib/engine/package-integration.test.ts (6 tests) 182ms
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/engine/engine.test.ts [ src/lib/engine/engine.test.ts ]
+Error: Cannot find module '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js' imported from '/private/tmp/zodiacs-platform-site-seconds-adoption/src/lib/engine/engine.test.ts'
+ ❯ src/lib/engine/engine.test.ts:12:1
+     10| import { createHash } from 'node:crypto';
+     11| import { resolve } from 'node:path';
+     12| import {
+       | ^
+     13|   Body, Observer, SearchHourAngle, SearchRiseSet, MakeTime, SiderealTi…
+     14| } from 'astronomy-engine';
+
+Caused by: Error: Failed to load url /Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js (resolved id: /Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js). Does the file exist?
+ ❯ loadAndTransform ../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/vite/dist/node/chunks/dep-Dm0c1Wj2.js:35835:17
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 6 passed (7)
+      Tests  130 passed (130)
+   Start at  13:40:22
+   Duration  518ms (transform 611ms, setup 0ms, collect 881ms, tests 544ms, environment 1ms, prepare 432ms)
+

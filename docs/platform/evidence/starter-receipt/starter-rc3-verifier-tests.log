@@ -1,0 +1,10 @@
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ scripts/platform-starter.test.mjs (113 tests) 891ms
+
+ Test Files  1 passed (1)
+      Tests  113 passed (113)
+   Start at  05:39:54
+   Duration  1.54s (transform 36ms, setup 0ms, collect 329ms, tests 891ms, environment 0ms, prepare 58ms)
+

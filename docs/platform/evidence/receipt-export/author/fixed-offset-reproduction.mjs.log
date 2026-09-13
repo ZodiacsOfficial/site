@@ -1,0 +1,14 @@
+import {readFile,writeFile} from 'node:fs/promises';
+import {computeChart,computeCalculatorReceipt,resolveLocalToUtc} from './compatibility-subject.mjs';
+const results=[];
+for (const zone of ['+01:00','+0100','-02:30','+23:59','-00:00']) {
+ const date='1990-06-15',time='14:30';
+ const resolved=resolveLocalToUtc(date,time,zone);
+ const input={utc:resolved.utc,latitude:40.71,longitude:-74,houseSystem:'whole',timeKnown:true,flags:resolved.flags};
+ const legacy=computeChart(input);let portable;
+ try {computeCalculatorReceipt(input,{date,time,timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:'supplied-instant'});portable='success';}catch(error){portable={name:error.name,code:error.code,message:error.message};}
+ results.push({zone,legacySucceeded:Boolean(legacy),utc:legacy.input.utc.toISOString(),portable});
+}
+const result={freeze:JSON.parse(await readFile(new URL('./freeze1-identity.json',import.meta.url))),node:process.version,results};
+await writeFile(new URL('./freeze1-fixed-offset-failure.json',import.meta.url),JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(results,null,2));

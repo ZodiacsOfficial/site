@@ -1,0 +1,35 @@
+import {h,render} from 'preact';
+import ChartCalculator from './source/src/islands/ChartCalculator';
+import * as actual from './source/src/lib/engine/full';
+import {createModuleLoader} from './source/src/lib/module-load';
+import {encodeChartLink} from './source/src/lib/share';
+import {encodePositionsLink} from './source/src/lib/share-positions';
+import en from './source/src/lib/i18n/ui/en';
+import ru from './source/src/lib/i18n/ui/ru';
+import {RUSSIAN_RUNTIME as ruRuntime} from './source/src/lib/i18n/ru-runtime/server';
+const gates=new Map<string,any>(),pending:any[]=[],events:any[]=[],errors:any[]=[],calls:any[]=[];
+let calculationFailure=false,shareGate:any=null;
+const deferred=()=>{let yes:any,no:any;const promise=new Promise((y,n)=>{yes=y;no=n;});return{promise,yes,no};};
+const engine={...actual,computeChart(input:any){calls.push({type:'legacy-natal',utc:input.utc.toISOString()});if(calculationFailure)throw Error('Synthetic calculation failure');return actual.computeChart(input);},computeBodies(utc:any){calls.push({type:'bodies',utc:utc.toISOString()});return actual.computeBodies(utc);}};
+const importEngine=()=>{events.push({type:'engine-import'});return gates.get('engine')?.promise.then(()=>engine)??Promise.resolve(engine);};
+const productionLoader=createModuleLoader(importEngine);
+const load=async(key:string,importer:()=>Promise<any>)=>{
+ events.push({type:'load',key});const gate=gates.get(key);if(gate)await gate.promise;
+ const module=await importer();
+ if(key==='../lib/engine/calculator-receipt')return{...module,computeCalculatorReceipt(input:any,context:any){calls.push({type:'portable-natal',utc:input.utc.toISOString()});if(calculationFailure)throw Error('Synthetic calculation failure');return module.computeCalculatorReceipt(input,context);}};
+ if(key==='../lib/chart-signature')return{...module,chartSignature(...args:any[]){events.push({type:'signature',utc:args[0].input.utc.toISOString()});return module.chartSignature(...args);}};
+ if(key==='./PositionsShareSurface')return{...module,async preparePrimaryShareArtifact(chart:any){events.push({type:'prepare-share',utc:chart.input.utc.toISOString()});const gate=gates.get('prepare-share');if(gate)await gate.promise;return{reviewUtc:chart.input.utc.toISOString()};},sharePrimaryArtifact(artifact:any){events.push({type:'share',utc:artifact.reviewUtc});return shareGate?.promise??Promise.resolve('saved');}};
+ return module;
+};
+const review:any={events,errors,calls,load,engineLoad:()=>new URL(location.href).searchParams.get('raw')?importEngine():productionLoader(),
+ hold(key:string){const d=deferred();gates.set(key,d);pending.push(d);return pending.length-1;},release(id:number){pending[id].yes();},reject(id:number){pending[id].no(Error('Synthetic delayed module failure'));},immediate(key:string){gates.delete(key);},fail(v:boolean){calculationFailure=v;},
+ holdShare(){shareGate=deferred();},releaseShare(){shareGate.yes('saved');},rejectShare(){shareGate.no(Error('Synthetic share rejection'));},
+ details(){return encodeChartLink({date:'1990-01-04',time:'12:00',timeKnown:true,lat:13.75,lon:100.5,tz:'Asia/Bangkok',place:'Synthetic Bangkok',houseSystem:'whole'});},
+ positions(){const chart=actual.computeChart({utc:new Date('1990-01-04T05:00:00Z'),latitude:13.75,longitude:100.5,timeKnown:true,houseSystem:'whole',flags:[]});return encodePositionsLink({bodies:chart.bodies,angles:chart.angles,houseSystem:'whole',engineVersion:'0.1.1-rc.6'});},
+ mount(locale='en',mode='full'){window.__ZDX_UI__={locale,messages:locale==='ru'?ru:en};if(locale==='ru')window.__ZDX_RU__={locale:'ru',data:ruRuntime};render(h(ChartCalculator,{locale,mode}),document.getElementById('mount')!);},unmount(){render(null,document.getElementById('mount')!);},
+};
+window.review=review;
+window.addEventListener('unhandledrejection',e=>errors.push({type:'unhandledrejection',message:String(e.reason)}));
+window.addEventListener('zodiacs:chart-computed',(e:any)=>events.push({type:'computed-event',detail:e.detail}));
+window.addEventListener('zodiacs:chart-context',(e:any)=>events.push({type:'context-event',detail:e.detail}));
+const originalScroll=Element.prototype.scrollIntoView;Element.prototype.scrollIntoView=function(...args:any[]){events.push({type:'scroll',id:this.id,className:this.className});return originalScroll.apply(this,args);};

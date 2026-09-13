@@ -1,0 +1,31 @@
+{
+  "head": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "files": [
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    }
+  ],
+  "allMatchObservedHead": true
+}

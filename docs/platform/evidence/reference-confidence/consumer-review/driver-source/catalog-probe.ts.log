@@ -1,0 +1,8 @@
+import en from './site/src/lib/i18n/ui/en';
+import es from './site/src/lib/i18n/ui/es';
+import fr from './site/src/lib/i18n/ui/fr';
+import it from './site/src/lib/i18n/ui/it';
+import pt from './site/src/lib/i18n/ui/pt';
+import ru from './site/src/lib/i18n/ui/ru';
+import assert from 'node:assert/strict';
+const catalogs={en,es,fr,it,pt,ru};const result=Object.entries(catalogs).map(([locale,messages])=>{assert.equal(Object.keys(messages).length,420);assert.equal(typeof messages.moonUnverifiedNotice,'string');return {locale,keys:Object.keys(messages).length,notice:messages.moonUnverifiedNotice};});console.log(JSON.stringify(result,null,2));

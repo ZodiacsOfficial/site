@@ -1,0 +1,1 @@
+Initial read-only root lookup resolved requested commit; scoped rg returned status 2 because guessed src/lib/i18n/share-cards.ts does not exist. Actual output showed share-card.ts imports must locate the catalog; corrected by inspecting imports in exact source capture. No product change or numerical test failure.

@@ -1,0 +1,11 @@
+{
+  "exactPrivateStringScanMatches": 0,
+  "privateFileDeleted": true,
+  "privateDirectoryDeleted": true,
+  "contextsAndBrowserClosed": {
+    "contextsClosed": true,
+    "browserClosed": true,
+    "localServerStarted": false
+  },
+  "serverSideRevocationClaimed": false
+}

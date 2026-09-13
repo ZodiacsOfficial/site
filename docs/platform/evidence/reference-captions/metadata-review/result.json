@@ -1,0 +1,118 @@
+{
+  "checks": [
+    {
+      "name": "Unchanged exact Git guard identity",
+      "passed": true
+    },
+    {
+      "name": "All33 frozen source/test identities;23 product sources",
+      "passed": true
+    },
+    {
+      "name": "Exact-base frozen scope permits exactly13 protected paths",
+      "passed": true
+    },
+    {
+      "name": "Wrong base rejected",
+      "passed": true
+    },
+    {
+      "name": "Missing changed allowance restores protection",
+      "passed": true
+    },
+    {
+      "name": "Missing actual protected change rejected",
+      "passed": true
+    },
+    {
+      "name": "Duplicate allowance path rejected",
+      "passed": true
+    },
+    {
+      "name": "Unsorted allowance paths rejected",
+      "passed": true
+    },
+    {
+      "name": "Unprotected allowance entry rejected",
+      "passed": true
+    },
+    {
+      "name": "Unlisted protected change rejected: public/sdk/index.html",
+      "passed": true
+    },
+    {
+      "name": "Unlisted protected change rejected: src/lib/i18n/ui/ru.test.ts",
+      "passed": true
+    },
+    {
+      "name": "Unlisted protected change rejected: src/pages/fr/other.astro",
+      "passed": true
+    },
+    {
+      "name": "Unlisted protected change rejected: public/registry/index.html",
+      "passed": true
+    },
+    {
+      "name": "Rename preserves protected source and is rejected",
+      "passed": true
+    },
+    {
+      "name": "Deletion preserves protected path and is rejected",
+      "passed": true
+    },
+    {
+      "name": "Workflow differs only by approved four-line step",
+      "passed": true
+    },
+    {
+      "name": "Node22 pinned setup/Chromium install/read permissions unchanged",
+      "passed": true
+    },
+    {
+      "name": "Output is inside unchanged always-uploaded artifact tree",
+      "passed": true
+    },
+    {
+      "name": "Actual final driver resolves OUT_DIR/current source and repository Chromium helper",
+      "passed": true
+    },
+    {
+      "name": "Actual fixture has guarded optional baseline; CI does not silently supply one",
+      "passed": true
+    },
+    {
+      "name": "Unchanged generator identity",
+      "passed": true
+    },
+    {
+      "name": "Independent native Node22 regeneration equals root proposal bytes",
+      "passed": true
+    },
+    {
+      "name": "Generated output contains only one EN default substitution",
+      "passed": true
+    }
+  ],
+  "passed": 23,
+  "base": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "freezePatchSha256": "0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36",
+  "metadataPatchSha256": "a0c52aa23c1464858abada3db1b5bbfb4a8cedd5db7e409fb04016b84197d637",
+  "generatedSha256": "a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812",
+  "driverSha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+  "protectedPaths": [
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/pages/es/moon-phase/index.astro",
+    "src/pages/fr/moon-phase/index.astro",
+    "src/pages/it/moon-phase/index.astro",
+    "src/pages/pt/moon-phase/index.astro",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
+  ],
+  "qualification": "Independent pure guard/negative cases and immutable metadata/source audit plus actual generator execution in isolated source copy. Root owns actual repository CLI scope/build/full-suite/CI; this does not claim those jobs passed or execute the author native driver again."
+}

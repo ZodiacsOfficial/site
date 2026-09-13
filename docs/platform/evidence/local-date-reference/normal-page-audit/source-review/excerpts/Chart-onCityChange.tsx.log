@@ -1,0 +1,5 @@
+onCityChange={(value) => {
+                invalidateProfileHandoff();
+                setCity(value);
+                setFieldErrors((current) => current.place ? { ...current, place: false } : current);
+              }}

@@ -1,0 +1,10 @@
+{
+  "id": "dpl_5nib8jxv64eDLtepqUGSKmmzWyNW",
+  "url": "zodiacs-3vgobfupn-zodiacsofficial.vercel.app",
+  "state": "READY",
+  "target": "production",
+  "meta": {
+    "githubCommitSha": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+    "githubCommitRef": "main"
+  }
+}

@@ -1,0 +1,14 @@
+file:///private/tmp/zodiacs-platform-site-receipt-export/tests/i18n-r2-deferred-styles.mjs:6
+    throw new Error(`Russian calculator must declare three deferred stylesheets; found ${templates.length}`);
+          ^
+
+Error: Russian calculator must declare three deferred stylesheets; found 0
+    at russianDeferredStyleURLs (file:///private/tmp/zodiacs-platform-site-receipt-export/tests/i18n-r2-deferred-styles.mjs:6:11)
+    at file:///private/tmp/zodiacs-platform-site-receipt-export/tests/i18n-r2-ru-drive.mjs:257:31
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17)
+    at async withPreview (file:///private/tmp/zodiacs-platform-site-receipt-export/tests/visual/preview-server.mjs:105:12)
+    at async file:///private/tmp/zodiacs-platform-site-receipt-export/tests/i18n-r2-ru-drive.mjs:35:1
+
+Node.js v22.23.2

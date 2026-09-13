@@ -1,0 +1,11 @@
+{
+  "baseFilesChecked": 10419,
+  "changedExistingFiles": [
+    "src/islands/MoonPhaseTool.tsx"
+  ],
+  "newFiles": [
+    "tests/moon-result-ownership-drive.mjs"
+  ],
+  "passed": true,
+  "dependencyMethod": "Existing root node_modules symlink, no installation; bundled runtime input hashes retained"
+}

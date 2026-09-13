@@ -1,0 +1,21 @@
+{"name":"reference Toronto","passed":true}
+{"name":"reference Juneau","passed":true}
+{"name":"reference ordinary singleton","passed":true}
+{"name":"reference ordinary two signs","passed":true}
+{"name":"reference same-date gap","passed":true}
+{"name":"reference repeated Apia","passed":true}
+{"name":"localized unresolved result en","passed":true}
+{"name":"localized unresolved result es","passed":true}
+{"name":"localized unresolved result fr","passed":true}
+{"name":"localized unresolved result it","passed":true}
+{"name":"localized unresolved result pt","passed":true}
+{"name":"localized unresolved result ru","passed":true}
+{"name":"known-time preserved full","passed":true}
+{"name":"known-time preserved moon","passed":true}
+{"name":"known-time preserved rising","passed":true}
+{"name":"C014 skipped-date clearing and recovery","passed":true}
+{"name":"pending reference ownership edit","passed":true}
+{"name":"pending reference ownership replacement","passed":true}
+{"name":"pending reference ownership unmount","passed":true}
+{"name":"positions-only stays unresolved without calculation or receipt","passed":true}
+{"passed":20,"failed":0}

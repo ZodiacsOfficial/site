@@ -1,0 +1,117 @@
+{
+  "node": "v22.23.2",
+  "reference": {
+    "utc": "2000-01-15T10:00:00.000Z",
+    "offsetMinutes": 180,
+    "flags": [
+      "dst-gap"
+    ]
+  },
+  "shareTimeNotes": [
+    "12:00 reference · Birth time unknown"
+  ],
+  "chartSettings": "12:00 reference · Apparent geocentric · Tropical of date · No houses · True Node",
+  "chartProvenance": [
+    "2000-01-15 · Birth time unknown · 12:00 local reference",
+    "15.5000°N · 32.5000°E · Africa/Khartoum",
+    "Reference UTC · 2000-01-15 10:00 UTC",
+    "DST gap adjusted forward"
+  ],
+  "positions": {
+    "token": "2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9",
+    "decodedKeys": [
+      "bodies",
+      "angles",
+      "houseSystem",
+      "engineVersion"
+    ],
+    "model": {
+      "placements": [
+        {
+          "label": "Sun",
+          "sign": "Capricorn",
+          "hue": "#C0DEA8",
+          "degree": "24 deg 33 min"
+        },
+        {
+          "label": "Moon",
+          "sign": "Taurus",
+          "hue": "#B9D4BE",
+          "degree": "5 deg 25 min"
+        }
+      ],
+      "settings": "12:00 reference / No houses / Tropical"
+    }
+  },
+  "og": {
+    "status": 200,
+    "description": "Sun and 12:00 reference Moon positions — birth details not included.",
+    "html": "<!doctype html><html><head><meta charset=\"utf-8\"><meta name=\"robots\" content=\"noindex,nofollow,noarchive\"><meta name=\"referrer\" content=\"no-referrer\"><meta property=\"og:title\" content=\"A shared birth chart\"><meta property=\"og:description\" content=\"Sun and 12:00 reference Moon positions — birth details not included.\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:image\" content=\"https://caption-fixture.invalid/api/og/chart-image?p=2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9\"><meta property=\"og:image:type\" content=\"image/png\"><meta property=\"og:image:width\" content=\"1200\"><meta property=\"og:image:height\" content=\"630\"><meta name=\"twitter:card\" content=\"summary_large_image\"><meta name=\"twitter:image\" content=\"https://caption-fixture.invalid/api/og/chart-image?p=2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9\"><title>A shared birth chart</title></head><body><p><a href=\"https://caption-fixture.invalid/birth-chart/#p=2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9\">Open the shared chart</a></p><script nonce=\"chart-preview\">location.replace(\"https://caption-fixture.invalid/birth-chart/#p=2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9\")</script><noscript><meta http-equiv=\"refresh\" content=\"0;url=https://caption-fixture.invalid/birth-chart/#p=2.eyJiIjpbMjk0LjU1NSwzNS40MSwyOTQuMTUsMjU4LjQ4MiwzMzguNzUyLDI2LjEzOSw0MC4yOTksMzE1LjU0NCwzMDMuNzA3LDI1MS45MTUsMTIzLjczNywzMDMuNzM3XSwiaCI6InciLCJ2IjoiMC4xLjEtcmMuNiJ9\"></noscript></body></html>"
+  },
+  "inspector": {
+    "sceneKeys": [
+      "engineVersion",
+      "moonSignCandidates",
+      "anchor",
+      "bodies",
+      "houses",
+      "angles",
+      "aspects",
+      "signs",
+      "flags",
+      "houseSystem"
+    ],
+    "markup": "<div class=\"insp insp--card insp--half\" data-explorer-inspector=\"true\"><button type=\"button\" class=\"insp__handle\" aria-label=\"Expand chart explanation\" aria-expanded=\"false\"></button><div class=\"insp__head\"><h3 class=\"insp__title\" tabindex=\"-1\" data-inspector-heading=\"true\"><span class=\"pglyph insp__pg\"><svg viewBox=\"0 0 24 24\" width=\"17\" height=\"17\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M14.7 4.4a8 8 0 1 0 0 15.2 6.5 6.5 0 0 1 0-15.2Z\"/></svg></span>Moon</h3><button class=\"insp__close\" type=\"button\" aria-label=\"Close details\">×</button></div><div class=\"insp__body\"><p class=\"insp__note\" data-moon-uncertain=\"true\"><strong>Needs a birth time</strong></p><section class=\"insp__insight\"><h4 class=\"mono--label\">Where it shows up</h4><div class=\"insp__read\">A birth time is needed to place it in a house, so this chart cannot say which area of life carries it.</div></section><div class=\"insp__related\"><span class=\"mono--label\">Explore next</span><div class=\"insp__related-actions\"></div></div><details class=\"insp__exact\"><summary>Exact chart data</summary><div class=\"insp__exact-body\"><p>Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.</p><div class=\"insp__row\"><span class=\"mono--label\">Position</span><span class=\"mono insp__val\">5°24′ Taurus</span></div></div></details></div></div>",
+    "claimsLocal12": true
+  },
+  "known": {
+    "settings": "Apparent geocentric · Tropical of date · Whole sign houses · True Node",
+    "model": {
+      "placements": [
+        {
+          "label": "Sun",
+          "sign": "Capricorn",
+          "hue": "#C0DEA8",
+          "degree": "24 deg 33 min"
+        },
+        {
+          "label": "Moon",
+          "sign": "Taurus",
+          "hue": "#B9D4BE",
+          "degree": "5 deg 25 min"
+        },
+        {
+          "label": "Rising",
+          "sign": "Taurus",
+          "hue": "#B9D4BE",
+          "degree": "2 deg 19 min"
+        }
+      ],
+      "settings": "Whole sign / Tropical"
+    }
+  },
+  "phasePoint": [
+    {
+      "utc": "2024-01-16T10:20:00.000Z",
+      "existingLiteName": "Waxing Crescent",
+      "existingLiteAngle": 67.36010109785639,
+      "existingFullAngle": 67.52540640644332,
+      "diagnosticFullAngleAtOrAbove67_5": true
+    },
+    {
+      "utc": "2024-01-16T10:30:00.000Z",
+      "existingLiteName": "Waxing Crescent",
+      "existingLiteAngle": 67.4524658327773,
+      "existingFullAngle": 67.61738889121597,
+      "diagnosticFullAngleAtOrAbove67_5": true
+    },
+    {
+      "utc": "2024-01-16T10:40:00.000Z",
+      "existingLiteName": "First Quarter",
+      "existingLiteAngle": 67.54481694507012,
+      "existingFullAngle": 67.70935696966922,
+      "diagnosticFullAngleAtOrAbove67_5": true
+    }
+  ],
+  "qualification": "Actual exported pure formatters, actual local HTML response handler and actual Inspector SSR. No HTTP/network request or rendered PNG was produced; model/HTML captions are the actual source used by the image/preview paths. The 67.5 comparison is a diagnostic application of the existing lite category threshold to the full angle, not a replacement astronomy oracle."
+}

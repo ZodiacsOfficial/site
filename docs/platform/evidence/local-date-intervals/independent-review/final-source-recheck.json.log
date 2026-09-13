@@ -1,0 +1,45 @@
+{
+  "sourceRecheck": [
+    {
+      "path": "src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313",
+      "role": "exact frozen authored source",
+      "isolatedAndAuthorMatched": true
+    },
+    {
+      "path": "src/lib/time/local-date-intervals.test.ts",
+      "bytes": 14027,
+      "sha256": "f15c17acc7c338aadbdb77452be4edbf9c8473b8e8b22c98b665b377ccd769cc",
+      "role": "exact frozen authored source",
+      "isolatedAndAuthorMatched": true
+    },
+    {
+      "path": "tests/local-date-intervals-drive.mjs",
+      "bytes": 11138,
+      "sha256": "fcdff2844a7912754b36cf9f4563762443b8e9060f5bc679f8014fd3fd40b32c",
+      "role": "exact frozen authored source",
+      "isolatedAndAuthorMatched": true
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+      "role": "unchanged base dependency",
+      "isolatedAndAuthorMatched": true
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "role": "unchanged base dependency",
+      "isolatedAndAuthorMatched": true
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "role": "unchanged base dependency",
+      "isolatedAndAuthorMatched": true
+    }
+  ],
+  "allDependenciesUnchanged": true,
+  "sourcePatchSha256": "9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78"
+}

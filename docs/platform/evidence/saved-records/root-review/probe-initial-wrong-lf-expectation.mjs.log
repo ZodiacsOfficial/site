@@ -1,0 +1,35 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { build } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/esbuild/lib/main.js';
+const root = '/Users/chiburashka/.codex/worktrees/4806/site';
+const out = '/private/tmp/zodiacs-platform-saved-record-root-review';
+const source = await readFile(out + '/record-observed.ts', 'utf8');
+const built = await build({ stdin: { contents: source + '\nexport { natalChart as native } from "@zodiacs/engine";\nexport { createNatalEnvelope as receipt } from "@zodiacs/engine/receipt";', resolveDir: root + '/src/lib/profile', sourcefile: 'captured-unfrozen-record.ts', loader: 'ts' }, bundle: true, platform: 'node', format: 'esm', write: false, metafile: true });
+const bytes = built.outputFiles[0].contents;
+const api = await import('data:text/javascript;base64,' + Buffer.from(bytes).toString('base64'));
+const owner = 'account:00000000-0000-4000-8000-000000000001';
+const id = '00000000-0000-4000-8000-000000000002';
+const envelope = api.receipt(api.native({ utc: '2001-12-21T08:30:00Z', latitude: 78.2232, longitude: 15.6267, houseSystem: 'placidus' }));
+const plain = api.createSavedNatalRecord(owner, id, '2026-09-08T04:00:00.000Z', envelope);
+assert.ok(plain);
+const labelled = api.createSavedNatalRecord(owner, id, '2026-09-08T04:00:00.000Z', envelope, 'Synthetic label');
+assert.ok(labelled);
+const cases = {
+  unlabeledCreation: { created: Boolean(plain), ownKeys: Object.keys(plain), reread: api.parseSavedNatalRecord(plain, owner).ok },
+  labelledControl: { reread: api.parseSavedNatalRecord(labelled, owner).ok },
+  idTrailingNewlineAccepted: api.isSavedNatalId(id + '\n'),
+  ownerTrailingNewlineAccepted: api.isSavedNatalOwnerKey(owner + '\n'),
+  futureVersion10: api.parseSavedNatalRecord({ ...labelled, schema: 'zodiacs.saved-natal.v10' }, owner),
+  futureVersion2Control: api.parseSavedNatalRecord({ ...labelled, schema: 'zodiacs.saved-natal.v2' }, owner),
+};
+assert.equal(cases.unlabeledCreation.reread, false);
+assert.equal(cases.labelledControl.reread, true);
+assert.equal(cases.idTrailingNewlineAccepted, true);
+assert.equal(cases.ownerTrailingNewlineAccepted, true);
+assert.equal(cases.futureVersion10.code, 'corrupt-record');
+assert.equal(cases.futureVersion2Control.code, 'unsupported-record');
+const report = { recordedAt: new Date().toISOString(), node: process.version, sourceSha256: createHash('sha256').update(source).digest('hex'), bundleSha256: createHash('sha256').update(bytes).digest('hex'), expectedDraftCounterexamplesReproduced: true, cases, scope: 'Unfrozen author draft, captured before known fixes. Actual pinned engine/receipt functions execute. These results are not acceptance of the final candidate.' };
+await writeFile(out + '/result.json', JSON.stringify(report, null, 2) + '\n');
+await writeFile(out + '/metafile.json', JSON.stringify(built.metafile, null, 2) + '\n');
+console.log(JSON.stringify(report, null, 2));

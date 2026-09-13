@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "921cd0d16cd0c4a82692d311c3af326b0045531d",
+  "evidenceCommit": "d63773a3be2b4d40ff28a1075b9aaa9cb6c10793",
+  "artifactSource": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz",
+  "artifactSHA256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+  "sourcePatchSHA256": "1de2da9d936c030e5035db156169015bf4aa97e7103fa72c1c8897389753b56c",
+  "files": {
+    "package-lock.json": "e54056616ffb38803e73f542848b026acacd250addd769570759dc91d51d7069",
+    "package.json": "4a8117977ede5eca16ce1117d725b4e6cb04ad937ff9efda7ab15c1f14980a23",
+    "public/llms-full.txt": "89058cb06b2a2aa0de19a4c8fac85bcd28397db5fab04419d7130c24aa2981cf",
+    "scripts/platform-candidate-docs.test.mjs": "f5f267f9097a3708748828e9885af4ba5f39686e89adfb0fd45132eb9cabc25a",
+    "src/data/platform-engine-candidate.json": "5ee357a8bdd642e0a60728e5b5502f851a530ca48172d302c97c65fe6ff481b5",
+    "src/lib/engine/package-integration.test.ts": "50ce387dd930823d5f4745dcdd8a96a5c90b66e19a7ba23271d8fa805c4671f0",
+    "src/lib/scene/__snapshots__/scene.test.ts.snap": "88c8ad21c846b788b10337715d6bb7253daf916b2838911554604b46e4764d17",
+    "src/pages/developers/support/index.astro": "d2438ba69544bcbbbe167b3607ed9d9d1e180e02b7b14082e4ad8bcf56fef157",
+    "vendor/README.md": "34e6e6ceb7800266adceab03eed9f13db1cc302a00f279ee05ec95efae6256ef",
+    "scripts/platform-engine-candidate.mjs": "a59e2e3abfc4b10cb76e75a07d9a83ae4bf1da9074bab497731d7a1f414f8ff0"
+  },
+  "unchangedPaths": [
+    "examples/platform",
+    "public/examples",
+    "public/sdk/engine",
+    "src/lib/engine/full.ts",
+    "src/lib/engine/houses.ts",
+    "src/lib/engine/aspects.ts",
+    "src/lib/engine/types.ts",
+    "src/lib/engine/fixtures",
+    "scripts/platform-engine-report.mjs",
+    "vendor/zodiacs-engine-0.1.0.tgz",
+    "vendor/zodiacs-engine-0.1.1-rc.0.tgz",
+    "vendor/zodiacs-engine-0.1.1-rc.1.tgz"
+  ],
+  "targetedAcceptance": {
+    "passed": 247,
+    "files": 7,
+    "runtime": "v22.23.2",
+    "vitest": "3.2.6"
+  },
+  "focusedTypescript": "passed",
+  "diffCheck": "passed",
+  "newNumericalReports": {
+    "node22": "passed",
+    "node24": "passed"
+  },
+  "starterVerifier": "passed",
+  "fullSiteGates": "integrator-pending",
+  "browserChecks": "integrator-pending",
+  "committedBySubagent": false,
+  "published": false,
+  "deployed": false
+}

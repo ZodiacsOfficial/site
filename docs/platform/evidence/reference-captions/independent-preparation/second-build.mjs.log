@@ -1,0 +1,8 @@
+import {build} from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {resolve} from 'node:path';
+const root=new URL('./',import.meta.url).pathname;
+const result=await build({absWorkingDir:root,entryPoints:['probe.tsx'],outfile:'probe.cjs',bundle:true,platform:'node',format:'cjs',target:'node22',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':JSON.stringify({SSR:true,DEV:false})},loader:{'.css':'empty'},external:['@vercel/og'],nodePaths:['/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules'],metafile:true});
+writeFileSync(root+'build-metafile.json',JSON.stringify(result.metafile,null,2)+'\n');
+const inputs=Object.keys(result.metafile.inputs).map(path=>{const b=readFileSync(resolve(root,path));return {path,bytes:b.length,sha256:createHash('sha256').update(b).digest('hex')}});writeFileSync(root+'consumed-inputs.json',JSON.stringify(inputs,null,2)+'\n');

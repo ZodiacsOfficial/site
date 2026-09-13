@@ -1,0 +1,97 @@
+[
+  {
+    "name": "parenthesized-dynamic-literal",
+    "status": 0,
+    "expected": "reject",
+    "baselineStatus": 1
+  },
+  {
+    "name": "parenthesized-require-literal",
+    "status": 0,
+    "expected": "reject",
+    "baselineStatus": 1
+  },
+  {
+    "name": "parenthesized-require-callee",
+    "status": 0,
+    "expected": "reject",
+    "baselineStatus": 1
+  },
+  {
+    "name": "versioned-cdn-static",
+    "status": 0,
+    "expected": "decision-external-vendor",
+    "baselineStatus": 1
+  },
+  {
+    "name": "cdn-dynamic",
+    "status": 0,
+    "expected": "decision-external-vendor",
+    "baselineStatus": 1
+  },
+  {
+    "name": "comment-static",
+    "status": 1,
+    "expected": "reject",
+    "baselineStatus": 1
+  },
+  {
+    "name": "inert-template",
+    "status": 0,
+    "expected": "pass",
+    "baselineStatus": 1
+  },
+  {
+    "name": "inert-import-string",
+    "status": 0,
+    "expected": "pass",
+    "baselineStatus": 1
+  },
+  {
+    "name": "aliased-dynamic",
+    "status": 0,
+    "expected": "declared-data-flow-limit",
+    "baselineStatus": 1
+  },
+  {
+    "name": "computed-dynamic",
+    "status": 0,
+    "expected": "declared-data-flow-limit",
+    "baselineStatus": 0
+  },
+  {
+    "name": "comment-local-side-effect",
+    "status": 1,
+    "expected": "reject-home"
+  },
+  {
+    "name": "escaped-local-reference",
+    "status": 1,
+    "expected": "reject-home"
+  },
+  {
+    "name": "reexport-home",
+    "status": 1,
+    "expected": "reject-home"
+  },
+  {
+    "name": "cycle-shared",
+    "status": 0,
+    "expected": "pass"
+  },
+  {
+    "name": "whitespace-source-sideeffect",
+    "status": 0,
+    "expected": "existing-source-regex-limit"
+  },
+  {
+    "name": "comment-source-named",
+    "status": 1,
+    "expected": "reject-source"
+  },
+  {
+    "name": "reexport-two-over-budget",
+    "status": 1,
+    "expected": "reject-engine-closure-budget"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "head": "9912e37bee3f20de691b6bed8165ff36189d1eca",
+  "groups": 14,
+  "allPassed": true,
+  "servedBodiesVerified": 72,
+  "screenshotsVerified": 28,
+  "requests": 910,
+  "blockedRequests": 14,
+  "blockedKinds": [
+    [
+      "GET",
+      "plausible.io"
+    ]
+  ],
+  "nonGETOrAPI": 0,
+  "responses": 892,
+  "unavailableImageBodies": 4,
+  "allSourceRecordsUnchanged": true,
+  "browser": "152.0.7977.84",
+  "node": "v22.23.2",
+  "qualification": "Four unavailable200image bodies retained explicitly; all observed JS, HTML and city JSON bodies captured. No new numerical oracle or independent reviewer claimed."
+}

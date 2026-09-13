@@ -1,0 +1,102 @@
+[
+  {
+    "path": "REVIEW.md.log",
+    "bytes": 4721,
+    "sha256": "53184889ae3a53ee6576289d8aa523b9c37676322e1c15d4fd851d655f768244"
+  },
+  {
+    "path": "allowance-before.json.log",
+    "bytes": 919,
+    "sha256": "13ad105085414839848b0059c4597e612ecc7e0e4aedc0441c918fe4f791b152"
+  },
+  {
+    "path": "allowance-template.patch.log",
+    "bytes": 1746,
+    "sha256": "aa1526ee88beb117b1c5d4fe74541a8a5865b410adb699817c3b61ecbae09583"
+  },
+  {
+    "path": "apply-check.log.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "apply.log.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "clone.log",
+    "bytes": 186,
+    "sha256": "35f829da98fa69cdd09d6ba7bb0bbe704002440db3151dfcd3249afd057d9348"
+  },
+  {
+    "path": "current-comparison-allowance.json.log",
+    "bytes": 931,
+    "sha256": "0dedfb296f84c803c5e6849acd40947c1c3c7af27c6a50e9b45b16ed66503ef4"
+  },
+  {
+    "path": "phase1-scope-allowance.template.json.log",
+    "bytes": 925,
+    "sha256": "b6f6d98c39184a2110c06bf1f4e8d11527c35b82c7e165c1663f85eb24cf8d85"
+  },
+  {
+    "path": "prepare.py.log",
+    "bytes": 4971,
+    "sha256": "b669c8d9db27064e81d942e931cc9a115027a93d9b5d70476db6fd8240389dbd"
+  },
+  {
+    "path": "result.json.log",
+    "bytes": 1903,
+    "sha256": "6ffe52b79a8dca6eed1f8b48e9b448c8ff244ad7309268bd4ffc2ea6e681e5e7"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 1990,
+    "sha256": "60f8d1f46a7a369f3596a70b870dd021323359b08a621eeaa5528b3966945407"
+  },
+  {
+    "path": "scope-current-comparison.log.log",
+    "bytes": 111,
+    "sha256": "dcb328c4705bb65c90e933e05aa4aa3c7156f56b0137c6c5030c45e2c81468d4"
+  },
+  {
+    "path": "site-check.proposed.yml.log",
+    "bytes": 16094,
+    "sha256": "5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0"
+  },
+  {
+    "path": "source-identities.json.log",
+    "bytes": 4252,
+    "sha256": "587301ddde035f8371bf31ce7d7ca9d684833dc5a0ce0c70ff3c2a4cdae119bf"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 3032,
+    "sha256": "fad14ed213ce43396bc626b5b2b2b6aa3a3b8884891aca4fa985bc948ede7603"
+  },
+  {
+    "path": "unchanged-phase1-scope-guard.mjs.log",
+    "bytes": 8343,
+    "sha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d"
+  },
+  {
+    "path": "verify.log.log",
+    "bytes": 25,
+    "sha256": "ee3c71efad3759d9e6692ec90557b37c3928719a60bfe93818496df27532753e"
+  },
+  {
+    "path": "verify.mjs.log",
+    "bytes": 6044,
+    "sha256": "8d2ce6b899cd4e65ab78de1563e893f69046bd964affe5ea14b240f46e9db21f"
+  },
+  {
+    "path": "workflow-before.yml.log",
+    "bytes": 15911,
+    "sha256": "286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9"
+  },
+  {
+    "path": "workflow.patch.log",
+    "bytes": 496,
+    "sha256": "1f26431e837a4cbb73e689f31313f59316431259fa9f8d3b227891f9b7818eed"
+  }
+]

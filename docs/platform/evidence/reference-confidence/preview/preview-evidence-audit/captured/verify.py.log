@@ -1,0 +1,55 @@
+from pathlib import Path
+import json,hashlib,tarfile,io
+root=Path.cwd();sha=lambda b:hashlib.sha256(b).hexdigest()
+runs=[json.loads((root/f'browser-run{i}/result.json').read_text()) for i in [1,2]]
+assert runs[0]['outcome']=='failed' and sum(c['passed'] for c in runs[0]['checks'])==6
+assert len(runs[1]['checks'])==2 and runs[1]['outcome']=='passed'
+accepted=[c for r in runs for c in r['checks'] if c['passed']];assert len(accepted)==8 and len({c['name'] for c in accepted})==8
+assert {c['name'] for c in accepted}=={f'{l}-{m}-{w}' for l in ['en','ru'] for m in ['chart','positions'] for w in [1280,390]}
+source=json.loads((root/'source-snapshot.json').read_text())
+for f in source['records']:assert sha((root/'source'/f['path']).read_bytes())==f['sha256']
+assert source['commit']=='9d180c9f1a2f66893ccd6d73fcda106cb3894674' and source['frozenProductFilesMatched']==16
+modules={};data={};screens=[];receipts=[];requestCount=0;responseCount=0;unavailable=[];refusal=0;blocks=[];events=[]
+for n,r in enumerate(runs,1):
+ d=root/f'browser-run{n}';assert r['sourceCommit']==source['commit'];requestCount+=len(r['requests']);responseCount+=len(r['responses']);missing=[v for v in r['responses'] if v.get('bodyUnavailable')];assert all(v['status']==200 and v['path'] in ['/assets/app-icons/v3/icon-512.png','/assets/guide-avatar.webp'] and 'Target page, context or browser has been closed' in v['error'] for v in missing);unavailable.extend(missing)
+ assert r['cleanup']=={'contextsClosed':True,'browserClosed':True,'localServerStarted':False}
+ for kind,target in [('modules',modules),('data',data)]:
+  for path,v in r[kind].items():
+   b=(d/('remote-modules' if kind=='modules' else 'remote-data')/Path(path).name).read_bytes();assert len(b)==v['bytes'] and sha(b)==v['sha256']
+   if path in target:assert target[path]['sha256']==v['sha256']
+   else:target[path]=dict(v,copyFrom=str((d/('remote-modules' if kind=='modules' else 'remote-data')/Path(path).name).relative_to(root)))
+ for c in r['checks']:
+  assert not c['pageErrors'];assert all(b['method']=='GET' and b['origin']=='https://plausible.io' and b['path']=='/js/pa-HwF2IBb5Sw8eboNPSOgHv.js' for b in c['blocked']);blocks.extend(c['blocked'])
+  assert not any(x['method']!='GET' or x['path'].startswith('/api/') for x in c['browserRequests'])
+  assert c.get('failureState',c.get('final'))['noSavedProfile'];assert c['contextClosed']
+  if c['passed']:events.extend(c['events']['cleared']);refusal+=c['expectedRefusalDiagnostics']
+  for s in c['screenshots']:
+   b=(d/s['path']).read_bytes();assert len(b)==s['bytes'] and sha(b)==s['sha256'];screens.append(dict(s,copyFrom=str((d/s['path']).relative_to(root))))
+  for x in c.get('receipts',[]):
+   b=(d/x['file']).read_bytes();assert sha(b)==x['sha256'] and len(b)==x['bytes'];e=json.loads(b);assert e['receipt']==x['receipt'];receipts.append(dict(x,case=c['name'],copyFrom=str((d/x['file']).relative_to(root))))
+  if c['passed'] and '-chart-' in c['name']:
+   assert len(c['historical'])==2 and len(c['receipts'])==4
+   assert [h['input']['date'] for h in c['historical']]==['1919-03-31','1867-10-18']
+   assert all(h['state']['moonUncertain'] and h['state']['registry'] is None for h in c['historical'])
+   assert c['known']['registry']['sign']=='gemini' and not c['known']['moonUncertain']
+   assert c['refused']['focus']['role']=='alert' and c['refused']['actions']==0 and c['refused']['context'] is None and not c['refused']['result']
+   assert c['recovered']['moonUncertain'] and c['recovered']['registry'] is None
+  if c['passed'] and '-positions-' in c['name']:assert c['positionsOnly'] and not c['events']['computed']
+assert len(receipts)==16 and len(screens)==26
+for date in ['1919-03-31','1867-10-18','1990-06-15','2011-12-31']:
+ subset=[r for r in receipts if r['receipt']['localResolution']['date']==date];assert len(subset)==4 and len({r['sha256'] for r in subset})==1
+assert all(e['detail']=='undefined' and e['contextAbsent'] for e in events)
+# Neutral archives explicitly exclude AppleDouble/xattrs and are reopened for byte verification.
+def archive(name,rows):
+ members=[]
+ with tarfile.open(root/(name+'.tar.gz'),'w:gz',format=tarfile.USTAR_FORMAT) as t:
+  for path,file in rows:
+   b=file.read_bytes();info=tarfile.TarInfo(path);info.size=len(b);info.mode=0o644;info.mtime=0;info.uid=info.gid=0;info.uname=info.gname='';t.addfile(info,io.BytesIO(b));members.append(dict(path=path,bytes=len(b),sha256=sha(b)))
+ with tarfile.open(root/(name+'.tar.gz')) as t:
+  actual=t.getmembers();assert len(actual)==len(members)
+  for m,r in zip(actual,members):assert m.isfile() and m.name==r['path'] and sha(t.extractfile(m).read())==r['sha256']
+ result={'members':members,'count':len(members),'archiveSha256':sha((root/(name+'.tar.gz')).read_bytes())};(root/(name+'-manifest.json')).write_text(json.dumps(result,indent=2)+'\n');return result
+sourceArc=archive('source-snapshot',[(r['path'],root/'source'/r['path']) for r in source['records']])
+moduleArc=archive('remote-modules',[(Path(p).name,root/r['copyFrom']) for p,r in sorted(modules.items())])
+result=dict(sourceCommit=source['commit'],executions=2,executedGroups=10,acceptedGroups=8,originalFailedGroups=2,originalFailure='Review selector counted the existing EN ReadingPath uncertainty tile as well as the hero card; corrected scope, no product changes.',acceptedNames=[c['name'] for c in accepted],nativeKeyboardReceipts=len(receipts),receiptBytesEqualAcrossBothLocalesAndViewports=True,receiptDetails=[{k:v for k,v in r.items() if k not in ['receipt','moon']}|{'receipt':r['receipt'],'referenceMoon':r['moon']} for r in receipts],screenshots=screens,requestEvents=requestCount,responseEvents=responseCount,capturedResponseBodies=responseCount-len(unavailable),uncapturedImageBodies=unavailable,distinctRemoteModules=len(modules),distinctCityData=len(data),blockedConfiguredPlausibleGets=len(blocks),apiOrNonGetTestContextRequests=0,pageErrors=0,acceptedRefusalDiagnostics=refusal,plainContextClearEvents=len(events),sourceArchiveMembers=sourceArc['count'],remoteArchiveMembers=moduleArc['count'],remoteModules=modules,remoteData=data,qualification='Actual native remote page evidence, no source/loader injection or numerical-call counts. Auth bootstrap isolated and unobserved. Numeric receipt identities describe reference instants, not full-date/candidate completeness, an ephemeris oracle or observed false Sun. Native browser is one installed Chrome, not cross-browser certification.')
+(root/'verified-results.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k not in ['receiptDetails','screenshots','remoteModules','remoteData']}))

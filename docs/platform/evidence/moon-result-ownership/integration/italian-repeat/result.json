@@ -1,0 +1,64 @@
+{
+  "at": "2026-09-08T08:19:08.583Z",
+  "node": "v22.23.2",
+  "sourceSha": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+  "scope": "Actual local production pages; six locales, synthetic UTC inputs. Race injection remains separate native acceptance.",
+  "checks": [
+    {
+      "sample": 0,
+      "overlay": {
+        "selector": ".zguide-launcher canvas",
+        "left": 318,
+        "top": 1234,
+        "width": 32,
+        "height": 32,
+        "ready": "ready"
+      },
+      "locale": "it",
+      "width": 390,
+      "path": "/it/moon-phase/",
+      "resultText": "Fase lunare\nPrimo quarto\n51% illuminata\nLuna in\nAriete\nCome calcoliamo\nCalcola il tema natale per questa data\n↗",
+      "screenshotSha256": "fcc2d961b17484c04c6255ab66009a052cdf2a08fa26c978e167cb88bfc8e4d0",
+      "noSavedProfile": true
+    },
+    {
+      "sample": 1,
+      "overlay": {
+        "selector": ".zguide-launcher canvas",
+        "left": 318,
+        "top": 1234,
+        "width": 32,
+        "height": 32,
+        "ready": "ready"
+      },
+      "locale": "it",
+      "width": 390,
+      "path": "/it/moon-phase/",
+      "resultText": "Fase lunare\nPrimo quarto\n51% illuminata\nLuna in\nAriete\nCome calcoliamo\nCalcola il tema natale per questa data\n↗",
+      "screenshotSha256": "fcc2d961b17484c04c6255ab66009a052cdf2a08fa26c978e167cb88bfc8e4d0",
+      "noSavedProfile": true
+    },
+    {
+      "sample": 2,
+      "overlay": {
+        "selector": ".zguide-launcher canvas",
+        "left": 318,
+        "top": 1234,
+        "width": 32,
+        "height": 32,
+        "ready": "ready"
+      },
+      "locale": "it",
+      "width": 390,
+      "path": "/it/moon-phase/",
+      "resultText": "Fase lunare\nPrimo quarto\n51% illuminata\nLuna in\nAriete\nCome calcoliamo\nCalcola il tema natale per questa data\n↗",
+      "screenshotSha256": "fcc2d961b17484c04c6255ab66009a052cdf2a08fa26c978e167cb88bfc8e4d0",
+      "noSavedProfile": true
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "outcome": "passed",
+  "browser": "152.0.7977.83",
+  "cleanup": "Owned browser contexts and preview server closed"
+}

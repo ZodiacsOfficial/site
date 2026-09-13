@@ -1,0 +1,41 @@
+# Independent audit of runtime wording delivery
+
+**No blocker found in the bounded review.** Exact source `abcf1a44e52040db79a369b49bc9b55d78099b22` is draft PR #431 over `4227bb0758d4b34cbd761a3cddd273cbea6c2c1b`. Fresh read-only GitHub requests returned two actual file pages of **100 + 83** entries. All **183 unique paths and their Git blob SHAs** match the immutable local commit and retained root diff record. Exactly one path lies outside `docs/platform/`: `src/pages/developers/support/index.astro`.
+
+The support change removes stale runtime/version-specific assertions in favor of the linked current artifact reports and renames the public-download link to “consumer check.” The exact current evidence link resolves by committed metadata to:
+
+https://github.com/ZodiacsOfficial/site/blob/68412f16140f9986b11767d271eda6e14b6aba48/docs/platform/evidence/site-engine-rc6/public-candidate-consumer.log
+
+The immutable carrier's actual contents identify rc.6, SHA-256 `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`, Node 22.23.2 and 24.19.0, public example/declaration checks, and their precise installation/attribution limits. The new wording follows that evidence without certifying all browsers or all manifest-admitted Node versions. The source page hash matches the retained root integration identity.
+
+A fresh provider inspection independently confirms the same automatic preview remains READY at this exact commit: `dpl_7TVmbdjnFTVjT1rZrVj5a8Kyj26C`, https://zodiacs-rcmeayim6-zodiacsofficial.vercel.app, source=git, preview target. The retained before/after provider observations bracket the recorded Chrome result timestamp and match this identity.
+
+## Recorded browser execution reviewed
+
+The audit checks the retained driver, raw result, source, diagnostics, summary, and screenshots; it does **not** run another browser or claim fresh execution of the thirteen cases.
+
+The result contains exactly **13 cases**: three developer pages at each of 1280/390/320 px (nine), one synthetic birth-chart result at each width (three), and one dated sky API check (one). Driver assertions verify the runtime row, exact current-carrier href, artifact URL/caption, archived rc.1 link, standard footer, keyboard table-region focus, reduced motion, no horizontal overflow on developer pages, rc.6 chart results and no saved profile. The write of the passing result occurs only after these assertions. Diagnostics identify the expected page titles, paths, 200 responses and single footers. Two actual developer PNGs are present and hashed; the support capture was visually inspected as part of this read-only audit.
+
+The result and summary agree on **478 observed GET requests**, no non-GET requests, and twelve blocked attempts to load the existing configured Plausible script. The APIRequestContext sky check is outside the browser request observer, as is the isolated authentication bootstrap. The API call is explicitly GET in the driver and has its own retained 200/date assertion. This qualification prevents treating the scoped browser count as every request made by the entire driver.
+
+## Scan and provenance limits
+
+The original literal-marker scan failure is accurately described: the retained paginated public Moon PR response includes an earlier scanner source literal in `docs/platform/evidence/site-engine-rc6/hosted-integration/archive-followups.py.log`. The independently rerun credential-like pattern scan of the reviewed records reports zero matches. This is a pattern scan of public evidence, not an exact-secret comparison after deletion. Root records temporary access deletion; this audit did not obtain, inspect, renew, or use credentials.
+
+The driver reads candidate metadata from the workspace. Its current bytes match the immutable candidate at this source, and its asserted URL construction matches the committed support implementation and retained output. This review is an evidence-consistency audit, not a cryptographic attestation of browser execution. No local product code injection appears in the retained preview driver. Existing Phase1 captures are explicitly reused under the recorded unchanged fingerprint; neither root's report nor this audit claims fresh Phase1 captures or a numerical oracle.
+
+An initial audit-only GitHub CLI invocation combined unsupported `--slurp` and `--jq` flags. Its error is preserved. The supported full pagination call then succeeded; there was no product failure or weakened assertion. No root files, branch, dist, product code or credentials were changed.
+
+## Reproduction and artifacts
+
+`audit.py` executes the bounded metadata/source/result checks; `audit.log` and `RESULTS.json` record their output. Fresh public metadata is in `pr431-current.json`, `pr431-files-pages-raw.json`, its reduced metadata copy, and `deployment-current.json`. The original reviewed source/driver/results are copied under `reviewed-records/` and verified unchanged after the audit. Immutable source and carrier bytes are under `immutable-source/`. Every raw archive member is byte-counted and hashed.
+
+Executed public metadata commands:
+
+```sh
+gh api --paginate --slurp 'repos/ZodiacsOfficial/site/pulls/431/files?per_page=100'
+gh api 'repos/ZodiacsOfficial/site/pulls/431' --jq '{number,state,draft,head:{sha:.head.sha,ref:.head.ref},base:{sha:.base.sha,ref:.base.ref},changed_files}'
+python3 /private/tmp/zodiacs-platform-runtime-claims-independent-audit/audit.py
+```
+
+Status: independently reviewed delivery/preview evidence with no bounded blocker. No production deployment, new publication, external adoption or human numerical certification is inferred.

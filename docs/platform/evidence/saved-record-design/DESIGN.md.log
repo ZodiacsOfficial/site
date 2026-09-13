@@ -1,0 +1,181 @@
+# Saved natal persistence: approved bounded implementation contract
+
+Implement an optional profile-domain persistence primitive after
+`computePortableChart`, in `src/lib/profile/saved-record.ts` and
+`src/lib/profile/saved-record-store.ts`. The accountable integrator approved this
+bounded direction and assigned a separate author. This review writes no product
+files. Active calculator saves, accounts, migrations and lifecycle coordination
+remain unchanged until their integration is separately reviewed.
+
+## The useful first capability
+
+A caller with an explicit application owner/access policy can persist a freshly
+computed SDK envelope, list/read it, export the same envelope, and delete it from
+an isolated local database. Use the real production IndexedDB API in tests as
+well as deterministic failure controls. Merely defining a detached schema does
+not finish this slice.
+
+Use a new database `zodiacs-saved-natal-v1`, version 1, with one `records` store,
+compound owner/record identity and an owner index. Keep this in the profile
+layer: do not introduce an engine-store service, account sync protocol, general
+repository framework or automatic default singleton. Importing the module must
+not open storage, create a guest vault, call the network or activate UI behavior.
+
+Reuse the existing Living Chart transaction and invalidation conventions,
+including owner-key partitioning and fixed storage errors. Do not reuse its
+physical database or insert natal values into its moments store. The existing
+adapter explicitly opens database version 1; the native browser control proves
+that adding an object store through version 2 makes that old adapter throw
+`VersionError`. Mixing record types into `moments` would instead violate its
+all-record parser and owner clear semantics. A separate database is necessary
+for version ownership; a generic engine persistence layer is not.
+
+Avoid changing the existing Living Chart adapter while implementing this slice.
+Its short transaction pattern can guide the new domain adapter; broad extraction
+of a configurable storage framework would expand review without improving this
+first consumer's safety.
+
+## Record and callable surface
+
+Use an immutable record containing schema version, fresh cryptographic UUID,
+explicit owner scope, created timestamp, optional bounded plain label, and
+`envelopeJson`. No copied body projection, inputSnapshot, historical timezone
+lookup or second numerical validator belongs in the stored authority.
+
+`envelopeJson` is produced/validated by the installed SDK's
+`serializeNatalEnvelope` / `parseNatalEnvelope`. Preserve unknown permitted SDK
+extensions as inert data. Local metadata must not be inserted into the SDK
+receipt or leaked through its export. Avoid inventing another wrapper import
+format: the first import capability, if needed, accepts only the already
+supported bounded SDK envelope format and treats it as claimed data, not a
+verified fresh calculation.
+
+The minimal callable operations are:
+
+- `create(calculation, metadata?)`: create one immutable saved record with a new
+  random ID. Capture and validate the envelope before awaiting storage, preserving
+  the detached calculation. No request deduplication through fallback houses or
+  hashes. Do not accept an existing ID or overwrite records.
+- `get(id)` and `list()`: owner-bound reads; report malformed records or unavailable
+  storage explicitly. Do not return an empty array on failure.
+- `exportEnvelope(id)`: return the existing SDK envelope JSON only. Exclude owner,
+  record ID, local label and storage timestamps. This is sensitive chart export,
+  not the redacted diagnostic.
+- `delete(id)`: owner-scoped, idempotent physical deletion. Immutable records and
+  internally generated creation IDs avoid an update path that can resurrect a
+  deleted ID.
+- `revoke()` / `close()`: invalidate pending access, abort tracked active native
+  transactions where still possible and reject stale completions. Do not create
+  a new authority automatically.
+
+Method names are author choices; those semantics are the reviewed contract.
+Use explicit result unions distinguishing success, missing, stale/access denied,
+storage unavailable, invalid record and full. Do not return raw exceptions,
+payload values or causes in errors. An immutable initial record needs no unused
+revision counter or updatedAt. Add metadata rename with meaningful optimistic
+revision only if required, rather than adding an edit operation to justify a
+counter.
+
+Enforce the existing 40-chart cap in the same readwrite transaction as insertion.
+Reject invalid owner IDs, malformed records, oversized envelopes and unusable
+UUID generation without partial writes. Prefer bounded owner reads (at most the
+supported cap plus one corruption sentinel) rather than an unbounded collection
+API. Every local key and row must agree with its stored owner and ID.
+
+## Authority and asynchronous boundaries
+
+An owner callback is application access policy, not proof of authentication and
+not a sandbox against hostile same-origin JavaScript. The primitive must make
+that limitation explicit; it must never infer a verified account merely from a
+localStorage owner marker or a caller-supplied account ID.
+
+Bind each store/session to one captured owner. Capture a generation at operation
+entry, then recheck owner/access/generation before transaction work, inside its
+read-success callback, and before returning data or dispatching a success event.
+A→B→A is still a different authority generation. A late `open()` must close its
+handle after revocation. Capture the owner in each transaction key; never choose
+an owner again after an await.
+
+`IDBDatabase.close()` does not abort an already active transaction. Track native
+transactions and call `abort()` during revocation when they are still active.
+If a transaction already committed to the captured owner before revocation, the
+stale caller must receive neither data nor success. A stale response must not
+promise that nothing was stored and must not trigger an automatic retry.
+
+No UI/default singleton is activated by this slice. Its next integration must
+connect the existing profile read lease and auth/access epoch coordinator; the
+new library must not manufacture a parallel global authority manager.
+
+## Why another localStorage key is insufficient
+
+The actual old aggregate writer can acknowledge two saves and retain only one
+under an allowed interleaving. A new aggregate key reproduces that design flaw.
+Per-record keys prevent different IDs from clobbering each other, but do not
+make same-record check/write, capacity checks, export snapshots or clear/create
+atomic. A version field alone is not compare-and-swap. Web Locks could serialize
+cooperating writers, but require every writer and lifecycle action to adopt the
+same protocol; lock-unavailable environments would need a fail-closed result.
+The application already has an appropriate IndexedDB transaction pattern.
+
+The HTML standard explicitly warns that localStorage shared-state users should
+assume no locking, while IndexedDB serializes overlapping readwrite transactions.
+These support the transaction choice; they do not establish application owner
+authority. Sources: [Web storage](https://html.spec.whatwg.org/multipage/webstorage.html)
+and [IndexedDB transaction scheduling](https://www.w3.org/TR/IndexedDB-3/#transaction-scheduling).
+
+## Exact activation blockers and next integration
+
+1. Existing account discovery and handoff are synchronous and enumerate five
+   explicit profile keys. A newly added global key is not detected, archived or
+   deleted by account-specific cleanup. The probe reproduces that with actual
+   boundary functions. New database presence must join an asynchronous pre-grant
+   check, or a rigorously durable presence/clear protocol; a best-effort boolean
+   marker is not enough to authorize access.
+2. Keep account/guest records in their owner namespaces on switch; do not copy
+   all richer records into the legacy five-key archive. Revoke old access before
+   the next owner can read. Guest import/ownership transfer remains an explicit
+   user choice, not an inference from missing legacy charts or a matching UTC.
+3. New database cleanup must participate in account deletion, sign-out removal,
+   retained-data choices, per-owner cleanup and full-device cleanup. The existing
+   prefix enumeration erases localStorage, not this new database. Reuse the
+   durable content-free clear-request/retry convention, preserve failed clear
+   intent, and prevent delayed operations from recreating data after clear.
+   Do not report physical erasure merely because a clear request was queued.
+4. The existing account export downloads server data. It cannot silently claim
+   to include these local records. Add an explicit local envelope export action
+   before active saves; preserve account export as its present remote operation.
+5. Richer records must stay out of legacy sync. Current v1 sync uploads all charts
+   from its old profile when the v2 flag is off. Do not dual-write authoritative
+   records there. Any richer-to-v1 write preparation must return a fixed
+   `requires-version-2` outcome before mutation IDs, serialization or network.
+   Read-only legacy entries remain explicitly legacy; never reconstruct a full
+   envelope from their abbreviated body summaries.
+
+Those are concrete dependencies for activation, not owner-only holds on the
+optional persistence primitive. The author can implement and test the callable
+store now without claiming that active C02 save/rerun loss has been fixed.
+
+## Decisive acceptance cases
+
+- Actual portable polar Placidus and explicit Whole requests persist as distinct
+  records; unknown 08:30 time remains unknown with actual houses null and its
+  exact captured reference/source spelling. Envelope export/reparse preserves
+  all fields and excludes local owner metadata.
+- Concurrent distinct creates retain both; concurrent cap-bound creates cannot
+  exceed 40. A missing record differs from unavailable/corrupt storage.
+- Revocation before open, during read, inside a write callback and before commit
+  fails closed. A→B→A cannot return A's earlier data. Separate owner IDs with the
+  same record ID never cross. An already committed stale operation is described
+  honestly without an automatic retry.
+- Corrupted rows, cross-owner row/key disagreement, unsupported SDK schemas or
+  required features, oversized JSON, invalid metadata and storage exceptions
+  produce bounded errors and no data-bearing notifications.
+- A failed insertion transaction writes nothing; successful completion is awaited.
+  Same-owner immutable deletion is idempotent and cannot target another owner.
+- Both owner read-only and write-capable policies are tested if the API supports
+  that distinction. Optional graph checks prove no new load from existing
+  engine/full/math/UI paths, and no storage/network on import.
+- The subsequent lifecycle integration—not this primitive—must demonstrate guest
+  discovery/import, account switch/retention/archive, clear/retry, export and
+  deletion against the actual coordinator, including cross-tab/native browser
+  schedules. Do not label those active flows passed from injection-only tests.

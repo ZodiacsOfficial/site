@@ -1,0 +1,365 @@
+{
+  "browser": "152.0.7977.83",
+  "node": "v22.23.2",
+  "requests": [],
+  "results": [
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Rejected focus prefetch is observed and a later real module retry succeeds",
+      "passed": true,
+      "evidence": {
+        "importAttempts": 2,
+        "unhandledRejections": 0,
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Shared pending import fences a replaced partial place query and keeps current UTC semantics",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'true' !== 'false'\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:17:162\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSearching places…\n\nSharpens the clock conversion; the phase barely needs it.\n\nComputing…↗\n\nPrivate by default. Your birth details stay in this browser."
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "City selection while import is pending replaces the current clock meaning",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 2\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:21:222\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n×\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter47% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Removing a selected city while pending fences local time and permits current UTC result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 2\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:24:279\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Clearing the date while pending prevents astronomy and late focus",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:8:51)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:27:113\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Clearing a known time while pending uses exactly one current unknown-noon calculation",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   '1990-01-04T15:30:00.000Z',\n+   '1990-01-04T15:30:00.000Z',\n    '1990-01-04T12:00:00.000Z',\n    '1990-01-04T12:00:00.000Z',\n    '1990-01-04T00:00:00.000Z',\n    '1990-01-04T23:59:00.000Z'\n  ]\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:30:251\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "raw",
+      "name": "Old rejection cannot clear the busy flag or error state of a newer pending request",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'false' !== 'true'\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:33:188\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nSomething went wrong computing that moon. Please try again."
+    },
+    {
+      "kind": "baseline",
+      "loader": "raw",
+      "name": "Old success after a newer result does not overwrite the result or steal edit focus",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 2\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:36:427\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Current calculation failure removes the prior result and recovers unchanged numerics",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:8:51)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:39:189\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nSomething went wrong computing that moon. Please try again.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Real current ModuleLoadError is cleared by edit and retry",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:42:341\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nThe calculation files could not load. Check your connection and try again.\n\nReload page Reloading clears unsaved entries."
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "An unmounted old request sharing import with a new mount cannot calculate",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n4 !== 2\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:45:303\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Rapid mount/input/submit/unmount before a paint still fences the pending request",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   {\n+     body: 'Moon',\n+     mountId: 2,\n+     utc: '1990-01-04T12:00:00.000Z'\n+   },\n+   {\n+     body: 'Sun',\n+     mountId: 2,\n+     utc: '1990-01-04T12:00:00.000Z'\n+   }\n+ ]\n- []\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:56:29\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": ""
+    },
+    {
+      "kind": "baseline",
+      "loader": "production",
+      "name": "Editing a displayed result including partial place input clears it immediately",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:8:51)\n    at async groups (file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:59:73)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership-independent-review/native-review.mjs:65:307",
+      "pageErrors": [],
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Rejected focus prefetch is observed and a later real module retry succeeds",
+      "passed": true,
+      "evidence": {
+        "importAttempts": 2,
+        "unhandledRejections": 0,
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Shared pending import fences a replaced partial place query and keeps current UTC semantics",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          }
+        ],
+        "selectedCity": false,
+        "unselectedQuery": "Tor",
+        "importAttempts": 1
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "City selection while import is pending replaces the current clock meaning",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T05:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T05:00:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Removing a selected city while pending fences local time and permits current UTC result",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Clearing the date while pending prevents astronomy and late focus",
+      "passed": true,
+      "evidence": {
+        "calls": 0,
+        "active": "mp-date"
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Clearing a known time while pending uses exactly one current unknown-noon calculation",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T00:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T23:59:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "raw",
+      "name": "Old rejection cannot clear the busy flag or error state of a newer pending request",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 1
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "raw",
+      "name": "Old success after a newer result does not overwrite the result or steal edit focus",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 1
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 1
+          }
+        ],
+        "active": "mp-time"
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Current calculation failure removes the prior result and recovers unchanged numerics",
+      "passed": true,
+      "evidence": {
+        "text": "Moon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗",
+        "recovered": true
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Real current ModuleLoadError is cleared by edit and retry",
+      "passed": true,
+      "evidence": {
+        "loadErrorText": "The calculation files could not load. Check your connection and try again.",
+        "importAttempts": 2
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "An unmounted old request sharing import with a new mount cannot calculate",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 2
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T13:00:00.000Z",
+            "mountId": 2
+          }
+        ]
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Rapid mount/input/submit/unmount before a paint still fences the pending request",
+      "passed": true,
+      "evidence": {
+        "calls": [],
+        "html": "",
+        "attempts": 1
+      }
+    },
+    {
+      "kind": "candidate",
+      "loader": "production",
+      "name": "Editing a displayed result including partial place input clears it immediately",
+      "passed": true,
+      "evidence": {
+        "partialQuery": "B",
+        "oldResultCleared": true
+      }
+    }
+  ],
+  "outcome": "passed"
+}

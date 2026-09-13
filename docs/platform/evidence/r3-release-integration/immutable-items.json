@@ -1,0 +1,146 @@
+{
+  "main": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "count": 28,
+  "items": [
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-09.json",
+      "sha256": "79b880477111cbc8bbeab5b30ff84bb29fbdcc304d7fe2d46bf4c080b0d9607e",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-10.json",
+      "sha256": "f8d28931d47e0301dd5571363d2916f97a121aba4f2baaf74aed7fb6fd56a738",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-11.json",
+      "sha256": "fe2c4c06e7a3bb48155a29238380cbcfdda9dd6ce960699291ab12cbaf63b58a",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-12.json",
+      "sha256": "7694067b6619839c4284ed3d7cb82e16f9edeb673ead4354214655f6d199bcc6",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto.json",
+      "sha256": "80d41ef02f404ee203a3980dff417b0c7c2b6e5788ec82d16607dbf8b1d40875",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune.json",
+      "sha256": "189e6546a86bb6750e83c33a1af7183435e51cc35a32d20890c194628d1a83d6",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus.json",
+      "sha256": "17eed4c056c7b519ce34a1e663aa8b9939fdc686bdf76bd1707b2de2491bbd6d",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto.json",
+      "sha256": "094a14075e31192870a0ec8d1d929b4b62ddb34486b1953d1d93417c73be50e9",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto.json",
+      "sha256": "730aad58a0462b2ea32e095efcd4ab26c896d12075dd92dad522bf65fa3eaa8f",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn.json",
+      "sha256": "049c741806f7b63e21a47f02f97396bd9208bfc7a1c43ce2b2d09cbb4467a208",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio.json",
+      "sha256": "2129a7c9004b8e3b675ccde44b2f08a0078d1dd21922c4fca93f4a52e625fb64",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra.json",
+      "sha256": "87bf0e3d22bb2fc0253f46397317165a1ea216570a31da0cd6957e34929e434c",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo.json",
+      "sha256": "b52b4255b4eeea79b612cb8a0a733f8da19abec68586f6b8c102b19344bc38cf",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-station-2026-09-10t18-40-43-743z-uranus-retrograde-gemini.json",
+      "sha256": "45c5e32eedf25a574b979512aa99385ebda297d8282d7dabece31da904241192",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-01-observation-168h.json",
+      "sha256": "c689a6dedc29211cd9acde629b620cda170b35020b58b691a01cc98aa991c513",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-02-observation-168h.json",
+      "sha256": "0d08ad7d539e6bfad380044b9dc6a36d74584c25847e4c48a1f6162c6312ebf3",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-03-observation-168h.json",
+      "sha256": "0f6b7b1d3d97086d551a31d575b950f48a1bfc9a9736cee08e7866ca0b49cc33",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-04-observation-168h.json",
+      "sha256": "cc7c90cd729772daeb6b0150d853f28dbd84f2b0b3b9e20bab6389d604f7560b",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-05-observation-168h.json",
+      "sha256": "ec2a9590a843d70309c9cc9fba2f935b2ce4e6c61aa395ff6da6cb886c13ada2",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-07-observation-24h.json",
+      "sha256": "ab13b901a24e89482af98816e9c80c6aa88ae43e71c61d3638c9d3dc7e67140e",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-08-observation-24h.json",
+      "sha256": "6007bdc147b4f066e529317049cacdb6bf424351b5864f3b4fc55f35612e2406",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09-observation-24h.json",
+      "sha256": "eee31ac19467a05a1dbfafc7e951da3688a4041634f94a042f3a94e78e3c95b2",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09.json",
+      "sha256": "2803fdadfd47c59255400e8b3976800be08c9f06447f8fb881680f87da45393e",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10-observation-24h.json",
+      "sha256": "88fd9cf38457b793998d4aa02121f37d16f9f4d3147c2a31674dc69a21aeae51",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10.json",
+      "sha256": "6fad1c10965f20ceb55e623358094a885049c5988ced906427ffc82a94ed028b",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11-observation-24h.json",
+      "sha256": "7b05af031909dc9f20d000a51591130ed47023fe5ae74c9bbc9060d258ffa7af",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11.json",
+      "sha256": "021f830308cb839e0dbf7b9bdc3cc3ff522ceb5aa8b20a1b83cf35ccbc9ef91c",
+      "candidateEqual": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-12.json",
+      "sha256": "c78c06496f0a04b2e5e7247797914b6d4353dc456c08b7bcb126fbe087e3308a",
+      "candidateEqual": true
+    }
+  ]
+}

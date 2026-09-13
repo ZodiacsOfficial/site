@@ -1,0 +1,68 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {chromium} from 'playwright-core';
+const executablePath='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const browser=await chromium.launch({executablePath,headless:true,args:['--no-sandbox']});
+const report={node:process.version,browser:browser.version(),executablePath,requests:[],pageErrors:[],outcome:'failed'};
+try{
+ const context=await browser.newContext();await context.route('**/*',async route=>{report.requests.push(route.request().url());await route.abort();});
+ const page=await context.newPage();page.on('pageerror',e=>report.pageErrors.push(String(e)));await page.goto('about:blank');
+ await page.evaluate(()=>{
+  const stats=globalThis.effects={temporal:0,intl:0,fetch:0,xhr:0,beacon:0,storage:0,idb:0};
+  const temporal=globalThis.Temporal;globalThis.savedTemporal=temporal;Object.defineProperty(globalThis,'Temporal',{configurable:true,get(){stats.temporal++;return temporal;}});
+  Intl.DateTimeFormat=new Proxy(Intl.DateTimeFormat,{construct(target,args,ctor){stats.intl++;return Reflect.construct(target,args,ctor);},apply(target,receiver,args){stats.intl++;return Reflect.apply(target,receiver,args);}});
+  for(const[key,counter]of [['fetch','fetch'],['XMLHttpRequest','xhr']])globalThis[key]=()=>{stats[counter]++;throw new Error('Unexpected external work');};
+  navigator.sendBeacon=()=>{stats.beacon++;throw new Error('Unexpected beacon');};
+  for(const[key,counter]of [['localStorage','storage'],['sessionStorage','storage'],['indexedDB','idb']])Object.defineProperty(globalThis,key,{configurable:true,get(){stats[counter]++;throw new Error('Unexpected storage access');}});
+ });
+ await page.addScriptTag({content:fs.readFileSync('subject.js','utf8')});report.importEffects=await page.evaluate(()=>({...globalThis.effects}));assert.deepEqual(report.importEffects,{temporal:0,intl:0,fetch:0,xhr:0,beacon:0,storage:0,idb:0});
+ report.native=await page.evaluate(()=>{
+  const {resolveLocalDateIntervals:resolve,createNativeTemporalTransitionProvider:factory}=globalThis.intervalSubject;
+  const check=(value,message)=>{if(!value)throw new Error(message);};
+  const fixtures=[
+   ['1919-03-31','America/Toronto',[['1919-03-31T04:30:00.000Z','1919-04-01T04:00:00.000Z']]],
+   ['1919-03-30','America/Toronto',[['1919-03-30T05:00:00.000Z','1919-03-31T04:30:00.000Z']]],
+   ['2009-11-01','America/St_Johns',[['2009-11-01T02:30:00.000Z','2009-11-01T02:31:00.000Z'],['2009-11-01T03:30:00.000Z','2009-11-02T03:30:00.000Z']]],
+   ['2009-10-31','America/St_Johns',[['2009-10-31T02:30:00.000Z','2009-11-01T02:30:00.000Z'],['2009-11-01T02:31:00.000Z','2009-11-01T03:30:00.000Z']]],
+   ['2011-12-30','Pacific/Apia',[]],
+   ['1892-07-04','Pacific/Apia',[['1892-07-03T11:26:56.000Z','1892-07-05T11:26:56.000Z']]],
+   ['1914-01-01','America/Manaus',[['1914-01-01T04:00:04.000Z','1914-01-02T04:00:00.000Z']]],
+   ['1972-01-07','Africa/Monrovia',[['1972-01-07T00:44:30.000Z','1972-01-08T00:00:00.000Z']]],
+   ['1906-01-01','Asia/Kolkata',[['1905-12-31T18:38:50.000Z','1906-01-01T18:30:00.000Z']]],
+   ['0000-01-01','UTC',[['0000-01-01T00:00:00.000Z','0000-01-02T00:00:00.000Z']]],
+   ['0000-01-01','Etc/GMT-1',[['-000001-12-31T23:00:00.000Z','0000-01-01T23:00:00.000Z']]],
+   ['0000-02-29','UTC',[['0000-02-29T00:00:00.000Z','0000-03-01T00:00:00.000Z']]],
+   ['0099-12-31','UTC',[['0099-12-31T00:00:00.000Z','0100-01-01T00:00:00.000Z']]],
+   ['9999-12-31','UTC',[['9999-12-31T00:00:00.000Z','+010000-01-01T00:00:00.000Z']]],
+   ['2024-03-10','America/New_York',[['2024-03-10T05:00:00.000Z','2024-03-11T04:00:00.000Z']]],
+   ['2024-11-03','America/New_York',[['2024-11-03T04:00:00.000Z','2024-11-04T05:00:00.000Z']]],
+  ];
+  check(factory()!==null,'Native Temporal required, no skipped success');
+  const rows=[];
+  for(const[date,zone,expected]of fixtures){
+   const result=resolve(date,zone);check(result.status!=='unresolved','Unexpected unresolved native case '+date+' '+zone);const actual=result.intervals.map(x=>[new Date(x.start).toISOString(),new Date(x.endExclusive).toISOString()]);check(JSON.stringify(actual)===JSON.stringify(expected),'Expected native interval mismatch '+date+' '+zone+' '+JSON.stringify(actual));
+   const [year,month,day]=date.split('-').map(Number),wall=new Date(0);wall.setUTCFullYear(year,month-1,day);wall.setUTCHours(0,0,0,0);const midnight=wall.getTime();
+   const formatter=new Intl.DateTimeFormat('en-US',{timeZone:zone,calendar:'gregory',numberingSystem:'latn',era:'short',year:'numeric',month:'2-digit',day:'2-digit'});
+   const member=instant=>{const parts=formatter.formatToParts(instant),p=type=>parts.find(x=>x.type===type)?.value;return(p('era')==='BC'?1-Number(p('year')):Number(p('year')))===year&&Number(p('month'))===month&&Number(p('day'))===day;};
+   const intervalMember=t=>result.intervals.some(x=>t>=x.start&&t<x.endExclusive);
+   const points=new Set(Array.from({length:289},(_,i)=>midnight-86400000+i*900000));
+   for(const x of result.intervals)for(const t of [x.start-1,x.start,x.start+1,x.endExclusive-1,x.endExclusive,x.endExclusive+1])points.add(t);
+   for(const t of points)check(member(t)===intervalMember(t),'Intl membership disagreement '+date+' '+zone+' '+new Date(t).toISOString());
+   rows.push({date,zone,result,actual,intlMembershipChecks:points.size});
+  }
+  const offsets=['+23:59','-23:59','+01:00','+0100','-02:30','-00:00'].map(zone=>{
+   let minutes;const formatter=new Intl.DateTimeFormat('en-US',{timeZone:zone,timeZoneName:'longOffset'}),name=formatter.formatToParts(0).find(x=>x.type==='timeZoneName').value,m=name.match(/GMT([+-])?(\d{1,2})?(?::(\d{2}))?/);minutes=(m[1]==='-'?-1:1)*(Number(m[2]??0)*60+Number(m[3]??0));
+   const result=resolve('1970-01-01',zone);check(result.status==='existing','Signed offset unavailable');check(JSON.stringify(result.intervals)===JSON.stringify([{start:-minutes*60000,endExclusive:86400000-minutes*60000}]),'Signed offset result mismatch');return{zone,result};
+  });
+  const original=Object.getOwnPropertyDescriptor(globalThis,'Temporal');
+  Object.defineProperty(globalThis,'Temporal',{configurable:true,value:undefined});const unavailable=resolve('1970-01-01','UTC');check(JSON.stringify(unavailable)===JSON.stringify({status:'unresolved',reason:'provider-unavailable'}),'Missing provider must be unresolved');
+  Object.defineProperty(globalThis,'Temporal',{configurable:true,get(){throw new Error('private synthetic host error');}});const accessor=resolve('1970-01-01','UTC');check(accessor.status==='unresolved'&&accessor.reason==='provider-failed'&&!('intervals'in accessor),'Host failure must not leak partial intervals');
+  Object.defineProperty(globalThis,'Temporal',original);
+  const nativeTemporal=globalThis.savedTemporal;
+  const fake={Instant:class {static fromEpochMilliseconds(ms){return{toZonedDateTimeISO(zone){const actual=nativeTemporal.Instant.fromEpochMilliseconds(ms).toZonedDateTimeISO(zone);return{offsetNanoseconds:actual.offsetNanoseconds+1000000,getTimeZoneTransition:()=>null};}};}},ZonedDateTime:class {getTimeZoneTransition(){return null;}}};
+  Object.defineProperty(globalThis,'Temporal',{configurable:true,value:fake});const mismatch=resolve('1970-01-01','UTC');check(mismatch.status==='unresolved'&&mismatch.reason==='provider-violation','Host offset mismatch admitted');Object.defineProperty(globalThis,'Temporal',original);
+  const invalid=resolve('1970-01-01','2000-01-01T00:00[UTC]');check(invalid.status==='unresolved','Temporal timeZoneLike bypass admitted');
+  return{rows,offsets,unavailable,accessor,mismatch,invalid,effects:{...globalThis.effects}};
+ });
+ assert.equal(report.native.rows.length,16);assert.equal(report.native.offsets.length,6);for(const key of ['fetch','xhr','beacon','storage','idb'])assert.equal(report.native.effects[key],0);assert.deepEqual(report.requests,[]);assert.deepEqual(report.pageErrors,[]);report.outcome='passed';
+}catch(error){report.error=String(error.stack??error);process.exitCode=1;}finally{await browser.close();report.cleanup='Owned browser context closed; no server or external request.';fs.writeFileSync('native-result.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({outcome:report.outcome,browser:report.browser,cases:report.native?.rows.length,offsets:report.native?.offsets.length,intlMembershipChecks:report.native?.rows.reduce((sum,row)=>sum+row.intlMembershipChecks,0),error:report.error}));}

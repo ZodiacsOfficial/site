@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-09-07T22:06:11.727997+00:00",
+  "serverSessionExit": 130,
+  "browserSession": "zodiacs-b04-widget in zodiacs-b04 namespace",
+  "zoomAndOfflineRestoredByScripts": true,
+  "listeners": [
+    {
+      "port": 54770,
+      "lsofExit": 1,
+      "listenerOutput": "",
+      "stderr": ""
+    },
+    {
+      "port": 54810,
+      "lsofExit": 1,
+      "listenerOutput": "",
+      "stderr": ""
+    }
+  ]
+}

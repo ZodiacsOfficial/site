@@ -1,0 +1,8 @@
+{
+  "code": "const response = await fetch('https://zodiacs.org/api/v1/sky/today.json', {\n  cache: 'no-cache',\n  signal: AbortSignal.timeout(10_000),\n});\nif (!response.ok) throw new Error(`Sky request failed: HTTP ${response.status}`);\n\nconst sky = await response.json();\nif (sky?.schema !== 'zodiacs.sky-api.today.v1'\n  || typeof sky.date !== 'string'\n  || typeof sky.snapshotAt !== 'string'\n  || typeof sky.summary !== 'string'\n  || !Array.isArray(sky.bodies)\n  || sky.bodies.length === 0\n  || sky.bodies.some((body) => !body\n    || typeof body !== 'object'\n    || typeof body.body !== 'string'\n    || typeof body.position !== 'string'\n    || typeof body.retrograde !== 'boolean')) {\n  throw new Error('Unexpected sky payload');\n}\n\nconst today = new Date().toISOString().slice(0, 10);\nif (sky.date !== today) {\n  throw new Error(`Sky edition ${sky.date} is not current (${today} UTC)`);\n}\nif (sky.snapshotAt !== `${sky.date}T12:00:00.000Z`) {\n  throw new Error('Unexpected sky snapshot time');\n}\n\nconsole.log(`Computed positions for ${sky.snapshotAt}`);\nconsole.log(sky.summary);\nfor (const body of sky.bodies) {\n  console.log(body.body, body.position, body.retrograde ? 'Rx' : '');\n}\n",
+  "codeScrollWidth": 617,
+  "codeWidth": 348,
+  "overlay": false,
+  "pageWidth": 390,
+  "viewport": 390
+}

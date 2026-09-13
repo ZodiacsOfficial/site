@@ -1,0 +1,6 @@
+Executed in /private/tmp/zodiacs-platform-interval-caller-compatibility/moon-review:
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node setup.mjs > setup.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node build.mjs > build.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node controls.mjs > controls.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node finalize.mjs
+All exited 0. Source reads and inventories are reflected in copied full files and identity.json. No product edit or install.

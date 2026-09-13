@@ -1,0 +1,282 @@
+{
+  "scope": "Source-only audit of normal Chart/Moon error-on-edit and submit reset semantics; no native rerun or product tests",
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 2084,
+      "sha256": "0cc822fc02505ad40ea8a19202757f0edf68e494e869eb3c96bf4013b97f6823"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 4310,
+      "sha256": "05c9a4d6578d24ea4a4916015a38d3fa609917083e8ad3c3d65440c4086c8070"
+    },
+    {
+      "path": "ast-result-initial.json",
+      "bytes": 45099,
+      "sha256": "4aa13c2a95ed2cef47f11340c66fe0d9685f7688b988c2c281bef2db4e859e6a"
+    },
+    {
+      "path": "ast-result.json",
+      "bytes": 45537,
+      "sha256": "bc45cd0ab305a479e46b5c78ba5d6967287f8395165ea91dd0de7c7faf066b7e"
+    },
+    {
+      "path": "ast-review-initial.log",
+      "bytes": 435,
+      "sha256": "349d0a767c6ecee65f34b5bd7b2b38a7152b27ee833a59c39e227fec5b1e47de"
+    },
+    {
+      "path": "ast-review.log",
+      "bytes": 498,
+      "sha256": "e2321579658ed469fb09055446b73ae47deb10b2554f3cf1bbdbab0b4ff2838d"
+    },
+    {
+      "path": "ast-review.mjs",
+      "bytes": 6486,
+      "sha256": "f43b5e12075a5d35e6449b56bd1dc34f0c69f0c3dd168cd499616c4d99589192"
+    },
+    {
+      "path": "c012-island-field-diff.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "c014-island-diff.patch",
+      "bytes": 4550,
+      "sha256": "d471579a6f698257780420dd42b28326cc50f095fa5a966c572e72e6cedb9dea"
+    },
+    {
+      "path": "capture.log",
+      "bytes": 146,
+      "sha256": "9e740b60a902abc92564f4f2ac069565326be2afa3ebb64bb678b0447c0a522b"
+    },
+    {
+      "path": "capture.py",
+      "bytes": 2449,
+      "sha256": "94d27750e5a1462a2cd40b1824eeb3e3f9a7c68b6c85afc51476fc3be00fd95c"
+    },
+    {
+      "path": "context-clear-source-references.log",
+      "bytes": 797,
+      "sha256": "551f61d6a12d2fb97968c8a874c6bd7d50ee9acf1faf817de2729b074f40406b"
+    },
+    {
+      "path": "excerpts/Chart-advanceInputRevision.tsx",
+      "bytes": 153,
+      "sha256": "b053742dd06a34c3d232de647de747932a48dbf2533be9adf6b3f41732bc711c"
+    },
+    {
+      "path": "excerpts/Chart-cancelSpotlightArrival.tsx",
+      "bytes": 131,
+      "sha256": "3121839ab6deefceae4a50bb05e3498e908f5807d925e2192626308b7e9ed4aa"
+    },
+    {
+      "path": "excerpts/Chart-clearReceiptExport.tsx",
+      "bytes": 143,
+      "sha256": "72e1ec8a33d4daf807f650fba356ddc919eaaff8e9d7e2aa131e149710f55a99"
+    },
+    {
+      "path": "excerpts/Chart-clearResult.tsx",
+      "bytes": 749,
+      "sha256": "4a48b848f5873a11b39bde509cad01e53507e7a86c085eed195de9edffe39aaf"
+    },
+    {
+      "path": "excerpts/Chart-compute.tsx",
+      "bytes": 1138,
+      "sha256": "d7d2f02db42e2b04c77d39cc70553e2067387d1cb5ebb31e58a5e5b75234274f"
+    },
+    {
+      "path": "excerpts/Chart-exitTour.tsx",
+      "bytes": 98,
+      "sha256": "897c9f6feca34f9c18a2e1025f31ac8a86b8dca37cce355a626c1109651cf52d"
+    },
+    {
+      "path": "excerpts/Chart-invalidateProfileHandoff.tsx",
+      "bytes": 272,
+      "sha256": "6503070c8b03a8221da6f6d4c33f018158c9108081a88b8ced484bf0dcd980d1"
+    },
+    {
+      "path": "excerpts/Chart-onCityChange.tsx",
+      "bytes": 221,
+      "sha256": "963d38f447aa1010798f519ea4c9fb92a1c9c00b6946cb7b6c0bbac3398bf668"
+    },
+    {
+      "path": "excerpts/Chart-onDateChange.tsx",
+      "bytes": 223,
+      "sha256": "2f48e07838009756a6f4ddc3c8f820934b2ab6df0cf6c21ee5ab02c98cb7d7e7"
+    },
+    {
+      "path": "excerpts/Chart-onTimeChange.tsx",
+      "bytes": 219,
+      "sha256": "746527417d6d2ed5173d660708d59a8c461ac537a07d61ce8e1b1e8c83025b28"
+    },
+    {
+      "path": "excerpts/Chart-onTimeKnownChange.tsx",
+      "bytes": 241,
+      "sha256": "828a3abde3ec293e68bef5472fbbae75f7377370897f1074dbe2fc01cf97e7ca"
+    },
+    {
+      "path": "excerpts/Chart-post-compute-focus-effect.tsx",
+      "bytes": 322,
+      "sha256": "bac517721a0f2e6bf95f16b38a0f93d4eab90e1c1a1ee9be81b188a4c1601913"
+    },
+    {
+      "path": "excerpts/Chart-resetLens.tsx",
+      "bytes": 72,
+      "sha256": "f2e3cf711cde63288899f945dec481e9a25fff734b41c0a600567740e6eb2054"
+    },
+    {
+      "path": "excerpts/Moon-date-input.tsx",
+      "bytes": 140,
+      "sha256": "0bee6e2e3589985953dd2262fc81090e323152917c72559ba32d33ec89a952da"
+    },
+    {
+      "path": "excerpts/Moon-invalidateLookup.tsx",
+      "bytes": 177,
+      "sha256": "dd734b5e0015cba07306030ccbbe5569d79521570af6a2756a74d6e34e498ecc"
+    },
+    {
+      "path": "excerpts/Moon-place-selection.tsx",
+      "bytes": 108,
+      "sha256": "d094099694363408fc0aba197cf368bb0e7258fde915893023cf304e4ffa9513"
+    },
+    {
+      "path": "excerpts/Moon-post-compute-focus-effect.tsx",
+      "bytes": 324,
+      "sha256": "148ee66708520a7ed29fb13bc8b8e32bd08846f5a44c5d07204ee11c1170f4df"
+    },
+    {
+      "path": "excerpts/Moon-time-input.tsx",
+      "bytes": 140,
+      "sha256": "e306ca1e88be5cb843a773122a47aa04c00d9776aca8711e6da399fee2174b21"
+    },
+    {
+      "path": "final-source-rehash.json",
+      "bytes": 107,
+      "sha256": "bf2a99c2df202a11725da57250a99da7f4f80bc879d6fdaf9d865d1d11b52d3f"
+    },
+    {
+      "path": "harness-third-snippet-span.json",
+      "bytes": 505,
+      "sha256": "fb3437adc56c59bb10fdaa559373a1bdab5dff2158f041b64a9d3ca76808a97a"
+    },
+    {
+      "path": "inputs/c014-source-freeze.json",
+      "bytes": 2624,
+      "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+    },
+    {
+      "path": "inputs/normal-chart-harness-correction.json",
+      "bytes": 1240,
+      "sha256": "c6b033390df51c5d5e7354de6911d85c0c2d418e3b0efd8150524f32975ee933"
+    },
+    {
+      "path": "source/c7/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 8891,
+      "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b"
+    },
+    {
+      "path": "source/c7/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "source/c7/src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "source/c7/src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "source/c7/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 13369,
+      "sha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1"
+    },
+    {
+      "path": "source/c7/src/lib/profile/post-chart-context.ts",
+      "bytes": 1468,
+      "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+    },
+    {
+      "path": "source/frozen/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "source/frozen/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "source/head3845/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "source/head3845/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "source/head3845/src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "source/head3845/src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "source/head3845/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14534,
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+    },
+    {
+      "path": "source/head3845/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "source/root/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "source/root/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "source/root/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "source/root/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "source/root/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14534,
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+    },
+    {
+      "path": "source/root/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "source-identity.json",
+      "bytes": 4250,
+      "sha256": "8e65288826e11a6cd5bef7288b36103b237d6bb12df293feeceeac9f944015c7"
+    }
+  ],
+  "recordCount": 55,
+  "totalBytes": 743985
+}

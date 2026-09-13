@@ -1,0 +1,122 @@
+{
+  "archive": "source-snapshot.tar.gz",
+  "sha256": "317e4201a073ee39606da1e1f0a445a8ff05f718a1ab06ecc7b8d1da306d7d7c",
+  "bytes": 210511,
+  "members": [
+    {
+      "path": "source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20636,
+      "sha256": "f3de3156ac4c8420084c282d259a4f656f8fe5899dd0f8217947fa3e8e0ec4f9"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/en.ts",
+      "bytes": 21989,
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/es.ts",
+      "bytes": 23999,
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27691,
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/it.ts",
+      "bytes": 26517,
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25626,
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38328,
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "path": "source/src/lib/time/localDateContainsUtc.test.ts",
+      "bytes": 6475,
+      "sha256": "0aa0d52d82f86f832ba4f1dae9a5c0e9a828c78c6d13fe27549333d4a46a5707"
+    },
+    {
+      "path": "source/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "source/tests/local-date-reference-drive.mjs",
+      "bytes": 22003,
+      "sha256": "2ea7036618df0451ee087e902296d4bff8b8d086ceb75b62c107bcd0d9eb15dd"
+    },
+    {
+      "path": "source/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "source/src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "path": "source/src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba"
+    },
+    {
+      "path": "source/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "source/src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "path": "source/src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+    },
+    {
+      "path": "source/tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "source/package.json",
+      "bytes": 11388,
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c"
+    },
+    {
+      "path": "source/package-lock.json",
+      "bytes": 436565,
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3"
+    },
+    {
+      "path": "source/.github/workflows/site-check.yml",
+      "bytes": 16094,
+      "sha256": "5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0"
+    },
+    {
+      "path": "source/.github/phase1-scope-allowance.json",
+      "bytes": 1155,
+      "sha256": "2f26d0a3b85e651e1b248733adae5a818c213885c227af08b98a699acc440797"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "runtime": "v22.23.2",
+  "zone": "Synthetic/SingleForward15Hours",
+  "date": "2000-01-01",
+  "kind": "Synthetic complete timezone model; NOT a real IANA zone or host-history claim",
+  "model": {
+    "offsetBeforeMilliseconds": 0,
+    "offsetAfterMilliseconds": 54000000,
+    "transitionUtc": "2000-01-01T00:00:00.000Z",
+    "completenessProof": "The model definition has exactly one offset change over the entire integer-millisecond timeline. nextTransition returns that unique change iff it lies strictly after its argument; otherwise null. Both offsets are stable integer milliseconds strictly within24h."
+  },
+  "representative": {
+    "utc": "2000-01-01T12:00:00.000Z",
+    "offsetMinutes": 900,
+    "flags": [
+      "dst-gap"
+    ],
+    "syntheticLocalWall": "2000-01-02T03:00:00.000Z",
+    "sameRequestedDate": false
+  },
+  "intervalResult": {
+    "status": "existing",
+    "intervals": [
+      {
+        "start": 946684800000,
+        "endExclusive": 946717200000
+      }
+    ]
+  },
+  "intervalUtc": [
+    {
+      "start": "2000-01-01T00:00:00.000Z",
+      "endExclusive": "2000-01-01T09:00:00.000Z"
+    }
+  ],
+  "nonemptyDurationHours": 9,
+  "method": "Execute unchanged copied site resolver with a scoped synthetic Intl.DateTimeFormat adapter; execute unchanged inactive interval primitive with explicit complete provider for the same exactly defined model. Native Intl formats shifted UTC civil fields only. Global adapter restored in finally. No product/source changes, runtime installs or network.",
+  "subjectSha256": "1a9f28c07d352cc135fe7b824966cd7142daa224649efbdce025873b3cbddf4f",
+  "driverSha256": "5deba7cb33c017ccc6dea5fad72f112dde7c711e25b00b39c00c0244cf1a1995"
+}

@@ -1,0 +1,12 @@
+{
+  "sdk-ephemeris.ts": {
+    "source": "/private/tmp/zodiacs-platform-sdk-seconds/packages/engine/src/ephemeris.ts",
+    "sha256": "3481029c0836bcf641bb4e2f9bea8e57d01358babce07bda6de8fdc9a9fe4418",
+    "bytes": 5224
+  },
+  "astronomy-engine-esm.js": {
+    "source": "/Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js",
+    "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7",
+    "bytes": 412025
+  }
+}

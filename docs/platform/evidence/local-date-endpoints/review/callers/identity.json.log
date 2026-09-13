@@ -1,0 +1,178 @@
+{
+  "at": "2026-09-08T06:39:48.437Z",
+  "purpose": "Read-only current caller/source inventory; site working tree includes concurrent export/hydration work and is not a frozen new patch.",
+  "repositories": {
+    "site": {
+      "root": "/Users/chiburashka/.codex/worktrees/4806/site",
+      "head": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+      "status": " M .github/phase1-scope-allowance.json\n M docs/acceptance/phase1/screenshots/manifest.json\n M docs/platform/DECISIONS.md\n M docs/platform/EVIDENCE.md\n M docs/platform/PLAN.md\n M docs/platform/REVIEW.md\n M docs/platform/STATUS.md\n M scripts/report-bundles.mjs\n M src/client-directives/interaction.ts\n M src/islands/ChartCalculator.actions.test.ts\n M src/islands/ChartCalculator.tsx\n M src/lib/i18n/index.test.ts\n M src/lib/i18n/ui/en.ts\n M src/lib/i18n/ui/es.ts\n M src/lib/i18n/ui/fr.ts\n M src/lib/i18n/ui/it.ts\n M src/lib/i18n/ui/pt.ts\n M src/lib/i18n/ui/ru.test.ts\n M src/lib/i18n/ui/ru.ts\n?? docs/platform/evidence/portable-calculation/release/ci-34187725308-final.json\n?? docs/platform/evidence/receipt-export/\n?? docs/platform/evidence/saved-records/\n?? scripts/report-bundles.test.mjs\n?? src/lib/engine/calculator-receipt.test.ts\n?? src/lib/engine/calculator-receipt.ts\n?? src/lib/receipt-download.test.ts\n?? src/lib/receipt-download.ts\n?? tests/interaction-replay-drive.mjs\n",
+      "files": [
+        {
+          "file": "src/lib/chart-date-certainty.ts",
+          "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+          "bytes": 1810
+        },
+        {
+          "file": "src/lib/chart-date-certainty.test.ts",
+          "sha256": "7590c81f6bb500781b08188aedb697ced862ea111abd315737cb032abbdfc0ee",
+          "bytes": 3216
+        },
+        {
+          "file": "src/lib/moon-certainty.ts",
+          "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+          "bytes": 1909
+        },
+        {
+          "file": "src/lib/moon-certainty.test.tsx",
+          "sha256": "e509607fc389f8175b9113cd8354eb43a66781a870c0cbb411ab58e02e8e3880",
+          "bytes": 11501
+        },
+        {
+          "file": "src/islands/ChartCalculator.tsx",
+          "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+          "bytes": 116026
+        },
+        {
+          "file": "src/islands/ChartCalculator.registry-bridge.test.ts",
+          "sha256": "bfa21bc246699afd63ad6cc85035aff173754f638a30029579a2ebd78e2734e0",
+          "bytes": 1697
+        },
+        {
+          "file": "src/islands/MoonPhaseTool.tsx",
+          "sha256": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8",
+          "bytes": 10765
+        },
+        {
+          "file": "src/lib/engine/types.ts",
+          "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+          "bytes": 2164
+        },
+        {
+          "file": "src/lib/i18n/ui/en.ts",
+          "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+          "bytes": 21866
+        },
+        {
+          "file": "src/lib/share.ts",
+          "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+          "bytes": 4808
+        },
+        {
+          "file": "src/lib/profile/schema.ts",
+          "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+          "bytes": 1527
+        },
+        {
+          "file": "src/lib/scene/build.ts",
+          "sha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54",
+          "bytes": 4409
+        },
+        {
+          "file": "src/lib/communication.ts",
+          "sha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64",
+          "bytes": 11339
+        },
+        {
+          "file": "src/lib/approach.ts",
+          "sha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22",
+          "bytes": 8818
+        },
+        {
+          "file": "src/lib/chart-signature.ts",
+          "sha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c",
+          "bytes": 11892
+        },
+        {
+          "file": "src/lib/share-card.ts",
+          "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+          "bytes": 55757
+        },
+        {
+          "file": "src/lib/daily.ts",
+          "sha256": "e3ee76fa21f2226254a6d86e31bcb955cf421d7182d8d2da3fe48c617280dced",
+          "bytes": 10719
+        },
+        {
+          "file": "src/lib/daily-publication.ts",
+          "sha256": "2bfe704934ec53d45b015fb9cc4184bb11821b8ea34388aa6b765eb56b1266c4",
+          "bytes": 37300
+        },
+        {
+          "file": "src/pages/feeds/daily-sky.xml.ts",
+          "sha256": "d1f59ee78d01bca306ff13a151cd343c8a07a59c6f00f2b12784d42fb29349f1",
+          "bytes": 2973
+        },
+        {
+          "file": "scripts/daily-feed-dates.test.ts",
+          "sha256": "f0c1023af71b5f5b9cef0c1c96c354b3d81cc18b29745da44a89df6135eb48f7",
+          "bytes": 2483
+        },
+        {
+          "file": "scripts/build-sky.mjs",
+          "sha256": "b1548b8d736b17a7646ab33aaf62bddb76320d299485c1b6b0a2d77cbc794ffd",
+          "bytes": 9244
+        },
+        {
+          "file": "scripts/build-sky-api.mjs",
+          "sha256": "e8bc8a02eecf7316409de8bdfa47bd2281e8eba1aa89e4730027a9c52bae4544",
+          "bytes": 1711
+        }
+      ],
+      "callerSearch": {
+        "args": [
+          "-n",
+          "localDateEndpointsUtc|LocalDateEndpoints|chart-date-certainty",
+          "src",
+          "scripts"
+        ],
+        "status": 0
+      }
+    },
+    "sdk": {
+      "root": "/private/tmp/zodiacs-platform-sdk-seconds",
+      "head": "ac27761e6dea138842e6ef5c2c69129ead7af636",
+      "status": "",
+      "files": [
+        {
+          "file": "packages/engine/src/geo.ts",
+          "sha256": "bb8e3e0497b2180b6c20954807d56206fe90d208760d730125493eef22464687",
+          "bytes": 334
+        },
+        {
+          "file": "packages/engine/src/geo/timezone.ts",
+          "sha256": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494",
+          "bytes": 8308
+        },
+        {
+          "file": "packages/engine/src/types.ts",
+          "sha256": "b56e35fb04903af94fbd0bbb98e4e8d99c298646ef68ddcefca12672d7397a3e",
+          "bytes": 4510
+        },
+        {
+          "file": "packages/engine/src/receipt.ts",
+          "sha256": "6a2513769934da7b72ab2e07c66df2d48e49fe2d8a8b54b737c2424d301778d8",
+          "bytes": 27874
+        },
+        {
+          "file": "packages/engine/src/geo.test.ts",
+          "sha256": "68f03a699351526509f9262a6976cc53cd5482447a1219e90eed052c77e8bbce",
+          "bytes": 5499
+        },
+        {
+          "file": "packages/engine/package.json",
+          "sha256": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc",
+          "bytes": 2154
+        }
+      ],
+      "callerSearch": {
+        "args": [
+          "-n",
+          "localDateEndpointsUtc|LocalDateEndpoints|chart-date-certainty",
+          "packages/engine/src",
+          "packages/sdk/src"
+        ],
+        "status": 1
+      }
+    }
+  }
+}

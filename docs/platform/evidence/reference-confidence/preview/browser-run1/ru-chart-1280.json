@@ -1,0 +1,1594 @@
+{
+  "name": "ru-chart-1280",
+  "mode": "chart",
+  "width": 1280,
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "text": "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "location": {
+        "url": "https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+        "line": 0,
+        "column": 0,
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    },
+    {
+      "text": "Error: Could not establish a calculation time within the local date.\n    at ri (https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app/_astro/ChartCalculator.Cj-rBB1B.js:2:24254)\n    at ai (https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app/_astro/ChartCalculator.Cj-rBB1B.js:2:27990)\n    at HTMLFormElement.<anonymous> (https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app/_astro/preact.module.Bjq9tLsx.js:1:4446)",
+      "location": {
+        "url": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app/_astro/ChartCalculator.Cj-rBB1B.js",
+        "line": 1,
+        "column": 27333,
+        "lineNumber": 1,
+        "columnNumber": 27333
+      }
+    }
+  ],
+  "browserRequests": [
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/ru/birth-chart/",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "blocked": true
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/favicon.svg",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/calculator.MBHg3tIV.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/explorer.ijMRUwvv.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartActionDock.Cc8zzTbx.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartCalculator.Cj-rBB1B.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PlanetGlyph.BhITbtcc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share.BRlg0eGS.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-handoff.Dvz2AAcL.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/BirthFields.VmY_J4-2.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/interpretations.BaZkYN67.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AstroTerm.7K8SAipO.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AspectGlyph.DMIAGIQV.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/Wheel.RNRSqGob.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/dignities.D6lQGYrR.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/houses.5SlbILVS.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/technical-layout.DQIjXHHb.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/learning-input-identity.C-WLv51I.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/analytics.CH5T6e-b.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/post-chart-context.cHI09JaB.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/paths.DYbAuceH.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/site-footer.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/index.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/golos-text-cyr-b.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/jetbrains-mono-cyrillic-400-500.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/golos-text-cyr-a.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-cyrillic-500-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/t.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/assistant-ui.css",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/guide-avatar.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/ChartActionDock.Bl4xOwIo.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/LearningPractice.CSqTNZrv.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/natal.D7JKDSdx.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/synastry.rhUg9_9F.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/aspects.BNC-J2iD.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/compat.Bjc3uaB7.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-context-copy.UBOz97Jz.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/AspectPatternFeature.DeT1XR8E.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/use-learning-sources.DJlsz2nj.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/schema.DqKqbGHb.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/read-store.CIuzJaHq.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/calculator-receipt.Sj7p-7nE.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/PositionsShareSurface.jcTwHV77.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-positions.D3o0ugj4.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card.6rw5NcG3.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card-brand.CJKZtcRK.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/share-card-copy.D0c42nic.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/chart-signature.o0kdVHcC.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/store.B9KwR70B.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/_astro/deletions.DUQYISzq.js",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-500-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-400-italic.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/j.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/fonts/eb-garamond-latin-400-normal.woff2",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/gemini.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/pisces.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/cancer.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/data/cities/a.json",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/zodiac-icons/128/capricorn.avif",
+      "blocked": false
+    },
+    {
+      "method": "GET",
+      "origin": "https://zodiacs-et5nq8c46-zodiacsofficial.vercel.app",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "blocked": false
+    }
+  ],
+  "blocked": [
+    {
+      "method": "GET",
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "reason": "external"
+    }
+  ],
+  "requestFailures": [
+    {
+      "origin": "https://plausible.io",
+      "path": "/js/pa-HwF2IBb5Sw8eboNPSOgHv.js",
+      "method": "GET",
+      "error": "net::ERR_BLOCKED_BY_CLIENT.Inspector",
+      "knownFooterTeardown": false
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "ru-chart-1280-toronto.png",
+      "bytes": 115352,
+      "sha256": "07fc54056b770983f1a9354281f833655795f1cd15987a69672ba034891fc0b5"
+    },
+    {
+      "path": "ru-chart-1280-juneau.png",
+      "bytes": 115500,
+      "sha256": "416632623bae2d09e4d10b45703b47fc652321c3569e6dee9d6ae76aaae6ea8f"
+    },
+    {
+      "path": "ru-chart-1280-known.png",
+      "bytes": 115530,
+      "sha256": "534983a9c47138de036154732305036e607282ebb2a91ef78a5a45c9cb0c9349"
+    },
+    {
+      "path": "ru-chart-1280-refused.png",
+      "bytes": 172996,
+      "sha256": "8441ceb945fc686c9fa1478f671425f4626750d6753d31b449f3a2ded74e3b59"
+    },
+    {
+      "path": "ru-chart-1280-recovered.png",
+      "bytes": 115366,
+      "sha256": "3cdb67a37f90a1ee0ca7635f57c076764dad1e99c14d508fdf0509f18993528f"
+    }
+  ],
+  "passed": true,
+  "locale": "ru",
+  "path": "/ru/birth-chart/",
+  "historical": [
+    {
+      "input": {
+        "name": "Toronto",
+        "zone": "America/Toronto",
+        "date": "1919-03-31"
+      },
+      "state": {
+        "date": "1919-03-31",
+        "time": "08:30",
+        "unknown": true,
+        "place": "Toronto · Ontario, Canada",
+        "result": true,
+        "resultText": "Натальная картаБез времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.СолнцеОвен9°53′ ОвенЧитать Овен →ЛунаНужно время рожденияНужно время рожденияАсцендентНужно время рожденияВаше чтение за 2 минутыЧто ваша карта говорит о вас — и что дальше?Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.Прочитать мою карту→Разберусь сам(а)Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesRxRxRxRxНатальнаяНебо сейчасПрогрессииСолнечное возвращение соединение секстиль квадратура трин оппозицияВыберите часть картыНичего не выбраноСолнцеЛунаМеркурийВенераМарсЮпитерСатурнУранНептунПлутонСеверный узелОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыМеркурий трин СатурнЛуна квадратура ЮпитерЛуна трин НептунЛуна квадратура ПлутонЮпитер соединение ПлутонМарс трин СатурнСолнце квадратура ЮпитерМеркурий соединение МарсВенера секстиль ЮпитерСолнце соединение ЛунаСолнце трин НептунВенера квадратура НептунУран трин ПлутонСолнце квадратура ПлутонSee it in three dimensions — пока по-английскиКоснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.Сохранить эту карту+Рисуем…↗Форма и классические управителиФорма картыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Нет чёткой формыНаибольшая пустая дуга: 188.156°Занятая дуга: 171.844°Округление измерений до: 0.001° · Отступ от каждого порога: 2°Десять планет, от Солнца до Плутона, учитываются по исходным положениям с равным весом. Узлы, дома, углы и смещённые символы в измерении не участвуют.ПравилоСвязка: занятая дуга ≤120°.Чаша: дуга 150°–180°; внутренние промежутки ≤60°.Локомотив: дуга 225°–255°; внутренние промежутки ≤60°.Корзина: единственная ручка; девять планет на дуге 120°–180°, внутренние промежутки ≤60°, разделяющие промежутки ≥60°, ручка в пределах 30° от оппозиции к середине дуги.Качели: две группы по 3–7 планет, каждая на дуге ≤90°; внутренние промежутки ≤60°, разделяющие промежутки ≥60°, середины в пределах 30° от оппозиции.Брызги: все круговые промежутки ≤60°.Чёткая форма должна соответствовать одному ужесточённому правилу без конкурирующего ослабленного варианта. У каждого углового порога есть полоса исключения 2°; это правило продукта, а не оценка погрешности.Луна · Показать на картеСолнце · Показать на картеМарс · Показать на картеМеркурий · Показать на картеВенера · Показать на картеПлутон · Показать на картеЮпитер · Показать на картеНептун · Показать на картеСатурн · Показать на картеУран · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеУправители карты и домовТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Классический управитель карты: Недоступно по этим даннымУправители карты и домов: Недоступно по этим даннымБез времени, места или достоверных куспидов соответствующие управители не определяются. Управитель карты и конечный диспозитор — разные понятия.Правило: zodiacs-chart-context-v1Создать изображениеДиспозиторыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Единый конечный диспозитор не установленСолнце → Марс → МарсЛуна · Неполная цепочкаМеркурий → Марс → МарсВенера → ВенераМарс → МарсЮпитер → Луна · Неполная цепочкаСатурн → Солнце → Марс → МарсСобственная обитель: МарсСобственная обитель: ВенераКаждая стрелка ведёт к классическому управителю знака предыдущей планеты. Участвуют только семь классических планет. Экзальтация не означает обитель.Солнце · Показать на картеМарс · Показать на картеМарс · Показать на картеЛуна · Показать на картеМеркурий · Показать на картеМарс · Показать на картеМарс · Показать на картеВенера · Показать на картеВенера · Показать на картеМарс · Показать на картеМарс · Показать на картеЮпитер · Показать на картеЛуна · Показать на картеСатурн · Показать на картеСолнце · Показать на картеМарс · Показать на картеМарс · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеКлассические достоинстваТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Солнце · Овен: ЭкзальтацияЛуна · Знак не установлен: Знак не установленМеркурий · Овен: Нет ни одной из этих четырёх метокВенера · Телец: ОбительМарс · Овен: ОбительЮпитер · Рак: ЭкзальтацияСатурн · Лев: ИзгнаниеНептун · Лев: Не входит в классическую таблицу семи планетСеверный узел · Стрелец: Не входит в классическую таблицу семи планетПлутон · Рак: Не входит в классическую таблицу семи планетЮжный узел · Близнецы: Не входит в классическую таблицу семи планетУран · Водолей: Не входит в классическую таблицу семи планетЭти традиционные метки описывают связь планеты со знаком. Они не измеряют ценность, способности или будущее человека.Обитель: знак, которым планета управляет в классической системе.Экзальтация: знак особой традиционной связи с планетой.Изгнание: знак напротив классической обители.Падение: знак напротив экзальтации. Эти четыре метки не охватывают все традиционные достоинства.Солнце · Показать на картеОвен · Показать на картеМеркурий · Показать на картеОвен · Показать на картеВенера · Показать на картеТелец · Показать на картеМарс · Показать на картеОвен · Показать на картеЮпитер · Показать на картеРак · Показать на картеСатурн · Показать на картеЛев · Показать на картеНептун · Показать на картеЛев · Показать на картеСеверный узел · Показать на картеСтрелец · Показать на картеПлутон · Показать на картеРак · Показать на картеЮжный узел · Показать на картеБлизнецы · Показать на картеУран · Показать на картеВодолей · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеЕщё способы использовать эту карту+Поделиться картой · Ещё способы использовать эту карту↗Скачать запись расчёта (.json)↓Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.Точные данные карты — 12 положений · 15 аспектов1919-03-31 · 16:00:00 UTC · 43.71°, -79.40° · движок v0.1.1-rc.6ТелоПоложениеЗнакДвижение Солнце9°53′Овен Луна6°54′Нужно время рождения · Нужно время рождения Меркурий21°52′ОвенRx Венера9°58′Телец Марс19°04′Овен Юпитер7°05′Рак Сатурн21°49′ЛевRx Уран29°58′Водолей Нептун6°36′ЛевRx Плутон4°34′Рак Северный узел5°17′СтрелецRx Южный узел5°17′БлизнецыRxАспекты - 15 аспектов Меркурий  трин  Сатурн · орбис 0.0° · сходящийся Луна  квадратура  Юпитер · орбис 0.2° · сходящийся Луна  трин  Нептун · орбис 0.3° · расходящийся Луна  квадратура  Плутон · орбис 2.3° · расходящийся Юпитер  соединение  Плутон · орбис 2.5° · расходящийся Марс  трин  Сатурн · орбис 2.8° · сходящийся Солнце  квадратура  Юпитер · орбис 2.8° · расходящийся Меркурий  соединение  Марс · орбис 2.8° · сходящийся Венера  секстиль  Юпитер · орбис 2.9° · расходящийся Солнце  соединение  Луна · орбис 3.0° · сходящийся Солнце  трин  Нептун · орбис 3.3° · расходящийся Венера  квадратура  Нептун · орбис 3.4° · расходящийся Уран  трин  Плутон · орбис 4.6° · сходящийся Солнце  квадратура  Плутон · орбис 5.3° · расходящийся Солнце  соединение  Марс · орбис 9.2° · сходящийся",
+        "moonUncertain": true,
+        "registry": null,
+        "error": null,
+        "busy": "false",
+        "actions": 5,
+        "context": {
+          "mode": "full",
+          "sunSign": "aries",
+          "chartId": null,
+          "contextId": 8
+        },
+        "focus": {
+          "tag": "H2",
+          "id": "",
+          "role": null,
+          "text": "Натальная карта"
+        },
+        "noSavedProfile": true,
+        "overflow": false
+      },
+      "referenceInstant": "1919-03-31T16:00:00.000Z"
+    },
+    {
+      "input": {
+        "name": "Juneau",
+        "zone": "America/Juneau",
+        "date": "1867-10-18"
+      },
+      "state": {
+        "date": "1867-10-18",
+        "time": "08:30",
+        "unknown": true,
+        "place": "Juneau · Alaska, United States",
+        "result": true,
+        "resultText": "Натальная картаРождение до введения часовых поясов — мы использовали местное среднее время той эпохи, ту же конвенцию, что и профессиональные программы. (America/Juneau). Как мы считаем.Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.СолнцеВесы24°01′ ВесыЧитать Весы →ЛунаНужно время рожденияНужно время рожденияАсцендентНужно время рожденияВаше чтение за 2 минутыЧто ваша карта говорит о вас — и что дальше?Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.Прочитать мою карту→Разберусь сам(а)Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesRxRxRxRxНатальнаяНебо сейчасПрогрессииСолнечное возвращение соединение секстиль квадратура трин оппозицияВыберите часть картыНичего не выбраноСолнцеЛунаМеркурийВенераМарсЮпитерСатурнУранНептунПлутонСеверный узелОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыМарс оппозиция ПлутонУран квадратура НептунМеркурий соединение МарсМеркурий оппозиция ПлутонМеркурий трин УранВенера трин ЮпитерМарс трин УранУран секстиль ПлутонСолнце трин ЛунаСолнце трин ЮпитерЮпитер квадратура СатурнСолнце соединение ВенераSee it in three dimensions — пока по-английскиКоснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.Сохранить эту карту+Рисуем…↗Форма и классические управителиФорма картыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Нет чёткой формыНаибольшая пустая дуга: 101.131°Занятая дуга: 258.869°Округление измерений до: 0.001° · Отступ от каждого порога: 2°Десять планет, от Солнца до Плутона, учитываются по исходным положениям с равным весом. Узлы, дома, углы и смещённые символы в измерении не участвуют.ПравилоСвязка: занятая дуга ≤120°.Чаша: дуга 150°–180°; внутренние промежутки ≤60°.Локомотив: дуга 225°–255°; внутренние промежутки ≤60°.Корзина: единственная ручка; девять планет на дуге 120°–180°, внутренние промежутки ≤60°, разделяющие промежутки ≥60°, ручка в пределах 30° от оппозиции к середине дуги.Качели: две группы по 3–7 планет, каждая на дуге ≤90°; внутренние промежутки ≤60°, разделяющие промежутки ≥60°, середины в пределах 30° от оппозиции.Брызги: все круговые промежутки ≤60°.Чёткая форма должна соответствовать одному ужесточённому правилу без конкурирующего ослабленного варианта. У каждого углового порога есть полоса исключения 2°; это правило продукта, а не оценка погрешности.Нептун · Показать на картеПлутон · Показать на картеЛуна · Показать на картеУран · Показать на картеСолнце · Показать на картеВенера · Показать на картеМеркурий · Показать на картеМарс · Показать на картеСатурн · Показать на картеЮпитер · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеУправители карты и домовТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Классический управитель карты: Недоступно по этим даннымУправители карты и домов: Недоступно по этим даннымБез времени, места или достоверных куспидов соответствующие управители не определяются. Управитель карты и конечный диспозитор — разные понятия.Правило: zodiacs-chart-context-v1Создать изображениеДиспозиторыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Единый конечный диспозитор не установленСолнце → Венера → ВенераЛуна · Неполная цепочкаМеркурий → Марс → МарсВенера → ВенераМарс → МарсЮпитер → Сатурн → Марс → МарсСатурн → Марс → МарсСобственная обитель: МарсСобственная обитель: ВенераКаждая стрелка ведёт к классическому управителю знака предыдущей планеты. Участвуют только семь классических планет. Экзальтация не означает обитель.Солнце · Показать на картеВенера · Показать на картеВенера · Показать на картеЛуна · Показать на картеМеркурий · Показать на картеМарс · Показать на картеМарс · Показать на картеВенера · Показать на картеВенера · Показать на картеМарс · Показать на картеМарс · Показать на картеЮпитер · Показать на картеСатурн · Показать на картеМарс · Показать на картеМарс · Показать на картеСатурн · Показать на картеМарс · Показать на картеМарс · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеКлассические достоинстваТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Солнце · Весы: ПадениеЛуна · Знак не установлен: Знак не установленМеркурий · Скорпион: Нет ни одной из этих четырёх метокВенера · Весы: ОбительМарс · Скорпион: ОбительЮпитер · Водолей: Нет ни одной из этих четырёх метокСатурн · Скорпион: Нет ни одной из этих четырёх метокНептун · Овен: Не входит в классическую таблицу семи планетСеверный узел · Дева: Не входит в классическую таблицу семи планетПлутон · Телец: Не входит в классическую таблицу семи планетЮжный узел · Рыбы: Не входит в классическую таблицу семи планетУран · Рак: Не входит в классическую таблицу семи планетЭти традиционные метки описывают связь планеты со знаком. Они не измеряют ценность, способности или будущее человека.Обитель: знак, которым планета управляет в классической системе.Экзальтация: знак особой традиционной связи с планетой.Изгнание: знак напротив классической обители.Падение: знак напротив экзальтации. Эти четыре метки не охватывают все традиционные достоинства.Солнце · Показать на картеВесы · Показать на картеМеркурий · Показать на картеСкорпион · Показать на картеВенера · Показать на картеВесы · Показать на картеМарс · Показать на картеСкорпион · Показать на картеЮпитер · Показать на картеВодолей · Показать на картеСатурн · Показать на картеСкорпион · Показать на картеНептун · Показать на картеОвен · Показать на картеСеверный узел · Показать на картеДева · Показать на картеПлутон · Показать на картеТелец · Показать на картеЮжный узел · Показать на картеРыбы · Показать на картеУран · Показать на картеРак · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеЕщё способы использовать эту карту+Поделиться картой · Ещё способы использовать эту карту↗Скачать запись расчёта (.json)↓Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.Точные данные карты — 12 положений · 15 аспектов1867-10-17 · 20:57:41 UTC · 58.30°, -134.42° · движок v0.1.1-rc.6ТелоПоложениеЗнакДвижение Солнце24°01′Весы Луна20°41′Нужно время рождения · Нужно время рождения Меркурий14°11′Скорпион Венера29°50′Весы Марс15°01′Скорпион Юпитер27°44′ВодолейRx Сатурн22°55′Скорпион Уран12°53′Рак Нептун13°22′ОвенRx Плутон15°30′ТелецRx Северный узел13°32′ДеваRx Южный узел13°32′РыбыRxАспекты - 15 аспектов Марс  оппозиция  Плутон · орбис 0.5° · сходящийся Уран  квадратура  Нептун · орбис 0.5° · сходящийся Меркурий  соединение  Марс · орбис 0.8° · сходящийся Меркурий  оппозиция  Плутон · орбис 1.3° · сходящийся Меркурий  трин  Уран · орбис 1.3° · расходящийся Венера  трин  Юпитер · орбис 2.1° · расходящийся Марс  трин  Уран · орбис 2.1° · расходящийся Уран  секстиль  Плутон · орбис 2.6° · сходящийся Солнце  трин  Луна · орбис 3.3° · сходящийся Солнце  трин  Юпитер · орбис 3.7° · сходящийся Юпитер  квадратура  Сатурн · орбис 4.8° · сходящийся Солнце  соединение  Венера · орбис 5.8° · расходящийся Луна  трин  Юпитер · орбис 7.0° · сходящийся Сатурн  оппозиция  Плутон · орбис 7.4° · расходящийся Марс  соединение  Сатурн · орбис 7.9° · сходящийся",
+        "moonUncertain": true,
+        "registry": null,
+        "error": null,
+        "busy": "false",
+        "actions": 5,
+        "context": {
+          "mode": "full",
+          "sunSign": "libra",
+          "chartId": null,
+          "contextId": 15
+        },
+        "focus": {
+          "tag": "H2",
+          "id": "",
+          "role": null,
+          "text": "Натальная карта"
+        },
+        "noSavedProfile": true,
+        "overflow": false
+      },
+      "referenceInstant": "1867-10-17T20:57:41.000Z"
+    }
+  ],
+  "offlineCities": [
+    {
+      "name": "Toronto",
+      "admin": "Ontario",
+      "country": "Canada",
+      "lat": 43.71,
+      "lon": -79.4,
+      "zone": "America/Toronto",
+      "shard": "t.json",
+      "observedOption": "Toronto\nOntario, Canada"
+    },
+    {
+      "name": "Juneau",
+      "admin": "Alaska",
+      "country": "United States",
+      "lat": 58.3,
+      "lon": -134.42,
+      "zone": "America/Juneau",
+      "shard": "j.json",
+      "observedOption": "Juneau\nAlaska, United States"
+    },
+    {
+      "name": "Toronto",
+      "admin": "Ontario",
+      "country": "Canada",
+      "lat": 43.71,
+      "lon": -79.4,
+      "zone": "America/Toronto",
+      "shard": "t.json",
+      "observedOption": "Toronto\nOntario, Canada"
+    },
+    {
+      "name": "Apia",
+      "admin": "Tuamasaga",
+      "country": "Samoa",
+      "lat": -13.83,
+      "lon": -171.77,
+      "zone": "Pacific/Apia",
+      "shard": "a.json",
+      "observedOption": "Apia\nTuamasaga, Samoa"
+    }
+  ],
+  "receipts": [
+    {
+      "file": "ru-chart-1280-toronto-receipt.json",
+      "sha256": "157b7c32a345439e411e097d2a458ad1624989c2c502df529cefac88daab7659",
+      "bytes": 4478,
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1919-03-31T16:00:00.000Z",
+        "localResolution": {
+          "date": "1919-03-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "moon": {
+        "body": "Moon",
+        "degree": 6.908715565947205,
+        "lat": 4.342837191659032,
+        "lon": 6.908715565947205,
+        "retrograde": false,
+        "sign": "aries",
+        "speed": 15.056719457560575
+      }
+    },
+    {
+      "file": "ru-chart-1280-juneau-receipt.json",
+      "sha256": "b2028a8c3131969ef8a0948b1f914573c0fdf4637248748d339afb06fb4d13cf",
+      "bytes": 4529,
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 58.3,
+          "longitude": -134.42
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [
+          "lmt"
+        ],
+        "instant": "1867-10-17T20:57:41.000Z",
+        "localResolution": {
+          "date": "1867-10-18",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 902.3166666666667,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "America/Juneau"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "lmt",
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "moon": {
+        "body": "Moon",
+        "degree": 20.692820323055003,
+        "lat": -5.123372651374478,
+        "lon": 80.692820323055,
+        "retrograde": false,
+        "sign": "gemini",
+        "speed": 14.334248577589165
+      }
+    },
+    {
+      "file": "ru-chart-1280-known-receipt.json",
+      "sha256": "281eb1124fee90b36a8736b02e8425a54cff6353b220423aace5e6c1619bd683",
+      "bytes": 4752,
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": 43.71,
+          "longitude": -79.4
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": null,
+          "actual": "whole",
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "1990-06-15T12:30:00.000Z",
+        "localResolution": {
+          "date": "1990-06-15",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": -240,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "08:30",
+          "timeZone": "America/Toronto"
+        },
+        "provenance": null,
+        "reference": "supplied-instant",
+        "resultFlags": [],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": true
+      },
+      "moon": {
+        "body": "Moon",
+        "degree": 15.636724373149718,
+        "lat": 3.1501087635442344,
+        "lon": 345.6367243731497,
+        "retrograde": false,
+        "sign": "pisces",
+        "speed": 13.369652766842364
+      }
+    },
+    {
+      "file": "ru-chart-1280-recovered-receipt.json",
+      "sha256": "0b85b2e7482a3fe44c6c783a03a90b8236107ce8a9c0c711e95df497e255a1c0",
+      "bytes": 4092,
+      "receipt": {
+        "conventions": {
+          "angles": "gast-and-mean-obliquity",
+          "aspects": "major-aspects;sun-moon-eight-planets;no-nodes",
+          "calendar": "proleptic-gregorian",
+          "longitudeUnit": "degrees-[0,360)",
+          "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+          "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+          "planetPositions": "apparent-geocentric-ecliptic-of-date",
+          "speed": "degrees-per-day;central-difference-plus-minus-0.25-day",
+          "zodiac": "tropical"
+        },
+        "coordinates": {
+          "latitude": -13.83,
+          "longitude": -171.77
+        },
+        "coverage": {
+          "angleExclusions": "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+          "assessment": "finite-reference-cases-only",
+          "broadDateRange": "not-certified",
+          "inputSyntax": "not-an-astronomical-accuracy-guarantee"
+        },
+        "engine": {
+          "name": "@zodiacs/engine",
+          "version": "0.1.1-rc.6"
+        },
+        "houses": {
+          "absenceReason": "unknown-time",
+          "actual": null,
+          "requested": "whole"
+        },
+        "inputFlags": [],
+        "instant": "2011-12-30T22:00:00.000Z",
+        "localResolution": {
+          "date": "2011-12-31",
+          "gapShiftMinutes": 0,
+          "offsetMinutes": 840,
+          "policy": {
+            "fold": "earlier",
+            "gap": "shift-forward"
+          },
+          "time": "12:00",
+          "timeZone": "Pacific/Apia"
+        },
+        "provenance": null,
+        "reference": "local-noon",
+        "resultFlags": [
+          "no-time"
+        ],
+        "schema": "zodiacs.calculation-receipt.draft-v1",
+        "sourceInstant": null,
+        "timeKnown": false
+      },
+      "moon": {
+        "body": "Moon",
+        "degree": 24.030919514277684,
+        "lat": 5.165315165338818,
+        "lon": 354.0309195142777,
+        "retrograde": false,
+        "sign": "pisces",
+        "speed": 12.195023855627824
+      }
+    }
+  ],
+  "known": {
+    "date": "1990-06-15",
+    "time": "08:30",
+    "unknown": false,
+    "place": "Toronto · Ontario, Canada",
+    "result": true,
+    "resultText": "Натальная картаСолнцеБлизнецы24°08′ БлизнецыЧитать Близнецы →ЛунаРыбы15°38′ РыбыЧитать Рыбы →АсцендентРак29°59′ РакЧитать Рак →Ваше чтение за 2 минутыЧто ваша карта говорит о вас — и что дальше?Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.Прочитать мою карту→Разберусь сам(а)Коллекционное крылоВаш солнечный знак — Близнецы.Близнецы входит в число Двенадцати — со своим образом, историей и официальной записью в Реестре, пока по-английски.Открыть Реестр: Близнецы — пока по-английски →Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPisces123456789101112ASCMCRxRxRxRxНатальнаяНебо сейчасПрогрессииСолнечное возвращение соединение секстиль квадратура трин оппозицияДомаВыберите часть картыНичего не выбраноСолнцеЛунаМеркурийВенераМарсЮпитерСатурнУранНептунПлутонСеверный узелОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыДом 1Дом 2Дом 3Дом 4Дом 5Дом 6Дом 7Дом 8Дом 9Дом 10Дом 11Дом 12ASCMCDSCICЛуна трин ПлутонЛуна трин ЮпитерЮпитер трин ПлутонНептун секстиль ПлутонЛуна секстиль НептунЮпитер оппозиция НептунМарс квадратура НептунМарс квадратура УранВенера секстиль ЮпитерЛуна секстиль ВенераВенера оппозиция ПлутонМарс квадратура ЮпитерВенера трин НептунВенера трин СатурнУран соединение НептунSee it in three dimensions — пока по-английскиКоснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.Сохранить эту карту+Рисуем…↗Форма и классические управителиФорма картыЛокомотивНаибольшая пустая дуга: 119.508°Занятая дуга: 240.492°Солнце, Луна, Меркурий, Венера, Марс, Юпитер, Сатурн, Уран, Нептун, Плутон · 240.492°Округление измерений до: 0.001° · Отступ от каждого порога: 2°Десять планет, от Солнца до Плутона, учитываются по исходным положениям с равным весом. Узлы, дома, углы и смещённые символы в измерении не участвуют.ПравилоСвязка: занятая дуга ≤120°.Чаша: дуга 150°–180°; внутренние промежутки ≤60°.Локомотив: дуга 225°–255°; внутренние промежутки ≤60°.Корзина: единственная ручка; девять планет на дуге 120°–180°, внутренние промежутки ≤60°, разделяющие промежутки ≥60°, ручка в пределах 30° от оппозиции к середине дуги.Качели: две группы по 3–7 планет, каждая на дуге ≤90°; внутренние промежутки ≤60°, разделяющие промежутки ≥60°, середины в пределах 30° от оппозиции.Брызги: все круговые промежутки ≤60°.Чёткая форма должна соответствовать одному ужесточённому правилу без конкурирующего ослабленного варианта. У каждого углового порога есть полоса исключения 2°; это правило продукта, а не оценка погрешности.Марс · Показать на картеВенера · Показать на картеМеркурий · Показать на картеСолнце · Показать на картеЮпитер · Показать на картеПлутон · Показать на картеУран · Показать на картеНептун · Показать на картеСатурн · Показать на картеЛуна · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеУправители карты и домовКлассический управитель карты: Рак → Луна · Рыбы · Дом 9Рассчитанная система домов: ЦельнознаковаяДом 1 · Рак → Луна · Рыбы · Дом 9Дом 2 · Лев → Солнце · Близнецы · Дом 12Дом 3 · Дева → Меркурий · Близнецы · Дом 12Дом 4 · Весы → Венера · Телец · Дом 11Дом 5 · Скорпион → Марс · Овен · Дом 10Дом 6 · Стрелец → Юпитер · Рак · Дом 1Дом 7 · Козерог → Сатурн · Козерог · Дом 7Дом 8 · Водолей → Сатурн · Козерог · Дом 7Дом 9 · Рыбы → Юпитер · Рак · Дом 1Дом 10 · Овен → Марс · Овен · Дом 10Дом 11 · Телец → Венера · Телец · Дом 11Дом 12 · Близнецы → Меркурий · Близнецы · Дом 12Без времени, места или достоверных куспидов соответствующие управители не определяются. Управитель карты и конечный диспозитор — разные понятия.Классический управитель карты · Показать на картеЛуна · Показать на картеДом 1 · Показать на картеЛуна · Показать на картеДом 2 · Показать на картеСолнце · Показать на картеДом 3 · Показать на картеМеркурий · Показать на картеДом 4 · Показать на картеВенера · Показать на картеДом 5 · Показать на картеМарс · Показать на картеДом 6 · Показать на картеЮпитер · Показать на картеДом 7 · Показать на картеСатурн · Показать на картеДом 8 · Показать на картеСатурн · Показать на картеДом 9 · Показать на картеЮпитер · Показать на картеДом 10 · Показать на картеМарс · Показать на картеДом 11 · Показать на картеВенера · Показать на картеДом 12 · Показать на картеМеркурий · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеДиспозиторыЕдиный конечный диспозитор не установленСолнце → Меркурий → МеркурийЛуна → Юпитер → ЛунаМеркурий → МеркурийВенера → ВенераМарс → МарсЮпитер → Луна → ЮпитерСатурн → СатурнСобственная обитель: МарсСобственная обитель: МеркурийВзаимная рецепция по обители: Луна → ЮпитерСобственная обитель: СатурнСобственная обитель: ВенераКаждая стрелка ведёт к классическому управителю знака предыдущей планеты. Участвуют только семь классических планет. Экзальтация не означает обитель.Солнце · Показать на картеМеркурий · Показать на картеМеркурий · Показать на картеЛуна · Показать на картеЮпитер · Показать на картеЛуна · Показать на картеМеркурий · Показать на картеМеркурий · Показать на картеВенера · Показать на картеВенера · Показать на картеМарс · Показать на картеМарс · Показать на картеЮпитер · Показать на картеЛуна · Показать на картеЮпитер · Показать на картеСатурн · Показать на картеСатурн · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеКлассические достоинстваСолнце · Близнецы · Дом 12: Нет ни одной из этих четырёх метокЛуна · Рыбы · Дом 9: Нет ни одной из этих четырёх метокМеркурий · Близнецы · Дом 12: ОбительВенера · Телец · Дом 11: ОбительМарс · Овен · Дом 10: ОбительЮпитер · Рак · Дом 1: ЭкзальтацияСатурн · Козерог · Дом 7: ОбительНептун · Козерог · Дом 7: Не входит в классическую таблицу семи планетСеверный узел · Водолей · Дом 8: Не входит в классическую таблицу семи планетПлутон · Скорпион · Дом 5: Не входит в классическую таблицу семи планетЮжный узел · Лев · Дом 2: Не входит в классическую таблицу семи планетУран · Козерог · Дом 7: Не входит в классическую таблицу семи планетЭти традиционные метки описывают связь планеты со знаком. Они не измеряют ценность, способности или будущее человека.Обитель: знак, которым планета управляет в классической системе.Экзальтация: знак особой традиционной связи с планетой.Изгнание: знак напротив классической обители.Падение: знак напротив экзальтации. Эти четыре метки не охватывают все традиционные достоинства.Солнце · Показать на картеБлизнецы · Показать на картеЛуна · Показать на картеРыбы · Показать на картеМеркурий · Показать на картеБлизнецы · Показать на картеВенера · Показать на картеТелец · Показать на картеМарс · Показать на картеОвен · Показать на картеЮпитер · Показать на картеРак · Показать на картеСатурн · Показать на картеКозерог · Показать на картеНептун · Показать на картеКозерог · Показать на картеСеверный узел · Показать на картеВодолей · Показать на картеПлутон · Показать на картеСкорпион · Показать на картеЮжный узел · Показать на картеЛев · Показать на картеУран · Показать на картеКозерог · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеЕщё способы использовать эту карту+Поделиться картой · Ещё способы использовать эту карту↗Скачать запись расчёта (.json)↓Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.Точные данные карты — 12 положений · 16 аспектов1990-06-15 · 12:30:00 UTC · 43.71°, -79.40° · Дома целых знаков · движок v0.1.1-rc.6ТелоПоложениеЗнакДомДвижение Солнце24°08′Близнецы12 Луна15°38′Рыбы9 Меркурий5°43′Близнецы12 Венера18°48′Телец11 Марс11°03′Овен10 Юпитер15°53′Рак1 Сатурн24°01′Козерог7Rx Уран8°09′Козерог7Rx Нептун13°42′Козерог7Rx Плутон15°24′Скорпион5Rx Северный узел8°07′Водолей8 Южный узел8°07′Лев2Аспекты - 16 аспектов Луна  трин  Плутон · орбис 0.2° · расходящийся Луна  трин  Юпитер · орбис 0.3° · сходящийся Юпитер  трин  Плутон · орбис 0.5° · расходящийся Нептун  секстиль  Плутон · орбис 1.7° · расходящийся Луна  секстиль  Нептун · орбис 1.9° · расходящийся Юпитер  оппозиция  Нептун · орбис 2.2° · расходящийся Марс  квадратура  Нептун · орбис 2.7° · сходящийся Марс  квадратура  Уран · орбис 2.9° · расходящийся Венера  секстиль  Юпитер · орбис 2.9° · расходящийся Луна  секстиль  Венера · орбис 3.2° · сходящийся Венера  оппозиция  Плутон · орбис 3.4° · расходящийся Марс  квадратура  Юпитер · орбис 4.8° · сходящийся Венера  трин  Нептун · орбис 5.1° · расходящийся Венера  трин  Сатурн · орбис 5.2° · сходящийся Уран  соединение  Нептун · орбис 5.6° · расходящийся Юпитер  оппозиция  Уран · орбис 7.7° · расходящийся",
+    "moonUncertain": false,
+    "registry": {
+      "sign": "gemini",
+      "href": "/registry/gemini/"
+    },
+    "error": null,
+    "busy": "false",
+    "actions": 6,
+    "context": {
+      "mode": "full",
+      "sunSign": "gemini",
+      "chartId": null,
+      "contextId": 24
+    },
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Натальная карта"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "edited": {
+    "date": "2011-12-30",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "moonUncertain": false,
+    "registry": null,
+    "error": null,
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "BODY",
+      "id": "",
+      "role": null,
+      "text": "(function(){const uiLocale = \"ru\";\nconst uiMessages = {\"chartDepthOpen\":\"See it in three dimensions — пока по-английски\",\"chartDepthClose\":\"Hide the third dimension — пока по-английски\",\"calculationLoadError\":\"Не удалось загрузить файлы расчёта. Проверьте подключение и попробуйте снова.\",\"calculationReload\":\"Перезагрузить страницу\",\"calculationReloadWarning\":\"При перезагрузке несохранённые данные будут удалены.\",\"calculationRetry\":\"Попробовать снова\",\"pfdYearError\":\"Не удалось завершить разбор на год вперёд. Попробуйте снова.\",\"placeSearching\":\"Поиск мест…\",\"chartWheelActions\":\"Действия с картой\",\"chartWheelGuide\":\"Пройти экскурсию\",\"chartWheelReplay\":\"Повторить экскурсию\",\"chartWheelAnother\":\"Прочитать другую карту — пока по-английски\",\"chartWheelSignatureSelf\":\"Характерный рисунок вашей карты\",\"chartWheelSignatureOther\":\"Характерный рисунок этой карты\",\"chartWheelCompareMine\":\"Сравнить с моей — пока по-английски\",\"chartWheelCompareAdd\":\"Добавить мою карту для сравнения — пока по-английски\",\"chartWheelShareOther\":\"Поделиться этой картой\",\"navPrimary\":\"Основное\",\"navSigns\":\"Знаки\",\"navTools\":\"Инструменты\",\"navLearn\":\"Разбор\",\"navHoroscopes\":\"Гороскопы\",\"navCollect\":\"Astrofolio\",\"navSavedCharts\":\"Сохранённые карты\",\"navMenu\":\"Меню\",\"navSite\":\"О сайте\",\"navTwelve\":\"Двенадцать знаков\",\"footerTag\":\"Бесплатные астрологические инструменты и гиды по знакам. Карты считаются приватно, прямо в вашем браузере.\",\"footerStartHere\":\"С чего начать\",\"footerPlanets\":\"Планеты\",\"footerHouses\":\"Дома\",\"footerZodiacDates\":\"Даты знаков\",\"footerGlossary\":\"Глоссарий\",\"footerCompute\":\"Как мы считаем\",\"footerRegistry\":\"Registry\",\"footerThesis\":\"Манифест\",\"footerArchive\":\"Архив\",\"footerSdk\":\"SDK\",\"footerCollectNote\":\"Записи, поиск, страницы каталога и SDK Registry работают только на чтение. Необязательный инструмент покупки Astrofolio использует независимый сервис Jupiter и ваш кошелёк; Zodiacs.org не хранит ключи или средства. Ничто из этого не является финансовой рекомендацией.\",\"footerMethodology\":\"Методология\",\"footerAbout\":\"О проекте\",\"footerPrivacy\":\"Конфиденциальность\",\"footerTerms\":\"Условия\",\"footerPlaceData\":\"Данные о местах\",\"footerFonts\":\"Шрифты под лицензией\",\"skipContent\":\"Перейти к содержимому\",\"open\":\"Открыть\",\"birthChart\":\"Натальная карта\",\"compatibility\":\"Совместимость\",\"moonSign\":\"Лунный знак\",\"risingSign\":\"Асцендент\",\"moonPhase\":\"Фаза Луны\",\"saturnReturn\":\"Возвращение Сатурна\",\"transits\":\"Транзиты\",\"birthday\":\"День рождения\",\"retrogrades\":\"Ретроградности\",\"sun\":\"Солнце\",\"moon\":\"Луна\",\"rising\":\"Асцендент\",\"body\":\"Тело\",\"position\":\"Положение\",\"sign\":\"Знак\",\"house\":\"Дом\",\"chart\":\"Карта\",\"date\":\"Дата\",\"time\":\"Время\",\"place\":\"Место\",\"motion\":\"Движение\",\"optional\":\"необязательно\",\"birthDate\":\"Дата рождения\",\"birthTime\":\"Время рождения\",\"birthplace\":\"Место рождения\",\"birthDateRequired\":\"Укажите дату рождения.\",\"birthDateRange\":\"Выберите дату рождения с 1800 по 2199 год.\",\"birthTimeRequired\":\"Укажите время рождения.\",\"houseSystem\":\"Система домов\",\"wholeSignDefault\":\"Целые знаки (по умолчанию)\",\"placidus\":\"Плацидус\",\"houseSystemHelp\":\"Как карта делится на двенадцать сфер жизни. В системе целых знаков каждый знак — один дом; в системе Плацидуса размер домов зависит от точного времени и места. Планеты остаются на месте: меняются только границы домов.\",\"computing\":\"Считаем…\",\"checking\":\"Проверяем…\",\"comparing\":\"Сравниваем…\",\"save\":\"Сохранить\",\"rename\":\"Переименовать\",\"remove\":\"Удалить\",\"getBirthChart\":\"Постройте бесплатную натальную карту\",\"findMoonSign\":\"Узнайте свой лунный знак\",\"findRisingSign\":\"Узнайте свой асцендент\",\"savedCharts\":\"Сохранённые карты\",\"profile\":\"Ваш профиль\",\"read\":\"Читать\",\"rightNow\":\"Прямо сейчас\",\"enterBirthDetails\":\"Введите данные рождения…\",\"privacyDevice\":\"Приватно по умолчанию. Данные рождения остаются в этом браузере.\",\"placePlaceholder\":\"Начните вводить город…\",\"placeChange\":\"Изменить место рождения\",\"placePickHint\":\"Выберите место рождения из списка.\",\"placeNoResults\":\"Нет в списке? Выберите ближайший город — несколько километров редко меняют карту.\",\"placeError\":\"Не удалось загрузить справочник мест — проверьте соединение и попробуйте ещё раз.\",\"searchGeo\":\"Поиск по ~34 000 мест · GeoNames (CC BY 4.0)\",\"chartError\":\"Не получилось рассчитать карту. Попробуйте ещё раз.\",\"moonError\":\"Не получилось рассчитать эту Луну. Попробуйте ещё раз.\",\"localDateReferenceError\":\"Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.\",\"returnError\":\"Не получилось рассчитать возвращение. Попробуйте ещё раз.\",\"transitError\":\"Не получилось рассчитать транзиты. Попробуйте ещё раз.\",\"compareError\":\"Не получилось сравнить карты. Попробуйте ещё раз.\",\"noBirthTime\":\"Не знаю время\",\"risingTimeHelp\":\"Асцендент меняется каждые два часа — здесь важны именно часы.\",\"chartTimeHelp\":\"Нет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.\",\"chartSavedDevice\":\"Сохранено · на этом устройстве\",\"saveThisChart\":\"Сохранить эту карту\",\"chartSavedStatus\":\"Карта сохранена на этом устройстве.\",\"chartSaveFull\":\"Можно хранить до 40 карт — сначала удалите одну.\",\"chartSaveError\":\"Не удалось сохранить — возможно, браузер блокирует локальное хранилище.\",\"chartSavedMessage\":\"Сохранено в ваши карты. Войдите здесь, если хотите видеть их на всех устройствах.\",\"linkCopied\":\"Ссылка скопирована\",\"copyChartLink\":\"Скопировать ссылку на эту карту\",\"rendering\":\"Рисуем…\",\"cardSaved\":\"Карточка сохранена\",\"saveChartCard\":\"Сохранить карточку карты\",\"shareChart\":\"Поделиться картой\",\"linkToChart\":\"Ссылка на эту карту\",\"chartLinkCopied\":\"Ссылка на карту скопирована в буфер обмена.\",\"chartCardSaved\":\"Карточка карты сохранена.\",\"cardError\":\"Не удалось нарисовать карточку в этом браузере — колесо выше отлично снимается и скриншотом.\",\"shareNote\":\"Ссылка содержит введённые данные рождения — нам ничего не отправляется, открыть её смогут только те, кому вы её передадите. Карточка — изображение 1080×1350, создаётся на вашем устройстве.\",\"needsBirthTime\":\"Нужно время рождения\",\"yourMoonSign\":\"Ваш лунный знак\",\"yourRisingSign\":\"Ваш асцендент\",\"moonPhaseAtBirth\":\"Фаза Луны при рождении\",\"chartRuler\":\"Управитель карты\",\"planetSteering\":\"планета, ведущая ваш асцендент.\",\"aspectsFound\":\"Аспекты\",\"found\":\"найдено\",\"applying\":\"сходящийся\",\"wholeSignHouses\":\"Дома целых знаков\",\"placidusHouses\":\"Дома Плацидуса\",\"engine\":\"движок v\",\"readInOrder\":\"Читаем по порядку\",\"readIntro\":\"Сверху вниз — так карту читал бы астролог. Таблицы выше — данные; здесь — что они значат.\",\"readBigThree\":\"Начните с большой тройки\",\"readBigThreeBody\":\"Солнце, Луна, асцендент — три карточки наверху. Личность, инстинкт, вход. Всё, что ниже, уточняет их; ничто их не заменяет.\",\"readRooms\":\"Планеты, комната за комнатой\",\"readNoHouses\":\"Без времени рождения нет домов, поэтому каждая планета читается только по знаку. Добавьте время — и раздел обретёт свои комнаты.\",\"readAspects\":\"Аспекты, которые работают больше всего\",\"readWeather\":\"Погода карты\",\"readIn\":\"в\",\"today\":\"сегодня\",\"todayBySignTitle\":\"Небо сегодня — для каждого знака\",\"todayBySignPrompt\":\"Выберите свой солнечный знак, чтобы прочитать ясный прогноз на сегодня — время рождения не нужно.\",\"todaySolarNote\":\"читается по солнечным домам вашего знака\",\"whyThisReading\":\"Почему такое чтение\",\"todayHoroscopeLink\":\"гороскоп\",\"or\":\"или\",\"chartSavedBeforeLink\":\"Сохранено в ваши карты. Войдите\",\"chartSavedLink\":\"здесь\",\"chartSavedAfterLink\":\"когда захотите видеть их на всех устройствах.\",\"signedInAs\":\"Вы вошли как {email}\",\"removeChartConfirm\":\"Удалить «{name}» с этого устройства?\",\"compareSavedHeading\":\"Сравнить: {a} и {b}\",\"compareSavedPitch\":\"Две сохранённые карты — это готовое сравнение: каждый межкартный аспект, честно рассчитанный на этом устройстве.\",\"saturnDateHelp\":\"Одна дата уже закрепляет годы возвращения. Время и место уточняют даты на несколько дней — но не год.\",\"saturnReturnHeading\":\"{ordinal} возвращение\",\"skyMercuryRetrograde\":\"Ретроградный Меркурий\",\"skyMercuryDirect\":\"Меркурий директный\",\"skyPlanetRetrograde\":\"Ретроградный {planet}\",\"skyFullMoon\":\"Полнолуние\",\"skyNewMoon\":\"Новолуние\",\"skyMoonOn\":\"{event} · {date}\",\"skyAsOf\":\"{date} · 12 UTC\",\"skyTickerAria\":\"Положения неба на {date}, 12:00 UTC\",\"moonDiscAria\":\"Луна, освещено {percent}%\",\"pairingCta\":\"Читать пару {a} и {b}\",\"inviteWith\":\"Пригласить кого-то сравниться с {name}\",\"inviteNamedNote\":\"Ссылка содержит данные рождения {name} и открывает эту страницу с заполненной стороной — нам ничего не отправляется. Если это не вы, стоит спросить согласия.\",\"transitMiddayUtc\":\"{date} · полдень UTC\",\"planetReturn\":\"Возвращение: {planet}\",\"natalPlanet\":\"Натальный {planet}\",\"pfdToday\":\"Сегодня для этой карты\",\"pfdComing\":\"Что впереди у этой карты\",\"pfdYearAhead\":\"Год вперёд для этой карты\",\"pfdYearBusy\":\"Считаем год на вашем устройстве — несколько секунд…\",\"pfdYearNote\":\"Рассчитано по вашей сохранённой карте: точные даты на ближайшие двенадцать месяцев.\",\"saveYearAheadNote\":\"Для сохранённых карт профиль считает год вперёд — солнечное возвращение, даты Юпитера и Сатурна, попадания затмений.\",\"recordLabel\":\"Коллекционное крыло\",\"recordOneOfTwelve\":\"также есть среди Двенадцати — это каноническая запись в Реестре, пока по-английски.\",\"recordViewLink\":\"Посмотреть запись — пока по-английски →\",\"recordChartSun\":\"Ваш солнечный знак — {sign}.\",\"recordChartBody\":\"{sign} входит в число Двенадцати — со своим образом, историей и официальной записью в Реестре, пока по-английски.\",\"recordChartLink\":\"Открыть Реестр: {sign} — пока по-английски →\",\"babyDueDate\":\"Предполагаемая дата родов\",\"babyCompute\":\"Прочитать небо на эту дату\",\"babyNeedDate\":\"Сначала введите дату.\",\"babyError\":\"Не получилось рассчитать небо. Попробуйте ещё раз.\",\"babySunHead\":\"Солнечный знак — почти наверняка\",\"babySunSingle\":\"Рождение в этот день даёт Солнце в\",\"babySunNearEdge\":\"Дата стоит у самой границы знака, так что приход на день с лишним раньше или позже может сместить в\",\"babySunNearEdgeTail\":\"— решает дата рождения.\",\"babySunSplitA\":\"В этот день Солнце меняет знак: рождение выходит\",\"babySunSplitOr\":\"или\",\"babySunSplitTail\":\"в зависимости от часа. Решает точный момент рождения.\",\"babyNoonNote\":\"знаки читаются на полдень всемирного времени\",\"babyMoonHead\":\"Лунный знак — один из нескольких\",\"babyMoonBody\":\"Луна меняет знак каждые два-три дня, так что неделя родов обычно охватывает два-три лунных знака. Дети, рождённые в одну неделю, могут нести разные — решают день и час рождения.\",\"babyRetroHead\":\"Ретроградные при рождении\",\"babyRetroBody\":\"эти планеты в своём ретроградном отрезке около даты родов. В натальной карте ретроградная планета читается как более обращённая внутрь — это обычное дело, чинить нечего.\",\"babyRisingHead\":\"Асцендент — не узнать до минуты\",\"babyRisingBody\":\"Асцендент меняется примерно каждые два часа, и никакая дата родов его не предскажет. Это единственная позиция, которая ждёт свидетельства о рождении.\",\"babyDateLink\":\"Разобрать этот день рождения подробно\",\"babyChartLink\":\"После рождения: полная карта\",\"pfdChartPick\":\"Карта\",\"pfdQuietSky\":\"Тихое небо для этой карты сегодня — ничего в пределах 3° от натальных точек.\",\"pfdQuietAhead\":\"На горизонте этой карты в рассчитанном окне нет крупного.\",\"pfdSaturnBusy\":\"Считаем окна Сатурна на вашем устройстве…\",\"pfdEmptyTitle\":\"Ваше небо — после первой сохранённой карты\",\"pfdEmptyBody\":\"Сохраните натальную карту, и эта страница будет каждый день открываться её транзитами, домами и тем, что для неё впереди.\",\"pfdWindows\":\"окна\",\"openChart\":\"Открыть\",\"dignityDomicile\":\"обитель\",\"dignityExaltation\":\"экзальтация\",\"dignityDetriment\":\"изгнание\",\"dignityFall\":\"падение\",\"explorerHint\":\"Коснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.\",\"explorerLabel\":\"Интерактивная натальная карта\",\"explorerSelectPart\":\"Выберите часть карты\",\"explorerNoSelection\":\"Ничего не выбрано\",\"explorerAngles\":\"Углы\",\"explorerControlsLoading\":\"Загрузка интерпретаций и элементов управления картой…\",\"explorerControlsError\":\"Карта готова, но её интерпретации и элементы управления не загрузились. Проверьте подключение и попробуйте снова.\",\"explorerKeyHint\":\"Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.\",\"selectionCleared\":\"Выбор снят.\",\"inspectorClose\":\"Закрыть детали\",\"speed\":\"Скорость\",\"day\":\"сутки\",\"dignity\":\"Достоинство\",\"separating\":\"расходящийся\",\"dates\":\"Даты\",\"element\":\"Стихия\",\"ruler\":\"Управитель\",\"inThisSign\":\"В этом знаке\",\"inThisHouse\":\"В этом доме\",\"cusp\":\"Куспид\",\"span\":\"Протяжённость\",\"emptyHouseNote\":\"Планет здесь нет. Пустой дом — не пробел: его темы идут через планету, которая им управляет.\",\"angleAscNote\":\"Асцендент — градус, восходящий над восточным горизонтом в момент рождения. Он держит всё колесо.\",\"angleDscNote\":\"Десцендент — градус, заходящий на западе, напротив асцендента. Традиционная дверь к партнёрам.\",\"angleMcNote\":\"Середина неба — градус, кульминирующий над головой при рождении. Карьера, репутация, видимая жизнь.\",\"angleIcNote\":\"IC — нижняя точка колеса, напротив Середины неба. Дом, корни, частная жизнь.\",\"layersLabel\":\"Слои карты\",\"layerHouses\":\"Дома\",\"editedBy\":\"Публикует\",\"tourStart\":\"Пройти экскурсию\",\"firstReadingLabel\":\"Ваше чтение за 2 минуты\",\"firstReadingTitle\":\"Что ваша карта говорит о вас — и что дальше?\",\"firstReadingBody\":\"Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.\",\"firstReadingResumeTitle\":\"Ваше чтение ждёт\",\"firstReadingResumeBody\":\"Продолжите с того места, где остановились на этом устройстве.\",\"firstReadingStart\":\"Прочитать мою карту\",\"firstReadingExplore\":\"Разберусь сам(а)\",\"firstReadingResume\":\"Продолжить чтение\",\"firstReadingStep\":\"Шаг\",\"firstReadingFullTour\":\"Как устроена карта — расширенная экскурсия\",\"firstReadingReplay\":\"Проиграть историю карты заново\",\"chartActionsMore\":\"Ещё способы использовать эту карту\",\"chartReceiptDownload\":\"Скачать запись расчёта (.json)\",\"chartReceiptPrivacy\":\"Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.\",\"chartReceiptError\":\"Не удалось скачать файл. Попробуйте ещё раз.\",\"chartReceiptUnavailable\":\"Запись расчёта для этой карты недоступна.\",\"seeTodaySky\":\"Небо сегодня\",\"contextHelpCue\":\"Термины с точечным подчёркиванием открывают пояснение простым языком.\",\"editorialHow\":\"редакционные стандарты\",\"dstGapNotice\":\"Это время попало в «прыжок» перевода часов и формально не существовало — мы сдвинули его вперёд через разрыв, как принято.\",\"dstFoldNotice\":\"В месте рождения этот час прошёл дважды; мы взяли первый проход. Если вы знаете, что был второй, карта почти не изменится — Луна проходит около полуградуса в час.\",\"lmtNotice\":\"Рождение до введения часовых поясов — мы использовали местное среднее время той эпохи, ту же конвенцию, что и профессиональные программы.\",\"polarNotice\":\"Так близко к полюсу дома Плацидуса не определены, поэтому карта использует дома целых знаков.\",\"noTimeNotice\":\"Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома.\",\"moonUnverifiedNotice\":\"Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.\",\"moonAmbiguousNotice\":\"В этот день Луна сменила знак — пока время не найдено, честно читать обоих соседей.\",\"fromLinkNotice\":\"Открыто по ссылке — данные рождения пришли в самой ссылке, и карта только что рассчитана на вашем устройстве.\",\"howWeCompute\":\"Как мы считаем\",\"welcomeBack\":\"С возвращением.\",\"savedChartAria\":\"Ваша сохранённая карта\",\"todayAgainstChart\":\"Сегодня на фоне вашей карты\",\"yourCharts\":\"Ваши карты\",\"recommendedNext\":\"Что дальше\",\"todayForName\":\"Что сегодня значит для {name}\",\"savedChartTodayBody\":\"Ваша карта не меняется. Сегодняшнее небо — меняется: начните с того, что движется для вас сейчас.\",\"openSavedChart\":\"Открыть сохранённую карту\",\"moonReadingSky\":\"Читаем небо…\",\"illuminated\":\"освещено\",\"moonIn\":\"Луна в:\",\"findThatMoon\":\"Найти эту Луну\",\"dateHelp\":\"День рождения, годовщина — любая дата.\",\"placeHelpMoon\":\"Уточняет пересчёт часов; фазе это почти не нужно.\",\"middayLocalCaption\":\"Считано на полдень местного времени — точное время суток закрепит градус.\",\"utcTimeCaption\":\"Время читается как всемирное — добавьте место рождения, чтобы пересчитать ваши часы.\",\"middayUtcCaption\":\"Считано на полдень всемирного времени — время и место закрепят градус точно.\",\"moonChangedNotice\":\"В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.\",\"birthChartForDate\":\"Построить натальную карту на эту дату\",\"natalSaturn\":\"Ваш натальный Сатурн\",\"addBirthDetails\":\"Добавить время и место рождения (необязательно)\",\"findSaturnReturn\":\"Найти своё возвращение Сатурна\",\"returnApprox\":\"Даты рассчитаны по полуденному чтению — со временем и местом рождения они могут сдвинуться на несколько дней в любую сторону.\",\"complete\":\"Позади\",\"underwayNow\":\"Идёт сейчас\",\"aheadOfYou\":\"Впереди\",\"first\":\"Первое\",\"second\":\"Второе\",\"third\":\"Третье\",\"fourth\":\"Четвёртое\",\"aroundAge29\":\"около 29 лет\",\"aroundAge58\":\"около 58 лет\",\"aroundAge88\":\"около 88 лет\",\"retrogradePass\":\"ретроградный проход\",\"threePasses\":\"Три точных прохода: Сатурн пересекает ваш градус, возвращается по нему ретроградно и закрепляет на выходе. Возвращение — весь этот отрезок.\",\"seeSaturnChart\":\"Сатурн в вашей натальной карте\",\"whatSaturnMeans\":\"Что значит Сатурн\",\"yourChart\":\"Ваша карта\",\"theSky\":\"Небо\",\"transitRingLede\":\"Постройте карту, затем двигайте ползунок и смотрите, как планеты идут по ней — вперёд или назад, до года.\",\"checkTransits\":\"Проверить свои транзиты\",\"savedChartHelp\":\"Рассчитанные и сохранённые карты появляются здесь в один тап — следующая проверка обойдётся без ввода.\",\"noTransitTimeNotice\":\"У этой карты нет времени рождения, так что её Луна — полуденная оценка: она может отстоять до шести градусов, и транзит к Луне у края орбиса может появиться или исчезнуть с настоящим временем.\",\"skyAt\":\"Небо на\",\"noTransitsWithin\":\"Нет транзитов в пределах\",\"activeTransitsWithin\":\"активных транзитов в пределах\",\"activeTransitWithin\":\"активный транзит в пределах\",\"ofExact\":\"от точного\",\"transitMoonOmitted\":\"транзитная Луна не показана — она проходит всю карту за месяц\",\"quietSky\":\"Тихое небо по строгому орбису этой страницы. Ничего срочного — загляните через пару дней или расширьте чтение до событий месяца ниже.\",\"natal\":\"Натальный\",\"forYourChart\":\"Для вашей карты\",\"orb\":\"орбис\",\"openDailyBrief\":\"Открыть полный выпуск на сегодня — пока по-английски\",\"allTransits\":\"Все ваши транзиты\",\"personA\":\"Человек A\",\"personB\":\"Человек B\",\"sharedChart\":\"Присланная карта\",\"sharedWithYou\":\"вам поделились\",\"removeSharedChart\":\"Убрать присланную карту\",\"sharedSideHelp\":\"Эта сторона пришла в ссылке — очистите её, чтобы ввести другого человека.\",\"name\":\"Имя\",\"compareCharts\":\"Сравнить карты\",\"sameChart\":\"Это одна и та же карта дважды — выберите две разные.\",\"compareSavedHelp\":\"Рассчитанные и сохранённые карты появляются здесь в один тап — второе сравнение быстрее первого.\",\"compareNoTimeNotice\":\"Нет времени рождения у\",\"moonMiddayEstimate\":\"поэтому эта Луна — полуденная оценка: она может отстоять до шести градусов, и лунный аспект у края орбиса может появиться или исчезнуть с настоящим временем.\",\"crossChartAspects\":\"межкартных аспектов\",\"easeful\":\"лёгкие\",\"charged\":\"напряжённые\",\"readPairing\":\"Читать пару\",\"inviteCompare\":\"Пригласить на сравнение\",\"inviteLink\":\"Ссылка-приглашение\",\"inviteNote\":\"Ссылка содержит данные рождения этого человека и открывает страницу с заполненной стороной — нам ничего не отправляется. Если это не вы, стоит спросить его согласия.\",\"inviteCopied\":\"Ссылка-приглашение скопирована в буфер обмена.\",\"syncOn\":\"Синхронизация включена\",\"keepEveryDevice\":\"Карты на всех устройствах\",\"signedIn\":\"Вход выполнен\",\"syncCopyOn\":\"Сохранённые карты и удаления синхронизируются между устройствами.\",\"syncCopyOff\":\"Сохраняйте карты на этом устройстве. Войдите, когда захотите видеть их везде.\",\"weeklyDigestTitle\":\"Еженедельное письмо о небе\",\"weeklyDigestCopy\":\"Одно письмо в неделю: небо на фоне ваших сохранённых карт. Отписаться можно в любой момент.\",\"weeklyDigestAria\":\"Подписка на еженедельный дайджест\",\"digestSaved\":\"Настройка дайджеста сохранена.\",\"digestFailed\":\"Не удалось обновить настройку дайджеста. Попробуйте ещё раз.\",\"checkEmail\":\"Проверьте почту — там ссылка для входа. Страница синхронизируется после возвращения.\",\"syncFailed\":\"Синхронизация не удалась. Попробуйте ещё раз.\",\"syncing\":\"Синхронизируем…\",\"synced\":\"Синхронизировано\",\"syncNow\":\"Синхронизировать\",\"signOut\":\"Выйти\",\"emailSyncAria\":\"Почта для синхронизации профиля\",\"sending\":\"Отправляем…\",\"sendSignIn\":\"Отправить ссылку для входа\",\"nothingSaved\":\"Пока ничего не сохранено.\",\"emptyProfile\":\"Сохранённые карты будут жить здесь, сначала на вашем устройстве. Рассчитайте карту и нажмите «Сохранить эту карту».\",\"saved\":\"сохранено\",\"chartSingular\":\"карта\",\"chartPlural\":\"карты\",\"savedChartSingular\":\"сохранённая карта\",\"savedChartPlural\":\"сохранённые карты\",\"syncedWhenSignedIn\":\"синхронизируются после входа\",\"storedBrowser\":\"хранятся в этом браузере\",\"chartName\":\"Название карты\",\"timeUnknown\":\"время неизвестно\",\"needsTime\":\"нужно время\",\"compareThese\":\"Сравнить эти две карты\",\"addAnotherChart\":\"Добавить ещё карту\",\"footerWidgets\":\"Виджеты\",\"footerDisclosure\":\"Раскрытие информации\",\"emailCaptureKicker\":\"Бесплатный еженедельный прогноз\",\"emailCaptureTitle\":\"Ваша неделя впереди.\",\"emailCapturePersonalTitle\":\"Ваша неделя {sign} впереди.\",\"emailCaptureCopy\":\"Еженедельный прогноз для вашего знака. Бесплатно, отписка в любой момент.\",\"emailCaptureEmailLabel\":\"Адрес почты\",\"emailCaptureEmailPlaceholder\":\"you@example.com\",\"emailCaptureSignLegend\":\"Ваш солнечный знак (необязательно)\",\"emailCaptureNoSign\":\"Без знака\",\"emailCaptureUsingSign\":\"Ваш солнечный знак: {sign}\",\"emailCaptureChangeSign\":\"Изменить\",\"emailCaptureSubmit\":\"Прислать мою неделю\",\"emailCaptureSubmitting\":\"Подключаем…\",\"emailCaptureSuccess\":\"Проверьте почту, чтобы подтвердить подписку.\",\"emailCaptureErrorTitle\":\"Подписка недоступна\",\"emailCaptureError\":\"Не удалось оформить подписку. Попробуйте ещё раз.\",\"emailCapturePrivacy\":\"Мы храним вашу почту только с выбранным знаком — и никогда данные рождения.\",\"emailCaptureHoneypot\":\"Оставьте это поле пустым\",\"emailPendingTitle\":\"Проверьте почту.\",\"emailPendingBody\":\"Перейдите по ссылке подтверждения из письма — подписка начнётся после этого.\",\"emailConfirmSubject\":\"Подтвердите подписку на Zodiacs.org\",\"emailConfirmMessage\":\"Подтвердите, что хотите получать письма Zodiacs.org:\",\"emailConfirmIgnore\":\"Ссылка действует 48 часов. Если вы ничего не запрашивали, просто проигнорируйте письмо — ничего подписано не будет.\",\"emailConfirmTitle\":\"Последняя проверка.\",\"emailConfirmBody\":\"Подтвердите подписку, чтобы она началась. До этого ничего не активно.\",\"emailConfirmAction\":\"Подтвердить подписку\",\"emailConfirmedTitle\":\"Подписка подтверждена.\",\"emailConfirmedBody\":\"Каждое письмо содержит ссылку для отписки.\",\"emailConfirmInvalidTitle\":\"Ссылка недействительна.\",\"emailConfirmInvalidBody\":\"Она могла истечь — ссылки действуют 48 часов — или уже быть использованной. Запросите новую в любой форме подписки на сайте.\",\"emailReturnHome\":\"Вернуться на Zodiacs.org\"};\n\n        globalThis.__ZDX_UI__ = { locale: uiLocale, messages: uiMessages };\n      })();(function(){const russianRuntime = {\"signs\":{\"names\":{\"aries\":\"Овен\",\"taurus\":\"Телец\",\"gemini\":\"Близнецы\",\"cancer\":\"Рак\",\"leo\":\"Лев\",\"virgo\":\"Дева\",\"libra\":\"Весы\",\"scorpio\":\"Скорпион\",\"sagittarius\":\"Стрелец\",\"capricorn\":\"Козерог\",\"aquarius\":\"Водолей\",\"pisces\":\"Рыбы\"},\"dates\":{\"aries\":\"21 мар – 19 апр\",\"taurus\":\"20 апр – 20 мая\",\"gemini\":\"21 мая – 20 июн\",\"cancer\":\"21 июн – 22 июл\",\"leo\":\"23 июл – 22 авг\",\"virgo\":\"23 авг – 22 сен\",\"libra\":\"23 сен – 22 окт\",\"scorpio\":\"23 окт – 21 ноя\",\"sagittarius\":\"22 ноя – 21 дек\",\"capricorn\":\"22 дек – 19 янв\",\"aquarius\":\"20 янв – 18 фев\",\"pisces\":\"19 фев – 20 мар\"},\"essences\":{\"aries\":\"Первый со старта — прямой, быстрый, не боится начинать.\",\"taurus\":\"Твёрдые руки, хороший вкус и долгая память на уют.\",\"gemini\":\"Быстрые, любопытные, созданы для разговора.\",\"cancer\":\"Сначала чувствует, всё помнит, бережёт то, что любит.\",\"leo\":\"Тёплое сердце, выразительность, рождён для света.\",\"virgo\":\"Точная, полезная, тихо ведёт всё хозяйство.\",\"libra\":\"Взвешивают всё — ради красоты и ради справедливости.\",\"scorpio\":\"Глубина, выдержка и взгляд, который не отвести.\",\"sagittarius\":\"Дальняя дорога, широкая мысль, честный смех.\",\"capricorn\":\"Долгий подъём, сухой юмор, результат по расписанию.\",\"aquarius\":\"Свой угол зрения — и дверь, открытая будущему.\",\"pisces\":\"Мягкая настройка на всех, море внутри.\"},\"prepositional\":{\"aries\":\"Овне\",\"taurus\":\"Тельце\",\"gemini\":\"Близнецах\",\"cancer\":\"Раке\",\"leo\":\"Льве\",\"virgo\":\"Деве\",\"libra\":\"Весах\",\"scorpio\":\"Скорпионе\",\"sagittarius\":\"Стрельце\",\"capricorn\":\"Козероге\",\"aquarius\":\"Водолее\",\"pisces\":\"Рыбах\"},\"elements\":{\"fire\":\"огонь\",\"earth\":\"земля\",\"air\":\"воздух\",\"water\":\"вода\"},\"modalities\":{\"cardinal\":\"кардинальный\",\"fixed\":\"фиксированный\",\"mutable\":\"мутабельный\"}},\"astrology\":{\"planets\":{\"Sun\":\"Солнце\",\"Moon\":\"Луна\",\"Mercury\":\"Меркурий\",\"Venus\":\"Венера\",\"Mars\":\"Марс\",\"Jupiter\":\"Юпитер\",\"Saturn\":\"Сатурн\",\"Uranus\":\"Уран\",\"Neptune\":\"Нептун\",\"Pluto\":\"Плутон\",\"North Node\":\"Северный узел\",\"South Node\":\"Южный узел\"},\"aspects\":{\"conjunction\":\"соединение\",\"sextile\":\"секстиль\",\"square\":\"квадратура\",\"trine\":\"трин\",\"opposition\":\"оппозиция\"},\"moonPhases\":{\"New Moon\":\"Новолуние\",\"Waxing Crescent\":\"Растущий серп\",\"First Quarter\":\"Первая четверть\",\"Waxing Gibbous\":\"Растущая Луна\",\"Full Moon\":\"Полнолуние\",\"Waning Gibbous\":\"Убывающая Луна\",\"Last Quarter\":\"Последняя четверть\",\"Waning Crescent\":\"Убывающий серп\"}},\"chart\":{\"lens\":{\"rail\":\"Карта во времени\",\"natal\":\"Натальная\",\"sky\":\"Небо сейчас\",\"progressed\":\"Прогрессии\",\"return\":\"Солнечное возвращение\"},\"detail\":{\"lead\":\"Точные данные карты — \",\"placements\":\" положений · \",\"aspects\":\" аспектов\"},\"wheelActions\":{\"actions\":\"Действия с картой\",\"guide\":\"Пройти экскурсию\",\"replay\":\"Повторить экскурсию\",\"another\":\"Прочитать другую карту — пока по-английски\",\"signatureSelf\":\"Характерный рисунок вашей карты\",\"signatureOther\":\"Характерный рисунок этой карты\",\"compareMine\":\"Сравнить с моей — пока по-английски\",\"compareAdd\":\"Добавить мою карту для сравнения — пока по-английски\",\"shareOther\":\"Поделиться этой картой\",\"spotlight\":\"Выделено на этой карте\"},\"chartBook\":{\"label\":\"Чья это карта?\",\"save\":\"Сохранить\",\"skip\":\"Пропустить\"},\"registryAura\":{\"discover\":\"Сохранённую карту можно сопоставить с записями Реестра по публичному адресу.\",\"discoverLink\":\"Открыть карту рядом с публичным адресом — пока по-английски →\",\"return\":\"Карта сохранена.\",\"returnLink\":\"Вернуться в Registry Collection — пока по-английски →\"},\"personChartTemplate\":\"Карта {name}: ниже «вы» означает {name}.\",\"otherSubject\":{\"unnamed\":\"Вы читаете карту другого человека. Ниже «вы» означает человека, чьи данные рождения вы ввели.\",\"namedTemplate\":\"Вы читаете карту {name}. Ниже «вы» означает {name}.\",\"headingTemplate\":\"Натальная карта: {name}\",\"headingUnnamed\":\"Натальная карта другого человека\",\"submit\":\"Обновить эту карту\",\"privacy\":\"Приватно по умолчанию. Данные рождения этого человека остаются в браузере.\"},\"autoNameSun\":\"Солнце\",\"sharedBirthplace\":\"Общее место рождения\",\"englishOnlyTitle\":\"Материал пока доступен по-английски\",\"englishOnlySuffix\":\" — пока по-английски\"},\"plurals\":{\"charts\":{\"one\":\"{n} карта\",\"few\":\"{n} карты\",\"many\":\"{n} карт\",\"other\":\"{n} карты\"},\"savedCharts\":{\"one\":\"{n} сохранённая карта\",\"few\":\"{n} сохранённые карты\",\"many\":\"{n} сохранённых карт\",\"other\":\"{n} сохранённой карты\"},\"aspects\":{\"one\":\"{n} аспект\",\"few\":\"{n} аспекта\",\"many\":\"{n} аспектов\",\"other\":\"{n} аспекта\"},\"activeTransits\":{\"one\":\"{n} активный транзит\",\"few\":\"{n} активных транзита\",\"many\":\"{n} активных транзитов\",\"other\":\"{n} активного транзита\"},\"places\":{\"one\":\"{n} место\",\"few\":\"{n} места\",\"many\":\"{n} мест\",\"other\":\"{n} места\"},\"windows\":{\"one\":\"{n} окно\",\"few\":\"{n} окна\",\"many\":\"{n} окон\",\"other\":\"{n} окна\"},\"years\":{\"one\":\"{n} год\",\"few\":\"{n} года\",\"many\":\"{n} лет\",\"other\":\"{n} года\"},\"days\":{\"one\":\"{n} день\",\"few\":\"{n} дня\",\"many\":\"{n} дней\",\"other\":\"{n} дня\"}}};\n\n        globalThis.__ZDX_RU__ = { locale: 'ru', data: russianRuntime };\n      })();Перейти к содержимомуZodiacs·orgИнструментыЗнакиРазбор— пока по-английскиГороскопы— пока по-английскиСохранённые картыAstrofolio— пока по-английскиНатальная картаСолнце, Луна, асцендент, планеты, дома — и что всё это значит.СовместимостьСравните две карты и увидьте, где они совпадают, спорят и растут.ТранзитыПосмотрите на сегодняшнее небо рядом со своей картой.Лунный знакКак вы чувствуете и что помогает вам успокоиться.АсцендентНайдите знак, который люди встречают первым. Нужны часы рождения.Фаза ЛуныЛуна сегодня и Луна в любую важную для вас дату.Возвращение СатурнаКогда именно случится ваше возвращение и о чём оно обычно спрашивает.Все инструменты →Овен21 мар – 19 апрТелец20 апр – 20 маяБлизнецы21 мая – 20 июнРак21 июн – 22 июлЛев23 июл – 22 авгДева23 авг – 22 сенВесы23 сен – 22 октСкорпион23 окт – 21 нояСтрелец22 ноя – 21 декКозерог22 дек – 19 янвВодолей20 янв – 18 февРыбы19 фев – 20 марО сайтеРазбор — пока по-английскиГороскопы — пока по-английскиСохранённые картыAstrofolioДвенадцать знаков Зодиака, пока по-английскиИнструментыНатальная картаСовместимостьТранзитыЛунный знакАсцендентФаза ЛуныВозвращение СатурнаВсе инструменты →Двенадцать знаковОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыvar e=document.querySelector(`[data-nav]`)?.parentElement,t=document.querySelector(`[data-tools-toggle]`),n=document.querySelector(`[data-tools-menu]`),r=document.querySelector(`[data-signs-toggle]`),i=document.querySelector(`[data-signs-menu]`),a=document.querySelector(`[data-menu-toggle]`),o=document.querySelector(`[data-mobile-menu]`);function s(e){if(e)for(let t of e.querySelectorAll(`source[data-srcset], img[data-src]`)){let{srcset:e,src:n}=t.dataset;e&&(t.srcset=e,delete t.dataset.srcset),n&&(t.src=n,delete t.dataset.src)}}function c(e,t,n){if(!e||!t)return null;let r=e,i=t,a=[...i.querySelectorAll(`a`)],o=0,c;function l(e,t=!1){o=(e+a.length)%a.length,a.forEach((e,t)=>{e.tabIndex=t===o?0:-1}),t&&a[o]?.focus()}function u(e,t){window.clearTimeout(c),r.setAttribute(`aria-expanded`,String(e)),e?(s(i),i.hidden=!1,t!==void 0&&l(t,!0),requestAnimationFrame(()=>i.classList.add(`is-open`))):(i.classList.remove(`is-open`),c=window.setTimeout(()=>{i.hidden=!0},190))}return r.addEventListener(`keydown`,e=>{e.key!==`ArrowDown`&&e.key!==`ArrowUp`||(e.preventDefault(),u(!0,e.key===`ArrowDown`?0:a.length-1))}),i.addEventListener(`keydown`,e=>{let t=e.target.closest(`a`);if(!t)return;let i=a.indexOf(t),o={ArrowRight:1,ArrowLeft:-1,ArrowDown:n,ArrowUp:-n};e.key in o?(e.preventDefault(),l(i+o[e.key],!0)):e.key===`Home`||e.key===`End`?(e.preventDefault(),l(e.key===`Home`?0:a.length-1,!0)):e.key===`Escape`&&(e.preventDefault(),e.stopPropagation(),u(!1),r.focus())}),a.forEach((e,t)=>{e.addEventListener(`focus`,()=>l(t))}),l(0),{button:r,menu:i,isOpen:()=>r.getAttribute(`aria-expanded`)===`true`,setOpen:u}}var l=c(t,n,2),u=c(r,i,3);for(let[e,t]of[[l,u],[u,l]])e&&(e.button.addEventListener(`click`,()=>{let n=!e.isOpen();t?.setOpen(!1),e.setOpen(n)}),e.button.addEventListener(`keydown`,e=>{(e.key===`ArrowDown`||e.key===`ArrowUp`)&&t?.setOpen(!1)}));for(let e of[l,u]){if(!e)continue;let t=t=>{let n=t.relatedTarget;n&&(e.menu.contains(n)||e.button.contains(n))||e.setOpen(!1)};e.menu.addEventListener(`focusout`,t),e.button.addEventListener(`focusout`,t)}var d=()=>Array.from(o?.querySelectorAll(`a[href], button:not([disabled])`)??[]);o?.addEventListener(`focusin`,({target:t})=>requestAnimationFrame(()=>{if(o.hidden||document.activeElement!==t)return;let{top:n,bottom:r}=t.getBoundingClientRect(),i=e.getBoundingClientRect().bottom+8;o.scrollTop+=Math.min(0,n-i)||Math.max(0,r-innerHeight+8)}));function f(e){if(!a||!o)return;let t=o.contains(document.activeElement);e&&(s(o),l?.setOpen(!1),u?.setOpen(!1)),a.setAttribute(`aria-expanded`,String(e)),a.setAttribute(`aria-label`,e?a.dataset.closeLabel||`Close menu`:a.dataset.openLabel||`Menu`),o.hidden=!e,o.classList.toggle(`is-open`,e),document.documentElement.style.overflow=e?`hidden`:``,e?d()[0]?.focus():t&&a.focus()}o?.addEventListener(`keydown`,e=>{if(e.key!==`Tab`)return;let t=d();if(!t.length)return;let n=t[0],r=t[t.length-1];e.shiftKey&&document.activeElement===n?(e.preventDefault(),r.focus()):!e.shiftKey&&document.activeElement===r&&(e.preventDefault(),n.focus())}),a?.addEventListener(`click`,()=>{f(a.getAttribute(`aria-expanded`)!==`true`)}),o?.addEventListener(`click`,e=>{e.target.closest(`a`)&&f(!1)}),document.addEventListener(`click`,t=>{e?.contains(t.target)||(l?.setOpen(!1),u?.setOpen(!1))}),document.addEventListener(`keydown`,e=>{if(e.key!==`Escape`)return;let t=document.activeElement,n=l?.menu.contains(t)?l.button:u?.menu.contains(t)?u.button:o&&o.contains(t)?a:null;l?.setOpen(!1),u?.setOpen(!1),f(!1),n?.focus()});var p=()=>{let e=document.querySelector(`[data-profile-glyph]`);e?.classList.remove(`has-saves`);try{let t=Reflect.get(window,`zodiacsProfileAccess`);if(document.documentElement.hasAttribute(`data-account-sync-v2`)&&t?.canRead?.()!==!0)return;let n=localStorage.getItem(`zodiacs.profile.v1`);n&&JSON.parse(n)?.charts?.length&&e?.classList.add(`has-saves`)}catch{}};p(),window.addEventListener(`zodiacs:profile-access`,p),window.addEventListener(`zodiacs:profile`,p);Постройте бесплатную натальную карту.Введите дату, время и место рождения, чтобы увидеть Солнце, Луну, асцендент, планеты, дома и их значение.astro-island,astro-slot,astro-static-slot{display:contents}(()=>{var L=[\"pointerover\",\"pointerdown\",\"focusin\",\"keydown\"];function v(i){return i instanceof HTMLSelectElement&&i.multiple?Array.from(i.selectedOptions,n=>n.value):void 0}function C(i){let n=i.cloneNode(!0);n.removeAttribute(\"form\");let e=document.createElement(\"form\");return e.append(n),HTMLFormElement.prototype.reset.call(e),i instanceof HTMLSelectElement?Array.from(i.options).some((o,t)=>o.selected!==n.options[t]?.selected):i.value!==n.value||i instanceof HTMLInputElement&&i.checked!==n.checked}function H(i,n,e){return i.find(o=>o.control===n)??(n.id?i.find(o=>o.id===n.id):void 0)??i.find(o=>o.index===e)}function T(i,n=[]){return Array.from(i.querySelectorAll(\"input, select, textarea\")).map((e,o)=>({control:e,index:o,id:e.id,value:e.value,checked:e instanceof HTMLInputElement?e.checked:void 0,selected:v(e),dirty:H(n,e,o)?.dirty===!0||C(e)}))}function g(i,n,e){let t=Array.from(i.querySelectorAll(\"input, select, textarea\")).indexOf(e),r=H(n,e,t);r&&(r.control=e,r.index=t,r.id=e.id,r.value=e.value,r.checked=e instanceof HTMLInputElement?e.checked:void 0,r.selected=v(e),r.dirty=!0)}function A(i,n){let e=Array.from(i.querySelectorAll(\"input, select, textarea\")),o=!1;for(let t of n){if(!t.dirty)continue;let r=t.control.isConnected?t.control:t.id?i.querySelector(`#${CSS.escape(t.id)}`):e[t.index]??null;if(!r)continue;let f=r.value!==t.value,c=r instanceof HTMLInputElement&&t.checked!==void 0&&r.checked!==t.checked,d=t.selected!==void 0&&JSON.stringify(v(r))!==JSON.stringify(t.selected);if(!(!f&&!c&&!d)){if(o=!0,r.value=t.value,r instanceof HTMLInputElement&&t.checked!==void 0&&(r.checked=t.checked),r instanceof HTMLSelectElement&&t.selected!==void 0){let l=[...t.selected];Array.from(r.options).forEach(p=>{let a=l.indexOf(p.value);p.selected=a>=0,a>=0&&l.splice(a,1)})}r.dispatchEvent(new Event(\"input\",{bubbles:!0})),r.dispatchEvent(new Event(\"change\",{bubbles:!0}))}}return o}function F(){return new Promise(i=>{let n,e,o=!1,t=window.setTimeout(r,120);function r(){o||(o=!0,window.clearTimeout(t),n!==void 0&&window.cancelAnimationFrame(n),e!==void 0&&window.cancelAnimationFrame(e),i())}document.visibilityState!==\"hidden\"&&(n=window.requestAnimationFrame(()=>{e=window.requestAnimationFrame(r)}))})}function k(i,n){let e=n.form.isConnected?n.form:i.querySelector(\"form\");if(!e)return;let o=n.submitter?.isConnected&&e.contains(n.submitter)?n.submitter:null;if(typeof e.requestSubmit==\"function\"){o?e.requestSubmit(o):e.requestSubmit();return}let t=typeof SubmitEvent==\"function\"?new SubmitEvent(\"submit\",{bubbles:!0,cancelable:!0,submitter:o}):new Event(\"submit\",{bubbles:!0,cancelable:!0});e.dispatchEvent(t)}var x=(i,n,e)=>{let o=!1,t=!1,r=!1,f=!1,c,d=T(e),l=null,p=()=>{if(r){r=!1;for(let u of L)e.removeEventListener(u,m,!0);window.removeEventListener(\"load\",a),c!==void 0&&window.clearTimeout(c),c=void 0}},a=()=>{c=window.setTimeout(m,600)},y=()=>{if(!(r||t)){r=!0;for(let u of L)e.addEventListener(u,m,{capture:!0,once:!0})}},h=()=>{o=!1,y()},m=()=>{o||t||(o=!0,p(),(async()=>{let u;try{u=await i()}catch{h();return}f||(d=T(e,d)),f=!0;try{await u()}catch{h();return}await F(),e.removeEventListener(\"input\",E,!0),e.removeEventListener(\"change\",E,!0),A(e,d)&&await F(),t=!0,e.removeEventListener(\"submit\",S,!0);let w=l;l=null,w&&k(e,w)})())},E=u=>{let s=u.target;(s instanceof HTMLInputElement||s instanceof HTMLSelectElement||s instanceof HTMLTextAreaElement)&&g(e,d,s)},S=u=>{if(t||!(u.target instanceof HTMLFormElement))return;u.preventDefault(),u.stopImmediatePropagation();let s=\"submitter\"in u&&(u.submitter instanceof HTMLButtonElement||u.submitter instanceof HTMLInputElement)?u.submitter:null;l??={form:u.target,submitter:s},m()};e.addEventListener(\"input\",E,!0),e.addEventListener(\"change\",E,!0),e.addEventListener(\"submit\",S,!0),y();let b=n.value;typeof b==\"object\"&&b!==null&&\"eagerHash\"in b&&b.eagerHash===!0&&/(?:^|[&#])(?:p|c)=/u.test(window.location.hash)?m():document.readyState===\"complete\"?a():window.addEventListener(\"load\",a,{once:!0})},M=x;(self.Astro||(self.Astro={})).interaction=M;window.dispatchEvent(new Event(\"astro:interaction\"));})();\n(()=>{var g=Object.defineProperty;var w=(a,s,c)=>s in a?g(a,s,{enumerable:!0,configurable:!0,writable:!0,value:c}):a[s]=c;var l=(a,s,c)=>w(a,typeof s!=\"symbol\"?s+\"\":s,c);var E=new Set([\"__proto__\",\"constructor\",\"prototype\"]);{let a={0:t=>y(t),1:t=>c(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(c(t)),5:t=>new Set(c(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>Number.POSITIVE_INFINITY*t},s=t=>{let[p,e]=t;return p in a?a[p](e):void 0},c=t=>t.map(s),y=t=>typeof t!=\"object\"||t===null?t:Object.fromEntries(Object.entries(t).map(([p,e])=>[p,s(e)]));class f extends HTMLElement{constructor(){super(...arguments);l(this,\"Component\");l(this,\"hydrator\");l(this,\"hydrate\",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest(\"astro-island[ssr]\");if(e){e.addEventListener(\"astro:hydrate\",this.hydrate,{once:!0});return}let r=this.querySelectorAll(\"astro-slot\"),n={},d=this.querySelectorAll(\"template[data-astro-template]\");for(let o of d){let i=o.closest(this.tagName);i!=null&&i.isSameNode(this)&&(n[o.getAttribute(\"data-astro-template\")||\"default\"]=o.innerHTML,o.remove())}for(let o of r){let i=o.closest(this.tagName);i!=null&&i.isSameNode(this)&&(n[o.getAttribute(\"name\")||\"default\"]=o.innerHTML)}let u;try{u=this.hasAttribute(\"props\")?y(JSON.parse(this.getAttribute(\"props\"))):{}}catch(o){let i=this.getAttribute(\"component-url\")||\"<unknown>\",v=this.getAttribute(\"component-export\");throw v&&(i+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${i}`,this.getAttribute(\"props\"),o),o}let h;await this.hydrator(this)(this.Component,u,n,{client:this.getAttribute(\"client\")}),this.removeAttribute(\"ssr\"),this.dispatchEvent(new CustomEvent(\"astro:hydrate\"))});l(this,\"unmount\",()=>{this.isConnected||this.dispatchEvent(new CustomEvent(\"astro:unmount\"))})}disconnectedCallback(){document.removeEventListener(\"astro:after-swap\",this.unmount),document.addEventListener(\"astro:after-swap\",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute(\"await-children\")||document.readyState===\"interactive\"||document.readyState===\"complete\")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener(\"DOMContentLoaded\",e),r.disconnect(),this.childrenConnectedCallback()},r=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue===\"astro:end\"&&(this.lastChild.remove(),e())});r.observe(this,{childList:!0}),document.addEventListener(\"DOMContentLoaded\",e)}}async childrenConnectedCallback(){let e=this.getAttribute(\"before-hydration-url\");e&&await import(e),this.start()}getRetryImportUrl(e){let r=new URL(e,document.baseURI);return r.searchParams.set(\"astro-retry\",Date.now().toString()),r.toString()}async importWithRetry(e){try{return await import(e)}catch(r){return await new Promise(n=>setTimeout(n,1e3)),import(this.getRetryImportUrl(e))}}handleHydrationError(e){let r=this.getAttribute(\"component-url\"),n=new CustomEvent(\"astro:hydration-error\",{cancelable:!0,bubbles:!0,composed:!0,detail:{error:e,componentUrl:r}});this.dispatchEvent(n)&&console.error(`[astro-island] Error hydrating ${r}`,e)}async start(){let e=JSON.parse(this.getAttribute(\"opts\")),r=this.getAttribute(\"client\");if(Astro[r]===void 0){window.addEventListener(`astro:${r}`,()=>this.start(),{once:!0});return}try{await Astro[r](async()=>{let n=this.getAttribute(\"renderer-url\");try{let[d,{default:u}]=await Promise.all([this.importWithRetry(this.getAttribute(\"component-url\")),n?this.importWithRetry(n):Promise.resolve({default:()=>()=>{}})]),h=this.getAttribute(\"component-export\")||\"default\";if(h.includes(\".\")){this.Component=d;for(let m of h.split(\".\")){if(E.has(m)||!this.Component||typeof this.Component!=\"object\"&&typeof this.Component!=\"function\"||!Object.hasOwn(this.Component,m))throw new Error(`Invalid component export path: ${h}`);this.Component=this.Component[m]}}else{if(E.has(h))throw new Error(`Invalid component export path: ${h}`);this.Component=d[h]}return this.hydrator=u,this.hydrate}catch(d){return this.handleHydrationError(d),()=>{}}},e,this)}catch(n){this.handleHydrationError(n)}}attributeChangedCallback(){this.hydrate()}}l(f,\"observedAttributes\",[\"props\"]),customElements.get(\"astro-island\")||customElements.define(\"astro-island\",f)}})();Дата рожденияВремя рожденияНе знаю времяНет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.Место рождения×Поиск по ~34 000 мест · GeoNames (CC BY 4.0)Система домовЦелые знаки (по умолчанию)ПлацидусКак карта делится на двенадцать сфер жизни. В системе целых знаков каждый знак — один дом; в системе Плацидуса размер домов зависит от точного времени и места. Планеты остаются на месте: меняются только границы домов.Постройте бесплатную натальную карту↗Приватно по умолчанию. Данные рождения остаются в этом браузере.<p data-astro-cid-ycsqp4jh>Для расчёта натальной карты нужен JavaScript. Включите его и перезагрузите страницу, чтобы рассчитать Солнце, Луну, асцендент, планеты и дома в вашем браузере.</p>Что перед вамиНатальная карта — снимок неба из места вашего рождения в момент рождения. Она показывает знаки, дома и планеты в точных градусах.Начните с Солнца, Луны и асцендента: это идентичность, эмоциональная жизнь и первое впечатление. Затем карту можно сохранить и вернуться к ней в любое время.Подробности — в разделе «Как мы считаем».Вопросы о натальной картеЧто такое натальная карта?Натальная карта — это схема положения планет, если смотреть с Земли, в точный момент и в точном месте вашего рождения. Она показывает Солнце, Луну, асцендент, планеты от Меркурия до Плутона и двенадцать домов.Нужно ли знать точное время рождения?Для асцендента и домов — да: асцендент меняется примерно каждые два часа. Если время неизвестно, мы используем 12:00 местного гражданского времени как ориентир для положений и не показываем асцендент, углы и дома. Если в этот день Луна сменила знак, результат отмечает неопределённость. Лучшие источники — свидетельство о рождении, медицинская запись или семья.Насколько точен расчёт?Положения планет рассчитываются астрономическим движком и сверяются с эталонными данными NASA JPL с точностью до сотых долей градуса. Исторические изменения часов, включая местное среднее время до стандартизации там, где оно доступно, берутся из истории IANA, предоставленной браузером или системой устройства.Что происходит с моими данными рождения?Вся карта рассчитывается в вашем браузере: серверного API для карт нет, аккаунт не нужен. Сохранённая карта сначала остаётся на этом устройстве. Необязательная синхронизация отправляет только выбранные сохранённые карты и только после входа.Цельнознаковые дома или Плацидус: что выбрать?Цельнознаковая система — более древняя и простая для чтения: каждый дом занимает целый знак. Плацидус делит дома по времени их восхождения, поэтому их размер различается. Попробуйте обе: планеты не двигаются, меняются только границы домов.Zodiacs.orgБесплатные астрологические инструменты и гиды по знакам. Карты считаются приватно, прямо в вашем браузере.Guide — пока по-английскиИнструментыНатальная картаСегодня — пока по-английскиСовместимостьЛунный знакАсцендентФаза ЛуныВозвращение СатурнаТранзитыРетроградности — пока по-английскиРазборС чего начать — пока по-английскиГороскопы — пока по-английскиПланеты — пока по-английскиДома — пока по-английскиДаты знаков — пока по-английскиГлоссарий — пока по-английскиКак мы считаемСохранённые картыRegistryAstrofolio — пока по-английскиRegistry — пока по-английскиSDK — пока по-английскиРаскрытие информацииДвенадцать знаковОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыЯзыкEnglishEspañolPortuguês (Brasil)FrançaisItalianoРусский© 2026 Zodiacs.orgПравовая информацияО проекте — пока по-английскиКонфиденциальностьУсловия — пока по-английскиЕщёВиджеты — пока по-английскиRSS — пока по-английскиДанные и лицензииДанные о местах: GeoNames · CC BY 4.0Шрифты под лицензией SIL OFL 1.1(function () {\n    var modulePromise;\n    var timer = 0;\n    var intentPending = false;\n    var defaultLocale = \"ru\";\n    var privateSessionKey = 'zodiacs.guide.private-session.v1';\n    var openPendingKey = 'zodiacs.guide.open-pending.v1';\n    function safeSessionGet(key) {\n      try { return sessionStorage.getItem(key); } catch (error) { return null; }\n    }\n    function consumePendingOpen() {\n      if (safeSessionGet(openPendingKey) === '1') {\n        try { sessionStorage.removeItem(openPendingKey); } catch (error) {}\n        return true;\n      }\n      if (location.pathname === '/ask/' && location.hash === '#guide') {\n        try { history.replaceState(null, '', '/ask/'); } catch (error) {}\n        return true;\n      }\n      return false;\n    }\n    function beginPrivateTransition() {\n      if (!document.documentElement.hasAttribute('data-guide-analytics-boundary')) return false;\n      if (safeSessionGet(privateSessionKey) === '1') return false;\n      try {\n        sessionStorage.setItem(privateSessionKey, '1');\n        sessionStorage.setItem(openPendingKey, '1');\n        location.reload();\n      } catch (error) {\n        location.assign('/ask/#guide');\n      }\n      return true;\n    }\n    function loadGuide() {\n      if (!modulePromise) {\n        modulePromise = import('/assets/assistant-ui.js?v=ask-guide-3').catch(function (error) {\n          modulePromise = null;\n          throw error;\n        });\n      }\n      return modulePromise;\n    }\n    function stopIntentListener() {\n      document.removeEventListener('click', onGuideIntent, true);\n    }\n    function stopScheduledMount() {\n      window.clearTimeout(timer);\n      window.removeEventListener('load', scheduleGuide);\n    }\n    function mountGuide() {\n      loadGuide().then(function (mod) {\n        if (consumePendingOpen()) return mod.openAssistant(defaultLocale, null);\n        return mod.bootstrapGuide(defaultLocale).then(stopIntentListener);\n      }).catch(function () {});\n    }\n    function scheduleGuide() {\n      timer = window.setTimeout(mountGuide, 500);\n    }\n    function onGuideIntent(event) {\n      var target = event.target && event.target.closest\n        ? event.target.closest('[data-assistant-open]')\n        : null;\n      if (!target) return;\n      if (intentPending) {\n        event.preventDefault();\n        event.stopImmediatePropagation();\n        return;\n      }\n      intentPending = true;\n      event.preventDefault();\n      event.stopImmediatePropagation();\n      stopScheduledMount();\n      if (beginPrivateTransition()) return;\n      loadGuide().then(function (mod) {\n        return mod.openAssistant(\n          target.getAttribute('data-assistant-locale') || defaultLocale,\n          target\n        ).then(stopIntentListener);\n      }).catch(function () { intentPending = false; });\n    }\n    document.addEventListener('click', onGuideIntent, true);\n    if (document.readyState === 'complete') scheduleGuide();\n    else window.addEventListener('load', scheduleGuide, { once: true });\n  })();\n      (function loadFooterStyles() {\n        var requested = false;\n        var observer;\n        function appendStylesheet() {\n          if (requested) return;\n          requested = true;\n          if (observer) observer.disconnect();\n          var stylesheet = document.createElement('link');\n          stylesheet.rel = 'stylesheet';\n          stylesheet.href = '/assets/site-footer.css';\n          document.head.appendChild(stylesheet);\n        }\n        function appendAfterLoad() {\n          window.setTimeout(appendStylesheet, 250);\n        }\n        var footer = document.querySelector('.zfooter');\n        var nearViewport = footer && footer.getBoundingClientRect().top <= window.innerHeight + 200;\n        if (nearViewport) appendStylesheet();\n        else {\n          if (footer && 'IntersectionObserver' in window) {\n            try {\n              observer = new IntersectionObserver(function (entries) {\n                for (var index = 0; index < entries.length; index += 1) {\n                  if (entries[index].isIntersecting) { appendStylesheet(); return; }\n                }\n              }, { threshold: 0, rootMargin: '0px 0px 200px 0px' });\n              observer.observe(footer);\n            } catch (_) {\n              if (observer) observer.disconnect();\n              observer = null;\n            }\n          }\n          if (document.readyState === 'complete') appendAfterLoad();\n          else window.addEventListener('load', appendAfterLoad, { once: true });\n        }\n      })();\n    <style>@import url('/assets/site-footer.css');</style>var e=window.matchMedia(`(prefers-reduced-motion: reduce)`).matches,t=document.querySelectorAll(`.reveal`);if(!e&&`IntersectionObserver`in window){let e=new IntersectionObserver(t=>{for(let n of t)n.isIntersecting&&(n.target.classList.add(`is-in`),e.unobserve(n.target))},{threshold:0,rootMargin:`0px 0px -8% 0px`});t.forEach(t=>e.observe(t))}else t.forEach(e=>e.classList.add(`is-in`));`serviceWorker`in navigator&&window.addEventListener(`load`,()=>{window.setTimeout(()=>{navigator.serviceWorker.register(`/sw.js`,{scope:`/`}).catch(()=>{})},3e3)},{once:!0});Ask Guide"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "refused": {
+    "date": "2011-12-30",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "moonUncertain": false,
+    "registry": null,
+    "error": "Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.",
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "P",
+      "id": "",
+      "role": "alert",
+      "text": "Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место."
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "beforeRetry": {
+    "date": "2011-12-31",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": false,
+    "resultText": null,
+    "moonUncertain": false,
+    "registry": null,
+    "error": "Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.",
+    "busy": "false",
+    "actions": 0,
+    "context": null,
+    "focus": {
+      "tag": "INPUT",
+      "id": "birth-date",
+      "role": null,
+      "text": ""
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "recovered": {
+    "date": "2011-12-31",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": true,
+    "resultText": "Натальная картаБез времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.СолнцеКозерог8°51′ КозерогЧитать Козерог →ЛунаНужно время рожденияНужно время рожденияАсцендентНужно время рожденияВаше чтение за 2 минутыЧто ваша карта говорит о вас — и что дальше?Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.Прочитать мою карту→Разберусь сам(а)Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesRxНатальнаяНебо сейчасПрогрессииСолнечное возвращение соединение секстиль квадратура трин оппозицияВыберите часть картыНичего не выбраноСолнцеЛунаМеркурийВенераМарсЮпитерСатурнУранНептунПлутонСеверный узелОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыСатурн трин НептунМеркурий квадратура МарсЮпитер секстиль НептунСолнце соединение ПлутонЮпитер оппозиция СатурнЛуна оппозиция МарсЛуна квадратура МеркурийSee it in three dimensions — пока по-английскиКоснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.Сохранить эту карту+Рисуем…↗Форма и классические управителиФорма картыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Нет чёткой формыНаибольшая пустая дуга: 139.439°Занятая дуга: 220.561°Округление измерений до: 0.001° · Отступ от каждого порога: 2°Десять планет, от Солнца до Плутона, учитываются по исходным положениям с равным весом. Узлы, дома, углы и смещённые символы в измерении не участвуют.ПравилоСвязка: занятая дуга ≤120°.Чаша: дуга 150°–180°; внутренние промежутки ≤60°.Локомотив: дуга 225°–255°; внутренние промежутки ≤60°.Корзина: единственная ручка; девять планет на дуге 120°–180°, внутренние промежутки ≤60°, разделяющие промежутки ≥60°, ручка в пределах 30° от оппозиции к середине дуги.Качели: две группы по 3–7 планет, каждая на дуге ≤90°; внутренние промежутки ≤60°, разделяющие промежутки ≥60°, середины в пределах 30° от оппозиции.Брызги: все круговые промежутки ≤60°.Чёткая форма должна соответствовать одному ужесточённому правилу без конкурирующего ослабленного варианта. У каждого углового порога есть полоса исключения 2°; это правило продукта, а не оценка погрешности.Уран · Показать на картеЮпитер · Показать на картеМарс · Показать на картеСатурн · Показать на картеМеркурий · Показать на картеПлутон · Показать на картеСолнце · Показать на картеВенера · Показать на картеНептун · Показать на картеЛуна · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеУправители карты и домовТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Классический управитель карты: Недоступно по этим даннымУправители карты и домов: Недоступно по этим даннымБез времени, места или достоверных куспидов соответствующие управители не определяются. Управитель карты и конечный диспозитор — разные понятия.Правило: zodiacs-chart-context-v1Создать изображениеДиспозиторыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Единый конечный диспозитор не установленСолнце → Сатурн → Венера → СатурнЛуна · Неполная цепочкаМеркурий → Юпитер → Венера → Сатурн → ВенераВенера → Сатурн → ВенераМарс → Меркурий → Юпитер → Венера → Сатурн → ВенераЮпитер → Венера → Сатурн → ВенераСатурн → Венера → СатурнВзаимная рецепция по обители: Венера → СатурнКаждая стрелка ведёт к классическому управителю знака предыдущей планеты. Участвуют только семь классических планет. Экзальтация не означает обитель.Солнце · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеЛуна · Показать на картеМеркурий · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеМарс · Показать на картеМеркурий · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеКлассические достоинстваТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Солнце · Козерог: Нет ни одной из этих четырёх метокЛуна · Знак не установлен: Знак не установленМеркурий · Стрелец: ИзгнаниеВенера · Водолей: Нет ни одной из этих четырёх метокМарс · Дева: Нет ни одной из этих четырёх метокЮпитер · Телец: Нет ни одной из этих четырёх метокСатурн · Весы: ЭкзальтацияНептун · Водолей: Не входит в классическую таблицу семи планетСеверный узел · Стрелец: Не входит в классическую таблицу семи планетПлутон · Козерог: Не входит в классическую таблицу семи планетЮжный узел · Близнецы: Не входит в классическую таблицу семи планетУран · Овен: Не входит в классическую таблицу семи планетЭти традиционные метки описывают связь планеты со знаком. Они не измеряют ценность, способности или будущее человека.Обитель: знак, которым планета управляет в классической системе.Экзальтация: знак особой традиционной связи с планетой.Изгнание: знак напротив классической обители.Падение: знак напротив экзальтации. Эти четыре метки не охватывают все традиционные достоинства.Солнце · Показать на картеКозерог · Показать на картеМеркурий · Показать на картеСтрелец · Показать на картеВенера · Показать на картеВодолей · Показать на картеМарс · Показать на картеДева · Показать на картеЮпитер · Показать на картеТелец · Показать на картеСатурн · Показать на картеВесы · Показать на картеНептун · Показать на картеВодолей · Показать на картеСеверный узел · Показать на картеСтрелец · Показать на картеПлутон · Показать на картеКозерог · Показать на картеЮжный узел · Показать на картеБлизнецы · Показать на картеУран · Показать на картеОвен · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеЕщё способы использовать эту карту+Поделиться картой · Ещё способы использовать эту карту↗Скачать запись расчёта (.json)↓Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.Точные данные карты — 12 положений · 10 аспектов2011-12-30 · 22:00:00 UTC · -13.83°, -171.77° · движок v0.1.1-rc.6ТелоПоложениеЗнакДвижение Солнце8°51′Козерог Луна24°01′Нужно время рождения · Нужно время рождения Меркурий18°23′Стрелец Венера12°29′Водолей Марс19°50′Дева Юпитер0°24′Телец Сатурн28°13′Весы Уран0°49′Овен Нептун28°51′Водолей Плутон7°17′Козерог Северный узел13°59′СтрелецRx Южный узел13°59′БлизнецыRxАспекты - 10 аспектов Сатурн  трин  Нептун · орбис 0.6° · сходящийся Меркурий  квадратура  Марс · орбис 1.4° · сходящийся Юпитер  секстиль  Нептун · орбис 1.5° · сходящийся Солнце  соединение  Плутон · орбис 1.6° · расходящийся Юпитер  оппозиция  Сатурн · орбис 2.2° · сходящийся Луна  оппозиция  Марс · орбис 4.2° · расходящийся Луна  квадратура  Меркурий · орбис 5.6° · расходящийся Уран  квадратура  Плутон · орбис 6.5° · расходящийся Луна  соединение  Уран · орбис 6.8° · сходящийся Юпитер  трин  Плутон · орбис 6.9° · расходящийся",
+    "moonUncertain": true,
+    "registry": null,
+    "error": null,
+    "busy": "false",
+    "actions": 5,
+    "context": {
+      "mode": "full",
+      "sunSign": "capricorn",
+      "chartId": null,
+      "contextId": 36
+    },
+    "focus": {
+      "tag": "H2",
+      "id": "",
+      "role": null,
+      "text": "Натальная карта"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "events": {
+    "computed": [
+      {
+        "mode": "full",
+        "sunSign": "aries",
+        "contextId": 8
+      },
+      {
+        "mode": "full",
+        "sunSign": "libra",
+        "contextId": 15
+      },
+      {
+        "mode": "full",
+        "sunSign": "gemini",
+        "contextId": 24
+      },
+      {
+        "mode": "full",
+        "sunSign": "capricorn",
+        "contextId": 36
+      }
+    ],
+    "cleared": [
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      },
+      {
+        "type": "Event",
+        "detail": "undefined",
+        "contextAbsent": true
+      }
+    ]
+  },
+  "final": {
+    "date": "2011-12-31",
+    "time": "08:30",
+    "unknown": true,
+    "place": "Apia · Tuamasaga, Samoa",
+    "result": true,
+    "resultText": "Натальная картаБез времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома. Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.СолнцеКозерог8°51′ КозерогЧитать Козерог →ЛунаНужно время рожденияНужно время рожденияАсцендентНужно время рожденияВаше чтение за 2 минутыЧто ваша карта говорит о вас — и что дальше?Посмотрите свой характерный расклад, где он разворачивается, один узнаваемый паттерн — и как астрология превращает карту в прогноз.Прочитать мою карту→Разберусь сам(а)Стрелки влево и вправо переключают положения; Enter открывает панель подробностей.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPiscesRxНатальнаяНебо сейчасПрогрессииСолнечное возвращение соединение секстиль квадратура трин оппозицияВыберите часть картыНичего не выбраноСолнцеЛунаМеркурийВенераМарсЮпитерСатурнУранНептунПлутонСеверный узелОвенТелецБлизнецыРакЛевДеваВесыСкорпионСтрелецКозерогВодолейРыбыСатурн трин НептунМеркурий квадратура МарсЮпитер секстиль НептунСолнце соединение ПлутонЮпитер оппозиция СатурнЛуна оппозиция МарсЛуна квадратура МеркурийSee it in three dimensions — пока по-английскиКоснитесь любой планеты, знака, дома или линии аспекта — или сфокусируйте колесо и листайте стрелками.Сохранить эту карту+Поделиться картой↗Форма и классические управителиФорма картыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Нет чёткой формыНаибольшая пустая дуга: 139.439°Занятая дуга: 220.561°Округление измерений до: 0.001° · Отступ от каждого порога: 2°Десять планет, от Солнца до Плутона, учитываются по исходным положениям с равным весом. Узлы, дома, углы и смещённые символы в измерении не участвуют.ПравилоСвязка: занятая дуга ≤120°.Чаша: дуга 150°–180°; внутренние промежутки ≤60°.Локомотив: дуга 225°–255°; внутренние промежутки ≤60°.Корзина: единственная ручка; девять планет на дуге 120°–180°, внутренние промежутки ≤60°, разделяющие промежутки ≥60°, ручка в пределах 30° от оппозиции к середине дуги.Качели: две группы по 3–7 планет, каждая на дуге ≤90°; внутренние промежутки ≤60°, разделяющие промежутки ≥60°, середины в пределах 30° от оппозиции.Брызги: все круговые промежутки ≤60°.Чёткая форма должна соответствовать одному ужесточённому правилу без конкурирующего ослабленного варианта. У каждого углового порога есть полоса исключения 2°; это правило продукта, а не оценка погрешности.Уран · Показать на картеЮпитер · Показать на картеМарс · Показать на картеСатурн · Показать на картеМеркурий · Показать на картеПлутон · Показать на картеСолнце · Показать на картеВенера · Показать на картеНептун · Показать на картеЛуна · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеУправители карты и домовТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Классический управитель карты: Недоступно по этим даннымУправители карты и домов: Недоступно по этим даннымБез времени, места или достоверных куспидов соответствующие управители не определяются. Управитель карты и конечный диспозитор — разные понятия.Правило: zodiacs-chart-context-v1Создать изображениеДиспозиторыТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Единый конечный диспозитор не установленСолнце → Сатурн → Венера → СатурнЛуна · Неполная цепочкаМеркурий → Юпитер → Венера → Сатурн → ВенераВенера → Сатурн → ВенераМарс → Меркурий → Юпитер → Венера → Сатурн → ВенераЮпитер → Венера → Сатурн → ВенераСатурн → Венера → СатурнВзаимная рецепция по обители: Венера → СатурнКаждая стрелка ведёт к классическому управителю знака предыдущей планеты. Участвуют только семь классических планет. Экзальтация не означает обитель.Солнце · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеЛуна · Показать на картеМеркурий · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеМарс · Показать на картеМеркурий · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеЮпитер · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеВенера · Показать на картеСатурн · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеКлассические достоинстваТолько опорные положения; время рождения неизвестно. Эти данные не установлены для всего дня рождения.Солнце · Козерог: Нет ни одной из этих четырёх метокЛуна · Знак не установлен: Знак не установленМеркурий · Стрелец: ИзгнаниеВенера · Водолей: Нет ни одной из этих четырёх метокМарс · Дева: Нет ни одной из этих четырёх метокЮпитер · Телец: Нет ни одной из этих четырёх метокСатурн · Весы: ЭкзальтацияНептун · Водолей: Не входит в классическую таблицу семи планетСеверный узел · Стрелец: Не входит в классическую таблицу семи планетПлутон · Козерог: Не входит в классическую таблицу семи планетЮжный узел · Близнецы: Не входит в классическую таблицу семи планетУран · Овен: Не входит в классическую таблицу семи планетЭти традиционные метки описывают связь планеты со знаком. Они не измеряют ценность, способности или будущее человека.Обитель: знак, которым планета управляет в классической системе.Экзальтация: знак особой традиционной связи с планетой.Изгнание: знак напротив классической обители.Падение: знак напротив экзальтации. Эти четыре метки не охватывают все традиционные достоинства.Солнце · Показать на картеКозерог · Показать на картеМеркурий · Показать на картеСтрелец · Показать на картеВенера · Показать на картеВодолей · Показать на картеМарс · Показать на картеДева · Показать на картеЮпитер · Показать на картеТелец · Показать на картеСатурн · Показать на картеВесы · Показать на картеНептун · Показать на картеВодолей · Показать на картеСеверный узел · Показать на картеСтрелец · Показать на картеПлутон · Показать на картеКозерог · Показать на картеЮжный узел · Показать на картеБлизнецы · Показать на картеУран · Показать на картеОвен · Показать на картеПравило: zodiacs-chart-context-v1Создать изображениеЕщё способы использовать эту карту+Поделиться картой · Ещё способы использовать эту карту↗Скачать запись расчёта (.json)↓Файл содержит личные данные о рождении и данные карты. Храните его в безопасном месте.Точные данные карты — 12 положений · 10 аспектов2011-12-30 · 22:00:00 UTC · -13.83°, -171.77° · движок v0.1.1-rc.6ТелоПоложениеЗнакДвижение Солнце8°51′Козерог Луна24°01′Нужно время рождения · Нужно время рождения Меркурий18°23′Стрелец Венера12°29′Водолей Марс19°50′Дева Юпитер0°24′Телец Сатурн28°13′Весы Уран0°49′Овен Нептун28°51′Водолей Плутон7°17′Козерог Северный узел13°59′СтрелецRx Южный узел13°59′БлизнецыRxАспекты - 10 аспектов Сатурн  трин  Нептун · орбис 0.6° · сходящийся Меркурий  квадратура  Марс · орбис 1.4° · сходящийся Юпитер  секстиль  Нептун · орбис 1.5° · сходящийся Солнце  соединение  Плутон · орбис 1.6° · расходящийся Юпитер  оппозиция  Сатурн · орбис 2.2° · сходящийся Луна  оппозиция  Марс · орбис 4.2° · расходящийся Луна  квадратура  Меркурий · орбис 5.6° · расходящийся Уран  квадратура  Плутон · орбис 6.5° · расходящийся Луна  соединение  Уран · орбис 6.8° · сходящийся Юпитер  трин  Плутон · орбис 6.9° · расходящийся",
+    "moonUncertain": true,
+    "registry": null,
+    "error": null,
+    "busy": "false",
+    "actions": 5,
+    "context": {
+      "mode": "full",
+      "sunSign": "capricorn",
+      "chartId": null,
+      "contextId": 36
+    },
+    "focus": {
+      "tag": "BUTTON",
+      "id": "",
+      "role": null,
+      "text": "Скачать запись расчёта (.json)↓"
+    },
+    "noSavedProfile": true,
+    "overflow": false
+  },
+  "expectedRefusalDiagnostics": 1,
+  "contextClosed": true
+}

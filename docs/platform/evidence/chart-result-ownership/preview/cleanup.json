@@ -1,0 +1,8 @@
+{
+  "at": "2026-09-08T09:33:29.145Z",
+  "temporaryAccessDirectoryRemoved": true,
+  "scannedFiles": 138,
+  "exactPrivateUrlAndNontrivialQueryValueMatches": 0,
+  "matchedFiles": [],
+  "qualification": "Authentication bootstrap used a separate disposable context before test request observation. Test contexts blocked external, API and non-GET requests. Browser contexts closed; credentials removed after scan. No claim that the isolated authentication bootstrap made zero network requests."
+}

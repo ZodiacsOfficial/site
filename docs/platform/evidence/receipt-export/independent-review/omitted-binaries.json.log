@@ -1,0 +1,104 @@
+[
+  {
+    "path": "browser/locale-en.png",
+    "bytes": 119386,
+    "sha256": "2b3295bfd582eeda9bb7579907d3249e1a98d8d3c2b4f5bca1db7df877b4a759",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser/locale-fr.png",
+    "bytes": 93215,
+    "sha256": "d008bf704180e50d74367b7dccad92dade93effdfdb7851935441060378f16de",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser/failure-positions-only-has-no-receipt.png",
+    "bytes": 527857,
+    "sha256": "e78e79e1c0199c695ddc7c74aade0d53691a25d30ae88e4ff26005a05cd9c623",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser/locale-es.png",
+    "bytes": 91762,
+    "sha256": "d2307c8ff007bbd81abad3f8870225d99d7702d154bcb918d90dfff45347c53d",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser/locale-it.png",
+    "bytes": 87853,
+    "sha256": "854c2dd52bbd2ed5402bef4faa39003a89a934f8dcb343a3b35a53d7b7a64df9",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser/locale-pt.png",
+    "bytes": 91587,
+    "sha256": "cafd535beafeda704650498fe03d2f2ba630d1cf541b751fa967f126ea83fd15",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-en.png",
+    "bytes": 119386,
+    "sha256": "2b3295bfd582eeda9bb7579907d3249e1a98d8d3c2b4f5bca1db7df877b4a759",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-fr.png",
+    "bytes": 93215,
+    "sha256": "d008bf704180e50d74367b7dccad92dade93effdfdb7851935441060378f16de",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-ru.png",
+    "bytes": 75494,
+    "sha256": "2de205788fea06979079f607294409e2cc9d08031597c4195ac428a407b2de7b",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-es.png",
+    "bytes": 91762,
+    "sha256": "d2307c8ff007bbd81abad3f8870225d99d7702d154bcb918d90dfff45347c53d",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-it.png",
+    "bytes": 87853,
+    "sha256": "854c2dd52bbd2ed5402bef4faa39003a89a934f8dcb343a3b35a53d7b7a64df9",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-final/locale-pt.png",
+    "bytes": 91587,
+    "sha256": "cafd535beafeda704650498fe03d2f2ba630d1cf541b751fa967f126ea83fd15",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-postbuild/locale-en.png",
+    "bytes": 119386,
+    "sha256": "2b3295bfd582eeda9bb7579907d3249e1a98d8d3c2b4f5bca1db7df877b4a759",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-postbuild/locale-fr.png",
+    "bytes": 93215,
+    "sha256": "d008bf704180e50d74367b7dccad92dade93effdfdb7851935441060378f16de",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-postbuild/locale-es.png",
+    "bytes": 91762,
+    "sha256": "d2307c8ff007bbd81abad3f8870225d99d7702d154bcb918d90dfff45347c53d",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-postbuild/locale-it.png",
+    "bytes": 87853,
+    "sha256": "854c2dd52bbd2ed5402bef4faa39003a89a934f8dcb343a3b35a53d7b7a64df9",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  },
+  {
+    "path": "browser-postbuild/locale-pt.png",
+    "bytes": 91587,
+    "sha256": "cafd535beafeda704650498fe03d2f2ba630d1cf541b751fa967f126ea83fd15",
+    "reason": "Nonessential screenshot excluded from durable binary copies; numeric evidence and executed result retained."
+  }
+]

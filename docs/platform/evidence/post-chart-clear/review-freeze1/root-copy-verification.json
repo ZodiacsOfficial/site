@@ -1,0 +1,231 @@
+{
+  "sourceManifestSha256": "dfca7b0f414784c874b2225363d0677def41a7c00048e0b3c6f97ee7b7e313e0",
+  "sourceRecords": 56,
+  "verifiedArchiveMembers": 60,
+  "fileMap": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "baseline-focus-refined-result.json",
+      "path": "baseline-focus-refined-result.json"
+    },
+    {
+      "sourcePath": "baseline-native-result.json",
+      "path": "baseline-native-result.json"
+    },
+    {
+      "sourcePath": "baseline-refresh-result.json",
+      "path": "baseline-refresh-result.json"
+    },
+    {
+      "sourcePath": "candidate-focus-refined-result.json",
+      "path": "candidate-focus-refined-result.json"
+    },
+    {
+      "sourcePath": "candidate-native-result.json",
+      "path": "candidate-native-result.json"
+    },
+    {
+      "sourcePath": "candidate-refresh-result.json",
+      "path": "candidate-refresh-result.json"
+    },
+    {
+      "sourcePath": "email/COMMANDS.md",
+      "path": "email/COMMANDS.md"
+    },
+    {
+      "sourcePath": "email/REVIEW.md",
+      "path": "email/REVIEW.md"
+    },
+    {
+      "sourcePath": "email/baseline-build.json",
+      "path": "email/baseline-build.json"
+    },
+    {
+      "sourcePath": "email/baseline-build.log",
+      "path": "email/baseline-build.log"
+    },
+    {
+      "sourcePath": "email/baseline-native-result.json",
+      "path": "email/baseline-native-result.json"
+    },
+    {
+      "sourcePath": "email/baseline-native-round1-result.json",
+      "path": "email/baseline-native-round1-result.json"
+    },
+    {
+      "sourcePath": "email/baseline-native-round1.log",
+      "path": "email/baseline-native-round1.log"
+    },
+    {
+      "sourcePath": "email/baseline-native-round2-result.json",
+      "path": "email/baseline-native-round2-result.json"
+    },
+    {
+      "sourcePath": "email/baseline-native-round2.log",
+      "path": "email/baseline-native-round2.log"
+    },
+    {
+      "sourcePath": "email/baseline-native.log",
+      "path": "email/baseline-native.log"
+    },
+    {
+      "sourcePath": "email/baseline.js",
+      "path": "email/baseline.js.log"
+    },
+    {
+      "sourcePath": "email/build.mjs",
+      "path": "email/build.mjs.log"
+    },
+    {
+      "sourcePath": "email/candidate-build.json",
+      "path": "email/candidate-build.json"
+    },
+    {
+      "sourcePath": "email/candidate-build.log",
+      "path": "email/candidate-build.log"
+    },
+    {
+      "sourcePath": "email/candidate-native-result.json",
+      "path": "email/candidate-native-result.json"
+    },
+    {
+      "sourcePath": "email/candidate-native.log",
+      "path": "email/candidate-native.log"
+    },
+    {
+      "sourcePath": "email/candidate.js",
+      "path": "email/candidate.js.log"
+    },
+    {
+      "sourcePath": "email/ci-wiring/REVIEW.md",
+      "path": "email/ci-wiring/REVIEW.md"
+    },
+    {
+      "sourcePath": "email/ci-wiring/base-source/package-lock.json",
+      "path": "email/ci-wiring/base-source/package-lock.json"
+    },
+    {
+      "sourcePath": "email/ci-wiring/base-source/package.json",
+      "path": "email/ci-wiring/base-source/package.json"
+    },
+    {
+      "sourcePath": "email/ci-wiring/base-source/src/layouts/Base.astro",
+      "path": "email/ci-wiring/base-source/src/layouts/Base.astro.log"
+    },
+    {
+      "sourcePath": "email/ci-wiring/base-source/tests/visual/browser.mjs",
+      "path": "email/ci-wiring/base-source/tests/visual/browser.mjs.log"
+    },
+    {
+      "sourcePath": "email/ci-wiring/identity.json",
+      "path": "email/ci-wiring/identity.json"
+    },
+    {
+      "sourcePath": "email/ci-wiring/patch.diff",
+      "path": "email/ci-wiring/patch.diff"
+    },
+    {
+      "sourcePath": "email/ci-wiring/reset-analytics-listeners.log",
+      "path": "email/ci-wiring/reset-analytics-listeners.log"
+    },
+    {
+      "sourcePath": "email/ci-wiring/site-check.base.yml",
+      "path": "email/ci-wiring/site-check.base.yml"
+    },
+    {
+      "sourcePath": "email/ci-wiring/site-check.yml",
+      "path": "email/ci-wiring/site-check.yml"
+    },
+    {
+      "sourcePath": "email/ci-wiring/verification.json",
+      "path": "email/ci-wiring/verification.json"
+    },
+    {
+      "sourcePath": "email/final-identity.json",
+      "path": "email/final-identity.json"
+    },
+    {
+      "sourcePath": "email/fixture.mjs",
+      "path": "email/fixture.mjs.log"
+    },
+    {
+      "sourcePath": "email/implementation.patch",
+      "path": "email/implementation.patch"
+    },
+    {
+      "sourcePath": "email/manifest.json",
+      "path": "email/manifest.json"
+    },
+    {
+      "sourcePath": "email/native-review.mjs",
+      "path": "email/native-review.mjs.log"
+    },
+    {
+      "sourcePath": "email/preparation/EmailCapture.base.astro",
+      "path": "email/preparation/EmailCapture.base.astro.log"
+    },
+    {
+      "sourcePath": "email/preparation/EmailCaptureEnhancement.base.astro",
+      "path": "email/preparation/EmailCaptureEnhancement.base.astro.log"
+    },
+    {
+      "sourcePath": "email/preparation/PREPARATION.md",
+      "path": "email/preparation/PREPARATION.md"
+    },
+    {
+      "sourcePath": "email/preparation/base-parity.json",
+      "path": "email/preparation/base-parity.json"
+    },
+    {
+      "sourcePath": "email/preparation/identity.json",
+      "path": "email/preparation/identity.json"
+    },
+    {
+      "sourcePath": "email/source/src/components/EmailCaptureEnhancement.astro",
+      "path": "email/source/src/components/EmailCaptureEnhancement.astro.log"
+    },
+    {
+      "sourcePath": "email/source/src/islands/PostChartDailyBrief.tsx",
+      "path": "email/source/src/islands/PostChartDailyBrief.tsx.log"
+    },
+    {
+      "sourcePath": "email/source/src/lib/profile/post-chart-context.test.ts",
+      "path": "email/source/src/lib/profile/post-chart-context.test.ts.log"
+    },
+    {
+      "sourcePath": "email/source/src/lib/profile/post-chart-context.ts",
+      "path": "email/source/src/lib/profile/post-chart-context.ts.log"
+    },
+    {
+      "sourcePath": "email/source/tests/post-chart-context-clear-drive.mjs",
+      "path": "email/source/tests/post-chart-context-clear-drive.mjs.log"
+    },
+    {
+      "sourcePath": "email/source/tests/post-chart-daily-drive.mjs",
+      "path": "email/source/tests/post-chart-daily-drive.mjs.log"
+    },
+    {
+      "sourcePath": "email/source-freeze.json",
+      "path": "email/source-freeze.json"
+    },
+    {
+      "sourcePath": "implementation.patch.log",
+      "path": "implementation.patch.log"
+    },
+    {
+      "sourcePath": "raw-members.json",
+      "path": "raw-members.json"
+    },
+    {
+      "sourcePath": "raw.tar.gz",
+      "path": "raw.tar.gz"
+    },
+    {
+      "sourcePath": "source-freeze.json",
+      "path": "source-freeze.json"
+    }
+  ]
+}

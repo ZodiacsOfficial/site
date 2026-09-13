@@ -1,0 +1,29 @@
+diff --git a/private/tmp/zodiacs-platform-downstream-context-independent-review/email/source/tests/post-chart-context-clear-drive.mjs b/private/tmp/zodiacs-platform-downstream-context-independent-review/email/freeze2-parity/source/tests/post-chart-context-clear-drive.mjs
+index c98da6f..b9af0df 100644
+--- a/private/tmp/zodiacs-platform-downstream-context-independent-review/email/source/tests/post-chart-context-clear-drive.mjs
++++ b/private/tmp/zodiacs-platform-downstream-context-independent-review/email/freeze2-parity/source/tests/post-chart-context-clear-drive.mjs
+@@ -93,6 +93,24 @@ try{
+  });
+  await group('clear-before-session-read',async s=>{await s.page.evaluate(()=>{window.fixture.publish();window.fixture.clear();});await frames(s);assert.deepEqual((await observation(s)).reads,[]);assert.equal(s.requests.length,0);return {noNewReads:true};});
+  await group('clear-during-session-read',async s=>{await s.page.evaluate(()=>{window.fixture.holdSession();window.fixture.publish();});await s.page.waitForFunction(()=>window.fixture.reads.includes('session'));await s.page.evaluate(()=>{window.fixture.clear();window.fixture.releaseSession();});await frames(s);assert.equal(s.requests.length,0);assert.equal((await observation(s)).managedHidden,true);return {noPreferenceRead:true};});
++ await group('profile-sync-cannot-certify-an-unknown-session-as-signed-out',async s=>{
++  await s.page.evaluate(()=>{window.fixture.holdSession();window.fixture.publish();});await s.page.waitForFunction(()=>window.fixture.reads.includes('session'));
++  await s.page.evaluate(()=>dispatchEvent(new Event('zodiacs:profile-synced')));await frames(s);const during=await observation(s);
++  await s.page.evaluate(()=>window.fixture.releaseSession());await frames(s);await s.page.waitForTimeout(50);const after=await observation(s);
++  assert.equal(during.managedState,null);assert.equal(after.managedState,'synced-eligible');assert.equal(s.requests.filter(r=>r.method==='GET').length,1);return {during,after};
++ });
++ for(const boundary of ['unknown-after-clear','explicit-auth-null','observed-session-null'])await group('session-cache-'+boundary,async s=>{
++  if(boundary==='unknown-after-clear'){await publish(s);await s.page.evaluate(()=>window.fixture.clear());}
++  if(boundary==='observed-session-null')await s.page.evaluate(()=>{window.fixture.session=null;});
++  const before=s.requests.length;
++  await s.page.evaluate(()=>{window.fixture.holdSession();window.fixture.publish(8,'leo');});await s.page.waitForFunction(()=>window.fixture.reads.filter(read=>read==='session').length>=(window.fixture.clearEvents.length?2:1));
++  if(boundary==='explicit-auth-null')await s.page.evaluate(()=>window.fixture.auth(null));
++  if(boundary==='observed-session-null'){await s.page.evaluate(()=>window.fixture.releaseSession());await s.page.locator('#managed[data-post-chart-state="device-only"]').waitFor({state:'visible'});await s.page.evaluate(()=>{window.fixture.session={access_token:'synthetic-new-token',user:{id:'10000000-0000-4000-8000-000000000001'}};});}
++  await frames(s);const readsBefore=(await observation(s)).reads.filter(read=>read==='session').length;
++  await s.page.evaluate(()=>dispatchEvent(new Event('zodiacs:profile-synced')));await frames(s);const during=await observation(s);
++  await s.page.evaluate(()=>window.fixture.releaseSession());await frames(s);await s.page.waitForTimeout(50);const after=await observation(s);
++  const unknown=boundary==='unknown-after-clear';assert.equal(during.managedState,unknown?null:'device-only');assert.equal(after.managedState,unknown?'synced-eligible':'device-only');assert.equal(s.requests.length,before+(unknown?1:0));assert.equal(after.reads.filter(read=>read==='session').length,readsBefore+(unknown?1:0));return {boundary,during,after};
++ });
+  await group('clear-during-preference-read',async s=>{const held=gate(s,'/api/email/chart-preference','GET');await s.page.evaluate(()=>window.fixture.publish());await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.managedHidden,true);assert.equal(value.managedState,null);assert.equal(s.requests.length,1);return {value};});
+  await group('submitted-resend-clears-without-retry',async s=>{
+   await publish(s);const held=gate(s,'/api/email/chart-preference','POST');await s.page.locator('#managed .post-chart-daily__actions button').click();await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.managedHidden,true);assert.equal(value.managedState,null);assert.equal(s.requests.filter(r=>r.method==='POST').length,1);assert.equal(s.requests.filter(r=>r.method==='GET').length,1);assert.equal(s.requests.find(r=>r.method==='POST').body,'{"action":"resend"}');return value;

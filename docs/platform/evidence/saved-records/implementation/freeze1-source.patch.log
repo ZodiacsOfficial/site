@@ -1,0 +1,1045 @@
+diff --git a/src/lib/profile/saved-record-store.test.ts b/src/lib/profile/saved-record-store.test.ts
+new file mode 100644
+index 00000000..deba5e6d
+--- /dev/null
++++ b/src/lib/profile/saved-record-store.test.ts
+@@ -0,0 +1,415 @@
++import { build } from 'esbuild';
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import { computePortableChart } from '../engine/portable';
++import { parseNatalEnvelope } from '@zodiacs/engine/receipt';
++import { createSavedNatalRecord, type SavedNatalRecord } from './saved-record';
++import {
++  IndexedDbSavedNatalAdapter, SavedNatalStore, SAVED_NATAL_DATABASE_NAME,
++  type SavedNatalAdapter, type SavedNatalAuthority, type SavedNatalResult,
++} from './saved-record-store';
++
++const A = 'account:10000000-0000-4000-8000-000000000001';
++const B = 'account:20000000-0000-4000-8000-000000000002';
++const ID = '30000000-0000-4000-8000-000000000003';
++const WHEN = '2026-09-08T00:00:00.000Z';
++const base = { utc: '2001-12-21T08:30:00-00:00', latitude: 78.2232, longitude: 15.6267,
++  houseSystem: 'placidus' as const, timeKnown: true };
++const polar = computePortableChart(base, { sourceInstant: base.utc });
++const whole = computePortableChart({ ...base, houseSystem: 'whole' });
++const unknown = computePortableChart({ ...base, timeKnown: false }, { sourceInstant: base.utc });
++function value<T>(result: SavedNatalResult<T>): T {
++  expect(result.ok).toBe(true);
++  if (!result.ok) throw new Error('Expected synthetic test operation success');
++  return result.value;
++}
++function deferred() {
++  let resolve!: () => void;
++  const promise = new Promise<void>((done) => { resolve = done; });
++  return { promise, resolve };
++}
++
++/** Deterministic adapter contract model; native IDB schedules are verified separately. */
++class Backend {
++  rows = new Map<string, Map<string, unknown>>();
++  tail: Promise<unknown> = Promise.resolve();
++  owner(key: string) { if (!this.rows.has(key)) this.rows.set(key, new Map()); return this.rows.get(key)!; }
++  async serial<T>(action: () => Promise<T>): Promise<T> {
++    const result = this.tail.then(action, action);
++    this.tail = result.catch(() => {});
++    return result;
++  }
++}
++class MemoryAdapter implements SavedNatalAdapter {
++  generation = 0;
++  aborts = 0;
++  calls = 0;
++  fault: unknown;
++  beforeRead?: () => Promise<void> | void;
++  beforeCommit?: () => Promise<void> | void;
++  afterCommit?: () => Promise<void> | void;
++  constructor(readonly backend = new Backend()) {}
++  async read(owner: string, id: string | null, guard: () => void): Promise<unknown[]> {
++    this.calls++;
++    const generation = this.generation;
++    guard();
++    await this.beforeRead?.();
++    if (this.fault) throw this.fault;
++    if (generation !== this.generation) throw new DOMException('synthetic', 'AbortError');
++    guard();
++    const rows = this.backend.owner(owner);
++    return structuredClone(id === null ? [...rows.values()].slice(0, 41) : rows.has(id) ? [rows.get(id)] : []);
++  }
++  async mutate<T>(owner: string, guard: () => void,
++    operation: (rows: unknown[]) => { result: T; add?: SavedNatalRecord; deleteId?: string }): Promise<T> {
++    return this.mutation(owner, guard, operation);
++  }
++  private async mutation<T>(owner: string, guard: () => void,
++    operation: (rows: unknown[]) => { result: T; add?: SavedNatalRecord; deleteId?: string }): Promise<T> {
++    this.calls++;
++    const generation = this.generation;
++    return this.backend.serial(async () => {
++      guard();
++      if (generation !== this.generation) throw new DOMException('synthetic', 'AbortError');
++      if (this.fault) throw this.fault;
++      const rows = this.backend.owner(owner);
++      const mutation = operation(structuredClone([...rows.values()].slice(0, 41)));
++      await this.beforeCommit?.();
++      if (generation !== this.generation) throw new DOMException('synthetic', 'AbortError');
++      guard();
++      if (mutation.add) rows.set(mutation.add.id, structuredClone(mutation.add));
++      if (mutation.deleteId) rows.delete(mutation.deleteId);
++      // Deliberately return an already committed result after this hook so the
++      // STORE's own post-await authority check is independently exercised.
++      await this.afterCommit?.();
++      return mutation.result;
++    });
++  }
++  async clear(owner: string, guard: () => void): Promise<void> {
++    this.calls++;
++    const generation = this.generation;
++    return this.backend.serial(async () => {
++      guard();
++      await this.beforeCommit?.();
++      if (this.fault) throw this.fault;
++      if (generation !== this.generation) throw new DOMException('synthetic', 'AbortError');
++      guard();
++      this.backend.rows.delete(owner);
++      await this.afterCommit?.();
++    });
++  }
++  abortPending() { this.generation++; this.aborts++; }
++}
++
++function fixture(owner = A, backend = new Backend()) {
++  let authority: SavedNatalAuthority | null = { ownerKey: owner, epoch: 1 };
++  let serial = 0;
++  const adapter = new MemoryAdapter(backend);
++  const store = new SavedNatalStore({ ownerKey: owner, epoch: 1, readAuthority: () => authority,
++    adapter, now: () => new Date(WHEN), randomUUID: () => `${String(++serial).padStart(8, '0')}-0000-4000-8000-000000000000` });
++  return { store, adapter, backend, setAuthority: (next: SavedNatalAuthority | null) => { authority = next; } };
++}
++
++afterEach(() => vi.unstubAllGlobals());
++
++describe('owner-bound immutable saved natal operations', () => {
++  it('creates/reads/exports an unlabeled record without local metadata in the envelope', async () => {
++    const { store } = fixture();
++    const record = value(await store.create(polar.envelope));
++    expect(Object.isFrozen(record)).toBe(true);
++    expect(value(await store.get(record.id))).toEqual(record);
++    const json = value(await store.exportEnvelope(record.id));
++    expect(json).toBe(record.envelopeJson);
++    expect(parseNatalEnvelope(json!)).toEqual({ ok: true, envelope: polar.envelope });
++    expect(json).not.toContain(record.id);
++    expect(json).not.toContain(record.ownerKey);
++    expect(Object.isFrozen(value(await store.list()))).toBe(true);
++  });
++
++  it('keeps polar/explicit Whole and repeated equivalent requests as distinct IDs', async () => {
++    const { store } = fixture();
++    const records = await Promise.all([polar, whole, polar].map((calculation) => store.create(calculation.envelope)));
++    expect(new Set(records.map((record) => value(record).id)).size).toBe(3);
++    const parsed = value(await store.list()).map((record) => JSON.parse(record.envelopeJson).receipt.houses);
++    expect(parsed.map((houses) => houses.requested)).toEqual(['placidus', 'whole', 'placidus']);
++    expect(parsed.every((houses) => houses.actual === 'whole')).toBe(true);
++  });
++
++  it('preserves unknown 08:30 and exact source spelling through persistence', async () => {
++    const { store } = fixture();
++    const record = value(await store.create(unknown.envelope, 'local label'));
++    const parsed = parseNatalEnvelope(value(await store.exportEnvelope(record.id))!);
++    expect(parsed.ok && parsed.envelope.receipt).toMatchObject({ instant: '2001-12-21T08:30:00.000Z',
++      sourceInstant: base.utc, timeKnown: false, houses: { requested: 'placidus', actual: null } });
++  });
++
++  it('captures the mutable caller envelope before waiting for storage', async () => {
++    const { store, adapter } = fixture();
++    const ready = deferred(), release = deferred();
++    adapter.beforeCommit = async () => { ready.resolve(); await release.promise; };
++    const source = JSON.parse(JSON.stringify(polar.envelope));
++    const pending = store.create(source);
++    await ready.promise;
++    source.receipt.instant = '1900-01-01T00:00:00.000Z';
++    source.result.bodies[0].lon = 0;
++    release.resolve();
++    expect(JSON.parse(value(await pending).envelopeJson)).toEqual(polar.envelope);
++  });
++
++  it('serializes concurrent creates and enforces cap40 with insertion atomically', async () => {
++    const { store, backend } = fixture();
++    const results = await Promise.all(Array.from({ length: 42 }, () => store.create(polar.envelope)));
++    expect(results.filter((result) => result.ok)).toHaveLength(40);
++    expect(results.filter((result) => !result.ok)).toEqual([
++      { ok: false, code: 'full', mayHaveCommitted: false }, { ok: false, code: 'full', mayHaveCommitted: false },
++    ]);
++    expect(backend.owner(A).size).toBe(40);
++    expect(value(await store.list())).toHaveLength(40);
++  });
++
++  it('reports a UUID collision without overwriting the existing immutable record', async () => {
++    const adapter = new MemoryAdapter();
++    const store = new SavedNatalStore({ ownerKey: A, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }),
++      adapter, randomUUID: () => ID, now: () => new Date(WHEN) });
++    const first = value(await store.create(polar.envelope));
++    expect(await store.create(whole.envelope)).toEqual({ ok: false, code: 'id-conflict', mayHaveCommitted: false });
++    expect(value(await store.get(ID))).toEqual(first);
++  });
++
++  it('partitions the same ID by explicit owner and deletes idempotently', async () => {
++    const backend = new Backend();
++    const a = fixture(A, backend), b = fixture(B, backend);
++    const one = value(await a.store.create(polar.envelope));
++    const two = value(await b.store.create(whole.envelope));
++    expect(one.id).toBe(two.id);
++    expect(value(await a.store.get(one.id))?.envelopeJson).toBe(one.envelopeJson);
++    expect(value(await b.store.get(two.id))?.envelopeJson).toBe(two.envelopeJson);
++    expect(await a.store.delete(one.id)).toEqual({ ok: true, value: undefined });
++    expect(await a.store.delete(one.id)).toEqual({ ok: true, value: undefined });
++    expect(await a.store.get(one.id)).toEqual({ ok: true, value: null });
++    expect(value(await b.store.get(two.id))).toEqual(two);
++  });
++
++  it.each([null, { ownerKey: B, epoch: 1 }, { ownerKey: A, epoch: 2 }])('rejects mismatched authority before adapter access (%#)', async (authority) => {
++    const { store, adapter, setAuthority } = fixture();
++    setAuthority(authority);
++    for (const operation of [() => store.create(polar.envelope), () => store.get(ID), () => store.list(),
++      () => store.delete(ID), () => store.clearOwner()]) {
++      expect(await operation()).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++    }
++    expect(adapter.calls).toBe(0);
++  });
++
++  it('invalidates A-to-B-to-A pending reads using the explicit authority epoch', async () => {
++    const { store, adapter, setAuthority } = fixture();
++    const ready = deferred(), release = deferred();
++    adapter.beforeRead = async () => { ready.resolve(); await release.promise; };
++    const pending = store.list(); await ready.promise;
++    setAuthority({ ownerKey: B, epoch: 2 }); setAuthority({ ownerKey: A, epoch: 3 });
++    release.resolve();
++    expect(await pending).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
++  });
++
++  it('aborts pending writes on revoke and does not reactivate the handle', async () => {
++    const { store, adapter, backend } = fixture();
++    const ready = deferred(), release = deferred();
++    adapter.beforeCommit = async () => { ready.resolve(); await release.promise; };
++    const pending = store.create(polar.envelope); await ready.promise;
++    store.revoke(); release.resolve();
++    expect(await pending).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
++    expect(backend.owner(A).size).toBe(0);
++    expect(adapter.aborts).toBe(1);
++    expect(await store.list()).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++  });
++
++  it('does not return success/data after an already committed write loses authority', async () => {
++    const { store, adapter, backend, setAuthority } = fixture();
++    adapter.afterCommit = () => { setAuthority(null); };
++    expect(await store.create(polar.envelope)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: true });
++    expect(backend.owner(A).size).toBe(1);
++    expect(adapter.calls).toBe(1); // No automatic retry.
++  });
++
++  it.each(['QuotaExceededError', 'AbortError', 'VersionError', 'UnknownError'])('returns fixed %s storage failure without a partial write', async (name) => {
++    const { store, adapter, backend } = fixture();
++    adapter.fault = new DOMException('private birth diagnostic', name);
++    const result = await store.create(polar.envelope);
++    expect(result).toEqual({ ok: false, code: name === 'QuotaExceededError' ? 'quota-exceeded'
++      : name === 'AbortError' ? 'aborted' : name === 'VersionError' ? 'unsupported-storage' : 'storage-unavailable',
++    mayHaveCommitted: false });
++    expect(JSON.stringify(result)).not.toContain('private');
++    expect(backend.owner(A).size).toBe(0);
++  });
++
++  it('does not inspect arbitrary private adapter exceptions', async () => {
++    const { store, adapter } = fixture(); let reads = 0;
++    adapter.fault = new Proxy({}, { get() { reads++; throw new Error('private'); } });
++    expect(await store.list()).toEqual({ ok: false, code: 'storage-unavailable', mayHaveCommitted: false });
++    expect(reads).toBe(0);
++  });
++
++  it('distinguishes absent rows from unavailable and corrupt storage', async () => {
++    const { store, adapter, backend } = fixture();
++    expect(await store.get(ID)).toEqual({ ok: true, value: null });
++    adapter.fault = new Error('private');
++    expect(await store.get(ID)).toEqual({ ok: false, code: 'storage-unavailable', mayHaveCommitted: false });
++    adapter.fault = undefined;
++    backend.owner(A).set(ID, { schema: 'damaged' });
++    expect(await store.get(ID)).toEqual({ ok: false, code: 'corrupt-record', mayHaveCommitted: false });
++    expect(await store.list()).toEqual({ ok: false, code: 'corrupt-record', mayHaveCommitted: false });
++    expect(await store.create(polar.envelope)).toEqual({ ok: false, code: 'corrupt-record', mayHaveCommitted: false });
++    expect(backend.owner(A).get(ID)).toEqual({ schema: 'damaged' });
++  });
++
++  it('preserves unknown records on read/create but permits explicit exact-key deletion', async () => {
++    const { store, backend } = fixture();
++    const future = { schema: 'zodiacs.saved-natal.v10', ownerKey: A, id: ID, future: 'opaque' };
++    backend.owner(A).set(ID, future);
++    expect(await store.list()).toEqual({ ok: false, code: 'unsupported-record', mayHaveCommitted: false });
++    expect(await store.create(polar.envelope)).toEqual({ ok: false, code: 'unsupported-record', mayHaveCommitted: false });
++    expect(backend.owner(A).get(ID)).toBe(future);
++    expect(await store.delete(ID)).toEqual({ ok: true, value: undefined });
++    expect(await store.get(ID)).toEqual({ ok: true, value: null });
++  });
++
++  it('rejects wrong-owner and row/key identity mismatches', async () => {
++    const { store, backend } = fixture();
++    backend.owner(A).set(ID, createSavedNatalRecord(B, ID, WHEN, polar.envelope));
++    expect(await store.get(ID)).toEqual({ ok: false, code: 'corrupt-record', mayHaveCommitted: false });
++    backend.owner(A).set(ID, createSavedNatalRecord(A, '40000000-0000-4000-8000-000000000004', WHEN, polar.envelope));
++    expect(await store.get(ID)).toEqual({ ok: false, code: 'corrupt-record', mayHaveCommitted: false });
++  });
++
++  it('consumes a clear handle and aborts its previously started creates', async () => {
++    const { store, adapter, backend } = fixture();
++    const ready = deferred(), release = deferred();
++    adapter.beforeCommit = async () => { ready.resolve(); await release.promise; };
++    const pending = store.create(polar.envelope); await ready.promise;
++    const clear = store.clearOwner(); release.resolve();
++    expect(await pending).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
++    expect(await clear).toEqual({ ok: true, value: undefined });
++    expect(backend.owner(A).size).toBe(0);
++    expect(adapter.aborts).toBe(2); // Abort old work; close clear's final connection.
++    expect(await store.create(polar.envelope)).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++  });
++
++  it('explicit clear removes corrupt/future owned content, preserves other owners, and allows a separate handle to create later', async () => {
++    const backend = new Backend(); const a = fixture(A, backend), b = fixture(B, backend);
++    backend.owner(A).set(ID, { schema: 'zodiacs.saved-natal.v100', future: true });
++    const other = value(await b.store.create(whole.envelope));
++    expect(await a.store.clearOwner()).toEqual({ ok: true, value: undefined });
++    expect(backend.owner(A).size).toBe(0);
++    expect(value(await b.store.get(other.id))).toEqual(other);
++    const separateHandle = fixture(A, backend);
++    expect((await separateHandle.store.create(polar.envelope)).ok).toBe(true);
++    // This primitive is not durable/cross-handle account erasure.
++    expect(backend.owner(A).size).toBe(1);
++  });
++
++  it('a failed clear preserves content and requires an explicit new handle for retry', async () => {
++    const f = fixture(); value(await f.store.create(polar.envelope));
++    f.adapter.fault = new Error('private failure');
++    expect(await f.store.clearOwner()).toEqual({ ok: false, code: 'storage-unavailable', mayHaveCommitted: false });
++    expect(f.backend.owner(A).size).toBe(1);
++    expect(await f.store.clearOwner()).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++    expect(await fixture(A, f.backend).store.clearOwner()).toEqual({ ok: true, value: undefined });
++    expect(f.backend.owner(A).size).toBe(0);
++  });
++
++  it('reports that stale post-commit clear may already have erased the owner', async () => {
++    const f = fixture(); value(await f.store.create(polar.envelope));
++    f.adapter.afterCommit = () => f.setAuthority(null);
++    expect(await f.store.clearOwner()).toEqual({ ok: false, code: 'stale', mayHaveCommitted: true });
++    expect(f.backend.owner(A).size).toBe(0);
++  });
++
++  it('keeps constructor, authority callback and clock failures fixed and private', async () => {
++    const options = Object.defineProperty({}, 'ownerKey', { get() { throw new Error('private constructor'); } });
++    expect(() => new SavedNatalStore(options as never)).toThrow('Unable to configure saved natal records.');
++    const denied = new SavedNatalStore({ ownerKey: A, epoch: 1,
++      readAuthority: () => { throw new Error('private authority'); } });
++    expect(await denied.list()).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++    const adapter = new MemoryAdapter();
++    const invalidClock = new SavedNatalStore({ ownerKey: A, epoch: 1,
++      readAuthority: () => ({ ownerKey: A, epoch: 1 }), adapter, randomUUID: () => ID,
++      now: () => new Date(NaN) });
++    expect(await invalidClock.create(polar.envelope)).toEqual({ ok: false, code: 'invalid-input', mayHaveCommitted: false });
++    expect(adapter.calls).toBe(0);
++  });
++
++  it('catches revocation reentrancy inside the authority callback before storage', async () => {
++    const adapter = new MemoryAdapter();
++    const store = new SavedNatalStore({ ownerKey: A, epoch: 1, adapter, readAuthority: () => {
++      store.revoke(); return { ownerKey: A, epoch: 1 };
++    } });
++    expect(await store.list()).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
++    expect(adapter.calls).toBe(0);
++  });
++
++  it('invalid UUID/label/envelope/time inputs fail before adapter writes', async () => {
++    for (const randomUUID of [() => '', () => ID + '\n', () => { throw new Error('private'); }]) {
++      const adapter = new MemoryAdapter();
++      const store = new SavedNatalStore({ ownerKey: A, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }), adapter, randomUUID });
++      expect(await store.create(polar.envelope)).toEqual({ ok: false, code: 'invalid-input', mayHaveCommitted: false });
++      expect(adapter.calls).toBe(0);
++    }
++    const { store, adapter } = fixture();
++    expect(await store.create(polar.envelope, '\n')).toEqual({ ok: false, code: 'invalid-input', mayHaveCommitted: false });
++    expect(await store.create({ ...polar.envelope, schema: 'future' } as never)).toEqual({ ok: false, code: 'invalid-input', mayHaveCommitted: false });
++    expect(adapter.calls).toBe(0);
++  });
++
++  it('stays optional, imports no ephemeris or legacy storage, and performs no import-time effects', async () => {
++    for (const entry of ['src/lib/profile/saved-record-store.ts', 'src/lib/engine/full.ts']) {
++      const result = await build({ entryPoints: [entry], bundle: true, platform: 'browser', format: 'esm',
++        write: false, metafile: true, logLevel: 'silent' });
++      const paths = Object.keys(result.metafile!.inputs);
++      if (entry.includes('saved-record-store')) {
++        expect(paths.some((path) => path.includes('astronomy-engine') || /\/(living-chart|supabase)\//u.test(path))).toBe(false);
++        expect(paths.some((path) => path.endsWith('/profile/store.ts'))).toBe(false);
++        const forbidden = vi.fn(() => { throw new Error('unexpected effect'); });
++        vi.stubGlobal('indexedDB', { open: forbidden }); vi.stubGlobal('fetch', forbidden);
++        vi.stubGlobal('localStorage', new Proxy({}, { get: forbidden }));
++        await import(`data:text/javascript;base64,${Buffer.from(result.outputFiles[0].contents).toString('base64')}`);
++        expect(forbidden).not.toHaveBeenCalled();
++      } else expect(paths.some((path) => path.includes('saved-record'))).toBe(false);
++    }
++  });
++});
++
++describe('native adapter bounded opening failures', () => {
++  it('reports absent IndexedDB without exposing a raw reference exception', async () => {
++    vi.stubGlobal('indexedDB', undefined);
++    const store = new SavedNatalStore({ ownerKey: A, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }) });
++    expect(await store.list()).toEqual({ ok: false, code: 'storage-unavailable', mayHaveCommitted: false });
++  });
++
++  it('closes a late successful native open after a blocked event', async () => {
++    const request: Record<string, unknown> = {};
++    const close = vi.fn();
++    const database = { close, version: 1, objectStoreNames: { length: 1, contains: () => true } };
++    vi.stubGlobal('indexedDB', { open: vi.fn(() => request) });
++    const adapter = new IndexedDbSavedNatalAdapter();
++    const store = new SavedNatalStore({ ownerKey: A, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }), adapter });
++    const pending = store.list();
++    (request.onblocked as () => void)();
++    expect(await pending).toEqual({ ok: false, code: 'blocked', mayHaveCommitted: false });
++    request.result = database;
++    (request.onsuccess as () => void)();
++    expect(close).toHaveBeenCalledTimes(1);
++    expect(indexedDB.open).toHaveBeenCalledWith(SAVED_NATAL_DATABASE_NAME, 1);
++  });
++
++  it('closes a late successful native open after revocation', async () => {
++    const request: Record<string, unknown> = {};
++    const close = vi.fn();
++    vi.stubGlobal('indexedDB', { open: () => request });
++    const store = new SavedNatalStore({ ownerKey: A, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }) });
++    const pending = store.list(); store.revoke();
++    // Must settle before an unrelated native blocker releases the open request.
++    expect(await pending).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
++    expect(close).not.toHaveBeenCalled();
++    request.result = { close };
++    (request.onsuccess as () => void)();
++    expect(close).toHaveBeenCalledTimes(1);
++  });
++});
+diff --git a/src/lib/profile/saved-record-store.ts b/src/lib/profile/saved-record-store.ts
+new file mode 100644
+index 00000000..2dbda24c
+--- /dev/null
++++ b/src/lib/profile/saved-record-store.ts
+@@ -0,0 +1,420 @@
++/** Optional owner-bound local persistence. Importing this module opens no database. */
++import type { NatalEnvelope } from '@zodiacs/engine/receipt';
++import {
++  createSavedNatalRecord, isSavedNatalId, isSavedNatalOwnerKey,
++  MAX_SAVED_NATAL_RECORDS, parseSavedNatalRecord, type SavedNatalRecord,
++} from './saved-record';
++
++export const SAVED_NATAL_DATABASE_NAME = 'zodiacs-saved-natal-v1';
++const VERSION = 1;
++const RECORDS = 'records';
++const OWNER_INDEX = 'ownerKey';
++
++export type SavedNatalFailureCode = 'access-denied' | 'stale' | 'invalid-input'
++  | 'corrupt-record' | 'unsupported-record' | 'unsupported-storage'
++  | 'storage-unavailable' | 'quota-exceeded' | 'blocked' | 'aborted' | 'full' | 'id-conflict';
++export interface SavedNatalFailure {
++  readonly ok: false;
++  readonly code: SavedNatalFailureCode;
++  /** A stale write can have committed. Never automatically retry it. */
++  readonly mayHaveCommitted: boolean;
++}
++export type SavedNatalResult<T> = { readonly ok: true; readonly value: T } | SavedNatalFailure;
++export interface SavedNatalAuthority { readonly ownerKey: string; readonly epoch: number }
++
++type Guard = () => void;
++interface Mutation<T> { readonly result: T; readonly add?: SavedNatalRecord; readonly deleteId?: string }
++/** One adapter belongs to one handle; injected adapters must preserve this transaction contract. */
++export interface SavedNatalAdapter {
++  read(ownerKey: string, id: string | null, guard: Guard): Promise<unknown[]>;
++  mutate<T>(ownerKey: string, guard: Guard, operation: (rows: unknown[]) => Mutation<T>): Promise<T>;
++  clear(ownerKey: string, guard: Guard): Promise<void>;
++  abortPending(): void;
++}
++
++const failures = new WeakMap<object, SavedNatalFailure>();
++function issue(code: SavedNatalFailureCode, mayHaveCommitted = false): Error {
++  const error = new Error('Saved natal record operation failed.');
++  failures.set(error, { ok: false, code, mayHaveCommitted });
++  return error;
++}
++function failure(error: unknown, committed = false): SavedNatalFailure {
++  const own = error !== null && (typeof error === 'object' || typeof error === 'function') ? failures.get(error) : undefined;
++  if (own) return { ...own, mayHaveCommitted: committed || own.mayHaveCommitted };
++  let name = '';
++  try {
++    if (typeof DOMException !== 'undefined') {
++      name = Object.getOwnPropertyDescriptor(DOMException.prototype, 'name')?.get?.call(error) ?? '';
++    }
++  } catch { /* Do not inspect arbitrary thrown objects or private messages. */ }
++  return { ok: false, code: name === 'QuotaExceededError' ? 'quota-exceeded'
++    : name === 'VersionError' ? 'unsupported-storage' : name === 'AbortError' ? 'aborted' : 'storage-unavailable',
++  mayHaveCommitted: committed };
++}
++function rethrow(error: unknown, committed = false): Error {
++  const result = failure(error, committed);
++  return issue(result.code, result.mayHaveCommitted);
++}
++
++/** Dedicated native database; no upgrades or writes to existing application databases. */
++export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
++  private pending: Promise<IDBDatabase> | null = null;
++  private connection: IDBDatabase | null = null;
++  private cancelOpen: (() => void) | null = null;
++  private generation = 0;
++  private readonly transactions = new Set<{ abort: () => void }>();
++
++  private open(guard: Guard): Promise<IDBDatabase> {
++    guard();
++    if (this.pending) return this.pending;
++    const generation = ++this.generation;
++    let pending!: Promise<IDBDatabase>;
++    pending = new Promise((resolve, reject) => {
++      let request: IDBOpenDBRequest;
++      let settled = false;
++      const fail = (error: unknown) => {
++        if (settled) return;
++        settled = true;
++        if (this.cancelOpen === cancel) this.cancelOpen = null;
++        reject(rethrow(error));
++      };
++      const cancel = () => {
++        // The native request cannot be cancelled while queued. Settle our
++        // caller now, abort any upgrade already active, and close late success.
++        try { request?.transaction?.abort(); } catch { /* Already completed. */ }
++        fail(issue('stale'));
++      };
++      this.cancelOpen = cancel;
++      try { request = indexedDB.open(SAVED_NATAL_DATABASE_NAME, VERSION); }
++      catch (error) { fail(error); return; }
++      request.onupgradeneeded = (event) => {
++        try {
++          guard();
++          if (settled || generation !== this.generation || event.oldVersion !== 0) throw issue('unsupported-storage');
++          const store = request.result.createObjectStore(RECORDS, { keyPath: ['ownerKey', 'id'] });
++          store.createIndex(OWNER_INDEX, 'ownerKey', { unique: false });
++        } catch (error) {
++          try { request.transaction?.abort(); } catch { /* Already aborted; retain the fixed original failure. */ }
++          fail(error);
++        }
++      };
++      request.onsuccess = () => {
++        const database = request.result;
++        try {
++          guard();
++          if (settled || this.pending !== pending || this.generation !== generation) throw issue('stale');
++          if (database.version !== VERSION || database.objectStoreNames.length !== 1
++            || !database.objectStoreNames.contains(RECORDS)) throw issue('unsupported-storage');
++          this.connection = database;
++          database.onversionchange = () => this.abortPending();
++          settled = true;
++          if (this.cancelOpen === cancel) this.cancelOpen = null;
++          resolve(database);
++        } catch (error) { database.close(); fail(error); }
++      };
++      request.onerror = () => fail(request.error);
++      // A blocked request can later succeed. Invalidate this attempt, then close
++      // that late success instead of retaining an unreachable connection.
++      request.onblocked = () => fail(issue('blocked'));
++    });
++    this.pending = pending;
++    void pending.catch(() => { if (this.pending === pending) this.pending = null; });
++    return pending;
++  }
++
++  private async execute<T>(
++    ownerKey: string,
++    mode: IDBTransactionMode,
++    guard: Guard,
++    queue: (store: IDBObjectStore, done: (value: T) => void, fail: (error: unknown) => void, check: Guard) => void,
++  ): Promise<T> {
++    guard();
++    const database = await this.open(guard);
++    const generation = this.generation;
++    const check = () => {
++      guard();
++      if (generation !== this.generation || this.connection !== database) throw issue('stale');
++    };
++    check();
++    return new Promise((resolve, reject) => {
++      let transaction: IDBTransaction;
++      try { transaction = database.transaction(RECORDS, mode); }
++      catch (error) { reject(rethrow(error)); return; }
++      let result: T;
++      let ready = false;
++      let priorFailure: unknown;
++      let settled = false;
++      let abortRequested = false;
++      const finishFailure = (error: unknown, committed = false) => {
++        if (settled) return;
++        settled = true;
++        this.transactions.delete(active);
++        reject(rethrow(error, committed));
++      };
++      const abort = (error: unknown) => {
++        priorFailure = error;
++        if (abortRequested || settled) return;
++        try { transaction.abort(); abortRequested = true; }
++        catch { finishFailure(error, mode === 'readwrite'); }
++      };
++      const active = { abort: () => abort(issue('stale')) };
++      this.transactions.add(active);
++      transaction.onabort = () => finishFailure(priorFailure ?? transaction.error ?? issue('aborted'));
++      transaction.onerror = () => { priorFailure ??= transaction.error ?? issue('storage-unavailable'); };
++      transaction.oncomplete = () => {
++        if (settled) return;
++        this.transactions.delete(active);
++        try {
++          check();
++          if (!ready) throw issue('storage-unavailable');
++          settled = true;
++          resolve(result);
++        } catch (error) { finishFailure(error, mode === 'readwrite'); }
++      };
++      try {
++        check();
++        if (!isSavedNatalOwnerKey(ownerKey)) throw issue('invalid-input');
++        const store = transaction.objectStore(RECORDS);
++        const keyPath = store.keyPath;
++        if (store.autoIncrement || !Array.isArray(keyPath) || keyPath.length !== 2
++          || keyPath[0] !== 'ownerKey' || keyPath[1] !== 'id'
++          || store.indexNames.length !== 1 || !store.indexNames.contains(OWNER_INDEX)) throw issue('unsupported-storage');
++        const index = store.index(OWNER_INDEX);
++        if (index.keyPath !== 'ownerKey' || index.unique || index.multiEntry) throw issue('unsupported-storage');
++        queue(store, (value) => { check(); result = value; ready = true; }, abort, check);
++      } catch (error) { abort(error); }
++    });
++  }
++
++  read(ownerKey: string, id: string | null, guard: Guard): Promise<unknown[]> {
++    return this.execute(ownerKey, 'readonly', guard, (store, done, fail, check) => {
++      const request = id === null ? store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1)
++        : store.get([ownerKey, id]);
++      request.onsuccess = () => {
++        try { check(); done(id === null ? request.result : request.result === undefined ? [] : [request.result]); }
++        catch (error) { fail(error); }
++      };
++      request.onerror = () => fail(request.error);
++    });
++  }
++
++  mutate<T>(ownerKey: string, guard: Guard, operation: (rows: unknown[]) => Mutation<T>): Promise<T> {
++    return this.execute(ownerKey, 'readwrite', guard, (store, done, fail, check) => {
++      const request = store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1);
++      request.onsuccess = () => {
++        try {
++          check();
++          const mutation = operation(request.result);
++          check();
++          if (mutation.add && mutation.deleteId) throw issue('invalid-input');
++          if (mutation.add) {
++            if (mutation.add.ownerKey !== ownerKey || !isSavedNatalId(mutation.add.id)) throw issue('invalid-input');
++            const add = store.add(mutation.add);
++            add.onerror = () => fail(add.error);
++          } else if (mutation.deleteId) {
++            if (!isSavedNatalId(mutation.deleteId)) throw issue('invalid-input');
++            const remove = store.delete([ownerKey, mutation.deleteId]);
++            remove.onerror = () => fail(remove.error);
++          }
++          done(mutation.result);
++        } catch (error) { fail(error); }
++      };
++      request.onerror = () => fail(request.error);
++    });
++  }
++
++  clear(ownerKey: string, guard: Guard): Promise<void> {
++    return this.execute(ownerKey, 'readwrite', guard, (store, done, fail, check) => {
++      const request = store.index(OWNER_INDEX).openKeyCursor(ownerKey);
++      request.onsuccess = () => {
++        try {
++          check();
++          const cursor = request.result;
++          if (!cursor) { done(undefined); return; }
++          const remove = store.delete(cursor.primaryKey);
++          remove.onerror = () => fail(remove.error);
++          cursor.continue();
++        } catch (error) { fail(error); }
++      };
++      request.onerror = () => fail(request.error);
++    });
++  }
++
++  /** close() alone cannot abort transactions; abort every tracked transaction first. */
++  abortPending(): void {
++    this.generation += 1;
++    const cancel = this.cancelOpen;
++    this.cancelOpen = null;
++    this.pending = null;
++    cancel?.();
++    for (const transaction of [...this.transactions]) transaction.abort();
++    this.connection?.close();
++    this.connection = null;
++  }
++}
++
++export interface SavedNatalStoreOptions {
++  readonly ownerKey: string;
++  readonly epoch: number;
++  /** Explicit application policy, not authentication or a same-origin sandbox. */
++  readonly readAuthority: () => SavedNatalAuthority | null;
++  readonly adapter?: SavedNatalAdapter;
++  readonly now?: () => Date;
++  readonly randomUUID?: () => string;
++}
++interface Ticket { readonly generation: number; readonly state: 'active' | 'clearing' }
++
++export class SavedNatalStore {
++  private readonly ownerKey: string;
++  private readonly epoch: number;
++  private readonly readAuthority: () => SavedNatalAuthority | null;
++  private readonly adapter: SavedNatalAdapter;
++  private readonly now: () => Date;
++  private readonly randomUUID: () => string;
++  private generation = 0;
++  private state: 'active' | 'clearing' | 'revoked' = 'active';
++
++  constructor(options: SavedNatalStoreOptions) {
++    try {
++      this.ownerKey = options.ownerKey;
++      this.epoch = options.epoch;
++      this.readAuthority = options.readAuthority;
++      this.adapter = options.adapter ?? new IndexedDbSavedNatalAdapter();
++      this.now = options.now ?? (() => new Date());
++      this.randomUUID = options.randomUUID ?? (() => crypto.randomUUID());
++    } catch { throw new Error('Unable to configure saved natal records.'); }
++  }
++
++  private allowed(ticket: Ticket): boolean {
++    try {
++      if (this.state !== ticket.state || this.generation !== ticket.generation
++        || !isSavedNatalOwnerKey(this.ownerKey) || !Number.isSafeInteger(this.epoch) || this.epoch < 0) return false;
++      const current = this.readAuthority();
++      const ownerKey = current?.ownerKey;
++      const epoch = current?.epoch;
++      return ownerKey === this.ownerKey && epoch === this.epoch
++        && this.state === ticket.state && this.generation === ticket.generation;
++    } catch { return false; }
++  }
++  private guard(ticket: Ticket): Guard {
++    return () => { if (!this.allowed(ticket)) throw issue('stale'); };
++  }
++  private start(): Ticket {
++    const ticket = { generation: this.generation, state: 'active' } as const;
++    if (!this.allowed(ticket)) throw issue('access-denied');
++    return ticket;
++  }
++  private parse(rows: unknown[]): SavedNatalRecord[] {
++    if (rows.length > MAX_SAVED_NATAL_RECORDS) throw issue('corrupt-record');
++    const records = rows.map((value) => {
++      const parsed = parseSavedNatalRecord(value, this.ownerKey);
++      if (!parsed.ok) throw issue(parsed.code);
++      return parsed.record;
++    });
++    if (new Set(records.map((record) => record.id)).size !== records.length) throw issue('corrupt-record');
++    return records;
++  }
++  private async perform<T>(ticket: Ticket, write: boolean, action: (guard: Guard) => Promise<T>): Promise<SavedNatalResult<T>> {
++    let completed = false;
++    try {
++      const guard = this.guard(ticket);
++      guard();
++      const value = await action(guard);
++      completed = true;
++      guard();
++      return { ok: true, value };
++    } catch (error) {
++      const failed = failure(error, completed && write);
++      return { ...failed, code: this.allowed(ticket) ? failed.code : 'stale' };
++    }
++  }
++
++  async create(envelope: Readonly<NatalEnvelope>, label?: string): Promise<SavedNatalResult<SavedNatalRecord>> {
++    try {
++      const ticket = this.start();
++      const id = this.randomUUID();
++      const date = this.now();
++      const timestamp = Date.prototype.toISOString.call(date);
++      const record = createSavedNatalRecord(this.ownerKey, id, timestamp, envelope, label);
++      if (!record) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
++      return this.perform(ticket, true, (guard) => this.adapter.mutate(this.ownerKey, guard, (rows) => {
++        const records = this.parse(rows);
++        if (records.some((current) => current.id === record.id)) throw issue('id-conflict');
++        if (records.length >= MAX_SAVED_NATAL_RECORDS) throw issue('full');
++        return { result: record, add: record };
++      }));
++    } catch (error) {
++      const result = failure(error);
++      return { ...result, code: result.code === 'access-denied' ? result.code : 'invalid-input' };
++    }
++  }
++
++  async list(): Promise<SavedNatalResult<readonly SavedNatalRecord[]>> {
++    try {
++      const ticket = this.start();
++      return this.perform(ticket, false, async (guard) => {
++        const rows = await this.adapter.read(this.ownerKey, null, guard);
++        guard();
++        return Object.freeze(this.parse(rows).sort((a, b) => a.createdAt === b.createdAt
++          ? a.id < b.id ? -1 : a.id > b.id ? 1 : 0 : a.createdAt > b.createdAt ? -1 : 1));
++      });
++    } catch (error) { return failure(error); }
++  }
++
++  async get(id: string): Promise<SavedNatalResult<SavedNatalRecord | null>> {
++    try {
++      const ticket = this.start();
++      if (!isSavedNatalId(id)) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
++      return this.perform(ticket, false, async (guard) => {
++        const rows = await this.adapter.read(this.ownerKey, id, guard);
++        guard();
++        const records = this.parse(rows);
++        if (records.length > 1 || (records[0] && records[0].id !== id)) throw issue('corrupt-record');
++        return records[0] ?? null;
++      });
++    } catch (error) { return failure(error); }
++  }
++
++  async exportEnvelope(id: string): Promise<SavedNatalResult<string | null>> {
++    const result = await this.get(id);
++    // A separate await can observe revocation after get() returned its snapshot.
++    try {
++      this.start();
++      return result.ok ? { ok: true, value: result.value?.envelopeJson ?? null } : result;
++    } catch { return { ok: false, code: 'stale', mayHaveCommitted: false }; }
++  }
++
++  async delete(id: string): Promise<SavedNatalResult<void>> {
++    try {
++      const ticket = this.start();
++      if (!isSavedNatalId(id)) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
++      return this.perform(ticket, true, (guard) => this.adapter.mutate(this.ownerKey, guard,
++        () => ({ result: undefined, deleteId: id })));
++    } catch (error) { return failure(error); }
++  }
++
++  /**
++   * Explicit owner erasure consumes this handle, including on failure. Other
++   * handles/tabs are not revoked; durable account erasure needs app integration.
++   */
++  async clearOwner(): Promise<SavedNatalResult<void>> {
++    try {
++      this.start();
++      this.state = 'clearing';
++      this.generation += 1;
++      this.adapter.abortPending();
++      const ticket = { generation: this.generation, state: 'clearing' } as const;
++      const result = await this.perform(ticket, true, (guard) => this.adapter.clear(this.ownerKey, guard));
++      if (!this.allowed(ticket)) return { ok: false, code: 'stale',
++        mayHaveCommitted: result.ok || result.mayHaveCommitted };
++      return result;
++    } catch (error) { return failure(error); }
++    finally { this.revoke(); }
++  }
++
++  revoke(): void {
++    this.state = 'revoked';
++    this.generation += 1;
++    try { this.adapter.abortPending(); } catch { /* No private adapter diagnostic escapes revocation. */ }
++  }
++}
+diff --git a/src/lib/profile/saved-record.test.ts b/src/lib/profile/saved-record.test.ts
+new file mode 100644
+index 00000000..af4ad6f2
+--- /dev/null
++++ b/src/lib/profile/saved-record.test.ts
+@@ -0,0 +1,86 @@
++import { describe, expect, it } from 'vitest';
++import { parseNatalEnvelope, serializeNatalEnvelope } from '@zodiacs/engine/receipt';
++import { computePortableChart } from '../engine/portable';
++import { selfChartPutWire } from '../account-v2/chart-wire';
++import type { SavedChart } from './schema';
++import {
++  createSavedNatalRecord, isSavedNatalId, isSavedNatalOwnerKey,
++  parseSavedNatalRecord, SAVED_NATAL_RECORD_SCHEMA,
++} from './saved-record';
++
++const ID = '10000000-0000-4000-8000-000000000001';
++const OWNER = `account:${ID}`;
++const WHEN = '2026-09-08T00:00:00.000Z';
++const calculation = computePortableChart({ utc: '2001-12-21T08:30:00-00:00',
++  latitude: 78.2232, longitude: 15.6267, houseSystem: 'placidus', timeKnown: false },
++{ sourceInstant: '2001-12-21T08:30:00-00:00', extensions: { test: { value: 'synthetic' } } });
++const make = (label?: string) => createSavedNatalRecord(OWNER, ID, WHEN, calculation.envelope, label)!;
++
++describe('immutable saved natal record', () => {
++  it.each([undefined, 'Synthetic local label'])('round-trips with optional label %s', (label) => {
++    const record = make(label);
++    expect(record).not.toBeNull();
++    expect(Object.isFrozen(record)).toBe(true);
++    expect(parseSavedNatalRecord(record, OWNER)).toEqual({ ok: true, record });
++    expect(record.envelopeJson).toBe(serializeNatalEnvelope(calculation.envelope));
++    expect(parseNatalEnvelope(record.envelopeJson)).toEqual({ ok: true, envelope: calculation.envelope });
++    expect(record.envelopeJson).not.toContain(ID);
++    expect(record.envelopeJson).not.toContain('Synthetic local label');
++    expect(Object.keys(record).sort()).toEqual(['schema', 'ownerKey', 'id', 'createdAt', 'envelopeJson', ...(label ? ['label'] : [])].sort());
++  });
++
++  it.each(['2', '9', '10', '11', '100'])('preserves future v%s records with changed fields', (version) => {
++    expect(parseSavedNatalRecord({ schema: `zodiacs.saved-natal.v${version}`, future: 'opaque' }, OWNER))
++      .toEqual({ ok: false, code: 'unsupported-record' });
++  });
++
++  it.each(['\n', '\r', '\r\n', ' ', '\u2028'])('rejects UUID and owner suffix %j', (suffix) => {
++    expect(isSavedNatalId(ID + suffix)).toBe(false);
++    expect(isSavedNatalOwnerKey(OWNER + suffix)).toBe(false);
++    expect(createSavedNatalRecord(OWNER + suffix, ID, WHEN, calculation.envelope)).toBeNull();
++    expect(createSavedNatalRecord(OWNER, ID + suffix, WHEN, calculation.envelope)).toBeNull();
++  });
++
++  it('accepts explicit canonical guest and account IDs without discovery or normalization', () => {
++    expect(isSavedNatalOwnerKey(OWNER)).toBe(true);
++    expect(isSavedNatalOwnerKey(`guest:${ID}`)).toBe(true);
++    for (const value of ['', ID, 'account:', `other:${ID}`, OWNER.toUpperCase()]) expect(isSavedNatalOwnerKey(value)).toBe(false);
++  });
++
++  it('bounds labels without leaking them into the receipt', () => {
++    for (const label of ['', ' ', '\ttext', 'text\n', 'x'.repeat(121), '😀'.repeat(121)]) expect(make(label)).toBeNull();
++    expect(make('😀'.repeat(120))?.label).toBe('😀'.repeat(120));
++    expect(make('  exact text  ')?.label).toBe('  exact text  ');
++  });
++
++  it('rejects malformed metadata, extra fields, accessors and wrong owners', () => {
++    const record = make('label');
++    for (const value of [null, [], { ...record, extra: true }, { ...record, id: 'bad' },
++      { ...record, createdAt: '2026-02-30T00:00:00.000Z' }, { ...record, label: undefined },
++      { ...record, schema: SAVED_NATAL_RECORD_SCHEMA + '\n' }]) {
++      expect(parseSavedNatalRecord(value, OWNER)).toEqual({ ok: false, code: 'corrupt-record' });
++    }
++    expect(parseSavedNatalRecord(record, `guest:${ID}`)).toEqual({ ok: false, code: 'corrupt-record' });
++    let reads = 0;
++    const accessor = Object.defineProperty({ ...record }, 'envelopeJson', { enumerable: true, get() { reads++; throw new Error('private'); } });
++    expect(parseSavedNatalRecord(accessor, OWNER)).toEqual({ ok: false, code: 'corrupt-record' });
++    expect(reads).toBe(0);
++  });
++
++  it('delegates inner future-version/feature/corrupt detection to the existing SDK codec', () => {
++    const record = make('label');
++    const original = JSON.parse(record.envelopeJson);
++    for (const envelope of [{ ...original, schema: 'zodiacs.natal-envelope.draft-v2' },
++      { ...original, requiredFeatures: ['future-feature'] }]) {
++      expect(parseSavedNatalRecord({ ...record, envelopeJson: JSON.stringify(envelope) }, OWNER))
++        .toEqual({ ok: false, code: 'unsupported-record' });
++    }
++    for (const envelopeJson of ['{broken', 'x'.repeat(65537), record.envelopeJson.replace('"timeKnown":false', '"timeKnown":true')]) {
++      expect(parseSavedNatalRecord({ ...record, envelopeJson }, OWNER)).toEqual({ ok: false, code: 'corrupt-record' });
++    }
++  });
++
++  it('cannot pass an immutable richer record through the existing v1 upload preparation', () => {
++    expect(selfChartPutWire(make() as unknown as SavedChart, ID, ID, 0)).toBeNull();
++  });
++});
+diff --git a/src/lib/profile/saved-record.ts b/src/lib/profile/saved-record.ts
+new file mode 100644
+index 00000000..3e61ec0d
+--- /dev/null
++++ b/src/lib/profile/saved-record.ts
+@@ -0,0 +1,100 @@
++/** Immutable local metadata around an existing SDK envelope; no legacy projection. */
++import {
++  parseNatalEnvelope,
++  serializeNatalEnvelope,
++  type NatalEnvelope,
++} from '@zodiacs/engine/receipt';
++import { isAccountV2Id } from '../account-v2/storage-identity';
++
++export const SAVED_NATAL_RECORD_SCHEMA = 'zodiacs.saved-natal.v1';
++export const MAX_SAVED_NATAL_RECORDS = 40;
++export const MAX_SAVED_NATAL_LABEL_CODE_POINTS = 120;
++
++export interface SavedNatalRecord {
++  readonly schema: typeof SAVED_NATAL_RECORD_SCHEMA;
++  readonly ownerKey: string;
++  readonly id: string;
++  readonly createdAt: string;
++  readonly label?: string;
++  /** SDK JSON only; includes private birth data and unauthenticated claims. */
++  readonly envelopeJson: string;
++}
++
++export type SavedNatalRecordParseResult =
++  | { readonly ok: true; readonly record: SavedNatalRecord }
++  | { readonly ok: false; readonly code: 'corrupt-record' | 'unsupported-record' };
++
++export function isSavedNatalOwnerKey(value: unknown): value is string {
++  if (typeof value !== 'string') return false;
++  const prefix = value.startsWith('account:') ? 'account:' : value.startsWith('guest:') ? 'guest:' : null;
++  return prefix !== null && isSavedNatalId(value.slice(prefix.length));
++}
++
++export function isSavedNatalId(value: unknown): value is string {
++  return typeof value === 'string' && value.length === 36 && isAccountV2Id(value);
++}
++
++function validLabel(value: unknown): value is string | undefined {
++  return value === undefined || (typeof value === 'string'
++    && value.length <= MAX_SAVED_NATAL_LABEL_CODE_POINTS * 2
++    && [...value].length <= MAX_SAVED_NATAL_LABEL_CODE_POINTS
++    && new TextEncoder().encode(value).length <= 512
++    && value.trim().length > 0 && !/[\u0000-\u001f\u007f-\u009f]/u.test(value));
++}
++
++function validTimestamp(value: unknown): value is string {
++  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u.test(value)) return false;
++  const date = new Date(value);
++  return Number.isFinite(date.getTime()) && date.toISOString() === value;
++}
++
++/** Snapshot existing validated receipt content before the caller starts storage. */
++export function createSavedNatalRecord(
++  ownerKey: string,
++  id: string,
++  createdAt: string,
++  envelope: Readonly<NatalEnvelope>,
++  label?: string,
++): SavedNatalRecord | null {
++  try {
++    if (!isSavedNatalOwnerKey(ownerKey) || !isSavedNatalId(id)
++      || !validTimestamp(createdAt) || !validLabel(label)) return null;
++    const envelopeJson = serializeNatalEnvelope(envelope);
++    return Object.freeze({ schema: SAVED_NATAL_RECORD_SCHEMA, ownerKey, id, createdAt,
++      ...(label === undefined ? {} : { label }), envelopeJson });
++  } catch { return null; }
++}
++
++/** Validate only this outer record; all inner validation belongs to the SDK. */
++export function parseSavedNatalRecord(value: unknown, ownerKey: string): SavedNatalRecordParseResult {
++  const corrupt = { ok: false, code: 'corrupt-record' } as const;
++  try {
++    if (!isSavedNatalOwnerKey(ownerKey) || !value || typeof value !== 'object'
++      || Object.getPrototypeOf(value) !== Object.prototype) return corrupt;
++    const schema = Object.getOwnPropertyDescriptor(value, 'schema');
++    if (schema?.enumerable && 'value' in schema && typeof schema.value === 'string'
++      && schema.value.length <= 128
++      && /^zodiacs\.saved-natal\.v(?:[2-9]|[1-9]\d+)$/u.exec(schema.value)?.[0] === schema.value) {
++      return { ok: false, code: 'unsupported-record' };
++    }
++    const keys = Reflect.ownKeys(value);
++    if (keys.length < 5 || keys.length > 6 || keys.some((key) => typeof key !== 'string')) return corrupt;
++    const fields: Record<string, unknown> = {};
++    for (const key of keys as string[]) {
++      const descriptor = Object.getOwnPropertyDescriptor(value, key);
++      if (!descriptor?.enumerable || !('value' in descriptor)
++        || !['schema', 'ownerKey', 'id', 'createdAt', 'label', 'envelopeJson'].includes(key)) return corrupt;
++      fields[key] = descriptor.value;
++    }
++    if (fields.schema !== SAVED_NATAL_RECORD_SCHEMA || fields.ownerKey !== ownerKey
++      || !isSavedNatalId(fields.id) || !validTimestamp(fields.createdAt)
++      || !validLabel(fields.label) || (Object.hasOwn(fields, 'label') && fields.label === undefined)
++      || typeof fields.envelopeJson !== 'string') return corrupt;
++    const parsed = parseNatalEnvelope(fields.envelopeJson);
++    if (!parsed.ok) return { ok: false, code: parsed.code === 'unsupported_version'
++      || parsed.code === 'unsupported_feature' ? 'unsupported-record' : 'corrupt-record' };
++    return { ok: true, record: Object.freeze({ schema: SAVED_NATAL_RECORD_SCHEMA,
++      ownerKey, id: fields.id, createdAt: fields.createdAt,
++      ...(fields.label === undefined ? {} : { label: fields.label }), envelopeJson: fields.envelopeJson }) };
++  } catch { return corrupt; }
++}

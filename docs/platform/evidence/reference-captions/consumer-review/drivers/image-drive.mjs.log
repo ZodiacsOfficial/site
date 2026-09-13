@@ -1,0 +1,73 @@
+// Independent actual renderer/download fixture. Runs only against isolated,
+// explicitly frozen source copies supplied by the reviewer after identity checks.
+import assert from 'node:assert/strict';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {createServer} from 'node:http';
+import {createHash} from 'node:crypto';
+import {resolve,basename} from 'node:path';
+import {build} from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js';
+import {chromium} from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/playwright-core/index.mjs';
+const root=resolve(import.meta.dirname),out=resolve(root,'native-images');
+const copies={baseline:resolve(root,'baseline'),candidate:resolve(root,'candidate')};
+const sha=b=>createHash('sha256').update(b).digest('hex');
+assert(process.env.C016_FROZEN_REVIEW==='1','Explicit frozen review execution required');
+await mkdir(out,{recursive:false});
+const entry=`
+import {computeChart} from './src/lib/engine/full';
+import en from './src/lib/i18n/ui/en';
+window.__ZDX_UI__={locale:'en',messages:en};
+import {prepareBigThreeCard,prepareChartSheet,downloadPreparedChartCard,shareCardTimeNotes,chartSheetProvenanceLines,chartSheetSettings} from './src/lib/share-card';
+import {ensurePastelZodiacIconEmbedding} from './src/lib/share-card-pastel-icons';
+let ready=null;
+window.prepareImage=async({known,sheet,hidden})=>{
+ const chart=computeChart({utc:new Date('2000-01-15T06:17:00.000Z'),timeKnown:known,houseSystem:'whole',latitude:0,longitude:0});
+ if(!known)chart.moonSignCandidates=[];
+ const details={date:'2000-01-15',time:'06:17',timeKnown:known,city:'Fixture privacy marker',timezone:'UTC'};
+ if(sheet){await ensurePastelZodiacIconEmbedding();ready=await prepareChartSheet(chart,{locale:'en',hideBirthDetails:hidden,birthDetails:details,moonAmbiguous:!known});}
+ else ready=await prepareBigThreeCard(chart,'en',{referenceTime:!known,moonAmbiguous:!known});
+ return {numerical:JSON.stringify(chart),filename:ready.filename,type:ready.blob.type,bytes:ready.blob.size,notes:shareCardTimeNotes('en',{referenceTime:!known,moonAmbiguous:!known}),provenance:chartSheetProvenanceLines(chart,details,hidden),settings:chartSheetSettings(chart),fontStatus:document.fonts.status};
+};
+document.querySelector('#download').onclick=()=>{if(!ready)throw Error('Image not ready');downloadPreparedChartCard(ready);};
+`;
+const bundles={},inputIdentity=[];
+for(const [variant,cwd] of Object.entries(copies)){
+ const result=await build({absWorkingDir:cwd,stdin:{contents:entry,resolveDir:cwd,loader:'tsx'},outfile:resolve(out,variant+'.js'),bundle:true,platform:'browser',format:'iife',target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':JSON.stringify({SSR:false,DEV:false})},loader:{'.css':'empty'},nodePaths:['/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules'],metafile:true});
+ const bytes=await readFile(resolve(out,variant+'.js'));bundles[variant]=bytes;
+ for(const p of Object.keys(result.metafile.inputs).filter(p=>!p.startsWith('<'))){const b=await readFile(resolve(cwd,p));inputIdentity.push({variant,path:p,bytes:b.length,sha256:sha(b)});}
+ await writeFile(resolve(out,variant+'-metafile.json'),JSON.stringify(result.metafile,null,2)+'\n');
+}
+await writeFile(resolve(out,'entry.tsx.log'),entry);await writeFile(resolve(out,'input-identities.json'),JSON.stringify(inputIdentity,null,2)+'\n');
+const requests=[],assetIdentities={},rows=[],errors=[];let browser;let origin;
+const server=createServer(async(req,res)=>{try{
+ const p=new URL(req.url,'http://fixture').pathname;
+ if(p==='/favicon.ico'){res.statusCode=204;res.end();return;}
+ if(p==='/baseline.js'||p==='/candidate.js'){res.setHeader('Content-Type','text/javascript');res.end(bundles[p.slice(1,-3)]);return;}
+ if(p==='/styles.css'){res.setHeader('Content-Type','text/css');res.end(await readFile(resolve(copies.candidate,'src/styles/tokens.css')));return;}
+ if(p.startsWith('/assets/')||p.startsWith('/fonts/')){const dir=resolve(copies.candidate,'public');const file=resolve(dir,'.'+p);assert(file.startsWith(dir+'/'));const bytes=await readFile(file);assetIdentities[p]={bytes:bytes.length,sha256:sha(bytes)};res.setHeader('Content-Type',p.endsWith('.png')?'image/png':p.endsWith('.webp')?'image/webp':'font/woff2');res.end(bytes);return;}
+ assert(p==='/baseline'||p==='/candidate');res.setHeader('Content-Type','text/html');res.end('<!doctype html><title>Independent reference image fixture</title><link rel="stylesheet" href="/styles.css"><button id="download">Download prepared image</button><script src="'+p+'.js"></script>');
+ }catch(error){errors.push(String(error));res.statusCode=404;res.end('Unavailable');}});
+try{
+ await new Promise(done=>server.listen(0,'127.0.0.1',done));origin='http://127.0.0.1:'+server.address().port;
+ browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--disable-background-networking','--disable-component-update','--no-first-run','--no-default-browser-check']});
+ for(const variant of ['baseline','candidate']){
+  const context=await browser.newContext({acceptDownloads:true,serviceWorkers:'block',reducedMotion:'reduce'});
+  try{
+   await context.route('**/*',route=>{const r=route.request();const allowed=r.url().startsWith(origin+'/')&&r.method()==='GET';requests.push({variant,url:r.url(),method:r.method(),allowed});return allowed?route.continue():route.abort();});
+   const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));await page.goto(origin+'/'+variant);
+   for(const input of [{name:'reference-card',known:false,sheet:false,hidden:true},{name:'reference-sheet-hidden',known:false,sheet:true,hidden:true},{name:'reference-sheet-optin',known:false,sheet:true,hidden:false},{name:'known-sheet-optin',known:true,sheet:true,hidden:false}]){
+    const data=await page.evaluate(input=>window.prepareImage(input),input);assert.equal(data.type,'image/png');assert(data.bytes>10000);assert.equal(data.fontStatus,'loaded');
+    const downloadPromise=page.waitForEvent('download');await page.locator('#download').click();const download=await downloadPromise;assert.equal(download.suggestedFilename(),data.filename);const file=variant+'-'+input.name+'.png';await download.saveAs(resolve(out,file));const bytes=await readFile(resolve(out,file));assert.equal(bytes.subarray(1,4).toString(),'PNG');
+    rows.push({variant,input,data,image:{file,sha256:sha(bytes),bytes:bytes.length,width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20)}});
+   }
+  }finally{await context.close();}
+ }
+ assert.deepEqual(errors,[]);assert(requests.every(r=>r.allowed));
+ for(const left of rows.filter(r=>r.variant==='baseline')){
+  const right=rows.find(r=>r.variant==='candidate'&&r.input.name===left.input.name);assert.equal(left.data.numerical,right.data.numerical);assert.equal(left.image.width,right.image.width);assert.equal(left.image.height,right.image.height);
+  if(left.input.known){assert.deepEqual(left.data.provenance,right.data.provenance);assert.equal(left.data.settings,right.data.settings);}
+  if(left.input.hidden)assert.deepEqual(right.data.provenance,['Birth details hidden']);
+ }
+}finally{
+ await browser?.close();await new Promise(done=>server.close(done));
+ await writeFile(resolve(out,'result.json'),JSON.stringify({rows,errors,requests,assetIdentities,driverSha256:sha(await readFile(new URL(import.meta.url))),qualification:'Actual original/candidate renderer and download functions from isolated frozen source. Direct UTC engine input is a finite consumer fixture, not full ChartCalculator interaction. Source is not instrumented; DOM and canvas are native, fonts/assets are served locally from immutable copied files. No external request or source mutation. PNG visual inspection and source/helper proofs are separate.'},null,2)+'\n');
+}

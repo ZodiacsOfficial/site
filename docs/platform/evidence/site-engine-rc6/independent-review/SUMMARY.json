@@ -1,0 +1,48 @@
+{
+  "reviewer": "Independent agent /root/adoption_review/time_context_edges; automated/source review, not human approval",
+  "sourcePatchSha256": "bb8cfee75e5602da24067f44bdd8e49d295f9025f7ceab4dc8db701305b3dc93",
+  "companionPatchSha256": "95f0a05ed8faa02797785c5ead8d42fee3d12e4d3e708b4ad5857b952f70d1cb",
+  "archiveSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+  "sourceFrozenFiles": 10,
+  "verdict": "No unresolved defect found within the frozen scope",
+  "eachRuntime": {
+    "retainedTransitions": 278,
+    "correctedFlags": 140,
+    "retainedInstantChanges": 0,
+    "additionalControls": 65,
+    "additionalInstantOrFlagChanges": 0,
+    "dateBoundaries": 42,
+    "malformedRejected": 19,
+    "publicPackageMatches": 385,
+    "helperControls": 41
+  },
+  "runtimes": [
+    {
+      "node": "v22.23.2",
+      "icu": "78.2",
+      "tzdb": "2026a"
+    },
+    {
+      "node": "v24.19.0",
+      "icu": "78.3",
+      "tzdb": "2026b"
+    }
+  ],
+  "helperExecutableCodeIdentical": true,
+  "metadataApproved": false,
+  "excludedMetadata": [
+    "vendor/README.md",
+    "src/data/platform-engine-candidate.json",
+    "public/llms-full.txt"
+  ],
+  "limitations": [
+    "Finite runtime-Intl behavior checks; not historical timezone truth or astronomical accuracy certification.",
+    "The existing three-offset sampler remains unchanged; the finite 145-hour reference is not a complete transition proof.",
+    "Year 0000/9999 are library syntax checks outside calculator UI dates 1800–2199.",
+    "Date interval endpoints, unknown-date candidate completeness, publication and deployment excluded."
+  ],
+  "publicConsumerEvidence": {
+    "path": "/private/tmp/zodiacs-platform-rc6-public-consumer-review/public-candidate-consumer.log",
+    "sha256": "05c4eed6f9e10d7ddfb4ea0de43ab9530e24ded58ade1711f4cd844a7b272c9e"
+  }
+}

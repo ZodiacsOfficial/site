@@ -1,0 +1,6 @@
+export * from '@zodiacs/engine';
+import { natalChart as actual } from '@zodiacs/engine';
+let calls=0;
+export const natalChart=input=>{calls++;return actual(input)};
+export const count=()=>calls;
+export const reset=()=>{calls=0};

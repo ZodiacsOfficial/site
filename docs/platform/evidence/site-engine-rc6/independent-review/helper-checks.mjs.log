@@ -1,0 +1,29 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import {computeCalculatorReceipt,computeChart,count,reset} from './helper-subject.mjs';
+import {resolveLocalToUtc} from './candidate-resolver.mjs';
+import {parseNatalEnvelope,natalReplayInput} from '@zodiacs/engine/receipt';
+const retained=JSON.parse(fs.readFileSync('node22-result.json')).transitions.results;
+const gaps=retained.filter(r=>r.shiftMilliseconds>0&&!r.baseline.flags.includes('dst-gap'));
+assert.equal(gaps.length,16);
+const results=[];
+for(const row of gaps){
+ const {date,time,zone}=row,resolved=resolveLocalToUtc(date,time,zone),input={utc:resolved.utc,latitude:78.2232,longitude:15.6267,houseSystem:'placidus',timeKnown:true,flags:resolved.flags},local={date,time,timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:'supplied-instant'};
+ reset();assert.equal(computeCalculatorReceipt({...input,flags:row.baseline.flags},local),null);assert.equal(count(),0);
+ results.push({kind:'legacy-inconsistent-flags-refused',date,time,zone,natalCalls:count(),returnedNull:true});
+ reset();const captured=computeCalculatorReceipt(input,local);assert.ok(captured);assert.equal(count(),1);assert.deepEqual(captured.chart,computeChart(input));
+ const parsed=parseNatalEnvelope(captured.envelopeJson);assert.equal(parsed.ok,true);const envelope=parsed.envelope;
+ assert.deepEqual(envelope.receipt.inputFlags,resolved.flags);assert.equal(envelope.receipt.localResolution.gapShiftMinutes,row.shiftMilliseconds/60000);assert.equal(natalReplayInput(envelope).utc,resolved.utc.toISOString());assert.equal(envelope.receipt.houses.requested,'placidus');assert.equal(envelope.receipt.houses.actual,'whole');assert.equal(envelope.receipt.sourceInstant,null);assert.equal(envelope.receipt.provenance,null);
+ results.push({kind:'corrected-seconds-context-captured',date,time,zone,natalCalls:count(),instant:envelope.receipt.instant,flags:envelope.receipt.inputFlags,gapShiftMinutes:envelope.receipt.localResolution.gapShiftMinutes,houses:envelope.receipt.houses,legacyChartEqual:true,replayInstantEqual:true});
+}
+for(const[date,time,zone,known]of [['1914-01-01','12:00','America/Manaus',false],['1972-01-07','00:30','Africa/Monrovia',true],['1916-10-01','02:30','Europe/Dublin',true],['1911-03-10','23:55','Europe/Paris',true],['1906-01-01','00:01','Asia/Kolkata',true]]){
+ const resolved=resolveLocalToUtc(date,time,zone),input={utc:resolved.utc,latitude:40,longitude:10,houseSystem:'placidus',timeKnown:known,flags:resolved.flags};reset();
+ const captured=computeCalculatorReceipt(input,{date,time,timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:known?'supplied-instant':'local-noon'});assert.ok(captured);assert.equal(count(),1);assert.deepEqual(captured.chart,computeChart(input));const parsed=parseNatalEnvelope(captured.envelopeJson);assert.equal(parsed.ok,true);assert.equal(natalReplayInput(parsed.envelope).utc,resolved.utc.toISOString());
+ if(!known){assert.equal(parsed.envelope.receipt.houses.actual,null);assert.equal(parsed.envelope.receipt.reference,'local-noon');assert.deepEqual(parsed.envelope.receipt.inputFlags,[]);}
+ results.push({kind:'additional-captured',date,time,zone,known,natalCalls:count(),flags:resolved.flags,instant:resolved.utc.toISOString(),gapShiftMinutes:parsed.envelope.receipt.localResolution.gapShiftMinutes});
+}
+for(const zone of ['+01:00','-02:30']){
+ const resolved=resolveLocalToUtc('2024-01-01','12:00',zone);reset();const input={utc:resolved.utc,latitude:40,longitude:10,houseSystem:'placidus',timeKnown:true,flags:resolved.flags};assert.equal(computeCalculatorReceipt(input,{date:'2024-01-01',time:'12:00',timeZone:zone,offsetMinutes:resolved.offsetMinutes,reference:'supplied-instant'}),null);assert.equal(count(),0);assert.equal(computeChart(input).bodies.length,12);results.push({kind:'fixed-offset-legacy-path-preserved',zone,natalCalls:0});
+}
+for(const latitude of [-90,90]){reset();const input={utc:'2024-01-01T12:00:00Z',latitude,longitude:0,timeKnown:true};assert.equal(computeCalculatorReceipt(input,{date:'2024-01-01',time:'12:00',timeZone:'UTC',offsetMinutes:0,reference:'supplied-instant'}),null);assert.equal(count(),0);assert.equal(computeChart({...input,utc:new Date(input.utc)}).bodies.length,12);results.push({kind:'exact-pole-legacy-path-preserved',latitude,natalCalls:0});}
+const result={node:process.version,passed:true,count:results.length,legacyNegatives:16,correctedPositives:16,additionalPositives:5,unchangedFallbacks:4,results};fs.writeFileSync(process.argv[2],JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({...result,results:undefined}));

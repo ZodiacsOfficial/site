@@ -1,0 +1,23 @@
+/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1748
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 3 errors:
+snapshot/src/lib/engine/types.ts:3:31: ERROR: Could not resolve "@zodiacs/engine/internal/math"
+snapshot/src/lib/profile/sync.ts:1:56: ERROR: Could not resolve "@supabase/supabase-js"
+snapshot/src/lib/supabase/client.ts:1:29: ERROR: Could not resolve "@supabase/supabase-js"
+    at failureErrorWithLog (/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1748:15)
+    at /private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1207:25
+    at /private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1159:52
+    at buildResponseToResult (/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1205:7)
+    at /private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:1232:16
+    at responseCallbacks.<computed> (/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:884:9)
+    at handleIncomingPacket (/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:939:12)
+    at Socket.readFromStdout (/private/tmp/zodiacs-platform-saved-record-design/node_modules/esbuild/lib/main.js:862:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v22.23.2

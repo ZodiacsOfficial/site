@@ -1,0 +1,65 @@
+[
+  {
+    "route": "/today/",
+    "limit": 21.5,
+    "gzip": 21480,
+    "chunks": [
+      {
+        "path": "/_astro/TodayBrief.BH3p6Pdu.js",
+        "gzip": 5603
+      },
+      {
+        "path": "/_astro/preload-helper.L5lOfJxi.js",
+        "gzip": 764
+      },
+      {
+        "path": "/_astro/preact.module.Bjq9tLsx.js",
+        "gzip": 4422
+      },
+      {
+        "path": "/_astro/hooks.module.C0_8FjiD.js",
+        "gzip": 1236
+      },
+      {
+        "path": "/_astro/read-store.XSlpY6zd.js",
+        "gzip": 714
+      },
+      {
+        "path": "/_astro/schema.DqKqbGHb.js",
+        "gzip": 112
+      },
+      {
+        "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+        "gzip": 264
+      },
+      {
+        "path": "/_astro/chunk-ATHPYVIF.C2hlKeDZ.js",
+        "gzip": 1740
+      },
+      {
+        "path": "/_astro/useProfile.BO_-IIkB.js",
+        "gzip": 301
+      },
+      {
+        "path": "/_astro/signs.BMXPKoMF.js",
+        "gzip": 4271
+      },
+      {
+        "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+        "gzip": 306
+      },
+      {
+        "path": "/_astro/daily.CU_KLrjT.js",
+        "gzip": 520
+      },
+      {
+        "path": "/_astro/edition-freshness.PlCrFbNa.js",
+        "gzip": 405
+      },
+      {
+        "path": "/_astro/client.DPkn9Lbl.js",
+        "gzip": 822
+      }
+    ]
+  }
+]

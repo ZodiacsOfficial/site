@@ -1,0 +1,15 @@
+import {build} from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js';
+import {readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {resolve} from 'node:path';
+import assert from 'node:assert/strict';
+const root=new URL('./',import.meta.url).pathname,locales=['en','es','fr','it','pt','ru'];
+const entry=locales.map(l=>`import ${l} from './candidate/src/lib/i18n/ui/${l}.ts';`).join('\n')+'\nexport default {en,es,fr,it,pt,ru};';
+writeFileSync(root+'catalog-runtime-entry.ts.log',entry);
+const built=await build({absWorkingDir:root,stdin:{contents:entry,resolveDir:root,sourcefile:'catalog-runtime-entry.ts'},outfile:root+'catalog-runtime-bundle.mjs',bundle:true,platform:'node',format:'esm',metafile:true});
+writeFileSync(root+'catalog-runtime-metafile.json',JSON.stringify(built.metafile,null,2)+'\n');
+writeFileSync(root+'catalog-runtime-inputs.json',JSON.stringify(Object.keys(built.metafile.inputs).filter(p=>!p.startsWith('catalog-runtime-entry.')).map(path=>{const b=readFileSync(resolve(root,path));return {path,bytes:b.length,sha256:createHash('sha256').update(b).digest('hex')};}),null,2)+'\n');
+const {default:catalogs}=await import('./catalog-runtime-bundle.mjs');
+const rows=Object.entries(catalogs).map(([locale,value])=>{const keys=Object.keys(value);assert.equal(keys.length,420);for(const old of ['middayLocalCaption','middayUtcCaption','moonChangedNotice'])assert(!keys.includes(old));for(const k of ['referenceLocalCaption','referenceUtcCaption','moonPhaseAtReference'])assert.equal(typeof value[k],'string');return {locale,count:keys.length,keys};});
+writeFileSync(root+'catalog-runtime-result.json',JSON.stringify({runtime:process.version,rows},null,2)+'\n');
+console.log(JSON.stringify({locales:rows.length,keysEach:420}));

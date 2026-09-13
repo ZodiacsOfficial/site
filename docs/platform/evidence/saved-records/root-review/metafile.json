@@ -1,0 +1,184 @@
+{
+  "inputs": {
+    "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": {
+      "bytes": 1459,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+      "bytes": 4693,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/receipt.js": {
+      "bytes": 24948,
+      "imports": [
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+          "kind": "import-statement",
+          "original": "./chunk-CPALRSPC.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/account-v2/storage-identity.ts": {
+      "bytes": 883,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js": {
+      "bytes": 2593,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js": {
+      "bytes": 4213,
+      "imports": [
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/astronomy-engine/esm/astronomy.js": {
+      "bytes": 412025,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js": {
+      "bytes": 4644,
+      "imports": [
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+          "kind": "import-statement",
+          "original": "./chunk-PD4H342X.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        },
+        {
+          "path": "node_modules/astronomy-engine/esm/astronomy.js",
+          "kind": "import-statement",
+          "original": "astronomy-engine"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/@zodiacs/engine/dist/index.js": {
+      "bytes": 13163,
+      "imports": [
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+          "kind": "import-statement",
+          "original": "./chunk-K5MRTCWE.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js",
+          "kind": "import-statement",
+          "original": "./chunk-4YKOFVM6.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js",
+          "kind": "import-statement",
+          "original": "./chunk-PD4H342X.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+          "kind": "import-statement",
+          "original": "./chunk-CPALRSPC.js"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+          "kind": "import-statement",
+          "original": "./chunk-INI453VG.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/profile/captured-unfrozen-record.ts": {
+      "bytes": 4654,
+      "imports": [
+        {
+          "path": "node_modules/@zodiacs/engine/dist/receipt.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/receipt"
+        },
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/storage-identity"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/index.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/receipt.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/receipt"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "stdin.js": {
+      "imports": [],
+      "exports": [
+        "MAX_SAVED_NATAL_LABEL_CODE_POINTS",
+        "MAX_SAVED_NATAL_RECORDS",
+        "SAVED_NATAL_RECORD_SCHEMA",
+        "createSavedNatalRecord",
+        "isSavedNatalId",
+        "isSavedNatalOwnerKey",
+        "native",
+        "parseSavedNatalRecord",
+        "receipt"
+      ],
+      "entryPoint": "src/lib/profile/captured-unfrozen-record.ts",
+      "inputs": {
+        "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": {
+          "bytesInOutput": 1414
+        },
+        "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+          "bytesInOutput": 4325
+        },
+        "node_modules/@zodiacs/engine/dist/receipt.js": {
+          "bytesInOutput": 23720
+        },
+        "src/lib/account-v2/storage-identity.ts": {
+          "bytesInOutput": 581
+        },
+        "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js": {
+          "bytesInOutput": 2513
+        },
+        "node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js": {
+          "bytesInOutput": 3435
+        },
+        "node_modules/astronomy-engine/esm/astronomy.js": {
+          "bytesInOutput": 79834
+        },
+        "node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js": {
+          "bytesInOutput": 4091
+        },
+        "node_modules/@zodiacs/engine/dist/index.js": {
+          "bytesInOutput": 1199
+        },
+        "src/lib/profile/captured-unfrozen-record.ts": {
+          "bytesInOutput": 3238
+        }
+      },
+      "bytes": 126702
+    }
+  }
+}

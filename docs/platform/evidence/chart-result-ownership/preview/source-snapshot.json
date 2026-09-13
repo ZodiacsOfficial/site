@@ -1,0 +1,72 @@
+{
+  "commit": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "records": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "gitBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca"
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "bytes": 9306,
+      "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b",
+      "gitBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20598,
+      "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9",
+      "gitBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8"
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "bytes": 21741,
+      "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7",
+      "gitBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d"
+    },
+    {
+      "path": "tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a",
+      "gitBlob": "4f2695cbc377aa554db3401dac260dc4864989b9"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "bytes": 15717,
+      "sha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5",
+      "gitBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc"
+    },
+    {
+      "path": "src/islands/ChartShareDialog.tsx",
+      "bytes": 17510,
+      "sha256": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b",
+      "gitBlob": "bbacca65b557df9dc8d6c243c703b559f25fa246"
+    },
+    {
+      "path": "src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba",
+      "gitBlob": "cb45785d30d6834367ca2463e168b67eaad7f712"
+    },
+    {
+      "path": "src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+      "gitBlob": "1137a44af892c41d36bafc8c2202c28b53f95184"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "gitBlob": "c031b8c1af8b8afd04758c4bdd75a64498494af8"
+    },
+    {
+      "path": "package.json",
+      "bytes": 11388,
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "gitBlob": "c9937adda131fe547f841453fd99cda08665d053"
+    }
+  ],
+  "qualification": "Exact selected immutable Git objects; used for identity and driver interpretation. Browser executes actual remote modules only. No local product source injection or local build."
+}

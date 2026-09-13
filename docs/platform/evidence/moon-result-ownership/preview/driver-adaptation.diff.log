@@ -1,0 +1,65 @@
+--- original-site-drive.mjs
++++ site-preview-drive.mjs
+@@ -3,22 +3,33 @@
+ import { createHash } from 'node:crypto';
+ import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+ import { findChromium, STABLE_CHROMIUM_ARGS } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs';
+-import { withPreview } from '/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs';
+-const root='/Users/chiburashka/.codex/worktrees/4806/site';
++const root='/private/tmp/zodiacs-platform-moon-preview-review/source';
++const base='https://zodiacs-q2i4dgo63-zodiacsofficial.vercel.app';
++const sourceCommit='4227bb0758d4b34cbd761a3cddd273cbea6c2c1b';
+ const out=process.env.OUT_DIR;if(!out)throw Error('An evidence output directory is required');await mkdir(out,{recursive:true});
+ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+ const sourceSha=sha(await readFile(root+'/src/islands/MoonPhaseTool.tsx'));
+-const report={at:new Date().toISOString(),node:process.version,sourceSha,scope:'Actual local production pages; six locales, synthetic UTC inputs. Race injection remains separate native acceptance.',checks:[],pageErrors:[],externalRequests:[],outcome:'failed'};
+-let browser;
++const report={at:new Date().toISOString(),node:process.version,sourceSha,sourceCommit,base,scope:'Actual exact-source READY automatic preview pages; six locales, synthetic UTC inputs. No local product code injected. Remote loader races are not claimed; separate native/CI evidence covers those.',requests:[],responses:[],checks:[],pageErrors:[],externalRequests:[],outcome:'failed'};
++let browser;let authCookies=[];const responseTasks=[];
+ try{
+  browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});report.browser=browser.version();
+- await withPreview({port:4341},async(base)=>{
++ if(process.env.ZODIACS_PREVIEW_AUTH_FILE){
++  const auth=JSON.parse(await readFile(process.env.ZODIACS_PREVIEW_AUTH_FILE,'utf8'));
++  const context=await browser.newContext();const page=await context.newPage();
++  try{await page.goto(auth.url,{waitUntil:'networkidle',timeout:60000});authCookies=await context.cookies();}
++  catch{throw Error('Temporary preview authentication did not complete.');}
++  finally{await context.close();}
++ }
++ await (async(base)=>{
+  for(const locale of ['en','es','fr','it','pt','ru'])for(const width of [1280,390]){
+   const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',timezoneId:'UTC'});
+   try{
++   if(authCookies.length)await context.addCookies(authCookies);
+    await context.route('**/*',async route=>{if(new URL(route.request().url()).origin!==base){report.externalRequests.push({locale,width,url:route.request().url()});await route.abort('blockedbyclient')}else await route.continue()});
+    await context.addInitScript(()=>{const NativeDate=Date;const instant=Date.parse('2026-07-10T12:00:00.000Z');globalThis.Date=class extends NativeDate{constructor(...args){super(...(args.length?args:[instant]))}static now(){return instant}}});
+    const page=await context.newPage();page.on('pageerror',e=>report.pageErrors.push({locale,width,error:String(e)}));
++   page.on('request',request=>{const url=new URL(request.url());report.requests.push({locale,width,method:request.method(),origin:url.origin,path:url.pathname})});
++   page.on('response',response=>{const url=new URL(response.url());if(url.origin!==base)return;responseTasks.push((async()=>{try{const bytes=await response.body();report.responses.push({locale,width,path:url.pathname,status:response.status(),bytes:bytes.length,sha256:sha(bytes)})}catch{report.responses.push({locale,width,path:url.pathname,status:response.status(),bodyUnavailable:true})}})())});
+    const path=(locale==='en'?'':'/'+locale)+'/moon-phase/';const response=await page.goto(base+path,{waitUntil:'networkidle'});assert.equal(response.status(),200);
+    await page.evaluate(async()=>{await Promise.all([...document.fonts].map(f=>f.load().catch(()=>{})));await document.fonts.ready});
+    assert.equal(await page.locator('footer.zfooter').count(),1);
+@@ -28,17 +39,19 @@
+    await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__result h2'));
+    const resultText=await page.locator('.calc__result').innerText();
+    const screenshot=out+`/${locale}-${width}.png`;await page.locator('.calc.mp').screenshot({path:screenshot,animations:'disabled'});
+-   const row={locale,width,path,resultText,screenshotSha256:sha(await readFile(screenshot)),noSavedProfile:await page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1')===null)};assert.equal(row.noSavedProfile,true);
++   const reference=JSON.parse(await readFile('/private/tmp/zodiacs-platform-moon-preview-review/local-result-reference.json','utf8')).checks.find(row=>row.locale===locale&&row.width===width);assert.equal(resultText,reference.resultText);
++   const row={locale,width,path,resultText,exactLocalResultText:true,screenshotSha256:sha(await readFile(screenshot)),noSavedProfile:await page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1')===null)};assert.equal(row.noSavedProfile,true);
+    if(process.env.VERIFY_OWNERSHIP==='1'){
+     await page.locator('#mp-date').fill('1990-01-05');await page.waitForFunction(()=>!document.querySelector('.calc__result'));
+     assert.equal(await page.locator('.calc__form').getAttribute('aria-busy'),'false');assert.equal(await page.locator('#mp-date').inputValue(),'1990-01-05');
+     await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor();await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__result h2'));
+     await page.locator('#mp-time').fill('13:00');await page.waitForFunction(()=>!document.querySelector('.calc__result'));
+-    await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor();row.editAndRecovery=true;
++    await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor();row.editAndRecovery=true;row.noSavedProfileAfterRecovery=await page.evaluate(()=>localStorage.getItem('zodiacs.profile.v1')===null);assert.equal(row.noSavedProfileAfterRecovery,true);
+    }
+    report.checks.push(row);console.log(JSON.stringify({locale,width,passed:true,ownership:row.editAndRecovery??false}));
+   }finally{await context.close()}
+  }
+- });
++ })(base);
++ assert.equal(report.checks.length,12);assert.equal(report.requests.some(request=>request.method!=='GET'),false);
+  assert.deepEqual(report.pageErrors,[]);assert.equal(sha(await readFile(root+'/src/islands/MoonPhaseTool.tsx')),sourceSha);report.outcome='passed';
+-} catch(error){report.failure=String(error.stack??error);process.exitCode=1}finally{if(browser)await browser.close();report.cleanup='Owned browser contexts and preview server closed';await writeFile(out+'/result.json',JSON.stringify(report,null,2)+'\n')}
++} catch(error){report.failure=String(error.stack??error);process.exitCode=1}finally{if(browser)await browser.close();await Promise.allSettled(responseTasks);authCookies=[];report.cleanup='Owned browser contexts closed; no local server started';await writeFile(out+'/result.json',JSON.stringify(report,null,2)+'\n')}

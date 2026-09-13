@@ -1,0 +1,79 @@
+{
+  "node": "v22.23.2",
+  "proposal": "7b7bcb5bb33d19790c06d427c665c9e3dd709fdaed057c4d880c1aeebc6046d4",
+  "guard": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d",
+  "base": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "catalogProof": [
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "beforeSha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "afterSha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9",
+      "onlyAddedLine": "localDateReferenceError: 'We couldn’t establish a calculation time within this local date. Check the date and place.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "beforeSha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f",
+      "afterSha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464",
+      "onlyAddedLine": "localDateReferenceError: 'No pudimos establecer una hora de cálculo dentro de esta fecha local. Comprueba la fecha y el lugar.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "beforeSha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f",
+      "afterSha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162",
+      "onlyAddedLine": "localDateReferenceError: 'Nous n’avons pas pu déterminer une heure de calcul correspondant à cette date locale. Vérifie la date et le lieu.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "beforeSha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5",
+      "afterSha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf",
+      "onlyAddedLine": "localDateReferenceError: 'Non è stato possibile stabilire un orario di calcolo all’interno di questa data locale. Controlla la data e il luogo.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "beforeSha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3",
+      "afterSha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc",
+      "onlyAddedLine": "localDateReferenceError: 'Não foi possível estabelecer um horário de cálculo dentro desta data local. Verifique a data e o local.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "beforeSha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+      "afterSha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828",
+      "onlyAddedLine": "localDateReferenceError: 'Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.',"
+    }
+  ],
+  "rows": [
+    {
+      "name": "exact six-path allowance accepted at exact base",
+      "passed": true
+    },
+    {
+      "name": "stale base rejected",
+      "passed": true
+    },
+    {
+      "name": "extra protected locale rejected",
+      "passed": true
+    },
+    {
+      "name": "missing protected catalog rejected",
+      "passed": true
+    },
+    {
+      "name": "duplicate catalog rejected",
+      "passed": true
+    },
+    {
+      "name": "unsorted catalog list rejected",
+      "passed": true
+    },
+    {
+      "name": "allowance inactive once its file leaves the compared change",
+      "passed": true
+    },
+    {
+      "name": "rename operands and deleted catalog remain protected",
+      "passed": true
+    }
+  ],
+  "qualification": "Reads the actual exported guard functions and exact frozen catalog bytes; authorization comes from root-approved C014 policy, not this JSON marker. No product or allowance mutation."
+}

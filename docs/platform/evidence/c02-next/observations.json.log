@@ -1,0 +1,93 @@
+{
+  "scope": "Synthetic in-memory storage only; actual site functions, no browser data, no network, no account request or shared-source modification.",
+  "runtime": {
+    "node": "v22.23.2",
+    "icu": "78.2",
+    "tz": "2026a"
+  },
+  "sources": [
+    {
+      "file": "src/lib/profile/schema.ts",
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "file": "src/lib/profile/store.ts",
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    {
+      "file": "src/lib/profile/read-store.ts",
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    {
+      "file": "src/lib/profile/profile-chart-handoff.ts",
+      "sha256": "e1df154c323b6990857df47ff5a3aa722ec033903c285ac8a9f993543cb17304"
+    },
+    {
+      "file": "src/lib/account-v2/chart-wire.ts",
+      "sha256": "56fa915f8e2c588cc1e6e3901482ef4938b51ea0c634e6d99955b58db142f950"
+    },
+    {
+      "file": "src/lib/account-v2/mutation-fingerprint.ts",
+      "sha256": "1c04d2a4f28215b713ce14ec8114719e742bfd457bbd943904e09ca5905c85a8"
+    },
+    {
+      "file": "src/lib/account-v2/profile-boundary.ts",
+      "sha256": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829"
+    },
+    {
+      "file": "src/islands/ChartCalculator.tsx",
+      "sha256": "5dda4f013b779ee4ce9e1e0d5f33dd6453a3eb4d2342255b80c353d5a854763f"
+    }
+  ],
+  "observations": [
+    {
+      "name": "fresh-save-request-loss",
+      "request": "placidus",
+      "computedActual": "whole",
+      "stored": "whole",
+      "rerun": "whole",
+      "expected": "placidus"
+    },
+    {
+      "name": "different-request-identity-collapse",
+      "requests": [
+        "placidus",
+        "whole"
+      ],
+      "actuals": [
+        "whole",
+        "whole"
+      ],
+      "secondStatus": "updated",
+      "chartCount": 1,
+      "retainedIds": [
+        "11111111-1111-4111-8111-111111111111"
+      ],
+      "expectedCount": 2
+    },
+    {
+      "name": "same-key-version-bump-is-not-safe",
+      "beforeVersion": 2,
+      "oldReaderVisibleCount": 0,
+      "afterVersion": 1,
+      "metadataSurvives": false
+    },
+    {
+      "name": "same-key-additive-metadata-downgrade",
+      "beforeRequest": {
+        "system": "placidus",
+        "origin": "recorded-request"
+      },
+      "afterRequest": null,
+      "oldUpdatedAt": "2026-09-08T07:00:00.000Z"
+    },
+    {
+      "name": "v1-wire-ambiguity",
+      "differentRequests": true,
+      "identicalWire": true,
+      "identicalCanonicalBytes": true,
+      "identicalMutationFingerprints": true,
+      "fingerprint": "8805e82941a9618431e2173dd53d7ee435a665fc19579822bd0ff26f233e2451"
+    }
+  ]
+}

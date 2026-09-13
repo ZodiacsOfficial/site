@@ -1,0 +1,22 @@
+{
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "node_modules/typescript/bin/tsc",
+    "--noEmit",
+    "--target",
+    "ES2022",
+    "--module",
+    "ESNext",
+    "--moduleResolution",
+    "Bundler",
+    "--strict",
+    "--skipLibCheck",
+    "--types",
+    "node,astro/client",
+    "src/lib/engine/calculator-receipt.ts",
+    "src/lib/engine/calculator-receipt.test.ts",
+    "src/lib/receipt-download.ts",
+    "src/lib/receipt-download.test.ts"
+  ],
+  "exitCode": 2
+}

@@ -1,0 +1,53 @@
+{
+  "purpose": "Root draft counterexamples and retained disproved LF concern; not final acceptance",
+  "files": [
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/record-observed.ts",
+      "target": "docs/platform/evidence/saved-records/root-review/record-observed.ts.log",
+      "bytes": 4524,
+      "sha256": "4538cb6400bdb6059e257cd8c8680f77cdbd9d8e1fe4b1f277c8170748c16074"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/source.json",
+      "target": "docs/platform/evidence/saved-records/root-review/source.json",
+      "bytes": 284,
+      "sha256": "b3fe8f58cc83bcbaed32ce2e72d4d6fdb742fdb2aadb729cce249fb506a63e7f"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/probe.mjs",
+      "target": "docs/platform/evidence/saved-records/root-review/probe.mjs.log",
+      "bytes": 3155,
+      "sha256": "30050a10f22fdf232335a5c52b51d18d6c41563ed948ebbcbdd5e9c7537d505b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/probe.log",
+      "target": "docs/platform/evidence/saved-records/root-review/probe.log",
+      "bytes": 1138,
+      "sha256": "0a4709b2cf15498e8afa689b26f442f4d7e15a369a3bcb8e61a9965d683350ac"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/probe-initial-wrong-lf-expectation.mjs",
+      "target": "docs/platform/evidence/saved-records/root-review/probe-initial-wrong-lf-expectation.mjs.log",
+      "bytes": 3011,
+      "sha256": "7d24867c843a5cbafbfafe21932e1e65e1809046018ea87dfe65071931941e6f"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/probe-initial-wrong-lf-expectation.log",
+      "target": "docs/platform/evidence/saved-records/root-review/probe-initial-wrong-lf-expectation.log",
+      "bytes": 478,
+      "sha256": "a8bb65b605a3aed311fe5604f71d3457ed44c9c898a7073cd76dd467d0ee495a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/result.json",
+      "target": "docs/platform/evidence/saved-records/root-review/result.json",
+      "bytes": 1138,
+      "sha256": "0a4709b2cf15498e8afa689b26f442f4d7e15a369a3bcb8e61a9965d683350ac"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-saved-record-root-review/metafile.json",
+      "target": "docs/platform/evidence/saved-records/root-review/metafile.json",
+      "bytes": 5468,
+      "sha256": "0157f1e7fddf558cd14713782a9bb5b68af8c7cb5d9f3b407301764c8712fef6"
+    }
+  ]
+}

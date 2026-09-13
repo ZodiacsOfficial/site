@@ -1,0 +1,41 @@
+✘ [ERROR] Could not resolve "../components/PlanetGlyph"
+
+    source/src/islands/PositionsShareSurface.tsx:3:24:
+      3 │ import PlanetGlyph from '../components/PlanetGlyph';
+        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Could not resolve "../../components/PlanetGlyph"
+
+    source/src/islands/explorer/Inspector.tsx:8:24:
+      8 │ import PlanetGlyph from '../../components/PlanetGlyph';
+        ╵                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✘ [ERROR] Could not resolve "../styles/context-help.css"
+
+    source/src/islands/AstroTerm.tsx:3:7:
+      3 │ import '../styles/context-help.css';
+        ╵        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1748
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 3 errors:
+source/src/islands/AstroTerm.tsx:3:7: ERROR: Could not resolve "../styles/context-help.css"
+source/src/islands/PositionsShareSurface.tsx:3:24: ERROR: Could not resolve "../components/PlanetGlyph"
+source/src/islands/explorer/Inspector.tsx:8:24: ERROR: Could not resolve "../../components/PlanetGlyph"
+    at failureErrorWithLog (/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1748:15)
+    at /private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1207:25
+    at /private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1159:52
+    at buildResponseToResult (/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1205:7)
+    at /private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:1232:16
+    at responseCallbacks.<computed> (/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:884:9)
+    at handleIncomingPacket (/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:939:12)
+    at Socket.readFromStdout (/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/esbuild/lib/main.js:862:7)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v22.23.2

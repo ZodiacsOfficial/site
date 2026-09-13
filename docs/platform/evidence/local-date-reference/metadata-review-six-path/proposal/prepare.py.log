@@ -1,0 +1,33 @@
+from pathlib import Path
+import json,hashlib,subprocess,difflib
+out=Path('/private/tmp/zodiacs-platform-local-date-metadata-proposal');site=out/'site';root=Path('/Users/chiburashka/.codex/worktrees/4806/site')
+date=Path('/private/tmp/zodiacs-platform-local-date-reference-evidence');clear=Path('/private/tmp/zodiacs-platform-post-chart-clear-evidence')
+sha=lambda b:hashlib.sha256(b).hexdigest()
+freeze=json.loads((date/'source-freeze.json').read_text());c012=json.loads((clear/'source-freeze2.json').read_text())
+rootHead=subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD']).decode().strip();assert rootHead=='295bbfbe3728b3d6f57ff665dc0b08feb765bc41'
+inputs=[]
+for row in c012['files']:
+ b=(root/row['path']).read_bytes();assert sha(b)==row['sha256'];p=site/row['path'];p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b);inputs.append(row)
+workflow='.github/workflows/site-check.yml';before=(root/workflow).read_bytes();(site/workflow).write_bytes(before)
+(out/'workflow-before.yml').write_bytes(before)
+patch=(date/'implementation.patch').read_bytes();assert sha(patch)==freeze['patch']['sha256']
+check=subprocess.run(['git','-C',str(site),'apply','--check',str(date/'implementation.patch')],capture_output=True);(out/'apply-check.log').write_bytes(check.stdout+check.stderr);assert check.returncode==0
+applied=subprocess.run(['git','-C',str(site),'apply',str(date/'implementation.patch')],capture_output=True);(out/'apply.log').write_bytes(applied.stdout+applied.stderr);assert applied.returncode==0
+for row in freeze['files']:assert sha((site/row['path']).read_bytes())==row['sha256']
+for row in c012['files']:assert sha((site/row['path']).read_bytes())==row['sha256']
+anchor='      - name: Engine accuracy vectors\n'
+step='      - name: Unknown-time local date reference\n        timeout-minutes: 5\n        run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs\n\n'
+assert before.decode().count(anchor)==1
+after=before.decode().replace(anchor,step+anchor);(out/'site-check.proposed.yml').write_text(after)
+(out/'workflow.patch').write_text(''.join(difflib.unified_diff(before.decode().splitlines(True),after.splitlines(True),fromfile='a/'+workflow,tofile='b/'+workflow)))
+allowancePath='.github/phase1-scope-allowance.json';oldAllowance=(root/allowancePath).read_text();(out/'allowance-before.json').write_text(oldAllowance)
+allowance={'version':1,'id':'platform-unknown-time-local-date-reference','baseCommit':'<FINAL_CHART_OWNERSHIP_SOURCE_SHA>','authorization':'Owner-authorized Zodiacs Platform implementation mandate, C-014 unknown-time local date reference guard. Only the six named locale catalogs add the dedicated error for a calculation time that could not be established within the requested local date. Conservative refusal does not claim an empty date or whole-date coverage. Approved design, global navigation/styles, Registry, SDK, Learn/sign guides and Astrofolio remain untouched. This exact-base one-time allowance does not authorize publication or future protected edits. See docs/platform/evidence/local-date-reference/.','protectedPaths':[f'src/lib/i18n/ui/{locale}.ts' for locale in ['en','es','fr','it','pt','ru']]}
+template=json.dumps(allowance,indent=2)+'\n';(out/'phase1-scope-allowance.template.json').write_text(template)
+(out/'allowance-template.patch').write_text(''.join(difflib.unified_diff(oldAllowance.splitlines(True),template.splitlines(True),fromfile='a/'+allowancePath,tofile='b/'+allowancePath)))
+(site/workflow).write_text(after)
+# This local-only materialization verifies the current comparison, and is not the future source template.
+localAllowance={**allowance,'baseCommit':rootHead};(site/allowancePath).write_text(json.dumps(localAllowance,indent=2)+'\n')
+(out/'current-comparison-allowance.json').write_text(json.dumps(localAllowance,indent=2)+'\n')
+identity={'observedRootHead':rootHead,'qualification':'Root has uncommitted, accepted C012 product source and workflow. Final chart source commit does not yet exist; no claim that the placeholder is releasable.','c012FreezeSha256':sha((clear/'source-freeze2.json').read_bytes()),'c012FilesUnchanged':inputs,'c014FreezeSha256':sha((date/'source-freeze.json').read_bytes()),'c014PatchSha256':sha(patch),'c014AppliedFilesUnchanged':freeze['files'],'workflowInputSha256':sha(before),'workflowProposedSha256':sha(after.encode()),'workflowPatchSha256':sha((out/'workflow.patch').read_bytes()),'allowanceInputSha256':sha(oldAllowance.encode()),'allowanceTemplateSha256':sha(template.encode()),'allowanceTemplatePatchSha256':sha((out/'allowance-template.patch').read_bytes()),'guardSha256':sha((root/'scripts/phase1-scope-guard.mjs').read_bytes())}
+(out/'source-identities.json').write_text(json.dumps(identity,indent=2)+'\n')
+print(json.dumps({'dateFilesAppliedExactly':len(freeze['files']),'c012FilesPreservedExactly':len(inputs),'workflowAddedLines':len(step.splitlines()),'templateIsProvisional':True}))

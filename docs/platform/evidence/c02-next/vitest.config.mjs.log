@@ -1,0 +1,1 @@
+export default { test: { include: ['probe.test.ts'], environment: 'node', pool: 'forks', poolOptions: { forks: { singleFork: true } } } };

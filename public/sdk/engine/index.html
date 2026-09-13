@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><link rel="canonical" href="https://zodiacs.org/sdk/engine/"/><meta name="robots" content="noindex,follow"/><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@zodiacs/engine 0.1.0</title><meta name="description" content="Documentation for @zodiacs/engine 0.1.0"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@zodiacs/engine 0.1.0</a>
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><link rel="canonical" href="https://zodiacs.org/sdk/engine/"/><meta name="robots" content="noindex,follow"/><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@zodiacs/engine 0.1.1-rc.1</title><meta name="description" content="Documentation for @zodiacs/engine 0.1.1-rc.1"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><link rel="stylesheet" href="assets/custom.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@zodiacs/engine 0.1.1-rc.1</a>
 <div id="tsd-toolbar-links"><a href="https://zodiacs.org/">Zodiacs.org</a><a href="https://zodiacs.org/registry/">Registry</a><a href="https://zodiacs.org/widgets/">Widgets</a></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
 <div id="tsd-search-status" aria-live="polite" aria-atomic="true">
@@ -7,16 +7,25 @@
 <div class="container container-main">
 <div class="col-content">
 <div class="tsd-page-title">
-<h1>@zodiacs/engine 0.1.0</h1></div>
+<h1>@zodiacs/engine 0.1.1-rc.1</h1></div>
 <div class="tsd-panel tsd-typography"><h1 id="zodiacsengine" class="tsd-anchor-link">@zodiacs/engine<a href="#zodiacsengine" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
 <p>Pure TypeScript astrology calculations for browsers and Node.js. The package
 computes tropical planetary positions, natal charts, transit snapshots,
 synastry, Moon phase, and Saturn-return seasons. It is synchronous,
 side-effect-free, ESM-only, and performs no network request from its core entry
 point.</p>
-<pre><code class="sh"><span class="hl-0">pnpm</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">@zodiacs/engine</span>
+<p><strong>Release candidate: 0.1.1-rc.1.</strong> Public npm lookups for this package returned
+404 on 2026-09-07. The expansion release remains held for review and operator
+publication authority. Install the exact candidate tarball supplied with the
+review, retaining its SHA-256 receipt:</p>
+<pre><code class="sh"><span class="hl-0">pnpm</span><span class="hl-1"> </span><span class="hl-2">add</span><span class="hl-1"> </span><span class="hl-2">./zodiacs-engine-0.1.1-rc.1.tgz</span>
 </code><button type="button">Copy</button></pre>
 
+<p>From the candidate source checkout, run <code>corepack pnpm --filter @zodiacs/engine build</code>, then <code>npm pack --ignore-scripts</code> in <code>packages/engine</code>. Test the packed
+file in a clean consumer using <code>corepack pnpm --filter @zodiacs/engine consumer:smoke /absolute/path/to/zodiacs-engine-0.1.1-rc.1.tgz</code>. The smoke check
+downloads the artifact's public dependencies and TypeScript 5.9.3; its output
+records the artifact hash, runtime and isolated consumer directory. A packed
+candidate is not a published release.</p>
 <h2 id="natal-chart-in-10-lines" class="tsd-anchor-link">Natal chart in 10 lines<a href="#natal-chart-in-10-lines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <pre><code class="ts"><span class="hl-3">import</span><span class="hl-1"> { </span><span class="hl-4">natalChart</span><span class="hl-1"> } </span><span class="hl-3">from</span><span class="hl-1"> </span><span class="hl-2">&quot;@zodiacs/engine&quot;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-6">chart</span><span class="hl-1"> = </span><span class="hl-0">natalChart</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">utc:</span><span class="hl-1"> </span><span class="hl-2">&quot;1990-06-15T12:30:00Z&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">latitude:</span><span class="hl-1"> </span><span class="hl-7">40.7128</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">longitude:</span><span class="hl-1"> -</span><span class="hl-7">74.006</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">houseSystem:</span><span class="hl-1"> </span><span class="hl-2">&quot;whole&quot;</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-4">chart</span><span class="hl-1">.</span><span class="hl-4">bodies</span><span class="hl-1">, </span><span class="hl-4">chart</span><span class="hl-1">.</span><span class="hl-4">houses</span><span class="hl-1">);</span>
 </code><button type="button">Copy</button></pre>
@@ -47,8 +56,7 @@ angles and whole-sign or Placidus houses.</li>
 <li><code>@zodiacs/engine/geo</code> provides IANA local-time resolution and a client for a
 separately hosted, sharded GeoNames index.</li>
 </ul>
-<p>Inputs accept <code>Date</code>, ISO/date strings, or millisecond timestamps. Returned
-longitudes use degrees in <code>[0, 360)</code> and positions include sign and degree
+<p>Returned longitudes use degrees in <code>[0, 360)</code> and positions include sign and degree
 annotations. Charts use the tropical ecliptic of date. Planetary positions are
 apparent and geocentric; this package does not calculate topocentric parallax.</p>
 <p>Placidus is undefined in polar regions. Above 66 degrees absolute latitude the
@@ -56,6 +64,60 @@ engine falls back to whole-sign houses and adds <code>polar-fallback</code> to t
 flags. When the birth time is unknown, pass a conventional UTC instant with
 <code>timeKnown: false</code>; angles and houses remain absent and the chart carries the
 <code>no-time</code> flag.</p>
+<p>The shared engine selects the eastern horizon intersection before assembling
+houses, including in either polar hemisphere. At exact geographic poles no
+point physically rises; at ecliptic/horizon coincidence an ascendant is not
+unique. Those degenerate configurations are outside the verified angle scope.
+Near tangencies the selected axis can change by 180 degrees. Placidus uses a
+bounded iteration and falls back if it cannot converge; it never returns the
+last unconverged iterate as a successful construction.</p>
+<p>See <a href="media/CHANGELOG.md">CHANGELOG.md</a> for candidate changes. Reference coverage and
+known limits are recorded in the site <a href="https://github.com/ZodiacsOfficial/site/blob/codex/platform-stage-a/docs/platform/EVIDENCE.md">platform evidence ledger</a>.
+The date parser's representable range is not a claim of astronomical accuracy
+across that range. Reference cases are finite; broader numerical scope review
+remains a release gate.</p>
+<p><code>findLongitudeCrossings</code> requires a finite step of at least one millisecond
+and permits at most 10,000 ephemeris evaluations per call, including root
+refinements. Excessive scans throw <code>RangeError</code> instead of returning partial
+results. The default 66-year Saturn scan fits this budget. This bounds sample
+count, not execution time or accuracy outside reference coverage. Sampling can
+miss crossings between steps; it is not a completeness guarantee for arbitrary
+bodies and step sizes.</p>
+<p>Exact window-boundary roots are included when an adjacent nonzero sample
+establishes direction. Exact interior roots require opposite-side neighbors;
+zero-length windows, sampled zero plateaus and interior tangencies return no crossing.
+At an exact window boundary, direction is one-sided evidence: a touch cannot
+be distinguished from a crossing without extending the requested window.</p>
+<h3 id="resolved-instant-inputs" class="tsd-anchor-link">Resolved instant inputs<a href="#resolved-instant-inputs" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p><code>DateInput</code> values passed to the calculation APIs accept a valid <code>Date</code>, a finite
+epoch-millisecond timestamp representable by JavaScript <code>Date</code>, or these ISO
+string forms:</p>
+<ul>
+<li><code>YYYY-MM-DD</code>, interpreted as midnight UTC using the proleptic Gregorian
+calendar. This convenience does not infer a birthplace's local midnight.</li>
+<li><code>YYYY-MM-DDTHH:mm[:ss[.sss]]Z</code>, or the same date-time with an explicit
+<code>+HH:mm</code> or <code>-HH:mm</code> offset. Fractional seconds, when supplied, have one to
+three digits. ISO expanded years use a sign and six digits, such as
+<code>-000001-01-01T00:00:00Z</code>; years <code>0000</code>–<code>0099</code> are not shifted to 1900–1999.</li>
+</ul>
+<p>Invalid calendar dates, rollovers such as February 30 or <code>24:00</code>, leap seconds,
+unresolved local date-times, locale-specific strings, excessive fractional
+precision, non-finite values, and other input types throw <code>RangeError</code> before
+calculation. Existing <code>Date</code> values cannot reveal whether a caller previously
+normalized an invalid date; pass the original string when validation is needed.
+<code>Date</code> and numeric inputs retain JavaScript's millisecond resolution.</p>
+<p><code>Z</code>, <code>+00:00</code>, and <code>-00:00</code> identify the same UTC instant. Results normalize to
+<code>Date</code> and do not retain the original offset or local-zone provenance; in
+particular, <a href="https://www.rfc-editor.org/rfc/rfc3339#section-4.3">RFC 3339's <code>-00:00</code> convention</a>
+indicating an unknown local offset is not
+preserved. Resolve daylight-saving gaps/folds and historical local-time rules
+before calling these APIs. Accepted date syntax is not an accuracy guarantee
+outside the documented reference coverage.</p>
+<p>Birth settings accept only <code>houseSystem: &quot;whole&quot; | &quot;placidus&quot;</code> and a boolean
+<code>timeKnown</code>. Omitting them defaults to <code>&quot;whole&quot;</code> and <code>true</code>; explicit <code>null</code>
+and other unsupported values throw <code>RangeError</code>, including when coordinates
+are absent. Latitude and longitude must be supplied together as finite numbers
+within <code>[-90, 90]</code> and <code>[-180, 180]</code> respectively.</p>
 <h2 id="accuracy-and-licensing" class="tsd-anchor-link">Accuracy and licensing<a href="#accuracy-and-licensing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>The ephemeris is powered by the MIT-licensed <code>astronomy-engine</code>. Tests compare
 modern and historical positions with public JPL Horizons vectors and exercise
@@ -91,11 +153,14 @@ third-party code must use the documented root and <code>/geo</code> entry points
 <li><a href="#compatibility"><span>Compatibility</span></a></li>
 <li><a href="#daily-transits"><span>Daily transits</span></a></li>
 <li><a href="#api"><span>API</span></a></li>
+<li>
+<ul>
+<li><a href="#resolved-instant-inputs"><span>Resolved instant inputs</span></a></li></ul></li>
 <li><a href="#accuracy-and-licensing"><span>Accuracy and licensing</span></a></li>
 <li><a href="#internal-site-entry-points"><span>Internal site entry points</span></a></li></ul></div></details></div>
 <div class="site-menu">
 <nav id="tsd-sidebar-links" class="tsd-navigation"><a href="https://zodiacs.org/" class="tsd-nav-link">Zodiacs.org</a><a href="https://zodiacs.org/registry/" class="tsd-nav-link">Registry</a><a href="https://zodiacs.org/widgets/" class="tsd-nav-link">Widgets</a></nav>
-<nav class="tsd-navigation"><a href="modules.html">@zodiacs/engine 0.1.0</a>
+<nav class="tsd-navigation"><a href="modules.html">@zodiacs/engine 0.1.1-rc.1</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
 <li>Loading...</li></ul></nav></div></div></div><footer><nav class="engine-sign-rail" aria-label="The twelve zodiac sign guides"><a href="/aries/" aria-label="Aries"><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/taurus/" aria-label="Taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/gemini/" aria-label="Gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/cancer/" aria-label="Cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/leo/" aria-label="Leo"><img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/virgo/" aria-label="Virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/libra/" aria-label="Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/scorpio/" aria-label="Scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/sagittarius/" aria-label="Sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/capricorn/" aria-label="Capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/aquarius/" aria-label="Aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a><a href="/pisces/" aria-label="Pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"></a></nav><p class="engine-docs-posture"><a href="/">Zodiacs.org</a> · accurate, private, free · astrology calculations stay on your device.</p></footer>
 <div class="overlay"></div></body></html>

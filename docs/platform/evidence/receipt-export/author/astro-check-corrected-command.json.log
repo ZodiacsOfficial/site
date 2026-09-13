@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "node_modules/astro/bin/astro.mjs",
+    "check"
+  ],
+  "exitCode": 0
+}

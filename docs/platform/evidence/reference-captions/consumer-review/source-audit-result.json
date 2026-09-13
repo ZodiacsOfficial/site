@@ -1,0 +1,1457 @@
+{
+  "checks": [
+    {
+      "name": "Exact literal-only source reconstruction: src/server/chart-preview-model.ts",
+      "passed": true
+    },
+    {
+      "name": "Exact literal-only source reconstruction: src/server/chart-preview.ts",
+      "passed": true
+    },
+    {
+      "name": "Exact literal-only source reconstruction: src/lib/share-card.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/en.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/es.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/fr.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/it.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/pt.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/i18n/ui/ru.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/lib/share-card-copy.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/islands/explorer/lens/copy.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/islands/explorer/tour/copy.ts",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/strings/additions.fr.mjs",
+      "passed": true
+    },
+    {
+      "name": "Canonical counterpart exact fr",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/strings/additions.it.mjs",
+      "passed": true
+    },
+    {
+      "name": "Canonical counterpart exact it",
+      "passed": true
+    },
+    {
+      "name": "Only approved copy properties: src/strings/additions.pt.mjs",
+      "passed": true
+    },
+    {
+      "name": "Canonical counterpart exact pt",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer and scoped paragraph: src/pages/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer: src/pages/es/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer: src/pages/fr/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer: src/pages/it/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer: src/pages/pt/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Only second FAQ answer: src/pages/ru/moon-phase/index.astro",
+      "passed": true
+    },
+    {
+      "name": "Retired UI keys have zero runtime source references",
+      "passed": true
+    },
+    {
+      "name": "All 33 frozen files still exact after consumer execution",
+      "passed": true
+    }
+  ],
+  "copy": [
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 4907,
+          "end": 5025,
+          "text": "chartTimeHelp: \"No birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\"",
+          "value": "No birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 15376,
+          "end": 15503,
+          "text": "noTimeNotice: 'Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.'",
+          "value": "Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 16556,
+          "end": 16630,
+          "text": "placeHelpMoon: 'Sharpens the clock conversion; the phase barely needs it.'",
+          "value": "Sharpens the clock conversion; the phase barely needs it.",
+          "line": 298
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 16636,
+          "end": 16732,
+          "text": "middayLocalCaption: 'Read at midday local time — adding the clock time pins the degree exactly.'",
+          "value": "Read at midday local time — adding the clock time pins the degree exactly.",
+          "line": 299
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 16844,
+          "end": 16936,
+          "text": "middayUtcCaption: 'Read at midday universal time — a time and place pin the degree exactly.'",
+          "value": "Read at midday universal time — a time and place pin the degree exactly.",
+          "line": 301
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 16942,
+          "end": 17135,
+          "text": "moonChangedNotice: \"The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.\"",
+          "value": "The Moon changed signs that day, and without a time we can't say which side of the line you were born on. The phase is unaffected — it moves too slowly for hours to matter.",
+          "line": 302
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 4907,
+          "end": 5037,
+          "text": "chartTimeHelp: \"No birth time? You'll get reference positions without rising or houses; the Moon’s possible signs are unverified.\"",
+          "value": "No birth time? You'll get reference positions without rising or houses; the Moon’s possible signs are unverified.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 15388,
+          "end": 15499,
+          "text": "noTimeNotice: \"Without a birth time, we show reference positions and omit the rising sign, angles, and houses.\"",
+          "value": "Without a birth time, we show reference positions and omit the rising sign, angles, and houses.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 16552,
+          "end": 16621,
+          "text": "placeHelpMoon: \"Converts your local date and time to universal time.\"",
+          "value": "Converts your local date and time to universal time.",
+          "line": 298
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 16627,
+          "end": 16800,
+          "text": "referenceLocalCaption: \"Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.\"",
+          "value": "Reference result for this local date. The Moon’s sign and phase may differ at other times that day. Add a birth time to calculate a specific moment.",
+          "line": 299
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 16912,
+          "end": 17082,
+          "text": "referenceUtcCaption: \"Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.\"",
+          "value": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment.",
+          "line": 301
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 17088,
+          "end": 17140,
+          "text": "moonPhaseAtReference: \"Moon phase at reference time\"",
+          "value": "Moon phase at reference time",
+          "line": 302
+        }
+      ]
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5326,
+          "end": 5453,
+          "text": "chartTimeHelp: '¿No sabes la hora? Verás una referencia al mediodía local sin ascendente ni casas; la Luna puede ser incierta.'",
+          "value": "¿No sabes la hora? Verás una referencia al mediodía local sin ascendente ni casas; la Luna puede ser incierta.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16662,
+          "end": 16796,
+          "text": "noTimeNotice: 'Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas.'",
+          "value": "Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17938,
+          "end": 18012,
+          "text": "placeHelpMoon: 'Afina la conversión de hora; la fase casi no lo necesita.'",
+          "value": "Afina la conversión de hora; la fase casi no lo necesita.",
+          "line": 298
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 18018,
+          "end": 18105,
+          "text": "middayLocalCaption: 'Lectura al mediodía local — agregar la hora exacta fija el grado.'",
+          "value": "Lectura al mediodía local — agregar la hora exacta fija el grado.",
+          "line": 299
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 18219,
+          "end": 18306,
+          "text": "middayUtcCaption: 'Lectura al mediodía universal — una hora y un lugar fijan el grado.'",
+          "value": "Lectura al mediodía universal — una hora y un lugar fijan el grado.",
+          "line": 301
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 18312,
+          "end": 18488,
+          "text": "moonChangedNotice: 'La Luna cambió de signo ese día, y sin hora no podemos saber de qué lado naciste. La fase no cambia: se mueve demasiado lento para que unas horas importen.'",
+          "value": "La Luna cambió de signo ese día, y sin hora no podemos saber de qué lado naciste. La fase no cambia: se mueve demasiado lento para que unas horas importen.",
+          "line": 302
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5326,
+          "end": 5470,
+          "text": "chartTimeHelp: \"¿No sabes la hora? Verás posiciones de referencia sin ascendente ni casas; los posibles signos de la Luna no están verificados.\"",
+          "value": "¿No sabes la hora? Verás posiciones de referencia sin ascendente ni casas; los posibles signos de la Luna no están verificados.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16679,
+          "end": 16804,
+          "text": "noTimeNotice: \"Sin hora de nacimiento, mostramos posiciones de referencia y omitimos el ascendente, los ángulos y las casas.\"",
+          "value": "Sin hora de nacimiento, mostramos posiciones de referencia y omitimos el ascendente, los ángulos y las casas.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17946,
+          "end": 18017,
+          "text": "placeHelpMoon: \"Convierte tu fecha y hora locales al tiempo universal.\"",
+          "value": "Convierte tu fecha y hora locales al tiempo universal.",
+          "line": 298
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 18023,
+          "end": 18236,
+          "text": "referenceLocalCaption: \"Resultado de referencia para esta fecha local. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora de nacimiento para calcular un momento concreto.\"",
+          "value": "Resultado de referencia para esta fecha local. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora de nacimiento para calcular un momento concreto.",
+          "line": 299
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 18350,
+          "end": 18553,
+          "text": "referenceUtcCaption: \"Resultado de referencia para esta fecha UTC. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora y un lugar para calcular un momento local.\"",
+          "value": "Resultado de referencia para esta fecha UTC. El signo y la fase de la Luna pueden ser distintos en otros momentos del día. Añade una hora y un lugar para calcular un momento local.",
+          "line": 301
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 18559,
+          "end": 18621,
+          "text": "moonPhaseAtReference: \"Fase lunar en el momento de referencia\"",
+          "value": "Fase lunar en el momento de referencia",
+          "line": 302
+        }
+      ]
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5312,
+          "end": 5456,
+          "text": "chartTimeHelp: 'Tu ne connais pas l’heure ? Tu obtiendras une référence à midi local, sans ascendant ni maisons ; la Lune peut être incertaine.'",
+          "value": "Tu ne connais pas l’heure ? Tu obtiendras une référence à midi local, sans ascendant ni maisons ; la Lune peut être incertaine.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 17125,
+          "end": 17276,
+          "text": "noTimeNotice: 'Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons.'",
+          "value": "Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 18498,
+          "end": 18577,
+          "text": "placeHelpMoon: 'Précise la conversion de l’heure ; la phase en dépend à peine.'",
+          "value": "Précise la conversion de l’heure ; la phase en dépend à peine.",
+          "line": 298
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 18581,
+          "end": 18693,
+          "text": "middayLocalCaption: 'Lecture à midi, heure locale — ajoute l’heure exacte pour déterminer précisément le degré.'",
+          "value": "Lecture à midi, heure locale — ajoute l’heure exacte pour déterminer précisément le degré.",
+          "line": 299
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 18816,
+          "end": 18924,
+          "text": "middayUtcCaption: 'Lecture à midi en temps universel — l’heure et le lieu déterminent précisément le degré.'",
+          "value": "Lecture à midi en temps universel — l’heure et le lieu déterminent précisément le degré.",
+          "line": 301
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 18928,
+          "end": 19176,
+          "text": "moonChangedNotice: 'La Lune a changé de signe ce jour-là et, sans l’heure, nous ne pouvons pas savoir de quel côté de la limite elle se trouvait à ta naissance. La phase reste la même — elle évolue trop lentement pour que quelques heures comptent.'",
+          "value": "La Lune a changé de signe ce jour-là et, sans l’heure, nous ne pouvons pas savoir de quel côté de la limite elle se trouvait à ta naissance. La phase reste la même — elle évolue trop lentement pour que quelques heures comptent.",
+          "line": 302
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5312,
+          "end": 5475,
+          "text": "chartTimeHelp: \"Tu ne connais pas l’heure ? Tu verras des positions de référence sans ascendant ni maisons ; les signes possibles de la Lune ne sont pas vérifiés.\"",
+          "value": "Tu ne connais pas l’heure ? Tu verras des positions de référence sans ascendant ni maisons ; les signes possibles de la Lune ne sont pas vérifiés.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 17144,
+          "end": 17278,
+          "text": "noTimeNotice: \"Sans heure de naissance, nous affichons des positions de référence et omettons l’ascendant, les angles et les maisons.\"",
+          "value": "Sans heure de naissance, nous affichons des positions de référence et omettons l’ascendant, les angles et les maisons.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 18500,
+          "end": 18575,
+          "text": "placeHelpMoon: \"Convertit ta date et ton heure locales en temps universel.\"",
+          "value": "Convertit ta date et ton heure locales en temps universel.",
+          "line": 298
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 18579,
+          "end": 18802,
+          "text": "referenceLocalCaption: \"Résultat de référence pour cette date locale. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure de naissance pour calculer un instant précis.\"",
+          "value": "Résultat de référence pour cette date locale. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure de naissance pour calculer un instant précis.",
+          "line": 299
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 18925,
+          "end": 19140,
+          "text": "referenceUtcCaption: \"Résultat de référence pour cette date UTC. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure et un lieu pour calculer un instant local.\"",
+          "value": "Résultat de référence pour cette date UTC. Le signe et la phase de la Lune peuvent être différents à d’autres moments de la journée. Ajoute une heure et un lieu pour calculer un instant local.",
+          "line": 301
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 19144,
+          "end": 19206,
+          "text": "moonPhaseAtReference: \"Phase lunaire à l’instant de référence\"",
+          "value": "Phase lunaire à l’instant de référence",
+          "line": 302
+        }
+      ]
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5221,
+          "end": 5370,
+          "text": "chartTimeHelp:\n    \"Non conosci l’ora di nascita? Vedrai un riferimento al mezzogiorno locale, senza ascendente né case; la Luna può essere incerta.\"",
+          "value": "Non conosci l’ora di nascita? Vedrai un riferimento al mezzogiorno locale, senza ascendente né case; la Luna può essere incerta.",
+          "line": 122
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16678,
+          "end": 16816,
+          "text": "noTimeNotice:\n    \"Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case.\"",
+          "value": "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case.",
+          "line": 326
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17960,
+          "end": 18054,
+          "text": "placeHelpMoon:\n    \"Rende più precisa la conversione dell’ora; per la fase cambia pochissimo.\"",
+          "value": "Rende più precisa la conversione dell’ora; per la fase cambia pochissimo.",
+          "line": 347
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 18058,
+          "end": 18163,
+          "text": "middayLocalCaption:\n    \"Lettura a mezzogiorno locale — aggiungi l’ora per fissare esattamente il grado.\"",
+          "value": "Lettura a mezzogiorno locale — aggiungi l’ora per fissare esattamente il grado.",
+          "line": 349
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 18288,
+          "end": 18401,
+          "text": "middayUtcCaption:\n    \"Lettura a mezzogiorno nel tempo universale — ora e luogo fissano il grado con precisione.\"",
+          "value": "Lettura a mezzogiorno nel tempo universale — ora e luogo fissano il grado con precisione.",
+          "line": 353
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 18405,
+          "end": 18647,
+          "text": "moonChangedNotice:\n    \"Quel giorno la Luna ha cambiato segno e, senza un’ora, non possiamo dire da quale lato del confine si trovasse alla tua nascita. La fase non cambia — si muove troppo lentamente perché poche ore facciano la differenza.\"",
+          "value": "Quel giorno la Luna ha cambiato segno e, senza un’ora, non possiamo dire da quale lato del confine si trovasse alla tua nascita. La fase non cambia — si muove troppo lentamente perché poche ore facciano la differenza.",
+          "line": 355
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5221,
+          "end": 5364,
+          "text": "chartTimeHelp: \"Non conosci l’ora? Vedrai posizioni di riferimento senza ascendente né case; i possibili segni della Luna non sono verificati.\"",
+          "value": "Non conosci l’ora? Vedrai posizioni di riferimento senza ascendente né case; i possibili segni della Luna non sono verificati.",
+          "line": 122
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16672,
+          "end": 16785,
+          "text": "noTimeNotice: \"Senza l’ora di nascita, mostriamo posizioni di riferimento e omettiamo ascendente, angoli e case.\"",
+          "value": "Senza l’ora di nascita, mostriamo posizioni di riferimento e omettiamo ascendente, angoli e case.",
+          "line": 325
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17929,
+          "end": 17998,
+          "text": "placeHelpMoon: \"Converte la data e l’ora locali in tempo universale.\"",
+          "value": "Converte la data e l’ora locali in tempo universale.",
+          "line": 345
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 18002,
+          "end": 18224,
+          "text": "referenceLocalCaption: \"Risultato di riferimento per questa data locale. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora di nascita per calcolare un momento specifico.\"",
+          "value": "Risultato di riferimento per questa data locale. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora di nascita per calcolare un momento specifico.",
+          "line": 346
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 18349,
+          "end": 18563,
+          "text": "referenceUtcCaption: \"Risultato di riferimento per questa data UTC. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora e un luogo per calcolare un momento locale.\"",
+          "value": "Risultato di riferimento per questa data UTC. Il segno e la fase della Luna possono essere diversi in altri momenti della giornata. Aggiungi un’ora e un luogo per calcolare un momento locale.",
+          "line": 349
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 18567,
+          "end": 18628,
+          "text": "moonPhaseAtReference: \"Fase lunare al momento di riferimento\"",
+          "value": "Fase lunare al momento di riferimento",
+          "line": 350
+        }
+      ]
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5036,
+          "end": 5163,
+          "text": "chartTimeHelp: 'Não sabe a hora? Você verá uma referência ao meio-dia local, sem ascendente nem casas; a Lua pode ser incerta.'",
+          "value": "Não sabe a hora? Você verá uma referência ao meio-dia local, sem ascendente nem casas; a Lua pode ser incerta.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16042,
+          "end": 16175,
+          "text": "noTimeNotice: 'Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas.'",
+          "value": "Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17296,
+          "end": 17375,
+          "text": "placeHelpMoon: 'Refina a conversão do horário; a fase quase não precisa disso.'",
+          "value": "Refina a conversão do horário; a fase quase não precisa disso.",
+          "line": 298
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 17379,
+          "end": 17466,
+          "text": "middayLocalCaption: 'Leitura ao meio-dia local — adicionar a hora exata define o grau.'",
+          "value": "Leitura ao meio-dia local — adicionar a hora exata define o grau.",
+          "line": 299
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 17604,
+          "end": 17708,
+          "text": "middayUtcCaption: 'Leitura ao meio-dia no horário universal — uma hora e um local definem o grau exato.'",
+          "value": "Leitura ao meio-dia no horário universal — uma hora e um local definem o grau exato.",
+          "line": 301
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 17712,
+          "end": 17931,
+          "text": "moonChangedNotice: 'A Lua mudou de signo nesse dia e, sem a hora, não podemos saber em qual signo ela estava quando você nasceu. A fase não é afetada — ela se move devagar demais para que algumas horas façam diferença.'",
+          "value": "A Lua mudou de signo nesse dia e, sem a hora, não podemos saber em qual signo ela estava quando você nasceu. A fase não é afetada — ela se move devagar demais para que algumas horas façam diferença.",
+          "line": 302
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 5036,
+          "end": 5178,
+          "text": "chartTimeHelp: \"Não sabe a hora? Você verá posições de referência sem ascendente nem casas; os possíveis signos da Lua não estão verificados.\"",
+          "value": "Não sabe a hora? Você verá posições de referência sem ascendente nem casas; os possíveis signos da Lua não estão verificados.",
+          "line": 113
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16057,
+          "end": 16171,
+          "text": "noTimeNotice: \"Sem a hora de nascimento, mostramos posições de referência e omitimos ascendente, ângulos e casas.\"",
+          "value": "Sem a hora de nascimento, mostramos posições de referência e omitimos ascendente, ângulos e casas.",
+          "line": 280
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17292,
+          "end": 17362,
+          "text": "placeHelpMoon: \"Converte sua data e hora locais em horário universal.\"",
+          "value": "Converte sua data e hora locais em horário universal.",
+          "line": 298
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 17366,
+          "end": 17577,
+          "text": "referenceLocalCaption: \"Resultado de referência para esta data local. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora de nascimento para calcular um momento específico.\"",
+          "value": "Resultado de referência para esta data local. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora de nascimento para calcular um momento específico.",
+          "line": 299
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 17715,
+          "end": 17914,
+          "text": "referenceUtcCaption: \"Resultado de referência para esta data UTC. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora e um local para calcular um momento local.\"",
+          "value": "Resultado de referência para esta data UTC. O signo e a fase da Lua podem ser diferentes em outros momentos do dia. Adicione uma hora e um local para calcular um momento local.",
+          "line": 301
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 17918,
+          "end": 17978,
+          "text": "moonPhaseAtReference: \"Fase da Lua no momento de referência\"",
+          "value": "Fase da Lua no momento de referência",
+          "line": 302
+        }
+      ]
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "baseline": [
+        {
+          "key": "chartTimeHelp",
+          "start": 6223,
+          "end": 6363,
+          "text": "chartTimeHelp: 'Нет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.'",
+          "value": "Нет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.",
+          "line": 166
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16729,
+          "end": 16865,
+          "text": "noTimeNotice: 'Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома.'",
+          "value": "Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома.",
+          "line": 333
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17890,
+          "end": 17956,
+          "text": "placeHelpMoon: 'Уточняет пересчёт часов; фазе это почти не нужно.'",
+          "value": "Уточняет пересчёт часов; фазе это почти не нужно.",
+          "line": 351
+        },
+        {
+          "key": "middayLocalCaption",
+          "start": 17960,
+          "end": 18055,
+          "text": "middayLocalCaption: 'Считано на полдень местного времени — точное время суток закрепит градус.'",
+          "value": "Считано на полдень местного времени — точное время суток закрепит градус.",
+          "line": 352
+        },
+        {
+          "key": "middayUtcCaption",
+          "start": 18165,
+          "end": 18261,
+          "text": "middayUtcCaption: 'Считано на полдень всемирного времени — время и место закрепят градус точно.'",
+          "value": "Считано на полдень всемирного времени — время и место закрепят градус точно.",
+          "line": 354
+        },
+        {
+          "key": "moonChangedNotice",
+          "start": 18265,
+          "end": 18461,
+          "text": "moonChangedNotice: 'В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.'",
+          "value": "В этот день Луна сменила знак, и без времени нельзя сказать, по какую сторону границы вы родились. Фаза не страдает — она движется слишком медленно, чтобы часы имели значение.",
+          "line": 355
+        }
+      ],
+      "candidate": [
+        {
+          "key": "chartTimeHelp",
+          "start": 6223,
+          "end": 6346,
+          "text": "chartTimeHelp: \"Нет времени рождения? Покажем опорные положения без асцендента и домов; возможные знаки Луны не проверены.\"",
+          "value": "Нет времени рождения? Покажем опорные положения без асцендента и домов; возможные знаки Луны не проверены.",
+          "line": 166
+        },
+        {
+          "key": "noTimeNotice",
+          "start": 16712,
+          "end": 16817,
+          "text": "noTimeNotice: \"Без времени рождения показываем опорные положения и не показываем асцендент, углы и дома.\"",
+          "value": "Без времени рождения показываем опорные положения и не показываем асцендент, углы и дома.",
+          "line": 333
+        },
+        {
+          "key": "placeHelpMoon",
+          "start": 17842,
+          "end": 17909,
+          "text": "placeHelpMoon: \"Переводит местные дату и время во всемирное время.\"",
+          "value": "Переводит местные дату и время во всемирное время.",
+          "line": 351
+        },
+        {
+          "key": "referenceLocalCaption",
+          "start": 17913,
+          "end": 18092,
+          "text": "referenceLocalCaption: \"Опорный результат для этой местной даты. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время рождения для расчёта на конкретный момент.\"",
+          "value": "Опорный результат для этой местной даты. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время рождения для расчёта на конкретный момент.",
+          "line": 352
+        },
+        {
+          "key": "referenceUtcCaption",
+          "start": 18202,
+          "end": 18374,
+          "text": "referenceUtcCaption: \"Опорный результат для этой даты по UTC. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время и место для расчёта на местный момент.\"",
+          "value": "Опорный результат для этой даты по UTC. В другие моменты дня знак и фаза Луны могут отличаться. Добавьте время и место для расчёта на местный момент.",
+          "line": 354
+        },
+        {
+          "key": "moonPhaseAtReference",
+          "start": 18378,
+          "end": 18429,
+          "text": "moonPhaseAtReference: \"Фаза Луны на опорный момент\"",
+          "value": "Фаза Луны на опорный момент",
+          "line": 355
+        }
+      ]
+    },
+    {
+      "path": "src/lib/share-card-copy.ts",
+      "baseline": [
+        {
+          "key": "referenceTimeNote",
+          "locale": "en",
+          "start": 1079,
+          "end": 1136,
+          "text": "referenceTimeNote: '12:00 reference · Birth time unknown'",
+          "value": "12:00 reference · Birth time unknown",
+          "line": 28
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "es",
+          "start": 2691,
+          "end": 2768,
+          "text": "referenceTimeNote: 'Referencia de las 12:00 · Hora de nacimiento desconocida'",
+          "value": "Referencia de las 12:00 · Hora de nacimiento desconocida",
+          "line": 64
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "pt",
+          "start": 4340,
+          "end": 4415,
+          "text": "referenceTimeNote: 'Referência das 12:00 · Hora de nascimento desconhecida'",
+          "value": "Referência das 12:00 · Hora de nascimento desconhecida",
+          "line": 97
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "fr",
+          "start": 6005,
+          "end": 6075,
+          "text": "referenceTimeNote: 'Référence à 12 h 00 · Heure de naissance inconnue'",
+          "value": "Référence à 12 h 00 · Heure de naissance inconnue",
+          "line": 130
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "it",
+          "start": 7650,
+          "end": 7722,
+          "text": "referenceTimeNote: 'Riferimento alle 12:00 · Ora di nascita sconosciuta'",
+          "value": "Riferimento alle 12:00 · Ora di nascita sconosciuta",
+          "line": 163
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "ru",
+          "start": 9322,
+          "end": 9386,
+          "text": "referenceTimeNote: 'Расчёт на 12:00 · Время рождения неизвестно'",
+          "value": "Расчёт на 12:00 · Время рождения неизвестно",
+          "line": 196
+        }
+      ],
+      "candidate": [
+        {
+          "key": "referenceTimeNote",
+          "locale": "en",
+          "start": 1079,
+          "end": 1140,
+          "text": "referenceTimeNote: 'Reference positions · Birth time unknown'",
+          "value": "Reference positions · Birth time unknown",
+          "line": 28
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "es",
+          "start": 2695,
+          "end": 2773,
+          "text": "referenceTimeNote: 'Posiciones de referencia · Hora de nacimiento desconocida'",
+          "value": "Posiciones de referencia · Hora de nacimiento desconocida",
+          "line": 64
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "pt",
+          "start": 4345,
+          "end": 4422,
+          "text": "referenceTimeNote: 'Posições de referência · Hora de nascimento desconhecida'",
+          "value": "Posições de referência · Hora de nascimento desconhecida",
+          "line": 97
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "fr",
+          "start": 6012,
+          "end": 6085,
+          "text": "referenceTimeNote: 'Positions de référence · Heure de naissance inconnue'",
+          "value": "Positions de référence · Heure de naissance inconnue",
+          "line": 130
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "it",
+          "start": 7660,
+          "end": 7734,
+          "text": "referenceTimeNote: 'Posizioni di riferimento · Ora di nascita sconosciuta'",
+          "value": "Posizioni di riferimento · Ora di nascita sconosciuta",
+          "line": 163
+        },
+        {
+          "key": "referenceTimeNote",
+          "locale": "ru",
+          "start": 9334,
+          "end": 9400,
+          "text": "referenceTimeNote: 'Опорные положения · Время рождения неизвестно'",
+          "value": "Опорные положения · Время рождения неизвестно",
+          "line": 196
+        }
+      ]
+    },
+    {
+      "path": "src/islands/explorer/lens/copy.ts",
+      "baseline": [
+        {
+          "key": "noTimeNote",
+          "locale": "en",
+          "start": 1633,
+          "end": 1765,
+          "text": "noTimeNote: 'Computed from a noon chart. Planetary themes remain useful; houses and rising are withheld until you add a birth time.'",
+          "value": "Computed from a noon chart. Planetary themes remain useful; houses and rising are withheld until you add a birth time.",
+          "line": 44
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "es",
+          "start": 2838,
+          "end": 3022,
+          "text": "noTimeNote: 'Calculado a partir de una carta de mediodía. Los temas planetarios siguen siendo útiles; las casas y el ascendente no se muestran hasta que añadas una hora de nacimiento.'",
+          "value": "Calculado a partir de una carta de mediodía. Los temas planetarios siguen siendo útiles; las casas y el ascendente no se muestran hasta que añadas una hora de nacimiento.",
+          "line": 62
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "pt",
+          "start": 4094,
+          "end": 4263,
+          "text": "noTimeNote: 'Calculado com um mapa do meio-dia. Os temas planetários continuam úteis; as casas e o ascendente não são mostrados até você adicionar a hora de nascimento.'",
+          "value": "Calculado com um mapa do meio-dia. Os temas planetários continuam úteis; as casas e o ascendente não são mostrados até você adicionar a hora de nascimento.",
+          "line": 80
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "fr",
+          "start": 5436,
+          "end": 5626,
+          "text": "noTimeNote: 'Calculé à partir d’un thème de midi. Les thèmes planétaires restent utiles ; les maisons et l’ascendant ne sont pas affichés tant que tu n’as pas ajouté ton heure de naissance.'",
+          "value": "Calculé à partir d’un thème de midi. Les thèmes planétaires restent utiles ; les maisons et l’ascendant ne sont pas affichés tant que tu n’as pas ajouté ton heure de naissance.",
+          "line": 98
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "it",
+          "start": 6835,
+          "end": 6999,
+          "text": "noTimeNote: 'Calcolato da un tema di mezzogiorno. I temi planetari restano utili; le case e l’ascendente non vengono mostrati finché non aggiungi l’ora di nascita.'",
+          "value": "Calcolato da un tema di mezzogiorno. I temi planetari restano utili; le case e l’ascendente non vengono mostrati finché non aggiungi l’ora di nascita.",
+          "line": 116
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "ru",
+          "start": 8137,
+          "end": 8275,
+          "text": "noTimeNote: 'Считано по полуденной карте. Планетные темы остаются полезными; дома и асцендент скрыты, пока вы не добавите время рождения.'",
+          "value": "Считано по полуденной карте. Планетные темы остаются полезными; дома и асцендент скрыты, пока вы не добавите время рождения.",
+          "line": 134
+        }
+      ],
+      "candidate": [
+        {
+          "key": "noTimeNote",
+          "locale": "en",
+          "start": 1633,
+          "end": 1730,
+          "text": "noTimeNote: \"Reference positions are shown. Houses and rising are withheld without a birth time.\"",
+          "value": "Reference positions are shown. Houses and rising are withheld without a birth time.",
+          "line": 44
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "es",
+          "start": 2803,
+          "end": 2921,
+          "text": "noTimeNote: \"Se muestran posiciones de referencia. Sin hora de nacimiento, no se muestran las casas ni el ascendente.\"",
+          "value": "Se muestran posiciones de referencia. Sin hora de nacimiento, no se muestran las casas ni el ascendente.",
+          "line": 62
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "pt",
+          "start": 3993,
+          "end": 4113,
+          "text": "noTimeNote: \"São mostradas posições de referência. Sem a hora de nascimento, as casas e o ascendente não são mostrados.\"",
+          "value": "São mostradas posições de referência. Sem a hora de nascimento, as casas e o ascendente não são mostrados.",
+          "line": 80
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "fr",
+          "start": 5286,
+          "end": 5405,
+          "text": "noTimeNote: \"Des positions de référence sont affichées. Sans heure de naissance, les maisons et l’ascendant sont omis.\"",
+          "value": "Des positions de référence sont affichées. Sans heure de naissance, les maisons et l’ascendant sont omis.",
+          "line": 98
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "it",
+          "start": 6614,
+          "end": 6737,
+          "text": "noTimeNote: \"Sono mostrate posizioni di riferimento. Senza un’ora di nascita, le case e l’ascendente non vengono mostrati.\"",
+          "value": "Sono mostrate posizioni di riferimento. Senza un’ora di nascita, le case e l’ascendente non vengono mostrati.",
+          "line": 116
+        },
+        {
+          "key": "noTimeNote",
+          "locale": "ru",
+          "start": 7875,
+          "end": 7971,
+          "text": "noTimeNote: \"Показаны опорные положения. Без времени рождения дома и асцендент не показываются.\"",
+          "value": "Показаны опорные положения. Без времени рождения дома и асцендент не показываются.",
+          "line": 134
+        }
+      ]
+    },
+    {
+      "path": "src/islands/explorer/tour/copy.ts",
+      "baseline": [
+        {
+          "key": "no-housesBody1",
+          "locale": "en",
+          "start": 7903,
+          "end": 8183,
+          "text": "'no-housesBody1': \"Houses come from the exact minute of birth — the sky's rotation, not the calendar. Without a time we compute a noon chart: every planet's sign is right — except sometimes the Moon, which can change sign within a day — and there is no horizon to hang houses on.\"",
+          "value": "Houses come from the exact minute of birth — the sky's rotation, not the calendar. Without a time we compute a noon chart: every planet's sign is right — except sometimes the Moon, which can change sign within a day — and there is no horizon to hang houses on.",
+          "line": 109
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "es",
+          "start": 16132,
+          "end": 16446,
+          "text": "'no-housesBody1': 'Las casas salen del minuto exacto del nacimiento — la rotación del cielo, no el calendario. Sin hora calculamos una carta de mediodía: el signo de cada planeta es correcto — salvo a veces el de la Luna, que puede cambiar de signo dentro del día — pero no hay horizonte del que colgar las casas.'",
+          "value": "Las casas salen del minuto exacto del nacimiento — la rotación del cielo, no el calendario. Sin hora calculamos una carta de mediodía: el signo de cada planeta es correcto — salvo a veces el de la Luna, que puede cambiar de signo dentro del día — pero no hay horizonte del que colgar las casas.",
+          "line": 203
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "pt",
+          "start": 24408,
+          "end": 24715,
+          "text": "'no-housesBody1': 'As casas vêm do minuto exato do nascimento — da rotação do céu, não do calendário. Sem um horário, calculamos um mapa do meio-dia: o signo de cada planeta está correto — com a possível exceção da Lua, que pode mudar de signo no mesmo dia — e não existe horizonte para sustentar as casas.'",
+          "value": "As casas vêm do minuto exato do nascimento — da rotação do céu, não do calendário. Sem um horário, calculamos um mapa do meio-dia: o signo de cada planeta está correto — com a possível exceção da Lua, que pode mudar de signo no mesmo dia — e não existe horizonte para sustentar as casas.",
+          "line": 297
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "fr",
+          "start": 33267,
+          "end": 33614,
+          "text": "'no-housesBody1': 'Les maisons viennent de la minute exacte de naissance — de la rotation du ciel, pas du calendrier. Sans heure, nous calculons un thème pour midi : le signe de chaque planète est correct — sauf parfois celui de la Lune, qui peut changer de signe au cours de la journée — mais il n’y a aucun horizon auquel rattacher les maisons.'",
+          "value": "Les maisons viennent de la minute exacte de naissance — de la rotation du ciel, pas du calendrier. Sans heure, nous calculons un thème pour midi : le signe de chaque planète est correct — sauf parfois celui de la Lune, qui peut changer de signe au cours de la journée — mais il n’y a aucun horizon auquel rattacher les maisons.",
+          "line": 391
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "it",
+          "start": 41973,
+          "end": 42309,
+          "text": "'no-housesBody1': 'Le case derivano dal minuto esatto della nascita — dalla rotazione del cielo, non dal calendario. Senza un’ora, calcoliamo un tema di mezzogiorno: il segno di ogni pianeta è corretto — tranne a volte quello della Luna, che può cambiare segno nell’arco della giornata — ma non c’è un orizzonte a cui ancorare le case.'",
+          "value": "Le case derivano dal minuto esatto della nascita — dalla rotazione del cielo, non dal calendario. Senza un’ora, calcoliamo un tema di mezzogiorno: il segno di ogni pianeta è corretto — tranne a volte quello della Luna, che può cambiare segno nell’arco della giornata — ma non c’è un orizzonte a cui ancorare le case.",
+          "line": 485
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "ru",
+          "start": 49817,
+          "end": 50055,
+          "text": "'no-housesBody1': 'Дома зависят от точной минуты рождения — от вращения неба, а не календаря. Без времени мы считаем полуденную карту: знаки планет верны, кроме иногда Луны, которая может сменить знак за день, но горизонта для домов нет.'",
+          "value": "Дома зависят от точной минуты рождения — от вращения неба, а не календаря. Без времени мы считаем полуденную карту: знаки планет верны, кроме иногда Луны, которая может сменить знак за день, но горизонта для домов нет.",
+          "line": 579
+        }
+      ],
+      "candidate": [
+        {
+          "key": "no-housesBody1",
+          "locale": "en",
+          "start": 7903,
+          "end": 8110,
+          "text": "'no-housesBody1': \"Houses depend on the birth time and the sky’s rotation. Without a birth time, we show reference positions; these do not establish every planet’s birth sign. Rising and houses are omitted.\"",
+          "value": "Houses depend on the birth time and the sky’s rotation. Without a birth time, we show reference positions; these do not establish every planet’s birth sign. Rising and houses are omitted.",
+          "line": 109
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "es",
+          "start": 16059,
+          "end": 16291,
+          "text": "'no-housesBody1': \"Las casas dependen de la hora de nacimiento y de la rotación del cielo. Sin hora, mostramos posiciones de referencia; estas no establecen el signo natal de cada planeta. No se muestran el ascendente ni las casas.\"",
+          "value": "Las casas dependen de la hora de nacimiento y de la rotación del cielo. Sin hora, mostramos posiciones de referencia; estas no establecen el signo natal de cada planeta. No se muestran el ascendente ni las casas.",
+          "line": 203
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "pt",
+          "start": 24253,
+          "end": 24474,
+          "text": "'no-housesBody1': \"As casas dependem da hora de nascimento e da rotação do céu. Sem a hora, mostramos posições de referência; elas não estabelecem o signo natal de cada planeta. O ascendente e as casas não são mostrados.\"",
+          "value": "As casas dependem da hora de nascimento e da rotação do céu. Sem a hora, mostramos posições de referência; elas não estabelecem o signo natal de cada planeta. O ascendente e as casas não são mostrados.",
+          "line": 297
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "fr",
+          "start": 33026,
+          "end": 33271,
+          "text": "'no-housesBody1': \"Les maisons dépendent de l’heure de naissance et de la rotation du ciel. Sans heure, nous affichons des positions de référence ; elles ne déterminent pas le signe natal de chaque planète. L’ascendant et les maisons sont omis.\"",
+          "value": "Les maisons dépendent de l’heure de naissance et de la rotation du ciel. Sans heure, nous affichons des positions de référence ; elles ne déterminent pas le signe natal de chaque planète. L’ascendant et les maisons sont omis.",
+          "line": 391
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "it",
+          "start": 41630,
+          "end": 41868,
+          "text": "'no-housesBody1': \"Le case dipendono dall’ora di nascita e dalla rotazione del cielo. Senza un’ora, mostriamo posizioni di riferimento; queste non stabiliscono il segno natale di ogni pianeta. L’ascendente e le case non vengono mostrati.\"",
+          "value": "Le case dipendono dall’ora di nascita e dalla rotazione del cielo. Senza un’ora, mostriamo posizioni di riferimento; queste non stabiliscono il segno natale di ogni pianeta. L’ascendente e le case non vengono mostrati.",
+          "line": 485
+        },
+        {
+          "key": "no-housesBody1",
+          "locale": "ru",
+          "start": 49376,
+          "end": 49581,
+          "text": "'no-housesBody1': \"Дома зависят от времени рождения и вращения неба. Без времени показываем опорные положения; они не устанавливают знак каждой планеты в момент рождения. Асцендент и дома не показываются.\"",
+          "value": "Дома зависят от времени рождения и вращения неба. Без времени показываем опорные положения; они не устанавливают знак каждой планеты в момент рождения. Асцендент и дома не показываются.",
+          "line": 579
+        }
+      ]
+    },
+    {
+      "path": "src/strings/additions.fr.mjs",
+      "baseline": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24911,
+          "end": 24993,
+          "text": "'shareCard.referenceTimeNote': 'Référence à 12 h 00 · Heure de naissance inconnue'",
+          "value": "Référence à 12 h 00 · Heure de naissance inconnue",
+          "line": 290
+        }
+      ],
+      "candidate": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24911,
+          "end": 24996,
+          "text": "'shareCard.referenceTimeNote': 'Positions de référence · Heure de naissance inconnue'",
+          "value": "Positions de référence · Heure de naissance inconnue",
+          "line": 290
+        }
+      ]
+    },
+    {
+      "path": "src/strings/additions.it.mjs",
+      "baseline": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24386,
+          "end": 24470,
+          "text": "'shareCard.referenceTimeNote': 'Riferimento alle 12:00 · Ora di nascita sconosciuta'",
+          "value": "Riferimento alle 12:00 · Ora di nascita sconosciuta",
+          "line": 296
+        }
+      ],
+      "candidate": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24386,
+          "end": 24472,
+          "text": "'shareCard.referenceTimeNote': 'Posizioni di riferimento · Ora di nascita sconosciuta'",
+          "value": "Posizioni di riferimento · Ora di nascita sconosciuta",
+          "line": 296
+        }
+      ]
+    },
+    {
+      "path": "src/strings/additions.pt.mjs",
+      "baseline": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24105,
+          "end": 24192,
+          "text": "'shareCard.referenceTimeNote': 'Referência das 12:00 · Hora de nascimento desconhecida'",
+          "value": "Referência das 12:00 · Hora de nascimento desconhecida",
+          "line": 296
+        }
+      ],
+      "candidate": [
+        {
+          "key": "shareCard.referenceTimeNote",
+          "start": 24105,
+          "end": 24194,
+          "text": "'shareCard.referenceTimeNote': 'Posições de referência · Hora de nascimento desconhecida'",
+          "value": "Posições de referência · Hora de nascimento desconhecida",
+          "line": 296
+        }
+      ]
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 1197,
+          "end": 1478,
+          "value": "Enter your birth date in the lookup above — the phase is exact from the date alone, since the Moon takes about 29.5 days to run through its cycle. Astrologers read a birth phase as a temperament note: new-moon people start things, full-moon people are said to live more publicly.",
+          "line": 33
+        }
+      ],
+      "candidate": [
+        {
+          "start": 1197,
+          "end": 1542,
+          "value": "Enter your birth date in the lookup above. Without a time, the result describes a reference moment; the phase can change within the date. Add a time and place to calculate the phase for your local birth moment. Astrologers read a birth phase as a temperament note: new-moon people start things, full-moon people are said to live more publicly.",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 569,
+          "end": 921,
+          "value": "Ingresa tu fecha de nacimiento en el buscador. La fase puede calcularse con precisión a partir de la fecha, porque la Luna tarda unos 29,5 días en completar su ciclo. La astrología interpreta la fase natal como una nota de temperamento: se dice que quienes nacen con Luna nueva inician cosas y quienes nacen con Luna llena viven de forma más pública.",
+          "line": 15
+        }
+      ],
+      "candidate": [
+        {
+          "start": 569,
+          "end": 990,
+          "value": "Ingresa tu fecha de nacimiento en el buscador. Sin hora, el resultado describe un momento de referencia; la fase puede cambiar dentro de la misma fecha. Añade una hora y un lugar para calcular la fase en tu momento local de nacimiento. La astrología interpreta la fase natal como una nota de temperamento: se dice que quienes nacen con Luna nueva inician cosas y quienes nacen con Luna llena viven de forma más pública.",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 597,
+          "end": 982,
+          "value": "Indique ta date de naissance dans l’outil. La phase peut être calculée avec précision à partir de la date, car la Lune met environ 29,5 jours à accomplir son cycle. L’astrologie interprète la phase natale comme une nuance du tempérament : on dit que les personnes nées à la nouvelle lune aiment lancer les choses, tandis que celles nées à la pleine lune vivent de façon plus visible.",
+          "line": 15
+        }
+      ],
+      "candidate": [
+        {
+          "start": 597,
+          "end": 1048,
+          "value": "Indique ta date de naissance dans l’outil. Sans heure, le résultat décrit un instant de référence ; la phase peut changer au cours de cette date. Ajoute une heure et un lieu pour calculer la phase à ton instant local de naissance. L’astrologie interprète la phase natale comme une nuance du tempérament : on dit que les personnes nées à la nouvelle lune aiment lancer les choses, tandis que celles nées à la pleine lune vivent de façon plus visible.",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 589,
+          "end": 962,
+          "value": "Inserisci la tua data di nascita nello strumento. La fase può essere calcolata con precisione dalla data, perché la Luna impiega circa 29,5 giorni per completare il ciclo. L’astrologia interpreta la fase natale come una sfumatura del temperamento: si dice che chi nasce con la luna nuova dia inizio alle cose, mentre chi nasce con la luna piena viva in modo più visibile.",
+          "line": 15
+        }
+      ],
+      "candidate": [
+        {
+          "start": 589,
+          "end": 1040,
+          "value": "Inserisci la tua data di nascita nello strumento. Senza un’ora, il risultato descrive un momento di riferimento; la fase può cambiare nel corso della stessa data. Aggiungi un’ora e un luogo per calcolare la fase nel momento locale della tua nascita. L’astrologia interpreta la fase natale come una sfumatura del temperamento: si dice che chi nasce con la luna nuova dia inizio alle cose, mentre chi nasce con la luna piena viva in modo più visibile.",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 549,
+          "end": 900,
+          "value": "Informe sua data de nascimento na busca. A fase pode ser calculada com precisão a partir da data porque a Lua leva cerca de 29,5 dias para completar seu ciclo. A astrologia interpreta a fase natal como uma nuance do temperamento: diz-se que pessoas nascidas na Lua nova iniciam coisas e que pessoas nascidas na Lua cheia vivem de forma mais pública.",
+          "line": 15
+        }
+      ],
+      "candidate": [
+        {
+          "start": 549,
+          "end": 965,
+          "value": "Informe sua data de nascimento na busca. Sem uma hora, o resultado descreve um momento de referência; a fase pode mudar dentro dessa data. Adicione uma hora e um local para calcular a fase no momento local do seu nascimento. A astrologia interpreta a fase natal como uma nuance do temperamento: diz-se que pessoas nascidas na Lua nova iniciam coisas e que pessoas nascidas na Lua cheia vivem de forma mais pública.",
+          "line": 15
+        }
+      ]
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "baseline": [
+        {
+          "start": 481,
+          "end": 663,
+          "value": "Введите дату рождения. Фазу можно точно рассчитать по дате: полный цикл Луны занимает около 29,5 суток. В астрологии натальная фаза — одна из заметок о темпераменте, а не приговор.",
+          "line": 15
+        }
+      ],
+      "candidate": [
+        {
+          "start": 481,
+          "end": 743,
+          "value": "Введите дату рождения. Без времени результат описывает опорный момент; в пределах одной даты фаза может измениться. Добавьте время и место для расчёта фазы на местный момент рождения. В астрологии натальная фаза — одна из заметок о темпераменте, а не приговор.",
+          "line": 15
+        }
+      ]
+    }
+  ],
+  "frozen": [
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "bytes": 1781,
+      "sha256": "aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120399,
+      "sha256": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.reference.test.ts",
+      "bytes": 7301,
+      "sha256": "188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "bytes": 11017,
+      "sha256": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/explorer/lens/copy.ts",
+      "bytes": 13544,
+      "sha256": "7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/explorer/tour/copy.ts",
+      "bytes": 55749,
+      "sha256": "458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "bytes": 22136,
+      "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "bytes": 24319,
+      "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "bytes": 27902,
+      "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "bytes": 26682,
+      "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "bytes": 25854,
+      "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38540,
+      "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/moon-certainty.test.tsx",
+      "bytes": 11558,
+      "sha256": "3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/reference-captions.test.tsx",
+      "bytes": 5455,
+      "sha256": "e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/share-card-copy.ts",
+      "bytes": 11216,
+      "sha256": "fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/share-card.test.ts",
+      "bytes": 16715,
+      "sha256": "ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/share-card.ts",
+      "bytes": 55760,
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "bytes": 3609,
+      "sha256": "19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "bytes": 3823,
+      "sha256": "b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "bytes": 3680,
+      "sha256": "246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "bytes": 7008,
+      "sha256": "79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "bytes": 3527,
+      "sha256": "f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "bytes": 4081,
+      "sha256": "14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/server/chart-preview-model.ts",
+      "bytes": 2056,
+      "sha256": "c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/server/chart-preview.ts",
+      "bytes": 9897,
+      "sha256": "4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.fr.mjs",
+      "bytes": 49891,
+      "sha256": "511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.it.mjs",
+      "bytes": 48086,
+      "sha256": "849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61",
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.pt.mjs",
+      "bytes": 47872,
+      "sha256": "f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e",
+      "kind": "product/copy"
+    },
+    {
+      "path": "tests/api/og-chart.test.ts",
+      "bytes": 12273,
+      "sha256": "1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "bytes": 22718,
+      "sha256": "88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/moon-result-ownership-drive.mjs",
+      "bytes": 14874,
+      "sha256": "69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/reference-caption-drive.mjs",
+      "bytes": 19270,
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "bytes": 66990,
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+      "kind": "scoped test/driver"
+    }
+  ],
+  "retired": []
+}

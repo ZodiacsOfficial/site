@@ -1,0 +1,72 @@
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ❯ scripts/platform-starter.test.mjs (39 tests | 1 failed | 38 skipped) 20ms
+   × platform starter archive and source identity (offline) > verifies the starter without the application engine pin 19ms
+     → expected [Function] to not throw an error but 'Error: ENOENT: no such file or direct…' was thrown
+   ↓ platform starter archive and source identity (offline) > verifies the public-directory archive against every source byte and the candidate
+   ↓ platform starter archive and source identity (offline) > detects an archive digest change before reading package data
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: undefined
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: "main"
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: "80dff5f"
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: "gggggggggggggggggggggggggggggggggggggggg"
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: 123
+   ↓ platform starter archive and source identity (offline) > requires a full immutable starter commit: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   ↓ platform starter archive and source identity (offline) > detects stale or substituted source even after the public digest is updated
+   ↓ platform starter archive and source identity (offline) > detects candidate provenance drift independently of starter source and digest
+   ↓ platform starter archive and source identity (offline) > rejects mutable artifact URLs even when both metadata copies match
+   ↓ platform starter archive and source identity (offline) > rejects a repacked engine even when starter source and its own digest agree
+   ↓ platform starter archive and source identity (offline) > rejects a starter that drops its private flag
+   ↓ platform starter archive and source identity (offline) > checks shrinkwrap engine integrity beyond source byte equality
+   ↓ platform starter archive and source identity (offline) > rejects source symlinks even if the target contains matching bytes
+   ↓ examples page artifact identity > renders links, setup values, and release identity from shared metadata
+   ↓ starter archive extraction boundary > rejects unsafe path package/../outside
+   ↓ starter archive extraction boundary > rejects unsafe path /absolute
+   ↓ starter archive extraction boundary > rejects unsafe path package/a/../../outside
+   ↓ starter archive extraction boundary > rejects unsafe path package/a\b
+   ↓ starter archive extraction boundary > rejects unsafe path package//double
+   ↓ starter archive extraction boundary > rejects unsafe path package/./dot
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries 1
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries 2
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries 3
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries 5
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries x
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries g
+   ↓ starter archive extraction boundary > rejects nonregular or alternate tar entries L
+   ↓ starter archive extraction boundary > rejects unlisted content node_modules/secret
+   ↓ starter archive extraction boundary > rejects unlisted content dist/app.js
+   ↓ starter archive extraction boundary > rejects unlisted content .env
+   ↓ starter archive extraction boundary > rejects unlisted content unexpected.txt
+   ↓ starter archive extraction boundary > rejects duplicate members, misleading link targets and missing expected files
+   ↓ starter archive extraction boundary > rejects bad checksums, truncated archives and data after the end marker
+   ↓ starter archive extraction boundary > bounds compressed and inflated archive sizes
+   ↓ starter archive extraction boundary > isolates the install from private npm settings and inherited credentials
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  scripts/platform-starter.test.mjs > platform starter archive and source identity (offline) > verifies the starter without the application engine pin
+AssertionError: expected [Function] to not throw an error but 'Error: ENOENT: no such file or direct…' was thrown
+
+- Expected: 
+undefined
+
++ Received: 
+"Error: ENOENT: no such file or directory, lstat '/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-starter-verifier-test-CVMHKa/src/data/platform-engine-candidate.json'"
+
+ ❯ scripts/platform-starter.test.mjs:65:51
+     63|     const test = fixture();
+     64|     rmSync(join(test.root, 'src/data/platform-engine-candidate.json'));
+     65|     expect(() => verifyPlatformStarter(test)).not.toThrow();
+       |                                                   ^
+     66|   });
+     67| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 38 skipped (39)
+   Start at  05:11:44
+   Duration  680ms (transform 33ms, setup 0ms, collect 328ms, tests 20ms, environment 0ms, prepare 44ms)
+

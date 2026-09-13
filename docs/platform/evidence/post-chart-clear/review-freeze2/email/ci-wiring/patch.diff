@@ -1,0 +1,13 @@
+--- a/.github/workflows/site-check.yml
++++ b/.github/workflows/site-check.yml
+@@ -117,6 +117,10 @@
+         timeout-minutes: 5
+         run: OUT_DIR=tests/visual/artifacts/chart-ownership node tests/chart-ownership-drive.mjs
+ 
++      - name: Chart-linked prompt result ownership
++        timeout-minutes: 5
++        run: OUT_DIR=tests/visual/artifacts/post-chart-context-clear node tests/post-chart-context-clear-drive.mjs
++
+       - name: Engine accuracy vectors
+         run: npm test
+ 

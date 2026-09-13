@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-09-08T04:13:20.421956+00:00",
+  "runtime": "Node22.23.2; Chrome152.0.7977.83",
+  "tests": {
+    "passed": 4717,
+    "files": 408,
+    "command": "npm test -- --fileParallelism=false",
+    "scope": "Engine adoption and current daily manifest/captures. A subsequent one-line developer-note wrapping fix is verified by rebuilt pages and affected browser checks."
+  },
+  "finalBuild": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "log": "build-reflow.log"
+  },
+  "developers": {
+    "command": "PLATFORM_BROWSER_EVIDENCE=docs/platform/evidence/site-engine-rc5/release/developers-final node tests/platform-developers-drive.mjs",
+    "exitCode": 0,
+    "checkRecords": 11,
+    "widths": [
+      1280,
+      390,
+      320
+    ]
+  },
+  "nativeZoom": {
+    "command": "node /private/tmp/zodiacs-platform-resume/native-zoom.mjs",
+    "exitCode": 0,
+    "checks": 30,
+    "cases": 4,
+    "scope": "Actual native Chrome 200%/400% zoom, developer entry/support, finite keyboard/reflow/reduced-motion/canonical-footer controls. No CSS zoom substitute or human accessibility certification.",
+    "harnessSha256": "6853335f8fa181565a5bc022b8c87b5c96964e6c5a78f5017257b0667daf1663"
+  },
+  "visual": {
+    "command": "npm run test:visual",
+    "exitCode": 1,
+    "failedCases": 15,
+    "classification": "Preceding candidate reproduces home dimensions; full independent control pending. No baseline update."
+  }
+}

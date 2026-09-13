@@ -1,0 +1,116 @@
+{
+  "main": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "selected": "60f9c779b69935e93dd14b7f8aac90dbbd4a6d35",
+  "head": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "mergeHead": "60f9c779b69935e93dd14b7f8aac90dbbd4a6d35",
+  "unmergedPaths": [],
+  "accepted469AncestorOfMergeHead": true,
+  "concurrentChangedPaths": 77,
+  "concurrentDifferentFromMain": [
+    ".github/phase1-scope-allowance.json",
+    "package-lock.json",
+    "scripts/registry-research.test.mjs",
+    "src/data/daily-publication-manifest.json",
+    "src/islands/today/TodayBrief.loading.test.ts",
+    "src/islands/today/TodayBrief.tsx",
+    "src/lib/horoscope-program.test.ts"
+  ],
+  "mainImmutableItemCount": 28,
+  "mainImmutableDifferences": [],
+  "rootConflictPreservationPathCount": 46,
+  "rootConflictPreservationDifferences": [
+    "src/data/daily-publication-manifest.json"
+  ],
+  "astrofolioActualPathCount": 36,
+  "astrofolioPresent": [],
+  "frozenCaptionCount": 33,
+  "frozenCaptionMismatches": [],
+  "lockDifferentPackageRecords": [
+    "",
+    "node_modules/@zodiacs/engine"
+  ],
+  "lockExactlyMainPlusAcceptedEngine": true,
+  "archiveSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+  "protectedMainIdentities": {
+    "CLAUDE.md": {
+      "main": "e3ca650e437c5be8ade8c6b0828158b533e559d7",
+      "candidate": "e3ca650e437c5be8ade8c6b0828158b533e559d7"
+    },
+    "public/registry/zodiacs.registry.json": {
+      "main": "143651845627641519486d13442dc497ed67a598",
+      "candidate": "143651845627641519486d13442dc497ed67a598"
+    },
+    "src/data/registry-research/approval-manifest.json": {
+      "main": "0714e90f62b362e599a0c1759f6928cc34e29302",
+      "candidate": "0714e90f62b362e599a0c1759f6928cc34e29302"
+    },
+    "vendor/zodiacs-engine-0.1.0.tgz": {
+      "main": "7fccb513090b3e45225f40c840adcd75d540fd66",
+      "candidate": "7fccb513090b3e45225f40c840adcd75d540fd66"
+    },
+    "scripts/phase1-scope-guard.mjs": {
+      "main": "5ce687a5e4ac171d92acab9e94ed3b1dcfa946a9",
+      "candidate": "5ce687a5e4ac171d92acab9e94ed3b1dcfa946a9"
+    },
+    "tests/visual/lighthouse.mjs": {
+      "main": "fc63b7c4881f36b263ccddc155b72aab873be404",
+      "candidate": "fc63b7c4881f36b263ccddc155b72aab873be404"
+    },
+    "tests/visual/widget-lighthouse.mjs": {
+      "main": "114f05de8c65012f6cf8d5fe124d8b9d4a80974a",
+      "candidate": "114f05de8c65012f6cf8d5fe124d8b9d4a80974a"
+    },
+    "scripts/verify-daily-freshness.mjs": {
+      "main": "b140f1c8b6f4e9547fc78a44be7d7fef96a02f7d",
+      "candidate": "b140f1c8b6f4e9547fc78a44be7d7fef96a02f7d"
+    },
+    "public/sw.js": {
+      "main": "fb4628c58025532434c3ad66119555f896d4adb5",
+      "candidate": "fb4628c58025532434c3ad66119555f896d4adb5"
+    },
+    "scripts/registry-market-snapshot-lib.mjs": {
+      "main": "7f4081760553f0ee88ea1f54b18d71cc653dda2a",
+      "candidate": "7f4081760553f0ee88ea1f54b18d71cc653dda2a"
+    },
+    "scripts/registry-market-snapshot.test.mjs": {
+      "main": "52ea4799edacfe5a07406e19423cbf920e8e23e0",
+      "candidate": "52ea4799edacfe5a07406e19423cbf920e8e23e0"
+    },
+    "scripts/registry-research-lib.mjs": {
+      "main": "c07911b04a9e264ec294cfca499dc4283a30ffb6",
+      "candidate": "c07911b04a9e264ec294cfca499dc4283a30ffb6"
+    },
+    "scripts/build-sign-pages.mjs": {
+      "main": "e5d4410ccc1c9fefc9c420e031cb8bc98469b405",
+      "candidate": "e5d4410ccc1c9fefc9c420e031cb8bc98469b405"
+    },
+    "scripts/sign-records.test.mjs": {
+      "main": "0689a4485681f573cbeaea3abfb062694e4fd707",
+      "candidate": "0689a4485681f573cbeaea3abfb062694e4fd707"
+    },
+    "tests/sign-record-drive.mjs": {
+      "main": "587cc3eea7bd7b11acb54f659f028e0971b60e0f",
+      "candidate": "587cc3eea7bd7b11acb54f659f028e0971b60e0f"
+    },
+    "src/pages/today/index.astro": {
+      "main": "89b391a9f699fbf68cdbe94ebd259464708ae42d",
+      "candidate": "89b391a9f699fbf68cdbe94ebd259464708ae42d"
+    }
+  },
+  "composedNonDocumentationPaths": [
+    ".github/phase1-scope-allowance.json",
+    "package-lock.json",
+    "scripts/registry-research.test.mjs",
+    "src/data/daily-publication-manifest.json",
+    "src/islands/today/TodayBrief.loading.test.ts",
+    "src/islands/today/TodayBrief.tsx"
+  ],
+  "composedSourceSha256": {
+    ".github/phase1-scope-allowance.json": "363f68ff1f4966ebd625e366b5d743e75b53554683da5625b3ec6d2a32008cd6",
+    "package-lock.json": "4bb298bba27d8297b504096e71e86f2c6a5cf4fe5d224ebc57ca70a9821a3792",
+    "scripts/registry-research.test.mjs": "04d9996b6346623847057ed6d98342028107a73a340ceed8a759f64fb747a009",
+    "src/data/daily-publication-manifest.json": "236ebd2240ed2511b2fee88cd2b8213b4ae2140dc002ac0971645f4b909b90da",
+    "src/islands/today/TodayBrief.loading.test.ts": "998f49229d2d9c7a5c80463e274525f34e8d95d24a39544f5277d0bd387c4ce2",
+    "src/islands/today/TodayBrief.tsx": "56b168c0f74e413a3d75477a1fd740aefc7da1aa61f6107f81a380357254b23c"
+  }
+}

@@ -1,0 +1,2807 @@
+{
+  "regularMembers": 285,
+  "records": [
+    {
+      "path": "author-freeze2.patch",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-freeze2.patch",
+      "bytes": 56603,
+      "sha256": "b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4"
+    },
+    {
+      "path": "baseline-extra.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-extra.json",
+      "bytes": 31163,
+      "sha256": "50ad923b377b6f9198a91490fd4f4283497116ea42bdf54c94ad537de7dea8c7"
+    },
+    {
+      "path": "baseline-identity.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-identity.json",
+      "bytes": 63780,
+      "sha256": "657e2b0317507ea329f5fd8d4115c81db0b67d7de0b0171662a505c0d778301a"
+    },
+    {
+      "path": "baseline-receipt.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-receipt.json",
+      "bytes": 3957,
+      "sha256": "771ef0f67b432bde616825ee21f8ead8e791bf66d4adf0f3a1952f0d697383f3"
+    },
+    {
+      "path": "baseline-result.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-result.json",
+      "bytes": 404288,
+      "sha256": "6bda331b3fef1395388d38acf67393f1161d9a6207b1302d10ab1028ad93ed36"
+    },
+    {
+      "path": "baseline-save-corrected.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-save-corrected.json",
+      "bytes": 77330,
+      "sha256": "2672e74a8bf950e07d0958e99e2fe12c05b6b5489697a41ccbecde62cd733072"
+    },
+    {
+      "path": "baseline-summary.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-summary.json",
+      "bytes": 8565,
+      "sha256": "1a431a71f967a5d5118231e203446c558a47fe258c0817ea911344777597b8e5"
+    },
+    {
+      "path": "baseline.css",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline.css",
+      "bytes": 29841,
+      "sha256": "2fe713bd8bfa6f374bff6b905f022f1bfde78945d0ef68d10316627e9b5328a0"
+    },
+    {
+      "path": "baseline.js",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline.js",
+      "bytes": 2205998,
+      "sha256": "36cbf9541530582dacf09b8bee28b107acaa32861d01bed154395a1446244525"
+    },
+    {
+      "path": "build-baseline.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/build-baseline.log",
+      "bytes": 125,
+      "sha256": "326444143ba2491dc9dfbc3325158a959bfc9f1335379d144e317c5113f8c66f"
+    },
+    {
+      "path": "build-candidate.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/build-candidate.log",
+      "bytes": 126,
+      "sha256": "5f78a5c91435d42dc871afeb392a8c11769f6aa7ef72caae692d65f16a0970ac"
+    },
+    {
+      "path": "build.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/build.mjs",
+      "bytes": 4677,
+      "sha256": "8005a750b09fc38fe1a1dce9fc37810439f94c1f327e9316562f2209d56b6411"
+    },
+    {
+      "path": "candidate-extra.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-extra.json",
+      "bytes": 30078,
+      "sha256": "9df2bc5c2de60cbc72a204cbd7a0b3baf19f7c07ef90c17bf750a7bee3fa78ec"
+    },
+    {
+      "path": "candidate-identity.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-identity.json",
+      "bytes": 65485,
+      "sha256": "c7aea1a014f0a73b12eb5ae86a30ab0b99a254d183c36617f14326e5b0fd7aae"
+    },
+    {
+      "path": "candidate-receipt.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-receipt.json",
+      "bytes": 3957,
+      "sha256": "771ef0f67b432bde616825ee21f8ead8e791bf66d4adf0f3a1952f0d697383f3"
+    },
+    {
+      "path": "candidate-result.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-result.json",
+      "bytes": 389273,
+      "sha256": "6d36e17757d0b968ff515c18d10416d7e1763dc71409439acd9b3bedb3629be5"
+    },
+    {
+      "path": "candidate.css",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate.css",
+      "bytes": 29841,
+      "sha256": "2fe713bd8bfa6f374bff6b905f022f1bfde78945d0ef68d10316627e9b5328a0"
+    },
+    {
+      "path": "candidate.js",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate.js",
+      "bytes": 2205699,
+      "sha256": "9701fa40972719b223570d3cbccf782543c5765a7ed17f999d4f7f95995fc025"
+    },
+    {
+      "path": "drive.freeze2-first17.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/drive.freeze2-first17.mjs.log",
+      "bytes": 11172,
+      "sha256": "40c31d02d180166dc99d555bb7957541a533dbf51261bc9f6368a83a1606ff45"
+    },
+    {
+      "path": "drive.initial.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/drive.initial.mjs.log",
+      "bytes": 11098,
+      "sha256": "5ebc241d3c3a8570e3560c137dde8d7abdb0593aa048f4f42813b01bb7a8525e"
+    },
+    {
+      "path": "drive.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/drive.mjs",
+      "bytes": 14123,
+      "sha256": "3b054ec5e7b3fd70278e9f204be27bd80cb33f24ab7835f3b573a50bf3305cb1"
+    },
+    {
+      "path": "entry.tsx",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/entry.tsx",
+      "bytes": 3820,
+      "sha256": "e85db4ff8754d69378d1e2e6c4a8108a52e4c7bd8701670210d318c90fde5ebe"
+    },
+    {
+      "path": "freeze-baseline-preparation.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/freeze-baseline-preparation.json",
+      "bytes": 103,
+      "sha256": "d822153a7023e17ed53b15c3bd0753092a50dbf3e280163b975969c9eb57a467"
+    },
+    {
+      "path": "native-baseline-extra.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/native-baseline-extra.log",
+      "bytes": 196,
+      "sha256": "f9ab7951d19183f559d98fc6adc766a523074751b629d89843bab7454cc5f39f"
+    },
+    {
+      "path": "native-baseline-save-corrected.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/native-baseline-save-corrected.log",
+      "bytes": 175,
+      "sha256": "9595081a4c72a07233f876f5fff558bd0270906673411d57c73632d2a1efaad8"
+    },
+    {
+      "path": "native-baseline.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/native-baseline.log",
+      "bytes": 1306,
+      "sha256": "26cbd260c2c38e3bb5b8a1ce0f3419329faa4733b61408fcc020d9ff60b0a382"
+    },
+    {
+      "path": "native-candidate-extra.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/native-candidate-extra.log",
+      "bytes": 199,
+      "sha256": "e42ae55a545ed4c99bdaadf899c99ef61b9b738d3995044742741ed6bc033839"
+    },
+    {
+      "path": "native-candidate.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/native-candidate.log",
+      "bytes": 1208,
+      "sha256": "cd53c31746759e598bf68c3b6b63d2087bb79e9f88cdb57f1be8d56057a7f975"
+    },
+    {
+      "path": "preparation-read-errors.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/preparation-read-errors.log",
+      "bytes": 267,
+      "sha256": "16e568c216f0c61ff334ba2c4b38db6f2859a17a22b765b6d81ef425e586f9e6"
+    },
+    {
+      "path": "secure-origin-probe.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/secure-origin-probe.json",
+      "bytes": 210,
+      "sha256": "1116e373e5e07488388fa9d9bd7f6602b8984223a011bf49a65b4316e5ce331b"
+    },
+    {
+      "path": "secure-origin-probe.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/secure-origin-probe.log",
+      "bytes": 161,
+      "sha256": "ddcfca5ec61f2db6d2894e98853026e9903a3f0d3b3a7d893ae8994f12bb496e"
+    },
+    {
+      "path": "secure-origin-probe.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/secure-origin-probe.mjs",
+      "bytes": 866,
+      "sha256": "e355f0c7cb12a5270368f25231ce5bc6a615a989bcb86ec874ebb0d4ecaed7d1"
+    },
+    {
+      "path": "source-review.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source-review.log",
+      "bytes": 144,
+      "sha256": "caa41993050658482c9a738fa53e6cd47fc7c82e85720d24b6861f8b84a83492"
+    },
+    {
+      "path": "source-review.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source-review.mjs",
+      "bytes": 6659,
+      "sha256": "bfc37baf91f50dfe8cc7d6a7b2abc73b3aa4ebebc9c3ce3c4aacda21b46966ba"
+    },
+    {
+      "path": "syntax.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/syntax.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "verify-freeze2.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/verify-freeze2.log",
+      "bytes": 598,
+      "sha256": "cc5c302664452049aa1fccb695422b1e4d0b81cb34f042a7f5cf243157f3d739"
+    },
+    {
+      "path": "verify-freeze2.py",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/verify-freeze2.py",
+      "bytes": 4796,
+      "sha256": "cf11727c2d5569a68241a4764fd6213ab0184655245ac2affd8ffd7dc34e59fe"
+    },
+    {
+      "path": "baseline-transformed/src/islands/ChartCalculator.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-transformed/src/islands/ChartCalculator.tsx.log",
+      "bytes": 123130,
+      "sha256": "23c4fe7562b86f5a0ef7cf9c7d68ce89214f80423c42d69dc1c0de38d4fc3d43"
+    },
+    {
+      "path": "baseline-transformed/src/lib/chart-date-certainty.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-transformed/src/lib/chart-date-certainty.ts.log",
+      "bytes": 1980,
+      "sha256": "3210432eb32bc1787b08dc9376d9bfc0a4383b18e34373610ed2b64ddf2aec1b"
+    },
+    {
+      "path": "baseline-transformed/src/lib/time/localToUtc.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/baseline-transformed/src/lib/time/localToUtc.ts.log",
+      "bytes": 8258,
+      "sha256": "803c9fa20218c32a163417a87ee4ed896f4eae86cc37834fe50a245a09bec3fc"
+    },
+    {
+      "path": "candidate-transformed/src/islands/ChartCalculator.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-transformed/src/islands/ChartCalculator.tsx.log",
+      "bytes": 122478,
+      "sha256": "1646bf9782659aa6ceb91bef23116b43bc10bfed0f0af7ca63501fbeb6afb457"
+    },
+    {
+      "path": "candidate-transformed/src/lib/time/localToUtc.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-transformed/src/lib/time/localToUtc.ts.log",
+      "bytes": 8258,
+      "sha256": "803c9fa20218c32a163417a87ee4ed896f4eae86cc37834fe50a245a09bec3fc"
+    },
+    {
+      "path": "candidate-source/src/islands/ChartCalculator.confidence.test.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/islands/ChartCalculator.confidence.test.ts",
+      "bytes": 10063,
+      "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb"
+    },
+    {
+      "path": "candidate-source/src/islands/ChartCalculator.ownership.test.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20641,
+      "sha256": "a6c463f6b42f5757b3d65b2a5dac0391f4dc11c1b25c050c5f5638fce4208aac"
+    },
+    {
+      "path": "candidate-source/src/islands/ChartCalculator.registry-bridge.test.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/islands/ChartCalculator.registry-bridge.test.ts",
+      "bytes": 1765,
+      "sha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d"
+    },
+    {
+      "path": "candidate-source/src/islands/ChartCalculator.tsx",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/islands/ChartCalculator.tsx",
+      "bytes": 120334,
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475"
+    },
+    {
+      "path": "candidate-source/src/lib/chart-date-certainty.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/chart-date-certainty.ts",
+      "bytes": 1879,
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/index.test.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/index.test.ts",
+      "bytes": 15646,
+      "sha256": "51a77f3a712d087e26e951bc637205598c093275e22df109cce8806452c6f96e"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/en.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/en.ts",
+      "bytes": 22131,
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/es.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/es.ts",
+      "bytes": 24192,
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/fr.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27888,
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/it.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/it.ts",
+      "bytes": 26712,
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/pt.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25812,
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/ru.test.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/ru.test.ts",
+      "bytes": 5247,
+      "sha256": "feeedfe74b08f939e0143e97d566d62878fe1cec7926be41463a206dc165ff44"
+    },
+    {
+      "path": "candidate-source/src/lib/i18n/ui/ru.ts",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38609,
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613"
+    },
+    {
+      "path": "candidate-source/tests/chart-reference-confidence-drive.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/tests/chart-reference-confidence-drive.mjs",
+      "bytes": 22843,
+      "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6"
+    },
+    {
+      "path": "candidate-source/tests/local-date-reference-drive.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/tests/local-date-reference-drive.mjs",
+      "bytes": 22380,
+      "sha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19"
+    },
+    {
+      "path": "candidate-source/tests/t17-positions-share.mjs",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/tests/t17-positions-share.mjs",
+      "bytes": 66986,
+      "sha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28"
+    },
+    {
+      "path": "author-failure-records/comparator-only.diff.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/comparator-only.diff.log",
+      "bytes": 1750,
+      "sha256": "3e04d0567d71a7e4f1b63e079e2e57c6e99332bd71afe3be2a010d5813df1108"
+    },
+    {
+      "path": "author-failure-records/confidence-freeze1.test.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/confidence-freeze1.test.ts.log",
+      "bytes": 9576,
+      "sha256": "c388ed4dacccb678053944888b930d130ecfb6b3d6ed8d41b34aaf16ccc777b0"
+    },
+    {
+      "path": "author-failure-records/confidence-freeze2.test.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/confidence-freeze2.test.ts.log",
+      "bytes": 10063,
+      "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb"
+    },
+    {
+      "path": "author-failure-records/focused-node22-final.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/focused-node22-final.log",
+      "bytes": 10652,
+      "sha256": "ad0ed5df1e7ca747775f5fa6a7bc1532003ef0d173c8751a0cc69b544399d54d"
+    },
+    {
+      "path": "author-failure-records/focused-node24-final.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/focused-node24-final.log",
+      "bytes": 10650,
+      "sha256": "f3d10510b27f1b6b20122e252611ac4debcadbdd54f49cf4388fe08b1123c79c"
+    },
+    {
+      "path": "author-failure-records/freeze1-REJECTED.md",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/freeze1-REJECTED.md",
+      "bytes": 463,
+      "sha256": "515b507c08dda19a0403436f1658d534ff89cf0e23b3318fc020e6b96589ae56"
+    },
+    {
+      "path": "author-failure-records/freeze1-identity.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/freeze1-identity.json",
+      "bytes": 2919,
+      "sha256": "d483ded41d877f33ece654847c6aad18e5e6dcc71ca69c9e045b25ec8a7c08a8"
+    },
+    {
+      "path": "author-failure-records/freeze2-identity.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/freeze2-identity.json",
+      "bytes": 2832,
+      "sha256": "54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c"
+    },
+    {
+      "path": "author-failure-records/identity-comparison.json",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/author-failure-records/identity-comparison.json",
+      "bytes": 208,
+      "sha256": "5b30f3d455fd1962709774e2e9379b71a209d22570bf81e52f1311d2ef06afd4"
+    },
+    {
+      "path": "build-inputs/000/preact.module.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/dist/preact.module.js",
+      "bytes": 11731,
+      "sha256": "850dcba8ed3535b0a3611495c405551b9887724885d3b8482207a03de365d64e"
+    },
+    {
+      "path": "build-inputs/001/hooks.module.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/hooks/dist/hooks.module.js",
+      "bytes": 3628,
+      "sha256": "42e6acefc7c61333a5eb372a5c556829a0154dfce1ea45d03b6b2689fb1dab4d"
+    },
+    {
+      "path": "build-inputs/002/core.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/core.ts",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "path": "build-inputs/003/client.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ru-runtime/client.ts",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "path": "build-inputs/004/ru.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38328,
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "path": "build-inputs/005/server.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ru-runtime/server.ts",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "path": "build-inputs/006/index.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ru-runtime/index.ts",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "path": "build-inputs/007/signs.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/signs.ts",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "path": "build-inputs/008/client.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/client.ts",
+      "bytes": 802,
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75"
+    },
+    {
+      "path": "build-inputs/009/growth.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/growth.ts",
+      "bytes": 4309,
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273"
+    },
+    {
+      "path": "build-inputs/010/en.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/en.ts",
+      "bytes": 21989,
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "path": "build-inputs/011/es.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/es.ts",
+      "bytes": 23999,
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "path": "build-inputs/012/pt.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25626,
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "path": "build-inputs/013/fr.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27691,
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "path": "build-inputs/014/it.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/it.ts",
+      "bytes": 26517,
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "path": "build-inputs/015/server.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/ui/server.ts",
+      "bytes": 614,
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9"
+    },
+    {
+      "path": "build-inputs/016/english-only.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/english-only.ts",
+      "bytes": 1516,
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef"
+    },
+    {
+      "path": "build-inputs/017/plural.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/plural.ts",
+      "bytes": 1657,
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d"
+    },
+    {
+      "path": "build-inputs/018/index.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/index.ts",
+      "bytes": 8203,
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303"
+    },
+    {
+      "path": "build-inputs/019/module-load.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/module-load.ts",
+      "bytes": 1053,
+      "sha256": "e64d582319bd1a9994a43654c527a8cc8c625aa7a86c30021fcc51f3b8c4ea3c"
+    },
+    {
+      "path": "build-inputs/020/jsxRuntime.module.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "bytes": 1826,
+      "sha256": "43af8eff4027c4d275700d867a65943353e8003dae2681c1632c4a12012db3f3"
+    },
+    {
+      "path": "build-inputs/021/CalculationReload.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/CalculationReload.tsx",
+      "bytes": 986,
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e"
+    },
+    {
+      "path": "build-inputs/022/PlaceSearch.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "path": "build-inputs/023/BirthFields.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "build-inputs/024/context-help.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/data/context-help.ts",
+      "bytes": 9961,
+      "sha256": "9429dc45b49908325e74a6ac2098d12cac935d83a6e4f4c0c1a042b4a6847355"
+    },
+    {
+      "path": "build-inputs/025/context-help.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/styles/context-help.css",
+      "bytes": 2308,
+      "sha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d"
+    },
+    {
+      "path": "build-inputs/026/analytics-config.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/analytics-config.mjs",
+      "bytes": 5182,
+      "sha256": "7a3988a3ed916bfc24e30a2967f665ef2cd3c3f440b581f5af132eaaa31e51c5"
+    },
+    {
+      "path": "build-inputs/027/analytics.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/analytics.ts",
+      "bytes": 3597,
+      "sha256": "7aa279a8e86614023781a0d99f6aede1381decbcbd4d5238544e169a40a42b4a"
+    },
+    {
+      "path": "build-inputs/028/context-help-client.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/context-help-client.ts",
+      "bytes": 4751,
+      "sha256": "e0a69e3683d6e5ef8c6aa48f8d1e6462848e49e0eb06b110628c838430c8b23d"
+    },
+    {
+      "path": "build-inputs/029/AstroTerm.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/AstroTerm.tsx",
+      "bytes": 2659,
+      "sha256": "49f7cb95fc3ee689ace060361f79329cb346d381008a904e5b2c27f4460daac5"
+    },
+    {
+      "path": "build-inputs/030/SignChip.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/SignChip.tsx",
+      "bytes": 830,
+      "sha256": "e6d4b3ea57ba8e82b5cd42eabefcf732c10a4ca8f179b89769a13d8175b16a73"
+    },
+    {
+      "path": "build-inputs/031/paths.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/glyphs/paths.ts",
+      "bytes": 5378,
+      "sha256": "2d585e8f1f99597a472c27dbcc02cfc3210f55d19e98792a47eede8e9aedbb64"
+    },
+    {
+      "path": "build-inputs/032/PlanetGlyph.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/components/PlanetGlyph.tsx",
+      "bytes": 1262,
+      "sha256": "714db46ffbd7985219251606e4d92244cf1cfca65d48ea633ec94d37ac76d0cd"
+    },
+    {
+      "path": "build-inputs/033/AspectGlyph.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/components/AspectGlyph.tsx",
+      "bytes": 1017,
+      "sha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b"
+    },
+    {
+      "path": "build-inputs/034/types.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/types.ts",
+      "bytes": 7753,
+      "sha256": "3d7ac67528d4868cc26a56e35160183436012ecce153e6dc050069dc41f97702"
+    },
+    {
+      "path": "build-inputs/035/layout.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/layout.ts",
+      "bytes": 1245,
+      "sha256": "5545e3f2494bc58b4f4cba8c796c2b28057f4dbc870cad69c57e1e0b5e5f9532"
+    },
+    {
+      "path": "build-inputs/036/emphasis.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/emphasis.ts",
+      "bytes": 2867,
+      "sha256": "47d2d26ea61929f5b33a83121bea7910fbf3976e22257061693b8eb8e7d64558"
+    },
+    {
+      "path": "build-inputs/037/body-leader.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/wheel/body-leader.ts",
+      "bytes": 804,
+      "sha256": "ef92ac8a3922b2024ac558ad2c7327665a9c40eacdd1c5d76e54fa49d40f108b"
+    },
+    {
+      "path": "build-inputs/038/Wheel.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/wheel/Wheel.tsx",
+      "bytes": 25902,
+      "sha256": "99e6a08137a0330baf7950375f5db31cb31c1fdea32c8898f00b029a0fbcd49e"
+    },
+    {
+      "path": "build-inputs/039/astrology.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/astrology.ts",
+      "bytes": 4740,
+      "sha256": "0c8b024837972934a5c92067008b4dd3a7e0a7871ad75839a318593fa0549c00"
+    },
+    {
+      "path": "build-inputs/040/LayerChips.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/LayerChips.tsx",
+      "bytes": 1962,
+      "sha256": "ece34d4a2983464cc5971fd5add14d6393173106a99113e6068c36cb11f23545"
+    },
+    {
+      "path": "build-inputs/041/moon-certainty.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/moon-certainty.ts",
+      "bytes": 1909,
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994"
+    },
+    {
+      "path": "build-inputs/042/receipt-download.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/receipt-download.ts",
+      "bytes": 715,
+      "sha256": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d"
+    },
+    {
+      "path": "build-inputs/043/progress.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/tour/progress.ts",
+      "bytes": 2421,
+      "sha256": "1d51bc1a8f8c133b26418ffe53df17a3efcbb350daafb44cd04589a83f42b6bc"
+    },
+    {
+      "path": "build-inputs/044/chunk-INI453VG.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "bytes": 4693,
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "path": "build-inputs/045/chunk-H7RJKCBO.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "bytes": 4213,
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+    },
+    {
+      "path": "build-inputs/046/internal-math.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+      "bytes": 591,
+      "sha256": "187cbd31a74bd069dc413e6fb1ef33cc72a108e9a405a3b5095b64346def2422"
+    },
+    {
+      "path": "build-inputs/047/houses.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/houses.ts",
+      "bytes": 1476,
+      "sha256": "e4230eb4f6d3e904efdd871b6067a9ca6ef5da630d60a64a83df099e48301eb0"
+    },
+    {
+      "path": "build-inputs/048/dignities.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/dignities.ts",
+      "bytes": 3140,
+      "sha256": "7e8593064ff20e0229a7701186fc834002988ced88bc58e2701f1ca4081ca5ac"
+    },
+    {
+      "path": "build-inputs/049/technical-layout.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/wheel/technical-layout.ts",
+      "bytes": 2394,
+      "sha256": "aa1914003559fde124e145a5b972d95671d7e466c3abd34ddb8c9a942bec410d"
+    },
+    {
+      "path": "build-inputs/050/build.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/build.ts",
+      "bytes": 4409,
+      "sha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54"
+    },
+    {
+      "path": "build-inputs/051/interpretations.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/interpretations.ts",
+      "bytes": 9856,
+      "sha256": "0c47a89f792b7669a238b5e8ced2be2a68b4a0258750132d41d2035d938fde60"
+    },
+    {
+      "path": "build-inputs/052/technical-locales.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "build-inputs/053/civil-date.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "build-inputs/054/localToUtc.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "build-inputs/055/chart-date-certainty.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-date-certainty.ts",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "path": "build-inputs/056/lite.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/lite.ts",
+      "bytes": 2498,
+      "sha256": "6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057"
+    },
+    {
+      "path": "build-inputs/057/registry-aura-entry.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/registry-aura-entry.mjs",
+      "bytes": 8938,
+      "sha256": "e24d8ed5642bb6438fc591d797c582620012467a9ff0491937bdb5faaf43d5af"
+    },
+    {
+      "path": "build-inputs/058/share.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+    },
+    {
+      "path": "build-inputs/059/chart-handoff.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-handoff.ts",
+      "bytes": 5609,
+      "sha256": "36352fed5dbd0736c757f3c138b200dda9a7c8f2f73e9accb133676d86e78413"
+    },
+    {
+      "path": "build-inputs/060/types.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/types.ts",
+      "bytes": 2164,
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+    },
+    {
+      "path": "build-inputs/061/profile-access-reader.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/account-v2/profile-access-reader.ts",
+      "bytes": 1335,
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    {
+      "path": "build-inputs/062/useProfileAccessGeneration.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/hooks/useProfileAccessGeneration.ts",
+      "bytes": 851,
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+    },
+    {
+      "path": "build-inputs/063/learning-input-identity.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/learning-input-identity.ts",
+      "bytes": 411,
+      "sha256": "8a8175bfbefbac6246d16c6183fa056f8ae2e4cdf0202364459b85f49d22ea5d"
+    },
+    {
+      "path": "build-inputs/064/post-chart-context.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "build-inputs/065/evidence-disclosure.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/styles/evidence-disclosure.css",
+      "bytes": 2459,
+      "sha256": "1320de7746404c56091e0261543d49a3599d86c4a74f48674225d65a04e338a5"
+    },
+    {
+      "path": "build-inputs/066/chart-shape.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-shape.ts",
+      "bytes": 6820,
+      "sha256": "d7396cbd6309d2148ff4aba098e45b5e51ccf9d4a9d043e11615ba6ea4aa7682"
+    },
+    {
+      "path": "build-inputs/067/chart-context.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-context.ts",
+      "bytes": 7527,
+      "sha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a"
+    },
+    {
+      "path": "build-inputs/068/chart-context-copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/chart-context-copy.ts",
+      "bytes": 26520,
+      "sha256": "7d7e8752fa32dc547ee19f1c45f3d90389e0a01007404f93829aca9a637316ea"
+    },
+    {
+      "path": "build-inputs/069/ChartContext.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/ChartContext.css",
+      "bytes": 1354,
+      "sha256": "fc440ac5cd64b5104472ed9ad148a578902d34c43b7e07f3fdfcb0dae20eea08"
+    },
+    {
+      "path": "build-inputs/070/brand-icons.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/brand-icons.mjs",
+      "bytes": 1557,
+      "sha256": "833876e4de95e2e715e2a6b7b9862b0ebbac2894651a145d6a56f5b83035be5b"
+    },
+    {
+      "path": "build-inputs/071/share-card-brand.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-card-brand.ts",
+      "bytes": 3339,
+      "sha256": "f202d7a026cadcde4ea2d3fc01b0f2ef1479cbfc8aa0ae3b9b6de5991b1c067e"
+    },
+    {
+      "path": "build-inputs/072/TechnicalWheel.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/wheel/TechnicalWheel.tsx",
+      "bytes": 8979,
+      "sha256": "0a8b556084173976085d1214f1a8973d5e5c0f8c65c41e944f37fda72d3d3c21"
+    },
+    {
+      "path": "build-inputs/073/aspects.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/aspects.ts",
+      "bytes": 1393,
+      "sha256": "0faaa80258494bee18bb5247291a8ecbe0abc9554775c5f0c43b8d0f00c2660f"
+    },
+    {
+      "path": "build-inputs/074/share-card-copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-card-copy.ts",
+      "bytes": 11193,
+      "sha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9"
+    },
+    {
+      "path": "build-inputs/075/communication.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/communication.ts",
+      "bytes": 11339,
+      "sha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64"
+    },
+    {
+      "path": "build-inputs/076/approach.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/approach.ts",
+      "bytes": 8818,
+      "sha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22"
+    },
+    {
+      "path": "build-inputs/077/compat.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/compat.ts",
+      "bytes": 7617,
+      "sha256": "e4a7e3225e5acf0bb652615cec3234fbb13f5ca413f325bfcee38c01ce3345a5"
+    },
+    {
+      "path": "build-inputs/078/synastry.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/synastry.ts",
+      "bytes": 4859,
+      "sha256": "e9ad789aa2ee2c125cd6d9d498cf957ee0c42e8934cedd820e3e7a8985fd4a8f"
+    },
+    {
+      "path": "build-inputs/079/natal.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/natal.ts",
+      "bytes": 18196,
+      "sha256": "2cdc6e9c43a40960e159e5898531ea7a095e9d37cf17c3ef397ac6aefaf83602"
+    },
+    {
+      "path": "build-inputs/080/chart-signature.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-signature.ts",
+      "bytes": 11892,
+      "sha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c"
+    },
+    {
+      "path": "build-inputs/081/share-card.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-card.ts",
+      "bytes": 55757,
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649"
+    },
+    {
+      "path": "build-inputs/082/chart-context-card.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/chart-context-card.ts",
+      "bytes": 7038,
+      "sha256": "d3beb30c86b408a47192cd9e7cb4e3378d54e75caa36c33c51e6582e196db655"
+    },
+    {
+      "path": "build-inputs/083/ChartContext.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/ChartContext.tsx",
+      "bytes": 9599,
+      "sha256": "ab64762c0e31406a47c6157ab1f7af6216e59ea74afd5598b9fb75372c4bf833"
+    },
+    {
+      "path": "build-inputs/084/styles.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/styles.css",
+      "bytes": 1974,
+      "sha256": "a4efee3c56ade9d12224a61663dbbdc25f4c427651ecd92c21f4b7aa0d5352fe"
+    },
+    {
+      "path": "build-inputs/085/aspect-patterns.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/aspect-patterns.ts",
+      "bytes": 7362,
+      "sha256": "df62a2f7b98a6305b79905a6b26a5cf1f2ce98d7df45a7c911c9331eec83f6cb"
+    },
+    {
+      "path": "build-inputs/086/copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/copy.ts",
+      "bytes": 3419,
+      "sha256": "165b9330acc901d00e00a410c0c64e7a74091d80492cdb7c10ab2b38e100c381"
+    },
+    {
+      "path": "build-inputs/087/aspect-pattern-model.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/aspect-pattern-model.ts",
+      "bytes": 4999,
+      "sha256": "3718bc63a0c46e7ba099e9233382b94192f65d3b5a49ce9edc3d36cc6eb05455"
+    },
+    {
+      "path": "build-inputs/088/AspectPatternDiagram.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/AspectPatternDiagram.tsx",
+      "bytes": 2788,
+      "sha256": "58dc1394929165858827202f4346c3320ff6190f60cfa2e5188b554ee20a6747"
+    },
+    {
+      "path": "build-inputs/089/aspect-pattern-card.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/aspect-pattern-card.ts",
+      "bytes": 10014,
+      "sha256": "25572d5e490dee1b79af4f5f8c5b5a9c7ee9a3f6cd2a2b60c53607645f54a574"
+    },
+    {
+      "path": "build-inputs/090/AspectPatternActions.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/AspectPatternActions.tsx",
+      "bytes": 7244,
+      "sha256": "d641cb6dce3c7cb062b5dd720623c266b41e489bb963ee04c4d49c7873d52758"
+    },
+    {
+      "path": "build-inputs/091/AspectPatternPanel.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/AspectPatternPanel.tsx",
+      "bytes": 6001,
+      "sha256": "42c45bd669ca2fae3ff96f08ad5298fcf026e885462353da1dd90b35532e8f7c"
+    },
+    {
+      "path": "build-inputs/092/AspectPatternFeature.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/aspect-patterns/AspectPatternFeature.tsx",
+      "bytes": 2461,
+      "sha256": "d68d0c387b1b71ec3233bef16d709086de70b6fc8cb1f99d7440c220870a42eb"
+    },
+    {
+      "path": "build-inputs/093/EntityPicker.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/EntityPicker.tsx",
+      "bytes": 3091,
+      "sha256": "3eeb1997d9aff2299c276dd313ef2448377da7d9b6b54dfa19b71fdf9ddc1317"
+    },
+    {
+      "path": "build-inputs/094/ReadingPath.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/ReadingPath.css",
+      "bytes": 17022,
+      "sha256": "22553d426e66d62b3dcd95c8472652e7585542e95e41bace3877a788e50e9651"
+    },
+    {
+      "path": "build-inputs/095/schema.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/schema.ts",
+      "bytes": 1527,
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "path": "build-inputs/096/polar-repair.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/polar-repair.ts",
+      "bytes": 2394,
+      "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+    },
+    {
+      "path": "build-inputs/097/read-store.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/read-store.ts",
+      "bytes": 1285,
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    {
+      "path": "build-inputs/098/learning-source.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/learning-source.ts",
+      "bytes": 3629,
+      "sha256": "4f9bd87b4cb44cae38bbd93691a477b65b59e1a7b7f898b5ebff1b9fa491f590"
+    },
+    {
+      "path": "build-inputs/099/use-learning-sources.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/use-learning-sources.ts",
+      "bytes": 1369,
+      "sha256": "ab83700cff04fd9368fae94d491ceb4457d7176ab5dac33d4ca8fda8ec9d7bce"
+    },
+    {
+      "path": "build-inputs/100/learning-progress.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/learning-progress.ts",
+      "bytes": 7432,
+      "sha256": "b7aa84be722b711b8a918a33d0fcad8bf998232cb85d095f234c7d09ed2cb0e7"
+    },
+    {
+      "path": "build-inputs/101/use-learning-progress.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/use-learning-progress.ts",
+      "bytes": 1106,
+      "sha256": "52c64387fa04da3b6c3e0afdabc628b13f022d3d11f9125a9fa2c8f42940f50f"
+    },
+    {
+      "path": "build-inputs/102/learning-exercises.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/learning-exercises.ts",
+      "bytes": 4230,
+      "sha256": "4bdd4d5bee0e75706c45c2b7153f82f302d334f28511bd435e677a6c401f0833"
+    },
+    {
+      "path": "build-inputs/103/LearningPractice.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/LearningPractice.css",
+      "bytes": 1626,
+      "sha256": "940340a7d9bff2fe72ebcd41326e8765ce544489dc353227d221306408cd9666"
+    },
+    {
+      "path": "build-inputs/104/LearningPractice.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/LearningPractice.tsx",
+      "bytes": 7007,
+      "sha256": "86520bb37573736927169cb020d6f6e82f1c78dfb5244d4eb82be4602e49eb56"
+    },
+    {
+      "path": "build-inputs/105/ReadingPath.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/ReadingPath.tsx",
+      "bytes": 22526,
+      "sha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559"
+    },
+    {
+      "path": "build-inputs/106/natal-context.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/natal-context.ts",
+      "bytes": 5759,
+      "sha256": "2c5acde9b0b7be5114d4d926a20e912cf9931b64ad60b6289b1f17632e5d3d54"
+    },
+    {
+      "path": "build-inputs/107/Inspector.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/Inspector.tsx",
+      "bytes": 27379,
+      "sha256": "e94bd7161b5193a0fe3ba01646271c1162e454a661ccc3a9598beb43f35d2759"
+    },
+    {
+      "path": "build-inputs/108/ChartActionDock.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/ChartActionDock.tsx",
+      "bytes": 3731,
+      "sha256": "0be246b3bd3d0cfeeb2498f4ec6f9ab562cca526795e8fd2d2ee7932721c6190"
+    },
+    {
+      "path": "build-inputs/109/chunk-CPALRSPC.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "bytes": 1459,
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+    },
+    {
+      "path": "build-inputs/110/receipt.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js",
+      "bytes": 24948,
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+    },
+    {
+      "path": "build-inputs/111/chunk-K5MRTCWE.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "bytes": 2593,
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+    },
+    {
+      "path": "build-inputs/112/astronomy.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js",
+      "bytes": 412025,
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+    },
+    {
+      "path": "build-inputs/113/chunk-GBH7JIYF.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "bytes": 4644,
+      "sha256": "8578139013ab4f4c0d2811682e92d6b6818492e1a392ddee43aeea033a8ebfc3"
+    },
+    {
+      "path": "build-inputs/114/index.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/index.js",
+      "bytes": 13163,
+      "sha256": "585f25423b08830025e9f4bbdbbe3dffb3bbd4d79f2891952c110f2ebfcf0bbc"
+    },
+    {
+      "path": "build-inputs/115/chart-adapter.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "path": "build-inputs/116/portable.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/portable.ts",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "path": "build-inputs/117/calculator-receipt.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "path": "build-inputs/118/a2hs.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/a2hs.ts",
+      "bytes": 4044,
+      "sha256": "3fb8b2aea25d49fa7657a5a7230396112227c028ac8f42c9db7cb3096b5adfb7"
+    },
+    {
+      "path": "build-inputs/119/push.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/push.ts",
+      "bytes": 2020,
+      "sha256": "4faffea868c3d75ef881ec4f616a8e723d5ee3fa64e90acb7e47915d56441b3a"
+    },
+    {
+      "path": "build-inputs/120/push.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/strings/push.ts",
+      "bytes": 4717,
+      "sha256": "86b3da1b7a0cc2088b5155e4d693402ad3277c73f4443f1a4c80fbc93d2a827a"
+    },
+    {
+      "path": "build-inputs/121/push.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/styles/push.css",
+      "bytes": 1840,
+      "sha256": "212e2bfdd4f94a487c059c61376eb027b5683c8fb070e497ba1c562705e3a093"
+    },
+    {
+      "path": "build-inputs/122/PushOptIn.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/PushOptIn.tsx",
+      "bytes": 10414,
+      "sha256": "d9a5cb0e7d5b6b990566501d783147e8a753fe4d0351edc875ef9c383108a90a"
+    },
+    {
+      "path": "build-inputs/123/copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/tour/copy.ts",
+      "bytes": 56276,
+      "sha256": "71a6efba4267056a5e181a5b4a89b7887fcca0007524e0e354c630f9ba07c7c2"
+    },
+    {
+      "path": "build-inputs/124/TourCard.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/tour/TourCard.tsx",
+      "bytes": 5418,
+      "sha256": "51775642667fc10c8128c7ef95e78879cc3e459564dd0c742ab744c51eaf7a27"
+    },
+    {
+      "path": "build-inputs/125/chapters.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/chapters.ts",
+      "bytes": 10440,
+      "sha256": "67b4d8e29e091ff8d7d5e04e1b1f95b142f70290f014dfaa945bb469bb54a504"
+    },
+    {
+      "path": "build-inputs/126/ChartTour.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/tour/ChartTour.tsx",
+      "bytes": 28419,
+      "sha256": "afecef812fd73faba49b1038a6121160bf77782df3b7bbc3c8d0bd16429b7570"
+    },
+    {
+      "path": "build-inputs/127/index.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/tour/index.ts",
+      "bytes": 348,
+      "sha256": "e40a1149177d86d673ea27d6a33c46b3f2aeb12620a2307d8187acd131507f81"
+    },
+    {
+      "path": "build-inputs/128/overlay.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/scene/overlay.ts",
+      "bytes": 2064,
+      "sha256": "72ac4743c72007b57ac6da3d0cf7260ea8cdd3c53d9d088c3874a61059dc3118"
+    },
+    {
+      "path": "build-inputs/129/renderTransitOverlay.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/transit/renderTransitOverlay.tsx",
+      "bytes": 6259,
+      "sha256": "20947e1e1a8451b6bd7ab5ca02493c73938947dcfe1b7e115c008b049733990b"
+    },
+    {
+      "path": "build-inputs/130/dates.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/i18n/dates.ts",
+      "bytes": 1212,
+      "sha256": "cbdd98821a63b40554fe85360793663c03a6945fb7fbfc95fb5a06d9f6e8fc2e"
+    },
+    {
+      "path": "build-inputs/131/copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/lens/copy.ts",
+      "bytes": 13893,
+      "sha256": "ae7a2118641bf95d5c2bee2f6584788603c0d673726213df12bf998c868ffab6"
+    },
+    {
+      "path": "build-inputs/132/internal.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal.js",
+      "bytes": 245,
+      "sha256": "52403d7a8514ceea3d5ac1ad7f404f79ff1163d907bbc783600edf1574ff2e42"
+    },
+    {
+      "path": "build-inputs/133/full.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "path": "build-inputs/134/progressions.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/progressions.ts",
+      "bytes": 1163,
+      "sha256": "5bac39d815857b0322b4ef93e48cf7f8046881b4a7d0cca2918e6140c12db48e"
+    },
+    {
+      "path": "build-inputs/135/longitude-crossings.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/longitude-crossings.ts",
+      "bytes": 2213,
+      "sha256": "9a41ce847fef61a6c9ff6fbd8907a2ac5ce7c674755c8f8e937ea12118b2e308"
+    },
+    {
+      "path": "build-inputs/136/returns.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/returns.ts",
+      "bytes": 3422,
+      "sha256": "d3538349bcd15d1dcff3c540d28c09d366630fff898ff252251df8c00731a62a"
+    },
+    {
+      "path": "build-inputs/137/solar-return.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/engine/solar-return.ts",
+      "bytes": 2155,
+      "sha256": "9ecba62f451613a6058f6dcf995faebfd2712f4c36652823326371864538753a"
+    },
+    {
+      "path": "build-inputs/138/ChartLens.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/explorer/lens/ChartLens.tsx",
+      "bytes": 9080,
+      "sha256": "1a57407d26abcbd7cb54e05be14cbf1440e4bf89aef7f4c88d0145b98a66f833"
+    },
+    {
+      "path": "build-inputs/139/ecliptic3d.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/wheel/ecliptic3d.ts",
+      "bytes": 11525,
+      "sha256": "baf0f81effe4490105f01dbf6f09bb52149f32e03f0fc198d0d1c582080aa366"
+    },
+    {
+      "path": "build-inputs/140/declination.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/declination.ts",
+      "bytes": 3509,
+      "sha256": "7e08ab1fdaad0b56553d8718f0dfba4e55ab24d92523011227ec0886b2d94dde"
+    },
+    {
+      "path": "build-inputs/141/sect.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/sect.ts",
+      "bytes": 3445,
+      "sha256": "95b0a3875a2ad4df2e788031941869fc40cecc4a291e1708369e452ef07f0bd5"
+    },
+    {
+      "path": "build-inputs/142/turning.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/chart3d/turning.ts",
+      "bytes": 5218,
+      "sha256": "d584bd1dc629d81c88d13f3dddc5f916f0bbb6d343773bec1f71a3ac63a19abc"
+    },
+    {
+      "path": "build-inputs/143/copy.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/chart3d/copy.ts",
+      "bytes": 20011,
+      "sha256": "eebf0acb925c26c5d5a5bb870c2f8d889195d05d8d299f046916bfdcb68519b1"
+    },
+    {
+      "path": "build-inputs/144/EclipticView.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/chart3d/EclipticView.tsx",
+      "bytes": 37103,
+      "sha256": "903fa9ebfb9ff79a2dd5526ee51126244daca7edf6b46e8bd907f69965bce82a"
+    },
+    {
+      "path": "build-inputs/145/profile-chart-handoff.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/profile-chart-handoff.ts",
+      "bytes": 1308,
+      "sha256": "e1df154c323b6990857df47ff5a3aa722ec033903c285ac8a9f993543cb17304"
+    },
+    {
+      "path": "build-inputs/146/share-positions.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-positions.ts",
+      "bytes": 7908,
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e"
+    },
+    {
+      "path": "build-inputs/147/share-card-pastel-icons.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-card-pastel-icons.ts",
+      "bytes": 2940,
+      "sha256": "8634851a324fb0563aca1ad97b75a9a3b294aa9b320786377b0bc67f3f236162"
+    },
+    {
+      "path": "build-inputs/148/share-positions-reading.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/share-positions-reading.ts",
+      "bytes": 2308,
+      "sha256": "fe987bd1af02d128b663f2802aabb0fd9b7f9657538558a99d8477202a81066a"
+    },
+    {
+      "path": "build-inputs/149/PositionsShareSurface.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/PositionsShareSurface.tsx",
+      "bytes": 19508,
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c"
+    },
+    {
+      "path": "build-inputs/150/ical.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/ical.ts",
+      "bytes": 6707,
+      "sha256": "e63ce4126477445b6f19a3f03d55bb9122e6f39fc107ec0756af059f2f41d400"
+    },
+    {
+      "path": "build-inputs/151/ical-download.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/ical-download.ts",
+      "bytes": 540,
+      "sha256": "b2f605e83d79df2009ac81d764122d59bed6986cf53dbe41f78eff6705f0f9a6"
+    },
+    {
+      "path": "build-inputs/152/CalendarSubscribe.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/CalendarSubscribe.tsx",
+      "bytes": 7084,
+      "sha256": "770421f1369c8f6d06b87862c196ab1ff4b88b9292698b44fbf08958e7cb0d54"
+    },
+    {
+      "path": "build-inputs/153/CommunicationRead.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/CommunicationRead.tsx",
+      "bytes": 7103,
+      "sha256": "8b5bb6d43288ec3cdccfa9fee2e02ae8db9e1538095da80d143d8fdbaf22b1cc"
+    },
+    {
+      "path": "build-inputs/154/ApproachRead.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/ApproachRead.tsx",
+      "bytes": 6870,
+      "sha256": "4717601c816f4c9dfdd1a2f62e0ab77e851e68c0f7e599abe961d5aba61b83b7"
+    },
+    {
+      "path": "build-inputs/155/pwa-install.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/pwa-install.ts",
+      "bytes": 1395,
+      "sha256": "b22cfc336272ca67fb827c510c6de6fb91b27ff957acd92c41411f4f3875c9c2"
+    },
+    {
+      "path": "build-inputs/156/pwa.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/strings/pwa.ts",
+      "bytes": 2226,
+      "sha256": "72781933be41ea8d643659e08dd202b6c98eb00344a9fc33d2526d7cb9bcf1b4"
+    },
+    {
+      "path": "build-inputs/157/pwa-install.css.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/styles/pwa-install.css",
+      "bytes": 802,
+      "sha256": "1388fe1334ce7deab58e81c4429cc8538821d8afe45d487c1729490936a505dd"
+    },
+    {
+      "path": "build-inputs/158/PwaInstallPrompt.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/PwaInstallPrompt.tsx",
+      "bytes": 4014,
+      "sha256": "34c7ddd78563a8c9f357559dd647f038726adc053077d6f304b31ba68f2b6ead"
+    },
+    {
+      "path": "build-inputs/159/CopyLinkButton.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/CopyLinkButton.tsx",
+      "bytes": 1878,
+      "sha256": "9317497e11c45ff7e2763757817f9e47a9745bcae359f798435fdb8fe882b0e3"
+    },
+    {
+      "path": "build-inputs/160/ChartShareDialog.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/ChartShareDialog.tsx",
+      "bytes": 17510,
+      "sha256": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b"
+    },
+    {
+      "path": "build-inputs/161/deletions.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/deletions.ts",
+      "bytes": 2155,
+      "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+    },
+    {
+      "path": "build-inputs/162/feature-flags.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/account-v2/feature-flags.ts",
+      "bytes": 773,
+      "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+    },
+    {
+      "path": "build-inputs/163/tslib.es6.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/tslib/tslib.es6.mjs",
+      "bytes": 17648,
+      "sha256": "0929993220938091ede542d688b0fdb87dad99a7e77678e1983c32d18a503339"
+    },
+    {
+      "path": "build-inputs/164/helper.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/helper.js",
+      "bytes": 203,
+      "sha256": "b68c1869da88161063d23f7944c71bc1c444229b22bca0680386f4ab33e0c967"
+    },
+    {
+      "path": "build-inputs/165/types.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/types.js",
+      "bytes": 2763,
+      "sha256": "bb251c280cb70f197775c8e5a66f38246ea2a09e4283ca11f954c557af37fe2e"
+    },
+    {
+      "path": "build-inputs/166/FunctionsClient.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js",
+      "bytes": 13044,
+      "sha256": "3713f2513f44a98d0526004cb6f7092d9e9e9a801a532219821560321ba6fe12"
+    },
+    {
+      "path": "build-inputs/167/index.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/index.js",
+      "bytes": 207,
+      "sha256": "cbbfe306ef3197b924ce2e7cad93e2271165995cfff05bfba29d16122477235b"
+    },
+    {
+      "path": "build-inputs/168/index.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/postgrest-js/dist/index.mjs",
+      "bytes": 106454,
+      "sha256": "afda25f52b6722f40f70f845fa1569b0b978c23d3e92eb9e453327751b78c00e"
+    },
+    {
+      "path": "build-inputs/169/websocket-factory.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js",
+      "bytes": 4400,
+      "sha256": "629232bc6bd2f354504f383dbce81de37c5544bb4fcb7835b865d697ff7bdbb0"
+    },
+    {
+      "path": "build-inputs/170/version.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/version.js",
+      "bytes": 483,
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "path": "build-inputs/171/constants.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/constants.js",
+      "bytes": 1010,
+      "sha256": "23d0a68e19cfb5dfcb512690caacddd8dd1de28cd742c2f076c16de82e221a65"
+    },
+    {
+      "path": "build-inputs/172/serializer.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/serializer.js",
+      "bytes": 7199,
+      "sha256": "c6ba38eb77e1fe0f3a6a7247a632d194758b8be32b036e1229243ae6f6388998"
+    },
+    {
+      "path": "build-inputs/173/transformers.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/transformers.js",
+      "bytes": 8282,
+      "sha256": "a907c21984ed100e56cac3b952e32faf108f4f5efe23dfbcdd3fb63a76581d74"
+    },
+    {
+      "path": "build-inputs/174/phoenix.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/phoenix/priv/static/phoenix.mjs",
+      "bytes": 54326,
+      "sha256": "a9c3ea0185da3278b2bc94a0ec76a892cbec3b5c05559f7eef389b08fb30c217"
+    },
+    {
+      "path": "build-inputs/175/presenceAdapter.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js",
+      "bytes": 3195,
+      "sha256": "a4aeee2de6268a3a4001cf5fdb0771e663eb2c6ee6f034b8cae8a605c213ea68"
+    },
+    {
+      "path": "build-inputs/176/RealtimePresence.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js",
+      "bytes": 1533,
+      "sha256": "462bb638ab2ad7ee41b71cccf64a35c9c3f3610003c80fb831b1758d84742e11"
+    },
+    {
+      "path": "build-inputs/177/normalizeChannelError.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/normalizeChannelError.js",
+      "bytes": 1168,
+      "sha256": "6a80956a048f351557bf4372a13837b67e214af5a3570e67dcc5f23663b4ab2b"
+    },
+    {
+      "path": "build-inputs/178/channelAdapter.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/channelAdapter.js",
+      "bytes": 3012,
+      "sha256": "fb11d798ed7550d8cecba3d8295de1a5ddb88dc45429605346e7581bf2866896"
+    },
+    {
+      "path": "build-inputs/179/RealtimePostgresFilterBuilder.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePostgresFilterBuilder.js",
+      "bytes": 6872,
+      "sha256": "e05a58149d9cc0f9ac8fb1a7915db7e13d7c8e5a4988a1b7ad8a7b328a797050"
+    },
+    {
+      "path": "build-inputs/180/RealtimeChannel.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeChannel.js",
+      "bytes": 31780,
+      "sha256": "d1e08bc086776218f0be69d018327c0cce17a77c5a830d110ea30982f43edb98"
+    },
+    {
+      "path": "build-inputs/181/socketAdapter.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js",
+      "bytes": 2851,
+      "sha256": "a316775d3658a1f678897023e40f5ca6485c475b3d88812dfae8a853fbc320d5"
+    },
+    {
+      "path": "build-inputs/182/RealtimeClient.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js",
+      "bytes": 25532,
+      "sha256": "01d933a2c24bd7bcd0b80bcfc0770b9e1d4d5d29a6cddba33ee976b983524ed9"
+    },
+    {
+      "path": "build-inputs/183/index.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/index.js",
+      "bytes": 731,
+      "sha256": "0615b93f9c384133d7a703749eb4c8477f25adaea99f4eefc4eec73b2bfa1aa4"
+    },
+    {
+      "path": "build-inputs/184/index.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/iceberg-js/dist/index.mjs",
+      "bytes": 17187,
+      "sha256": "15ed0530ab67a7bfb541eb2cea764023c159312b7f1888e42c029840fafd381d"
+    },
+    {
+      "path": "build-inputs/185/index.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/storage-js/dist/index.mjs",
+      "bytes": 108459,
+      "sha256": "cfe96e61f73eb1f2a13173150db50e834f5e682f9a50a16a79ee0c9a436ceb77"
+    },
+    {
+      "path": "build-inputs/186/version.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/version.js",
+      "bytes": 483,
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "path": "build-inputs/187/constants.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/constants.js",
+      "bytes": 1631,
+      "sha256": "a4d395c65228d78f63af7fbbc7dfcf08817acdff1ee3e24079cab95b15f35782"
+    },
+    {
+      "path": "build-inputs/188/errors.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/errors.js",
+      "bytes": 9011,
+      "sha256": "fcbfa357dab595c78a4e934b828808e59fe3aded885f90240e349d9fcfb76e59"
+    },
+    {
+      "path": "build-inputs/189/base64url.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/base64url.js",
+      "bytes": 8610,
+      "sha256": "2c04328375ce233068e3defa27649a5991f1f1686753e4e4649a9586f30aac0f"
+    },
+    {
+      "path": "build-inputs/190/helpers.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/helpers.js",
+      "bytes": 14947,
+      "sha256": "057cb41abc14506192a97d7dc9575bf05a5682adb090a3f12030302d728b7b5d"
+    },
+    {
+      "path": "build-inputs/191/fetch.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/fetch.js",
+      "bytes": 8187,
+      "sha256": "acb810c206814e21745cf64dd5a37e0e3bdd741a7901bb85535f2ea877f9c6b1"
+    },
+    {
+      "path": "build-inputs/192/types.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/types.js",
+      "bytes": 549,
+      "sha256": "962955ac9e78967535cadacb3e50fd412066df07c8ef78fbc8483ab6f39032f9"
+    },
+    {
+      "path": "build-inputs/193/GoTrueAdminApi.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js",
+      "bytes": 40694,
+      "sha256": "fb4a9c24f62f02a6e9f662444386068d7c1077d6339513e9ee01c179070751b1"
+    },
+    {
+      "path": "build-inputs/194/local-storage.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/local-storage.js",
+      "bytes": 440,
+      "sha256": "b43bf10da0dbcc5bc91c902c05624b82fc640de82555026c40d03e85549d9f13"
+    },
+    {
+      "path": "build-inputs/195/locks.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/locks.js",
+      "bytes": 15989,
+      "sha256": "81698be5dade8c1367224856c96e9e1fad7243ad3c556aa6ff87ce6e17e1ac88"
+    },
+    {
+      "path": "build-inputs/196/polyfills.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/polyfills.js",
+      "bytes": 743,
+      "sha256": "cd45893a74c685ad8267585114c890cd2515ef584fa79ffc19b134a4333f0544"
+    },
+    {
+      "path": "build-inputs/197/ethereum.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/web3/ethereum.js",
+      "bytes": 3108,
+      "sha256": "3c8177cf4fe06f5c675778b0bd296fd20d5f313202471f4117e7e43a358a6a47"
+    },
+    {
+      "path": "build-inputs/198/webauthn.errors.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.errors.js",
+      "bytes": 11637,
+      "sha256": "0ee6d345e33a254c30e444d7d2466a410519999b7128a83c43c79ab2c1851516"
+    },
+    {
+      "path": "build-inputs/199/webauthn.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.js",
+      "bytes": 33984,
+      "sha256": "51aaa42576603f805702620e72d3940c14e9f757b25a89e2b8bf3218e00c5f25"
+    },
+    {
+      "path": "build-inputs/200/GoTrueClient.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueClient.js",
+      "bytes": 255902,
+      "sha256": "d9d649205584937435fa1dff6631885f40aa21ffbe6d12f80444b7e63bd59197"
+    },
+    {
+      "path": "build-inputs/201/AuthAdminApi.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js",
+      "bytes": 153,
+      "sha256": "f18bf53f4c43d232f849f9000c1f61bdd43eee7bceb42f829339c5053b6eee41"
+    },
+    {
+      "path": "build-inputs/202/AuthClient.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthClient.js",
+      "bytes": 141,
+      "sha256": "684b46b2be095e71fe7546e72f6791753f1cae9ebdaacd167b4905a5b7a87903"
+    },
+    {
+      "path": "build-inputs/203/index.js.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/index.js",
+      "bytes": 452,
+      "sha256": "9be5694df0e46b33d4f3b7bb8bad0ecef05ce343a5734376d6b4c93a8233eba7"
+    },
+    {
+      "path": "build-inputs/204/index.mjs.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/supabase-js/dist/index.mjs",
+      "bytes": 35342,
+      "sha256": "4df240f9b886d1a2b101b8bb91f48424baea58d04c450dbf4ba496de5dc940c5"
+    },
+    {
+      "path": "build-inputs/205/client.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/supabase/client.ts",
+      "bytes": 726,
+      "sha256": "16d706d55e658d23682a55d39783ac281e09d8cd0f39ec14cb41772245f37155"
+    },
+    {
+      "path": "build-inputs/206/merge.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/merge.ts",
+      "bytes": 4528,
+      "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+    },
+    {
+      "path": "build-inputs/207/sync.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/sync.ts",
+      "bytes": 7820,
+      "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+    },
+    {
+      "path": "build-inputs/208/store.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/lib/profile/store.ts",
+      "bytes": 7948,
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    {
+      "path": "build-inputs/209/ChartCalculator.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/source/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "build-inputs/210/entry.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/entry.tsx",
+      "bytes": 3820,
+      "sha256": "e85db4ff8754d69378d1e2e6c4a8108a52e4c7bd8701670210d318c90fde5ebe"
+    },
+    {
+      "path": "build-inputs/211/ru.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38609,
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613"
+    },
+    {
+      "path": "build-inputs/212/en.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/en.ts",
+      "bytes": 22131,
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621"
+    },
+    {
+      "path": "build-inputs/213/es.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/es.ts",
+      "bytes": 24192,
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c"
+    },
+    {
+      "path": "build-inputs/214/pt.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25812,
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6"
+    },
+    {
+      "path": "build-inputs/215/fr.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27888,
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed"
+    },
+    {
+      "path": "build-inputs/216/it.ts.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/lib/i18n/ui/it.ts",
+      "bytes": 26712,
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea"
+    },
+    {
+      "path": "build-inputs/217/ChartCalculator.tsx.log",
+      "source": "/private/tmp/zodiacs-platform-chart-reference-confidence-review/candidate-source/src/islands/ChartCalculator.tsx",
+      "bytes": 120334,
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475"
+    }
+  ],
+  "buildInputCopies": [
+    {
+      "archivePath": "build-inputs/000/preact.module.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/dist/preact.module.js",
+      "sha256": "850dcba8ed3535b0a3611495c405551b9887724885d3b8482207a03de365d64e"
+    },
+    {
+      "archivePath": "build-inputs/001/hooks.module.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/hooks/dist/hooks.module.js",
+      "sha256": "42e6acefc7c61333a5eb372a5c556829a0154dfce1ea45d03b6b2689fb1dab4d"
+    },
+    {
+      "archivePath": "build-inputs/002/core.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/core.ts",
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "archivePath": "build-inputs/003/client.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ru-runtime/client.ts",
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "archivePath": "build-inputs/004/ru.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/ru.ts",
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "archivePath": "build-inputs/005/server.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ru-runtime/server.ts",
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "archivePath": "build-inputs/006/index.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ru-runtime/index.ts",
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "archivePath": "build-inputs/007/signs.ts.log",
+      "declaredInputPath": "source/src/lib/signs.ts",
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "archivePath": "build-inputs/008/client.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/client.ts",
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75"
+    },
+    {
+      "archivePath": "build-inputs/009/growth.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/growth.ts",
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273"
+    },
+    {
+      "archivePath": "build-inputs/010/en.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/en.ts",
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "archivePath": "build-inputs/011/es.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/es.ts",
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "archivePath": "build-inputs/012/pt.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/pt.ts",
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "archivePath": "build-inputs/013/fr.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/fr.ts",
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "archivePath": "build-inputs/014/it.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/it.ts",
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "archivePath": "build-inputs/015/server.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/server.ts",
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9"
+    },
+    {
+      "archivePath": "build-inputs/016/english-only.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/english-only.ts",
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef"
+    },
+    {
+      "archivePath": "build-inputs/017/plural.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/plural.ts",
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d"
+    },
+    {
+      "archivePath": "build-inputs/018/index.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/index.ts",
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303"
+    },
+    {
+      "archivePath": "build-inputs/019/module-load.ts.log",
+      "declaredInputPath": "source/src/lib/module-load.ts",
+      "sha256": "e64d582319bd1a9994a43654c527a8cc8c625aa7a86c30021fcc51f3b8c4ea3c"
+    },
+    {
+      "archivePath": "build-inputs/020/jsxRuntime.module.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "sha256": "43af8eff4027c4d275700d867a65943353e8003dae2681c1632c4a12012db3f3"
+    },
+    {
+      "archivePath": "build-inputs/021/CalculationReload.tsx.log",
+      "declaredInputPath": "source/src/islands/CalculationReload.tsx",
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e"
+    },
+    {
+      "archivePath": "build-inputs/022/PlaceSearch.tsx.log",
+      "declaredInputPath": "source/src/islands/PlaceSearch.tsx",
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "archivePath": "build-inputs/023/BirthFields.tsx.log",
+      "declaredInputPath": "source/src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "archivePath": "build-inputs/024/context-help.ts.log",
+      "declaredInputPath": "source/src/data/context-help.ts",
+      "sha256": "9429dc45b49908325e74a6ac2098d12cac935d83a6e4f4c0c1a042b4a6847355"
+    },
+    {
+      "archivePath": "build-inputs/025/context-help.css.log",
+      "declaredInputPath": "source/src/styles/context-help.css",
+      "sha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d"
+    },
+    {
+      "archivePath": "build-inputs/026/analytics-config.mjs.log",
+      "declaredInputPath": "source/src/lib/analytics-config.mjs",
+      "sha256": "7a3988a3ed916bfc24e30a2967f665ef2cd3c3f440b581f5af132eaaa31e51c5"
+    },
+    {
+      "archivePath": "build-inputs/027/analytics.ts.log",
+      "declaredInputPath": "source/src/lib/analytics.ts",
+      "sha256": "7aa279a8e86614023781a0d99f6aede1381decbcbd4d5238544e169a40a42b4a"
+    },
+    {
+      "archivePath": "build-inputs/028/context-help-client.ts.log",
+      "declaredInputPath": "source/src/lib/context-help-client.ts",
+      "sha256": "e0a69e3683d6e5ef8c6aa48f8d1e6462848e49e0eb06b110628c838430c8b23d"
+    },
+    {
+      "archivePath": "build-inputs/029/AstroTerm.tsx.log",
+      "declaredInputPath": "source/src/islands/AstroTerm.tsx",
+      "sha256": "49f7cb95fc3ee689ace060361f79329cb346d381008a904e5b2c27f4460daac5"
+    },
+    {
+      "archivePath": "build-inputs/030/SignChip.tsx.log",
+      "declaredInputPath": "source/src/islands/SignChip.tsx",
+      "sha256": "e6d4b3ea57ba8e82b5cd42eabefcf732c10a4ca8f179b89769a13d8175b16a73"
+    },
+    {
+      "archivePath": "build-inputs/031/paths.ts.log",
+      "declaredInputPath": "source/src/lib/glyphs/paths.ts",
+      "sha256": "2d585e8f1f99597a472c27dbcc02cfc3210f55d19e98792a47eede8e9aedbb64"
+    },
+    {
+      "archivePath": "build-inputs/032/PlanetGlyph.tsx.log",
+      "declaredInputPath": "source/src/components/PlanetGlyph.tsx",
+      "sha256": "714db46ffbd7985219251606e4d92244cf1cfca65d48ea633ec94d37ac76d0cd"
+    },
+    {
+      "archivePath": "build-inputs/033/AspectGlyph.tsx.log",
+      "declaredInputPath": "source/src/components/AspectGlyph.tsx",
+      "sha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b"
+    },
+    {
+      "archivePath": "build-inputs/034/types.ts.log",
+      "declaredInputPath": "source/src/lib/scene/types.ts",
+      "sha256": "3d7ac67528d4868cc26a56e35160183436012ecce153e6dc050069dc41f97702"
+    },
+    {
+      "archivePath": "build-inputs/035/layout.ts.log",
+      "declaredInputPath": "source/src/lib/scene/layout.ts",
+      "sha256": "5545e3f2494bc58b4f4cba8c796c2b28057f4dbc870cad69c57e1e0b5e5f9532"
+    },
+    {
+      "archivePath": "build-inputs/036/emphasis.ts.log",
+      "declaredInputPath": "source/src/lib/scene/emphasis.ts",
+      "sha256": "47d2d26ea61929f5b33a83121bea7910fbf3976e22257061693b8eb8e7d64558"
+    },
+    {
+      "archivePath": "build-inputs/037/body-leader.ts.log",
+      "declaredInputPath": "source/src/lib/wheel/body-leader.ts",
+      "sha256": "ef92ac8a3922b2024ac558ad2c7327665a9c40eacdd1c5d76e54fa49d40f108b"
+    },
+    {
+      "archivePath": "build-inputs/038/Wheel.tsx.log",
+      "declaredInputPath": "source/src/lib/wheel/Wheel.tsx",
+      "sha256": "99e6a08137a0330baf7950375f5db31cb31c1fdea32c8898f00b029a0fbcd49e"
+    },
+    {
+      "archivePath": "build-inputs/039/astrology.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/astrology.ts",
+      "sha256": "0c8b024837972934a5c92067008b4dd3a7e0a7871ad75839a318593fa0549c00"
+    },
+    {
+      "archivePath": "build-inputs/040/LayerChips.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/LayerChips.tsx",
+      "sha256": "ece34d4a2983464cc5971fd5add14d6393173106a99113e6068c36cb11f23545"
+    },
+    {
+      "archivePath": "build-inputs/041/moon-certainty.ts.log",
+      "declaredInputPath": "source/src/lib/moon-certainty.ts",
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994"
+    },
+    {
+      "archivePath": "build-inputs/042/receipt-download.ts.log",
+      "declaredInputPath": "source/src/lib/receipt-download.ts",
+      "sha256": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d"
+    },
+    {
+      "archivePath": "build-inputs/043/progress.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/tour/progress.ts",
+      "sha256": "1d51bc1a8f8c133b26418ffe53df17a3efcbb350daafb44cd04589a83f42b6bc"
+    },
+    {
+      "archivePath": "build-inputs/044/chunk-INI453VG.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "archivePath": "build-inputs/045/chunk-H7RJKCBO.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+    },
+    {
+      "archivePath": "build-inputs/046/internal-math.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+      "sha256": "187cbd31a74bd069dc413e6fb1ef33cc72a108e9a405a3b5095b64346def2422"
+    },
+    {
+      "archivePath": "build-inputs/047/houses.ts.log",
+      "declaredInputPath": "source/src/lib/engine/houses.ts",
+      "sha256": "e4230eb4f6d3e904efdd871b6067a9ca6ef5da630d60a64a83df099e48301eb0"
+    },
+    {
+      "archivePath": "build-inputs/048/dignities.ts.log",
+      "declaredInputPath": "source/src/lib/dignities.ts",
+      "sha256": "7e8593064ff20e0229a7701186fc834002988ced88bc58e2701f1ca4081ca5ac"
+    },
+    {
+      "archivePath": "build-inputs/049/technical-layout.ts.log",
+      "declaredInputPath": "source/src/lib/wheel/technical-layout.ts",
+      "sha256": "aa1914003559fde124e145a5b972d95671d7e466c3abd34ddb8c9a942bec410d"
+    },
+    {
+      "archivePath": "build-inputs/050/build.ts.log",
+      "declaredInputPath": "source/src/lib/scene/build.ts",
+      "sha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54"
+    },
+    {
+      "archivePath": "build-inputs/051/interpretations.ts.log",
+      "declaredInputPath": "source/src/lib/interpretations.ts",
+      "sha256": "0c47a89f792b7669a238b5e8ced2be2a68b4a0258750132d41d2035d938fde60"
+    },
+    {
+      "archivePath": "build-inputs/052/technical-locales.ts.log",
+      "declaredInputPath": "source/src/lib/time/technical-locales.ts",
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "archivePath": "build-inputs/053/civil-date.ts.log",
+      "declaredInputPath": "source/src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "archivePath": "build-inputs/054/localToUtc.ts.log",
+      "declaredInputPath": "source/src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "archivePath": "build-inputs/055/chart-date-certainty.ts.log",
+      "declaredInputPath": "source/src/lib/chart-date-certainty.ts",
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "archivePath": "build-inputs/056/lite.ts.log",
+      "declaredInputPath": "source/src/lib/engine/lite.ts",
+      "sha256": "6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057"
+    },
+    {
+      "archivePath": "build-inputs/057/registry-aura-entry.mjs.log",
+      "declaredInputPath": "source/src/lib/registry-aura-entry.mjs",
+      "sha256": "e24d8ed5642bb6438fc591d797c582620012467a9ff0491937bdb5faaf43d5af"
+    },
+    {
+      "archivePath": "build-inputs/058/share.ts.log",
+      "declaredInputPath": "source/src/lib/share.ts",
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+    },
+    {
+      "archivePath": "build-inputs/059/chart-handoff.ts.log",
+      "declaredInputPath": "source/src/lib/chart-handoff.ts",
+      "sha256": "36352fed5dbd0736c757f3c138b200dda9a7c8f2f73e9accb133676d86e78413"
+    },
+    {
+      "archivePath": "build-inputs/060/types.ts.log",
+      "declaredInputPath": "source/src/lib/engine/types.ts",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+    },
+    {
+      "archivePath": "build-inputs/061/profile-access-reader.ts.log",
+      "declaredInputPath": "source/src/lib/account-v2/profile-access-reader.ts",
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    {
+      "archivePath": "build-inputs/062/useProfileAccessGeneration.ts.log",
+      "declaredInputPath": "source/src/lib/hooks/useProfileAccessGeneration.ts",
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+    },
+    {
+      "archivePath": "build-inputs/063/learning-input-identity.ts.log",
+      "declaredInputPath": "source/src/lib/learning-input-identity.ts",
+      "sha256": "8a8175bfbefbac6246d16c6183fa056f8ae2e4cdf0202364459b85f49d22ea5d"
+    },
+    {
+      "archivePath": "build-inputs/064/post-chart-context.ts.log",
+      "declaredInputPath": "source/src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "archivePath": "build-inputs/065/evidence-disclosure.css.log",
+      "declaredInputPath": "source/src/styles/evidence-disclosure.css",
+      "sha256": "1320de7746404c56091e0261543d49a3599d86c4a74f48674225d65a04e338a5"
+    },
+    {
+      "archivePath": "build-inputs/066/chart-shape.ts.log",
+      "declaredInputPath": "source/src/lib/chart-shape.ts",
+      "sha256": "d7396cbd6309d2148ff4aba098e45b5e51ccf9d4a9d043e11615ba6ea4aa7682"
+    },
+    {
+      "archivePath": "build-inputs/067/chart-context.ts.log",
+      "declaredInputPath": "source/src/lib/chart-context.ts",
+      "sha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a"
+    },
+    {
+      "archivePath": "build-inputs/068/chart-context-copy.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/chart-context-copy.ts",
+      "sha256": "7d7e8752fa32dc547ee19f1c45f3d90389e0a01007404f93829aca9a637316ea"
+    },
+    {
+      "archivePath": "build-inputs/069/ChartContext.css.log",
+      "declaredInputPath": "source/src/islands/explorer/ChartContext.css",
+      "sha256": "fc440ac5cd64b5104472ed9ad148a578902d34c43b7e07f3fdfcb0dae20eea08"
+    },
+    {
+      "archivePath": "build-inputs/070/brand-icons.mjs.log",
+      "declaredInputPath": "source/src/lib/brand-icons.mjs",
+      "sha256": "833876e4de95e2e715e2a6b7b9862b0ebbac2894651a145d6a56f5b83035be5b"
+    },
+    {
+      "archivePath": "build-inputs/071/share-card-brand.ts.log",
+      "declaredInputPath": "source/src/lib/share-card-brand.ts",
+      "sha256": "f202d7a026cadcde4ea2d3fc01b0f2ef1479cbfc8aa0ae3b9b6de5991b1c067e"
+    },
+    {
+      "archivePath": "build-inputs/072/TechnicalWheel.tsx.log",
+      "declaredInputPath": "source/src/lib/wheel/TechnicalWheel.tsx",
+      "sha256": "0a8b556084173976085d1214f1a8973d5e5c0f8c65c41e944f37fda72d3d3c21"
+    },
+    {
+      "archivePath": "build-inputs/073/aspects.ts.log",
+      "declaredInputPath": "source/src/lib/engine/aspects.ts",
+      "sha256": "0faaa80258494bee18bb5247291a8ecbe0abc9554775c5f0c43b8d0f00c2660f"
+    },
+    {
+      "archivePath": "build-inputs/074/share-card-copy.ts.log",
+      "declaredInputPath": "source/src/lib/share-card-copy.ts",
+      "sha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9"
+    },
+    {
+      "archivePath": "build-inputs/075/communication.ts.log",
+      "declaredInputPath": "source/src/lib/communication.ts",
+      "sha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64"
+    },
+    {
+      "archivePath": "build-inputs/076/approach.ts.log",
+      "declaredInputPath": "source/src/lib/approach.ts",
+      "sha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22"
+    },
+    {
+      "archivePath": "build-inputs/077/compat.ts.log",
+      "declaredInputPath": "source/src/lib/compat.ts",
+      "sha256": "e4a7e3225e5acf0bb652615cec3234fbb13f5ca413f325bfcee38c01ce3345a5"
+    },
+    {
+      "archivePath": "build-inputs/078/synastry.ts.log",
+      "declaredInputPath": "source/src/lib/engine/synastry.ts",
+      "sha256": "e9ad789aa2ee2c125cd6d9d498cf957ee0c42e8934cedd820e3e7a8985fd4a8f"
+    },
+    {
+      "archivePath": "build-inputs/079/natal.ts.log",
+      "declaredInputPath": "source/src/lib/natal.ts",
+      "sha256": "2cdc6e9c43a40960e159e5898531ea7a095e9d37cf17c3ef397ac6aefaf83602"
+    },
+    {
+      "archivePath": "build-inputs/080/chart-signature.ts.log",
+      "declaredInputPath": "source/src/lib/chart-signature.ts",
+      "sha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c"
+    },
+    {
+      "archivePath": "build-inputs/081/share-card.ts.log",
+      "declaredInputPath": "source/src/lib/share-card.ts",
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649"
+    },
+    {
+      "archivePath": "build-inputs/082/chart-context-card.ts.log",
+      "declaredInputPath": "source/src/lib/chart-context-card.ts",
+      "sha256": "d3beb30c86b408a47192cd9e7cb4e3378d54e75caa36c33c51e6582e196db655"
+    },
+    {
+      "archivePath": "build-inputs/083/ChartContext.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/ChartContext.tsx",
+      "sha256": "ab64762c0e31406a47c6157ab1f7af6216e59ea74afd5598b9fb75372c4bf833"
+    },
+    {
+      "archivePath": "build-inputs/084/styles.css.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/styles.css",
+      "sha256": "a4efee3c56ade9d12224a61663dbbdc25f4c427651ecd92c21f4b7aa0d5352fe"
+    },
+    {
+      "archivePath": "build-inputs/085/aspect-patterns.ts.log",
+      "declaredInputPath": "source/src/lib/engine/aspect-patterns.ts",
+      "sha256": "df62a2f7b98a6305b79905a6b26a5cf1f2ce98d7df45a7c911c9331eec83f6cb"
+    },
+    {
+      "archivePath": "build-inputs/086/copy.ts.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/copy.ts",
+      "sha256": "165b9330acc901d00e00a410c0c64e7a74091d80492cdb7c10ab2b38e100c381"
+    },
+    {
+      "archivePath": "build-inputs/087/aspect-pattern-model.ts.log",
+      "declaredInputPath": "source/src/lib/aspect-pattern-model.ts",
+      "sha256": "3718bc63a0c46e7ba099e9233382b94192f65d3b5a49ce9edc3d36cc6eb05455"
+    },
+    {
+      "archivePath": "build-inputs/088/AspectPatternDiagram.tsx.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/AspectPatternDiagram.tsx",
+      "sha256": "58dc1394929165858827202f4346c3320ff6190f60cfa2e5188b554ee20a6747"
+    },
+    {
+      "archivePath": "build-inputs/089/aspect-pattern-card.ts.log",
+      "declaredInputPath": "source/src/lib/aspect-pattern-card.ts",
+      "sha256": "25572d5e490dee1b79af4f5f8c5b5a9c7ee9a3f6cd2a2b60c53607645f54a574"
+    },
+    {
+      "archivePath": "build-inputs/090/AspectPatternActions.tsx.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/AspectPatternActions.tsx",
+      "sha256": "d641cb6dce3c7cb062b5dd720623c266b41e489bb963ee04c4d49c7873d52758"
+    },
+    {
+      "archivePath": "build-inputs/091/AspectPatternPanel.tsx.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/AspectPatternPanel.tsx",
+      "sha256": "42c45bd669ca2fae3ff96f08ad5298fcf026e885462353da1dd90b35532e8f7c"
+    },
+    {
+      "archivePath": "build-inputs/092/AspectPatternFeature.tsx.log",
+      "declaredInputPath": "source/src/islands/aspect-patterns/AspectPatternFeature.tsx",
+      "sha256": "d68d0c387b1b71ec3233bef16d709086de70b6fc8cb1f99d7440c220870a42eb"
+    },
+    {
+      "archivePath": "build-inputs/093/EntityPicker.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/EntityPicker.tsx",
+      "sha256": "3eeb1997d9aff2299c276dd313ef2448377da7d9b6b54dfa19b71fdf9ddc1317"
+    },
+    {
+      "archivePath": "build-inputs/094/ReadingPath.css.log",
+      "declaredInputPath": "source/src/islands/explorer/ReadingPath.css",
+      "sha256": "22553d426e66d62b3dcd95c8472652e7585542e95e41bace3877a788e50e9651"
+    },
+    {
+      "archivePath": "build-inputs/095/schema.ts.log",
+      "declaredInputPath": "source/src/lib/profile/schema.ts",
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "archivePath": "build-inputs/096/polar-repair.ts.log",
+      "declaredInputPath": "source/src/lib/profile/polar-repair.ts",
+      "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+    },
+    {
+      "archivePath": "build-inputs/097/read-store.ts.log",
+      "declaredInputPath": "source/src/lib/profile/read-store.ts",
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    {
+      "archivePath": "build-inputs/098/learning-source.ts.log",
+      "declaredInputPath": "source/src/lib/learning-source.ts",
+      "sha256": "4f9bd87b4cb44cae38bbd93691a477b65b59e1a7b7f898b5ebff1b9fa491f590"
+    },
+    {
+      "archivePath": "build-inputs/099/use-learning-sources.ts.log",
+      "declaredInputPath": "source/src/lib/use-learning-sources.ts",
+      "sha256": "ab83700cff04fd9368fae94d491ceb4457d7176ab5dac33d4ca8fda8ec9d7bce"
+    },
+    {
+      "archivePath": "build-inputs/100/learning-progress.ts.log",
+      "declaredInputPath": "source/src/lib/learning-progress.ts",
+      "sha256": "b7aa84be722b711b8a918a33d0fcad8bf998232cb85d095f234c7d09ed2cb0e7"
+    },
+    {
+      "archivePath": "build-inputs/101/use-learning-progress.ts.log",
+      "declaredInputPath": "source/src/lib/use-learning-progress.ts",
+      "sha256": "52c64387fa04da3b6c3e0afdabc628b13f022d3d11f9125a9fa2c8f42940f50f"
+    },
+    {
+      "archivePath": "build-inputs/102/learning-exercises.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/learning-exercises.ts",
+      "sha256": "4bdd4d5bee0e75706c45c2b7153f82f302d334f28511bd435e677a6c401f0833"
+    },
+    {
+      "archivePath": "build-inputs/103/LearningPractice.css.log",
+      "declaredInputPath": "source/src/islands/LearningPractice.css",
+      "sha256": "940340a7d9bff2fe72ebcd41326e8765ce544489dc353227d221306408cd9666"
+    },
+    {
+      "archivePath": "build-inputs/104/LearningPractice.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/LearningPractice.tsx",
+      "sha256": "86520bb37573736927169cb020d6f6e82f1c78dfb5244d4eb82be4602e49eb56"
+    },
+    {
+      "archivePath": "build-inputs/105/ReadingPath.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/ReadingPath.tsx",
+      "sha256": "ff8f28366bba3c617b91b34c47c3357f29d8272c232a3d70bc8668feab200559"
+    },
+    {
+      "archivePath": "build-inputs/106/natal-context.ts.log",
+      "declaredInputPath": "source/src/lib/natal-context.ts",
+      "sha256": "2c5acde9b0b7be5114d4d926a20e912cf9931b64ad60b6289b1f17632e5d3d54"
+    },
+    {
+      "archivePath": "build-inputs/107/Inspector.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/Inspector.tsx",
+      "sha256": "e94bd7161b5193a0fe3ba01646271c1162e454a661ccc3a9598beb43f35d2759"
+    },
+    {
+      "archivePath": "build-inputs/108/ChartActionDock.tsx.log",
+      "declaredInputPath": "source/src/islands/ChartActionDock.tsx",
+      "sha256": "0be246b3bd3d0cfeeb2498f4ec6f9ab562cca526795e8fd2d2ee7932721c6190"
+    },
+    {
+      "archivePath": "build-inputs/109/chunk-CPALRSPC.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js",
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+    },
+    {
+      "archivePath": "build-inputs/110/receipt.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js",
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+    },
+    {
+      "archivePath": "build-inputs/111/chunk-K5MRTCWE.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+    },
+    {
+      "archivePath": "build-inputs/112/astronomy.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js",
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+    },
+    {
+      "archivePath": "build-inputs/113/chunk-GBH7JIYF.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "sha256": "8578139013ab4f4c0d2811682e92d6b6818492e1a392ddee43aeea033a8ebfc3"
+    },
+    {
+      "archivePath": "build-inputs/114/index.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/index.js",
+      "sha256": "585f25423b08830025e9f4bbdbbe3dffb3bbd4d79f2891952c110f2ebfcf0bbc"
+    },
+    {
+      "archivePath": "build-inputs/115/chart-adapter.ts.log",
+      "declaredInputPath": "source/src/lib/engine/chart-adapter.ts",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "archivePath": "build-inputs/116/portable.ts.log",
+      "declaredInputPath": "source/src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "archivePath": "build-inputs/117/calculator-receipt.ts.log",
+      "declaredInputPath": "source/src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "archivePath": "build-inputs/118/a2hs.ts.log",
+      "declaredInputPath": "source/src/lib/a2hs.ts",
+      "sha256": "3fb8b2aea25d49fa7657a5a7230396112227c028ac8f42c9db7cb3096b5adfb7"
+    },
+    {
+      "archivePath": "build-inputs/119/push.ts.log",
+      "declaredInputPath": "source/src/lib/push.ts",
+      "sha256": "4faffea868c3d75ef881ec4f616a8e723d5ee3fa64e90acb7e47915d56441b3a"
+    },
+    {
+      "archivePath": "build-inputs/120/push.ts.log",
+      "declaredInputPath": "source/src/strings/push.ts",
+      "sha256": "86b3da1b7a0cc2088b5155e4d693402ad3277c73f4443f1a4c80fbc93d2a827a"
+    },
+    {
+      "archivePath": "build-inputs/121/push.css.log",
+      "declaredInputPath": "source/src/styles/push.css",
+      "sha256": "212e2bfdd4f94a487c059c61376eb027b5683c8fb070e497ba1c562705e3a093"
+    },
+    {
+      "archivePath": "build-inputs/122/PushOptIn.tsx.log",
+      "declaredInputPath": "source/src/islands/PushOptIn.tsx",
+      "sha256": "d9a5cb0e7d5b6b990566501d783147e8a753fe4d0351edc875ef9c383108a90a"
+    },
+    {
+      "archivePath": "build-inputs/123/copy.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/tour/copy.ts",
+      "sha256": "71a6efba4267056a5e181a5b4a89b7887fcca0007524e0e354c630f9ba07c7c2"
+    },
+    {
+      "archivePath": "build-inputs/124/TourCard.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/tour/TourCard.tsx",
+      "sha256": "51775642667fc10c8128c7ef95e78879cc3e459564dd0c742ab744c51eaf7a27"
+    },
+    {
+      "archivePath": "build-inputs/125/chapters.ts.log",
+      "declaredInputPath": "source/src/lib/scene/chapters.ts",
+      "sha256": "67b4d8e29e091ff8d7d5e04e1b1f95b142f70290f014dfaa945bb469bb54a504"
+    },
+    {
+      "archivePath": "build-inputs/126/ChartTour.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/tour/ChartTour.tsx",
+      "sha256": "afecef812fd73faba49b1038a6121160bf77782df3b7bbc3c8d0bd16429b7570"
+    },
+    {
+      "archivePath": "build-inputs/127/index.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/tour/index.ts",
+      "sha256": "e40a1149177d86d673ea27d6a33c46b3f2aeb12620a2307d8187acd131507f81"
+    },
+    {
+      "archivePath": "build-inputs/128/overlay.ts.log",
+      "declaredInputPath": "source/src/lib/scene/overlay.ts",
+      "sha256": "72ac4743c72007b57ac6da3d0cf7260ea8cdd3c53d9d088c3874a61059dc3118"
+    },
+    {
+      "archivePath": "build-inputs/129/renderTransitOverlay.tsx.log",
+      "declaredInputPath": "source/src/islands/transit/renderTransitOverlay.tsx",
+      "sha256": "20947e1e1a8451b6bd7ab5ca02493c73938947dcfe1b7e115c008b049733990b"
+    },
+    {
+      "archivePath": "build-inputs/130/dates.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/dates.ts",
+      "sha256": "cbdd98821a63b40554fe85360793663c03a6945fb7fbfc95fb5a06d9f6e8fc2e"
+    },
+    {
+      "archivePath": "build-inputs/131/copy.ts.log",
+      "declaredInputPath": "source/src/islands/explorer/lens/copy.ts",
+      "sha256": "ae7a2118641bf95d5c2bee2f6584788603c0d673726213df12bf998c868ffab6"
+    },
+    {
+      "archivePath": "build-inputs/132/internal.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal.js",
+      "sha256": "52403d7a8514ceea3d5ac1ad7f404f79ff1163d907bbc783600edf1574ff2e42"
+    },
+    {
+      "archivePath": "build-inputs/133/full.ts.log",
+      "declaredInputPath": "source/src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "archivePath": "build-inputs/134/progressions.ts.log",
+      "declaredInputPath": "source/src/lib/engine/progressions.ts",
+      "sha256": "5bac39d815857b0322b4ef93e48cf7f8046881b4a7d0cca2918e6140c12db48e"
+    },
+    {
+      "archivePath": "build-inputs/135/longitude-crossings.ts.log",
+      "declaredInputPath": "source/src/lib/engine/longitude-crossings.ts",
+      "sha256": "9a41ce847fef61a6c9ff6fbd8907a2ac5ce7c674755c8f8e937ea12118b2e308"
+    },
+    {
+      "archivePath": "build-inputs/136/returns.ts.log",
+      "declaredInputPath": "source/src/lib/engine/returns.ts",
+      "sha256": "d3538349bcd15d1dcff3c540d28c09d366630fff898ff252251df8c00731a62a"
+    },
+    {
+      "archivePath": "build-inputs/137/solar-return.ts.log",
+      "declaredInputPath": "source/src/lib/engine/solar-return.ts",
+      "sha256": "9ecba62f451613a6058f6dcf995faebfd2712f4c36652823326371864538753a"
+    },
+    {
+      "archivePath": "build-inputs/138/ChartLens.tsx.log",
+      "declaredInputPath": "source/src/islands/explorer/lens/ChartLens.tsx",
+      "sha256": "1a57407d26abcbd7cb54e05be14cbf1440e4bf89aef7f4c88d0145b98a66f833"
+    },
+    {
+      "archivePath": "build-inputs/139/ecliptic3d.ts.log",
+      "declaredInputPath": "source/src/lib/wheel/ecliptic3d.ts",
+      "sha256": "baf0f81effe4490105f01dbf6f09bb52149f32e03f0fc198d0d1c582080aa366"
+    },
+    {
+      "archivePath": "build-inputs/140/declination.ts.log",
+      "declaredInputPath": "source/src/lib/declination.ts",
+      "sha256": "7e08ab1fdaad0b56553d8718f0dfba4e55ab24d92523011227ec0886b2d94dde"
+    },
+    {
+      "archivePath": "build-inputs/141/sect.ts.log",
+      "declaredInputPath": "source/src/lib/sect.ts",
+      "sha256": "95b0a3875a2ad4df2e788031941869fc40cecc4a291e1708369e452ef07f0bd5"
+    },
+    {
+      "archivePath": "build-inputs/142/turning.ts.log",
+      "declaredInputPath": "source/src/islands/chart3d/turning.ts",
+      "sha256": "d584bd1dc629d81c88d13f3dddc5f916f0bbb6d343773bec1f71a3ac63a19abc"
+    },
+    {
+      "archivePath": "build-inputs/143/copy.ts.log",
+      "declaredInputPath": "source/src/islands/chart3d/copy.ts",
+      "sha256": "eebf0acb925c26c5d5a5bb870c2f8d889195d05d8d299f046916bfdcb68519b1"
+    },
+    {
+      "archivePath": "build-inputs/144/EclipticView.tsx.log",
+      "declaredInputPath": "source/src/islands/chart3d/EclipticView.tsx",
+      "sha256": "903fa9ebfb9ff79a2dd5526ee51126244daca7edf6b46e8bd907f69965bce82a"
+    },
+    {
+      "archivePath": "build-inputs/145/profile-chart-handoff.ts.log",
+      "declaredInputPath": "source/src/lib/profile/profile-chart-handoff.ts",
+      "sha256": "e1df154c323b6990857df47ff5a3aa722ec033903c285ac8a9f993543cb17304"
+    },
+    {
+      "archivePath": "build-inputs/146/share-positions.ts.log",
+      "declaredInputPath": "source/src/lib/share-positions.ts",
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e"
+    },
+    {
+      "archivePath": "build-inputs/147/share-card-pastel-icons.ts.log",
+      "declaredInputPath": "source/src/lib/share-card-pastel-icons.ts",
+      "sha256": "8634851a324fb0563aca1ad97b75a9a3b294aa9b320786377b0bc67f3f236162"
+    },
+    {
+      "archivePath": "build-inputs/148/share-positions-reading.ts.log",
+      "declaredInputPath": "source/src/lib/share-positions-reading.ts",
+      "sha256": "fe987bd1af02d128b663f2802aabb0fd9b7f9657538558a99d8477202a81066a"
+    },
+    {
+      "archivePath": "build-inputs/149/PositionsShareSurface.tsx.log",
+      "declaredInputPath": "source/src/islands/PositionsShareSurface.tsx",
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c"
+    },
+    {
+      "archivePath": "build-inputs/150/ical.ts.log",
+      "declaredInputPath": "source/src/lib/ical.ts",
+      "sha256": "e63ce4126477445b6f19a3f03d55bb9122e6f39fc107ec0756af059f2f41d400"
+    },
+    {
+      "archivePath": "build-inputs/151/ical-download.ts.log",
+      "declaredInputPath": "source/src/lib/ical-download.ts",
+      "sha256": "b2f605e83d79df2009ac81d764122d59bed6986cf53dbe41f78eff6705f0f9a6"
+    },
+    {
+      "archivePath": "build-inputs/152/CalendarSubscribe.tsx.log",
+      "declaredInputPath": "source/src/islands/CalendarSubscribe.tsx",
+      "sha256": "770421f1369c8f6d06b87862c196ab1ff4b88b9292698b44fbf08958e7cb0d54"
+    },
+    {
+      "archivePath": "build-inputs/153/CommunicationRead.tsx.log",
+      "declaredInputPath": "source/src/islands/CommunicationRead.tsx",
+      "sha256": "8b5bb6d43288ec3cdccfa9fee2e02ae8db9e1538095da80d143d8fdbaf22b1cc"
+    },
+    {
+      "archivePath": "build-inputs/154/ApproachRead.tsx.log",
+      "declaredInputPath": "source/src/islands/ApproachRead.tsx",
+      "sha256": "4717601c816f4c9dfdd1a2f62e0ab77e851e68c0f7e599abe961d5aba61b83b7"
+    },
+    {
+      "archivePath": "build-inputs/155/pwa-install.ts.log",
+      "declaredInputPath": "source/src/lib/pwa-install.ts",
+      "sha256": "b22cfc336272ca67fb827c510c6de6fb91b27ff957acd92c41411f4f3875c9c2"
+    },
+    {
+      "archivePath": "build-inputs/156/pwa.ts.log",
+      "declaredInputPath": "source/src/strings/pwa.ts",
+      "sha256": "72781933be41ea8d643659e08dd202b6c98eb00344a9fc33d2526d7cb9bcf1b4"
+    },
+    {
+      "archivePath": "build-inputs/157/pwa-install.css.log",
+      "declaredInputPath": "source/src/styles/pwa-install.css",
+      "sha256": "1388fe1334ce7deab58e81c4429cc8538821d8afe45d487c1729490936a505dd"
+    },
+    {
+      "archivePath": "build-inputs/158/PwaInstallPrompt.tsx.log",
+      "declaredInputPath": "source/src/islands/PwaInstallPrompt.tsx",
+      "sha256": "34c7ddd78563a8c9f357559dd647f038726adc053077d6f304b31ba68f2b6ead"
+    },
+    {
+      "archivePath": "build-inputs/159/CopyLinkButton.tsx.log",
+      "declaredInputPath": "source/src/islands/CopyLinkButton.tsx",
+      "sha256": "9317497e11c45ff7e2763757817f9e47a9745bcae359f798435fdb8fe882b0e3"
+    },
+    {
+      "archivePath": "build-inputs/160/ChartShareDialog.tsx.log",
+      "declaredInputPath": "source/src/islands/ChartShareDialog.tsx",
+      "sha256": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b"
+    },
+    {
+      "archivePath": "build-inputs/161/deletions.ts.log",
+      "declaredInputPath": "source/src/lib/profile/deletions.ts",
+      "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+    },
+    {
+      "archivePath": "build-inputs/162/feature-flags.ts.log",
+      "declaredInputPath": "source/src/lib/account-v2/feature-flags.ts",
+      "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+    },
+    {
+      "archivePath": "build-inputs/163/tslib.es6.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/tslib/tslib.es6.mjs",
+      "sha256": "0929993220938091ede542d688b0fdb87dad99a7e77678e1983c32d18a503339"
+    },
+    {
+      "archivePath": "build-inputs/164/helper.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/helper.js",
+      "sha256": "b68c1869da88161063d23f7944c71bc1c444229b22bca0680386f4ab33e0c967"
+    },
+    {
+      "archivePath": "build-inputs/165/types.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/types.js",
+      "sha256": "bb251c280cb70f197775c8e5a66f38246ea2a09e4283ca11f954c557af37fe2e"
+    },
+    {
+      "archivePath": "build-inputs/166/FunctionsClient.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js",
+      "sha256": "3713f2513f44a98d0526004cb6f7092d9e9e9a801a532219821560321ba6fe12"
+    },
+    {
+      "archivePath": "build-inputs/167/index.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/index.js",
+      "sha256": "cbbfe306ef3197b924ce2e7cad93e2271165995cfff05bfba29d16122477235b"
+    },
+    {
+      "archivePath": "build-inputs/168/index.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/postgrest-js/dist/index.mjs",
+      "sha256": "afda25f52b6722f40f70f845fa1569b0b978c23d3e92eb9e453327751b78c00e"
+    },
+    {
+      "archivePath": "build-inputs/169/websocket-factory.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js",
+      "sha256": "629232bc6bd2f354504f383dbce81de37c5544bb4fcb7835b865d697ff7bdbb0"
+    },
+    {
+      "archivePath": "build-inputs/170/version.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/version.js",
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "archivePath": "build-inputs/171/constants.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/constants.js",
+      "sha256": "23d0a68e19cfb5dfcb512690caacddd8dd1de28cd742c2f076c16de82e221a65"
+    },
+    {
+      "archivePath": "build-inputs/172/serializer.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/serializer.js",
+      "sha256": "c6ba38eb77e1fe0f3a6a7247a632d194758b8be32b036e1229243ae6f6388998"
+    },
+    {
+      "archivePath": "build-inputs/173/transformers.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/transformers.js",
+      "sha256": "a907c21984ed100e56cac3b952e32faf108f4f5efe23dfbcdd3fb63a76581d74"
+    },
+    {
+      "archivePath": "build-inputs/174/phoenix.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/phoenix/priv/static/phoenix.mjs",
+      "sha256": "a9c3ea0185da3278b2bc94a0ec76a892cbec3b5c05559f7eef389b08fb30c217"
+    },
+    {
+      "archivePath": "build-inputs/175/presenceAdapter.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js",
+      "sha256": "a4aeee2de6268a3a4001cf5fdb0771e663eb2c6ee6f034b8cae8a605c213ea68"
+    },
+    {
+      "archivePath": "build-inputs/176/RealtimePresence.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js",
+      "sha256": "462bb638ab2ad7ee41b71cccf64a35c9c3f3610003c80fb831b1758d84742e11"
+    },
+    {
+      "archivePath": "build-inputs/177/normalizeChannelError.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/normalizeChannelError.js",
+      "sha256": "6a80956a048f351557bf4372a13837b67e214af5a3570e67dcc5f23663b4ab2b"
+    },
+    {
+      "archivePath": "build-inputs/178/channelAdapter.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/channelAdapter.js",
+      "sha256": "fb11d798ed7550d8cecba3d8295de1a5ddb88dc45429605346e7581bf2866896"
+    },
+    {
+      "archivePath": "build-inputs/179/RealtimePostgresFilterBuilder.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePostgresFilterBuilder.js",
+      "sha256": "e05a58149d9cc0f9ac8fb1a7915db7e13d7c8e5a4988a1b7ad8a7b328a797050"
+    },
+    {
+      "archivePath": "build-inputs/180/RealtimeChannel.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeChannel.js",
+      "sha256": "d1e08bc086776218f0be69d018327c0cce17a77c5a830d110ea30982f43edb98"
+    },
+    {
+      "archivePath": "build-inputs/181/socketAdapter.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js",
+      "sha256": "a316775d3658a1f678897023e40f5ca6485c475b3d88812dfae8a853fbc320d5"
+    },
+    {
+      "archivePath": "build-inputs/182/RealtimeClient.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js",
+      "sha256": "01d933a2c24bd7bcd0b80bcfc0770b9e1d4d5d29a6cddba33ee976b983524ed9"
+    },
+    {
+      "archivePath": "build-inputs/183/index.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/index.js",
+      "sha256": "0615b93f9c384133d7a703749eb4c8477f25adaea99f4eefc4eec73b2bfa1aa4"
+    },
+    {
+      "archivePath": "build-inputs/184/index.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/iceberg-js/dist/index.mjs",
+      "sha256": "15ed0530ab67a7bfb541eb2cea764023c159312b7f1888e42c029840fafd381d"
+    },
+    {
+      "archivePath": "build-inputs/185/index.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/storage-js/dist/index.mjs",
+      "sha256": "cfe96e61f73eb1f2a13173150db50e834f5e682f9a50a16a79ee0c9a436ceb77"
+    },
+    {
+      "archivePath": "build-inputs/186/version.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/version.js",
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "archivePath": "build-inputs/187/constants.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/constants.js",
+      "sha256": "a4d395c65228d78f63af7fbbc7dfcf08817acdff1ee3e24079cab95b15f35782"
+    },
+    {
+      "archivePath": "build-inputs/188/errors.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/errors.js",
+      "sha256": "fcbfa357dab595c78a4e934b828808e59fe3aded885f90240e349d9fcfb76e59"
+    },
+    {
+      "archivePath": "build-inputs/189/base64url.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/base64url.js",
+      "sha256": "2c04328375ce233068e3defa27649a5991f1f1686753e4e4649a9586f30aac0f"
+    },
+    {
+      "archivePath": "build-inputs/190/helpers.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/helpers.js",
+      "sha256": "057cb41abc14506192a97d7dc9575bf05a5682adb090a3f12030302d728b7b5d"
+    },
+    {
+      "archivePath": "build-inputs/191/fetch.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/fetch.js",
+      "sha256": "acb810c206814e21745cf64dd5a37e0e3bdd741a7901bb85535f2ea877f9c6b1"
+    },
+    {
+      "archivePath": "build-inputs/192/types.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/types.js",
+      "sha256": "962955ac9e78967535cadacb3e50fd412066df07c8ef78fbc8483ab6f39032f9"
+    },
+    {
+      "archivePath": "build-inputs/193/GoTrueAdminApi.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js",
+      "sha256": "fb4a9c24f62f02a6e9f662444386068d7c1077d6339513e9ee01c179070751b1"
+    },
+    {
+      "archivePath": "build-inputs/194/local-storage.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/local-storage.js",
+      "sha256": "b43bf10da0dbcc5bc91c902c05624b82fc640de82555026c40d03e85549d9f13"
+    },
+    {
+      "archivePath": "build-inputs/195/locks.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/locks.js",
+      "sha256": "81698be5dade8c1367224856c96e9e1fad7243ad3c556aa6ff87ce6e17e1ac88"
+    },
+    {
+      "archivePath": "build-inputs/196/polyfills.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/polyfills.js",
+      "sha256": "cd45893a74c685ad8267585114c890cd2515ef584fa79ffc19b134a4333f0544"
+    },
+    {
+      "archivePath": "build-inputs/197/ethereum.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/web3/ethereum.js",
+      "sha256": "3c8177cf4fe06f5c675778b0bd296fd20d5f313202471f4117e7e43a358a6a47"
+    },
+    {
+      "archivePath": "build-inputs/198/webauthn.errors.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.errors.js",
+      "sha256": "0ee6d345e33a254c30e444d7d2466a410519999b7128a83c43c79ab2c1851516"
+    },
+    {
+      "archivePath": "build-inputs/199/webauthn.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.js",
+      "sha256": "51aaa42576603f805702620e72d3940c14e9f757b25a89e2b8bf3218e00c5f25"
+    },
+    {
+      "archivePath": "build-inputs/200/GoTrueClient.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueClient.js",
+      "sha256": "d9d649205584937435fa1dff6631885f40aa21ffbe6d12f80444b7e63bd59197"
+    },
+    {
+      "archivePath": "build-inputs/201/AuthAdminApi.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js",
+      "sha256": "f18bf53f4c43d232f849f9000c1f61bdd43eee7bceb42f829339c5053b6eee41"
+    },
+    {
+      "archivePath": "build-inputs/202/AuthClient.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthClient.js",
+      "sha256": "684b46b2be095e71fe7546e72f6791753f1cae9ebdaacd167b4905a5b7a87903"
+    },
+    {
+      "archivePath": "build-inputs/203/index.js.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/index.js",
+      "sha256": "9be5694df0e46b33d4f3b7bb8bad0ecef05ce343a5734376d6b4c93a8233eba7"
+    },
+    {
+      "archivePath": "build-inputs/204/index.mjs.log",
+      "declaredInputPath": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/supabase-js/dist/index.mjs",
+      "sha256": "4df240f9b886d1a2b101b8bb91f48424baea58d04c450dbf4ba496de5dc940c5"
+    },
+    {
+      "archivePath": "build-inputs/205/client.ts.log",
+      "declaredInputPath": "source/src/lib/supabase/client.ts",
+      "sha256": "16d706d55e658d23682a55d39783ac281e09d8cd0f39ec14cb41772245f37155"
+    },
+    {
+      "archivePath": "build-inputs/206/merge.ts.log",
+      "declaredInputPath": "source/src/lib/profile/merge.ts",
+      "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+    },
+    {
+      "archivePath": "build-inputs/207/sync.ts.log",
+      "declaredInputPath": "source/src/lib/profile/sync.ts",
+      "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+    },
+    {
+      "archivePath": "build-inputs/208/store.ts.log",
+      "declaredInputPath": "source/src/lib/profile/store.ts",
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    {
+      "archivePath": "build-inputs/209/ChartCalculator.tsx.log",
+      "declaredInputPath": "source/src/islands/ChartCalculator.tsx",
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "archivePath": "build-inputs/210/entry.tsx.log",
+      "declaredInputPath": "entry.tsx",
+      "sha256": "e85db4ff8754d69378d1e2e6c4a8108a52e4c7bd8701670210d318c90fde5ebe"
+    },
+    {
+      "archivePath": "build-inputs/211/ru.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/ru.ts",
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613"
+    },
+    {
+      "archivePath": "build-inputs/212/en.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/en.ts",
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621"
+    },
+    {
+      "archivePath": "build-inputs/213/es.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/es.ts",
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c"
+    },
+    {
+      "archivePath": "build-inputs/214/pt.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/pt.ts",
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6"
+    },
+    {
+      "archivePath": "build-inputs/215/fr.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/fr.ts",
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed"
+    },
+    {
+      "archivePath": "build-inputs/216/it.ts.log",
+      "declaredInputPath": "source/src/lib/i18n/ui/it.ts",
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea"
+    },
+    {
+      "archivePath": "build-inputs/217/ChartCalculator.tsx.log",
+      "declaredInputPath": "source/src/islands/ChartCalculator.tsx",
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475"
+    }
+  ]
+}

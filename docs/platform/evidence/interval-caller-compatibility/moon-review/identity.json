@@ -1,0 +1,138 @@
+{
+  "at": "2026-09-08T07:35:10.082Z",
+  "root": "/Users/chiburashka/.codex/worktrees/4806/site",
+  "head": "68412f16140f9986b11767d271eda6e14b6aba48",
+  "status": " M docs/acceptance/phase1/screenshots/manifest.json\n M docs/platform/DECISIONS.md\n M docs/platform/EVIDENCE.md\n M docs/platform/PLAN.md\n M docs/platform/REVIEW.md\n M docs/platform/STATUS.md\n M package-lock.json\n M package.json\n M public/llms-full.txt\n M src/data/daily-publication-manifest.json\n M src/data/platform-engine-candidate.json\n M src/lib/engine/calculator-receipt.test.ts\n M src/lib/engine/calculator-receipt.ts\n M src/lib/engine/package-integration.test.ts\n M src/lib/scene/__snapshots__/scene.test.ts.snap\n M src/lib/time/localToUtc.ts\n M vendor/README.md\n?? docs/platform/evidence/receipt-export/release/ci-34195946291-final.json\n?? docs/platform/evidence/site-engine-rc6/author/\n?? docs/platform/evidence/site-engine-rc6/independent-review/\n?? docs/platform/evidence/site-engine-rc6/integration/\n?? docs/platform/evidence/site-engine-rc6/release/\n?? docs/platform/evidence/site-engine-rc6/root-source-identity.json\n?? docs/platform/evidence/site-engine-rc6/runtime-math/\n?? src/lib/time/localToUtc-precision.test.ts\n?? vendor/zodiacs-engine-0.1.1-rc.6.sha256\n?? vendor/zodiacs-engine-0.1.1-rc.6.tgz\n",
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "sha256": "e4afd3609a8fec988efb298e03f29b055e60c1040356c8baaced53ebd91cfdae",
+      "bytes": 12153
+    },
+    {
+      "path": "docs/STRATEGY.md",
+      "sha256": "6e3352f3c307f92f193650e665888114a579bdd66574f650f2af704761032ca3",
+      "bytes": 18901
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8",
+      "bytes": 10765
+    },
+    {
+      "path": "src/islands/PlaceSearch.tsx",
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2",
+      "bytes": 6578
+    },
+    {
+      "path": "src/islands/CalculationReload.tsx",
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e",
+      "bytes": 986
+    },
+    {
+      "path": "src/lib/hooks/useEngine.ts",
+      "sha256": "77bfc5d88a501614280aff770db896988f6272b868aab55a767a5486f2b6797d",
+      "bytes": 600
+    },
+    {
+      "path": "src/lib/module-load.ts",
+      "sha256": "e64d582319bd1a9994a43654c527a8cc8c625aa7a86c30021fcc51f3b8c4ea3c",
+      "bytes": 1053
+    },
+    {
+      "path": "src/lib/moon-certainty.ts",
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "bytes": 1909
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "bytes": 1810
+    },
+    {
+      "path": "src/lib/engine/types.ts",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+      "bytes": 2164
+    },
+    {
+      "path": "src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "bytes": 1215
+    },
+    {
+      "path": "src/lib/engine/chart-adapter.ts",
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+      "bytes": 788
+    },
+    {
+      "path": "src/lib/engine/lite.ts",
+      "sha256": "6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057",
+      "bytes": 2498
+    },
+    {
+      "path": "src/lib/signs.ts",
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4",
+      "bytes": 16338
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd",
+      "bytes": 6897
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+      "bytes": 1480
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+      "bytes": 167
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "bytes": 21866
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "sha256": "d404f048535fa836ccfe3d43f485641d9130bc4ed829b5eb60752a0cefeb5c15",
+      "bytes": 6909
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "sha256": "1bb3445c6b1fbd31665dd7a8569b3b5e2dbf0acf1bd62cdd135c147e3d8a7dc1",
+      "bytes": 3541
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "sha256": "c81c8781a50826a83e158ce145aac104db488b179f34a0f127da7614cd494fc1",
+      "bytes": 3757
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "sha256": "1674015e2c539800914731c8d33ec00b8d597d5aa593842b9b0f8ff399f53c0b",
+      "bytes": 3599
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "sha256": "24377faef56714b38675606d0754f7330615134db476e60c14fa5b247478dc79",
+      "bytes": 3462
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "sha256": "b195a5ee7f1fef52e6bd283d59274ad716316cbfe50c93e1c318aba3dcf9b3ac",
+      "bytes": 3929
+    }
+  ],
+  "dependencies": {
+    "esbuild": "/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/esbuild",
+    "@esbuild/darwin-arm64": "/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/@esbuild/darwin-arm64",
+    "typescript": "/private/tmp/zodiacs-platform-rc6-public-consumer-review/node_modules/typescript",
+    "@zodiacs/engine": "/Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine",
+    "astronomy-engine": "/private/tmp/zodiacs-platform-rc6-public-consumer-review/node_modules/astronomy-engine"
+  },
+  "packageVersion": "0.1.1-rc.6",
+  "packageMatchesReviewedArchive": true,
+  "reviewedIntervalBundleSha256": "98b3b214479136f558e6c0c8fff37bff89f83e7e2d3ba5430a6474a2113a8c21"
+}

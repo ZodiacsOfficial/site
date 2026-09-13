@@ -1,0 +1,9 @@
+
+> zodiacs-sdk-workspace@ neutrality:guard /private/tmp/zodiacs-platform-sdk
+> corepack pnpm --filter @zodiacs/sdk neutrality:guard
+
+
+> @zodiacs/sdk@1.0.1 neutrality:guard /private/tmp/zodiacs-platform-sdk/packages/sdk
+> node scripts/neutrality-guard.mjs
+
+App-neutrality guard passed.

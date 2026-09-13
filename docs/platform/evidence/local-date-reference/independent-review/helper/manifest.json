@@ -1,0 +1,196 @@
+{
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 1616,
+      "sha256": "cb76537477a0ce68b699411e221c6f2991f5193993ebabc9fd39ba04356262b5"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 5482,
+      "sha256": "c03eb130a180034c4886b3bbb3482eca8309bb0ed1b4296f20b2372c755c6953"
+    },
+    {
+      "path": "base-dependency-identity.json",
+      "bytes": 603,
+      "sha256": "168e4ae735e27734a69c712729ddfbd1bcb66815cba50520fbc11e15ff3942cb"
+    },
+    {
+      "path": "build-identity.json",
+      "bytes": 3413,
+      "sha256": "b82faaf1600136a0b1d623b1356bd4e0bacd91863d6b748dbcb3bd830574aced"
+    },
+    {
+      "path": "build.log",
+      "bytes": 352,
+      "sha256": "b995cc695c1fe8c23c80df7e9696d68f6e60eecbce5143b3a006ed8da111eb5b"
+    },
+    {
+      "path": "build.mjs",
+      "bytes": 2093,
+      "sha256": "34f5c680aac637e3b2771f615e64dde6691968b5a7d793f42daeb25776b77f45"
+    },
+    {
+      "path": "cases.mjs",
+      "bytes": 10177,
+      "sha256": "74dee091be32206891ae5752566614472c2469cc7f2d3e519d53ea2fc92f6f55"
+    },
+    {
+      "path": "final-identity.json",
+      "bytes": 5098,
+      "sha256": "b6f5dc77219b113108528efbbf31e9dea477316c809a39b1aedf2c4221237712"
+    },
+    {
+      "path": "implementation.patch",
+      "bytes": 40918,
+      "sha256": "41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e"
+    },
+    {
+      "path": "interval.js",
+      "bytes": 8610,
+      "sha256": "bd6cb61d43e7783b26b7520c7ef08aa592a94ed2daaf912c89d5b4b916f70c4f"
+    },
+    {
+      "path": "interval.mjs",
+      "bytes": 7240,
+      "sha256": "98b3b214479136f558e6c0c8fff37bff89f83e7e2d3ba5430a6474a2113a8c21"
+    },
+    {
+      "path": "localToUtc.base.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "native-result.json",
+      "bytes": 21296,
+      "sha256": "a4c11e19e01998df46490495e4cf1f99782b92ce037996bb2e04a3464c3b7980"
+    },
+    {
+      "path": "native-review.mjs",
+      "bytes": 2669,
+      "sha256": "7d4c63db5436f1c15b5092a478ba9bc6a8309949926c68509c8cd2da23752627"
+    },
+    {
+      "path": "native.log",
+      "bytes": 121,
+      "sha256": "1fb2c2612e3907f117bc199e375357c7125cf5e30418e05cc345d7df086f0439"
+    },
+    {
+      "path": "node-review.mjs",
+      "bytes": 990,
+      "sha256": "fc7c1e1b6adb6bfc81b5c2f42afd2fc704a395c6c5a95eaa73bc3f0ce21b54b3"
+    },
+    {
+      "path": "node22-result.json",
+      "bytes": 19567,
+      "sha256": "90b1465ad0e6b14c8d8aeb0bd275b4d1ac3ff6e82fa547d44d327551149b0d4f"
+    },
+    {
+      "path": "node22.log",
+      "bytes": 66,
+      "sha256": "49e4d9285d85635d80e46aa306cc17559f1b4c0086855ea6ae63ee1f039b3e33"
+    },
+    {
+      "path": "node24-result.json",
+      "bytes": 19567,
+      "sha256": "e53d7654bf87c2be4312316db4aff850bde96448ee07aa03ab7708cbda55da91"
+    },
+    {
+      "path": "node24.log",
+      "bytes": 66,
+      "sha256": "0f83a9c5a1ed8c4a9a8eb63b0b50bdd27137e09fd311c48818b832fdb1481eaa"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20636,
+      "sha256": "f3de3156ac4c8420084c282d259a4f656f8fe5899dd0f8217947fa3e8e0ec4f9"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/en.ts",
+      "bytes": 21989,
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/es.ts",
+      "bytes": 23999,
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27691,
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/it.ts",
+      "bytes": 26517,
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25626,
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38328,
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "path": "source/src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "source/src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "source/src/lib/time/localDateContainsUtc.test.ts",
+      "bytes": 6475,
+      "sha256": "0aa0d52d82f86f832ba4f1dae9a5c0e9a828c78c6d13fe27549333d4a46a5707"
+    },
+    {
+      "path": "source/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "source/src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "source/tests/local-date-reference-drive.mjs",
+      "bytes": 22003,
+      "sha256": "2ea7036618df0451ee087e902296d4bff8b8d086ceb75b62c107bcd0d9eb15dd"
+    },
+    {
+      "path": "source-freeze.json",
+      "bytes": 2624,
+      "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+    },
+    {
+      "path": "subject.js",
+      "bytes": 18626,
+      "sha256": "b9eb7b3d926a499bea9609b11f6565d7a69509ae4da1276f7d977e43b0835295"
+    },
+    {
+      "path": "subject.mjs",
+      "bytes": 16934,
+      "sha256": "5333ea8f30704946bc1b32639a6848d6d6ac1fb4cdbb6f3842a6df6bb2d57ebf"
+    }
+  ],
+  "recordCount": 38,
+  "totalBytes": 560151
+}

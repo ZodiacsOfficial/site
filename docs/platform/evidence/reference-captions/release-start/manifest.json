@@ -1,0 +1,29 @@
+{
+  "records": [
+    {
+      "path": "astrofolio-files.json",
+      "bytes": 8725,
+      "sha256": "a0848b8215c8298636e1751c48578789bb58ab7ceea1bc3bf384b9f990d34395"
+    },
+    {
+      "path": "astrofolio-pre-release.json",
+      "bytes": 302,
+      "sha256": "9a147aa5fbdb14dace9d9fa68eaf7e6bc6f94fdfbd9fbaacab952aafdb37574b"
+    },
+    {
+      "path": "sdk-hold-pre-release.json",
+      "bytes": 1600,
+      "sha256": "e90f0499d5391e2e936a0821dd34af16d874c1690ccc49f8767c06d231149191"
+    },
+    {
+      "path": "sdk-main.json",
+      "bytes": 440,
+      "sha256": "f8251ad3d2dc1112de6066d54d450da86e9ee713ef8ced73ed57a146747c8ef8"
+    },
+    {
+      "path": "site-main.json",
+      "bytes": 458,
+      "sha256": "7caa1967df0b6189e52b295ebe3eb14bedddfddb603eb64eb862b712164131eb"
+    }
+  ]
+}

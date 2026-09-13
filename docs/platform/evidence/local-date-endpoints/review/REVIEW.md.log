@@ -1,0 +1,78 @@
+# Local civil-date coverage: independent architecture review
+
+**Recommendation:** specify a set of existing UTC intervals, with explicit empty and unresolved outcomes. Derive first/last instants from that set. Do not replace the current helper with another “resolve two midnights” implementation: real midnight-crossing folds disprove that contract, even when a standards-based start-of-day operation is used. Build the correction on one complete transition provider before advertising exact date membership; a denser Intl sample is a bounded approximation with a distinct qualification.
+
+This is a read-only recommendation, not an implemented or accepted product change. Root owns integration, caller policy and the provider decision. No rc.6 adoption, repository mutation, publication or service activation was performed.
+
+## Refreshed scope and executed evidence
+
+The copied source identity records site HEAD `c761a49c55d125bca48ff38d81b0a9ff6fd5adcf` and SDK HEAD `ac27761e6dea138842e6ef5c2c69129ead7af636`. The current SDK has `resolveLocalToUtc`/`resolveBirth`, but **no localDateEndpointsUtc implementation, export or caller**. The site helper and its imported sources were copied before probing. The independent caller trace has 28 source hashes and identifies one production direct caller: ChartCalculator's unknown-time branch. Daily Sky uses explicit UTC dates and needs no migration.
+
+The same 17 finite cases were executed in Node22.23.2 / ICU78.2 / tzdb2026a and native Chrome152.0.7977.83. Nine current-helper first/last results disagree with the reference interval sets in each runtime. Independent Gregorian wall formatting at every discovered segment's first/final millisecond agrees with offset arithmetic and the requested date. Chrome's actual Temporal transition enumeration agrees with all17 sets (29 transition queries); this cross-check shares the browser's timezone data and is **not independent historical timezone evidence**. Node22 has no native Temporal; Chrome152 does. No broader browser availability claim is made.
+
+| Date and zone | Concrete result |
+| --- | --- |
+| Toronto1919-03-31 | First existing instant04:30Z(local00:30); current helper starts05:00Z(local01:00). |
+| Toronto1919-03-30 | Last existing instant next-day04:29:59.999Z; current end extends30min into the next local date. |
+| Apia2011-12-30 | No instant has this local date. Current start is on Dec31 and end is on Dec29, with end=start−1ms. |
+| St_Johns2009-10-31 | UTC membership is `[Oct31 02:30Z, Nov1 02:30Z)` plus `[Nov1 02:31Z,03:30Z)`. Current end loses the59-minute repeated tail. |
+| St_Johns2009-11-01 | Date exists for its first minute, disappears for59min, then returns. Current first/last happen to match, but their enclosing interval includes another date. |
+| Goose_Bay1988-10-29/30 | The analogous rollback produces a119-minute repeated tail/disappearance. |
+| Apia1892-07-04 | One repeated civil date lasts48hours in the executed runtime. |
+| UTC0000-01-01,0000-02-29,0099-12-31 | Current Date.UTC rollover ends the interval in1900/1999. |
+| UTC9999-12-31 | Current next-date string slicing rejects rollover to year10000, although both the requested final millisecond and following exclusive boundary are representable. |
+
+Ordinary Tokyo, modern23/25-hour New York, and adjacent Apia dates are positive controls. Exact raw inputs, intervals, UTC/local transition boundaries, runtime identities and errors are in `result.json` and `browser-result.json`. No interval/astronomy product code was changed.
+
+## Exact mathematical contract
+
+Let `D` be a strictly validated proleptic-Gregorian civil date, `w` its nominal UTC-midnight epoch millisecond, and `o_z(t)` the host/provider's UTC offset in integer milliseconds. On the Date timeline, which does not represent leap seconds, define
+
+`S(D,z) = { integer t : w <= t + o_z(t) < w + 86_400_000 }`.
+
+This is date membership, not a choice of a birth-time fold or gap policy. It can be empty, connected, or disconnected. Its first and final existing instants are `min(S)` and `max(S)` only when nonempty. The hull `[min(S), max(S)]` need not consist entirely of that date. Never infer `max(S)` by subtracting1ms from the earliest start of the next civil date.
+
+Prefer a new callable contract such as `resolveLocalDateIntervals(date,timeZone)`:
+
+- `existing`: a nonempty ordered array of disjoint, maximally merged half-open `{ start: Date, endExclusive: Date }` intervals, each with `start < endExclusive`.
+- `empty`: an empty array, only when the provider/search established that no requested-date instant exists.
+- `unresolved`: no intervals, with a bounded reason such as unsupported provider, transition limit or inconsistent provider output. Invalid date/zone inputs retain explicit validation errors; they never become empty dates.
+
+Do not store redundant first/last fields. The adapter derives first from the first interval and final inclusive millisecond from the last interval's `endExclusive−1`. The old `LocalDateEndpoints.end` is inclusive despite its misleading “end-exclusive” comment; change that explicitly rather than passing an exclusive boundary into existing astronomy calls.
+
+Year0 must use astronomical year numbering and year-preserving construction. Compute nominal next-day arithmetic numerically or with Gregorian date addition; do not pass Date.UTC through years0–99 or truncate an expanded-year ISO string. Four-digit public date syntax can remain unchanged while an internal exclusive boundary reaches year10000. These library cases do not enlarge the UI's1800–2199 range or the engine's astronomical accuracy claim.
+
+## Algorithm choice
+
+The interval construction is small and exact **given a complete transition schedule**. Partition a bounded UTC search window at every offset transition. For each constant-offset segment `[a,b)` with offset `o`, intersect it with `[w−o,w+DAY−o)`. Keep nonempty intersections and merge touching intervals. This handles partial-midnight gaps, repeats, disjoint dates and empty dates without inventing local times.
+
+Temporal specifies a next-transition operation and offsets strictly inside±24h; its start-of-day operation has different semantics from forward-shifting a supplied midnight. These provide useful building blocks, but taking two start-of-day results still does not enumerate a disjoint date. [TC39 transition and offset operations](https://tc39.es/proposal-temporal/#sec-temporal-getnamedtimezonenexttransition), [TC39 start-of-day operation](https://tc39.es/proposal-temporal/#sec-temporal-getstartofday).
+
+With that offset bound, `[w−DAY,w+2*DAY)` contains all date members. Enumerate transitions until the window ends, with a fixed operation cap and explicit unresolved-on-cap behavior; validate strictly increasing transitions and offsets before intersecting. Our reference intentionally used a larger five-day window and a16-transition cap. A finite cap is safe when exceeding it returns unresolved, rather than silently truncating coverage.
+
+Options compared:
+
+1. **Two shifted midnights:** smallest code, demonstrably wrong. Reject.
+2. **Binary search a date-order predicate:** fast, but the predicate is nonmonotone across actual St_Johns/Goose_Bay returns. Reject a single global bisection as a proof.
+3. **Bounded Intl offset sampling plus transition bisection:** dependency-free and practical. Our hourly five-day discovery matches all17 native-transition references. However, equal sampled offsets do not prove absence of intermediate changes. Two executed synthetic schedules show a missed earlier date segment and a false empty-date conclusion; all offsets stay within14h. No corresponding hidden transition pair in actual IANA data is claimed. This algorithm is acceptable only under an explicit sampled-coverage contract, not unconditional first/last/empty certification.
+4. **Complete transition enumeration from a supported native runtime or reviewed pinned timezone provider:** recommended for the exact API. Native Chrome demonstrated the useful algorithm; Node22 compatibility remains a concrete implementation dependency. Do not assume a polyfill's method name implies completeness: inspect its discovery method, data/version behavior, package size and browser graph before selecting it. No dependency was installed or proposed provider falsely certified here.
+
+An arbitrary denser sample cannot establish the missing completeness property. If the next slice deliberately retains Intl sampling, record the sampling/offset assumptions and limit the certainty claim; do not silently upgrade its result to an exact public date-coverage guarantee. Keep transition discovery separate from interval algebra so the latter has exhaustive synthetic schedule tests.
+
+## Smallest safe caller migration
+
+After selecting the provider/coverage policy, implement one shared geo contract and a thin site adapter; there is no existing SDK endpoint API to preserve. Keep the known-time `resolveLocalToUtc` fold-earlier/gap-forward policy unchanged. Do not change the independent rc.6 adoption or receipt schema.
+
+In ChartCalculator, preflight unknown-time civil-date coverage **before** natal work, endpoint body sampling, receipt capture, result commitment and Registry bridge selection. Narrow on the result. For admitted coverage, derive inclusive sampling instants explicitly. For empty/unresolved coverage, show one localized date-unavailable state, suppress receipt/share/save/Registry commitment for the attempted result, and avoid presenting a previous result under current attempted-input labels. Clearing the prior displayed result for this distinct failure is smaller than inventing a previous-result UX; leave the user's editable inputs intact. This intentional correction changes the previous acceptance of an unknown-time skipped Apia date and requires its own decision/test update; the standalone resolved-UTC calculation/receipt APIs remain untouched.
+
+Do not map empty coverage to `moonSignCandidates=[]` plus ordinary ambiguity. Existing copy then asserts that the Moon changed signs or that a missing time would solve the problem. Neither is true for a nonexistent civil date.
+
+Do not feed an arbitrary long/disjoint coverage set into the current certainty helpers as a proof. `stableBodySignSlug` compares only endpoint signs despite its generic “provably stable” comment; production currently calls it only for the Sun. Moon candidates explicitly support one or two endpoint alternatives. A repeated48-hour date can require a separately justified sampling/candidate policy. For the first migration, explicitly leave complex coverage unavailable until that policy is verified; do not truncate candidate arrays or label endpoint equality a generic astronomical theorem. Ordinary admitted intervals preserve the established Sun/Moon behavior with its actual finite coverage qualification.
+
+`MoonPhaseTool` independently resolves00:00 and23:59 and has the same class of issue, but is not a direct caller. Track its explicit migration separately rather than silently altering it through this helper. Daily Sky remains unaffected. The detailed caller trace and source hashes are in `callers/CALLERS.md` and its manifest.
+
+## Meaningful acceptance before implementation delivery
+
+Retain the17 actual cases, assert every returned interval's membership and its boundary neighbors against separately formatted wall fields, and compare a complete transition enumeration where available. Test empty versus provider failure, fixed offsets, invalid inputs, both edges of midnight gaps/folds, repeated/disjoint dates, year0 leap day,99→100 and9999→10000 internal rollover. Test synthetic hidden transitions against the claimed provider contract instead of making the scanner its own oracle.
+
+At the consumer boundary assert empty/unresolved cases perform no natal/endpoint calls, issue no receipt/share/save/Registry result and show accurate localized copy. Preserve known-time gap/fold receipts and ordinary unknown-time noon behavior. Explicitly test stale previous-result handling. Provider/bundle/runtime compatibility and a justified Sun/Moon coverage policy remain real implementation prerequisites, not completed work. The review's executable files are scratch probes only.

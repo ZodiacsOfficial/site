@@ -1,0 +1,31 @@
+# C-014 metadata proposal and compatibility check
+
+This is a two-file metadata proposal only. No root checkout, frozen author source, guard implementation, dependency, build output, remote CI or deployment was changed. The final chart ownership commit does not yet exist, so the allowance deliberately contains `<FINAL_CHART_OWNERSHIP_SOURCE_SHA>` and is not ready to commit unchanged.
+
+## Proposed integration
+
+1. `workflow.patch` adds one four-line step to the current `.github/workflows/site-check.yml`, after the accepted downstream-context step: `Unknown-time local date reference`, a five-minute bound, and `OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs`. Existing Node 22 setup, dependency installation, pinned Chromium installation and always-run browser-artifact upload already cover this step. No current step, action pin, timeout, event, permission or guard invocation changes.
+2. `allowance-template.patch` replaces the previous historical receipt allowance with the C-014 allowance. It names exactly the six sorted, unique catalogs `en.ts`, `es.ts`, `fr.ts`, `it.ts`, `pt.ts`, `ru.ts`. It does not retain the prior two locale test paths or permit any other protected path. Root must substitute the actual final chart ownership commit and rerun the existing guard against that precise comparison base before committing. `current-comparison-allowance.json` is a separate local-only materialization for the observed current comparison, not the proposed release value.
+
+The new driver already uses repository `findChromium` and `STABLE_CHROMIUM_ARGS`, accepts `OUT_DIR`, exits nonzero for failures and owns/closes its browser/server. With no `REFERENCE_BASELINE_DIR`, CI runs its candidate controls and honestly records no baseline equality. The frozen author and independent evidence separately preserve original-caller parity. This proposal does not claim a fresh browser execution or CI success.
+
+## Exact source compatibility
+
+Observed root HEAD: `295bbfbe3728b3d6f57ff665dc0b08feb765bc41`, with the accepted C-012 Freeze2 six source/test files and four-line workflow wiring present but uncommitted. The temporary clone starts from that exact commit; it copies and verifies all six integrated C-012 files against the accepted freeze, plus the current workflow. Applying the unchanged C-014 patch succeeds with `git apply --check` and actual `git apply`. All twelve applied C-014 files exactly match their reviewed hashes, and all six C-012 files still match afterward. Detailed SHA-256 identities are in `source-identities.json`. This is byte compatibility with the observed final product files, not a claim that a future commit has already been created.
+
+C-014 patch SHA-256: `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`.
+
+## Guard rationale and execution
+
+The unmodified `scripts/phase1-scope-guard.mjs` activates a one-time allowance only when its file is itself changed, the fully resolved comparison SHA equals `baseCommit`, the list is unique and sorted, and the list exactly equals the actual protected diff. The allowance is a path-and-base exception; it does not itself inspect the semantic contents of the catalog changes or verify the authorization prose. The immutable 12-file review provides the content evidence. Once the allowance is unchanged in a later comparison, it supplies no exemption; all existing Registry/SDK/locale/Learn protections remain in force.
+
+Fourteen metadata checks pass. They include successful exact-six admission, wrong-base and placeholder rejection, no exemption when the allowance is unchanged, extra/missing protected-path rejection, duplicate/unsorted/unprotected-list rejection, full YAML equality after removing just the new step, driver syntax/default interface, and actual CLI execution against the isolated combined diff. The unchanged CLI reports 20 changed paths, with exactly six protected paths covered. These 20 are C-012 six + C-014 twelve + two metadata files; shared docs were intentionally not copied because this checks product/metadata compatibility only.
+
+Commands:
+
+```
+python3 /private/tmp/zodiacs-platform-local-date-metadata-proposal/prepare.py
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-local-date-metadata-proposal/verify.mjs
+```
+
+The verification uses Node 22.23.2 and the existing installed YAML parser. No dependency installation, native browser run or heavy build was performed. All checks passed on the first execution; negative controls intentionally throw and are explicitly recorded as expected outcomes. The original clone/setup and apply logs are included. Root retains integration and publication authority.

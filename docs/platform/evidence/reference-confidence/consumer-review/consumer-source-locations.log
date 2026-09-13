@@ -1,0 +1,125 @@
+src/lib/chart-context.ts:11:  moonSignCandidates?: readonly string[];
+src/lib/chart-context.ts:17:  status: 'established' | 'reference' | 'unresolved' | 'invalid';
+src/lib/chart-context.ts:51:    reference: boolean;
+src/lib/chart-context.ts:78:    const row: ContextPlacement = { body, status: good ? input.timeKnown ? 'established' : 'reference' : 'invalid',
+src/lib/chart-context.ts:83:      const candidates = input.moonSignCandidates;
+src/lib/chart-context.ts:89:        row.status = 'unresolved'; row.conditionalSigns = valid ? [...candidates!] : [];
+src/lib/chart-context.ts:92:        // Only the sign is established; the reference longitude remains a receipt.
+src/lib/chart-context.ts:136:    input.timeKnown, input.moonSignCandidates ?? null, input.angles, input.houses]);
+src/lib/chart-context.ts:138:  if (input.timeKnown && byBody.get('Moon')?.status === 'unresolved') {
+src/lib/chart-context.ts:144:    dispositors: { edges, chains, terminals: components, final, reference: !input.timeKnown } };
+src/lib/moon-certainty.ts:8:  moonSignCandidates?: readonly string[];
+src/lib/moon-certainty.ts:11:/** Never reconstruct a local-day range from a reference longitude alone. */
+src/lib/moon-certainty.ts:12:export function moonCandidates(chart: MoonPresentation): readonly string[] {
+src/lib/moon-certainty.ts:13:  if (chart.moonSignCandidates !== undefined) {
+src/lib/moon-certainty.ts:14:    const candidates = [...new Set(chart.moonSignCandidates)];
+src/lib/moon-certainty.ts:23:export function moonIsUncertain(chart: MoonPresentation): boolean {
+src/lib/moon-certainty.ts:24:  return moonCandidates(chart).length !== 1;
+src/lib/moon-certainty.ts:29:  const candidates = moonCandidates(chart);
+src/lib/moon-certainty.ts:36:export function moonCandidatesFromEndpoints(
+src/lib/communication.ts:3:import { moonIsUncertain, moonLabel } from './moon-certainty';
+src/lib/communication.ts:129:  const uncertainMoon = moonIsUncertain(chart);
+src/lib/approach.ts:4:import { moonIsUncertain } from './moon-certainty';
+src/lib/approach.ts:117:  chart: Pick<Chart, 'bodies' | 'angles' | 'moonSignCandidates'>,
+src/lib/approach.ts:120:  const moonAmbiguous = options.moonAmbiguous === true || moonIsUncertain(chart);
+src/lib/share-card.ts:33:import { moonIsUncertain, moonLabel } from './moon-certainty';
+src/lib/share-card.ts:51:  /** True when displayed positions use the calculator's 12:00 no-time reference. */
+src/lib/share-card.ts:52:  referenceTime?: boolean;
+src/lib/share-card.ts:82:  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects' | 'moonSignCandidates'>,
+src/lib/share-card.ts:200:  chart: Pick<BigThreeCardChart, 'bodies' | 'angles' | 'moonSignCandidates'>,
+src/lib/share-card.ts:213:    if (kind === 'moon' && moonIsUncertain(chart)) {
+src/lib/share-card.ts:220:export function dominantProfile(chart: Pick<Chart, 'bodies'> & Partial<Pick<Chart, 'angles' | 'moonSignCandidates'>>): { element: Element | null; modality: Modality | null } {
+src/lib/share-card.ts:221:  if (moonIsUncertain(chart)) return { element: null, modality: null };
+src/lib/share-card.ts:260:  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
+src/lib/share-card.ts:263:  if (options.referenceTime) notes.push(shareCardText(locale, 'referenceTimeNote'));
+src/lib/share-card.ts:317:    if (placement.body === 'Moon' && moonIsUncertain(chart)) {
+src/lib/share-card.ts:357:  if (moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/lib/share-card.ts:364:      referenceTime: !chart.input.timeKnown,
+src/lib/share-card.ts:365:      moonAmbiguous: moonAmbiguous || moonIsUncertain(chart),
+src/lib/share-card.ts:400:  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/lib/share-card.ts:490:    referenceTime: options.referenceTime ?? !chart.input.timeKnown,
+src/lib/share-card.ts:491:    moonAmbiguous: options.moonAmbiguous || moonIsUncertain(chart),
+src/lib/share-card.ts:578:  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/lib/share-card.ts:581:  const timeNotes = shareCardTimeNotes(locale, { ...options, moonAmbiguous: options.moonAmbiguous || moonIsUncertain(chart) });
+src/lib/share-card.ts:1025:  const reference = chart.input?.timeKnown === false ? '12:00 reference · ' : '';
+src/lib/share-card.ts:1026:  return `${reference}Apparent geocentric · Tropical of date · ${houses} · True Node`;
+src/lib/share-card.ts:1083:    : `${details.date} · Birth time unknown · 12:00 local reference`;
+src/lib/share-card.ts:1213:    const uncertainMoon = row.body === 'Moon' && moonIsUncertain(chart);
+src/lib/share-card.ts:1277:  if (options.moonAmbiguous || moonIsUncertain(chart)) {
+src/lib/share-card.ts:1299:  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/lib/share-card.ts:1307:  const uncertainMoon = placement === 'moon' && moonIsUncertain(chart);
+src/lib/share-card.ts:1352:  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/lib/share-card.ts:1446:  moonSignCandidates?: readonly string[];
+src/lib/share-card.ts:1460:  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
+src/lib/share-card.ts:1472:  options: Pick<ShareCardOptions, 'referenceTime' | 'moonAmbiguous'> = {},
+src/lib/share-card.ts:1484:  if (options.moonAmbiguous && chart.moonSignCandidates === undefined) chart = { ...chart, moonSignCandidates: [] };
+src/islands/ChartCalculator.tsx:19:import { moonCandidates, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
+src/islands/ChartCalculator.tsx:514:  const detailPreferenceRef = useRef<'open' | 'closed' | null>(null);
+src/islands/ChartCalculator.tsx:708:          b.body === 'Moon' && chart && moonIsUncertain(chart)
+src/islands/ChartCalculator.tsx:866:  // Device-local preference. The server and first client paint stay closed;
+src/islands/ChartCalculator.tsx:873:      detailPreferenceRef.current = stored === 'open' || stored === 'closed' ? stored : null;
+src/islands/ChartCalculator.tsx:874:      if (detailPreferenceRef.current === 'open') setDetailOpen(true);
+src/islands/ChartCalculator.tsx:878:  // The first-reading prompt is a device preference, just like exact-data
+src/islands/ChartCalculator.tsx:904:    const preference = open ? 'open' : 'closed';
+src/islands/ChartCalculator.tsx:906:    // interaction. The validated preference was read exactly once on mount.
+src/islands/ChartCalculator.tsx:907:    if (detailPreferenceRef.current === preference) return;
+src/islands/ChartCalculator.tsx:908:    detailPreferenceRef.current = preference;
+src/islands/ChartCalculator.tsx:910:      localStorage.setItem(DETAIL_STORAGE_KEY, preference);
+src/islands/ChartCalculator.tsx:911:    } catch { /* device preference is best effort */ }
+src/islands/ChartCalculator.tsx:1197:        reference: input.timeKnown ? 'supplied-instant' : 'local-noon',
+src/islands/ChartCalculator.tsx:1206:        // A reference instant does not verify the Moon's possible signs across
+src/islands/ChartCalculator.tsx:1207:        // the birth date. Empty candidates use the existing unresolved state;
+src/islands/ChartCalculator.tsx:1208:        // the numerical chart and portable receipt remain the reference result.
+src/islands/ChartCalculator.tsx:1209:        result.moonSignCandidates = [];
+src/islands/ChartCalculator.tsx:1210:        nextMoonAmbiguous = moonIsUncertain(result);
+src/islands/ChartCalculator.tsx:1477:      birth: {
+src/islands/ChartCalculator.tsx:1505:        chartId: match?.id ?? null,
+src/islands/ChartCalculator.tsx:1516:  function chartIdentity() {
+src/islands/ChartCalculator.tsx:1519:      birth: {
+src/islands/ChartCalculator.tsx:1573:    if (!chartIdentity()) return;
+src/islands/ChartCalculator.tsx:1588:    const identity = chartIdentity();
+src/islands/ChartCalculator.tsx:1606:        birth: identity.birth,
+src/islands/ChartCalculator.tsx:1629:          chartId: match?.id ?? null,
+src/islands/ChartCalculator.tsx:1704:    const settled = ps.filter((placement) => placement.body !== 'Moon' || !moonIsUncertain(chart));
+src/islands/ChartCalculator.tsx:1709:          && (!moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))),
+src/islands/ChartCalculator.tsx:1939:              if (kind === 'moon' && moonIsUncertain(chart)) {
+src/islands/ChartCalculator.tsx:1946:                      {moonCandidates(chart).map((slug) => (
+src/islands/ChartCalculator.tsx:2057:            <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
+src/islands/ChartCalculator.tsx:2388:                  moonSignCandidates={moonCandidates(chart)}
+src/islands/ChartCalculator.tsx:2396:                  moonSignCandidates: chart.moonSignCandidates, angles: chart.angles, houses: chart.houses }}
+src/islands/ChartCalculator.tsx:2605:                            <td>{p.body === 'Moon' && moonIsUncertain(chart)
+src/lib/chart-signature.ts:5:import { moonCandidates, moonIsUncertain, moonLabel } from './moon-certainty';
+src/lib/chart-signature.ts:232:  chart: Pick<Chart, 'bodies' | 'angles' | 'moonSignCandidates'>,
+src/lib/chart-signature.ts:239:  const uncertainMoon = moonIsUncertain(chart);
+src/lib/chart-signature.ts:244:    ? body === 'Moon' ? [...moonCandidates(chart)] : [signForLongitude(placement.lon).slug]
+src/lib/chart-signature.ts:272:  chart: Pick<Chart, 'bodies' | 'angles' | 'aspects' | 'moonSignCandidates'>,
+src/lib/chart-signature.ts:275:  const uncertainMoon = moonIsUncertain(chart);
+src/islands/explorer/ReadingPath.tsx:9:import { moonCandidates, moonLabel } from '../../lib/moon-certainty';
+src/islands/explorer/ReadingPath.tsx:32:  moonSignCandidates?: readonly string[];
+src/islands/explorer/ReadingPath.tsx:146:  moonSignCandidates?: readonly string[];
+src/islands/explorer/ReadingPath.tsx:149:function BigThreeTile({ label, lon, entity, selection, onShow, moonSignCandidates }: BigThreeTileProps) {
+src/islands/explorer/ReadingPath.tsx:150:  if (label === 'Moon' && moonSignCandidates?.length !== 1) {
+src/islands/explorer/ReadingPath.tsx:155:        <strong>{moonLabel({ bodies: [], moonSignCandidates: moonSignCandidates ?? [] })}</strong>
+src/islands/explorer/ReadingPath.tsx:157:        {entity && <ShowButton entity={entity} subject="Moon at the reference time" selection={selection} onShow={onShow} />}
+src/islands/explorer/ReadingPath.tsx:209:  moonSignCandidates?: readonly string[];
+src/islands/explorer/ReadingPath.tsx:212:function PlacementList({ placements, housesKnown, selection, onShow, moonSignCandidates }: PlacementListProps) {
+src/islands/explorer/ReadingPath.tsx:223:          const uncertainMoon = placement.body === 'Moon' && moonSignCandidates?.length !== 1;
+src/islands/explorer/ReadingPath.tsx:225:            ? `${moonLabel({ bodies: [], moonSignCandidates: moonSignCandidates ?? [] })} · Birth time needed`
+src/islands/explorer/ReadingPath.tsx:243:                subject={uncertainMoon ? 'Moon at the reference time' : `${placement.body} in ${signName(sign)}`}
+src/islands/explorer/ReadingPath.tsx:257:function HouseMap({ placements, housesKnown, selection, onShow, moonSignCandidates }: PlaceMapProps) {
+src/islands/explorer/ReadingPath.tsx:267:            const occupants = placements.filter((placement) => !(placement.body === 'Moon' && moonSignCandidates?.length !== 1)
+src/islands/explorer/ReadingPath.tsx:303:          moonSignCandidates={moonSignCandidates}
+src/islands/explorer/ReadingPath.tsx:352:        moonSignCandidates={moonSignCandidates}
+src/islands/explorer/ReadingPath.tsx:451:  moonSignCandidates,
+src/islands/explorer/ReadingPath.tsx:462:  const possibleMoonSigns = moonCandidates({ bodies: placements, angles: housesKnown ? {} : null, moonSignCandidates });
+src/islands/explorer/ReadingPath.tsx:508:          intro="Use these three reference points to find your way around the wheel."
+src/islands/explorer/ReadingPath.tsx:520:              moonSignCandidates={possibleMoonSigns}
+src/islands/explorer/ReadingPath.tsx:551:            moonSignCandidates={possibleMoonSigns}
+src/islands/explorer/ReadingPath.tsx:596:        moonSignCandidates={moonSignCandidates} effectiveHouseSystem={effectiveHouseSystem}
+src/lib/share-positions-reading.ts:5:import { moonIsUncertain } from './moon-certainty';
+src/lib/share-positions-reading.ts:61:    topAspects: aspects.filter((aspect) => !moonIsUncertain(chart) || (aspect.a !== 'Moon' && aspect.b !== 'Moon'))
+src/server/chart-preview.ts:127:    : 'Sun and 12:00 reference Moon positions — birth details not included.';
+src/server/chart-preview-model.ts:55:      : '12:00 reference / No houses / Tropical',
+src/islands/explorer/tour/ChartTour.tsx:30:import { moonCandidates, moonIsUncertain, moonLabel } from '../../../lib/moon-certainty';
+src/islands/explorer/tour/ChartTour.tsx:97:  const uncertainMoon = moonAmbiguous || moonIsUncertain(chart);
+src/islands/explorer/tour/ChartTour.tsx:458:          {uncertainMoon && <p class="tour__note">{moonCandidates(chart).length === 2

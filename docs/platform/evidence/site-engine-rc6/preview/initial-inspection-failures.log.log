@@ -1,0 +1,3 @@
+Read .vercel/project.json: absent. Used connected Vercel list_teams and list_projects read-only tools.
+Initial qualification search included a missing evidence/site-receipt-export path; corrected to docs/platform/EVIDENCE.md lines1598 onward.
+Temporary share-link recognition initially failed because URL is unavailable in the functions V8 isolate; no browser attempt ran and no secret was printed. Exact hostname/query-shape matching recognized the connector-provided HTTPS URL; credential remained outside evidence.

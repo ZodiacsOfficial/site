@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ src/lib/time/civil-date.test.ts (64 tests) 9ms
+ ✓ src/lib/time/localToUtc.test.ts (53 tests) 171ms
+ ✓ src/lib/share.test.ts (48 tests) 160ms
+ ✓ src/lib/profile/polar-repair.test.ts (36 tests) 75ms
+
+ Test Files  4 passed (4)
+      Tests  201 passed (201)
+   Start at  20:50:59
+   Duration  943ms (transform 471ms, setup 0ms, collect 735ms, tests 414ms, environment 0ms, prepare 543ms)

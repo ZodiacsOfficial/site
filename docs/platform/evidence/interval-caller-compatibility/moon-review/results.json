@@ -1,0 +1,366 @@
+{
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tzdb": "2026a",
+  "rows": [
+    {
+      "date": "2011-12-30",
+      "zone": "Pacific/Apia",
+      "existingLookupResult": {
+        "phase": "First Quarter",
+        "angle": 75.17691062059356,
+        "illum": 0.3720823234117365,
+        "lon": 354.0309195142777,
+        "altLon": 0.09065097807234679,
+        "caption": "middayLocalCaption"
+      },
+      "existingDisplayedSigns": [
+        "pisces",
+        "aries"
+      ],
+      "calls": [
+        {
+          "name": "Moon",
+          "instant": "2011-12-30T22:00:00.000Z",
+          "hostWall": "12/31/2011, 12:00:00",
+          "inRequestedDate": false
+        },
+        {
+          "name": "Sun",
+          "instant": "2011-12-30T22:00:00.000Z",
+          "hostWall": "12/31/2011, 12:00:00",
+          "inRequestedDate": false
+        },
+        {
+          "name": "Moon",
+          "instant": "2011-12-30T10:00:00.000Z",
+          "hostWall": "12/31/2011, 00:00:00",
+          "inRequestedDate": false
+        },
+        {
+          "name": "Moon",
+          "instant": "2011-12-31T09:59:00.000Z",
+          "hostWall": "12/31/2011, 23:59:00",
+          "inRequestedDate": false
+        }
+      ],
+      "reviewedIntervals": {
+        "status": "empty",
+        "intervals": []
+      },
+      "actualIntervalEndpointObservations": [],
+      "qualification": "Finite host/known-transition control and actual engine behavior; endpoint observations do not certify all intervening Moon candidates."
+    },
+    {
+      "date": "1892-07-04",
+      "zone": "Pacific/Apia",
+      "existingLookupResult": {
+        "phase": "First Quarter",
+        "angle": 110.4993622352668,
+        "illum": 0.6750984775255835,
+        "lon": 212.89932220636365,
+        "altLon": 206.99389137436458,
+        "caption": "middayLocalCaption"
+      },
+      "existingDisplayedSigns": [
+        "scorpio",
+        "libra"
+      ],
+      "calls": [
+        {
+          "name": "Moon",
+          "instant": "1892-07-03T23:26:56.000Z",
+          "hostWall": "07/04/1892, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Sun",
+          "instant": "1892-07-03T23:26:56.000Z",
+          "hostWall": "07/04/1892, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "1892-07-03T11:26:56.000Z",
+          "hostWall": "07/04/1892, 00:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "1892-07-04T11:25:56.000Z",
+          "hostWall": "07/04/1892, 23:59:00",
+          "inRequestedDate": true
+        }
+      ],
+      "reviewedIntervals": {
+        "status": "existing",
+        "intervals": [
+          {
+            "start": -2445510784000,
+            "endExclusive": -2445337984000
+          }
+        ]
+      },
+      "actualIntervalEndpointObservations": [
+        {
+          "instant": "1892-07-03T11:26:56.000Z",
+          "longitude": 206.99389137436458,
+          "sign": "libra"
+        },
+        {
+          "instant": "1892-07-05T11:26:55.999Z",
+          "longitude": 230.71836447693204,
+          "sign": "scorpio"
+        }
+      ],
+      "qualification": "Finite host/known-transition control and actual engine behavior; endpoint observations do not certify all intervening Moon candidates."
+    },
+    {
+      "date": "1919-03-31",
+      "zone": "America/Toronto",
+      "existingLookupResult": {
+        "phase": "New Moon",
+        "angle": 357.02194679439486,
+        "illum": 0.0006752457709652826,
+        "lon": 6.908715565947205,
+        "altLon": null,
+        "caption": "middayLocalCaption"
+      },
+      "existingDisplayedSigns": [
+        "aries"
+      ],
+      "calls": [
+        {
+          "name": "Moon",
+          "instant": "1919-03-31T16:00:00.000Z",
+          "hostWall": "03/31/1919, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Sun",
+          "instant": "1919-03-31T16:00:00.000Z",
+          "hostWall": "03/31/1919, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "1919-03-31T05:00:00.000Z",
+          "hostWall": "03/31/1919, 01:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "1919-04-01T03:59:00.000Z",
+          "hostWall": "03/31/1919, 23:59:00",
+          "inRequestedDate": true
+        }
+      ],
+      "reviewedIntervals": {
+        "status": "existing",
+        "intervals": [
+          {
+            "start": -1601753400000,
+            "endExclusive": -1601668800000
+          }
+        ]
+      },
+      "actualIntervalEndpointObservations": [
+        {
+          "instant": "1919-03-31T04:30:00.000Z",
+          "longitude": 359.7145003582242,
+          "sign": "pisces"
+        },
+        {
+          "instant": "1919-04-01T03:59:59.999Z",
+          "longitude": 14.454372541038538,
+          "sign": "aries"
+        }
+      ],
+      "qualification": "Finite host/known-transition control and actual engine behavior; endpoint observations do not certify all intervening Moon candidates."
+    },
+    {
+      "date": "2009-11-01",
+      "zone": "America/St_Johns",
+      "existingLookupResult": {
+        "phase": "Full Moon",
+        "angle": 165.47115087044847,
+        "illum": 0.9840107241239167,
+        "lon": 24.81799535564511,
+        "altLon": 31.54650436250381,
+        "caption": "middayLocalCaption"
+      },
+      "existingDisplayedSigns": [
+        "aries",
+        "taurus"
+      ],
+      "calls": [
+        {
+          "name": "Moon",
+          "instant": "2009-11-01T15:30:00.000Z",
+          "hostWall": "11/01/2009, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Sun",
+          "instant": "2009-11-01T15:30:00.000Z",
+          "hostWall": "11/01/2009, 12:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "2009-11-01T02:30:00.000Z",
+          "hostWall": "11/01/2009, 00:00:00",
+          "inRequestedDate": true
+        },
+        {
+          "name": "Moon",
+          "instant": "2009-11-02T03:29:00.000Z",
+          "hostWall": "11/01/2009, 23:59:00",
+          "inRequestedDate": true
+        }
+      ],
+      "reviewedIntervals": {
+        "status": "existing",
+        "intervals": [
+          {
+            "start": 1257042600000,
+            "endExclusive": 1257042660000
+          },
+          {
+            "start": 1257046200000,
+            "endExclusive": 1257132600000
+          }
+        ]
+      },
+      "actualIntervalEndpointObservations": [
+        {
+          "instant": "2009-11-01T02:30:00.000Z",
+          "longitude": 17.610600569745884,
+          "sign": "aries"
+        },
+        {
+          "instant": "2009-11-01T02:30:59.999Z",
+          "longitude": 17.61977736422739,
+          "sign": "aries"
+        },
+        {
+          "instant": "2009-11-01T03:30:00.000Z",
+          "longitude": 18.16150845913279,
+          "sign": "aries"
+        },
+        {
+          "instant": "2009-11-02T03:29:59.999Z",
+          "longitude": 31.555916649703875,
+          "sign": "taurus"
+        }
+      ],
+      "qualification": "Finite host/known-transition control and actual engine behavior; endpoint observations do not certify all intervening Moon candidates."
+    }
+  ],
+  "stale": {
+    "oldCapturedInput": "2000-01-01",
+    "visibleEditedInput": "2000-06-15",
+    "oldCompletionResult": {
+      "phase": "Waning Crescent",
+      "angle": 302.9551524876556,
+      "illum": 0.22800879501896065,
+      "lon": 223.3238911274741,
+      "altLon": null,
+      "caption": "middayUtcCaption"
+    },
+    "freshEditedInputResult": {
+      "phase": "Full Moon",
+      "angle": 164.22433172908745,
+      "illum": 0.9811667678413301,
+      "lon": 248.9044490599416,
+      "altLon": null,
+      "caption": "middayUtcCaption"
+    },
+    "oldResultCommittedAfterEdit": true,
+    "resultContainsDateIdentity": false,
+    "qualification": "Exact production closure executed with observable setters and a controlled pending loader; enabled edit controls and missing revision checks are confirmed in copied source. Not a DOM/browser timing claim."
+  },
+  "staleError": {
+    "existingResultPreservedAfterFailedNewInput": true,
+    "errorKey": "moonError",
+    "busy": false
+  },
+  "finitePhaseNameControls": [
+    {
+      "date": "2024-01-01",
+      "startPhase": "Waning Gibbous",
+      "endPhase": "Waning Gibbous",
+      "startAngle": 235.95072882786553,
+      "endAngle": 246.73462142533936,
+      "phaseChanged": false
+    },
+    {
+      "date": "2024-01-03",
+      "startPhase": "Last Quarter",
+      "endPhase": "Last Quarter",
+      "startAngle": 257.4937574854848,
+      "endAngle": 268.325173429801,
+      "phaseChanged": false
+    },
+    {
+      "date": "2024-01-09",
+      "startPhase": "Waning Crescent",
+      "endPhase": "New Moon",
+      "startAngle": 326.89225045951935,
+      "endAngle": 339.8501861647983,
+      "phaseChanged": true
+    },
+    {
+      "date": "2024-01-16",
+      "startPhase": "Waxing Crescent",
+      "endPhase": "First Quarter",
+      "startAngle": 61.607551022159896,
+      "endAngle": 74.88759045901679,
+      "phaseChanged": true
+    },
+    {
+      "date": "2024-01-24",
+      "startPhase": "Full Moon",
+      "endPhase": "Full Moon",
+      "startAngle": 160.11196986839786,
+      "endAngle": 171.49088834826398,
+      "phaseChanged": false
+    },
+    {
+      "date": "2024-04-07",
+      "startPhase": "Waning Crescent",
+      "endPhase": "New Moon",
+      "startAngle": 335.3730218727469,
+      "endAngle": 349.4486196562066,
+      "phaseChanged": true
+    },
+    {
+      "date": "2024-04-13",
+      "startPhase": "Waxing Crescent",
+      "endPhase": "First Quarter",
+      "startAngle": 56.72053524783405,
+      "endAngle": 68.99969713799874,
+      "phaseChanged": true
+    },
+    {
+      "date": "2024-04-14",
+      "startPhase": "First Quarter",
+      "endPhase": "First Quarter",
+      "startAngle": 68.99969727760617,
+      "endAngle": 80.85741348056945,
+      "phaseChanged": false
+    },
+    {
+      "date": "2024-04-15",
+      "startPhase": "First Quarter",
+      "endPhase": "First Quarter",
+      "startAngle": 80.85741361552573,
+      "endAngle": 92.34674010237359,
+      "phaseChanged": false
+    }
+  ],
+  "defaultIntervalCapability": {
+    "status": "unresolved",
+    "reason": "provider-unavailable"
+  }
+}

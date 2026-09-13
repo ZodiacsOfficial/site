@@ -1,0 +1,26 @@
+[
+  {
+    "argv": [
+      "git",
+      "clone",
+      "--shared",
+      "--no-checkout",
+      "/Users/chiburashka/.codex/worktrees/4806/site",
+      "/private/tmp/zodiacs-platform-site-seconds-receipt-companion"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "Cloning into '/private/tmp/zodiacs-platform-site-seconds-receipt-companion'...\ndone.\n"
+  },
+  {
+    "argv": [
+      "git",
+      "checkout",
+      "--detach",
+      "804c70309d2508e67e8462df526b5f9e71a112e9"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "HEAD is now at 804c7030 Add private calculation receipt download and preserve deliberate hydration input\n"
+  }
+]

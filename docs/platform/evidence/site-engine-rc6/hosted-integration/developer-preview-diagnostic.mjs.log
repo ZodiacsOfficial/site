@@ -1,0 +1,12 @@
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { chromium } from '/Users/chiburashka/.codex/worktrees/4806/site/node_modules/playwright-core/index.mjs';
+const out='/private/tmp/zodiacs-platform-rc6-release/developer-diagnostic';await mkdir(out,{recursive:true});
+const browser=await chromium.launch({executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true});
+try{
+ const auth=JSON.parse(await readFile('/private/tmp/zodiacs-platform-rc6-release/preview-auth.json','utf8'));const initial=await browser.newContext();let cookies;
+ try{const page=await initial.newPage();await page.goto(auth.url,{waitUntil:'networkidle'});cookies=await initial.cookies();}catch{throw Error('Preview access did not complete')}finally{await initial.close()}
+ const context=await browser.newContext();await context.addCookies(cookies);const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.name));
+ const response=await page.goto('https://zodiacs-4qqy7ml63-zodiacsofficial.vercel.app/developers/',{waitUntil:'networkidle'});
+ const result={status:response.status(),location:new URL(page.url()).origin+new URL(page.url()).pathname,title:await page.title(),footerCount:await page.locator('footer').count(),footerClasses:await page.locator('footer').evaluateAll(es=>es.map(e=>e.className)),text:await page.locator('body').innerText(),errors};
+ await page.screenshot({path:out+'/developers.png',fullPage:true});await writeFile(out+'/result.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({...result,text:result.text.slice(0,2500)}));await context.close();
+}finally{await browser.close()}

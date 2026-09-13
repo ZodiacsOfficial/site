@@ -1,0 +1,1528 @@
+{
+  "node": "v22.23.2",
+  "sourceIdentitySha256": "79c79036ac4ae1b5dd8a5478b8cb837d249e198ebf2064e80c5e00de62859a79",
+  "driverSha256": "51538c94b8f8ed0f31fbb307dd98c62e7818f55c3a7e526323d1ad917f0f6be8",
+  "profileInitialSha256": "bb626ca8106e42376f436c49505069882090eb6967f20ffa1db32920dd251a05",
+  "phase": "edit-refusal-recovery",
+  "requests": [
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/birth-chart/",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/fonts/instrument-sans-latin-wght-normal.woff2",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/fonts/eb-garamond-latin-400-normal.woff2",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/fonts/eb-garamond-latin-500-normal.woff2",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/Base.Bryss0yT.css",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/calculator.MBHg3tIV.css",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/explorer.ijMRUwvv.css",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/ChartActionDock.Cc8zzTbx.css",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/EmailCaptureEnhancement.astro_astro_type_script_index_0_lang.CNNz1T1u.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/PostChartDailyBrief.pO3UMUER.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/client.DPkn9Lbl.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/preload-helper.L5lOfJxi.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/ChartCalculator.qr7ePXAW.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/preact.module.Bjq9tLsx.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/hooks.module.C0_8FjiD.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/profile-access-reader.DoQqlSjt.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/post-chart-context.cHI09JaB.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/context-help-client.BqVrBbz0.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/analytics.CH5T6e-b.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/signs.BMXPKoMF.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/PlanetGlyph.BhITbtcc.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/i18n.Cg_lCJuc.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/CalculationReload.DXyGkRsn.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/astrology.BHib5efU.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/share.BRlg0eGS.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chart-handoff.Dvz2AAcL.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/useEngine.BV92cVg4.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/BirthFields.VmY_J4-2.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/localToUtc.CKDDLf-o.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/interpretations.BaZkYN67.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/AstroTerm.7K8SAipO.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/SignChip.Dx3tQVZl.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/AspectGlyph.DMIAGIQV.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/Wheel.RNRSqGob.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/dignities.BycBkP8Y.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/houses.5SlbILVS.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/technical-layout.DQIjXHHb.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/lite.DKWHZC5_.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/learning-input-identity.C-WLv51I.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/favicon.svg",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/sync._hAAXu9f.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/schema.DqKqbGHb.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/read-store.CIuzJaHq.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/deletions.DUQYISzq.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/store.CwXe3dEm.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/client.DWKO6fmW.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/paths.DYbAuceH.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/civil-date.CpOZUt7Z.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/technical-locales.DDKucXXd.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/PlaceSearch.D1WsU_jW.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/auth/v1/user",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/profiles",
+      "search": "?select=settings&user_id=eq.110e8400-e29b-41d4-a716-446655440000",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/charts",
+      "search": "?select=id%2Cpayload%2Cupdated_at&user_id=eq.110e8400-e29b-41d4-a716-446655440000",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/chart_deletions",
+      "search": "?select=id%2Cdeleted_at&user_id=eq.110e8400-e29b-41d4-a716-446655440000",
+      "phase": "startup"
+    },
+    {
+      "method": "POST",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/profiles",
+      "search": "?on_conflict=user_id",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chart-signature.-is-2T7w.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/natal.D7JKDSdx.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/synastry.rhUg9_9F.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/aspects.BNC-J2iD.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/compat.Bjc3uaB7.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/ChartActionDock.B-renUC-.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/LearningPractice.CSqTNZrv.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chart-context-copy.UBOz97Jz.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/AspectPatternFeature.JIFgyNsc.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/use-learning-sources.DJlsz2nj.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/full.AQ--_mi-.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/chart-adapter.K-QfJlbI.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/favicon.svg",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/calculator-receipt.Sj7p-7nE.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/PositionsShareSurface.DT0CW1_r.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/share-positions.D3o0ugj4.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/share-card.DovPi6oZ.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/share-card-brand.CJKZtcRK.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/share-card-copy.D0c42nic.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/CommunicationRead.ooCKD9f4.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/ApproachRead.Bcve0KbT.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/a2hs.WonhOqdm.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/cancer.avif",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.avif",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.avif",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/daily-email-client.bT6sKl-Y.js",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/api/email/chart-preference",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/charts",
+      "search": "?select=id&user_id=eq.110e8400-e29b-41d4-a716-446655440000",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/fonts/eb-garamond-latin-400-italic.woff2",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/site-footer.css",
+      "search": "",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/assistant-ui.js",
+      "search": "?v=ask-guide-3",
+      "phase": "startup"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/assistant-ui.css",
+      "search": "?v=ask-guide-3",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/guide-avatar.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/_astro/search.BXcwbrsc.js",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/data/cities/index.json",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/data/cities/a.json",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.avif",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aries.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/gemini.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/cancer.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/leo.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/libra.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/scorpio.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/capricorn.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/aquarius.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/pisces.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/sagittarius.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/zodiac-icons/128/virgo.webp",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/api/email/chart-preference",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/charts",
+      "search": "?select=id&user_id=eq.110e8400-e29b-41d4-a716-446655440000",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    },
+    {
+      "method": "GET",
+      "origin": "http://127.0.0.1:4397",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "search": "",
+      "phase": "edit-refusal-recovery"
+    }
+  ],
+  "blockedMutations": [
+    {
+      "method": "POST",
+      "origin": "https://phase3-test.supabase.co",
+      "path": "/rest/v1/profiles",
+      "search": "?on_conflict=user_id",
+      "phase": "startup",
+      "reason": "Intercepted before external network; returned local 418"
+    }
+  ],
+  "unexpected": [],
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 418 (I'm a teapot)",
+    "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:4397/_astro/ChartCalculator.qr7ePXAW.js:2:24633)\n    at ci (http://127.0.0.1:4397/_astro/ChartCalculator.qr7ePXAW.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:4397/_astro/preact.module.Bjq9tLsx.js:1:4446)"
+  ],
+  "requestFailures": [],
+  "checkpoints": [
+    {
+      "label": "initial-success-and-pending-panel",
+      "global": {
+        "mode": "full",
+        "sunSign": "cancer",
+        "chartId": "220e8400-e29b-41d4-a716-446655440000",
+        "contextId": 2
+      },
+      "resultCount": 1,
+      "actionsCount": 1,
+      "error": null,
+      "errorFocused": false,
+      "date": "1907-07-06",
+      "timeDisabled": false,
+      "place": "Coyoacán, Mexico",
+      "daily": [
+        {
+          "hidden": false,
+          "state": "pending",
+          "managed": "true"
+        }
+      ],
+      "events": [
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-computed",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "contextId": 2
+          },
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "chartId": "220e8400-e29b-41d4-a716-446655440000",
+            "contextId": 2
+          },
+          "globalAbsent": false
+        }
+      ],
+      "profileWrites": [
+        {
+          "bytes": "{\"version\":1,\"settings\":{\"houseSystem\":\"whole\"},\"charts\":[{\"id\":\"220e8400-e29b-41d4-a716-446655440000\",\"name\":\"Synthetic stored chart\",\"createdAt\":\"2026-07-01T00:00:00.000Z\",\"updatedAt\":\"2026-07-01T00:00:00.000Z\",\"birth\":{\"date\":\"1907-07-06\",\"time\":\"08:30\",\"timeKnown\":true,\"place\":{\"name\":\"Coyoacán\",\"admin1\":\"Ciudad de México\",\"country\":\"MX\",\"lat\":19.35,\"lon\":-99.16,\"tz\":\"America/Mexico_City\"}},\"summary\":{\"engineVersion\":\"test\",\"utcISO\":\"1907-07-06T15:06:36.000Z\",\"houseSystem\":\"whole\",\"bodies\":[{\"body\":\"Sun\",\"lon\":103.91,\"retrograde\":false}],\"angles\":{\"asc\":143.2,\"mc\":58.4},\"flags\":[]}}]}",
+          "sameAsOriginal": true
+        }
+      ],
+      "profileSha256": "bb626ca8106e42376f436c49505069882090eb6967f20ffa1db32920dd251a05",
+      "preferenceReads": 1
+    },
+    {
+      "label": "native-input-edit-clears-old-chart",
+      "global": null,
+      "resultCount": 0,
+      "actionsCount": 0,
+      "error": null,
+      "errorFocused": false,
+      "date": "2011-12-30",
+      "timeDisabled": true,
+      "place": "Apia · Tuamasaga, Samoa",
+      "daily": [
+        {
+          "hidden": true,
+          "state": null,
+          "managed": "true"
+        }
+      ],
+      "events": [
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-computed",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "contextId": 2
+          },
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "chartId": "220e8400-e29b-41d4-a716-446655440000",
+            "contextId": 2
+          },
+          "globalAbsent": false
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        }
+      ],
+      "profileWrites": [
+        {
+          "bytes": "{\"version\":1,\"settings\":{\"houseSystem\":\"whole\"},\"charts\":[{\"id\":\"220e8400-e29b-41d4-a716-446655440000\",\"name\":\"Synthetic stored chart\",\"createdAt\":\"2026-07-01T00:00:00.000Z\",\"updatedAt\":\"2026-07-01T00:00:00.000Z\",\"birth\":{\"date\":\"1907-07-06\",\"time\":\"08:30\",\"timeKnown\":true,\"place\":{\"name\":\"Coyoacán\",\"admin1\":\"Ciudad de México\",\"country\":\"MX\",\"lat\":19.35,\"lon\":-99.16,\"tz\":\"America/Mexico_City\"}},\"summary\":{\"engineVersion\":\"test\",\"utcISO\":\"1907-07-06T15:06:36.000Z\",\"houseSystem\":\"whole\",\"bodies\":[{\"body\":\"Sun\",\"lon\":103.91,\"retrograde\":false}],\"angles\":{\"asc\":143.2,\"mc\":58.4},\"flags\":[]}}]}",
+          "sameAsOriginal": true
+        }
+      ],
+      "profileSha256": "bb626ca8106e42376f436c49505069882090eb6967f20ffa1db32920dd251a05",
+      "preferenceReads": 1
+    },
+    {
+      "label": "skipped-date-dedicated-focused-refusal",
+      "global": null,
+      "resultCount": 0,
+      "actionsCount": 0,
+      "error": "We couldn’t establish a calculation time within this local date. Check the date and place.",
+      "errorFocused": true,
+      "date": "2011-12-30",
+      "timeDisabled": true,
+      "place": "Apia · Tuamasaga, Samoa",
+      "daily": [
+        {
+          "hidden": true,
+          "state": null,
+          "managed": "true"
+        }
+      ],
+      "events": [
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-computed",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "contextId": 2
+          },
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "chartId": "220e8400-e29b-41d4-a716-446655440000",
+            "contextId": 2
+          },
+          "globalAbsent": false
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        }
+      ],
+      "profileWrites": [
+        {
+          "bytes": "{\"version\":1,\"settings\":{\"houseSystem\":\"whole\"},\"charts\":[{\"id\":\"220e8400-e29b-41d4-a716-446655440000\",\"name\":\"Synthetic stored chart\",\"createdAt\":\"2026-07-01T00:00:00.000Z\",\"updatedAt\":\"2026-07-01T00:00:00.000Z\",\"birth\":{\"date\":\"1907-07-06\",\"time\":\"08:30\",\"timeKnown\":true,\"place\":{\"name\":\"Coyoacán\",\"admin1\":\"Ciudad de México\",\"country\":\"MX\",\"lat\":19.35,\"lon\":-99.16,\"tz\":\"America/Mexico_City\"}},\"summary\":{\"engineVersion\":\"test\",\"utcISO\":\"1907-07-06T15:06:36.000Z\",\"houseSystem\":\"whole\",\"bodies\":[{\"body\":\"Sun\",\"lon\":103.91,\"retrograde\":false}],\"angles\":{\"asc\":143.2,\"mc\":58.4},\"flags\":[]}}]}",
+          "sameAsOriginal": true
+        }
+      ],
+      "profileSha256": "bb626ca8106e42376f436c49505069882090eb6967f20ffa1db32920dd251a05",
+      "preferenceReads": 1
+    },
+    {
+      "label": "valid-date-recovers-current-result-and-context",
+      "global": {
+        "mode": "full",
+        "sunSign": "capricorn",
+        "chartId": null,
+        "contextId": 14
+      },
+      "resultCount": 1,
+      "actionsCount": 1,
+      "error": null,
+      "errorFocused": false,
+      "date": "2011-12-31",
+      "timeDisabled": true,
+      "place": "Apia · Tuamasaga, Samoa",
+      "daily": [
+        {
+          "hidden": false,
+          "state": "device-only",
+          "managed": "true"
+        }
+      ],
+      "events": [
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-computed",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "contextId": 2
+          },
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context",
+          "detail": {
+            "mode": "full",
+            "sunSign": "cancer",
+            "chartId": "220e8400-e29b-41d4-a716-446655440000",
+            "contextId": 2
+          },
+          "globalAbsent": false
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context-cleared",
+          "detail": null,
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-computed",
+          "detail": {
+            "mode": "full",
+            "sunSign": "capricorn",
+            "contextId": 14
+          },
+          "globalAbsent": true
+        },
+        {
+          "type": "zodiacs:chart-context",
+          "detail": {
+            "mode": "full",
+            "sunSign": "capricorn",
+            "chartId": null,
+            "contextId": 14
+          },
+          "globalAbsent": false
+        }
+      ],
+      "profileWrites": [
+        {
+          "bytes": "{\"version\":1,\"settings\":{\"houseSystem\":\"whole\"},\"charts\":[{\"id\":\"220e8400-e29b-41d4-a716-446655440000\",\"name\":\"Synthetic stored chart\",\"createdAt\":\"2026-07-01T00:00:00.000Z\",\"updatedAt\":\"2026-07-01T00:00:00.000Z\",\"birth\":{\"date\":\"1907-07-06\",\"time\":\"08:30\",\"timeKnown\":true,\"place\":{\"name\":\"Coyoacán\",\"admin1\":\"Ciudad de México\",\"country\":\"MX\",\"lat\":19.35,\"lon\":-99.16,\"tz\":\"America/Mexico_City\"}},\"summary\":{\"engineVersion\":\"test\",\"utcISO\":\"1907-07-06T15:06:36.000Z\",\"houseSystem\":\"whole\",\"bodies\":[{\"body\":\"Sun\",\"lon\":103.91,\"retrograde\":false}],\"angles\":{\"asc\":143.2,\"mc\":58.4},\"flags\":[]}}]}",
+          "sameAsOriginal": true
+        }
+      ],
+      "profileSha256": "bb626ca8106e42376f436c49505069882090eb6967f20ffa1db32920dd251a05",
+      "preferenceReads": 2
+    }
+  ],
+  "qualification": "Actual combined Astro birth-chart page and native city selector, using the unchanged installed browser engine. Only synthetic session/profile and documented P3 backend responses are fixtures. Natural legacy auth startup attempts one cloud-sync POST, intercepted and blocked locally; measured edit/refusal/recovery must attempt no additional mutation. No real authentication, subscriber, provider, network-issued/completed write, production or deployed-state claim.",
+  "browser": "152.0.7977.83",
+  "origin": "http://127.0.0.1:4397",
+  "selectedOption": "Apia\nTuamasaga, Samoa",
+  "expectedDiagnostics": {
+    "sourceLoggedRefusal": [
+      "Error: Could not establish a calculation time within the local date.\n    at oi (http://127.0.0.1:4397/_astro/ChartCalculator.qr7ePXAW.js:2:24633)\n    at ci (http://127.0.0.1:4397/_astro/ChartCalculator.qr7ePXAW.js:2:28504)\n    at HTMLFormElement.<anonymous> (http://127.0.0.1:4397/_astro/preact.module.Bjq9tLsx.js:1:4446)"
+    ],
+    "locallyBlockedStartupSync": [
+      "Failed to load resource: the server responded with a status of 418 (I'm a teapot)"
+    ]
+  },
+  "measurement": {
+    "startupAttemptedPosts": 1,
+    "startupBlockedPosts": 1,
+    "flowAttemptedPosts": 0,
+    "allNetworkIssuedMutations": 0,
+    "allNetworkCompletedMutations": 0,
+    "preferenceReadsBeforeRefusal": 1,
+    "preferenceReadsAtRefusal": 1,
+    "preferenceReadsAfterRecovery": 2,
+    "profileBytesUnchanged": true,
+    "flowProfileWrites": 0
+  },
+  "outcome": "passed",
+  "cleanup": "Owned browser contexts/browser and foreground Astro preview closed; no production/account backend operation."
+}

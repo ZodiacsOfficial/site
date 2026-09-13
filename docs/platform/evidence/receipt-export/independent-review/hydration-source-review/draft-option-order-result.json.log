@@ -1,0 +1,45 @@
+{
+  "at": "2026-09-08T06:09:44.088Z",
+  "node": "v22.23.2",
+  "source": "/private/tmp/zodiacs-platform-site-receipt-export/src/client-directives/interaction.ts",
+  "sourceSha256": "1d690aec157e3c7d2adc89ddd5c446047390b7c49e50a0535fe334ed567b6a52",
+  "bundleSha256": "a368cb69394c0209d32a566374dd4bac4f799ffc6336e0141c36be970ddd7ca5",
+  "checks": [
+    {
+      "replaced": false,
+      "expected": "b",
+      "actual": "a",
+      "options": [
+        {
+          "value": "b",
+          "selected": false
+        },
+        {
+          "value": "a",
+          "selected": true
+        }
+      ]
+    },
+    {
+      "replaced": true,
+      "expected": "b",
+      "actual": "a",
+      "options": [
+        {
+          "value": "b",
+          "selected": false
+        },
+        {
+          "value": "a",
+          "selected": true
+        }
+      ]
+    }
+  ],
+  "browser": "152.0.7977.83",
+  "cleanup": {
+    "browserClosed": true,
+    "serverClosed": true
+  },
+  "harnessSha256": "6090e548a39a59a98b22693d0be259f7be4cd8ba859bc4d10c643c055026faaa"
+}

@@ -1,0 +1,5 @@
+
+> zodiacs-org@1.0.0 data:assistant-context
+> vite-node --script scripts/build-assistant-context.mjs
+
+assistant-context: 50033 bytes · 53 static pages · 159 learn guides · 145 glossary terms

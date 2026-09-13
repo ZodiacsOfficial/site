@@ -1,0 +1,87 @@
+{
+  "recordedAt": "2026-09-07T22:35:52.246021+00:00",
+  "sourceToEvidence": [
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-receipt-tests-initial.log",
+      "evidence": "tests-loopback-restricted.log",
+      "sha256": "2f46b585e120cd1a5de828d8f09750fe994af1ed05a6715ea3bf7a829ad33b7a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-receipt-tests-local-final.log",
+      "evidence": "tests-local-final.log",
+      "sha256": "fb78de2159b82d07ee969a08a2c213313ff4ea787de8c8f3b2eb3ed576c5a685"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-receipt-build-final.log",
+      "evidence": "build-local-final.log",
+      "sha256": "5c5310740c70a4bbc47e6661865050c543856d1e77bc32b1327801f8af9c93fe"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-decouple-ephemeris-fixture-tests-final.log",
+      "evidence": "verifier-synthetic-fixture-tests.log",
+      "sha256": "10d6303583f06765ae3de25644f3eab4a694c6b00cf89c5a54263d98af3c773e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-decouple-fixture-cli.log",
+      "evidence": "verifier-synthetic-fixture-cli.log",
+      "sha256": "a7464301950b2605c9cc391a96e7b2592d5158a87ff10d1883c31bc077a9e06b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-evidence/starter-decouple-red.log",
+      "evidence": "verifier-decouple-red.log",
+      "sha256": "d7e4885ad7c034e18edc178fed3a3fd973fb7b1c99691c5187874a5c561b7a90"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-browser-prepack/browser.json",
+      "evidence": "browser-prepack-initial.json",
+      "sha256": "5d3c0ad237658666eb966dc14bc735744bb68cdea7a72be0eeb4cc1719a674b7"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/REVIEW.md",
+      "evidence": "build-review-initial.md",
+      "sha256": "3fdc581589167244e6b817c7df422ed8bd373f2ba98b0a2c4ad145ca4999e03a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/result.json",
+      "evidence": "build-review-initial.json",
+      "sha256": "05cd1333cf5b7de2ef572b9f199550976fc70066b5b8c5144c2c8d62245e4010"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/final/REVIEW.md",
+      "evidence": "build-review-final.md",
+      "sha256": "7fa4aeaf3ae96a281bc0e9190b0e550ce1fcc6fa3b781b5b71d60e2dcb7ecfb6"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/final/result.json",
+      "evidence": "build-review-final.json",
+      "sha256": "1725feba313f76e032025f2357076436ff628538001beaae7fe109e0567a441b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/final/all-output-stability.json",
+      "evidence": "build-rejection-output-stability.json",
+      "sha256": "a602a4f3b50cc7ea62e4f1fc7b494ece417f4f9e4aa817d4b94dfc13e9763cc9"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-build-review/final/probe.mjs",
+      "evidence": "build-probe.mjs.log",
+      "sha256": "b593a316c19138960c207d6c18faa52775c66211b863aecb1bfb1276d92f64fe"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-implementation/result.json",
+      "evidence": "implementation-focused.json",
+      "sha256": "424b93836d7facc0b6719fab01bee9923aef1fcde8db3cf7f7f6f8ac6813b067"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-starter-receipt-implementation/ephemeris-result.json",
+      "evidence": "implementation-ephemeris.json",
+      "sha256": "77d5bf822a61dc40d8618d557e4d38e39db3eee4ae08964e4a0e02a74d124daa"
+    }
+  ],
+  "limits": [
+    "All birth inputs and imported records are synthetic.",
+    "Initial pre-pack browser: 222 of 223 reported assertions passed; widget mobile focus finding remains unresolved in this record.",
+    "Verifier tests use a synthetic rc.3 archive fixture; real packed/public rc.3 verification is pending.",
+    "Build review rejected nested ephemeris before writes; all eight existing outputs preserved.",
+    "Restricted-loopback EPERM is retained separately from the successful local-server test."
+  ]
+}

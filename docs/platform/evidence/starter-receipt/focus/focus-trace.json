@@ -1,0 +1,5035 @@
+{
+  "observedAt": "2026-09-07T22:32:36.888Z",
+  "browser": "152.0.7977.83",
+  "plan": "Fixed 16 cases chosen before execution; six immediate mobile contexts per unchanged widget version, desktop controls, then strict settled-focus controls. No retry-until-green.",
+  "runs": [
+    {
+      "label": "rc3-390-immediate-0",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 0,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820299261.1,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820299267.3,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820299292.5,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820297082.8,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820297085.6,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820297232,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820297232.1,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820297232.2,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820297232.2,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299235,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299235.9001,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299235.9001,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299236.3,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299269.9001,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299270,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299270.1,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299278.1,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820299236.1,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299237.8,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299237.8,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299239.6,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299268.6,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299268.7,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299268.7,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820299268.8,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-immediate-1",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 1,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820303139,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820303147.8,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820303153.4,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820300177.6,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820300177.6,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820300214.3,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820300214.3,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820300214.4,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820300214.4,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303126.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303126.8,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303126.8,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303127.1,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303127.1,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303147.9,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303148,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303148,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303150.1,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820303129.6,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303129.7,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303129.7,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303149.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303149.8,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303149.8,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303149.8,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-immediate-2",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 2,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820306921,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820306928.9001,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820306942.6,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820303939.8,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303939.8,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303978.9001,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303979,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303979,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820303979,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306906.1,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306906.2,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306906.2,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306906.5,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306928.8,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306929,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306929,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306933.4001,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820306908.3,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306908.4001,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306908.4001,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306908.5,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306930.1,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306930.2,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306930.2,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820306930.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-immediate-3",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 3,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820310765.1,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820310776.4,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820310799.9001,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820307745.2002,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820307745.2002,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820307784.2002,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820307784.2002,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820307784.3,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820307784.3,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310750.7002,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310750.9001,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310750.9001,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310751.2002,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310751.2002,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310779.5,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310779.7002,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310779.8,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310779.8,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820310752.6,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310752.8,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310752.8,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310780,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310780.2,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310780.2,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820310780.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-immediate-4",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 4,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820314594.5,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820314605,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820314612.9001,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820311611.3,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820311611.3,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820311641,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820311641,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820311641,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820311641,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314576.9001,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314577.1,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314577.1,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314577.6,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314577.7,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.2,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.3,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.4001,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314607.1,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820314578.7,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314578.9,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314578.9,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.8,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.9,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.9,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820314606.9,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-immediate-5",
+      "version": "rc3",
+      "width": 390,
+      "method": "immediate",
+      "index": 5,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820318604.6,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820318613.7,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820318631.8,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820315421.1,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820315421.1,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820315474.7,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820315474.8,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820315474.8,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820315474.8,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318581,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318581.3,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318581.3,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318582.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318614.4,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318614.6,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318614.6,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318614.6,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820318583.0999,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318583.4,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318583.4,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318594.0999,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318615,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318615.0999,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318615.0999,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820318615.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-0",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 0,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820322675.7,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820322681.5,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820322697.5,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820319547.8,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820319547.9001,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820319587.5,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820319587.5,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820319587.5,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820319587.5,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322667.6,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322667.7,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322667.7,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322668,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322668,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.6,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.8,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.8,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322685.8,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820322668.7,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322668.7998,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322668.7998,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.7998,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.7998,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820322684.7998,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-1",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 1,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820326416.2,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820326426.2002,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820326435.5,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820323500,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820323500,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820323537.2,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820323537.2,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820323537.2,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820323537.2,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326399.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326399.8,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326399.9,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326400.2,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326400.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326427.8,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326428,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326428,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820326400.7002,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326400.9001,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326400.9001,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326427.5,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326427.6,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326427.6,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820326427.7002,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        },
+        {
+          "time": 1788820326428.4001,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-2",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 2,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820330246.2,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820330250.5,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820330256.5,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820327262.3,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820327262.4,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820327299.5,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820327299.5999,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820327299.7,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820327299.7,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330228.5999,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330228.5999,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330228.5999,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330229.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330251.8,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330252,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330252,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330253.0999,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820330229.6,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330229.7002,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330229.7002,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330236.9001,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330251.8,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330251.9001,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330251.9001,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820330252,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-3",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 3,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820333985.7,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820333990.9001,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820333996.8,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820331054.4,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820331054.4,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820331097.3,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820331097.3,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820331097.4,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820331097.4,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333974.5999,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333974.8,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333974.8,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333975.3,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.5999,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.7,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.7,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820333975.5,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333975.7002,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333975.7002,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333975.9001,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.5,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.6,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.6,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820333992.6,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        },
+        {
+          "time": 1788820333992.9001,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-4",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 4,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820337833,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820337841.0999,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820337848.5,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820334827.9001,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820334827.9001,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820334859.3,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820334859.4001,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820334859.4001,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820334859.4001,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821.3,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821.4001,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337843,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337843.2002,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337843.2002,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337844.5,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820337821.4,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821.5,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337821.5,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337842.4,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337842.5,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337842.5,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820337842.5999,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-immediate-5",
+      "version": "rc2",
+      "width": 390,
+      "method": "immediate",
+      "index": 5,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820341581.0999,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820341591.8,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820341603.2998,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820338655.2998,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820338655.2998,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820338695.7,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820338695.7,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820338695.7,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820338695.7,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.0999,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.0999,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.0999,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.2998,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.5,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.4,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.7,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.7,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341594.0999,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820341571.6,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.8,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341571.8,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.2,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.2,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820341593.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-1280-immediate-0",
+      "version": "rc3",
+      "width": 1280,
+      "method": "immediate",
+      "index": 0,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820345379.0999,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820345384.2,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820345394.2998,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820342404.5999,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820342404.5999,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820342435.2,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820342435.2998,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820342435.2998,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820342435.2998,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345363.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345363.7998,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345363.7998,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345364.4,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345387.0999,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345387.2,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345387.2998,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820345364.4,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345364.5999,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345364.5999,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345369.7,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345385.5999,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345385.8,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345385.9,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820345386,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        },
+        {
+          "time": 1788820345387.8,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-1280-immediate-0",
+      "version": "rc2",
+      "width": 1280,
+      "method": "immediate",
+      "index": 0,
+      "steps": [
+        {
+          "key": 0,
+          "focus": {
+            "time": 1788820349151.7,
+            "tag": "IFRAME",
+            "href": null,
+            "id": "",
+            "hasFocus": true
+          },
+          "child": {
+            "time": 1788820349159.9,
+            "focused": true,
+            "hasFocus": true,
+            "active": "A"
+          }
+        },
+        {
+          "key": 1,
+          "focus": {
+            "time": 1788820349170.1,
+            "tag": "A",
+            "href": "https://zodiacs.org/today/",
+            "id": "",
+            "hasFocus": true
+          },
+          "child": null
+        }
+      ],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "parentTrace": [
+        {
+          "time": 1788820346194.6,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820346194.6,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820346238.9,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820346238.9,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820346238.9,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820346238.9,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349142.7,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349142.8,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349142.9,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349143.1,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349143.2,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349162,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349162.2,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349162.2,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349164.4,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820349143.3,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349143.5,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349143.5,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349161.3,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349161.4,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349161.4,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349161.5,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc3-390-settled-0",
+      "version": "rc3",
+      "width": 390,
+      "method": "settled",
+      "index": 0,
+      "steps": [],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "immediateParent": {
+        "tag": "IFRAME",
+        "id": "",
+        "href": null
+      },
+      "frameReachedAt": 23,
+      "parentTrace": [
+        {
+          "time": 1788820349952.9,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349952.9,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349993.2998,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349993.2998,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349993.5,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820349993.5,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.2,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.2998,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.2998,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.7998,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.7998,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352948.5999,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352948.7,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352948.7,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352948.7998,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820352868.8,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352868.9001,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352869,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352947.6,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352947.8,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352947.8,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820352947.9001,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    },
+    {
+      "label": "rc2-390-settled-0",
+      "version": "rc2",
+      "width": 390,
+      "method": "settled",
+      "index": 0,
+      "steps": [],
+      "reachedFrame": true,
+      "reachedFallback": true,
+      "immediateParent": {
+        "tag": "IFRAME",
+        "id": "",
+        "href": null
+      },
+      "frameReachedAt": 21,
+      "parentTrace": [
+        {
+          "time": 1788820353777.4001,
+          "type": "focus",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820353777.4001,
+          "type": "focusin",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "INPUT",
+          "activeId": "accent",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820353811.6,
+          "type": "blur",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820353811.7002,
+          "type": "focusout",
+          "key": null,
+          "target": "INPUT",
+          "id": "accent",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820353811.7002,
+          "type": "focus",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820353811.7002,
+          "type": "focusin",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.2002,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BUTTON",
+          "activeId": "load-widget",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.4001,
+          "type": "blur",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.4001,
+          "type": "focusout",
+          "key": null,
+          "target": "BUTTON",
+          "id": "load-widget",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.6,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "BODY",
+          "id": "",
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.7002,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "IFRAME",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356802.8,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356803,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356803,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356804.2002,
+          "type": "keyup",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/today/",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/today/",
+          "hasFocus": true
+        }
+      ],
+      "childTrace": [
+        {
+          "time": 1788820356724.7002,
+          "type": "focus",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.8,
+          "type": "focus",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356724.9001,
+          "type": "focusin",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356802.5,
+          "type": "keydown",
+          "key": "Tab",
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "A",
+          "activeId": "",
+          "activeHref": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356802.6,
+          "type": "blur",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356802.6,
+          "type": "focusout",
+          "key": null,
+          "target": "A",
+          "id": "",
+          "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": true
+        },
+        {
+          "time": 1788820356802.6,
+          "type": "blur",
+          "key": null,
+          "target": "window",
+          "id": null,
+          "href": null,
+          "active": "BODY",
+          "activeId": "",
+          "activeHref": null,
+          "hasFocus": false
+        }
+      ],
+      "finalParent": {
+        "tag": "A",
+        "id": "",
+        "href": "https://zodiacs.org/today/"
+      },
+      "finalChild": {
+        "tag": "BODY",
+        "href": null,
+        "hasFocus": false
+      },
+      "assertion": true
+    }
+  ]
+}

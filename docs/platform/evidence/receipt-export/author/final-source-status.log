@@ -1,0 +1,16 @@
+ M src/client-directives/interaction.ts
+ M src/islands/ChartCalculator.actions.test.ts
+ M src/islands/ChartCalculator.tsx
+ A src/lib/engine/calculator-receipt.test.ts
+ A src/lib/engine/calculator-receipt.ts
+ M src/lib/i18n/index.test.ts
+ M src/lib/i18n/ui/en.ts
+ M src/lib/i18n/ui/es.ts
+ M src/lib/i18n/ui/fr.ts
+ M src/lib/i18n/ui/it.ts
+ M src/lib/i18n/ui/pt.ts
+ M src/lib/i18n/ui/ru.test.ts
+ M src/lib/i18n/ui/ru.ts
+ A src/lib/receipt-download.test.ts
+ A src/lib/receipt-download.ts
+ A tests/interaction-replay-drive.mjs

@@ -1,0 +1,29 @@
+{
+  "baseCommit": "4227bb0758d4b34cbd761a3cddd273cbea6c2c1b",
+  "at": "2026-09-08T08:41:42.042020+00:00",
+  "source": [
+    {
+      "path": "src/pages/developers/support/index.astro",
+      "sha256": "7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea"
+    }
+  ],
+  "preparedPatchSha256": "2a59e5e721a748178f96e5d653434c0515cc5795d7c37d82cd25338dbe83e581",
+  "integrationManifestSha256": "4cf6faf3e43762996599234a071b6b4202f6c280903fcdcb117f5d93ce7c2dfa",
+  "build": true,
+  "tests": {
+    "files": 414,
+    "passed": 4938
+  },
+  "check": {
+    "files": 1041,
+    "errors": 0,
+    "warnings": 0,
+    "hints": 11
+  },
+  "browserGroups": 13,
+  "phase1Fingerprint": "3e60d4c18803a51346d35820ff31f256d1cf497bc665237b241e1c05213ab514",
+  "captureQualification": "Existing Moon18 captures reused: covered fingerprint unchanged and full-suite evidence validation passes. No new Phase1 screenshots claimed; two fresh developer screenshots retained.",
+  "published": false,
+  "productionDeployed": false,
+  "externallyAdopted": false
+}

@@ -1,0 +1,3318 @@
+{
+  "observedAt": "2026-09-07T21:59:49.662Z",
+  "browser": "152.0.7977.83",
+  "node": "v22.23.2",
+  "originalZoom": 1,
+  "scope": "Actual isolated Chrome browser; native default zoom changed only in its temporary profile and restored; immutable starter rc.2 extracted and source-checked, local build with existing verified rc.2 dependencies. Live public frame; offline cases use actual network emulation, host CSS injection is synthetic. No source changes, external user study or publication.",
+  "observations": [
+    {
+      "name": "w1280-nativeZoom1-dark-normal: no external request before Load widget",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: Tab reaches Load widget",
+      "pass": true,
+      "evidence": {
+        "tag": "BUTTON",
+        "id": "load-widget",
+        "text": "Load widget",
+        "rect": {
+          "x": 193,
+          "y": 437.1875,
+          "width": 107.125,
+          "height": 42.375,
+          "top": 437.1875,
+          "right": 300.125,
+          "bottom": 479.5625,
+          "left": 193
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: actual browser zoom configured",
+      "pass": true,
+      "evidence": {
+        "factor": 1,
+        "innerWidth": 1280,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: parent reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 1280,
+        "scrollWidth": 1280
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: frame reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 480,
+        "scrollWidth": 480
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: native viewport at high zoom",
+      "pass": true,
+      "evidence": {
+        "width": 1280,
+        "zoom": 1,
+        "innerWidth": 1280
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: reduced motion matches and has no running animations",
+      "pass": true,
+      "evidence": {
+        "parent": false,
+        "frame": false,
+        "parentAnimations": 0,
+        "frameAnimations": 0
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: no persistent app state in either document",
+      "pass": true,
+      "evidence": {
+        "parent": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        },
+        "frame": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: widget requests only declared hosted document and icons",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: embed referrer includes only origin",
+      "pass": true,
+      "evidence": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "method": "GET",
+        "type": "document",
+        "referer": "http://127.0.0.1:54770/",
+        "postData": null
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: Tab enters required attribution and escapes to fallback",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 176,
+            "y": 595.75,
+            "width": 480,
+            "height": 300,
+            "top": 595.75,
+            "right": 656,
+            "bottom": 895.75,
+            "left": 176
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5625,
+              "y": 240.5,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5625
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 480,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 176,
+            "y": 691.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 691.75,
+            "right": 384.296875,
+            "bottom": 709.75,
+            "left": 176
+          }
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: focused attribution is fully within frame viewport",
+      "pass": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Powered by Zodiacs.org →",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "rect": {
+          "x": 324.5625,
+          "y": 240.5,
+          "width": 139.4375,
+          "height": 17.5,
+          "top": 240.5,
+          "right": 464,
+          "bottom": 258,
+          "left": 324.5625
+        },
+        "scrollX": 0,
+        "scrollY": 0,
+        "innerWidth": 480,
+        "innerHeight": 300
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: adversarial host text styles do not penetrate iframe",
+      "pass": true,
+      "evidence": {
+        "host": "rgb(255, 0, 0)",
+        "beforeStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        },
+        "afterStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom1-dark-normal: no page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: no external request before Load widget",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: Tab reaches Load widget",
+      "pass": true,
+      "evidence": {
+        "tag": "BUTTON",
+        "id": "load-widget",
+        "text": "Load widget",
+        "rect": {
+          "x": 36.1953125,
+          "y": 259.234375,
+          "width": 107.1328125,
+          "height": 42.390625,
+          "top": 259.234375,
+          "right": 143.328125,
+          "bottom": 301.625,
+          "left": 36.1953125
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: actual browser zoom configured",
+      "pass": true,
+      "evidence": {
+        "factor": 2,
+        "innerWidth": 640,
+        "dpr": 2
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: parent reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 640,
+        "scrollWidth": 640
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: frame reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 480,
+        "scrollWidth": 480
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: native viewport at high zoom",
+      "pass": true,
+      "evidence": {
+        "width": 1280,
+        "zoom": 2,
+        "innerWidth": 640
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: reduced motion matches and has no running animations",
+      "pass": true,
+      "evidence": {
+        "parent": true,
+        "frame": true,
+        "parentAnimations": 0,
+        "frameAnimations": 0
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: no persistent app state in either document",
+      "pass": true,
+      "evidence": {
+        "parent": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        },
+        "frame": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: widget requests only declared hosted document and icons",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: embed referrer includes only origin",
+      "pass": true,
+      "evidence": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "method": "GET",
+        "type": "document",
+        "referer": "http://127.0.0.1:54770/",
+        "postData": null
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: Tab enters required attribution and escapes to fallback",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.1953125,
+            "y": -24.1796875,
+            "width": 480,
+            "height": 300,
+            "top": -24.1796875,
+            "right": 499.1953125,
+            "bottom": 275.8203125,
+            "left": 19.1953125
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5703125,
+              "y": 240.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 480,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1953125,
+            "y": 294.3203125,
+            "width": 208.296875,
+            "height": 19,
+            "top": 294.3203125,
+            "right": 227.4921875,
+            "bottom": 313.3203125,
+            "left": 19.1953125
+          }
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: focused attribution is fully within frame viewport",
+      "pass": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Powered by Zodiacs.org →",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "rect": {
+          "x": 324.5703125,
+          "y": 240.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 240.5,
+          "right": 464,
+          "bottom": 258,
+          "left": 324.5703125
+        },
+        "scrollX": 0,
+        "scrollY": 0,
+        "innerWidth": 480,
+        "innerHeight": 300
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: adversarial host text styles do not penetrate iframe",
+      "pass": true,
+      "evidence": {
+        "host": "rgb(255, 0, 0)",
+        "beforeStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        },
+        "afterStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom2-dark-reduce: no page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: no external request before Load widget",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: Tab reaches Load widget",
+      "pass": true,
+      "evidence": {
+        "tag": "BUTTON",
+        "id": "load-widget",
+        "text": "Load widget",
+        "rect": {
+          "x": 36.19921875,
+          "y": 146.5546875,
+          "width": 107.140625,
+          "height": 42.3984375,
+          "top": 146.5546875,
+          "right": 143.33984375,
+          "bottom": 188.953125,
+          "left": 36.19921875
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: actual browser zoom configured",
+      "pass": true,
+      "evidence": {
+        "factor": 3.9999999999999996,
+        "innerWidth": 320,
+        "dpr": 4
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: parent reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: frame reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 281,
+        "scrollWidth": 281
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: native viewport at high zoom",
+      "pass": true,
+      "evidence": {
+        "width": 1280,
+        "zoom": 4,
+        "innerWidth": 320
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: reduced motion matches and has no running animations",
+      "pass": true,
+      "evidence": {
+        "parent": true,
+        "frame": true,
+        "parentAnimations": 0,
+        "frameAnimations": 0
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: no persistent app state in either document",
+      "pass": true,
+      "evidence": {
+        "parent": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        },
+        "frame": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: widget requests only declared hosted document and icons",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: embed referrer includes only origin",
+      "pass": true,
+      "evidence": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "method": "GET",
+        "type": "document",
+        "referer": "http://127.0.0.1:54770/",
+        "postData": null
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: Tab enters required attribution and escapes to fallback",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.19921875,
+            "y": -177.84765625,
+            "width": 281.6015625,
+            "height": 300,
+            "top": -177.84765625,
+            "right": 300.80078125,
+            "bottom": 122.15234375,
+            "left": 19.19921875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 281,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.19921875,
+            "y": 140.65234375,
+            "width": 208.296875,
+            "height": 19,
+            "top": 140.65234375,
+            "right": 227.49609375,
+            "bottom": 159.65234375,
+            "left": 19.19921875
+          }
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: focused attribution is fully within frame viewport",
+      "pass": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Powered by Zodiacs.org →",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "rect": {
+          "x": 126.0703125,
+          "y": 281.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 281.5,
+          "right": 265.5,
+          "bottom": 299,
+          "left": 126.0703125
+        },
+        "scrollX": 0,
+        "scrollY": 0,
+        "innerWidth": 281,
+        "innerHeight": 300
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: adversarial host text styles do not penetrate iframe",
+      "pass": true,
+      "evidence": {
+        "host": "rgb(255, 0, 0)",
+        "beforeStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        },
+        "afterStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(238, 241, 247)",
+            "background": "rgb(10, 12, 17)"
+          },
+          "links": [
+            {
+              "color": "rgb(127, 113, 171)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-dark-reduce: no page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: no external request before Load widget",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: Tab reaches Load widget",
+      "pass": true,
+      "evidence": {
+        "tag": "BUTTON",
+        "id": "load-widget",
+        "text": "Load widget",
+        "rect": {
+          "x": 36.19921875,
+          "y": 146.5546875,
+          "width": 107.140625,
+          "height": 42.3984375,
+          "top": 146.5546875,
+          "right": 143.33984375,
+          "bottom": 188.953125,
+          "left": 36.19921875
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: actual browser zoom configured",
+      "pass": true,
+      "evidence": {
+        "factor": 3.9999999999999996,
+        "innerWidth": 320,
+        "dpr": 4
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: parent reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 320,
+        "scrollWidth": 320
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: frame reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 281,
+        "scrollWidth": 281
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: native viewport at high zoom",
+      "pass": true,
+      "evidence": {
+        "width": 1280,
+        "zoom": 4,
+        "innerWidth": 320
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: reduced motion matches and has no running animations",
+      "pass": true,
+      "evidence": {
+        "parent": true,
+        "frame": true,
+        "parentAnimations": 0,
+        "frameAnimations": 0
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: no persistent app state in either document",
+      "pass": true,
+      "evidence": {
+        "parent": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        },
+        "frame": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: widget requests only declared hosted document and icons",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: embed referrer includes only origin",
+      "pass": true,
+      "evidence": {
+        "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+        "method": "GET",
+        "type": "document",
+        "referer": "http://127.0.0.1:54770/",
+        "postData": null
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: Tab enters required attribution and escapes to fallback",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.19921875,
+            "y": -177.84765625,
+            "width": 281.6015625,
+            "height": 300,
+            "top": -177.84765625,
+            "right": 300.80078125,
+            "bottom": 122.15234375,
+            "left": 19.19921875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 281,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.19921875,
+            "y": 140.65234375,
+            "width": 208.296875,
+            "height": 19,
+            "top": 140.65234375,
+            "right": 227.49609375,
+            "bottom": 159.65234375,
+            "left": 19.19921875
+          }
+        }
+      ]
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: focused attribution is fully within frame viewport",
+      "pass": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Powered by Zodiacs.org →",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "rect": {
+          "x": 126.0703125,
+          "y": 281.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 281.5,
+          "right": 265.5,
+          "bottom": 299,
+          "left": 126.0703125
+        },
+        "scrollX": 0,
+        "scrollY": 0,
+        "innerWidth": 281,
+        "innerHeight": 300
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: adversarial host text styles do not penetrate iframe",
+      "pass": true,
+      "evidence": {
+        "host": "rgb(255, 0, 0)",
+        "beforeStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(28, 30, 38)",
+            "background": "rgb(251, 250, 247)"
+          },
+          "links": [
+            {
+              "color": "rgb(121, 107, 165)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        },
+        "afterStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(28, 30, 38)",
+            "background": "rgb(251, 250, 247)"
+          },
+          "links": [
+            {
+              "color": "rgb(121, 107, 165)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "w1280-nativeZoom4-light-reduce: no page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: no external request before Load widget",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: Tab reaches Load widget",
+      "pass": true,
+      "evidence": {
+        "tag": "BUTTON",
+        "id": "load-widget",
+        "text": "Load widget",
+        "rect": {
+          "x": 36.1875,
+          "y": 669.1875,
+          "width": 107.125,
+          "height": 42.375,
+          "top": 669.1875,
+          "right": 143.3125,
+          "bottom": 711.5625,
+          "left": 36.1875
+        }
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: actual browser zoom configured",
+      "pass": true,
+      "evidence": {
+        "factor": 1,
+        "innerWidth": 390,
+        "dpr": 1
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: parent reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 390,
+        "scrollWidth": 390
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: frame reflows without horizontal overflow",
+      "pass": true,
+      "evidence": {
+        "width": 352,
+        "scrollWidth": 352
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: native viewport at high zoom",
+      "pass": true,
+      "evidence": {
+        "width": 390,
+        "zoom": 1,
+        "innerWidth": 390
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: reduced motion matches and has no running animations",
+      "pass": true,
+      "evidence": {
+        "parent": true,
+        "frame": true,
+        "parentAnimations": 0,
+        "frameAnimations": 0
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: no persistent app state in either document",
+      "pass": true,
+      "evidence": {
+        "parent": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        },
+        "frame": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: widget requests only declared hosted document and icons",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        }
+      ]
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: embed referrer includes only origin",
+      "pass": true,
+      "evidence": {
+        "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+        "method": "GET",
+        "type": "document",
+        "referer": "http://127.0.0.1:54770/",
+        "postData": null
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: Tab enters required attribution and escapes to fallback",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.1875,
+            "y": 215.75,
+            "width": 351.625,
+            "height": 300,
+            "top": 215.75,
+            "right": 370.8125,
+            "bottom": 515.75,
+            "left": 19.1875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 196.5625,
+              "y": 225,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 225,
+              "right": 336,
+              "bottom": 242.5,
+              "left": 196.5625
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 352,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1875,
+            "y": 534.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 534.75,
+            "right": 227.484375,
+            "bottom": 552.75,
+            "left": 19.1875
+          }
+        }
+      ]
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: focused attribution is fully within frame viewport",
+      "pass": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Powered by Zodiacs.org →",
+        "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+        "rect": {
+          "x": 196.5625,
+          "y": 225,
+          "width": 139.4375,
+          "height": 17.5,
+          "top": 225,
+          "right": 336,
+          "bottom": 242.5,
+          "left": 196.5625
+        },
+        "scrollX": 0,
+        "scrollY": 0,
+        "innerWidth": 352,
+        "innerHeight": 300
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: adversarial host text styles do not penetrate iframe",
+      "pass": true,
+      "evidence": {
+        "host": "rgb(255, 0, 0)",
+        "beforeStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(28, 30, 38)",
+            "background": "rgb(251, 250, 247)"
+          },
+          "links": [
+            {
+              "color": "rgb(121, 107, 165)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        },
+        "afterStyle": {
+          "body": {
+            "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+            "color": "rgb(28, 30, 38)",
+            "background": "rgb(251, 250, 247)"
+          },
+          "links": [
+            {
+              "color": "rgb(121, 107, 165)",
+              "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "w390-nativeZoom1-light-reduce: no page errors",
+      "pass": true,
+      "evidence": []
+    },
+    {
+      "name": "offline-before-first-frame: actual network failure observed",
+      "pass": true,
+      "evidence": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "failure": "net::ERR_INTERNET_DISCONNECTED"
+        }
+      ]
+    },
+    {
+      "name": "offline-before-first-frame: fallback remains keyboard reachable",
+      "pass": true,
+      "evidence": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1875,
+            "y": 467.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 467.75,
+            "right": 227.484375,
+            "bottom": 485.75,
+            "left": 19.1875
+          }
+        }
+      ]
+    },
+    {
+      "name": "offline-before-first-frame: parent does not claim load success/current data",
+      "pass": true,
+      "evidence": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load."
+    },
+    {
+      "name": "offline-after-hosted-load: static data retains its date and attribution",
+      "pass": true,
+      "evidence": {
+        "before": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "after": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →"
+      }
+    }
+  ],
+  "failures": [],
+  "scenarios": [
+    {
+      "label": "w1280-nativeZoom1-dark-normal",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 1280,
+        "innerHeight": 900,
+        "dpr": 1,
+        "scrollWidth": 1280,
+        "clientWidth": 1280,
+        "scrollHeight": 1123,
+        "scrollY": 0,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": false,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 176,
+              "y": 19.1875,
+              "width": 119.78125,
+              "height": 24,
+              "top": 19.1875,
+              "right": 295.78125,
+              "bottom": 43.1875,
+              "left": 176
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 311.78125,
+              "y": 19.1875,
+              "width": 213.875,
+              "height": 24,
+              "top": 19.1875,
+              "right": 525.65625,
+              "bottom": 43.1875,
+              "left": 311.78125
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 541.65625,
+              "y": 19.1875,
+              "width": 149.734375,
+              "height": 24,
+              "top": 19.1875,
+              "right": 691.390625,
+              "bottom": 43.1875,
+              "left": 541.65625
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 176,
+              "y": 914.75,
+              "width": 208.296875,
+              "height": 18,
+              "top": 914.75,
+              "right": 384.296875,
+              "bottom": 932.75,
+              "left": 176
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "innerWidth": 480,
+        "innerHeight": 300,
+        "dpr": 1,
+        "scrollWidth": 480,
+        "clientWidth": 480,
+        "scrollHeight": 300,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": false,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(238, 241, 247)",
+          "background": "rgb(10, 12, 17)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5625,
+              "y": 240.5,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5625
+            },
+            "color": "rgb(127, 113, 171)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ],
+      "responses": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "status": 200
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 176,
+            "y": 595.75,
+            "width": 480,
+            "height": 300,
+            "top": 595.75,
+            "right": 656,
+            "bottom": 895.75,
+            "left": 176
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5625,
+              "y": 240.5,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5625
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 480,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 176,
+            "y": 691.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 691.75,
+            "right": 384.296875,
+            "bottom": 709.75,
+            "left": 176
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "w1280-nativeZoom2-dark-reduce",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "dpr": 2,
+        "scrollWidth": 640,
+        "clientWidth": 640,
+        "scrollHeight": 1291,
+        "scrollY": 250,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 19.1953125,
+              "y": -230.8046875,
+              "width": 119.7734375,
+              "height": 24,
+              "top": -230.8046875,
+              "right": 138.96875,
+              "bottom": -206.8046875,
+              "left": 19.1953125
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 154.96875,
+              "y": -230.8046875,
+              "width": 213.8671875,
+              "height": 24,
+              "top": -230.8046875,
+              "right": 368.8359375,
+              "bottom": -206.8046875,
+              "left": 154.96875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 384.8359375,
+              "y": -230.8046875,
+              "width": 149.7265625,
+              "height": 24,
+              "top": -230.8046875,
+              "right": 534.5625,
+              "bottom": -206.8046875,
+              "left": 384.8359375
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 19.1953125,
+              "y": 760.3203125,
+              "width": 208.296875,
+              "height": 19,
+              "top": 760.3203125,
+              "right": 227.4921875,
+              "bottom": 779.3203125,
+              "left": 19.1953125
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "innerWidth": 480,
+        "innerHeight": 300,
+        "dpr": 2,
+        "scrollWidth": 480,
+        "clientWidth": 480,
+        "scrollHeight": 300,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(238, 241, 247)",
+          "background": "rgb(10, 12, 17)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5703125,
+              "y": 240.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5703125
+            },
+            "color": "rgb(127, 113, 171)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ],
+      "responses": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "status": 200
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.1953125,
+            "y": -24.1796875,
+            "width": 480,
+            "height": 300,
+            "top": -24.1796875,
+            "right": 499.1953125,
+            "bottom": 275.8203125,
+            "left": 19.1953125
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5703125,
+              "y": 240.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 480,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1953125,
+            "y": 294.3203125,
+            "width": 208.296875,
+            "height": 19,
+            "top": 294.3203125,
+            "right": 227.4921875,
+            "bottom": 313.3203125,
+            "left": 19.1953125
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "w1280-nativeZoom4-dark-reduce",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "dpr": 4,
+        "scrollWidth": 320,
+        "clientWidth": 320,
+        "scrollHeight": 1816,
+        "scrollY": 672,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -652.80078125,
+              "width": 119.7734375,
+              "height": 24,
+              "top": -652.80078125,
+              "right": 138.97265625,
+              "bottom": -628.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -612.80078125,
+              "width": 213.8671875,
+              "height": 24,
+              "top": -612.80078125,
+              "right": 233.06640625,
+              "bottom": -588.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -572.80078125,
+              "width": 149.7265625,
+              "height": 24,
+              "top": -572.80078125,
+              "right": 168.92578125,
+              "bottom": -548.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 19.19921875,
+              "y": 671.65234375,
+              "width": 208.296875,
+              "height": 19,
+              "top": 671.65234375,
+              "right": 227.49609375,
+              "bottom": 690.65234375,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "innerWidth": 281,
+        "innerHeight": 300,
+        "dpr": 4,
+        "scrollWidth": 281,
+        "clientWidth": 281,
+        "scrollHeight": 345,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(238, 241, 247)",
+          "background": "rgb(10, 12, 17)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "color": "rgb(127, 113, 171)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "postData": null
+        }
+      ],
+      "responses": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "status": 200
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.19921875,
+            "y": -177.84765625,
+            "width": 281.6015625,
+            "height": 300,
+            "top": -177.84765625,
+            "right": 300.80078125,
+            "bottom": 122.15234375,
+            "left": 19.19921875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 281,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.19921875,
+            "y": 140.65234375,
+            "width": 208.296875,
+            "height": 19,
+            "top": 140.65234375,
+            "right": 227.49609375,
+            "bottom": 159.65234375,
+            "left": 19.19921875
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "w1280-nativeZoom4-light-reduce",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "dpr": 4,
+        "scrollWidth": 320,
+        "clientWidth": 320,
+        "scrollHeight": 1816,
+        "scrollY": 672,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -652.80078125,
+              "width": 119.7734375,
+              "height": 24,
+              "top": -652.80078125,
+              "right": 138.97265625,
+              "bottom": -628.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -612.80078125,
+              "width": 213.8671875,
+              "height": 24,
+              "top": -612.80078125,
+              "right": 233.06640625,
+              "bottom": -588.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 19.19921875,
+              "y": -572.80078125,
+              "width": 149.7265625,
+              "height": 24,
+              "top": -572.80078125,
+              "right": 168.92578125,
+              "bottom": -548.80078125,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 19.19921875,
+              "y": 671.65234375,
+              "width": 208.296875,
+              "height": 19,
+              "top": 671.65234375,
+              "right": 227.49609375,
+              "bottom": 690.65234375,
+              "left": 19.19921875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+        "innerWidth": 281,
+        "innerHeight": 300,
+        "dpr": 4,
+        "scrollWidth": 281,
+        "clientWidth": 281,
+        "scrollHeight": 345,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(28, 30, 38)",
+          "background": "rgb(251, 250, 247)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "color": "rgb(121, 107, 165)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        }
+      ],
+      "responses": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "status": 200
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.19921875,
+            "y": -177.84765625,
+            "width": 281.6015625,
+            "height": 300,
+            "top": -177.84765625,
+            "right": 300.80078125,
+            "bottom": 122.15234375,
+            "left": 19.19921875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 126.0703125,
+              "y": 281.5,
+              "width": 139.4296875,
+              "height": 17.5,
+              "top": 281.5,
+              "right": 265.5,
+              "bottom": 299,
+              "left": 126.0703125
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 281,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.19921875,
+            "y": 140.65234375,
+            "width": 208.296875,
+            "height": 19,
+            "top": 140.65234375,
+            "right": 227.49609375,
+            "bottom": 159.65234375,
+            "left": 19.19921875
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "w390-nativeZoom1-light-reduce",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 390,
+        "innerHeight": 900,
+        "dpr": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "scrollHeight": 1571,
+        "scrollY": 0,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 19.1875,
+              "y": 19.1875,
+              "width": 119.78125,
+              "height": 24,
+              "top": 19.1875,
+              "right": 138.96875,
+              "bottom": 43.1875,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 154.96875,
+              "y": 19.1875,
+              "width": 213.875,
+              "height": 24,
+              "top": 19.1875,
+              "right": 368.84375,
+              "bottom": 43.1875,
+              "left": 154.96875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 19.1875,
+              "y": 59.1875,
+              "width": 149.734375,
+              "height": 24,
+              "top": 59.1875,
+              "right": 168.921875,
+              "bottom": 83.1875,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 19.1875,
+              "y": 1194.75,
+              "width": 208.296875,
+              "height": 18,
+              "top": 1194.75,
+              "right": 227.484375,
+              "bottom": 1212.75,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+        "innerWidth": 352,
+        "innerHeight": 300,
+        "dpr": 1,
+        "scrollWidth": 352,
+        "clientWidth": 352,
+        "scrollHeight": 300,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": true,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(28, 30, 38)",
+          "background": "rgb(251, 250, 247)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 196.5625,
+              "y": 225,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 225,
+              "right": 336,
+              "bottom": 242.5,
+              "left": 196.5625
+            },
+            "color": "rgb(121, 107, 165)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requests": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "method": "GET",
+          "type": "document",
+          "referer": null,
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "method": "GET",
+          "type": "script",
+          "referer": "http://127.0.0.1:54770/widget.html",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "method": "GET",
+          "type": "document",
+          "referer": "http://127.0.0.1:54770/",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "method": "GET",
+          "type": "image",
+          "referer": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "postData": null
+        }
+      ],
+      "responses": [
+        {
+          "url": "http://127.0.0.1:54770/widget.html",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/styles.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:54770/widget.js",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=light&accent=%237B6DA8",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/cancer.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/virgo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/libra.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/leo.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aries.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/gemini.webp",
+          "status": 200
+        },
+        {
+          "url": "https://zodiacs.org/assets/zodiac-icons/48/aquarius.webp",
+          "status": 200
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "IFRAME",
+          "id": "",
+          "text": "",
+          "rect": {
+            "x": 19.1875,
+            "y": 215.75,
+            "width": 351.625,
+            "height": 300,
+            "top": 215.75,
+            "right": 370.8125,
+            "bottom": 515.75,
+            "left": 19.1875
+          },
+          "frame": {
+            "tag": "A",
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 196.5625,
+              "y": 225,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 225,
+              "right": 336,
+              "bottom": 242.5,
+              "left": 196.5625
+            },
+            "scrollX": 0,
+            "scrollY": 0,
+            "innerWidth": 352,
+            "innerHeight": 300
+          }
+        },
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1875,
+            "y": 534.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 534.75,
+            "right": 227.484375,
+            "bottom": 552.75,
+            "left": 19.1875
+          }
+        }
+      ],
+      "errors": []
+    },
+    {
+      "label": "offline-before-first-frame",
+      "parent": {
+        "url": "http://127.0.0.1:54770/widget.html",
+        "innerWidth": 390,
+        "innerHeight": 844,
+        "dpr": 1,
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "scrollHeight": 1571,
+        "scrollY": 0,
+        "bodyText": "Local natal chart\nPersonalized transit snapshot\nPublisher sky widget\nEmbed the shared sky\n\nThis separate example requests a hosted iframe from zodiacs.org when you select Load widget. It does not collect birth details. The hosted widget has its own deployment and data date, independent of this archive.\n\nThe embed service receives a network request, including your IP address and the referring origin. strict-origin-when-cross-origin omits the parent path and query from that cross-origin referrer. This parent page adds no analytics, cookies, storage, wallet, or messages to the frame.\n\nPublisher settings\nTheme \nDark\nLight\nAccent — six-digit opaque color \nLoad widget\n\nExternal widget requested. Check its displayed date; use the link below if it is unavailable or stale.\n\nOpen the sky on Zodiacs.org — available if the frame is blocked, offline, unavailable, or stale.\n\nKeep the required “Powered by Zodiacs.org” link inside the iframe visible and intact. The frame uses a responsive width up to 480 pixels and a 300-pixel height; its document may adjust your accent for text contrast. Do not proxy, crop, or rewrite its attribution.\n\nCheck the displayed data date. Loading a frame does not prove its content is current or that publication succeeded. Offline operation is limited to the two local calculation pages after their bundles load.",
+        "reduced": false,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "16px / 24px system-ui, sans-serif",
+          "color": "rgb(32, 37, 43)",
+          "background": "rgba(0, 0, 0, 0)"
+        },
+        "links": [
+          {
+            "text": "Local natal chart",
+            "href": "http://127.0.0.1:54770/natal.html",
+            "rect": {
+              "x": 19.1875,
+              "y": 19.1875,
+              "width": 119.78125,
+              "height": 24,
+              "top": 19.1875,
+              "right": 138.96875,
+              "bottom": 43.1875,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Personalized transit snapshot",
+            "href": "http://127.0.0.1:54770/transits.html",
+            "rect": {
+              "x": 154.96875,
+              "y": 19.1875,
+              "width": 213.875,
+              "height": 24,
+              "top": 19.1875,
+              "right": 368.84375,
+              "bottom": 43.1875,
+              "left": 154.96875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Publisher sky widget",
+            "href": "http://127.0.0.1:54770/widget.html",
+            "rect": {
+              "x": 19.1875,
+              "y": 59.1875,
+              "width": 149.734375,
+              "height": 24,
+              "top": 59.1875,
+              "right": 168.921875,
+              "bottom": 83.1875,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          },
+          {
+            "text": "Open the sky on Zodiacs.org",
+            "href": "https://zodiacs.org/today/",
+            "rect": {
+              "x": 19.1875,
+              "y": 1194.75,
+              "width": 208.296875,
+              "height": 18,
+              "top": 1194.75,
+              "right": 227.484375,
+              "bottom": 1212.75,
+              "left": 19.1875
+            },
+            "color": "rgb(53, 71, 137)",
+            "font": "16px / 24px system-ui, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      },
+      "requestFailures": [
+        {
+          "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+          "failure": "net::ERR_INTERNET_DISCONNECTED"
+        }
+      ],
+      "keyboard": [
+        {
+          "tag": "A",
+          "id": "",
+          "text": "Open the sky on Zodiacs.org",
+          "href": "https://zodiacs.org/today/",
+          "rect": {
+            "x": 19.1875,
+            "y": 467.75,
+            "width": 208.296875,
+            "height": 18,
+            "top": 467.75,
+            "right": 227.484375,
+            "bottom": 485.75,
+            "left": 19.1875
+          }
+        }
+      ]
+    },
+    {
+      "label": "offline-after-hosted-load",
+      "frame": {
+        "url": "https://zodiacs.org/embed/sky/?theme=dark&accent=%237B6DA8",
+        "innerWidth": 480,
+        "innerHeight": 300,
+        "dpr": 1,
+        "scrollWidth": 480,
+        "clientWidth": 480,
+        "scrollHeight": 300,
+        "scrollY": 0,
+        "bodyText": "The sky today\n2026-09-07 · WANING CRESCENT\nMoon 27° Cancer\nSun 15° Virgo\nMercury 25° Virgo\nVenus 28° Libra\nMars 17° Cancer\nJupiter 15° Leo\nSaturn 13° Aries Rx\nUranus 6° Gemini\nNeptune 4° Aries Rx\nPluto 3° Aquarius Rx\nRetrograde: Saturn, Neptune, Pluto\nPowered by Zodiacs.org →",
+        "reduced": false,
+        "animations": 0,
+        "bodyStyle": {
+          "font": "13px / 19.5px system-ui, -apple-system, sans-serif",
+          "color": "rgb(238, 241, 247)",
+          "background": "rgb(10, 12, 17)"
+        },
+        "links": [
+          {
+            "text": "Powered by Zodiacs.org →",
+            "href": "https://zodiacs.org/?utm_source=embed&utm_medium=widget&utm_campaign=sky",
+            "rect": {
+              "x": 324.5625,
+              "y": 240.5,
+              "width": 139.4375,
+              "height": 17.5,
+              "top": 240.5,
+              "right": 464,
+              "bottom": 258,
+              "left": 324.5625
+            },
+            "color": "rgb(127, 113, 171)",
+            "font": "11px / 16.5px system-ui, -apple-system, sans-serif"
+          }
+        ],
+        "storage": {
+          "local": [],
+          "session": [],
+          "cookies": "",
+          "indexedDB": [],
+          "cache": [],
+          "workers": []
+        }
+      }
+    }
+  ]
+}

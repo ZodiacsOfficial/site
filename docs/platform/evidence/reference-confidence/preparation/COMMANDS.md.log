@@ -1,0 +1,15 @@
+# Reproduction
+
+All writes and outputs are in `/private/tmp/zodiacs-platform-reference-certainty-preparation`; root source was read only. No package install or product build.
+
+```
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-reference-certainty-preparation/build.mjs
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-reference-certainty-preparation/node-probe.mjs
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node /private/tmp/zodiacs-platform-reference-certainty-preparation/browser-probe.mjs
+```
+
+Original attempts: `build.log` and `build-initial.mjs.log` (metadata path error); `build-corrected.log`, `node22.log`, `build-before-ssr.mjs.log` (missing standalone SSR compile flag). Corrected original finite run: `build-final.log`, `node22-final.log`, `browser.log`, and `initial-finite-run/`. Final extra exact Juneau witnesses: `build-expanded-witness.log`, `node22-expanded-witness.log`, `browser-expanded-witness.log`, with final `identity.json`, `subject.mjs`, `node22-result.json`, `browser-result.json`.
+
+Initial source reads also tried `src/lib/engine/chart-date-certainty.ts`; the actual path is `src/lib/chart-date-certainty.ts`. A presumed real-date `result.json` was absent; the actual retained records are `node-result.json` and `native-result.json`. These were inspection errors, not product failures.
+
+The AST extraction copies complete declaration text for the production Moon lookup/illumination functions and exact statements for ChartCalculator's admitted numerical/receipt/certainty portion. Surrounding UI ownership is modeled with a current predicate and recorded state setters; stale UI behavior is not being retested here. Real engine, time, receipt and presentation modules are bundled. The same bundle runs in Node22 and actual Chrome, including a no-Temporal browser control. `import.meta.env.SSR=true` selects the real server catalog for non-DOM labels. All scripts/source hashes and raw attempts are preserved.

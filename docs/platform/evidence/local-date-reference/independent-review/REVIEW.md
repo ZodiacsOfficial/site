@@ -1,0 +1,37 @@
+# Independent C-014 Freeze 1 review
+
+**Accepted within the tested contract and recorded runtime limits. No product defect found.** Exact author freeze `328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2`, patch `41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e`, twelve files, base `c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3`. Author/root source remained unchanged throughout review. Root owns integration, full-site gates, six-catalog scope approval and release decisions.
+
+The implementation performs the approved **membership-witness** check. False refuses the chosen reference; it is not an empty-date conclusion. Both callers turn false or a thrown helper error into the dedicated localized inability message before numerical/receipt/endpoint work. Existing explicit-time, no-city UTC, public positions and ownership behavior remain in their established branches. Engine/module loading still precedes the guard as approved; “zero calculation work” below refers to the submitted lookup's full numerical/receipt/endpoint operations, not all page initialization or the Moon tool's independent current-time banner.
+
+## Independent source and helper review
+
+The helper validates canonical dates, explicit nonempty zone strings and the Date's internal finite value via `Date.prototype.getTime.call`, without invoking caller `getTime` or primitive-conversion overrides. It reuses the existing Gregorian/Latin/era-aware formatter. Invalid inputs or host formatting failure throw a fixed sanitized RangeError without private input/cause details. There is no new formatter/cache policy, dependency, SDK export, interval activation or storage operation.
+
+The independently authored helper controls pass **92 cases on each of Node 22.23.2, Node 24.19.0 and native Chrome 152**. They cover malformed date/zone/instant domains; fake, proxied, subclass, frozen and cross-realm Dates; internal-slot reads without user coercion; years 0000/0099/9999 and leap/era boundaries; exact milliseconds around historical second-offset midnights; accepted aliases/fixed offsets; skipped dates and constructor/cached-formatter failures. Native locale/timezone deliberately differ from the technical calendar/zone being tested. Import probes observe zero Intl/fetch/storage/Temporal work; Temporal access is made throwing in the native environment, and helper operations still pass.
+
+The actual frozen helper also rejects the noon chosen in the independently defined synthetic UTC+00→UTC+15 transition model, while an actual instant within that date is admitted. The complete one-transition interval provider proves the date is nonempty for nine hours. This confirms the required conservative-refusal qualification; it is not an IANA-zone occurrence or broad timezone-history proof.
+
+All five preexisting time functions are byte-identical. The main Chart calculation/receipt/endpoint block and the Moon numerical/caption block are byte-identical, with hashes in `native/source-review.json`. The 93 module-specifier occurrences across those three modules are unchanged. Existing endpoint and candidate-certainty limitations therefore remain; passing a date witness does not certify whole-date coverage or Sun/Moon candidate completeness.
+
+## Independent native caller controls
+
+The main reviewer built a separate controlled fixture from an immutable private copy of the base plus the exact twelve frozen files. It executes real Preact, both actual callers, actual helper/resolver and rc.6 ephemeris/receipt code. Each baseline/candidate bundle records 213 actual source/dependency inputs. This is independently designed acceptance, not repetition of the author's 35-group driver.
+
+**26 candidate controls accepted:** 25 passed in the original run; one affected recovery control passed after a test-driver-only correction. The baseline satisfies 13 of the same 26 criteria. Nine preserved numerical-output controls match baseline bytes exactly.
+
+- Four skipped dates, each through unknown-time Chart and selected-city unknown-time Moon: Apia 2011-12-30, Kwajalein 1993-08-21, Kiritimati 1994-12-31 and Guam 1844-12-31. All eight yield one reference resolution and one membership check, zero full numerical/receipt/endpoint calls, no computed event or retained result/actions/context, and a focused refusal alert.
+- Known-time Apia gap, repeated Apia 1892-07-04, interrupted Toronto 1919-03-31 and signed fixed offset controls in both callers preserve outputs. The Moon no-city UTC path preserves its output for 2011-12-30 and performs no local-zone resolver/membership call. These nine output comparisons are finite compatibility evidence, not a numerical oracle.
+- Both callers clear a prior successful result, refuse the skipped date and recover on the following valid date. A separately declared helper-throw fault in each caller receives the same sanitized localized outcome and then recovers.
+- Editing/replacing a skipped-date run while the engine loader is pending prevents the obsolete run from even resolving the reference; only the replacement succeeds. The profile-revoke control exercises the real fail-closed reader boundary with a synthetic local record: enabling that boundary with no reader scrubs the profile-derived form and prevents reference/calculation work. It does not claim a new authentication mechanism or rolled-back storage write.
+- Public positions-only initialization performs no date/engine/receipt calls. A Russian refusal renders actual catalog text rather than a key or English fallback. Broader six-locale validation remains separately attributed to root/author.
+
+Declared fixture controls are import/engine loader promises, synthetic city rows, share-artifact side effects, actual function-entry counters and a single explicit helper-throw fault. Actual numerical functions delegate to the frozen implementation. This IIFE fixture is **not production import-graph, full-page visual or deployed-preview evidence**. No external request was executed; local profile data was synthetic and confined to disposable browser contexts.
+
+## Original failures and remaining boundaries
+
+Initial build identity collection attempted to read esbuild's virtual `<define:import.meta.env>` entry as a file. The build source and both original logs are preserved; excluding virtual entries fixed identity collection before acceptance. The original native recovery driver attempted to fill a disabled unknown-time field. Its source/result/log remain immutable. The corrected interaction re-enables that field before filling; only the affected baseline/candidate case was rerun, against unchanged product source. The baseline then fails on the actual missing refusal, while the candidate passes. These are harness failures, not concealed product regressions.
+
+No interval coverage policy, historical resolver sampling, whole-date body-candidate proof, public receipt schema, account/save semantics or existing known-time gap policy was changed or certified here. The standalone helper has the usual conforming-host assumptions; it is not a hostile-global sandbox. This review establishes implemented/tested source acceptance in the bounded contract, not root release readiness, publication, deployment or adoption.
+
+Raw source identities, controlled transformations, actual bundle/input bytes, original failures, results and helper review are sealed with a copy manifest. Root remains the accountable integrator.

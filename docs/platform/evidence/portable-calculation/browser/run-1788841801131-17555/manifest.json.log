@@ -1,0 +1,26 @@
+{
+  "initial-page.png": {
+    "sha256": "bede0bb35e88c5aedcfa4be38815be473cd47dc131d6cbbb0d59ae998d2af35e",
+    "bytes": 32813
+  },
+  "metafile.json": {
+    "sha256": "ffbd7da41eed8977046ea9186ebdc79725ab55c825cafba46fd0cf5488f952c4",
+    "bytes": 9236
+  },
+  "offline-results.png": {
+    "sha256": "53709abf1ac7d988d4688b8c5e8eaeec7dd21f11b2399a0fb88e0821de8ad3dc",
+    "bytes": 103817
+  },
+  "precise-coverage.json": {
+    "sha256": "e5569d0f9bdcd0635681ed370036a953a1863a63fc11cf879dde913f7d8b23be",
+    "bytes": 87640
+  },
+  "report.json": {
+    "sha256": "4deeb8d23d4b5d04c2bb16b1d22e2466ca7da63888bc30e1ed3f41598dc90ba3",
+    "bytes": 27550
+  },
+  "trace.zip": {
+    "sha256": "32843842751b604b3fd45cfdd67bc181a7a22b7b7729d53dbf1983c9e7042d4f",
+    "bytes": 122704
+  }
+}

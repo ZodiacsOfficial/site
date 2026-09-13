@@ -1,0 +1,25 @@
+{
+  "head": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "base": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "actualPaths": 314,
+  "allPathsAndBlobsMatch": true,
+  "nonDocsPaths": [
+    ".github/phase1-scope-allowance.json",
+    ".github/workflows/site-check.yml",
+    "src/islands/ChartCalculator.ownership.test.ts",
+    "src/islands/ChartCalculator.tsx",
+    "src/islands/MoonPhaseTool.tsx",
+    "src/lib/i18n/index.test.ts",
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.test.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/lib/time/localDateContainsUtc.test.ts",
+    "src/lib/time/localToUtc.ts",
+    "tests/local-date-reference-drive.mjs"
+  ],
+  "rawFilesSha256": "44839bf2088c64a22bf7398b4248816d291f76915268cd1dc0f05c8048eb4cb6"
+}

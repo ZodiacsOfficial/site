@@ -1,0 +1,138 @@
+import hashlib, json, pathlib, difflib, datetime, urllib.parse
+
+ROOT = pathlib.Path('/private/tmp/zodiacs-platform-local-date-root-acceptance')
+OUT = pathlib.Path('/private/tmp/zodiacs-platform-local-date-normal-page-audit')
+SITE = pathlib.Path('/Users/chiburashka/.codex/worktrees/4806/site')
+FREEZE = pathlib.Path('/private/tmp/zodiacs-platform-local-date-reference-evidence/source-freeze.json')
+sha = lambda b: hashlib.sha256(b).hexdigest()
+read = lambda p: json.loads(p.read_text())
+identities = []
+def record(path):
+    b=path.read_bytes()
+    row={'path':str(path),'bytes':len(b),'sha256':sha(b)}
+    identities.append(row)
+    return row
+def same_file(path, row):
+    actual=record(path)
+    assert actual['sha256']==row['sha256'], path
+    if 'bytes' in row: assert actual['bytes']==row['bytes'], path
+    return actual
+
+first=read(ROOT/'normal-page-run1/result.json')
+second=read(ROOT/'normal-chart-run2/result.json')
+correction=read(ROOT/'normal-chart-harness-correction.json')
+summary=read(ROOT/'normal-page-final-analysis.json')
+freeze=read(FREEZE)
+assert record(FREEZE)['sha256']=='328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2'
+for f in ['normal-page-run1/result.json','normal-chart-run2/result.json','normal-chart-harness-correction.json','normal-page-final-analysis.json','build-receipt-final.json','capture-comparison-final.json','normal-page-run1.log','normal-chart-run2.log']:
+    record(ROOT/f)
+
+original=(ROOT/'normal-build-drive.mjs').read_text()
+corrected=(ROOT/'normal-chart-corrected-drive.mjs').read_text()
+assert (ROOT/'normal-build-drive.original.mjs').read_bytes()==original.encode()
+for f,expected in [('normal-build-drive.mjs',correction['originalDriverSha256']),('normal-build-drive.original.mjs',correction['originalDriverSha256']),('normal-chart-corrected-drive.mjs',correction['correctedDriverSha256'])]:
+    assert record(ROOT/f)['sha256']==expected
+assert correction['productChanged'] is False
+delta=''.join(difflib.unified_diff(original.splitlines(True),corrected.splitlines(True),fromfile='original-driver',tofile='corrected-chart-only-driver'))
+(OUT/'verified-driver-diff.log').write_text(delta)
+
+expected_names={f'{locale}-{mode}-{width}' for locale in ['en','es','fr','it','pt','ru'] for mode in ['chart','moon'] for width in [1280,390]}
+assert {r['name'] for r in first['results']}==expected_names
+assert len(first['results'])==24 and first['passed']==12 and first['failed']==12 and first['outcome']=='failed'
+assert {r['name'] for r in second['results']}=={n for n in expected_names if '-chart-' in n}
+assert len(second['results'])==12 and second['passed']==12 and second['failed']==0 and second['outcome']=='passed'
+assert first['sourceBefore']==first['sourceAfter']==second['sourceBefore']==second['sourceAfter']
+assert first['sourceHead']==second['sourceHead']=='3845a04bcea822da3c30a18848ef3d8d133b7b66'
+for row in freeze['files']:
+    assert row==next(x for x in first['sourceBefore'] if x['path']==row['path'])
+for row in first['sourceBefore']: same_file(SITE/row['path'],row)
+
+expected={}
+for locale in ['en','es','fr','it','pt','ru']:
+    text=(SITE/f'src/lib/i18n/ui/{locale}.ts').read_text()
+    line=next(l for l in text.splitlines() if 'localDateReferenceError:' in l)
+    expected[locale]=line.split(':',1)[1].strip().removesuffix(',')[1:-1]
+
+screen_count=0
+case_rows=[]
+for dirname,data in [('normal-page-run1',first),('normal-chart-run2',second)]:
+    assert data['node']=='v22.23.2' and data['browser']=='152.0.7977.83'
+    assert data['freezeSha256']==sha(FREEZE.read_bytes())
+    assert all(data['cleanup'].values())
+    assert read(ROOT/dirname/'served-files.json')==data['served']
+    record(ROOT/dirname/'served-files.json')
+    assert all(r['method']=='GET' and r['status']==200 for r in data['requests'])
+    for r in data['results']:
+        assert read(ROOT/dirname/(r['name']+'.json'))==r
+        record(ROOT/dirname/(r['name']+'.json'))
+        assert r['contextClosed'] and not r['pageErrors'] and not r['blocked'] and not r['requestFailures']
+        assert len(r['consoleErrors'])==1
+        assert r['consoleErrors'][0]['text'].splitlines()[0]=='Error: Could not establish a calculation time within the local date.'
+        module='ChartCalculator.CJSrWeaL.js' if r['mode']=='chart' else 'MoonPhaseTool.DGpJwGUo.js'
+        assert urllib.parse.urlparse(r['consoleErrors'][0]['location']['url']).path=='/_astro/'+module
+        assert all(q['method']=='GET' and not q['blocked'] and q['url'].startswith(data['origin']+'/') for q in r['browserRequests'])
+        for stage in ['ordinary','edited','refused']:
+            state=r[stage]
+            assert state['noSavedProfile'] and not state['overflow'] and state['busy']=='false'
+            assert state['place']=='Apia · Tuamasaga, Samoa' and state['unknown'] is True
+            assert state['time']==('08:30' if r['mode']=='chart' else '')
+        assert r['ordinary']['result'] and r['ordinary']['error'] is None and r['ordinary']['date']=='2011-12-29'
+        for stage in ['edited','refused']:
+            state=r[stage]
+            assert not state['result'] and state['actions']==0 and state['context'] is None and state['date']=='2011-12-30'
+        assert r['refused']['error']==expected[r['locale']]
+        assert r['refused']['focus']['role']=='alert'
+        if dirname=='normal-page-run1' and r['mode']=='chart':
+            assert not r['passed'] and '1 !== 0' in r['failure'] and 'normal-build-drive.mjs:111:40' in r['failure']
+            assert 'recovered' not in r
+            assert r['failureState']['date']=='2011-12-31' and r['failureState']['error']==expected[r['locale']]
+            assert not r['failureState']['result'] and r['failureState']['focus']['id']=='birth-date'
+        else:
+            assert r['passed'] and 'failure' not in r
+            state=r['recovered']
+            assert state['result'] and state['error'] is None and state['date']=='2011-12-31'
+            assert state['focus']['tag']=='H2' and state['noSavedProfile'] and not state['overflow']
+            if r['mode']=='chart':
+                retry=r['beforeRetry']
+                assert retry['date']=='2011-12-31' and retry['error']==expected[r['locale']]
+                assert retry['focus']['id']=='birth-date' and not retry['result'] and retry['actions']==0 and retry['context'] is None
+                assert state['actions']>0 and state['context']['mode']=='full' and state['context']['chartId'] is None
+            if 'knownTime' in r:
+                assert r['locale']=='en' and r['width']==1280
+                assert r['knownTime']['result'] and r['knownTime']['unknown'] is False and r['knownTime']['date']=='2011-12-30'
+                assert r['knownTime']['time']=='08:30' and r['knownTime']['error'] is None
+        for s in r['screenshots']:
+            same_file(ROOT/dirname/s['path'],s);screen_count+=1
+        case_rows.append({'run':dirname,'name':r['name'],'accepted':r['passed'],'screenshots':len(r['screenshots']),'requests':len(r['browserRequests']),'expectedConsoleErrors':1,'knownTimeControl':'knownTime' in r})
+
+accepted=[r for r in first['results'] if r['mode']=='moon']+second['results']
+assert len(accepted)==24 and {r['name'] for r in accepted}==expected_names
+assert sum('knownTime' in r for r in accepted)==2
+assert summary['acceptedGroups']==24 and summary['initialChartAssertionFailuresRetained']==12
+assert summary['expectedSanitizedRefusalConsoleErrors']==24
+assert all(summary[k]==0 for k in ['unexpectedConsoleErrors','uncaughtPageErrors','refusalHorizontalOverflow','mutationAttempts','blockedExternalRequests'])
+for r in accepted:
+    s=next(x for x in summary['groups'] if x['name']==r['name'])
+    assert s['consoleErrors']==r['consoleErrors'] and s['knownTimeControl']==('knownTime' in r)
+
+served1={r['path']:r for r in first['served']}
+served2={r['path']:r for r in second['served']}
+common=set(served1)&set(served2)
+assert all(served1[p]==served2[p] for p in common)
+current_dist=[]
+for p,row in {**served1,**served2}.items():
+    same_file(SITE/'dist'/p,row);current_dist.append(row)
+for row in first['cityArtifacts']: same_file(SITE/'dist'/row['path'],row)
+assert first['cityArtifacts']==second['cityArtifacts']
+
+captures=read(ROOT/'capture-comparison-final.json')
+assert len(captures)==18
+for r in captures:
+    assert r['identical'] and r['sha256']==r['priorSha256']
+    same_file(SITE/r['path'],r)
+receipt=read(ROOT/'build-receipt-final.json')
+assert receipt['templateSourceSha256']=='e664d1d35eeae647eff10cc775f058d16e179bea4f0006313a91f3f0d4a3b3b7'
+result={'auditedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'outcome':'accepted for the stated finite local normal-page scope','noBrowserRerun':True,'originalRun':{'passed':12,'failed':12,'allFailures':'unchanged Chart pre-retry error persistence contradicted harness assertion'},'correctedChartRun':{'passed':12,'failed':0},'acceptedGroups':24,'executedGroupsAcrossBothRuns':36,'sourceFilesBeforeAfterAndCurrentVerified':len(first['sourceBefore']),'exactFrozenFiles':len(freeze['files']),'screenshotsVerified':screen_count,'servedUniqueFiles':[len(served1),len(served2)],'commonServedFilesIdentical':len(common),'currentDistFilesRehashed':len(current_dist),'genericExpectedConsoleErrorsAcceptedGroups':24,'genericExpectedConsoleErrorsAllExecutions':36,'unexpectedConsoleErrors':0,'pageErrors':0,'requestFailures':0,'blockedRequests':0,'nonGetRequests':0,'explicitKnownTimeControls':2,'captureIdentitiesVerified':18,'templateSourceSha256':receipt['templateSourceSha256'],'groups':case_rows,'limits':['Independent evidence and source audit of root-executed browser controls; no new browser execution.','24 accepted groups are from two executions, not one fully passing 24-group execution.','No numerical-call counts, independent numerical oracle, empty-date proof, whole-date completeness, signed-in lifecycle, remote preview, publication or deployment claim.','Expected generic console errors are retained; no exposed formatter details in these observations.','HTTP request observations and server response records are not claims that every browser request completed.']}
+(OUT/'audit-result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+(OUT/'original-input-manifest.json').write_text(json.dumps({'files':identities},ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({k:v for k,v in result.items() if k not in ['groups','limits']},ensure_ascii=False,indent=2))

@@ -1,0 +1,75 @@
+{
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 3479,
+      "sha256": "0031ac0685bef863d498dbede35fd55b94d1781886ffd9d8ebe8cd808308046f"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5434,
+      "sha256": "78bc5721c5216bd74d919301650ebdfe0b5d8010534aba1306601d5b5352ffcd"
+    },
+    {
+      "path": "acceptance-summary.json",
+      "bytes": 1240,
+      "sha256": "6e223d5d0e49ff9156e7dc2e5e97e53f53325b4ede87475f6a86ee9792818a77"
+    },
+    {
+      "path": "capture-comparison.json",
+      "bytes": 5252,
+      "sha256": "ea9dea2433e455a8a50c8545b3d89a40273e50d2a1ac76b5e8ec9d769728f4c6"
+    },
+    {
+      "path": "en-tool-1280-local-reference.png",
+      "bytes": 185045,
+      "sha256": "23887afda2e1f1adef88f7d5a1638c90a47153ed8a0b3b744d40a74d19a83ce2"
+    },
+    {
+      "path": "final-source-manifest.json",
+      "bytes": 8424,
+      "sha256": "5e32126465b3ee095c04367a65a0ad499e7b9d1148a1ff01b49d75f1e9370a4a"
+    },
+    {
+      "path": "full-tests.log",
+      "bytes": 33753,
+      "sha256": "c7ac3a9ac70dc0ad441c9b1002028c371601d25dd5e0aca33f8e22355f8a2fdc"
+    },
+    {
+      "path": "metadata-tests.log",
+      "bytes": 590,
+      "sha256": "7713143e650b6092dcf08b6b378865ef63e602ddfa7aa0ccf1c88606f7cfa83b"
+    },
+    {
+      "path": "raw-evidence.tar.gz",
+      "bytes": 22295964,
+      "sha256": "720a49f52d9ba8eca46f92f84e8344ed115c1a00c3eedacba505b0cc2a85aad8"
+    },
+    {
+      "path": "raw-members.json",
+      "bytes": 96172,
+      "sha256": "cfc7df0d1bbc5c8ab6b592631cd3eac38e718a1b8498fbfa18e069efe21c3d0c"
+    },
+    {
+      "path": "ru-tool-390-local-reference.png",
+      "bytes": 127071,
+      "sha256": "b310dee530a1ea8f57d888249198990d2a12efe2f81aa2f06282325d35bfb25b"
+    },
+    {
+      "path": "scope.log",
+      "bytes": 191,
+      "sha256": "811e9fdf1664326957be97ba72ccfdd7d7ba3c57470aff7e088b5a0ca5d3f1d5"
+    },
+    {
+      "path": "sharing-image-disposition.json",
+      "bytes": 956,
+      "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 7708,
+      "sha256": "348c58a7edab4bd9055a604733657f6477efea10f48e782a96eb28886c79251d"
+    }
+  ],
+  "qualification": "Root local acceptance. Raw original paths map to content-addressed ordinary inert archive members; all members round-trip verified."
+}

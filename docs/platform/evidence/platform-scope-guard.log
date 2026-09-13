@@ -1,0 +1,18 @@
+
+> zodiacs-org@1.0.0 test:phase1:scope
+> node scripts/phase1-scope-guard.mjs
+
+phase1-scope-guard: PASS — 177 changed path(s); 86 protected path(s) covered by the changed one-time allowance
+
+> zodiacs-org@1.0.0 test
+> vitest run scripts/phase1-scope-guard.test.mjs
+
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ scripts/phase1-scope-guard.test.mjs (30 tests) 5ms
+
+ Test Files  1 passed (1)
+      Tests  30 passed (30)
+   Start at  02:02:19
+   Duration  295ms (transform 25ms, setup 0ms, collect 21ms, tests 5ms, environment 0ms, prepare 40ms)

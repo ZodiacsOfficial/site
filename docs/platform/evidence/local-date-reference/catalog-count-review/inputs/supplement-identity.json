@@ -1,0 +1,27 @@
+{
+  "base": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "records": [
+    {
+      "path": ".github/phase1-scope-allowance.json",
+      "bytes": 1155,
+      "sha256": "2f26d0a3b85e651e1b248733adae5a818c213885c227af08b98a699acc440797"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "bytes": 16094,
+      "sha256": "5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0"
+    },
+    {
+      "path": "src/lib/i18n/index.test.ts",
+      "bytes": 15646,
+      "sha256": "d14f7e38407738910c6e43c552475901bfea8358d3be31438666ddce0527c513"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.test.ts",
+      "bytes": 5247,
+      "sha256": "5af680fd9c0905b3090a6f660c1381828ef9a39838ebba59eb9f383d6b60260d"
+    }
+  ],
+  "patchSha256": "50330a5cc5865f44872f607795b1135bf5c98a0a1ffd06113ccf6cfcebff5922",
+  "state": "Root supplemental catalog-count integration for independent review; original12-file freeze unchanged."
+}

@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+import {build,transform} from 'esbuild';
+const sha=b=>createHash('sha256').update(b).digest('hex');
+const identity=JSON.parse(fs.readFileSync('receipt-companion-freeze1-identity.json'));
+const dependencies=[];
+for(const file of ['src/lib/engine/portable.ts','src/lib/engine/chart-adapter.ts','src/lib/engine/full.ts','src/lib/engine/types.ts']){
+ const bytes=execFileSync('git',['show',`${identity.baseCommit}:${file}`],{cwd:identity.sourceCheckout});assert.deepEqual(bytes,fs.readFileSync(path.join(identity.sourceCheckout,file)));fs.mkdirSync(path.dirname('candidate/'+file),{recursive:true});fs.writeFileSync('candidate/'+file,bytes);dependencies.push({file,sha256:sha(bytes),unchangedFromBase:true});
+}
+for(const name of ['@zodiacs/engine','astronomy-engine'])fs.cpSync('../zodiacs-platform-rc6-public-consumer-review/node_modules/'+name,'node_modules/'+name,{recursive:true,dereference:true});
+fs.writeFileSync('package.json','{"private":true,"type":"module"}\n');
+const previous=execFileSync('git',['show',`${identity.baseCommit}:src/lib/engine/calculator-receipt.ts`],{cwd:identity.sourceCheckout});fs.writeFileSync('baseline-calculator-receipt.ts',previous);
+const options={loader:'ts',format:'esm',legalComments:'none'};
+const oldOutput=await transform(previous.toString(),options),newOutput=await transform(fs.readFileSync('candidate/src/lib/engine/calculator-receipt.ts','utf8'),options);assert.equal(newOutput.code,oldOutput.code,'Companion helper must emit identical executable code');
+fs.writeFileSync('counted-public.mjs',`export * from '@zodiacs/engine';\nimport { natalChart as actual } from '@zodiacs/engine';\nlet calls=0;\nexport const natalChart=input=>{calls++;return actual(input)};\nexport const count=()=>calls;\nexport const reset=()=>{calls=0};\n`);
+fs.writeFileSync('helper-entry.ts',`export {computeCalculatorReceipt} from './candidate/src/lib/engine/calculator-receipt';\nexport {computeChart} from './candidate/src/lib/engine/full';\nexport {count,reset} from './counted-public.mjs';\n`);
+const result=await build({entryPoints:['helper-entry.ts'],outfile:'helper-subject.mjs',platform:'node',format:'esm',target:'es2022',bundle:true,metafile:true,external:['@zodiacs/engine/*'],plugins:[{name:'count-only-public-natal',setup(b){b.onResolve({filter:/^@zodiacs\/engine$/},args=>args.importer.endsWith('/counted-public.mjs')?{path:args.path,external:true}:{path:path.resolve('counted-public.mjs')});}}]});
+const inputs=Object.keys(result.metafile.inputs).map(file=>{assert.ok(path.resolve(file).startsWith(process.cwd()+'/'));return{file,sha256:sha(fs.readFileSync(file))};});
+const record={helperExecutableCodeIdentical:true,helperTransformedSha256:sha(newOutput.code),unmodifiedBaseDependencies:dependencies,inputs,instrumentation:'Only public natalChart import passes through a transparent count wrapper that delegates exactly once to the physically extracted public archive; no product source mutation or natal stub.',externalPackagePath:path.resolve('node_modules/@zodiacs/engine'),bundleSha256:sha(fs.readFileSync('helper-subject.mjs'))};fs.writeFileSync('helper-build-identity.json',JSON.stringify(record,null,2)+'\n');console.log(JSON.stringify(record));

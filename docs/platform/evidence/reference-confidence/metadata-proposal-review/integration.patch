@@ -1,0 +1,27 @@
+--- a/.github/phase1-scope-allowance.json
++++ b/.github/phase1-scope-allowance.json
+@@ -1,8 +1,8 @@
+ {
+   "version": 1,
+-  "id": "platform-unknown-time-local-date-reference",
+-  "baseCommit": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+-  "authorization": "Owner-authorized Zodiacs Platform implementation mandate, C-014 unknown-time local date reference guard. Only the six named locale catalogs add the dedicated error for a calculation time that could not be established within the requested local date; the two named locale tests update the exact catalog-key count from 418 to 419 and its test title. No existing parity or interpolation assertion is removed. Conservative refusal does not claim an empty date or whole-date coverage. Approved design, global navigation/styles, Registry, SDK, Learn/sign guides and Astrofolio remain untouched. This exact-base one-time allowance does not authorize publication or future protected edits. See docs/platform/evidence/local-date-reference/.",
++  "id": "platform-unknown-time-chart-confidence",
++  "baseCommit": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
++  "authorization": "Owner-authorized Zodiacs Platform implementation mandate, C-015 unknown-time chart confidence. Only the six named locale catalogs add a dedicated notice that the Moon sign across the date is unverified; the two named locale tests update the exact catalog-key count from 419 to 420 and its title. Existing parity/interpolation assertions remain intact. This withholds unsupported date-wide confidence while preserving the admitted reference calculation; it does not assert a sign crossing or complete date coverage. Approved design, global navigation/styles, canonical Registry, SDK, Learn/sign guides and Astrofolio remain untouched. This exact-base one-time allowance does not authorize publication or future protected edits. See docs/platform/evidence/reference-confidence/.",
+   "protectedPaths": [
+     "src/lib/i18n/index.test.ts",
+     "src/lib/i18n/ui/en.ts",
+--- a/.github/workflows/site-check.yml
++++ b/.github/workflows/site-check.yml
+@@ -125,6 +125,10 @@
+         timeout-minutes: 5
+         run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs
+ 
++      - name: Unknown-time chart confidence
++        timeout-minutes: 5
++        run: OUT_DIR=tests/visual/artifacts/chart-reference-confidence node tests/chart-reference-confidence-drive.mjs
++
+       - name: Engine accuracy vectors
+         run: npm test
+ 

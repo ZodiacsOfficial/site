@@ -1,0 +1,101 @@
+{
+  "variant": "candidate",
+  "browser": "152.0.7977.83",
+  "groups": 1,
+  "passed": 0,
+  "results": [
+    {
+      "name": "profile sync while the replacement authoritative session is pending preserves authenticated result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: {\"interim\":\"device-only\",\"final\":\"device-only\",\"requests\":[{\"method\":\"GET\",\"body\":null,\"authorization\":\"Bearer synthetic-token-A\"}]}\n+ actual - expected\n\n+ 'device-only'\n- 'pending'\n\n    at file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/refresh-drive.mjs:34:744\n    at async test (file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/refresh-drive.mjs:32:82)\n    at async file:///private/tmp/zodiacs-platform-downstream-context-independent-review/daily/refresh-drive.mjs:34:2",
+      "requests": [
+        {
+          "method": "GET",
+          "body": null,
+          "authorization": "Bearer synthetic-token-A"
+        }
+      ],
+      "errors": [],
+      "state": {
+        "shell": {
+          "hidden": false,
+          "state": "device-only"
+        },
+        "body": "Synthetic capture\nCancer\nLeo\nJoin\n\nDevice note",
+        "events": [
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "auth-subscribe"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "db-table",
+            "table": "charts"
+          },
+          {
+            "kind": "db-columns",
+            "columns": "id"
+          },
+          {
+            "kind": "db-owner",
+            "field": "user_id",
+            "userId": "90000000-0000-4000-8000-000000000009"
+          },
+          {
+            "kind": "clear-observed",
+            "current": null,
+            "detailType": "undefined",
+            "eventType": "Event"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          },
+          {
+            "kind": "get-session"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/sync"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/daily-email-client"
+          },
+          {
+            "kind": "import",
+            "key": "../lib/profile/store"
+          }
+        ],
+        "focuses": [],
+        "active": ""
+      }
+    }
+  ],
+  "scope": "Real Preact controller/context/helper/profile access/client; native fetch to fulfilled owned endpoint. Synthetic auth/Supabase boundary, structural DOM and declared import delay gates. No backend/public page claim."
+}

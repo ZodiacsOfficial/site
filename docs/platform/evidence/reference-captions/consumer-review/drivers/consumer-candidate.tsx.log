@@ -1,0 +1,51 @@
+import assert from 'node:assert/strict';
+import {writeFileSync,mkdirSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {h} from 'preact';
+import {render} from 'preact-render-to-string';
+import {computeChart} from './candidate/src/lib/engine/full';
+import {encodePositionsLink,decodePositionsLink} from './candidate/src/lib/share-positions';
+import {previewModel} from './candidate/src/server/chart-preview-model';
+import {handleChartLinkRequest} from './candidate/src/server/chart-preview';
+import {chartSheetSettings,chartSheetProvenanceLines,shareCardTimeNotes} from './candidate/src/lib/share-card';
+import {buildSceneModel} from './candidate/src/lib/scene/build';
+import Inspector from './candidate/src/islands/explorer/Inspector';
+import {PositionsOnlyResult} from './candidate/src/islands/PositionsShareSurface';
+import {t} from './candidate/src/lib/i18n';
+const out='/private/tmp/zodiacs-platform-reference-caption-consumer-review/consumer-output-candidate';mkdirSync(out,{recursive:true});
+const sha=(text:string)=>createHash('sha256').update(text).digest('hex');
+async function main(){
+ const rows=[];
+ for(const timeKnown of [false,true])for(const clock of ['06:17','18:43']){
+  const instant=`2000-01-15T${clock}:00.000Z`;
+  const chart=computeChart({utc:new Date(instant),timeKnown,houseSystem:'whole',latitude:0,longitude:0});
+  if(!timeKnown)chart.moonSignCandidates=[];
+  const token=encodePositionsLink({bodies:chart.bodies,angles:chart.angles,houseSystem:'whole',engineVersion:chart.engineVersion});assert(token);
+  const decoded=decodePositionsLink(token);assert(decoded);
+  assert.deepEqual(Object.keys(decoded).sort(),['angles','bodies','engineVersion','houseSystem']);
+  assert(!('input' in decoded));
+  const model=previewModel(token);assert(model);
+  const response=await handleChartLinkRequest(new Request('https://example.invalid/api/chart-link?p='+encodeURIComponent(token)));assert.equal(response.status,200);
+  const html=await response.text();
+  const scene=buildSceneModel(chart);assert(!('input' in scene));assert(!('utc' in scene));
+  const inspector=render(h(Inspector,{scene,selection:{kind:'body',body:'Moon'},onSelect:()=>{},locale:'en'}));
+  const receiver=render(h(PositionsOnlyResult,{chart:decoded,locale:'en'}));
+  const notes=shareCardTimeNotes('en',{referenceTime:!timeKnown,moonAmbiguous:!timeKnown});
+  const settings=chartSheetSettings(chart);
+  const details={date:'2000-01-15',time:clock,timeKnown,city:'',timezone:'UTC'};
+  const hidden=chartSheetProvenanceLines(chart,details,true),visible=chartSheetProvenanceLines(chart,details,false);
+  assert.deepEqual(hidden,['Birth details hidden']);
+  if(timeKnown){assert(!model.settings.includes('12:00'));assert(!html.includes('12:00 reference'));assert(!inspector.includes(t('en','noTimeNotice')));assert.deepEqual(notes,[]);assert(!settings.includes('12:00'));assert(visible[0].includes(clock+' local'));assert(visible.some(x=>x.includes('Resolved UTC')));}
+  else{assert.equal(model.settings,'Reference positions / No houses / Tropical');assert(html.includes('Reference Sun and Moon positions — birth details not included.'));assert(inspector.includes(t('en','noTimeNotice')));assert.equal(notes[0],'Reference positions · Birth time unknown');assert(settings.startsWith('Reference positions · '));assert(visible[0].includes('Reference positions'));assert(!visible[0].includes('12:00'));assert(!inspector.includes('12:00 local civil time'));assert(visible.some(x=>x.includes(clock+' UTC')));}
+  assert(!receiver.includes('12:00'));assert(receiver.includes('Positions only'));
+  const name=(timeKnown?'known':'reference')+'-'+clock.replace(':','');
+  const artifacts:any={};for(const [key,value]of Object.entries({html,inspector,receiver})){const file=name+'-'+key+'.html';writeFileSync(out+'/'+file,value);artifacts[key]={file,sha256:sha(value),bytes:Buffer.byteLength(value)};}
+  rows.push({numerical:JSON.stringify(chart),response:{status:response.status,headers:Object.fromEntries(response.headers)},timeKnown,input:{utc:instant,latitude:0,longitude:0,timezoneForProvenance:'UTC'},token,decodedKeys:Object.keys(decoded).sort(),decodedHasClock:false,model,notes,settings,hidden,visible,sceneKeys:Object.keys(scene).sort(),artifacts});
+ }
+ const privacyCases=[];
+ for(const item of [{name:'post',method:'POST',query:'p='+rows[0].token,status:405},{name:'extraBirthField',method:'GET',query:'p='+rows[0].token+'&date=sensitive-fixture-date',status:400},{name:'duplicateToken',method:'GET',query:'p='+rows[0].token+'&p='+rows[0].token,status:400},{name:'malformed',method:'GET',query:'p=not-a-token',status:400},{name:'absent',method:'GET',query:'',status:400}]){
+  const response=await handleChartLinkRequest(new Request('https://example.invalid/api/chart-link?'+item.query,{method:item.method}));const text=await response.text();assert.equal(response.status,item.status);assert.equal(response.headers.get('referrer-policy'),'no-referrer');assert(response.headers.get('cache-control')!.includes('no-store'));privacyCases.push({name:item.name,status:response.status,headers:Object.fromEntries(response.headers),text});
+ }
+ console.log(JSON.stringify({variant:'candidate',privacyCases,runtime:{node:process.version,icu:process.versions.icu,tz:process.versions.tz},qualification:'Actual UTC engine calls, public codec/model/local HTML response, share-caption helpers and actual consumer SSR. Arbitrary non-noon reference instants are valid library/codec inputs; this does not claim the current Chart UI selects these clocks. No network request is issued by constructing Request and calling the local handler. No OG image rasterization, browser UI, date-wide proof, or author Khartoum probe is performed. Public positions receiver does not use Inspector; Inspector check covers its clockless scene contract separately.',rows},null,2));
+}
+main().catch(error=>{console.error(error);process.exitCode=1;});

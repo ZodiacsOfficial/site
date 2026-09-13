@@ -1,0 +1,50 @@
+[
+  {
+    "path": "/private/tmp/zodiacs-platform-reference-caption-delivery/dist",
+    "receipt": {
+      "schema": "zodiacs.phase1-build-receipt.v1",
+      "builtAt": "2026-09-12T10:32:10.254Z",
+      "templateSourceSha256": "f59fed583e24c81abde15f9fc040d3dd69599f2eda1a1e880c4dbbfca273a717",
+      "dailyDate": "2026-09-12",
+      "publicationCanonicalSha256": "7fcca38152c766111e3602a83e9f9a9152247c61d6551d3bed157ee3c0c78243",
+      "renderPayloadSha256": {
+        "daily": "3ec6bf1e9dd5041aff894f2d40079c38abeca67c1f2b05524daa9da09d13ab60",
+        "dailyPublication": "33b055a72d62055db934120d3498eb6bc0a429495ddc293ac9d9a6dbc7707045",
+        "dailyPublicationManifest": "9e5f3675f52211a3ae6b0624c3f8b3077a651a49494da9dace39daf535c03c46",
+        "horoscopeProgram": "f29846e8f81d994c932aba5096e2500e5491c3f33198ff3a3338dc6b9eb1a197"
+      }
+    },
+    "receiptSha256": "0246b89b0c7147971e3bb8e5e42b6e98b9ded211bbd6899cd5d59b82187890f2",
+    "qualification": "Owned disposable Astro build output only. Source, dependencies, committed captures and durable evidence archives retained."
+  },
+  {
+    "path": "/private/tmp/zodiacs-platform-chart-reference-confidence/dist",
+    "receipt": {
+      "schema": "zodiacs.phase1-build-receipt.v1",
+      "builtAt": "2026-09-08T11:42:58.125Z",
+      "templateSourceSha256": "d51a67c3c837aeb26041fc4c55c63a18937bce193b9490a76b314f3fc792aae1",
+      "dailyDate": "2026-09-08",
+      "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+      "renderPayloadSha256": {
+        "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+        "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+        "dailyPublicationManifest": "f23b13d62750903c0c66e59e9938d1b9334e66102a40ee4d724f55dac50191f8",
+        "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+      }
+    },
+    "receiptSha256": "9864716198569b3829abcba86c3db5e8ed66bb232f5776b13db9f44a2af1fd2e",
+    "qualification": "Owned disposable Astro build output only. Source, dependencies, committed captures and durable evidence archives retained."
+  },
+  {
+    "path": "/private/tmp/zodiacs-platform-chart-ownership/dist",
+    "qualification": "Known prior platform task disposable Astro dist, no source/dependencies/captures/evidence deleted. No build receipt existed; this removal makes no new verification claim."
+  },
+  {
+    "path": "/private/tmp/zodiacs-platform-post-chart-clear/dist",
+    "qualification": "Known prior platform task disposable Astro dist, no source/dependencies/captures/evidence deleted. No build receipt existed; this removal makes no new verification claim."
+  },
+  {
+    "path": "/private/tmp/zodiacs-platform-site-receipt-export/dist",
+    "qualification": "Owned prior receipt-export generated Astro build output; source, public artifacts and recorded evidence retained."
+  }
+]

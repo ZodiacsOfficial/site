@@ -1,0 +1,19 @@
+import { createRequire } from 'node:module';
+import fs from 'node:fs/promises';
+const require=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json');const {chromium}=require('playwright-core');
+const root='/private/tmp/zodiacs-platform-b04';const browser=await chromium.connectOverCDP('ws://127.0.0.1:54810/devtools/browser/129f51db-2a35-4272-90ef-dabd695f458f');const context=browser.contexts()[0];const settings=await context.newPage();await settings.goto('chrome://settings/appearance');const original=await settings.evaluate(()=>new Promise(r=>chrome.settingsPrivate.getDefaultZoom(r)));let page;const observations=[];
+async function shot(cdp,file){const {data}=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:false});const bytes=Buffer.from(data,'base64');await fs.writeFile(`${root}/${file}`,bytes);return {file,width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20)};}
+try{
+for(const [factor,theme] of [[2,'dark'],[4,'dark'],[4,'light']]){
+ await settings.evaluate(f=>new Promise(r=>chrome.settingsPrivate.setDefaultZoom(f,r)),factor);page=await context.newPage();await page.setViewportSize({width:1280,height:900});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('http://127.0.0.1:54770/widget.html',{waitUntil:'networkidle'});await page.getByLabel('Theme').selectOption(theme);await page.getByRole('button',{name:'Load widget'}).click();const frame=await (await page.locator('iframe').elementHandle()).contentFrame();await frame.getByRole('link',{name:/Powered by Zodiacs.org/}).waitFor();const cdp=await context.newCDPSession(page);
+ await page.getByRole('button',{name:'Load widget'}).focus();await page.keyboard.press('Tab');
+ const focused=await frame.evaluate(()=>({text:document.activeElement?.textContent,rect:document.activeElement?.getBoundingClientRect().toJSON(),scrollY,innerWidth,innerHeight}));
+ const parent=await page.locator('iframe').boundingBox();const viewport=await page.evaluate(()=>({innerWidth,innerHeight,devicePixelRatio}));
+ const attributionScreenshot=await shot(cdp,`nativeZoom${factor}-${theme}-attribution-viewport.png`);
+ await page.keyboard.press('PageDown');await page.waitForTimeout(150);const after=await frame.evaluate(()=>({scrollY,scrollHeight:document.documentElement.scrollHeight,innerHeight,active:document.activeElement?.textContent}));
+ const scrollScreenshot=await shot(cdp,`nativeZoom${factor}-${theme}-pagedown-viewport.png`);
+ await page.keyboard.press('Tab');const fallback=await page.evaluate(()=>({tag:document.activeElement?.tagName,href:document.activeElement?.href,rect:document.activeElement?.getBoundingClientRect().toJSON()}));
+ observations.push({factor,theme,viewport,parent,focused,afterPageDown:after,fallback,attributionScreenshot,scrollScreenshot,keyboardScrollPass:factor!==4||after.scrollY>0,attributionGloballyVisible:focused.rect.y+parent.y>=-1&&focused.rect.bottom+parent.y<=viewport.innerHeight+1&&focused.rect.x+parent.x>=-1&&focused.rect.right+parent.x<=viewport.innerWidth+1,fallbackPass:fallback.href==='https://zodiacs.org/today/'});
+ await page.close();page=null;
+}
+}finally{await settings.evaluate(f=>new Promise(r=>chrome.settingsPrivate.setDefaultZoom(f,r)),original);if(page)await page.close();await settings.close();await fs.writeFile(`${root}/native-zoom-captures.json`,JSON.stringify({observedAt:new Date().toISOString(),browser:browser.version(),scope:'Actual native zoom plus raw viewport screenshots via Page.captureScreenshot without clip. Earlier Playwright fullPage screenshots at zoom>1 were clipped capture artifacts and are not accepted visual evidence. Settings restored in isolated browser.',observations},null,2)+'\n');console.log(JSON.stringify(observations,null,2));await browser.close();}

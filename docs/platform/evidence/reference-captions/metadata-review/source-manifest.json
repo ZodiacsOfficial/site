@@ -1,0 +1,131 @@
+{
+  "records": [
+    {
+      "path": "REVIEW.md",
+      "bytes": 3308,
+      "sha256": "2d6a237b40018b84e3c2e4bd606403289bb3e251e2fb98fc08feff5a1bbfa1ae"
+    },
+    {
+      "path": "COMMANDS.md",
+      "bytes": 831,
+      "sha256": "23c447858ea3d8d1afae1e7bea70b0e9e2ad75f6c991adb6fd8fbf43aea443b9"
+    },
+    {
+      "path": "prepare.py.log",
+      "bytes": 1981,
+      "sha256": "c2ecdb71421f510e8a5a15c50a48804847c980c0256e890efee0d875e34e1e29"
+    },
+    {
+      "path": "prepare.log",
+      "bytes": 141,
+      "sha256": "3809ebc3c118b244177bab08533938011e46f3b46fd54a6fe7af21843288b22c"
+    },
+    {
+      "path": "audit.mjs.log",
+      "bytes": 7020,
+      "sha256": "71768b5377d37541402e89b35fb12bd16587ebe4183f6385fe47d5c29ce9b999"
+    },
+    {
+      "path": "audit.log",
+      "bytes": 109,
+      "sha256": "2f51ce8572e5b7f94a833d0ce2acadf8f8bfccd4dfa2e3d7d41e43411d84aa5f"
+    },
+    {
+      "path": "result.json",
+      "bytes": 3586,
+      "sha256": "8357374824e49807eec3dad7544f2a3255582996ed0bb6d00f6fe92ab20be605"
+    },
+    {
+      "path": "integration.patch",
+      "bytes": 3127,
+      "sha256": "a0c52aa23c1464858abada3db1b5bbfb4a8cedd5db7e409fb04016b84197d637"
+    },
+    {
+      "path": "source-identity.json",
+      "bytes": 1413,
+      "sha256": "a9ddfa7b43cc0ff401ef8f12f18a09f18223062d2e4017dcfb2e2b3d8c3e1085"
+    },
+    {
+      "path": "author-freeze.json",
+      "bytes": 6520,
+      "sha256": "c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644"
+    },
+    {
+      "path": "generation-independent.log",
+      "bytes": 34,
+      "sha256": "32aee63d3fb958b3c7b2e9a36bf668f3737fcb507dad1ffaebc88326505f76b7"
+    },
+    {
+      "path": "fixture-source-manifest.json",
+      "bytes": 312996,
+      "sha256": "4f753e6464dbfab775f81a28253927c2519ee03af748760bb82bbe5914b0cdf6"
+    },
+    {
+      "path": "before/.github/phase1-scope-allowance.json",
+      "bytes": 1196,
+      "sha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95"
+    },
+    {
+      "path": "before/.github/workflows/site-check.yml",
+      "bytes": 16285,
+      "sha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a"
+    },
+    {
+      "path": "after/.github/phase1-scope-allowance.json",
+      "bytes": 1505,
+      "sha256": "ca347fa6deb0cd07f9f28c08a543deaca0d7c84f1abd2f5593e1f519f47cd8aa"
+    },
+    {
+      "path": "after/.github/workflows/site-check.yml",
+      "bytes": 16456,
+      "sha256": "5eda3577f373103788d2305fe8ae898393efa89b2bd38d0f0e5142d29ab6c166"
+    },
+    {
+      "path": "generation/after/i18n-additions.md",
+      "bytes": 185898,
+      "sha256": "a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812"
+    },
+    {
+      "path": "generation/before/i18n-additions.md",
+      "bytes": 185894,
+      "sha256": "cd4092b9fdefcc7f1cce50455b93d2d1ee1da70acfbb0d658f65c00b2b237396"
+    },
+    {
+      "path": "generation/identity.json",
+      "bytes": 575,
+      "sha256": "d8c3a19186114824f9abc29b9745f842b6b2a1ca0c6aa631d1e371f0b034244d"
+    },
+    {
+      "path": "generation/integration.patch",
+      "bytes": 911,
+      "sha256": "cdcebdd27255dd9e71c89e98c87975b75724f160cc84404010ffd317ed83efe5"
+    },
+    {
+      "path": "executed-or-reviewed/scripts/phase1-scope-guard.mjs.log",
+      "bytes": 8343,
+      "sha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d"
+    },
+    {
+      "path": "executed-or-reviewed/scripts/build-i18n-additions.mjs.log",
+      "bytes": 17140,
+      "sha256": "7cae770860a39d5423c8f4c6e5cad4df35261b41d55e1fdad51e622a55494e82"
+    },
+    {
+      "path": "executed-or-reviewed/tests/reference-caption-drive.mjs.log",
+      "bytes": 19270,
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f"
+    },
+    {
+      "path": "executed-or-reviewed/tests/visual/browser.mjs.log",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "executed-or-reviewed/i18n-additions.md",
+      "bytes": 185898,
+      "sha256": "a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812"
+    }
+  ],
+  "count": 25,
+  "bytes": 983741
+}

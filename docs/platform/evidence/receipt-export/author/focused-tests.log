@@ -1,0 +1,18 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-receipt-export
+
+ ✓ src/islands/ChartCalculator.registry-bridge.test.ts (2 tests) 3ms
+ ✓ src/lib/receipt-download.test.ts (5 tests) 5ms
+ ✓ src/lib/i18n/ui/client.test.ts (4 tests) 2ms
+ ✓ src/islands/ChartCalculator.locale.test.ts (7 tests) 20ms
+ ✓ src/lib/i18n/ui/ru.test.ts (6 tests) 10ms
+ ✓ src/islands/ChartCalculator.actions.test.ts (20 tests) 11ms
+ ✓ src/lib/i18n/index.test.ts (20 tests) 37ms
+ ✓ src/lib/engine/calculator-receipt.test.ts (11 tests) 125ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 161ms
+
+ Test Files  9 passed (9)
+      Tests  96 passed (96)
+   Start at  12:28:03
+   Duration  556ms (transform 819ms, setup 0ms, collect 1.40s, tests 373ms, environment 1ms, prepare 593ms)
+

@@ -1,0 +1,13 @@
+{
+  "schema": "zodiacs.phase1-build-receipt.v1",
+  "builtAt": "2026-09-08T10:49:26.805Z",
+  "templateSourceSha256": "e85d852a325e93e76a4a5d46249908da0f134819ccd030c13482b7c6457c6c18",
+  "dailyDate": "2026-09-08",
+  "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+  "renderPayloadSha256": {
+    "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+    "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+    "dailyPublicationManifest": "f23b13d62750903c0c66e59e9938d1b9334e66102a40ee4d724f55dac50191f8",
+    "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+  }
+}

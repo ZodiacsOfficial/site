@@ -1,0 +1,45 @@
+# Next C02 slice: keep a version-owned source and refuse silent downgrade
+
+**Recommendation: implement a small versioned saved-record adapter first, with explicit v1 read/write policy. Do not change the active profile key or remote restore label alone.** The existing SDK natal envelope should own fresh calculation semantics; the site wrapper adds saved-record identity and legacy origin, not another numerical schema. This is a proposed slice, not an approved or deployed storage/wire protocol.
+
+## Refreshed failures
+
+At site `921cd0d16cd0c4a82692d311c3af326b0045531d`, the independent probe executes the current calculator save projection and actual store/handoff/wire functions with synthetic memory storage. **Two assertions fail as expected; three compatibility controls pass.**
+
+1. Requested Placidus at the synthetic polar location computes Whole Sign, saves `summary.houseSystem = whole`, and reruns Whole Sign. The original request is already lost before account sync.
+2. A subsequent explicit Whole Sign calculation at the same birth matches the first record's actual system. `saveChart` returns `updated` and keeps one ID instead of retaining the two distinct requests.
+
+Additional controls show that a same-key `Profile.version = 2` is invisible to the current reader and overwritten as v1 by its next save; optional fields inside v1 are dropped by an ordinary full-record re-save; and the two requests still produce identical v1 wire bytes and mutation fingerprints. The earlier remote-restore defect and withdrawn one-line fix in `docs/platform/evidence/c02-*` remain relevant.
+
+## Two plausible approaches
+
+| Approach | Compatibility and cost | Verdict |
+| --- | --- | --- |
+| Add a versioned calculation member inside existing `zodiacs.profile.v1`, and later add private-chart.v2 on the wire | Smallest new-client change, but old writers can remove the member. Bumping the outer version in the same key is worse: old readers see no charts and can replace the entire profile. An explicit declared downgrade would require a durable record outside that key to know which richer source was lost. | Useful only as a disposable view/projection. It cannot be the authoritative requested/actual record. |
+| Store version-owned saved records in a separate namespace; use a separately versioned encrypted account payload/projection when server support is ready | More boundary integration, but old v1 tabs cannot overwrite the authoritative new record. Reuse the SDK envelope for fresh results. Keep one-way legacy import, explicit conflict handling and strict wire version selection. No inference from matching v1 payload bytes. | Recommended destination. Implement its pure codec/accessors/downgrade policy before enabling the namespace. |
+
+## First additive implementation, without server/account changes
+
+Own a new `src/lib/profile/saved-record.ts` and focused tests, plus any needed local type-only adapter. No active storage migration, account request, deletion policy, feature flag or consumer redesign is required for this first commit.
+
+- Define a tagged saved-record wrapper with a fresh-envelope branch and a legacy-v1 branch. Fresh calculation settings/results come from the existing `NatalEnvelope` fields; do not duplicate its validators or reconstruct a full envelope from legacy `SavedChart.summary`, which lacks full bodies, cusps and reliable provenance. The site SDK entry currently predates `/receipt`; actual UI wiring depends on a separately verified SDK integration, not copied SDK source.
+- Provide pure construction from a fresh, validated envelope plus existing saved identity/label/relationship metadata; explicit legacy import preserving the original record; a replay-setting accessor; and a result-setting accessor. For legacy, replay may use the old enum but must be labeled `legacy-replay`, with original requested intent unavailable. Neither a polar flag nor current recalculation proves the historical request. Fresh actual houses use the envelope's `actual` and `absenceReason`; null and unavailable remain different.
+- Provide version-dispatched write preparation: legacy-v1 stays on the exact existing serializer/fingerprint path. A richer saved record targeting the current v1 account path returns a fixed `requires-version-2` outcome **before serialization, mutation-ID allocation or network**. There is no automatic lossy cloud export. A view-only positions projection may use actual houses, but it must not masquerade as the complete saved record or become the replay source.
+- Define local identity from saved ID first, otherwise birth plus **recorded request**, rather than actual fallback output. A legacy record with unknown original intent must not automatically merge with a distinct explicitly recorded request. Existing same-ID updates remain updates. Do not bulk re-key records.
+
+This slice is executable groundwork with round-trip and downgrade tests; it does not itself fix the two active UI regressions or complete C02. It makes the next local save/rerun wiring reviewable without a silent migration. The following local implementation can add a version-owned storage adapter and update the calculator/store/handoff consumers once local access/export/delete boundaries are integrated.
+
+## Explicit downgrade policy
+
+- Existing v1 reads remain readable and unchanged. Import into the new namespace is one-way and never invents historical settings.
+- New records are not automatically overwritten, merged or refreshed from subsequent v1 writes. If old and new views disagree, keep the version-owned source and present a conflict requiring an explicit new-client choice. Old-client timestamp or byte equality cannot prove request intent.
+- An old client may continue writing its own v1 namespace; those writes do not silently change the newer source. A v1 projection cannot be used to update a richer record. No dual-write scheme may quietly mark both stores authoritative.
+- Future server capability negotiation must keep old v1 reads/retries working, reject new destructive v1 writes against richer current records, and preserve the existing completed-mutation replay semantics. That requires separate account implementation and race tests; this review grants no server migration authority.
+
+## Integration boundaries and acceptance cases
+
+The active loss is in `ChartCalculator.tsx` (`chartIdentity` and `commitSave`), `profile/store.ts` (`sameStoredInput`), and `profile/profile-chart-handoff.ts`. `profile/resolve.ts` and `account-v2/remote-chart.ts` must use the request accessor for calculation and actual result for display. Existing v1 `chart-wire.ts`, `mutation-fingerprint.ts`, strict `account-api/sync-wire.ts` and remote ready projection must retain their exact behavior until a new version is explicitly selected.
+
+A new persistence key cannot be activated by merely adding `localStorage.setItem`: `account-v2/profile-boundary.ts` has an explicit key allowlist used by archive, account switch, clear and deletion. New records must participate in those flows, profile access/lease revocation, owner export, storage failure rollback, and legacy sync exclusion before any active write. These are technical local dependencies; production server changes are not needed to implement and test them with injected memory storage.
+
+Minimum decisive cases: polar Placidus versus explicit Whole remain distinct across save/load/rerun; unknown time keeps requested settings with actual null; no-place/failed recomputation stays honest; legacy p/w with and without polar flags never becomes known historical intent; new-to-v1 write preparation fails without mutation/fetch; all existing v1 canonical bytes/hashes remain pinned; old-tab v1 replacement cannot alter the new namespace; same-ID edits, account switching, export and deletion preserve their existing privacy behavior.

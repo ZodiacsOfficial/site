@@ -1,0 +1,141 @@
+{
+  "inputs": {
+    "candidate/src/lib/i18n/ui/growth.ts": {
+      "bytes": 4309,
+      "imports": [],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/en.ts": {
+      "bytes": 22136,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/es.ts": {
+      "bytes": 24319,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/fr.ts": {
+      "bytes": 27902,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/it.ts": {
+      "bytes": 26682,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/pt.ts": {
+      "bytes": 25854,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/growth.ts",
+          "kind": "import-statement",
+          "original": "./growth.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "candidate/src/lib/i18n/ui/ru.ts": {
+      "bytes": 38540,
+      "imports": [],
+      "format": "esm"
+    },
+    "catalog-runtime-entry.ts": {
+      "bytes": 347,
+      "imports": [
+        {
+          "path": "candidate/src/lib/i18n/ui/en.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/en.ts"
+        },
+        {
+          "path": "candidate/src/lib/i18n/ui/es.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/es.ts"
+        },
+        {
+          "path": "candidate/src/lib/i18n/ui/fr.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/fr.ts"
+        },
+        {
+          "path": "candidate/src/lib/i18n/ui/it.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/it.ts"
+        },
+        {
+          "path": "candidate/src/lib/i18n/ui/pt.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/pt.ts"
+        },
+        {
+          "path": "candidate/src/lib/i18n/ui/ru.ts",
+          "kind": "import-statement",
+          "original": "./candidate/src/lib/i18n/ui/ru.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "catalog-runtime-bundle.mjs": {
+      "imports": [],
+      "exports": [
+        "default"
+      ],
+      "entryPoint": "catalog-runtime-entry.ts",
+      "inputs": {
+        "candidate/src/lib/i18n/ui/growth.ts": {
+          "bytesInOutput": 4281
+        },
+        "candidate/src/lib/i18n/ui/en.ts": {
+          "bytesInOutput": 21538
+        },
+        "candidate/src/lib/i18n/ui/es.ts": {
+          "bytesInOutput": 24108
+        },
+        "candidate/src/lib/i18n/ui/fr.ts": {
+          "bytesInOutput": 29502
+        },
+        "candidate/src/lib/i18n/ui/it.ts": {
+          "bytesInOutput": 26851
+        },
+        "candidate/src/lib/i18n/ui/pt.ts": {
+          "bytesInOutput": 26702
+        },
+        "candidate/src/lib/i18n/ui/ru.ts": {
+          "bytesInOutput": 87952
+        },
+        "catalog-runtime-entry.ts": {
+          "bytesInOutput": 136
+        }
+      },
+      "bytes": 221409
+    }
+  }
+}

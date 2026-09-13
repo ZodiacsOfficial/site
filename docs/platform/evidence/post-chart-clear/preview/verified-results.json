@@ -1,0 +1,20 @@
+{
+  "passed": 9,
+  "natalCalls": 12,
+  "nativeIdentity": {
+    "path": "/_astro/chart-adapter.K-QfJlbI.js",
+    "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95",
+    "function": "Et",
+    "mapping": "Parsed from actual remote response: one-argument function returning exact input plus bodies and engineVersion."
+  },
+  "clearEventsVerified": 43,
+  "chartLinkedCaptureShells": 0,
+  "observedRequestEvents": 993,
+  "responseRecords": 874,
+  "complete200Responses": 871,
+  "unavailableResponseBodies": 3,
+  "blockedPlausibleGets": 9,
+  "observedApiOrNonGetRequests": 0,
+  "actualRemoteModules": 69,
+  "qualification": "Post-run validation of the actual existing browser records; not a second browser execution. No chart-linked capture DOM is present in this preview. Unpaired request events are not counted as completed responses; auth bootstrap unobserved."
+}

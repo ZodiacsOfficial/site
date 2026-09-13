@@ -1,0 +1,1200 @@
+// ../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js
+var ISO_INSTANT = /^(\d{4}|[+-]\d{6})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?(Z|[+-](\d{2}):(\d{2})))?$/;
+function validIsoInput(input) {
+  const match = ISO_INSTANT.exec(input);
+  if (!match || match[0] !== input || match[1] === "-000000") return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12) return false;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const monthDays = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (day < 1 || day > monthDays[month - 1]) return false;
+  return Number(match[4] ?? 0) <= 23 && Number(match[5] ?? 0) <= 59 && Number(match[6] ?? 0) <= 59 && Number(match[9] ?? 0) <= 23 && Number(match[10] ?? 0) <= 59;
+}
+function dateFrom(input, label) {
+  const invalid = () => new RangeError(
+    `${label} must be a valid Date, finite epoch-millisecond timestamp, or ISO calendar date/date-time with an explicit UTC offset.`
+  );
+  let date;
+  if (input instanceof Date) {
+    date = new Date(Date.prototype.getTime.call(input));
+  } else if (typeof input === "number" && Number.isFinite(input)) {
+    date = new Date(input);
+  } else if (typeof input === "string" && validIsoInput(input)) {
+    date = new Date(input);
+  } else {
+    throw invalid();
+  }
+  if (!Number.isFinite(date.getTime())) throw invalid();
+  return date;
+}
+
+// ../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js
+var ASPECT_TYPES = [
+  "conjunction",
+  "sextile",
+  "square",
+  "trine",
+  "opposition"
+];
+var ASPECTS = [
+  { type: "conjunction", angle: 0, orb: 8, luminaryOrb: 10 },
+  { type: "sextile", angle: 60, orb: 4, luminaryOrb: 5 },
+  { type: "square", angle: 90, orb: 7, luminaryOrb: 8 },
+  { type: "trine", angle: 120, orb: 7, luminaryOrb: 8 },
+  { type: "opposition", angle: 180, orb: 8, luminaryOrb: 10 }
+];
+var ASPECT_BODIES = /* @__PURE__ */ new Set([
+  "Sun",
+  "Moon",
+  "Mercury",
+  "Venus",
+  "Mars",
+  "Jupiter",
+  "Saturn",
+  "Uranus",
+  "Neptune",
+  "Pluto"
+]);
+var SIGNS = [
+  {
+    slug: "aries",
+    name: "Aries",
+    element: "fire",
+    modality: "cardinal",
+    polarity: "day",
+    naturalHouse: 1
+  },
+  {
+    slug: "taurus",
+    name: "Taurus",
+    element: "earth",
+    modality: "fixed",
+    polarity: "night",
+    naturalHouse: 2
+  },
+  {
+    slug: "gemini",
+    name: "Gemini",
+    element: "air",
+    modality: "mutable",
+    polarity: "day",
+    naturalHouse: 3
+  },
+  {
+    slug: "cancer",
+    name: "Cancer",
+    element: "water",
+    modality: "cardinal",
+    polarity: "night",
+    naturalHouse: 4
+  },
+  {
+    slug: "leo",
+    name: "Leo",
+    element: "fire",
+    modality: "fixed",
+    polarity: "day",
+    naturalHouse: 5
+  },
+  {
+    slug: "virgo",
+    name: "Virgo",
+    element: "earth",
+    modality: "mutable",
+    polarity: "night",
+    naturalHouse: 6
+  },
+  {
+    slug: "libra",
+    name: "Libra",
+    element: "air",
+    modality: "cardinal",
+    polarity: "day",
+    naturalHouse: 7
+  },
+  {
+    slug: "scorpio",
+    name: "Scorpio",
+    element: "water",
+    modality: "fixed",
+    polarity: "night",
+    naturalHouse: 8
+  },
+  {
+    slug: "sagittarius",
+    name: "Sagittarius",
+    element: "fire",
+    modality: "mutable",
+    polarity: "day",
+    naturalHouse: 9
+  },
+  {
+    slug: "capricorn",
+    name: "Capricorn",
+    element: "earth",
+    modality: "cardinal",
+    polarity: "night",
+    naturalHouse: 10
+  },
+  {
+    slug: "aquarius",
+    name: "Aquarius",
+    element: "air",
+    modality: "fixed",
+    polarity: "day",
+    naturalHouse: 11
+  },
+  {
+    slug: "pisces",
+    name: "Pisces",
+    element: "water",
+    modality: "mutable",
+    polarity: "night",
+    naturalHouse: 12
+  }
+];
+var SIGN_NAMES = SIGNS.map((sign) => sign.slug);
+
+// ../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/receipt.js
+function parseReceiptJson(json, limits) {
+  if (typeof json !== "string") return { ok: false, code: "invalid_json" };
+  if (!Number.isSafeInteger(limits.depth) || limits.depth < 0 || !Number.isSafeInteger(limits.nodes) || limits.nodes < 1)
+    return { ok: false, code: "complexity_limit" };
+  let cursor = 0;
+  let nodes = 0;
+  let code = "invalid_json";
+  const stack = [];
+  const number2 = /-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?/y;
+  const reject = (reason = "invalid_json") => {
+    code = reason;
+    throw new Error();
+  };
+  const whitespace = () => {
+    while (cursor < json.length && " 	\r\n".includes(json[cursor])) cursor += 1;
+  };
+  const string = (decode) => {
+    const start = cursor;
+    if (json[cursor++] !== '"') reject();
+    while (cursor < json.length) {
+      const character = json[cursor++];
+      if (character === '"') {
+        return decode ? JSON.parse(json.slice(start, cursor)) : void 0;
+      }
+      if (character.charCodeAt(0) < 32) reject();
+      if (character !== "\\") continue;
+      const escape = json[cursor++];
+      if (escape === "u") {
+        const digits = json.slice(cursor, cursor + 4);
+        if (!/^[0-9a-fA-F]{4}$/.test(digits)) reject();
+        cursor += 4;
+      } else if (escape === void 0 || !'"\\/bfnrt'.includes(escape)) reject();
+    }
+    return reject();
+  };
+  const value = (depth) => {
+    if (++nodes > limits.nodes || depth > limits.depth) reject("complexity_limit");
+    whitespace();
+    const token = json[cursor];
+    if (token === "{" || token === "[") {
+      cursor += 1;
+      stack.push({
+        kind: token === "{" ? "object" : "array",
+        state: "first",
+        ...token === "{" ? { keys: /* @__PURE__ */ new Set() } : {}
+      });
+    } else if (token === '"') string(false);
+    else if (token === "-" || token !== void 0 && token >= "0" && token <= "9") {
+      number2.lastIndex = cursor;
+      if (!number2.exec(json)) reject();
+      cursor = number2.lastIndex;
+    } else {
+      const literal = ["true", "false", "null"].find(
+        (candidate) => json.startsWith(candidate, cursor)
+      );
+      if (!literal) return reject();
+      cursor += literal.length;
+    }
+  };
+  try {
+    value(0);
+    while (stack.length > 0) {
+      const frame = stack[stack.length - 1];
+      whitespace();
+      const end = frame.kind === "object" ? "}" : "]";
+      if (frame.state === "separator") {
+        if (json[cursor] === end) {
+          cursor += 1;
+          stack.pop();
+        } else if (json[cursor] === ",") {
+          cursor += 1;
+          frame.state = "next";
+        } else reject();
+        continue;
+      }
+      if (frame.state === "first" && json[cursor] === end) {
+        cursor += 1;
+        stack.pop();
+        continue;
+      }
+      if (frame.kind === "object") {
+        const key = string(true);
+        if (frame.keys.has(key)) reject();
+        frame.keys.add(key);
+        whitespace();
+        if (json[cursor++] !== ":") reject();
+      }
+      frame.state = "separator";
+      value(stack.length);
+    }
+    whitespace();
+    if (cursor !== json.length) reject();
+    return { ok: true, value: JSON.parse(json) };
+  } catch {
+    return { ok: false, code };
+  }
+}
+var NATAL_ENVELOPE_SCHEMA = "zodiacs.natal-envelope.draft-v1";
+var NATAL_RECEIPT_SCHEMA = "zodiacs.calculation-receipt.draft-v1";
+var NATAL_ENVELOPE_LIMITS = Object.freeze({ bytes: 65536, depth: 12, nodes: 4096 });
+var ERROR_CODES = /* @__PURE__ */ new Set([
+  "invalid_json",
+  "invalid_shape",
+  "invalid_value",
+  "inconsistent_result",
+  "invalid_context",
+  "size_limit",
+  "complexity_limit",
+  "unsupported_version",
+  "unsupported_feature"
+]);
+var ERROR_BRAND = /* @__PURE__ */ new WeakMap();
+var NatalEnvelopeError = class extends Error {
+  code;
+  constructor(code) {
+    const fixed = ERROR_CODES.has(code) ? code : "invalid_shape";
+    super(`Natal envelope rejected: ${fixed}.`);
+    this.code = fixed;
+    this.name = "NatalEnvelopeError";
+    ERROR_BRAND.set(this, fixed);
+  }
+};
+var CONVENTIONS = Object.freeze({
+  calendar: "proleptic-gregorian",
+  zodiac: "tropical",
+  planetPositions: "apparent-geocentric-ecliptic-of-date",
+  moonPosition: "astronomy-engine-ecliptic-geo-moon",
+  moonNodes: "instantaneous-geocentric-moon-orbit-plane",
+  angles: "gast-and-mean-obliquity",
+  longitudeUnit: "degrees-[0,360)",
+  speed: "degrees-per-day;central-difference-plus-minus-0.25-day",
+  aspects: "major-aspects;sun-moon-eight-planets;no-nodes"
+});
+var COVERAGE = Object.freeze({
+  assessment: "finite-reference-cases-only",
+  broadDateRange: "not-certified",
+  angleExclusions: "exact-geographic-poles-and-ecliptic-horizon-coincidence",
+  inputSyntax: "not-an-astronomical-accuracy-guarantee"
+});
+var BODIES = [
+  "Sun",
+  "Moon",
+  "Mercury",
+  "Venus",
+  "Mars",
+  "Jupiter",
+  "Saturn",
+  "Uranus",
+  "Neptune",
+  "Pluto",
+  "North Node",
+  "South Node"
+];
+var FLAGS = ["dst-gap", "dst-fold", "lmt", "no-time", "polar-fallback"];
+var TIME_FLAGS = ["dst-gap", "dst-fold", "lmt"];
+var HOUSE_SYSTEMS = ["whole", "placidus"];
+var HOSTILE_KEYS = /* @__PURE__ */ new Set(["__proto__", "prototype", "constructor"]);
+function fail(code) {
+  throw new NatalEnvelopeError(code);
+}
+function guarded(action) {
+  try {
+    return action();
+  } catch (error) {
+    return fail(errorCode(error));
+  }
+}
+function errorCode(error) {
+  return (error !== null && typeof error === "object" ? ERROR_BRAND.get(error) : void 0) ?? "invalid_shape";
+}
+function cloneData(value, allowDates = false) {
+  const seen = /* @__PURE__ */ new Set();
+  let nodes = 0;
+  let stringBytes = 0;
+  const countString = (text2) => {
+    if (text2.length > NATAL_ENVELOPE_LIMITS.bytes) fail("size_limit");
+    stringBytes += new TextEncoder().encode(text2).length;
+    if (stringBytes > NATAL_ENVELOPE_LIMITS.bytes) fail("size_limit");
+  };
+  const visit = (item, depth) => {
+    if (++nodes > NATAL_ENVELOPE_LIMITS.nodes || depth > NATAL_ENVELOPE_LIMITS.depth)
+      fail("complexity_limit");
+    if (item === null || typeof item === "boolean") return item;
+    if (typeof item === "string") {
+      countString(item);
+      return item;
+    }
+    if (typeof item === "number") {
+      if (!Number.isFinite(item)) fail("invalid_value");
+      return Object.is(item, -0) ? 0 : item;
+    }
+    if (typeof item !== "object") fail("invalid_shape");
+    if (seen.has(item)) fail("invalid_shape");
+    const prototype = Object.getPrototypeOf(item);
+    const keys = Reflect.ownKeys(item);
+    if (keys.length > NATAL_ENVELOPE_LIMITS.nodes) fail("complexity_limit");
+    if (allowDates && prototype === Date.prototype) {
+      if (keys.length !== 0) fail("invalid_shape");
+      const ms = Date.prototype.getTime.call(item);
+      if (!Number.isFinite(ms)) fail("invalid_value");
+      return new Date(ms);
+    }
+    const array = Array.isArray(item);
+    if (prototype !== (array ? Array.prototype : Object.prototype) && !(prototype === null && !array))
+      fail("invalid_shape");
+    seen.add(item);
+    const out = array ? [] : {};
+    const length = array ? Object.getOwnPropertyDescriptor(item, "length")?.value : 0;
+    if (array && (length > NATAL_ENVELOPE_LIMITS.nodes || keys.length !== length + 1))
+      fail("invalid_shape");
+    if (keys.some((key) => typeof key !== "string" || HOSTILE_KEYS.has(key))) fail("invalid_shape");
+    for (const key of keys.sort()) {
+      if (array && key === "length") continue;
+      if (array && (!/^(0|[1-9]\d*)$/.test(key) || Number(key) >= length)) fail("invalid_shape");
+      const descriptor = Object.getOwnPropertyDescriptor(item, key);
+      if (!descriptor || !("value" in descriptor) || !descriptor.enumerable) fail("invalid_shape");
+      countString(key);
+      Object.defineProperty(out, key, {
+        value: visit(descriptor.value, depth + 1),
+        enumerable: true,
+        writable: true,
+        configurable: true
+      });
+    }
+    seen.delete(item);
+    return out;
+  };
+  return visit(value, 0);
+}
+function record(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value) || value instanceof Date)
+    fail("invalid_shape");
+  return value;
+}
+function fields(value, required, optional = []) {
+  if (required.some((key) => !Object.hasOwn(value, key)) || Object.keys(value).some((key) => !required.includes(key) && !optional.includes(key)))
+    fail("invalid_shape");
+}
+function choice(value, choices) {
+  if (typeof value !== "string" || !choices.includes(value)) fail("invalid_value");
+  return value;
+}
+function number(value, min, max, exclusiveMax = false) {
+  if (typeof value !== "number" || !Number.isFinite(value) || value < min || (exclusiveMax ? value >= max : value > max))
+    fail("invalid_value");
+  return value;
+}
+function bool(value) {
+  if (typeof value !== "boolean") fail("invalid_shape");
+  return value;
+}
+function text(value, maximum = 128) {
+  if (typeof value !== "string" || value.length === 0 || value.length > maximum || value.trim() !== value || /[\p{Cc}\p{Cf}]/u.test(value))
+    fail("invalid_value");
+  return value;
+}
+function version(value) {
+  const parsed = text(value, 64);
+  if (!/^\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?(?:\+[A-Za-z0-9.-]+)?$/.test(parsed))
+    fail("invalid_value");
+  return parsed;
+}
+function canonicalInstant(value) {
+  if (typeof value !== "string" || value.length > 32) fail("invalid_value");
+  try {
+    if (dateFrom(value, "instant").toISOString() !== value) fail("invalid_value");
+  } catch {
+    fail("invalid_value");
+  }
+  return value;
+}
+function flagList(value, allowed) {
+  if (!Array.isArray(value) || value.length > allowed.length) fail("invalid_value");
+  const flags = value.map((flag) => choice(flag, allowed));
+  if (new Set(flags).size !== flags.length || flags.includes("dst-gap") && flags.includes("dst-fold"))
+    fail("inconsistent_result");
+  return flags;
+}
+function sameFlags(a, b) {
+  return a.length === b.length && a.every((flag) => b.includes(flag));
+}
+function fixedFields(value, expected) {
+  const actual = record(value);
+  fields(actual, Object.keys(expected));
+  if (Object.keys(expected).some((key) => actual[key] !== expected[key]))
+    fail("unsupported_feature");
+}
+function longitude(value) {
+  return number(value, 0, 360, true);
+}
+function close(a, b) {
+  return Math.abs(a - b) <= 1e-8;
+}
+function wrap(value) {
+  return (value % 360 + 360) % 360;
+}
+function angularClose(a, b) {
+  return Math.min(wrap(a - b), wrap(b - a)) <= 1e-8;
+}
+function validateResult(value) {
+  const result = record(value);
+  fields(result, ["bodies", "angles", "houses", "aspects"]);
+  if (!Array.isArray(result.bodies) || result.bodies.length !== 12) fail("invalid_shape");
+  const names = /* @__PURE__ */ new Set();
+  const longitudes = /* @__PURE__ */ new Map();
+  for (const item of result.bodies) {
+    const body = record(item);
+    fields(body, ["body", "lon", "lat", "speed", "retrograde", "sign", "degree"]);
+    const name = choice(body.body, BODIES);
+    if (names.has(name)) fail("invalid_value");
+    names.add(name);
+    const lon = longitude(body.lon);
+    longitudes.set(name, lon);
+    number(body.lat, -90, 90);
+    const speed = number(body.speed, -Number.MAX_VALUE, Number.MAX_VALUE);
+    const degree = number(body.degree, 0, 30, true);
+    if (bool(body.retrograde) !== speed < 0 || body.sign !== SIGNS[Math.floor(lon / 30)]?.slug || !close(degree, lon % 30))
+      fail("inconsistent_result");
+  }
+  if (result.angles === null !== (result.houses === null)) fail("inconsistent_result");
+  if (result.angles !== null) {
+    const angles = record(result.angles);
+    fields(angles, ["asc", "mc", "dsc", "ic"]);
+    for (const angle of Object.values(angles)) longitude(angle);
+    if (!angularClose(angles.dsc, angles.asc + 180) || !angularClose(angles.ic, angles.mc + 180))
+      fail("inconsistent_result");
+    const houses = record(result.houses);
+    fields(houses, ["system", "cusps"]);
+    choice(houses.system, HOUSE_SYSTEMS);
+    if (!Array.isArray(houses.cusps) || houses.cusps.length !== 12) fail("invalid_shape");
+    const cusps = houses.cusps.map(longitude);
+    if (new Set(cusps).size !== 12) fail("inconsistent_result");
+    if (houses.system === "whole") {
+      const first = Math.floor(angles.asc / 30) * 30;
+      if (cusps.some((cusp, index) => !angularClose(cusp, first + index * 30)))
+        fail("inconsistent_result");
+    } else if (!angularClose(cusps[0], angles.asc) || !angularClose(cusps[9], angles.mc) || cusps.slice(0, 6).some((cusp, index) => !angularClose(cusps[index + 6], cusp + 180)))
+      fail("inconsistent_result");
+  }
+  if (!Array.isArray(result.aspects) || result.aspects.length > 45) fail("invalid_shape");
+  const pairs = /* @__PURE__ */ new Set();
+  for (const item of result.aspects) {
+    const aspect = record(item);
+    fields(aspect, ["a", "b", "type", "orb", "applying"]);
+    const a = choice(
+      aspect.a,
+      BODIES.filter((body) => ASPECT_BODIES.has(body))
+    );
+    const b = choice(
+      aspect.b,
+      BODIES.filter((body) => ASPECT_BODIES.has(body))
+    );
+    const key = [a, b].sort().join("/");
+    if (a === b || pairs.has(key)) fail("inconsistent_result");
+    pairs.add(key);
+    const type = choice(aspect.type, ASPECT_TYPES);
+    const definition = ASPECTS.find((aspect2) => aspect2.type === type);
+    const luminary = a === "Sun" || a === "Moon" || b === "Sun" || b === "Moon";
+    const orb = number(aspect.orb, 0, luminary ? definition.luminaryOrb : definition.orb);
+    const distance = Math.abs(longitudes.get(a) - longitudes.get(b));
+    if (!close(orb, Math.abs(Math.min(distance, 360 - distance) - definition.angle)))
+      fail("inconsistent_result");
+    bool(aspect.applying);
+  }
+  return result;
+}
+function validateLocal(value, receipt) {
+  if (value === null) {
+    if (receipt.reference === "local-noon") fail("invalid_context");
+    return;
+  }
+  const local = record(value);
+  fields(local, ["date", "time", "timeZone", "offsetMinutes", "gapShiftMinutes", "policy"]);
+  const date = text(local.date, 10), time = text(local.time, 5);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(time))
+    fail("invalid_context");
+  let wall;
+  try {
+    wall = dateFrom(`${date}T${time}:00Z`, "wall").getTime();
+  } catch {
+    fail("invalid_context");
+  }
+  const zone = text(local.timeZone, 128);
+  if (!/^[A-Za-z][A-Za-z0-9._+-]*(?:\/[A-Za-z0-9._+-]+){0,3}$/.test(zone)) fail("invalid_context");
+  const offset = number(local.offsetMinutes, -1440, 1440);
+  const shift = number(local.gapShiftMinutes, 0, 2880);
+  const offsetMs = offset * 6e4, shiftMs = shift * 6e4;
+  if (Math.abs(offsetMs - Math.round(offsetMs)) > 1e-6 || Math.abs(shiftMs - Math.round(shiftMs)) > 1e-6)
+    fail("invalid_context");
+  if (wall + Math.round(shiftMs) - Math.round(offsetMs) !== dateFrom(receipt.instant, "instant").getTime())
+    fail("invalid_context");
+  fixedFields(local.policy, { fold: "earlier", gap: "shift-forward" });
+  if (receipt.inputFlags.includes("dst-gap") !== shift > 0 || receipt.inputFlags.includes("lmt") !== Math.abs(offset % 1) > 1e-9)
+    fail("invalid_context");
+  if (receipt.reference === "local-noon" && time !== "12:00") fail("invalid_context");
+}
+function repository(value) {
+  const input = text(value, 256);
+  let url;
+  try {
+    url = new URL(input);
+  } catch {
+    return fail("invalid_value");
+  }
+  if (url.protocol !== "https:" || !url.hostname || url.username || url.password || url.search || url.hash)
+    fail("invalid_value");
+}
+function commit(value) {
+  if (typeof value !== "string" || !/^(?:[a-f0-9]{40}|[a-f0-9]{64})$/.test(value))
+    fail("invalid_value");
+}
+function validateProvenance(value, engineVersion) {
+  if (value === null) return;
+  const facts = record(value);
+  fields(facts, ["status"], ["source", "artifact", "runtime", "ephemeris"]);
+  if (facts.status !== "claimed" || Object.keys(facts).length === 1) fail("invalid_shape");
+  if (facts.source !== void 0) {
+    const source = record(facts.source);
+    fields(source, ["repository", "commit"]);
+    repository(source.repository);
+    commit(source.commit);
+  }
+  if (facts.artifact !== void 0) {
+    const artifact = record(facts.artifact);
+    fields(
+      artifact,
+      ["sha256", "packageVersion"],
+      ["distributionRepository", "distributionCommit"]
+    );
+    if (typeof artifact.sha256 !== "string" || !/^[a-f0-9]{64}$/.test(artifact.sha256))
+      fail("invalid_value");
+    if (version(artifact.packageVersion) !== engineVersion) fail("invalid_context");
+    if (artifact.distributionRepository === void 0 !== (artifact.distributionCommit === void 0))
+      fail("invalid_context");
+    if (artifact.distributionRepository !== void 0) {
+      repository(artifact.distributionRepository);
+      commit(artifact.distributionCommit);
+    }
+  }
+  if (facts.runtime !== void 0) {
+    const runtime = record(facts.runtime);
+    fields(runtime, ["name"], ["version", "icuVersion", "tzdbVersion"]);
+    for (const item of Object.values(runtime)) text(item, 64);
+  }
+  if (facts.ephemeris !== void 0) {
+    const ephemeris = record(facts.ephemeris);
+    fields(ephemeris, ["name", "version"]);
+    if (ephemeris.name !== "astronomy-engine") fail("unsupported_feature");
+    version(ephemeris.version);
+  }
+}
+function validateEnvelope(input) {
+  const envelope = record(input);
+  if (envelope.schema !== NATAL_ENVELOPE_SCHEMA) fail("unsupported_version");
+  fields(envelope, ["schema", "requiredFeatures", "receipt", "result"], ["extensions"]);
+  if (!Array.isArray(envelope.requiredFeatures)) fail("invalid_shape");
+  if (envelope.requiredFeatures.length !== 0) fail("unsupported_feature");
+  const receipt = record(envelope.receipt);
+  if (receipt.schema !== NATAL_RECEIPT_SCHEMA) fail("unsupported_version");
+  fields(receipt, [
+    "schema",
+    "instant",
+    "sourceInstant",
+    "timeKnown",
+    "reference",
+    "localResolution",
+    "coordinates",
+    "houses",
+    "inputFlags",
+    "resultFlags",
+    "engine",
+    "provenance",
+    "conventions",
+    "coverage"
+  ]);
+  canonicalInstant(receipt.instant);
+  if (receipt.sourceInstant !== null) {
+    if (typeof receipt.sourceInstant !== "string" || receipt.sourceInstant.length > 40)
+      fail("invalid_context");
+    try {
+      if (dateFrom(receipt.sourceInstant, "source").toISOString() !== receipt.instant)
+        fail("invalid_context");
+    } catch {
+      fail("invalid_context");
+    }
+  }
+  const timeKnown = bool(receipt.timeKnown);
+  const reference = choice(receipt.reference, ["supplied-instant", "utc-noon", "local-noon"]);
+  if (reference !== "supplied-instant" && timeKnown) fail("invalid_context");
+  if (reference === "utc-noon" && !receipt.instant.endsWith("T12:00:00.000Z"))
+    fail("invalid_context");
+  if (receipt.coordinates !== null) {
+    const coords = record(receipt.coordinates);
+    fields(coords, ["latitude", "longitude"]);
+    number(coords.latitude, -90, 90);
+    number(coords.longitude, -180, 180);
+    if (timeKnown && Math.abs(coords.latitude) === 90) fail("unsupported_feature");
+  }
+  const result = validateResult(envelope.result);
+  const house = record(receipt.houses);
+  fields(house, ["requested", "actual", "absenceReason"]);
+  const requested = choice(house.requested, HOUSE_SYSTEMS);
+  const reason = !timeKnown ? "unknown-time" : receipt.coordinates === null ? "missing-location" : null;
+  if (house.absenceReason !== reason || result.houses === null !== (reason !== null) || house.actual !== (result.houses?.system ?? null))
+    fail("inconsistent_result");
+  if (requested === "whole" && result.houses?.system === "placidus") fail("inconsistent_result");
+  const inputFlags = flagList(receipt.inputFlags, TIME_FLAGS);
+  const resultFlags = flagList(receipt.resultFlags, FLAGS);
+  const expected = [...inputFlags];
+  if (!timeKnown) expected.push("no-time");
+  if (requested === "placidus" && result.houses?.system === "whole")
+    expected.push("polar-fallback");
+  if (!sameFlags(expected, resultFlags)) fail("inconsistent_result");
+  const engine = record(receipt.engine);
+  fields(engine, ["name", "version"]);
+  if (engine.name !== "@zodiacs/engine") fail("unsupported_feature");
+  const engineVersion = version(engine.version);
+  validateProvenance(receipt.provenance, engineVersion);
+  validateLocal(receipt.localResolution, receipt);
+  fixedFields(receipt.conventions, CONVENTIONS);
+  fixedFields(receipt.coverage, COVERAGE);
+  if (envelope.extensions !== void 0) record(envelope.extensions);
+  return envelope;
+}
+function encoded(envelope) {
+  const json = JSON.stringify(envelope);
+  if (new TextEncoder().encode(json).length > NATAL_ENVELOPE_LIMITS.bytes) fail("size_limit");
+  return json;
+}
+function checked(input) {
+  const envelope = validateEnvelope(cloneData(input));
+  encoded(envelope);
+  return envelope;
+}
+function parseNatalEnvelope(json) {
+  try {
+    if (typeof json !== "string") fail("invalid_shape");
+    if (json.length > NATAL_ENVELOPE_LIMITS.bytes || new TextEncoder().encode(json).length > NATAL_ENVELOPE_LIMITS.bytes)
+      fail("size_limit");
+    const parsed = parseReceiptJson(json, {
+      depth: NATAL_ENVELOPE_LIMITS.depth,
+      nodes: NATAL_ENVELOPE_LIMITS.nodes
+    });
+    if (!parsed.ok) return parsed;
+    return { ok: true, envelope: guarded(() => checked(parsed.value)) };
+  } catch (error) {
+    return { ok: false, code: errorCode(error) };
+  }
+}
+function serializeNatalEnvelope(envelope) {
+  return guarded(() => encoded(checked(envelope)));
+}
+
+// pre-freeze-open-review/src/lib/account-v2/storage-identity.ts
+var ACCOUNT_V2_STORAGE_PREFIX = "zodiacs.account-sync-v2.";
+var ACCOUNT_V2_LOCAL_OWNER_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}local-owner.v1`;
+var ACCOUNT_V2_RETAINED_OWNER_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}retained-owner.v1`;
+var ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY = `${ACCOUNT_V2_STORAGE_PREFIX}profile-lease-revoke.v1`;
+var ACCOUNT_V2_ID_PATTERN_SOURCE = "^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$";
+var UUID = new RegExp(ACCOUNT_V2_ID_PATTERN_SOURCE, "u");
+function isAccountV2Id(value) {
+  return typeof value === "string" && UUID.test(value);
+}
+
+// pre-freeze-open-review/src/lib/profile/saved-record.ts
+var SAVED_NATAL_RECORD_SCHEMA = "zodiacs.saved-natal.v1";
+var MAX_SAVED_NATAL_RECORDS = 40;
+var MAX_SAVED_NATAL_LABEL_CODE_POINTS = 120;
+function isSavedNatalOwnerKey(value) {
+  if (typeof value !== "string") return false;
+  const prefix = value.startsWith("account:") ? "account:" : value.startsWith("guest:") ? "guest:" : null;
+  return prefix !== null && isSavedNatalId(value.slice(prefix.length));
+}
+function isSavedNatalId(value) {
+  return typeof value === "string" && value.length === 36 && isAccountV2Id(value);
+}
+function validLabel(value) {
+  return value === void 0 || typeof value === "string" && value.length <= MAX_SAVED_NATAL_LABEL_CODE_POINTS * 2 && [...value].length <= MAX_SAVED_NATAL_LABEL_CODE_POINTS && new TextEncoder().encode(value).length <= 512 && value.trim().length > 0 && !/[\u0000-\u001f\u007f-\u009f]/u.test(value);
+}
+function validTimestamp(value) {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/u.test(value)) return false;
+  const date = new Date(value);
+  return Number.isFinite(date.getTime()) && date.toISOString() === value;
+}
+function createSavedNatalRecord(ownerKey, id, createdAt, envelope, label) {
+  try {
+    if (!isSavedNatalOwnerKey(ownerKey) || !isSavedNatalId(id) || !validTimestamp(createdAt) || !validLabel(label)) return null;
+    const envelopeJson = serializeNatalEnvelope(envelope);
+    return Object.freeze({
+      schema: SAVED_NATAL_RECORD_SCHEMA,
+      ownerKey,
+      id,
+      createdAt,
+      ...label === void 0 ? {} : { label },
+      envelopeJson
+    });
+  } catch {
+    return null;
+  }
+}
+function parseSavedNatalRecord(value, ownerKey) {
+  const corrupt = { ok: false, code: "corrupt-record" };
+  try {
+    if (!isSavedNatalOwnerKey(ownerKey) || !value || typeof value !== "object" || Object.getPrototypeOf(value) !== Object.prototype) return corrupt;
+    const schema = Object.getOwnPropertyDescriptor(value, "schema");
+    if (schema?.enumerable && "value" in schema && typeof schema.value === "string" && schema.value.length <= 128 && /^zodiacs\.saved-natal\.v(?:[2-9]|[1-9]\d+)$/u.exec(schema.value)?.[0] === schema.value) {
+      return { ok: false, code: "unsupported-record" };
+    }
+    const keys = Reflect.ownKeys(value);
+    if (keys.length < 5 || keys.length > 6 || keys.some((key) => typeof key !== "string")) return corrupt;
+    const fields2 = {};
+    for (const key of keys) {
+      const descriptor = Object.getOwnPropertyDescriptor(value, key);
+      if (!descriptor?.enumerable || !("value" in descriptor) || !["schema", "ownerKey", "id", "createdAt", "label", "envelopeJson"].includes(key)) return corrupt;
+      fields2[key] = descriptor.value;
+    }
+    if (fields2.schema !== SAVED_NATAL_RECORD_SCHEMA || fields2.ownerKey !== ownerKey || !isSavedNatalId(fields2.id) || !validTimestamp(fields2.createdAt) || !validLabel(fields2.label) || Object.hasOwn(fields2, "label") && fields2.label === void 0 || typeof fields2.envelopeJson !== "string") return corrupt;
+    const parsed = parseNatalEnvelope(fields2.envelopeJson);
+    if (!parsed.ok) return { ok: false, code: parsed.code === "unsupported_version" || parsed.code === "unsupported_feature" ? "unsupported-record" : "corrupt-record" };
+    return { ok: true, record: Object.freeze({
+      schema: SAVED_NATAL_RECORD_SCHEMA,
+      ownerKey,
+      id: fields2.id,
+      createdAt: fields2.createdAt,
+      ...fields2.label === void 0 ? {} : { label: fields2.label },
+      envelopeJson: fields2.envelopeJson
+    }) };
+  } catch {
+    return corrupt;
+  }
+}
+
+// pre-freeze-open-review/src/lib/profile/saved-record-store.ts
+var SAVED_NATAL_DATABASE_NAME = "zodiacs-saved-natal-v1";
+var VERSION = 1;
+var RECORDS = "records";
+var OWNER_INDEX = "ownerKey";
+var failures = /* @__PURE__ */ new WeakMap();
+function issue(code, mayHaveCommitted = false) {
+  const error = new Error("Saved natal record operation failed.");
+  failures.set(error, { ok: false, code, mayHaveCommitted });
+  return error;
+}
+function failure(error, committed = false) {
+  const own = error !== null && (typeof error === "object" || typeof error === "function") ? failures.get(error) : void 0;
+  if (own) return { ...own, mayHaveCommitted: committed || own.mayHaveCommitted };
+  let name = "";
+  try {
+    if (typeof DOMException !== "undefined") {
+      name = Object.getOwnPropertyDescriptor(DOMException.prototype, "name")?.get?.call(error) ?? "";
+    }
+  } catch {
+  }
+  return {
+    ok: false,
+    code: name === "QuotaExceededError" ? "quota-exceeded" : name === "VersionError" ? "unsupported-storage" : name === "AbortError" ? "aborted" : "storage-unavailable",
+    mayHaveCommitted: committed
+  };
+}
+function rethrow(error, committed = false) {
+  const result = failure(error, committed);
+  return issue(result.code, result.mayHaveCommitted);
+}
+var IndexedDbSavedNatalAdapter = class {
+  pending = null;
+  connection = null;
+  generation = 0;
+  transactions = /* @__PURE__ */ new Set();
+  open(guard) {
+    guard();
+    if (this.pending) return this.pending;
+    const generation = ++this.generation;
+    let pending;
+    pending = new Promise((resolve, reject) => {
+      let request;
+      let settled = false;
+      const fail2 = (error) => {
+        settled = true;
+        reject(rethrow(error));
+      };
+      try {
+        request = indexedDB.open(SAVED_NATAL_DATABASE_NAME, VERSION);
+      } catch (error) {
+        fail2(error);
+        return;
+      }
+      request.onupgradeneeded = (event) => {
+        try {
+          guard();
+          if (settled || generation !== this.generation || event.oldVersion !== 0) throw issue("unsupported-storage");
+          const store = request.result.createObjectStore(RECORDS, { keyPath: ["ownerKey", "id"] });
+          store.createIndex(OWNER_INDEX, "ownerKey", { unique: false });
+        } catch (error) {
+          try {
+            request.transaction?.abort();
+          } catch {
+          }
+          fail2(error);
+        }
+      };
+      request.onsuccess = () => {
+        const database = request.result;
+        try {
+          guard();
+          if (settled || this.pending !== pending || this.generation !== generation) throw issue("stale");
+          if (database.version !== VERSION || database.objectStoreNames.length !== 1 || !database.objectStoreNames.contains(RECORDS)) throw issue("unsupported-storage");
+          this.connection = database;
+          database.onversionchange = () => this.abortPending();
+          settled = true;
+          resolve(database);
+        } catch (error) {
+          database.close();
+          fail2(error);
+        }
+      };
+      request.onerror = () => fail2(request.error);
+      request.onblocked = () => fail2(issue("blocked"));
+    });
+    this.pending = pending;
+    void pending.catch(() => {
+      if (this.pending === pending) this.pending = null;
+    });
+    return pending;
+  }
+  async execute(ownerKey, mode, guard, queue) {
+    guard();
+    const database = await this.open(guard);
+    const generation = this.generation;
+    const check = () => {
+      guard();
+      if (generation !== this.generation || this.connection !== database) throw issue("stale");
+    };
+    check();
+    return new Promise((resolve, reject) => {
+      let transaction;
+      try {
+        transaction = database.transaction(RECORDS, mode);
+      } catch (error) {
+        reject(rethrow(error));
+        return;
+      }
+      let result;
+      let ready = false;
+      let priorFailure;
+      let settled = false;
+      let abortRequested = false;
+      const finishFailure = (error, committed = false) => {
+        if (settled) return;
+        settled = true;
+        this.transactions.delete(active);
+        reject(rethrow(error, committed));
+      };
+      const abort = (error) => {
+        priorFailure = error;
+        if (abortRequested || settled) return;
+        try {
+          transaction.abort();
+          abortRequested = true;
+        } catch {
+          finishFailure(error, mode === "readwrite");
+        }
+      };
+      const active = { abort: () => abort(issue("stale")) };
+      this.transactions.add(active);
+      transaction.onabort = () => finishFailure(priorFailure ?? transaction.error ?? issue("aborted"));
+      transaction.onerror = () => {
+        priorFailure ??= transaction.error ?? issue("storage-unavailable");
+      };
+      transaction.oncomplete = () => {
+        if (settled) return;
+        this.transactions.delete(active);
+        try {
+          check();
+          if (!ready) throw issue("storage-unavailable");
+          settled = true;
+          resolve(result);
+        } catch (error) {
+          finishFailure(error, mode === "readwrite");
+        }
+      };
+      try {
+        check();
+        if (!isSavedNatalOwnerKey(ownerKey)) throw issue("invalid-input");
+        const store = transaction.objectStore(RECORDS);
+        const keyPath = store.keyPath;
+        if (store.autoIncrement || !Array.isArray(keyPath) || keyPath.length !== 2 || keyPath[0] !== "ownerKey" || keyPath[1] !== "id" || store.indexNames.length !== 1 || !store.indexNames.contains(OWNER_INDEX)) throw issue("unsupported-storage");
+        const index = store.index(OWNER_INDEX);
+        if (index.keyPath !== "ownerKey" || index.unique || index.multiEntry) throw issue("unsupported-storage");
+        queue(store, (value) => {
+          check();
+          result = value;
+          ready = true;
+        }, abort, check);
+      } catch (error) {
+        abort(error);
+      }
+    });
+  }
+  read(ownerKey, id, guard) {
+    return this.execute(ownerKey, "readonly", guard, (store, done, fail2, check) => {
+      const request = id === null ? store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1) : store.get([ownerKey, id]);
+      request.onsuccess = () => {
+        try {
+          check();
+          done(id === null ? request.result : request.result === void 0 ? [] : [request.result]);
+        } catch (error) {
+          fail2(error);
+        }
+      };
+      request.onerror = () => fail2(request.error);
+    });
+  }
+  mutate(ownerKey, guard, operation) {
+    return this.execute(ownerKey, "readwrite", guard, (store, done, fail2, check) => {
+      const request = store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1);
+      request.onsuccess = () => {
+        try {
+          check();
+          const mutation = operation(request.result);
+          check();
+          if (mutation.add && mutation.deleteId) throw issue("invalid-input");
+          if (mutation.add) {
+            if (mutation.add.ownerKey !== ownerKey || !isSavedNatalId(mutation.add.id)) throw issue("invalid-input");
+            const add = store.add(mutation.add);
+            add.onerror = () => fail2(add.error);
+          } else if (mutation.deleteId) {
+            if (!isSavedNatalId(mutation.deleteId)) throw issue("invalid-input");
+            const remove = store.delete([ownerKey, mutation.deleteId]);
+            remove.onerror = () => fail2(remove.error);
+          }
+          done(mutation.result);
+        } catch (error) {
+          fail2(error);
+        }
+      };
+      request.onerror = () => fail2(request.error);
+    });
+  }
+  clear(ownerKey, guard) {
+    return this.execute(ownerKey, "readwrite", guard, (store, done, fail2, check) => {
+      const request = store.index(OWNER_INDEX).openKeyCursor(ownerKey);
+      request.onsuccess = () => {
+        try {
+          check();
+          const cursor = request.result;
+          if (!cursor) {
+            done(void 0);
+            return;
+          }
+          const remove = store.delete(cursor.primaryKey);
+          remove.onerror = () => fail2(remove.error);
+          cursor.continue();
+        } catch (error) {
+          fail2(error);
+        }
+      };
+      request.onerror = () => fail2(request.error);
+    });
+  }
+  /** close() alone cannot abort transactions; abort every tracked transaction first. */
+  abortPending() {
+    this.generation += 1;
+    this.pending = null;
+    for (const transaction of [...this.transactions]) transaction.abort();
+    this.connection?.close();
+    this.connection = null;
+  }
+};
+var SavedNatalStore = class {
+  ownerKey;
+  epoch;
+  readAuthority;
+  adapter;
+  now;
+  randomUUID;
+  generation = 0;
+  state = "active";
+  constructor(options) {
+    try {
+      this.ownerKey = options.ownerKey;
+      this.epoch = options.epoch;
+      this.readAuthority = options.readAuthority;
+      this.adapter = options.adapter ?? new IndexedDbSavedNatalAdapter();
+      this.now = options.now ?? (() => /* @__PURE__ */ new Date());
+      this.randomUUID = options.randomUUID ?? (() => crypto.randomUUID());
+    } catch {
+      throw new Error("Unable to configure saved natal records.");
+    }
+  }
+  allowed(ticket) {
+    try {
+      if (this.state !== ticket.state || this.generation !== ticket.generation || !isSavedNatalOwnerKey(this.ownerKey) || !Number.isSafeInteger(this.epoch) || this.epoch < 0) return false;
+      const current = this.readAuthority();
+      const ownerKey = current?.ownerKey;
+      const epoch = current?.epoch;
+      return ownerKey === this.ownerKey && epoch === this.epoch && this.state === ticket.state && this.generation === ticket.generation;
+    } catch {
+      return false;
+    }
+  }
+  guard(ticket) {
+    return () => {
+      if (!this.allowed(ticket)) throw issue("stale");
+    };
+  }
+  start() {
+    const ticket = { generation: this.generation, state: "active" };
+    if (!this.allowed(ticket)) throw issue("access-denied");
+    return ticket;
+  }
+  parse(rows) {
+    if (rows.length > MAX_SAVED_NATAL_RECORDS) throw issue("corrupt-record");
+    const records = rows.map((value) => {
+      const parsed = parseSavedNatalRecord(value, this.ownerKey);
+      if (!parsed.ok) throw issue(parsed.code);
+      return parsed.record;
+    });
+    if (new Set(records.map((record2) => record2.id)).size !== records.length) throw issue("corrupt-record");
+    return records;
+  }
+  async perform(ticket, write, action) {
+    let completed = false;
+    try {
+      const guard = this.guard(ticket);
+      guard();
+      const value = await action(guard);
+      completed = true;
+      guard();
+      return { ok: true, value };
+    } catch (error) {
+      const failed = failure(error, completed && write);
+      return { ...failed, code: this.allowed(ticket) ? failed.code : "stale" };
+    }
+  }
+  async create(envelope, label) {
+    try {
+      const ticket = this.start();
+      const id = this.randomUUID();
+      const date = this.now();
+      const timestamp = Date.prototype.toISOString.call(date);
+      const record2 = createSavedNatalRecord(this.ownerKey, id, timestamp, envelope, label);
+      if (!record2) return { ok: false, code: "invalid-input", mayHaveCommitted: false };
+      return this.perform(ticket, true, (guard) => this.adapter.mutate(this.ownerKey, guard, (rows) => {
+        const records = this.parse(rows);
+        if (records.some((current) => current.id === record2.id)) throw issue("id-conflict");
+        if (records.length >= MAX_SAVED_NATAL_RECORDS) throw issue("full");
+        return { result: record2, add: record2 };
+      }));
+    } catch (error) {
+      const result = failure(error);
+      return { ...result, code: result.code === "access-denied" ? result.code : "invalid-input" };
+    }
+  }
+  async list() {
+    try {
+      const ticket = this.start();
+      return this.perform(ticket, false, async (guard) => {
+        const rows = await this.adapter.read(this.ownerKey, null, guard);
+        guard();
+        return Object.freeze(this.parse(rows).sort((a, b) => a.createdAt === b.createdAt ? a.id < b.id ? -1 : a.id > b.id ? 1 : 0 : a.createdAt > b.createdAt ? -1 : 1));
+      });
+    } catch (error) {
+      return failure(error);
+    }
+  }
+  async get(id) {
+    try {
+      const ticket = this.start();
+      if (!isSavedNatalId(id)) return { ok: false, code: "invalid-input", mayHaveCommitted: false };
+      return this.perform(ticket, false, async (guard) => {
+        const rows = await this.adapter.read(this.ownerKey, id, guard);
+        guard();
+        const records = this.parse(rows);
+        if (records.length > 1 || records[0] && records[0].id !== id) throw issue("corrupt-record");
+        return records[0] ?? null;
+      });
+    } catch (error) {
+      return failure(error);
+    }
+  }
+  async exportEnvelope(id) {
+    const result = await this.get(id);
+    try {
+      this.start();
+      return result.ok ? { ok: true, value: result.value?.envelopeJson ?? null } : result;
+    } catch {
+      return { ok: false, code: "stale", mayHaveCommitted: false };
+    }
+  }
+  async delete(id) {
+    try {
+      const ticket = this.start();
+      if (!isSavedNatalId(id)) return { ok: false, code: "invalid-input", mayHaveCommitted: false };
+      return this.perform(ticket, true, (guard) => this.adapter.mutate(
+        this.ownerKey,
+        guard,
+        () => ({ result: void 0, deleteId: id })
+      ));
+    } catch (error) {
+      return failure(error);
+    }
+  }
+  /**
+   * Explicit owner erasure consumes this handle, including on failure. Other
+   * handles/tabs are not revoked; durable account erasure needs app integration.
+   */
+  async clearOwner() {
+    try {
+      this.start();
+      this.state = "clearing";
+      this.generation += 1;
+      this.adapter.abortPending();
+      const ticket = { generation: this.generation, state: "clearing" };
+      const result = await this.perform(ticket, true, (guard) => this.adapter.clear(this.ownerKey, guard));
+      if (!this.allowed(ticket)) return {
+        ok: false,
+        code: "stale",
+        mayHaveCommitted: result.ok || result.mayHaveCommitted
+      };
+      return result;
+    } catch (error) {
+      return failure(error);
+    } finally {
+      this.revoke();
+    }
+  }
+  revoke() {
+    this.state = "revoked";
+    this.generation += 1;
+    try {
+      this.adapter.abortPending();
+    } catch {
+    }
+  }
+};
+export {
+  IndexedDbSavedNatalAdapter,
+  SAVED_NATAL_DATABASE_NAME,
+  SavedNatalStore
+};

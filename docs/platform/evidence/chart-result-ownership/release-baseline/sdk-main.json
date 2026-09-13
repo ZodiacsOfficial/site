@@ -1,0 +1,1 @@
+{"commit":{"committer":"2026-06-17T17:49:53Z","message":"Make Zodia production ready\n\nProduction-ready Zodia launch: Base-first auth hardening, AstroTalk, per-zodiac feeds, Cosmic Profile/Aura, Cosmic Tape removal, env/ops hardening, and SDK posture cleanup needed for repo CI."},"sha":"b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff"}

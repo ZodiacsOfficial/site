@@ -1,0 +1,149 @@
+Independent public archive consumer verification completed using public exports and published declarations.
+{
+  "version": "0.1.1-rc.6",
+  "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+  "publicExamples": "passed",
+  "types": "passed",
+  "archiveFiles": 23,
+  "astronomyEngine": "2.1.19",
+  "typescript": "5.9.3",
+  "runtimes": [
+    {
+      "node": "v22.23.2",
+      "icu": "78.2",
+      "tzdb": "2026a",
+      "examples": 5
+    },
+    {
+      "node": "v24.19.0",
+      "icu": "78.3",
+      "tzdb": "2026b",
+      "examples": 5
+    }
+  ],
+  "publicImports": [
+    "@zodiacs/engine",
+    "@zodiacs/engine/geo",
+    "@zodiacs/engine/receipt"
+  ],
+  "publicExampleCases": [
+    {
+      "name": "Manaus-four-second-gap",
+      "instant": "1914-01-01T04:00:04.000Z",
+      "flags": [
+        "dst-gap"
+      ],
+      "offsetMinutes": -240,
+      "gapShiftMinutes": 0.06666666666666667,
+      "houses": {
+        "absenceReason": null,
+        "actual": "placidus",
+        "requested": "placidus"
+      },
+      "resultFlags": [
+        "dst-gap"
+      ],
+      "roundtrip": true,
+      "replayNumericsEqual": true,
+      "sourceInstant": null,
+      "provenance": null,
+      "wireBytes": 4481
+    },
+    {
+      "name": "unknown-time-local-noon-no-false-fold",
+      "instant": "1914-01-01T16:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": -240,
+      "gapShiftMinutes": 0,
+      "houses": {
+        "absenceReason": "unknown-time",
+        "actual": null,
+        "requested": "placidus"
+      },
+      "resultFlags": [
+        "no-time"
+      ],
+      "roundtrip": true,
+      "replayNumericsEqual": true,
+      "sourceInstant": null,
+      "provenance": null,
+      "wireBytes": 4094
+    },
+    {
+      "name": "polar-Placidus-fallback",
+      "instant": "2024-01-01T11:00:00.000Z",
+      "flags": [],
+      "offsetMinutes": 60,
+      "gapShiftMinutes": 0,
+      "houses": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      },
+      "resultFlags": [
+        "polar-fallback"
+      ],
+      "roundtrip": true,
+      "replayNumericsEqual": true,
+      "sourceInstant": null,
+      "provenance": null,
+      "wireBytes": 4421
+    },
+    {
+      "name": "true-four-second-Denver-fold",
+      "instant": "1883-11-18T18:59:56.000Z",
+      "flags": [
+        "dst-fold",
+        "lmt"
+      ],
+      "offsetMinutes": -419.93333333333334,
+      "gapShiftMinutes": 0,
+      "houses": {
+        "absenceReason": null,
+        "actual": "placidus",
+        "requested": "placidus"
+      },
+      "resultFlags": [
+        "dst-fold",
+        "lmt"
+      ],
+      "roundtrip": true,
+      "replayNumericsEqual": true,
+      "sourceInstant": null,
+      "provenance": null,
+      "wireBytes": 4967
+    },
+    {
+      "name": "historical-second-offset-Mexico",
+      "instant": "1907-07-06T15:06:36.000Z",
+      "flags": [
+        "lmt"
+      ],
+      "offsetMinutes": -396.6,
+      "gapShiftMinutes": 0,
+      "houses": {
+        "absenceReason": null,
+        "actual": "placidus",
+        "requested": "placidus"
+      },
+      "resultFlags": [
+        "lmt"
+      ],
+      "roundtrip": true,
+      "replayNumericsEqual": true,
+      "sourceInstant": null,
+      "provenance": null,
+      "wireBytes": 4640
+    }
+  ],
+  "archiveDeclarationCheck": {
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": false,
+    "negativeTypes": 2,
+    "allResolvedFilesInsideScratch": true
+  },
+  "installation": "Validated exactly 23 unique regular package/ members, no absolute/traversal paths or links; manually wrote extracted archive bytes into node_modules/@zodiacs/engine. No npm install, lifecycle script, network, or source rebuild. Existing dependency and TypeScript trees physically copied, dereferencing links.",
+  "attribution": "Independent automated consumer using an already anonymously downloaded archive; no new download, source rebuild, publication, or human review.",
+  "initialHarnessError": "An initial test expected a nonexistent high-latitude-fallback flag. Published declarations specify polar-fallback; corrected the harness and retained its original source/error. No product change."
+}

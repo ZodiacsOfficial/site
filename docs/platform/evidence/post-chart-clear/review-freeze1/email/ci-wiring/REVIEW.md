@@ -1,0 +1,13 @@
+# Independent proposed C-012 CI wiring review
+
+**No wiring blocker found for the exact four-line addition and frozen driver.** This is read-only source/environment compatibility review; it is not execution on Ubuntu or a remote CI-success claim.
+
+The original workflow SHA256 is `74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5`; proposed workflow SHA256 is `286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9`; patch SHA256 is `f9ce2b49d843e6d6c65b5bd49155554f63aa82b146b48313e13d90ad6a5cadf4`. Removing only the named four-line step restores the exact base workflow bytes. The reviewed frozen driver SHA256 is `f60a0858fe7afbffd813bc1f9d4fca91e5a1e983b48b60374426bc37b9f86364`.
+
+The step runs before Engine accuracy vectors in the existing Build & Check job, with a five-minute limit and OUT_DIR=tests/visual/artifacts/post-chart-context-clear. Existing steps already check out the repository, install Node 22 and npm-ci dependencies, install pinned Chromium, build, and typecheck. The required esbuild 0.28.1, playwright-core 1.61.1 and Preact 10.29.4 are present in the unchanged lockfile and existing manifest declarations.
+
+The frozen driver derives its source root from import.meta.dirname rather than a personal absolute checkout. Its OUT_DIR takes precedence and resolves to the configured artifact subdirectory. It imports the existing portable browser helper, whose resolution includes the Playwright-installed Chromium before host fallbacks; it uses the existing stable Chromium arguments. It builds its own local fixture, binds an ephemeral 127.0.0.1 server, substitutes declared auth/store clients, intercepts API responses, and aborts nonlocal requests. No new CI secret or actual provider/auth authority is required.
+
+The existing final artifact-upload step has if: always(), includes tests/visual/artifacts/, and retains artifacts for 90 days. The driver's build files/identities, per-group failure screenshots when capture succeeds, and final result.json all use the configured output directory; normal group failures are collected and set a nonzero exit code. The upload retains files that exist even after a step failure. Early setup failure remains in CI logs, and abrupt timeout/process termination can prevent the final per-group result write; this is not a guarantee that every failed process creates a full report.
+
+Trigger definitions, contents: read permissions, action pins, all existing gates and artifact policy remain unchanged. The root-owned workflow proposal is separate from the author's six-file freeze and this review did not apply or publish it. The separate full-page gate diagnosis remains outside this wiring verdict.

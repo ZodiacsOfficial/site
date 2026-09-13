@@ -1,0 +1,217 @@
+[
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "log": "precision-baseline.log",
+    "exitCode": 1,
+    "outcome": "23/27 fail against old resolver with actual rc6 package",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts",
+      "src/lib/time/localToUtc.test.ts",
+      "src/lib/engine/package-integration.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/engine/engine.test.ts",
+      "src/lib/chart-date-certainty.test.ts",
+      "src/lib/scene/scene.test.ts"
+    ],
+    "log": "precision-focused.log",
+    "exitCode": 1,
+    "outcome": "130 tests pass; engine suite fails Vite dependency symlink resolution",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts",
+      "src/lib/time/localToUtc.test.ts",
+      "src/lib/engine/package-integration.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/engine/engine.test.ts",
+      "src/lib/chart-date-certainty.test.ts",
+      "src/lib/scene/scene.test.ts"
+    ],
+    "log": "precision-focused-corrected.log",
+    "exitCode": 0,
+    "outcome": "183 tests pass after unchanged dependency locally copied",
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--target",
+      "ES2022",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,astro/client",
+      "src/lib/time/localToUtc.ts",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "log": "precision-types.log",
+    "exitCode": 0,
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption"
+  },
+  {
+    "argv": [
+      "/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/time/localToUtc-precision.test.ts",
+      "src/lib/time/localToUtc.test.ts",
+      "src/lib/engine/package-integration.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/engine/engine.test.ts",
+      "src/lib/chart-date-certainty.test.ts",
+      "src/lib/scene/scene.test.ts"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "precision-focused-node24.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/build-acceptance.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "build-acceptance.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/run-node-acceptance.mjs",
+      "node22-parity.json"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "node22-parity.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/run-node-acceptance.mjs",
+      "node24-parity.json"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "node24-parity.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/run-browser-acceptance-initial.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "browser-acceptance-initial.log",
+    "exitCode": 1
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/run-browser-acceptance.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "browser-acceptance.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/run-browser-acceptance.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "browser-acceptance-final.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/engine/calculator-receipt.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-receipt-companion",
+    "log": "companion-focused.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/Users/chiburashka/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/engine/calculator-receipt.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/lib/time/localToUtc-precision.test.ts"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-receipt-companion",
+    "log": "companion-focused-node24.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--target",
+      "ES2022",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,astro/client",
+      "src/lib/engine/calculator-receipt.ts",
+      "src/lib/engine/calculator-receipt.test.ts"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-receipt-companion",
+    "log": "companion-types.log",
+    "exitCode": 0
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "scripts/platform-candidate-docs.test.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "metadata-contract-PROVISIONAL.log",
+    "exitCode": 0,
+    "meaning": "22 tests pass; explicitly provisional placeholder identity, not real carrier proof"
+  },
+  {
+    "argv": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "scripts/platform-candidate-docs.test.mjs"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+    "log": "metadata-contract-final.log",
+    "exitCode": 0,
+    "meaning": "22 tests pass against actual local root carrier and finalized metadata"
+  }
+]

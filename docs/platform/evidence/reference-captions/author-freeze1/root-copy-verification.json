@@ -1,0 +1,8 @@
+{
+  "sourceManifestSha256": "0948ba4c7cbf34559acca885976e83ae3ad69eab16d96acf317176c161ca8326",
+  "verifiedPayloads": 7,
+  "originalRecords": 172,
+  "verifiedOrdinaryArchiveMembers": 154,
+  "payloadBytesUnchanged": true,
+  "qualification": "Root rehash and archive verification; execution claims remain attributed to author."
+}

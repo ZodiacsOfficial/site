@@ -1,0 +1,213 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { createServer } from 'node:http';
+import { mkdir, readFile, writeFile, cp, readdir, rm, stat } from 'node:fs/promises';
+import { resolve, dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
+const root = '/Users/chiburashka/.codex/worktrees/4806/site';
+const here = dirname(fileURLToPath(import.meta.url));
+const require = createRequire(join(root, 'package.json'));
+const { build } = require('esbuild');
+const { chromium } = require('playwright-core');
+const { STABLE_CHROMIUM_ARGS } = await import(join(root, 'tests/visual/browser.mjs'));
+const runId = `run-${Date.now()}-${process.pid}`;
+const out = join(here, runId);
+const fixture = join(out, 'fixture');
+const web = join(out, 'web');
+const profile = join(out, 'chrome-profile');
+const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
+await mkdir(fixture, { recursive: true });
+await mkdir(web, { recursive: true });
+const report = { startedAt: new Date().toISOString(), runId, root,
+  sourceCommit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
+  sourceBranch: execFileSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).trim(),
+  runner: { path: fileURLToPath(import.meta.url), sha256: digest(await readFile(fileURLToPath(import.meta.url))) },
+  status: 'running', files: {}, staticRequests: [], browserRequests: [], failedRequests: [], pageErrors: [], consoleErrors: [], deniedRequests: [], cleanup: {} };
+let context, server, page;
+let serving = 'load';
+const identity = JSON.parse(await readFile('/private/tmp/zodiacs-platform-portable-evidence/identity.json', 'utf8'));
+const frozenFiles = Object.keys(identity.files);
+const installed = join(root, 'node_modules/@zodiacs/engine');
+const artifact = join(root, 'vendor/zodiacs-engine-0.1.1-rc.5.tgz');
+try {
+  for (const name of [...frozenFiles, 'src/lib/engine/types.ts']) {
+    const bytes = await readFile(join(root, name));
+    if (identity.files[name]) assert.equal(digest(bytes), identity.files[name], `Frozen source ${name}`);
+    await mkdir(dirname(join(fixture, name)), { recursive: true });
+    await writeFile(join(fixture, name), bytes);
+    report.files[name] = { sha256: digest(bytes), bytes: bytes.length };
+  }
+  await mkdir(join(fixture, 'node_modules/@zodiacs'), { recursive: true });
+  await cp(installed, join(fixture, 'node_modules/@zodiacs/engine'), { recursive: true });
+  await cp(join(root, 'node_modules/astronomy-engine'), join(fixture, 'node_modules/astronomy-engine'), { recursive: true });
+  const members = execFileSync('tar', ['-tzf', artifact], { encoding: 'utf8' }).trim().split('\n').filter((name) => !name.endsWith('/'));
+  assert.equal(members.length, 23);
+  const memberChecks = [];
+  for (const member of members) {
+    assert.ok(member.startsWith('package/') && !member.includes('..'));
+    const rel = member.slice('package/'.length);
+    const packedBytes = execFileSync('tar', ['-xOf', artifact, member]);
+    const installedBytes = await readFile(join(installed, rel));
+    const fixtureBytes = await readFile(join(fixture, 'node_modules/@zodiacs/engine', rel));
+    assert.equal(digest(packedBytes), digest(installedBytes), `Installed artifact member ${rel}`);
+    assert.equal(digest(packedBytes), digest(fixtureBytes), `Browser fixture artifact member ${rel}`);
+    memberChecks.push({ member: rel, bytes: packedBytes.length, sha256: digest(packedBytes) });
+  }
+  report.artifact = { path: artifact, sha256: digest(await readFile(artifact)), members: memberChecks };
+  assert.equal(report.artifact.sha256, identity.installedEngineArtifactSha256);
+  const enginePackage = JSON.parse(await readFile(join(fixture, 'node_modules/@zodiacs/engine/package.json'), 'utf8'));
+  const ephemerisPackage = JSON.parse(await readFile(join(fixture, 'node_modules/astronomy-engine/package.json'), 'utf8'));
+  assert.equal(enginePackage.version, '0.1.1-rc.5');
+  assert.equal(ephemerisPackage.version, '2.1.19');
+  report.versions = { engine: enginePackage.version, ephemeris: ephemerisPackage.version, node: process.version,
+    playwright: require('playwright-core/package.json').version, esbuild: require('esbuild/package.json').version };
+  const entry = join(fixture, 'entry.mjs');
+  await writeFile(entry, `import { computePortableChart } from './src/lib/engine/portable.ts';\nimport { serializeNatalEnvelope, parseNatalEnvelope, natalReplayInput } from '@zodiacs/engine/receipt';\nwindow.portableAPI = { computePortableChart, serializeNatalEnvelope, parseNatalEnvelope, natalReplayInput };\n`);
+  const bundle = await build({ entryPoints: [entry], bundle: true, format: 'esm', platform: 'browser',
+    target: ['chrome120'], write: false, metafile: true, outfile: join(web, 'bundle.js'), minify: false, logLevel: 'silent' });
+  assert.equal(bundle.outputFiles.length, 1);
+  await writeFile(join(web, 'bundle.js'), bundle.outputFiles[0].contents);
+  await writeFile(join(out, 'metafile.json'), `${JSON.stringify(bundle.metafile, null, 2)}\n`);
+  const graph = [];
+  for (const [name, data] of Object.entries(bundle.metafile.inputs)) {
+    const path = resolve(name);
+    assert.ok(path.startsWith(`${fixture}/`), `Only frozen fixture code is bundled: ${path}`);
+    const bytes = await readFile(path);
+    graph.push({ path, bytes: bytes.length, sha256: digest(bytes), imports: data.imports });
+  }
+  assert.ok(graph.some(({ path }) => path.endsWith('/src/lib/engine/portable.ts')));
+  assert.ok(graph.some(({ path }) => path.endsWith('/src/lib/engine/chart-adapter.ts')));
+  assert.ok(graph.some(({ path }) => path.endsWith('/astronomy-engine/esm/astronomy.js')));
+  assert.ok(graph.some(({ path }) => path.endsWith('/@zodiacs/engine/dist/receipt.js')));
+  assert.ok(!graph.some(({ path }) => /\/geo\.js$|@zodiacs\/sdk\//u.test(path)));
+  report.moduleGraph = graph;
+  report.bundle = { sha256: digest(bundle.outputFiles[0].contents), bytes: bundle.outputFiles[0].contents.length };
+  const cases = await readFile(join(here, 'browser-cases.js'));
+  await writeFile(join(web, 'cases.js'), cases);
+  report.cases = { sha256: digest(cases), bytes: cases.length };
+  const html = `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"><title>Portable calculation acceptance</title><style>body{background:#101014;color:#eee;font:16px system-ui;margin:40px;max-width:1100px}h1{font-size:28px}p{color:#bbb}pre{white-space:pre-wrap;line-height:1.65;font:14px ui-monospace,monospace}#status{color:#b9d9c7}section{padding:20px;border:1px solid #444;border-radius:12px}</style><h1>Portable calculation browser acceptance</h1><p>Owned synthetic test harness — no product UI, account or personal data.</p><section><h2 id="status">Ready for offline acceptance</h2><pre id="results">Real rc.5 engine and the frozen site module load locally.</pre></section><script type="module" src="/bundle.js"></script><script type="module" src="/cases.js"></script></html>`;
+  await writeFile(join(web, 'index.html'), html);
+  const allowed = new Map([
+    ['/', { file: 'index.html', type: 'text/html; charset=utf-8' }],
+    ['/bundle.js', { file: 'bundle.js', type: 'text/javascript; charset=utf-8' }],
+    ['/cases.js', { file: 'cases.js', type: 'text/javascript; charset=utf-8' }],
+  ]);
+  server = createServer(async (request, response) => {
+    const path = new URL(request.url, 'http://127.0.0.1').pathname;
+    const match = allowed.get(path);
+    report.staticRequests.push({ phase: serving, method: request.method, path, status: match && request.method === 'GET' ? 200 : 404 });
+    if (!match || request.method !== 'GET') { response.writeHead(404); response.end(); return; }
+    response.writeHead(200, { 'Content-Type': match.type, 'Cache-Control': 'no-store' });
+    response.end(await readFile(join(web, match.file)));
+  });
+  await new Promise((resolveReady, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolveReady); });
+  report.origin = `http://127.0.0.1:${server.address().port}`;
+  const chrome = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+  report.chromeExecutable = chrome;
+  context = await chromium.launchPersistentContext(profile, { executablePath: chrome, headless: true,
+    viewport: { width: 1280, height: 1000 }, colorScheme: 'dark', reducedMotion: 'reduce', args: STABLE_CHROMIUM_ARGS });
+  report.chromeVersion = context.browser().version();
+  await context.tracing.start({ screenshots: true, snapshots: true, sources: false });
+  await context.route('**/*', async (route) => {
+    const request = route.request();
+    if (serving === 'load' && request.url().startsWith(report.origin) && allowed.has(new URL(request.url()).pathname) && request.method() === 'GET') await route.continue();
+    else { report.deniedRequests.push({ phase: serving, url: request.url(), method: request.method() }); await route.abort('blockedbyclient'); }
+  });
+  page = context.pages()[0] ?? await context.newPage();
+  page.on('request', (request) => report.browserRequests.push({ phase: serving, url: request.url(), method: request.method(), resourceType: request.resourceType() }));
+  page.on('requestfailed', (request) => report.failedRequests.push({ phase: serving, url: request.url(), failure: request.failure() }));
+  page.on('pageerror', (error) => report.pageErrors.push(String(error)));
+  page.on('console', (message) => { if (message.type() === 'error') report.consoleErrors.push(message.text()); });
+  const response = await page.goto(report.origin, { waitUntil: 'networkidle' });
+  assert.equal(response.status(), 200);
+  await page.waitForFunction(() => window.portableAPI && window.casesReady);
+  report.initialPage = await page.evaluate(() => ({ title: document.title, body: document.body.innerText,
+    errorOverlay: !!document.querySelector('astro-error-overlay, .vite-error-overlay, [data-nextjs-dialog]'),
+    bundleAPI: Object.keys(window.portableAPI), userAgent: navigator.userAgent }));
+  assert.equal(report.initialPage.errorOverlay, false);
+  assert.ok(report.initialPage.body.includes('Ready for offline acceptance'));
+  await page.screenshot({ path: join(out, 'initial-page.png'), fullPage: true });
+  report.storageBefore = await page.evaluate(() => window.installObservers());
+  report.negativeControls = await page.evaluate(() => window.negativeControls());
+  serving = 'offline-calculation';
+  await context.setOffline(true);
+  assert.equal(await page.evaluate(() => navigator.onLine), false);
+  const client = await context.newCDPSession(page);
+  await client.send('Profiler.enable');
+  await client.send('Profiler.startPreciseCoverage', { callCount: true, detailed: true, allowTriggeredUpdates: false });
+  report.singleCalculation = await page.evaluate(() => window.runSingle());
+  const coverage = await client.send('Profiler.takePreciseCoverage');
+  await writeFile(join(out, 'precise-coverage.json'), `${JSON.stringify(coverage, null, 2)}\n`);
+  await client.send('Profiler.stopPreciseCoverage');
+  await client.send('Profiler.disable');
+  const scripts = coverage.result.filter((script) => script.url === `${report.origin}/bundle.js`);
+  assert.equal(scripts.length, 1, 'One actual bundle coverage record');
+  report.calculationCalls = {};
+  for (const name of ['computePortableChart', 'natalChart', 'computeChart', 'createNatalEnvelope']) {
+    const matches = scripts[0].functions.filter((fn) => fn.functionName === name);
+    assert.equal(matches.length, 1, `Unique actual function ${name}`);
+    report.calculationCalls[name] = matches[0].ranges[0].count;
+    assert.equal(report.calculationCalls[name], 1, `Exactly one actual ${name} call`);
+  }
+  report.browserResult = await page.evaluate(() => window.runCases());
+  assert.equal(report.browserResult.summary.failed, 0);
+  assert.equal(report.browserResult.summary.passed, 12);
+  assert.deepEqual(report.browserResult.candidateObservations, []);
+  assert.equal(report.browserResult.offline, true);
+  report.storageAfter = await page.evaluate(() => window.restoreObservers());
+  assert.deepEqual(report.storageAfter, report.storageBefore);
+  report.cookies = await context.cookies();
+  assert.deepEqual(report.cookies, []);
+  assert.deepEqual(report.deniedRequests, []);
+  assert.deepEqual(report.failedRequests, []);
+  assert.deepEqual(report.pageErrors, []);
+  assert.deepEqual(report.consoleErrors, []);
+  assert.equal(report.staticRequests.length, 3);
+  assert.equal(report.browserRequests.length, 3);
+  assert.ok(report.staticRequests.every((request) => request.phase === 'load' && request.status === 200));
+  await page.screenshot({ path: join(out, 'offline-results.png'), fullPage: true });
+  report.finalPage = await page.locator('body').innerText();
+  await context.tracing.stop({ path: join(out, 'trace.zip') });
+  for (const name of frozenFiles) assert.equal(digest(await readFile(join(root, name))), identity.files[name], `Source unchanged after Chrome ${name}`);
+  report.sourceUnchangedAfter = true;
+  report.status = 'passed';
+} catch (error) {
+  report.status = 'failed';
+  report.failure = { name: error.name, message: error.message, stack: error.stack };
+  if (page) {
+    try { await page.screenshot({ path: join(out, 'failure-page.png'), fullPage: true }); } catch {}
+  }
+  console.error(error.stack);
+  process.exitCode = 1;
+} finally {
+  if (context) {
+    try { await context.tracing.stop({ path: join(out, report.status === 'passed' ? 'trace-final.zip' : 'trace-failure.zip') }); } catch {}
+    await context.close();
+    report.cleanup.browserClosed = true;
+  }
+  if (server) {
+    server.closeAllConnections();
+    await new Promise((resolveClosed) => server.close(resolveClosed));
+    report.cleanup.serverClosed = !server.listening;
+  }
+  assert.ok(profile.startsWith(`${here}/run-`) && profile.endsWith('/chrome-profile'));
+  await rm(profile, { recursive: true, force: true });
+  report.cleanup.ownedProfileRemoved = await stat(profile).then(() => false, () => true);
+  report.endedAt = new Date().toISOString();
+  await writeFile(join(out, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);
+  const manifest = {};
+  const walk = async (directory) => {
+    for (const entry of await readdir(directory, { withFileTypes: true })) {
+      if (entry.name === 'fixture' || entry.name === 'web') continue;
+      const path = join(directory, entry.name);
+      if (entry.isDirectory()) await walk(path);
+      else { const bytes = await readFile(path); manifest[path.slice(out.length + 1)] = { sha256: digest(bytes), bytes: bytes.length }; }
+    }
+  };
+  await walk(out);
+  await writeFile(join(out, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
+  console.log(JSON.stringify({ out, status: report.status, checks: report.browserResult?.summary,
+    negativeControls: report.negativeControls?.length, calls: report.calculationCalls, cleanup: report.cleanup }, null, 2));
+}

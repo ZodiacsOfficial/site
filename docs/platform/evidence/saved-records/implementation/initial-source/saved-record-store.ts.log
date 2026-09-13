@@ -1,0 +1,394 @@
+/** Optional owner-bound local persistence. Importing this module opens no database. */
+import type { NatalEnvelope } from '@zodiacs/engine/receipt';
+import {
+  createSavedNatalRecord, isSavedNatalId, isSavedNatalOwnerKey,
+  MAX_SAVED_NATAL_RECORDS, parseSavedNatalRecord, type SavedNatalRecord,
+} from './saved-record';
+
+export const SAVED_NATAL_DATABASE_NAME = 'zodiacs-saved-natal-v1';
+const VERSION = 1;
+const RECORDS = 'records';
+const OWNER_INDEX = 'ownerKey';
+
+export type SavedNatalFailureCode = 'access-denied' | 'stale' | 'invalid-input'
+  | 'corrupt-record' | 'unsupported-record' | 'unsupported-storage'
+  | 'storage-unavailable' | 'quota-exceeded' | 'blocked' | 'aborted' | 'full' | 'id-conflict';
+export interface SavedNatalFailure {
+  readonly ok: false;
+  readonly code: SavedNatalFailureCode;
+  /** A stale write can have committed. Never automatically retry it. */
+  readonly mayHaveCommitted: boolean;
+}
+export type SavedNatalResult<T> = { readonly ok: true; readonly value: T } | SavedNatalFailure;
+export interface SavedNatalAuthority { readonly ownerKey: string; readonly epoch: number }
+
+type Guard = () => void;
+interface Mutation<T> { readonly result: T; readonly add?: SavedNatalRecord; readonly deleteId?: string }
+/** One adapter belongs to one handle; injected adapters must preserve this transaction contract. */
+export interface SavedNatalAdapter {
+  read(ownerKey: string, id: string | null, guard: Guard): Promise<unknown[]>;
+  mutate<T>(ownerKey: string, guard: Guard, operation: (rows: unknown[]) => Mutation<T>): Promise<T>;
+  clear(ownerKey: string, guard: Guard): Promise<void>;
+  abortPending(): void;
+}
+
+const failures = new WeakMap<object, SavedNatalFailure>();
+function issue(code: SavedNatalFailureCode, mayHaveCommitted = false): Error {
+  const error = new Error('Saved natal record operation failed.');
+  failures.set(error, { ok: false, code, mayHaveCommitted });
+  return error;
+}
+function failure(error: unknown, committed = false): SavedNatalFailure {
+  const own = error !== null && (typeof error === 'object' || typeof error === 'function') ? failures.get(error) : undefined;
+  if (own) return { ...own, mayHaveCommitted: committed || own.mayHaveCommitted };
+  let name = '';
+  try {
+    if (typeof DOMException !== 'undefined') {
+      name = Object.getOwnPropertyDescriptor(DOMException.prototype, 'name')?.get?.call(error) ?? '';
+    }
+  } catch { /* Do not inspect arbitrary thrown objects or private messages. */ }
+  return { ok: false, code: name === 'QuotaExceededError' ? 'quota-exceeded'
+    : name === 'VersionError' ? 'unsupported-storage' : name === 'AbortError' ? 'aborted' : 'storage-unavailable',
+  mayHaveCommitted: committed };
+}
+function rethrow(error: unknown, committed = false): Error {
+  const result = failure(error, committed);
+  return issue(result.code, result.mayHaveCommitted);
+}
+
+/** Dedicated native database; no upgrades or writes to existing application databases. */
+export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
+  private pending: Promise<IDBDatabase> | null = null;
+  private connection: IDBDatabase | null = null;
+  private generation = 0;
+  private readonly transactions = new Set<{ abort: () => void }>();
+
+  private open(guard: Guard): Promise<IDBDatabase> {
+    guard();
+    if (this.pending) return this.pending;
+    const generation = ++this.generation;
+    let pending!: Promise<IDBDatabase>;
+    pending = new Promise((resolve, reject) => {
+      let request: IDBOpenDBRequest;
+      let settled = false;
+      const fail = (error: unknown) => { settled = true; reject(rethrow(error)); };
+      try { request = indexedDB.open(SAVED_NATAL_DATABASE_NAME, VERSION); }
+      catch (error) { fail(error); return; }
+      request.onupgradeneeded = (event) => {
+        try {
+          guard();
+          if (settled || generation !== this.generation || event.oldVersion !== 0) throw issue('unsupported-storage');
+          const store = request.result.createObjectStore(RECORDS, { keyPath: ['ownerKey', 'id'] });
+          store.createIndex(OWNER_INDEX, 'ownerKey', { unique: false });
+        } catch (error) { request.transaction?.abort(); fail(error); }
+      };
+      request.onsuccess = () => {
+        const database = request.result;
+        try {
+          guard();
+          if (settled || this.pending !== pending || this.generation !== generation) throw issue('stale');
+          if (database.version !== VERSION || database.objectStoreNames.length !== 1
+            || !database.objectStoreNames.contains(RECORDS)) throw issue('unsupported-storage');
+          this.connection = database;
+          database.onversionchange = () => this.abortPending();
+          settled = true;
+          resolve(database);
+        } catch (error) { database.close(); fail(error); }
+      };
+      request.onerror = () => fail(request.error);
+      // A blocked request can later succeed. Invalidate this attempt, then close
+      // that late success instead of retaining an unreachable connection.
+      request.onblocked = () => fail(issue('blocked'));
+    });
+    this.pending = pending;
+    void pending.catch(() => { if (this.pending === pending) this.pending = null; });
+    return pending;
+  }
+
+  private async execute<T>(
+    ownerKey: string,
+    mode: IDBTransactionMode,
+    guard: Guard,
+    queue: (store: IDBObjectStore, done: (value: T) => void, fail: (error: unknown) => void, check: Guard) => void,
+  ): Promise<T> {
+    guard();
+    const database = await this.open(guard);
+    const generation = this.generation;
+    const check = () => {
+      guard();
+      if (generation !== this.generation || this.connection !== database) throw issue('stale');
+    };
+    check();
+    return new Promise((resolve, reject) => {
+      let transaction: IDBTransaction;
+      try { transaction = database.transaction(RECORDS, mode); }
+      catch (error) { reject(rethrow(error)); return; }
+      let result: T;
+      let ready = false;
+      let priorFailure: unknown;
+      let settled = false;
+      const finishFailure = (error: unknown, committed = false) => {
+        if (settled) return;
+        settled = true;
+        this.transactions.delete(active);
+        reject(rethrow(error, committed));
+      };
+      const abort = (error: unknown) => {
+        priorFailure = error;
+        try { transaction.abort(); }
+        catch { finishFailure(error, mode === 'readwrite'); }
+      };
+      const active = { abort: () => abort(issue('stale')) };
+      this.transactions.add(active);
+      transaction.onabort = () => finishFailure(priorFailure ?? transaction.error ?? issue('aborted'));
+      transaction.onerror = () => { priorFailure ??= transaction.error ?? issue('storage-unavailable'); };
+      transaction.oncomplete = () => {
+        if (settled) return;
+        this.transactions.delete(active);
+        try {
+          check();
+          if (!ready) throw issue('storage-unavailable');
+          settled = true;
+          resolve(result);
+        } catch (error) { finishFailure(error, mode === 'readwrite'); }
+      };
+      try {
+        check();
+        if (!isSavedNatalOwnerKey(ownerKey)) throw issue('invalid-input');
+        const store = transaction.objectStore(RECORDS);
+        const keyPath = store.keyPath;
+        if (store.autoIncrement || !Array.isArray(keyPath) || keyPath.length !== 2
+          || keyPath[0] !== 'ownerKey' || keyPath[1] !== 'id'
+          || store.indexNames.length !== 1 || !store.indexNames.contains(OWNER_INDEX)) throw issue('unsupported-storage');
+        const index = store.index(OWNER_INDEX);
+        if (index.keyPath !== 'ownerKey' || index.unique || index.multiEntry) throw issue('unsupported-storage');
+        queue(store, (value) => { check(); result = value; ready = true; }, abort, check);
+      } catch (error) { abort(error); }
+    });
+  }
+
+  read(ownerKey: string, id: string | null, guard: Guard): Promise<unknown[]> {
+    return this.execute(ownerKey, 'readonly', guard, (store, done, fail, check) => {
+      const request = id === null ? store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1)
+        : store.get([ownerKey, id]);
+      request.onsuccess = () => {
+        try { check(); done(id === null ? request.result : request.result === undefined ? [] : [request.result]); }
+        catch (error) { fail(error); }
+      };
+      request.onerror = () => fail(request.error);
+    });
+  }
+
+  mutate<T>(ownerKey: string, guard: Guard, operation: (rows: unknown[]) => Mutation<T>): Promise<T> {
+    return this.execute(ownerKey, 'readwrite', guard, (store, done, fail, check) => {
+      const request = store.index(OWNER_INDEX).getAll(ownerKey, MAX_SAVED_NATAL_RECORDS + 1);
+      request.onsuccess = () => {
+        try {
+          check();
+          const mutation = operation(request.result);
+          check();
+          if (mutation.add && mutation.deleteId) throw issue('invalid-input');
+          if (mutation.add) {
+            if (mutation.add.ownerKey !== ownerKey || !isSavedNatalId(mutation.add.id)) throw issue('invalid-input');
+            const add = store.add(mutation.add);
+            add.onerror = () => fail(add.error);
+          } else if (mutation.deleteId) {
+            if (!isSavedNatalId(mutation.deleteId)) throw issue('invalid-input');
+            const remove = store.delete([ownerKey, mutation.deleteId]);
+            remove.onerror = () => fail(remove.error);
+          }
+          done(mutation.result);
+        } catch (error) { fail(error); }
+      };
+      request.onerror = () => fail(request.error);
+    });
+  }
+
+  clear(ownerKey: string, guard: Guard): Promise<void> {
+    return this.execute(ownerKey, 'readwrite', guard, (store, done, fail, check) => {
+      const request = store.index(OWNER_INDEX).openKeyCursor(ownerKey);
+      request.onsuccess = () => {
+        try {
+          check();
+          const cursor = request.result;
+          if (!cursor) { done(undefined); return; }
+          const remove = store.delete(cursor.primaryKey);
+          remove.onerror = () => fail(remove.error);
+          cursor.continue();
+        } catch (error) { fail(error); }
+      };
+      request.onerror = () => fail(request.error);
+    });
+  }
+
+  /** close() alone cannot abort transactions; abort every tracked transaction first. */
+  abortPending(): void {
+    this.generation += 1;
+    this.pending = null;
+    for (const transaction of [...this.transactions]) transaction.abort();
+    this.connection?.close();
+    this.connection = null;
+  }
+}
+
+export interface SavedNatalStoreOptions {
+  readonly ownerKey: string;
+  readonly epoch: number;
+  /** Explicit application policy, not authentication or a same-origin sandbox. */
+  readonly readAuthority: () => SavedNatalAuthority | null;
+  readonly adapter?: SavedNatalAdapter;
+  readonly now?: () => Date;
+  readonly randomUUID?: () => string;
+}
+interface Ticket { readonly generation: number; readonly state: 'active' | 'clearing' }
+
+export class SavedNatalStore {
+  private readonly ownerKey: string;
+  private readonly epoch: number;
+  private readonly readAuthority: () => SavedNatalAuthority | null;
+  private readonly adapter: SavedNatalAdapter;
+  private readonly now: () => Date;
+  private readonly randomUUID: () => string;
+  private generation = 0;
+  private state: 'active' | 'clearing' | 'revoked' = 'active';
+
+  constructor(options: SavedNatalStoreOptions) {
+    this.ownerKey = options.ownerKey;
+    this.epoch = options.epoch;
+    this.readAuthority = options.readAuthority;
+    this.adapter = options.adapter ?? new IndexedDbSavedNatalAdapter();
+    this.now = options.now ?? (() => new Date());
+    this.randomUUID = options.randomUUID ?? (() => crypto.randomUUID());
+  }
+
+  private allowed(ticket: Ticket): boolean {
+    try {
+      if (this.state !== ticket.state || this.generation !== ticket.generation
+        || !isSavedNatalOwnerKey(this.ownerKey) || !Number.isSafeInteger(this.epoch) || this.epoch < 0) return false;
+      const current = this.readAuthority();
+      const ownerKey = current?.ownerKey;
+      const epoch = current?.epoch;
+      return ownerKey === this.ownerKey && epoch === this.epoch
+        && this.state === ticket.state && this.generation === ticket.generation;
+    } catch { return false; }
+  }
+  private guard(ticket: Ticket): Guard {
+    return () => { if (!this.allowed(ticket)) throw issue('stale'); };
+  }
+  private start(): Ticket {
+    const ticket = { generation: this.generation, state: 'active' } as const;
+    if (!this.allowed(ticket)) throw issue('access-denied');
+    return ticket;
+  }
+  private parse(rows: unknown[]): SavedNatalRecord[] {
+    if (rows.length > MAX_SAVED_NATAL_RECORDS) throw issue('corrupt-record');
+    const records = rows.map((value) => {
+      const parsed = parseSavedNatalRecord(value, this.ownerKey);
+      if (!parsed.ok) throw issue(parsed.code);
+      return parsed.record;
+    });
+    if (new Set(records.map((record) => record.id)).size !== records.length) throw issue('corrupt-record');
+    return records;
+  }
+  private async perform<T>(ticket: Ticket, write: boolean, action: (guard: Guard) => Promise<T>): Promise<SavedNatalResult<T>> {
+    let completed = false;
+    try {
+      const guard = this.guard(ticket);
+      guard();
+      const value = await action(guard);
+      completed = true;
+      guard();
+      return { ok: true, value };
+    } catch (error) {
+      const failed = failure(error, completed && write);
+      return { ...failed, code: this.allowed(ticket) ? failed.code : 'stale' };
+    }
+  }
+
+  async create(envelope: Readonly<NatalEnvelope>, label?: string): Promise<SavedNatalResult<SavedNatalRecord>> {
+    try {
+      const ticket = this.start();
+      const id = this.randomUUID();
+      const date = this.now();
+      const timestamp = Date.prototype.toISOString.call(date);
+      const record = createSavedNatalRecord(this.ownerKey, id, timestamp, envelope, label);
+      if (!record) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
+      return this.perform(ticket, true, (guard) => this.adapter.mutate(this.ownerKey, guard, (rows) => {
+        const records = this.parse(rows);
+        if (records.some((current) => current.id === record.id)) throw issue('id-conflict');
+        if (records.length >= MAX_SAVED_NATAL_RECORDS) throw issue('full');
+        return { result: record, add: record };
+      }));
+    } catch (error) {
+      const result = failure(error);
+      return { ...result, code: result.code === 'access-denied' ? result.code : 'invalid-input' };
+    }
+  }
+
+  async list(): Promise<SavedNatalResult<readonly SavedNatalRecord[]>> {
+    try {
+      const ticket = this.start();
+      return this.perform(ticket, false, async (guard) => {
+        const rows = await this.adapter.read(this.ownerKey, null, guard);
+        guard();
+        return Object.freeze(this.parse(rows).sort((a, b) => a.createdAt === b.createdAt
+          ? a.id < b.id ? -1 : a.id > b.id ? 1 : 0 : a.createdAt > b.createdAt ? -1 : 1));
+      });
+    } catch (error) { return failure(error); }
+  }
+
+  async get(id: string): Promise<SavedNatalResult<SavedNatalRecord | null>> {
+    try {
+      const ticket = this.start();
+      if (!isSavedNatalId(id)) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
+      return this.perform(ticket, false, async (guard) => {
+        const rows = await this.adapter.read(this.ownerKey, id, guard);
+        guard();
+        const records = this.parse(rows);
+        if (records.length > 1 || (records[0] && records[0].id !== id)) throw issue('corrupt-record');
+        return records[0] ?? null;
+      });
+    } catch (error) { return failure(error); }
+  }
+
+  async exportEnvelope(id: string): Promise<SavedNatalResult<string | null>> {
+    const result = await this.get(id);
+    // A separate await can observe revocation after get() returned its snapshot.
+    try {
+      this.start();
+      return result.ok ? { ok: true, value: result.value?.envelopeJson ?? null } : result;
+    } catch { return { ok: false, code: 'stale', mayHaveCommitted: false }; }
+  }
+
+  async delete(id: string): Promise<SavedNatalResult<void>> {
+    try {
+      const ticket = this.start();
+      if (!isSavedNatalId(id)) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
+      return this.perform(ticket, true, (guard) => this.adapter.mutate(this.ownerKey, guard,
+        () => ({ result: undefined, deleteId: id })));
+    } catch (error) { return failure(error); }
+  }
+
+  /**
+   * Explicit owner erasure consumes this handle, including on failure. Other
+   * handles/tabs are not revoked; durable account erasure needs app integration.
+   */
+  async clearOwner(): Promise<SavedNatalResult<void>> {
+    try {
+      this.start();
+      this.state = 'clearing';
+      this.generation += 1;
+      this.adapter.abortPending();
+      const ticket = { generation: this.generation, state: 'clearing' } as const;
+      const result = await this.perform(ticket, true, (guard) => this.adapter.clear(this.ownerKey, guard));
+      if (this.generation === ticket.generation) this.state = 'revoked';
+      return result;
+    } catch (error) { this.revoke(); return failure(error); }
+  }
+
+  revoke(): void {
+    this.state = 'revoked';
+    this.generation += 1;
+    this.adapter.abortPending();
+  }
+}

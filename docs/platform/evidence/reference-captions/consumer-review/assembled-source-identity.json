@@ -1,0 +1,289 @@
+{
+  "base": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "sourceReadCommand": [
+    "git",
+    "archive",
+    "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+    "src",
+    "public/fonts",
+    "public/assets/zodiac-icons/128",
+    "public/assets/app-icons/v3",
+    "package.json",
+    "package-lock.json",
+    "tests/api/og-chart.test.ts",
+    "tests/local-date-reference-drive.mjs",
+    "tests/moon-result-ownership-drive.mjs",
+    "tests/t17-positions-share.mjs",
+    "tests/visual/browser.mjs"
+  ],
+  "unchangedFiles": 1866,
+  "changedPaths": [
+    "src/islands/ChartCalculator.registry-bridge.test.ts",
+    "src/islands/ChartCalculator.tsx",
+    "src/islands/MoonPhaseTool.reference.test.ts",
+    "src/islands/MoonPhaseTool.tsx",
+    "src/islands/explorer/lens/copy.ts",
+    "src/islands/explorer/tour/copy.ts",
+    "src/lib/i18n/ui/en.ts",
+    "src/lib/i18n/ui/es.ts",
+    "src/lib/i18n/ui/fr.ts",
+    "src/lib/i18n/ui/it.ts",
+    "src/lib/i18n/ui/pt.ts",
+    "src/lib/i18n/ui/ru.ts",
+    "src/lib/moon-certainty.test.tsx",
+    "src/lib/reference-captions.test.tsx",
+    "src/lib/share-card-copy.ts",
+    "src/lib/share-card.test.ts",
+    "src/lib/share-card.ts",
+    "src/pages/es/moon-phase/index.astro",
+    "src/pages/fr/moon-phase/index.astro",
+    "src/pages/it/moon-phase/index.astro",
+    "src/pages/moon-phase/index.astro",
+    "src/pages/pt/moon-phase/index.astro",
+    "src/pages/ru/moon-phase/index.astro",
+    "src/server/chart-preview-model.ts",
+    "src/server/chart-preview.ts",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs",
+    "tests/api/og-chart.test.ts",
+    "tests/local-date-reference-drive.mjs",
+    "tests/moon-result-ownership-drive.mjs",
+    "tests/reference-caption-drive.mjs",
+    "tests/t17-positions-share.mjs"
+  ],
+  "frozenFiles": [
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "baseSha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d",
+      "sha256": "aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e",
+      "bytes": 1781,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "baseSha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+      "sha256": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420",
+      "bytes": 120399,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.reference.test.ts",
+      "baseSha256": null,
+      "sha256": "188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8",
+      "bytes": 7301,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "baseSha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "sha256": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966",
+      "bytes": 11017,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/explorer/lens/copy.ts",
+      "baseSha256": "ae7a2118641bf95d5c2bee2f6584788603c0d673726213df12bf998c868ffab6",
+      "sha256": "7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f",
+      "bytes": 13544,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/islands/explorer/tour/copy.ts",
+      "baseSha256": "71a6efba4267056a5e181a5b4a89b7887fcca0007524e0e354c630f9ba07c7c2",
+      "sha256": "458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e",
+      "bytes": 55749,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "baseSha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621",
+      "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f",
+      "bytes": 22136,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "baseSha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c",
+      "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f",
+      "bytes": 24319,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "baseSha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed",
+      "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0",
+      "bytes": 27902,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "baseSha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea",
+      "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c",
+      "bytes": 26682,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "baseSha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6",
+      "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5",
+      "bytes": 25854,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "baseSha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613",
+      "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338",
+      "bytes": 38540,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/moon-certainty.test.tsx",
+      "baseSha256": "e509607fc389f8175b9113cd8354eb43a66781a870c0cbb411ab58e02e8e3880",
+      "sha256": "3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003",
+      "bytes": 11558,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/reference-captions.test.tsx",
+      "baseSha256": null,
+      "sha256": "e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab",
+      "bytes": 5455,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/share-card-copy.ts",
+      "baseSha256": "3a8fceab7b04a796cf4cbedb9c91302e4f0627d83a3043f7ae6366508d633fd9",
+      "sha256": "fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889",
+      "bytes": 11216,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/lib/share-card.test.ts",
+      "baseSha256": "bfad74af933532e4ded88c1c9b5e04e133cd8924a39aff7d9ab910d11a654f2c",
+      "sha256": "ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084",
+      "bytes": 16715,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "src/lib/share-card.ts",
+      "baseSha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "bytes": 55760,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "baseSha256": "1bb3445c6b1fbd31665dd7a8569b3b5e2dbf0acf1bd62cdd135c147e3d8a7dc1",
+      "sha256": "19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d",
+      "bytes": 3609,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "baseSha256": "c81c8781a50826a83e158ce145aac104db488b179f34a0f127da7614cd494fc1",
+      "sha256": "b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f",
+      "bytes": 3823,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "baseSha256": "1674015e2c539800914731c8d33ec00b8d597d5aa593842b9b0f8ff399f53c0b",
+      "sha256": "246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae",
+      "bytes": 3680,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "baseSha256": "d404f048535fa836ccfe3d43f485641d9130bc4ed829b5eb60752a0cefeb5c15",
+      "sha256": "79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010",
+      "bytes": 7008,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "baseSha256": "24377faef56714b38675606d0754f7330615134db476e60c14fa5b247478dc79",
+      "sha256": "f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8",
+      "bytes": 3527,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "baseSha256": "b195a5ee7f1fef52e6bd283d59274ad716316cbfe50c93e1c318aba3dcf9b3ac",
+      "sha256": "14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241",
+      "bytes": 4081,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/server/chart-preview-model.ts",
+      "baseSha256": "e91ca74f4ac207da843370dc9ea844077b0a8897ace59a9f023fedec3345fa02",
+      "sha256": "c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957",
+      "bytes": 2056,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/server/chart-preview.ts",
+      "baseSha256": "14a71f31b00e3f7ff68283bc527eb1dad62947ed11bb559c1bf12d2d3494ca4e",
+      "sha256": "4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc",
+      "bytes": 9897,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.fr.mjs",
+      "baseSha256": "bbfc07e127b3f5af9154a3a92c2a1c44fde3be72f76cd2f183b1bc5d0c6cbdaa",
+      "sha256": "511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2",
+      "bytes": 49891,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.it.mjs",
+      "baseSha256": "93ef9c70c4c7124d59e6ec23012e0d0efcaff5e9c4a3018580d136785bcd69d4",
+      "sha256": "849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61",
+      "bytes": 48086,
+      "kind": "product/copy"
+    },
+    {
+      "path": "src/strings/additions.pt.mjs",
+      "baseSha256": "9257f0e6f39af61fb3bfb10dd30c913b624966ec225e1f47256b5e38022bdbfc",
+      "sha256": "f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e",
+      "bytes": 47872,
+      "kind": "product/copy"
+    },
+    {
+      "path": "tests/api/og-chart.test.ts",
+      "baseSha256": "6e936dbc70c2535058cb8aab5de66803ca6dbd0d48ea1fa40f5447fcd446b4a9",
+      "sha256": "1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2",
+      "bytes": 12273,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "baseSha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19",
+      "sha256": "88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc",
+      "bytes": 22718,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/moon-result-ownership-drive.mjs",
+      "baseSha256": "2815fb499e7e8278fff2adf30344abe6b1f407f38247347c4b77865f020f2246",
+      "sha256": "69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd",
+      "bytes": 14874,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/reference-caption-drive.mjs",
+      "baseSha256": null,
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+      "bytes": 19270,
+      "kind": "scoped test/driver"
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "baseSha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28",
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+      "bytes": 66990,
+      "kind": "scoped test/driver"
+    }
+  ],
+  "allOtherCopiedSourceAssetsEqual": true
+}

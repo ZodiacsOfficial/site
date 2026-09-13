@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,hashlib,subprocess
+root=Path(__file__).resolve().parent
+repo='/Users/chiburashka/.codex/worktrees/4806/site'
+head='9d180c9f1a2f66893ccd6d73fcda106cb3894674'
+freeze=Path('/private/tmp/zodiacs-platform-chart-reference-confidence-evidence/freeze2-identity.json')
+b=freeze.read_bytes();assert hashlib.sha256(b).hexdigest()=='54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c'
+f=json.loads(b);(root/'freeze2-identity.json').write_bytes(b)
+paths=sorted(set(f['files'])|set(['src/islands/BirthFields.tsx','src/islands/PlaceSearch.tsx','src/lib/geo/search.ts','src/lib/profile/post-chart-context.ts','src/lib/engine/calculator-receipt.ts','src/lib/time/localToUtc.ts','src/lib/share.ts','tests/visual/browser.mjs','package.json','package-lock.json','.github/workflows/site-check.yml','.github/phase1-scope-allowance.json']))
+rows=[]
+for path in paths:
+ b=subprocess.check_output(['git','-C',repo,'show',head+':'+path]);s=hashlib.sha256(b).hexdigest()
+ if path in f['files']:assert s==f['files'][path]['sha256'] and len(b)==f['files'][path]['bytes']
+ blob=subprocess.check_output(['git','-C',repo,'rev-parse',head+':'+path]).decode().strip()
+ assert blob==hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()
+ dest=root/'source'/path;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+ rows.append(dict(path=path,bytes=len(b),sha256=s,gitBlob=blob))
+result=dict(commit=head,base=f['baseCommit'],frozenProductFilesMatched=len(f['files']),records=rows,qualification='Selected immutable Git blobs. Browser executes actual deployed modules, not this source snapshot; no local build or source injection.')
+(root/'source-snapshot.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'commit':head,'records':len(rows),'frozenProductFilesMatched':len(f['files'])}))

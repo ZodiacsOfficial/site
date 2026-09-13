@@ -1,0 +1,149 @@
+(() => {
+    if (mode !== 'full')
+        return;
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.slice(1));
+    const nextSubjectMode = subjectModeFromHash(hash);
+    const nextMineHandoff = mineHandoffFromHash(hash);
+    const handoffOrigins = profileHandoffOriginsFromHash(hash);
+    const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
+    if (params.has('profileChartId')) {
+        const profileChartId = profileChartIdFromHash(hash);
+        const handoffId = profileHandoffIdRef.current + 1;
+        profileHandoffIdRef.current = handoffId;
+        clearFragment();
+        if (!profileChartId || params.size !== 1) {
+            setError(t(locale, 'chartError'));
+            return;
+        }
+        let active = true;
+        let resolving = false;
+        const handoffIsCurrent = () => active && handoffId === profileHandoffIdRef.current;
+        const onProfileAccess = () => { queueMicrotask(resolveCurrentProfileChart); };
+        const resolveCurrentProfileChart = () => {
+            if (!handoffIsCurrent() || resolving || !profileAccessAllowed())
+                return;
+            resolving = true;
+            const accessGeneration = profileAccessGeneration.current;
+            void reviewImport('../lib/profile/profile-chart-handoff').then(({ loadProfileChartRunInput }) => {
+                resolving = false;
+                if (!handoffIsCurrent() || !profileAccessAllowed())
+                    return;
+                if (accessGeneration !== profileAccessGeneration.current) {
+                    queueMicrotask(resolveCurrentProfileChart);
+                    return;
+                }
+                const input = loadProfileChartRunInput(profileChartId);
+                if (!input) {
+                    active = false;
+                    window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+                    return;
+                }
+                const linkCity = input.city;
+                active = false;
+                window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+                primaryProfileOriginRef.current = true;
+                primaryProfileChartIdRef.current = profileChartId;
+                mineProfileOriginRef.current = false;
+                setDate(input.date);
+                setTime(input.time);
+                setTimeKnown(input.timeKnown);
+                setCity(linkCity);
+                setHouseSystem(input.houseSystem);
+                setFromLink(true);
+                setLinkName(input.name ?? null);
+                setPositionsOnly(null);
+                void runChart(input, false);
+            }).catch(() => {
+                resolving = false;
+                if (handoffIsCurrent() && accessGeneration === profileAccessGeneration.current) {
+                    setError(t(locale, 'chartError'));
+                }
+            });
+        };
+        window.addEventListener('zodiacs:profile-access', onProfileAccess);
+        resolveCurrentProfileChart();
+        return () => {
+            active = false;
+            window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+        };
+    }
+    if (params.has('c') && params.has('p')) {
+        clearFragment();
+        let active = true;
+        reviewImport('./PositionsShareSurface')
+            .then((surface) => {
+            if (active)
+                setError(surface.shareText(locale, 'shareLinkAmbiguous'));
+        })
+            .catch(() => {
+            if (active)
+                setError(t(locale, 'chartError'));
+        });
+        return () => { active = false; };
+    }
+    if (params.has('p')) {
+        const token = params.get('p') ?? '';
+        let active = true;
+        reviewImport('./PositionsShareSurface')
+            .then((surface) => {
+            if (!active)
+                return;
+            const decoded = surface.decodePositionsToken(token);
+            if (!decoded) {
+                setError(surface.shareText(locale, 'positionsLinkInvalid'));
+                return;
+            }
+            setChart(null);
+            clearReceiptExport();
+            setSignature(null);
+            setRegistryRecordSlug(null);
+            setShareInput(null);
+            setComputedInput(null);
+            shareRuntimeRef.current.surface = surface;
+            setPositionsOnly(decoded);
+            setSubjectMode(nextSubjectMode);
+            setMineHandoff(nextMineHandoff);
+            primaryProfileOriginRef.current = false;
+            primaryProfileChartIdRef.current = null;
+            mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
+            track('chart_computed', { mode, source: 'shared_positions' });
+            clearFragment();
+        })
+            .catch(() => {
+            if (active)
+                setError(t(locale, 'chartError'));
+        });
+        return () => { active = false; };
+    }
+    const token = params.get('c');
+    if (!token)
+        return;
+    const decoded = decodeChartLink(token);
+    if (!decoded)
+        return;
+    const linkCity = {
+        name: decoded.place ?? (russianCopy?.chart.sharedBirthplace ?? 'Shared birthplace'),
+        admin1: '', country: '',
+        lat: decoded.lat, lon: decoded.lon, tz: decoded.tz, pop: 0,
+    };
+    setDate(decoded.date);
+    setTime(decoded.time ?? '');
+    setTimeKnown(decoded.timeKnown);
+    setCity(linkCity);
+    setHouseSystem(decoded.houseSystem);
+    setFromLink(true);
+    setLinkName(decoded.name ?? null);
+    setPositionsOnly(null);
+    primaryProfileOriginRef.current = false;
+    primaryProfileChartIdRef.current = null;
+    mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
+    clearFragment();
+    runChart({
+        date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
+        city: linkCity, houseSystem: decoded.houseSystem,
+        name: decoded.name,
+        subjectMode: nextSubjectMode,
+        mine: nextMineHandoff,
+    }, false, 'shared_details');
+})

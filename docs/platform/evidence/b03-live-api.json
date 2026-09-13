@@ -1,0 +1,62 @@
+{
+  "capturedAt": "2026-09-07T18:43:54.973Z",
+  "runtime": "v22.23.2",
+  "results": [
+    {
+      "url": "https://zodiacs.org/api/v1/sky/today.json",
+      "status": 200,
+      "cacheControl": "public, max-age=300, must-revalidate",
+      "age": "1080",
+      "cors": "*",
+      "date": "2026-09-07",
+      "snapshotAt": "2026-09-07T12:00:00.000Z",
+      "from": null,
+      "to": null,
+      "dailyDate": null,
+      "generatedAt": "2026-09-07T15:57:16.001Z",
+      "sha256": "90d693c6677c4684e14f579aa17aeb44550007bd5d84d62d8d0f175bba0c913d"
+    },
+    {
+      "url": "https://zodiacs.org/api/v1/sky/upcoming.json",
+      "status": 200,
+      "cacheControl": "public, max-age=86400, must-revalidate",
+      "age": "1080",
+      "cors": "*",
+      "date": null,
+      "snapshotAt": null,
+      "from": "2026-09-07T12:00:00.000Z",
+      "to": "2026-11-06T12:00:00.000Z",
+      "dailyDate": null,
+      "generatedAt": "2026-09-07T15:57:16.001Z",
+      "sha256": "08ca586b14874af594b65e28f376dba0389d408ce1580d5d1902e05705e28375"
+    },
+    {
+      "url": "https://zodiacs.org/api/v1/planets/mercury.json",
+      "status": 200,
+      "cacheControl": "public, max-age=86400, must-revalidate",
+      "age": "1080",
+      "cors": "*",
+      "date": "2026-09-07",
+      "snapshotAt": "2026-09-07T12:00:00.000Z",
+      "from": null,
+      "to": null,
+      "dailyDate": null,
+      "generatedAt": "2026-09-07T15:57:16.001Z",
+      "sha256": "ac601b22bcde3235e5890b57af252083e3000a41fff7f0b5648c7fefde54cf8a"
+    },
+    {
+      "url": "https://zodiacs.org/api/v1/index.json",
+      "status": 200,
+      "cacheControl": "public, max-age=3600, must-revalidate",
+      "age": "1080",
+      "cors": "*",
+      "date": null,
+      "snapshotAt": null,
+      "from": null,
+      "to": null,
+      "dailyDate": "2026-09-07",
+      "generatedAt": "2026-09-07T15:57:16.001Z",
+      "sha256": "2fc414e74d1615801cc1b50f8e353fb08c9bd5336e18917cd8b3fbd2c32c5617"
+    }
+  ]
+}

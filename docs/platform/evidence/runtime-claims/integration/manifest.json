@@ -1,0 +1,92 @@
+[
+  {
+    "path": "local/test.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/test.log",
+    "bytes": 36292,
+    "sha256": "aaa882046c8b95eff10210ee526508caeacc9d113b36cbced1bb5d981f2cdd37"
+  },
+  {
+    "path": "local/developers-drive.mjs.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/developers-drive.mjs",
+    "bytes": 5632,
+    "sha256": "e4a777700ed22cb867955955c0949293fdde04a37880eefd1c6952dc66547ee4"
+  },
+  {
+    "path": "local/scope.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/scope.log",
+    "bytes": 74,
+    "sha256": "e4436a3258366f84cdc7e95889187fbd59d794177d60876ba83d82a053df8969"
+  },
+  {
+    "path": "local/check.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/check.log",
+    "bytes": 4438,
+    "sha256": "7b93e8818d0b32b4a5b46d35097f1a18bad3c6a75f57164c1aac6c1cef8ec445"
+  },
+  {
+    "path": "local/developers.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/developers.log",
+    "bytes": 32,
+    "sha256": "3485a56dd424a29f433a78da7106c28309f45fb2764b7f1883f77e07ef47772c"
+  },
+  {
+    "path": "local/build.log",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/build.log",
+    "bytes": 282817,
+    "sha256": "dac64753d0745202228ecdabd14b154769b89edea6b4cb6ca9abc123f1d5139f"
+  },
+  {
+    "path": "local/developers/result.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/developers/result.json",
+    "bytes": 2751,
+    "sha256": "48373e28e4c92fae26e8b4af0d975c1a04eb777590024b7953e709fa62b409cf"
+  },
+  {
+    "path": "local/developers/support-1280.png",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/developers/support-1280.png",
+    "bytes": 882101,
+    "sha256": "793caa54dfd43931dd54da6f8a30f9f44023a330c12b96ec17ba7264f4dd510a"
+  },
+  {
+    "path": "local/developers/entry-320.png",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-integration/developers/entry-320.png",
+    "bytes": 881849,
+    "sha256": "80374159b7763c67ab7c883e3d896e9a6743162f88942cf5cde86f1959e62dc0"
+  },
+  {
+    "path": "release/rc6-ci.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/rc6-ci.json",
+    "bytes": 27846,
+    "sha256": "c9b0a94465d080959e8c43e213f76847e0cdcafdbae0dbb2c6ecf144e2cf7f04"
+  },
+  {
+    "path": "release/moon-pr.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/moon-pr.json",
+    "bytes": 338,
+    "sha256": "b9dff20794830838759e0a588d17073d206b333ce19479cee5c8ec4a9dcbbac1"
+  },
+  {
+    "path": "release/moon-files.pages.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/moon-files.pages.json",
+    "bytes": 2175547,
+    "sha256": "be36f228eb728e0e05f9ad603691f3d078ff0fe576f725dd2cc93d4fc17bed57"
+  },
+  {
+    "path": "release/moon-diff-verification.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/moon-diff-verification.json",
+    "bytes": 30355,
+    "sha256": "2369c3fab1a8ac4020dbbccfd11a721298b1790fccd9e7e0d38648874579f8ee"
+  },
+  {
+    "path": "release/moon-runs.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/moon-runs.json",
+    "bytes": 453,
+    "sha256": "8718905a81ae76aa5b7b188d45c08f7344493f37837a0efdb4229927f78915eb"
+  },
+  {
+    "path": "release/interval-ci.json",
+    "sourcePath": "/private/tmp/zodiacs-platform-runtime-claims-release/interval-ci.json",
+    "bytes": 27846,
+    "sha256": "5f5c893b9face52e314efe1491569b6638315f81f4ca24421eaecae0dfe5ac01"
+  }
+]

@@ -1,0 +1,36 @@
+import * as subject from './acceptance-subject.mjs';
+const ensure=(condition,message)=>{if(!condition)throw Error(message);};
+const checkedNumber=value=>{ensure(Number.isFinite(value),'Nonfinite numerical comparison');return Object.is(value,-0)?{negativeZero:true}:value;};
+const normalized=value=>typeof value==='number'?checkedNumber(value):value instanceof Date?value.toISOString():Array.isArray(value)?value.map(normalized):value&&typeof value==='object'?Object.fromEntries(Object.keys(value).sort().filter(key=>key!=='engineVersion').map(key=>[key,normalized(value[key])])):value;
+const equal=(a,b)=>JSON.stringify(normalized(a))===JSON.stringify(normalized(b));
+function calculate(resolution,date,time,timeZone,timeKnown=true){return subject.computeCalculatorReceipt({utc:resolution.utc,latitude:-3.1,longitude:-60.02,houseSystem:'placidus',timeKnown,flags:resolution.flags},{date,time,timeZone,offsetMinutes:resolution.offsetMinutes,reference:timeKnown?'supplied-instant':'local-noon'});}
+export function runAcceptance(fixtures){
+ ensure(subject.ENGINE_VERSION==='0.1.1-rc.6','Current package version');ensure(subject.OLD_ENGINE_VERSION==='0.1.1-rc.5','Baseline package version');
+ const historical=fixtures.map(f=>{
+  const baseline=subject.resolveBaseline(f.date,f.time,f.zone),current=subject.resolveSite(f.date,f.time,f.zone),sdk=subject.resolvePackage(f.date,f.time,f.zone);
+  ensure(equal(current,sdk),'Site/package resolver mismatch '+f.zone);
+  ensure(current.utc.toISOString()===f.instant,'Unexpected historical instant '+f.zone);
+  ensure(current.utc.getUTCMilliseconds()===0,'Sub-millisecond offset noise '+f.zone);
+  ensure(calculate(baseline,f.date,f.time,f.zone)===null,'Baseline must reproduce unavailable receipt '+f.zone);
+  const portable=calculate(current,f.date,f.time,f.zone);ensure(portable!==null,'Corrected receipt unavailable '+f.zone);
+  const parsed=subject.parseNatalEnvelope(portable.envelopeJson);ensure(parsed.ok,'Corrected receipt invalid '+f.zone);
+  ensure(parsed.envelope.receipt.engine.version===subject.ENGINE_VERSION,'Receipt version '+f.zone);
+  ensure(parsed.envelope.receipt.localResolution.gapShiftMinutes===f.gapShiftMinutes,'Changed historical seconds '+f.zone);
+  ensure(parsed.envelope.receipt.inputFlags[0]==='dst-gap','Missing truthful gap flag '+f.zone);
+  const replay=subject.natalReplayInput(parsed.envelope);ensure(new Date(replay.utc).toISOString()===f.instant,'Replay instant '+f.zone);
+  return{zone:f.zone,date:f.date,time:f.time,instant:current.utc.toISOString(),offsetMinutes:current.offsetMinutes,oldFlags:baseline.flags,newFlags:current.flags,gapShiftMinutes:parsed.envelope.receipt.localResolution.gapShiftMinutes,baselineReceiptUnavailable:true,currentReceiptValid:true,envelope:parsed.envelope};
+ });
+ const controls=[['2024-06-15','14:30','America/New_York',true],['2024-03-10','02:30','America/New_York',true],['2024-11-03','01:30','America/New_York',true],['2024-10-06','02:15','Australia/Lord_Howe',true],['2011-12-30','12:00','Pacific/Apia',false],['1907-07-06','08:30','America/Mexico_City',true],['0099-12-31','12:00','UTC',true],['0000-01-01','00:30','Etc/GMT-1',true],['1914-01-01','12:00','America/Manaus',false]].map(([date,time,zone,timeKnown])=>{
+  const current=subject.resolveSite(date,time,zone);ensure(equal(current,subject.resolvePackage(date,time,zone)),'Control parity '+zone);
+  const result=calculate(current,date,time,zone,timeKnown);ensure(result!==null,'Control unavailable '+zone);const parsed=subject.parseNatalEnvelope(result.envelopeJson);ensure(parsed.ok,'Control invalid '+zone);
+  return{date,time,zone,timeKnown,instant:current.utc.toISOString(),flags:current.flags,receipt:parsed.envelope.receipt};
+ });
+ const numerical=[];
+ for(const latitude of [-89.99,-78,-66,-33,0,51,78,89.99])for(const longitude of [-180,15.6267,180])for(const houseSystem of ['whole','placidus'])for(const timeKnown of [true,false]){
+  const input={utc:'2001-12-21T08:30:00Z',latitude,longitude,houseSystem,timeKnown};const current=subject.natalChart(input),old=subject.oldNatalChart(input);
+  ensure(equal(current,old),'Numerical values changed '+JSON.stringify(input));
+  numerical.push({...input,actualHouses:current.houses?.system??null,flags:current.flags,parity:true});
+ }
+ const fixedOffset=subject.resolveSite('1990-06-15','14:30','+01:00');ensure(calculate(fixedOffset,'1990-06-15','14:30','+01:00')===null,'Existing signed-zone limitation must remain explicit');
+ return{engineVersion:subject.ENGINE_VERSION,baselineEngineVersion:subject.OLD_ENGINE_VERSION,artifactSHA256:'09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e',historical,controls,numerical,totals:{historical:historical.length,controls:controls.length,numerical:numerical.length},retainedSignedZoneLimitation:true};
+}

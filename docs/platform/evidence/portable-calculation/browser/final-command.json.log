@@ -1,0 +1,8 @@
+{
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "/private/tmp/zodiacs-platform-portable-browser/run.mjs"
+  ],
+  "cwd": "/Users/chiburashka/.codex/worktrees/4806/site",
+  "exitCode": 0
+}

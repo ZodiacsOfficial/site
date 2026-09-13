@@ -1,0 +1,435 @@
+{
+  "at": "2026-09-08T06:48:37.498009+00:00",
+  "sourceRoot": "/private/tmp/zodiacs-platform-local-date-endpoints-review",
+  "records": [
+    {
+      "source": "REVIEW.md",
+      "copy": "REVIEW.md.log",
+      "bytes": 12264,
+      "sha256": "6185b4a5b07d4bece75365ae88c40b55f45a66516359a36dbeb225a4dd7528e7"
+    },
+    {
+      "source": "SUMMARY.json",
+      "copy": "SUMMARY.json.log",
+      "bytes": 708,
+      "sha256": "dcd36115119b7eacf80e65ad3a687f522cc6c8e6b1a66675282b58ae6e8c795d"
+    },
+    {
+      "source": "browser-entry.js",
+      "copy": "browser-entry.js.log",
+      "bytes": 3986,
+      "sha256": "5fc07cba582124462c65fd078cd8e4a7616f846cbabf55d1bfe1985ae417d75a"
+    },
+    {
+      "source": "browser-initial.mjs",
+      "copy": "browser-initial.mjs.log",
+      "bytes": 3014,
+      "sha256": "19563078b87e0dff81d8553f5601dd781c0730f069723a309ea2e7e135800b4c"
+    },
+    {
+      "source": "browser-result.json",
+      "copy": "browser-result.json.log",
+      "bytes": 49358,
+      "sha256": "c7184897fa8688b5c087076fb7e0ff4f748c7cfcc8904c8b0fde82e394b1ec97"
+    },
+    {
+      "source": "browser-subject.js",
+      "copy": "browser-subject.js.log",
+      "bytes": 15031,
+      "sha256": "c446c2c9e8164eb5c57061eddccf7039e2ece785b65510bff1cd199d63f51b67"
+    },
+    {
+      "source": "browser.log",
+      "copy": "browser.log.log",
+      "bytes": 9114,
+      "sha256": "bf311fbe5376fb1f9aaca318af32322816d33e2781c9d89be92cc84b16b321f6"
+    },
+    {
+      "source": "browser.mjs",
+      "copy": "browser.mjs.log",
+      "bytes": 4380,
+      "sha256": "b28a24fbada9916a9bcfc8c4b690ea7ad4cc8b9543d84283de0337d5dc1239d6"
+    },
+    {
+      "source": "build.mjs",
+      "copy": "build.mjs.log",
+      "bytes": 1609,
+      "sha256": "4896b1a15f55f5147287ceff0f0cdf3eb530fe2a28339801c1b9cfbbadb24bc6"
+    },
+    {
+      "source": "callers/CALLERS.md",
+      "copy": "callers/CALLERS.md.log",
+      "bytes": 6952,
+      "sha256": "95d99ec339af0934e4fc64c357a32c19090b73e0d39256205e72906b12b6ac4c"
+    },
+    {
+      "source": "callers/capture.mjs",
+      "copy": "callers/capture.mjs.log",
+      "bytes": 2643,
+      "sha256": "21045042d77ec255477d604efc16a53fcea0576a066863f3a1bf29e4ad256477"
+    },
+    {
+      "source": "callers/finalize.mjs",
+      "copy": "callers/finalize.mjs.log",
+      "bytes": 1422,
+      "sha256": "b96495cf9e699a485ccfd12be42f5762e96f01077ebc345e1dfe6a558303a18b"
+    },
+    {
+      "source": "callers/identity.json",
+      "copy": "callers/identity.json.log",
+      "bytes": 7146,
+      "sha256": "d882a0e25783f83d5c8b2ffbda9590fab8562eb19bc9105c93af729f832bd15d"
+    },
+    {
+      "source": "callers/manifest.json",
+      "copy": "callers/manifest.json.log",
+      "bytes": 5982,
+      "sha256": "8daef586337bf2de2d5f99406a2e684c4f8022026c416986e454d81715c7913b"
+    },
+    {
+      "source": "callers/recheck.json",
+      "copy": "callers/recheck.json.log",
+      "bytes": 8001,
+      "sha256": "bde5262129d7fd3d2cd79907ccc6dea00b8e933ef1aabafda31eb4a5862e344a"
+    },
+    {
+      "source": "callers/sdk-caller-search.log",
+      "copy": "callers/sdk-caller-search.log.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "callers/site-caller-search.log",
+      "copy": "callers/site-caller-search.log.log",
+      "bytes": 1442,
+      "sha256": "7d72ae2264e2decf7e07633f74769d0d107ba76d6156a60a79920839830b9c55"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/package.json",
+      "copy": "callers/source/sdk/packages/engine/package.json.log",
+      "bytes": 2154,
+      "sha256": "b9318c0a5afca031f3a823c6f5001337949ab15b9fbc63f7caa0ea10df02fddc"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/src/geo/timezone.ts",
+      "copy": "callers/source/sdk/packages/engine/src/geo/timezone.ts.log",
+      "bytes": 8308,
+      "sha256": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/src/geo.test.ts",
+      "copy": "callers/source/sdk/packages/engine/src/geo.test.ts.log",
+      "bytes": 5499,
+      "sha256": "68f03a699351526509f9262a6976cc53cd5482447a1219e90eed052c77e8bbce"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/src/geo.ts",
+      "copy": "callers/source/sdk/packages/engine/src/geo.ts.log",
+      "bytes": 334,
+      "sha256": "bb8e3e0497b2180b6c20954807d56206fe90d208760d730125493eef22464687"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/src/receipt.ts",
+      "copy": "callers/source/sdk/packages/engine/src/receipt.ts.log",
+      "bytes": 27874,
+      "sha256": "6a2513769934da7b72ab2e07c66df2d48e49fe2d8a8b54b737c2424d301778d8"
+    },
+    {
+      "source": "callers/source/sdk/packages/engine/src/types.ts",
+      "copy": "callers/source/sdk/packages/engine/src/types.ts.log",
+      "bytes": 4510,
+      "sha256": "b56e35fb04903af94fbd0bbb98e4e8d99c298646ef68ddcefca12672d7397a3e"
+    },
+    {
+      "source": "callers/source/site/scripts/build-sky-api.mjs",
+      "copy": "callers/source/site/scripts/build-sky-api.mjs.log",
+      "bytes": 1711,
+      "sha256": "e8bc8a02eecf7316409de8bdfa47bd2281e8eba1aa89e4730027a9c52bae4544"
+    },
+    {
+      "source": "callers/source/site/scripts/build-sky.mjs",
+      "copy": "callers/source/site/scripts/build-sky.mjs.log",
+      "bytes": 9244,
+      "sha256": "b1548b8d736b17a7646ab33aaf62bddb76320d299485c1b6b0a2d77cbc794ffd"
+    },
+    {
+      "source": "callers/source/site/scripts/daily-feed-dates.test.ts",
+      "copy": "callers/source/site/scripts/daily-feed-dates.test.ts.log",
+      "bytes": 2483,
+      "sha256": "f0c1023af71b5f5b9cef0c1c96c354b3d81cc18b29745da44a89df6135eb48f7"
+    },
+    {
+      "source": "callers/source/site/src/islands/ChartCalculator.registry-bridge.test.ts",
+      "copy": "callers/source/site/src/islands/ChartCalculator.registry-bridge.test.ts.log",
+      "bytes": 1697,
+      "sha256": "bfa21bc246699afd63ad6cc85035aff173754f638a30029579a2ebd78e2734e0"
+    },
+    {
+      "source": "callers/source/site/src/islands/ChartCalculator.tsx",
+      "copy": "callers/source/site/src/islands/ChartCalculator.tsx.log",
+      "bytes": 116026,
+      "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11"
+    },
+    {
+      "source": "callers/source/site/src/islands/MoonPhaseTool.tsx",
+      "copy": "callers/source/site/src/islands/MoonPhaseTool.tsx.log",
+      "bytes": 10765,
+      "sha256": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8"
+    },
+    {
+      "source": "callers/source/site/src/lib/approach.ts",
+      "copy": "callers/source/site/src/lib/approach.ts.log",
+      "bytes": 8818,
+      "sha256": "9ac2cb9d6ab26d350a96e0b2b8d4dcbc97ebd4b521cbe445502399ad9da05e22"
+    },
+    {
+      "source": "callers/source/site/src/lib/chart-date-certainty.test.ts",
+      "copy": "callers/source/site/src/lib/chart-date-certainty.test.ts.log",
+      "bytes": 3216,
+      "sha256": "7590c81f6bb500781b08188aedb697ced862ea111abd315737cb032abbdfc0ee"
+    },
+    {
+      "source": "callers/source/site/src/lib/chart-date-certainty.ts",
+      "copy": "callers/source/site/src/lib/chart-date-certainty.ts.log",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "source": "callers/source/site/src/lib/chart-signature.ts",
+      "copy": "callers/source/site/src/lib/chart-signature.ts.log",
+      "bytes": 11892,
+      "sha256": "0e0a9c7bb95e130dba02a92582a753e4bdd34ae60ee25cb2e7d41073a027941c"
+    },
+    {
+      "source": "callers/source/site/src/lib/communication.ts",
+      "copy": "callers/source/site/src/lib/communication.ts.log",
+      "bytes": 11339,
+      "sha256": "d6aa9a7a56139ebe96e1250a405ed12fa32db8113380eb02cef3ca6175752f64"
+    },
+    {
+      "source": "callers/source/site/src/lib/daily-publication.ts",
+      "copy": "callers/source/site/src/lib/daily-publication.ts.log",
+      "bytes": 37300,
+      "sha256": "2bfe704934ec53d45b015fb9cc4184bb11821b8ea34388aa6b765eb56b1266c4"
+    },
+    {
+      "source": "callers/source/site/src/lib/daily.ts",
+      "copy": "callers/source/site/src/lib/daily.ts.log",
+      "bytes": 10719,
+      "sha256": "e3ee76fa21f2226254a6d86e31bcb955cf421d7182d8d2da3fe48c617280dced"
+    },
+    {
+      "source": "callers/source/site/src/lib/engine/types.ts",
+      "copy": "callers/source/site/src/lib/engine/types.ts.log",
+      "bytes": 2164,
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+    },
+    {
+      "source": "callers/source/site/src/lib/i18n/ui/en.ts",
+      "copy": "callers/source/site/src/lib/i18n/ui/en.ts.log",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "source": "callers/source/site/src/lib/moon-certainty.test.tsx",
+      "copy": "callers/source/site/src/lib/moon-certainty.test.tsx.log",
+      "bytes": 11501,
+      "sha256": "e509607fc389f8175b9113cd8354eb43a66781a870c0cbb411ab58e02e8e3880"
+    },
+    {
+      "source": "callers/source/site/src/lib/moon-certainty.ts",
+      "copy": "callers/source/site/src/lib/moon-certainty.ts.log",
+      "bytes": 1909,
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994"
+    },
+    {
+      "source": "callers/source/site/src/lib/profile/schema.ts",
+      "copy": "callers/source/site/src/lib/profile/schema.ts.log",
+      "bytes": 1527,
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "source": "callers/source/site/src/lib/scene/build.ts",
+      "copy": "callers/source/site/src/lib/scene/build.ts.log",
+      "bytes": 4409,
+      "sha256": "4bb4a00bb68ec02b01e34ef44662c61665132a8ec7a74cb49684a19a25a56b54"
+    },
+    {
+      "source": "callers/source/site/src/lib/share-card.ts",
+      "copy": "callers/source/site/src/lib/share-card.ts.log",
+      "bytes": 55757,
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649"
+    },
+    {
+      "source": "callers/source/site/src/lib/share.ts",
+      "copy": "callers/source/site/src/lib/share.ts.log",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+    },
+    {
+      "source": "callers/source/site/src/pages/feeds/daily-sky.xml.ts",
+      "copy": "callers/source/site/src/pages/feeds/daily-sky.xml.ts.log",
+      "bytes": 2973,
+      "sha256": "d1f59ee78d01bca306ff13a151cd343c8a07a59c6f00f2b12784d42fb29349f1"
+    },
+    {
+      "source": "entry.ts",
+      "copy": "entry.ts.log",
+      "bytes": 237,
+      "sha256": "76e2d5e12fb09611e94a77cb8852e03b37bfe1466e4e4b243152be19958250ba"
+    },
+    {
+      "source": "guards-result.json",
+      "copy": "guards-result.json.log",
+      "bytes": 1452,
+      "sha256": "e17fde7ee8284c859832c28400cf518e0df756fc8ffa224461d09a1d8949a1bb"
+    },
+    {
+      "source": "guards.log",
+      "copy": "guards.log.log",
+      "bytes": 1452,
+      "sha256": "e17fde7ee8284c859832c28400cf518e0df756fc8ffa224461d09a1d8949a1bb"
+    },
+    {
+      "source": "guards.mjs",
+      "copy": "guards.mjs.log",
+      "bytes": 711,
+      "sha256": "c2d987a306165c41660f0f80d10681d18dffca7b83a6e0d70bea20491d8c3d6a"
+    },
+    {
+      "source": "probe.log",
+      "copy": "probe.log.log",
+      "bytes": 8789,
+      "sha256": "3a60fe9bcfca3ffbabf400c283c133f4e76d50e6dde0ea613a4e3f3eba0024c0"
+    },
+    {
+      "source": "probe.mjs",
+      "copy": "probe.mjs.log",
+      "bytes": 4423,
+      "sha256": "d0f68ef6a4257efe59023bd1f4febcad69ca8b5156ee36701e954d44e6040e23"
+    },
+    {
+      "source": "result.json",
+      "copy": "result.json.log",
+      "bytes": 40772,
+      "sha256": "0be5b2f554ce26c4504fb051972c8df04709fec8b35dfdaba300618beee9c4f3"
+    },
+    {
+      "source": "sampling-countermodels.json",
+      "copy": "sampling-countermodels.json.log",
+      "bytes": 1730,
+      "sha256": "a6831b3505c51767fa6dc99abceb377d27e6c70f0672bad4634e8525d3ac282d"
+    },
+    {
+      "source": "sampling-countermodels.log",
+      "copy": "sampling-countermodels.log.log",
+      "bytes": 1730,
+      "sha256": "a6831b3505c51767fa6dc99abceb377d27e6c70f0672bad4634e8525d3ac282d"
+    },
+    {
+      "source": "sampling-countermodels.mjs",
+      "copy": "sampling-countermodels.mjs.log",
+      "bytes": 1649,
+      "sha256": "342535afc2a4229c408b865970f85e2aed8c513e6a6fe15f4d3eb22b6818a6d5"
+    },
+    {
+      "source": "source/sdk/packages/engine/src/birth-input.ts",
+      "copy": "source/sdk/packages/engine/src/birth-input.ts.log",
+      "bytes": 3227,
+      "sha256": "144fd683942ec434088c6a214dbe1f0b87cba13f545c38deaca8e5fcaf12581e"
+    },
+    {
+      "source": "source/sdk/packages/engine/src/geo/timezone.ts",
+      "copy": "source/sdk/packages/engine/src/geo/timezone.ts.log",
+      "bytes": 8308,
+      "sha256": "11f7370996a00fff9e1315be4c2fcdbe4641b1b41482e760e3a436995ec04494"
+    },
+    {
+      "source": "source/site/src/lib/chart-date-certainty.ts",
+      "copy": "source/site/src/lib/chart-date-certainty.ts.log",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "source": "source/site/src/lib/i18n/core.ts",
+      "copy": "source/site/src/lib/i18n/core.ts.log",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "source": "source/site/src/lib/i18n/ru-runtime/client.ts",
+      "copy": "source/site/src/lib/i18n/ru-runtime/client.ts.log",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "source": "source/site/src/lib/i18n/ru-runtime/index.ts",
+      "copy": "source/site/src/lib/i18n/ru-runtime/index.ts.log",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "source": "source/site/src/lib/i18n/ru-runtime/server.ts",
+      "copy": "source/site/src/lib/i18n/ru-runtime/server.ts.log",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "source": "source/site/src/lib/i18n/ui/ru.ts",
+      "copy": "source/site/src/lib/i18n/ui/ru.ts.log",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "source": "source/site/src/lib/signs.ts",
+      "copy": "source/site/src/lib/signs.ts.log",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "source": "source/site/src/lib/time/civil-date.ts",
+      "copy": "source/site/src/lib/time/civil-date.ts.log",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "source": "source/site/src/lib/time/localToUtc.ts",
+      "copy": "source/site/src/lib/time/localToUtc.ts.log",
+      "bytes": 6469,
+      "sha256": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64"
+    },
+    {
+      "source": "source/site/src/lib/time/technical-locales.ts",
+      "copy": "source/site/src/lib/time/technical-locales.ts.log",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "source": "source-identity.json",
+      "copy": "source-identity.json.log",
+      "bytes": 2955,
+      "sha256": "6d4449e14b7f78b5d3f74890fb6ca5340a04f83a6d2214bcc174d0514996c2e4"
+    },
+    {
+      "source": "source-recheck.json",
+      "copy": "source-recheck.json.log",
+      "bytes": 3133,
+      "sha256": "fcc0adfaf9bad4acfd166ece1d29f3022340cf89fec2dd56a4d39fb133ad5c19"
+    },
+    {
+      "source": "sources.json",
+      "copy": "sources.json.log",
+      "bytes": 999,
+      "sha256": "cf360ea3c0be8d3f7376c08ba87d0d160fd804f70b1d581a1d7ea0346923eae5"
+    },
+    {
+      "source": "subject.mjs",
+      "copy": "subject.mjs.log",
+      "bytes": 14163,
+      "sha256": "8eca6e68d1f9569f46583a6bf294c21127aa9fbf01f37bb763c406a7c7db625d"
+    }
+  ],
+  "recordCount": 71,
+  "totalBytes": 688219,
+  "scope": "Read-only local-date interval contract/caller/counterexample review. All copies are inert logs; no product source changes."
+}

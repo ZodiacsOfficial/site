@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "finalRun": "run-1788841898123-18336",
+  "preservedInitialRun": "run-1788841801131-17555",
+  "files": [
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/README.md",
+      "target": "docs/platform/evidence/portable-calculation/browser/README.md.log",
+      "bytes": 5645,
+      "sha256": "18ab24bd51e71fe42b6d2cc59c1d4085540526a2d45e659ca79e401a6d5a2a8f"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/browser-cases.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/browser-cases.js.log",
+      "bytes": 16965,
+      "sha256": "c1e84b97e3aa92f5c1f24d7db6b5db9bb7ccc77588403389c87f0125a5ff1dab"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/command.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/command.json.log",
+      "bytes": 214,
+      "sha256": "9f884b6684603d5d7c2a09bff6ada14c234ff7076be78cefe348df8b040a6546"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/final-command.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/final-command.json.log",
+      "bytes": 231,
+      "sha256": "da87a8f9e7c649e3d0d1180809021a3c7e7ec86a0fe28567270fc16f3ffb54f9"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/final-run.log",
+      "target": "docs/platform/evidence/portable-calculation/browser/final-run.log",
+      "bytes": 414,
+      "sha256": "73808f758ba9a888f52c0ee0f3f5e90c843f2cf92abedaf8cc09d35d05aab92a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/initial-browser-cases.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/initial-browser-cases.js.log",
+      "bytes": 15960,
+      "sha256": "55b2080bdbb5b6df7617485a4202a9f8bd6a73edca274973342b7eee84e1df22"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/initial-run.log",
+      "target": "docs/platform/evidence/portable-calculation/browser/initial-run.log",
+      "bytes": 414,
+      "sha256": "9de93f0219669090c2f70f311488480d8eed7350c7acb5ea67c84b151b071350"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/initial-runner.mjs",
+      "target": "docs/platform/evidence/portable-calculation/browser/initial-runner.mjs.log",
+      "bytes": 15018,
+      "sha256": "b38f2493fdd4e858b03e783ac56038f5e4fb60c8a9562c3ee3110b9a1744a7ab"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/post-interruption-check.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/post-interruption-check.json.log",
+      "bytes": 382,
+      "sha256": "b8e212eabb69ac7303a2214979591bb751c5838f560f7afe717aa7ae4d6c6867"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/initial-page.png",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/initial-page.png",
+      "bytes": 32813,
+      "sha256": "bede0bb35e88c5aedcfa4be38815be473cd47dc131d6cbbb0d59ae998d2af35e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/manifest.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/manifest.json.log",
+      "bytes": 777,
+      "sha256": "ab26239d85fb4396458d81ed3afe7c53814552c51d14ee51ac941fb45c4b0636"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/metafile.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/metafile.json.log",
+      "bytes": 9236,
+      "sha256": "ffbd7da41eed8977046ea9186ebdc79725ab55c825cafba46fd0cf5488f952c4"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/offline-results.png",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/offline-results.png",
+      "bytes": 103817,
+      "sha256": "53709abf1ac7d988d4688b8c5e8eaeec7dd21f11b2399a0fb88e0821de8ad3dc"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/precise-coverage.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/precise-coverage.json.log",
+      "bytes": 87640,
+      "sha256": "e5569d0f9bdcd0635681ed370036a953a1863a63fc11cf879dde913f7d8b23be"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/report.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/report.json.log",
+      "bytes": 27550,
+      "sha256": "4deeb8d23d4b5d04c2bb16b1d22e2466ca7da63888bc30e1ed3f41598dc90ba3"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/trace.zip",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/trace.zip",
+      "bytes": 122704,
+      "sha256": "32843842751b604b3fd45cfdd67bc181a7a22b7b7729d53dbf1983c9e7042d4f"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/web/bundle.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/web/bundle.js.log",
+      "bytes": 125683,
+      "sha256": "8566459c2e96e9910bc72a8ca51cef0ab45a789d45de306d5a9dce98a1c65e98"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/web/cases.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/web/cases.js.log",
+      "bytes": 15960,
+      "sha256": "55b2080bdbb5b6df7617485a4202a9f8bd6a73edca274973342b7eee84e1df22"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841801131-17555/web/index.html",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841801131-17555/web/index.html.log",
+      "bytes": 923,
+      "sha256": "6ba8621d23c5943ab16e8024ddeb03b1ee6a0d132bc2be1cbc0dad5370b61493"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/initial-page.png",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/initial-page.png",
+      "bytes": 32813,
+      "sha256": "bede0bb35e88c5aedcfa4be38815be473cd47dc131d6cbbb0d59ae998d2af35e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/manifest.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/manifest.json.log",
+      "bytes": 777,
+      "sha256": "d9c380af65f83f2163240c0c00a97ceede16aa21e75d4f168bc7141e0b5638ea"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/metafile.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/metafile.json.log",
+      "bytes": 9236,
+      "sha256": "d5653ec2b64090d8dae705336c4452ab7dba12f4248aab8a3a41947c6885f2f1"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/offline-results.png",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/offline-results.png",
+      "bytes": 103817,
+      "sha256": "53709abf1ac7d988d4688b8c5e8eaeec7dd21f11b2399a0fb88e0821de8ad3dc"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/precise-coverage.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/precise-coverage.json.log",
+      "bytes": 87640,
+      "sha256": "7829c7192d012ff92c63e94e800cfe66c43c10f51e430ab461f0d77949ed9836"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/report.json",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/report.json.log",
+      "bytes": 32964,
+      "sha256": "245677f1c774f3757126c6ccc6deb36083f839621c6d5718d2969e2926b76f0e"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/trace.zip",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/trace.zip",
+      "bytes": 123365,
+      "sha256": "e0aae3f602254dfb321a4e0aa7faed7f105211ab71d709fda2c3675e4afcc94a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/web/bundle.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/web/bundle.js.log",
+      "bytes": 125683,
+      "sha256": "33f8bb250e61a39b986b2f1d4acc2e73f4a1ee4926e35c60027234cec5416515"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/web/cases.js",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/web/cases.js.log",
+      "bytes": 16965,
+      "sha256": "c1e84b97e3aa92f5c1f24d7db6b5db9bb7ccc77588403389c87f0125a5ff1dab"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run-1788841898123-18336/web/index.html",
+      "target": "docs/platform/evidence/portable-calculation/browser/run-1788841898123-18336/web/index.html.log",
+      "bytes": 923,
+      "sha256": "6ba8621d23c5943ab16e8024ddeb03b1ee6a0d132bc2be1cbc0dad5370b61493"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-browser/run.mjs",
+      "target": "docs/platform/evidence/portable-calculation/browser/run.mjs.log",
+      "bytes": 15134,
+      "sha256": "baf3dd5efeb41c3ff3267e347441d2bcd7cddce12489164667652bbee8cee685"
+    }
+  ]
+}

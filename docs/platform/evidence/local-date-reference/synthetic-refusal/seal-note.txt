@@ -1,0 +1,1 @@
+First seal command used unresolved Path(".").parent and looked for delivery under this addendum. It failed read-only before writing a manifest. Replaced with resolved current directory; original17-control files all rehashed unchanged. No probe/source result changed.

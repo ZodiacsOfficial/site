@@ -1,0 +1,22 @@
+{
+  "freezeSha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2",
+  "candidateAcceptedControls": 26,
+  "initialCandidatePassed": 25,
+  "correctedAffectedCasePassed": 1,
+  "baselineAcceptedCriteria": 13,
+  "outputParities": 9,
+  "helper": {
+    "manifestSha256": "7a5cf412191f3c405cc47b02075d3b486b5584ea611d8245994eb30c171fca31",
+    "recordsRehashed": 38,
+    "controlsPerRuntime": 92,
+    "runtimes": [
+      "Node22.23.2 ICU78.2 tzdb2026a",
+      "Node24.19.0 ICU78.3 tzdb2026b",
+      "Chrome152.0.7977.83"
+    ]
+  },
+  "rawOrdinaryFileMembers": 276,
+  "rawArchiveSha256": "6ebe319efbdcda8103fd279075d645d53247dcaea207766d740fa78c328cbb02",
+  "noAppleDoubleOrMetadataMembers": true,
+  "rootAuthorFrozenSourceUnchanged": true
+}

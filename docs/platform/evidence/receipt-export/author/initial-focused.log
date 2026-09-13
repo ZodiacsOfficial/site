@@ -1,0 +1,46 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-receipt-export
+
+ ✓ src/islands/ChartCalculator.registry-bridge.test.ts (2 tests) 3ms
+ ✓ src/lib/receipt-download.test.ts (5 tests) 11ms
+ ✓ src/lib/i18n/ui/client.test.ts (4 tests) 2ms
+ ✓ src/islands/ChartCalculator.locale.test.ts (7 tests) 13ms
+ ❯ src/lib/i18n/ui/ru.test.ts (6 tests | 1 failed) 13ms
+   × Russian staged catalog > covers every UI key and preserves every interpolation token 6ms
+     → expected [ 'activeTransitWithin', …(416) ] to have a length of 414 but got 417
+   ✓ Russian staged catalog > pins representative exact deck copy 0ms
+   ✓ Russian staged catalog > renders the complete catalog without releasing or indexing Russian 1ms
+   ✓ Russian staged catalog > loads the Russian catalog into gated client islands 0ms
+   ✓ Russian staged catalog > pins Russian astrology and all twelve sign overrides 1ms
+   ✓ Russian staged catalog > selects reviewed Russian forms for every R1 count family 3ms
+ ✓ src/islands/ChartCalculator.actions.test.ts (14 tests) 10ms
+ ✓ src/lib/engine/calculator-receipt.test.ts (11 tests) 116ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 161ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/i18n/ui/ru.test.ts > Russian staged catalog > covers every UI key and preserves every interpolation token
+AssertionError: expected [ 'activeTransitWithin', …(416) ] to have a length of 414 but got 417
+
+- Expected
++ Received
+
+- 414
++ 417
+
+ ❯ src/lib/i18n/ui/ru.test.ts:42:25
+     40|   it('covers every UI key and preserves every interpolation token', ()…
+     41|     const englishKeys = Object.keys(en).sort() as UiKey[];
+     42|     expect(englishKeys).toHaveLength(414);
+       |                         ^
+     43|     expect(Object.keys(ru).sort()).toEqual(englishKeys);
+     44|     for (const key of englishKeys) {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 7 passed (8)
+      Tests  1 failed | 69 passed (70)
+   Start at  12:26:22
+   Duration  600ms (transform 912ms, setup 0ms, collect 1.36s, tests 330ms, environment 1ms, prepare 553ms)
+

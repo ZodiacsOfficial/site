@@ -1,0 +1,164 @@
+{
+  "at": "2026-09-08T06:19:35.562185+00:00",
+  "frozenSource": {
+    "src/islands/ChartCalculator.actions.test.ts": "a5291e6c274afb02c462de68e22df45f4598e5aea36dfb7ca2499f870af1a902",
+    "src/islands/ChartCalculator.tsx": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+    "src/lib/engine/calculator-receipt.test.ts": "58b4a803c2f579e2d1c72ca27334270e4dc726620b369a2f280e40218fc50fe6",
+    "src/lib/engine/calculator-receipt.ts": "21c1a94b6aadc77b28bfc1081de526f22e2514dbf4f30224049adb76564ca410",
+    "src/lib/i18n/index.test.ts": "5d5435b23bdc12d9a35ae23af75f41b47c1d40a2d0d9534fed74f78051b171c4",
+    "src/lib/i18n/ui/en.ts": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+    "src/lib/i18n/ui/es.ts": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f",
+    "src/lib/i18n/ui/fr.ts": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f",
+    "src/lib/i18n/ui/it.ts": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5",
+    "src/lib/i18n/ui/pt.ts": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3",
+    "src/lib/i18n/ui/ru.test.ts": "30e63d628acb48176abf238ed41b661bb37b662d781cbd9f7f18bdcd97e63809",
+    "src/lib/i18n/ui/ru.ts": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+    "src/lib/receipt-download.test.ts": "a3f039e77b4a234f7ab6dc46afa9819f7dd1c5de10a97a330654fb727b973ac6",
+    "src/lib/receipt-download.ts": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d",
+    "src/client-directives/interaction.ts": "ea5784fcd35b661ea9584e510fb680a00955ba481b1abf16084d3848dfc74fc7",
+    "tests/interaction-replay-drive.mjs": "611651b6d74d5901adc2680bb6f26c0896cb19ec5af884af463f78b0c61e4a58"
+  },
+  "archiveChecks": [
+    {
+      "file": "LICENSE",
+      "sha256": "9a8ab25f278db9d59a00ee82d1a82d63ee4891a9c417c53b4e2b9942aaab10df",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "NOTICE",
+      "sha256": "06a8e2e2bae6d6113e738f8c4ee3869f698fbf39756a26ce842d549dde423450",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/chunk-4YKOFVM6.js",
+      "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/chunk-CPALRSPC.js",
+      "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/chunk-INI453VG.js",
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/chunk-K5MRTCWE.js",
+      "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/chunk-PD4H342X.js",
+      "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/geo.js",
+      "sha256": "9d45088e73e9dadf8083c3673d12e5e8affedd17d1796a6fb0f3b0ec6ae679f5",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/index.js",
+      "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/internal-math.js",
+      "sha256": "8c058be3014be9d5443a87cd09413ecec21af89fe599ebe9ed4e58a8cda9870a",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/internal.js",
+      "sha256": "5a913b0ebbe34440e13f65d5ecddd7c2f5454746eb8d1861ff5bc1ec8ae88c52",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/receipt.js",
+      "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "package.json",
+      "sha256": "84206969fb8c9c78c1abee1cfb4ebeda6b862c77bff0e5f7effc2ebc47826387",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "sha256": "8dded1aea3cc4318a0a07f2777892584709a7543a3d33f2b773fb92d132c93fe",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "LICENSING.md",
+      "sha256": "8a2010524ad7ebf388dabe0bda5ed2ed8753b8bb112f284f0c23826546410096",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "README.md",
+      "sha256": "4bb5149b88c323e4730687e92c17ab55c2742f8fe2ac2bc218408cffdb559e1c",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/geo.d.ts",
+      "sha256": "0454dda71c0559da5a0f792ed592d07f610132a601e67c8ed37eddf2d22b774d",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/index.d.ts",
+      "sha256": "3c4063793f944f3cb0b1e07338c4c24becb6480aacede5cf3199bd18186403fa",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/internal-math-2qAGGDMX.d.ts",
+      "sha256": "2eb16b632345cade067e9a415b4d5d96252af3dbb247b8c24fecfe2840dc64a0",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/internal-math.d.ts",
+      "sha256": "0a648b1bba45a089192ef6804dfb640ba45e07f307807a64f48e3b3c99c0248c",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/internal.d.ts",
+      "sha256": "68eacb2ef7bc5be384d027cba266256baa440460c94539f36edbde95f9b1649e",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/receipt.d.ts",
+      "sha256": "7ca8a71659c70c1fb15a98506bd63d0e77f32f7018c914d4ba0ace1ec7ad7d54",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    },
+    {
+      "file": "dist/types-CHoIZzek.d.ts",
+      "sha256": "08b23ad16ae93803ed08f9b9dda797e8c46fa3d14dac3bae5debd3f984288a85",
+      "parserRoot": "exact",
+      "browserAuthor": "exact"
+    }
+  ],
+  "archiveSha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+  "allFrozenSourcesUnchanged": true,
+  "archiveFiles": 23
+}

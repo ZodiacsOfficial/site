@@ -1,0 +1,60 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-saved-record
+
+ ❯ src/lib/profile/saved-record-store.test.ts (32 tests | 1 failed | 31 skipped) 5012ms
+   ↓ owner-bound immutable saved natal operations > creates/reads/exports an unlabeled record without local metadata in the envelope
+   ↓ owner-bound immutable saved natal operations > keeps polar/explicit Whole and repeated equivalent requests as distinct IDs
+   ↓ owner-bound immutable saved natal operations > preserves unknown 08:30 and exact source spelling through persistence
+   ↓ owner-bound immutable saved natal operations > captures the mutable caller envelope before waiting for storage
+   ↓ owner-bound immutable saved natal operations > serializes concurrent creates and enforces cap40 with insertion atomically
+   ↓ owner-bound immutable saved natal operations > reports a UUID collision without overwriting the existing immutable record
+   ↓ owner-bound immutable saved natal operations > partitions the same ID by explicit owner and deletes idempotently
+   ↓ owner-bound immutable saved natal operations > rejects mismatched authority before adapter access (0)
+   ↓ owner-bound immutable saved natal operations > rejects mismatched authority before adapter access (1)
+   ↓ owner-bound immutable saved natal operations > rejects mismatched authority before adapter access (2)
+   ↓ owner-bound immutable saved natal operations > invalidates A-to-B-to-A pending reads using the explicit authority epoch
+   ↓ owner-bound immutable saved natal operations > aborts pending writes on revoke and does not reactivate the handle
+   ↓ owner-bound immutable saved natal operations > does not return success/data after an already committed write loses authority
+   ↓ owner-bound immutable saved natal operations > returns fixed QuotaExceededError storage failure without a partial write
+   ↓ owner-bound immutable saved natal operations > returns fixed AbortError storage failure without a partial write
+   ↓ owner-bound immutable saved natal operations > returns fixed VersionError storage failure without a partial write
+   ↓ owner-bound immutable saved natal operations > returns fixed UnknownError storage failure without a partial write
+   ↓ owner-bound immutable saved natal operations > does not inspect arbitrary private adapter exceptions
+   ↓ owner-bound immutable saved natal operations > distinguishes absent rows from unavailable and corrupt storage
+   ↓ owner-bound immutable saved natal operations > preserves unknown records on read/create but permits explicit exact-key deletion
+   ↓ owner-bound immutable saved natal operations > rejects wrong-owner and row/key identity mismatches
+   ↓ owner-bound immutable saved natal operations > consumes a clear handle and aborts its previously started creates
+   ↓ owner-bound immutable saved natal operations > explicit clear removes corrupt/future owned content, preserves other owners, and allows a separate handle to create later
+   ↓ owner-bound immutable saved natal operations > a failed clear preserves content and requires an explicit new handle for retry
+   ↓ owner-bound immutable saved natal operations > reports that stale post-commit clear may already have erased the owner
+   ↓ owner-bound immutable saved natal operations > keeps constructor, authority callback and clock failures fixed and private
+   ↓ owner-bound immutable saved natal operations > catches revocation reentrancy inside the authority callback before storage
+   ↓ owner-bound immutable saved natal operations > invalid UUID/label/envelope/time inputs fail before adapter writes
+   ↓ owner-bound immutable saved natal operations > stays optional, imports no ephemeris or legacy storage, and performs no import-time effects
+   ↓ native adapter bounded opening failures > reports absent IndexedDB without exposing a raw reference exception
+   ↓ native adapter bounded opening failures > closes a late successful native open after a blocked event
+   × native adapter bounded opening failures > closes a late successful native open after revocation 5011ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/profile/saved-record-store.test.ts > native adapter bounded opening failures > closes a late successful native open after revocation
+Error: Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ src/lib/profile/saved-record-store.test.ts:402:3
+    400|   });
+    401| 
+    402|   it('closes a late successful native open after revocation', async ()…
+       |   ^
+    403|     const request: Record<string, unknown> = {};
+    404|     const close = vi.fn();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 31 skipped (32)
+   Start at  12:06:56
+   Duration  5.49s (transform 120ms, setup 0ms, collect 182ms, tests 5.01s, environment 0ms, prepare 42ms)
+

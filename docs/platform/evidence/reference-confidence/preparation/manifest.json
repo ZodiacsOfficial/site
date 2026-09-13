@@ -1,0 +1,47 @@
+[
+  {
+    "path": "COMMANDS.md.log",
+    "bytes": 2052,
+    "sha256": "0cb4f6356b1aeb951a8aecd29282479969725e47621e27d1148af0df7148954c"
+  },
+  {
+    "path": "REVIEW.md.log",
+    "bytes": 10400,
+    "sha256": "fd7950e04695bc6351eb0ffa29cb77b887b1cb46b1c9b308cdd3b0101c9bb662"
+  },
+  {
+    "path": "archive-members.json",
+    "bytes": 12023,
+    "sha256": "cc5538795b6bbe28512a6a2baf04e90fc31b7329f58e36aac8d429c54f8de95c"
+  },
+  {
+    "path": "final-source-check.json.log",
+    "bytes": 9649,
+    "sha256": "d42626014d031238a76a08e518f7dc73acf338531ad866b76f9872cfa40ae843"
+  },
+  {
+    "path": "identity.json.log",
+    "bytes": 9362,
+    "sha256": "a41f2bfeae9b935be2709d4fba9b78d156196059846571dfafb49882e20ff011"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 445107,
+    "sha256": "c9d999b77054d338fa11e8d1dfc4e9de8a84079bcf572c34277b74d28aac2b85"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 844,
+    "sha256": "2bd82fb466710fb2444ba792164815ce3c3d4faf63b63f7d0df68710991466f6"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1303,
+    "sha256": "337ab7b9da8e0aa6c8a311a1857419af0d58948b3ef97f164db46eb12fb385ff"
+  },
+  {
+    "path": "summary.json.log",
+    "bytes": 346,
+    "sha256": "0cf672235f3808fd1e8c5cd0509a67943529183cf5e5ef51ebcb10624e16b3aa"
+  }
+]

@@ -1,0 +1,200 @@
+{
+  "sourceManifestSha256": "0bb5291d12638dd44b0dc311161c685c282e45d10950919921c6e6d28dba3238",
+  "recordsVerified": 48,
+  "archives": [],
+  "sourceBytesUnchanged": true,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "assemble.py",
+      "path": "assemble.py.log"
+    },
+    {
+      "sourcePath": "assembly-git.log",
+      "path": "assembly-git.log"
+    },
+    {
+      "sourcePath": "assembly-identity.json",
+      "path": "assembly-identity.json"
+    },
+    {
+      "sourcePath": "assembly.log",
+      "path": "assembly.log"
+    },
+    {
+      "sourcePath": "baseline-exact-failures.json",
+      "path": "baseline-exact-failures.json"
+    },
+    {
+      "sourcePath": "baseline-results.json",
+      "path": "baseline-results.json"
+    },
+    {
+      "sourcePath": "baseline-tests.log",
+      "path": "baseline-tests.log"
+    },
+    {
+      "sourcePath": "candidate-name-status.raw",
+      "path": "candidate-name-status.raw"
+    },
+    {
+      "sourcePath": "candidate-results.json",
+      "path": "candidate-results.json"
+    },
+    {
+      "sourcePath": "candidate-tests.log",
+      "path": "candidate-tests.log"
+    },
+    {
+      "sourcePath": "candidate-untracked.raw",
+      "path": "candidate-untracked.raw"
+    },
+    {
+      "sourcePath": "commands.json",
+      "path": "commands.json"
+    },
+    {
+      "sourcePath": "final-name-status.raw",
+      "path": "final-name-status.raw"
+    },
+    {
+      "sourcePath": "final-untracked.raw",
+      "path": "final-untracked.raw"
+    },
+    {
+      "sourcePath": "frozen-source/.github/phase1-scope-allowance.json",
+      "path": "frozen-source/.github/phase1-scope-allowance.json"
+    },
+    {
+      "sourcePath": "frozen-source/.github/workflows/site-check.yml",
+      "path": "frozen-source/.github/workflows/site-check.yml"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/ChartCalculator.ownership.test.ts",
+      "path": "frozen-source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/ChartCalculator.tsx",
+      "path": "frozen-source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/MoonPhaseTool.tsx",
+      "path": "frozen-source/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/index.test.ts",
+      "path": "frozen-source/src/lib/i18n/index.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/en.ts",
+      "path": "frozen-source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/es.ts",
+      "path": "frozen-source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/fr.ts",
+      "path": "frozen-source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/it.ts",
+      "path": "frozen-source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/pt.ts",
+      "path": "frozen-source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/ru.test.ts",
+      "path": "frozen-source/src/lib/i18n/ui/ru.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/i18n/ui/ru.ts",
+      "path": "frozen-source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/localDateContainsUtc.test.ts",
+      "path": "frozen-source/src/lib/time/localDateContainsUtc.test.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/src/lib/time/localToUtc.ts",
+      "path": "frozen-source/src/lib/time/localToUtc.ts.log"
+    },
+    {
+      "sourcePath": "frozen-source/tests/local-date-reference-drive.mjs",
+      "path": "frozen-source/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "sourcePath": "inputs/base-index.test.ts",
+      "path": "inputs/base-index.test.ts.log"
+    },
+    {
+      "sourcePath": "inputs/base-ru.test.ts",
+      "path": "inputs/base-ru.test.ts.log"
+    },
+    {
+      "sourcePath": "inputs/c014-source-freeze.json",
+      "path": "inputs/c014-source-freeze.json"
+    },
+    {
+      "sourcePath": "inputs/integration.patch",
+      "path": "inputs/integration.patch"
+    },
+    {
+      "sourcePath": "inputs/prior-six-path-allowance.json",
+      "path": "inputs/prior-six-path-allowance.json"
+    },
+    {
+      "sourcePath": "inputs/prior-wiring-manifest.json",
+      "path": "inputs/prior-wiring-manifest.json"
+    },
+    {
+      "sourcePath": "inputs/supplement-identity.json",
+      "path": "inputs/supplement-identity.json"
+    },
+    {
+      "sourcePath": "inputs/unchanged-scope-guard.mjs",
+      "path": "inputs/unchanged-scope-guard.mjs.log"
+    },
+    {
+      "sourcePath": "result.json",
+      "path": "result.json"
+    },
+    {
+      "sourcePath": "run-review.log",
+      "path": "run-review.log"
+    },
+    {
+      "sourcePath": "run-review.py",
+      "path": "run-review.py.log"
+    },
+    {
+      "sourcePath": "runtime-and-final-provenance.json",
+      "path": "runtime-and-final-provenance.json"
+    },
+    {
+      "sourcePath": "scope-eight-paths.log",
+      "path": "scope-eight-paths.log"
+    },
+    {
+      "sourcePath": "scope-final-eight-paths.log",
+      "path": "scope-final-eight-paths.log"
+    },
+    {
+      "sourcePath": "scope-prior-six-rejected.log",
+      "path": "scope-prior-six-rejected.log"
+    },
+    {
+      "sourcePath": "scope-wrong-base-rejected.log",
+      "path": "scope-wrong-base-rejected.log"
+    }
+  ]
+}

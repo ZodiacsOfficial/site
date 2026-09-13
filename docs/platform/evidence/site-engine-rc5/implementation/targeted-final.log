@@ -1,0 +1,54 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-engine-rc5
+
+ ✓ src/lib/engine/server-ephemeris.test.ts (2 tests) 192ms
+ ✓ src/lib/scene/scene.test.ts (15 tests) 64ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 134ms
+ ✓ src/lib/profile/polar-repair.test.ts (36 tests) 112ms
+ ❯ src/lib/engine/package-integration.test.ts (6 tests | 1 failed) 663ms
+   ✓ vendored @zodiacs/engine integration > matches the public natal entry point across hemispheres, date line, fallback and unknown time 117ms
+   ✓ vendored @zodiacs/engine integration > matches both recorded checksums in the repository 5ms
+   ✓ vendored @zodiacs/engine integration > preserves the site body shape while using package positions and version 4ms
+   × vendored @zodiacs/engine integration > makes the optional draft receipt available without changing replay intent or unknown time 38ms
+     → expected { input: { …(6) }, …(6) } to deeply equal { input: { …(5) }, …(6) }
+   ✓ vendored @zodiacs/engine integration > keeps receipt and geo optional and the eager site math graph free of the ephemeris  476ms
+   ✓ vendored @zodiacs/engine integration > publishes every TypeDoc page with its absolute canonical and icon rail 22ms
+ ✓ scripts/platform-starter.test.mjs (113 tests) 1104ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/lib/engine/package-integration.test.ts > vendored @zodiacs/engine integration > makes the optional draft receipt available without changing replay intent or unknown time
+AssertionError: expected { input: { …(6) }, …(6) } to deeply equal { input: { …(5) }, …(6) }
+
+- Expected
++ Received
+
+@@ -242,10 +242,11 @@
+        330,
+      ],
+      "system": "whole",
+    },
+    "input": {
++     "flags": [],
+      "houseSystem": "placidus",
+      "latitude": 78.2232,
+      "longitude": 15.6267,
+      "timeKnown": true,
+      "utc": 2001-12-21T08:30:00.000Z,
+
+ ❯ src/lib/engine/package-integration.test.ts:104:34
+    102|       const replay = natalReplayInput(envelope);
+    103|       expect(replay.houseSystem).toBe('placidus');
+    104|       expect(natalChart(replay)).toEqual(chart);
+       |                                  ^
+    105|       expect(redactNatalEnvelope(envelope)).toEqual({
+    106|         schema: 'zodiacs.natal-diagnostic.draft-v1', status: 'redacted…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 5 passed (6)
+      Tests  1 failed | 224 passed (225)
+   Start at  07:02:52
+   Duration  1.96s (transform 1.32s, setup 0ms, collect 2.87s, tests 2.27s, environment 1ms, prepare 575ms)
+

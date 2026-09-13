@@ -1,0 +1,5 @@
+{"name":"unchanged-shared-init-en","passed":true}
+{"name":"unchanged-shared-init-ru","passed":true}
+{"name":"positions-only-production-graph","passed":true}
+{"name":"pending-positions-mine-revoke","passed":true}
+{"name":"pending-positions-mine-regrant","passed":true}

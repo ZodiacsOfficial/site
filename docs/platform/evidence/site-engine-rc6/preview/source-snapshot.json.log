@@ -1,0 +1,171 @@
+{
+  "commit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "repository": "ZodiacsOfficial/site",
+  "sourceExport": "git show exact commit; no checkout or root edit",
+  "source": "/private/tmp/zodiacs-platform-rc6-preview-review/source",
+  "runtimeDependencies": "/Users/chiburashka/.codex/worktrees/4806/site/node_modules",
+  "identitySources": [
+    {
+      "path": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/freeze2-identity.json",
+      "sha256": "54ae5e9ae17389eb6a226413cfa4f746b4b6590a146c16b21afc33a788a4038d"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-freeze1-identity.json",
+      "sha256": "e92cea8a682fd6a141d56c1b57678e39c7ee9e9ed25ba90e47f19a60bac79f41"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/source-freeze1-identity.json",
+      "sha256": "0f0305918d2675005c1bcef490cf29b6d151bd1c6d466de687ed2011c39365b6"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/receipt-companion-freeze1-identity.json",
+      "sha256": "d0a18741d607e9529d7a130d72bfc626bff684a27942e720fa328a89f2deeba9"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-site-seconds-adoption-evidence/metadata-freeze1-identity.json",
+      "sha256": "1270ba2fbc1c9368bf9954907a9b8c2b1b1f8f328e25e08786acf57725bf3e92"
+    }
+  ],
+  "files": [
+    {
+      "path": "src/islands/ChartCalculator.actions.test.ts",
+      "bytes": 8756,
+      "sha256": "a5291e6c274afb02c462de68e22df45f4598e5aea36dfb7ca2499f870af1a902"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 116026,
+      "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.test.ts",
+      "bytes": 12337,
+      "sha256": "aeeb9ee59ed3093a7f2b375be4c53a5f60d1577e4ab2da10ef2930a338c10168"
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "path": "src/lib/i18n/index.test.ts",
+      "bytes": 15646,
+      "sha256": "5d5435b23bdc12d9a35ae23af75f41b47c1d40a2d0d9534fed74f78051b171c4"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "bytes": 23867,
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "bytes": 27542,
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "bytes": 26366,
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "bytes": 25488,
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.test.ts",
+      "bytes": 5247,
+      "sha256": "30e63d628acb48176abf238ed41b661bb37b662d781cbd9f7f18bdcd97e63809"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "src/lib/receipt-download.test.ts",
+      "bytes": 2737,
+      "sha256": "a3f039e77b4a234f7ab6dc46afa9819f7dd1c5de10a97a330654fb727b973ac6"
+    },
+    {
+      "path": "src/lib/receipt-download.ts",
+      "bytes": 715,
+      "sha256": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d"
+    },
+    {
+      "path": "src/client-directives/interaction.ts",
+      "bytes": 10738,
+      "sha256": "ea5784fcd35b661ea9584e510fb680a00955ba481b1abf16084d3848dfc74fc7"
+    },
+    {
+      "path": "tests/interaction-replay-drive.mjs",
+      "bytes": 10427,
+      "sha256": "611651b6d74d5901adc2680bb6f26c0896cb19ec5af884af463f78b0c61e4a58"
+    },
+    {
+      "path": "package.json",
+      "bytes": 11388,
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 436565,
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3"
+    },
+    {
+      "path": "vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+      "bytes": 36591,
+      "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e"
+    },
+    {
+      "path": "vendor/zodiacs-engine-0.1.1-rc.6.sha256",
+      "bytes": 96,
+      "sha256": "3a861a7109205e914a8b8ee7efccd891b0b8c0d06df247cc3b41d7b32e188ada"
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "src/lib/time/localToUtc-precision.test.ts",
+      "bytes": 5688,
+      "sha256": "6fd56daa5dc6d7853622db478d20e7e90d8988ad2247ec1abc3e16637599f34f"
+    },
+    {
+      "path": "src/lib/engine/package-integration.test.ts",
+      "bytes": 6940,
+      "sha256": "1c912cf6c73a5821255f2da6f1588a12ad1561145314742c4d369f575fd2363b"
+    },
+    {
+      "path": "src/lib/scene/__snapshots__/scene.test.ts.snap",
+      "bytes": 8122,
+      "sha256": "f28c039c5092bd311da23af4f229c91b80f7875aee4eaed9968c1ef3a09470c1"
+    },
+    {
+      "path": "vendor/README.md",
+      "bytes": 3950,
+      "sha256": "91fde60c2d6c91a8fd5939424e6160facdf5f4d29db1dd1f084170cdfa96339e"
+    },
+    {
+      "path": "src/data/platform-engine-candidate.json",
+      "bytes": 1296,
+      "sha256": "5afa2e8e2fbc328c4f7abe6bad1cedfdce58c0ecabedef4bc58fae78eac4792c"
+    },
+    {
+      "path": "public/llms-full.txt",
+      "bytes": 25065,
+      "sha256": "142c518a3fc0d2772f8e4d4e49d19797e908fd718dc79660822dfa656cced3e9"
+    },
+    {
+      "path": "docs/platform/evidence/site-engine-rc6/author/browser-acceptance.json.log",
+      "bytes": 205646,
+      "sha256": "7b58ac57c555faa1a46d4b951adebcff02f538c30b0a17df1617ff74194018c2"
+    }
+  ]
+}

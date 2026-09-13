@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-08T05:23:58.929340+00:00",
+  "source": "/Users/chiburashka/.codex/worktrees/4806/site",
+  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "purpose": "Read-only scope review and time-context controls before author export patch",
+  "files": {
+    "src/islands/ChartCalculator.tsx": "5dda4f013b779ee4ce9e1e0d5f33dd6453a3eb4d2342255b80c353d5a854763f",
+    "src/islands/ChartShareDialog.tsx": "3bc016ed8cc47b61c23e070151cec4300da023667004525d2c8dc5998698444b",
+    "src/lib/time/localToUtc.ts": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+    "src/lib/time/civil-date.ts": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+    "src/lib/time/technical-locales.ts": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397",
+    "src/lib/hooks/useEngine.ts": "77bfc5d88a501614280aff770db896988f6272b868aab55a767a5486f2b6797d",
+    "src/lib/hooks/useProfileAccessGeneration.ts": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9",
+    "src/lib/engine/portable.ts": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+    "src/lib/engine/chart-adapter.ts": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+    "src/lib/engine/types.ts": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54",
+    "src/lib/profile/store.ts": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3",
+    "src/lib/profile/schema.ts": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789",
+    "src/lib/share.ts": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436",
+    "src/lib/share-positions.ts": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e"
+  }
+}

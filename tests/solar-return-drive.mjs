@@ -4,6 +4,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { PNG } from 'pngjs';
+import { ENGINE_VERSION } from '@zodiacs/engine';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -164,7 +165,7 @@ async function checkImage(page, check, outDir, slug, approximate) {
     && png.width === 1080 && png.height === 1350
     && painted.includes(`${approximate ? 'Approximate solar return' : 'Solar return'} · 2024`)
     && reading.every((line) => painted.includes(line))
-    && painted.includes('Engine 0.1.0') && painted.includes('zodiacs.org')
+    && painted.includes(`Engine ${ENGINE_VERSION}`) && painted.includes('zodiacs.org')
     && (await page.locator('[data-solar-return-result]').getAttribute('data-sr-no-place') !== 'true' || painted.includes('No stored birthplace is available, so this return is planets-only.'))
     && painted.includes('shift by hours') === approximate
     && !/Frida|1907-07-06|Mexico City|08:30/.test(painted), `${png.width}×${png.height}; ${file.sha256}`);

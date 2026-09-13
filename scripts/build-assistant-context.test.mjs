@@ -60,12 +60,13 @@ describe('assistant site context', () => {
       // The numerology calculator adds one English tool and one static page;
       // its twelve Life Path pages come from a dynamic route and are not counted.
       // The void-of-course Moon calendar adds one more English tool and static page.
-      consumerRoutes: 690,
+      // Developer support and runnable examples add two static pages.
+      consumerRoutes: 692,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 51,
+      staticPages: 53,
       tools: 20,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');

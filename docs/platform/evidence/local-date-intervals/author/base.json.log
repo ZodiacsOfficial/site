@@ -1,0 +1,5 @@
+{
+  "base": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "method": "git archive from locally verified commit; full tracked tree extracted into new isolated scratch; no root worktree or git writes",
+  "at": "2026-09-08T06:54:04.386343+00:00"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "locale": "en",
+    "keys": 420,
+    "notice": "The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+  },
+  {
+    "locale": "es",
+    "keys": 420,
+    "notice": "No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento."
+  },
+  {
+    "locale": "fr",
+    "keys": 420,
+    "notice": "Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis."
+  },
+  {
+    "locale": "it",
+    "keys": 420,
+    "notice": "I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento."
+  },
+  {
+    "locale": "pt",
+    "keys": 420,
+    "notice": "Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento."
+  },
+  {
+    "locale": "ru",
+    "keys": 420,
+    "notice": "Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента."
+  }
+]

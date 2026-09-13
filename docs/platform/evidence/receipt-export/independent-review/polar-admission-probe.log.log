@@ -1,0 +1,101 @@
+{
+  "at": "2026-09-08T05:37:39.142Z",
+  "node": "v22.23.2",
+  "purpose": "Bounded chart admission difference under existing documented SDK receipt angle exclusions; not a new civil-context failure or a proposed relaxation of numerical policy",
+  "results": [
+    {
+      "latitude": 90,
+      "timeKnown": true,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": "whole",
+      "legacyAngles": {
+        "asc": 0,
+        "mc": 219.88526172132612,
+        "dsc": 180,
+        "ic": 39.88526172132612
+      },
+      "portableNoContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "latitude": 90,
+      "timeKnown": false,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": null,
+      "legacyAngles": null,
+      "portableNoContextSuccess": true
+    },
+    {
+      "latitude": -90,
+      "timeKnown": true,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": "whole",
+      "legacyAngles": {
+        "asc": 0,
+        "mc": 219.88526172132612,
+        "dsc": 180,
+        "ic": 39.88526172132612
+      },
+      "portableNoContextSuccess": false,
+      "failureCode": "calculation_failed"
+    },
+    {
+      "latitude": -90,
+      "timeKnown": false,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": null,
+      "legacyAngles": null,
+      "portableNoContextSuccess": true
+    },
+    {
+      "latitude": 89.99,
+      "timeKnown": true,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": "whole",
+      "legacyAngles": {
+        "asc": 0.01995547630940564,
+        "mc": 219.88526172132612,
+        "dsc": 180.0199554763094,
+        "ic": 39.88526172132612
+      },
+      "portableNoContextSuccess": true
+    },
+    {
+      "latitude": 89.99,
+      "timeKnown": false,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": null,
+      "legacyAngles": null,
+      "portableNoContextSuccess": true
+    },
+    {
+      "latitude": -89.99,
+      "timeKnown": true,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": "whole",
+      "legacyAngles": {
+        "asc": 359.98005429746644,
+        "mc": 219.88526172132612,
+        "dsc": 179.9800542974665,
+        "ic": 39.88526172132612
+      },
+      "portableNoContextSuccess": true
+    },
+    {
+      "latitude": -89.99,
+      "timeKnown": false,
+      "linkAccepted": true,
+      "legacySuccess": true,
+      "legacyHouses": null,
+      "legacyAngles": null,
+      "portableNoContextSuccess": true
+    }
+  ]
+}

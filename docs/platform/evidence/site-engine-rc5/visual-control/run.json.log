@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "npm",
+      "run",
+      "editorial:daily:build"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-rc1-visual-control/site",
+    "startedAt": "2026-09-08T04:11:05.537893+00:00",
+    "name": "daily-provenance",
+    "exitCode": 0,
+    "seconds": 1.302
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-rc1-visual-control/site",
+    "startedAt": "2026-09-08T04:11:49.464782+00:00",
+    "name": "build",
+    "exitCode": 0,
+    "seconds": 43.926
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "test:visual"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-rc1-visual-control/site",
+    "startedAt": "2026-09-08T04:12:47.072614+00:00",
+    "name": "visual",
+    "exitCode": 1,
+    "seconds": 57.607
+  }
+]

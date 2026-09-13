@@ -1,0 +1,209 @@
+{
+  "createdAt": "2026-09-08T04:45:56.093047+00:00",
+  "records": [
+    {
+      "source": "DESIGN.md",
+      "destination": "DESIGN.md.log",
+      "bytes": 11249,
+      "sha256": "6d8ce26932c74e0d191961be9d66259912671d57e12d6a494dc5c38bef4bb941"
+    },
+    {
+      "source": "EVIDENCE.md",
+      "destination": "EVIDENCE.md.log",
+      "bytes": 2293,
+      "sha256": "d9c1bbf29ed9d6d537d5044fed12e35e677c4f0396c978154da7b43371dd6239"
+    },
+    {
+      "source": "identity.json",
+      "destination": "identity.json.log",
+      "bytes": 57162,
+      "sha256": "5054c366e4d85e37da8146d36999e5fd17d6b7560cc58787b38d792f9810b9c8"
+    },
+    {
+      "source": "result.json",
+      "destination": "result.json.log",
+      "bytes": 3120,
+      "sha256": "aaafc98f37703fa70e674f3c2a8b946cbd88835dbdb88e5e6005f7e89b169d1e"
+    },
+    {
+      "source": "probe.mjs",
+      "destination": "probe.mjs.log",
+      "bytes": 7335,
+      "sha256": "01c19aa8d723bc35649b37856fbc47ae8106bb2dc4e2c0ea0eafe1b65ab1e8da"
+    },
+    {
+      "source": "probe.log",
+      "destination": "probe.log",
+      "bytes": 3120,
+      "sha256": "aaafc98f37703fa70e674f3c2a8b946cbd88835dbdb88e5e6005f7e89b169d1e"
+    },
+    {
+      "source": "build-probe.mjs",
+      "destination": "build-probe.mjs.log",
+      "bytes": 1037,
+      "sha256": "df41b46dbc3e0cdb5c453b5dbd06acc9b334327fe413bb95378b30fee78b1d56"
+    },
+    {
+      "source": "build-probe.log",
+      "destination": "build-probe.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "initial-bundle-missing-dependencies.log",
+      "destination": "initial-bundle-missing-dependencies.log",
+      "bytes": 1521,
+      "sha256": "c4e736879e4991c05efa2bc0fb72d5495709b475cc55ab79d60446feaab00db1"
+    },
+    {
+      "source": "bundle-inputs.json",
+      "destination": "bundle-inputs.json.log",
+      "bytes": 7499,
+      "sha256": "049621ec8cf3fa47ef29d8d2e1e4c8ea96626a632d38e4a029e975389d34c0ac"
+    },
+    {
+      "source": "bundle-source-hashes.json",
+      "destination": "bundle-source-hashes.json.log",
+      "bytes": 13229,
+      "sha256": "17f6fae22445354b17f61147c6bc37d2638e4d56c219a0919706150572a90e28"
+    },
+    {
+      "source": "current-boundaries.mjs",
+      "destination": "current-boundaries.mjs.log",
+      "bytes": 1093966,
+      "sha256": "508c60f7a6ad482eb5ec4d013318a7e787faab4fec06f3bf56b585500d57bdc7"
+    },
+    {
+      "source": "native-idb-control.mjs",
+      "destination": "native-idb-control.mjs.log",
+      "bytes": 4415,
+      "sha256": "6bc54af3bf2e0e5289506b0c24c775cf3fed3e6b2b6612e59a11f3dcb29a82c8"
+    },
+    {
+      "source": "native-idb-control.log",
+      "destination": "native-idb-control.log",
+      "bytes": 1208,
+      "sha256": "b345f15d49e3b1b9628348a8268f60b56f55cd25556f9acb7474fc8f75e6dec5"
+    },
+    {
+      "source": "native-idb-result.json",
+      "destination": "native-idb-result.json.log",
+      "bytes": 1208,
+      "sha256": "b345f15d49e3b1b9628348a8268f60b56f55cd25556f9acb7474fc8f75e6dec5"
+    },
+    {
+      "source": "build-idb-control.mjs",
+      "destination": "build-idb-control.mjs.log",
+      "bytes": 674,
+      "sha256": "f8ccca20e349a2b9f978067a4a3c7a9feb5cf741e1b19ed78d9776baa82cfd7c"
+    },
+    {
+      "source": "build-idb-control.log",
+      "destination": "build-idb-control.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "native-idb-adapter.js",
+      "destination": "native-idb-adapter.js.log",
+      "bytes": 47188,
+      "sha256": "a60aa7e7b945490c34ff01922fd3084891c122682b77cf24f15fad7a1fb79491"
+    },
+    {
+      "source": "native-idb-inputs.json",
+      "destination": "native-idb-inputs.json.log",
+      "bytes": 600,
+      "sha256": "a950238ae631b8981ca69fb62dcd97f7b76466bc38d25a09f5b15b7a03e558b5"
+    },
+    {
+      "source": "native-idb-initial-three-controls.log",
+      "destination": "native-idb-initial-three-controls.log",
+      "bytes": 1062,
+      "sha256": "caaf874a150caa40dc6cb912ccdb185dc5065be46d0cdaf1a47147aa773b1e17"
+    },
+    {
+      "source": "native-idb-initial-three-controls.json",
+      "destination": "native-idb-initial-three-controls.json.log",
+      "bytes": 1062,
+      "sha256": "caaf874a150caa40dc6cb912ccdb185dc5065be46d0cdaf1a47147aa773b1e17"
+    },
+    {
+      "source": "root-boundary-recheck.json",
+      "destination": "root-boundary-recheck.json.log",
+      "bytes": 2769,
+      "sha256": "2cd90e680439ac2d7069af4b51f86763d2ff55c67e47b89734ba147314b9cecc"
+    },
+    {
+      "source": "snapshot/src/lib/profile/store.ts",
+      "destination": "snapshot/src/lib/profile/store.ts.log",
+      "bytes": 7948,
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    {
+      "source": "snapshot/src/lib/profile/read-store.ts",
+      "destination": "snapshot/src/lib/profile/read-store.ts.log",
+      "bytes": 1285,
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    {
+      "source": "snapshot/src/lib/profile/schema.ts",
+      "destination": "snapshot/src/lib/profile/schema.ts.log",
+      "bytes": 1527,
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "source": "snapshot/src/lib/account-v2/profile-boundary.ts",
+      "destination": "snapshot/src/lib/account-v2/profile-boundary.ts.log",
+      "bytes": 20693,
+      "sha256": "6c1354634879049a7f03aebfb70183cc3daf62d38a0199cf2578ebbc55cf1829"
+    },
+    {
+      "source": "snapshot/src/lib/account-v2/profile-lease.ts",
+      "destination": "snapshot/src/lib/account-v2/profile-lease.ts.log",
+      "bytes": 4237,
+      "sha256": "be434eba4d19ed65e439609dd627108538d15c12a78b36e999e6d75adc0a30ef"
+    },
+    {
+      "source": "snapshot/src/lib/account-v2/profile-access-reader.ts",
+      "destination": "snapshot/src/lib/account-v2/profile-access-reader.ts.log",
+      "bytes": 1335,
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    {
+      "source": "snapshot/src/lib/account-v2/auth-epoch.ts",
+      "destination": "snapshot/src/lib/account-v2/auth-epoch.ts.log",
+      "bytes": 1382,
+      "sha256": "a0c848ec383be9023e17a13bd22a781b61778fcc0d3812b6ee9d3495d81e3ae8"
+    },
+    {
+      "source": "snapshot/src/lib/account-v2/local-state.ts",
+      "destination": "snapshot/src/lib/account-v2/local-state.ts.log",
+      "bytes": 25624,
+      "sha256": "94133384e3e9184282c8350f038ab7cce5a95f815bd6e8f50d7778f5f916e345"
+    },
+    {
+      "source": "snapshot/src/lib/living-chart/store.ts",
+      "destination": "snapshot/src/lib/living-chart/store.ts.log",
+      "bytes": 52763,
+      "sha256": "47d7d834bff25a8d1b288a33bba72b5116bbf8c66fb54234c70573115b86c676"
+    },
+    {
+      "source": "snapshot/src/lib/living-chart/owner.ts",
+      "destination": "snapshot/src/lib/living-chart/owner.ts.log",
+      "bytes": 4071,
+      "sha256": "d22af6676482d11d0c30ad5ac71ecc0b4fdc98cfba9f4e57b8f8b5b1d25e619a"
+    },
+    {
+      "source": "snapshot/src/islands/AccountProfileAccessBootstrap.tsx",
+      "destination": "snapshot/src/islands/AccountProfileAccessBootstrap.tsx.log",
+      "bytes": 6976,
+      "sha256": "f8d1512644736523e143390acfc5f8e55a9fb1a05d57dcd6e000711a4ded3cbd"
+    },
+    {
+      "source": "snapshot/src/islands/AccountSyncV2Panel.tsx",
+      "destination": "snapshot/src/islands/AccountSyncV2Panel.tsx.log",
+      "bytes": 74505,
+      "sha256": "d1a9b4ee88a64fb99bded2f698f518d20b6586a839c68fbdffb9dba93cafc392"
+    }
+  ]
+}

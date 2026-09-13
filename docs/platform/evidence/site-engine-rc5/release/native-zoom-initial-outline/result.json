@@ -1,0 +1,102 @@
+{
+  "status": "failed",
+  "timestamp": "2026-09-08T04:05:51.489Z",
+  "runtime": {
+    "node": "v22.23.2",
+    "chrome": "152.0.7977.83"
+  },
+  "scope": "Actual native Chrome 200%/400% zoom, developer entry/support, finite keyboard/reflow/reduced-motion/canonical-footer controls. No CSS zoom substitute or human accessibility certification.",
+  "buildReceipt": {
+    "schema": "zodiacs.phase1-build-receipt.v1",
+    "builtAt": "2026-09-08T03:59:54.415Z",
+    "templateSourceSha256": "60cfc37957b23caaf5f8ed329ef3f3fa51a176c8b339daa255f49430a3dfbcd5",
+    "dailyDate": "2026-09-08",
+    "publicationCanonicalSha256": "0151c51db2743087a1d5f38ed2369dd6175db2aa25eac60d5e7ac61bf9420e0c",
+    "renderPayloadSha256": {
+      "daily": "136d3711cc4acc8d10134c968e14da6b5aa1a4a1a6aaddf20499bb528a3d9f61",
+      "dailyPublication": "96d3ce9b1daac4f0cba7dea30f68aec797f82ca58a2717c6aa7291882ba95971",
+      "dailyPublicationManifest": "98e66d195156dd081c459f0b19737c0a4a0860305160cadc59048e0bc2b784d1",
+      "horoscopeProgram": "997243b7e885dac2bf1216692bb7c26b833409035f83abea027ef5a7fe88c3ef"
+    }
+  },
+  "checks": [
+    {
+      "name": "2x /developers/ loads",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x /developers/ native zoom",
+      "pass": true,
+      "detail": {
+        "width": 640,
+        "height": 450,
+        "dpr": 2,
+        "clientWidth": 640,
+        "scrollWidth": 640,
+        "htmlZoom": "1",
+        "bodyZoom": "1",
+        "reduced": true,
+        "overlay": false
+      }
+    },
+    {
+      "name": "2x /developers/ reflow/reduced motion",
+      "pass": true,
+      "detail": null
+    },
+    {
+      "name": "2x /developers/ keyboard focus",
+      "pass": false,
+      "detail": {
+        "active": true,
+        "visible": true,
+        "outline": "solid",
+        "width": 1.5,
+        "scroll": 0,
+        "overflow": true,
+        "rect": {
+          "x": 20,
+          "y": -1.125,
+          "width": 600,
+          "height": 724.09375,
+          "top": -1.125,
+          "right": 620,
+          "bottom": 722.96875,
+          "left": 20
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "factor": 2,
+      "path": "/developers/",
+      "captures": [],
+      "errors": [],
+      "dimensions": {
+        "width": 640,
+        "height": 450,
+        "dpr": 2,
+        "clientWidth": 640,
+        "scrollWidth": 640,
+        "htmlZoom": "1",
+        "bodyZoom": "1",
+        "reduced": true,
+        "overlay": false
+      }
+    }
+  ],
+  "failures": [
+    {
+      "message": "2x /developers/ keyboard focus",
+      "stack": "AssertionError [ERR_ASSERTION]: 2x /developers/ keyboard focus\n    at check (file:///private/tmp/zodiacs-platform-resume/native-zoom.mjs:13:92)\n    at file:///private/tmp/zodiacs-platform-resume/native-zoom.mjs:42:4\n    at runNextTicks (node:internal/process/task_queues:64:5)\n    at process.processImmediate (node:internal/timers:452:9)\n    at process.callbackTrampoline (node:internal/async_hooks:130:17)\n    at async withPreview (file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/preview-server.mjs:105:12)\n    at async file:///private/tmp/zodiacs-platform-resume/native-zoom.mjs:24:2"
+    }
+  ],
+  "cleanup": {
+    "ownedProfile": true,
+    "copiedAuthentication": false,
+    "restoredZoom": true,
+    "browserClosed": true
+  }
+}

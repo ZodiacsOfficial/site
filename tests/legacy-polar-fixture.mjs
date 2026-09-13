@@ -1,17 +1,20 @@
 import assert from 'node:assert/strict';
-import { computeChart } from '@zodiacs/engine/internal';
+import { readFileSync } from 'node:fs';
 
 export const PROFILE_KEY = 'zodiacs.profile.v1';
-export const POLAR_REPAIR_VERSION = '0.1.0+polar-asc.1';
+const frozen = JSON.parse(readFileSync(new URL('./fixtures/legacy-polar-browser.json', import.meta.url), 'utf8'));
 
-// Generate the saved record with the exact vendored pre-fix engine, never the
-// browser's repaired implementation. The default is the original regression.
+// These immutable summaries come from the archived pre-fix package. Installing
+// a newer engine must never regenerate or relabel the historical inputs.
+// The full quarter-hour day supports Today's discriminating ASC search.
 export function legacyPolarFixture(minutes = 9 * 60) {
-  const utc = new Date(Date.UTC(2001, 11, 21, 0, minutes));
-  const legacy = computeChart({
-    utc, latitude: 78.2232, longitude: 15.6267,
-    houseSystem: 'placidus', timeKnown: true,
-  });
+  if (!Number.isInteger(minutes) || minutes < 0 || minutes >= 1440 || minutes % 15 !== 0) {
+    throw new RangeError('Legacy polar fixture requires a quarter-hour minute from 0 through 1425');
+  }
+  const record = frozen.cases.find((row) => row.minutes === minutes);
+  assert.ok(record, `Missing frozen legacy polar fixture at minute ${minutes}`);
+  const legacy = structuredClone(record.summary);
+  const utc = new Date(legacy.utcISO);
   assert.equal(legacy.engineVersion, '0.1.0');
   if (minutes === 9 * 60) assert.ok(Math.abs(legacy.angles.asc - 203.87198411230202) < 1e-10);
   const polar = {
@@ -22,12 +25,7 @@ export function legacyPolarFixture(minutes = 9 * 60) {
       date: '2001-12-21', time: utc.toISOString().slice(11, 16), timeKnown: true,
       place: { name: 'Polar fixture', admin1: '', country: '', lat: 78.2232, lon: 15.6267, tz: 'UTC' },
     },
-    summary: {
-      engineVersion: legacy.engineVersion, utcISO: utc.toISOString(),
-      houseSystem: legacy.houses.system,
-      bodies: legacy.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
-      angles: { asc: legacy.angles.asc, mc: legacy.angles.mc }, flags: [...legacy.flags],
-    },
+    summary: structuredClone(legacy),
   };
   const positionsOnly = structuredClone(polar);
   positionsOnly.id = '55555555-5555-4555-8555-555555555555';
@@ -38,7 +36,9 @@ export function legacyPolarFixture(minutes = 9 * 60) {
   const profile = { version: 1, settings: { houseSystem: 'whole' }, charts: [polar, positionsOnly] };
   // Whitespace makes an incidental parse/stringify rewrite observable too.
   return { profile, raw: JSON.stringify(profile, null, 2), polar, positionsOnly, legacy,
-    correctedAsc: (legacy.angles.asc + 180) % 360 };
+    // Only the setting branch needs reversal. Some samples already rise.
+    correctedAsc: (legacy.angles.asc - legacy.angles.mc + 360) % 360 < 180
+      ? legacy.angles.asc : (legacy.angles.asc + 180) % 360 };
 }
 
 export async function installLegacyProfile(context, fixture) {

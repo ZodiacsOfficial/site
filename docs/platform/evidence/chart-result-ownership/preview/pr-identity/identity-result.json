@@ -1,0 +1,1898 @@
+{
+  "expectedHead": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "remoteHead": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "remoteBase": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "baseRef": "codex/platform-runtime-claims",
+  "mergeBase": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "state": "open",
+  "draft": true,
+  "title": "Prevent obsolete birth-chart results and delayed action updates",
+  "pages": [
+    100,
+    99
+  ],
+  "totalChangedFiles": 199,
+  "allChangedNamesMatchLocal": true,
+  "allChangedBlobIdentitiesMatchLocal": true,
+  "nonDocumentationCount": 5,
+  "nonDocumentationFiles": [
+    {
+      "path": ".github/workflows/site-check.yml",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "localBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "localBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "localBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "localBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "localBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "isDocumentation": false,
+      "verified": true
+    }
+  ],
+  "allFiles": [
+    {
+      "path": ".github/workflows/site-check.yml",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "localBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/manifest.json",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "e7e44133ebfb78e44c7a9f5593023d2b68081caa",
+      "localBlob": "e7e44133ebfb78e44c7a9f5593023d2b68081caa",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/DECISIONS.md",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "a58f02c9f47c3bce35a02ce27b21c10d04d092c7",
+      "localBlob": "a58f02c9f47c3bce35a02ce27b21c10d04d092c7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/EVIDENCE.md",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "7ef5bd811641b708b0564f3c75fa155ce1f6d5d2",
+      "localBlob": "7ef5bd811641b708b0564f3c75fa155ce1f6d5d2",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/PLAN.md",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "7b6c3c1f263838cb34ac1694a128e2b845857a48",
+      "localBlob": "7b6c3c1f263838cb34ac1694a128e2b845857a48",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/REVIEW.md",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "e2d3606192a6be93c6ce2ed5dbe23f2bdeb1ed28",
+      "localBlob": "e2d3606192a6be93c6ce2ed5dbe23f2bdeb1ed28",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/STATUS.md",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "8a3742917011f92e8c6377b7572bc6f3c39490c2",
+      "localBlob": "8a3742917011f92e8c6377b7572bc6f3c39490c2",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/README.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "04679f758cd8dc3fb36bed04d2bf5a2ce2213e07",
+      "localBlob": "04679f758cd8dc3fb36bed04d2bf5a2ce2213e07",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/COMMANDS.md.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "6cb65f9f6ed99a9ea23142a383489caad40c510e",
+      "localBlob": "6cb65f9f6ed99a9ea23142a383489caad40c510e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/REPORT.md.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d068ea9bd8d08a9d7dcd31c7426f4f1d4b2bd2dc",
+      "localBlob": "d068ea9bd8d08a9d7dcd31c7426f4f1d4b2bd2dc",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/freeze.json.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8bcad1cab0325d2311950f98d13c7b7289b01e11",
+      "localBlob": "8bcad1cab0325d2311950f98d13c7b7289b01e11",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e7cd1d98ace80044142d4e799aaacb71615ca4af",
+      "localBlob": "e7cd1d98ace80044142d4e799aaacb71615ca4af",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/patch.diff.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d0084fb19ef9edb399013c05c80ce6716019b276",
+      "localBlob": "d0084fb19ef9edb399013c05c80ce6716019b276",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/raw-evidence.tar.gz",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e9a90b56cbdfebae3f91336b6b6ec258daa14280",
+      "localBlob": "e9a90b56cbdfebae3f91336b6b6ec258daa14280",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze1/raw-members.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b1755f4e85c97c1fd0d0f602082b7ad42bb1cda0",
+      "localBlob": "b1755f4e85c97c1fd0d0f602082b7ad42bb1cda0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/REPORT.md.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "1f082bb002c95f21d8687044a7710c95e68bc5ac",
+      "localBlob": "1f082bb002c95f21d8687044a7710c95e68bc5ac",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/freeze.json.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "localBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ca143292f3d180f8d086bf2dea6018b6bc1c1ad0",
+      "localBlob": "ca143292f3d180f8d086bf2dea6018b6bc1c1ad0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/patch.diff.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "localBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/raw-evidence.tar.gz",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2c819c3ec4f4ee1d99f001ad66ddd8609c60081c",
+      "localBlob": "2c819c3ec4f4ee1d99f001ad66ddd8609c60081c",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/author-freeze2/raw-members.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "17435c874a5aaafe193e71682343aa405433e6c9",
+      "localBlob": "17435c874a5aaafe193e71682343aa405433e6c9",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/RESULTS.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4b9f785c11f0d540133dccb72ab5834ad9312a35",
+      "localBlob": "4b9f785c11f0d540133dccb72ab5834ad9312a35",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/REVIEW.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4c570317b1b12046ee9990e2e6e646db66c88938",
+      "localBlob": "4c570317b1b12046ee9990e2e6e646db66c88938",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/check.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d07dc4fcd012071dfdec0ca9df59ff12a5dad6a2",
+      "localBlob": "d07dc4fcd012071dfdec0ca9df59ff12a5dad6a2",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/check.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "744ab75e9792accd10710e885bf0fcca030353bc",
+      "localBlob": "744ab75e9792accd10710e885bf0fcca030353bc",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/ci-proposed.patch.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f3e590335b9603f0ce2c4b819420dd37be485058",
+      "localBlob": "f3e590335b9603f0ce2c4b819420dd37be485058",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d1508109f2b2204ccbb80cdda247f1caacb64c8a",
+      "localBlob": "d1508109f2b2204ccbb80cdda247f1caacb64c8a",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/source-manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f10f11c1b41d9a1fe0640a36b08c1c6904fcaa6e",
+      "localBlob": "f10f11c1b41d9a1fe0640a36b08c1c6904fcaa6e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/ci-wiring-review/workflow.proposed.yml.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "localBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/build.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f3c62f81f798697658b153244a25b023d2e1138a",
+      "localBlob": "f3c62f81f798697658b153244a25b023d2e1138a",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/capture-comparison.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "345e61f5981f431b24c971cda0615867b76c48f8",
+      "localBlob": "345e61f5981f431b24c971cda0615867b76c48f8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/captures.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "dae0e8fe1f16c7780d049b952798966cca7965c6",
+      "localBlob": "dae0e8fe1f16c7780d049b952798966cca7965c6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/check.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ab7973db6a2e8bf0acdefe28b9b6e04ce40cb7d8",
+      "localBlob": "ab7973db6a2e8bf0acdefe28b9b6e04ce40cb7d8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7dc20a9c67f1230bc8e645c3ff81b696d19c29de",
+      "localBlob": "7dc20a9c67f1230bc8e645c3ff81b696d19c29de",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/moon-ci.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "32a8be973e172256212d367bd482750531e5a8f8",
+      "localBlob": "32a8be973e172256212d367bd482750531e5a8f8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/native-result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f77ff23a08643174405ce1b1a4fa0994b7037272",
+      "localBlob": "f77ff23a08643174405ce1b1a4fa0994b7037272",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/native.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a3855f61bac201028891b9ad8b2b38c37ec14ad0",
+      "localBlob": "a3855f61bac201028891b9ad8b2b38c37ec14ad0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/raw-evidence.tar.gz",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "1293d928a10397cd8647ef2a6e94f211137322a1",
+      "localBlob": "1293d928a10397cd8647ef2a6e94f211137322a1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/raw-members.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "0612831f214f3dcf58acc0aefa0c3ac5e0d013f1",
+      "localBlob": "0612831f214f3dcf58acc0aefa0c3ac5e0d013f1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/russian.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "dd6845a918ae904b80adc17573a5570bc6da8271",
+      "localBlob": "dd6845a918ae904b80adc17573a5570bc6da8271",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/scope.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "848d3b59ea17e9a77c0fbdf9f5a70dfeec52f9ca",
+      "localBlob": "848d3b59ea17e9a77c0fbdf9f5a70dfeec52f9ca",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/share.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2ca8ab494c5e7d48ad6c1977d30e7006ba76082d",
+      "localBlob": "2ca8ab494c5e7d48ad6c1977d30e7006ba76082d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/support-ci.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "83ec066fc6accf9eae24f46cf80f04b25f43476e",
+      "localBlob": "83ec066fc6accf9eae24f46cf80f04b25f43476e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/tests.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "55fb80e901b131993f2181bc045ac7e456ce1fb3",
+      "localBlob": "55fb80e901b131993f2181bc045ac7e456ce1fb3",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-acceptance.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ca2ef02b32a0cf90d41b0afec735263947f6aa16",
+      "localBlob": "ca2ef02b32a0cf90d41b0afec735263947f6aa16",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-comparison.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "cd4fca01ba4c61259345efcd0b161d7f4c4ac4fa",
+      "localBlob": "cd4fca01ba4c61259345efcd0b161d7f4c4ac4fa",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-initial-comparison-failure.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d91a11725a4f23f4f7837460986286161f17bd40",
+      "localBlob": "d91a11725a4f23f4f7837460986286161f17bd40",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-pixel-diagnostic.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c976b9f9ec579c63ac134ef2ce3c66df944696e7",
+      "localBlob": "c976b9f9ec579c63ac134ef2ce3c66df944696e7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-repeat-comparison.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "5555d22c3989b2e4f86b5ecd3640ea9ea7bec571",
+      "localBlob": "5555d22c3989b2e4f86b5ecd3640ea9ea7bec571",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-repeat.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9e14e2d801a4f07ee853c543fac52fc50bd670ae",
+      "localBlob": "9e14e2d801a4f07ee853c543fac52fc50bd670ae",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual-score.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b8601ed3193592cd906c0489f1f0f6d7fc161ec5",
+      "localBlob": "b8601ed3193592cd906c0489f1f0f6d7fc161ec5",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/integration/visual.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9e14e2d801a4f07ee853c543fac52fc50bd670ae",
+      "localBlob": "9e14e2d801a4f07ee853c543fac52fc50bd670ae",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/COMMANDS.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c2f4e23bdcad309fb89b9b0305d6603b2b85f2e1",
+      "localBlob": "c2f4e23bdcad309fb89b9b0305d6603b2b85f2e1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/ChartCalculator.original.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "28c52af50419eec08e1409633eb285dffe28fda4",
+      "localBlob": "28c52af50419eec08e1409633eb285dffe28fda4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/REVIEW.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e69d714822298fd9543822968de9610e88282fbe",
+      "localBlob": "e69d714822298fd9543822968de9610e88282fbe",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/base-source-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e010b12f68fd3f5cb13b825c3127d5d2192d7da8",
+      "localBlob": "e010b12f68fd3f5cb13b825c3127d5d2192d7da8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/final-verification.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f330883acd77de8145dd3075d17a1effd030aacf",
+      "localBlob": "f330883acd77de8145dd3075d17a1effd030aacf",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/freeze.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "localBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3609bb22abc0a061e302a58f7786c025fb4e425d",
+      "localBlob": "3609bb22abc0a061e302a58f7786c025fb4e425d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "eed47e91491c38ecddcd8b1148a70733acf37d45",
+      "localBlob": "eed47e91491c38ecddcd8b1148a70733acf37d45",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final/actual-modules.js.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d21efeb562070770693caffbfdd85cb35bf9ca85",
+      "localBlob": "d21efeb562070770693caffbfdd85cb35bf9ca85",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final/bundle-inputs.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f0f3eafb8d9639057909d9d5ece2a6393c7292b1",
+      "localBlob": "f0f3eafb8d9639057909d9d5ece2a6393c7292b1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final/callback-code.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "214c352990982140aeb70cafaa9258b78deed69e",
+      "localBlob": "214c352990982140aeb70cafaa9258b78deed69e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final/callback-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a9caf6333693bb24ba6769f934900719fa339bcd",
+      "localBlob": "a9caf6333693bb24ba6769f934900719fa339bcd",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-final/result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "dce0a10833270d020a5891fb370d3d3c29c2c74e",
+      "localBlob": "dce0a10833270d020a5891fb370d3d3c29c2c74e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b8c50067f5fb117897b874aaf539f0f3aedd7909",
+      "localBlob": "b8c50067f5fb117897b874aaf539f0f3aedd7909",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1/actual-modules.js.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d21efeb562070770693caffbfdd85cb35bf9ca85",
+      "localBlob": "d21efeb562070770693caffbfdd85cb35bf9ca85",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1/bundle-inputs.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f0f3eafb8d9639057909d9d5ece2a6393c7292b1",
+      "localBlob": "f0f3eafb8d9639057909d9d5ece2a6393c7292b1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1/callback-code.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "214c352990982140aeb70cafaa9258b78deed69e",
+      "localBlob": "214c352990982140aeb70cafaa9258b78deed69e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1/callback-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a9caf6333693bb24ba6769f934900719fa339bcd",
+      "localBlob": "a9caf6333693bb24ba6769f934900719fa339bcd",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-freeze2-run1/result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d6b18b26b8c3e8a053eaf78e49b4293ab9561f7b",
+      "localBlob": "d6b18b26b8c3e8a053eaf78e49b4293ab9561f7b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/native-profile-save.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3bd27e411962ebac3079614ffec8757d1d619cd2",
+      "localBlob": "3bd27e411962ebac3079614ffec8757d1d619cd2",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/patch.diff",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "localBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/persistence-source-parity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "23ce21ee53e6330e0a71a24562b0da257b343b8e",
+      "localBlob": "23ce21ee53e6330e0a71a24562b0da257b343b8e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source-manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b0396b1c4bc61deb5239d33323cc6926e65ec08e",
+      "localBlob": "b0396b1c4bc61deb5239d33323cc6926e65ec08e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/CLAUDE.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e3ca650e437c5be8ade8c6b0828158b533e559d7",
+      "localBlob": "e3ca650e437c5be8ade8c6b0828158b533e559d7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/islands/AccountProfileAccessBootstrap.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e4c055d42025feb83f817a5dda54d5f7da213e30",
+      "localBlob": "e4c055d42025feb83f817a5dda54d5f7da213e30",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/islands/ChartCalculator.actions.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "aa617990525ea717b3399fc4ab4fc17f2e4e5a05",
+      "localBlob": "aa617990525ea717b3399fc4ab4fc17f2e4e5a05",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/islands/ChartCalculator.locale.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "localBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/islands/ChartCalculator.ownership.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "localBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/islands/ChartCalculator.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "localBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/layouts/Base.astro",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "73cae868303efdafaae1023f3f7dc628bde71053",
+      "localBlob": "73cae868303efdafaae1023f3f7dc628bde71053",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/a2hs.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "bfe986ccfdd0cbd64b46e9bf82dfd5d1ded83470",
+      "localBlob": "bfe986ccfdd0cbd64b46e9bf82dfd5d1ded83470",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/feature-flags.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "271f837c329b909d3260d5f81bf0f4ee2d0dee98",
+      "localBlob": "271f837c329b909d3260d5f81bf0f4ee2d0dee98",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-access-reader.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d2fb895109b3f1ce051df8d3269f6c328b517b60",
+      "localBlob": "d2fb895109b3f1ce051df8d3269f6c328b517b60",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-access.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "26f963b83b7bd945e69ac458965cf58e41da0496",
+      "localBlob": "26f963b83b7bd945e69ac458965cf58e41da0496",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-access.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "bf21498895af32d34d8a091fcdabcd7741cd0e54",
+      "localBlob": "bf21498895af32d34d8a091fcdabcd7741cd0e54",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-boundary.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a5ad079534652548b62d99e1fc127aebbb18de65",
+      "localBlob": "a5ad079534652548b62d99e1fc127aebbb18de65",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-boundary.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2a41762eff703923dbc8e0037180d6c586b145e2",
+      "localBlob": "2a41762eff703923dbc8e0037180d6c586b145e2",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-lease.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c8928f98e9112860a0d58d0211e6788b30e8dcd4",
+      "localBlob": "c8928f98e9112860a0d58d0211e6788b30e8dcd4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/profile-lease.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3b5e4c121eae7ea6dd48a52168df7f63de0e926b",
+      "localBlob": "3b5e4c121eae7ea6dd48a52168df7f63de0e926b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/account-v2/storage-identity.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3a37b0dce47be1d8ba00c0d72b2a289dd99941ea",
+      "localBlob": "3a37b0dce47be1d8ba00c0d72b2a289dd99941ea",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/chart-handoff.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "73280878c40e82f580293679309dfce389216d17",
+      "localBlob": "73280878c40e82f580293679309dfce389216d17",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/chart-handoff.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3a754b58141dbc2c18fb633cc50a3f7727862939",
+      "localBlob": "3a754b58141dbc2c18fb633cc50a3f7727862939",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/engine/types.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e52947da3ef64cccb9f0fc112112b520b25c4dfe",
+      "localBlob": "e52947da3ef64cccb9f0fc112112b520b25c4dfe",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/hooks/useProfileAccessGeneration.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "badad77a621e487fd0f4d66986b4da8213f538cd",
+      "localBlob": "badad77a621e487fd0f4d66986b4da8213f538cd",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/core.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "fa1d9f18ae4e44ad280b9b57b0182710cb7b5710",
+      "localBlob": "fa1d9f18ae4e44ad280b9b57b0182710cb7b5710",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/plural.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "649da159dfebc029cc266797a33e9e1a1f4c03da",
+      "localBlob": "649da159dfebc029cc266797a33e9e1a1f4c03da",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ru-runtime/client.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a2152484086172e25d4325143c20b4d03d35d106",
+      "localBlob": "a2152484086172e25d4325143c20b4d03d35d106",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ru-runtime/index.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e01ba458e1da799bc78c82d2c7d43bd68591e389",
+      "localBlob": "e01ba458e1da799bc78c82d2c7d43bd68591e389",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ru-runtime/schema.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9f8fd994fe71a2587dd1b7770139b8271f5bab8e",
+      "localBlob": "9f8fd994fe71a2587dd1b7770139b8271f5bab8e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ru-runtime/server.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2b1d59adc3e802f324af4f0dc89ddbe2fd77d4a9",
+      "localBlob": "2b1d59adc3e802f324af4f0dc89ddbe2fd77d4a9",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ui/en.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "206f98942e0b6bf4abe70d8935c94b50afe9782c",
+      "localBlob": "206f98942e0b6bf4abe70d8935c94b50afe9782c",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ui/growth.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ba9cc3722311f1715b0d8487865cb0f7a858186b",
+      "localBlob": "ba9cc3722311f1715b0d8487865cb0f7a858186b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ui/ru.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e83663ee30d58ce5040c15707b56ee22bdd8f736",
+      "localBlob": "e83663ee30d58ce5040c15707b56ee22bdd8f736",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/i18n/ui/schema.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "5927804251b2cc4f49404ea1ad55c281a6cd9d38",
+      "localBlob": "5927804251b2cc4f49404ea1ad55c281a6cd9d38",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/deletions.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c160eb51fa553046f80fa88073ba0b9f11086120",
+      "localBlob": "c160eb51fa553046f80fa88073ba0b9f11086120",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/personal-chart.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "5092e41ed6a270c7e87a1ce709e4d84a1fbac97e",
+      "localBlob": "5092e41ed6a270c7e87a1ce709e4d84a1fbac97e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/polar-repair.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "88820d56631a87ea92a5fb546c26c77d03fca3c4",
+      "localBlob": "88820d56631a87ea92a5fb546c26c77d03fca3c4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/post-chart-context.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9b4f7f01e06292e7468c06b36ee5ee5294d77298",
+      "localBlob": "9b4f7f01e06292e7468c06b36ee5ee5294d77298",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/profile-chart-handoff.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ca5a5de817fd2577898829ff0c39e9549f57a32d",
+      "localBlob": "ca5a5de817fd2577898829ff0c39e9549f57a32d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/read-store.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "666a3f6dcdabdd50c6ef00e450ec75f9f235d6e6",
+      "localBlob": "666a3f6dcdabdd50c6ef00e450ec75f9f235d6e6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/schema.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3efa8207aa6fcd9f5c6114b850e0769195b68f06",
+      "localBlob": "3efa8207aa6fcd9f5c6114b850e0769195b68f06",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/store.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7a4d1474ccfd0f468b9c1c964a2dfaf8c29c3f5e",
+      "localBlob": "7a4d1474ccfd0f468b9c1c964a2dfaf8c29c3f5e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/profile/store.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "70db6af19c64ef044fa647e6baefbdb859d485cb",
+      "localBlob": "70db6af19c64ef044fa647e6baefbdb859d485cb",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/src/lib/signs.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a82eab85a99ca6a2ef4954102b8a30d5a2009ef3",
+      "localBlob": "a82eab85a99ca6a2ef4954102b8a30d5a2009ef3",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/tests/chart-ownership-drive.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "localBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/source/tests/personal-chart-handoff.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4428e02af0b28f48f5a56ee00bd0d7a6bd21991c",
+      "localBlob": "4428e02af0b28f48f5a56ee00bd0d7a6bd21991c",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/tool-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "26a6db22924bd478695ca280c424737218c0b3e6",
+      "localBlob": "26a6db22924bd478695ca280c424737218c0b3e6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/profile-save-review-freeze2/verification-first-native-run.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2c6677d013c0acde91fe7a124d2d79271a5c360c",
+      "localBlob": "2c6677d013c0acde91fe7a124d2d79271a5c360c",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/astrofolio-paths.txt",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "341e298e715c03a90d2cff9a0f55f0ec6123b9df",
+      "localBlob": "341e298e715c03a90d2cff9a0f55f0ec6123b9df",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/astrofolio-pr.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "64e85cbeef21942234c4e7b0b3ec1581139e57d1",
+      "localBlob": "64e85cbeef21942234c4e7b0b3ec1581139e57d1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/deployments-current.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9b2d4d1caaa426938e334aed93b26432433c3186",
+      "localBlob": "9b2d4d1caaa426938e334aed93b26432433c3186",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "02a7a14609bf8085e4307935d741410af05045c6",
+      "localBlob": "02a7a14609bf8085e4307935d741410af05045c6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/sdk-hold.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c574e5126f8dcc44afcfb5a2e1f42f0683bb79f8",
+      "localBlob": "c574e5126f8dcc44afcfb5a2e1f42f0683bb79f8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/sdk-main.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b6da9a83ba06f0d5443292f5d2aa0f4d5a415d4b",
+      "localBlob": "b6da9a83ba06f0d5443292f5d2aa0f4d5a415d4b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/site-main.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d896d11b50a799425b9186ae48337cb332ee76a0",
+      "localBlob": "d896d11b50a799425b9186ae48337cb332ee76a0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/release-baseline/upstream-delta.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "cbc1c1fa396c50720b77cdcff1ebf1a8e262f89e",
+      "localBlob": "cbc1c1fa396c50720b77cdcff1ebf1a8e262f89e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/REVIEW-FREEZE2.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "fc8d72e81abd9d6e417dafdad44a1427b3730832",
+      "localBlob": "fc8d72e81abd9d6e417dafdad44a1427b3730832",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/SUMMARY.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4c16ccfb0da7dd3fb15e0d8c8aeab332c0399b93",
+      "localBlob": "4c16ccfb0da7dd3fb15e0d8c8aeab332c0399b93",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/build.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9d67b9218c82115b2b54f382fc3cb17253c14c1b",
+      "localBlob": "9d67b9218c82115b2b54f382fc3cb17253c14c1b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/build.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f7bde746a60ef68d3f980e892f8eff276f139222",
+      "localBlob": "f7bde746a60ef68d3f980e892f8eff276f139222",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/candidate-build-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3b5406ee7979865a22c26b09c6585290fb875296",
+      "localBlob": "3b5406ee7979865a22c26b09c6585290fb875296",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/candidate-instrumented.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ad3f24652aab89fef69921ea1b22f1b568ea1484",
+      "localBlob": "ad3f24652aab89fef69921ea1b22f1b568ea1484",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/drive.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "dde0e67d2661c8a7414c96883231143f1bc516af",
+      "localBlob": "dde0e67d2661c8a7414c96883231143f1bc516af",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/fixture-entry.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "837cf7a920ff7146848bc1d6d8daaf2633d2fadd",
+      "localBlob": "837cf7a920ff7146848bc1d6d8daaf2633d2fadd",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/full-component.diff",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2709a1f782b0df1251a1aad4fb43c19192836c69",
+      "localBlob": "2709a1f782b0df1251a1aad4fb43c19192836c69",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/native-result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "68bdb1246014cbc3f9a63b1022d5952568a6425f",
+      "localBlob": "68bdb1246014cbc3f9a63b1022d5952568a6425f",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/native.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9a9cfd17b0ec1c5e1e9ebf4d86d21f688c02d106",
+      "localBlob": "9a9cfd17b0ec1c5e1e9ebf4d86d21f688c02d106",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/numeric-parity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "b961604c80becd7b031d5700abea31c6b46ef2b7",
+      "localBlob": "b961604c80becd7b031d5700abea31c6b46ef2b7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/numeric-parity.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f5e0f454023491a8d18e867fa60b69a93c4fd02e",
+      "localBlob": "f5e0f454023491a8d18e867fa60b69a93c4fd02e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/numeric-parity.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8a13557919541f98bbe67346edc455421ef54939",
+      "localBlob": "8a13557919541f98bbe67346edc455421ef54939",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/portable-driver.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "26d4e0a59d2d190321a3c44fd66733e33b826fc6",
+      "localBlob": "26d4e0a59d2d190321a3c44fd66733e33b826fc6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/source-review.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4d636b52ca7e910019eb51d8449f71ee28b37d78",
+      "localBlob": "4d636b52ca7e910019eb51d8449f71ee28b37d78",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/source-review.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "9e3085166c6ec9a40f5688233b02799858cb4516",
+      "localBlob": "9e3085166c6ec9a40f5688233b02799858cb4516",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/source-review.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7051db1b10f4753cd8fa8cba9d7a2f0d89bdc0f4",
+      "localBlob": "7051db1b10f4753cd8fa8cba9d7a2f0d89bdc0f4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/static-drive.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ec5076bfbbf3dac4673816491f66c0fed7ef8b6d",
+      "localBlob": "ec5076bfbbf3dac4673816491f66c0fed7ef8b6d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/static-result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "d0f2cc229ad4774ecda27905fae605ba088c8695",
+      "localBlob": "d0f2cc229ad4774ecda27905fae605ba088c8695",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/static.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c1a839b5b6adb2e7fb7993084ff6bc261f98d791",
+      "localBlob": "c1a839b5b6adb2e7fb7993084ff6bc261f98d791",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/execution/unchanged-numerical-block.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7295da2c87a41e62d4a18af9a6299c78b1b91ff4",
+      "localBlob": "7295da2c87a41e62d4a18af9a6299c78b1b91ff4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/freeze.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "localBlob": "47295c028cf5492f101ebb19a4cb727945d107c4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/frozen-source/src/islands/ChartCalculator.locale.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "localBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/frozen-source/src/islands/ChartCalculator.ownership.test.ts.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "localBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/frozen-source/src/islands/ChartCalculator.tsx.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "localBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/frozen-source/tests/chart-ownership-drive.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "localBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7258b794de3ff8940668f1a6962930fdacc676f6",
+      "localBlob": "7258b794de3ff8940668f1a6962930fdacc676f6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/native-candidate-bundle.tgz",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "cda215fba96d6dd2cfa8c1f82e1174be6c9dd39b",
+      "localBlob": "cda215fba96d6dd2cfa8c1f82e1174be6c9dd39b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/patch.diff",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "localBlob": "65703ff445ae054bf2d7432ff52e38d5ae1889aa",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/portable/native-coverage.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "1517c345bf72607ee12a54fcb1a7eada481bfa15",
+      "localBlob": "1517c345bf72607ee12a54fcb1a7eada481bfa15",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/portable/result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7556aa2bffd3f8aa77feb1f7bdb6a7b634aedfb4",
+      "localBlob": "7556aa2bffd3f8aa77feb1f7bdb6a7b634aedfb4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/review-freeze2/source-manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c103eac6434c2ad6c8974910e4687d4501f2c4ea",
+      "localBlob": "c103eac6434c2ad6c8974910e4687d4501f2c4ea",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/chart-result-ownership/root-source-identity.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3814b43e3d0f215bde67dd25529b5e0d6249dfd4",
+      "localBlob": "3814b43e3d0f215bde67dd25529b5e0d6249dfd4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/RESULTS.json.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8d6f65140bce8e7f9004dce2b856ae789aa394e5",
+      "localBlob": "8d6f65140bce8e7f9004dce2b856ae789aa394e5",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/REVIEW.md.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "f468e9c0394d45b7a9c75619d965d827f2b9ff8b",
+      "localBlob": "f468e9c0394d45b7a9c75619d965d827f2b9ff8b",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/audit.log.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8d6f65140bce8e7f9004dce2b856ae789aa394e5",
+      "localBlob": "8d6f65140bce8e7f9004dce2b856ae789aa394e5",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/audit.py.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "84473c9787057fc52d259d1ac82cab6c4acb717a",
+      "localBlob": "84473c9787057fc52d259d1ac82cab6c4acb717a",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/deployment-current.json.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ebe30b6957e53160cbbe7166da567e1d4d7dd9ee",
+      "localBlob": "ebe30b6957e53160cbbe7166da567e1d4d7dd9ee",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a549b7d1338faef41277ec26d019c83b73b4c651",
+      "localBlob": "a549b7d1338faef41277ec26d019c83b73b4c651",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/raw-evidence.tar.gz",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3bff3e7e3b716392255cca3ff0b9f0fda200e8d0",
+      "localBlob": "3bff3e7e3b716392255cca3ff0b9f0fda200e8d0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/preview-audit/raw-members.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "ea3bad59ec00fd58aed75bc6b07e68398e0e6437",
+      "localBlob": "ea3bad59ec00fd58aed75bc6b07e68398e0e6437",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/README.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8185920601dc9c978f75506fbaf364486bdf5add",
+      "localBlob": "8185920601dc9c978f75506fbaf364486bdf5add",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/REVIEW.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "c47c48e439431537e0fa0b54e58b5ed5d3c41667",
+      "localBlob": "c47c48e439431537e0fa0b54e58b5ed5d3c41667",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/credential-scan-initial-failure.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "60c801eeb92003d3dbcacbc9a8fb1697f6578058",
+      "localBlob": "60c801eeb92003d3dbcacbc9a8fb1697f6578058",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/deployment-after.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "92de0068b2e9723a93a7907293fd6f4b2f14016d",
+      "localBlob": "92de0068b2e9723a93a7907293fd6f4b2f14016d",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/deployment-before.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "0045310f179c2e1e747f3b4e992ea3bde1587cb6",
+      "localBlob": "0045310f179c2e1e747f3b4e992ea3bde1587cb6",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/diff-verification.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "6c9e8ba49144ecd3e8ccb0b2b0225f536b02f225",
+      "localBlob": "6c9e8ba49144ecd3e8ccb0b2b0225f536b02f225",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/files.pages.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e672967758ba5b3ea4c64cb94be353bdeab46bae",
+      "localBlob": "e672967758ba5b3ea4c64cb94be353bdeab46bae",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/interval-pr-body-current.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "0bdb787f507ac9d5f650ef929f853b77a7b9a8a1",
+      "localBlob": "0bdb787f507ac9d5f650ef929f853b77a7b9a8a1",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/interval-pr-body-updated.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "96e95e2996c130454b0c8581491033d23b922063",
+      "localBlob": "96e95e2996c130454b0c8581491033d23b922063",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/manifest.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "77feab4a9a0a0a94a85bf044542b1f4ee80ef55c",
+      "localBlob": "77feab4a9a0a0a94a85bf044542b1f4ee80ef55c",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/moon-ci-current.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "fdbc39a22859a39c474b287ecc86db874f618f5e",
+      "localBlob": "fdbc39a22859a39c474b287ecc86db874f618f5e",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/moon-pr-body-current.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "1a2fbdcdbc11efe6344d70c8f6acca1866c47082",
+      "localBlob": "1a2fbdcdbc11efe6344d70c8f6acca1866c47082",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/moon-pr-body-updated.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "7e6623052e8e8877cd78a70aeb611a8fc31689c0",
+      "localBlob": "7e6623052e8e8877cd78a70aeb611a8fc31689c0",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/pr-body-updated.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "16a120a78f8a42c40843ce95ef90a93d7dca7710",
+      "localBlob": "16a120a78f8a42c40843ce95ef90a93d7dca7710",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/pr-body.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4a910ca03194a351fbda2105f1abfebb4a235bfc",
+      "localBlob": "4a910ca03194a351fbda2105f1abfebb4a235bfc",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/pr.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "5823e9ba92336aca8b78881973bca08bfef87223",
+      "localBlob": "5823e9ba92336aca8b78881973bca08bfef87223",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview-drive.mjs.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e32daad69df4a2b17d22d6f49c753f3732655686",
+      "localBlob": "e32daad69df4a2b17d22d6f49c753f3732655686",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview-summary.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "6350e30a2d97b23eb4667134ec2c03642cecd7b8",
+      "localBlob": "6350e30a2d97b23eb4667134ec2c03642cecd7b8",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview.log",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "a6d90e8f749077936ce99dc67a1763ab38ceedcd",
+      "localBlob": "a6d90e8f749077936ce99dc67a1763ab38ceedcd",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview/entry-320.png",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "3ee3d01460cf15bf4143c39c7c621d24a5122af3",
+      "localBlob": "3ee3d01460cf15bf4143c39c7c621d24a5122af3",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview/result.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "4c6d7bc12fff8d5f9f67286ed6be3a9439bceaa3",
+      "localBlob": "4c6d7bc12fff8d5f9f67286ed6be3a9439bceaa3",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/preview/support-1280.png",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "0e72a1f44a645ed90ea0bff77adf6898e1912a67",
+      "localBlob": "0e72a1f44a645ed90ea0bff77adf6898e1912a67",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/rc6-pr-body-current.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "27590e6730c704bc55b9ae3cd159a15673be2f90",
+      "localBlob": "27590e6730c704bc55b9ae3cd159a15673be2f90",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/rc6-pr-body-updated.md",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "e2760c30f41e6aec2535c60d2d3711aecda347c4",
+      "localBlob": "e2760c30f41e6aec2535c60d2d3711aecda347c4",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "docs/platform/evidence/runtime-claims/release/runs.json",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "89c28d3aa8bc008df597b265fa5d9f27fe6157ce",
+      "localBlob": "89c28d3aa8bc008df597b265fa5d9f27fe6157ce",
+      "isDocumentation": true,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "localBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "localBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "status": "modified",
+      "localStatus": "M",
+      "remoteBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "localBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "isDocumentation": false,
+      "verified": true
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "status": "added",
+      "localStatus": "A",
+      "remoteBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "localBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "isDocumentation": false,
+      "verified": true
+    }
+  ],
+  "frozenSourceFiles": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "remoteAndLocalBlob": "bdc8d01eae3b53c6fa34505c2724791ea52111ca",
+      "expectedFreezeSha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "actualSha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "remoteAndLocalBlob": "3ed556c83a45fb0b85ac6f44f5f7564d358491a7",
+      "expectedFreezeSha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b",
+      "actualSha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b",
+      "verified": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "remoteAndLocalBlob": "8dcbbe094f8ad54d9e081d633b036692d23052a8",
+      "expectedFreezeSha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9",
+      "actualSha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9",
+      "verified": true
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "remoteAndLocalBlob": "2754ebb4810dd9be08176fd1f3e606b51c90847d",
+      "expectedFreezeSha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7",
+      "actualSha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7",
+      "verified": true
+    }
+  ],
+  "ci": {
+    "onlyFourLineAddition": true,
+    "workflowHeadBlob": "b616aabc04ffb5955cd8305b71e920e7f78c91fc",
+    "workflowHeadSha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5",
+    "existingPermissionsUnchanged": true,
+    "browserHelperUnchanged": true,
+    "artifactDirectoryWithinExistingAlwaysUpload": true,
+    "timeoutMinutes": 5
+  },
+  "scope": "Read-only exact PR identity and wiring review; remote preview/runtime/CI success are separate."
+}

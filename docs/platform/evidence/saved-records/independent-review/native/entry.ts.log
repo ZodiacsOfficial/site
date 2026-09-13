@@ -1,0 +1,2 @@
+export { SavedNatalStore } from '../frozen-source/src/lib/profile/saved-record-store';
+export { computePortableChart } from '../frozen-source/src/lib/engine/portable';

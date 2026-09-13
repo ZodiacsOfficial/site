@@ -1,0 +1,92 @@
+[
+  {
+    "path": "REVIEW.md",
+    "bytes": 1950,
+    "sha256": "7d6843f25beb5631d7b600e7463879a43b3fb351c6f3aa958b7a5d2f5f0e6c27"
+  },
+  {
+    "path": "actual-changed-paths.json",
+    "bytes": 667,
+    "sha256": "de98ff5c445347602444c724958b57ec79aec346fe7b8a91ef1f3631be4622d9"
+  },
+  {
+    "path": "actual-scope-cli.log",
+    "bytes": 111,
+    "sha256": "838780fada52f1a53d8a6679dc1c02c647979ff6680a6febadae0b9d1738c203"
+  },
+  {
+    "path": "assembled-identity.json",
+    "bytes": 3593,
+    "sha256": "1e0079648fe64d2af0c9ee060f484578f8c6e5fc2647c3c8714f18b46df1dc6b"
+  },
+  {
+    "path": "driver-syntax-check.json",
+    "bytes": 291,
+    "sha256": "b72cb7aafb6030732d78dd82e762fd565b2dc40eea9e3b6459827a4bc6b4c8cd"
+  },
+  {
+    "path": "freeze2-identity.json",
+    "bytes": 2832,
+    "sha256": "54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c"
+  },
+  {
+    "path": "metadata-identity.json",
+    "bytes": 650,
+    "sha256": "c06edae4ad100a761e4c622b4c2c691ff072005a6c35de30ba9da1854ceaf78d"
+  },
+  {
+    "path": "metadata.patch",
+    "bytes": 2487,
+    "sha256": "408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 1926,
+    "sha256": "a2b4ff2bc3e2829fcbd4933fe62b982745ef1e771344cf781480c908b59444e3"
+  },
+  {
+    "path": "source/.github/phase1-scope-allowance.json",
+    "bytes": 1196,
+    "sha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95"
+  },
+  {
+    "path": "source/.github/workflows/site-check.yml",
+    "bytes": 16285,
+    "sha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a"
+  },
+  {
+    "path": "source/package-lock.json",
+    "bytes": 436565,
+    "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3"
+  },
+  {
+    "path": "source/package.json",
+    "bytes": 11388,
+    "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c"
+  },
+  {
+    "path": "source/scripts/phase1-scope-guard.mjs.log",
+    "bytes": 8343,
+    "sha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d"
+  },
+  {
+    "path": "source/tests/chart-reference-confidence-drive.mjs.log",
+    "bytes": 22843,
+    "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6"
+  },
+  {
+    "path": "source/tests/visual/browser.mjs.log",
+    "bytes": 3304,
+    "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+  },
+  {
+    "path": "source-identities.json",
+    "bytes": 1075,
+    "sha256": "e46ef4dabae14d9a0dba3bdad300831e1ccd7cbd0912c5b4083132f2797727bc"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 2638,
+    "sha256": "1b39d3b1f7db85966344c3938df1d82e26a2647dfc432d7cba764dbee6424b59"
+  }
+]

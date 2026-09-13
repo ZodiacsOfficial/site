@@ -1,0 +1,94 @@
+
+> zodiacs-org@1.0.0 test
+> vitest run src/islands/today/TodayBrief.loading.test.ts
+
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ❯ src/islands/today/TodayBrief.loading.test.ts (11 tests | 2 failed) 641ms
+   × Today saved-chart transit loading > keeps transit code unloaded for an empty profile while recording the visit once 177ms
+     → expected "spy" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st spy call:
+
+    Array []
+
+
+Number of calls: 1
+
+   × Today saved-chart transit loading > waits for profile readiness even when a chart is already present 11ms
+     → expected "spy" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st spy call:
+
+    Array []
+
+
+Number of calls: 1
+
+   ✓ Today saved-chart transit loading > starts contact arithmetic while transit phrasing is still loading 63ms
+   ✓ Today saved-chart transit loading > starts personalization when a saved chart arrives after an empty first render 10ms
+   ✓ Today saved-chart transit loading > reuses the pending module when the selected chart changes from A to B 61ms
+   ✓ Today saved-chart transit loading > ignores a late module after cleared profile 63ms
+   ✓ Today saved-chart transit loading > ignores a late module after revoked profile access 60ms
+   ✓ Today saved-chart transit loading > ignores a late resolve after unmount 62ms
+   ✓ Today saved-chart transit loading > ignores a late reject after unmount 60ms
+   ✓ Today saved-chart transit loading > shows an import failure only for a chart that needs it, without a retry loop 65ms
+   ✓ Today saved-chart transit loading > preserves the malformed-profile DOM-hint fallback without loading transit code 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/islands/today/TodayBrief.loading.test.ts > Today saved-chart transit loading > keeps transit code unloaded for an empty profile while recording the visit once
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st spy call:
+
+    Array []
+
+
+Number of calls: 1
+
+ ❯ src/islands/today/TodayBrief.loading.test.ts:172:38
+    170|     await vi.dynamicImportSettled();
+    171|     expect(harness.load).not.toHaveBeenCalled();
+    172|     expect(harness.loadContacts).not.toHaveBeenCalled();
+       |                                      ^
+    173|     expect(view.props['data-today-state']).toBe('empty');
+    174|     expect(comparisonUnavailable(view)).toBe(false);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/islands/today/TodayBrief.loading.test.ts > Today saved-chart transit loading > waits for profile readiness even when a chart is already present
+AssertionError: expected "spy" to not be called at all, but actually been called 1 times
+
+Received:
+
+  1st spy call:
+
+    Array []
+
+
+Number of calls: 1
+
+ ❯ src/islands/today/TodayBrief.loading.test.ts:185:38
+    183|     await vi.dynamicImportSettled();
+    184|     expect(harness.load).not.toHaveBeenCalled();
+    185|     expect(harness.loadContacts).not.toHaveBeenCalled();
+       |                                      ^
+    186|     profile([chart('A')]);
+    187|     render();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 9 passed (11)
+   Start at  02:18:35
+   Duration  1.00s (transform 178ms, setup 0ms, collect 83ms, tests 641ms, environment 0ms, prepare 50ms)
+

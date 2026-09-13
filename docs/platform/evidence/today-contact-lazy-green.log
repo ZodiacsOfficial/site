@@ -1,0 +1,16 @@
+
+> zodiacs-org@1.0.0 test
+> vitest run src/lib/today src/islands/today/TodayBrief.loading.test.ts src/lib/transits.test.ts
+
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ src/lib/transits.test.ts (5 tests) 17ms
+ ✓ src/lib/today/index.test.ts (8 tests) 3ms
+ ✓ src/islands/today/TodayBrief.loading.test.ts (12 tests) 627ms
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  02:20:05
+   Duration  953ms (transform 270ms, setup 0ms, collect 367ms, tests 647ms, environment 0ms, prepare 153ms)
+

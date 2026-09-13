@@ -1,0 +1,18 @@
+{
+  "staticRoot": "/private/tmp/zodiacs-platform-site-receipt-export/dist",
+  "at": "2026-09-08T06:15:41.140391+00:00",
+  "subject": "receipt Freeze 2 plus interaction Freeze 1",
+  "buildLogs": {
+    "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-astro-build.log": "d11b3fa75278020c759ae10699820de38e59220998fffbc5057436dcbdad0596",
+    "/private/tmp/zodiacs-platform-site-receipt-export-evidence/interaction-static-guide-build.log": "97f6f954b2c9e2b0d7079d4a7f82163a51ab8a64f2d45e153ff636bf52ec9465"
+  },
+  "helperSha256": "191e125ef6bb163412662bcf2313dc37d542aff47686615081f7064b626e4588",
+  "postbuild": "Unchanged repository scripts/inline-critical-styles.mjs applied by author",
+  "postbuildSourceSha256": "5608482648b2d0ffd02222895eafd863d39b7bc418d23b371f719fad35394848",
+  "pages": {
+    "birth-chart/index.html": "0d7a4cba5c00fed1e42de0b4ed9baf6bdf047e6030be2152b154d6926a604e61",
+    "ru/birth-chart/index.html": "3a7ab09fb0eaced662c9c528808a85e861749d35d46225b46dd8ee222ba16878",
+    "moon-sign/index.html": "33e343e1ddc3a5b8caaf3c92dc4a1aa3fa20e23a45a4413281fb40a0003e28df",
+    "rising-sign/index.html": "5aeee776fe85d19f1c6336bebeb6d726e5e248277ec63a16cb8496e5d9de931d"
+  }
+}

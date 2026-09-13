@@ -1,0 +1,44 @@
+{
+  "at": "2026-09-08T07:27:09.948Z",
+  "reviewer": "Independent agent /root/adoption_review/time_context_edges",
+  "verdict": "No unresolved defect within frozen inactive scope; complete-provider trust obligation remains explicit.",
+  "base": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "patchSha256": "9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78",
+  "sourceFiles": 3,
+  "sourceStillMatches": true,
+  "algebra": {
+    "runtimes": [
+      "v22.23.2",
+      "v24.19.0"
+    ],
+    "perRuntime": {
+      "schedules": 1500,
+      "empty": 19,
+      "disconnected": 1059,
+      "maximumIntervals": 8,
+      "explicitOffsetAndEdgeCases": 20,
+      "transitionLimitCases": 6,
+      "providerFailureCases": 5
+    },
+    "identicalDetailedResults": true,
+    "oracle": "Independently partitions UTC at all schedule transitions and every candidate civil-date crossing; checks membership across each cell and joins only member cells."
+  },
+  "browser": {
+    "version": "152.0.7977.83",
+    "nativeFixtures": 16,
+    "signedOffsets": 6,
+    "independentIntlMembershipChecks": 4699,
+    "zeroImportEffects": true,
+    "zeroObservedStorageAndNetworkAPIs": true,
+    "zeroObservedPageRequests": true,
+    "missingCapabilityAndHostMismatch": "unresolved"
+  },
+  "strictTypes": "passed",
+  "completenessCounterexample": "A deliberately false provider hides a returning pair; marker-only completeness is not certified. This is the explicitly documented contract limitation.",
+  "scope": "Inactive three-file addition only. No root/author source, UI/caller, SDK, release, account, storage or production edit.",
+  "errorsRetained": [
+    "Initial setup assumed author scratch was a git checkout; used known isolated checkout to read exact committed dependency bytes and verified against frozen source.",
+    "Initial sandboxed Chrome launch aborted; rerun through approved isolated-browser escalation passed."
+  ],
+  "remaining": "Root owns integration gates and any future caller activation/native compatibility policy."
+}

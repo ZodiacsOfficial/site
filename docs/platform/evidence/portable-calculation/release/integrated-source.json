@@ -1,0 +1,14 @@
+{
+  "recordedAt": "2026-09-08T04:35:11.658443+00:00",
+  "integrationBase": "6ab85278bea708337e20947966a54a5072ad0627",
+  "authorBase": "d63773a3be2b4d40ff28a1075b9aaa9cb6c10793",
+  "authorBaseIncludesUncommittedSiteRc5Adoption": true,
+  "patchSha256": "69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45",
+  "sourceFiles": {
+    "src/lib/engine/chart-adapter.ts": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9",
+    "src/lib/engine/full.ts": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+    "src/lib/engine/portable.ts": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+    "src/lib/engine/portable.test.ts": "47bd2c343a888bbcf647bb92b32cd2140d19259ffdfeff816af0ecdfeb78aec9"
+  },
+  "sourceBytesMatchAuthorAndIndependentReviewedPatch": true
+}

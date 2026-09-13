@@ -1,0 +1,98 @@
+{
+  "observedAt": "2026-09-07T20:55:07.409Z",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tz": "2026a",
+  "hostTimezone": "Asia/Bangkok",
+  "sources": {
+    "src/lib/time/civil-date.ts": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671",
+    "src/lib/time/localToUtc.ts": "bd7a3b494c9884928b8710940372a6bc4c44c2ed3adac4a8b531f41f901ecb64",
+    "src/lib/time/technical-locales.ts": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+  },
+  "calendarCases": 148800,
+  "roundTrips": 3344,
+  "zones": 418,
+  "controls": [
+    {
+      "date": "2024-04-07",
+      "time": "01:45",
+      "zone": "Australia/Lord_Howe",
+      "expected": "2024-04-06T14:45:00.000Z",
+      "flag": "dst-fold",
+      "actual": "2024-04-06T14:45:00.000Z",
+      "flags": [
+        "dst-fold"
+      ]
+    },
+    {
+      "date": "2024-10-06",
+      "time": "02:15",
+      "zone": "Australia/Lord_Howe",
+      "expected": "2024-10-05T15:45:00.000Z",
+      "flag": "dst-gap",
+      "actual": "2024-10-05T15:45:00.000Z",
+      "flags": [
+        "dst-gap"
+      ]
+    },
+    {
+      "date": "2011-12-30",
+      "time": "12:00",
+      "zone": "Pacific/Apia",
+      "expected": "2011-12-30T22:00:00.000Z",
+      "flag": "dst-gap",
+      "actual": "2011-12-30T22:00:00.000Z",
+      "flags": [
+        "dst-gap"
+      ]
+    },
+    {
+      "date": "1907-07-06",
+      "time": "08:30",
+      "zone": "America/Mexico_City",
+      "expected": "1907-07-06T15:06:36.000Z",
+      "flag": "lmt",
+      "actual": "1907-07-06T15:06:36.000Z",
+      "flags": [
+        "lmt"
+      ]
+    }
+  ],
+  "failures": [],
+  "hostDefaultTimezone": [
+    {
+      "type": "undefined",
+      "value": "undefined",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "type": "object",
+      "value": "null",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "type": "string",
+      "value": "",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "type": "number",
+      "value": "123",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    },
+    {
+      "type": "object",
+      "value": "[object Object]",
+      "error": "RangeError",
+      "message": "An explicit supported timezone is required."
+    }
+  ],
+  "limitations": [
+    "Finite corpus against this runtime ICU; round-trip check is not independent validation of historical tzdb offsets.",
+    "Read-only source review and scratch execution; no repository mutation, full build, browser or network."
+  ]
+}

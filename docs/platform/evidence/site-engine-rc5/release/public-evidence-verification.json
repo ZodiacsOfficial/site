@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-09-08T04:16:20.403088+00:00",
+  "credentialUse": false,
+  "source": "8ee0e0183a3c4437af902858b1d76678d3e961a3",
+  "checks": [
+    {
+      "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/d63773a3be2b4d40ff28a1075b9aaa9cb6c10793/docs/platform/evidence/site-engine-rc5/README.md",
+      "status": 200,
+      "sha256": "22d091867af95b350bd4704395ff3fcf86b01bcf86dde5563aabed6718502864",
+      "matches": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/d63773a3be2b4d40ff28a1075b9aaa9cb6c10793/docs/platform/evidence/site-engine-rc5/independent-node-polar-node22.json",
+      "status": 200,
+      "sha256": "f868f04c0449bb443587e7d4d21a4e5e2da8a4783593de8e0769e6c45dd1a731",
+      "matches": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/d63773a3be2b4d40ff28a1075b9aaa9cb6c10793/docs/platform/evidence/site-engine-rc5/independent-node-polar-node24.json",
+      "status": 200,
+      "sha256": "fd4c4eaf1f7a465250e153e5be75bdae39dd7cf490534ba6fbc4a6cff9ad8728",
+      "matches": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/ZodiacsOfficial/site/d63773a3be2b4d40ff28a1075b9aaa9cb6c10793/docs/platform/evidence/site-engine-rc5/public-candidate-consumer.log",
+      "status": 200,
+      "sha256": "19691a87624c045377440a85ee8ff7e0007083b6faaecfa642240d220dabc47d",
+      "matches": true
+    }
+  ]
+}

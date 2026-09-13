@@ -1,0 +1,605 @@
+diff --git a/src/lib/time/local-date-intervals.ts b/src/lib/time/local-date-intervals.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/time/local-date-intervals.ts
+@@ -0,0 +1,202 @@
++import { parseCivilDate } from './civil-date';
++import { offsetAt as intlOffsetMinutes } from './localToUtc';
++
++const DAY = 86_400_000;
++const DATE_LIMIT = 8_640_000_000_000_000;
++const MAX_TRANSITIONS = 32;
++
++/** Integer epoch milliseconds; the exclusive boundary is not a sampling instant. */
++export interface LocalDateInterval {
++  readonly start: number;
++  readonly endExclusive: number;
++}
++
++export type LocalDateIntervalsResult =
++  | { readonly status: 'existing'; readonly intervals: readonly [LocalDateInterval, ...LocalDateInterval[]] }
++  | { readonly status: 'empty'; readonly intervals: readonly [] }
++  | { readonly status: 'unresolved'; readonly reason: LocalDateUnresolvedReason };
++
++export type LocalDateUnresolvedReason =
++  | 'invalid-input'
++  | 'provider-unavailable'
++  | 'invalid-provider'
++  | 'provider-failed'
++  | 'provider-violation'
++  | 'transition-limit';
++
++/**
++ * Trusted completeness contract, not a claim established by this marker.
++ * Methods must be synchronous and stable for the duration of a call. Offsets
++ * are integer milliseconds strictly inside ±24h. nextTransition returns the
++ * FIRST offset change strictly after its argument, or null if none exists.
++ * Transition instants are exact integer milliseconds using the new offset.
++ * An implementation must not substitute a sampled search for this obligation.
++ * Finite validation cannot detect every deliberately omitted transition.
++ */
++export interface CompleteTransitionProvider {
++  readonly completeness: 'complete-transitions-v1';
++  offsetMilliseconds(timeZone: string, instant: number): number;
++  nextTransitionMilliseconds(timeZone: string, after: number): number | null;
++}
++
++interface TemporalZonedInstant {
++  readonly offsetNanoseconds: number;
++  readonly epochNanoseconds: bigint;
++  getTimeZoneTransition(direction: 'next'): TemporalZonedInstant | null;
++}
++
++interface TemporalInstant {
++  toZonedDateTimeISO(timeZone: string): TemporalZonedInstant;
++}
++
++/**
++ * Feature-detect the host Temporal interface when called. No polyfill is loaded.
++ * As with Intl, the host supplies the timezone data and its historical limits.
++ * Merely importing this module performs no browser, timezone or storage work.
++ */
++export function createNativeTemporalTransitionProvider(): CompleteTransitionProvider | null {
++  const temporal: unknown = Reflect.get(globalThis, 'Temporal');
++  if (!temporal || typeof temporal !== 'object') return null;
++  const instant: unknown = Reflect.get(temporal, 'Instant');
++  const zoned: unknown = Reflect.get(temporal, 'ZonedDateTime');
++  if (typeof instant !== 'function' || typeof zoned !== 'function') return null;
++  const from: unknown = Reflect.get(instant, 'fromEpochMilliseconds');
++  const prototype: unknown = Reflect.get(zoned, 'prototype');
++  if (typeof from !== 'function' || !prototype || typeof prototype !== 'object'
++    || typeof Reflect.get(prototype, 'getTimeZoneTransition') !== 'function') return null;
++
++  let validatedZone: string | undefined;
++  const at = (timeZone: string, milliseconds: number): TemporalZonedInstant => {
++    if (validatedZone !== timeZone) {
++      // Temporal accepts additional timeZoneLike forms. Keep this API aligned
++      // with the existing Intl timezone-identifier boundary, including offsets.
++      new Intl.DateTimeFormat('en-US', { timeZone });
++      validatedZone = timeZone;
++    }
++    const value = Reflect.apply(from, instant, [milliseconds]) as TemporalInstant;
++    return value.toZonedDateTimeISO(timeZone);
++  };
++  return Object.freeze({
++    completeness: 'complete-transitions-v1' as const,
++    offsetMilliseconds(timeZone: string, instantMilliseconds: number) {
++      const nanoseconds = at(timeZone, instantMilliseconds).offsetNanoseconds;
++      if (!Number.isSafeInteger(nanoseconds) || nanoseconds % 1_000_000 !== 0) {
++        throw new ProviderViolation();
++      }
++      const milliseconds = nanoseconds / 1_000_000;
++      // Reuse the existing host Intl offset reader. Its integral-second offset
++      // expressed as fractional minutes needs only conversion-noise rounding.
++      // Disagreeing host interfaces cannot establish this date's membership.
++      if (Math.round(intlOffsetMinutes(timeZone, instantMilliseconds) * 60_000) !== milliseconds) {
++        throw new ProviderViolation();
++      }
++      return milliseconds;
++    },
++    nextTransitionMilliseconds(timeZone: string, after: number) {
++      const next = at(timeZone, after).getTimeZoneTransition('next');
++      if (next === null) return null;
++      const nanoseconds = next.epochNanoseconds;
++      if (typeof nanoseconds !== 'bigint' || nanoseconds % 1_000_000n !== 0n) {
++        throw new ProviderViolation();
++      }
++      return Number(nanoseconds / 1_000_000n);
++    },
++  });
++}
++
++class ProviderViolation extends Error {}
++
++function unresolved(reason: LocalDateUnresolvedReason): LocalDateIntervalsResult {
++  return Object.freeze({ status: 'unresolved', reason });
++}
++
++function validInstant(value: unknown): value is number {
++  return typeof value === 'number' && Number.isSafeInteger(value) && Math.abs(value) <= DATE_LIMIT;
++}
++
++/**
++ * Existing Date-scale UTC members of a strictly validated Gregorian civil date.
++ * No birth-time fold/gap disambiguation is applied. Disconnected dates remain
++ * disconnected; an empty result is never a shifted representative instant.
++ * Completeness is conditional on the supplied provider honoring its contract.
++ * This additive API is not connected to calculator, account or save behavior.
++ */
++export function resolveLocalDateIntervals(
++  date: unknown,
++  timeZone: unknown,
++  provider?: CompleteTransitionProvider | null,
++): LocalDateIntervalsResult {
++  const civil = parseCivilDate(date);
++  if (!civil || typeof timeZone !== 'string' || timeZone.trim().length === 0) {
++    return unresolved('invalid-input');
++  }
++  const wall = new Date(0);
++  wall.setUTCFullYear(civil.year, civil.month - 1, civil.day);
++  wall.setUTCHours(0, 0, 0, 0);
++  const midnight = wall.getTime();
++  // With offsets strictly inside ±24h, every member is inside this 72h window.
++  // Nominal numeric date arithmetic also preserves years 0–99 and the internal
++  // exclusive boundary after 9999-12-31 without widening public date syntax.
++  const lower = midnight - DAY;
++  const upper = midnight + 2 * DAY;
++  const intervals: LocalDateInterval[] = [];
++
++  try {
++    const source: unknown = provider === undefined ? createNativeTemporalTransitionProvider() : provider;
++    if (source === null) return unresolved('provider-unavailable');
++    if (!source || typeof source !== 'object'
++      || Reflect.get(source, 'completeness') !== 'complete-transitions-v1') {
++      return unresolved('invalid-provider');
++    }
++    const offsetMethod: unknown = Reflect.get(source, 'offsetMilliseconds');
++    const transitionMethod: unknown = Reflect.get(source, 'nextTransitionMilliseconds');
++    if (typeof offsetMethod !== 'function' || typeof transitionMethod !== 'function') {
++      return unresolved('invalid-provider');
++    }
++    const offsetAt = (instant: number): number => {
++      const offset: unknown = Reflect.apply(offsetMethod, source, [timeZone, instant]);
++      if (typeof offset !== 'number' || !Number.isSafeInteger(offset) || Math.abs(offset) >= DAY) {
++        throw new ProviderViolation();
++      }
++      return offset;
++    };
++    const append = (start: number, endExclusive: number, offset: number) => {
++      const first = Math.max(start, midnight - offset);
++      const end = Math.min(endExclusive, midnight + DAY - offset);
++      if (first >= end) return;
++      const previous = intervals.at(-1);
++      if (previous && previous.endExclusive === first) {
++        intervals[intervals.length - 1] = { start: previous.start, endExclusive: end };
++      } else {
++        intervals.push({ start: first, endExclusive: end });
++      }
++    };
++    let cursor = lower;
++    let offset = offsetAt(cursor);
++    for (let transitions = 0; transitions <= MAX_TRANSITIONS; transitions += 1) {
++      const candidate: unknown = Reflect.apply(transitionMethod, source, [timeZone, cursor]);
++      let next: number | null;
++      if (candidate === null) next = null;
++      else if (validInstant(candidate) && candidate > cursor) next = candidate;
++      else throw new ProviderViolation();
++      const end = next === null ? upper : Math.min(next, upper);
++      // Observable provider violations fail closed. These checks do not prove
++      // that an untrusted provider has disclosed every intermediate transition.
++      if (offsetAt(end - 1) !== offset) throw new ProviderViolation();
++      append(cursor, end, offset);
++      if (next === null || next >= upper) {
++        const frozen = Object.freeze(intervals.map((interval) => Object.freeze(interval)));
++        if (frozen.length === 0) return Object.freeze({ status: 'empty', intervals: Object.freeze([]) as readonly [] });
++        return Object.freeze({ status: 'existing', intervals: frozen as readonly [LocalDateInterval, ...LocalDateInterval[]] });
++      }
++      if (transitions === MAX_TRANSITIONS) return unresolved('transition-limit');
++      const nextOffset = offsetAt(next);
++      if (nextOffset === offset) throw new ProviderViolation();
++      cursor = next;
++      offset = nextOffset;
++    }
++    return unresolved('transition-limit');
++  } catch (error) {
++    return unresolved(error instanceof ProviderViolation ? 'provider-violation' : 'provider-failed');
++  }
++}
+diff --git a/src/lib/time/local-date-intervals.test.ts b/src/lib/time/local-date-intervals.test.ts
+new file mode 100644
+--- /dev/null
++++ b/src/lib/time/local-date-intervals.test.ts
+@@ -0,0 +1,237 @@
++import { afterEach, describe, expect, it, vi } from 'vitest';
++import {
++  createNativeTemporalTransitionProvider,
++  resolveLocalDateIntervals,
++  type CompleteTransitionProvider,
++} from './local-date-intervals';
++
++const DAY = 86_400_000;
++const HOUR = 3_600_000;
++const epoch = (value: string) => Date.parse(value);
++type Change = readonly [number, number];
++
++function schedule(initial: number, changes: readonly Change[] = []): CompleteTransitionProvider {
++  return {
++    completeness: 'complete-transitions-v1',
++    offsetMilliseconds(_zone, instant) {
++      let offset = initial;
++      for (const [at, after] of changes) if (at <= instant) offset = after;
++      return offset;
++    },
++    nextTransitionMilliseconds(_zone, after) {
++      return changes.find(([at]) => at > after)?.[0] ?? null;
++    },
++  };
++}
++
++function display(date: string, provider: CompleteTransitionProvider) {
++  const result = resolveLocalDateIntervals(date, 'Synthetic/Complete', provider);
++  if (result.status !== 'existing') return result;
++  return result.intervals.map(({ start, endExclusive }) => [
++    new Date(start).toISOString(), new Date(endExclusive).toISOString(),
++  ]);
++}
++
++afterEach(() => {
++  vi.unstubAllGlobals();
++  vi.restoreAllMocks();
++});
++
++describe('complete transition interval algebra', () => {
++  it.each([
++    ['0000-01-01', '0000-01-02T00:00:00.000Z'],
++    ['0000-02-29', '0000-03-01T00:00:00.000Z'],
++    ['0099-12-31', '0100-01-01T00:00:00.000Z'],
++    ['9999-12-31', '+010000-01-01T00:00:00.000Z'],
++  ])('preserves Gregorian rollover for %s', (date, next) => {
++    expect(display(date, schedule(0))).toEqual([[`${date}T00:00:00.000Z`, next]]);
++  });
++
++  it.each([
++    ['UTC', 0, '1990-06-15T00:00:00.000Z', '1990-06-16T00:00:00.000Z'],
++    ['Tokyo', 9 * HOUR, '1990-06-14T15:00:00.000Z', '1990-06-15T15:00:00.000Z'],
++    ['negative fixed', -150 * 60_000, '1990-06-15T02:30:00.000Z', '1990-06-16T02:30:00.000Z'],
++    ['historical seconds', -23_796_000, '1990-06-15T06:36:36.000Z', '1990-06-16T06:36:36.000Z'],
++  ])('handles %s offset without a midnight policy', (_name, offset, first, end) => {
++    expect(display('1990-06-15', schedule(offset))).toEqual([[first, end]]);
++  });
++
++  it.each([
++    ['2024-03-10', -5 * HOUR, '2024-03-10T07:00:00Z', -4 * HOUR, '2024-03-10T05:00:00.000Z', '2024-03-11T04:00:00.000Z'],
++    ['2024-11-03', -4 * HOUR, '2024-11-03T06:00:00Z', -5 * HOUR, '2024-11-03T04:00:00.000Z', '2024-11-04T05:00:00.000Z'],
++    ['1919-03-31', -5 * HOUR, '1919-03-31T04:30:00Z', -4 * HOUR, '1919-03-31T04:30:00.000Z', '1919-04-01T04:00:00.000Z'],
++    ['1919-03-30', -5 * HOUR, '1919-03-31T04:30:00Z', -4 * HOUR, '1919-03-30T05:00:00.000Z', '1919-03-31T04:30:00.000Z'],
++    ['1914-01-01', -14_404_000, '1914-01-01T04:00:04Z', -4 * HOUR, '1914-01-01T04:00:04.000Z', '1914-01-02T04:00:00.000Z'],
++  ])('handles complete transition fixture %s', (date, before, at, after, first, end) => {
++    expect(display(date, schedule(before, [[epoch(at), after]]))).toEqual([[first, end]]);
++  });
++
++  it('represents a skipped date explicitly, without either adjacent date', () => {
++    const provider = schedule(-10 * HOUR, [[epoch('2011-12-30T10:00:00Z'), 14 * HOUR]]);
++    expect(display('2011-12-30', provider)).toEqual({ status: 'empty', intervals: [] });
++    expect(display('2011-12-29', provider)).toEqual([['2011-12-29T10:00:00.000Z', '2011-12-30T10:00:00.000Z']]);
++    expect(display('2011-12-31', provider)).toEqual([['2011-12-30T10:00:00.000Z', '2011-12-31T10:00:00.000Z']]);
++  });
++
++  it('preserves both St_Johns date segments and the intervening other date', () => {
++    const provider = schedule(-150 * 60_000, [[epoch('2009-11-01T02:31:00Z'), -210 * 60_000]]);
++    expect(display('2009-10-31', provider)).toEqual([
++      ['2009-10-31T02:30:00.000Z', '2009-11-01T02:30:00.000Z'],
++      ['2009-11-01T02:31:00.000Z', '2009-11-01T03:30:00.000Z'],
++    ]);
++    expect(display('2009-11-01', provider)).toEqual([
++      ['2009-11-01T02:30:00.000Z', '2009-11-01T02:31:00.000Z'],
++      ['2009-11-01T03:30:00.000Z', '2009-11-02T03:30:00.000Z'],
++    ]);
++  });
++
++  it('merges a repeated 48-hour Apia date when UTC membership is continuous', () => {
++    const provider = schedule(45_184_000, [[epoch('1892-07-04T11:26:56Z'), -41_216_000]]);
++    expect(display('1892-07-04', provider)).toEqual([['1892-07-03T11:26:56.000Z', '1892-07-05T11:26:56.000Z']]);
++  });
++
++  it('finds short and otherwise-hidden segments from a complete provider', () => {
++    const first = schedule(0, [[-59 * 60_000, HOUR], [-58 * 60_000, 0]]);
++    expect(resolveLocalDateIntervals('1970-01-01', 'Synthetic', first)).toEqual({
++      status: 'existing', intervals: [{ start: -59 * 60_000, endExclusive: -58 * 60_000 }, { start: 0, endExclusive: DAY }],
++    });
++    const skippedExceptMinute = schedule(-10 * HOUR, [[10 * HOUR, 14 * HOUR], [10 * HOUR + 60_000, -10 * HOUR], [10 * HOUR + 120_000, 14 * HOUR]]);
++    expect(resolveLocalDateIntervals('1970-01-01', 'Synthetic', skippedExceptMinute)).toEqual({
++      status: 'existing', intervals: [{ start: 10 * HOUR + 60_000, endExclusive: 10 * HOUR + 120_000 }],
++    });
++  });
++
++  it.each([
++    ['lower edge', -DAY, 1_000, -1_000, DAY - 1_000],
++    ['upper edge', 2 * DAY, 1_000, 0, DAY],
++    ['date start', 0, 1_000, 0, DAY - 1_000],
++    ['date end', DAY, 1_000, 0, DAY],
++    ['last millisecond gap', DAY - 1, 1_000, 0, DAY - 1],
++  ])('uses exact half-open boundaries at %s', (_name, transition, offset, start, endExclusive) => {
++    expect(resolveLocalDateIntervals('1970-01-01', 'Synthetic', schedule(0, [[transition, offset]]))).toEqual({ status: 'existing', intervals: [{ start, endExclusive }] });
++  });
++
++  it('returns frozen values and does not expose mutable Date instances', () => {
++    const result = resolveLocalDateIntervals('1970-01-01', 'UTC', schedule(0));
++    expect(Object.isFrozen(result)).toBe(true);
++    if (result.status !== 'existing') throw new Error('Expected interval');
++    expect(Object.isFrozen(result.intervals)).toBe(true);
++    expect(Object.isFrozen(result.intervals[0])).toBe(true);
++    expect(typeof result.intervals[0].start).toBe('number');
++  });
++});
++
++describe('malformed input and provider outcomes never become empty', () => {
++  it.each([null, {}, '2001-02-29', '0000-02-30', '2000-13-01', '2000-01-00', '2000-1-01', '2000-01-01\n', '+010000-01-01'])('rejects date %j before consulting a provider', (date) => {
++    const provider = schedule(0); const spy = vi.spyOn(provider, 'offsetMilliseconds');
++    expect(resolveLocalDateIntervals(date, 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'invalid-input' });
++    expect(spy).not.toHaveBeenCalled();
++  });
++  it.each([undefined, null, {}, '', ' \t\n'])('rejects timezone %j before consulting a provider', (zone) => {
++    expect(resolveLocalDateIntervals('1970-01-01', zone, schedule(0))).toEqual({ status: 'unresolved', reason: 'invalid-input' });
++  });
++  it('reports missing native capability and explicit absent provider', () => {
++    vi.stubGlobal('Temporal', undefined);
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC')).toEqual({ status: 'unresolved', reason: 'provider-unavailable' });
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', null)).toEqual({ status: 'unresolved', reason: 'provider-unavailable' });
++  });
++  it.each([{}, [], { completeness: 'sampled' }, { completeness: 'complete-transitions-v1', offsetMilliseconds: 3 }])('rejects malformed provider %j', (provider) => {
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider as unknown as CompleteTransitionProvider)).toEqual({ status: 'unresolved', reason: 'invalid-provider' });
++  });
++  it.each([NaN, Infinity, -Infinity, 0.5, DAY, -DAY, '0', null, Promise.resolve(0)])('rejects invalid offset %j', (value) => {
++    const provider = { ...schedule(0), offsetMilliseconds: () => value } as CompleteTransitionProvider;
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it.each([NaN, Infinity, -Infinity, -DAY, -DAY - 1, 0.5, 8_640_000_000_000_001, '0', undefined, Promise.resolve(null)])('rejects invalid/nonadvancing transition %j', (value) => {
++    const provider = { ...schedule(0), nextTransitionMilliseconds: () => value } as CompleteTransitionProvider;
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it.each(['offsetMilliseconds', 'nextTransitionMilliseconds'] as const)('contains %s failures without data or exception text', (method) => {
++    const provider = { ...schedule(0), [method]: () => { throw new Error('private provider details'); } };
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'provider-failed' });
++  });
++  it('contains a throwing provider accessor', () => {
++    const provider = Object.defineProperty({}, 'completeness', { get() { throw new Error('private'); } });
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider as CompleteTransitionProvider)).toEqual({ status: 'unresolved', reason: 'provider-failed' });
++  });
++  it('rejects a claimed transition with no offset change', () => {
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', { ...schedule(0), nextTransitionMilliseconds: () => 0 })).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it.each(['before', 'after', 'omitted-last'] as const)('rejects observable %s offset disagreement without partial intervals', (variant) => {
++    const provider = schedule(0, [[0, 1_000]]);
++    const actual = provider.offsetMilliseconds.bind(provider);
++    if (variant === 'omitted-last') provider.nextTransitionMilliseconds = () => null;
++    else provider.offsetMilliseconds = (zone, t) => t === (variant === 'before' ? -1 : 0) ? 2_000 : actual(zone, t);
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it('rejects a duplicate transition after accepting its first boundary', () => {
++    const provider = { ...schedule(0, [[0, 1_000]]), nextTransitionMilliseconds: () => 0 };
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it('admits 32 transitions but returns no partial coverage on the 33rd', () => {
++    const changes: Change[] = Array.from({ length: 33 }, (_, i) => [i * 1_000, i % 2 === 0 ? 1_000 : 0]);
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', schedule(0, changes.slice(0, 32))).status).toBe('existing');
++    const provider = schedule(0, changes); const spy = vi.spyOn(provider, 'nextTransitionMilliseconds');
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC', provider)).toEqual({ status: 'unresolved', reason: 'transition-limit' });
++    expect(spy).toHaveBeenCalledTimes(33);
++  });
++});
++
++function fakeTemporal(offset: number, transition: bigint | null = null) {
++  class Zoned {
++    offsetNanoseconds = offset;
++    epochNanoseconds = transition ?? 0n;
++    getTimeZoneTransition() { return transition === null ? null : new Zoned(); }
++  }
++  class Instant {
++    static fromEpochMilliseconds() { return { toZonedDateTimeISO: () => new Zoned() }; }
++  }
++  return { Instant, ZonedDateTime: Zoned };
++}
++
++describe('lazy Temporal adapter', () => {
++  it('does no Temporal or Intl work while importing', async () => {
++    let reads = 0;
++    const original = Object.getOwnPropertyDescriptor(globalThis, 'Temporal');
++    Object.defineProperty(globalThis, 'Temporal', { configurable: true, get() { reads += 1; throw new Error('eager access'); } });
++    const intl = vi.spyOn(Intl, 'DateTimeFormat');
++    try {
++      vi.resetModules(); await import('./local-date-intervals');
++      expect(reads).toBe(0); expect(intl).not.toHaveBeenCalled();
++    } finally {
++      if (original) Object.defineProperty(globalThis, 'Temporal', original);
++      else Reflect.deleteProperty(globalThis, 'Temporal');
++    }
++  });
++  it('feature detection does not resolve a timezone', () => {
++    vi.stubGlobal('Temporal', fakeTemporal(0));
++    const intl = vi.spyOn(Intl, 'DateTimeFormat');
++    expect(createNativeTemporalTransitionProvider()?.completeness).toBe('complete-transitions-v1');
++    expect(intl).not.toHaveBeenCalled();
++  });
++  it.each([{}, { Instant: {} }, { Instant: class {}, ZonedDateTime: class {} }])('reports missing required Temporal methods', (value) => {
++    vi.stubGlobal('Temporal', value);
++    expect(createNativeTemporalTransitionProvider()).toBeNull();
++  });
++  it('uses native identifier validation instead of accepting broader timeZoneLike input', () => {
++    vi.stubGlobal('Temporal', fakeTemporal(0));
++    expect(resolveLocalDateIntervals('1970-01-01', '2000-01-01T00:00[UTC]')).toEqual({ status: 'unresolved', reason: 'provider-failed' });
++    expect(resolveLocalDateIntervals('1970-01-01', 'Synthetic/Invalid')).toEqual({ status: 'unresolved', reason: 'provider-failed' });
++  });
++  it('rejects disagreement with Intl instead of producing a false date', () => {
++    vi.stubGlobal('Temporal', fakeTemporal(HOUR * 1_000_000));
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC')).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it('refuses sub-millisecond offsets and transitions rather than truncating', () => {
++    vi.stubGlobal('Temporal', fakeTemporal(1));
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC')).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++    vi.stubGlobal('Temporal', fakeTemporal(0, 1n));
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC')).toEqual({ status: 'unresolved', reason: 'provider-violation' });
++  });
++  it('does not mistake a host call failure for an empty date', () => {
++    const temporal = fakeTemporal(0);
++    temporal.Instant.fromEpochMilliseconds = () => { throw new Error('private host failure'); };
++    vi.stubGlobal('Temporal', temporal);
++    expect(resolveLocalDateIntervals('1970-01-01', 'UTC')).toEqual({ status: 'unresolved', reason: 'provider-failed' });
++  });
++});
+diff --git a/tests/local-date-intervals-drive.mjs b/tests/local-date-intervals-drive.mjs
+new file mode 100644
+--- /dev/null
++++ b/tests/local-date-intervals-drive.mjs
+@@ -0,0 +1,151 @@
++/** Owned static fixture; no site build, polyfill, user profile or remote service. */
++import assert from 'node:assert/strict';
++import { createHash } from 'node:crypto';
++import { mkdir, readFile, writeFile } from 'node:fs/promises';
++import { createServer } from 'node:http';
++import { resolve, join } from 'node:path';
++import { build } from 'esbuild';
++import { chromium } from 'playwright-core';
++import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
++
++const root = resolve(import.meta.dirname, '..');
++const out = resolve(process.env.OUT_DIR ?? join(root, 'tests/visual/artifacts/local-date-intervals'));
++const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
++// Explicit historical fixtures retained from the endpoint architecture review.
++// These finite cases do not establish completeness for other host histories.
++const cases = [
++  ['2000-01-01', 'Asia/Tokyo', [['1999-12-31T15:00:00.000Z', '2000-01-01T15:00:00.000Z']]],
++  ['2024-03-10', 'America/New_York', [['2024-03-10T05:00:00.000Z', '2024-03-11T04:00:00.000Z']]],
++  ['2024-11-03', 'America/New_York', [['2024-11-03T04:00:00.000Z', '2024-11-04T05:00:00.000Z']]],
++  ['1919-03-30', 'America/Toronto', [['1919-03-30T05:00:00.000Z', '1919-03-31T04:30:00.000Z']]],
++  ['1919-03-31', 'America/Toronto', [['1919-03-31T04:30:00.000Z', '1919-04-01T04:00:00.000Z']]],
++  ['2011-12-29', 'Pacific/Apia', [['2011-12-29T10:00:00.000Z', '2011-12-30T10:00:00.000Z']]],
++  ['2011-12-30', 'Pacific/Apia', []],
++  ['2011-12-31', 'Pacific/Apia', [['2011-12-30T10:00:00.000Z', '2011-12-31T10:00:00.000Z']]],
++  ['2009-10-31', 'America/St_Johns', [['2009-10-31T02:30:00.000Z', '2009-11-01T02:30:00.000Z'], ['2009-11-01T02:31:00.000Z', '2009-11-01T03:30:00.000Z']]],
++  ['2009-11-01', 'America/St_Johns', [['2009-11-01T02:30:00.000Z', '2009-11-01T02:31:00.000Z'], ['2009-11-01T03:30:00.000Z', '2009-11-02T03:30:00.000Z']]],
++  ['1988-10-29', 'America/Goose_Bay', [['1988-10-29T02:00:00.000Z', '1988-10-30T02:00:00.000Z'], ['1988-10-30T02:01:00.000Z', '1988-10-30T04:00:00.000Z']]],
++  ['1988-10-30', 'America/Goose_Bay', [['1988-10-30T02:00:00.000Z', '1988-10-30T02:01:00.000Z'], ['1988-10-30T04:00:00.000Z', '1988-10-31T04:00:00.000Z']]],
++  ['1892-07-04', 'Pacific/Apia', [['1892-07-03T11:26:56.000Z', '1892-07-05T11:26:56.000Z']]],
++  ['0000-01-01', 'UTC', [['0000-01-01T00:00:00.000Z', '0000-01-02T00:00:00.000Z']]],
++  ['0000-02-29', 'UTC', [['0000-02-29T00:00:00.000Z', '0000-03-01T00:00:00.000Z']]],
++  ['0099-12-31', 'UTC', [['0099-12-31T00:00:00.000Z', '0100-01-01T00:00:00.000Z']]],
++  ['9999-12-31', 'UTC', [['9999-12-31T00:00:00.000Z', '+010000-01-01T00:00:00.000Z']]],
++  ['1914-01-01', 'America/Manaus', [['1914-01-01T04:00:04.000Z', '1914-01-02T04:00:00.000Z']]],
++  ['2024-04-07', 'Australia/Lord_Howe', [['2024-04-06T13:00:00.000Z', '2024-04-07T13:30:00.000Z']]],
++  ['2024-10-06', 'Australia/Lord_Howe', [['2024-10-05T13:30:00.000Z', '2024-10-06T13:00:00.000Z']]],
++  ['1900-01-01', 'America/Mexico_City', [['1900-01-01T06:36:36.000Z', '1900-01-02T06:36:36.000Z']]],
++  ['0000-01-01', 'Etc/GMT-1', [['-000001-12-31T23:00:00.000Z', '0000-01-01T23:00:00.000Z']]],
++];
++
++await mkdir(out, { recursive: true });
++const bundle = await build({
++  absWorkingDir: root,
++  stdin: { contents: "export { resolveLocalDateIntervals, createNativeTemporalTransitionProvider } from './src/lib/time/local-date-intervals';", resolveDir: root },
++  bundle: true, write: false, format: 'iife', globalName: 'dateIntervalsSubject',
++  platform: 'browser', target: 'es2022', metafile: true,
++});
++const script = bundle.outputFiles[0].contents;
++await writeFile(join(out, 'subject.js'), script);
++const sources = await Promise.all(Object.keys(bundle.metafile.inputs).filter((path) => path !== '<stdin>').map(async (path) => ({ path, sha256: sha256(await readFile(join(root, path))) })));
++const report = { at: new Date().toISOString(), node: process.version, sources, bundleSha256: sha256(script), requests: [], pageErrors: [], outcome: 'failed' };
++const server = createServer((req, res) => {
++  if (req.url === '/subject.js') { res.setHeader('Content-Type', 'application/javascript'); res.end(script); }
++  else if (req.url === '/') { res.setHeader('Content-Type', 'text/html'); res.end('<!doctype html><title>Local date interval fixture</title><script src="/subject.js"></script>'); }
++  else { res.statusCode = 404; res.end(); }
++});
++let browser;
++try {
++  await new Promise((done, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', done); });
++  const origin = `http://127.0.0.1:${server.address().port}`;
++  const executablePath = await findChromium();
++  browser = await chromium.launch({ executablePath, headless: true, args: STABLE_CHROMIUM_ARGS });
++  report.browser = { version: browser.version(), executablePath };
++  const context = await browser.newContext();
++  await context.route('**/*', async (route) => {
++    const url = route.request().url();
++    report.requests.push(url);
++    if (new URL(url).origin === origin) await route.continue();
++    else await route.abort('blockedbyclient');
++  });
++  await context.addInitScript(() => {
++    const stats = globalThis.moduleEffects = { temporalReads: 0, intl: 0, storage: 0, idb: 0, fetch: 0, xhr: 0, beacon: 0 };
++    const nativeTemporal = globalThis.Temporal;
++    Object.defineProperty(globalThis, 'Temporal', { configurable: true, get() { stats.temporalReads++; return nativeTemporal; } });
++    const NativeFormat = Intl.DateTimeFormat;
++    Intl.DateTimeFormat = new Proxy(NativeFormat, {
++      construct(target, args, ctor) { stats.intl++; return Reflect.construct(target, args, ctor); },
++      apply(target, receiver, args) { stats.intl++; return Reflect.apply(target, receiver, args); },
++    });
++    for (const [object, key, counter] of [
++      [Storage.prototype, 'setItem', 'storage'], [IDBFactory.prototype, 'open', 'idb'],
++      [globalThis, 'fetch', 'fetch'], [XMLHttpRequest.prototype, 'open', 'xhr'], [Navigator.prototype, 'sendBeacon', 'beacon'],
++    ]) {
++      const original = object[key];
++      object[key] = function (...args) { stats[counter]++; return Reflect.apply(original, this, args); };
++    }
++  });
++  const page = await context.newPage();
++  page.on('pageerror', (error) => report.pageErrors.push(String(error)));
++  await page.goto(origin, { waitUntil: 'load' });
++  report.importEffects = await page.evaluate(() => ({ ...globalThis.moduleEffects }));
++  assert.deepEqual(report.importEffects, { temporalReads: 0, intl: 0, storage: 0, idb: 0, fetch: 0, xhr: 0, beacon: 0 });
++  report.native = await page.evaluate((fixtures) => {
++    const { resolveLocalDateIntervals: resolve, createNativeTemporalTransitionProvider: provider } = globalThis.dateIntervalsSubject;
++    const nativeAvailable = provider() !== null;
++    const rows = [];
++    const iso = (n) => new Date(n).toISOString();
++    for (const [date, zone, expected] of fixtures) {
++      const result = resolve(date, zone);
++      const actual = result.status === 'unresolved' ? null : result.intervals.map(({ start, endExclusive }) => [iso(start), iso(endExclusive)]);
++      const formatter = new Intl.DateTimeFormat('en-US', { timeZone: zone, calendar: 'gregory', numberingSystem: 'latn', era: 'short', year: 'numeric', month: '2-digit', day: '2-digit' });
++      const localDate = (instant) => {
++        const parts = Object.fromEntries(formatter.formatToParts(instant).map((part) => [part.type, part.value]));
++        const year = parts.era === 'BC' ? 1 - Number(parts.year) : Number(parts.year);
++        return `${String(year).padStart(4, '0')}-${parts.month}-${parts.day}`;
++      };
++      const boundaries = result.status !== 'existing' ? [] : result.intervals.flatMap(({ start, endExclusive }) => [[start - 1, false], [start, true], [endExclusive - 1, true], [endExclusive, false]].map(([instant, expectedMember]) => ({ instant: iso(instant), localDate: localDate(instant), expectedMember, passed: (localDate(instant) === date) === expectedMember })));
++      rows.push({ date, zone, expected, result, actual, boundaries, passed: JSON.stringify(actual) === JSON.stringify(expected) && boundaries.every((row) => row.passed) });
++    }
++    const offsets = [['+01:00', 3600000], ['+0100', 3600000], ['-02:30', -9000000], ['-00:00', 0]].map(([zone, offset]) => {
++      let intlAccepted = true;
++      let temporalAccepted = true;
++      try { new Intl.DateTimeFormat('en-US', { timeZone: zone }); } catch { intlAccepted = false; }
++      try { Temporal.Instant.fromEpochMilliseconds(0).toZonedDateTimeISO(zone); } catch { temporalAccepted = false; }
++      const result = resolve('2000-01-01', zone);
++      const midnight = Date.parse('2000-01-01T00:00Z');
++      const expected = [{ start: midnight - offset, endExclusive: midnight + 86400000 - offset }];
++      const passed = intlAccepted && temporalAccepted
++        ? result.status === 'existing' && JSON.stringify(result.intervals) === JSON.stringify(expected)
++        : result.status === 'unresolved';
++      return { zone, intlAccepted, temporalAccepted, result, passed };
++    });
++    const original = Object.getOwnPropertyDescriptor(globalThis, 'Temporal');
++    Object.defineProperty(globalThis, 'Temporal', { configurable: true, value: undefined });
++    const unavailable = resolve('2000-01-01', 'UTC');
++    Object.defineProperty(globalThis, 'Temporal', original);
++    const invalidNativeZone = resolve('2000-01-01', '2000-01-01T00:00+01:00');
++    const failing = resolve('2000-01-01', 'UTC', { completeness: 'complete-transitions-v1', offsetMilliseconds() { return 0; }, nextTransitionMilliseconds() { throw new Error('private synthetic detail'); } });
++    const effects = { ...globalThis.moduleEffects };
++    return { nativeAvailable, rows, offsets, unavailable, invalidNativeZone, failing, effects };
++  }, cases);
++  assert.equal(report.native.nativeAvailable, true, 'Native Temporal transition API is required for this driver; no polyfill or skipped success.');
++  assert.ok(report.native.rows.every((row) => row.passed), 'Native fixture or independent Intl boundary membership mismatch.');
++  assert.ok(report.native.offsets.every((row) => row.passed), 'Fixed-offset acceptance or unresolved boundary mismatch.');
++  assert.deepEqual(report.native.unavailable, { status: 'unresolved', reason: 'provider-unavailable' });
++  assert.deepEqual(report.native.invalidNativeZone, { status: 'unresolved', reason: 'provider-failed' });
++  assert.deepEqual(report.native.failing, { status: 'unresolved', reason: 'provider-failed' });
++  for (const key of ['storage', 'idb', 'fetch', 'xhr', 'beacon']) assert.equal(report.native.effects[key], 0);
++  assert.deepEqual(report.pageErrors, []);
++  assert.ok(report.requests.every((url) => new URL(url).origin === origin));
++  report.outcome = 'passed';
++} catch (error) {
++  report.error = String(error.stack ?? error);
++  process.exitCode = 1;
++} finally {
++  await browser?.close();
++  await new Promise((done, reject) => server.close((error) => error ? reject(error) : done()));
++  report.cleanup = 'Owned browser context and loopback server closed.';
++  await writeFile(join(out, 'result.json'), `${JSON.stringify(report, null, 2)}\n`);
++  console.log(JSON.stringify(report));
++}

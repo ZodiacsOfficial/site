@@ -1,0 +1,109 @@
+{
+  "at": "2026-09-08T08:04:11.802Z",
+  "node": "v22.23.2",
+  "sourceSha": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8",
+  "scope": "Actual local production pages; six locales, synthetic UTC inputs. Race injection remains separate native acceptance.",
+  "checks": [
+    {
+      "locale": "en",
+      "width": 1280,
+      "path": "/moon-phase/",
+      "resultText": "Moon phase\nFirst Quarter\n51% illuminated\nMoon in\nAries\nHow we compute\nGet the birth chart for this date\n↗",
+      "screenshotSha256": "da6101b18429e01942b354aba1dd9e4252688261c9cbb2fd402372cc80ec4eea",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "en",
+      "width": 390,
+      "path": "/moon-phase/",
+      "resultText": "Moon phase\nFirst Quarter\n51% illuminated\nMoon in\nAries\nHow we compute\nGet the birth chart for this date\n↗",
+      "screenshotSha256": "a98e756d4f353920288646f669ad69607b0b515d065c40be4bb1e87952a3868a",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "es",
+      "width": 1280,
+      "path": "/es/moon-phase/",
+      "resultText": "Fase lunar\nCuarto creciente\n51% iluminada\nLuna en\nAries\nCómo calculamos\nObtener la carta natal de esta fecha\n↗",
+      "screenshotSha256": "642bd9cb36d1b4028cff4ad0deafaa3acfe3d3e76787ca708601b73a22cca687",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "es",
+      "width": 390,
+      "path": "/es/moon-phase/",
+      "resultText": "Fase lunar\nCuarto creciente\n51% iluminada\nLuna en\nAries\nCómo calculamos\nObtener la carta natal de esta fecha\n↗",
+      "screenshotSha256": "63ade52716df6152a7a183415f02a7c41ebd1e170d4b1ee1165fdc7c35c4618d",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "fr",
+      "width": 1280,
+      "path": "/fr/moon-phase/",
+      "resultText": "Phase de la Lune\nPremier quartier\n51% éclairée\nLune en\nBélier\nNos calculs\nCalculer le thème astral de cette date\n↗",
+      "screenshotSha256": "2aabfb390618c218c5f900ab394f305c3a796abaa09204b26d269931b467b24e",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "fr",
+      "width": 390,
+      "path": "/fr/moon-phase/",
+      "resultText": "Phase de la Lune\nPremier quartier\n51% éclairée\nLune en\nBélier\nNos calculs\nCalculer le thème astral de cette date\n↗",
+      "screenshotSha256": "14a943edc283c288548112818efc55958ded76c5ff0a955141e938dd6c8fce0d",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "it",
+      "width": 1280,
+      "path": "/it/moon-phase/",
+      "resultText": "Fase lunare\nPrimo quarto\n51% illuminata\nLuna in\nAriete\nCome calcoliamo\nCalcola il tema natale per questa data\n↗",
+      "screenshotSha256": "b1b72859cbc08d8a6dca8e552b4436efa44d617244a975114f6cb7821e2c74d1",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "it",
+      "width": 390,
+      "path": "/it/moon-phase/",
+      "resultText": "Fase lunare\nPrimo quarto\n51% illuminata\nLuna in\nAriete\nCome calcoliamo\nCalcola il tema natale per questa data\n↗",
+      "screenshotSha256": "fcc2d961b17484c04c6255ab66009a052cdf2a08fa26c978e167cb88bfc8e4d0",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "pt",
+      "width": 1280,
+      "path": "/pt/moon-phase/",
+      "resultText": "Fase da Lua\nQuarto crescente\n51% iluminada\nLua em\nÁries\nComo calculamos\nFazer o mapa astral desta data\n↗",
+      "screenshotSha256": "8c996ed2a212f3f1cb3818eb994c30a7b50daf61267d8a606d3be7e5da7e8d6a",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "pt",
+      "width": 390,
+      "path": "/pt/moon-phase/",
+      "resultText": "Fase da Lua\nQuarto crescente\n51% iluminada\nLua em\nÁries\nComo calculamos\nFazer o mapa astral desta data\n↗",
+      "screenshotSha256": "6f22c801985499533b96d1cb24c38fba31409a751042afd5c8a7be6148f8124d",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "ru",
+      "width": 1280,
+      "path": "/ru/moon-phase/",
+      "resultText": "Фаза Луны\nПервая четверть\n51% освещено\nЛуна в: Овне\nКак мы считаем\nПостроить натальную карту на эту дату\n↗",
+      "screenshotSha256": "d3fa9b7d050db0b1c707eb5f81157537544308c9f186412f2be6c97ffcfa4eb5",
+      "noSavedProfile": true
+    },
+    {
+      "locale": "ru",
+      "width": 390,
+      "path": "/ru/moon-phase/",
+      "resultText": "Фаза Луны\nПервая четверть\n51% освещено\nЛуна в: Овне\nКак мы считаем\nПостроить натальную карту на эту дату\n↗",
+      "screenshotSha256": "79aada0b8cd9f6d78e40ad78ed902f042a96a143ffc4002c04679540866589b2",
+      "noSavedProfile": true
+    }
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "outcome": "passed",
+  "browser": "152.0.7977.83",
+  "cleanup": "Owned browser contexts and preview server closed"
+}

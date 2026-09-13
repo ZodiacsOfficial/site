@@ -1,0 +1,47 @@
+PASS  Solar: engine, result, wheel and export modules remain lazy before calculation
+PASS  Solar: custom year retains the supported bounds
+PASS  Solar: reading leads, exact data starts closed and result heading receives focus
+PASS  Solar: fixed 2024 located fixture retains authored ASC and Sun-house readings
+PASS  Solar: located wheel, houses and both node placements remain available
+PASS  Solar: one completed result emits one page view
+PASS  Solar known-2024: genuine portrait PNG retains the full reading and privacy qualification · 1080×1350; 685fe0af1565efbc99affef4188cc16498e45111363f57f41772d6ee7ae02f9c
+PASS  Solar known-2024: calendar marks the displayed UTC instant with honest uncertainty
+PASS  Solar known 1440: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":160,"right":290.03125},{"height":47.59375,"left":302.03125,"right":439.640625},{"height":47.59375,"left":451.640625,"right":613.484375}]}
+PASS  Solar known 390: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar known 320: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar: native share uses the prepared file with live user activation and no URL or birth payload
+PASS  Solar: native cancellation stays neutral without a fallback download
+PASS  Solar: unsupported native sharing downloads the same prepared PNG
+PASS  Solar: editing relocation immediately removes stale result and exports
+PASS  Solar relocated-2024: genuine portrait PNG retains the full reading and privacy qualification · 1080×1350; c53dd9a027f928d2f211d1d02e43ea7cad22aaed41cb7545fa8f45ffe9f81539
+PASS  Solar relocated-2024: calendar marks the displayed UTC instant with honest uncertainty
+PASS  Solar: relocation rebuilds the image while preserving the solar instant and calendar identity
+PASS  Solar relocated 390: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar: known time without birthplace remains planets-only without a noon claim
+PASS  Solar known-no-place-2024: genuine portrait PNG retains the full reading and privacy qualification · 1080×1350; b8ba38353754bea22cd0de9917a1d3efa12c532215ce29f3b0eb4ec5c26b829a
+PASS  Solar known-no-place-2024: calendar marks the displayed UTC instant with honest uncertainty
+PASS  Solar known-no-place 390: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar: failed PNG encoding keeps the valid unknown-time wheel and calendar
+PASS  Solar unknown-2024: calendar marks the displayed UTC instant with honest uncertainty
+PASS  Solar unknown-2024: genuine portrait PNG retains the full reading and privacy qualification · 1080×1350; 66065f0deb94e5c7cee6edd569e5b59b4b5fd89320b5d3d517094022c7dde794
+PASS  Solar: retry restores image actions without redoing the return
+PASS  Solar unknown 1440: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":160,"right":290.03125},{"height":47.59375,"left":302.03125,"right":439.640625},{"height":47.59375,"left":451.640625,"right":613.484375}]}
+PASS  Solar unknown 390: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar unknown 320: result fits and export controls retain 44px targets · {"pageFits":true,"resultFits":true,"controls":[{"height":47.59375,"left":20,"right":150.03125},{"height":47.59375,"left":162.03125,"right":299.640625},{"height":47.59375,"left":20,"right":181.84375}]}
+PASS  Solar: manual birth fields become ready
+PASS  Solar: saved no-place chart never reuses the manual birthplace
+PASS  Solar: manual unknown time suppresses relocation, angles and houses
+PASS  Solar: cosmetic saved-chart rename preserves the completed return
+PASS  Solar: saved birth edit clears the completed return and its exports
+PASS  Solar: deleting the selected saved chart returns to usable manual inputs
+PASS  Solar: calculation and export traffic remains same-origin GET without birth payloads
+PASS  Solar main: no unhandled exceptions or unexpected console/request failures · {"pageErrors":[],"unexpectedConsole":[],"unexpectedRequests":[]}
+PASS  Solar: initial image-module failure retains a valid return and explicit reload warning
+PASS  Solar module-failure-2024: calendar marks the displayed UTC instant with honest uncertainty
+PASS  Solar: explicit reload permits a fresh image preparation after native module failure
+PASS  Solar image-module failure: no unhandled exceptions or unexpected console/request failures · {"pageErrors":[],"unexpectedConsole":[],"unexpectedRequests":[]}
+PASS  Solar: editing a pending calculation releases the form without exposing old exports
+PASS  Solar: the cancelled module completion does not publish the old result
+PASS  Solar: a fresh calculation uses the edited year after cancellation
+PASS  Solar pending calculation: no unhandled exceptions or unexpected console/request failures · {"pageErrors":[],"unexpectedConsole":[],"unexpectedRequests":[]}
+ALL 46 CHECKS PASS

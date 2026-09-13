@@ -1,0 +1,2046 @@
+{
+  "originalRecords": 340,
+  "ordinaryArchiveMembers": 321,
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 3479,
+      "sha256": "0031ac0685bef863d498dbede35fd55b94d1781886ffd9d8ebe8cd808308046f",
+      "archiveMember": "objects/0031ac0685bef863d498dbede35fd55b94d1781886ffd9d8ebe8cd808308046f.log"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5434,
+      "sha256": "78bc5721c5216bd74d919301650ebdfe0b5d8010534aba1306601d5b5352ffcd",
+      "archiveMember": "objects/78bc5721c5216bd74d919301650ebdfe0b5d8010534aba1306601d5b5352ffcd.log"
+    },
+    {
+      "path": "acceptance-summary.json",
+      "bytes": 1240,
+      "sha256": "6e223d5d0e49ff9156e7dc2e5e97e53f53325b4ede87475f6a86ee9792818a77",
+      "archiveMember": "objects/6e223d5d0e49ff9156e7dc2e5e97e53f53325b4ede87475f6a86ee9792818a77.log"
+    },
+    {
+      "path": "baseline/dist/.phase1-build-receipt.json",
+      "bytes": 710,
+      "sha256": "3c2edec96d4c4ded99978d7418663804bc6a9ebe66bf11592e7e39d54266ffee",
+      "archiveMember": "objects/3c2edec96d4c4ded99978d7418663804bc6a9ebe66bf11592e7e39d54266ffee.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/cold-read.md",
+      "bytes": 7497,
+      "sha256": "7f5275df8016e3782bfed790c4e37069cf14a8ecf368386cdd8fcb0c8b72dcba",
+      "archiveMember": "objects/7f5275df8016e3782bfed790c4e37069cf14a8ecf368386cdd8fcb0c8b72dcba.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/career-1280.png",
+      "bytes": 371574,
+      "sha256": "e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1",
+      "archiveMember": "objects/e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/career-360.png",
+      "bytes": 299941,
+      "sha256": "28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa",
+      "archiveMember": "objects/28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/daily-1280.png",
+      "bytes": 404727,
+      "sha256": "6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4",
+      "archiveMember": "objects/6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/daily-360.png",
+      "bytes": 332151,
+      "sha256": "a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a",
+      "archiveMember": "objects/a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+      "bytes": 417189,
+      "sha256": "240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b",
+      "archiveMember": "objects/240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+      "bytes": 384106,
+      "sha256": "943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29",
+      "archiveMember": "objects/943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/love-1280.png",
+      "bytes": 365908,
+      "sha256": "683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f",
+      "archiveMember": "objects/683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/love-360.png",
+      "bytes": 299028,
+      "sha256": "8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f",
+      "archiveMember": "objects/8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/manifest.json",
+      "bytes": 12353,
+      "sha256": "8cc9454f8d74528a58ffac658de788ed1c503aa157e12282ab840429a720ec20",
+      "archiveMember": "objects/8cc9454f8d74528a58ffac658de788ed1c503aa157e12282ab840429a720ec20.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/monthly-1280.png",
+      "bytes": 519158,
+      "sha256": "976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3",
+      "archiveMember": "objects/976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/monthly-360.png",
+      "bytes": 428404,
+      "sha256": "449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d",
+      "archiveMember": "objects/449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/today-1280.png",
+      "bytes": 763381,
+      "sha256": "df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355",
+      "archiveMember": "objects/df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/today-360.png",
+      "bytes": 649907,
+      "sha256": "bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d",
+      "archiveMember": "objects/bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+      "bytes": 404786,
+      "sha256": "ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29",
+      "archiveMember": "objects/ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/tomorrow-360.png",
+      "bytes": 324718,
+      "sha256": "a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d",
+      "archiveMember": "objects/a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/weekly-1280.png",
+      "bytes": 483733,
+      "sha256": "0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498",
+      "archiveMember": "objects/0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/weekly-360.png",
+      "bytes": 396663,
+      "sha256": "9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f",
+      "archiveMember": "objects/9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/yearly-1280.png",
+      "bytes": 1433284,
+      "sha256": "cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e",
+      "archiveMember": "objects/cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e.log"
+    },
+    {
+      "path": "baseline/docs/acceptance/phase1/screenshots/yearly-360.png",
+      "bytes": 1211105,
+      "sha256": "0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67",
+      "archiveMember": "objects/0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67.log"
+    },
+    {
+      "path": "baseline/manifest.json",
+      "bytes": 4033,
+      "sha256": "130488c42c29332cf9b9736cdcc119e1819f2e5e4c3d041ee7410a5c2162d43a",
+      "archiveMember": "objects/130488c42c29332cf9b9736cdcc119e1819f2e5e4c3d041ee7410a5c2162d43a.log"
+    },
+    {
+      "path": "build.log",
+      "bytes": 282741,
+      "sha256": "45f27d0e26d7d90bc3e9c94987131dc0d0675cbb668f0e8da86f9c1c4909e679",
+      "archiveMember": "objects/45f27d0e26d7d90bc3e9c94987131dc0d0675cbb668f0e8da86f9c1c4909e679.log"
+    },
+    {
+      "path": "capture-comparison.json",
+      "bytes": 5252,
+      "sha256": "ea9dea2433e455a8a50c8545b3d89a40273e50d2a1ac76b5e8ec9d769728f4c6",
+      "archiveMember": "objects/ea9dea2433e455a8a50c8545b3d89a40273e50d2a1ac76b5e8ec9d769728f4c6.log"
+    },
+    {
+      "path": "captures.log",
+      "bytes": 1427,
+      "sha256": "118f98a3c2491806bcdcd4edee3800bb6ecff74f02f0261ecf513e6a930fc2f9",
+      "archiveMember": "objects/118f98a3c2491806bcdcd4edee3800bb6ecff74f02f0261ecf513e6a930fc2f9.log"
+    },
+    {
+      "path": "check.log",
+      "bytes": 4438,
+      "sha256": "a5c38979eaefc24a6ac82acead9d9b217a15271f3b08bbc87a47808a13b4fd8a",
+      "archiveMember": "objects/a5c38979eaefc24a6ac82acead9d9b217a15271f3b08bbc87a47808a13b4fd8a.log"
+    },
+    {
+      "path": "final-captures/dist/.phase1-build-receipt.json",
+      "bytes": 710,
+      "sha256": "7488904d2276fa7aee24547f1c19640ff0a50e7c8b4fc41e2877345d3284dc4c",
+      "archiveMember": "objects/7488904d2276fa7aee24547f1c19640ff0a50e7c8b4fc41e2877345d3284dc4c.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/career-1280.png",
+      "bytes": 371574,
+      "sha256": "e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1",
+      "archiveMember": "objects/e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/career-360.png",
+      "bytes": 299941,
+      "sha256": "28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa",
+      "archiveMember": "objects/28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/daily-1280.png",
+      "bytes": 404727,
+      "sha256": "6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4",
+      "archiveMember": "objects/6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/daily-360.png",
+      "bytes": 332151,
+      "sha256": "a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a",
+      "archiveMember": "objects/a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+      "bytes": 417189,
+      "sha256": "240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b",
+      "archiveMember": "objects/240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+      "bytes": 384106,
+      "sha256": "943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29",
+      "archiveMember": "objects/943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/love-1280.png",
+      "bytes": 365908,
+      "sha256": "683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f",
+      "archiveMember": "objects/683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/love-360.png",
+      "bytes": 299028,
+      "sha256": "8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f",
+      "archiveMember": "objects/8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/manifest.json",
+      "bytes": 12353,
+      "sha256": "4871bd3c16dc24d31a41d0886c326aa60bd41a4701771acd65eb6fc59c69358d",
+      "archiveMember": "objects/4871bd3c16dc24d31a41d0886c326aa60bd41a4701771acd65eb6fc59c69358d.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/monthly-1280.png",
+      "bytes": 519158,
+      "sha256": "976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3",
+      "archiveMember": "objects/976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/monthly-360.png",
+      "bytes": 428404,
+      "sha256": "449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d",
+      "archiveMember": "objects/449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/today-1280.png",
+      "bytes": 763381,
+      "sha256": "df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355",
+      "archiveMember": "objects/df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/today-360.png",
+      "bytes": 649907,
+      "sha256": "bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d",
+      "archiveMember": "objects/bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+      "bytes": 404786,
+      "sha256": "ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29",
+      "archiveMember": "objects/ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/tomorrow-360.png",
+      "bytes": 324718,
+      "sha256": "a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d",
+      "archiveMember": "objects/a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/weekly-1280.png",
+      "bytes": 483733,
+      "sha256": "0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498",
+      "archiveMember": "objects/0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/weekly-360.png",
+      "bytes": 396663,
+      "sha256": "9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f",
+      "archiveMember": "objects/9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/yearly-1280.png",
+      "bytes": 1433284,
+      "sha256": "cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e",
+      "archiveMember": "objects/cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e.log"
+    },
+    {
+      "path": "final-captures/docs/acceptance/phase1/screenshots/yearly-360.png",
+      "bytes": 1211105,
+      "sha256": "0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67",
+      "archiveMember": "objects/0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67.log"
+    },
+    {
+      "path": "final-source/.github/phase1-scope-allowance.json",
+      "bytes": 1505,
+      "sha256": "ca347fa6deb0cd07f9f28c08a543deaca0d7c84f1abd2f5593e1f519f47cd8aa",
+      "archiveMember": "objects/ca347fa6deb0cd07f9f28c08a543deaca0d7c84f1abd2f5593e1f519f47cd8aa.log"
+    },
+    {
+      "path": "final-source/.github/workflows/site-check.yml",
+      "bytes": 16456,
+      "sha256": "5eda3577f373103788d2305fe8ae898393efa89b2bd38d0f0e5142d29ab6c166",
+      "archiveMember": "objects/5eda3577f373103788d2305fe8ae898393efa89b2bd38d0f0e5142d29ab6c166.log"
+    },
+    {
+      "path": "final-source/i18n-additions.md",
+      "bytes": 185898,
+      "sha256": "a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812",
+      "archiveMember": "objects/a5477a59ccc43cc3edad8b44904acda4fd2bcea7e67e97909f8cf683e06ba812.log"
+    },
+    {
+      "path": "final-source/package-lock.json",
+      "bytes": 436565,
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+      "archiveMember": "objects/bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3.log"
+    },
+    {
+      "path": "final-source/package.json",
+      "bytes": 11388,
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "archiveMember": "objects/a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c.log"
+    },
+    {
+      "path": "final-source/scripts/build-i18n-additions.mjs",
+      "bytes": 17140,
+      "sha256": "7cae770860a39d5423c8f4c6e5cad4df35261b41d55e1fdad51e622a55494e82",
+      "archiveMember": "objects/7cae770860a39d5423c8f4c6e5cad4df35261b41d55e1fdad51e622a55494e82.log"
+    },
+    {
+      "path": "final-source/scripts/phase1-scope-guard.mjs",
+      "bytes": 8343,
+      "sha256": "53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d",
+      "archiveMember": "objects/53c8452a2350eda3fb6541066846a88ad2111df46c803db807e91212c02c282d.log"
+    },
+    {
+      "path": "final-source/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "archiveMember": "objects/9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a.log"
+    },
+    {
+      "path": "final-source/src/islands/ChartCalculator.registry-bridge.test.ts",
+      "bytes": 1781,
+      "sha256": "aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e",
+      "archiveMember": "objects/aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e.log"
+    },
+    {
+      "path": "final-source/src/islands/ChartCalculator.tsx",
+      "bytes": 120399,
+      "sha256": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420",
+      "archiveMember": "objects/a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420.log"
+    },
+    {
+      "path": "final-source/src/islands/MoonPhaseTool.reference.test.ts",
+      "bytes": 7301,
+      "sha256": "188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8",
+      "archiveMember": "objects/188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8.log"
+    },
+    {
+      "path": "final-source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 11017,
+      "sha256": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966",
+      "archiveMember": "objects/0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966.log"
+    },
+    {
+      "path": "final-source/src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2",
+      "archiveMember": "objects/ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2.log"
+    },
+    {
+      "path": "final-source/src/islands/explorer/lens/copy.ts",
+      "bytes": 13544,
+      "sha256": "7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f",
+      "archiveMember": "objects/7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f.log"
+    },
+    {
+      "path": "final-source/src/islands/explorer/tour/copy.ts",
+      "bytes": 55749,
+      "sha256": "458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e",
+      "archiveMember": "objects/458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e.log"
+    },
+    {
+      "path": "final-source/src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "archiveMember": "objects/e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79.log"
+    },
+    {
+      "path": "final-source/src/lib/engine/lite.ts",
+      "bytes": 2498,
+      "sha256": "6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057",
+      "archiveMember": "objects/6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057.log"
+    },
+    {
+      "path": "final-source/src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba",
+      "archiveMember": "objects/625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/client.ts",
+      "bytes": 802,
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75",
+      "archiveMember": "objects/5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/en.ts",
+      "bytes": 22136,
+      "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f",
+      "archiveMember": "objects/6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/es.ts",
+      "bytes": 24319,
+      "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f",
+      "archiveMember": "objects/0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27902,
+      "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0",
+      "archiveMember": "objects/326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/it.ts",
+      "bytes": 26682,
+      "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c",
+      "archiveMember": "objects/dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25854,
+      "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5",
+      "archiveMember": "objects/be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38540,
+      "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338",
+      "archiveMember": "objects/87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338.log"
+    },
+    {
+      "path": "final-source/src/lib/i18n/ui/server.ts",
+      "bytes": 614,
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9",
+      "archiveMember": "objects/5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9.log"
+    },
+    {
+      "path": "final-source/src/lib/moon-certainty.test.tsx",
+      "bytes": 11558,
+      "sha256": "3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003",
+      "archiveMember": "objects/3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003.log"
+    },
+    {
+      "path": "final-source/src/lib/reference-captions.test.tsx",
+      "bytes": 5455,
+      "sha256": "e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab",
+      "archiveMember": "objects/e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab.log"
+    },
+    {
+      "path": "final-source/src/lib/share-card-copy.ts",
+      "bytes": 11216,
+      "sha256": "fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889",
+      "archiveMember": "objects/fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889.log"
+    },
+    {
+      "path": "final-source/src/lib/share-card.test.ts",
+      "bytes": 16715,
+      "sha256": "ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084",
+      "archiveMember": "objects/ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084.log"
+    },
+    {
+      "path": "final-source/src/lib/share-card.ts",
+      "bytes": 55760,
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "archiveMember": "objects/d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c.log"
+    },
+    {
+      "path": "final-source/src/lib/share-positions.ts",
+      "bytes": 7908,
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e",
+      "archiveMember": "objects/cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e.log"
+    },
+    {
+      "path": "final-source/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "archiveMember": "objects/c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb.log"
+    },
+    {
+      "path": "final-source/src/pages/es/moon-phase/index.astro",
+      "bytes": 3609,
+      "sha256": "19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d",
+      "archiveMember": "objects/19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d.log"
+    },
+    {
+      "path": "final-source/src/pages/fr/moon-phase/index.astro",
+      "bytes": 3823,
+      "sha256": "b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f",
+      "archiveMember": "objects/b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f.log"
+    },
+    {
+      "path": "final-source/src/pages/it/moon-phase/index.astro",
+      "bytes": 3680,
+      "sha256": "246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae",
+      "archiveMember": "objects/246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae.log"
+    },
+    {
+      "path": "final-source/src/pages/moon-phase/index.astro",
+      "bytes": 7008,
+      "sha256": "79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010",
+      "archiveMember": "objects/79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010.log"
+    },
+    {
+      "path": "final-source/src/pages/pt/moon-phase/index.astro",
+      "bytes": 3527,
+      "sha256": "f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8",
+      "archiveMember": "objects/f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8.log"
+    },
+    {
+      "path": "final-source/src/pages/ru/moon-phase/index.astro",
+      "bytes": 4081,
+      "sha256": "14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241",
+      "archiveMember": "objects/14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241.log"
+    },
+    {
+      "path": "final-source/src/server/chart-preview-model.ts",
+      "bytes": 2056,
+      "sha256": "c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957",
+      "archiveMember": "objects/c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957.log"
+    },
+    {
+      "path": "final-source/src/server/chart-preview.ts",
+      "bytes": 9897,
+      "sha256": "4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc",
+      "archiveMember": "objects/4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc.log"
+    },
+    {
+      "path": "final-source/src/strings/additions.fr.mjs",
+      "bytes": 49891,
+      "sha256": "511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2",
+      "archiveMember": "objects/511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2.log"
+    },
+    {
+      "path": "final-source/src/strings/additions.it.mjs",
+      "bytes": 48086,
+      "sha256": "849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61",
+      "archiveMember": "objects/849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61.log"
+    },
+    {
+      "path": "final-source/src/strings/additions.pt.mjs",
+      "bytes": 47872,
+      "sha256": "f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e",
+      "archiveMember": "objects/f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e.log"
+    },
+    {
+      "path": "final-source/tests/api/og-chart.test.ts",
+      "bytes": 12273,
+      "sha256": "1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2",
+      "archiveMember": "objects/1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2.log"
+    },
+    {
+      "path": "final-source/tests/local-date-reference-drive.mjs",
+      "bytes": 22718,
+      "sha256": "88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc",
+      "archiveMember": "objects/88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc.log"
+    },
+    {
+      "path": "final-source/tests/moon-result-ownership-drive.mjs",
+      "bytes": 14874,
+      "sha256": "69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd",
+      "archiveMember": "objects/69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd.log"
+    },
+    {
+      "path": "final-source/tests/reference-caption-drive.mjs",
+      "bytes": 19270,
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+      "archiveMember": "objects/8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f.log"
+    },
+    {
+      "path": "final-source/tests/t17-positions-share.mjs",
+      "bytes": 66990,
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+      "archiveMember": "objects/bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31.log"
+    },
+    {
+      "path": "final-source/tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a",
+      "archiveMember": "objects/20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a.log"
+    },
+    {
+      "path": "final-source/vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+      "bytes": 36591,
+      "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+      "archiveMember": "objects/09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e.log"
+    },
+    {
+      "path": "final-source-manifest.json",
+      "bytes": 8424,
+      "sha256": "5e32126465b3ee095c04367a65a0ad499e7b9d1148a1ff01b49d75f1e9370a4a",
+      "archiveMember": "objects/5e32126465b3ee095c04367a65a0ad499e7b9d1148a1ff01b49d75f1e9370a4a.log"
+    },
+    {
+      "path": "full-tests.log",
+      "bytes": 33753,
+      "sha256": "c7ac3a9ac70dc0ad441c9b1002028c371601d25dd5e0aca33f8e22355f8a2fdc",
+      "archiveMember": "objects/c7ac3a9ac70dc0ad441c9b1002028c371601d25dd5e0aca33f8e22355f8a2fdc.log"
+    },
+    {
+      "path": "i18n-generation.log",
+      "bytes": 116,
+      "sha256": "4e59f75b1f3fa4c7642addd9adc1570fe4b3276cf8c56bd224bde38c4c3694b4",
+      "archiveMember": "objects/4e59f75b1f3fa4c7642addd9adc1570fe4b3276cf8c56bd224bde38c4c3694b4.log"
+    },
+    {
+      "path": "metadata-tests.log",
+      "bytes": 590,
+      "sha256": "7713143e650b6092dcf08b6b378865ef63e602ddfa7aa0ccf1c88606f7cfa83b",
+      "archiveMember": "objects/7713143e650b6092dcf08b6b378865ef63e602ddfa7aa0ccf1c88606f7cfa83b.log"
+    },
+    {
+      "path": "native-date/candidate-build.json",
+      "bytes": 211738,
+      "sha256": "d8703fb07c9d3c390db683d0964806996f23fbe8ede18780de4fda5c61827caf",
+      "archiveMember": "objects/d8703fb07c9d3c390db683d0964806996f23fbe8ede18780de4fda5c61827caf.log"
+    },
+    {
+      "path": "native-date/candidate-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8",
+      "archiveMember": "objects/ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8.log"
+    },
+    {
+      "path": "native-date/candidate-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e",
+      "archiveMember": "objects/1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e.log"
+    },
+    {
+      "path": "native-date/candidate-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a",
+      "archiveMember": "objects/b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a.log"
+    },
+    {
+      "path": "native-date/candidate.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9",
+      "archiveMember": "objects/3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9.log"
+    },
+    {
+      "path": "native-date/candidate.js",
+      "bytes": 2213380,
+      "sha256": "66082b03425865fc53711f58c6bc5d960570a90f5f1acd587d7bbc0e51192e7c",
+      "archiveMember": "objects/66082b03425865fc53711f58c6bc5d960570a90f5f1acd587d7bbc0e51192e7c.log"
+    },
+    {
+      "path": "native-date/chart-Pacific-Apia-rejected.png",
+      "bytes": 60383,
+      "sha256": "194189e248ed3ec2991377399999ee367367f7bba62d9eef35c9e65352639e75",
+      "archiveMember": "objects/194189e248ed3ec2991377399999ee367367f7bba62d9eef35c9e65352639e75.log"
+    },
+    {
+      "path": "native-date/chart-Pacific-Guam-rejected.png",
+      "bytes": 60481,
+      "sha256": "7caef68fdb14c977dcbd69bd0e6d8eb5c0808c9451ae0970afd5fdffd80884d8",
+      "archiveMember": "objects/7caef68fdb14c977dcbd69bd0e6d8eb5c0808c9451ae0970afd5fdffd80884d8.log"
+    },
+    {
+      "path": "native-date/chart-Pacific-Kiritimati-rejected.png",
+      "bytes": 60479,
+      "sha256": "93f9296f4ac81efa09bc9b85bda7c0a2905f23591203178b25f1d5253ec737d3",
+      "archiveMember": "objects/93f9296f4ac81efa09bc9b85bda7c0a2905f23591203178b25f1d5253ec737d3.log"
+    },
+    {
+      "path": "native-date/chart-Pacific-Kwajalein-rejected.png",
+      "bytes": 60637,
+      "sha256": "160745307bf15454b542f42a3f5acfd53e1e8ad43bbc0117d66a24a9d3b90022",
+      "archiveMember": "objects/160745307bf15454b542f42a3f5acfd53e1e8ad43bbc0117d66a24a9d3b90022.log"
+    },
+    {
+      "path": "native-date/fixture-entry.tsx.log",
+      "bytes": 2140,
+      "sha256": "f03557b01b65a4eeba34680e514274a960becd44e0340e670a23a6c236a0de5d",
+      "archiveMember": "objects/f03557b01b65a4eeba34680e514274a960becd44e0340e670a23a6c236a0de5d.log"
+    },
+    {
+      "path": "native-date/moon-Pacific-Apia-rejected.png",
+      "bytes": 43877,
+      "sha256": "7bda687d7f232421fad1790c603bd9dee1419819697f422eed72c866bd005878",
+      "archiveMember": "objects/7bda687d7f232421fad1790c603bd9dee1419819697f422eed72c866bd005878.log"
+    },
+    {
+      "path": "native-date/moon-Pacific-Guam-rejected.png",
+      "bytes": 43996,
+      "sha256": "c74593d60cebe36e7f2018d5e52ba4ae48711901dcaf8dfe8f485694242b941d",
+      "archiveMember": "objects/c74593d60cebe36e7f2018d5e52ba4ae48711901dcaf8dfe8f485694242b941d.log"
+    },
+    {
+      "path": "native-date/moon-Pacific-Kiritimati-rejected.png",
+      "bytes": 43989,
+      "sha256": "cb4006bb6092e1da000715723f1a87277455183698d22cba06251ce02a639b81",
+      "archiveMember": "objects/cb4006bb6092e1da000715723f1a87277455183698d22cba06251ce02a639b81.log"
+    },
+    {
+      "path": "native-date/moon-Pacific-Kwajalein-rejected.png",
+      "bytes": 44174,
+      "sha256": "6f3183b3cfce8cae7a00167ff8e3d8b18ee23dc0832c47d928932295bd39ae7f",
+      "archiveMember": "objects/6f3183b3cfce8cae7a00167ff8e3d8b18ee23dc0832c47d928932295bd39ae7f.log"
+    },
+    {
+      "path": "native-date/result.json",
+      "bytes": 188243,
+      "sha256": "91a45591b2bae17f6e02c9eca9b151b2d9c5a10766ff810466170c3827327de6",
+      "archiveMember": "objects/91a45591b2bae17f6e02c9eca9b151b2d9c5a10766ff810466170c3827327de6.log"
+    },
+    {
+      "path": "native-date.log",
+      "bytes": 2042,
+      "sha256": "2aca8db551701ce9c6f1656957075260c77b2cd0e8dd9fcff9a73414bdf9caa5",
+      "archiveMember": "objects/2aca8db551701ce9c6f1656957075260c77b2cd0e8dd9fcff9a73414bdf9caa5.log"
+    },
+    {
+      "path": "native-moon-ownership/fixture.css",
+      "bytes": 2483,
+      "sha256": "7a834ac86e5041e05d9c18a835a937e95f69effe2bcdbb5744d9a1186d3b74ab",
+      "archiveMember": "objects/7a834ac86e5041e05d9c18a835a937e95f69effe2bcdbb5744d9a1186d3b74ab.log"
+    },
+    {
+      "path": "native-moon-ownership/fixture.js",
+      "bytes": 411272,
+      "sha256": "a974778543874cc309329a446380c49dea198f2cff4b38afc3caacfa1a85b6b1",
+      "archiveMember": "objects/a974778543874cc309329a446380c49dea198f2cff4b38afc3caacfa1a85b6b1.log"
+    },
+    {
+      "path": "native-moon-ownership/result.json",
+      "bytes": 18684,
+      "sha256": "dda30d085727ef2537f26757424393a9c1dd4e5d120f431a931740c6f26790c1",
+      "archiveMember": "objects/dda30d085727ef2537f26757424393a9c1dd4e5d120f431a931740c6f26790c1.log"
+    },
+    {
+      "path": "native-moon-ownership.log",
+      "bytes": 14526,
+      "sha256": "7383d17bf2f31c232bb78568f1edbb183ed0e131dd1a02386c6ac22dd1197022",
+      "archiveMember": "objects/7383d17bf2f31c232bb78568f1edbb183ed0e131dd1a02386c6ac22dd1197022.log"
+    },
+    {
+      "path": "native-reference/candidate-build.json",
+      "bytes": 238598,
+      "sha256": "f5c1ef4f4f69f2592e2456591d7da266bc660150999dbe184b18839277d1c508",
+      "archiveMember": "objects/f5c1ef4f4f69f2592e2456591d7da266bc660150999dbe184b18839277d1c508.log"
+    },
+    {
+      "path": "native-reference/candidate-en-known-full.png",
+      "bytes": 270753,
+      "sha256": "da21f544071a027c11e23e3936352733463cdd62e0a13f9b09fa0f8c10b3de87",
+      "archiveMember": "objects/da21f544071a027c11e23e3936352733463cdd62e0a13f9b09fa0f8c10b3de87.log"
+    },
+    {
+      "path": "native-reference/candidate-en-reference-full.png",
+      "bytes": 246113,
+      "sha256": "8c7f89bc49d086d3f59baee788c32602bd74dc719b530a93d6d0d4483bd93ef0",
+      "archiveMember": "objects/8c7f89bc49d086d3f59baee788c32602bd74dc719b530a93d6d0d4483bd93ef0.log"
+    },
+    {
+      "path": "native-reference/candidate-en-reference-sheet.png",
+      "bytes": 652395,
+      "sha256": "695df0862b5ff78a1409eebce45041d1518441dcb563ecce45fa4408f563ba52",
+      "archiveMember": "objects/695df0862b5ff78a1409eebce45041d1518441dcb563ecce45fa4408f563ba52.log"
+    },
+    {
+      "path": "native-reference/candidate-es-reference-full.png",
+      "bytes": 246242,
+      "sha256": "5a0e5b3e8e350562d4fc1010bcd7ddcb55b3c2bd09dcba765a8ffceaa8dc5fe7",
+      "archiveMember": "objects/5a0e5b3e8e350562d4fc1010bcd7ddcb55b3c2bd09dcba765a8ffceaa8dc5fe7.log"
+    },
+    {
+      "path": "native-reference/candidate-fr-reference-full.png",
+      "bytes": 245923,
+      "sha256": "0cdd85be1e409edeb1e9108fdcca661fe47afac544d34220e0cc66da650cf5e5",
+      "archiveMember": "objects/0cdd85be1e409edeb1e9108fdcca661fe47afac544d34220e0cc66da650cf5e5.log"
+    },
+    {
+      "path": "native-reference/candidate-it-reference-full.png",
+      "bytes": 249346,
+      "sha256": "0f7fc4616ca75785487c5e667250374feaa0dd2591d9257ceb66601396c6c55c",
+      "archiveMember": "objects/0f7fc4616ca75785487c5e667250374feaa0dd2591d9257ceb66601396c6c55c.log"
+    },
+    {
+      "path": "native-reference/candidate-pt-reference-full.png",
+      "bytes": 248814,
+      "sha256": "4fdcfb8d86bba7238af7069427f8ab12945e3077f9ff3f523d8b54b6379a20bf",
+      "archiveMember": "objects/4fdcfb8d86bba7238af7069427f8ab12945e3077f9ff3f523d8b54b6379a20bf.log"
+    },
+    {
+      "path": "native-reference/candidate-ru-reference-full.png",
+      "bytes": 248689,
+      "sha256": "4d9532ea937ff84975bb7614a2e6efe1957566f3d3ef46907bde243043ac8c8e",
+      "archiveMember": "objects/4d9532ea937ff84975bb7614a2e6efe1957566f3d3ef46907bde243043ac8c8e.log"
+    },
+    {
+      "path": "native-reference/candidate.css",
+      "bytes": 29785,
+      "sha256": "8a5d66dec2ed9e4ce9e900151e6c390c7ad384466937c458471ce68a8aeee08f",
+      "archiveMember": "objects/8a5d66dec2ed9e4ce9e900151e6c390c7ad384466937c458471ce68a8aeee08f.log"
+    },
+    {
+      "path": "native-reference/candidate.js",
+      "bytes": 2216296,
+      "sha256": "79d4fd0603e553be9226325772b46835c4e8afeeb094a81eb79b2faeef7b9026",
+      "archiveMember": "objects/79d4fd0603e553be9226325772b46835c4e8afeeb094a81eb79b2faeef7b9026.log"
+    },
+    {
+      "path": "native-reference/caption-en.png",
+      "bytes": 61583,
+      "sha256": "239e44454dc88f67dea75d2db3cc32e67be994bdd90453b918de56b749f8c617",
+      "archiveMember": "objects/239e44454dc88f67dea75d2db3cc32e67be994bdd90453b918de56b749f8c617.log"
+    },
+    {
+      "path": "native-reference/caption-es.png",
+      "bytes": 62899,
+      "sha256": "7f372f58aac2df1aea9f1c344a9cc7a80358f49d1763cefb417ba1a72eb24abc",
+      "archiveMember": "objects/7f372f58aac2df1aea9f1c344a9cc7a80358f49d1763cefb417ba1a72eb24abc.log"
+    },
+    {
+      "path": "native-reference/caption-fr.png",
+      "bytes": 63665,
+      "sha256": "fd842d191a51e8e6a43415e94f4fa65c6494ecf8c541edc55e99a89b34724b74",
+      "archiveMember": "objects/fd842d191a51e8e6a43415e94f4fa65c6494ecf8c541edc55e99a89b34724b74.log"
+    },
+    {
+      "path": "native-reference/caption-it.png",
+      "bytes": 63714,
+      "sha256": "ae1bcded621b058c8f0fef5afee67aa0d9defdfb712f72a9fcbf2b793a8752b7",
+      "archiveMember": "objects/ae1bcded621b058c8f0fef5afee67aa0d9defdfb712f72a9fcbf2b793a8752b7.log"
+    },
+    {
+      "path": "native-reference/caption-pt.png",
+      "bytes": 64039,
+      "sha256": "11163eff2204cec14edc01b607f4f98084960aa078b0bdc55b71b1fd39e2e767",
+      "archiveMember": "objects/11163eff2204cec14edc01b607f4f98084960aa078b0bdc55b71b1fd39e2e767.log"
+    },
+    {
+      "path": "native-reference/caption-ru.png",
+      "bytes": 65841,
+      "sha256": "856d4903d18e9201ab1d9abb9bafa7d68956a740ec95d19f1d4b0d765823385b",
+      "archiveMember": "objects/856d4903d18e9201ab1d9abb9bafa7d68956a740ec95d19f1d4b0d765823385b.log"
+    },
+    {
+      "path": "native-reference/fixture-entry.tsx.log",
+      "bytes": 3617,
+      "sha256": "e0383e387e7659b048e5cf8539b975f510f8ec2deaa6c2a42faa5ac432e6fd8e",
+      "archiveMember": "objects/e0383e387e7659b048e5cf8539b975f510f8ec2deaa6c2a42faa5ac432e6fd8e.log"
+    },
+    {
+      "path": "native-reference/result.json",
+      "bytes": 196435,
+      "sha256": "d2df3ba6c7e8f220fd73acc2941987515a43e5623439e112b7bd8d73f1e0f38b",
+      "archiveMember": "objects/d2df3ba6c7e8f220fd73acc2941987515a43e5623439e112b7bd8d73f1e0f38b.log"
+    },
+    {
+      "path": "native-reference.log",
+      "bytes": 51,
+      "sha256": "90a737d42949e9e44bc48fcea06c785ca87e3f8df6c60ea62a4f82407d00df32",
+      "archiveMember": "objects/90a737d42949e9e44bc48fcea06c785ca87e3f8df6c60ea62a4f82407d00df32.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-1280-known.png",
+      "bytes": 188630,
+      "sha256": "958d68fffcfe9dfb689ad257947c4f86ff743a71d9025bbf277dc7abeb2b9380",
+      "archiveMember": "objects/958d68fffcfe9dfb689ad257947c4f86ff743a71d9025bbf277dc7abeb2b9380.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-1280-reference.png",
+      "bytes": 136819,
+      "sha256": "145cc0a851b0cc2d3790ea3d0a241a4ec30201f7567fdee5f60507323b053e65",
+      "archiveMember": "objects/145cc0a851b0cc2d3790ea3d0a241a4ec30201f7567fdee5f60507323b053e65.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-1280.json",
+      "bytes": 12777,
+      "sha256": "2c5add9edf3a18e3b35109b22da08a42ef038b7ee45060f696b39b1ea55ab844",
+      "archiveMember": "objects/2c5add9edf3a18e3b35109b22da08a42ef038b7ee45060f696b39b1ea55ab844.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-390-known.png",
+      "bytes": 122285,
+      "sha256": "738c9e73b3416b642f9dd4c894112500672577e22d52caead2812dbe0569bf5b",
+      "archiveMember": "objects/738c9e73b3416b642f9dd4c894112500672577e22d52caead2812dbe0569bf5b.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-390-reference.png",
+      "bytes": 100810,
+      "sha256": "0aca4ed1e6d533eeda42a68dca0f2bc4c1630a34e0ba49066dcea597793e5662",
+      "archiveMember": "objects/0aca4ed1e6d533eeda42a68dca0f2bc4c1630a34e0ba49066dcea597793e5662.log"
+    },
+    {
+      "path": "normal-pages/en-moon-mode-390.json",
+      "bytes": 12773,
+      "sha256": "ed23e7ecb3e59d10446c266910911ce47888da8360836a52af23cd2c0297ef14",
+      "archiveMember": "objects/ed23e7ecb3e59d10446c266910911ce47888da8360836a52af23cd2c0297ef14.log"
+    },
+    {
+      "path": "normal-pages/en-tool-1280-local-reference.png",
+      "bytes": 185045,
+      "sha256": "23887afda2e1f1adef88f7d5a1638c90a47153ed8a0b3b744d40a74d19a83ce2",
+      "archiveMember": "objects/23887afda2e1f1adef88f7d5a1638c90a47153ed8a0b3b744d40a74d19a83ce2.log"
+    },
+    {
+      "path": "normal-pages/en-tool-1280-utc-reference.png",
+      "bytes": 178328,
+      "sha256": "a99de55818fbc89b5d0101d8413777b5e13ac2c89dbe706ef01269a4d4eee472",
+      "archiveMember": "objects/a99de55818fbc89b5d0101d8413777b5e13ac2c89dbe706ef01269a4d4eee472.log"
+    },
+    {
+      "path": "normal-pages/en-tool-1280.json",
+      "bytes": 54771,
+      "sha256": "1da27a8830c4a38edd4516a9e50aa27c14bcd6539c4cc6254e0c88d8a8395ade",
+      "archiveMember": "objects/1da27a8830c4a38edd4516a9e50aa27c14bcd6539c4cc6254e0c88d8a8395ade.log"
+    },
+    {
+      "path": "normal-pages/en-tool-390-local-reference.png",
+      "bytes": 124139,
+      "sha256": "5ecf929c491477ad76338d30021cd88f4631d29d63cdd8a253b7393274548bfd",
+      "archiveMember": "objects/5ecf929c491477ad76338d30021cd88f4631d29d63cdd8a253b7393274548bfd.log"
+    },
+    {
+      "path": "normal-pages/en-tool-390-utc-reference.png",
+      "bytes": 120013,
+      "sha256": "4ef41d85de24c227ad6dc35cd4262c902e5386d1322dbb00e53734eca3e6d3ba",
+      "archiveMember": "objects/4ef41d85de24c227ad6dc35cd4262c902e5386d1322dbb00e53734eca3e6d3ba.log"
+    },
+    {
+      "path": "normal-pages/en-tool-390.json",
+      "bytes": 54767,
+      "sha256": "9e218159ae08b313f73391b65b60171ce2cfd2e104eb78fad4d848bb8230498a",
+      "archiveMember": "objects/9e218159ae08b313f73391b65b60171ce2cfd2e104eb78fad4d848bb8230498a.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-1280-known.png",
+      "bytes": 140830,
+      "sha256": "1fec9ae1440acf896ea02d3da0ac7279bb59b260dd12ecb1367fb5e17a01e657",
+      "archiveMember": "objects/1fec9ae1440acf896ea02d3da0ac7279bb59b260dd12ecb1367fb5e17a01e657.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-1280-reference.png",
+      "bytes": 165741,
+      "sha256": "68ca4996968b47d8cfa1e683f0a0b2fe5947a40e17856dc2e5b57b19bcc4e2f5",
+      "archiveMember": "objects/68ca4996968b47d8cfa1e683f0a0b2fe5947a40e17856dc2e5b57b19bcc4e2f5.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-1280.json",
+      "bytes": 14228,
+      "sha256": "345d6cc700599736eec0706ff450c28e3cadf35478742bfd76b6e6525f9ab5ca",
+      "archiveMember": "objects/345d6cc700599736eec0706ff450c28e3cadf35478742bfd76b6e6525f9ab5ca.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-390-known.png",
+      "bytes": 91810,
+      "sha256": "a497de40f06d96c6b1bb4f658cb8eecea96be7133b45831df71273bd53087299",
+      "archiveMember": "objects/a497de40f06d96c6b1bb4f658cb8eecea96be7133b45831df71273bd53087299.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-390-reference.png",
+      "bytes": 111377,
+      "sha256": "02a49470e593a641f82cbb672dc624020eb4e06b98095d71e6aaa399acd7baf3",
+      "archiveMember": "objects/02a49470e593a641f82cbb672dc624020eb4e06b98095d71e6aaa399acd7baf3.log"
+    },
+    {
+      "path": "normal-pages/es-moon-mode-390.json",
+      "bytes": 14223,
+      "sha256": "e390ee74c8a46d5c3171a7b8f380dbba78b33496f6cfe30a90e40a1661e65d84",
+      "archiveMember": "objects/e390ee74c8a46d5c3171a7b8f380dbba78b33496f6cfe30a90e40a1661e65d84.log"
+    },
+    {
+      "path": "normal-pages/es-tool-1280-local-reference.png",
+      "bytes": 185755,
+      "sha256": "606af6a6ea80e0bcf1f528a31cfca5a66579084ed04b2607cc016c5cc26f0933",
+      "archiveMember": "objects/606af6a6ea80e0bcf1f528a31cfca5a66579084ed04b2607cc016c5cc26f0933.log"
+    },
+    {
+      "path": "normal-pages/es-tool-1280-utc-reference.png",
+      "bytes": 178146,
+      "sha256": "e06dd5dac91300b9b38630be7615a947c0ad9311b4f864b54868e5977b60559b",
+      "archiveMember": "objects/e06dd5dac91300b9b38630be7615a947c0ad9311b4f864b54868e5977b60559b.log"
+    },
+    {
+      "path": "normal-pages/es-tool-1280.json",
+      "bytes": 57201,
+      "sha256": "0db42f0dcd53d69505abedb2e35f8fc97b644d6aff6e4327755d1912dee356e5",
+      "archiveMember": "objects/0db42f0dcd53d69505abedb2e35f8fc97b644d6aff6e4327755d1912dee356e5.log"
+    },
+    {
+      "path": "normal-pages/es-tool-390-local-reference.png",
+      "bytes": 132635,
+      "sha256": "d2580b2b0d0e773aaf4a5ac438e82c499f9303f9f25396f5526cfc2dfb09b590",
+      "archiveMember": "objects/d2580b2b0d0e773aaf4a5ac438e82c499f9303f9f25396f5526cfc2dfb09b590.log"
+    },
+    {
+      "path": "normal-pages/es-tool-390-utc-reference.png",
+      "bytes": 128876,
+      "sha256": "30aa50dee8980644e8c4b570270772653a8b8bcb8d10cc6f248f1c5331dd9474",
+      "archiveMember": "objects/30aa50dee8980644e8c4b570270772653a8b8bcb8d10cc6f248f1c5331dd9474.log"
+    },
+    {
+      "path": "normal-pages/es-tool-390.json",
+      "bytes": 57197,
+      "sha256": "04b0a5c1b41d4edadad9d87f42c7ef75b7b64f6630befa05d2f0ffe40bad9dab",
+      "archiveMember": "objects/04b0a5c1b41d4edadad9d87f42c7ef75b7b64f6630befa05d2f0ffe40bad9dab.log"
+    },
+    {
+      "path": "normal-pages/expected-ui.mjs",
+      "bytes": 221734,
+      "sha256": "1e637d44245a9e698fb089959bd6a9cae3763e21ca1b4aecf77cddaaf56a0207",
+      "archiveMember": "objects/1e637d44245a9e698fb089959bd6a9cae3763e21ca1b4aecf77cddaaf56a0207.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-1280-known.png",
+      "bytes": 145622,
+      "sha256": "da67d244b7239ea3bf384d72528d991817cf0499b3f1e9c38fe4064a715f8dab",
+      "archiveMember": "objects/da67d244b7239ea3bf384d72528d991817cf0499b3f1e9c38fe4064a715f8dab.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-1280-reference.png",
+      "bytes": 160761,
+      "sha256": "7cf0187efcda9c41cbde9794305ec0d58740a9a95a1edde3fc487472a0707e9a",
+      "archiveMember": "objects/7cf0187efcda9c41cbde9794305ec0d58740a9a95a1edde3fc487472a0707e9a.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-1280.json",
+      "bytes": 14553,
+      "sha256": "97075b20625b32b4643cbbf2b343b8caf71c7a3f9534a9c3ba8dc69954374b1b",
+      "archiveMember": "objects/97075b20625b32b4643cbbf2b343b8caf71c7a3f9534a9c3ba8dc69954374b1b.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-390-known.png",
+      "bytes": 97803,
+      "sha256": "8d84db17ad9a59f3cb3fe6088ba8bac3887a9985460c73758b3904fb2e45eed4",
+      "archiveMember": "objects/8d84db17ad9a59f3cb3fe6088ba8bac3887a9985460c73758b3904fb2e45eed4.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-390-reference.png",
+      "bytes": 119001,
+      "sha256": "85876d1cf221dcd8790b101f9aa20868fe911380c2b7056af6512ef3698880ba",
+      "archiveMember": "objects/85876d1cf221dcd8790b101f9aa20868fe911380c2b7056af6512ef3698880ba.log"
+    },
+    {
+      "path": "normal-pages/fr-moon-mode-390.json",
+      "bytes": 13620,
+      "sha256": "e1ae594ee76e39a476c119ab90d26e2545154be6695dd8d94ae7d2374dddea52",
+      "archiveMember": "objects/e1ae594ee76e39a476c119ab90d26e2545154be6695dd8d94ae7d2374dddea52.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-1280-local-reference.png",
+      "bytes": 197514,
+      "sha256": "7ec340605c583a2b472abc6bb7c323fcc2db8d462f59f6d4aefa14881eda8680",
+      "archiveMember": "objects/7ec340605c583a2b472abc6bb7c323fcc2db8d462f59f6d4aefa14881eda8680.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-1280-utc-reference.png",
+      "bytes": 190038,
+      "sha256": "0c49d489975d655f2d5d1ee5f06a2ef512930edb51ad4707870bcbc8f63f6c5d",
+      "archiveMember": "objects/0c49d489975d655f2d5d1ee5f06a2ef512930edb51ad4707870bcbc8f63f6c5d.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-1280.json",
+      "bytes": 60295,
+      "sha256": "3c2dd23cf406ca209deaa403319ddf66471549c2a32e5c250f314a96df8f66b3",
+      "archiveMember": "objects/3c2dd23cf406ca209deaa403319ddf66471549c2a32e5c250f314a96df8f66b3.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-390-local-reference.png",
+      "bytes": 129444,
+      "sha256": "4bd1c8bbd962b4e3a352c91c2f56c6c358840d2acf05d4335b8e91f230390bd0",
+      "archiveMember": "objects/4bd1c8bbd962b4e3a352c91c2f56c6c358840d2acf05d4335b8e91f230390bd0.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-390-utc-reference.png",
+      "bytes": 125082,
+      "sha256": "87d8c8e87c656577a6539f6c843ba45fee9e8b6a69f84f92344a8555f9c92d0c",
+      "archiveMember": "objects/87d8c8e87c656577a6539f6c843ba45fee9e8b6a69f84f92344a8555f9c92d0c.log"
+    },
+    {
+      "path": "normal-pages/fr-tool-390.json",
+      "bytes": 60291,
+      "sha256": "56883e8d3af8575885dac2eb0b1b083d9e7547e0d1968fed6bc640c7ec1c2c7e",
+      "archiveMember": "objects/56883e8d3af8575885dac2eb0b1b083d9e7547e0d1968fed6bc640c7ec1c2c7e.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-1280-known.png",
+      "bytes": 138363,
+      "sha256": "4f579618fd33b3fd669191df8abad90c27d58db08c88e762c7bd147e7434e9d1",
+      "archiveMember": "objects/4f579618fd33b3fd669191df8abad90c27d58db08c88e762c7bd147e7434e9d1.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-1280-reference.png",
+      "bytes": 165874,
+      "sha256": "f1b3d8952cca59f10ef4805ac3cc74036da11ba73617b0aedaf5594d7bf3ae65",
+      "archiveMember": "objects/f1b3d8952cca59f10ef4805ac3cc74036da11ba73617b0aedaf5594d7bf3ae65.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-1280.json",
+      "bytes": 14297,
+      "sha256": "d587dd1a112f4124c15416f284c8eecab65d06eb08c081ec71dea2deed9b346a",
+      "archiveMember": "objects/d587dd1a112f4124c15416f284c8eecab65d06eb08c081ec71dea2deed9b346a.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-390-known.png",
+      "bytes": 91497,
+      "sha256": "5a980c76a3b7d2f4f4497a537d74397827281a44cf61638ef1e6d45864965026",
+      "archiveMember": "objects/5a980c76a3b7d2f4f4497a537d74397827281a44cf61638ef1e6d45864965026.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-390-reference.png",
+      "bytes": 110110,
+      "sha256": "5d18b13a05044ea887bb371906475779c389d3c57873edd23e171471a944c270",
+      "archiveMember": "objects/5d18b13a05044ea887bb371906475779c389d3c57873edd23e171471a944c270.log"
+    },
+    {
+      "path": "normal-pages/it-moon-mode-390.json",
+      "bytes": 14292,
+      "sha256": "a3bae1008e48e493abf82dbd740923b37b665f762ae96aa5005bedeeef45aae3",
+      "archiveMember": "objects/a3bae1008e48e493abf82dbd740923b37b665f762ae96aa5005bedeeef45aae3.log"
+    },
+    {
+      "path": "normal-pages/it-tool-1280-local-reference.png",
+      "bytes": 193695,
+      "sha256": "144111d117eaf0f62eaa319fb7aabd7e372dbd39ce1942f068de65423e426d58",
+      "archiveMember": "objects/144111d117eaf0f62eaa319fb7aabd7e372dbd39ce1942f068de65423e426d58.log"
+    },
+    {
+      "path": "normal-pages/it-tool-1280-utc-reference.png",
+      "bytes": 186737,
+      "sha256": "97635933d74ed51be91f2bc80a0efd0ba6f6e7d551569adf0ff62c498caedafe",
+      "archiveMember": "objects/97635933d74ed51be91f2bc80a0efd0ba6f6e7d551569adf0ff62c498caedafe.log"
+    },
+    {
+      "path": "normal-pages/it-tool-1280.json",
+      "bytes": 58041,
+      "sha256": "a8b70519c037c18e2e7bb3c8402ae85a00e3b95f79aa1968e9fbcac3f1ee365c",
+      "archiveMember": "objects/a8b70519c037c18e2e7bb3c8402ae85a00e3b95f79aa1968e9fbcac3f1ee365c.log"
+    },
+    {
+      "path": "normal-pages/it-tool-390-local-reference.png",
+      "bytes": 128020,
+      "sha256": "438ef226e649fc2838198341cfe160abb42caa64295308c86b8b1d1c5b3fe528",
+      "archiveMember": "objects/438ef226e649fc2838198341cfe160abb42caa64295308c86b8b1d1c5b3fe528.log"
+    },
+    {
+      "path": "normal-pages/it-tool-390-utc-reference.png",
+      "bytes": 124346,
+      "sha256": "5a6b6f890a46f14d9bee6aad908a164bba96461cd82be97397e2c5df29d3702d",
+      "archiveMember": "objects/5a6b6f890a46f14d9bee6aad908a164bba96461cd82be97397e2c5df29d3702d.log"
+    },
+    {
+      "path": "normal-pages/it-tool-390.json",
+      "bytes": 58037,
+      "sha256": "cf3e443e87689bf2d60d4e384d605ea787b16a45df1ab514982ea0251beb9f35",
+      "archiveMember": "objects/cf3e443e87689bf2d60d4e384d605ea787b16a45df1ab514982ea0251beb9f35.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-1280-known.png",
+      "bytes": 141428,
+      "sha256": "b05d0f9c8b600d3d8951aebe78fb3b7dc7189ee00dd0fd9f22a38698beb4c7da",
+      "archiveMember": "objects/b05d0f9c8b600d3d8951aebe78fb3b7dc7189ee00dd0fd9f22a38698beb4c7da.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-1280-reference.png",
+      "bytes": 168509,
+      "sha256": "6338d340b5d8ee48137265b1e7ff6177bded2cf3cb3a3bac2a32f41f0d1205c5",
+      "archiveMember": "objects/6338d340b5d8ee48137265b1e7ff6177bded2cf3cb3a3bac2a32f41f0d1205c5.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-1280.json",
+      "bytes": 14249,
+      "sha256": "5e0c5f227b203521168520461e2d04dc59c90421eaaba9f91eca9613d77dab99",
+      "archiveMember": "objects/5e0c5f227b203521168520461e2d04dc59c90421eaaba9f91eca9613d77dab99.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-390-known.png",
+      "bytes": 95433,
+      "sha256": "18e37c03c5b48323cd3d01a553d13ba8b2b25660da1066911c1867eda483feed",
+      "archiveMember": "objects/18e37c03c5b48323cd3d01a553d13ba8b2b25660da1066911c1867eda483feed.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-390-reference.png",
+      "bytes": 117185,
+      "sha256": "8cc10f0638b8b143f16ee854a1f06380abab22d3a320d4a1234cc810d95660f5",
+      "archiveMember": "objects/8cc10f0638b8b143f16ee854a1f06380abab22d3a320d4a1234cc810d95660f5.log"
+    },
+    {
+      "path": "normal-pages/pt-moon-mode-390.json",
+      "bytes": 14244,
+      "sha256": "17bff30ef6c853f0f1c2a8f4edd95613be55ba1ea1e5bd6ae943bdd25ac15722",
+      "archiveMember": "objects/17bff30ef6c853f0f1c2a8f4edd95613be55ba1ea1e5bd6ae943bdd25ac15722.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-1280-local-reference.png",
+      "bytes": 183936,
+      "sha256": "36ce575c15e06aff0b4cdf81414567ddf65c838b0541e8756690b9ca363880e8",
+      "archiveMember": "objects/36ce575c15e06aff0b4cdf81414567ddf65c838b0541e8756690b9ca363880e8.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-1280-utc-reference.png",
+      "bytes": 175754,
+      "sha256": "ea7847119e3635a8dbd88b0eb77709748d99751d4d3a3881cc6af56d45db6e9b",
+      "archiveMember": "objects/ea7847119e3635a8dbd88b0eb77709748d99751d4d3a3881cc6af56d45db6e9b.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-1280.json",
+      "bytes": 57463,
+      "sha256": "97d3b6dbbc962db8834f598f0ff6e3f33476273ffc44327f9329134e739dad9b",
+      "archiveMember": "objects/97d3b6dbbc962db8834f598f0ff6e3f33476273ffc44327f9329134e739dad9b.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-390-local-reference.png",
+      "bytes": 130518,
+      "sha256": "df10e7d729605aeaa87f64cb988c88d43648d9c6608ef88282710575dea02cf4",
+      "archiveMember": "objects/df10e7d729605aeaa87f64cb988c88d43648d9c6608ef88282710575dea02cf4.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-390-utc-reference.png",
+      "bytes": 125387,
+      "sha256": "2e538ed0385efbb87c1ce8236184b7a9f0e59e350e1e9eee9f1c72b46d686c30",
+      "archiveMember": "objects/2e538ed0385efbb87c1ce8236184b7a9f0e59e350e1e9eee9f1c72b46d686c30.log"
+    },
+    {
+      "path": "normal-pages/pt-tool-390.json",
+      "bytes": 57459,
+      "sha256": "22037e2737506b6f60978ef4353f2bc4c8de27093c374dbf771fb5b35d5e6c5c",
+      "archiveMember": "objects/22037e2737506b6f60978ef4353f2bc4c8de27093c374dbf771fb5b35d5e6c5c.log"
+    },
+    {
+      "path": "normal-pages/result.json",
+      "bytes": 1148385,
+      "sha256": "59f9f8d25b9d28104072a6bfa01f2c5da567a09138ecc45197a423bd524e6914",
+      "archiveMember": "objects/59f9f8d25b9d28104072a6bfa01f2c5da567a09138ecc45197a423bd524e6914.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-1280-known.png",
+      "bytes": 144625,
+      "sha256": "7bc50177f94266a8694b32db93fdf87d436658ca24291890fb7179a9f60c150c",
+      "archiveMember": "objects/7bc50177f94266a8694b32db93fdf87d436658ca24291890fb7179a9f60c150c.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-1280-reference.png",
+      "bytes": 158326,
+      "sha256": "492b85eb10e9432448616ed253bdbf4adaa9ecd3cc28531f2dc7307b60d46e5d",
+      "archiveMember": "objects/492b85eb10e9432448616ed253bdbf4adaa9ecd3cc28531f2dc7307b60d46e5d.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-1280.json",
+      "bytes": 15349,
+      "sha256": "c5a6e78cc20cd3108a2e9b6f02c2dda9f2ed1ea7b7ff555d08017f32073c81bf",
+      "archiveMember": "objects/c5a6e78cc20cd3108a2e9b6f02c2dda9f2ed1ea7b7ff555d08017f32073c81bf.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-390-known.png",
+      "bytes": 96811,
+      "sha256": "d26935c924fd7aed4e6f8da4f7e8bef873ed08ac676a101642db2249622c05e6",
+      "archiveMember": "objects/d26935c924fd7aed4e6f8da4f7e8bef873ed08ac676a101642db2249622c05e6.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-390-reference.png",
+      "bytes": 114992,
+      "sha256": "591c170736ab204f12379e09abfb28897cbdf0580ec81c77e51e54693629bafe",
+      "archiveMember": "objects/591c170736ab204f12379e09abfb28897cbdf0580ec81c77e51e54693629bafe.log"
+    },
+    {
+      "path": "normal-pages/ru-moon-mode-390.json",
+      "bytes": 14416,
+      "sha256": "1a6cfe1ae5002cf1059f30ad242f3e2b1f6ead937786d8c0908b7f1fac517612",
+      "archiveMember": "objects/1a6cfe1ae5002cf1059f30ad242f3e2b1f6ead937786d8c0908b7f1fac517612.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-1280-local-reference.png",
+      "bytes": 189306,
+      "sha256": "9f1871bcbbd2356f3a28186d6b39d1dafa45dd8211f6bd1284241e9dc59dd9f5",
+      "archiveMember": "objects/9f1871bcbbd2356f3a28186d6b39d1dafa45dd8211f6bd1284241e9dc59dd9f5.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-1280-utc-reference.png",
+      "bytes": 180973,
+      "sha256": "461c08cdf5aa94bcdd2a705ff86eac7e5f6d7cb124ff278ce09f1cee19dc1794",
+      "archiveMember": "objects/461c08cdf5aa94bcdd2a705ff86eac7e5f6d7cb124ff278ce09f1cee19dc1794.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-1280.json",
+      "bytes": 79547,
+      "sha256": "d6e5d9f9ff3776e86c9dcdd7d85589c55ffa17799220031939984ff5eade3544",
+      "archiveMember": "objects/d6e5d9f9ff3776e86c9dcdd7d85589c55ffa17799220031939984ff5eade3544.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-390-local-reference.png",
+      "bytes": 127071,
+      "sha256": "b310dee530a1ea8f57d888249198990d2a12efe2f81aa2f06282325d35bfb25b",
+      "archiveMember": "objects/b310dee530a1ea8f57d888249198990d2a12efe2f81aa2f06282325d35bfb25b.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-390-utc-reference.png",
+      "bytes": 123352,
+      "sha256": "d261c29f8ea28c6f4440532e2567578700d832c5b207e8a6b6a3ed24c987e33e",
+      "archiveMember": "objects/d261c29f8ea28c6f4440532e2567578700d832c5b207e8a6b6a3ed24c987e33e.log"
+    },
+    {
+      "path": "normal-pages/ru-tool-390.json",
+      "bytes": 79543,
+      "sha256": "192dbc2d5f21e738d3b689566571112c7d5ff9280798968c2a8ca5c2e12889ea",
+      "archiveMember": "objects/192dbc2d5f21e738d3b689566571112c7d5ff9280798968c2a8ca5c2e12889ea.log"
+    },
+    {
+      "path": "normal-pages.log",
+      "bytes": 1004,
+      "sha256": "ab5e7891a871e3e9235d419623c9bc91030322577d4a4b27310e2272c0441a9f",
+      "archiveMember": "objects/ab5e7891a871e3e9235d419623c9bc91030322577d4a4b27310e2272c0441a9f.log"
+    },
+    {
+      "path": "normal-pages.mjs",
+      "bytes": 12025,
+      "sha256": "38ccd21b56f853f6cccef7a7a5e0adeaebf2115c1a162b4b6e3e6844051833d9",
+      "archiveMember": "objects/38ccd21b56f853f6cccef7a7a5e0adeaebf2115c1a162b4b6e3e6844051833d9.log"
+    },
+    {
+      "path": "normal-pages.preflight1.mjs",
+      "bytes": 12027,
+      "sha256": "78a1ac66fc9449e67028478b00c478325e0125b73e4266998df518b358076b0d",
+      "archiveMember": "objects/78a1ac66fc9449e67028478b00c478325e0125b73e4266998df518b358076b0d.log"
+    },
+    {
+      "path": "normal-served-files/_astro/AspectGlyph.DMIAGIQV.js",
+      "bytes": 488,
+      "sha256": "ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a",
+      "archiveMember": "objects/ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a.log"
+    },
+    {
+      "path": "normal-served-files/_astro/AstroTerm.7K8SAipO.js",
+      "bytes": 9025,
+      "sha256": "17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe",
+      "archiveMember": "objects/17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe.log"
+    },
+    {
+      "path": "normal-served-files/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "bytes": 773,
+      "sha256": "e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca",
+      "archiveMember": "objects/e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca.log"
+    },
+    {
+      "path": "normal-served-files/_astro/Base.Bryss0yT.css",
+      "bytes": 46112,
+      "sha256": "4877c6226e887495ac2c87605485f8011cbd605ab9c0ab4a5400310591712486",
+      "archiveMember": "objects/4877c6226e887495ac2c87605485f8011cbd605ab9c0ab4a5400310591712486.log"
+    },
+    {
+      "path": "normal-served-files/_astro/BirthFields.VmY_J4-2.js",
+      "bytes": 1752,
+      "sha256": "19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d",
+      "archiveMember": "objects/19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d.log"
+    },
+    {
+      "path": "normal-served-files/_astro/CalculationReload.DXyGkRsn.js",
+      "bytes": 763,
+      "sha256": "7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef",
+      "archiveMember": "objects/7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef.log"
+    },
+    {
+      "path": "normal-served-files/_astro/ChartActionDock.Cc8zzTbx.css",
+      "bytes": 14972,
+      "sha256": "cab0ce96a6285f99bbfbcea67006a99a09d7f345bb1459d03ddf9ae7a71eeffc",
+      "archiveMember": "objects/cab0ce96a6285f99bbfbcea67006a99a09d7f345bb1459d03ddf9ae7a71eeffc.log"
+    },
+    {
+      "path": "normal-served-files/_astro/ChartCalculator.CfECKj7I.js",
+      "bytes": 58907,
+      "sha256": "9780fc2d94a74093c4509558758e48fcff9a210b588777241e895974f2abbb80",
+      "archiveMember": "objects/9780fc2d94a74093c4509558758e48fcff9a210b588777241e895974f2abbb80.log"
+    },
+    {
+      "path": "normal-served-files/_astro/EvidenceDisclosure.LNSfDkU7.js",
+      "bytes": 548,
+      "sha256": "40817121a14b5ea05546b30f4ccbc321ef993fd0fea6cf79f2bd9b144d2ac55a",
+      "archiveMember": "objects/40817121a14b5ea05546b30f4ccbc321ef993fd0fea6cf79f2bd9b144d2ac55a.log"
+    },
+    {
+      "path": "normal-served-files/_astro/MoonPhaseTool.D0rzryv_.js",
+      "bytes": 5595,
+      "sha256": "6977c99a428d5356dbeb39a111926bb27d08851dec7d15469cce4e4d40945255",
+      "archiveMember": "objects/6977c99a428d5356dbeb39a111926bb27d08851dec7d15469cce4e4d40945255.log"
+    },
+    {
+      "path": "normal-served-files/_astro/PlaceSearch.D1WsU_jW.js",
+      "bytes": 3472,
+      "sha256": "9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9",
+      "archiveMember": "objects/9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9.log"
+    },
+    {
+      "path": "normal-served-files/_astro/PlanetGlyph.BhITbtcc.js",
+      "bytes": 575,
+      "sha256": "57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04",
+      "archiveMember": "objects/57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04.log"
+    },
+    {
+      "path": "normal-served-files/_astro/PositionsShareSurface.BxrUQM79.js",
+      "bytes": 17938,
+      "sha256": "cc5ea850cfd284807a4b2a2a142a0ba3def282daabbf1266d1825f062b81635f",
+      "archiveMember": "objects/cc5ea850cfd284807a4b2a2a142a0ba3def282daabbf1266d1825f062b81635f.log"
+    },
+    {
+      "path": "normal-served-files/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "bytes": 4062,
+      "sha256": "a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3",
+      "archiveMember": "objects/a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3.log"
+    },
+    {
+      "path": "normal-served-files/_astro/SignChip.Dx3tQVZl.js",
+      "bytes": 550,
+      "sha256": "646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324",
+      "archiveMember": "objects/646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324.log"
+    },
+    {
+      "path": "normal-served-files/_astro/Wheel.RNRSqGob.js",
+      "bytes": 12355,
+      "sha256": "d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e",
+      "archiveMember": "objects/d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e.log"
+    },
+    {
+      "path": "normal-served-files/_astro/a2hs.WonhOqdm.js",
+      "bytes": 2797,
+      "sha256": "944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316",
+      "archiveMember": "objects/944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316.log"
+    },
+    {
+      "path": "normal-served-files/_astro/analytics.CH5T6e-b.js",
+      "bytes": 4190,
+      "sha256": "56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252",
+      "archiveMember": "objects/56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252.log"
+    },
+    {
+      "path": "normal-served-files/_astro/aspects.BNC-J2iD.js",
+      "bytes": 286,
+      "sha256": "9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533",
+      "archiveMember": "objects/9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533.log"
+    },
+    {
+      "path": "normal-served-files/_astro/astrology.BHib5efU.js",
+      "bytes": 3245,
+      "sha256": "e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d",
+      "archiveMember": "objects/e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d.log"
+    },
+    {
+      "path": "normal-served-files/_astro/calculator.MBHg3tIV.css",
+      "bytes": 62573,
+      "sha256": "e4606bd37837f898c7b5e0a5e2da987c1de2bcfe97130a72beb2e5c22d154004",
+      "archiveMember": "objects/e4606bd37837f898c7b5e0a5e2da987c1de2bcfe97130a72beb2e5c22d154004.log"
+    },
+    {
+      "path": "normal-served-files/_astro/chart-adapter.K-QfJlbI.js",
+      "bytes": 50306,
+      "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95",
+      "archiveMember": "objects/20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95.log"
+    },
+    {
+      "path": "normal-served-files/_astro/chart-handoff.Dvz2AAcL.js",
+      "bytes": 2042,
+      "sha256": "6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8",
+      "archiveMember": "objects/6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8.log"
+    },
+    {
+      "path": "normal-served-files/_astro/chart-signature.o0kdVHcC.js",
+      "bytes": 6020,
+      "sha256": "e16cfcbcba99b46b71cdfb4c918f09130ed70c8434092d0133139cb0c5dd46d9",
+      "archiveMember": "objects/e16cfcbcba99b46b71cdfb4c918f09130ed70c8434092d0133139cb0c5dd46d9.log"
+    },
+    {
+      "path": "normal-served-files/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "bytes": 1763,
+      "sha256": "512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523",
+      "archiveMember": "objects/512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523.log"
+    },
+    {
+      "path": "normal-served-files/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "bytes": 2569,
+      "sha256": "efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b",
+      "archiveMember": "objects/efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b.log"
+    },
+    {
+      "path": "normal-served-files/_astro/civil-date.CpOZUt7Z.js",
+      "bytes": 533,
+      "sha256": "74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9",
+      "archiveMember": "objects/74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9.log"
+    },
+    {
+      "path": "normal-served-files/_astro/client.DPkn9Lbl.js",
+      "bytes": 1447,
+      "sha256": "d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999",
+      "archiveMember": "objects/d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999.log"
+    },
+    {
+      "path": "normal-served-files/_astro/compat.Bjc3uaB7.js",
+      "bytes": 1242,
+      "sha256": "77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7",
+      "archiveMember": "objects/77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7.log"
+    },
+    {
+      "path": "normal-served-files/_astro/context-help-client.BqVrBbz0.js",
+      "bytes": 2472,
+      "sha256": "52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce",
+      "archiveMember": "objects/52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce.log"
+    },
+    {
+      "path": "normal-served-files/_astro/dates.D4PDcYt5.js",
+      "bytes": 395,
+      "sha256": "378304c0c70feb036cd849897964f4a4acb1b8f88ac05cadbefb2ccd6a95cf4a",
+      "archiveMember": "objects/378304c0c70feb036cd849897964f4a4acb1b8f88ac05cadbefb2ccd6a95cf4a.log"
+    },
+    {
+      "path": "normal-served-files/_astro/dignities.D6lQGYrR.js",
+      "bytes": 1627,
+      "sha256": "2aa5196e6ed999cd3730533461930d3a0d585a43621a0c28fa9c941414252fb7",
+      "archiveMember": "objects/2aa5196e6ed999cd3730533461930d3a0d585a43621a0c28fa9c941414252fb7.log"
+    },
+    {
+      "path": "normal-served-files/_astro/full.AQ--_mi-.js",
+      "bytes": 392,
+      "sha256": "b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829",
+      "archiveMember": "objects/b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829.log"
+    },
+    {
+      "path": "normal-served-files/_astro/hooks.module.C0_8FjiD.js",
+      "bytes": 2875,
+      "sha256": "70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d",
+      "archiveMember": "objects/70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d.log"
+    },
+    {
+      "path": "normal-served-files/_astro/houses.5SlbILVS.js",
+      "bytes": 213,
+      "sha256": "2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838",
+      "archiveMember": "objects/2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838.log"
+    },
+    {
+      "path": "normal-served-files/_astro/i18n.Cg_lCJuc.js",
+      "bytes": 6936,
+      "sha256": "70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d",
+      "archiveMember": "objects/70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d.log"
+    },
+    {
+      "path": "normal-served-files/_astro/interpretations.BaZkYN67.js",
+      "bytes": 8979,
+      "sha256": "5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae",
+      "archiveMember": "objects/5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae.log"
+    },
+    {
+      "path": "normal-served-files/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "bytes": 430,
+      "sha256": "7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa",
+      "archiveMember": "objects/7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa.log"
+    },
+    {
+      "path": "normal-served-files/_astro/learning-input-identity.C-WLv51I.js",
+      "bytes": 146,
+      "sha256": "5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9",
+      "archiveMember": "objects/5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9.log"
+    },
+    {
+      "path": "normal-served-files/_astro/lite.DKWHZC5_.js",
+      "bytes": 831,
+      "sha256": "476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a",
+      "archiveMember": "objects/476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a.log"
+    },
+    {
+      "path": "normal-served-files/_astro/localToUtc.CKDDLf-o.js",
+      "bytes": 2589,
+      "sha256": "888b1c21076bf60e9867f16ec0035f959dca72531834f47f56a4bcfc0e009245",
+      "archiveMember": "objects/888b1c21076bf60e9867f16ec0035f959dca72531834f47f56a4bcfc0e009245.log"
+    },
+    {
+      "path": "normal-served-files/_astro/natal.D7JKDSdx.js",
+      "bytes": 13113,
+      "sha256": "7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778",
+      "archiveMember": "objects/7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778.log"
+    },
+    {
+      "path": "normal-served-files/_astro/paths.DYbAuceH.js",
+      "bytes": 1629,
+      "sha256": "77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720",
+      "archiveMember": "objects/77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720.log"
+    },
+    {
+      "path": "normal-served-files/_astro/post-chart-context.cHI09JaB.js",
+      "bytes": 730,
+      "sha256": "f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1",
+      "archiveMember": "objects/f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1.log"
+    },
+    {
+      "path": "normal-served-files/_astro/preact.module.Bjq9tLsx.js",
+      "bytes": 10499,
+      "sha256": "796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635",
+      "archiveMember": "objects/796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635.log"
+    },
+    {
+      "path": "normal-served-files/_astro/preload-helper.L5lOfJxi.js",
+      "bytes": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927",
+      "archiveMember": "objects/8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927.log"
+    },
+    {
+      "path": "normal-served-files/_astro/profile-access-reader.DoQqlSjt.js",
+      "bytes": 438,
+      "sha256": "ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390",
+      "archiveMember": "objects/ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390.log"
+    },
+    {
+      "path": "normal-served-files/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff",
+      "archiveMember": "objects/a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff.log"
+    },
+    {
+      "path": "normal-served-files/_astro/search.BXcwbrsc.js",
+      "bytes": 1096,
+      "sha256": "eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b",
+      "archiveMember": "objects/eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b.log"
+    },
+    {
+      "path": "normal-served-files/_astro/share-card-brand.CJKZtcRK.js",
+      "bytes": 1434,
+      "sha256": "36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6",
+      "archiveMember": "objects/36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6.log"
+    },
+    {
+      "path": "normal-served-files/_astro/share-card-copy.bqA8GBCS.js",
+      "bytes": 9595,
+      "sha256": "8fdfc37af4e2400d3a5889037cf346eac641a50b0d3224900379b09d277cbda7",
+      "archiveMember": "objects/8fdfc37af4e2400d3a5889037cf346eac641a50b0d3224900379b09d277cbda7.log"
+    },
+    {
+      "path": "normal-served-files/_astro/share-card.BTyoQJGs.js",
+      "bytes": 46137,
+      "sha256": "efd93fe2d412cb040fbc7c42cf2c9f5e4d4833ea58f6c2fcee783150d46ee914",
+      "archiveMember": "objects/efd93fe2d412cb040fbc7c42cf2c9f5e4d4833ea58f6c2fcee783150d46ee914.log"
+    },
+    {
+      "path": "normal-served-files/_astro/share-positions.D3o0ugj4.js",
+      "bytes": 2554,
+      "sha256": "71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985",
+      "archiveMember": "objects/71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985.log"
+    },
+    {
+      "path": "normal-served-files/_astro/share.BRlg0eGS.js",
+      "bytes": 2132,
+      "sha256": "f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308",
+      "archiveMember": "objects/f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308.log"
+    },
+    {
+      "path": "normal-served-files/_astro/signs.BMXPKoMF.js",
+      "bytes": 11693,
+      "sha256": "21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc",
+      "archiveMember": "objects/21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc.log"
+    },
+    {
+      "path": "normal-served-files/_astro/synastry.rhUg9_9F.js",
+      "bytes": 1349,
+      "sha256": "c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef",
+      "archiveMember": "objects/c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef.log"
+    },
+    {
+      "path": "normal-served-files/_astro/technical-layout.DQIjXHHb.js",
+      "bytes": 860,
+      "sha256": "68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a",
+      "archiveMember": "objects/68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a.log"
+    },
+    {
+      "path": "normal-served-files/_astro/technical-locales.DDKucXXd.js",
+      "bytes": 46,
+      "sha256": "69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6",
+      "archiveMember": "objects/69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6.log"
+    },
+    {
+      "path": "normal-served-files/_astro/useEngine.BV92cVg4.js",
+      "bytes": 504,
+      "sha256": "36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4",
+      "archiveMember": "objects/36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4.log"
+    },
+    {
+      "path": "normal-served-files/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "bytes": 340,
+      "sha256": "8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f",
+      "archiveMember": "objects/8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f.log"
+    },
+    {
+      "path": "normal-served-files/assets/app-icons/v3/favicon.svg",
+      "bytes": 791,
+      "sha256": "7905102c09c8c80f73cca1f2b23d3921fd8a18f8666cbe7d1436e7acabca1f9b",
+      "archiveMember": "objects/7905102c09c8c80f73cca1f2b23d3921fd8a18f8666cbe7d1436e7acabca1f9b.log"
+    },
+    {
+      "path": "normal-served-files/assets/app-icons/v3/icon-512.png",
+      "bytes": 47117,
+      "sha256": "01405f4da95d384d77e19d2986abbbe1ae9081650055d03cc46698b8d53c8896",
+      "archiveMember": "objects/01405f4da95d384d77e19d2986abbbe1ae9081650055d03cc46698b8d53c8896.log"
+    },
+    {
+      "path": "normal-served-files/assets/assistant-ui.css",
+      "bytes": 1396,
+      "sha256": "eaf7e9531749d921c0947df7894e2fd447dcd800da620b3a14ba673af1cb7e0d",
+      "archiveMember": "objects/eaf7e9531749d921c0947df7894e2fd447dcd800da620b3a14ba673af1cb7e0d.log"
+    },
+    {
+      "path": "normal-served-files/assets/assistant-ui.js",
+      "bytes": 4088,
+      "sha256": "238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb",
+      "archiveMember": "objects/238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb.log"
+    },
+    {
+      "path": "normal-served-files/assets/guide-avatar.webp",
+      "bytes": 11384,
+      "sha256": "9970c7c5d7d20343e20a7f59422f3647c2ff3bf38a0565ac145d5bed0f96bb11",
+      "archiveMember": "objects/9970c7c5d7d20343e20a7f59422f3647c2ff3bf38a0565ac145d5bed0f96bb11.log"
+    },
+    {
+      "path": "normal-served-files/assets/site-footer.css",
+      "bytes": 10397,
+      "sha256": "d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700",
+      "archiveMember": "objects/d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/128/taurus.avif",
+      "bytes": 14900,
+      "sha256": "84c57d70db50b0c086b57f5c537d2ef33dcfd947f11eb1689d87fd047fbbbc51",
+      "archiveMember": "objects/84c57d70db50b0c086b57f5c537d2ef33dcfd947f11eb1689d87fd047fbbbc51.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/128/taurus.webp",
+      "bytes": 4584,
+      "sha256": "f15447014c88e0270f9ac8d4ad5431dce41ef9f89f572e3e48997fa55c1ede8d",
+      "archiveMember": "objects/f15447014c88e0270f9ac8d4ad5431dce41ef9f89f572e3e48997fa55c1ede8d.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/aquarius.webp",
+      "bytes": 1534,
+      "sha256": "a0016dd04b605028c890eaaffd11fc3d4230a633b4908dfc18d5e10ea239a753",
+      "archiveMember": "objects/a0016dd04b605028c890eaaffd11fc3d4230a633b4908dfc18d5e10ea239a753.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/aries.webp",
+      "bytes": 1666,
+      "sha256": "98ad83139bc0fe35d13096245869de4c342e65da7e33c5c767202931fd01feea",
+      "archiveMember": "objects/98ad83139bc0fe35d13096245869de4c342e65da7e33c5c767202931fd01feea.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/cancer.webp",
+      "bytes": 1686,
+      "sha256": "5f388b82448e3f88bf59b0016da48efbc48e8edbeba1082560f3e2dd83ae6a61",
+      "archiveMember": "objects/5f388b82448e3f88bf59b0016da48efbc48e8edbeba1082560f3e2dd83ae6a61.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/capricorn.webp",
+      "bytes": 1590,
+      "sha256": "042f7ea66d9064e87fab58eb9e39c9a15e44306fd92974498c283f7a9f712e1f",
+      "archiveMember": "objects/042f7ea66d9064e87fab58eb9e39c9a15e44306fd92974498c283f7a9f712e1f.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/gemini.webp",
+      "bytes": 1424,
+      "sha256": "88aefd78320aa8c6abce1bddd38e0e801a469bf4c5f3cb3511d1492fe1ed30fb",
+      "archiveMember": "objects/88aefd78320aa8c6abce1bddd38e0e801a469bf4c5f3cb3511d1492fe1ed30fb.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/leo.webp",
+      "bytes": 1638,
+      "sha256": "364f3836dbf0a3252a9db785c2d33a9bff7b09e12f97c23c64e068b240f2bed8",
+      "archiveMember": "objects/364f3836dbf0a3252a9db785c2d33a9bff7b09e12f97c23c64e068b240f2bed8.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/libra.webp",
+      "bytes": 1556,
+      "sha256": "6b6038053581a23103dc059debf8a1c35588ab13a6308881d016cb295ae59212",
+      "archiveMember": "objects/6b6038053581a23103dc059debf8a1c35588ab13a6308881d016cb295ae59212.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/pisces.webp",
+      "bytes": 1476,
+      "sha256": "0622ec5f5b51784e5d0cdbb0f99d993c9e5d0f4dceea345fe8783f415c0a670e",
+      "archiveMember": "objects/0622ec5f5b51784e5d0cdbb0f99d993c9e5d0f4dceea345fe8783f415c0a670e.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/sagittarius.webp",
+      "bytes": 1588,
+      "sha256": "85e9ee2e1978e24567bef73a6362a0088d870d0d4c5abe9c1604abaecb45fe33",
+      "archiveMember": "objects/85e9ee2e1978e24567bef73a6362a0088d870d0d4c5abe9c1604abaecb45fe33.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/scorpio.webp",
+      "bytes": 1486,
+      "sha256": "972c7916a97921865c1f83d1070f7deabce8221ba61ce8df2bce73a62c5b3b0b",
+      "archiveMember": "objects/972c7916a97921865c1f83d1070f7deabce8221ba61ce8df2bce73a62c5b3b0b.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/taurus.avif",
+      "bytes": 5384,
+      "sha256": "fb17740932a8496affa7edf833377cb29785557c555cbc0efceb9c8089e2d366",
+      "archiveMember": "objects/fb17740932a8496affa7edf833377cb29785557c555cbc0efceb9c8089e2d366.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/taurus.webp",
+      "bytes": 1566,
+      "sha256": "9a1cf0fed1103cb251f70411e0edc318392da137b29bbbaec52ef621643f8174",
+      "archiveMember": "objects/9a1cf0fed1103cb251f70411e0edc318392da137b29bbbaec52ef621643f8174.log"
+    },
+    {
+      "path": "normal-served-files/assets/zodiac-icons/48/virgo.webp",
+      "bytes": 1634,
+      "sha256": "54741e8c95f3271cc214334e4f7286f67353a4b6d9f7cf7948d9675d7a1ebc9a",
+      "archiveMember": "objects/54741e8c95f3271cc214334e4f7286f67353a4b6d9f7cf7948d9675d7a1ebc9a.log"
+    },
+    {
+      "path": "normal-served-files/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6",
+      "archiveMember": "objects/3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6.log"
+    },
+    {
+      "path": "normal-served-files/data/cities/k.json",
+      "bytes": 107823,
+      "sha256": "af81cf18bb2e240c84386c1b3d638b0339e9bd4167f02628444566f977c60505",
+      "archiveMember": "objects/af81cf18bb2e240c84386c1b3d638b0339e9bd4167f02628444566f977c60505.log"
+    },
+    {
+      "path": "normal-served-files/es/moon-phase/index.html",
+      "bytes": 88056,
+      "sha256": "c66da8510d7147e8166a804f6e48cf9c24c7637122c656d64bd2ed038140df29",
+      "archiveMember": "objects/c66da8510d7147e8166a804f6e48cf9c24c7637122c656d64bd2ed038140df29.log"
+    },
+    {
+      "path": "normal-served-files/es/moon-sign/index.html",
+      "bytes": 94150,
+      "sha256": "4fea7766c79d467d1a88a6d9b71a4d58d6f6da0aa113997eedc13425e4f1ee95",
+      "archiveMember": "objects/4fea7766c79d467d1a88a6d9b71a4d58d6f6da0aa113997eedc13425e4f1ee95.log"
+    },
+    {
+      "path": "normal-served-files/fonts/eb-garamond-cyrillic-500-normal.woff2",
+      "bytes": 14428,
+      "sha256": "d6cbde36e0e8a5355921c385f434ef60ba81bd2502abeb4f19d87a901b423e22",
+      "archiveMember": "objects/d6cbde36e0e8a5355921c385f434ef60ba81bd2502abeb4f19d87a901b423e22.log"
+    },
+    {
+      "path": "normal-served-files/fonts/eb-garamond-latin-400-italic.woff2",
+      "bytes": 22172,
+      "sha256": "1bd1b20fd55986b334ba42dbcb0d9bed7e2d08fd7a713000e8041bfafa37e8ec",
+      "archiveMember": "objects/1bd1b20fd55986b334ba42dbcb0d9bed7e2d08fd7a713000e8041bfafa37e8ec.log"
+    },
+    {
+      "path": "normal-served-files/fonts/eb-garamond-latin-400-normal.woff2",
+      "bytes": 21704,
+      "sha256": "b63448e2680a0dbde70ebb2f3de78f6c515122835491f938e8a8595b46f29210",
+      "archiveMember": "objects/b63448e2680a0dbde70ebb2f3de78f6c515122835491f938e8a8595b46f29210.log"
+    },
+    {
+      "path": "normal-served-files/fonts/eb-garamond-latin-500-normal.woff2",
+      "bytes": 23012,
+      "sha256": "d2bb3f624516d0233ef8a03bd7b2be47489c36809a02e83ac1bc859e85f4874a",
+      "archiveMember": "objects/d2bb3f624516d0233ef8a03bd7b2be47489c36809a02e83ac1bc859e85f4874a.log"
+    },
+    {
+      "path": "normal-served-files/fonts/golos-text-cyr-a.woff2",
+      "bytes": 17532,
+      "sha256": "10aa879203c4b62f61841bdeee64a2ca5d97f1cf21e717f45c96914ce7629710",
+      "archiveMember": "objects/10aa879203c4b62f61841bdeee64a2ca5d97f1cf21e717f45c96914ce7629710.log"
+    },
+    {
+      "path": "normal-served-files/fonts/golos-text-cyr-b.woff2",
+      "bytes": 22028,
+      "sha256": "2f175b8fc40ed4e826742879f92ec903256fc2612d8d95c7c287232fd7138e4b",
+      "archiveMember": "objects/2f175b8fc40ed4e826742879f92ec903256fc2612d8d95c7c287232fd7138e4b.log"
+    },
+    {
+      "path": "normal-served-files/fonts/instrument-sans-latin-wght-normal.woff2",
+      "bytes": 30092,
+      "sha256": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971",
+      "archiveMember": "objects/2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971.log"
+    },
+    {
+      "path": "normal-served-files/fonts/jetbrains-mono-cyrillic-400-500.woff2",
+      "bytes": 8892,
+      "sha256": "4995a9a43ac659ec32fcd8b463755cd6a07b31a6e6b3894a6a153b661cf490e2",
+      "archiveMember": "objects/4995a9a43ac659ec32fcd8b463755cd6a07b31a6e6b3894a6a153b661cf490e2.log"
+    },
+    {
+      "path": "normal-served-files/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "bytes": 40404,
+      "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e",
+      "archiveMember": "objects/18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e.log"
+    },
+    {
+      "path": "normal-served-files/fr/moon-phase/index.html",
+      "bytes": 91734,
+      "sha256": "8e3593baf06c311cdd6284c4624cd4fa2e9cd4a9252fa14c16033fec91e1a971",
+      "archiveMember": "objects/8e3593baf06c311cdd6284c4624cd4fa2e9cd4a9252fa14c16033fec91e1a971.log"
+    },
+    {
+      "path": "normal-served-files/fr/moon-sign/index.html",
+      "bytes": 98081,
+      "sha256": "4e00711c423371702f8d95c4252de97372d0222e4509455e1b4fc2712369a194",
+      "archiveMember": "objects/4e00711c423371702f8d95c4252de97372d0222e4509455e1b4fc2712369a194.log"
+    },
+    {
+      "path": "normal-served-files/it/moon-phase/index.html",
+      "bytes": 89151,
+      "sha256": "1ded81137d585feebb262ac65e754a08fa72557008d80dbbc76fce67ad9e9563",
+      "archiveMember": "objects/1ded81137d585feebb262ac65e754a08fa72557008d80dbbc76fce67ad9e9563.log"
+    },
+    {
+      "path": "normal-served-files/it/moon-sign/index.html",
+      "bytes": 95303,
+      "sha256": "3c4b0e755fd8d9a90efeff9f049334e51d69d7618dccd3f992902ea66de29f82",
+      "archiveMember": "objects/3c4b0e755fd8d9a90efeff9f049334e51d69d7618dccd3f992902ea66de29f82.log"
+    },
+    {
+      "path": "normal-served-files/moon-phase/index.html",
+      "bytes": 89890,
+      "sha256": "e95aa712586118f38025b036574370b2a04e59224a58dad3641f8d9c6b2e4e79",
+      "archiveMember": "objects/e95aa712586118f38025b036574370b2a04e59224a58dad3641f8d9c6b2e4e79.log"
+    },
+    {
+      "path": "normal-served-files/moon-sign/index.html",
+      "bytes": 95969,
+      "sha256": "d75581f33ff71530e6e2e9e1ab5240c023be503270999752f2a1a0809835fbc5",
+      "archiveMember": "objects/d75581f33ff71530e6e2e9e1ab5240c023be503270999752f2a1a0809835fbc5.log"
+    },
+    {
+      "path": "normal-served-files/pt/moon-phase/index.html",
+      "bytes": 88354,
+      "sha256": "484c9adeb369a91108c72ac735c5a05bde6d0b4ef714f5ff85d74356324fb948",
+      "archiveMember": "objects/484c9adeb369a91108c72ac735c5a05bde6d0b4ef714f5ff85d74356324fb948.log"
+    },
+    {
+      "path": "normal-served-files/pt/moon-sign/index.html",
+      "bytes": 94795,
+      "sha256": "19d001fb4f7736fa699b1867ea0d5e011130068be055a20d6513c6fa265c3772",
+      "archiveMember": "objects/19d001fb4f7736fa699b1867ea0d5e011130068be055a20d6513c6fa265c3772.log"
+    },
+    {
+      "path": "normal-served-files/ru/moon-phase/index.html",
+      "bytes": 109948,
+      "sha256": "e40ef0fcbdcc73dc9263185f6e4b9761f03c64f902393bb7b7e8c07d8347418a",
+      "archiveMember": "objects/e40ef0fcbdcc73dc9263185f6e4b9761f03c64f902393bb7b7e8c07d8347418a.log"
+    },
+    {
+      "path": "normal-served-files/ru/moon-sign/index.html",
+      "bytes": 116743,
+      "sha256": "09444b9149784a719214d2314a1537e0b2a0b6375c481c2080ebb4a8b512fa59",
+      "archiveMember": "objects/09444b9149784a719214d2314a1537e0b2a0b6375c481c2080ebb4a8b512fa59.log"
+    },
+    {
+      "path": "prior-c015-sharing.log",
+      "bytes": 2801,
+      "sha256": "76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119",
+      "archiveMember": "objects/76a234688c57358de502fd5a42a710a7cdf27cd707a91eb59a7c0305ae377119.log"
+    },
+    {
+      "path": "scope.log",
+      "bytes": 191,
+      "sha256": "811e9fdf1664326957be97ba72ccfdd7d7ba3c57470aff7e088b5a0ca5d3f1d5",
+      "archiveMember": "objects/811e9fdf1664326957be97ba72ccfdd7d7ba3c57470aff7e088b5a0ca5d3f1d5.log"
+    },
+    {
+      "path": "seal-inputs.initial-error.log",
+      "bytes": 530,
+      "sha256": "fb6013b877a4e5944e9f4cc759f566d0ac3694c9edbf120114feea42a5751e89",
+      "archiveMember": "objects/fb6013b877a4e5944e9f4cc759f566d0ac3694c9edbf120114feea42a5751e89.log"
+    },
+    {
+      "path": "seal-inputs.log",
+      "bytes": 1156,
+      "sha256": "a5e3b4e581f05cff157dfc6c149c6a9b433d7dae414f2c4fb514c650831747df",
+      "archiveMember": "objects/a5e3b4e581f05cff157dfc6c149c6a9b433d7dae414f2c4fb514c650831747df.log"
+    },
+    {
+      "path": "seal-inputs.py",
+      "bytes": 3573,
+      "sha256": "0fe2f295ed03c78db880c62f69b81815fcb70d125228cd8109f4d41b077e03b7",
+      "archiveMember": "objects/0fe2f295ed03c78db880c62f69b81815fcb70d125228cd8109f4d41b077e03b7.log"
+    },
+    {
+      "path": "sharing-33-percent-baseline.png",
+      "bytes": 145280,
+      "sha256": "dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7",
+      "archiveMember": "objects/dfbd85ebf67b822d8510b92dff2dc8ccd02671e26abf93da7afca2c1ba6e0fa7.log"
+    },
+    {
+      "path": "sharing-33-percent.png",
+      "bytes": 202543,
+      "sha256": "fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38",
+      "archiveMember": "objects/fdac569d1f89b4e844d3e7b4b21b57d9e8a4426f3ca3307321b9ecf32a841c38.log"
+    },
+    {
+      "path": "sharing-baseline-source.ts.log",
+      "bytes": 55757,
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "archiveMember": "objects/db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649.log"
+    },
+    {
+      "path": "sharing-candidate-source.ts.log",
+      "bytes": 55760,
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "archiveMember": "objects/d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c.log"
+    },
+    {
+      "path": "sharing-image-comparison.json",
+      "bytes": 710,
+      "sha256": "46f91348f9f783f59fd823f92f8b5a6e02a79d2f11ee0007cde24c59f1be2a28",
+      "archiveMember": "objects/46f91348f9f783f59fd823f92f8b5a6e02a79d2f11ee0007cde24c59f1be2a28.log"
+    },
+    {
+      "path": "sharing-image-diff.png",
+      "bytes": 55220,
+      "sha256": "0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b",
+      "archiveMember": "objects/0fe9f3bfb3147283e43beb551908c38bd9e112bc264dd00f0ce766cf68da538b.log"
+    },
+    {
+      "path": "sharing-image-disposition.json",
+      "bytes": 956,
+      "sha256": "04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5",
+      "archiveMember": "objects/04ffd854bf9bf5ab8016d82098372b9844b2e90378a8265ee085d6db4f2f60e5.log"
+    },
+    {
+      "path": "sharing.log",
+      "bytes": 2902,
+      "sha256": "72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c",
+      "archiveMember": "objects/72cfe0df9abee186bf6c54affb04b64213e0c8b3f00f471f6c1277a111c6ac1c.log"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 7708,
+      "sha256": "348c58a7edab4bd9055a604733657f6477efea10f48e782a96eb28886c79251d",
+      "archiveMember": "objects/348c58a7edab4bd9055a604733657f6477efea10f48e782a96eb28886c79251d.log"
+    }
+  ]
+}

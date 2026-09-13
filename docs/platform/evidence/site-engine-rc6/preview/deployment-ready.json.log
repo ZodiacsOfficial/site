@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-09-08T07:40:44.643Z",
+  "tool": "vercel_get_deployment",
+  "deployment": {
+    "id": "dpl_DCmR76jrfuTxvB4M4b5Xfw55iR11",
+    "url": "zodiacs-4qqy7ml63-zodiacsofficial.vercel.app",
+    "state": "READY",
+    "readyState": "READY",
+    "target": null,
+    "commit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+    "branch": "codex/platform-engine-rc6",
+    "repository": "ZodiacsOfficial/site",
+    "projectId": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+    "source": "git",
+    "createdAt": 1788852939536,
+    "buildingAt": 1788852940832,
+    "providerReadyTimestamp": 1788853166599
+  }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "pid": 85174,
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/git diff --name-only 9d180c9f",
+    "action": "SIGTERM to owned read-only check"
+  },
+  {
+    "pid": 85409,
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/git diff --check -- . :!docs/platform/evidence/**",
+    "action": "SIGTERM to owned read-only check"
+  },
+  {
+    "pid": 85670,
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/git -c core.fsmonitor=false -c core.untrackedCache=false status --short --untracked-files=no",
+    "action": "SIGTERM to owned read-only check"
+  }
+]

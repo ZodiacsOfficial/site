@@ -1,0 +1,60 @@
+{
+  "at": "2026-09-08T06:04:40.553Z",
+  "node": "v22.23.2",
+  "results": [
+    {
+      "name": "control-inert",
+      "kind": "candidate",
+      "status": 0,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\nreport-bundles: budgets pass\n\n",
+      "expected": "pass",
+      "source": null
+    },
+    {
+      "name": "plain-vendor",
+      "kind": "candidate",
+      "status": 1,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\n\nreport-bundles: 1 failures\n  - browser engine isolation: server-only import marker found in /_astro/receipt.fixture.js\n",
+      "expected": "reject",
+      "source": "import \"astronomy-engine\";"
+    },
+    {
+      "name": "escaped-static-vendor",
+      "kind": "candidate",
+      "status": 0,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\nreport-bundles: budgets pass\n\n",
+      "expected": "reject",
+      "source": "import \"astronomy-\\u0065ngine\";"
+    },
+    {
+      "name": "escaped-reexport-vendor",
+      "kind": "candidate",
+      "status": 0,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\nreport-bundles: budgets pass\n\n",
+      "expected": "reject",
+      "source": "export * from \"\\u0061stronomy-engine\";"
+    },
+    {
+      "name": "escaped-dynamic-vendor",
+      "kind": "candidate",
+      "status": 0,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\nreport-bundles: budgets pass\n\n",
+      "expected": "reject",
+      "source": "import(\"astronomy-\\x65ngine\");"
+    },
+    {
+      "name": "escaped-require-vendor",
+      "kind": "candidate",
+      "status": 0,
+      "signal": null,
+      "output": "route gzip sizes (initial transitive local JS):\n  /                   0.0 KB /   42 KB  (1 chunks)\n  /birth-chart/       0.0 KB /   70 KB  (0 chunks)\n  /big-three/         0.0 KB /   30 KB  (0 chunks)\n  /transits/          0.0 KB /   30 KB  (0 chunks)\n  /solar-return/      0.0 KB /   30 KB  (0 chunks)\n  /lunar-return/      0.0 KB /   30 KB  (0 chunks)\n  /numerology/        0.0 KB /   30 KB  (0 chunks)\n  /numerology/life-path/7/    0.0 KB /   30 KB  (0 chunks)\n  /void-of-course-moon/    0.0 KB /    5 KB  (0 chunks)\n  /today/             0.0 KB / 21.5 KB  (0 chunks)\n  /compatibility/     0.0 KB / 35.5 KB  (0 chunks)\n  /aries/             0.0 KB /    0 KB  (0 chunks)\n  /almanac/           0.0 KB /    0 KB  (0 chunks)\n  /almanac/sky-2026-08/    0.0 KB /    0 KB  (0 chunks)\n  /almanac/reading-a-childs-chart/    0.0 KB /    0 KB  (0 chunks)\n  /registry/collection/    0.0 KB /   48 KB  (0 chunks)\nchunk gates:\n  chunk-max           0.1 KB /   60 KB  (/_astro/engine-core.fixture.js)\n  engine-chunk        0.2 KB /   25 KB  (/_astro/full.fixture.js; 2 static chunks)\nengine isolation: package boundary clear; homepage markers clear\nreport-bundles: budgets pass\n\n",
+      "expected": "reject",
+      "source": "require(\"astronomy-\\u0065ngine\");"
+    }
+  ]
+}

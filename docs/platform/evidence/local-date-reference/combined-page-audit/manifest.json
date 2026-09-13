@@ -1,0 +1,22 @@
+[
+  {
+    "path": "REVIEW.md",
+    "bytes": 1274,
+    "sha256": "a52c993f0d2ae17edaed3943357e467f3fe7ab2756eeadd63b60fb13904ec5e5"
+  },
+  {
+    "path": "audit.json",
+    "bytes": 957,
+    "sha256": "40b1ef7cdf310adb3770b3a5c37cf0f47ecc6844690c6532b97ebd6467eb37c0"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 318,
+    "sha256": "0d40a642507c7a4a9518c79e2ffe403d622467873e3aed2302e01e3c19efa69b"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 310,
+    "sha256": "7dae0f4fb9e160422bea2cc8f59a747788fa534a7f2146a438acbdea3df546e3"
+  }
+]

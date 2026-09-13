@@ -1,0 +1,28 @@
+
+> zodiacs-org@1.0.0 test:visual
+> node tests/visual/visual-regression.mjs
+
+Visual regression · 152.0.7977.83 · http://127.0.0.1:4327
+  FAIL home-desktop: 1440×8156 expected, 1440×6493 received
+  FAIL home-mobile: 390×9349 expected, 390×8122 received
+  FAIL home-desktop-reduced-motion: 1440×8156 expected, 1440×6493 received
+  FAIL birth-chart-kahlo-desktop: 1440×8809 expected, 1440×9502 received
+  FAIL birth-chart-kahlo-mobile: 390×13360 expected, 390×14011 received
+  FAIL birth-chart-kahlo-desktop-reduced-motion: 1440×8809 expected, 1440×9502 received
+  FAIL aries-desktop: 1440×6860 expected, 1440×6856 received
+  FAIL aries-mobile: 390×10208 expected, 390×10202 received
+  FAIL aries-desktop-reduced-motion: 1440×6860 expected, 1440×6856 received
+  FAIL events-hub-desktop: 1440×16747 expected, 1440×16743 received
+  FAIL events-hub-mobile: 390×20959 expected, 390×20953 received
+  FAIL events-hub-desktop-reduced-motion: 1440×16747 expected, 1440×16743 received
+  FAIL event-full-moon-desktop: 1440×4730 expected, 1440×4785 received
+  FAIL event-full-moon-mobile: 390×6821 expected, 390×6888 received
+  FAIL event-full-moon-desktop-reduced-motion: 1440×4730 expected, 1440×4785 received
+file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/visual-regression.mjs:491
+  throw new Error(`${failures} visual regression case${failures === 1 ? '' : 's'} failed. Artifacts: ${artifactRoot}`);
+        ^
+
+Error: 15 visual regression cases failed. Artifacts: /Users/chiburashka/.codex/worktrees/4806/site/tests/visual/artifacts/visual
+    at file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/visual-regression.mjs:491:9
+
+Node.js v22.23.2

@@ -1,0 +1,13 @@
+--- a/.github/workflows/site-check.yml
++++ b/.github/workflows/site-check.yml
+@@ -113,6 +113,10 @@
+         timeout-minutes: 3
+         run: OUT_DIR=tests/visual/artifacts/moon-result-ownership node tests/moon-result-ownership-drive.mjs
+ 
++      - name: Birth chart result ownership
++        timeout-minutes: 5
++        run: OUT_DIR=tests/visual/artifacts/chart-ownership node tests/chart-ownership-drive.mjs
++
+       - name: Engine accuracy vectors
+         run: npm test
+ 

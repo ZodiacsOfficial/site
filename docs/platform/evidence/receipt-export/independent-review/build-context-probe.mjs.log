@@ -1,0 +1,4 @@
+import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';import {createHash} from 'node:crypto';
+const root=path.dirname(new URL(import.meta.url).pathname);const {build}=createRequire('/Users/chiburashka/.codex/worktrees/4806/site/package.json')('esbuild');
+const result=await build({entryPoints:[path.join(root,'time-context-entry.ts')],outfile:path.join(root,'time-context-subject.mjs'),platform:'node',format:'esm',target:'node22',bundle:true,metafile:true,nodePaths:['/Users/chiburashka/.codex/worktrees/4806/site/node_modules']});
+fs.writeFileSync(path.join(root,'time-context-bundle-inputs.json'),JSON.stringify(Object.fromEntries(Object.keys(result.metafile.inputs).map(p=>[p,createHash('sha256').update(fs.readFileSync(p)).digest('hex')])),null,2)+'\n');

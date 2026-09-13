@@ -1,0 +1,19 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-receipt-export
+
+ ✓ src/islands/ChartCalculator.registry-bridge.test.ts (2 tests) 11ms
+ ✓ src/lib/receipt-download.test.ts (5 tests) 18ms
+ ✓ src/lib/i18n/ui/client.test.ts (4 tests) 6ms
+ ✓ src/islands/ChartCalculator.locale.test.ts (7 tests) 106ms
+ ✓ src/lib/i18n/ui/ru.test.ts (6 tests) 23ms
+ ✓ src/lib/i18n/index.test.ts (20 tests) 113ms
+ ✓ src/islands/ChartCalculator.actions.test.ts (20 tests) 107ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 637ms
+   ✓ shared compact chart projection > keeps the new boundary optional and the shared adapter free of runtime dependencies  314ms
+ ✓ src/lib/engine/calculator-receipt.test.ts (35 tests) 544ms
+
+ Test Files  9 passed (9)
+      Tests  120 passed (120)
+   Start at  12:38:21
+   Duration  2.60s (transform 4.25s, setup 0ms, collect 7.37s, tests 1.57s, environment 2ms, prepare 2.12s)
+

@@ -1,0 +1,680 @@
+{
+  "members": [
+    {
+      "path": "AUTHOR.md",
+      "bytes": 10692,
+      "sha256": "475fab95759f7bbcf47ce00868176143afd80e868920757c277ecf817e54fa09"
+    },
+    {
+      "path": "astro-sync-corrected.log",
+      "bytes": 177,
+      "sha256": "4f15d0b61d0eaf6ffbc775da023e98197cd746d5abcfbaf83dd6e136d082d3a6"
+    },
+    {
+      "path": "astro-sync.log",
+      "bytes": 717,
+      "sha256": "a62f3143373c9f5debdaa27ec76de07890e4afff9ccef2f4aa330a0801c2fc3b"
+    },
+    {
+      "path": "base.json",
+      "bytes": 1693,
+      "sha256": "864ef3b0f033698c2a1055b7965159aba6fbb1e342b0d825624b7c842546174e"
+    },
+    {
+      "path": "baseline-source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20598,
+      "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9"
+    },
+    {
+      "path": "baseline-source/src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "baseline-source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/en.ts",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/es.ts",
+      "bytes": 23867,
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27542,
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/it.ts",
+      "bytes": 26366,
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25488,
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3"
+    },
+    {
+      "path": "baseline-source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "baseline-source/src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "commands.md",
+      "bytes": 4586,
+      "sha256": "202b4a4f98dd97a8931fcd24df9a0266cdecbaf2809b68f7683ad8987f620e15"
+    },
+    {
+      "path": "driver-34-groups.mjs.log",
+      "bytes": 19333,
+      "sha256": "1562ef876b55470ddf46b6900764a601137bf139f6c48a6277defdadba0909ee"
+    },
+    {
+      "path": "driver-initial.mjs.log",
+      "bytes": 15336,
+      "sha256": "da5c7f83d41c3b0eaddbfe944b31335b4d3702054594b4c4da2ffbd815d1a571"
+    },
+    {
+      "path": "environment.json",
+      "bytes": 2933,
+      "sha256": "70f00fc6b3a8faecc69b66627cfa62c9d76a3a79b46e7f71066fbc0eb7d6b356"
+    },
+    {
+      "path": "focused-final-node22.log",
+      "bytes": 685,
+      "sha256": "c0cdf15815525e721c9f17633b850186b50a3cfb98110483863334920405d1fe"
+    },
+    {
+      "path": "focused-final-node24.log",
+      "bytes": 687,
+      "sha256": "2c238f592eca89f1d63baea70e6c8972a8f01c1f55c19dcb330b6d334400c79f"
+    },
+    {
+      "path": "focused-initial.log",
+      "bytes": 502,
+      "sha256": "03f3966cc9ee1bc45605f42348bd49416cfef46b15e77714a59b71ba96271aca"
+    },
+    {
+      "path": "frozen-source/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20636,
+      "sha256": "f3de3156ac4c8420084c282d259a4f656f8fe5899dd0f8217947fa3e8e0ec4f9"
+    },
+    {
+      "path": "frozen-source/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "frozen-source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/en.ts",
+      "bytes": 21989,
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/es.ts",
+      "bytes": 23999,
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/fr.ts",
+      "bytes": 27691,
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/it.ts",
+      "bytes": 26517,
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/pt.ts",
+      "bytes": 25626,
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "path": "frozen-source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38328,
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "path": "frozen-source/src/lib/time/localDateContainsUtc.test.ts",
+      "bytes": 6475,
+      "sha256": "0aa0d52d82f86f832ba4f1dae9a5c0e9a828c78c6d13fe27549333d4a46a5707"
+    },
+    {
+      "path": "frozen-source/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "frozen-source/tests/local-date-reference-drive.mjs",
+      "bytes": 22003,
+      "sha256": "2ea7036618df0451ee087e902296d4bff8b8d086ceb75b62c107bcd0d9eb15dd"
+    },
+    {
+      "path": "implementation.patch",
+      "bytes": 40918,
+      "sha256": "41d49812595e81a56ae1194a598bab65faa6c047806480cbb4438ed6be1bf13e"
+    },
+    {
+      "path": "initial-inspection-errors.log",
+      "bytes": 806,
+      "sha256": "c0db789f71abbcff4719e1c067e50824107044700c50d1a28207e97d7e394347"
+    },
+    {
+      "path": "moon-ownership/fixture.css",
+      "bytes": 2483,
+      "sha256": "7a834ac86e5041e05d9c18a835a937e95f69effe2bcdbb5744d9a1186d3b74ab"
+    },
+    {
+      "path": "moon-ownership/fixture.js",
+      "bytes": 411317,
+      "sha256": "eab80a2163dba12e86e840cef969066bef4f6c982eeaa65df37bf925a4496981"
+    },
+    {
+      "path": "moon-ownership/result.json",
+      "bytes": 18718,
+      "sha256": "b021da5d93d0ffdab0419276b16008bf01996e0adbb935a394c168d111ef5f4e"
+    },
+    {
+      "path": "moon-ownership.log",
+      "bytes": 14360,
+      "sha256": "0e68466cd49239a990c6ef24acc5c70d1f7520edd39d883f7a1a54651a4cfcda"
+    },
+    {
+      "path": "native/baseline-build.json",
+      "bytes": 191478,
+      "sha256": "eb2054fd594de4f843d6add03c000e0b489830a5a3f684eff6076b099031d5d6"
+    },
+    {
+      "path": "native/baseline-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native/baseline-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native/baseline-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native/baseline.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native/baseline.js",
+      "bytes": 2219974,
+      "sha256": "a95e352efdeb63a2fa29f7067739cd4521c0e0c9bdb245a33c77f3eaf32d7c4b"
+    },
+    {
+      "path": "native/candidate-build.json",
+      "bytes": 191481,
+      "sha256": "c9192d9bb66512f29a28e7895a32470f44cb691d8318d2832d6b178edaf57ad5"
+    },
+    {
+      "path": "native/candidate-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native/candidate-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native/candidate-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native/candidate.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native/candidate.js",
+      "bytes": 2221528,
+      "sha256": "b3258b289447c1ce8167275a98724deb74e68a82f6a258c9308853de97381eb6"
+    },
+    {
+      "path": "native/chart-Pacific-Apia-rejected.png",
+      "bytes": 59875,
+      "sha256": "2bb1b91ce54c5334fe0ac7481f7bbeb55df3283a8064460debae6f2cfb4a3acc"
+    },
+    {
+      "path": "native/chart-Pacific-Guam-rejected.png",
+      "bytes": 59985,
+      "sha256": "6d0bf682e415a13dd4d37e59cc881e7485d81f19fd1ed812364ba8630f374abb"
+    },
+    {
+      "path": "native/chart-Pacific-Kiritimati-rejected.png",
+      "bytes": 59971,
+      "sha256": "f58a783d1408a084f675cf9445bf406369e5951430b5cdd64c8535980c9c08dc"
+    },
+    {
+      "path": "native/chart-Pacific-Kwajalein-rejected.png",
+      "bytes": 60136,
+      "sha256": "8750c26b0b69943f387f743484e4ab53aa35a5ba07409d2a8b3789ffc5684a20"
+    },
+    {
+      "path": "native/fixture-entry.tsx.log",
+      "bytes": 2074,
+      "sha256": "2de9dac5464cf2cce726a271a27a825eb04121d93e6e452d0e16ccd85b6fe831"
+    },
+    {
+      "path": "native/moon-Pacific-Apia-rejected.png",
+      "bytes": 44243,
+      "sha256": "7aac2e1f3dfdd3cf5190c1ba8df931ae579f9bce489bdd241a8ae9c65698c37b"
+    },
+    {
+      "path": "native/moon-Pacific-Guam-rejected.png",
+      "bytes": 44360,
+      "sha256": "0c91460d9fa1b9d59b894d9c65ccb5920539cc6e4fe41f7062335764badb803a"
+    },
+    {
+      "path": "native/moon-Pacific-Kiritimati-rejected.png",
+      "bytes": 44351,
+      "sha256": "dd79ae1dfa70dcc9880f5e02a43de4ba5795837c7936356450df18cf61996bfc"
+    },
+    {
+      "path": "native/moon-Pacific-Kwajalein-rejected.png",
+      "bytes": 44532,
+      "sha256": "229f265ecb6a739bd23d287c8ae6939d1dd74241112ecab851e1d49eec2564ae"
+    },
+    {
+      "path": "native/result.json",
+      "bytes": 303973,
+      "sha256": "ef1fa4e7bb2b8c5540d84615cba4e24525b3e1cba0aa50dcef041fa0ebe2cf04"
+    },
+    {
+      "path": "native-complete/baseline-build.json",
+      "bytes": 231264,
+      "sha256": "acdb4b6e219c610ffef9e42be544e409c35934ce8845c8b37967767bc38f1927"
+    },
+    {
+      "path": "native-complete/baseline-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native-complete/baseline-chart-date-certainty.ts.probe-source.log",
+      "bytes": 1863,
+      "sha256": "54e163b0b0a18e3c71127cefac9b0e0ef322bc8fbc7edf9d6936ab7b69cf9687"
+    },
+    {
+      "path": "native-complete/baseline-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native-complete/baseline-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native-complete/baseline.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native-complete/baseline.js",
+      "bytes": 2220102,
+      "sha256": "7c1ef9f23d7e1d2776998c5fa46d166500ecd59e274f39a994a6c20e0b00b3da"
+    },
+    {
+      "path": "native-complete/candidate-build.json",
+      "bytes": 230999,
+      "sha256": "16eef7d6fd27982596a48100f23c06c288dc6d0f77ed212cc001774d12ec1583"
+    },
+    {
+      "path": "native-complete/candidate-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native-complete/candidate-chart-date-certainty.ts.probe-source.log",
+      "bytes": 1863,
+      "sha256": "54e163b0b0a18e3c71127cefac9b0e0ef322bc8fbc7edf9d6936ab7b69cf9687"
+    },
+    {
+      "path": "native-complete/candidate-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native-complete/candidate-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native-complete/candidate.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native-complete/candidate.js",
+      "bytes": 2221656,
+      "sha256": "d1bde7a44e94a665e9284e3f3fa63f2f8eee37114634b57853c8e2495a441d30"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Apia-original.png",
+      "bytes": 819227,
+      "sha256": "ea9ce527daad29c2fb110f3beaa9412ee131f488e7b3f580885da69034028b88"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Apia-rejected.png",
+      "bytes": 59875,
+      "sha256": "2bb1b91ce54c5334fe0ac7481f7bbeb55df3283a8064460debae6f2cfb4a3acc"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Guam-original.png",
+      "bytes": 814197,
+      "sha256": "dc236320d0e5afb80cab71f9f598d60478a5e14ce82ef843930d7773efcc54eb"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Guam-rejected.png",
+      "bytes": 59985,
+      "sha256": "6d0bf682e415a13dd4d37e59cc881e7485d81f19fd1ed812364ba8630f374abb"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Kiritimati-original.png",
+      "bytes": 807798,
+      "sha256": "e52b27c688fb4815f8d2154d234f13d285749d9a9406c7db5ee56270e763ae18"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Kiritimati-rejected.png",
+      "bytes": 59971,
+      "sha256": "f58a783d1408a084f675cf9445bf406369e5951430b5cdd64c8535980c9c08dc"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Kwajalein-original.png",
+      "bytes": 818848,
+      "sha256": "ea75db20b4ff4536d2c80ec975fbdcd9ed9af821fa3f32027a636feba43fa845"
+    },
+    {
+      "path": "native-complete/chart-Pacific-Kwajalein-rejected.png",
+      "bytes": 60136,
+      "sha256": "8750c26b0b69943f387f743484e4ab53aa35a5ba07409d2a8b3789ffc5684a20"
+    },
+    {
+      "path": "native-complete/fixture-entry.tsx.log",
+      "bytes": 2140,
+      "sha256": "f03557b01b65a4eeba34680e514274a960becd44e0340e670a23a6c236a0de5d"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Apia-original.png",
+      "bytes": 63839,
+      "sha256": "a93e85b4d292cbac8d1581a0697b96bf48089a4bbf5ab3032364907f869a4847"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Apia-rejected.png",
+      "bytes": 44256,
+      "sha256": "bac2056de0e1b2f442694a719487a96360f1c5fb5a6b37de0dc1f2897c24310c"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Guam-original.png",
+      "bytes": 63914,
+      "sha256": "b38dfea86671cc4b60c4706279be8e9d64f3a3a3c9e070e615fa9f051bb7ae97"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Guam-rejected.png",
+      "bytes": 44373,
+      "sha256": "1027bb8b47c45ab9d77d0e22849b109c5938e636db06d68dcea8786865f259d2"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Kiritimati-original.png",
+      "bytes": 64366,
+      "sha256": "e63b4a5c55b16c03b78e3e7af29f65151b319e3ce01aed249d1d152f93fe3dd1"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Kiritimati-rejected.png",
+      "bytes": 44364,
+      "sha256": "92bd24ee7f82a2e8737e1f4c9a77744899b80db854bff580d5b5fca7e7a18210"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Kwajalein-original.png",
+      "bytes": 65048,
+      "sha256": "de03a9f3fdbbfcc34611fd93a41a6d478866214f96b911491a32e8f1a8ddb42c"
+    },
+    {
+      "path": "native-complete/moon-Pacific-Kwajalein-rejected.png",
+      "bytes": 44546,
+      "sha256": "1e4736ed8020362ff5bc23308b8f713863ec19043270c7786eadec11f12cac73"
+    },
+    {
+      "path": "native-complete/result.json",
+      "bytes": 442805,
+      "sha256": "ec4161d7d1c23db800557e93b7eeb0ae2107f2b9a245a71c9446cf9464fd2c0b"
+    },
+    {
+      "path": "native-complete.log",
+      "bytes": 2042,
+      "sha256": "2aca8db551701ce9c6f1656957075260c77b2cd0e8dd9fcff9a73414bdf9caa5"
+    },
+    {
+      "path": "native-final/baseline-build.json",
+      "bytes": 231255,
+      "sha256": "6ee41b6940c93d0f3582a2af0379ce996ad7858f60437e8b5acb291c79879417"
+    },
+    {
+      "path": "native-final/baseline-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native-final/baseline-chart-date-certainty.ts.probe-source.log",
+      "bytes": 1863,
+      "sha256": "54e163b0b0a18e3c71127cefac9b0e0ef322bc8fbc7edf9d6936ab7b69cf9687"
+    },
+    {
+      "path": "native-final/baseline-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native-final/baseline-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native-final/baseline.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native-final/baseline.js",
+      "bytes": 2220032,
+      "sha256": "3980f4d3195c00446ced3041de4d39f4958df8266feda8a394c00774f2495caf"
+    },
+    {
+      "path": "native-final/candidate-build.json",
+      "bytes": 230990,
+      "sha256": "766035f4028eb72469991797d90d05bc272af63e7eb7230dfc260b174fb8f4ea"
+    },
+    {
+      "path": "native-final/candidate-calculator-receipt.ts.probe-source.log",
+      "bytes": 2784,
+      "sha256": "ac81f5324bfee38e8f083d1638cd1a1dc99efff31aec79baa2035311ee923fa8"
+    },
+    {
+      "path": "native-final/candidate-chart-date-certainty.ts.probe-source.log",
+      "bytes": 1863,
+      "sha256": "54e163b0b0a18e3c71127cefac9b0e0ef322bc8fbc7edf9d6936ab7b69cf9687"
+    },
+    {
+      "path": "native-final/candidate-localToUtc.ts.probe-source.log",
+      "bytes": 8130,
+      "sha256": "1230181bf503b0f09ef2b7d84b7cca9f8c109818de6916e27fe7ccda9e89c59e"
+    },
+    {
+      "path": "native-final/candidate-portable.ts.probe-source.log",
+      "bytes": 3207,
+      "sha256": "b4c484c4f0cc166a9748538e1294d3923768a8a68894fa97bc0b3c0914abe06a"
+    },
+    {
+      "path": "native-final/candidate.css",
+      "bytes": 29785,
+      "sha256": "3d8241365bf87ca7fe8fa9b98c03537d162c96a0e9eb5cb7548dced37ffeb8d9"
+    },
+    {
+      "path": "native-final/candidate.js",
+      "bytes": 2221586,
+      "sha256": "479befb947b087681570913d83d96db9eef78bdfe8bb67553c74a3ca6da3d427"
+    },
+    {
+      "path": "native-final/chart-Pacific-Apia-rejected.png",
+      "bytes": 59875,
+      "sha256": "2bb1b91ce54c5334fe0ac7481f7bbeb55df3283a8064460debae6f2cfb4a3acc"
+    },
+    {
+      "path": "native-final/chart-Pacific-Guam-rejected.png",
+      "bytes": 59985,
+      "sha256": "6d0bf682e415a13dd4d37e59cc881e7485d81f19fd1ed812364ba8630f374abb"
+    },
+    {
+      "path": "native-final/chart-Pacific-Kiritimati-rejected.png",
+      "bytes": 59971,
+      "sha256": "f58a783d1408a084f675cf9445bf406369e5951430b5cdd64c8535980c9c08dc"
+    },
+    {
+      "path": "native-final/chart-Pacific-Kwajalein-rejected.png",
+      "bytes": 60136,
+      "sha256": "8750c26b0b69943f387f743484e4ab53aa35a5ba07409d2a8b3789ffc5684a20"
+    },
+    {
+      "path": "native-final/fixture-entry.tsx.log",
+      "bytes": 2074,
+      "sha256": "2de9dac5464cf2cce726a271a27a825eb04121d93e6e452d0e16ccd85b6fe831"
+    },
+    {
+      "path": "native-final/moon-Pacific-Apia-rejected.png",
+      "bytes": 44257,
+      "sha256": "65290ef77181a6fd550be8f306477af1f3c68683f643d697e8b58e632ff4cc4a"
+    },
+    {
+      "path": "native-final/moon-Pacific-Guam-rejected.png",
+      "bytes": 44374,
+      "sha256": "de223723768185d1f86d3c9d4ac06bf8106c34785da7332345e75c65d7702313"
+    },
+    {
+      "path": "native-final/moon-Pacific-Kiritimati-rejected.png",
+      "bytes": 44367,
+      "sha256": "dd0fb16eaac8e2f58d2fcdf5ae369e68cb529c7f97949b62d1c6c77c9447f9e4"
+    },
+    {
+      "path": "native-final/moon-Pacific-Kwajalein-rejected.png",
+      "bytes": 44547,
+      "sha256": "ea8dea65134233ee06fa2c907542c94dfc7c9f0bb2bce921c0b23311b494df92"
+    },
+    {
+      "path": "native-final/result.json",
+      "bytes": 354335,
+      "sha256": "86ab4d0812f349e42864168db540395b55c0411d8cdca5718cdc644a54687f3a"
+    },
+    {
+      "path": "native-final.log",
+      "bytes": 1954,
+      "sha256": "3acfd27db8dd464c313f2dd1aa8e4adf7248494ba9097cf3438479d8c4495aa6"
+    },
+    {
+      "path": "native-initial.log",
+      "bytes": 1483,
+      "sha256": "f41ed5cab708c4b03392888c764baa12a8ace70af6a5904ef68456b36cfd0736"
+    },
+    {
+      "path": "native-summary.json",
+      "bytes": 245,
+      "sha256": "871b2e9a40dcde628c4d139b6e05a8b8771b3b64d288d7316c78882df58429eb"
+    },
+    {
+      "path": "package-delivery.py",
+      "bytes": 5196,
+      "sha256": "638e648486fc206c48a3cdd7e2b897fe1329f71fc02501aa7165dd2bff20f1b7"
+    },
+    {
+      "path": "preparation-support/counterexample-REVIEW.md.log",
+      "bytes": 4019,
+      "sha256": "54d424759400e3524b9c074efa07df112966763038be2e56cb9f225f2577c288"
+    },
+    {
+      "path": "preparation-support/counterexample-manifest.json.log",
+      "bytes": 3590,
+      "sha256": "25dee2490e18f27cf5f85049e5cefd26577e127a9db7b985d7f60dd523d2ebe9"
+    },
+    {
+      "path": "preparation-support/linked-evidence-verification.json.log",
+      "bytes": 611,
+      "sha256": "34c8a6059dc9fe4cbb0d46fa909752161523f48dbde4fe943cf74375048da85f"
+    },
+    {
+      "path": "preparation-support/main-REVIEW.md.log",
+      "bytes": 10226,
+      "sha256": "cddae680abfd8505db4ef529e8e3f8748bd92ac60da82102ecb613a042851afc"
+    },
+    {
+      "path": "preparation-support/synthetic-README.md.log",
+      "bytes": 1654,
+      "sha256": "a640d2ca4de6d2853759a69bbcdd352c191a6e8dc1491d3043c89dde9eda5d1a"
+    },
+    {
+      "path": "preparation-support/synthetic-manifest.json.log",
+      "bytes": 1443,
+      "sha256": "4766304dca951739f509c3aa9a2a7620890e3168bbe904951a66086489a1b442"
+    },
+    {
+      "path": "retained-moon-driver.mjs.log",
+      "bytes": 14964,
+      "sha256": "2815fb499e7e8278fff2adf30344abe6b1f407f38247347c4b77865f020f2246"
+    },
+    {
+      "path": "scope-proof.json",
+      "bytes": 2652,
+      "sha256": "37056aab07ba0112be2a103101929af034515aeb0625048708a9cac8cd291aa8"
+    },
+    {
+      "path": "seal-source.log",
+      "bytes": 181,
+      "sha256": "fe1b253d694335395f14b20e17113fe1830346bb28b97e169bba36a15c6c652a"
+    },
+    {
+      "path": "seal-source.py",
+      "bytes": 4715,
+      "sha256": "89d5806ae9a31586b3d704f942b830d04cc57bb20128c84096c856d1cf41889b"
+    },
+    {
+      "path": "source-freeze.json",
+      "bytes": 2624,
+      "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+    },
+    {
+      "path": "types-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "types-initial.log",
+      "bytes": 2080,
+      "sha256": "f6816b2d974fe01f9dc2c9ac49236a21e82d9106aca0dc4397a7938f628b0154"
+    }
+  ],
+  "totalBytes": 22062960
+}

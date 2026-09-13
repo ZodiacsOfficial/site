@@ -1,0 +1,499 @@
+{
+  "lockSource": "cced011659d48877b8b73b8a85796815234cf741 (unchanged)",
+  "command": "corepack pnpm audit --prod --json",
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 1,
+      "moderate": 37,
+      "high": 21,
+      "critical": 0
+    },
+    "dependencies": 663,
+    "devDependencies": 0,
+    "optionalDependencies": 0,
+    "totalDependencies": 663
+  },
+  "advisories": [
+    {
+      "module": "postcss",
+      "severity": "moderate",
+      "title": "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output",
+      "url": "https://github.com/advisories/GHSA-qx2v-qp2m-jg93",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "ws",
+      "severity": "moderate",
+      "title": "ws: Uninitialized memory disclosure",
+      "url": "https://github.com/advisories/GHSA-58qx-3vcg-4xpx",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "uuid",
+      "severity": "moderate",
+      "title": "uuid: Missing buffer bounds check in v3/v5/v6 when buf is provided",
+      "url": "https://github.com/advisories/GHSA-w5hq-g745-h8pq",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "form-data",
+      "severity": "high",
+      "title": "form-data: CRLF injection in form-data via unescaped multipart field names and filenames",
+      "url": "https://github.com/advisories/GHSA-hmw2-7cc7-3qxx",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "ws",
+      "severity": "high",
+      "title": "ws: Memory exhaustion DoS from tiny fragments and data chunks",
+      "url": "https://github.com/advisories/GHSA-96hv-2xvq-fx4p",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs",
+        "examples/simastry-aura",
+        "packages/sdk"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios form serializer maxDepth bypass via {} metatoken",
+      "url": "https://github.com/advisories/GHSA-hcpx-6fm6-wx23",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "hono: Body Limit Middleware can be bypassed on AWS Lambda by understating `Content-Length`",
+      "url": "https://github.com/advisories/GHSA-rv63-4mwf-qqc2",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "hono: Lambda@Edge adapter keeps only the last value of a repeated request header, dropping the rest",
+      "url": "https://github.com/advisories/GHSA-wgpf-jwqj-8h8p",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "high",
+      "title": "hono: CORS Middleware reflects any Origin with credentials when `origin` defaults to the wildcard",
+      "url": "https://github.com/advisories/GHSA-88fw-hqm2-52qc",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "hono: Path traversal in `serve-static` on Windows via encoded backslash (`%5C`)",
+      "url": "https://github.com/advisories/GHSA-wwfh-h76j-fc44",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "hono: AWS Lambda adapter merges multiple `Set-Cookie` headers into one value, dropping cookies on ALB single-header and Lattice",
+      "url": "https://github.com/advisories/GHSA-j6c9-x7qj-28xf",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "Hono: API Gateway v1 adapter can drop a distinct repeated request header value during de-duplication",
+      "url": "https://github.com/advisories/GHSA-xgm2-5f3f-mvvc",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "hono/jsx does not isolate context per request, leading to cross-request data disclosure",
+      "url": "https://github.com/advisories/GHSA-hvrm-45r6-mjfj",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "Hono: Server-Side XSS via JSX Escaping Bypass in cx() Utility",
+      "url": "https://github.com/advisories/GHSA-w62v-xxxg-mg59",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "sharp",
+      "severity": "high",
+      "title": "sharp inherited vulnerabilities in libvips: CVE-2026-33327, CVE-2026-33328, CVE-2026-35590, CVE-2026-35591",
+      "url": "https://github.com/advisories/GHSA-f88m-g3jw-g9cj",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "high",
+      "title": "Next.js: Denial of Service in App Router using Server Actions",
+      "url": "https://github.com/advisories/GHSA-m99w-x7hq-7vfj",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "high",
+      "title": "Next.js: Server-Side Request Forgery in Server Actions on custom servers",
+      "url": "https://github.com/advisories/GHSA-89xv-2m56-2m9x",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "moderate",
+      "title": "Next.js: Cache confusion of response bodies for requests with bodies",
+      "url": "https://github.com/advisories/GHSA-68g3-v927-f742",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "moderate",
+      "title": "Next.js: Cache confusion of response bodies for requests with bodies containing invalid UTF-8 byte sequences",
+      "url": "https://github.com/advisories/GHSA-4633-3j49-mh5q",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "moderate",
+      "title": "Next.js: Unbounded Server Action payload in Edge runtime",
+      "url": "https://github.com/advisories/GHSA-4c39-4ccg-62r3",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "high",
+      "title": "Next.js: Server-Side Request Forgery in rewrites via attacker-controlled destination hostname",
+      "url": "https://github.com/advisories/GHSA-p9j2-gv94-2wf4",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "moderate",
+      "title": "Next.js: Denial of Service in the Image Optimization API using SVGs",
+      "url": "https://github.com/advisories/GHSA-q8wf-6r8g-63ch",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "next",
+      "severity": "moderate",
+      "title": "Next.js: Unauthenticated disclosure of internal Server Function endpoints",
+      "url": "https://github.com/advisories/GHSA-955p-x3mx-jcvp",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "postcss",
+      "severity": "high",
+      "title": "PostCSS: Arbitrary file read and information disclosure via attacker-controlled sourceMappingURL in CSS comments",
+      "url": "https://github.com/advisories/GHSA-6g55-p6wh-862q",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "postcss",
+      "severity": "moderate",
+      "title": "PostCSS: incomplete fix of GHSA-6g55-p6wh-862q — attacker-controlled sourceMappingURL reads arbitrary .map files when `from` is unset",
+      "url": "https://github.com/advisories/GHSA-fxqj-rqcc-2cmp",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "socket.io-parser",
+      "severity": "high",
+      "title": "Socket.IO: Zero-attachment Memory Exhaustion",
+      "url": "https://github.com/advisories/GHSA-2m8v-j782-fhvr",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "Hono: ReDoS in CORS middleware via Access-Control-Request-Headers",
+      "url": "https://github.com/advisories/GHSA-8j4g-w8fx-2239",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Prototype pollution auth subfields can inject Basic auth",
+      "url": "https://github.com/advisories/GHSA-xj6q-8x83-jv6g",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "Hono: `memo()` retains SSR output across requests, leading to cross-user data disclosure",
+      "url": "https://github.com/advisories/GHSA-f23p-vx2j-j53r",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "low",
+      "title": "Hono: Proxy Helper does not remove response headers listed in the `Connection` header",
+      "url": "https://github.com/advisories/GHSA-79qm-7rj5-m7r9",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "hono",
+      "severity": "moderate",
+      "title": "Hono: Algorithmic Complexity DoS in Language Middleware",
+      "url": "https://github.com/advisories/GHSA-54fx-42gc-7vw4",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "nanoid",
+      "severity": "high",
+      "title": "nanoid: non-secure generators can loop indefinitely with negative size",
+      "url": "https://github.com/advisories/GHSA-28wg-ghj8-5hjv",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "nanoid",
+      "severity": "high",
+      "title": "nanoid: custom generators can loop indefinitely when size is zero",
+      "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "postcss",
+      "severity": "high",
+      "title": "PostCSS: Path Traversal in Previous Source Map Auto-Loading (sourceMappingURL) leads to Arbitrary .map File Disclosure",
+      "url": "https://github.com/advisories/GHSA-r28c-9q8g-f849",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Prototype pollution gadgets can alter axios request construction",
+      "url": "https://github.com/advisories/GHSA-mmx7-hfxf-jppx",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Deep formToJSON Key Recursion Can Cause Denial of Service",
+      "url": "https://github.com/advisories/GHSA-pmv8-rq9r-6j72",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "decode-uri-component",
+      "severity": "moderate",
+      "title": "decode-uri-component: Denial of service via exponential decoding of malformed percent-encoded input",
+      "url": "https://github.com/advisories/GHSA-vcc3-ghjq-m6fr",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "browserslist",
+      "severity": "high",
+      "title": "Browserslist: Unbounded memory growth (no cache eviction) via distinct query results, leading to eventual OOM",
+      "url": "https://github.com/advisories/GHSA-c83g-rgw3-j3cx",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "browserslist",
+      "severity": "high",
+      "title": "Browserslist: Uncaught crash / prototype write via untrusted browserslist-stats.json custom stats (normalizeStats)",
+      "url": "https://github.com/advisories/GHSA-73wf-gq98-2v4g",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app",
+        "examples/nextjs"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: HTTP/2 streamed uploads bypass `maxBodyLength`",
+      "url": "https://github.com/advisories/GHSA-mwf2-3pr3-8698",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "high",
+      "title": "Axios Node HTTP adapter can use an inherited proxy after interceptor config cloning",
+      "url": "https://github.com/advisories/GHSA-gcfj-64vw-6mp9",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Nested axios option objects can consume polluted prototype values",
+      "url": "https://github.com/advisories/GHSA-7q8q-rj6j-mhjq",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Fetch adapter `ReadableStream` uploads bypass `maxBodyLength`",
+      "url": "https://github.com/advisories/GHSA-jqh4-m9w3-8hp9",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: NO_PROXY bypass for 0.0.0.0 local addresses in axios",
+      "url": "https://github.com/advisories/GHSA-f4gw-2p7v-4548",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "axios",
+      "severity": "moderate",
+      "title": "Axios: Excessive recursion in formDataToJSON can cause denial of service",
+      "url": "https://github.com/advisories/GHSA-42h9-826w-cgv3",
+      "affectedProjects": [
+        "apps/zodia",
+        "examples/base-app"
+      ]
+    },
+    {
+      "module": "stream-json",
+      "severity": "moderate",
+      "title": "stream-json: pick/ignore/filter/replace filters are O(depth²) on nested input — small crafted JSON blocks the event loop for seconds→minutes (DoS)",
+      "url": "https://github.com/advisories/GHSA-528h-pc64-c93x",
+      "affectedProjects": [
+        "apps/zodia"
+      ]
+    }
+  ],
+  "resultFileWrittenAt": "2026-09-07T18:02:56.830Z"
+}

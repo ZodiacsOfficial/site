@@ -1,0 +1,52 @@
+[
+  {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/vitest/vitest.mjs",
+      "run",
+      "src/lib/engine/calculator-receipt.test.ts",
+      "src/lib/receipt-download.test.ts",
+      "src/lib/engine/portable.test.ts",
+      "src/islands/ChartCalculator.actions.test.ts",
+      "src/islands/ChartCalculator.locale.test.ts",
+      "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "src/lib/i18n/index.test.ts",
+      "src/lib/i18n/ui/client.test.ts",
+      "src/lib/i18n/ui/ru.test.ts"
+    ],
+    "log": "freeze2-final-focused-tests.log",
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/typescript/bin/tsc",
+      "--noEmit",
+      "--target",
+      "ES2022",
+      "--module",
+      "ESNext",
+      "--moduleResolution",
+      "Bundler",
+      "--strict",
+      "--skipLibCheck",
+      "--types",
+      "node,astro/client",
+      "src/lib/engine/calculator-receipt.ts",
+      "src/lib/engine/calculator-receipt.test.ts",
+      "src/lib/receipt-download.ts",
+      "src/lib/receipt-download.test.ts"
+    ],
+    "log": "freeze2-final-focused-typecheck.log",
+    "exitCode": 0
+  },
+  {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "node_modules/astro/bin/astro.mjs",
+      "check"
+    ],
+    "log": "freeze2-final-astro-check.log",
+    "exitCode": 0
+  }
+]

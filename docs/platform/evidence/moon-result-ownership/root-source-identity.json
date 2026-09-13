@@ -1,0 +1,25 @@
+{
+  "base": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "at": "2026-09-08T07:54:03.158124+00:00",
+  "reviewStatus": "Author, independent and root local verification passed with documented existing Guide portrait variance; hosted CI pending",
+  "scope": "Moon result ownership only; one changed island plus one native acceptance driver. No interval, date endpoint, certainty, locale, style, SDK or root changes.",
+  "files": [
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "tests/moon-result-ownership-drive.mjs",
+      "bytes": 14964,
+      "sha256": "2815fb499e7e8278fff2adf30344abe6b1f407f38247347c4b77865f020f2246"
+    }
+  ],
+  "patchSha256": "ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858",
+  "rootBaseCommit": "65418003c07efc0c435ce1010e3c9ec05b478eb4",
+  "evidenceCarrierCommit": "11e75bab0f92ea2e02ba38ea8385a7cebed6a64b",
+  "rootCiIntegration": {
+    ".github/workflows/site-check.yml": "f7eced0d399caded9cff242c556f54084abea450aecd9df55122b966f40bfaaf"
+  },
+  "captureManifestSha256": "f4a6cb01925db9ed92bb9e58501b856b381ed687d2ad22b044f0646d2e42e101"
+}

@@ -1,0 +1,30 @@
+{
+  "refreshedAt": "2026-09-08T04:10:49.498708+00:00",
+  "siteMain": "d4d5717d132a28cd6d7cda3007e3b898bb74669f",
+  "sdkMain": "b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff",
+  "sdk10Head": "224863ebea0ab62d0eff721a53f5ab2a1bfc756f",
+  "sdk5": {
+    "head": "cced011659d48877b8b73b8a85796815234cf741",
+    "state": "OPEN",
+    "draft": true,
+    "submittedReviews": 0,
+    "hold": "do not merge, do not publish"
+  },
+  "production": {
+    "deployment": "dpl_gqJJR8pNkD3jHFtTmChh55UNvyse",
+    "state": "READY",
+    "source": "d4d5717d132a28cd6d7cda3007e3b898bb74669f",
+    "alias": "zodiacs.org"
+  },
+  "npm": {
+    "engine": 404,
+    "widgets": 404,
+    "ownershipLatest": "1.0.1"
+  },
+  "operations": [
+    "read-only GitHub CLI ref/PR/release reads",
+    "read-only Vercel connected get deployment",
+    "anonymous npm registry HTTP reads"
+  ],
+  "note": "These fresh reads do not imply production contains any platform candidate. No merge, publication or deployment operation occurred."
+}

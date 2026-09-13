@@ -1,0 +1,175 @@
+{
+  "baseCommit": "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+  "scratch": "/private/tmp/zodiacs-platform-reference-caption",
+  "patchSha256": "0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36",
+  "files": {
+    "src/islands/ChartCalculator.registry-bridge.test.ts": {
+      "bytes": 1781,
+      "sha256": "aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e",
+      "kind": "scoped test/driver"
+    },
+    "src/islands/ChartCalculator.tsx": {
+      "bytes": 120399,
+      "sha256": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420",
+      "kind": "product/copy"
+    },
+    "src/islands/MoonPhaseTool.reference.test.ts": {
+      "bytes": 7301,
+      "sha256": "188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8",
+      "kind": "scoped test/driver"
+    },
+    "src/islands/MoonPhaseTool.tsx": {
+      "bytes": 11017,
+      "sha256": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966",
+      "kind": "product/copy"
+    },
+    "src/islands/explorer/lens/copy.ts": {
+      "bytes": 13544,
+      "sha256": "7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f",
+      "kind": "product/copy"
+    },
+    "src/islands/explorer/tour/copy.ts": {
+      "bytes": 55749,
+      "sha256": "458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/en.ts": {
+      "bytes": 22136,
+      "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/es.ts": {
+      "bytes": 24319,
+      "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/fr.ts": {
+      "bytes": 27902,
+      "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/it.ts": {
+      "bytes": 26682,
+      "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/pt.ts": {
+      "bytes": 25854,
+      "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5",
+      "kind": "product/copy"
+    },
+    "src/lib/i18n/ui/ru.ts": {
+      "bytes": 38540,
+      "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338",
+      "kind": "product/copy"
+    },
+    "src/lib/moon-certainty.test.tsx": {
+      "bytes": 11558,
+      "sha256": "3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003",
+      "kind": "scoped test/driver"
+    },
+    "src/lib/reference-captions.test.tsx": {
+      "bytes": 5455,
+      "sha256": "e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab",
+      "kind": "scoped test/driver"
+    },
+    "src/lib/share-card-copy.ts": {
+      "bytes": 11216,
+      "sha256": "fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889",
+      "kind": "product/copy"
+    },
+    "src/lib/share-card.test.ts": {
+      "bytes": 16715,
+      "sha256": "ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084",
+      "kind": "scoped test/driver"
+    },
+    "src/lib/share-card.ts": {
+      "bytes": 55760,
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "kind": "product/copy"
+    },
+    "src/pages/es/moon-phase/index.astro": {
+      "bytes": 3609,
+      "sha256": "19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d",
+      "kind": "product/copy"
+    },
+    "src/pages/fr/moon-phase/index.astro": {
+      "bytes": 3823,
+      "sha256": "b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f",
+      "kind": "product/copy"
+    },
+    "src/pages/it/moon-phase/index.astro": {
+      "bytes": 3680,
+      "sha256": "246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae",
+      "kind": "product/copy"
+    },
+    "src/pages/moon-phase/index.astro": {
+      "bytes": 7008,
+      "sha256": "79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010",
+      "kind": "product/copy"
+    },
+    "src/pages/pt/moon-phase/index.astro": {
+      "bytes": 3527,
+      "sha256": "f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8",
+      "kind": "product/copy"
+    },
+    "src/pages/ru/moon-phase/index.astro": {
+      "bytes": 4081,
+      "sha256": "14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241",
+      "kind": "product/copy"
+    },
+    "src/server/chart-preview-model.ts": {
+      "bytes": 2056,
+      "sha256": "c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957",
+      "kind": "product/copy"
+    },
+    "src/server/chart-preview.ts": {
+      "bytes": 9897,
+      "sha256": "4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc",
+      "kind": "product/copy"
+    },
+    "src/strings/additions.fr.mjs": {
+      "bytes": 49891,
+      "sha256": "511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2",
+      "kind": "product/copy"
+    },
+    "src/strings/additions.it.mjs": {
+      "bytes": 48086,
+      "sha256": "849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61",
+      "kind": "product/copy"
+    },
+    "src/strings/additions.pt.mjs": {
+      "bytes": 47872,
+      "sha256": "f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e",
+      "kind": "product/copy"
+    },
+    "tests/api/og-chart.test.ts": {
+      "bytes": 12273,
+      "sha256": "1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2",
+      "kind": "scoped test/driver"
+    },
+    "tests/local-date-reference-drive.mjs": {
+      "bytes": 22718,
+      "sha256": "88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc",
+      "kind": "scoped test/driver"
+    },
+    "tests/moon-result-ownership-drive.mjs": {
+      "bytes": 14874,
+      "sha256": "69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd",
+      "kind": "scoped test/driver"
+    },
+    "tests/reference-caption-drive.mjs": {
+      "bytes": 19270,
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+      "kind": "scoped test/driver"
+    },
+    "tests/t17-positions-share.mjs": {
+      "bytes": 66990,
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+      "kind": "scoped test/driver"
+    }
+  },
+  "productSources": 23,
+  "scopedTestsAndDrivers": 10,
+  "qualification": "Author Freeze1, independently reviewable. Generated manifest, scope allowance, CI, normal build/captures and final full suite remain integrator-owned."
+}

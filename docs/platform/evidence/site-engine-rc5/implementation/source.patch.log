@@ -1,0 +1,473 @@
+diff --git a/package-lock.json b/package-lock.json
+index aa37234d..6cae1b90 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -15,7 +15,7 @@
+         "@vercel/firewall": "1.2.1",
+         "@vercel/functions": "3.7.5",
+         "@vercel/og": "0.7.2",
+-        "@zodiacs/engine": "file:vendor/zodiacs-engine-0.1.1-rc.1.tgz",
++        "@zodiacs/engine": "file:vendor/zodiacs-engine-0.1.1-rc.5.tgz",
+         "astro": "^7.0.6",
+         "astronomy-engine": "^2.1.19",
+         "preact": "^10.26.0",
+@@ -4253,9 +4253,9 @@
+       "license": "MIT"
+     },
+     "node_modules/@zodiacs/engine": {
+-      "version": "0.1.1-rc.1",
+-      "resolved": "file:vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+-      "integrity": "sha512-WX6wQmnvNvfxSdyWL/YaiGm+fZTNl8GMUGY8Ir8j3I8CvrXHD24Qjc3AMn9MjOt2lrjiPL2IRIoVEPV1Htm4Kg==",
++      "version": "0.1.1-rc.5",
++      "resolved": "file:vendor/zodiacs-engine-0.1.1-rc.5.tgz",
++      "integrity": "sha512-XUmtZ+mOwMJxElr6hbhQ59cPatvsPa8/XrLfihZfdsQnMZgptlTZSV6YBRVr+Nqps0No64HUpYLXNhUoeCVzNA==",
+       "license": "MIT",
+       "dependencies": {
+         "astronomy-engine": "^2.1.19"
+diff --git a/package.json b/package.json
+index 1dae644c..f8e4d42b 100644
+--- a/package.json
++++ b/package.json
+@@ -133,7 +133,7 @@
+     "@vercel/firewall": "1.2.1",
+     "@vercel/functions": "3.7.5",
+     "@vercel/og": "0.7.2",
+-    "@zodiacs/engine": "file:vendor/zodiacs-engine-0.1.1-rc.1.tgz",
++    "@zodiacs/engine": "file:vendor/zodiacs-engine-0.1.1-rc.5.tgz",
+     "astro": "^7.0.6",
+     "astronomy-engine": "^2.1.19",
+     "preact": "^10.26.0",
+diff --git a/public/llms-full.txt b/public/llms-full.txt
+index 77c20ecc..d2899694 100644
+--- a/public/llms-full.txt
++++ b/public/llms-full.txt
+@@ -170,13 +170,17 @@ Check the consumed payload before calling it current: `date` is the UTC edition
+ 
+ ### Astrology engine
+ 
+-`@zodiacs/engine` candidate version 0.1.1-rc.1 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
++`@zodiacs/engine` candidate version 0.1.1-rc.5 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
+ 
+-Typed API reference: https://zodiacs.org/sdk/engine/
++Current candidate API guide: https://github.com/ZodiacsOfficial/sdk/blob/97f5e8d01828f4b85ffa845825dee9acff4695e4/packages/engine/README.md
++
++Optional `@zodiacs/engine/receipt` validates a Zodiacs-owned draft natal envelope from a fresh full public Chart. It preserves requested versus actual houses, unknown-time reference instants and supplied provenance; it does not authenticate claims or recalculate positions. The site saved-chart/account format is unchanged, and the standalone starter retains its separately pinned engine rc.3. Draft specification: https://github.com/ZodiacsOfficial/sdk/blob/97f5e8d01828f4b85ffa845825dee9acff4695e4/docs/platform/receipt-draft-v1.md
++
++Archived rc.1 typed API reference (earlier candidate): https://zodiacs.org/sdk/engine/
+ 
+ Licensing chain: the engine uses MIT-licensed Astronomy Engine and explicitly excludes Swiss Ephemeris code. `@zodiacs/engine/geo` contains adapters, not a bundled place database. GeoNames-derived place data is CC BY 4.0; downstream users must retain the package `NOTICE`. Historical timezone resolution depends on the host's IANA/ICU data.
+ 
+-Release status: this site revision consumes an exact vendored `@zodiacs/engine@0.1.1-rc.1` npm pack artifact and verifies its checksum. It is an unpublished review candidate, not a verified npm release. Agents must verify publication, or use the exact repository artifact documented in `vendor/README.md`, until an authorized maintainer publishes it.
++Release status: this site revision consumes an exact vendored `@zodiacs/engine@0.1.1-rc.5` npm pack artifact and verifies its checksum. It is an unpublished review candidate, not a verified npm release. Agents must verify publication, or use the exact repository artifact documented in `vendor/README.md`, until an authorized maintainer publishes it.
+ 
+ Natal chart:
+ 
+diff --git a/scripts/platform-candidate-docs.test.mjs b/scripts/platform-candidate-docs.test.mjs
+index bb2695b8..e8c72d4f 100644
+--- a/scripts/platform-candidate-docs.test.mjs
++++ b/scripts/platform-candidate-docs.test.mjs
+@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
+ import { resolve } from 'node:path';
+ import { describe, expect, it } from 'vitest';
+ import { ENGINE_VERSION } from '@zodiacs/engine';
++import { assertEngineCandidate } from './platform-engine-candidate.mjs';
++import { readPackageArchive } from './verify-platform-starter.mjs';
+ 
+ const root = process.cwd();
+ const read = (path) => readFileSync(resolve(root, path), 'utf8');
+@@ -15,6 +17,7 @@ const manifest = JSON.parse(packed('package.json'));
+ 
+ describe('developer candidate documentation', () => {
+   it('identifies the installed public engine and exact archived package', () => {
++    expect(assertEngineCandidate(candidate)).toBe(candidate);
+     expect(candidate.schemaVersion).toBe(1);
+     expect(candidate.name).toBe(manifest.name);
+     expect(candidate.version).toBe(manifest.version);
+@@ -25,6 +28,11 @@ describe('developer candidate documentation', () => {
+     const lock = JSON.parse(read('package-lock.json'));
+     expect(lock.packages[`node_modules/${candidate.name}`].integrity)
+       .toBe(`sha512-${createHash('sha512').update(archive).digest('base64')}`);
++    const files = readPackageArchive(archive);
++    expect(files.size).toBe(23);
++    for (const [path, bytes] of files) {
++      expect(readFileSync(resolve(root, 'node_modules/@zodiacs/engine', path)), path).toEqual(bytes);
++    }
+   });
+ 
+   it('uses the recorded immutable public URL for that archive', () => {
+@@ -32,9 +40,9 @@ describe('developer candidate documentation', () => {
+     expect(url.origin).toBe('https://raw.githubusercontent.com');
+     expect(url.username + url.password + url.search + url.hash).toBe('');
+     const [, owner, repository, commit, ...path] = url.pathname.split('/');
+-    expect([owner, repository]).toEqual(['ZodiacsOfficial', 'site']);
+-    expect(commit).toMatch(/^[a-f0-9]{40}$/);
+-    expect(path.join('/')).toBe(candidate.artifactPath);
++    expect(`https://github.com/${owner}/${repository}`).toBe(candidate.artifactRepository);
++    expect(commit).toBe(candidate.artifactCommit);
++    expect(path.join('/')).toBe(candidate.artifactRepositoryPath);
+     expect(read(candidate.evidencePaths.ledger)).toContain(candidate.artifactUrl);
+   });
+ 
+@@ -50,12 +58,43 @@ describe('developer candidate documentation', () => {
+     }
+     // A source checkout is not required: the archive must expose the documented
+     // public ESM/type paths, independent of its internal site-only subpaths.
+-    for (const entry of ['.', './geo']) {
++    for (const entry of ['.', './geo', './receipt']) {
+       expect(packed(manifest.exports[entry].import.replace(/^\.\//, ''))).not.toBe('');
+       expect(packed(manifest.exports[entry].types.replace(/^\.\//, ''))).not.toBe('');
+     }
+   });
+ 
++  it.each([
++    ['artifactCommit', 'main'],
++    ['artifactCommit', 'a'.repeat(40) + '\n'],
++    ['sourceCommit', 'a'.repeat(40) + '\r'],
++    ['evidenceCommit', null],
++    ['artifactRepository', 'https://github.com/another/sdk'],
++    ['artifactRepositoryPath', 'artifacts/%2e%2e/private.tgz'],
++    ['artifactPath', '../private.tgz'],
++    ['artifactUrl', candidate.artifactUrl + '?token=synthetic'],
++    ['sha256', '0'.repeat(64) + '\n'],
++    ['version', candidate.version + '\r'],
++    ['version', '00.1.1-rc.5'],
++    ['version', '0.1.1-rc.05'],
++    ['releaseStatus', 'published'],
++    ['schemaVersion', 2],
++  ])('rejects inconsistent or noncanonical metadata: %s', (key, value) => {
++    const validFixture = { ...candidate, evidenceCommit: 'a'.repeat(40) };
++    expect(assertEngineCandidate(validFixture)).toBe(validFixture);
++    expect(() => assertEngineCandidate({ ...validFixture, [key]: value }))
++      .toThrow('Invalid engine candidate metadata');
++  });
++
++  it('rejects extra metadata fields and evidence path traversal', () => {
++    const validFixture = { ...candidate, evidenceCommit: 'a'.repeat(40) };
++    expect(assertEngineCandidate(validFixture)).toBe(validFixture);
++    expect(() => assertEngineCandidate({ ...validFixture, anotherIdentity: true })).toThrow();
++    expect(() => assertEngineCandidate({ ...validFixture, evidencePaths: {
++      ...candidate.evidencePaths, node22: 'docs/platform/../private.json',
++    } })).toThrow();
++  });
++
+   it('links existing evidence for the same artifact rather than another candidate', () => {
+     expect(candidate.evidenceRepository).toBe('https://github.com/ZodiacsOfficial/site');
+     expect(candidate.evidenceCommit).toMatch(/^[a-f0-9]{40}$/);
+@@ -94,4 +133,17 @@ describe('developer candidate documentation', () => {
+       expect(page, path).not.toContain(candidate.sourceCommit);
+     }
+   });
++
++  it('identifies current source documentation separately from the archived TypeDoc and starter', () => {
++    const guide = read('public/llms-full.txt');
++    expect(guide).toContain(`candidate version ${candidate.version}`);
++    expect(guide).toContain(`${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}/README.md`);
++    expect(guide).toContain(`${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`);
++    expect(guide).toContain('Archived rc.1 typed API reference (earlier candidate)');
++    expect(read('public/sdk/engine/index.html')).toContain('<title>@zodiacs/engine 0.1.1-rc.1</title>');
++    const support = read('src/pages/developers/support/index.astro');
++    expect(support).toContain('current candidate API guide');
++    expect(support).toContain('archived rc.1 API reference');
++    expect(support).toContain('site saved-chart/account format is unchanged');
++  });
+ });
+diff --git a/src/data/platform-engine-candidate.json b/src/data/platform-engine-candidate.json
+index 707f38af..bc13683e 100644
+--- a/src/data/platform-engine-candidate.json
++++ b/src/data/platform-engine-candidate.json
+@@ -1,21 +1,24 @@
+ {
+   "schemaVersion": 1,
+   "name": "@zodiacs/engine",
+-  "version": "0.1.1-rc.1",
++  "version": "0.1.1-rc.5",
+   "releaseStatus": "unpublished-candidate",
+   "releaseLabel": "Unpublished candidate",
+-  "artifactPath": "vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+-  "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/site/40d3f9647a31afc20db007b7cd5269eb4ef73b6a/vendor/zodiacs-engine-0.1.1-rc.1.tgz",
+-  "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17",
++  "artifactPath": "vendor/zodiacs-engine-0.1.1-rc.5.tgz",
++  "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz",
++  "sha256": "1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65",
+   "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+-  "sourceCommit": "03bf77990f3014b9125eed4976d7a41200aac80d",
++  "sourceCommit": "97f5e8d01828f4b85ffa845825dee9acff4695e4",
+   "sourcePackagePath": "packages/engine",
+   "evidenceRepository": "https://github.com/ZodiacsOfficial/site",
+-  "evidenceCommit": "2cd8c0886e3960e0081d54bdaf21e9c9fd8d6334",
++  "evidenceCommit": "d63773a3be2b4d40ff28a1075b9aaa9cb6c10793",
+   "evidencePaths": {
+-    "ledger": "docs/platform/EVIDENCE.md",
+-    "node22": "docs/platform/evidence/independent-node-polar-node22.json",
+-    "node24": "docs/platform/evidence/independent-node-polar-node24.json",
+-    "publicConsumer": "docs/platform/evidence/public-candidate-consumer.log"
+-  }
++    "ledger": "docs/platform/evidence/site-engine-rc5/README.md",
++    "node22": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node22.json",
++    "node24": "docs/platform/evidence/site-engine-rc5/independent-node-polar-node24.json",
++    "publicConsumer": "docs/platform/evidence/site-engine-rc5/public-candidate-consumer.log"
++  },
++  "artifactRepository": "https://github.com/ZodiacsOfficial/sdk",
++  "artifactCommit": "333369256af683c560603dd1e6411dd7a07adb1f",
++  "artifactRepositoryPath": "artifacts/zodiacs-engine-0.1.1-rc.5.tgz"
+ }
+diff --git a/src/lib/engine/package-integration.test.ts b/src/lib/engine/package-integration.test.ts
+index dcab6fb7..ae89b5ed 100644
+--- a/src/lib/engine/package-integration.test.ts
++++ b/src/lib/engine/package-integration.test.ts
+@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
+ import { readdirSync, readFileSync, statSync } from 'node:fs';
+ import { relative, resolve, sep } from 'node:path';
+ import { describe, expect, it } from 'vitest';
++import { build } from 'esbuild';
+ 
+ import { ENGINE_VERSION as packageEngineVersion, natalChart } from '@zodiacs/engine';
+ import { computeBodies as packageComputeBodies } from '@zodiacs/engine/internal';
+@@ -9,7 +10,7 @@ import { computeBodies as packageComputeBodies } from '@zodiacs/engine/internal'
+ import { computeBodies, computeChart } from './full';
+ import { ENGINE_VERSION } from './types';
+ 
+-const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.tgz');
++const artifactPath = resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.5.tgz');
+ const docsPath = resolve(process.cwd(), 'public/sdk/engine');
+ 
+ function walk(directory: string): string[] {
+@@ -51,7 +52,7 @@ describe('vendored @zodiacs/engine integration', () => {
+   it('matches both recorded checksums in the repository', () => {
+     const artifact = readFileSync(artifactPath);
+     const checksum = readFileSync(
+-      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.1.sha256'),
++      resolve(process.cwd(), 'vendor/zodiacs-engine-0.1.1-rc.5.sha256'),
+       'utf8',
+     ).trim().split(/\s+/u)[0];
+     const lock = JSON.parse(
+@@ -72,7 +73,7 @@ describe('vendored @zodiacs/engine integration', () => {
+     const siteBodies = computeBodies(date);
+ 
+     expect(ENGINE_VERSION).toBe(packageEngineVersion);
+-    expect(ENGINE_VERSION).toBe('0.1.1-rc.1');
++    expect(ENGINE_VERSION).toBe('0.1.1-rc.5');
+     expect(siteBodies).toEqual(
+       packageBodies.map(({ body, lon, lat, speed, retrograde }) => ({
+         body,
+@@ -85,6 +86,48 @@ describe('vendored @zodiacs/engine integration', () => {
+     expect(siteBodies.some((body) => 'sign' in body || 'degree' in body)).toBe(false);
+   });
+ 
++  it('makes the optional draft receipt available without changing replay intent or unknown time', async () => {
++    const { createNatalEnvelope, parseNatalEnvelope, serializeNatalEnvelope, natalReplayInput, redactNatalEnvelope } =
++      await import('@zodiacs/engine/receipt');
++    for (const timeKnown of [true, false]) {
++      const sourceInstant = '2001-12-21T08:30:00-00:00';
++      const chart = natalChart({ utc: sourceInstant, latitude: 78.2232, longitude: 15.6267,
++        houseSystem: 'placidus', timeKnown });
++      const envelope = createNatalEnvelope(chart, { sourceInstant });
++      const parsed = parseNatalEnvelope(serializeNatalEnvelope(envelope));
++      expect(parsed).toEqual({ ok: true, envelope });
++      expect(envelope.receipt).toMatchObject({ instant: '2001-12-21T08:30:00.000Z',
++        sourceInstant, timeKnown, reference: 'supplied-instant',
++        houses: { requested: 'placidus', actual: timeKnown ? 'whole' : null } });
++      const replay = natalReplayInput(envelope);
++      expect(replay.houseSystem).toBe('placidus');
++      expect(replay.flags).toEqual([]);
++      expect(natalChart(replay)).toEqual({ ...chart, input: { ...chart.input, flags: [] } });
++      expect(redactNatalEnvelope(envelope)).toEqual({
++        schema: 'zodiacs.natal-diagnostic.draft-v1', status: 'redacted-not-anonymous',
++        timeKnown, houses: envelope.receipt.houses, inputFlags: [],
++        resultFlags: [timeKnown ? 'polar-fallback' : 'no-time'],
++      });
++    }
++  });
++
++  it('keeps receipt and geo optional and the eager site math graph free of the ephemeris', async () => {
++    for (const entry of ['@zodiacs/engine', '@zodiacs/engine/internal', '@zodiacs/engine/receipt',
++      './src/lib/engine/types.ts', './src/lib/engine/houses.ts', './src/lib/engine/aspects.ts']) {
++      const bundled = await build({ stdin: { contents: `export * from ${JSON.stringify(entry)}`,
++        resolveDir: process.cwd(), sourcefile: 'engine-isolation-entry.js' }, bundle: true,
++      platform: 'browser', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
++      const paths = Object.keys(bundled.metafile!.inputs);
++      expect(paths.some((path) => path.includes('@zodiacs/sdk'))).toBe(false);
++      expect(paths.some((path) => path.endsWith('/geo.js'))).toBe(false);
++      const receipt = entry === '@zodiacs/engine/receipt';
++      expect(paths.some((path) => path.endsWith('/receipt.js'))).toBe(receipt);
++      const calculates = entry === '@zodiacs/engine' || entry === '@zodiacs/engine/internal';
++      expect(paths.some((path) => path.includes('/astronomy-engine/'))).toBe(calculates);
++      if (!calculates) expect(paths.some((path) => path.endsWith('@zodiacs/engine/dist/index.js'))).toBe(false);
++    }
++  });
++
+   it('publishes every TypeDoc page with its absolute canonical and icon rail', () => {
+     const pages = walk(docsPath).filter((path) => path.endsWith('.html'));
+     expect(pages.length).toBeGreaterThan(0);
+diff --git a/src/lib/scene/__snapshots__/scene.test.ts.snap b/src/lib/scene/__snapshots__/scene.test.ts.snap
+index aeb0f7a6..a1205bd4 100644
+--- a/src/lib/scene/__snapshots__/scene.test.ts.snap
++++ b/src/lib/scene/__snapshots__/scene.test.ts.snap
+@@ -256,7 +256,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
+       "speed": -0.0235342,
+     },
+   ],
+-  "engineVersion": "0.1.1-rc.1",
++  "engineVersion": "0.1.1-rc.5",
+   "flags": [
+     "lmt",
+   ],
+diff --git a/src/pages/developers/support/index.astro b/src/pages/developers/support/index.astro
+index 05974b43..d8cb469b 100644
+--- a/src/pages/developers/support/index.astro
++++ b/src/pages/developers/support/index.astro
+@@ -3,6 +3,7 @@ import Base from '../../../layouts/Base.astro';
+ import candidate from '../../../data/platform-engine-candidate.json';
+ 
+ const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
++const receiptSpec = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`;
+ const evidenceUrl = (path: string) => `${candidate.evidenceRepository}/blob/${candidate.evidenceCommit}/${path}`;
+ const description = 'Current Zodiacs developer support: local engine candidate, public sky data, hosted widgets, planned chart API, runtime checks, calculation limits, privacy, and licenses.';
+ const engineRows = [
+@@ -12,6 +13,7 @@ const engineRows = [
+   ['Calculations', 'Positions, natal charts, transit snapshots, synastry, Moon phase, and Saturn-return seasons. The same public API supplies calculation metadata; interpretation is separate from astronomical accuracy.'],
+   ['Houses and unknown time', 'Whole-sign and Placidus houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign above 66° absolute latitude or on nonconvergence, with polar-fallback. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
+   ['Resolved instant input', 'A valid Date, finite epoch milliseconds, or validated ISO date/time. Date-times require Z or an explicit numeric offset; date-only YYYY-MM-DD means midnight UTC. Invalid ISO calendar dates, unresolved local date-times, leap seconds, and more than three fractional-second digits are rejected. A Date already normalized by its caller cannot reveal that earlier rollover. Outputs normalize to Date and do not preserve the original offset or local timezone.'],
++  ['Portable natal records', 'Optional @zodiacs/engine/receipt validates a Zodiacs draft envelope from a fresh full public Chart, preserving requested/actual houses and captured time provenance. Validation does not authenticate imported claims or recalculate positions. The site saved-chart/account format is unchanged; the standalone starter uses its separately pinned candidate.'],
+   ['Local-time resolution', 'Optional @zodiacs/engine/geo accepts a local YYYY-MM-DD date, HH:mm time, and explicit IANA timezone. Folds select the earlier instant; gaps shift forward, with flags. Historical offsets depend on the host Intl/ICU data. No place records or timezone database are bundled.'],
+   ['Date coverage and accuracy', 'Accepted date syntax and JavaScript Date range are not a numerical accuracy interval. Tests cover finite modern, historical, early-year, and polar cases; broader range and numerical scope review remain open. The mini-chart widget’s form limits are a separate UI contract.'],
+   ['Computation and privacy', 'The synchronous core computes in the caller’s browser or Node.js process, with no network requests, account, or wallet. The optional GeoNames client fetches separately hosted index/shard assets; the data host can observe those requests. Your integration controls any storage or network transfer around the calculation.'],
+@@ -59,10 +61,12 @@ const engineRows = [
+       <p><a href="/developers/examples/">Run the starter project</a> for complete local natal, transit, and publisher widget examples.</p>
+       <p>
+         Use the public <code>@zodiacs/engine</code> and optional{' '}
+-        <code>@zodiacs/engine/geo</code> entry points. The{' '}
++        <code>@zodiacs/engine/geo</code> and <code>@zodiacs/engine/receipt</code> entry points. The{' '}
+         <code>/internal</code> entry points are site compatibility boundaries.
+-        See the <a href="/sdk/engine/">API reference</a> and{' '}
+-        <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>.
++        Use the <a href={`${sourceRoot}/README.md`}>current candidate API guide</a>,{' '}
++        <a href={receiptSpec}>draft receipt specification</a>, and{' '}
++        <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>. The{' '}
++        <a href="/sdk/engine/">archived rc.1 API reference</a> describes the earlier candidate.
+       </p>
+     </div>
+ 
+diff --git a/vendor/README.md b/vendor/README.md
+index bfe56705..934d61b6 100644
+--- a/vendor/README.md
++++ b/vendor/README.md
+@@ -1,31 +1,37 @@
+ # Vendored @zodiacs/engine artifact
+ 
+-`zodiacs-engine-0.1.1-rc.1.tgz` is the exact npm pack artifact consumed by this
+-site. Keeping the immutable tarball in-repository lets the site and package
+-share one calculation implementation without requiring an external npm
+-publication during this build.
++`zodiacs-engine-0.1.1-rc.5.tgz` is the exact npm pack artifact consumed by this
++site. The standalone starter keeps its separate engine `0.1.1-rc.3` pin and
++immutable project archive. The optional ownership SDK remains separate.
+ 
+-- Package: `@zodiacs/engine@0.1.1-rc.1` (unpublished candidate)
++- Package: `@zodiacs/engine@0.1.1-rc.5` (unpublished candidate)
+ - Source repository: `https://github.com/ZodiacsOfficial/sdk`
+ - Source package: `packages/engine`
+-- Source branch: `codex/platform-stage-a`, [SDK draft PR #6](https://github.com/ZodiacsOfficial/sdk/pull/6)
+-- Source commit: `03bf77990f3014b9125eed4976d7a41200aac80d`
+-- Artifact SHA-256: `f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`
+-- Build: `corepack pnpm --filter @zodiacs/engine build`
+-- Pack: `npm pack --ignore-scripts --pack-destination <candidate-directory>`
+-- Runtime: Node 22.23.2, pnpm 9.15.0; SDK `pnpm-lock.yaml` unchanged.
+-
+-The tarball was packed from the same package tree recorded by the source
+-commit. The checked-in tarball plus SHA-256 file is the deterministic site
+-input until an authorized maintainer publishes the package. This artifact is
+-not evidence of an npm release, and this work does not claim publication
+-authority.
+-
+-The core now selects the rising polar intersection before deriving houses;
+-the site adapter only reshapes its output. Candidate verification and remaining
+-release holds are in [the platform evidence](../docs/platform/EVIDENCE.md).
+-The optional ownership SDK remains separate. No production deployment or npm
+-publication is implied by this pin.
++- Source commit: `97f5e8d01828f4b85ffa845825dee9acff4695e4`
++- Artifact carrier commit: `333369256af683c560603dd1e6411dd7a07adb1f`
++- Artifact SHA-256: `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`
++- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/333369256af683c560603dd1e6411dd7a07adb1f/artifacts/zodiacs-engine-0.1.1-rc.5.tgz)
++- Archive: 23 files, 36,065 packed bytes, 121,212 unpacked bytes.
++
++The public SDK archive was downloaded without credentials and checked against
++the recorded SHA-256. Its source identity and artifact carrier identify separate
++commits. The candidate adds the optional draft natal-envelope codec and
++GeoNames/input validation fixes while retaining the site-only internal adapter
++boundaries. The site does not yet connect the receipt codec to account or
++saved-chart storage. An imported receipt remains an untrusted claim.
++
++New checks of this artifact are recorded in [the rc.5 adoption evidence](../docs/platform/evidence/site-engine-rc5/README.md).
++Earlier evidence and immutable artifacts retain their original identities.
++The site pin is not evidence of npm publication, production deployment,
++required human review, or external adoption.
++
++## Previous site candidate
++
++`zodiacs-engine-0.1.1-rc.1.tgz` and its checksum remain unchanged. Source commit:
++`03bf77990f3014b9125eed4976d7a41200aac80d`; SHA-256:
++`f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17`.
++It supplied the initial corrected polar implementation. Its recorded Stage A
++checks do not establish verification of later candidate bytes.
+ 
+ ## Archived rollback artifact
+ 
+@@ -44,8 +50,8 @@ CC BY 4.0 attribution in `NOTICE`.
+ 
+ The exported `@zodiacs/engine/internal` and
+ `@zodiacs/engine/internal/math` subpaths are explicitly site-only compatibility
+-boundaries. Public integrations must use `@zodiacs/engine` and
+-`@zodiacs/engine/geo`.
++boundaries. Public integrations use `@zodiacs/engine`, optional
++`@zodiacs/engine/geo`, and optional `@zodiacs/engine/receipt`.
+ 
+ The intermediate `0.1.1-rc.0` tarball is also retained unchanged (SHA-256
+ `4b16eeac2e8c82e5fb3a5b3756b2ed31f8fec93a37728a722b9ef81ce8f5c20d`).
+diff --git a/scripts/platform-engine-candidate.mjs b/scripts/platform-engine-candidate.mjs
+new file mode 100644
+index 00000000..e2f94e88
+--- /dev/null
++++ b/scripts/platform-engine-candidate.mjs
+@@ -0,0 +1,41 @@
++// Offline metadata contract. This checks claims and their exact immutable URL;
++// it does not authenticate a source commit or fetch a remote artifact.
++const keys = [
++  'schemaVersion', 'name', 'version', 'releaseStatus', 'releaseLabel',
++  'artifactPath', 'artifactUrl', 'artifactRepository', 'artifactCommit',
++  'artifactRepositoryPath', 'sha256', 'sourceRepository', 'sourceCommit',
++  'sourcePackagePath', 'evidenceRepository', 'evidenceCommit', 'evidencePaths',
++];
++const record = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
++const exactKeys = (value, expected) => record(value)
++  && Object.keys(value).length === expected.length
++  && expected.every((key) => Object.hasOwn(value, key));
++const matches = (value, pattern) => typeof value === 'string' && pattern.exec(value)?.[0] === value;
++const commit = (value) => matches(value, /^[a-f0-9]{40}$/u) && value.length === 40;
++
++export function assertEngineCandidate(candidate) {
++  const fail = () => { throw new Error('Invalid engine candidate metadata'); };
++  if (!exactKeys(candidate, keys)) fail();
++  if (candidate.schemaVersion !== 1 || candidate.name !== '@zodiacs/engine'
++    || !matches(candidate.version, /^(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)-rc\.(?:0|[1-9]\d*)$/u)
++    || candidate.version.includes('\n')
++    || candidate.releaseStatus !== 'unpublished-candidate'
++    || candidate.releaseLabel !== 'Unpublished candidate'
++    || !matches(candidate.sha256, /^[a-f0-9]{64}$/u) || candidate.sha256.length !== 64
++    || !commit(candidate.sourceCommit) || !commit(candidate.artifactCommit) || !commit(candidate.evidenceCommit)
++    || candidate.sourceRepository !== 'https://github.com/ZodiacsOfficial/sdk'
++    || candidate.sourcePackagePath !== 'packages/engine'
++    || candidate.evidenceRepository !== 'https://github.com/ZodiacsOfficial/site'
++    || !['https://github.com/ZodiacsOfficial/site', 'https://github.com/ZodiacsOfficial/sdk'].includes(candidate.artifactRepository)) fail();
++  const file = `zodiacs-engine-${candidate.version}.tgz`;
++  const repository = candidate.artifactRepository.split('/').at(-1);
++  if (candidate.artifactPath !== `vendor/${file}`
++    || candidate.artifactRepositoryPath !== `${repository === 'sdk' ? 'artifacts' : 'vendor'}/${file}`
++    || candidate.artifactUrl !== `https://raw.githubusercontent.com/ZodiacsOfficial/${repository}/${candidate.artifactCommit}/${candidate.artifactRepositoryPath}`) fail();
++  if (!exactKeys(candidate.evidencePaths, ['ledger', 'node22', 'node24', 'publicConsumer'])) fail();
++  for (const path of Object.values(candidate.evidencePaths)) {
++    if (!matches(path, /^docs\/platform\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.(?:md|json|log)$/u)
++      || path.includes('\n')) fail();
++  }
++  return candidate;
++}

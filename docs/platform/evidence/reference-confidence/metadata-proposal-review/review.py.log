@@ -1,0 +1,37 @@
+from pathlib import Path
+import subprocess,json,hashlib,datetime
+OUT=Path(__file__).parent;ROOT=Path('/Users/chiburashka/.codex/worktrees/4806/site');PROP=Path('/private/tmp/zodiacs-platform-reference-confidence-metadata')
+BASE='f803d2543ad81343b22d49326b8b46d0e2ea03a0'
+def sha(x):return hashlib.sha256(x).hexdigest()
+def save(name,data):
+ p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+def git(*args):return subprocess.check_output(['git',*args],cwd=ROOT)
+patch=(PROP/'integration.patch').read_bytes();assert sha(patch)=='408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4';save('integration.patch',patch)
+identity=json.loads((PROP/'source-identity.json').read_text());save('source-identity.json',(PROP/'source-identity.json').read_bytes())
+assert identity['baseCommit']==BASE and len(identity['files'])==2
+for row in identity['files']:
+ name=row['path'];before=(PROP/'before'/name).read_bytes();after=(PROP/'after'/name).read_bytes()
+ assert sha(before)==row['beforeSha256'] and sha(after)==row['afterSha256']
+ assert before==git('show',BASE+':'+name)
+ save('before/'+name,before);save('after/'+name,after);save('apply-fixture/'+name,before)
+allowance='.github/phase1-scope-allowance.json';workflow='.github/workflows/site-check.yml'
+old=json.loads((OUT/'before'/allowance).read_text());new=json.loads((OUT/'after'/allowance).read_text())
+assert set(new)==set(old)
+changed=[k for k in old if old[k]!=new[k]];assert sorted(changed)==['authorization','baseCommit','id']
+expected=['src/lib/i18n/index.test.ts','src/lib/i18n/ui/en.ts','src/lib/i18n/ui/es.ts','src/lib/i18n/ui/fr.ts','src/lib/i18n/ui/it.ts','src/lib/i18n/ui/pt.ts','src/lib/i18n/ui/ru.test.ts','src/lib/i18n/ui/ru.ts']
+assert new['protectedPaths']==old['protectedPaths']==expected and new['version']==old['version']==1
+assert new['baseCommit']==BASE and new['id']=='platform-unknown-time-chart-confidence'
+assert 'from 419 to 420' in new['authorization']
+wb=(OUT/'before'/workflow).read_bytes();wa=(OUT/'after'/workflow).read_bytes();anchor=b'      - name: Engine accuracy vectors\n'
+addition=b'      - name: Unknown-time chart confidence\n        timeout-minutes: 5\n        run: OUT_DIR=tests/visual/artifacts/chart-reference-confidence node tests/chart-reference-confidence-drive.mjs\n\n'
+assert wb.count(anchor)==1 and wb.replace(anchor,addition+anchor)==wa
+assert b'permissions:\n  contents: read' in wa and b'if: always()' in wa and b'            tests/visual/artifacts/' in wa
+guard=git('show',BASE+':scripts/phase1-scope-guard.mjs');save('unchanged-scope-guard.mjs',guard)
+save('browser-helper.mjs',git('show',BASE+':tests/visual/browser.mjs'))
+commands=[]
+for label,argv in [('patch-check',['git','apply','--check',str(OUT/'integration.patch')]),('patch-apply',['git','apply',str(OUT/'integration.patch')])]:
+ with (OUT/(label+'.log')).open('w') as f:r=subprocess.run(argv,cwd=OUT/'apply-fixture',stdout=f,stderr=subprocess.STDOUT)
+ commands.append({'label':label,'argv':argv,'cwd':str(OUT/'apply-fixture'),'exitCode':r.returncode});assert r.returncode==0
+for row in identity['files']:assert (OUT/'apply-fixture'/row['path']).read_bytes()==(OUT/'after'/row['path']).read_bytes()
+result={'base':BASE,'patchSha256':sha(patch),'exactTwoFilePatchApplies':True,'beforeBytesMatchImmutableGit':True,'allowanceChangedKeys':changed,'protectedPathsUnchanged':expected,'exactFourLineWorkflowAddition':True,'permissionsPinsSetupTriggersAndUploadsUnchanged':True,'scopeGuardSha256':sha(guard),'commands':commands,'verifiedAtUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pending':['Actual driver/freeze compatibility','Actual candidate full-diff scope CLI','Semantic catalog-copy approval','Native/CI execution']}
+save('source-review-result.json',(json.dumps(result,indent=2)+'\n').encode());print(json.dumps(result,indent=2))

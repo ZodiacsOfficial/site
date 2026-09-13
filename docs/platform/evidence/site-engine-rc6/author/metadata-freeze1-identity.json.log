@@ -1,0 +1,18 @@
+{
+  "freeze": 1,
+  "timestamp": "2026-09-08T07:04:06.671142+00:00",
+  "baseCommit": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "sourceCheckout": "/private/tmp/zodiacs-platform-site-seconds-adoption",
+  "files": {
+    "vendor/README.md": "91fde60c2d6c91a8fd5939424e6160facdf5f4d29db1dd1f084170cdfa96339e",
+    "src/data/platform-engine-candidate.json": "5afa2e8e2fbc328c4f7abe6bad1cedfdce58c0ecabedef4bc58fae78eac4792c",
+    "public/llms-full.txt": "142c518a3fc0d2772f8e4d4e49d19797e908fd718dc79660822dfa656cced3e9"
+  },
+  "patchSha256": "3b361b824a20e94a623a9327ad5fd74afe8ba9e2f334dfbb35eae9b6e5d1ae36",
+  "evidenceCommit": "68412f16140f9986b11767d271eda6e14b6aba48",
+  "carrierVerifiedFromActualRootCommit": true,
+  "targetedContractTests": 22,
+  "contractLog": "metadata-contract-final.log",
+  "placeholder": false,
+  "rootPushPending": true
+}

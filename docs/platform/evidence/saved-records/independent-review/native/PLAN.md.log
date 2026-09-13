@@ -1,0 +1,59 @@
+# Independent native IndexedDB review plan
+
+Status: harness prepared against the author's declared API; acceptance awaits a
+frozen, hashed patch. No product files edited. The constructor is owner/epoch
+bound; required readAuthority is application policy, not authentication.
+
+Run in isolated headless Chrome contexts against copied frozen modules and the
+exact rc.5 package, with no user browser, account, local site data or network
+service. Each native case gets a fresh context. Keep raw failures and fixes.
+
+1. Import has zero database opens. An ordinary no-label record can create, read
+   and export; missing is distinct from error. Export excludes outer metadata.
+2. Two independent native connections race at the 40-record cap; one insertion
+   succeeds and one returns full. Distinct permitted records cannot be lost.
+3. Revocation inside readAuthority itself is detected after that callback returns;
+   no stale success and no database work. Test both callback and returned-field
+   getter revocation. A→B→A with changed epoch cannot resurrect a handle.
+4. Inject revocation from a real native add request's success event before
+   transaction commit. The actual transaction must abort, not merely close.
+5. Revoke from a transaction complete listener registered before the production
+   listener. A committed row can remain under its captured owner, but the caller
+   receives stale without private data and mayHaveCommitted true.
+6. Real pending open: hold a v1 connection, queue a blocked database deletion,
+   queue the subject open behind it, revoke, then unblock. A late success must
+   close its handle. Fixed open(version1) cannot naturally upgrade an existing
+   version0 DB; do not fabricate a native upgrade-blocked event claim.
+7. Real native abort and CDP storage quota override where supported: distinguish
+   confirmed rollback from possibly committed; preserve any unsupported quota
+   control honestly rather than relabeling a synthetic error as native quota.
+8. Inject corrupt and future rows into the native object store: outer v2/v10,
+   malformed envelope, future SDK required feature, and over-cap data. list/get
+   must fail explicitly rather than return empty. Normal keyPath prevents an
+   owner field differing from its physical primary key; test corrupt key/index
+   schemas as unsupported storage, not invented impossible native rows.
+9. Exact canonical UUIDs/owner keys: trailing LF/CR/encoded traversal cannot enter
+   the new namespace. Preserve existing legacy helper source.
+10. Account/guest owner partitioning: the same UUID in two owner scopes remains
+    distinct; reads/export/delete do not affect another owner.
+11. clearOwner consumes its handle even on failure and closes any reopened
+    connection. Its transaction is owner scoped; another same-owner handle can
+    create afterward. Record this declared limit rather than falsely certifying
+    account erasure. Durable global clear needs a later lifecycle coordinator.
+12. Future/malformed database versions/stores/indexes fail closed, and repeated
+    blocked/late requests cannot retain an unreachable connection.
+
+Early findings supplied by root/reviewer, awaiting frozen fix verification:
+wrong unlabeled key count (5 required fields), future v10 regex omission, terminal
+clear connection not closed. The proposed trailing-newline UUID concern was
+disproved by actual Node 22 execution: existing non-multiline expressions reject
+LF/CR. Retain those as negative controls, not a product finding. Preserve
+reproduction evidence; no baseline expectations weakened.
+
+Native quota control uses Chrome's experimental per-origin CDP quota override
+on the disposable test origin after schema creation. A rejected/unsupported CDP
+command is environment-blocked, not a quota pass. The harness restores the
+quota before closing the context. Reference: [CDP Storage override](https://chromedevtools.github.io/devtools-protocol/tot/Storage/#method-overrideQuotaForOrigin).
+
+The runner requires `freeze.json` and a subject bundle built from that exact
+snapshot. Merely preparing this skeleton does not constitute executed acceptance.

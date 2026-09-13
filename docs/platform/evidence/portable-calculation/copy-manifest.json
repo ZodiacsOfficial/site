@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Copy raw implementation and independent review evidence without formatting or executable test discovery",
+  "files": [
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/README.md",
+      "target": "docs/platform/evidence/portable-calculation/implementation/README.md.log",
+      "bytes": 5039,
+      "sha256": "705548dd390a1569d3261626303558c3cf93203c5ecb71db72585ec8fe371c5a"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/diff-check.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/final-diff-check.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/final-diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/final-focused-test.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/final-focused-test.log",
+      "bytes": 421,
+      "sha256": "6b39ff302e11963561e504f8b03447bdd948c6efe3cbcc1996223142211982da"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/final-runs.json",
+      "target": "docs/platform/evidence/portable-calculation/implementation/final-runs.json.log",
+      "bytes": 1186,
+      "sha256": "90578ff89ee40cc4462ce455b0b317ed4e49f26f59495fbd2f0c0b728b027ae0"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/final-typecheck.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/final-typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/focused-runs.json",
+      "target": "docs/platform/evidence/portable-calculation/implementation/focused-runs.json.log",
+      "bytes": 1195,
+      "sha256": "7d0ba0574b29320e6943de6750c10fd1e83663a124d24b2a06c9491149a18b61"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/focused-test-local-dependency.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/focused-test-local-dependency.log",
+      "bytes": 420,
+      "sha256": "fc1f7f3850141fb0938d064a28c6c803999cc089b1f2c06e0d3d8884c800167c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/focused-test.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/focused-test.log",
+      "bytes": 1494,
+      "sha256": "b32c20e0ade500de0d207386a26d5322db68417e9e8a49a38882c7e0791d489b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/identity.json",
+      "target": "docs/platform/evidence/portable-calculation/implementation/identity.json.log",
+      "bytes": 1583,
+      "sha256": "d00129271f35e7e000f1a7ebf0651f0388f179dbaa4f2f1502fb53ccaa6e3c79"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/initial-test.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/initial-test.log",
+      "bytes": 303,
+      "sha256": "3f6e71a10df47d86d122a40570597dd63123772a5686388fcce45e17c9ef1e8c"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/manifest.json",
+      "target": "docs/platform/evidence/portable-calculation/implementation/manifest.json.log",
+      "bytes": 1382,
+      "sha256": "113638b9f802d8c8b2d23a5ae1de1ca5b2a54c92c4d7a5bd01f012ce928eb25b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/scratch-astronomy-copy.json",
+      "target": "docs/platform/evidence/portable-calculation/implementation/scratch-astronomy-copy.json.log",
+      "bytes": 870,
+      "sha256": "c636c439835e805f51aa9d113281374f4af39c0ef1d6b0c67439462b6286cffa"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/source.patch",
+      "target": "docs/platform/evidence/portable-calculation/implementation/source.patch.log",
+      "bytes": 21179,
+      "sha256": "69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/typecheck-confirmed.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/typecheck-confirmed.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-evidence/typecheck.log",
+      "target": "docs/platform/evidence/portable-calculation/implementation/typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/REVIEW.md",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/REVIEW.md.log",
+      "bytes": 3406,
+      "sha256": "d549b99138c11830eeb021237d23db5a5a1b7b40aee7544050f1fcf023aea46b"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/identities.json",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/identities.json.log",
+      "bytes": 2848,
+      "sha256": "4b8bd74bf8fd102809cebedd1e93cf29f58d51f98da334f327efbecbbf001125"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/manifest.json",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/manifest.json.log",
+      "bytes": 621,
+      "sha256": "fee51a694c3b2c69efbc0394e5e24734e8bdbab03aa2ca765b80f79f02802b0f"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/probe.log",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/probe.log",
+      "bytes": 811,
+      "sha256": "3b3fe1db102f6d86b3cacc1cd2b8303f2315dafac68e831761256e2597bd13e6"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/probe.mjs",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/probe.mjs.log",
+      "bytes": 12437,
+      "sha256": "d250cb6f0ed7846e91658cc680fb9302642a791bf23b7d02982ac747b1850226"
+    },
+    {
+      "source": "/private/tmp/zodiacs-platform-portable-review/result.json",
+      "target": "docs/platform/evidence/portable-calculation/independent-review/result.json.log",
+      "bytes": 2018,
+      "sha256": "d64742da4f984699b8c8dc9a128abb2f211a40aac8b71d1c6335913ac5e903ef"
+    }
+  ]
+}

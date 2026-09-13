@@ -1,0 +1,487 @@
+{
+  "at": "2026-09-08T07:50:36.680Z",
+  "node": "v22.23.2",
+  "inputs": [
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/dist/preact.module.js",
+      "bytes": 11731,
+      "sha256": "850dcba8ed3535b0a3611495c405551b9887724885d3b8482207a03de365d64e"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/hooks/dist/hooks.module.js",
+      "bytes": 3628,
+      "sha256": "42e6acefc7c61333a5eb372a5c556829a0154dfce1ea45d03b6b2689fb1dab4d"
+    },
+    {
+      "path": "src/styles/evidence-disclosure.css",
+      "bytes": 2459,
+      "sha256": "1320de7746404c56091e0261543d49a3599d86c4a74f48674225d65a04e338a5"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "bytes": 1826,
+      "sha256": "43af8eff4027c4d275700d867a65943353e8003dae2681c1632c4a12012db3f3"
+    },
+    {
+      "path": "src/islands/EvidenceDisclosure.tsx",
+      "bytes": 938,
+      "sha256": "39689eaf82b5155e70c321418105371d0365d24172a47b036b5e9098f80acf2b"
+    },
+    {
+      "path": "src/lib/i18n/core.ts",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/client.ts",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/server.ts",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "path": "src/lib/i18n/ru-runtime/index.ts",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "path": "src/lib/signs.ts",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "path": "src/lib/i18n/ui/client.ts",
+      "bytes": 802,
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75"
+    },
+    {
+      "path": "src/lib/i18n/ui/growth.ts",
+      "bytes": 4309,
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "bytes": 23867,
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "bytes": 25488,
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "bytes": 27542,
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "bytes": 26366,
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5"
+    },
+    {
+      "path": "src/lib/i18n/ui/server.ts",
+      "bytes": 614,
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9"
+    },
+    {
+      "path": "src/lib/i18n/english-only.ts",
+      "bytes": 1516,
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef"
+    },
+    {
+      "path": "src/lib/i18n/plural.ts",
+      "bytes": 1657,
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d"
+    },
+    {
+      "path": "src/lib/i18n/index.ts",
+      "bytes": 8203,
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303"
+    },
+    {
+      "path": "src/lib/module-load.ts",
+      "bytes": 1053,
+      "sha256": "e64d582319bd1a9994a43654c527a8cc8c625aa7a86c30021fcc51f3b8c4ea3c"
+    },
+    {
+      "path": "src/islands/CalculationReload.tsx",
+      "bytes": 986,
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e"
+    },
+    {
+      "path": "src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "path": "src/islands/SignChip.tsx",
+      "bytes": 830,
+      "sha256": "e6d4b3ea57ba8e82b5cd42eabefcf732c10a4ca8f179b89769a13d8175b16a73"
+    },
+    {
+      "path": "src/lib/engine/lite.ts",
+      "bytes": 2498,
+      "sha256": "6d6be2d0b5e4cd2910b66326ed5ebc97115ca66c36a7f743b0c95fe0552b5057"
+    },
+    {
+      "path": "src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "src/lib/i18n/dates.ts",
+      "bytes": 1212,
+      "sha256": "cbdd98821a63b40554fe85360793663c03a6945fb7fbfc95fb5a06d9f6e8fc2e"
+    },
+    {
+      "path": "src/lib/i18n/astrology.ts",
+      "bytes": 4740,
+      "sha256": "0c8b024837972934a5c92067008b4dd3a7e0a7871ad75839a318593fa0549c00"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "bytes": 10765,
+      "sha256": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "bytes": 4693,
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "bytes": 4213,
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/astronomy-engine/esm/astronomy.js",
+      "bytes": 412025,
+      "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "bytes": 4644,
+      "sha256": "8578139013ab4f4c0d2811682e92d6b6818492e1a392ddee43aeea033a8ebfc3"
+    },
+    {
+      "path": "../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal.js",
+      "bytes": 245,
+      "sha256": "52403d7a8514ceea3d5ac1ad7f404f79ff1163d907bbc783600edf1574ff2e42"
+    },
+    {
+      "path": "src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "path": "src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    }
+  ],
+  "bundleSha256": "49ca4fbe2b2df58cb83791c7d8282ec9bfde150fdc00bf1f55093494b3ebfac9",
+  "controlledBoundaries": [
+    "useEngine loader promise settlement",
+    "synthetic GeoNames search response"
+  ],
+  "groups": [
+    {
+      "name": "Successful known-time UTC result retains calculations and heading focus",
+      "passed": true,
+      "evidence": {
+        "calls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z"
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z"
+          }
+        ],
+        "text": "Moon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+      }
+    },
+    {
+      "name": "A date edit clears a displayed result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:118:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:112:75",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "A time edit clears a displayed result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:118:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:112:75",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "A city-selection edit clears a displayed result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:118:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:112:75",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n×\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "A city-removal edit clears a displayed result",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:118:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:112:75",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter47% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Delayed lookup is fenced after date edit",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:129:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:121:71",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Delayed lookup is fenced after time edit",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:129:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:121:71",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Delayed lookup is fenced after city-removal edit",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:129:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:121:71",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter47% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Delayed lookup is fenced after empty-date edit",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:129:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:121:71",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Superseded resolve cannot settle a newer pending run",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:142:5\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:135:51",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Superseded reject cannot settle a newer pending run",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'false' !== 'true'\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:143:12\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:135:51",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nSomething went wrong computing that moon. Please try again."
+    },
+    {
+      "name": "Current calculation failure clears old output, focuses alert, and permits retry",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:154:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:151:3",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nSomething went wrong computing that moon. Please try again.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Current loader failure clears old output and permits loader retry",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:164:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:160:3",
+      "dom": "Right nowWaning Crescent10% illuminated · Moon in Leo\nHow we compute\nDate\n\nA birthday, an anniversary, any date at all.\n\nTime optional\nPlace optional\n\nSharpens the clock conversion; the phase barely needs it.\n\nFind that moon↗\n\nPrivate by default. Your birth details stay in this browser.\n\nSomething went wrong computing that moon. Please try again.\n\nMoon phase\nFirst Quarter51% illuminatedMoon in Aries\nHow we compute\nGet the birth chart for this date↗"
+    },
+    {
+      "name": "Unmounted pending lookup performs no calculation or result commit",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n2 !== 0\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:174:12\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:169:3",
+      "dom": ""
+    },
+    {
+      "name": "Unknown UTC and local-date engine inputs remain unchanged",
+      "passed": true,
+      "evidence": {
+        "utcCalls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T12:00:00.000Z"
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T12:00:00.000Z"
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T00:00:00.000Z"
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T23:59:00.000Z"
+          }
+        ],
+        "localCalls": [
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "body": "Sun",
+            "utc": "1990-01-04T05:00:00.000Z"
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-03T17:00:00.000Z"
+          },
+          {
+            "body": "Moon",
+            "utc": "1990-01-04T16:59:00.000Z"
+          }
+        ],
+        "qualification": "No date-interval or sign-candidate correction is included."
+      }
+    },
+    {
+      "name": "Existing es result text and edit ownership",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:191:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:188:56",
+      "dom": "Ahora mismoLuna menguante10% iluminada · Luna en Leo\nCómo calculamos\nFecha\n\nUn cumpleaños, un aniversario, cualquier fecha.\n\nHora opcional\nLugar opcional\n\nAfina la conversión de hora; la fase casi no lo necesita.\n\nEncontrar esa Luna↗\n\nPrivado de forma predeterminada. Tus datos de nacimiento permanecen en este navegador.\n\nFase lunar\nCuarto creciente51% iluminadaLuna en Aries\nCómo calculamos\nObtener la carta natal de esta fecha↗"
+    },
+    {
+      "name": "Existing fr result text and edit ownership",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:191:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:188:56",
+      "dom": "En ce momentDernier croissant10% éclairée · Lune en Lion\nNos calculs\nDate\n\nUn anniversaire, une date marquante, n’importe quelle date.\n\nHeure facultatif\nLieu facultatif\n\nPrécise la conversion de l’heure ; la phase en dépend à peine.\n\nRetrouver la Lune de cette date↗\n\nPrivé par défaut. Tes données de naissance restent dans ce navigateur.\n\nPhase de la Lune\nPremier quartier51% éclairéeLune en Bélier\nNos calculs\nCalculer le thème astral de cette date↗"
+    },
+    {
+      "name": "Existing it result text and edit ownership",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:191:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:188:56",
+      "dom": "In questo momentoFalce calante10% illuminata · Luna in Leone\nCome calcoliamo\nData\n\nUn compleanno, un anniversario, una data qualsiasi.\n\nOra facoltativo\nLuogo facoltativo\n\nRende più precisa la conversione dell’ora; per la fase cambia pochissimo.\n\nTrova quella Luna↗\n\nPrivato per impostazione predefinita. I tuoi dati di nascita restano in questo browser.\n\nFase lunare\nPrimo quarto51% illuminataLuna in Ariete\nCome calcoliamo\nCalcola il tema natale per questa data↗"
+    },
+    {
+      "name": "Existing pt result text and edit ownership",
+      "passed": false,
+      "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at noResult (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:84:63)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:191:51\n    at async group (file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:188:56",
+      "dom": "AgoraLua minguante10% iluminada · Lua em Leão\nComo calculamos\nData\n\nUm aniversário, uma data especial, qualquer data.\n\nHora opcional\nLocal opcional\n\nRefina a conversão do horário; a fase quase não precisa disso.\n\nEncontrar essa Lua↗\n\nPrivado por padrão. Seus dados de nascimento permanecem neste navegador.\n\nFase da Lua\nQuarto crescente51% iluminadaLua em Áries\nComo calculamos\nFazer o mapa astral desta data↗"
+    },
+    {
+      "name": "Existing ru result text and edit ownership",
+      "passed": false,
+      "error": "locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('button[type=submit]')\u001b[22m\n\u001b[2m    - locator resolved to <button disabled type=\"submit\" class=\"btn btn--primary calc__submit\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    8 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not enabled\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\n    at submit (/private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:80:62)\n    at success (/private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:81:41)\n    at /private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:190:29\n    at async group (/private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:88:26)\n    at async file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:188:56",
+      "dom": "Прямо сейчасЧитаем небо…—\nДата\n\nДень рождения, годовщина — любая дата.\n\nВремя необязательно\nМесто необязательно\n\nУточняет пересчёт часов; фазе это почти не нужно.\n\nНайти эту Луну↗\n\nПриватно по умолчанию. Данные рождения остаются в этом браузере."
+    }
+  ],
+  "pageErrors": [
+    "Error: Missing staged Russian runtime payload",
+    "Error: Missing staged Russian runtime payload",
+    "Error: Missing staged Russian runtime payload"
+  ],
+  "requests": [
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=es",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=fr",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=it",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=pt",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/assets/zodiac-icons/48/aries.avif",
+    "http://127.0.0.1:59114/?locale=en",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js",
+    "http://127.0.0.1:59114/?locale=ru",
+    "http://127.0.0.1:59114/fixture.css",
+    "http://127.0.0.1:59114/fixture.js"
+  ],
+  "outcome": "failed",
+  "browser": {
+    "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "version": "152.0.7977.83"
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n+ [\n+   'Error: Missing staged Russian runtime payload',\n+   'Error: Missing staged Russian runtime payload',\n+   'Error: Missing staged Russian runtime payload'\n+ ]\n- []\n\n    at file:///private/tmp/zodiacs-platform-moon-result-ownership/tests/moon-result-ownership-drive.mjs:194:10",
+  "cleanup": "Owned browser context and loopback server closed."
+}

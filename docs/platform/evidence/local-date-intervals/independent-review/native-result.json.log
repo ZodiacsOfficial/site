@@ -1,0 +1,447 @@
+{
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "executablePath": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  "requests": [],
+  "pageErrors": [],
+  "outcome": "passed",
+  "importEffects": {
+    "temporal": 0,
+    "intl": 0,
+    "fetch": 0,
+    "xhr": 0,
+    "beacon": 0,
+    "storage": 0,
+    "idb": 0
+  },
+  "native": {
+    "rows": [
+      {
+        "date": "1919-03-31",
+        "zone": "America/Toronto",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -1601753400000,
+              "endExclusive": -1601668800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1919-03-31T04:30:00.000Z",
+            "1919-04-01T04:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "1919-03-30",
+        "zone": "America/Toronto",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -1601838000000,
+              "endExclusive": -1601753400000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1919-03-30T05:00:00.000Z",
+            "1919-03-31T04:30:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "2009-11-01",
+        "zone": "America/St_Johns",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 1257042600000,
+              "endExclusive": 1257042660000
+            },
+            {
+              "start": 1257046200000,
+              "endExclusive": 1257132600000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "2009-11-01T02:30:00.000Z",
+            "2009-11-01T02:31:00.000Z"
+          ],
+          [
+            "2009-11-01T03:30:00.000Z",
+            "2009-11-02T03:30:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 298
+      },
+      {
+        "date": "2009-10-31",
+        "zone": "America/St_Johns",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 1256956200000,
+              "endExclusive": 1257042600000
+            },
+            {
+              "start": 1257042660000,
+              "endExclusive": 1257046200000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "2009-10-31T02:30:00.000Z",
+            "2009-11-01T02:30:00.000Z"
+          ],
+          [
+            "2009-11-01T02:31:00.000Z",
+            "2009-11-01T03:30:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 298
+      },
+      {
+        "date": "2011-12-30",
+        "zone": "Pacific/Apia",
+        "result": {
+          "status": "empty",
+          "intervals": []
+        },
+        "actual": [],
+        "intlMembershipChecks": 289
+      },
+      {
+        "date": "1892-07-04",
+        "zone": "Pacific/Apia",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -2445510784000,
+              "endExclusive": -2445337984000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1892-07-03T11:26:56.000Z",
+            "1892-07-05T11:26:56.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 295
+      },
+      {
+        "date": "1914-01-01",
+        "zone": "America/Manaus",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -1767211196000,
+              "endExclusive": -1767124800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1914-01-01T04:00:04.000Z",
+            "1914-01-02T04:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 294
+      },
+      {
+        "date": "1972-01-07",
+        "zone": "Africa/Monrovia",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 63593070000,
+              "endExclusive": 63676800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1972-01-07T00:44:30.000Z",
+            "1972-01-08T00:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 294
+      },
+      {
+        "date": "1906-01-01",
+        "zone": "Asia/Kolkata",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -2019705670000,
+              "endExclusive": -2019619800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "1905-12-31T18:38:50.000Z",
+            "1906-01-01T18:30:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 294
+      },
+      {
+        "date": "0000-01-01",
+        "zone": "UTC",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -62167219200000,
+              "endExclusive": -62167132800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "0000-01-01T00:00:00.000Z",
+            "0000-01-02T00:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "0000-01-01",
+        "zone": "Etc/GMT-1",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -62167222800000,
+              "endExclusive": -62167136400000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "-000001-12-31T23:00:00.000Z",
+            "0000-01-01T23:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "0000-02-29",
+        "zone": "UTC",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -62162121600000,
+              "endExclusive": -62162035200000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "0000-02-29T00:00:00.000Z",
+            "0000-03-01T00:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "0099-12-31",
+        "zone": "UTC",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -59011545600000,
+              "endExclusive": -59011459200000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "0099-12-31T00:00:00.000Z",
+            "0100-01-01T00:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "9999-12-31",
+        "zone": "UTC",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 253402214400000,
+              "endExclusive": 253402300800000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "9999-12-31T00:00:00.000Z",
+            "+010000-01-01T00:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "2024-03-10",
+        "zone": "America/New_York",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 1710046800000,
+              "endExclusive": 1710129600000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "2024-03-10T05:00:00.000Z",
+            "2024-03-11T04:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      },
+      {
+        "date": "2024-11-03",
+        "zone": "America/New_York",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 1730606400000,
+              "endExclusive": 1730696400000
+            }
+          ]
+        },
+        "actual": [
+          [
+            "2024-11-03T04:00:00.000Z",
+            "2024-11-04T05:00:00.000Z"
+          ]
+        ],
+        "intlMembershipChecks": 293
+      }
+    ],
+    "offsets": [
+      {
+        "zone": "+23:59",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -86340000,
+              "endExclusive": 60000
+            }
+          ]
+        }
+      },
+      {
+        "zone": "-23:59",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 86340000,
+              "endExclusive": 172740000
+            }
+          ]
+        }
+      },
+      {
+        "zone": "+01:00",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -3600000,
+              "endExclusive": 82800000
+            }
+          ]
+        }
+      },
+      {
+        "zone": "+0100",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": -3600000,
+              "endExclusive": 82800000
+            }
+          ]
+        }
+      },
+      {
+        "zone": "-02:30",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 9000000,
+              "endExclusive": 95400000
+            }
+          ]
+        }
+      },
+      {
+        "zone": "-00:00",
+        "result": {
+          "status": "existing",
+          "intervals": [
+            {
+              "start": 0,
+              "endExclusive": 86400000
+            }
+          ]
+        }
+      }
+    ],
+    "unavailable": {
+      "status": "unresolved",
+      "reason": "provider-unavailable"
+    },
+    "accessor": {
+      "status": "unresolved",
+      "reason": "provider-failed"
+    },
+    "mismatch": {
+      "status": "unresolved",
+      "reason": "provider-violation"
+    },
+    "invalid": {
+      "status": "unresolved",
+      "reason": "provider-failed"
+    },
+    "effects": {
+      "temporal": 24,
+      "intl": 61,
+      "fetch": 0,
+      "xhr": 0,
+      "beacon": 0,
+      "storage": 0,
+      "idb": 0
+    }
+  },
+  "cleanup": "Owned browser context closed; no server or external request."
+}

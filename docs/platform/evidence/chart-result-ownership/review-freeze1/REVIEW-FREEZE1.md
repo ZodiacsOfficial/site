@@ -1,0 +1,29 @@
+# Independent ChartCalculator ownership review — Freeze 1
+
+Correction requested for the exact four-file patch 8a8f32d0c3eadeb68fffd282752c33e17fc273143955d5e93eebc397baba3738; component 6d954dd0994e019408e5c23cae7ffab9853939d774eb0d8e7df9ca4a51aa920b. Base is 30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14. No product or shared files were edited.
+
+## Findings
+
+1. **Delayed positions initialization reattaches revoked optional mine context.** At component lines 1035–1070, the initial revision/run fence has no captured access generation for the optional profile-derived mine. Start a valid positions-only fragment with subject=other, mineSource=profile and synthetic UUID 10000000-0000-4000-8000-000000000001. Hold PositionsShareSurface, dispatch the existing access event with the reader now denied, release, then enter a fresh anonymous other chart. The comparison href includes the old UUID as its a query. Original and candidate native components reproduce; the unmodified production Astro build also reproduces with only local transport delay. Public positions remain valid. Drop the obsolete profile-derived mine while preserving public positions. This is stale opaque-ID reattachment, not a birth-data read or authentication bypass.
+
+2. **Old controls retry steals focus into a newer result.** requestChartControls(true), lines 1344–1353, retains unguarded completion/RAF intent. Reject initial controls loading, start a delayed visible retry, edit time and compute a newer result, focus birth-date, release retry. Actual frozen Preact/DOM moves focus to EntityPicker P0-0. Original and candidate reproduce with controlled import promises, actual createModuleLoader, and two real rc.6 calculations. Module caching is harmless and should remain available. Separate static native transport attempts did not reproduce this precise successful retry sequence because the page preload/browser failure path did not reach the required retry state; no production-transport reproduction is claimed for this finding.
+
+3. **Save-close focus survives mine-only revocation.** The separate child's actual native callback/store/RAF control commits one save, schedules its close RAF, then revokes optional profile-derived mine while preserving anonymous primary. closeSavePrompt's owner check ignores access generation for that anonymous chart, so it focuses the old/replacement save target. Capture the save UI access generation for its frame. The write remains committed exactly once; no rollback, retry or cancellation is requested. Full child evidence is linked in SUMMARY.json and must be copied separately.
+
+## Verified boundaries
+
+Main actual-component controls: candidate 16/18; original 4/18. They use real ChartCalculator, Preact, BirthFields, PlaceSearch, current codecs, rc.6 calculations and context store; only documented import promises, synthetic city search, engine-loader timing and image-share effects are controlled. Tests cover pending engine/helper edits, date/time/house/place invalidation, optional signature rejection before engine completion, late signature/share preparation/context, old share completion, delayed dialog, current failure clearing and retry, valid/invalid/conflicting positions initialization, unmount and known/unknown controls. IIFE bundling does not establish the production import graph.
+
+Unmodified local production output separately passes EN and RU shared initialization and positions-only graph checks: birth fields remain stable, receipts are enabled for full calculations, and positions-only requests no full/chart-adapter/calculator-receipt chunk. It reproduces finding 1 through the actual form and actual city index. All Chrome contexts and owned servers close; external page requests are aborted.
+
+The child profile/save review passes 13/14 candidate controls versus 5/14 original. Actual committed-write event reentrancy, stale messages/context/hints and current allowed save behavior are exercised. Its synthetic true-return reader callback test is conditional reentrancy hardening only: actual Base reader and bootstrap evidence does not establish an ordinary access bypass.
+
+The parsed numerical block from effectiveTime through existing unknown-time endpoint calculation is byte-identical after TypeScript printing. This does not certify local-date coverage or whole-date Sun/Moon certainty. No intervals, endpoint policy, richer saved-record activation, styles, locales, SDK or metadata were changed by this review.
+
+## Reproduction and limits
+
+Use Node22 at /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node. The source archive is exact base git archive, with existing node_modules shared read-only (no installation). Frozen candidate replaces only the source read by the build plugin; source is not rewritten on disk. execution/build.mjs.log transparently wraps import expressions for controlled timing; resulting exact sources, bundle hashes and compressed executable bundles are preserved. execution/drive.mjs.log runs the 18 controls; native-result-freeze1-round1.json contains the first 17 and native-result-freeze1-mine.json the additional mine case. Set REVIEW_CASE to run an individual control. execution/static-drive.mjs.log runs against /private/tmp/zodiacs-platform-chart-ownership/dist; REVIEW_CASE=pending-positions-mine-revoke reproduces the confirmed production finding.
+
+An initial missing Russian fixture import and overly broad role=option selector were harness mistakes; raw failures are retained and not counted as product findings. Exploratory static CSS/network retry failures are retained as limits, not affirmative evidence. Their early driver versions were not separately sealed; the final static driver and final mine finding are reproducible. Original source-level five-case probes remain separate from native evidence.
+
+Status: implemented candidate reviewed, correction requested; no release-ready, publication, deployment or adoption claim.

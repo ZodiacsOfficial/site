@@ -1,0 +1,13 @@
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ scripts/daily-workflow.test.mjs (4 tests) 11ms
+ ✓ scripts/exchange-entry.test.mjs (18 tests) 26ms
+ ✓ scripts/audit-with-retry.test.mjs (49 tests) 11ms
+ ✓ scripts/registry-selected-token-chart.test.mjs (27 tests) 34ms
+
+ Test Files  4 passed (4)
+      Tests  98 passed (98)
+   Start at  15:20:12
+   Duration  332ms (transform 88ms, setup 0ms, collect 179ms, tests 82ms, environment 0ms, prepare 187ms)
+

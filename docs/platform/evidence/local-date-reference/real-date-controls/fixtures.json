@@ -1,0 +1,19 @@
+[
+  {"date":"1919-03-31","zone":"America/Toronto","reason":"retained omitted initial half-hour"},
+  {"date":"2009-11-01","zone":"America/St_Johns","reason":"retained disconnected date"},
+  {"date":"2009-10-31","zone":"America/St_Johns","reason":"retained returning date tail"},
+  {"date":"1892-07-04","zone":"Pacific/Apia","reason":"retained 48-hour repeated date"},
+  {"date":"2011-12-30","zone":"Pacific/Apia","reason":"retained empty date"},
+  {"date":"1969-09-30","zone":"Pacific/Kwajalein","reason":"bounded repeated-date control"},
+  {"date":"1867-10-18","zone":"America/Juneau","reason":"bounded Alaska date-line control"},
+  {"date":"1867-10-19","zone":"America/Juneau","reason":"adjacent Alaska date-line control"},
+  {"date":"1956-01-01","zone":"Antarctica/McMurdo","reason":"bounded Antarctic fixed-date probe"},
+  {"date":"1899-11-01","zone":"Antarctica/Macquarie","reason":"bounded Antarctic fixed-date probe"},
+  {"date":"1947-01-01","zone":"Antarctica/DumontDUrville","reason":"bounded Antarctic fixed-date probe"},
+  {"date":"1969-01-01","zone":"Antarctica/Casey","reason":"bounded Antarctic fixed-date probe"},
+  {"date":"1993-08-21","zone":"Pacific/Kwajalein","reason":"bounded skipped-date control"},
+  {"date":"1994-12-31","zone":"Pacific/Kiritimati","reason":"bounded skipped-date control"},
+  {"date":"1844-12-31","zone":"Pacific/Guam","reason":"bounded date-line control"},
+  {"date":"1972-01-07","zone":"Africa/Monrovia","reason":"retained subminute historical gap control"},
+  {"date":"2024-03-10","zone":"America/New_York","reason":"ordinary DST date control"}
+]

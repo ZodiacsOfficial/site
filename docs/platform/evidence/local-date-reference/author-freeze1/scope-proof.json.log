@@ -1,0 +1,47 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "proof": [
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "baseSha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd",
+      "candidateSha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "unchangedApartFromExplicitMembershipBoundary": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "baseSha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0",
+      "candidateSha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263",
+      "unchangedApartFromExplicitMembershipBoundary": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "baseSha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb",
+      "candidateSha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "unchangedApartFromExplicitMembershipBoundary": true
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "onlyChange": "localDateReferenceError: 'We couldn\u2019t establish a calculation time within this local date. Check the date and place.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "onlyChange": "localDateReferenceError: 'No pudimos establecer una hora de c\u00e1lculo dentro de esta fecha local. Comprueba la fecha y el lugar.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "onlyChange": "localDateReferenceError: 'Nous n\u2019avons pas pu d\u00e9terminer une heure de calcul correspondant \u00e0 cette date locale. V\u00e9rifie la date et le lieu.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "onlyChange": "localDateReferenceError: 'Non \u00e8 stato possibile stabilire un orario di calcolo all\u2019interno di questa data locale. Controlla la data e il luogo.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "onlyChange": "localDateReferenceError: 'N\u00e3o foi poss\u00edvel estabelecer um hor\u00e1rio de c\u00e1lculo dentro desta data local. Verifique a data e o local.',"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "onlyChange": "localDateReferenceError: '\u041d\u0435 \u0443\u0434\u0430\u043b\u043e\u0441\u044c \u043e\u043f\u0440\u0435\u0434\u0435\u043b\u0438\u0442\u044c \u0432\u0440\u0435\u043c\u044f \u0434\u043b\u044f \u0440\u0430\u0441\u0447\u0451\u0442\u0430 \u0432 \u043f\u0440\u0435\u0434\u0435\u043b\u0430\u0445 \u044d\u0442\u043e\u0439 \u043c\u0435\u0441\u0442\u043d\u043e\u0439 \u0434\u0430\u0442\u044b. \u041f\u0440\u043e\u0432\u0435\u0440\u044c\u0442\u0435 \u0434\u0430\u0442\u0443 \u0438 \u043c\u0435\u0441\u0442\u043e.',"
+    }
+  ]
+}

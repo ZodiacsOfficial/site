@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-07T20:05:17.929Z",
+  "scope": "Read-only public release refresh for B01/B02; not release approval.",
+  "access": {
+    "github": "Escalated gh api GET requests succeeded.",
+    "npm": "Unauthenticated public registry GET requests succeeded; engine/widgets returned HTTP 404.",
+    "blockers": [],
+    "mutations": "Only this local evidence record was written. No merge, publish, release, deployment or protection change."
+  },
+  "main": {
+    "site": {
+      "sha": "7f953e3fca0e7d5009e5602a1dad69edff0f54cc",
+      "url": "https://github.com/ZodiacsOfficial/site/commit/7f953e3fca0e7d5009e5602a1dad69edff0f54cc",
+      "protected": true
+    },
+    "sdk": {
+      "sha": "b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff",
+      "url": "https://github.com/ZodiacsOfficial/sdk/commit/b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff",
+      "protected": false
+    }
+  },
+  "sdkPR5": {
+    "url": "https://github.com/ZodiacsOfficial/sdk/pull/5",
+    "state": "open",
+    "draft": true,
+    "head": "cced011659d48877b8b73b8a85796815234cf741",
+    "headRef": "codex/engine-expansion",
+    "base": "b49e0f14f9f17bc84db39486f2c4bb075e0ae3ff",
+    "baseRef": "main",
+    "updatedAt": "2026-07-15T09:31:54Z",
+    "mergedAt": null,
+    "holdPresentInDescription": true,
+    "hold": "pending adversarial review — do not merge, do not publish",
+    "requestedReviewers": [],
+    "submittedReviews": [],
+    "inlineReviewCommentCount": 0,
+    "comments": [
+      {
+        "url": "https://github.com/ZodiacsOfficial/sdk/pull/5#issuecomment-4979069768",
+        "author": "vercel[bot]",
+        "updatedAt": "2026-07-15T09:31:54Z",
+        "kind": "bot"
+      }
+    ],
+    "holdResolutionObserved": false,
+    "holdResolutionBasis": "Description retains the explicit hold; no submitted reviews or inline comments; the only issue comment remains the 2026-07-15 Vercel bot deployment report."
+  },
+  "npm": {
+    "observation": "Unauthenticated public npm registry GET; no npm config or token used.",
+    "packages": [
+      {
+        "name": "@zodiacs/engine",
+        "url": "https://registry.npmjs.org/%40zodiacs%2Fengine",
+        "checkedAt": "2026-09-07T20:02:47.942Z",
+        "httpStatus": 404,
+        "error": "Not found",
+        "publicLatest": null
+      },
+      {
+        "name": "@zodiacs/widgets",
+        "url": "https://registry.npmjs.org/%40zodiacs%2Fwidgets",
+        "checkedAt": "2026-09-07T20:02:47.950Z",
+        "httpStatus": 404,
+        "error": "Not found",
+        "publicLatest": null
+      },
+      {
+        "name": "@zodiacs/sdk",
+        "url": "https://registry.npmjs.org/%40zodiacs%2Fsdk",
+        "checkedAt": "2026-09-07T20:02:49.132Z",
+        "httpStatus": 200,
+        "distTags": {
+          "rc": "1.0.0-rc.1",
+          "latest": "1.0.1"
+        },
+        "versions": [
+          "1.0.0-rc.1",
+          "1.0.0",
+          "1.0.1"
+        ],
+        "publicLatest": "1.0.1",
+        "publishedAt": "2026-06-07T09:15:36.903Z",
+        "modifiedAt": "2026-06-07T09:15:36.993Z",
+        "latestDistribution": {
+          "tarball": "https://registry.npmjs.org/@zodiacs/sdk/-/sdk-1.0.1.tgz",
+          "integrity": "sha512-BqU6/3UULkxg9T563f7nT8GyrzvlnzASw3zwF5QdQTaIcDzG0yA0qk5KwdtsJBe8DS7uotVXxSWaeUhBQOVXdQ=="
+        },
+        "repository": {
+          "type": "git",
+          "url": "git+https://github.com/ZodiacsOfficial/sdk.git"
+        }
+      }
+    ]
+  },
+  "sdkLatestGitHubRelease": {
+    "tag": "v1.0.1",
+    "url": "https://github.com/ZodiacsOfficial/sdk/releases/tag/v1.0.1",
+    "publishedAt": "2026-06-07T09:16:23Z",
+    "draft": false,
+    "prerelease": false,
+    "interpretation": "Ownership SDK release; not an engine or widgets npm release."
+  },
+  "sitePR415": {
+    "url": "https://github.com/ZodiacsOfficial/site/pull/415",
+    "state": "open",
+    "draft": true,
+    "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+    "headRef": "codex/platform-stage-a",
+    "base": "7f953e3fca0e7d5009e5602a1dad69edff0f54cc",
+    "baseRef": "main",
+    "updatedAt": "2026-09-07T19:35:50Z",
+    "mergedAt": null,
+    "expectedHead": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+    "exactHeadMatches": true,
+    "run": {
+      "id": 34156030961,
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961",
+      "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+      "status": "in_progress",
+      "conclusion": null,
+      "attempt": 1
+    },
+    "checkRuns": [
+      {
+        "name": "Vercel Preview Comments",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/runs/101848387260",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:35:50Z"
+      },
+      {
+        "name": "Browser evidence (${{ (((github.event.action == 'edited') && 'candidates') || 'compare') }})",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156064272/job/101848032017",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:34:00Z"
+      },
+      {
+        "name": "Browser evidence (${{ (((github.event.action == 'edited') && 'candidates') || 'compare') }})",
+        "status": "completed",
+        "conclusion": "skipped",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030949/job/101847931284",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:33:27Z"
+      },
+      {
+        "name": "Phase 3 PWA drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931208",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:35:55Z"
+      },
+      {
+        "name": "Phase 3 post-chart drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931167",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:35:12Z"
+      },
+      {
+        "name": "Registry Aura drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931147",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:36:26Z"
+      },
+      {
+        "name": "Zodiac Games SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931116",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:34:00Z"
+      },
+      {
+        "name": "Phase 7 Living Chart sync SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931098",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:33:56Z"
+      },
+      {
+        "name": "Phase 3 push drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931096",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:37:04Z"
+      },
+      {
+        "name": "Legacy wing drift",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931061",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:34:17Z"
+      },
+      {
+        "name": "Phase 4 sharing drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931050",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:36:12Z"
+      },
+      {
+        "name": "Phase 4 compatibility invite SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931027",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:34:28Z"
+      },
+      {
+        "name": "Phase 3 delivery SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931006",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:34:04Z"
+      },
+      {
+        "name": "Build & Check",
+        "status": "in_progress",
+        "conclusion": null,
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931004",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": null
+      },
+      {
+        "name": "Phase 6 assistant quota SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847930993",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:33:58Z"
+      },
+      {
+        "name": "Phase 7 Living Chart drive",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847930931",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:36:07Z"
+      },
+      {
+        "name": "Account Sync v2 SQL",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847930926",
+        "head": "4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f",
+        "completedAt": "2026-09-07T19:33:57Z"
+      }
+    ],
+    "buildAndCheck": {
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34156030961/job/101847931004",
+      "successfulSteps": [
+        "Set up job",
+        "Checkout",
+        "Setup Node",
+        "Phase 1 protected-scope guard",
+        "Install",
+        "Dependency advisories stay at zero",
+        "Install pinned Chromium",
+        "Validate registry JSON",
+        "Check for stale repo or bridge wording",
+        "Wing language stays in the wing",
+        "Voice — banned tells stay out of the copy",
+        "Authorship stays transparent",
+        "Verify daily editorial package",
+        "Replay 30 daily editions",
+        "Build",
+        "Typecheck",
+        "Thesis reading and evidence at six viewport widths",
+        "Upload thesis screenshots",
+        "Birth chart export and sharing acceptance",
+        "Engine accuracy vectors",
+        "Phase 1 exact-width acceptance evidence",
+        "Weekly digest smoke",
+        "Link & artifact integrity over dist",
+        "I18n route-boundary regression",
+        "Russian R2 public-locale acceptance",
+        "Homepage poster motion and deferred video",
+        "Homepage interactive chart preview",
+        "Phase 2 sky-events publication drive",
+        "Phase 5 People noindex pilot",
+        "Phase 6 Ask Zodiacs drive",
+        "Today SSR and personalization",
+        "Horoscope templates, SSR, and responsive behavior",
+        "Link-in-bio page acceptance",
+        "Existing compatibility regression drive",
+        "Existing Registry selector regression drive",
+        "Zodiac Markets mobile terminal acceptance",
+        "Phase 1 mobile frame cadence",
+        "Structured data validation",
+        "Bundle size & engine isolation gates",
+        "Visual regression"
+      ],
+      "remainingSteps": [
+        {
+          "name": "Lighthouse performance budgets",
+          "status": "in_progress",
+          "startedAt": "2026-09-07T19:52:31Z"
+        },
+        {
+          "name": "Foreign-origin widget integration",
+          "status": "pending",
+          "startedAt": null
+        },
+        {
+          "name": "Widget Lighthouse thresholds",
+          "status": "pending",
+          "startedAt": null
+        },
+        {
+          "name": "Upload Phase 1 browser and performance evidence",
+          "status": "pending",
+          "startedAt": null
+        },
+        {
+          "name": "Post Setup Node",
+          "status": "pending",
+          "startedAt": null
+        },
+        {
+          "name": "Post Checkout",
+          "status": "pending",
+          "startedAt": null
+        }
+      ]
+    },
+    "commitStatuses": [
+      {
+        "context": "Vercel",
+        "state": "success",
+        "url": "https://vercel.com/zodiacsofficial/zodiacs-org/E98V1wNWvdVq6TT4H5z8DiSCpZY9",
+        "updatedAt": "2026-09-07T19:35:50Z"
+      }
+    ],
+    "releaseInterpretation": "PR remains open/draft; a successful preview or completed individual job is not a merged or production-deployed candidate."
+  },
+  "overlap": {
+    "pr289": {
+      "url": "https://github.com/ZodiacsOfficial/site/pull/289",
+      "state": "open",
+      "draft": false,
+      "head": "de9bb3b58240286923f3437d32c7b5590490a78a",
+      "headRef": "codex/site-footer-system",
+      "base": "82e109e9662b39fe4ec37817c90f9fd8f2dc7cff",
+      "baseRef": "main",
+      "updatedAt": "2026-08-24T11:44:06Z",
+      "mergedAt": null,
+      "priorRecordedHead": "de9bb3b58240286923f3437d32c7b5590490a78a",
+      "priorEvidence": "docs/platform/EVIDENCE.md (B03 freshness overlap checkpoint)",
+      "headChanged": false,
+      "changedFileCount": 82,
+      "refreshedFileCount": 82,
+      "developerPageFiles": [],
+      "relevantFiles": [
+        ".github/phase1-scope-allowance.json",
+        "package.json",
+        "public/sdk/engine/assets/custom.css",
+        "src/components/SiteFooter.astro",
+        "src/layouts/Base.astro",
+        "src/styles/site-footer.css"
+      ]
+    },
+    "pr413": {
+      "url": "https://github.com/ZodiacsOfficial/site/pull/413",
+      "state": "open",
+      "draft": false,
+      "head": "bf8268d24c1dc883f6c0213fb4147504a498f44c",
+      "headRef": "codex/seo-birthday-methodology-20260907",
+      "base": "e73cf42bb9c0891bd58d5ac7c83f8ebe2bed41e8",
+      "baseRef": "main",
+      "updatedAt": "2026-09-07T14:28:46Z",
+      "mergedAt": null,
+      "priorRecordedHead": null,
+      "headChanged": null,
+      "comparison": "A prior exact SHA was not found in durable platform records. updatedAt predates the initial 2026-09-07 17:47–17:52 UTC repository audit; the refreshed four-file scope matches the prior overlap description. This is not an independent exact-SHA no-change proof.",
+      "files": [
+        "api/_assistant/context.ts",
+        "src/pages/birthday/index.astro",
+        "src/pages/sitemap.xml.ts",
+        "vercel.json"
+      ],
+      "implementationOverlap": "src/pages/sitemap.xml.ts: preserve the existing birthday/route changes while adding the developer support route."
+    }
+  },
+  "sources": {
+    "siteMain": "https://api.github.com/repos/ZodiacsOfficial/site/branches/main",
+    "sdkMain": "https://api.github.com/repos/ZodiacsOfficial/sdk/branches/main",
+    "sdkPR5": "https://api.github.com/repos/ZodiacsOfficial/sdk/pulls/5",
+    "sdkPR5Reviews": "https://api.github.com/repos/ZodiacsOfficial/sdk/pulls/5/reviews?per_page=100",
+    "sdkPR5Comments": "https://api.github.com/repos/ZodiacsOfficial/sdk/issues/5/comments?per_page=100",
+    "sdkPR5Inline": "https://api.github.com/repos/ZodiacsOfficial/sdk/pulls/5/comments?per_page=100",
+    "sitePR415": "https://api.github.com/repos/ZodiacsOfficial/site/pulls/415",
+    "sitePR289": "https://api.github.com/repos/ZodiacsOfficial/site/pulls/289",
+    "sitePR413": "https://api.github.com/repos/ZodiacsOfficial/site/pulls/413",
+    "sitePR289Files": "https://api.github.com/repos/ZodiacsOfficial/site/pulls/289/files?per_page=100",
+    "sitePR413Files": "https://api.github.com/repos/ZodiacsOfficial/site/pulls/413/files?per_page=100",
+    "siteChecks": "https://api.github.com/repos/ZodiacsOfficial/site/commits/4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f/check-runs?per_page=100",
+    "siteStatus": "https://api.github.com/repos/ZodiacsOfficial/site/commits/4bb0d70eaaf21ea950a8fe708a0e1a91f8fb1f4f/status",
+    "siteRun": "https://api.github.com/repos/ZodiacsOfficial/site/actions/runs/34156030961",
+    "siteBuild": "https://api.github.com/repos/ZodiacsOfficial/site/actions/jobs/101847931004",
+    "sdkRelease": "https://api.github.com/repos/ZodiacsOfficial/sdk/releases/latest"
+  }
+}

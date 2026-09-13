@@ -1,0 +1,48 @@
+{
+  "archive": "/private/tmp/zodiacs-platform-chart-preview-review/delivery/browser/remote-modules.tar.gz",
+  "archiveSha256": "417de927d29f6539daa85cb9221d5874698f146482892c8a42388b050a4c3ecc",
+  "payloadManifestSha256": "8a45322e8552bd792517e210b7904700f4aff01df54f0fb5185f92a9111fe6d9",
+  "originalDeliveryFilesVerifiedUnchanged": 79,
+  "totalMembers": 140,
+  "classifications": {
+    "AppleDouble metadata": 70,
+    "directory": 1,
+    "manifest JavaScript payload": 69
+  },
+  "regularMembers": 139,
+  "allPayloadHashesMatch": true,
+  "xattrNames": {
+    "com.apple.provenance": 70
+  },
+  "patterns": {
+    "protection_bypass_header": "x-vercel-(?:protection-bypass|set-bypass-cookie)",
+    "protection_secret_structural_key": "VERCEL_AUTOMATION_BYPASS_SECRET|bypassToken|protectionBypass|previewToken|deploymentProtection",
+    "private_preview_hostname": "[a-z0-9-]+\\.vercel\\.app",
+    "vercel_auth_cookie": "_vercel_jwt|vercel_toolbar_token",
+    "jwt_shape": "eyJ[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}\\.[A-Za-z0-9_-]{8,}",
+    "provider_token_shape": "gh[pousr]_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-(?:proj-)?[A-Za-z0-9_-]{24,}",
+    "authorization_bearer_assignment": "authorization[\\s\\x22\\x27:=]{1,12}bearer[\\s\\x22\\x27+]{1,12}[A-Za-z0-9_-]{8,}",
+    "generic_token_or_authorization": "\\b(?:token|authorization|access_token|refresh_token|secret|password)\\b"
+  },
+  "scanByPattern": {
+    "protection_bypass_header": 0,
+    "protection_secret_structural_key": 0,
+    "private_preview_hostname": 0,
+    "vercel_auth_cookie": 0,
+    "jwt_shape": 0,
+    "provider_token_shape": 0,
+    "authorization_bearer_assignment": 0,
+    "generic_token_or_authorization": 2
+  },
+  "fullDecompressedTarBytes": 652288,
+  "fullDecompressedTarScan": {
+    "generic_token_or_authorization": {
+      "count": 2,
+      "offsets": [
+        70314,
+        451085
+      ]
+    }
+  },
+  "exactSecretValueScan": "Not performed: original exact values are no longer available. Heuristic structural and credential-shape scanning is not a proof of absence."
+}

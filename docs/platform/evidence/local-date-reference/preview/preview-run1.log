@@ -1,0 +1,11 @@
+{"name":"en-chart-1280","passed":true}
+{"name":"en-chart-390","passed":true}
+{"name":"en-moon-1280","passed":true}
+{"name":"en-moon-390","passed":true}
+{"name":"ru-chart-1280","passed":true}
+{"name":"ru-chart-390","passed":true}
+{"name":"ru-moon-1280","passed":true}
+{"name":"ru-moon-390","passed":true}
+{"name":"moon-no-city-utc","passed":true}
+{"name":"public-positions-only","passed":true}
+{"groups":10,"passed":10,"outcome":"passed"}

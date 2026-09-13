@@ -1,0 +1,44 @@
+src/server/chart-preview-model.ts:55:      : '12:00 reference / No houses / Tropical',
+src/server/chart-preview.ts:127:    : 'Sun and 12:00 reference Moon positions — birth details not included.';
+src/lib/share-card-copy.ts:28:  referenceTimeNote: '12:00 reference · Birth time unknown',
+src/lib/share-card-copy.ts:64:    referenceTimeNote: 'Referencia de las 12:00 · Hora de nacimiento desconocida',
+src/lib/share-card-copy.ts:97:    referenceTimeNote: 'Referência das 12:00 · Hora de nascimento desconhecida',
+src/lib/share-card-copy.ts:130:    referenceTimeNote: 'Référence à 12 h 00 · Heure de naissance inconnue',
+src/lib/share-card-copy.ts:163:    referenceTimeNote: 'Riferimento alle 12:00 · Ora di nascita sconosciuta',
+src/lib/share-card-copy.ts:196:    referenceTimeNote: 'Расчёт на 12:00 · Время рождения неизвестно',
+src/strings/additions.pt.mjs:296:  'shareCard.referenceTimeNote': 'Referência das 12:00 · Hora de nascimento desconhecida',
+src/strings/additions.it.mjs:296:  'shareCard.referenceTimeNote': 'Riferimento alle 12:00 · Ora di nascita sconosciuta',
+src/strings/additions.fr.mjs:290:  'shareCard.referenceTimeNote': 'Référence à 12 h 00 · Heure de naissance inconnue',
+src/islands/explorer/Inspector.tsx:195:            <ExactData><p>{t(locale, 'noTimeNotice')}</p><Receipt label={t(locale, 'position')}>{formatLongitude(sb.lon, locale)}</Receipt></ExactData>
+src/islands/explorer/Inspector.tsx:431:          <ExactData><p class="insp__note">{t(locale, 'noTimeNotice')}</p>{exact}</ExactData>
+src/lib/share-card.ts:51:  /** True when displayed positions use the calculator's 12:00 no-time reference. */
+src/lib/share-card.ts:263:  if (options.referenceTime) notes.push(shareCardText(locale, 'referenceTimeNote'));
+src/lib/share-card.ts:1025:  const reference = chart.input?.timeKnown === false ? '12:00 reference · ' : '';
+src/lib/share-card.ts:1083:    : `${details.date} · Birth time unknown · 12:00 local reference`;
+src/islands/ChartCalculator.tsx:1177:      const effectiveTime = input.timeKnown ? input.time : '12:00';
+src/islands/ChartCalculator.tsx:1821:              timeHelp={mode === 'rising' ? t(locale, 'risingTimeHelp') : t(locale, 'chartTimeHelp')}
+src/islands/ChartCalculator.tsx:1917:              {t(locale, 'noTimeNotice')}
+src/islands/ChartCalculator.tsx:2057:            <p class="calc__phase mono">{t(locale, 'moonPhaseAtBirth')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
+src/lib/i18n/ui/ru.ts:166:  chartTimeHelp: 'Нет времени рождения? Покажем ориентир на местный полдень без асцендента и домов; положение Луны может быть неопределённым.',
+src/lib/i18n/ui/ru.ts:187:  moonPhaseAtBirth: 'Фаза Луны при рождении',
+src/lib/i18n/ui/ru.ts:228:  skyTickerAria: 'Положения неба на {date}, 12:00 UTC',
+src/lib/i18n/ui/ru.ts:333:  noTimeNotice: 'Без времени рождения используем 12:00 местного гражданского времени как ориентир и не показываем асцендент, углы и дома.',
+src/lib/i18n/ui/fr.ts:113:  chartTimeHelp: 'Tu ne connais pas l’heure ? Tu obtiendras une référence à midi local, sans ascendant ni maisons ; la Lune peut être incertaine.',
+src/lib/i18n/ui/fr.ts:134:  moonPhaseAtBirth: 'Phase de la Lune à la naissance',
+src/lib/i18n/ui/fr.ts:280:  noTimeNotice: 'Sans heure de naissance, nous utilisons 12 h en heure civile locale comme référence et omettons l’ascendant, les angles et les maisons.',
+src/lib/i18n/ui/pt.ts:113:  chartTimeHelp: 'Não sabe a hora? Você verá uma referência ao meio-dia local, sem ascendente nem casas; a Lua pode ser incerta.',
+src/lib/i18n/ui/pt.ts:134:  moonPhaseAtBirth: 'Fase da Lua no nascimento',
+src/lib/i18n/ui/pt.ts:280:  noTimeNotice: 'Sem a hora de nascimento, usamos 12:00 no horário civil local como referência e omitimos ascendente, ângulos e casas.',
+src/lib/i18n/ui/en.ts:113:    chartTimeHelp: "No birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.",
+src/lib/i18n/ui/en.ts:134:    moonPhaseAtBirth: 'Moon phase at birth',
+src/lib/i18n/ui/en.ts:175:    skyTickerAria: 'Sky positions for {date} at 12:00 UTC',
+src/lib/i18n/ui/en.ts:280:    noTimeNotice: 'Without a birth time we use 12:00 local civil time as a reference and omit the rising sign, angles, and houses.',
+src/lib/i18n/ui/es.ts:113:    chartTimeHelp: '¿No sabes la hora? Verás una referencia al mediodía local sin ascendente ni casas; la Luna puede ser incierta.',
+src/lib/i18n/ui/es.ts:134:    moonPhaseAtBirth: 'Fase lunar al nacer',
+src/lib/i18n/ui/es.ts:175:    skyTickerAria: 'Posiciones del cielo para el {date} a las 12:00 UTC',
+src/lib/i18n/ui/es.ts:280:    noTimeNotice: 'Sin hora de nacimiento usamos las 12:00 del tiempo civil local como referencia y omitimos ascendente, ángulos y casas.',
+src/lib/i18n/ui/it.ts:122:  chartTimeHelp:
+src/lib/i18n/ui/it.ts:148:  moonPhaseAtBirth: "Fase lunare alla nascita",
+src/lib/i18n/ui/it.ts:195:  skyTickerAria: "Posizioni nel cielo per il {date} alle 12:00 UTC",
+src/lib/i18n/ui/it.ts:326:  noTimeNotice:
+src/lib/i18n/ui/it.ts:327:    "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case.",

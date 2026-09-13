@@ -1,0 +1,197 @@
+Fresh consumer directory: /var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-platform-consumer-CW1Qc3/package
+
+added 4 packages, and audited 5 packages in 7s
+
+found 0 vulnerabilities
+
+> zodiacs-platform-starter@0.1.0-rc.2 test
+> node scripts/build.mjs && node --test tests/*.check.mjs
+
+Built three examples with candidate 0.1.1-rc.1; artifact SHA256 f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17
+TAP version 13
+# Subtest: real candidate returns coherent polar fallback and provenance
+ok 1 - real candidate returns coherent polar fallback and provenance
+  ---
+  duration_ms: 20.814042
+  type: 'test'
+  ...
+# Subtest: offset equivalent instants calculate identically and keep entered provenance
+ok 2 - offset equivalent instants calculate identically and keep entered provenance
+  ---
+  duration_ms: 3.753458
+  type: 'test'
+  ...
+# Subtest: unknown time uses stated UTC noon and suppresses angles and houses
+ok 3 - unknown time uses stated UTC noon and suppresses angles and houses
+  ---
+  duration_ms: 1.257375
+  type: 'test'
+  ...
+# Subtest: transit snapshot uses the actual public API result and explicit instant
+ok 4 - transit snapshot uses the actual public API result and explicit instant
+  ---
+  duration_ms: 3.253584
+  type: 'test'
+  ...
+# Subtest: public API rejects impossible calendar dates before rollover and preserves leap days
+ok 5 - public API rejects impossible calendar dates before rollover and preserves leap days
+  ---
+  duration_ms: 1.187792
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: ""
+ok 6 - rejects unresolved or malformed instants: ""
+  ---
+  duration_ms: 0.1415
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: " "
+ok 7 - rejects unresolved or malformed instants: " "
+  ---
+  duration_ms: 0.105667
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21"
+ok 8 - rejects unresolved or malformed instants: "2001-12-21"
+  ---
+  duration_ms: 0.097209
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00"
+ok 9 - rejects unresolved or malformed instants: "2001-12-21T09:00:00"
+  ---
+  duration_ms: 0.191917
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00Z\\n"
+ok 10 - rejects unresolved or malformed instants: "2001-12-21T09:00:00Z\\n"
+  ---
+  duration_ms: 0.229667
+  type: 'test'
+  ...
+# Subtest: rejects unresolved or malformed instants: "2001-12-21T09:00:00+25:00"
+ok 11 - rejects unresolved or malformed instants: "2001-12-21T09:00:00+25:00"
+  ---
+  duration_ms: 0.741458
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: ""
+ok 12 - rejects empty/nonfinite or nondecimal coordinates: ""
+  ---
+  duration_ms: 0.059459
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: " "
+ok 13 - rejects empty/nonfinite or nondecimal coordinates: " "
+  ---
+  duration_ms: 0.033916
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "NaN"
+ok 14 - rejects empty/nonfinite or nondecimal coordinates: "NaN"
+  ---
+  duration_ms: 0.02925
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "Infinity"
+ok 15 - rejects empty/nonfinite or nondecimal coordinates: "Infinity"
+  ---
+  duration_ms: 0.027416
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "0x10"
+ok 16 - rejects empty/nonfinite or nondecimal coordinates: "0x10"
+  ---
+  duration_ms: 0.026833
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "1e999"
+ok 17 - rejects empty/nonfinite or nondecimal coordinates: "1e999"
+  ---
+  duration_ms: 0.026916
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: "12\\n"
+ok 18 - rejects empty/nonfinite or nondecimal coordinates: "12\\n"
+  ---
+  duration_ms: 0.24625
+  type: 'test'
+  ...
+# Subtest: rejects empty/nonfinite or nondecimal coordinates: undefined
+ok 19 - rejects empty/nonfinite or nondecimal coordinates: undefined
+  ---
+  duration_ms: 0.084542
+  type: 'test'
+  ...
+# Subtest: rejects out-of-range and unsupported exact-pole inputs and invalid options
+ok 20 - rejects out-of-range and unsupported exact-pole inputs and invalid options
+  ---
+  duration_ms: 0.469542
+  type: 'test'
+  ...
+# Subtest: recalculation works with network and persistent storage APIs unavailable
+ok 21 - recalculation works with network and persistent storage APIs unavailable
+  ---
+  duration_ms: 4.314208
+  type: 'test'
+  ...
+# Subtest: localhost server serves only exact built assets and never accepts submissions
+ok 22 - localhost server serves only exact built assets and never accepts submissions
+  ---
+  duration_ms: 26.025708
+  type: 'test'
+  ...
+# Subtest: widget URL has only constrained display inputs at the canonical HTTPS origin
+ok 23 - widget URL has only constrained display inputs at the canonical HTTPS origin
+  ---
+  duration_ms: 1.555458
+  type: 'test'
+  ...
+# Subtest: local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available
+ok 24 - local pages cannot submit birth fields when JavaScript fails; hosted fallback remains available
+  ---
+  duration_ms: 6.52125
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 104.086041
+{
+  "schemaVersion": 1,
+  "result": "passed",
+  "mode": "fresh-consumer",
+  "starter": {
+    "schemaVersion": 1,
+    "name": "zodiacs-platform-starter",
+    "version": "0.1.0-rc.2",
+    "file": "zodiacs-platform-starter-0.1.0-rc.2.tgz",
+    "sha256": "d409a395966e78b3ddc0604d75d4a836477987d99814ff786f55aee9e464e420"
+  },
+  "engine": {
+    "name": "@zodiacs/engine",
+    "version": "0.1.1-rc.1",
+    "sha256": "f95c887deedb55f64b185ed4dd406b580b6d3287656ab5ec0557215fc02e5d17"
+  },
+  "filesVerified": 20,
+  "runtime": {
+    "node": "v22.23.2",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "consumer": {
+    "path": "/var/folders/yj/t3y9tw9d1rj9mxk5z2_pkxpw0000gn/T/zodiacs-platform-consumer-CW1Qc3/package",
+    "install": "passed",
+    "testsAndBuild": "passed",
+    "commands": [
+      "npm ci --ignore-scripts --no-fund",
+      "npm test"
+    ]
+  },
+  "elapsedSeconds": 7.79
+}

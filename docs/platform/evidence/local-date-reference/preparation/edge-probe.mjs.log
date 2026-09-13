@@ -1,0 +1,81 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+import * as subject from './time-subject.mjs';
+
+// Proposed callable boundary MODEL only; formatter and parser are actual copied
+// production code. Product has no exported membership helper or active guard.
+function witness(date, utc, zone) {
+  if (!subject.parseCivilDate(date) || !(utc instanceof Date)
+      || !Number.isFinite(utc.getTime()) || typeof zone !== 'string' || zone.length === 0) {
+    return { status: 'unresolved', reason: 'invalid-input' };
+  }
+  try {
+    const wall = subject.__reviewWallStringAt(zone, utc.getTime());
+    const actualDate = wall.split('T')[0];
+    return { status: actualDate === date ? 'witness' : 'different-date', actualDate, wall };
+  } catch {
+    return { status: 'unresolved', reason: 'formatter-failed' };
+  }
+}
+
+const eras = [];
+for (const [date, zone] of [
+  ['0000-01-01', 'UTC'], ['0000-02-29', 'UTC'], ['0099-12-31', 'UTC'],
+  ['9999-12-31', 'UTC'], ['0000-01-01', '+23:59'], ['9999-12-31', '-23:59'],
+]) {
+  const resolved = subject.resolveLocalToUtc(date, '00:00', zone);
+  const result = witness(date, resolved.utc, zone);
+  const prior = witness(date, new Date(resolved.utc.getTime() - 1), zone);
+  assert.equal(result.status, 'witness');
+  assert.equal(prior.status, 'different-date');
+  eras.push({ date, zone, utc: resolved.utc.toISOString(), result, prior, astronomyExecuted: false });
+}
+
+const seconds = ['America/Mexico_City', 'America/Manaus', 'America/Juneau'].map(zone => {
+  const date = '1900-01-01';
+  const resolved = subject.resolveLocalToUtc(date, '00:00', zone);
+  const prior = new Date(resolved.utc.getTime() - 1);
+  const result = witness(date, resolved.utc, zone), before = witness(date, prior, zone);
+  assert.equal(result.status, 'witness');
+  assert.equal(before.status, 'different-date');
+  const roundedMinuteDate = new Date(resolved.utc.getTime() + Math.round(resolved.offsetMinutes) * 60000).toISOString().split('T')[0];
+  return { date, zone, utc: resolved.utc.toISOString(), offsetMinutes: resolved.offsetMinutes, result, before, roundedMinuteDate, roundingWouldRejectValidRepresentative: roundedMinuteDate !== date };
+});
+assert.ok(seconds.some(row => row.roundingWouldRejectValidRepresentative));
+
+const identifiers = ['UTC', 'Etc/UTC', 'US/Eastern', 'America/New_York', 'Etc/GMT+5', '+05:30', '+0530', '-00:00', '+23:59', '-23:59', '+05:30:45', '+24:00', 'UTC ', 'Invalid/Zone'].map(zone => {
+  const date = '1990-01-04';
+  try {
+    const resolved = subject.resolveLocalToUtc(date, '12:00', zone);
+    const result = witness(date, resolved.utc, zone);
+    assert.equal(result.status, 'witness');
+    return { zone, resolver: 'accepted', result };
+  } catch {
+    const result = witness(date, new Date('1990-01-04T12:00:00Z'), zone);
+    assert.equal(result.status, 'unresolved');
+    return { zone, resolver: 'rejected', result };
+  }
+});
+
+const invalid = [
+  ['1990-01-04', new Date(NaN), 'UTC'], ['2026-02-30', new Date('2026-03-02T12:00:00Z'), 'UTC'],
+  ['1990-01-04', new Date('1990-01-04T12:00:00Z'), undefined],
+  ['1990-01-04', new Date('1990-01-04T12:00:00Z'), ''],
+  ['1990-01-04', '1990-01-04T12:00:00Z', 'UTC'],
+].map(([date, utc, zone]) => {
+  const result = witness(date, utc, zone);
+  assert.equal(result.status, 'unresolved');
+  return { date, utc: utc instanceof Date && !Number.isFinite(utc.getTime()) ? 'Invalid Date' : utc, zone: zone === undefined ? '<undefined>' : zone, result };
+});
+// The private function was safe only behind resolver validation. Exposing it
+// directly would accidentally accept an omitted zone using the machine zone.
+let rawMissingZone;
+try { rawMissingZone = { returned: subject.__reviewWallStringAt(undefined, Date.parse('1990-01-04T12:00:00Z')), machineZone: Intl.DateTimeFormat().resolvedOptions().timeZone }; }
+catch { rawMissingZone = { rejected: true }; }
+assert.equal(invalid[2].result.status, 'unresolved');
+const output = { at: new Date().toISOString(), node: process.version, icu: process.versions.icu, tz: process.versions.tz,
+  method: 'Actual copied resolver/parser/private era-aware wall formatter with explicit proposed wrapper model, no product changes or caller execution claim.',
+  eras, seconds, identifiers, invalid, rawMissingZone,
+  limits: ['Host-supported identifier behavior only; rejected identifiers are unresolved, never empty.', 'Boundary years are calendar-only checks; no astronomical accuracy or UI support claim.', 'The new callable boundary must enforce explicit zone and finite instant; private formatter alone does not.'] };
+fs.writeFileSync(`edge-result-${process.version}.json`, JSON.stringify(output, null, 2) + '\n');
+console.log(JSON.stringify({ node: process.version, eras: eras.length, seconds: seconds.length, identifiers: identifiers.length, invalid: invalid.length, rawMissingZone, passed: true }));

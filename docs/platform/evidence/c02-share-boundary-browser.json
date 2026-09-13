@@ -1,0 +1,188 @@
+{
+  "result": "passed",
+  "capturedAt": "2026-09-07T20:53:38.682Z",
+  "browser": "152.0.7977.83",
+  "engineVersion": "0.1.1-rc.1",
+  "checks": [
+    {
+      "date": "2001-02-29",
+      "time": "08:30",
+      "accepted": false,
+      "width": 1280,
+      "events": [],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "1900-02-29",
+      "time": "08:30",
+      "accepted": false,
+      "width": 1280,
+      "events": [],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2001-04-31",
+      "time": "08:30",
+      "accepted": false,
+      "width": 1280,
+      "events": [],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": "24:00",
+      "accepted": false,
+      "width": 1280,
+      "events": [],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": "08:30",
+      "accepted": true,
+      "width": 1280,
+      "events": [
+        {
+          "mode": "full",
+          "sunSign": "pisces",
+          "contextId": 1
+        }
+      ],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": null,
+      "accepted": true,
+      "width": 1280,
+      "events": [
+        {
+          "mode": "full",
+          "sunSign": "pisces",
+          "contextId": 1
+        }
+      ],
+      "layout": {
+        "viewport": 1280,
+        "pageWidth": 1280
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2001-02-29",
+      "time": "08:30",
+      "accepted": false,
+      "width": 390,
+      "events": [],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "1900-02-29",
+      "time": "08:30",
+      "accepted": false,
+      "width": 390,
+      "events": [],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2001-04-31",
+      "time": "08:30",
+      "accepted": false,
+      "width": 390,
+      "events": [],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": "24:00",
+      "accepted": false,
+      "width": 390,
+      "events": [],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": "08:30",
+      "accepted": true,
+      "width": 390,
+      "events": [
+        {
+          "mode": "full",
+          "sunSign": "pisces",
+          "contextId": 1
+        }
+      ],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    },
+    {
+      "date": "2000-02-29",
+      "time": null,
+      "accepted": true,
+      "width": 390,
+      "events": [
+        {
+          "mode": "full",
+          "sunSign": "pisces",
+          "contextId": 1
+        }
+      ],
+      "layout": {
+        "viewport": 390,
+        "pageWidth": 390
+      },
+      "noSavedProfile": true,
+      "errors": []
+    }
+  ]
+}

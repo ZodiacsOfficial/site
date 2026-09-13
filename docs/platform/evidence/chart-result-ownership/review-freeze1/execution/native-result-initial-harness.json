@@ -1,0 +1,875 @@
+{
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "driverSha256": "a35b204e63f90f447b69c8b8c54d0e11b5dd5f7961f2aa57b658aca0e2f2137f",
+  "qualification": "Actual frozen or original ChartCalculator with actual Preact/BirthFields/PlaceSearch and native DOM. Only import promises, geosearch results, engine load and share artifact effects are controlled at explicit wrapper boundaries; actual rc.6 calculation and existing codecs/context store run. IIFE bundle is not production import-graph evidence.",
+  "results": [
+    {
+      "kind": "baseline",
+      "name": "control-known",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:12:44\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "control-unknown",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:13:46\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "pending-engine-date-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:14:87\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "pending-receipt-place-clear",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:15:116\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "signature-rejection-while-engine-pending",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:16:152\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "late-signature-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:17:104\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "late-share-preparation-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:18:103\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "late-context-match-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:19:106\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "old-share-completion-newer-result",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:20:64\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "old-dialog-intent-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:21:103\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "current-failure-clears-old-result",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:22:64\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "positions-only-control",
+      "passed": true,
+      "evidence": {
+        "readOnly": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result calc__positions-only"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/scorpio.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/leo.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "pending-valid-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "#p=2.eyJiIjpbMjgzLjU3NSwxMC40OTYsMjk0LjE1MiwzMDUuNzE0LDI1MS45MDgsOTQuNzg3LDI4NS45NzgsMjc1Ljk0NiwyODIuMTQsMjI3LjE2NiwzMTYuOTI3LDEzNi45MjddLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzExLjAwNSwyNzguMzEzXX0",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "pending-invalid-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "#p=invalid",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "pending-conflicting-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "stale-controls-retry-focus",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:25:105\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "baseline",
+      "name": "unmount-pending-receipt",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async groups (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:26:112)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "control-known",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:12:44\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "control-unknown",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:13:46\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-engine-date-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:14:87\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-receipt-place-clear",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:15:116\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "signature-rejection-while-engine-pending",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:16:152\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-signature-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:17:104\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-share-preparation-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:18:103\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "late-context-match-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:19:106\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "old-share-completion-newer-result",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:20:64\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "old-dialog-intent-after-edit",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:21:103\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "current-failure-clears-old-result",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:22:64\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "positions-only-control",
+      "passed": true,
+      "evidence": {
+        "readOnly": true
+      },
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "scroll",
+            "id": "",
+            "className": "calc__result calc__positions-only"
+          }
+        ],
+        "errors": [],
+        "active": "",
+        "hash": "",
+        "busy": "false"
+      },
+      "requests": [
+        "http://owned-review.invalid/",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aries.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/taurus.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/gemini.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/cancer.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/leo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/virgo.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/libra.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/scorpio.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/sagittarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/capricorn.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/aquarius.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/128/pisces.webp",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/sagittarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/cancer.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/capricorn.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/scorpio.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aquarius.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/leo.avif",
+        "http://owned-review.invalid/assets/zodiac-icons/48/aries.avif"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-valid-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "#p=2.eyJiIjpbMjgzLjU3NSwxMC40OTYsMjk0LjE1MiwzMDUuNzE0LDI1MS45MDgsOTQuNzg3LDI4NS45NzgsMjc1Ljk0NiwyODIuMTQsMjI3LjE2NiwzMTYuOTI3LDEzNi45MjddLCJoIjoidyIsInYiOiIwLjEuMS1yYy42IiwiYSI6WzExLjAwNSwyNzguMzEzXX0",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-invalid-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "#p=invalid",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "pending-conflicting-positions-after-new-run",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:24:296\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "load",
+            "key": "./PositionsShareSurface"
+          },
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "stale-controls-retry-focus",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:25:105\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    },
+    {
+      "kind": "candidate",
+      "name": "unmount-pending-receipt",
+      "passed": false,
+      "error": "locator.click: Error: strict mode violation: getByRole('option') resolved to 2 elements:\n    1) <option value=\"whole\">Whole sign (default)</option> aka getByLabel('House system')\n    2) <option value=\"placidus\">Placidus</option> aka getByLabel('House system')\n\nCall log:\n\u001b[2m  - waiting for getByRole('option')\u001b[22m\n\n    at fill (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:7:186)\n    at async groups (/private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:26:112)\n    at async file:///private/tmp/zodiacs-platform-chart-ownership-independent-review/native/drive.mjs:28:780",
+      "pageErrors": [],
+      "observation": {
+        "calls": [],
+        "events": [
+          {
+            "type": "engine-import"
+          }
+        ],
+        "errors": [],
+        "active": "place",
+        "hash": "",
+        "busy": "false"
+      },
+      "dom": "Birth date\nBirth timeI don't know it\n\nNo birth time? You'll get a local-noon reference without rising or houses; the Moon may be uncertain.\n\nBirthplace\n\nPick your birthplace from the list.\n\nSearching places…\n\nSearch covers ~34,000 places · GeoNames (CC BY 4.0)\n\nHouse system\nWhole sign (default)\nPlacidus\n\nHow the chart divides into twelve areas of life. Whole sign gives each sign one house; Placidus varies house sizes by exact birth time and place. Planets stay put — only house boundaries move.\n\nDotted terms can be tapped for a plain-English explanation.\n\nGet your free birth chart↗\n\nPrivate by default. Your birth details stay in this browser.",
+      "requests": [
+        "http://owned-review.invalid/"
+      ]
+    }
+  ],
+  "cleanup": {
+    "browserClosed": true,
+    "contextsClosed": true,
+    "noExternalRequestsExecuted": true
+  }
+}

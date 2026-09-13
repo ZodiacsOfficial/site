@@ -1,0 +1,16 @@
+{
+  "frozenFiles": 33,
+  "sourceSnapshots": 167,
+  "rehashedInputRecords": 253,
+  "nativeImageGroups": 8,
+  "observedRequests": 48,
+  "observedAllowedGetRequests": 48,
+  "assets": 17,
+  "sourceChecks": 26,
+  "reconciliationChecks": 23,
+  "runtimeCatalogs": 6,
+  "runtimeKeysEach": 420,
+  "identitySha256": "c055e55985284904cb82e39fa1eca53a035aa337a3a49a752240fcd5c7d21644",
+  "patchSha256": "0371de7d739a8526f342e49c3fdb623fa646d8d405a91db4f7623cba5b835b36",
+  "qualification": "All observed fixture requests are same loopback origin GETs; context route controls are not a claim about all browser process background traffic. No live account/auth or remote source request occurred. No author or shared source edited."
+}

@@ -1,0 +1,7 @@
+commit f803d2543ad81343b22d49326b8b46d0e2ea03a0
+Author:     diasmal917 <diasmal917@gmail.com>
+AuthorDate: Tue Sep 8 18:21:35 2026 +0700
+Commit:     diasmal917 <diasmal917@gmail.com>
+CommitDate: Tue Sep 8 18:21:35 2026 +0700
+
+    Require unknown-time references to belong to the selected local date

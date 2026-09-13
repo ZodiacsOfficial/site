@@ -1,0 +1,257 @@
+[
+  {
+    "path": "base.json",
+    "bytes": 1120,
+    "sha256": "f2be44f89670700b178093f6c5f8a046e3a02cb79e9eb7c0093809edd5e6477f"
+  },
+  {
+    "path": "build-candidate.log",
+    "bytes": 109,
+    "sha256": "959639b42b162d2e14c8af027758f8057b9c01591f5c8dfcb19cd306c5dec809"
+  },
+  {
+    "path": "build.mjs",
+    "bytes": 3181,
+    "sha256": "6134afd33989d22b95301490819deb3888dd41db2ef51f8e1c6ac5b83f03d274"
+  },
+  {
+    "path": "candidate-PostChartDailyBrief.transformed.tsx.log",
+    "bytes": 16362,
+    "sha256": "e319a153c4698409937a508f048d041799028cbcb3b9d62db37c6e5789da0da3"
+  },
+  {
+    "path": "candidate-focus-refined-result.json",
+    "bytes": 7772,
+    "sha256": "848f2aeea435c742c60873affc43dea2b37bb7a37792f1c849df1851ecd87b12"
+  },
+  {
+    "path": "candidate-focus-refined.log",
+    "bytes": 332,
+    "sha256": "1756e328ad320cb0752aaad56f3561f052c8693e921ca180d8c912c4050676b8"
+  },
+  {
+    "path": "candidate-freeze.json",
+    "bytes": 2004,
+    "sha256": "fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc"
+  },
+  {
+    "path": "candidate-identity.json",
+    "bytes": 24647,
+    "sha256": "98d667dcde33798f4ccae68e048a551643a4afb48f6db511899f4c8f1ee5cdf3"
+  },
+  {
+    "path": "candidate-native-result.json",
+    "bytes": 39729,
+    "sha256": "243b345947b8f0f1248ee1c5ede072edfeb4e4dbe15bc8e903d51038eb8d91ed"
+  },
+  {
+    "path": "candidate-native.log",
+    "bytes": 1861,
+    "sha256": "ce46c3f39198c9d22f01de9916321c714d0755fb2bccf301eb3521e6ccd1c181"
+  },
+  {
+    "path": "candidate-refresh-admission-result.json",
+    "bytes": 7080,
+    "sha256": "ed493743e638c1713b0b318cb943acac98f3a735926437e9906991f9e290b649"
+  },
+  {
+    "path": "candidate-refresh-admission.log",
+    "bytes": 425,
+    "sha256": "81ab54d8c258bb846513a1ac3239cdbdc36b1e818a39f7ef8c1a329bec656971"
+  },
+  {
+    "path": "candidate-source/src/components/EmailCaptureEnhancement.astro",
+    "bytes": 10545,
+    "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+  },
+  {
+    "path": "candidate-source/src/islands/PostChartDailyBrief.tsx",
+    "bytes": 14534,
+    "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+  },
+  {
+    "path": "candidate-source/src/lib/profile/post-chart-context.test.ts",
+    "bytes": 1993,
+    "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e"
+  },
+  {
+    "path": "candidate-source/src/lib/profile/post-chart-context.ts",
+    "bytes": 1676,
+    "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+  },
+  {
+    "path": "candidate-source/tests/post-chart-context-clear-drive.mjs",
+    "bytes": 23894,
+    "sha256": "3e98393b5ce53e0f15d9ccc6a49fd6da199186da7076e35f9a22938daec9ccfe"
+  },
+  {
+    "path": "candidate-source/tests/post-chart-daily-drive.mjs",
+    "bytes": 44367,
+    "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654"
+  },
+  {
+    "path": "candidate.js",
+    "bytes": 447184,
+    "sha256": "f9e89949596bca1fd7e4348f01ea412b155aade3a02740c8e35d400fd780aa7a"
+  },
+  {
+    "path": "entry.tsx",
+    "bytes": 2253,
+    "sha256": "90ec5a7c48f88e7e781b280791e1487de3096d69c856485b8b241062ad3b6458"
+  },
+  {
+    "path": "focus-refined-drive.mjs",
+    "bytes": 7538,
+    "sha256": "634b556442c00c558fff1ff2664b112b49ae3fe251f4b2cb04c5603991a310fe"
+  },
+  {
+    "path": "implementation.patch.log",
+    "bytes": 43339,
+    "sha256": "7202443237f2bebf826a9a0ef24da3fd8062b4cd2aff2b4edfed02f3a51fc5d8"
+  },
+  {
+    "path": "native-drive.mjs",
+    "bytes": 13517,
+    "sha256": "150c3ce9d366c0da9c2a3ed730d59e4e01a4d7d76f54441f81f308721dbd40e3"
+  },
+  {
+    "path": "refresh-admission-drive.mjs",
+    "bytes": 7445,
+    "sha256": "94d00d01c39b7079fdb71b1e50b9642bf2268942b17fad6fdc0488bce3493c65"
+  },
+  {
+    "path": "runtime.json",
+    "bytes": 536,
+    "sha256": "56ea478d53dd8130e36a6b89104b41559152402d7ebe1baaa349ecb8a1ecadd4"
+  },
+  {
+    "path": "seal-review.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "seal-review.py",
+    "bytes": 10183,
+    "sha256": "20cc56af880b80080fc0b1ea910548d2b9803cf9c9b15117f10c1983c7a3a844"
+  },
+  {
+    "path": "source-proof.json",
+    "bytes": 5239,
+    "sha256": "1898fc278f7c815f5338a45a6d4c31b3eb9e9673066fc6044372426a0bccae40"
+  },
+  {
+    "path": "source-proof.log",
+    "bytes": 74,
+    "sha256": "dccfe7cf631dc49be1a5cea61f2dd5ac4a71786ff76c63f85f9a9d6f96d1ba39"
+  },
+  {
+    "path": "source-proof.mjs",
+    "bytes": 2791,
+    "sha256": "c20325f8c13089fccd67f2a7f58cd466dccd115c775d97dada3dbbab128760cf"
+  },
+  {
+    "path": "source/src/islands/PostChartDailyBrief.tsx",
+    "bytes": 13369,
+    "sha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1"
+  },
+  {
+    "path": "source/src/lib/account-v2/feature-flags.ts",
+    "bytes": 773,
+    "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+  },
+  {
+    "path": "source/src/lib/account-v2/profile-access-reader.ts",
+    "bytes": 1335,
+    "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+  },
+  {
+    "path": "source/src/lib/email/post-chart-state.ts",
+    "bytes": 3758,
+    "sha256": "cc49feb8b3633d082abcf7db7d0b198de8e45d631a924cb7116a427ae355aaec"
+  },
+  {
+    "path": "source/src/lib/engine/types.ts",
+    "bytes": 2164,
+    "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+  },
+  {
+    "path": "source/src/lib/hooks/useProfileAccessGeneration.ts",
+    "bytes": 851,
+    "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+  },
+  {
+    "path": "source/src/lib/i18n/core.ts",
+    "bytes": 4611,
+    "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/client.ts",
+    "bytes": 465,
+    "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/index.ts",
+    "bytes": 474,
+    "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+  },
+  {
+    "path": "source/src/lib/i18n/ru-runtime/server.ts",
+    "bytes": 6883,
+    "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+  },
+  {
+    "path": "source/src/lib/i18n/ui/ru.ts",
+    "bytes": 38127,
+    "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+  },
+  {
+    "path": "source/src/lib/profile/daily-email-client.ts",
+    "bytes": 10225,
+    "sha256": "19c31b36c3fd0996259cfbf3567a5a8a57f1abb31bb6062948933468c44dd20a"
+  },
+  {
+    "path": "source/src/lib/profile/deletions.ts",
+    "bytes": 2155,
+    "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+  },
+  {
+    "path": "source/src/lib/profile/merge.ts",
+    "bytes": 4528,
+    "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+  },
+  {
+    "path": "source/src/lib/profile/polar-repair.ts",
+    "bytes": 2394,
+    "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+  },
+  {
+    "path": "source/src/lib/profile/post-chart-context.ts",
+    "bytes": 1468,
+    "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+  },
+  {
+    "path": "source/src/lib/profile/read-store.ts",
+    "bytes": 1285,
+    "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+  },
+  {
+    "path": "source/src/lib/profile/schema.ts",
+    "bytes": 1527,
+    "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+  },
+  {
+    "path": "source/src/lib/profile/store.ts",
+    "bytes": 7948,
+    "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+  },
+  {
+    "path": "source/src/lib/profile/sync.ts",
+    "bytes": 7820,
+    "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+  },
+  {
+    "path": "source/src/lib/signs.ts",
+    "bytes": 16338,
+    "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+  }
+]

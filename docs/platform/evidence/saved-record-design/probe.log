@@ -1,0 +1,89 @@
+{
+  "generatedAt": "2026-09-08T04:37:13.284Z",
+  "node": "v22.23.2",
+  "rootSource": "6ab85278bea708337e20947966a54a5072ad0627",
+  "actualModuleSHA256": "508c60f7a6ad482eb5ec4d013318a7e787faab4fec06f3bf56b585500d57bdc7",
+  "controls": [
+    {
+      "name": "control/sequential-old-writers-preserve-distinct-records",
+      "status": "passed",
+      "finalIds": [
+        "20000000-0000-4000-8000-000000000002",
+        "10000000-0000-4000-8000-000000000001"
+      ]
+    },
+    {
+      "name": "counterexample/interleaved-actual-aggregate-writers-lose-acknowledged-save",
+      "status": "reproduced",
+      "schedule": "A reads snapshot, B reads+writes, A writes its earlier snapshot; injected Storage.getItem hook models this allowed two-tab schedule.",
+      "bothReturnedSaved": true,
+      "lostId": "20000000-0000-4000-8000-000000000002",
+      "finalIds": [
+        "10000000-0000-4000-8000-000000000001"
+      ]
+    },
+    {
+      "name": "counterexample/new-global-key-alone-escapes-existing-handoff-inventory",
+      "status": "reproduced",
+      "inventoryRecognizesSensitiveRecord": false,
+      "boundary": {
+        "status": "ready",
+        "authenticatedAccountId": "20000000-0000-4000-8000-000000000002",
+        "localOwnerAccountId": null
+      },
+      "key": "zodiacs.saved-natal.candidate-v1"
+    },
+    {
+      "name": "counterexample/new-global-key-survives-actual-account-switch-and-account-delete",
+      "status": "reproduced",
+      "switchReturned": {
+        "ok": true,
+        "restoredPreviousArchive": false
+      },
+      "ownerAfterSwitch": "20000000-0000-4000-8000-000000000002",
+      "archiveContainsCandidateKey": false,
+      "deletionReturned": {
+        "ok": true,
+        "restoredPreviousArchive": false
+      },
+      "sensitiveNewKeyRemains": true
+    },
+    {
+      "name": "control/full-device-clear-includes-zodiacs-localStorage-prefix",
+      "status": "passed",
+      "candidateKeyRemoved": true,
+      "unrelatedKeyRetained": true
+    },
+    {
+      "name": "control/storage-quota-failure-does-not-claim-saved",
+      "status": "passed",
+      "result": "error",
+      "profileWritten": false
+    },
+    {
+      "name": "counterexample/per-record-localStorage-naive-CAS-still-loses-update",
+      "status": "reproduced",
+      "modelOnly": true,
+      "schedule": "Both read revision1; B writes revision2; A writes revision2 based on stale snapshot.",
+      "lostEdit": "B edit"
+    },
+    {
+      "name": "counterexample/per-record-cap-and-delete-recreate-need-serialization",
+      "status": "reproduced",
+      "modelOnly": true,
+      "capacity": 2,
+      "bothObservedCount": 1,
+      "actualCountAfterConcurrentCreates": 3,
+      "deletedRecordResurrected": true
+    },
+    {
+      "name": "control/epoch-detects-account-A-B-A-obsolete-work",
+      "status": "passed",
+      "capturedEpoch": 1,
+      "currentEpoch": 3,
+      "lateActionAllowed": false
+    }
+  ],
+  "networkCalls": 0,
+  "scope": "Synthetic in-memory exact source-function executions plus explicitly labeled candidate storage models. No real localStorage, IndexedDB, account or UI mutation."
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "name": "control-inert",
+    "status": 0,
+    "expected": "pass",
+    "source": null
+  },
+  {
+    "name": "plain-vendor",
+    "status": 1,
+    "expected": "reject",
+    "source": "import \"astronomy-engine\";"
+  },
+  {
+    "name": "escaped-static-vendor",
+    "status": 0,
+    "expected": "reject",
+    "source": "import \"astronomy-\\u0065ngine\";"
+  },
+  {
+    "name": "escaped-reexport-vendor",
+    "status": 0,
+    "expected": "reject",
+    "source": "export * from \"\\u0061stronomy-engine\";"
+  },
+  {
+    "name": "escaped-dynamic-vendor",
+    "status": 0,
+    "expected": "reject",
+    "source": "import(\"astronomy-\\x65ngine\");"
+  },
+  {
+    "name": "escaped-require-vendor",
+    "status": 0,
+    "expected": "reject",
+    "source": "require(\"astronomy-\\u0065ngine\");"
+  }
+]

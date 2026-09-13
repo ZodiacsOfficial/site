@@ -1,0 +1,56 @@
+{
+  "status": "implemented-focused-tests-passed",
+  "runtime": "v22.23.2",
+  "engineVersion": "0.1.1-rc.3",
+  "command": "node --test tests/calculate.check.mjs tests/receipt.check.mjs",
+  "tests": {
+    "passed": 36,
+    "failed": 0,
+    "existingCalculation": 21,
+    "receiptAndFile": 15
+  },
+  "syntaxChecks": [
+    "src/app.mjs",
+    "src/calculate.mjs"
+  ],
+  "ownedFiles": [
+    {
+      "file": "examples/platform/src/calculate.mjs",
+      "sha256": "94de9ea64c657458a89d3370e5bccb9d0e0b46a64679db74c7db6af6aa71bcbc"
+    },
+    {
+      "file": "examples/platform/src/app.mjs",
+      "sha256": "20974f4a7e22af4b446c0f26685f4cb211a560cb2b9af1505db3a995168155ee"
+    },
+    {
+      "file": "examples/platform/src/natal.html",
+      "sha256": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7"
+    },
+    {
+      "file": "examples/platform/src/styles.css",
+      "sha256": "307ae0993c62cea0a4d8b8cb70b4f676b7077fa1eb5fc6de3b508e875deef5bb"
+    },
+    {
+      "file": "examples/platform/tests/calculate.check.mjs",
+      "sha256": "5386701d6b6bad9118c4374682cca1abb8b271d0d73a8d74ce99abe82f644160"
+    },
+    {
+      "file": "examples/platform/tests/receipt.check.mjs",
+      "sha256": "ca5c00d6fa5bf7147968225fbdf7eb907497f5de43e19ab4cc98460b058ca89e"
+    }
+  ],
+  "notRunByThisAgent": [
+    "build",
+    "pack",
+    "git operations",
+    "browser integration checks",
+    "publication"
+  ],
+  "remainingIntegration": "Root integrator verifies real browser imports/exports, asynchronous races, downloads, accessibility, privacy, immutable archive and site metadata.",
+  "notes": [
+    "Imported results are untrusted stored claims with no automatic calculation or birth form mutation",
+    "Full precision and optional extensions survive re-export; extensions are not rendered",
+    "No artifact or engine migration is inferred from imported provenance",
+    "File selection changes/cancel and new operations invalidate pending reads"
+  ]
+}

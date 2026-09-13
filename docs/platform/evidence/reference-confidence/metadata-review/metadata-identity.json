@@ -1,0 +1,16 @@
+{
+  "baseCommit": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "files": [
+    {
+      "path": ".github/phase1-scope-allowance.json",
+      "beforeSha256": "2f26d0a3b85e651e1b248733adae5a818c213885c227af08b98a699acc440797",
+      "afterSha256": "1056a5dfcc7b9d23d9e625b875cd9917ba806dc7a6d7ffff748073f41497fc95"
+    },
+    {
+      "path": ".github/workflows/site-check.yml",
+      "beforeSha256": "5574577652bc6002884647804e6b99fa45c05840accbb3ce442620f5d32732a0",
+      "afterSha256": "1c775d82e2365a2fdebbc1ead63fa68e565265a8e33c186ae2487b2e199e271a"
+    }
+  ],
+  "patchSha256": "408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4"
+}

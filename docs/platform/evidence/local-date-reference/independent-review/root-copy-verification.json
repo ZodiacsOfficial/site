@@ -1,0 +1,207 @@
+{
+  "sourceManifestSha256": "8841255c2f15e2fb71dfa4e9cd7083d99116b930bb804a9667d5b7f9a76dc3cc",
+  "records": 50,
+  "verifiedArchiveMembers": 276,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "PREPARATION-RUNTIME-CORRIGENDUM.md",
+      "path": "PREPARATION-RUNTIME-CORRIGENDUM.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "caller-raw-manifest.json",
+      "path": "caller-raw-manifest.json"
+    },
+    {
+      "sourcePath": "caller-raw.tar.gz",
+      "path": "caller-raw.tar.gz"
+    },
+    {
+      "sourcePath": "freeze.json",
+      "path": "freeze.json"
+    },
+    {
+      "sourcePath": "helper/COMMANDS.md",
+      "path": "helper/COMMANDS.md"
+    },
+    {
+      "sourcePath": "helper/REVIEW.md",
+      "path": "helper/REVIEW.md"
+    },
+    {
+      "sourcePath": "helper/base-dependency-identity.json",
+      "path": "helper/base-dependency-identity.json"
+    },
+    {
+      "sourcePath": "helper/build-identity.json",
+      "path": "helper/build-identity.json"
+    },
+    {
+      "sourcePath": "helper/build.log",
+      "path": "helper/build.log"
+    },
+    {
+      "sourcePath": "helper/build.mjs",
+      "path": "helper/build.mjs.log"
+    },
+    {
+      "sourcePath": "helper/cases.mjs",
+      "path": "helper/cases.mjs.log"
+    },
+    {
+      "sourcePath": "helper/final-identity.json",
+      "path": "helper/final-identity.json"
+    },
+    {
+      "sourcePath": "helper/implementation.patch",
+      "path": "helper/implementation.patch"
+    },
+    {
+      "sourcePath": "helper/interval.js",
+      "path": "helper/interval.js.log"
+    },
+    {
+      "sourcePath": "helper/interval.mjs",
+      "path": "helper/interval.mjs.log"
+    },
+    {
+      "sourcePath": "helper/localToUtc.base.ts",
+      "path": "helper/localToUtc.base.ts.log"
+    },
+    {
+      "sourcePath": "helper/manifest.json",
+      "path": "helper/manifest.json"
+    },
+    {
+      "sourcePath": "helper/native-result.json",
+      "path": "helper/native-result.json"
+    },
+    {
+      "sourcePath": "helper/native-review.mjs",
+      "path": "helper/native-review.mjs.log"
+    },
+    {
+      "sourcePath": "helper/native.log",
+      "path": "helper/native.log"
+    },
+    {
+      "sourcePath": "helper/node-review.mjs",
+      "path": "helper/node-review.mjs.log"
+    },
+    {
+      "sourcePath": "helper/node22-result.json",
+      "path": "helper/node22-result.json"
+    },
+    {
+      "sourcePath": "helper/node22.log",
+      "path": "helper/node22.log"
+    },
+    {
+      "sourcePath": "helper/node24-result.json",
+      "path": "helper/node24-result.json"
+    },
+    {
+      "sourcePath": "helper/node24.log",
+      "path": "helper/node24.log"
+    },
+    {
+      "sourcePath": "helper/source/src/islands/ChartCalculator.ownership.test.ts",
+      "path": "helper/source/src/islands/ChartCalculator.ownership.test.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/islands/ChartCalculator.tsx",
+      "path": "helper/source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "helper/source/src/islands/MoonPhaseTool.tsx",
+      "path": "helper/source/src/islands/MoonPhaseTool.tsx.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/en.ts",
+      "path": "helper/source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/es.ts",
+      "path": "helper/source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/fr.ts",
+      "path": "helper/source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/it.ts",
+      "path": "helper/source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/pt.ts",
+      "path": "helper/source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/i18n/ui/ru.ts",
+      "path": "helper/source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/time/civil-date.ts",
+      "path": "helper/source/src/lib/time/civil-date.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/time/local-date-intervals.ts",
+      "path": "helper/source/src/lib/time/local-date-intervals.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/time/localDateContainsUtc.test.ts",
+      "path": "helper/source/src/lib/time/localDateContainsUtc.test.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/time/localToUtc.ts",
+      "path": "helper/source/src/lib/time/localToUtc.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/src/lib/time/technical-locales.ts",
+      "path": "helper/source/src/lib/time/technical-locales.ts.log"
+    },
+    {
+      "sourcePath": "helper/source/tests/local-date-reference-drive.mjs",
+      "path": "helper/source/tests/local-date-reference-drive.mjs.log"
+    },
+    {
+      "sourcePath": "helper/source-freeze.json",
+      "path": "helper/source-freeze.json"
+    },
+    {
+      "sourcePath": "helper/subject.js",
+      "path": "helper/subject.js.log"
+    },
+    {
+      "sourcePath": "helper/subject.mjs",
+      "path": "helper/subject.mjs.log"
+    },
+    {
+      "sourcePath": "native-chart-recovery-corrected.log",
+      "path": "native-chart-recovery-corrected.log"
+    },
+    {
+      "sourcePath": "native-initial.log",
+      "path": "native-initial.log"
+    },
+    {
+      "sourcePath": "seal.py.log",
+      "path": "seal.py.log"
+    },
+    {
+      "sourcePath": "source-review.json",
+      "path": "source-review.json"
+    },
+    {
+      "sourcePath": "summary.json",
+      "path": "summary.json"
+    }
+  ]
+}

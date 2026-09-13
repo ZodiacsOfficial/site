@@ -1,0 +1,9 @@
+
+ RUN  v2.1.9 /private/tmp/zodiacs-platform-sdk
+
+ ✓ packages/engine/src/geo.test.ts (40 tests) 51ms
+
+ Test Files  1 passed (1)
+      Tests  40 passed (40)
+   Start at  18:06:06
+   Duration  1.11s (transform 99ms, setup 0ms, collect 98ms, tests 51ms, environment 0ms, prepare 269ms)

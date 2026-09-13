@@ -1,0 +1,10 @@
+{"name":"ordinary-en-1280","status":"passed"}
+{"name":"ordinary-en-390","status":"passed"}
+{"name":"ordinary-ru-1280","status":"passed"}
+{"name":"ordinary-ru-390","status":"passed"}
+{"name":"failed-run-clears-and-recovers","status":"passed"}
+{"name":"edit-during-calculator-receipt-loader","status":"passed"}
+{"name":"edit-during-full-loader","status":"passed"}
+{"name":"new-run-during-receipt-loader","status":"passed"}
+{"name":"positions-only","status":"passed"}
+{"checks":9,"passed":9,"outcome":"passed"}

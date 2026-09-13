@@ -1,0 +1,5 @@
+
+> zodiacs-org@1.0.0 editorial:daily:build
+> vite-node --script scripts/build-daily-publication.ts
+
+daily-publication: wrote 12 signs for 2026-09-08 (58 traceable facts, deterministic-template)

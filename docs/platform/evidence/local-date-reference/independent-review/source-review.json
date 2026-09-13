@@ -1,0 +1,160 @@
+{
+  "freezeSourceSha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2",
+  "all12FrozenFilesUnchanged": true,
+  "numericalBlocks": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "b1b113377a3a4b3c76a17d8689ee6d24386a66219feb3f7b3d825ae3dfa747f4",
+      "unchanged": true,
+      "scope": "calculationInput through portable/legacy natal and existing unknown endpoint policy, ending before result owner capture"
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "bf59e35c5d5a08938cd188fb214c37ad8d73b36ed05ee15d7f9a3c43befa0e19",
+      "unchanged": true,
+      "scope": "Moon/Sun body lookup, angle, endpoint candidate and caption block"
+    }
+  ],
+  "oldTimeFunctions": [
+    {
+      "name": "offsetFormatter",
+      "sha256": "7f6527a54d8e3297fa4645210cc3a3b068a6f3b157c3f4bad57e7e71b1db124d",
+      "unchanged": true
+    },
+    {
+      "name": "wallFormatter",
+      "sha256": "7b0ca0223063d4ea9ac9176a4b4b20b60ede7afb1b07abe3dd77709396f23998",
+      "unchanged": true
+    },
+    {
+      "name": "offsetAt",
+      "sha256": "e7614aeabb944793826dd65c8f44e23895e8025df55c2a9a880dcf95e962ffa9",
+      "unchanged": true
+    },
+    {
+      "name": "wallStringAt",
+      "sha256": "56e2b8296ffa9701f533eee2eceeb438b4b2505c48831cd1beb6e565ec2c93a6",
+      "unchanged": true
+    },
+    {
+      "name": "resolveLocalToUtc",
+      "sha256": "758a7414e3f9f2582ea6389dcec8c4b74d3695a206822c88ad0b7a85486e3e13",
+      "unchanged": true
+    }
+  ],
+  "moduleGraph": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "unchangedModuleSpecifiers": 77,
+      "specifiers": [
+        "preact/hooks",
+        "./BirthFields",
+        "./AstroTerm",
+        "./SignChip",
+        "../components/PlanetGlyph",
+        "../components/AspectGlyph",
+        "../lib/wheel/Wheel",
+        "./explorer/LayerChips",
+        "../lib/moon-certainty",
+        "../lib/module-load",
+        "../lib/receipt-download",
+        "./explorer/ReadingPath",
+        "./explorer/tour/progress",
+        "../lib/scene/build",
+        "../lib/scene/emphasis",
+        "../lib/scene/types",
+        "../lib/signs",
+        "../lib/interpretations",
+        "../lib/time/localToUtc",
+        "../lib/chart-date-certainty",
+        "../lib/engine/houses",
+        "../lib/engine/lite",
+        "../lib/registry-aura-entry.mjs",
+        "../lib/share",
+        "../lib/share",
+        "../lib/chart-handoff",
+        "../lib/share-positions",
+        "../lib/scene/chapters",
+        "../lib/engine/types",
+        "../lib/engine/types",
+        "../lib/geo/search",
+        "../lib/i18n",
+        "../lib/i18n/astrology",
+        "../lib/i18n/ru-runtime",
+        "../lib/hooks/useEngine",
+        "./CalculationReload",
+        "../lib/hooks/useProfileAccessGeneration",
+        "../lib/account-v2/profile-access-reader",
+        "../lib/learning-input-identity",
+        "../lib/engine/types",
+        "../lib/analytics",
+        "../lib/profile/post-chart-context",
+        "../lib/chart-signature",
+        "./PositionsShareSurface",
+        "./ChartShareDialog",
+        "./ChartActionDock",
+        "./ChartActionDock",
+        "../lib/engine/calculator-receipt",
+        "./explorer/tour",
+        "./explorer/lens/ChartLens",
+        "./chart3d/EclipticView",
+        "./explorer/lens/copy",
+        "../lib/wheel/Wheel",
+        "preact",
+        "./CalendarSubscribe",
+        "./CommunicationRead",
+        "./ApproachRead",
+        "../lib/a2hs",
+        "./PushOptIn",
+        "./PwaInstallPrompt",
+        "./PushOptIn",
+        "./explorer/tour",
+        "./explorer/lens/ChartLens",
+        "./chart3d/EclipticView",
+        "../lib/profile/profile-chart-handoff",
+        "./PositionsShareSurface",
+        "./PositionsShareSurface",
+        "../lib/chart-signature",
+        "./PositionsShareSurface",
+        "./CalendarSubscribe",
+        "./CommunicationRead",
+        "./ApproachRead",
+        "./PwaInstallPrompt",
+        "./ChartShareDialog",
+        "../lib/profile/store",
+        "../lib/profile/store",
+        "../lib/a2hs"
+      ]
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "unchangedModuleSpecifiers": 14,
+      "specifiers": [
+        "preact/hooks",
+        "./EvidenceDisclosure",
+        "./PlaceSearch",
+        "./SignChip",
+        "../lib/engine/lite",
+        "../lib/engine/lite",
+        "../lib/signs",
+        "../lib/time/localToUtc",
+        "../lib/geo/search",
+        "../lib/i18n",
+        "../lib/i18n/dates",
+        "../lib/i18n/astrology",
+        "../lib/hooks/useEngine",
+        "./CalculationReload"
+      ]
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "unchangedModuleSpecifiers": 2,
+      "specifiers": [
+        "./technical-locales",
+        "./civil-date"
+      ]
+    }
+  ],
+  "admissionOrder": "Only unknown inputs; actual resolved reference -> membership -> numerical/receipt/endpoint work. Engine/module loading still precedes guard as approved. Explicit known-time and no-city UTC branches untouched.",
+  "scope": "Twelve frozen files only: two callers, additive helper, six existing catalog keys and scoped tests/driver. No SDK, dependencies, storage, public schema, date interval, global style or profile authority changes. Public helper addition is within existing site module only."
+}

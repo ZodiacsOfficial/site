@@ -1,0 +1,174 @@
+{
+  "scope": "Moon ownership author evidence; source Freeze 1, independent review pending. Code records copied inertly; earlier partial fixture bundles omitted while their logs/results remain. Final original/candidate fixture bundles both retained.",
+  "records": [
+    {
+      "sourcePath": "AUTHOR.md",
+      "path": "AUTHOR.md",
+      "bytes": 4777,
+      "sha256": "bcbd9ccef534d31851617e7d933f0ddf8a6f8a233ed81e472e2bf211b444f154"
+    },
+    {
+      "sourcePath": "MoonPhaseTool-before.tsx",
+      "path": "MoonPhaseTool-before.tsx.log",
+      "bytes": 10765,
+      "sha256": "37ecef482f628f7ffa189c82584a249367e7d3876e713a776b3e23941925c6c8"
+    },
+    {
+      "sourcePath": "base.json",
+      "path": "base.json",
+      "bytes": 338,
+      "sha256": "8f877cc4832a9edabc6bcae46a185607abde62d630c41cedd7f00317cfd3ee0c"
+    },
+    {
+      "sourcePath": "calculation-preservation.json",
+      "path": "calculation-preservation.json",
+      "bytes": 632,
+      "sha256": "0b7f0077e41703b03889e356d43d6396094d735f007257b021e8c1d3754f9a02"
+    },
+    {
+      "sourcePath": "commands.json",
+      "path": "commands.json",
+      "bytes": 4521,
+      "sha256": "dcd785c8c3566a0a1624ab638f4e8d347dca45ea360dee5d9ede5032db5ac721"
+    },
+    {
+      "sourcePath": "frozen-source/src/islands/MoonPhaseTool.tsx",
+      "path": "frozen-source/src/islands/MoonPhaseTool.tsx.log",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "sourcePath": "frozen-source/tests/moon-result-ownership-drive.mjs",
+      "path": "frozen-source/tests/moon-result-ownership-drive.mjs.log",
+      "bytes": 14964,
+      "sha256": "2815fb499e7e8278fff2adf30344abe6b1f407f38247347c4b77865f020f2246"
+    },
+    {
+      "sourcePath": "native-after/result.json",
+      "path": "native-after/result.json",
+      "bytes": 21054,
+      "sha256": "2d509c8f0ef990f8c05430b46dd0dc1bd6a927c1e78d72cb5a3689b2f9b34bd8"
+    },
+    {
+      "sourcePath": "native-after.log",
+      "path": "native-after.log",
+      "bytes": 16693,
+      "sha256": "5b87a289df6883bc3f0d652d3febde4baf028a575cdaab45970f6a6dcd858e93"
+    },
+    {
+      "sourcePath": "native-baseline-final/fixture.css",
+      "path": "native-baseline-final/fixture.css.log",
+      "bytes": 2483,
+      "sha256": "7a834ac86e5041e05d9c18a835a937e95f69effe2bcdbb5744d9a1186d3b74ab"
+    },
+    {
+      "sourcePath": "native-baseline-final/fixture.js",
+      "path": "native-baseline-final/fixture.js.log",
+      "bytes": 408249,
+      "sha256": "fc7ff81f39ad734ad3568e574beb60c71e897a2f5af1e5412868b96fcf28372f"
+    },
+    {
+      "sourcePath": "native-baseline-final/result.json",
+      "path": "native-baseline-final/result.json",
+      "bytes": 33727,
+      "sha256": "65786024b637faea472e744b7e69d4b96fbbc1cc054d4dd7f4a7767163a52622"
+    },
+    {
+      "sourcePath": "native-baseline-final.log",
+      "path": "native-baseline-final.log",
+      "bytes": 30398,
+      "sha256": "cc6f2d4bb8d649089fb3abda579174ab1ada548e0b52da3c60d58ee7bd6374a5"
+    },
+    {
+      "sourcePath": "native-before-catalog/result.json",
+      "path": "native-before-catalog/result.json",
+      "bytes": 34675,
+      "sha256": "dd02e9ea201b402a398dd984513e3e467e2f221f9cec486cb7629f1d9a8e078f"
+    },
+    {
+      "sourcePath": "native-before-catalog.log",
+      "path": "native-before-catalog.log",
+      "bytes": 31336,
+      "sha256": "7c7b776d4fd3d2b6dd43c0c14a87beb1833e2745bd83d75462bf73348bec8637"
+    },
+    {
+      "sourcePath": "native-before-executed/result.json",
+      "path": "native-before-executed/result.json",
+      "bytes": 8260,
+      "sha256": "1a4b874fefbc24acf551e419a6b30515ba6eec00bff23fa2b63bb01c35bb88bf"
+    },
+    {
+      "sourcePath": "native-before-executed.log",
+      "path": "native-before-executed.log",
+      "bytes": 6794,
+      "sha256": "8cff1326d5a41190525a31e0e57dc8a048dfe21b18bd77f61489d09dc417189e"
+    },
+    {
+      "sourcePath": "native-before-rerun.log",
+      "path": "native-before-rerun.log",
+      "bytes": 772,
+      "sha256": "c046630141e29736c073ff51a135acbb3a415b1d795a736609715597e6413eae"
+    },
+    {
+      "sourcePath": "native-before.log",
+      "path": "native-before.log",
+      "bytes": 1661,
+      "sha256": "b14a610bdca36e3f8db47b4151c1c0beb49e0cefb6ff1b0978936aebbda85106"
+    },
+    {
+      "sourcePath": "native-final/fixture.css",
+      "path": "native-final/fixture.css.log",
+      "bytes": 2483,
+      "sha256": "7a834ac86e5041e05d9c18a835a937e95f69effe2bcdbb5744d9a1186d3b74ab"
+    },
+    {
+      "sourcePath": "native-final/fixture.js",
+      "path": "native-final/fixture.js.log",
+      "bytes": 409115,
+      "sha256": "ec9f67d24aa16f0d443b9639c9812ed2860eb20f37d3dde8c2ba1273ffc97123"
+    },
+    {
+      "sourcePath": "native-final/result.json",
+      "path": "native-final/result.json",
+      "bytes": 18718,
+      "sha256": "90d59d618545f9178dec54f62d5a7dbf56a113a69d3fecf39a9762ab7a9c6b46"
+    },
+    {
+      "sourcePath": "native-final.log",
+      "path": "native-final.log",
+      "bytes": 14360,
+      "sha256": "2db7c73dd34ae662c04622fb277e28d33954deefd3774eda70bedfb0e7e24ab3"
+    },
+    {
+      "sourcePath": "patch-check.log",
+      "path": "patch-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "scope.json",
+      "path": "scope.json",
+      "bytes": 300,
+      "sha256": "fd3e9ec9ad15ca2f607106ce623002d1b549a8bdfdccd89e2dc1fdf7fb227e11"
+    },
+    {
+      "sourcePath": "source-freeze1-identity.json",
+      "path": "source-freeze1-identity.json",
+      "bytes": 760,
+      "sha256": "bdb2934cab9ee22014aad1ad5222798395fa307d321cebfe2fe97b66deaf12c6"
+    },
+    {
+      "sourcePath": "source-freeze1.patch",
+      "path": "source-freeze1.patch",
+      "bytes": 18825,
+      "sha256": "ecdc149e2115ee234828f3848b40cab4f6ba2b15074763b28bf936f0abac6858"
+    },
+    {
+      "sourcePath": "typecheck.log",
+      "path": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "totalBytes": 1108276
+}

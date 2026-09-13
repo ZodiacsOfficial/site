@@ -1,0 +1,202 @@
+---
+import Base from '../../../layouts/Base.astro';
+import candidate from '../../../data/platform-engine-candidate.json';
+
+const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
+const receiptSpec = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`;
+const evidenceUrl = (path: string) => `${candidate.evidenceRepository}/blob/${candidate.evidenceCommit}/${path}`;
+const description = 'Current Zodiacs developer support: local engine candidate, public sky data, hosted widgets, planned chart API, runtime checks, calculation limits, privacy, and licenses.';
+const engineRows = [
+  ['Language and runtime', 'ESM JavaScript with TypeScript declarations. The manifest declares Node.js ≥18; there is no CommonJS export. Browser integrations need an ESM-aware bundler or equivalent dependency setup.'],
+  ['Recorded runtime checks', 'Candidate tests passed on Node 20 and 22. Clean package installs, examples, and TypeScript 5.9.3 checks passed on Node 20 and 22. Selected independent numerical comparisons also passed on Node 24. These checks do not certify every browser or Node 18.'],
+  ['Zodiac and positions', 'Tropical ecliptic of date; apparent geocentric positions in degrees. Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, and true North/South Moon nodes. No sidereal mode or topocentric parallax.'],
+  ['Calculations', 'Positions, natal charts, transit snapshots, synastry, Moon phase, and Saturn-return seasons. The same public API supplies calculation metadata; interpretation is separate from astronomical accuracy.'],
+  ['Houses and unknown time', 'Whole-sign and Placidus houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign above 66° absolute latitude or on nonconvergence, with polar-fallback. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
+  ['Resolved instant input', 'A valid Date, finite epoch milliseconds, or validated ISO date/time. Date-times require Z or an explicit numeric offset; date-only YYYY-MM-DD means midnight UTC. Invalid ISO calendar dates, unresolved local date-times, leap seconds, and more than three fractional-second digits are rejected. A Date already normalized by its caller cannot reveal that earlier rollover. Outputs normalize to Date and do not preserve the original offset or local timezone.'],
+  ['Portable natal records', 'Optional @zodiacs/engine/receipt validates a Zodiacs draft envelope from a fresh full public Chart, preserving requested/actual houses and captured time provenance. Validation does not authenticate imported claims or recalculate positions. The site saved-chart/account format is unchanged; the standalone starter uses its separately pinned candidate.'],
+  ['Local-time resolution', 'Optional @zodiacs/engine/geo accepts a local YYYY-MM-DD date, HH:mm time, and explicit IANA timezone. Folds select the earlier instant; gaps shift forward, with flags. Historical offsets depend on the host Intl/ICU data. No place records or timezone database are bundled.'],
+  ['Date coverage and accuracy', 'Accepted date syntax and JavaScript Date range are not a numerical accuracy interval. Tests cover finite modern, historical, early-year, and polar cases; broader range and numerical scope review remain open. The mini-chart widget’s form limits are a separate UI contract.'],
+  ['Computation and privacy', 'The synchronous core computes in the caller’s browser or Node.js process, with no network requests, account, or wallet. The optional GeoNames client fetches separately hosted index/shard assets; the data host can observe those requests. Your integration controls any storage or network transfer around the calculation.'],
+  ['License', 'The engine and its astronomy-engine dependency are MIT licensed. Retain the packaged licenses and NOTICE. Hosting or redistributing GeoNames-derived place data also requires its CC BY 4.0 attribution.'],
+];
+---
+<Base
+  title="Developer Support & Calculation Limits | Zodiacs.org"
+  description={description}
+  path="/developers/support/"
+  jsonLd={[{
+    '@type': 'WebPage',
+    name: 'Zodiacs developer support and calculation limits',
+    url: 'https://zodiacs.org/developers/support/',
+    description,
+  }]}
+>
+  <section class="section container container--narrow support-page">
+    <em class="kicker">Developer support</em>
+    <h1 class="display">Choose the right integration.</h1>
+    <div class="prose">
+      <p>
+        <a href="/developers/">Developer tools</a> have different release states.
+        Public sky files and hosted embeds are available now. The local engine
+        below is a downloadable review candidate. Personalized hosted computation
+        is planned and has no public endpoint.
+      </p>
+    </div>
+
+    <h2 id="engine-candidate">Local engine · {candidate.releaseLabel.toLowerCase()}</h2>
+    <div class="prose">
+      <p>
+        Evaluate <code>{candidate.name}@{candidate.version}</code> from the exact
+        public tarball below. It has been downloaded without credentials and
+        installed in a clean consumer. It is not an npm release; review and
+        publication approval remain open. This archive identifies the local
+        package; hosted data and widgets are separate deployments.
+      </p>
+      <p>
+        <a href={candidate.artifactUrl}>Download engine {candidate.version} (.tgz)</a>.
+        Verify its SHA-256 before installing the local file; follow the{' '}
+        <a href={`${sourceRoot}/README.md`}>candidate README and examples</a>.
+      </p>
+      <p class="support-hash">SHA-256: <code>{candidate.sha256}</code></p>
+      <p><a href="/developers/examples/">Run the starter project</a> for complete local natal, transit, and publisher widget examples.</p>
+      <p>
+        Use the public <code>@zodiacs/engine</code> and optional{' '}
+        <code>@zodiacs/engine/geo</code> and <code>@zodiacs/engine/receipt</code> entry points. The{' '}
+        <code>/internal</code> entry points are site compatibility boundaries.
+        Use the <a href={`${sourceRoot}/README.md`}>current candidate API guide</a>,{' '}
+        <a href={receiptSpec}>draft receipt specification</a>, and{' '}
+        <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>. The{' '}
+        <a href="/sdk/engine/">archived rc.1 API reference</a> describes the earlier candidate.
+      </p>
+    </div>
+
+    <div class="support-table-wrap" tabindex="0" role="region" aria-label="Local engine support matrix">
+      <table>
+        <caption>Local engine {candidate.version}</caption>
+        <thead><tr><th scope="col">Capability</th><th scope="col">Current support</th></tr></thead>
+        <tbody>
+          {engineRows.map(([capability, support]) => (
+            <tr><th scope="row">{capability}</th><td>{support}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>
+        Each longitude-crossing search caps ephemeris evaluations at 10,000. Sampling
+        can miss events between steps; interior tangencies are omitted, and
+        direction at a window endpoint uses one-sided evidence. This is not a
+        guarantee of complete event discovery or a wall-clock time limit.
+      </p>
+      <p>
+        The <a href={evidenceUrl(candidate.evidencePaths.ledger)}>candidate evidence ledger</a>{' '}
+        records commands, runtimes, reference conventions, and limits. Read the{' '}
+        <a href={evidenceUrl(candidate.evidencePaths.node22)}>Node 22 comparison</a>,{' '}
+        <a href={evidenceUrl(candidate.evidencePaths.node24)}>Node 24 comparison</a>, and{' '}
+        <a href={evidenceUrl(candidate.evidencePaths.publicConsumer)}>public-download install receipt</a>.
+        These are finite test results and internal reviews, not human practitioner
+        certification or evidence that astrological interpretation is scientifically validated.
+      </p>
+    </div>
+
+    <h2 id="public-data">Shared sky data · available</h2>
+    <div class="prose">
+      <p>
+        Public JSON and Markdown files work with any HTTP client, without a key
+        or account. They contain shared-sky data, not personalized charts or
+        houses. The daily positions cover the Sun, Moon, and eight planets in
+        the tropical, geocentric system; positions are computed for 12:00 UTC
+        on the edition date rather than updated continuously.
+      </p>
+      <p>
+        Check the payload’s UTC edition and snapshot, and read{' '}
+        <a href="/api/v1/index.json">the live coverage index</a> for available
+        years. Event windows can be clipped at coverage boundaries. Data is{' '}
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener noreferrer">CC BY 4.0</a>{' '}
+        with Zodiacs.org attribution. Start with the{' '}
+        <a href="/developers/#sky-data">validated quick start and cache contract</a>,{' '}
+        <a href="/api/v1/openapi.json">OpenAPI reference</a>, or{' '}
+        <a href="/api/v1/llms.txt">agent guide</a>.
+      </p>
+    </div>
+
+    <h2 id="embeds">Hosted widgets · available</h2>
+    <div class="prose">
+      <p>
+        The <a href="/widgets/">widget builder</a> supplies Moon phase, daily
+        sky, and mini birth-chart iframes. An optional script mounts the same
+        sandboxed documents. No npm package or framework is required; the
+        <code>@zodiacs/widgets</code> package is not a released installation path.
+        Dark/light themes and an adjusted accent work inside the frame; keep
+        its width within the host layout and its “Powered by Zodiacs.org” credit intact.
+      </p>
+      <p>
+        The mini chart computes Sun, Moon, and rising inside its iframe after
+        submission. Its form accepts 1800–2199 and requires a date, time, and
+        selected birthplace. That form range is not a complete numerical
+        accuracy claim. It loads code and place-index assets; it does not send
+        entered birth details to a chart API or include the main site’s analytics.
+        An embed still makes ordinary requests to Zodiacs.org; it is not an
+        offline or network-free integration.
+      </p>
+    </div>
+
+    <h2 id="hosted">Personalized hosted computation · planned</h2>
+    <div class="prose">
+      <p>
+        There is no public hosted natal or personalized-transit endpoint to
+        call yet. Input contracts, privacy and cost limits, and release approval
+        remain open. Use the local engine candidate for evaluation; the public
+        shared-sky files do not accept birth inputs.
+      </p>
+    </div>
+
+    <h2 id="ownership">Optional ownership SDK · separate integration</h2>
+    <div class="prose">
+      <p>
+        <a href="/sdk/">The ownership SDK</a> supports official registry
+        verification, public ownership reads, and identity helpers.
+        Its core is React-free and read-only; React/UI and other adapters
+        require explicit optional imports. The SDK reference documents its
+        supported networks. It does not request private keys,
+        sign messages, or submit transactions. Public balance reads use the
+        configured RPC provider. None of the chart, sky-data, or widget paths
+        requires this SDK or wallet ownership.
+      </p>
+    </div>
+
+    <h2>Report a discrepancy</h2>
+    <div class="prose">
+      <p>
+        <a href="https://github.com/ZodiacsOfficial/sdk/issues">Engine issues</a>{' '}
+        belong in the SDK repository; use{' '}
+        <a href="https://github.com/ZodiacsOfficial/site/issues">site issues</a>{' '}
+        for data files or embeds. Include the version or payload URL, runtime,
+        settings, expected result, and actual result. Prefer a synthetic input
+        that reproduces the problem; public issues should not contain someone’s
+        name or private birth details. There is no published long-term support
+        or response-time guarantee for this candidate.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .support-page h1 { margin: var(--s-1) 0 var(--s-4); }
+  .support-page h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); scroll-margin-top: 96px; }
+  .support-page .prose { max-width: 68ch; }
+  .support-page code { font-family: var(--font-mono); font-size: .9em; overflow-wrap: anywhere; }
+  .support-hash { font-size: var(--text-sm); }
+  .support-table-wrap { margin: var(--s-6) 0; max-width: 100%; overflow-x: auto; }
+  .support-table-wrap:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); line-height: 1.65; text-align: left; }
+  caption { padding-bottom: var(--s-3); text-align: left; color: var(--muted); }
+  th, td { padding: var(--s-4) var(--s-3); border-bottom: 1px solid var(--hair-2); vertical-align: top; }
+  th { color: var(--text-2); font-weight: 500; }
+  tbody th { width: 26%; }
+  td { color: var(--muted); }
+  @media (max-width: 560px) {
+    th, td { padding: var(--s-3) var(--s-2); }
+    tbody th { width: 30%; }
+  }
+</style>

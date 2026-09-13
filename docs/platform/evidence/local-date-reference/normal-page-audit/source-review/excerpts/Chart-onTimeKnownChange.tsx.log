@@ -1,0 +1,5 @@
+onTimeKnownChange={(value) => {
+                invalidateProfileHandoff();
+                setTimeKnown(value);
+                if (!value) setFieldErrors((current) => current.time ? { ...current, time: false } : current);
+              }}

@@ -1,0 +1,20 @@
+{
+  "head": "3845a04bcea822da3c30a18848ef3d8d133b7b66",
+  "base": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "actualPaths": 623,
+  "pathsAndBlobsMatch": true,
+  "nonDocsPaths": [
+    ".github/workflows/site-check.yml",
+    "src/components/EmailCaptureEnhancement.astro",
+    "src/islands/ChartCalculator.locale.test.ts",
+    "src/islands/ChartCalculator.ownership.test.ts",
+    "src/islands/ChartCalculator.tsx",
+    "src/islands/PostChartDailyBrief.tsx",
+    "src/lib/profile/post-chart-context.test.ts",
+    "src/lib/profile/post-chart-context.ts",
+    "tests/chart-ownership-drive.mjs",
+    "tests/post-chart-context-clear-drive.mjs",
+    "tests/post-chart-daily-drive.mjs"
+  ],
+  "sourceFilesPaginatedSha256": "850aa97e3c01376ddc5ae90a3f5ef5b84dec32ce79afabe519df16391afaf575"
+}

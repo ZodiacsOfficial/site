@@ -1,0 +1,15 @@
+{
+  "observedRootHead": "c3001114d4058ecb17e0274774ac465aa9f59dad",
+  "files": [
+    {
+      "path": "preparation/EmailCapture.base.astro",
+      "sha256": "5c55b0649765eb0ffeee07b5d4d2b7ee99c684c5ba89079aa99ce0af6103eae9",
+      "bytes": 13142
+    },
+    {
+      "path": "preparation/EmailCaptureEnhancement.base.astro",
+      "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b",
+      "bytes": 8891
+    }
+  ]
+}

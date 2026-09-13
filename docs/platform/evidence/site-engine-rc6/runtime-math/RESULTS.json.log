@@ -1,0 +1,1242 @@
+{
+  "status": "passed",
+  "input": {
+    "utc": "1890-01-01T04:27:44.000Z",
+    "latitude": -3.1,
+    "longitude": -60.02,
+    "houseSystem": "placidus",
+    "timeKnown": true,
+    "flags": [
+      "dst-gap",
+      "lmt"
+    ]
+  },
+  "runtimes": {
+    "node22": {
+      "node": "v22.23.2",
+      "versions": {
+        "node": "22.23.2",
+        "acorn": "8.16.0",
+        "ada": "2.9.2",
+        "amaro": "1.1.8",
+        "ares": "1.34.6",
+        "brotli": "1.1.0",
+        "cjs_module_lexer": "2.2.0",
+        "cldr": "48.0",
+        "icu": "78.2",
+        "llhttp": "9.4.3",
+        "modules": "127",
+        "napi": "10",
+        "nbytes": "0.1.3",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.69.0",
+        "openssl": "3.5.7",
+        "simdjson": "4.5.0",
+        "simdutf": "6.4.2",
+        "sqlite": "3.51.3",
+        "tz": "2026a",
+        "undici": "6.28.0",
+        "unicode": "17.0",
+        "uv": "1.51.0",
+        "uvwasi": "0.0.23",
+        "v8": "12.4.254.21-node.56",
+        "zlib": "1.3.1-e00f703",
+        "zstd": "1.5.7"
+      },
+      "arch": "arm64",
+      "platform": "darwin",
+      "execPath": "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node"
+    },
+    "node24": {
+      "node": "v24.19.0",
+      "versions": {
+        "node": "24.19.0",
+        "acorn": "8.17.0",
+        "ada": "3.4.4",
+        "amaro": "1.1.10",
+        "ares": "1.34.6",
+        "brotli": "1.2.0",
+        "cldr": "48.0",
+        "icu": "78.3",
+        "llhttp": "9.4.3",
+        "merve": "1.2.2",
+        "modules": "137",
+        "napi": "10",
+        "nbytes": "0.1.4",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.69.0",
+        "nghttp3": "",
+        "ngtcp2": "",
+        "openssl": "3.5.7",
+        "simdjson": "4.6.4",
+        "simdutf": "6.4.0",
+        "sqlite": "3.53.3",
+        "tz": "2026b",
+        "undici": "7.29.0",
+        "unicode": "17.0",
+        "uv": "1.52.1",
+        "uvwasi": "0.0.23",
+        "v8": "13.6.233.17-node.51",
+        "zlib": "1.3.2.1-motley-3246f1b",
+        "zstd": "1.5.7"
+      },
+      "arch": "arm64",
+      "platform": "darwin",
+      "execPath": "/Volumes/MAC_EXT/UserData/Codex/cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
+    },
+    "chrome": {
+      "protocolVersion": "1.3",
+      "product": "Chrome/152.0.7977.83",
+      "revision": "@79460ebecaa5625e57a5fb679a735659e73dc687",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+      "jsVersion": "15.2.124.21"
+    }
+  },
+  "bundleUnchanged": true,
+  "rootProductionCaracasEqualsAuthorChrome": true,
+  "sameRuntimeRc5Rc6HistoricalCases": 16,
+  "freshChromeMatchesAuthorHistoricalCases": 16,
+  "freshNodeMatchesAuthorHistoricalCasesPerVersion": 16,
+  "node22Node24ExactTraceAndCharts": true,
+  "traceCalls": 270141,
+  "firstDifference": {
+    "index": 17,
+    "node": [
+      "cos",
+      [
+        -81.09991224236799
+      ],
+      0.8356414579161423
+    ],
+    "chrome": [
+      "cos",
+      [
+        -81.09991224236799
+      ],
+      0.8356414579161422
+    ]
+  },
+  "sameArgumentsDifferentResults": 7817,
+  "differingMathOperations": [
+    "cos",
+    "atan2",
+    "sin"
+  ],
+  "allMathReplayExact": true,
+  "trigOnlyReplayExact": true,
+  "replayAllArgumentsExact": true,
+  "directIsolatedCalls": [
+    {
+      "name": "cos",
+      "args": [
+        -81.09991224236799
+      ],
+      "expected": 0.8356414579161423,
+      "actual": 0.8356414579161422
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1378.8652543043013
+      ],
+      "expected": -0.9571154032043101,
+      "actual": -0.9571154032043102
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1264.9650311909531
+      ],
+      "expected": -0.45643835662305554,
+      "actual": -0.4564383566230555
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1207.1283374031298
+      ],
+      "expected": 0.7270653893885723,
+      "actual": 0.7270653893885722
+    },
+    {
+      "name": "cos",
+      "args": [
+        2.4413318061959566
+      ],
+      "expected": -0.7646741187611623,
+      "actual": -0.7646741187611624
+    },
+    {
+      "name": "cos",
+      "args": [
+        2.9121371839366
+      ],
+      "expected": -0.973790391326681,
+      "actual": -0.9737903913266811
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1260.2622692983691
+      ],
+      "expected": -0.8853197018600283,
+      "actual": -0.8853197018600284
+    },
+    {
+      "name": "cos",
+      "args": [
+        -17708.39211881054
+      ],
+      "expected": -0.7209185595182315,
+      "actual": -0.7209185595182316
+    },
+    {
+      "name": "cos",
+      "args": [
+        -8544.689278602169
+      ],
+      "expected": 0.9035815532749705,
+      "actual": 0.9035815532749706
+    },
+    {
+      "name": "cos",
+      "args": [
+        -426.1778954347569
+      ],
+      "expected": 0.4724697043486742,
+      "actual": 0.47246970434867414
+    },
+    {
+      "name": "cos",
+      "args": [
+        -642.0942853500544
+      ],
+      "expected": 0.35359565707140206,
+      "actual": 0.3535956570714021
+    },
+    {
+      "name": "cos",
+      "args": [
+        -172.39195942147185
+      ],
+      "expected": -0.9227514369921668,
+      "actual": -0.9227514369921667
+    },
+    {
+      "name": "cos",
+      "args": [
+        -40.28633985579221
+      ],
+      "expected": -0.8502350669369759,
+      "actual": -0.850235066936976
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1207.120824001932
+      ],
+      "expected": 0.7322032815758073,
+      "actual": 0.7322032815758074
+    },
+    {
+      "name": "cos",
+      "args": [
+        -81.09991224236799
+      ],
+      "expected": 0.8356414579161423,
+      "actual": 0.8356414579161422
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1378.8652543043013
+      ],
+      "expected": -0.9571154032043101,
+      "actual": -0.9571154032043102
+    },
+    {
+      "name": "cos",
+      "args": [
+        -5736.124798686599
+      ],
+      "expected": 0.9117027160987885,
+      "actual": 0.9117027160987886
+    },
+    {
+      "name": "cos",
+      "args": [
+        -275.05991005217436
+      ],
+      "expected": 0.1697272166007719,
+      "actual": 0.16972721660077186
+    },
+    {
+      "name": "cos",
+      "args": [
+        -11475.562466687432
+      ],
+      "expected": -0.7803963582415776,
+      "actual": -0.7803963582415777
+    },
+    {
+      "name": "cos",
+      "args": [
+        -1381.1717164171012
+      ],
+      "expected": 0.42751775602609776,
+      "actual": 0.4275177560260977
+    }
+  ],
+  "historicalNumericLeafDifferences": 110,
+  "maximumObservedAbsoluteLeafDelta": {
+    "zone": "Asia/Colombo",
+    "path": "$.bodies.10.speed",
+    "chrome": 0.009394974967108283,
+    "node": 0.00939499334924676,
+    "delta": -1.8382138478045817e-8,
+    "absolute": 1.8382138478045817e-8
+  },
+  "maximumObservedLongitudeDelta": {
+    "zone": "America/Port-au-Prince",
+    "path": "$.bodies.10.lon",
+    "chrome": 93.03329536345802,
+    "node": 93.03329536743905,
+    "delta": -3.981028839916689e-9,
+    "absolute": 3.981028839916689e-9
+  },
+  "maximumObservedSpeedDelta": {
+    "zone": "Asia/Colombo",
+    "path": "$.bodies.10.speed",
+    "chrome": 0.009394974967108283,
+    "node": 0.00939499334924676,
+    "delta": -1.8382138478045817e-8,
+    "absolute": 1.8382138478045817e-8
+  },
+  "historical": [
+    {
+      "zone": "America/Caracas",
+      "instant": "1890-01-01T04:27:44.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.0.orb",
+          "chrome": 0.915803519045653,
+          "node": 0.9158035190457099,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.9.orb",
+          "chrome": 4.444716662514679,
+          "node": 4.444716662514736,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.3.lon",
+          "chrome": 269.17737708162826,
+          "node": 269.1773770816282,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.4.speed",
+          "chrome": 0.5627572174576017,
+          "node": 0.5627572174575448,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 93.03307491829639,
+          "node": 93.03307491949272,
+          "delta": -1.1963265933445655e-9,
+          "absolute": 1.1963265933445655e-9
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": 0.013379856744563767,
+          "node": 0.0133798590219385,
+          "delta": -2.2773747332394123e-9,
+          "absolute": 2.2773747332394123e-9
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 3.0330749182963928,
+          "node": 3.0330749194927193,
+          "delta": -1.1963265933445655e-9,
+          "absolute": 1.1963265933445655e-9
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 273.0330749182964,
+          "node": 273.0330749194927,
+          "delta": -1.1963265933445655e-9,
+          "absolute": 1.1963265933445655e-9
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": 0.013379856744563767,
+          "node": 0.0133798590219385,
+          "delta": -2.2773747332394123e-9,
+          "absolute": 2.2773747332394123e-9
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 3.0330749182963928,
+          "node": 3.0330749194927193,
+          "delta": -1.1963265933445655e-9,
+          "absolute": 1.1963265933445655e-9
+        }
+      ]
+    },
+    {
+      "zone": "America/Dawson_Creek",
+      "instant": "1884-01-01T08:00:56.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.0.orb",
+          "chrome": 0.4489704111604169,
+          "node": 0.4489704111605306,
+          "delta": -1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.aspects.3.orb",
+          "chrome": 1.4042293331942801,
+          "node": 1.404229333194337,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.5.orb",
+          "chrome": 2.390827763921834,
+          "node": 2.390827763921777,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.10.orb",
+          "chrome": 4.650275232309241,
+          "node": 4.650275232309184,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": 4.885302168124808,
+          "node": 4.8853021681248086,
+          "delta": -8.881784197001252e-16,
+          "absolute": 8.881784197001252e-16
+        },
+        {
+          "path": "$.bodies.4.lon",
+          "chrome": 141.39333783755563,
+          "node": 141.39333783755558,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.4.degree",
+          "chrome": 21.393337837555634,
+          "node": 21.393337837555578,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.8.lon",
+          "chrome": 48.492375018598636,
+          "node": 48.49237501859858,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.8.degree",
+          "chrome": 18.492375018598636,
+          "node": 18.49237501859858,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.9.lon",
+          "chrome": 59.551584796452744,
+          "node": 59.5515847964528,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.9.degree",
+          "chrome": 29.551584796452744,
+          "node": 29.5515847964528,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        }
+      ]
+    },
+    {
+      "zone": "America/Goose_Bay",
+      "instant": "1935-03-30T03:30:52.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": 0.8604317900551937,
+          "node": 0.8604317900551911,
+          "delta": 2.55351295663786e-15,
+          "absolute": 2.55351295663786e-15
+        },
+        {
+          "path": "$.bodies.5.lat",
+          "chrome": 1.2391411375548744,
+          "node": 1.239141137554877,
+          "delta": -2.6645352591003757e-15,
+          "absolute": 2.6645352591003757e-15
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 298.489683323735,
+          "node": 298.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 118.489683323735,
+          "node": 118.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        }
+      ]
+    },
+    {
+      "zone": "America/Manaus",
+      "instant": "1914-01-01T04:00:04.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.5.orb",
+          "chrome": 3.915948070446973,
+          "node": 3.9159480704470297,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.2.lon",
+          "chrome": 266.0095137953611,
+          "node": 266.00951379536104,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.4.speed",
+          "chrome": -0.3963841439239104,
+          "node": -0.39638414392379673,
+          "delta": -1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.5.speed",
+          "chrome": 0.23136275764636594,
+          "node": 0.23136275764625225,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 347.17040051521985,
+          "node": 347.17040051532695,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 17.170400515219853,
+          "node": 17.170400515326946,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 167.17040051521985,
+          "node": 167.17040051532695,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 17.170400515219853,
+          "node": 17.170400515326946,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        }
+      ]
+    },
+    {
+      "zone": "America/Paramaribo",
+      "instant": "1935-01-01T03:40:52.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.9.speed",
+          "chrome": -0.02092948667177552,
+          "node": -0.020929486671889208,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": -0.04771556861544468,
+          "node": -0.04771557035871865,
+          "delta": 1.7432739696232602e-9,
+          "absolute": 1.7432739696232602e-9
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": -0.04771556861544468,
+          "node": -0.04771557035871865,
+          "delta": 1.7432739696232602e-9,
+          "absolute": 1.7432739696232602e-9
+        },
+        {
+          "path": "$.houses.cusps.1",
+          "chrome": 217.9547182978393,
+          "node": 217.95471829783932,
+          "delta": -2.842170943040401e-14,
+          "absolute": 2.842170943040401e-14
+        },
+        {
+          "path": "$.houses.cusps.7",
+          "chrome": 37.95471829783929,
+          "node": 37.95471829783935,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        }
+      ]
+    },
+    {
+      "zone": "America/Port-au-Prince",
+      "instant": "1890-01-01T04:49:20.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 93.03329536345802,
+          "node": 93.03329536743905,
+          "delta": -3.981028839916689e-9,
+          "absolute": 3.981028839916689e-9
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": 0.013419755286008694,
+          "node": 0.013419756958910511,
+          "delta": -1.6729018170735799e-9,
+          "absolute": 1.6729018170735799e-9
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 3.0332953634580235,
+          "node": 3.0332953674390524,
+          "delta": -3.981028839916689e-9,
+          "absolute": 3.981028839916689e-9
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 273.033295363458,
+          "node": 273.033295367439,
+          "delta": -3.9809719964978285e-9,
+          "absolute": 3.9809719964978285e-9
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": 0.013419755286008694,
+          "node": 0.013419756958910511,
+          "delta": -1.6729018170735799e-9,
+          "absolute": 1.6729018170735799e-9
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 3.0332953634580235,
+          "node": 3.0332953674389955,
+          "delta": -3.9809719964978285e-9,
+          "absolute": 3.9809719964978285e-9
+        }
+      ]
+    },
+    {
+      "zone": "America/Punta_Arenas",
+      "instant": "1890-01-01T04:43:40.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.0.orb",
+          "chrome": 0.9081223328801684,
+          "node": 0.9081223328802253,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.5.orb",
+          "chrome": 2.885576976270727,
+          "node": 2.88557697627067,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.9.orb",
+          "chrome": 4.430451011226012,
+          "node": 4.430451011226069,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.3.lon",
+          "chrome": 269.19128499846505,
+          "node": 269.191284998465,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.3.speed",
+          "chrome": 1.2569497691074503,
+          "node": 1.2569497691073366,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.3.degree",
+          "chrome": 29.191284998465107,
+          "node": 29.191284998464994,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 93.0332329782592,
+          "node": 93.03323297766235,
+          "delta": 5.968558980384842e-10,
+          "absolute": 5.968558980384842e-10
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": 0.013428421100911692,
+          "node": 0.013428405942022437,
+          "delta": 1.515888925496256e-8,
+          "absolute": 1.515888925496256e-8
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 3.033232978259207,
+          "node": 3.033232977662351,
+          "delta": 5.968558980384842e-10,
+          "absolute": 5.968558980384842e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 273.0332329782592,
+          "node": 273.03323297766235,
+          "delta": 5.968558980384842e-10,
+          "absolute": 5.968558980384842e-10
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": 0.013428421100911692,
+          "node": 0.013428405942022437,
+          "delta": 1.515888925496256e-8,
+          "absolute": 1.515888925496256e-8
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 3.033232978259207,
+          "node": 3.033232977662351,
+          "delta": 5.968558980384842e-10,
+          "absolute": 5.968558980384842e-10
+        },
+        {
+          "path": "$.houses.cusps.1",
+          "chrome": 234.75700516141,
+          "node": 234.75700516140995,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.houses.cusps.7",
+          "chrome": 54.75700516141001,
+          "node": 54.75700516140995,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        }
+      ]
+    },
+    {
+      "zone": "America/St_Johns",
+      "instant": "1935-03-30T03:30:52.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": 0.8604317900551937,
+          "node": 0.8604317900551911,
+          "delta": 2.55351295663786e-15,
+          "absolute": 2.55351295663786e-15
+        },
+        {
+          "path": "$.bodies.5.lat",
+          "chrome": 1.2391411375548744,
+          "node": 1.239141137554877,
+          "delta": -2.6645352591003757e-15,
+          "absolute": 2.6645352591003757e-15
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 298.489683323735,
+          "node": 298.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 118.489683323735,
+          "node": 118.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        }
+      ]
+    },
+    {
+      "zone": "America/Whitehorse",
+      "instant": "1900-08-20T09:00:12.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.4.speed",
+          "chrome": 0.6487559493298249,
+          "node": 0.6487559493297113,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        }
+      ]
+    },
+    {
+      "zone": "Asia/Colombo",
+      "instant": "1879-12-31T18:40:36.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": -2.599965314148807,
+          "node": -2.5999653141488066,
+          "delta": -4.440892098500626e-16,
+          "absolute": 4.440892098500626e-16
+        },
+        {
+          "path": "$.bodies.1.speed",
+          "chrome": 12.633666350626527,
+          "node": 12.63366635062664,
+          "delta": -1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.2.speed",
+          "chrome": 1.092862001971639,
+          "node": 1.0928620019715254,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 285.5422082602075,
+          "node": 285.5422082602074,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": 0.009394974967108283,
+          "node": 0.00939499334924676,
+          "delta": -1.8382138478045817e-8,
+          "absolute": 1.8382138478045817e-8
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 105.54220826020747,
+          "node": 105.54220826020742,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": 0.009394974967108283,
+          "node": 0.00939499334924676,
+          "delta": -1.8382138478045817e-8,
+          "absolute": 1.8382138478045817e-8
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 15.542208260207474,
+          "node": 15.542208260207417,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        }
+      ]
+    },
+    {
+      "zone": "Asia/Tbilisi",
+      "instant": "1924-05-01T21:00:49.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.5.speed",
+          "chrome": -0.07652502665064276,
+          "node": -0.07652502665075644,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 149.59628600056345,
+          "node": 149.5962860005634,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 29.596286000563452,
+          "node": 29.596286000563396,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        }
+      ]
+    },
+    {
+      "zone": "Brazil/West",
+      "instant": "1914-01-01T04:00:04.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.5.orb",
+          "chrome": 3.915948070446973,
+          "node": 3.9159480704470297,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.2.lon",
+          "chrome": 266.0095137953611,
+          "node": 266.00951379536104,
+          "delta": 5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.4.speed",
+          "chrome": -0.3963841439239104,
+          "node": -0.39638414392379673,
+          "delta": -1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.5.speed",
+          "chrome": 0.23136275764636594,
+          "node": 0.23136275764625225,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 347.17040051521985,
+          "node": 347.17040051532695,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 17.170400515219853,
+          "node": 17.170400515326946,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 167.17040051521985,
+          "node": 167.17040051532695,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 17.170400515219853,
+          "node": 17.170400515326946,
+          "delta": -1.070930011337623e-10,
+          "absolute": 1.070930011337623e-10
+        }
+      ]
+    },
+    {
+      "zone": "Canada/Newfoundland",
+      "instant": "1935-03-30T03:30:52.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": 0.8604317900551937,
+          "node": 0.8604317900551911,
+          "delta": 2.55351295663786e-15,
+          "absolute": 2.55351295663786e-15
+        },
+        {
+          "path": "$.bodies.5.lat",
+          "chrome": 1.2391411375548744,
+          "node": 1.239141137554877,
+          "delta": -2.6645352591003757e-15,
+          "absolute": 2.6645352591003757e-15
+        },
+        {
+          "path": "$.bodies.10.lon",
+          "chrome": 298.489683323735,
+          "node": 298.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.10.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.lon",
+          "chrome": 118.489683323735,
+          "node": 118.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": -0.016188517284490445,
+          "node": -0.01618851491946316,
+          "delta": -2.3650272851227783e-9,
+          "absolute": 2.3650272851227783e-9
+        },
+        {
+          "path": "$.bodies.11.degree",
+          "chrome": 28.489683323734994,
+          "node": 28.48968332286654,
+          "delta": 8.684537533554249e-10,
+          "absolute": 8.684537533554249e-10
+        }
+      ]
+    },
+    {
+      "zone": "Canada/Yukon",
+      "instant": "1900-08-20T09:00:12.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.4.speed",
+          "chrome": 0.6487559493298249,
+          "node": 0.6487559493297113,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        }
+      ]
+    },
+    {
+      "zone": "Pacific/Norfolk",
+      "instant": "1900-12-31T12:48:08.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.aspects.3.orb",
+          "chrome": 1.4036613233796515,
+          "node": 1.4036613233797084,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.aspects.14.orb",
+          "chrome": 6.098696972003495,
+          "node": 6.098696972003609,
+          "delta": -1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.1.lat",
+          "chrome": 1.7445374517537677,
+          "node": 1.7445374517537675,
+          "delta": 2.220446049250313e-16,
+          "absolute": 2.220446049250313e-16
+        },
+        {
+          "path": "$.bodies.3.lon",
+          "chrome": 250.1730875064263,
+          "node": 250.17308750642627,
+          "delta": 2.842170943040401e-14,
+          "absolute": 2.842170943040401e-14
+        },
+        {
+          "path": "$.bodies.3.speed",
+          "chrome": 1.240925222767828,
+          "node": 1.2409252227678849,
+          "delta": -5.684341886080802e-14,
+          "absolute": 5.684341886080802e-14
+        },
+        {
+          "path": "$.bodies.7.lon",
+          "chrome": 254.28212804159617,
+          "node": 254.28212804159614,
+          "delta": 2.842170943040401e-14,
+          "absolute": 2.842170943040401e-14
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": 0.023832321734062134,
+          "node": 0.023832321233840048,
+          "delta": 5.002220859751105e-10,
+          "absolute": 5.002220859751105e-10
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": 0.023832321734062134,
+          "node": 0.023832321233840048,
+          "delta": 5.002220859751105e-10,
+          "absolute": 5.002220859751105e-10
+        }
+      ]
+    },
+    {
+      "zone": "Pacific/Tongatapu",
+      "instant": "1945-09-09T11:40:48.000Z",
+      "exactSameRuntimeRc5Rc6": true,
+      "exactFreshChromeAuthorChrome": true,
+      "exactFreshNodeAuthorNode": true,
+      "differences": [
+        {
+          "path": "$.bodies.3.speed",
+          "chrome": 1.1907228890931947,
+          "node": 1.190722889093081,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.10.speed",
+          "chrome": -0.18502295904352195,
+          "node": -0.18502295904363564,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        },
+        {
+          "path": "$.bodies.11.speed",
+          "chrome": -0.18502295904352195,
+          "node": -0.18502295904363564,
+          "delta": 1.1368683772161603e-13,
+          "absolute": 1.1368683772161603e-13
+        }
+      ]
+    }
+  ],
+  "offline": true,
+  "externalRequests": [],
+  "errors": [],
+  "cleanup": {
+    "context": true,
+    "browser": true,
+    "server": true
+  },
+  "noProductChanges": true,
+  "noToleranceChanges": true,
+  "crossRuntimeBitEqualityGuaranteed": false
+}

@@ -1,0 +1,19 @@
+# Executed command ledger
+
+Working directory: `/private/tmp/zodiacs-platform-chart-ownership`.
+Node runtime: `/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node` (22.23.2).
+
+The following are the exact main final invocations, with stderr redirected into the stated retained log.
+
+```sh
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/vitest/vitest.mjs run src/islands/ChartCalculator.ownership.test.ts src/islands/ChartCalculator.actions.test.ts src/islands/ChartCalculator.locale.test.ts src/islands/ChartCalculator.registry-bridge.test.ts src/lib/engine/calculator-receipt.test.ts src/lib/engine/portable.test.ts > /private/tmp/zodiacs-platform-chart-ownership-evidence/focused-suite-final.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/typescript/bin/tsc --noEmit --pretty false > /private/tmp/zodiacs-platform-chart-ownership-evidence/typecheck-final.log 2>&1
+PATH=/private/tmp/zodiacs-platform-runtime/node_modules/node/bin:$PATH /private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node node_modules/astro/bin/astro.mjs build > /private/tmp/zodiacs-platform-chart-ownership-evidence/final-astro-build.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node scripts/inline-critical-styles.mjs > /private/tmp/zodiacs-platform-chart-ownership-evidence/final-critical-styles.log 2>&1
+/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node tests/chart-ownership-drive.mjs > /private/tmp/zodiacs-platform-chart-ownership-evidence/final-browser.log 2>&1
+git diff --check
+```
+
+The same compilation/postprocessor paths were used for the baseline and intermediate builds, with baseline-/current- output names. Earlier browser invocations used the same command with baseline-browser.log, current-browser.log, expanded-browser.log and expanded-browser-focus-wait.log; each report retains the then-current source/driver hashes. The initial wrong Astro invocation used node_modules/astro/astro.js; its module-not-found output remains in initial-invocation-baseline-astro-build.log. The retained baseline probe was invoked with the same pinned Node runtime; its initial failed path-copy implementation is preserved separately.
+
+No product publication, dependency installation, network service mutation or external message was performed. The browser process launch was a permitted sandbox escalation to run actual local Chrome; all browser contexts used synthetic input, with external requests blocked by the driver.

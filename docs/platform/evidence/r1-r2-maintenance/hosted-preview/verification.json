@@ -1,0 +1,35 @@
+{
+  "head": "35301d24907b6eb7117a1f4b0ae690ca42c57de6",
+  "outcome": "passed",
+  "captionGroups": 14,
+  "editionViews": 8,
+  "screenshots": 36,
+  "captionServedBodies": 72,
+  "editionArtifacts": 5,
+  "sourceRecords": 73,
+  "browser": "152.0.7977.84",
+  "unavailableResponseBodies": [
+    {
+      "group": "it-moon-mode-390",
+      "path": "/assets/zodiac-icons/128/taurus.webp",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    },
+    {
+      "group": "pt-moon-mode-390",
+      "path": "/assets/app-icons/v3/icon-512.png",
+      "status": 200,
+      "bodyUnavailable": true,
+      "error": "Error: response.body: Target page, context or browser has been closed"
+    }
+  ],
+  "cleanup": {
+    "contextsClosed": true,
+    "browserClosed": true,
+    "localServerStarted": false
+  },
+  "privateAccessFileDeleted": true,
+  "exactAccessSecretScanHits": 0,
+  "qualification": "Auth bootstrap isolated and unobserved; local access file deleted, no server-side revocation claim."
+}

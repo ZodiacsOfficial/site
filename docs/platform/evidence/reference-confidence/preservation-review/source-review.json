@@ -1,0 +1,913 @@
+{
+  "base": "f803d2543ad81343b22d49326b8b46d0e2ea03a0",
+  "freezeIdentitySha256": "54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c",
+  "files": [
+    {
+      "path": "src/islands/ChartCalculator.confidence.test.ts",
+      "bytes": 10063,
+      "sha256": "6c523d243fed3dcbc11bf67b0c1ec0703ffaaffa862cc8e1187daac07eb280fb"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20641,
+      "sha256": "a6c463f6b42f5757b3d65b2a5dac0391f4dc11c1b25c050c5f5638fce4208aac"
+    },
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "bytes": 1765,
+      "sha256": "78652eb861ae1c417c9c2d4cf8acc4ae0913be96965f31367144f7eff9fa127d"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120334,
+      "sha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "bytes": 1879,
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936"
+    },
+    {
+      "path": "src/lib/i18n/index.test.ts",
+      "bytes": 15646,
+      "sha256": "51a77f3a712d087e26e951bc637205598c093275e22df109cce8806452c6f96e"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "bytes": 22131,
+      "sha256": "74afbab6d7cadbbbbc7ee7aa974e8436074c8d05b1826282cc4d78deff431621"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "bytes": 24192,
+      "sha256": "7dff64252d8d982ba0f4538a4c3f1c7c7baeef97aca2818123196859be592a8c"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "bytes": 27888,
+      "sha256": "526cbd534cc67e750f1414d55ffdda37923afaafadd2cca60b5593f9f5b640ed"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "bytes": 26712,
+      "sha256": "39891334ce6b6144a378cac883dd67a16e1f64540c32db5d4905917474ae22ea"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "bytes": 25812,
+      "sha256": "bd5ad9bacfefa44ebab1f5cb7c148017dff204ff62b52e70e016fd6af59e39a6"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.test.ts",
+      "bytes": 5247,
+      "sha256": "feeedfe74b08f939e0143e97d566d62878fe1cec7926be41463a206dc165ff44"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "bytes": 38609,
+      "sha256": "dd3c7155457c082154058efe6fe004d6c04f8a5d5d6bef787ead4ecf83ed7613"
+    },
+    {
+      "path": "tests/chart-reference-confidence-drive.mjs",
+      "bytes": 22843,
+      "sha256": "02e8d4b4fb50ce7e3f93bb4b5c1a963cf0a2ec64f4218eaed4d7172387862ff6"
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "bytes": 22380,
+      "sha256": "91a4bfaee6cabfb43d80ead610bc1b7943031c6997abba11bd0c4f04dca29c19"
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "bytes": 66986,
+      "sha256": "1b59abf04d279dbcb1283db0c406856acda24051c00592f882918c4629549f28"
+    }
+  ],
+  "entireComponentReconstructionMatches": true,
+  "unchangedNamedFunctions": [
+    {
+      "name": "russianNameTemplate",
+      "sha256": "a8e42fa36d6a1c89e9551f54e7e15f35052e849fa5805b8c582e37a16aaa786a",
+      "bytes": 118
+    },
+    {
+      "name": "sceneHas",
+      "sha256": "dc62d59844d8183bccc7eef209e1ebd0f33347833765ad5f69099afb2be8c7b9",
+      "bytes": 476
+    },
+    {
+      "name": "HouseSystemReceipt",
+      "sha256": "16b5957291d83b5725d1f079bbea6853ea896004600474ba9c1d319ef4557874",
+      "bytes": 426
+    },
+    {
+      "name": "clearReceiptExport",
+      "sha256": "1298299c58ad6d4bd91a1f0ff2dadaf664a83020b1f41d8a60a5e72b538e8e42",
+      "bytes": 142
+    },
+    {
+      "name": "advanceInputRevision",
+      "sha256": "59eb543d3e95683d0c130b2f8726d2ff6a7182287803cdbf5a692e846d87d13c",
+      "bytes": 152
+    },
+    {
+      "name": "resultIsCurrent",
+      "sha256": "d598fc0edfc8039e0fab3284007f585f812996054c0e704f5678fead9ec4c441",
+      "bytes": 403
+    },
+    {
+      "name": "currentResultOwner",
+      "sha256": "6f3266e248b2418d31cbeb2cf99e7e059bd8db2830d1a479fa0c67cff2874e64",
+      "bytes": 177
+    },
+    {
+      "name": "clearResult",
+      "sha256": "976a42a0233c8ae81bc7c6c5b864b1fd4dae74856af13213ee9b8486a41b8de8",
+      "bytes": 748
+    },
+    {
+      "name": "invalidateProfileHandoff",
+      "sha256": "43ecfecc91f8ea89c10bd19f9db1643190b3c57d80b93a4d4fe54f19d2bd70b5",
+      "bytes": 271
+    },
+    {
+      "name": "track",
+      "sha256": "229b4d919fa9efa75d3bff66da922f402acea3b8a86c1fc7f2d651cf878be649",
+      "bytes": 225
+    },
+    {
+      "name": "loadPushOptIn",
+      "sha256": "50fc832606bab5ea93919ad6f745895acf41e49693bc2b5b0f2b3e563d6033b9",
+      "bytes": 151
+    },
+    {
+      "name": "keepWheelAboveTour",
+      "sha256": "27a97e428a88106ef98125cedbe4c8dc500faea0e25493869e00af39cf42141c",
+      "bytes": 567
+    },
+    {
+      "name": "persistFirstReading",
+      "sha256": "5bb746c7ddbb26646055272ab04e47b2ac860c982ae0ed9c9893167e36c4da19",
+      "bytes": 457
+    },
+    {
+      "name": "startTour",
+      "sha256": "a6a8a63b8c1a0505a5b1426d6afc0572e2bbec2dcf6b6eec94afa20a9253d4a5",
+      "bytes": 693
+    },
+    {
+      "name": "exitTour",
+      "sha256": "e26cadf1d1df4a9bc375ead9bf82b7f5b898cb7b11b518443aa6516100076f89",
+      "bytes": 97
+    },
+    {
+      "name": "startFirstReading",
+      "sha256": "3a5b1ab8d32b4a913183cc1d32a19792caac999475863502655806cf3f4ff402",
+      "bytes": 450
+    },
+    {
+      "name": "dismissFirstReading",
+      "sha256": "d0dcd6b6d4d57af302815d3cda0eb48e607370122af344d7bcaa807294834a6b",
+      "bytes": 135
+    },
+    {
+      "name": "completeFirstReading",
+      "sha256": "84eddc22f91867fc7bfabf92b8d93e25b167e92c8d0815ba1b8885d72c4e3d6b",
+      "bytes": 191
+    },
+    {
+      "name": "resetLens",
+      "sha256": "ddfcbc137154bb331c04aec1344cf1c998c3eff5a0e0a98553e4fa9f4a6c51e4",
+      "bytes": 71
+    },
+    {
+      "name": "selectLens",
+      "sha256": "fc732734ca7c5668ddbc06d3a772ebfe63952942c767e293be8fdbe336a39751",
+      "bytes": 566
+    },
+    {
+      "name": "toggleDepth",
+      "sha256": "4eef23050a3041642c6a1f0e2beedb57af036d4d8b6dc0ca225511048719535e",
+      "bytes": 428
+    },
+    {
+      "name": "describeSelection",
+      "sha256": "38d48be9904e1cd33c4f720f28ad045828472ce74f46a7e88829658802946a00",
+      "bytes": 927
+    },
+    {
+      "name": "openDetailForSelection",
+      "sha256": "d60b06a6187b63300e319a3aa77e1ae58e0898d8239cd68fc57a1d8718f8eae4",
+      "bytes": 92
+    },
+    {
+      "name": "cancelSpotlightArrival",
+      "sha256": "621e6fcbf21d8abeea512a0d9d931e897c729f935818283e2b6ef75c80d6ebdc",
+      "bytes": 130
+    },
+    {
+      "name": "applySelect",
+      "sha256": "56a7e7972d9c633bb9514e7a6af4603cd89137015c35d5afeedf564d3c495f90",
+      "bytes": 1183
+    },
+    {
+      "name": "showOnChartFromReading",
+      "sha256": "2ea94f005ae6bafc7197b4d840ebdfbb2dac6feaf97af28fe38b51f7a6676f0f",
+      "bytes": 3824
+    },
+    {
+      "name": "onDetailToggle",
+      "sha256": "a7624e09cb474822c28db8489fb20f605c7c9344d3807ad0bca13fd50448a549",
+      "bytes": 622
+    },
+    {
+      "name": "onWheelKeyDown",
+      "sha256": "0a26d0ec58b312ce118758bcf81ee102e2c317a31a522f5f2bd3c590e030d2a4",
+      "bytes": 1554
+    },
+    {
+      "name": "exportReceipt",
+      "sha256": "6f0a5ad03a55720093cf929bff6b2b6cedda2b6e36aa9db2ca4c21116c2b1f88",
+      "bytes": 591
+    },
+    {
+      "name": "compute",
+      "sha256": "7b8fe0bd4f895fd394095e4549630ebe17a3585a129737645628ca0ca7fd6012",
+      "bytes": 1137
+    },
+    {
+      "name": "requestChartControls",
+      "sha256": "5d57ef5d206172bf2eb8f469e89f008b108e11b64659e0272117079ede7840f9",
+      "bytes": 1026
+    },
+    {
+      "name": "openShareOptions",
+      "sha256": "16d31f1985db6167171311add0322c9affeceaf91171605e21c6ac3b1de1d88c",
+      "bytes": 541
+    },
+    {
+      "name": "shareChartFromAction",
+      "sha256": "0a8919f6b5c03a027bd499f3c88dd97b765f4ac6fcc05e2754994f7759493d39",
+      "bytes": 618
+    },
+    {
+      "name": "closeShareDialog",
+      "sha256": "9fdffeda6aac9dc7c8c4b9aaae9d96b7b0e53290d81962c928a5f5742cb4eb02",
+      "bytes": 358
+    },
+    {
+      "name": "chartIdentity",
+      "sha256": "20d36ce773750c3f1b648850742af5bcc227ad3c449503b0c2c010c8fd1b741d",
+      "bytes": 650
+    },
+    {
+      "name": "isConnectedSaveControl",
+      "sha256": "933699a559723260675c05553ca7804c61e1b9220c60b7455330cc887955446b",
+      "bytes": 233
+    },
+    {
+      "name": "saveFocusFallback",
+      "sha256": "256f9b90aee93c9570500f666057dde59eb03c1cea5aa68005cea3e77a16f905",
+      "bytes": 331
+    },
+    {
+      "name": "closeSavePrompt",
+      "sha256": "a5af39f400d624da0a52be4440710ed90b0d6ad187f3312a77deac8d542278c0",
+      "bytes": 652
+    },
+    {
+      "name": "openSavePrompt",
+      "sha256": "58cba703e2aadd19fa6985c3f5397a54cefe0ff3dca13943bb65edf1add420e7",
+      "bytes": 772
+    },
+    {
+      "name": "commitSave",
+      "sha256": "2d3f0569e7148e48dc3d36cb27584e60aa16e1848943fc89f9c86e64949a485c",
+      "bytes": 2943
+    },
+    {
+      "name": "submitSaveName",
+      "sha256": "14a3beb8a07b732285e180bf26d34d70f191980921177745d54ff708fbea250b",
+      "bytes": 884
+    },
+    {
+      "name": "renderSavePrompt",
+      "sha256": "64ae32cb22694b191a8e494ad53f88ca761841b8be1e32d4fb39efc4b6ffd908",
+      "bytes": 902
+    }
+  ],
+  "unchangedRunSpans": [
+    {
+      "name": "run start",
+      "sha256": "9f6ac83a9d533fd7e7ffb5f63a4bd480e7da95948ad84e650364a2dd05762604",
+      "bytes": 2937
+    },
+    {
+      "name": "run ownership/capture/share/context/catch",
+      "sha256": "3163c282f352f8847a87572f57b85ef98551903ab32db0287f2c663f03abc839",
+      "bytes": 3339
+    }
+  ],
+  "helperExecutableAstUnchanged": true,
+  "catalogs": [
+    {
+      "locale": "en",
+      "addedLine": "    moonUnverifiedNotice: \"The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment.\",",
+      "priorBytesRestored": true
+    },
+    {
+      "locale": "es",
+      "addedLine": "    moonUnverifiedNotice: \"No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento.\",",
+      "priorBytesRestored": true
+    },
+    {
+      "locale": "fr",
+      "addedLine": "  moonUnverifiedNotice: \"Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis.\",",
+      "priorBytesRestored": true
+    },
+    {
+      "locale": "it",
+      "addedLine": "  moonUnverifiedNotice: \"I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento.\",",
+      "priorBytesRestored": true
+    },
+    {
+      "locale": "pt",
+      "addedLine": "  moonUnverifiedNotice: \"Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento.\",",
+      "priorBytesRestored": true
+    },
+    {
+      "locale": "ru",
+      "addedLine": "  moonUnverifiedNotice: \"Возможные знаки Луны в течение этой даты рождения не проверены. Укажите время рождения, чтобы получить результат для конкретного момента.\",",
+      "priorBytesRestored": true
+    }
+  ],
+  "moduleSpecifiersBefore": [
+    {
+      "kind": "static",
+      "value": "preact/hooks"
+    },
+    {
+      "kind": "static",
+      "value": "./BirthFields"
+    },
+    {
+      "kind": "static",
+      "value": "./AstroTerm"
+    },
+    {
+      "kind": "static",
+      "value": "./SignChip"
+    },
+    {
+      "kind": "static",
+      "value": "../components/PlanetGlyph"
+    },
+    {
+      "kind": "static",
+      "value": "../components/AspectGlyph"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/wheel/Wheel"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/LayerChips"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/moon-certainty"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/module-load"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/receipt-download"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/ReadingPath"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/tour/progress"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/build"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/emphasis"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/signs"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/interpretations"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/time/localToUtc"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/chart-date-certainty"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/houses"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/lite"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/registry-aura-entry.mjs"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/chart-handoff"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share-positions"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/chapters"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/geo/search"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n/astrology"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n/ru-runtime"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/hooks/useEngine"
+    },
+    {
+      "kind": "static",
+      "value": "./CalculationReload"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/hooks/useProfileAccessGeneration"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/account-v2/profile-access-reader"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/learning-input-identity"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/analytics"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/profile/post-chart-context"
+    },
+    {
+      "kind": "static",
+      "value": "../styles/evidence-disclosure.css"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ChartActionDock"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/engine/calculator-receipt"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PushOptIn"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./explorer/tour"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./explorer/lens/ChartLens"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./chart3d/EclipticView"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/profile-chart-handoff"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/chart-signature"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./CalendarSubscribe"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./CommunicationRead"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ApproachRead"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PwaInstallPrompt"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ChartShareDialog"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/a2hs"
+    }
+  ],
+  "moduleSpecifiersAfter": [
+    {
+      "kind": "static",
+      "value": "preact/hooks"
+    },
+    {
+      "kind": "static",
+      "value": "./BirthFields"
+    },
+    {
+      "kind": "static",
+      "value": "./AstroTerm"
+    },
+    {
+      "kind": "static",
+      "value": "./SignChip"
+    },
+    {
+      "kind": "static",
+      "value": "../components/PlanetGlyph"
+    },
+    {
+      "kind": "static",
+      "value": "../components/AspectGlyph"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/wheel/Wheel"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/LayerChips"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/moon-certainty"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/module-load"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/receipt-download"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/ReadingPath"
+    },
+    {
+      "kind": "static",
+      "value": "./explorer/tour/progress"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/build"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/emphasis"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/signs"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/interpretations"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/time/localToUtc"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/houses"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/lite"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/registry-aura-entry.mjs"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/chart-handoff"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/share-positions"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/scene/chapters"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/geo/search"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n/astrology"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/i18n/ru-runtime"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/hooks/useEngine"
+    },
+    {
+      "kind": "static",
+      "value": "./CalculationReload"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/hooks/useProfileAccessGeneration"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/account-v2/profile-access-reader"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/learning-input-identity"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/engine/types"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/analytics"
+    },
+    {
+      "kind": "static",
+      "value": "../lib/profile/post-chart-context"
+    },
+    {
+      "kind": "static",
+      "value": "../styles/evidence-disclosure.css"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ChartActionDock"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/engine/calculator-receipt"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PushOptIn"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./explorer/tour"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./explorer/lens/ChartLens"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./chart3d/EclipticView"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/profile-chart-handoff"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/chart-signature"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PositionsShareSurface"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./CalendarSubscribe"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./CommunicationRead"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ApproachRead"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./PwaInstallPrompt"
+    },
+    {
+      "kind": "dynamic",
+      "value": "./ChartShareDialog"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/profile/store"
+    },
+    {
+      "kind": "dynamic",
+      "value": "../lib/a2hs"
+    }
+  ],
+  "preserved": [
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/profile/store.ts",
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/hooks/useProfileAccessGeneration.ts",
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/receipt-download.ts",
+      "sha256": "6b11d3c850a5669eae98684cac629a150d3645854f657df4c5fc5f95cee33d6d",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/islands/PositionsShareSurface.tsx",
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/share-card.ts",
+      "sha256": "db3a4d4b9367e69c359fa64ae7d0a75569aea2661a25bf5cf48a5bd81a4dc649",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "src/lib/share-positions.ts",
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "outsideFrozenChanges": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3",
+      "outsideFrozenChanges": true
+    }
+  ],
+  "qualification": "Exact private base/frozen byte and AST review, not execution proof. Dynamic import graph strings are unchanged; one static endpoint helper import is removed. Production bundle/CI remains root-owned."
+}

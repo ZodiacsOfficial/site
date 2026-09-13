@@ -1,0 +1,7 @@
+import en from './candidate/src/lib/i18n/ui/en.ts';
+import es from './candidate/src/lib/i18n/ui/es.ts';
+import fr from './candidate/src/lib/i18n/ui/fr.ts';
+import it from './candidate/src/lib/i18n/ui/it.ts';
+import pt from './candidate/src/lib/i18n/ui/pt.ts';
+import ru from './candidate/src/lib/i18n/ui/ru.ts';
+export default {en,es,fr,it,pt,ru};

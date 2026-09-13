@@ -1,0 +1,32 @@
+{
+  "baseline": {
+    "format": "raw",
+    "width": 594,
+    "height": 792,
+    "channels": 4,
+    "depth": "uchar",
+    "premultiplied": false,
+    "hasAlpha": true,
+    "size": 1881792
+  },
+  "candidate": {
+    "format": "raw",
+    "width": 594,
+    "height": 792,
+    "channels": 4,
+    "depth": "uchar",
+    "premultiplied": false,
+    "hasAlpha": true,
+    "size": 1881792
+  },
+  "exactChangedPixels": 173028,
+  "changedBounds": {
+    "minX": 11,
+    "minY": 11,
+    "maxX": 582,
+    "maxY": 780
+  },
+  "scoredPixels": 47094,
+  "ratio": 0.10010458116518722,
+  "qualification": "Diagnostic comparison only; threshold0.1 is the unchanged repository pixel comparison threshold, not a new acceptance gate."
+}

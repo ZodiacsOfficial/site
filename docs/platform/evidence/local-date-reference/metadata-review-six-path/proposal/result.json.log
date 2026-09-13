@@ -1,0 +1,74 @@
+{
+  "node": "v22.23.2",
+  "checks": [
+    {
+      "name": "unchanged guard admits exactly six current-base catalogs",
+      "passed": true
+    },
+    {
+      "name": "placeholder template is rejected against current real base",
+      "passed": true
+    },
+    {
+      "name": "wrong real comparison base rejected",
+      "passed": true
+    },
+    {
+      "name": "unchanged allowance provides no exemption",
+      "passed": true
+    },
+    {
+      "name": "extra protected file rejected",
+      "passed": true
+    },
+    {
+      "name": "missing catalog rejected",
+      "passed": true
+    },
+    {
+      "name": "duplicate allowance path rejected",
+      "passed": true
+    },
+    {
+      "name": "unsorted allowance rejected",
+      "passed": true
+    },
+    {
+      "name": "unprotected path cannot be allowed",
+      "passed": true
+    },
+    {
+      "name": "six paths are catalogs only",
+      "passed": true
+    },
+    {
+      "name": "workflow adds one bounded step without changing prior contract",
+      "passed": true
+    },
+    {
+      "name": "native driver syntax and default CI interface preserved",
+      "passed": true
+    },
+    {
+      "name": "actual unchanged CLI guard passes local combined current-base diff",
+      "passed": true
+    },
+    {
+      "name": "root workflow was not changed by proposal",
+      "passed": true
+    }
+  ],
+  "passed": 14,
+  "failed": 0,
+  "cli": {
+    "command": [
+      "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+      "scripts/phase1-scope-guard.mjs",
+      "--base",
+      "295bbfbe3728b3d6f57ff665dc0b08feb765bc41"
+    ],
+    "cwd": "/private/tmp/zodiacs-platform-local-date-metadata-proposal/site",
+    "exit": 0
+  },
+  "qualification": "Metadata proposal checks only; no browser execution, build, remote CI or final-base scope claim. Final chart commit must replace the explicit template marker and guard must rerun."
+}

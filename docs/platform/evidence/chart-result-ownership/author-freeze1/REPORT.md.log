@@ -1,0 +1,50 @@
+# Chart result ownership — author evidence, Freeze 1
+
+The four-file patch prevents an obsolete calculation, shared-link import, or result action from publishing into a newer calculator state. Edits and new calculations clear the old result, computed birth context, receipt, share artifact, dialogs, saved-status display, and result-specific explorer state. A failed new calculation leaves the typed inputs available for correction and retry. The existing profile reset also uses this common clearing boundary.
+
+This is author verification for bounded integration. Independent review is pending. This evidence does not establish merged, published, deployed, numerically more accurate, or account-lifecycle-complete status.
+
+## Identity and scope
+
+Base: `30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14`.
+Scratch: `/private/tmp/zodiacs-platform-chart-ownership`.
+Exact patch and four source identities: `freeze1/freeze.json` and `freeze1/patch.diff`.
+Product file: `src/islands/ChartCalculator.tsx` only. Three verification files accompany it: the new ownership unit test, the native browser driver, and a narrow update to the existing structural profile-scrub assertion in `ChartCalculator.locale.test.ts`. No locale wording changed.
+
+Root source, product styles, navigation, date interval/certainty policy, SDK, receipt helper, API, Registry, Astrofolio, storage formats, and account write authority were not edited. The existing installed dependencies were reused through a read-only node_modules symlink. There were no dependency installations or external writes.
+
+## Decisions and limits
+
+- Every result owns its exact chart reference, run number, input revision, and existing conditional profile-access generation. Async completions check that captured owner; old DOM callbacks cannot borrow the newer result's owner.
+- Clearing happens synchronously through refs before rendered state settles. Both valid/invalid positions imports and conflicting-format error imports use the same run/revision fence.
+- The actual calculation and optional pre-calculation receipt fallback remain unchanged. No second natal calculation is introduced. Signature/share preparation and post-chart profile matching are fenced separately after their async boundaries. The existing computed event remains a successful-calculation event, and a synchronous listener's edit cannot refill share state afterward.
+- Sharing retains the existing user-gesture invocation. Old dialog/share completions and focus restoration cannot update a newer result. No share was sent to an external service in this verification.
+- An already requested save keeps its existing write and authority semantics. A later edit prevents obsolete UI/status/context completion; it does not undo, cancel, or retry a persistence write. This patch makes no durable account erasure or cross-tab guarantee.
+- The existing focus effect was left unchanged. The browser assertion now waits for the actual effect to focus the rendered alert instead of racing its scheduling.
+- This is scoped full-calculator acceptance. Root's full repository pipeline and independent acceptance remain separate. The compilation below is Astro production compilation plus the existing critical-style postprocessor; it is not the entire npm build pre/post pipeline.
+
+## Executed acceptance
+
+- Six focused suites: **125/125 passed**, including 18 execution controls extracting the actual component functions and substituting controlled async boundaries. These are not an independent reviewer or a duplicate hand-written ownership implementation.
+- Strict project TypeScript check: passed, zero output.
+- Astro production compilation and existing critical-style postprocessing: passed.
+- Actual Chrome **152.0.7977.83**, Node **22.23.2**: **15/15 browser groups passed** against exact final source `6d954dd0994e019408e5c23cae7ffab9853939d774eb0d8e7df9ca4a51aa920b`.
+- Native V8 precise coverage verifies 0 natal calls for cancelled pending loaders/imports, 1 for admitted results and fallback, and 3 across initial success + deliberately failed serialization + successful recovery. The actual native function is identified by parsing the served chart-adapter return shape; its served bytes and coverage are retained. No numerical oracle or cross-runtime equality claim follows from these counts.
+- Native groups cover edits during engine/receipt loading, edits after success, failure/recovery and actual alert focus, a replacement run, delayed share preparation/dialog module, successful and stale positions-only initialization, invalid/conflicting fragment errors after an edit, pending/completed profile revocation, actual Astro/Preact unmount, and optional receipt-module failure.
+- Final run: `browser-1788855675153/result.json`. It records 1,335 observed GET requests, no non-GET requests, no external requests, no uncaught page errors, served-file byte hashes, source identity before/after, and each control's rendered observation. Every disposable context, browser and owned static server was closed.
+- Profile controls seed a synthetic v1 fixture only in disposable browser localStorage and exercise the actual profile access reader/event and component callback. They do not certify application authentication.
+
+## Counterexamples and retained failures
+
+- Baseline extracted-run reproduction retained the existing stale chart/computed/share and busy card after a subsequent failure: `baseline-probe.mjs`, `result.json`, `runChart-extracted.js`, and baseline source.
+- Actual baseline Chrome reproduced all three initial ownership failures (0/3 pass): `browser-1788854234679`. The same three assertions passed the first correction (`browser-1788854766181`). Original failure observations, screenshots, exact source and driver hash are retained. The initial three-case driver's complete bytes were not copied before expansion; the later expanded driver and all final driver bytes are retained. The matching recorded initial driver hash on both runs establishes that their driver did not change between them, but is not a substitute for a missing byte archive.
+- Initial extracted-function test harness had 9 failures/8 passes because a setter referenced as a callback was omitted from its stubs. `ownership-tests-initial.test.ts` and log retain that harness defect; the corrected scanner and actual function set passed 17, then the added focus control passed 18.
+- The existing locale test originally failed because it expected scrub setters inline inside the profile callback. It now verifies delegation and the common clearing helper, retaining the same field/profile guards. Native profile-revoke coverage supplies behavior evidence.
+- Expanded native run initially passed 12/13. Its immediate alert-focus assertion raced the unchanged effect; the bounded focus wait passed 13/13 and final 15/15. Both drivers and raw results are retained.
+- Initial baseline-probe copy attempted a dependency path outside scratch and failed with EPERM; the copy filter was corrected to exclude external dependency paths. An initial Astro executable path was wrong. Both original invocation failures are retained. Neither caused source changes or an approval escalation.
+
+## Reproduction
+
+All invocations use the isolated scratch as working directory and its existing dependency tree. See `COMMANDS.md` for exact main commands and corresponding output files. The browser driver starts only an owned static-file server over its dist; it closes all resources in finally. Optional environment overrides are `ZODIACS_OWNERSHIP_ROOT` and `ZODIACS_OWNERSHIP_EVIDENCE`.
+
+Raw evidence is preserved in a compressed archive with SHA-256 and byte counts for every extracted member. Served asset hashes identify the exact output; the archive does not duplicate the entire generated site or installed dependencies. The plain frozen patch/source identities are also delivered for integration.

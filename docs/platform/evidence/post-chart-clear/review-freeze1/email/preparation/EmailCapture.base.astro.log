@@ -1,0 +1,326 @@
+---
+import SignIcon from './SignIcon.astro';
+import EmailCaptureEnhancement from './EmailCaptureEnhancement.astro';
+import { hasStandaloneWeeklyEmailCapture } from '../lib/email/config';
+import { dailyEmailFeatureEnabled, hasDailySunEmailProvider } from '../lib/email/daily-config';
+import { DAILY_CAPTURE_EN } from '../lib/email/daily-capture-copy';
+import { SIGNS, signName } from '../lib/signs';
+import { normalizeLocale, t, type Locale } from '../lib/i18n';
+
+interface Props {
+  locale?: Locale;
+  placement: 'chart' | 'horoscopes' | 'footer';
+  revealOnChart?: boolean;
+  sign?: string;
+  postChartManaged?: boolean;
+}
+
+const {
+  locale: rawLocale = 'en',
+  placement,
+  revealOnChart = false,
+  sign: requestedSign,
+  postChartManaged: requestedPostChartManaged = false,
+} = Astro.props;
+const locale = normalizeLocale(rawLocale);
+const selectedSignData = SIGNS.find((sign) => sign.slug === requestedSign);
+const selectedSign = selectedSignData?.slug;
+const selectedSignName = selectedSignData ? signName(selectedSignData, locale) : undefined;
+// Astro's static frontmatter runs in Node; unprefixed provider secrets are
+// intentionally absent from `import.meta.env` client exposure.
+const dailyRequested = locale === 'en' && dailyEmailFeatureEnabled(process.env);
+const daily = dailyRequested && hasDailySunEmailProvider(process.env);
+const enabled = dailyRequested ? daily : hasStandaloneWeeklyEmailCapture(process.env);
+const postChartManaged = daily && placement === 'chart' && requestedPostChartManaged;
+const capture = daily ? {
+  kicker: DAILY_CAPTURE_EN.kicker,
+  title: placement === 'footer' ? DAILY_CAPTURE_EN.footerTitle : DAILY_CAPTURE_EN.title,
+  personalTitle: DAILY_CAPTURE_EN.personalTitle,
+  copy: placement === 'footer' ? DAILY_CAPTURE_EN.footerCopy : DAILY_CAPTURE_EN.copy,
+  emailLabel: DAILY_CAPTURE_EN.emailLabel,
+  emailPlaceholder: DAILY_CAPTURE_EN.emailPlaceholder,
+  signLegend: DAILY_CAPTURE_EN.signLegend,
+  usingSign: DAILY_CAPTURE_EN.usingSign,
+  changeSign: DAILY_CAPTURE_EN.changeSign,
+  submit: DAILY_CAPTURE_EN.submit,
+  submitting: DAILY_CAPTURE_EN.submitting,
+  success: DAILY_CAPTURE_EN.success,
+  missingSign: DAILY_CAPTURE_EN.missingSign,
+  invalidEmail: DAILY_CAPTURE_EN.invalidEmail,
+  error: DAILY_CAPTURE_EN.error,
+  privacy: DAILY_CAPTURE_EN.privacy,
+  honeypot: DAILY_CAPTURE_EN.honeypot,
+} : {
+  kicker: t(locale, 'emailCaptureKicker'),
+  title: t(locale, 'emailCaptureTitle'),
+  personalTitle: t(locale, 'emailCapturePersonalTitle'),
+  copy: t(locale, 'emailCaptureCopy'),
+  emailLabel: t(locale, 'emailCaptureEmailLabel'),
+  emailPlaceholder: t(locale, 'emailCaptureEmailPlaceholder'),
+  signLegend: t(locale, 'emailCaptureSignLegend'),
+  usingSign: t(locale, 'emailCaptureUsingSign'),
+  changeSign: t(locale, 'emailCaptureChangeSign'),
+  submit: t(locale, 'emailCaptureSubmit'),
+  submitting: t(locale, 'emailCaptureSubmitting'),
+  success: t(locale, 'emailCaptureSuccess'),
+  missingSign: '',
+  invalidEmail: '',
+  error: t(locale, 'emailCaptureError'),
+  privacy: t(locale, 'emailCapturePrivacy'),
+  honeypot: t(locale, 'emailCaptureHoneypot'),
+};
+const id = `email-${placement}-${locale}`;
+---
+{enabled && (
+  <section
+    id={daily && placement === 'horoscopes' ? 'daily-email' : undefined}
+    class:list={['email-capture', `email-capture--${placement}`]}
+    data-email-capture-shell
+    data-placement={placement}
+    data-reveal-on-chart={revealOnChart ? 'true' : undefined}
+    data-personalized-sign={selectedSign ? 'true' : undefined}
+    data-daily-capture={daily ? 'true' : undefined}
+    data-post-chart-managed={postChartManaged ? 'true' : undefined}
+    hidden={revealOnChart}
+    aria-labelledby={`${id}-title`}
+  >
+    {postChartManaged && <slot name="post-chart" />}
+    <div class="email-capture__copy">
+      {!(daily && placement === 'footer') && <span class="email-capture__kicker">{capture.kicker}</span>}
+      <h2
+        id={`${id}-title`}
+        data-email-title
+        data-default-title={capture.title}
+        data-personal-title={capture.personalTitle}
+      >
+        {selectedSignName
+          ? capture.personalTitle.replace('{sign}', selectedSignName)
+          : capture.title}
+      </h2>
+      <p>{capture.copy}</p>
+    </div>
+
+    <form
+      class="email-capture__form"
+      method="post"
+      action="/api/email/subscribe"
+      data-email-capture
+      data-placement={placement}
+    >
+      <input type="hidden" name="locale" value={locale} />
+      <div class="email-capture__trap" aria-hidden="true">
+        <label for={`${id}-website`}>{capture.honeypot}</label>
+        <input id={`${id}-website`} name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="email-capture__email-row">
+        <div class="email-capture__field">
+          <label for={`${id}-address`}>{capture.emailLabel}</label>
+          <input
+            id={`${id}-address`}
+            name="email"
+            type="email"
+            inputmode="email"
+            autocomplete="email"
+            placeholder={capture.emailPlaceholder}
+            maxlength="254"
+            required
+          />
+        </div>
+        <button class="btn btn--primary email-capture__submit" type="submit" data-label={capture.submit} data-busy-label={capture.submitting}>
+          {capture.submit}
+        </button>
+      </div>
+
+      <div
+        class="email-capture__sign-summary"
+        data-email-sign-summary
+        data-summary-template={capture.usingSign}
+        hidden={!selectedSignName}
+      >
+        <span data-email-sign-summary-copy>
+          {selectedSignName ? capture.usingSign.replace('{sign}', selectedSignName) : ''}
+        </span>
+        <button
+          class="email-capture__change-sign"
+          type="button"
+          data-email-sign-change
+          aria-controls={`${id}-signs`}
+          aria-expanded="false"
+        >
+          {capture.changeSign}
+        </button>
+      </div>
+
+      <fieldset id={`${id}-signs`} class="email-capture__signs" data-email-signs hidden={Boolean(selectedSignName)}>
+        <legend>{capture.signLegend}</legend>
+        {!daily && <label class="email-capture__skip">
+          <input type="radio" name="sign" value="" checked={!selectedSign} />
+          <span>{t(locale, 'emailCaptureNoSign')}</span>
+        </label>}
+        <div class="email-capture__sign-grid">
+          {SIGNS.map((sign) => (
+            <label class="email-capture__sign" title={signName(sign, locale)}>
+              <input
+                type="radio"
+                name="sign"
+                value={sign.slug}
+                data-sign-name={signName(sign, locale)}
+                checked={selectedSign === sign.slug}
+              />
+              <span class="email-capture__disc">
+                <SignIcon sign={sign.slug} size={24} alt="" />
+              </span>
+              <span class="email-capture__sign-name">{signName(sign, locale)}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <p class="email-capture__privacy">{capture.privacy}</p>
+      {postChartManaged && (
+        <p class="email-capture__privacy email-capture__device-note" data-post-chart-device-note hidden>
+          Prefer a brief matched to this exact chart? That exists only for account-synced charts — syncing is always your call, and this chart stays on your device until you make it.{' '}
+          <a href="/profile/#profile-sync">How chart sync works</a>
+        </p>
+      )}
+      <p class="email-capture__status" role="status" aria-live="polite" data-email-status></p>
+      <span hidden data-success-copy>{capture.success}</span>
+      <span hidden data-missing-sign-copy>{capture.missingSign}</span>
+      <span hidden data-invalid-email-copy>{capture.invalidEmail}</span>
+      <span hidden data-error-copy>{capture.error}</span>
+    </form>
+  </section>
+)}
+{enabled && <EmailCaptureEnhancement />}
+
+<style>
+  .email-capture {
+    display: grid;
+    gap: 22px;
+    margin: clamp(30px, 6vw, 56px) 0;
+    padding: clamp(22px, 4vw, 34px);
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-lg);
+    background: var(--void-1);
+  }
+  .email-capture[hidden] { display: none; }
+  .email-capture__copy[hidden],
+  .email-capture__form[hidden],
+  .email-capture__device-note[hidden] { display: none; }
+  @media (min-width: 860px) {
+    .email-capture { grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.3fr); align-items: start; }
+  }
+  .email-capture__kicker,
+  .email-capture__field label,
+  .email-capture__signs legend {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .email-capture h2 {
+    margin: 8px 0 6px;
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    line-height: 1.08;
+  }
+  .email-capture__copy p { margin: 0; max-width: 38ch; color: var(--muted); font-size: var(--text-sm); }
+  .email-capture__form { min-width: 0; }
+  .email-capture__trap { position: absolute; inset-inline-start: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .email-capture__email-row { display: grid; gap: 9px; }
+  @media (min-width: 540px) { .email-capture__email-row { grid-template-columns: minmax(0, 1fr) auto; align-items: end; } }
+  .email-capture__field { display: grid; gap: 7px; }
+  .email-capture__field input {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-sm);
+    background: var(--void-0);
+    color: var(--text);
+    font: inherit;
+  }
+  .email-capture__field input:focus-visible,
+  .email-capture button:focus-visible,
+  .email-capture__sign input:focus-visible + .email-capture__disc,
+  .email-capture__skip input:focus-visible + span { outline: 2px solid var(--ink-0); outline-offset: 3px; }
+  .email-capture__submit { min-height: 46px; padding-inline: 18px; white-space: nowrap; }
+  .email-capture__submit:disabled { cursor: wait; }
+  .email-capture__sign-summary {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 16px;
+    padding-block: 0;
+    padding-inline: 12px 4px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-full);
+    color: var(--text-2);
+    font-size: 13px;
+  }
+  .email-capture__sign-summary[hidden] { display: none; }
+  .email-capture__change-sign {
+    min-width: 72px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 0;
+    border-radius: var(--r-full);
+    background: rgba(198, 204, 218, 0.08);
+    color: var(--text);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .email-capture__change-sign:hover { background: rgba(198, 204, 218, 0.14); }
+  }
+  .email-capture__change-sign:active { transform: scale(0.97); }
+  .email-capture__signs { margin: 16px 0 0; padding: 0; border: 0; }
+  .email-capture__signs[hidden] { display: none; }
+  .email-capture__signs legend { margin-bottom: 9px; }
+  .email-capture__skip { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px; color: var(--muted); font-size: 12px; cursor: pointer; }
+  .email-capture__skip input { accent-color: var(--ink-1); }
+  .email-capture__sign-grid { display: flex; flex-wrap: wrap; gap: 6px; direction: ltr; }
+  .email-capture__sign { position: relative; display: grid; min-width: 44px; justify-items: center; gap: 3px; cursor: pointer; }
+  :global(html:lang(ar)) .email-capture__sign { direction: rtl; }
+  .email-capture__sign input { position: absolute; opacity: 0; pointer-events: none; }
+  .email-capture__disc {
+    display: block;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    opacity: 0.58;
+    transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .email-capture__sign:hover .email-capture__disc { opacity: 0.88; }
+  }
+  .email-capture__sign input:checked + .email-capture__disc { opacity: 1; border-color: var(--ink-1); transform: translateY(-1px); }
+  .email-capture__sign-name { max-width: 58px; overflow: hidden; color: var(--faint); font-size: 9px; line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+  .email-capture__sign input:checked ~ .email-capture__sign-name { color: var(--text-2); }
+  .email-capture__privacy,
+  .email-capture__status { margin: 10px 0 0; color: var(--faint); font-size: 11px; line-height: 1.5; }
+  .email-capture__device-note { max-width: 62ch; }
+  .email-capture__device-note a {
+    color: var(--text-2);
+    text-decoration-color: var(--hair-3);
+    text-underline-offset: 0.18em;
+  }
+  .email-capture__device-note a:focus-visible {
+    outline: 2px solid var(--ink-0);
+    outline-offset: 3px;
+  }
+  .email-capture__status:not(:empty) { color: var(--text-2); }
+  .email-capture--footer { margin: 0 0 clamp(36px, 6vw, 60px); }
+  @media (prefers-reduced-motion: reduce) {
+    .email-capture__disc,
+    .email-capture__change-sign { transition: none; }
+  }
+</style>

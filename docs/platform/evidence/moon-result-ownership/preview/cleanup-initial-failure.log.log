@@ -1,0 +1,6 @@
+Initial cleanup verification finished the exact private URL/query-value scan (zero matches), immutable-source checks, four-file ChartCalculator freeze check, and deletion of /private/tmp/zodiacs-platform-moon-preview-auth. Its subsequent public-loader assertion failed:
+Traceback (most recent call last):
+  File "<stdin>", line 17, in <module>
+AssertionError
+
+The assertion mistakenly expected https://plausible.io/js/script.js. Actual retained requests use the existing configured loader https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js. The corrected verification checks that exact observed configured URL. This is a cleanup harness assumption error, not a page or product failure. All 12 browser groups had already passed, and the temporary credential directory had already been removed before this assertion.

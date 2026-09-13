@@ -1,0 +1,42 @@
+[
+  {
+    "path": "ci-current.json",
+    "bytes": 27970,
+    "sha256": "924cda4ad06d0330719defd8e53c04c1e7cbacfb7872ef6f8cd56a5a8615a356"
+  },
+  {
+    "path": "ci-log-unavailable.txt",
+    "bytes": 221,
+    "sha256": "2e50507c777017370fb1cdd88e9a1f0ecfb2ac09325e7c127c68136d051a868d"
+  },
+  {
+    "path": "ci-post-chart-job.log",
+    "bytes": 28512,
+    "sha256": "4eb23b0e42d63e72e978bb6d4fcfb2116347f766e5bf761bd1616dff1ed0b77d"
+  },
+  {
+    "path": "diff-verification.json",
+    "bytes": 19152,
+    "sha256": "e0d71147eed7ad4b04088b7783a2a1de737db5ded77bd3c89a46a36df5ccf902"
+  },
+  {
+    "path": "files.pages.json",
+    "bytes": 1868438,
+    "sha256": "533312c8af50ecf9b8ff1d09bb2f624b004c1494efc69507adfd364e053ec4ba"
+  },
+  {
+    "path": "pr.json",
+    "bytes": 332,
+    "sha256": "f70798574833f3d346f28a4f7ebda32d75761e62a39638e5caa594d44a67db4f"
+  },
+  {
+    "path": "runs.json",
+    "bytes": 453,
+    "sha256": "57a0d5f0fe3df0d9f9b9cd95f4017d45f84ebba3f5a761d71c07df19c81ad4d5"
+  },
+  {
+    "path": "support-ci-final-check.json",
+    "bytes": 28014,
+    "sha256": "54edeba9470e07d07bf4f5b1b575fc90f8f547a1ddd136a170cc3246c7fb5334"
+  }
+]

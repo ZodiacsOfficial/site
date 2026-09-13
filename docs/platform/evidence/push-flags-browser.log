@@ -1,0 +1,31 @@
+
+> zodiacs-org@1.0.0 test:phase3:push
+> node tests/push-drive.mjs
+
+PASS  generated service worker is present and push-enabled · status=200
+PASS  first /today/ visit does not show the push affordance
+PASS  first visit makes no permission or push-subscription call · {"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":0,"getSubscriptionCalls":0,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  returning Today stays free of proactive Guide popovers
+PASS  returning Today offer is stable and fully contained · {"cls":0,"position":"fixed","promptTop":602.90625,"promptRight":363,"promptBottom":800,"promptLeft":12,"viewportWidth":375,"viewportHeight":812,"pageWidth":375,"readingBottomGap":0}
+PASS  returning visit shows the event-only sky-alert affordance
+PASS  native permission is not requested on page load · {"permissionCalls":0,"registrationCalls":1,"getRegistrationCalls":1,"getSubscriptionCalls":1,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  denied permission adds no opt-in registration, subscription, or API enrollment · {"permissionCalls":1,"registrationCalls":1,"getRegistrationCalls":1,"getSubscriptionCalls":1,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  an existing subscriber gets no returning-visit acquisition card
+PASS  existing-subscriber silence makes no permission or enrollment request · {"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":1,"getSubscriptionCalls":1,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  Profile exposes the exact active Sky Alerts status row
+PASS  Profile revokes browser and server consent while keeping the Off row reachable · {"profileOff":{"calls":{"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":2,"getSubscriptionCalls":2,"subscribeCalls":0,"unsubscribeCalls":1,"applicationServerKeyBytes":0},"preference":"dismissed"},"profileRequests":[{"method":"DELETE","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts"}}]}
+PASS  Profile status and reversal never trigger native permission by themselves · {"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":2,"getSubscriptionCalls":2,"subscribeCalls":0,"unsubscribeCalls":1,"applicationServerKeyBytes":0}
+PASS  Profile never reports Off when server revocation fails · {"serverFailureState":{"calls":{"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":2,"getSubscriptionCalls":2,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0},"preference":"subscribed"},"serverFailureRequests":[{"method":"DELETE","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts"}}]}
+PASS  Profile never reports Off when browser revocation fails · {"browserFailureState":{"calls":{"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":2,"getSubscriptionCalls":2,"subscribeCalls":0,"unsubscribeCalls":1,"applicationServerKeyBytes":0},"preference":"subscribed"},"browserFailureRequests":[{"method":"DELETE","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts"}}]}
+PASS  Profile reports Off with a retry when failed enrollment rolls back cleanly · {"enrollmentRollbackState":{"calls":{"permissionCalls":1,"registrationCalls":1,"getRegistrationCalls":2,"getSubscriptionCalls":3,"subscribeCalls":1,"unsubscribeCalls":1,"applicationServerKeyBytes":4},"preference":"dismissed"},"enrollmentRollbackRequests":[{"method":"POST","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts","expirationTime":null,"keys":{"p256dh":"fixture-p256dh","auth":"fixture-auth"},"lang":"en"}}]}
+PASS  Profile reports On when failed enrollment leaves the browser subscription active · {"enrollmentRollbackFailureState":{"calls":{"permissionCalls":1,"registrationCalls":1,"getRegistrationCalls":2,"getSubscriptionCalls":3,"subscribeCalls":1,"unsubscribeCalls":1,"applicationServerKeyBytes":4},"preference":"subscribed"},"enrollmentRollbackFailureRequests":[{"method":"POST","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts","expirationTime":null,"keys":{"p256dh":"fixture-p256dh","auth":"fixture-auth"},"lang":"en"}}]}
+PASS  non-installed iOS explains Home Screen installation before push
+PASS  non-installed iOS makes no permission or subscription request · {"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":1,"getSubscriptionCalls":1,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  installed iOS is eligible for the ordinary explicit opt-in
+PASS  installed-iOS eligibility remains passive before acceptance · {"permissionCalls":0,"registrationCalls":0,"getRegistrationCalls":1,"getSubscriptionCalls":1,"subscribeCalls":0,"unsubscribeCalls":0,"applicationServerKeyBytes":0}
+PASS  explicit acceptance creates one mocked browser subscription · {"calls":{"permissionCalls":1,"registrationCalls":1,"getRegistrationCalls":1,"getSubscriptionCalls":2,"subscribeCalls":1,"unsubscribeCalls":0,"applicationServerKeyBytes":4},"preference":"subscribed"}
+PASS  successful enrollment posts only the mocked endpoint and keys · [{"method":"POST","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts","expirationTime":null,"keys":{"p256dh":"fixture-p256dh","auth":"fixture-auth"},"lang":"en"}}]
+PASS  turn off removes the mocked browser subscription and hides the affordance · {"calls":{"permissionCalls":1,"registrationCalls":1,"getRegistrationCalls":2,"getSubscriptionCalls":3,"subscribeCalls":1,"unsubscribeCalls":1,"applicationServerKeyBytes":4},"preference":"dismissed"}
+PASS  turn off deletes the same mocked endpoint from the API · [{"method":"POST","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts","expirationTime":null,"keys":{"p256dh":"fixture-p256dh","auth":"fixture-auth"},"lang":"en"}},{"method":"DELETE","body":{"endpoint":"https://push.fixture.test/subscription/sky-alerts"}}]
+
+ALL PASS

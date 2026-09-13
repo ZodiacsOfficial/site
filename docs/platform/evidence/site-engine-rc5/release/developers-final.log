@@ -1,0 +1,138 @@
+{
+  "capturedAt": "2026-09-08T04:10:46.007Z",
+  "browser": "152.0.7977.83",
+  "result": "passed",
+  "checks": [
+    {
+      "width": 1280,
+      "sourceMatches": true,
+      "keyboardFocus": true,
+      "viewport": 1280,
+      "pageWidth": 1280,
+      "codeWidth": 778,
+      "codeScrollWidth": 778,
+      "codeScrollLeft": 0,
+      "reducedMotion": true,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/support/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "width": 1280,
+      "pageWidth": 1280,
+      "zoom": "1",
+      "overflow": false,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/support/",
+      "cssZoom": 2,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "width": 1280,
+      "pageWidth": 1280,
+      "zoom": "2",
+      "overflow": false,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/examples/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+      "width": 1280,
+      "pageWidth": 1280,
+      "overflow": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/examples/",
+      "cssZoom": 2,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+      "width": 1280,
+      "pageWidth": 1280,
+      "overflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "sourceMatches": true,
+      "keyboardFocus": true,
+      "viewport": 390,
+      "pageWidth": 390,
+      "codeWidth": 348,
+      "codeScrollWidth": 615,
+      "codeScrollLeft": 2,
+      "reducedMotion": true,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/support/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "width": 390,
+      "pageWidth": 390,
+      "zoom": "1",
+      "overflow": false,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/examples/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+      "width": 390,
+      "pageWidth": 390,
+      "overflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 320,
+      "sourceMatches": true,
+      "keyboardFocus": true,
+      "viewport": 320,
+      "pageWidth": 320,
+      "codeWidth": 278,
+      "codeScrollWidth": 615,
+      "codeScrollLeft": 2,
+      "reducedMotion": true,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/support/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "width": 320,
+      "pageWidth": 320,
+      "zoom": "1",
+      "overflow": false,
+      "overlay": false,
+      "pageErrors": []
+    },
+    {
+      "route": "/developers/examples/",
+      "cssZoom": 1,
+      "keyboardFocus": true,
+      "canonicalFooter": true,
+      "artifactUrl": "https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz",
+      "width": 320,
+      "pageWidth": 320,
+      "overflow": false,
+      "pageErrors": []
+    }
+  ]
+}

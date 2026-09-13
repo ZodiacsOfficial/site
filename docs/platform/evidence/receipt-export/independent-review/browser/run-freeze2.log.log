@@ -1,0 +1,21 @@
+{"name":"download-ordinary","status":"passed"}
+{"name":"download-gap-hour","status":"passed"}
+{"name":"download-fold-earlier","status":"passed"}
+{"name":"download-gap-half-hour","status":"passed"}
+{"name":"download-gap-whole-day-unknown","status":"passed"}
+{"name":"download-LMT","status":"passed"}
+{"name":"download-polar-requested-placidus","status":"passed"}
+{"name":"download-unknown-local-noon","status":"passed"}
+{"name":"preserve-fixed-offset","status":"passed"}
+{"name":"preserve-subminute-gap","status":"passed"}
+{"name":"preserve-exact-pole","status":"passed"}
+{"name":"stale-DOM-after-edit","status":"passed"}
+{"name":"replacement-run","status":"passed"}
+{"name":"positions-only-has-no-receipt","status":"failed","error":"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n","stack":"AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at file:///private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:27:314\n    at async check (file:///private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:21:90)\n    at async file:///private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:27:1"}
+{"name":"locale-en","status":"passed"}
+{"name":"locale-es","status":"passed"}
+{"name":"locale-pt","status":"passed"}
+{"name":"locale-fr","status":"passed"}
+{"name":"locale-it","status":"passed"}
+{"name":"locale-ru","status":"failed","error":"TimeoutError: page.waitForEvent: Timeout 30000ms exceeded while waiting for event \"download\"\n=========================== logs ===========================\nwaiting for event \"download\"\n============================================================","stack":"page.waitForEvent: Timeout 30000ms exceeded while waiting for event \"download\"\n=========================== logs ===========================\nwaiting for event \"download\"\n============================================================\n    at /private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:28:705\n    at async check (/private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:21:90)\n    at async file:///private/tmp/zodiacs-platform-site-receipt-export-review/browser/run.mjs:28:53"}
+{"passed":18,"failed":2}

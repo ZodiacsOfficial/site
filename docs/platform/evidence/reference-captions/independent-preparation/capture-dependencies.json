@@ -1,0 +1,324 @@
+{
+  "command": [
+    "git",
+    "archive",
+    "9d180c9f1a2f66893ccd6d73fcda106cb3894674",
+    "src/components",
+    "src/styles"
+  ],
+  "sha256": "84a190ab93ba085d1d380263f1a3c25bb35607931b14a28b41bc501c78c13b2e",
+  "files": [
+    {
+      "path": "src/components/AskGuideLine.astro",
+      "sha256": "46201efba93d4cd75759f5f1baa681de598e2df340b733581eee909e83d2377f"
+    },
+    {
+      "path": "src/components/AspectGlyph.tsx",
+      "sha256": "a9f4e7159a1f23c403aea42ff4bda299ff7e4282ff7e502a2d70934e02c9c93b"
+    },
+    {
+      "path": "src/components/AspectWheel.astro",
+      "sha256": "49d8250fb1117fbece0d412a39bbe229bf1b5e5a8de67ffc036800d4bdc5588d"
+    },
+    {
+      "path": "src/components/AstroTerm.astro",
+      "sha256": "9daea2e565697996e3a7b856202c40c0c4c185f100fbcb8980462f0b7188b758"
+    },
+    {
+      "path": "src/components/BrandMark.astro",
+      "sha256": "38ae476dea58a23d762c01a52a9c37aebb6eacee160de649d09313ad250b0e1f"
+    },
+    {
+      "path": "src/components/ChineseZodiacBrandRail.astro",
+      "sha256": "ddc753386e5ea1ab901b317b8d9e4f71051d3c9185a7d033c3cc6030087b059e"
+    },
+    {
+      "path": "src/components/CollectBand.astro",
+      "sha256": "df82011775ecc9ea707540d58d8c198bc46bf0280e4c526dcd29575129a0ca62"
+    },
+    {
+      "path": "src/components/CollectBand.contract.test.ts",
+      "sha256": "108a849fd4160be62c5f1b72a6612587c8f6f59e9a49ca39259d6d8c951f385c"
+    },
+    {
+      "path": "src/components/DailyLocaleReading.astro",
+      "sha256": "ea1f444da2c453620794e919c4131a1c79deca0a7e4137cbe906fa9eeb8b95c8"
+    },
+    {
+      "path": "src/components/DepthFigure.astro",
+      "sha256": "b810c53c8085338e791de9bb36a5315a9e346edd0689c6ee72f78c9fd11caa99"
+    },
+    {
+      "path": "src/components/DisclosureTable.astro",
+      "sha256": "dea9c9195c0126e62c9078627447865b39540baf08eb77118903d6d8c9639ffb"
+    },
+    {
+      "path": "src/components/EditionFreshnessGuard.astro",
+      "sha256": "11a270f44b9290d6befeadb7b31111ee7c2f98b9eff5150b300bf263a270c7e9"
+    },
+    {
+      "path": "src/components/EditionText.astro",
+      "sha256": "15594688e4ca3b8f1d9f87c7f3db009cb87262968c322ef07d40e9c7a43e7482"
+    },
+    {
+      "path": "src/components/EditorialLine.astro",
+      "sha256": "ec2c7c1c65602a6e199f98eef4656387616389a0177029ffa22d9150d116cac0"
+    },
+    {
+      "path": "src/components/EmailCapture.astro",
+      "sha256": "5c55b0649765eb0ffeee07b5d4d2b7ee99c684c5ba89079aa99ce0af6103eae9"
+    },
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "src/components/EmbedChart.astro",
+      "sha256": "d00a5f9824129c5a69380469738d317a2bcd79a48f243a652da2dd35a0b32509"
+    },
+    {
+      "path": "src/components/EmbedMoon.astro",
+      "sha256": "d0286e23474e542160a3e95a1f2a610ab72b1f3cd124b1de07940c07c67cbecb"
+    },
+    {
+      "path": "src/components/EmbedSky.astro",
+      "sha256": "de430848f4c410c5fc5caba0e4b295224541fc2317d2ce0980b2a234cb2ccaf1"
+    },
+    {
+      "path": "src/components/EvidenceDisclosure.astro",
+      "sha256": "ca131d3443abf5520917ba888fe4d809b33819d41dfc87a06ed5fe1d8f74d53a"
+    },
+    {
+      "path": "src/components/FactTable.astro",
+      "sha256": "7058d40e3b0c78527948ac6026064c0c1790f3eef02e16a280fae9f215fb0a4f"
+    },
+    {
+      "path": "src/components/Faq.astro",
+      "sha256": "b793c999c4cc93e592fda69e6a933c0d31c367317b7010d6d5412bcb67625b02"
+    },
+    {
+      "path": "src/components/GlassDefs.astro",
+      "sha256": "be6a90d3de50a44af9cf32b1e2dd8c9de5586564815da1c6ee6b305f91c844e7"
+    },
+    {
+      "path": "src/components/GuideHoroscopeBand.astro",
+      "sha256": "400b0529ab822139cad4c28fc42800c204427ca7c918410259a50bf322d03fff"
+    },
+    {
+      "path": "src/components/GuideProfileHook.astro",
+      "sha256": "bc753d707953437f1f2901e8a4b841aed8a1f870b63d633ce82b82abfb13dead"
+    },
+    {
+      "path": "src/components/GuideQuickPrompts.astro",
+      "sha256": "a40c10b12c645a5ed3f77de6d64db42f1207c3df88e0f502c5d85dbccf5c500b"
+    },
+    {
+      "path": "src/components/HeritageTimeline.astro",
+      "sha256": "9d4fb3313661e753e955d9f8796a5edebdf6006d3297153472a57f2815005fd9"
+    },
+    {
+      "path": "src/components/HoroscopeProgramPage.astro",
+      "sha256": "cef593544da00d6b2be1fa52bcb68786d10ec0be01ccd7b34ac1fff1226d503a"
+    },
+    {
+      "path": "src/components/HouseWheel.astro",
+      "sha256": "a36ba5b0baf41ab92338eda6cffc4dcbd09c5cf90167659144b5d1b72f4e00be"
+    },
+    {
+      "path": "src/components/LocalizedDisclosurePage.astro",
+      "sha256": "3abf942c9dc10abdfd966544efa104d8615890a61863e9e5c1a425d3a30ed72a"
+    },
+    {
+      "path": "src/components/NextActionCard.tsx",
+      "sha256": "320e9fc11695c246a6b570f8bccd3c306de890abb0cdbd1e4dcef717b5bbd925"
+    },
+    {
+      "path": "src/components/PlanetGlyph.tsx",
+      "sha256": "714db46ffbd7985219251606e4d92244cf1cfca65d48ea633ec94d37ac76d0cd"
+    },
+    {
+      "path": "src/components/RaceRamp.astro",
+      "sha256": "c8482be6176b308dd844d653093ae0cdeb942ebde37a5ed63308ce113fa040fd"
+    },
+    {
+      "path": "src/components/SEO.astro",
+      "sha256": "5724c02395694238e849dd2c25d8e5d70f34149e5a7f095e28a59599da0d0fe3"
+    },
+    {
+      "path": "src/components/ShareRow.astro",
+      "sha256": "95870bfeb3a6848d1a031e4595b482c62b0144817937379829ffbdd9d6ef1ac5"
+    },
+    {
+      "path": "src/components/SignIcon.astro",
+      "sha256": "d130aa96ab10c46a17a6fceb1b8ca560da89d447c0103c32f052c03f82842bbc"
+    },
+    {
+      "path": "src/components/SiteFooter.astro",
+      "sha256": "d51212bba8380b20ead7a4a5cc3bc59b6ba77171aa9dd2d83bf5aa9ac5f7b290"
+    },
+    {
+      "path": "src/components/SiteNav.astro",
+      "sha256": "4fe7e4cecca4c3751045f5875cfb7de4cfc0588d8bf0d598245c362a799c06d6"
+    },
+    {
+      "path": "src/components/SourcesLine.astro",
+      "sha256": "d7fde641ec129094b59db8c8b073190f62332c18c7d15372637f055cd5bcdd71"
+    },
+    {
+      "path": "src/components/TerminalMarketVenueNotice.astro",
+      "sha256": "3246388c6e28c669b8ad09d4b3c87c4d81bcc6876bef155a875b9e3d4c0b3624"
+    },
+    {
+      "path": "src/components/ToolGlyph.astro",
+      "sha256": "a848f9394e226d543fd4c758dbab0fe8a0c86d377703fd23c3d60af511fd7d8c"
+    },
+    {
+      "path": "src/components/ToolsPageHeading.astro",
+      "sha256": "8ff28ebeec356e087dc0892203d08ba080480830d54d589db40a0d2836cdc611"
+    },
+    {
+      "path": "src/components/ZodiacRing.astro",
+      "sha256": "1cc0023ea32f9f252ffc8264999b350f4376288e0436c87cc36b2e8612fa3075"
+    },
+    {
+      "path": "src/components/events/EventEvidence.astro",
+      "sha256": "fd957bb1c36f4e7b7c3616a352612397d8c7d6ba76feee702959edd986de3f32"
+    },
+    {
+      "path": "src/components/events/EventFactsBand.astro",
+      "sha256": "680dd0b10d0f2ce28ff0324917c7f482faf94f4059ea316f8637355f441f3c79"
+    },
+    {
+      "path": "src/components/events/EventMark.astro",
+      "sha256": "ddd5de597303524c9ce2e6f511f8aee1b51b1125e5e6e6a5cdc58ec9714cedbd"
+    },
+    {
+      "path": "src/components/events/EventPageLayout.astro",
+      "sha256": "b17cbecf870b136d1f6fea51452ecfe4a18a4a1aa08f5966c3a9064643f5abe3"
+    },
+    {
+      "path": "src/components/events/EventRelated.astro",
+      "sha256": "5c06876aa9bdc589af4d5cbd8411dd4bfac6d84334adabce875aa8085cf14fe5"
+    },
+    {
+      "path": "src/components/events/EventSignNotes.astro",
+      "sha256": "5b867245acd0d999da8cd193b0fddfc3d01b0cc3832d8c7266dc7c57d694dc0b"
+    },
+    {
+      "path": "src/components/events/UpcomingEventLinks.astro",
+      "sha256": "f06479a87c18d2ee94651de8a40b943e149ab40c3211679d78c4038783434632"
+    },
+    {
+      "path": "src/components/people/PeopleCard.astro",
+      "sha256": "83726ea363f8b36178dac253d79af2cccfa5a2a1ff2839f5bd8549dd1c16860f"
+    },
+    {
+      "path": "src/components/programmatic/LocalizedBirthdayPage.astro",
+      "sha256": "55ccad690338d0e328cc8572db7bf0a69882e5d5dc94dbcc2906d6b550301f27"
+    },
+    {
+      "path": "src/components/programmatic/LocalizedChineseZodiacAnimal.astro",
+      "sha256": "b4dfc0dc2b783bbd80f4bc281488184be50d80f65ea8e31586e4464bfefa03ec"
+    },
+    {
+      "path": "src/components/programmatic/LocalizedChineseZodiacHub.astro",
+      "sha256": "2e340961a5d6704f547b567792bb3dde09091796b113ac9d9386758c0e04b4e0"
+    },
+    {
+      "path": "src/styles/base.css",
+      "sha256": "a85d1939ab2bdd43e378d6257a502767182fe654a9dccf328c67f1b41df598cc"
+    },
+    {
+      "path": "src/styles/calculator-first-paint.css",
+      "sha256": "ede26eecf16f775131837e836bc752e504bee2e781100dec361e8fc3d0269184"
+    },
+    {
+      "path": "src/styles/calculator.css",
+      "sha256": "7fe31ea7cb1344d1a5cb7e3aa66fb6c633ea442791e1af198f53a1946b6aadb6"
+    },
+    {
+      "path": "src/styles/chinese-zodiac.css",
+      "sha256": "8d994ecc505cf3c797263b7aabb65f9b99fdbb7e983eb38b5b00ae4cbff0382c"
+    },
+    {
+      "path": "src/styles/cluster.css",
+      "sha256": "ea3a707d47cf1487ba801a0f1c96dd4a4fc000bf177186e4cff73dad53c5c6a1"
+    },
+    {
+      "path": "src/styles/context-help.css",
+      "sha256": "6c2e5c83d5ba584707986e81a97618690bb2d1a68e73789eb60ed3775a202b1d"
+    },
+    {
+      "path": "src/styles/events.css",
+      "sha256": "ce0b8c6dd0a1f1d01cfef8219b7e352c9140c36a420bdab8d141f997da7c8ce6"
+    },
+    {
+      "path": "src/styles/evidence-disclosure.css",
+      "sha256": "1320de7746404c56091e0261543d49a3599d86c4a74f48674225d65a04e338a5"
+    },
+    {
+      "path": "src/styles/explorer.css",
+      "sha256": "bae077ec22caf42761a15f94ead861c0a46fd406b9b7eee5683f3f978f315ab1"
+    },
+    {
+      "path": "src/styles/living-chart.css",
+      "sha256": "c51aac72f438cb9bf3f3562c6eb3a539711a07ed0209e61da36f9b97523f1175"
+    },
+    {
+      "path": "src/styles/people.css",
+      "sha256": "41cabad249ed4a132a4628ff71382b969c04c35e6756d1aeebc77934b2ffcf90"
+    },
+    {
+      "path": "src/styles/post-chart-daily.css",
+      "sha256": "99a8048b0826a9af03dc8d35c4b3644b58faee2e54cce5bcb54c4873f819edea"
+    },
+    {
+      "path": "src/styles/prose.css",
+      "sha256": "caa27e63115115ba0458bd6961ae27855f91f78c4d8ea643fe037d7346d26fc8"
+    },
+    {
+      "path": "src/styles/push.css",
+      "sha256": "212e2bfdd4f94a487c059c61376eb027b5683c8fb070e497ba1c562705e3a093"
+    },
+    {
+      "path": "src/styles/pwa-install.css",
+      "sha256": "1388fe1334ce7deab58e81c4429cc8538821d8afe45d487c1729490936a505dd"
+    },
+    {
+      "path": "src/styles/race.css",
+      "sha256": "1edaf41640665a1db6065ee53a97119a117688fe72a67db57343856203c0da17"
+    },
+    {
+      "path": "src/styles/registry-aura.css",
+      "sha256": "1cbf286e764dc8590971330625f33c922d0da54e6f2b69ee5af17fc7152151b8"
+    },
+    {
+      "path": "src/styles/rx-table.css",
+      "sha256": "fa9edd9a63d8dcd489121b91cdc19eb1cbe5866d42e9d9636ace48c81d309b44"
+    },
+    {
+      "path": "src/styles/site-footer.css",
+      "sha256": "d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700"
+    },
+    {
+      "path": "src/styles/someone-else.css",
+      "sha256": "5b2f4a60478422f1f08c1ad0ec1a20f035504d6a6670a73ea1786810c9da2586"
+    },
+    {
+      "path": "src/styles/today.css",
+      "sha256": "7233bbb4e7927b44f01332e57c692f75ee1281e8a2474573d932f2c1b85f9857"
+    },
+    {
+      "path": "src/styles/tokens.css",
+      "sha256": "4ee3e929f656cf7e683adca7bf6fc1b9d4fdb3f7ab05a5d4cb02e95548a820a2"
+    },
+    {
+      "path": "src/styles/transit-itinerary.css",
+      "sha256": "dcf642ac7f2c0e1a986b8b355c4950fc5a966d0989ff2d0f60a1743ab063166c"
+    },
+    {
+      "path": "src/styles/wallet-chart.css",
+      "sha256": "142a77615d16e1f4d8b2820de96d4f42e116d6fa47fc9f63b0b7a5a0a3e7f811"
+    }
+  ]
+}

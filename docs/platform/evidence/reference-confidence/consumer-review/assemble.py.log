@@ -1,0 +1,34 @@
+from pathlib import Path
+import subprocess,json,hashlib
+OUT=Path(__file__).parent;SITE=OUT/'site';ROOT=Path('/Users/chiburashka/.codex/worktrees/4806/site');BASE='f803d2543ad81343b22d49326b8b46d0e2ea03a0'
+AUTHOR=Path('/private/tmp/zodiacs-platform-chart-reference-confidence-evidence');META=Path('/private/tmp/zodiacs-platform-reference-confidence-metadata')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def save(name,b):
+ p=OUT/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(b)
+identity=(AUTHOR/'freeze2-identity.json').read_bytes();patch=(AUTHOR/'freeze2.patch').read_bytes()
+assert sha(identity)=='54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c'
+assert sha(patch)=='b13527901ee962d462b0ddd2bdbc16f82763ffa8ad7486d797358b46f76fd0a4'
+save('freeze2-identity.json',identity);save('freeze2.patch',patch);freeze=json.loads(identity);assert freeze['baseCommit']==BASE and len(freeze['files'])==16
+with (OUT/'assembly.log').open('w') as log:
+ subprocess.run(['git','clone','--shared','--no-checkout',str(ROOT),str(SITE)],stdout=log,stderr=log,check=True)
+ subprocess.run(['git','checkout','--detach',BASE],cwd=SITE,stdout=log,stderr=log,check=True)
+ subprocess.run(['git','apply','--check',str(OUT/'freeze2.patch')],cwd=SITE,stdout=log,stderr=log,check=True)
+ subprocess.run(['git','apply',str(OUT/'freeze2.patch')],cwd=SITE,stdout=log,stderr=log,check=True)
+records=[]
+for name,row in freeze['files'].items():
+ data=(SITE/name).read_bytes();assert sha(data)==row['sha256'] and len(data)==row['bytes'];assert data==(AUTHOR/'source-freeze2'/name).read_bytes()
+ save('frozen-source/'+name,data);records.append({'path':name,**row,'origin':'author16'})
+metadata=json.loads((META/'source-identity.json').read_text());metapatch=(META/'integration.patch').read_bytes();assert sha(metapatch)=='408d373d7221f7b8caf796a0e67e6ee7f458fcab0ca5ceac628b3a71dbfbb2a4';save('metadata.patch',metapatch);save('metadata-identity.json',(META/'source-identity.json').read_bytes())
+with (OUT/'metadata-apply.log').open('w') as log:
+ subprocess.run(['git','apply','--check',str(OUT/'metadata.patch')],cwd=SITE,stdout=log,stderr=log,check=True)
+ subprocess.run(['git','apply',str(OUT/'metadata.patch')],cwd=SITE,stdout=log,stderr=log,check=True)
+for row in metadata['files']:
+ name=row['path'];data=(SITE/name).read_bytes();assert sha(data)==row['afterSha256'];assert data==(META/'after'/name).read_bytes();save('frozen-source/'+name,data);records.append({'path':name,'bytes':len(data),'sha256':sha(data),'origin':'root-metadata2'})
+status=subprocess.check_output(['git','diff','--name-only','-z','HEAD'],cwd=SITE);untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard','-z'],cwd=SITE)
+paths=[p.decode() for p in (status+untracked).split(b'\0') if p];assert set(paths)=={r['path'] for r in records} and len(paths)==18
+save('actual-changed-paths.json',(json.dumps(sorted(paths),indent=2)+'\n').encode());save('assembled-identity.json',(json.dumps({'base':BASE,'records':records},indent=2)+'\n').encode())
+node='/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node'
+with (OUT/'actual-scope-cli.log').open('w') as f:
+ r=subprocess.run([node,'scripts/phase1-scope-guard.mjs','--base',BASE],cwd=SITE,stdout=f,stderr=subprocess.STDOUT)
+assert r.returncode==0
+print(json.dumps({'base':BASE,'files':len(records),'scopeExit':r.returncode,'productOrRootMutations':False}))

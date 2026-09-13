@@ -1,0 +1,22 @@
+[
+  {
+    "file": "site-b02-final-build.log",
+    "rawSHA256": "9c4dafdf90775946f0f05bb599cdbd2751be30bb0fa0af9ea02ee41aa07e0cec",
+    "storedSHA256": "8a41060eb1ac5d0c8d994c09e8ffcea3799add4d0533b482b34c2a0b431be8fe"
+  },
+  {
+    "file": "site-b02-final-check.log",
+    "rawSHA256": "c07e01c212d4c13debf19fc9b408f1813c835b52b702b3bce24f48012882f9fc",
+    "storedSHA256": "ce39b713ef8b87d35c9a1752da56e8fffaf2e0e891dcd1438e1dc300093d000e"
+  },
+  {
+    "file": "site-b02-final-tests.log",
+    "rawSHA256": "53ab7fcc59240352ad07d00a7562a239cb384f43eea5ff1610cdbac360f75055",
+    "storedSHA256": "b1771541555890c85e5265bf0c3941fac08632395b620d3a79265ec9334d0114"
+  },
+  {
+    "file": "b02-assistant-context.log",
+    "rawSHA256": "6dc3fa841b859164acf14cbdb812ccd5496a6f6d38fdffd4f3dea79b42e727d2",
+    "storedSHA256": "6dc3fa841b859164acf14cbdb812ccd5496a6f6d38fdffd4f3dea79b42e727d2"
+  }
+]

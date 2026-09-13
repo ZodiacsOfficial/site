@@ -1,0 +1,36 @@
+{
+  "baseCommit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "scratch": "/private/tmp/zodiacs-platform-chart-ownership",
+  "files": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 119198,
+      "sha256": "6d954dd0994e019408e5c23cae7ffab9853939d774eb0d8e7df9ca4a51aa920b"
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "bytes": 9306,
+      "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 15655,
+      "sha256": "99d2fb1027c9827fb6a451f4ed4a70916ed65d167b73196edb0a6739e7170e85"
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "bytes": 19337,
+      "sha256": "6a04ed522b2c818966899fff96e9c3d17684669e02dc63cbbf21d87070657716"
+    }
+  ],
+  "patchSha256": "8a8f32d0c3eadeb68fffd282752c33e17fc273143955d5e93eebc397baba3738",
+  "validation": {
+    "focusedTests": 125,
+    "strictTypeCheck": "passed",
+    "astroProductionCompilation": "passed",
+    "criticalStylesPostprocessing": "passed",
+    "browser": "/private/tmp/zodiacs-platform-chart-ownership-evidence/browser-1788855675153/result.json",
+    "browserGroups": 15
+  },
+  "status": "author-frozen; independent review pending; not integrated or published"
+}

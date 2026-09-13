@@ -1,0 +1,51 @@
+[
+  {
+    "command": "corepack pnpm typecheck",
+    "started": "2026-09-07T18:18:46.530Z",
+    "finished": "2026-09-07T18:19:14.904Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-typecheck.log"
+  },
+  {
+    "command": "corepack pnpm test",
+    "started": "2026-09-07T18:19:14.907Z",
+    "finished": "2026-09-07T18:19:29.569Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-test.log"
+  },
+  {
+    "command": "corepack pnpm pack:dry-run",
+    "started": "2026-09-07T18:19:29.569Z",
+    "finished": "2026-09-07T18:19:48.141Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-pack-dry-run.log"
+  },
+  {
+    "command": "corepack pnpm package:contents",
+    "started": "2026-09-07T18:19:48.142Z",
+    "finished": "2026-09-07T18:19:51.298Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-package-contents.log"
+  },
+  {
+    "command": "corepack pnpm exports:smoke",
+    "started": "2026-09-07T18:19:51.298Z",
+    "finished": "2026-09-07T18:19:54.098Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-exports-smoke.log"
+  },
+  {
+    "command": "corepack pnpm docs:engine",
+    "started": "2026-09-07T18:19:54.098Z",
+    "finished": "2026-09-07T18:19:56.826Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-docs-engine.log"
+  },
+  {
+    "command": "corepack pnpm format:check",
+    "started": "2026-09-07T18:19:56.826Z",
+    "finished": "2026-09-07T18:20:00.823Z",
+    "status": 0,
+    "path": "/private/tmp/zodiacs-platform-evidence/sdk-final-format-check.log"
+  }
+]

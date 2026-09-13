@@ -1,0 +1,38 @@
+# Saved-record design evidence
+
+The source snapshot records root HEAD
+`6ab85278bea708337e20947966a54a5072ad0627` plus exact working file SHA-256 values,
+including the then-uncommitted portable calculation boundary. No product files
+were edited. No Astrofolio verification view or reserved trust work was used.
+
+`probe.mjs` executes a freshly bundled copy of actual profile/account functions
+against synthetic memory storage on Node 22.23.2. `result.json` records nine
+controls: four passing boundary controls and five reproduced counterexamples.
+Two of the latter are explicitly modeled proposals rather than product code.
+
+Actual counterexamples: both real aggregate saves return `saved` while an allowed
+interleaving loses one; a hypothetical new global key is absent from real
+handoff inventory; account isolation and account-specific deletion succeed while
+that key remains. Controls establish ordinary sequential saves, full prefix
+clear, quota error reporting and A→B→A epoch rejection. The fixture uses synthetic
+UUIDs, an unknown 2001-12-21 08:30 polar Placidus calculation and no real person.
+No network calls occurred.
+
+`native-idb-control.mjs` executes the actual frozen
+`IndexedDbLivingChartAdapter` in Chrome 152.0.7977.83 native IndexedDB, through a
+disposable browser context and an owned local HTTP server. It confirms atomic
+capacity/CAS callbacks, proves that close does not abort an already active
+transaction, and proves that upgrading the existing database to version 2 breaks
+the current exact-version-1 adapter. The browser/context/server were closed.
+Only synthetic disposable browser storage was changed.
+
+These are bounded architecture probes, not acceptance of a new store or a claim
+that current active profile behavior is fixed. The author task owns product
+implementation, and this reviewer will separately review its frozen patch.
+
+Initial bundle generation failed because the isolated source copy had no engine
+or Supabase package resolution. The error is retained in
+`initial-bundle-missing-dependencies.log`; the corrected bundle resolves existing
+installed packages through an explicit Node search path. No dependency was
+installed and no network behavior was invoked. The bundle input manifests and
+exact emitted bytes are retained for reproducibility.

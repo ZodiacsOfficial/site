@@ -1,0 +1,1459 @@
+{
+  "files": [
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-reference-evidence/source-freeze.json",
+      "bytes": 2624,
+      "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/result.json",
+      "bytes": 800984,
+      "sha256": "99fe209813cfff11b96d76e3b450fb9b2d75966b0cfd1c09f5bbfbd0aa4f4227"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/result.json",
+      "bytes": 889811,
+      "sha256": "ff45c1cc3b8faeac924c562de8a760c6e86a79b80172005518f72d9493f6f223"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-harness-correction.json",
+      "bytes": 1240,
+      "sha256": "c6b033390df51c5d5e7354de6911d85c0c2d418e3b0efd8150524f32975ee933"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-final-analysis.json",
+      "bytes": 16689,
+      "sha256": "19de1cdbaf5f4e055ed9835458265524f5b854912ee6300bfe64ba2856d068af"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/build-receipt-final.json",
+      "bytes": 710,
+      "sha256": "553b1bf1ff70c86675353e8f124af45ce0bc1044294c4a0fdec91d6660b7e5b6"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/capture-comparison-final.json",
+      "bytes": 5176,
+      "sha256": "925145e2904bca4969afaa49498ef733cfcd253f31b4096917cd8f28ae20cc18"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1.log",
+      "bytes": 969,
+      "sha256": "3fd0cc7ca042b845a2e347fbb6859e6b34000206fa26098ed948442549fca3ed"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2.log",
+      "bytes": 506,
+      "sha256": "b14a4978e37f064c933a3a977d4da99bf003f332300a8304d7dfa8644568708d"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-build-drive.mjs",
+      "bytes": 15943,
+      "sha256": "fb37a5a83bb02266583ce61014c88591dc78720befadce9c4525ea574d0c7758"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-build-drive.original.mjs",
+      "bytes": 15943,
+      "sha256": "fb37a5a83bb02266583ce61014c88591dc78720befadce9c4525ea574d0c7758"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-corrected-drive.mjs",
+      "bytes": 16216,
+      "sha256": "6b8eb27b192a33c0f1103435b98ea38435a8908f58546187224d3319b2ac378c"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20636,
+      "sha256": "f3de3156ac4c8420084c282d259a4f656f8fe5899dd0f8217947fa3e8e0ec4f9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/islands/ChartCalculator.tsx",
+      "bytes": 120926,
+      "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/islands/MoonPhaseTool.tsx",
+      "bytes": 12032,
+      "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/en.ts",
+      "bytes": 21989,
+      "sha256": "6068bb4f1145e44b0c580288ff08d52dbc86fac4f6f7bbfe39a8420370915bd9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/es.ts",
+      "bytes": 23999,
+      "sha256": "35fe4b28652f4c82a37f699f62ef0d1dc665a83fcccbdee98122cabb50cf3464"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/fr.ts",
+      "bytes": 27691,
+      "sha256": "f98d148397dad96a2d58a5f76aadc4e31b52e56d938f8481206bbb70efa39162"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/it.ts",
+      "bytes": 26517,
+      "sha256": "be2940c9917652218a53c5bd96825d7883dfebdf6daae2b75ece4e6d28924bbf"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/pt.ts",
+      "bytes": 25626,
+      "sha256": "f569c95ad79a9983d02621a38f21176e3c00761b280ad38c117bd22db089ebcc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/i18n/ui/ru.ts",
+      "bytes": 38328,
+      "sha256": "fb24674394e753a14fa515474a619c2db4611c85dcbc83364fa4898f5cd37828"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/time/localDateContainsUtc.test.ts",
+      "bytes": 6475,
+      "sha256": "0aa0d52d82f86f832ba4f1dae9a5c0e9a828c78c6d13fe27549333d4a46a5707"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/time/localToUtc.ts",
+      "bytes": 7916,
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/tests/local-date-reference-drive.mjs",
+      "bytes": 22003,
+      "sha256": "2ea7036618df0451ee087e902296d4bff8b8d086ceb75b62c107bcd0d9eb15dd"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/package-lock.json",
+      "bytes": 436565,
+      "sha256": "bfd8e7f262ea6ecc8692a7551b77b5ecde39850b8bd4520cfd04a3bab6f6ebc3"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/served-files.json",
+      "bytes": 20543,
+      "sha256": "e1048b885afac2a9b65186ea24e0ec4b5f19d5cb333789eb018014d597194c18"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-1280.json",
+      "bytes": 34583,
+      "sha256": "23710199cfca6bf517741d04e4559640673fa83dd67609c849c544eae7e12681"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-1280-refused.png",
+      "bytes": 168672,
+      "sha256": "549c8d9c1ded26232cecdfacf4054130b5e84ad8bec3df20f96d759e7efa2bd2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-1280-failure.png",
+      "bytes": 170050,
+      "sha256": "9aa57a95a688b0e7c4c0792aa7f54166cb5a00a093fc480d63b6d0d09d31e2e8"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-390.json",
+      "bytes": 34613,
+      "sha256": "e53168e100f22ecc4aba6498e92bd61f1f3db60a66e4919a69cb682e20e2008f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-390-refused.png",
+      "bytes": 132453,
+      "sha256": "6175b115995665a681cfaa201ba19a6bd96b3afefe2fd91d40ce1353d274c6e2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-chart-390-failure.png",
+      "bytes": 104503,
+      "sha256": "c9f7b7fb34737749ed24e70eb3deeba5069c2011eb0fb109af2e28ca445e968f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-1280.json",
+      "bytes": 10895,
+      "sha256": "106b0b8450d55db981282b4b0007e85d49615391a41aca548afb807c33f3cf5d"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-1280-refused.png",
+      "bytes": 144852,
+      "sha256": "f44fade37655f1f8263edda4e72323080b92e3fed529a37a59022e002410d302"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-1280-recovered.png",
+      "bytes": 183125,
+      "sha256": "7988a81dc0088b89b1df8a042ec0356791c3acd1db371d86dd3906cd55d68ed8"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-390.json",
+      "bytes": 10543,
+      "sha256": "2e3f264627b7c59519ba4fe7dff9dc09d226afbb38b2a94684f83c099df51cc8"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-390-refused.png",
+      "bytes": 103473,
+      "sha256": "bc723301c4651f698bce4f6852a018c0c24f9908beace124e2811c23ac4f9145"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/en-moon-390-recovered.png",
+      "bytes": 104615,
+      "sha256": "07104979392839f4fe04fba0d6c7c658b232ffc64fbd331392b3bb27c56112b1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-1280.json",
+      "bytes": 28630,
+      "sha256": "339921e5be91d7e9ddfa0828dadfd5ad178e0569c6331722de2e68a575f2dcf9"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-1280-refused.png",
+      "bytes": 185946,
+      "sha256": "cf84ecddaa159b132f73a10078786313c24d52c90337a126207607834a805272"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-1280-failure.png",
+      "bytes": 187223,
+      "sha256": "bd2b24884e0a9627ec5b2ad4a4a348b67740533c3531c75a166f5708a6aee191"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-390.json",
+      "bytes": 28626,
+      "sha256": "7e10f266252468c00ddb24c2971bcf2ce1f949c40c173b9a8b7a5c507969b53e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-390-refused.png",
+      "bytes": 121779,
+      "sha256": "0356abc8a90beac576c79159616578cca7982ac847a75f87bb020bb059ca1632"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-chart-390-failure.png",
+      "bytes": 107447,
+      "sha256": "70c9020d30871d9672f92ae65b098fad86df0501ae9a6a6887b8bb76b037755f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-1280.json",
+      "bytes": 12660,
+      "sha256": "c2ced2f7ba37ee66d376127b5b198d71a331b2044cccd16a0dfb91d1ad941e7e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-1280-refused.png",
+      "bytes": 127465,
+      "sha256": "19a6c7cde8bf276ca51f5e6b18b37277dbbfa7425636530a640b246089a0e6af"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-1280-recovered.png",
+      "bytes": 186008,
+      "sha256": "373ecb1d38a90119288e7bd365a3d002ac89acf689f069953097f4c0539f2538"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-390.json",
+      "bytes": 11589,
+      "sha256": "97aab01c5259ec45dbd2ba97563dbc534e28839125cffc073c8f5db15472ed46"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-390-refused.png",
+      "bytes": 99137,
+      "sha256": "5baae4afe7999673ee3335e2f791c40df870813a7b5ab5f7d05546d3fa2f67d6"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/es-moon-390-recovered.png",
+      "bytes": 105868,
+      "sha256": "f0465e68a4f7abe4bb5e87c45d981539040ad7360fda8d350567be57009716bf"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-1280.json",
+      "bytes": 29178,
+      "sha256": "6be27b7efe39be42e944e1e125190fed392ebcd682f0b7db1573ef7297ea0f40"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-1280-refused.png",
+      "bytes": 190637,
+      "sha256": "b5381d3fc91173d4f61d58b61ceb1cb0b1046439704342028d1e72cab9db9ff1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-1280-failure.png",
+      "bytes": 192019,
+      "sha256": "a61581cd711cf5f004af560465caf28fffc4078b9228ed37bb9b09fa14b8ecd1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-390.json",
+      "bytes": 29174,
+      "sha256": "8cf3a212b3b564124267000a69ff158213634e1d19f14271cf0b4d0dfa2ec21b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-390-refused.png",
+      "bytes": 122763,
+      "sha256": "865fe2417522755bb98e7c6e9c00ad1d1a8625dfca9d5ddd172a6e7e9c0a5cac"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-chart-390-failure.png",
+      "bytes": 112057,
+      "sha256": "1098e2446fb75cab97bdcf5e300eef6ff13586873bc14e4ab78d29a5776a3e77"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-1280.json",
+      "bytes": 12939,
+      "sha256": "d383185078555480314e8e2bccf4ef295aedfb5f0a5adfc5abfdb03e187c0183"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-1280-refused.png",
+      "bytes": 123162,
+      "sha256": "f013769f5f2c584c4666a42c71bd016659a022704008d367b07819fef2e745bf"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-1280-recovered.png",
+      "bytes": 196264,
+      "sha256": "d2396a88a1a71058be1fb13ab7b1183830e4815a7ae70d3153e0eca70f73906d"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-390.json",
+      "bytes": 10817,
+      "sha256": "86ee6bc5a0cc0c783b479d5c5c087112ac06f8ea5bb64854204f45f1b75da848"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-390-refused.png",
+      "bytes": 98341,
+      "sha256": "579bf2e5cdb3d69ccf502b700066b265bfdeb4e47413fbb1ad0864b663bec743"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/fr-moon-390-recovered.png",
+      "bytes": 102600,
+      "sha256": "7665b7459ac84a60d3b34454a338b8d49839a1850de83839becb74e3a21ca53e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-1280.json",
+      "bytes": 28503,
+      "sha256": "ebf91dbdb7b7fb952318fdba723f9f86f98bbb3b4ff3f4bc660fd1ab2e2247d2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-1280-refused.png",
+      "bytes": 183967,
+      "sha256": "92967bd0e168d79cc0544cd0c62f4355b0d794ca149d9157ea144a197cc9a1aa"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-1280-failure.png",
+      "bytes": 185262,
+      "sha256": "0f96aefba073ad1fe888ec073aef190551e73140d36959e58cdca41ea1fdbe6c"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-390.json",
+      "bytes": 28499,
+      "sha256": "82abec8d6c8968ec312c77052aacd3db3689aa0d84a9a79d819e62bf4a9d48d1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-390-refused.png",
+      "bytes": 128565,
+      "sha256": "a41b282fd76f84e9af45404e08e614480018c8fa5b386d486dc94606535c002b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-chart-390-failure.png",
+      "bytes": 106697,
+      "sha256": "33450f81d0520f9a488bbabdcd81a0e81bbd02ef9572c5e96581ad3338276cc9"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-1280.json",
+      "bytes": 12852,
+      "sha256": "3b252aef716aba3fba7c9b82f7c0985594df00e2feeb25178151a9afe1a51cf1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-1280-refused.png",
+      "bytes": 117255,
+      "sha256": "cff36bc4791d1014cccaf73482b4c5774b1eb92101f70a327e4a1091ef10faf6"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-1280-recovered.png",
+      "bytes": 193371,
+      "sha256": "bef895fe3674224fc91e592d85de32dd7e202b6fe8fa98057ab9387586a434b0"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-390.json",
+      "bytes": 12847,
+      "sha256": "e7b3898f6ed7b41b1d846ea357d3398637b41a3ab393a415214c7f0d83b0feab"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-390-refused.png",
+      "bytes": 96213,
+      "sha256": "fdca6920f0c2610ac429824292cb4e8c22b56e481138e761773e4a1a1b7a8390"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/it-moon-390-recovered.png",
+      "bytes": 106495,
+      "sha256": "bbd64388787a54ac7272bf2b481ab458c02f9481f0c1a8c5aa1ea217af5f2565"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-1280.json",
+      "bytes": 28388,
+      "sha256": "6f9df490a5660715d320df3c6bbd4c07fe07bd04408d9e61deb58c75074abc1e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-1280-refused.png",
+      "bytes": 187437,
+      "sha256": "fbbcd5984c9e49890186f9c8de31999c45daf46dfe91f9bae71d8c14b429df42"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-1280-failure.png",
+      "bytes": 188836,
+      "sha256": "fd0982214e618d12ce23846d71f26cb86cefda7a49345dadfe12876b6792c813"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-390.json",
+      "bytes": 28384,
+      "sha256": "a0653702d8c354ec7dc6376fdc6e6b6180282d2af824b4b256a2c95f9a53526b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-390-refused.png",
+      "bytes": 126309,
+      "sha256": "ac974ef479511dc87e7116a9fbc2dbe69a7880111b5ddbd258869ca92293fd32"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-chart-390-failure.png",
+      "bytes": 110260,
+      "sha256": "4b6d9666b3053f6143fae9b74fcb5c6f326d03e50defc64b4c74b8998b57e037"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-1280.json",
+      "bytes": 12752,
+      "sha256": "8410c3e487a267d8e156c41fe836af2aeb710fe455d756d04b2185d306072230"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-1280-refused.png",
+      "bytes": 120335,
+      "sha256": "7bc2f772aee2d3e107c11c24d53a0e4113e756680cd7a02515dce18d0c0217a5"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-1280-recovered.png",
+      "bytes": 191125,
+      "sha256": "d2516c775441f57ae9dcb459eeb6e7267bb67138ac991740536e51ae610fdd05"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-390.json",
+      "bytes": 11681,
+      "sha256": "74c5eef253d87e5d4ab65476349b32d0cdccc07ddb9db16bd3b4433ac78f1fcd"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-390-refused.png",
+      "bytes": 97987,
+      "sha256": "fb7912ce6e81f69b7af10d5cd304cfe97bbc6835879da99755309ebe5b78bc72"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/pt-moon-390-recovered.png",
+      "bytes": 108333,
+      "sha256": "471f2c22ec1472401653acebccf75c3a9a2c672ce21158d9e2b9a29adb9381e9"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-1280.json",
+      "bytes": 34516,
+      "sha256": "a983764d3d51e0c3c1bba9c16c3b50e77c30ea2c6c03ceac0f8cefe517596831"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-1280-refused.png",
+      "bytes": 172996,
+      "sha256": "8441ceb945fc686c9fa1478f671425f4626750d6753d31b449f3a2ded74e3b59"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-1280-failure.png",
+      "bytes": 174242,
+      "sha256": "5293087eb223fb3075174a120c5e21c13a7d9e71ea65db60159dcde9ba19a2e0"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-390.json",
+      "bytes": 34512,
+      "sha256": "10b344e37e154ad5a8c4d65f8f1ce054c34a3d9e97a1142f4111c14b49c9f87f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-390-refused.png",
+      "bytes": 128472,
+      "sha256": "08cc3f83a1a746937968c24d9e4241c62d8594740604ecb84480caaaff5d7cfd"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-chart-390-failure.png",
+      "bytes": 108430,
+      "sha256": "dd8ef5c4ecd3a97abf5d70f9d53c9e0a845eb806f933dd8698e3c9a09a753a69"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-1280.json",
+      "bytes": 13120,
+      "sha256": "7996aa9701f040303c6d56b059014079561e4106bccb822d5aa3c48a0b038e03"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-1280-refused.png",
+      "bytes": 117075,
+      "sha256": "bff9f9ca39c0e03ced52682792d443a327787f69a6438ffe1b61b47bd8cf1600"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-1280-recovered.png",
+      "bytes": 189790,
+      "sha256": "19d42312da555a9380edb2f77ce88aa09754e18f8728c9f97c680a1f58837d6b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-390.json",
+      "bytes": 10998,
+      "sha256": "ceabee47108836c9e3efe5043dc9ebabdf7899c8841e6c345a5eb2b96a79ed12"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-390-refused.png",
+      "bytes": 96225,
+      "sha256": "2b6f269bb8b8f240fd21bdac6847b3d70dc274c7aea4c84286a750076fae14b0"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/ru-moon-390-recovered.png",
+      "bytes": 105888,
+      "sha256": "116d3772071cbd2624e90e58679f2efbfafa903e232ea262c4a27c108d14774c"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/served-files.json",
+      "bytes": 16949,
+      "sha256": "85accd61c3a9e01a0f64a1a99a0e94e020207b04409a4e8d2ab8ca4ccb0e1531"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-1280.json",
+      "bytes": 81622,
+      "sha256": "bec84cfa9665d6393e520aa76c4ae1f905d406b947b9be145119bac101570bb4"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-1280-refused.png",
+      "bytes": 168672,
+      "sha256": "549c8d9c1ded26232cecdfacf4054130b5e84ad8bec3df20f96d759e7efa2bd2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-1280-recovered.png",
+      "bytes": 257693,
+      "sha256": "6b2be00393a3ae962011fae94f8cf3c917adc0b404b901c8adb22cd5fd3b281e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-390.json",
+      "bytes": 62977,
+      "sha256": "921a00f6d621eb9198557a6c95915560a1a3e85cbebd0187e7eaa7567bd99172"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-390-refused.png",
+      "bytes": 132453,
+      "sha256": "6175b115995665a681cfaa201ba19a6bd96b3afefe2fd91d40ce1353d274c6e2"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/en-chart-390-recovered.png",
+      "bytes": 133254,
+      "sha256": "23e2c128f35bf03ff26edcb8c933beb6fb77eef85149d6b5e30311792a6f36d1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-1280.json",
+      "bytes": 48021,
+      "sha256": "8ff613903f19aa4287d55895bb342be026157a9cd04078fdd60805450ebf4719"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-1280-refused.png",
+      "bytes": 185946,
+      "sha256": "cf84ecddaa159b132f73a10078786313c24d52c90337a126207607834a805272"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-1280-recovered.png",
+      "bytes": 270778,
+      "sha256": "fac0baed1f54f6b6ad20aa6545fde8cf30ba10334cab951ec5147c7c2bf47a33"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-390.json",
+      "bytes": 48017,
+      "sha256": "eb60e4098736675d57ac465583cf6d77328cdbcf8f9b52a622d96d35019093aa"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-390-refused.png",
+      "bytes": 121779,
+      "sha256": "0356abc8a90beac576c79159616578cca7982ac847a75f87bb020bb059ca1632"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/es-chart-390-recovered.png",
+      "bytes": 131772,
+      "sha256": "a23915db3f51f7f6ecb26b9564bbea5fb811e2e43af2cb2e30434a68b1869334"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-1280.json",
+      "bytes": 49605,
+      "sha256": "6c4b204fbc2102d19687bf86d54f8a8c39e22c4ea2a89651d559818c2c6d47bc"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-1280-refused.png",
+      "bytes": 190637,
+      "sha256": "b5381d3fc91173d4f61d58b61ceb1cb0b1046439704342028d1e72cab9db9ff1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-1280-recovered.png",
+      "bytes": 269186,
+      "sha256": "e654182df72abbd5aebff71f855bbdb269b314b4fb94c95584f034ea82331f6a"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-390.json",
+      "bytes": 49601,
+      "sha256": "8e8d0b34b620fb06a44baa4cab635f7d460f9ac0c5cd1038ab2fc20d6ac34d73"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-390-refused.png",
+      "bytes": 122763,
+      "sha256": "865fe2417522755bb98e7c6e9c00ad1d1a8625dfca9d5ddd172a6e7e9c0a5cac"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/fr-chart-390-recovered.png",
+      "bytes": 127718,
+      "sha256": "efc28c3e42f37084b6c0ee5dabccfd311aacf2b478b4c947643248cd84e9f14f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-1280.json",
+      "bytes": 47570,
+      "sha256": "9286f9b4603901c671c64adb06c4b58bb9ec277ee80f736124e61a0e33bc633b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-1280-refused.png",
+      "bytes": 183967,
+      "sha256": "92967bd0e168d79cc0544cd0c62f4355b0d794ca149d9157ea144a197cc9a1aa"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-1280-recovered.png",
+      "bytes": 267277,
+      "sha256": "2ba01d082209c31f7f1d3da3db6a6cdea2c4aa5e73d3be81923dd1c8361af8c1"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-390.json",
+      "bytes": 47566,
+      "sha256": "ad6c17194bb2fba986ad6ac43256273d6a77a9095ab5152875ac3a160e7f9a9c"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-390-refused.png",
+      "bytes": 128565,
+      "sha256": "a41b282fd76f84e9af45404e08e614480018c8fa5b386d486dc94606535c002b"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/it-chart-390-recovered.png",
+      "bytes": 130819,
+      "sha256": "35c0c7ff5910b63cb4953faf1c27170247e43519e5dbdac11031597ff3f435de"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-1280.json",
+      "bytes": 47349,
+      "sha256": "ef70a095808d03fde40ea659f9f15fe5c69e61c45aab30120ae9f3472fbee21e"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-1280-refused.png",
+      "bytes": 187437,
+      "sha256": "fbbcd5984c9e49890186f9c8de31999c45daf46dfe91f9bae71d8c14b429df42"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-1280-recovered.png",
+      "bytes": 255656,
+      "sha256": "f69eda6f52aca7b6ffe75eb194f9b8ed1bd04f07494f2b373e80b6936949f415"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-390.json",
+      "bytes": 47345,
+      "sha256": "8689011cbab22ac958a252bc4b47414f79a20ce0bf3ee40c9235e26fa4b62273"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-390-refused.png",
+      "bytes": 126309,
+      "sha256": "ac974ef479511dc87e7116a9fbc2dbe69a7880111b5ddbd258869ca92293fd32"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/pt-chart-390-recovered.png",
+      "bytes": 132893,
+      "sha256": "9fd7417789a41d349685e47299d03b5cb8b070d09d101ebf94f2ccaf43551948"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-1280.json",
+      "bytes": 64921,
+      "sha256": "f11fb2a11a21ba5bee5f2484988b5d35c04bf807725d0411273f15cc0c1f5c8c"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-1280-refused.png",
+      "bytes": 172996,
+      "sha256": "8441ceb945fc686c9fa1478f671425f4626750d6753d31b449f3a2ded74e3b59"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-1280-recovered.png",
+      "bytes": 254307,
+      "sha256": "1e0087096e661bcad5b78112588e3c724e089680a178492c8583dd4dab252978"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-390.json",
+      "bytes": 64917,
+      "sha256": "537dfb9e3e756cb909873c42f8eb557e8032d25dfb890c154c464665f5c58b3f"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-390-refused.png",
+      "bytes": 128472,
+      "sha256": "08cc3f83a1a746937968c24d9e4241c62d8594740604ecb84480caaaff5d7cfd"
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/ru-chart-390-recovered.png",
+      "bytes": 127207,
+      "sha256": "8ece8f9e27d4b9dd30f98d81a4e03dad6383577258d291a5af6539a5fd73697a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/birth-chart/index.html",
+      "bytes": 218861,
+      "sha256": "7483efa119095599bc99289a95c5a0dd1df1ea9f756209855d9d80a074ed5470"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/instrument-sans-latin-wght-normal.woff2",
+      "bytes": 30092,
+      "sha256": "2ee17598a98d8a59e4df8152d015bec9ab8e4d5672cc0ab42bef806b568e3971"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/eb-garamond-latin-400-normal.woff2",
+      "bytes": 21704,
+      "sha256": "b63448e2680a0dbde70ebb2f3de78f6c515122835491f938e8a8595b46f29210"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/eb-garamond-latin-500-normal.woff2",
+      "bytes": 23012,
+      "sha256": "d2bb3f624516d0233ef8a03bd7b2be47489c36809a02e83ac1bc859e85f4874a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "bytes": 773,
+      "sha256": "e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/jetbrains-mono-latin-wght-normal.woff2",
+      "bytes": 40404,
+      "sha256": "18be452724bfdc236c074ca94a249a7f41a86752c7d04ab258ce9ed5651f6a7e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/preload-helper.L5lOfJxi.js",
+      "bytes": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/context-help-client.BqVrBbz0.js",
+      "bytes": 2472,
+      "sha256": "52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/client.DPkn9Lbl.js",
+      "bytes": 1447,
+      "sha256": "d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/ChartCalculator.CJSrWeaL.js",
+      "bytes": 59378,
+      "sha256": "558988c496305bbe686a1c41e877366f253386e313b6da5f50ef51e6f5f0bd32"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/analytics.CH5T6e-b.js",
+      "bytes": 4190,
+      "sha256": "56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/app-icons/v3/favicon.svg",
+      "bytes": 791,
+      "sha256": "7905102c09c8c80f73cca1f2b23d3921fd8a18f8666cbe7d1436e7acabca1f9b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/hooks.module.C0_8FjiD.js",
+      "bytes": 2875,
+      "sha256": "70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "bytes": 1763,
+      "sha256": "512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/profile-access-reader.DoQqlSjt.js",
+      "bytes": 438,
+      "sha256": "ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/preact.module.Bjq9tLsx.js",
+      "bytes": 10499,
+      "sha256": "796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/signs.BMXPKoMF.js",
+      "bytes": 11693,
+      "sha256": "21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "bytes": 430,
+      "sha256": "7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/PlanetGlyph.BhITbtcc.js",
+      "bytes": 575,
+      "sha256": "57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/i18n.Cg_lCJuc.js",
+      "bytes": 6936,
+      "sha256": "70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/CalculationReload.DXyGkRsn.js",
+      "bytes": 763,
+      "sha256": "7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/astrology.BHib5efU.js",
+      "bytes": 3245,
+      "sha256": "e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/share.BRlg0eGS.js",
+      "bytes": 2132,
+      "sha256": "f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chart-handoff.Dvz2AAcL.js",
+      "bytes": 2042,
+      "sha256": "6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "bytes": 340,
+      "sha256": "8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/useEngine.BV92cVg4.js",
+      "bytes": 504,
+      "sha256": "36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/BirthFields.VmY_J4-2.js",
+      "bytes": 1752,
+      "sha256": "19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/localToUtc.CKDDLf-o.js",
+      "bytes": 2589,
+      "sha256": "888b1c21076bf60e9867f16ec0035f959dca72531834f47f56a4bcfc0e009245"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/interpretations.BaZkYN67.js",
+      "bytes": 8979,
+      "sha256": "5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/AstroTerm.7K8SAipO.js",
+      "bytes": 9025,
+      "sha256": "17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/AspectGlyph.DMIAGIQV.js",
+      "bytes": 488,
+      "sha256": "ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/SignChip.Dx3tQVZl.js",
+      "bytes": 550,
+      "sha256": "646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/explorer.ijMRUwvv.css",
+      "bytes": 19962,
+      "sha256": "741806551de3bf6e2ff210ea3c7e76f9361ed2e26894f23f8ad0870faed312a5"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/ChartActionDock.Cc8zzTbx.css",
+      "bytes": 14972,
+      "sha256": "cab0ce96a6285f99bbfbcea67006a99a09d7f345bb1459d03ddf9ae7a71eeffc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/Wheel.RNRSqGob.js",
+      "bytes": 12355,
+      "sha256": "d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/dignities.BycBkP8Y.js",
+      "bytes": 1822,
+      "sha256": "a925e7ba2284ebe5efc85bcd0e3e6aac10249c09ce84d50c5190c1d2c7460d17"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/houses.5SlbILVS.js",
+      "bytes": 213,
+      "sha256": "2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/technical-layout.DQIjXHHb.js",
+      "bytes": 860,
+      "sha256": "68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/lite.DKWHZC5_.js",
+      "bytes": 831,
+      "sha256": "476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/learning-input-identity.C-WLv51I.js",
+      "bytes": 146,
+      "sha256": "5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "bytes": 2569,
+      "sha256": "efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/post-chart-context.cHI09JaB.js",
+      "bytes": 730,
+      "sha256": "f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/paths.DYbAuceH.js",
+      "bytes": 1629,
+      "sha256": "77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/civil-date.CpOZUt7Z.js",
+      "bytes": 533,
+      "sha256": "74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/technical-locales.DDKucXXd.js",
+      "bytes": 46,
+      "sha256": "69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/PlaceSearch.D1WsU_jW.js",
+      "bytes": 3472,
+      "sha256": "9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/full.AQ--_mi-.js",
+      "bytes": 392,
+      "sha256": "b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chart-adapter.K-QfJlbI.js",
+      "bytes": 50306,
+      "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/search.BXcwbrsc.js",
+      "bytes": 1096,
+      "sha256": "eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/data/cities/a.json",
+      "bytes": 101875,
+      "sha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/site-footer.css",
+      "bytes": 10397,
+      "sha256": "d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chart-signature.-is-2T7w.js",
+      "bytes": 6020,
+      "sha256": "a9df3a6ba5a17fb3d393f12da0c9a7c523073d7d65d813bb8eb1681248045f0c"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/natal.D7JKDSdx.js",
+      "bytes": 13113,
+      "sha256": "7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/synastry.rhUg9_9F.js",
+      "bytes": 1349,
+      "sha256": "c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/aspects.BNC-J2iD.js",
+      "bytes": 286,
+      "sha256": "9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/compat.Bjc3uaB7.js",
+      "bytes": 1242,
+      "sha256": "77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/ChartActionDock.B-renUC-.js",
+      "bytes": 49982,
+      "sha256": "df054176f4704076594570570804269dc8aacfd3ed3879c870a3c98b0d5699e2"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/LearningPractice.CSqTNZrv.js",
+      "bytes": 3156,
+      "sha256": "63ee2d2f4bc68cc5c5b81ae686b8eecdc6e08e687b1aa6adf6dc162119568709"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/chart-context-copy.UBOz97Jz.js",
+      "bytes": 27575,
+      "sha256": "f8ca6b3ad758a7f70d34b779c66627c4b6ee9621a2269f0e141d87f182a3318a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/AspectPatternFeature.JIFgyNsc.js",
+      "bytes": 1978,
+      "sha256": "488e8b0a06e3c4fd991795c5249504261ab26777dd5cafe1e648b937f186d362"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/use-learning-sources.DJlsz2nj.js",
+      "bytes": 2796,
+      "sha256": "f13d8df48d62e14c72f75619e32ecb3fecca0b8fdd86c3e886693309b474f654"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/schema.DqKqbGHb.js",
+      "bytes": 99,
+      "sha256": "2d3a1ca10f5d7cb644905a1ee3d1dbd8a2dffdfaaad03cdd722453c51b4b4c53"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/read-store.CIuzJaHq.js",
+      "bytes": 1301,
+      "sha256": "680103dc780e645458b2546ccd6af93f51351bfb6960910b2493fc5afb45691e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/calculator-receipt.Sj7p-7nE.js",
+      "bytes": 16370,
+      "sha256": "7c0fc529b892d3bdca5e34221a22fb551fd687312a04ec11c61205faabb0d5b6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/share-positions.D3o0ugj4.js",
+      "bytes": 2554,
+      "sha256": "71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/PositionsShareSurface.DT0CW1_r.js",
+      "bytes": 17938,
+      "sha256": "f108fe7f60261ea9f0c561cd5b6d1db680adf882544651d4e30e01aa40701717"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/share-card-brand.CJKZtcRK.js",
+      "bytes": 1434,
+      "sha256": "36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "bytes": 5142,
+      "sha256": "002553e4521b4da36a4819c8897ec7f383309f924a2e9d94f8e7e0badd55ba7e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/share-card-copy.D0c42nic.js",
+      "bytes": 9572,
+      "sha256": "f1b7a708bc6151f1c0bdab37332a11c0355a2e9239c45fb49f85eafbaecc075b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/share-card.DovPi6oZ.js",
+      "bytes": 46135,
+      "sha256": "08535414a77a24d3ee0b3dddcdd77de2beacdd5e48c177b6b80e53b7ac4783b7"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/CommunicationRead.ooCKD9f4.js",
+      "bytes": 4211,
+      "sha256": "5a2f060e7bb499de541abac24a79d06953f09aac28e54204c34f15796c6730e7"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "bytes": 4062,
+      "sha256": "a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/ApproachRead.Bcve0KbT.js",
+      "bytes": 4282,
+      "sha256": "1e06923242495b805c94895c93da3aa11784457e9526269d995add8444264d69"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/a2hs.WonhOqdm.js",
+      "bytes": 2797,
+      "sha256": "944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/capricorn.avif",
+      "bytes": 15611,
+      "sha256": "54f55ce18743977f61f677724dd1e92fd303d9d206de4dcc29d394a991c120cc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/pisces.avif",
+      "bytes": 14365,
+      "sha256": "6b048f9e3a65675d4bb32547e12f349d9bf3c954c2d38accb0e4f37a3f69c852"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/deletions.DUQYISzq.js",
+      "bytes": 958,
+      "sha256": "28744fcc33ddb02b6df893a9579135219176d767bf768f625f65e13c51cae82b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/store.CMhBuWSS.js",
+      "bytes": 3369,
+      "sha256": "f1aab8bcd6dc5f7f5988372c992a79398184d240dd095b30c0b79635f578b986"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/aries.webp",
+      "bytes": 4672,
+      "sha256": "7550c5b7545f81f2c0783576c8f71562cb1e0e47e4c83ea2297016bf9febf7d9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/taurus.webp",
+      "bytes": 4584,
+      "sha256": "f15447014c88e0270f9ac8d4ad5431dce41ef9f89f572e3e48997fa55c1ede8d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/gemini.webp",
+      "bytes": 4014,
+      "sha256": "e34ba92a8abad763ecd8cb008381bce6c6454ff906eaf405a0d27b735b57a7ce"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/cancer.webp",
+      "bytes": 5004,
+      "sha256": "3cb7255d053d136a066c67a42f0dedd60827052574ff9c13cec90c3328d48725"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/leo.webp",
+      "bytes": 4694,
+      "sha256": "55e216907703a27ea4e959a2f14c324187d06693daa1e02acf7611db003d10a9"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/virgo.webp",
+      "bytes": 4676,
+      "sha256": "66dfd434cd47e0ff6116b904e37b28326be2125b9d2a51bcbb71d44952de1134"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/libra.webp",
+      "bytes": 4128,
+      "sha256": "fd6df007626eb45a6e4ead08db3e387b13201eb02c8bc3fa112511126020b871"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/sagittarius.webp",
+      "bytes": 4638,
+      "sha256": "8254a32a439fa0ad37b2ca66284d9985c1c5b985e69d75897c6672be744b21cc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/scorpio.webp",
+      "bytes": 4342,
+      "sha256": "792ba54ebeaea084f0e218113ced6a39fbb4b3d83d94caf0358a3abaa3f4b130"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/capricorn.webp",
+      "bytes": 4682,
+      "sha256": "45dc11a1350c54d758bbdeb13882b2bbc45cba8237fb986ff8764a480797d469"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/aquarius.webp",
+      "bytes": 4458,
+      "sha256": "3437d5fc940c83830a0240d0a1b9870e94b14c17720967688aa5cf20530a7122"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/128/pisces.webp",
+      "bytes": 4284,
+      "sha256": "552fddb24708be2a37b37b741c53fc1e7f34b8023e3ca9838b4aadccede2b8c3"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/eb-garamond-latin-400-italic.woff2",
+      "bytes": 22172,
+      "sha256": "1bd1b20fd55986b334ba42dbcb0d9bed7e2d08fd7a713000e8041bfafa37e8ec"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/app-icons/v3/icon-512.png",
+      "bytes": 47117,
+      "sha256": "01405f4da95d384d77e19d2986abbbe1ae9081650055d03cc46698b8d53c8896"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/assistant-ui.js",
+      "bytes": 4088,
+      "sha256": "238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/assistant-ui.css",
+      "bytes": 1396,
+      "sha256": "eaf7e9531749d921c0947df7894e2fd447dcd800da620b3a14ba673af1cb7e0d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/guide-avatar.webp",
+      "bytes": 11384,
+      "sha256": "9970c7c5d7d20343e20a7f59422f3647c2ff3bf38a0565ac145d5bed0f96bb11"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/moon-phase/index.html",
+      "bytes": 89598,
+      "sha256": "25f0620df2c83319b991b85e799bf51235f2065877c6b63f090e486d9b2222fb"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/calculator.MBHg3tIV.css",
+      "bytes": 62573,
+      "sha256": "e4606bd37837f898c7b5e0a5e2da987c1de2bcfe97130a72beb2e5c22d154004"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/Base.Bryss0yT.css",
+      "bytes": 46112,
+      "sha256": "4877c6226e887495ac2c87605485f8011cbd605ab9c0ab4a5400310591712486"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/MoonPhaseTool.DGpJwGUo.js",
+      "bytes": 6047,
+      "sha256": "b98be8758d9f046297fb030159f848ea6dfc0df269deb9cbc034911658532309"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/EvidenceDisclosure.LNSfDkU7.js",
+      "bytes": 548,
+      "sha256": "40817121a14b5ea05546b30f4ccbc321ef993fd0fea6cf79f2bd9b144d2ac55a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/_astro/dates.D4PDcYt5.js",
+      "bytes": 395,
+      "sha256": "378304c0c70feb036cd849897964f4a4acb1b8f88ac05cadbefb2ccd6a95cf4a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/pisces.avif",
+      "bytes": 4944,
+      "sha256": "b1d52e8cfb94f443fedf0f872bee82269181f8d83e0e975ef4d3511ef07c5602"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/aries.avif",
+      "bytes": 5102,
+      "sha256": "2424642d38ff70104004dfd27a9b6fd096f3e3165d40a4feba5939d88f86d95f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/es/birth-chart/index.html",
+      "bytes": 104276,
+      "sha256": "513612cca14827d35f6aba7c9d8ae21d254e0cf948526c508fb8d9156dec0015"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/es/moon-phase/index.html",
+      "bytes": 87608,
+      "sha256": "ec98fa8cc961e68586cf40026bc688b745ecd402caf2d8b71e79b266c904d2f6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/aries.webp",
+      "bytes": 1666,
+      "sha256": "98ad83139bc0fe35d13096245869de4c342e65da7e33c5c767202931fd01feea"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/taurus.webp",
+      "bytes": 1566,
+      "sha256": "9a1cf0fed1103cb251f70411e0edc318392da137b29bbbaec52ef621643f8174"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/gemini.webp",
+      "bytes": 1424,
+      "sha256": "88aefd78320aa8c6abce1bddd38e0e801a469bf4c5f3cb3511d1492fe1ed30fb"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/cancer.webp",
+      "bytes": 1686,
+      "sha256": "5f388b82448e3f88bf59b0016da48efbc48e8edbeba1082560f3e2dd83ae6a61"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/leo.webp",
+      "bytes": 1638,
+      "sha256": "364f3836dbf0a3252a9db785c2d33a9bff7b09e12f97c23c64e068b240f2bed8"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/libra.webp",
+      "bytes": 1556,
+      "sha256": "6b6038053581a23103dc059debf8a1c35588ab13a6308881d016cb295ae59212"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/scorpio.webp",
+      "bytes": 1486,
+      "sha256": "972c7916a97921865c1f83d1070f7deabce8221ba61ce8df2bce73a62c5b3b0b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/sagittarius.webp",
+      "bytes": 1588,
+      "sha256": "85e9ee2e1978e24567bef73a6362a0088d870d0d4c5abe9c1604abaecb45fe33"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/virgo.webp",
+      "bytes": 1634,
+      "sha256": "54741e8c95f3271cc214334e4f7286f67353a4b6d9f7cf7948d9675d7a1ebc9a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/capricorn.webp",
+      "bytes": 1590,
+      "sha256": "042f7ea66d9064e87fab58eb9e39c9a15e44306fd92974498c283f7a9f712e1f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/aquarius.webp",
+      "bytes": 1534,
+      "sha256": "a0016dd04b605028c890eaaffd11fc3d4230a633b4908dfc18d5e10ea239a753"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/assets/zodiac-icons/48/pisces.webp",
+      "bytes": 1476,
+      "sha256": "0622ec5f5b51784e5d0cdbb0f99d993c9e5d0f4dceea345fe8783f415c0a670e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fr/birth-chart/index.html",
+      "bytes": 108265,
+      "sha256": "d45bb1478c7e21e99cd47e8ec2b3d3a79b62dea459c578a4c931be2bbb281ae6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fr/moon-phase/index.html",
+      "bytes": 91406,
+      "sha256": "f836ed913d648a2ac461ef7d1ecc340e8724b5660154fece879c524dfcec3045"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/it/birth-chart/index.html",
+      "bytes": 105436,
+      "sha256": "769850551232f92356d1535d2c4c217db64e7ff98942b19b39bad6e5cf37c0bb"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/it/moon-phase/index.html",
+      "bytes": 88824,
+      "sha256": "686dc0c211ee72673897b7045f51d9eb1b33bac4ab37cdd0b38ad12e7d101535"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/pt/birth-chart/index.html",
+      "bytes": 104936,
+      "sha256": "33362fedc63cf226be027efd1696be6ba737df2cc1c911c5017b66e05e05fc0a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/pt/moon-phase/index.html",
+      "bytes": 88009,
+      "sha256": "1ce4facbf15de7517ea424b58385924a0a9b64eca146d272aa392e547fca6294"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/ru/birth-chart/index.html",
+      "bytes": 183270,
+      "sha256": "b6f6556fc21c04236719705037149ffb558a35f55881a134f0d6045978e3ae04"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/golos-text-cyr-b.woff2",
+      "bytes": 22028,
+      "sha256": "2f175b8fc40ed4e826742879f92ec903256fc2612d8d95c7c287232fd7138e4b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/golos-text-cyr-a.woff2",
+      "bytes": 17532,
+      "sha256": "10aa879203c4b62f61841bdeee64a2ca5d97f1cf21e717f45c96914ce7629710"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/eb-garamond-cyrillic-500-normal.woff2",
+      "bytes": 14428,
+      "sha256": "d6cbde36e0e8a5355921c385f434ef60ba81bd2502abeb4f19d87a901b423e22"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/fonts/jetbrains-mono-cyrillic-400-500.woff2",
+      "bytes": 8892,
+      "sha256": "4995a9a43ac659ec32fcd8b463755cd6a07b31a6e6b3894a6a153b661cf490e2"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/ru/moon-phase/index.html",
+      "bytes": 109433,
+      "sha256": "639a0d5225ef3e54cb1d89318066e0f8176917e8a07aeec1b8be86185c6fcf7d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/dist/data/cities/a.json",
+      "bytes": 101875,
+      "sha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/career-1280.png",
+      "bytes": 371574,
+      "sha256": "e2a61850576dcfc710e9f976176c5baa478b49c7cccdd47a13466970eceb49a1"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/career-360.png",
+      "bytes": 299941,
+      "sha256": "28bc4ebd3e6135ab9c65fa58bee28a93e05a9e6ec3756abf765ac2cbaf8813aa"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/daily-1280.png",
+      "bytes": 404727,
+      "sha256": "6094da6649170179fa02ab16b95a3e9d2421fd9394b53eeab2851ed45648b0d4"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/daily-360.png",
+      "bytes": 332151,
+      "sha256": "a8e8653183724ed9d8d784bf7d53ebb567b9ac60e73b7654017d7af43943fc7a"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+      "bytes": 417189,
+      "sha256": "240e37981ef145ecfb0706f648c56f19eaa4246df1dada8a7abdda2e023fd15b"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+      "bytes": 384106,
+      "sha256": "943e86beedd700f66cdf7fc42f2edfa27e5887c235f82cc5a88fa41cc032df29"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/love-1280.png",
+      "bytes": 365908,
+      "sha256": "683c32444bcc24b0c82cec09db7d7dd1fbceadfb026f7a89525cc9924942d23f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/love-360.png",
+      "bytes": 299028,
+      "sha256": "8960502cbc89236daeda333db9a47028372d66bac268a263ca1607ad493fd29f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/monthly-1280.png",
+      "bytes": 519158,
+      "sha256": "976d081ca509bc74b24c62f5be5431e73dfbe500ab8b86f8e163b75dfd4907f3"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/monthly-360.png",
+      "bytes": 428404,
+      "sha256": "449fedc241bfd45123c7b0232aa34b7f3e349f72bcf04643cbd37c6c3598ff2d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/today-1280.png",
+      "bytes": 763381,
+      "sha256": "df98dcf3a99852078ed9a8e48f706b5d6348f89ccaad9b57856787a28b1cb355"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/today-360.png",
+      "bytes": 649907,
+      "sha256": "bba99e6dce960402ecb331b0e89531010016a5b3cf77abc2c599b762de85585d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+      "bytes": 404786,
+      "sha256": "ee8a49cd2b3feb3a84a8ccb4f920830e826367a8f185bd76d09b016f6d71fb29"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/tomorrow-360.png",
+      "bytes": 324718,
+      "sha256": "a82cd761a9f4691f8e38e9b86ca7316dc35ae0203caa4a0360076d7f9c9f0b0d"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/weekly-1280.png",
+      "bytes": 483733,
+      "sha256": "0afbc2638c95820b197f5dc61258a0309f6080afc14502c2e8ba0e78a944c498"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/weekly-360.png",
+      "bytes": 396663,
+      "sha256": "9d2fd31c201495175541308e6c18c94dcd418e14c354f9b8c198ded073c79f9f"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/yearly-1280.png",
+      "bytes": 1433284,
+      "sha256": "cc8a1fdfe776e65e5190995a99ec6703395862f194e4e2256776bc053eedec5e"
+    },
+    {
+      "path": "/Users/chiburashka/.codex/worktrees/4806/site/docs/acceptance/phase1/screenshots/yearly-360.png",
+      "bytes": 1211105,
+      "sha256": "0ec2db5c0f63e4c70998ee55858cfdc6c3742801227da7fdf2bb153411477c67"
+    }
+  ]
+}

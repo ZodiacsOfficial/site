@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-08T09:15:17.138Z",
+  "linked": [
+    {
+      "path": "/private/tmp/zodiacs-platform-skipped-date-preparation/independent-counterexamples/delivery",
+      "manifestSha256": "25dee2490e18f27cf5f85049e5cefd26577e127a9db7b985d7f60dd523d2ebe9",
+      "verifiedRecords": 22,
+      "verifiedBytes": 140360
+    },
+    {
+      "path": "/private/tmp/zodiacs-platform-skipped-date-preparation/independent-counterexamples/synthetic-addendum",
+      "manifestSha256": "4766304dca951739f509c3aa9a2a7620890e3168bbe904951a66086489a1b442",
+      "verifiedRecords": 8,
+      "verifiedBytes": 26532
+    }
+  ]
+}

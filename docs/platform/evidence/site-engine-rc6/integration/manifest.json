@@ -1,0 +1,510 @@
+{
+  "recordedAt": "2026-09-08T07:32:56.246758+00:00",
+  "baseCommit": "804c70309d2508e67e8462df526b5f9e71a112e9",
+  "records": [
+    {
+      "sourcePath": "browser-1788851392756/desktop-actions.png",
+      "path": "browser-1788851392756/desktop-actions.png",
+      "bytes": 28212,
+      "sha256": "3b720c0d8a5848a65dd1d710e7f611f815d73331342d7507316a860853354b29"
+    },
+    {
+      "sourcePath": "browser-1788851392756/desktop-wheel.png",
+      "path": "browser-1788851392756/desktop-wheel.png",
+      "bytes": 213227,
+      "sha256": "16f2b5be5858a2f333308190dbc4e6a0390828d0fa8fbaa81d273a6b5c8ce71d"
+    },
+    {
+      "sourcePath": "browser-1788851392756/download-retry.json",
+      "path": "browser-1788851392756/download-retry.json",
+      "bytes": 4598,
+      "sha256": "847d8bb3e992d31a8df9b5f62a18cf8f45c527bcc53c20c852ea3ae59f9bd566"
+    },
+    {
+      "sourcePath": "browser-1788851392756/fresh-polar.json",
+      "path": "browser-1788851392756/fresh-polar.json",
+      "bytes": 4695,
+      "sha256": "cfc6eb832e764c5a1cf1a55be860a9650ebeff8f3842fcf6b29028c1eb9f6308"
+    },
+    {
+      "sourcePath": "browser-1788851392756/historical-America-Caracas.json",
+      "path": "browser-1788851392756/historical-America-Caracas.json",
+      "bytes": 4915,
+      "sha256": "a8920b11733330016d26c9e4df48f26ce45e3023e2fe58ab28d08242e4273e16"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-en.json",
+      "path": "browser-1788851392756/locale-en.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-es.json",
+      "path": "browser-1788851392756/locale-es.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-fr.json",
+      "path": "browser-1788851392756/locale-fr.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-it.json",
+      "path": "browser-1788851392756/locale-it.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-pt.json",
+      "path": "browser-1788851392756/locale-pt.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/locale-ru.json",
+      "path": "browser-1788851392756/locale-ru.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-en.png",
+      "path": "browser-1788851392756/mobile-actions-en.png",
+      "bytes": 29225,
+      "sha256": "e6f83185aa319048f96977b973a15df5e5b9a1e1340167fd830439948f18bc48"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-es.png",
+      "path": "browser-1788851392756/mobile-actions-es.png",
+      "bytes": 31124,
+      "sha256": "a1b3916eb30543077691594da2800871e18b572bdec69034998971c55500861b"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-fr.png",
+      "path": "browser-1788851392756/mobile-actions-fr.png",
+      "bytes": 32408,
+      "sha256": "80fa577e05e953af29d1877a54d3bf68e2b4e85b391b182556aea98d41b88dfe"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-it.png",
+      "path": "browser-1788851392756/mobile-actions-it.png",
+      "bytes": 30504,
+      "sha256": "60d7bc4096f7ff445fa244052c92c5d729d54c4b6a8e4c6fbfe439c2b6bc20b9"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-pt.png",
+      "path": "browser-1788851392756/mobile-actions-pt.png",
+      "bytes": 31857,
+      "sha256": "24fb4dfadbd4a4cce2d4ba247bc64d98ef3c887ef11ab437bd99ade57b4ec6d4"
+    },
+    {
+      "sourcePath": "browser-1788851392756/mobile-actions-ru.png",
+      "path": "browser-1788851392756/mobile-actions-ru.png",
+      "bytes": 30377,
+      "sha256": "7e33102bfd6b80ade90a515a0b1e7d6920f55793ad4fdf7e1e0ada07fe169740"
+    },
+    {
+      "sourcePath": "browser-1788851392756/recalculated-polar.json",
+      "path": "browser-1788851392756/recalculated-polar.json",
+      "bytes": 4598,
+      "sha256": "847d8bb3e992d31a8df9b5f62a18cf8f45c527bcc53c20c852ea3ae59f9bd566"
+    },
+    {
+      "sourcePath": "browser-1788851392756/result.json",
+      "path": "browser-1788851392756/result.json",
+      "bytes": 273578,
+      "sha256": "abd733812fd4ef14a6eb005f3259c56a549e949f05db67f0d799affca1d46ee3"
+    },
+    {
+      "sourcePath": "browser-1788851392756/unknown-local-noon.json",
+      "path": "browser-1788851392756/unknown-local-noon.json",
+      "bytes": 4436,
+      "sha256": "fe8684d44ea9fcfb2a3b16cffe8070541dcff73cb1c1576ae76eea443f2b0232"
+    },
+    {
+      "sourcePath": "browser-1788851957486/desktop-actions.png",
+      "path": "browser-1788851957486/desktop-actions.png",
+      "bytes": 28212,
+      "sha256": "3b720c0d8a5848a65dd1d710e7f611f815d73331342d7507316a860853354b29"
+    },
+    {
+      "sourcePath": "browser-1788851957486/desktop-wheel.png",
+      "path": "browser-1788851957486/desktop-wheel.png",
+      "bytes": 213227,
+      "sha256": "3c0beac16d25adf56027478a288efd496ece7ece20616faba80e7c11b6eb711e"
+    },
+    {
+      "sourcePath": "browser-1788851957486/download-retry.json",
+      "path": "browser-1788851957486/download-retry.json",
+      "bytes": 4598,
+      "sha256": "847d8bb3e992d31a8df9b5f62a18cf8f45c527bcc53c20c852ea3ae59f9bd566"
+    },
+    {
+      "sourcePath": "browser-1788851957486/fresh-polar.json",
+      "path": "browser-1788851957486/fresh-polar.json",
+      "bytes": 4695,
+      "sha256": "cfc6eb832e764c5a1cf1a55be860a9650ebeff8f3842fcf6b29028c1eb9f6308"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Caracas.json",
+      "path": "browser-1788851957486/historical-America-Caracas.json",
+      "bytes": 4915,
+      "sha256": "a8920b11733330016d26c9e4df48f26ce45e3023e2fe58ab28d08242e4273e16"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Dawson_Creek.json",
+      "path": "browser-1788851957486/historical-America-Dawson_Creek.json",
+      "bytes": 5147,
+      "sha256": "02b27057c141e3b4b6fdb7b6a923d523ff9edc16460828f3c48ed4847c7a4892"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Goose_Bay.json",
+      "path": "browser-1788851957486/historical-America-Goose_Bay.json",
+      "bytes": 4274,
+      "sha256": "bb20fe73a51366de590734f9dd8853ac7dce2a2326e0bb4b0108ae15af551a91"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Manaus.json",
+      "path": "browser-1788851957486/historical-America-Manaus.json",
+      "bytes": 4478,
+      "sha256": "b8cfb8dca7ee60a72b9dc32abcd8c99f5000c2b59d921034a18ff36137414968"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Paramaribo.json",
+      "path": "browser-1788851957486/historical-America-Paramaribo.json",
+      "bytes": 4811,
+      "sha256": "44c497d7232437ec60c04566a54bf94b5b3db21964c390b0b8fcd3522f9c444f"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Port-au-Prince.json",
+      "path": "browser-1788851957486/historical-America-Port-au-Prince.json",
+      "bytes": 4893,
+      "sha256": "697efff6e7e152bd14c200203cdcb9768c52c11e1ff575e60502bafbc4248aa5"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Punta_Arenas.json",
+      "path": "browser-1788851957486/historical-America-Punta_Arenas.json",
+      "bytes": 4905,
+      "sha256": "57792e8a919bd3636999d2bfb325d1fac276cf6963eb20901f5509250bd25941"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-St_Johns.json",
+      "path": "browser-1788851957486/historical-America-St_Johns.json",
+      "bytes": 4273,
+      "sha256": "4fac1ee74406072bdd0355ce70b9c16944ca99d4c2804451d5ee11acb45e3546"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-America-Whitehorse.json",
+      "path": "browser-1788851957486/historical-America-Whitehorse.json",
+      "bytes": 4452,
+      "sha256": "dde82ede2f81c18a53098ade176d214d8d79a5bd1c47255da2fa40c72da88180"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Asia-Colombo.json",
+      "path": "browser-1788851957486/historical-Asia-Colombo.json",
+      "bytes": 4895,
+      "sha256": "9a24249db9c87e6558b3719a70e8d38ed71eb183a25abbcdd21570c6fd14ec74"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Asia-Tbilisi.json",
+      "path": "browser-1788851957486/historical-Asia-Tbilisi.json",
+      "bytes": 4948,
+      "sha256": "eb44f66513b49080a92f6720e60c82220d9e91e208ddd5f526ed3c1cd2871b32"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Brazil-West.json",
+      "path": "browser-1788851957486/historical-Brazil-West.json",
+      "bytes": 4475,
+      "sha256": "ed518ff1be66fa0331446605a456036d6752171f61e198811f2c274a52f0e316"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Canada-Newfoundland.json",
+      "path": "browser-1788851957486/historical-Canada-Newfoundland.json",
+      "bytes": 4276,
+      "sha256": "9e1e85edfec80149aaf67b6d59f676b6437793278e879b919c22f6d5364e12bd"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Canada-Yukon.json",
+      "path": "browser-1788851957486/historical-Canada-Yukon.json",
+      "bytes": 4446,
+      "sha256": "9be290ea89d8bbef46c648c3e1cd8675bf0959a4a0f750b0d82a37c7d8fa44fd"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Pacific-Norfolk.json",
+      "path": "browser-1788851957486/historical-Pacific-Norfolk.json",
+      "bytes": 4898,
+      "sha256": "dd02a16db2e8c2f44a8237b1de11e0e8f8ca089cce50fc3b223ce68dd1fabdff"
+    },
+    {
+      "sourcePath": "browser-1788851957486/historical-Pacific-Tongatapu.json",
+      "path": "browser-1788851957486/historical-Pacific-Tongatapu.json",
+      "bytes": 4252,
+      "sha256": "2eb45f7f01df0684f382c9ed27faff892782cb7d7aef13c6100752cb29912d5a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-en.json",
+      "path": "browser-1788851957486/locale-en.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-es.json",
+      "path": "browser-1788851957486/locale-es.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-fr.json",
+      "path": "browser-1788851957486/locale-fr.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-it.json",
+      "path": "browser-1788851957486/locale-it.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-pt.json",
+      "path": "browser-1788851957486/locale-pt.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/locale-ru.json",
+      "path": "browser-1788851957486/locale-ru.json",
+      "bytes": 4937,
+      "sha256": "ad44a0c8a0f5d2d24cf2ebffa2a7ca5e3825d1bae236ea1f9555f5f54e8efc7a"
+    },
+    {
+      "sourcePath": "browser-1788851957486/manaus-actions.png",
+      "path": "browser-1788851957486/manaus-actions.png",
+      "bytes": 28212,
+      "sha256": "3b720c0d8a5848a65dd1d710e7f611f815d73331342d7507316a860853354b29"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-en.png",
+      "path": "browser-1788851957486/mobile-actions-en.png",
+      "bytes": 29225,
+      "sha256": "e6f83185aa319048f96977b973a15df5e5b9a1e1340167fd830439948f18bc48"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-es.png",
+      "path": "browser-1788851957486/mobile-actions-es.png",
+      "bytes": 31124,
+      "sha256": "a1b3916eb30543077691594da2800871e18b572bdec69034998971c55500861b"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-fr.png",
+      "path": "browser-1788851957486/mobile-actions-fr.png",
+      "bytes": 32408,
+      "sha256": "80fa577e05e953af29d1877a54d3bf68e2b4e85b391b182556aea98d41b88dfe"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-it.png",
+      "path": "browser-1788851957486/mobile-actions-it.png",
+      "bytes": 30504,
+      "sha256": "60d7bc4096f7ff445fa244052c92c5d729d54c4b6a8e4c6fbfe439c2b6bc20b9"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-pt.png",
+      "path": "browser-1788851957486/mobile-actions-pt.png",
+      "bytes": 31857,
+      "sha256": "24fb4dfadbd4a4cce2d4ba247bc64d98ef3c887ef11ab437bd99ade57b4ec6d4"
+    },
+    {
+      "sourcePath": "browser-1788851957486/mobile-actions-ru.png",
+      "path": "browser-1788851957486/mobile-actions-ru.png",
+      "bytes": 30377,
+      "sha256": "7e33102bfd6b80ade90a515a0b1e7d6920f55793ad4fdf7e1e0ada07fe169740"
+    },
+    {
+      "sourcePath": "browser-1788851957486/recalculated-polar.json",
+      "path": "browser-1788851957486/recalculated-polar.json",
+      "bytes": 4598,
+      "sha256": "847d8bb3e992d31a8df9b5f62a18cf8f45c527bcc53c20c852ea3ae59f9bd566"
+    },
+    {
+      "sourcePath": "browser-1788851957486/result.json",
+      "path": "browser-1788851957486/result.json",
+      "bytes": 649252,
+      "sha256": "3c5d94915761bfd425a2545d80db9352518e85a9104a2fea34a6b66515346e86"
+    },
+    {
+      "sourcePath": "browser-1788851957486/unknown-local-noon.json",
+      "path": "browser-1788851957486/unknown-local-noon.json",
+      "bytes": 4436,
+      "sha256": "fe8684d44ea9fcfb2a3b16cffe8070541dcff73cb1c1576ae76eea443f2b0232"
+    },
+    {
+      "sourcePath": "browser-latest.json",
+      "path": "browser-latest.json",
+      "bytes": 178,
+      "sha256": "9777d21663f9986eec6ba35d7d5ecbfab1c12be541d171e6806fb7a84c8b34bf"
+    },
+    {
+      "sourcePath": "build.log",
+      "path": "build.log",
+      "bytes": 282816,
+      "sha256": "cf947d5c4f9260e59aeb7bd296be94075b05191c8798853936ada0335091d3a2"
+    },
+    {
+      "sourcePath": "capture-comparison.json",
+      "path": "capture-comparison.json",
+      "bytes": 3656,
+      "sha256": "46c9b7b57eead5036d4d92c79b4e8ee51fae8a947bf96f74914324c62763a969"
+    },
+    {
+      "sourcePath": "captures.log",
+      "path": "captures.log",
+      "bytes": 1427,
+      "sha256": "118f98a3c2491806bcdcd4edee3800bb6ecff74f02f0261ecf513e6a930fc2f9"
+    },
+    {
+      "sourcePath": "chart-visual-comparison.json",
+      "path": "chart-visual-comparison.json",
+      "bytes": 1366,
+      "sha256": "93d64bfcd594ab60cca7abdb9b4c087645c5f61aac749f71eb7b567a77fff894"
+    },
+    {
+      "sourcePath": "chart-visual-comparison.log",
+      "path": "chart-visual-comparison.log",
+      "bytes": 1366,
+      "sha256": "93d64bfcd594ab60cca7abdb9b4c087645c5f61aac749f71eb7b567a77fff894"
+    },
+    {
+      "sourcePath": "chart-visual.log",
+      "path": "chart-visual.log",
+      "bytes": 769,
+      "sha256": "4fb04f0ea353e5bc058265eb9ce3a8bac60f818689d169c384e7865a6157073b"
+    },
+    {
+      "sourcePath": "check.log",
+      "path": "check.log",
+      "bytes": 4438,
+      "sha256": "fed29f368a1978780b9f50f0be89c24fab05cd7f13c9621a8aa34139438e7a7f"
+    },
+    {
+      "sourcePath": "compare-chart.mjs",
+      "path": "compare-chart.mjs.log",
+      "bytes": 2043,
+      "sha256": "38989ad8c2a0e2d7b5eed1a71635ae5c5ce6a3e1648f6a94330824099f19cd62"
+    },
+    {
+      "sourcePath": "daily-builder.log",
+      "path": "daily-builder.log",
+      "bytes": 194,
+      "sha256": "2b01e1f9a91c91741f25528311f46654940158f59945b9b3ffc96f7b876e7759"
+    },
+    {
+      "sourcePath": "developers/entry-320.png",
+      "path": "developers/entry-320.png",
+      "bytes": 881849,
+      "sha256": "80374159b7763c67ab7c883e3d896e9a6743162f88942cf5cde86f1959e62dc0"
+    },
+    {
+      "sourcePath": "developers/result.json",
+      "path": "developers/result.json",
+      "bytes": 2636,
+      "sha256": "79acbcf663bbfd4870f60e80c03949413298f4b975ac300c6ff55771371bae80"
+    },
+    {
+      "sourcePath": "developers/support-1280.png",
+      "path": "developers/support-1280.png",
+      "bytes": 882475,
+      "sha256": "7cb99948e7c01e3c38299a8be1649466d4019ce58c4751e17e3cdd2d8e961a04"
+    },
+    {
+      "sourcePath": "developers-drive.mjs",
+      "path": "developers-drive.mjs.log",
+      "bytes": 4849,
+      "sha256": "ccc1bbe2a29f23e6a4a9f2ece4e16c364675ad308524e2e1934a18e8e506da25"
+    },
+    {
+      "sourcePath": "developers.log",
+      "path": "developers.log",
+      "bytes": 32,
+      "sha256": "3485a56dd424a29f433a78da7106c28309f45fb2764b7f1883f77e07ef47772c"
+    },
+    {
+      "sourcePath": "install.log",
+      "path": "install.log",
+      "bytes": 28,
+      "sha256": "7ee0eb43d38a351656efdbe98d63d2d0fed118409934f16452529413bb1e6799"
+    },
+    {
+      "sourcePath": "npm-unrelated-lock-rewrite.diff.log",
+      "path": "npm-unrelated-lock-rewrite.diff.log",
+      "bytes": 6910,
+      "sha256": "f3166856cff9c91bb0f4a67c0a108aed64188ba02059ae5ef69fd8552bdb1c9b"
+    },
+    {
+      "sourcePath": "npm-unrelated-lock-rewrite.json.log",
+      "path": "npm-unrelated-lock-rewrite.json.log",
+      "bytes": 434332,
+      "sha256": "9d8a3130b3d54ee2f6e04349f181954c44db9886a065008c8efa95e74bd05183"
+    },
+    {
+      "sourcePath": "receipt-browser-node-reference-initial.log",
+      "path": "receipt-browser-node-reference-initial.log",
+      "bytes": 2187,
+      "sha256": "027bbb052982cbb77b2354c5311f09c3843fec54bbe106844e7c3aeb2bc52fee"
+    },
+    {
+      "sourcePath": "receipt-browser.log",
+      "path": "receipt-browser.log",
+      "bytes": 114,
+      "sha256": "18f9835aba0ee3fe42776e91b9df1cf97d1751dd0df6fe974b37d202a14b18ad"
+    },
+    {
+      "sourcePath": "receipt-drive-node-reference-initial.mjs.log",
+      "path": "receipt-drive-node-reference-initial.mjs.log",
+      "bytes": 16717,
+      "sha256": "252141e0ee138267d466022e9afbeb95f70b17c06a2d913fe1e9c0ea9e58cf94"
+    },
+    {
+      "sourcePath": "receipt-drive.mjs",
+      "path": "receipt-drive.mjs.log",
+      "bytes": 16740,
+      "sha256": "80644ed76bac8c33e0204ee3f5ffc2c1fab28c91fc1473a7f69dda4c2bdf6186"
+    },
+    {
+      "sourcePath": "receipt-harness-correction.md",
+      "path": "receipt-harness-correction.md",
+      "bytes": 443,
+      "sha256": "4d043bb0f341399633d4badf1ec27f6e460889d5d8782c5fad8d0b7e7f1264ee"
+    },
+    {
+      "sourcePath": "scope.log",
+      "path": "scope.log",
+      "bytes": 76,
+      "sha256": "c7d39f5cf2822a145f87b8fecb8c2137123b66ba789f6323d6ebbe247c089961"
+    },
+    {
+      "sourcePath": "seal-evidence.py",
+      "path": "seal-evidence.py.log",
+      "bytes": 2334,
+      "sha256": "9b7905f8edc581a1016172375637f426e900cf38f0f8f56e59257583f125eae7"
+    },
+    {
+      "sourcePath": "share.log",
+      "path": "share.log",
+      "bytes": 3654,
+      "sha256": "f3de4be07305ce72e2918237644cd61df1b14df7a216a5f9b1145624dbbb553f"
+    },
+    {
+      "sourcePath": "source-identity.json",
+      "path": "source-identity.json",
+      "bytes": 1456,
+      "sha256": "f79f1068abe3e6c38ba15ecb12d50d005a7ba1fc5079abb799cd2dce83ac755b"
+    },
+    {
+      "sourcePath": "tests.log",
+      "path": "tests.log",
+      "bytes": 33044,
+      "sha256": "4232c2f5f09b823e9526e3f2c4b8d6d9ef30d85da3a01d69016f2949a3cca9ae"
+    }
+  ]
+}

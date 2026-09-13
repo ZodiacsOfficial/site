@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-08T06:48:37.478538+00:00",
+  "nodeCases": 17,
+  "browserCases": 17,
+  "mismatchesEachRuntime": 9,
+  "actualNativeTemporalEnumerationMatches": 17,
+  "actualNativeTemporalNextTransitionQueries": 29,
+  "invalidInputGuardsRejected": 8,
+  "syntheticSamplingCountermodels": {
+    "agreementControls": 1,
+    "counterexamples": 2,
+    "actualIanaClaims": false
+  },
+  "implementationStatus": "read-only architecture/probe evidence; no product implementation",
+  "providerRecommendation": "complete transition partition for exact contract; sampled Intl requires an explicitly bounded guarantee",
+  "callerReviewManifestSha256": "8daef586337bf2de2d5f99406a2e684c4f8022026c416986e454d81715c7913b"
+}

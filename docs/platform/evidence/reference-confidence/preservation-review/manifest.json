@@ -1,0 +1,67 @@
+[
+  {
+    "path": "BASELINE.md",
+    "bytes": 3242,
+    "sha256": "75bc29ebeb4c441aaa7932e0efa7a9c09610926ce52f6808a6c09ebe7bc11e31"
+  },
+  {
+    "path": "COMMANDS.md",
+    "bytes": 3759,
+    "sha256": "4bc7550e01bfe59ecc345fee3cbe9dfd971be65da68812f99862ee17fb06f390"
+  },
+  {
+    "path": "PREPARATION.md",
+    "bytes": 5601,
+    "sha256": "7745bc3a881e035b634dcc5c1e0fbf2d0bb13548f303d693aaa0bc9d212ea51e"
+  },
+  {
+    "path": "REVIEW.md",
+    "bytes": 8237,
+    "sha256": "b9e0df03d13fb0b720ba6796866d17aa51c19357f3f67812595c1257a97856f6"
+  },
+  {
+    "path": "base-source.json",
+    "bytes": 311193,
+    "sha256": "2dc395ea08b60e488fb9e6fc6afefb4740b95bed779481bd426f1c27883e316a"
+  },
+  {
+    "path": "final-verification.json",
+    "bytes": 4932,
+    "sha256": "622718bc5c3a18dea7aa1ee292f025d3212d62a260e97d8e2ba5b6d09dc28187"
+  },
+  {
+    "path": "freeze.json",
+    "bytes": 2832,
+    "sha256": "54cd5acbc7f69c7b3935943a9380be10bb18e8ca2b5a90c1d1766625d8bca55c"
+  },
+  {
+    "path": "parity.json",
+    "bytes": 4403,
+    "sha256": "fd5f2936ab1f95f6e8464f5d8dc175ac4e80ff332c46aba06b47dde5b0a27cd3"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 2010796,
+    "sha256": "5d56a2f6bcae41277c8e9827d0bb1ef81e93d967e09a67f9b977c8dacbdc0964"
+  },
+  {
+    "path": "raw-manifest.json",
+    "bytes": 138970,
+    "sha256": "58f8d0ca7d26973fda65b0c128dcfbb95d5eddf1f140f9e434d46625f99682c4"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 1121,
+    "sha256": "5a07e2ef1289cf18dd025d6ebc09df2d40ad7405668d8924a021b17b8ea6efde"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1798,
+    "sha256": "7074f314f7dc0bde290926233d1a603c7ba2083260d13e36a18b72cae88be6ef"
+  },
+  {
+    "path": "source-review.json",
+    "bytes": 23482,
+    "sha256": "fd6d267ee4e87af267073d17a04a56078fb011c57137fab66272ee762f358ef6"
+  }
+]

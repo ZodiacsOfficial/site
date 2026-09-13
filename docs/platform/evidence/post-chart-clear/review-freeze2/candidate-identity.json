@@ -1,0 +1,366 @@
+{
+  "kind": "candidate",
+  "inputs": [
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/dist/preact.module.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/dist/preact.module.js",
+      "sha256": "850dcba8ed3535b0a3611495c405551b9887724885d3b8482207a03de365d64e"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/hooks/dist/hooks.module.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/hooks/dist/hooks.module.js",
+      "sha256": "42e6acefc7c61333a5eb372a5c556829a0154dfce1ea45d03b6b2689fb1dab4d"
+    },
+    {
+      "path": "source/src/lib/account-v2/profile-access-reader.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/account-v2/profile-access-reader.ts",
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    {
+      "path": "source/src/lib/hooks/useProfileAccessGeneration.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/hooks/useProfileAccessGeneration.ts",
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+    },
+    {
+      "path": "source/src/lib/email/post-chart-state.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/email/post-chart-state.ts",
+      "sha256": "cc49feb8b3633d082abcf7db7d0b198de8e45d631a924cb7116a427ae355aaec"
+    },
+    {
+      "path": "source/src/lib/profile/post-chart-context.ts",
+      "selected": "candidate-source/src/lib/profile/post-chart-context.ts",
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "source/src/lib/profile/daily-email-client.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/daily-email-client.ts",
+      "sha256": "19c31b36c3fd0996259cfbf3567a5a8a57f1abb31bb6062948933468c44dd20a"
+    },
+    {
+      "path": "source/src/lib/profile/schema.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/schema.ts",
+      "sha256": "cbbe3f11355458f162a1da37863b6bc9cb35c1cb53e24c20763f11e0d63e5789"
+    },
+    {
+      "path": "source/src/lib/profile/deletions.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/deletions.ts",
+      "sha256": "ff6011e36ae422f154374973982c8e5d9840aafca12627554b3a1354ec5855ef"
+    },
+    {
+      "path": "source/src/lib/account-v2/feature-flags.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/account-v2/feature-flags.ts",
+      "sha256": "ac0111bfea02f434c9976820d91fd7807b0d237064d9f586c02516d4f74c43da"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "sha256": "eda5c8c0462d21f269ffb8a6abfc8e6c5a2ebbc6d8fcb55d796d0a63e7b721c4"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@zodiacs/engine/dist/internal-math.js",
+      "sha256": "187cbd31a74bd069dc413e6fb1ef33cc72a108e9a405a3b5095b64346def2422"
+    },
+    {
+      "path": "source/src/lib/engine/types.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/engine/types.ts",
+      "sha256": "55b9113db22cf4d456a090411dad862f639440c7690da2a314f751efa6cf6c54"
+    },
+    {
+      "path": "source/src/lib/profile/polar-repair.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/polar-repair.ts",
+      "sha256": "772dc144d1d00429c46f925f43061da071b9117d0f351896e4395d746552e741"
+    },
+    {
+      "path": "source/src/lib/profile/read-store.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/read-store.ts",
+      "sha256": "dc99f255f745996843022f1618e167a82fea5ea35c8adcd945738be439602485"
+    },
+    {
+      "path": "source/src/lib/i18n/core.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/i18n/core.ts",
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/client.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/i18n/ru-runtime/client.ts",
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/ru.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/i18n/ui/ru.ts",
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/server.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/i18n/ru-runtime/server.ts",
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/index.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/i18n/ru-runtime/index.ts",
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "path": "source/src/lib/signs.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/signs.ts",
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/tslib/tslib.es6.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/tslib/tslib.es6.mjs",
+      "sha256": "0929993220938091ede542d688b0fdb87dad99a7e77678e1983c32d18a503339"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/helper.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/helper.js",
+      "sha256": "b68c1869da88161063d23f7944c71bc1c444229b22bca0680386f4ab33e0c967"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/types.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/types.js",
+      "sha256": "bb251c280cb70f197775c8e5a66f38246ea2a09e4283ca11f954c557af37fe2e"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/FunctionsClient.js",
+      "sha256": "3713f2513f44a98d0526004cb6f7092d9e9e9a801a532219821560321ba6fe12"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/index.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/functions-js/dist/module/index.js",
+      "sha256": "cbbfe306ef3197b924ce2e7cad93e2271165995cfff05bfba29d16122477235b"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/postgrest-js/dist/index.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/postgrest-js/dist/index.mjs",
+      "sha256": "afda25f52b6722f40f70f845fa1569b0b978c23d3e92eb9e453327751b78c00e"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/websocket-factory.js",
+      "sha256": "629232bc6bd2f354504f383dbce81de37c5544bb4fcb7835b865d697ff7bdbb0"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/version.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/version.js",
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/constants.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/constants.js",
+      "sha256": "23d0a68e19cfb5dfcb512690caacddd8dd1de28cd742c2f076c16de82e221a65"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/serializer.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/serializer.js",
+      "sha256": "c6ba38eb77e1fe0f3a6a7247a632d194758b8be32b036e1229243ae6f6388998"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/transformers.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/transformers.js",
+      "sha256": "a907c21984ed100e56cac3b952e32faf108f4f5efe23dfbcdd3fb63a76581d74"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/phoenix/priv/static/phoenix.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/phoenix/priv/static/phoenix.mjs",
+      "sha256": "a9c3ea0185da3278b2bc94a0ec76a892cbec3b5c05559f7eef389b08fb30c217"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/presenceAdapter.js",
+      "sha256": "a4aeee2de6268a3a4001cf5fdb0771e663eb2c6ee6f034b8cae8a605c213ea68"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePresence.js",
+      "sha256": "462bb638ab2ad7ee41b71cccf64a35c9c3f3610003c80fb831b1758d84742e11"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/normalizeChannelError.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/lib/normalizeChannelError.js",
+      "sha256": "6a80956a048f351557bf4372a13837b67e214af5a3570e67dcc5f23663b4ab2b"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/channelAdapter.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/channelAdapter.js",
+      "sha256": "fb11d798ed7550d8cecba3d8295de1a5ddb88dc45429605346e7581bf2866896"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePostgresFilterBuilder.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimePostgresFilterBuilder.js",
+      "sha256": "e05a58149d9cc0f9ac8fb1a7915db7e13d7c8e5a4988a1b7ad8a7b328a797050"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeChannel.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeChannel.js",
+      "sha256": "d1e08bc086776218f0be69d018327c0cce17a77c5a830d110ea30982f43edb98"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/phoenix/socketAdapter.js",
+      "sha256": "a316775d3658a1f678897023e40f5ca6485c475b3d88812dfae8a853fbc320d5"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/RealtimeClient.js",
+      "sha256": "01d933a2c24bd7bcd0b80bcfc0770b9e1d4d5d29a6cddba33ee976b983524ed9"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/index.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/realtime-js/dist/module/index.js",
+      "sha256": "0615b93f9c384133d7a703749eb4c8477f25adaea99f4eefc4eec73b2bfa1aa4"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/iceberg-js/dist/index.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/iceberg-js/dist/index.mjs",
+      "sha256": "15ed0530ab67a7bfb541eb2cea764023c159312b7f1888e42c029840fafd381d"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/storage-js/dist/index.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/storage-js/dist/index.mjs",
+      "sha256": "cfe96e61f73eb1f2a13173150db50e834f5e682f9a50a16a79ee0c9a436ceb77"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/version.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/version.js",
+      "sha256": "1af488d86401a66e1a96db888d50787f94c285020cad91b4fa572ce96ddf022d"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/constants.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/constants.js",
+      "sha256": "a4d395c65228d78f63af7fbbc7dfcf08817acdff1ee3e24079cab95b15f35782"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/errors.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/errors.js",
+      "sha256": "fcbfa357dab595c78a4e934b828808e59fe3aded885f90240e349d9fcfb76e59"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/base64url.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/base64url.js",
+      "sha256": "2c04328375ce233068e3defa27649a5991f1f1686753e4e4649a9586f30aac0f"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/helpers.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/helpers.js",
+      "sha256": "057cb41abc14506192a97d7dc9575bf05a5682adb090a3f12030302d728b7b5d"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/fetch.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/fetch.js",
+      "sha256": "acb810c206814e21745cf64dd5a37e0e3bdd741a7901bb85535f2ea877f9c6b1"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/types.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/types.js",
+      "sha256": "962955ac9e78967535cadacb3e50fd412066df07c8ef78fbc8483ab6f39032f9"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueAdminApi.js",
+      "sha256": "fb4a9c24f62f02a6e9f662444386068d7c1077d6339513e9ee01c179070751b1"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/local-storage.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/local-storage.js",
+      "sha256": "b43bf10da0dbcc5bc91c902c05624b82fc640de82555026c40d03e85549d9f13"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/locks.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/locks.js",
+      "sha256": "81698be5dade8c1367224856c96e9e1fad7243ad3c556aa6ff87ce6e17e1ac88"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/polyfills.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/polyfills.js",
+      "sha256": "cd45893a74c685ad8267585114c890cd2515ef584fa79ffc19b134a4333f0544"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/web3/ethereum.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/web3/ethereum.js",
+      "sha256": "3c8177cf4fe06f5c675778b0bd296fd20d5f313202471f4117e7e43a358a6a47"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.errors.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.errors.js",
+      "sha256": "0ee6d345e33a254c30e444d7d2466a410519999b7128a83c43c79ab2c1851516"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/lib/webauthn.js",
+      "sha256": "51aaa42576603f805702620e72d3940c14e9f757b25a89e2b8bf3218e00c5f25"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueClient.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/GoTrueClient.js",
+      "sha256": "d9d649205584937435fa1dff6631885f40aa21ffbe6d12f80444b7e63bd59197"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthAdminApi.js",
+      "sha256": "f18bf53f4c43d232f849f9000c1f61bdd43eee7bceb42f829339c5053b6eee41"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthClient.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/AuthClient.js",
+      "sha256": "684b46b2be095e71fe7546e72f6791753f1cae9ebdaacd167b4905a5b7a87903"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/index.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/auth-js/dist/module/index.js",
+      "sha256": "9be5694df0e46b33d4f3b7bb8bad0ecef05ce343a5734376d6b4c93a8233eba7"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/supabase-js/dist/index.mjs",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/@supabase/supabase-js/dist/index.mjs",
+      "sha256": "4df240f9b886d1a2b101b8bb91f48424baea58d04c450dbf4ba496de5dc940c5"
+    },
+    {
+      "path": "source/src/lib/profile/merge.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/merge.ts",
+      "sha256": "3e49d997f331d47182b3103d0f01d18dc72aa7b19219418e59c1b55923aeb084"
+    },
+    {
+      "path": "source/src/lib/profile/sync.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/sync.ts",
+      "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+    },
+    {
+      "path": "source/src/lib/profile/store.ts",
+      "selected": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/lib/profile/store.ts",
+      "sha256": "463ae8eee11d52cfbbca7c458310aea4bc8fc6b9b234317c4f8b8a65acc06ea3"
+    },
+    {
+      "path": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "selected": "../../../../Users/chiburashka/.codex/worktrees/4806/site/node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js",
+      "sha256": "43af8eff4027c4d275700d867a65943353e8003dae2681c1632c4a12012db3f3"
+    },
+    {
+      "path": "source/src/islands/PostChartDailyBrief.tsx",
+      "selected": "candidate-source/src/islands/PostChartDailyBrief.tsx",
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+    },
+    {
+      "path": "entry.tsx",
+      "selected": "entry.tsx",
+      "sha256": "90ec5a7c48f88e7e781b280791e1487de3096d69c856485b8b241062ad3b6458"
+    }
+  ],
+  "transforms": [
+    {
+      "source": "/private/tmp/zodiacs-platform-downstream-context-independent-review/daily-freeze2/source/src/islands/PostChartDailyBrief.tsx",
+      "selected": "candidate-source/src/islands/PostChartDailyBrief.tsx",
+      "sourceSha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158",
+      "transformedSha256": "e319a153c4698409937a508f048d041799028cbcb3b9d62db37c6e5789da0da3",
+      "file": "candidate-PostChartDailyBrief.transformed.tsx.log"
+    }
+  ],
+  "bundleSha256": "f9e89949596bca1fd7e4348f01ea412b155aade3a02740c8e35d400fd780aa7a",
+  "qualification": "Actual daily controller, context helper, preference fetch client, state derivation, profile store and access hook. Only dynamic import timing and synthetic auth/Supabase query boundaries are substituted. Native same-origin preference fetch is fulfilled by an owned test route."
+}

@@ -1,0 +1,44 @@
+{
+  "frozen-source/node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": {
+    "sha256": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/chunk-INI453VG.js": {
+    "sha256": "e6f7c42bfdaee08361b37975c7a27a7a5400de35e9b44b71325d9f64ff5aa68d"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/receipt.js": {
+    "sha256": "b42ea8dbedea62a02c3793acd7d22024b302681fea203657b02437cd25a17fea"
+  },
+  "frozen-source/src/lib/account-v2/storage-identity.ts": {
+    "sha256": "fac153299e09bf775443e2ed71be9e81ad8de6ad911a87c85ac4fc42707675ab"
+  },
+  "frozen-source/src/lib/profile/saved-record.ts": {
+    "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33"
+  },
+  "frozen-source/src/lib/profile/saved-record-store.ts": {
+    "sha256": "f691ee57e20ba25b8cd164a96b8fac60f3641a4680164a2dcf15484d9935e7a2"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js": {
+    "sha256": "2048e88750394d48837acb55735f872be9128b2f2d3d37af7134026a9f0e976d"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/chunk-PD4H342X.js": {
+    "sha256": "5852fc08c1f56052de23dc2f018b3bcd6e75b080c18c9d9b5a793a2be49bf4c0"
+  },
+  "frozen-source/node_modules/astronomy-engine/esm/astronomy.js": {
+    "sha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/chunk-4YKOFVM6.js": {
+    "sha256": "5d795078c6cfc19404f933c87c3748946706ab30631d6b4b4b695a227dc8b803"
+  },
+  "frozen-source/node_modules/@zodiacs/engine/dist/index.js": {
+    "sha256": "46306e0005fc4dd86eaa62a062f8e54957bceb0e672a6f073f920434d2b2ef3b"
+  },
+  "frozen-source/src/lib/engine/chart-adapter.ts": {
+    "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+  },
+  "frozen-source/src/lib/engine/portable.ts": {
+    "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+  },
+  "native/entry.ts": {
+    "sha256": "ba078c97d421dd9587fb1e12fe44698596d21fdd486cfaa1e70f140f596abff2"
+  }
+}

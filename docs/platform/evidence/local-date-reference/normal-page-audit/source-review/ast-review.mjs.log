@@ -1,0 +1,78 @@
+import ts from '/private/tmp/zodiacs-platform-local-date-catalog-count-independent-review/site/node_modules/typescript/lib/typescript.js';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { createHash } from 'node:crypto';
+import assert from 'node:assert/strict';
+const out=dirname(fileURLToPath(import.meta.url));
+const sha=s=>createHash('sha256').update(s).digest('hex');
+const parse=(v,p)=>{
+ const text=readFileSync(join(out,'source',v,p),'utf8');
+ return ts.createSourceFile(p,text,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+};
+const walk=(n,predicate,found=[])=>{if(predicate(n))found.push(n);ts.forEachChild(n,c=>{walk(c,predicate,found)});return found};
+const decl=(s,name)=>{const list=walk(s,n=>ts.isFunctionDeclaration(n)&&n.name?.text===name);assert.equal(list.length,1);return list[0]};
+const attr=(s,name,predicate=()=>true)=>{const list=walk(s,n=>ts.isJsxAttribute(n)&&n.name.getText(s)===name&&predicate(n));assert.equal(list.length,1);return list[0]};
+const effect=s=>{const list=walk(s,n=>ts.isCallExpression(n)&&n.expression.getText(s)==='useEffect'&&n.arguments[0]?.getText(s).includes('if (busy || !focusAfterComputeRef.current) return;'));assert.equal(list.length,1);return list[0]};
+const calls=(n,s)=>walk(n,x=>ts.isCallExpression(x)).map(x=>({callee:x.expression.getText(s),arguments:x.arguments.map(a=>a.getText(s))}));
+const entry=(s,n)=>({startLine:s.getLineAndCharacterOfPosition(n.getStart(s)).line+1,endLine:s.getLineAndCharacterOfPosition(n.end).line+1,
+ sha256:sha(n.getText(s)),text:n.getText(s),calls:calls(n,s)});
+const chartPath='src/islands/ChartCalculator.tsx',moonPath='src/islands/MoonPhaseTool.tsx',fieldsPath='src/islands/BirthFields.tsx';
+const c=parse('root',chartPath),bc=parse('head3845',chartPath),m=parse('root',moonPath),bm=parse('head3845',moonPath),bf=parse('root',fieldsPath);
+const rows=[];
+function identical(label,current,base,extract){
+ const a=entry(current,extract(current)),b=entry(base,extract(base));assert.equal(a.text,b.text,label);
+ rows.push({label,path:current.fileName,root:a,base:b,byteIdentical:true});return a;
+}
+for(const name of ['clearReceiptExport','advanceInputRevision','clearResult','invalidateProfileHandoff','resetLens','exitTour','cancelSpotlightArrival','compute'])
+ identical('Chart '+name,c,bc,s=>decl(s,name));
+for(const name of ['onDateChange','onTimeChange','onTimeKnownChange','onCityChange'])
+ identical('Chart '+name,c,bc,s=>attr(s,name));
+identical('Chart post-compute focus effect',c,bc,effect);
+identical('Moon invalidateLookup',m,bm,s=>decl(s,'invalidateLookup'));
+identical('Moon date input',m,bm,s=>attr(s,'onInput',n=>n.parent.getText(s).includes('id="mp-date"')));
+identical('Moon time input',m,bm,s=>attr(s,'onInput',n=>n.parent.getText(s).includes('id="mp-time"')));
+identical('Moon place selection',m,bm,s=>attr(s,'onSelect'));
+identical('Moon post-compute focus effect',m,bm,effect);
+const birthDate=entry(bf,attr(bf,'onInput',n=>n.getText(bf).includes('onDateChange')));
+const runPrefix=(s,name)=>{
+ const body=decl(s,name).body;
+ const prefix=[];
+ for(const statement of body.statements){
+  if(ts.isTryStatement(statement))break;
+  if(ts.isVariableStatement(statement)&&statement.declarationList.declarations.some(d=>d.name.getText(s)==='localDateReferenceFailure'))continue;
+  prefix.push(statement.getText(s));
+ }
+ return prefix;
+};
+for(const [label,a,b,name] of [['Chart run start',c,bc,'runChart'],['Moon lookup start',m,bm,'lookup']]){
+ const current=runPrefix(a,name),base=runPrefix(b,name);assert.deepEqual(current,base,label);
+ rows.push({label,path:a.fileName,statementsBeforeFirstTryIgnoringOnlyNewFailureSentinel:current,baseSame:true});
+}
+for(const name of ['clearReceiptExport','advanceInputRevision','clearResult','invalidateProfileHandoff','resetLens','exitTour','cancelSpotlightArrival'])
+ assert.equal(calls(decl(c,name),c).filter(x=>x.callee==='setError').length,0,name);
+const dateCalls=calls(attr(c,'onDateChange'),c);
+assert.deepEqual(dateCalls.map(x=>x.callee),['invalidateProfileHandoff','setDate','setFieldErrors']);
+assert(calls(decl(c,'compute'),c).some(x=>x.callee==='setError'&&x.arguments[0]==="''"));
+assert(calls(decl(m,'invalidateLookup'),m).some(x=>x.callee==='setError'&&x.arguments[0]==="''"));
+const correction=JSON.parse(readFileSync(join(out,'inputs/normal-chart-harness-correction.json'),'utf8'));
+const claimed=correction.sourceProof.map(proof=>{
+ const name=proof.start.match(/function (\w+)/)[1];const node=decl(c,name);
+ const text=node.getText(c),lineStart=c.text.lastIndexOf('\n',node.getStart(c)-1)+1;
+ const variants={'ast-getText':sha(text),'line-start-through-node-end':sha(c.text.slice(lineStart,node.end)),
+ 'ast-getText-plus-newline':sha(text+'\n'),'line-start-through-node-end-plus-newline':sha(c.text.slice(lineStart,node.end)+'\n'),
+ 'line-start-through-node-end-plus-two-newlines':sha(c.text.slice(lineStart,node.end)+'\n\n')};
+ return {function:name,claimedSha256:proof.sha256,variants,matchingDefinitions:Object.keys(variants).filter(k=>variants[k]===proof.sha256)};
+});
+const result={scope:'Source-only AST and byte comparison; no product execution or new tests',
+ chartDateEditRetainsSeparateError:true,chartDateEditClearsFieldErrorOnly:true,
+ chartComputeClearsErrorBeforeValidationReturnWhenNotBusy:true,chartRunStartClearsErrorBeforeAsyncAwait:true,
+ moonDateEditClearsError:true,moonLookupStartsWithErrorClearAfterNonemptyDateGuard:true,
+ dateEditAndResetPathsUnchangedFromC014Base:true,c012IslandAndFieldsBytesUnchanged:true,
+ chartFocusEffectDisarmedByInvalidateProfileHandoff:true,
+ qualification:'Ordinary date edit after a settled refusal. A separate primary-profile revocation explicitly clears error, and submit while busy returns early. Source shows focus is not requested on this edit; actual DOM focus and 24 browser outcomes are parent evidence.',
+ birthFieldsDateInput:birthDate,comparisons:rows,harnessSnippetHashDefinitions:claimed};
+writeFileSync(join(out,'ast-result.json'),JSON.stringify(result,null,2)+'\n');
+mkdirSync(join(out,'excerpts'),{recursive:true});
+for(const row of rows){if(row.root)writeFileSync(join(out,'excerpts',row.label.replace(/[^a-z0-9]+/gi,'-')+'.tsx'),row.root.text+'\n')}
+console.log(JSON.stringify({sourceComparisons:rows.length,allRelevantPathsIdentical:true,claimedSnippetHashes:claimed.map(x=>({function:x.function,matches:x.matchingDefinitions}))},null,2));

@@ -1,0 +1,5 @@
+onDateChange={(value) => {
+                invalidateProfileHandoff();
+                setDate(value);
+                setFieldErrors((current) => current.date ? { ...current, date: undefined } : current);
+              }}

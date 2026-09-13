@@ -1,0 +1,83 @@
+import { beforeEach, afterEach, afterAll, expect, it, vi } from 'vitest';
+import { writeFileSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { computeChart } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/engine/full.ts';
+import { PROFILE_KEY, EMPTY_PROFILE } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/profile/schema.ts';
+import { loadProfile, saveChart } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/profile/store.ts';
+import { profileChartRunInput } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/profile/profile-chart-handoff.ts';
+import { selfChartPutWire } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-v2/chart-wire.ts';
+import { serializePrivateChartPayloadV1, putChartMutationFingerprintV1 } from '/Users/chiburashka/.codex/worktrees/4806/site/src/lib/account-v2/mutation-fingerprint.ts';
+
+const root='/Users/chiburashka/.codex/worktrees/4806/site';
+const out='/private/tmp/zodiacs-platform-c02-next-review';
+const observations:any[]=[];
+const uuid='11111111-1111-4111-8111-111111111111';
+class MemoryStorage {
+  values=new Map<string,string>();
+  get length(){return this.values.size}
+  getItem(key:string){return this.values.get(key)??null}
+  setItem(key:string,value:string){this.values.set(key,String(value))}
+  removeItem(key:string){this.values.delete(key)}
+  key(index:number){return [...this.values.keys()][index]??null}
+  clear(){this.values.clear()}
+}
+let storage:MemoryStorage;
+function chartFromCurrentSaveProjection(houseSystem:'whole'|'placidus',id=uuid){
+  // This projection is the active ChartCalculator commitSave mapping. The
+  // actual computation, store, rerun adapter and wire functions are imported.
+  const computed=computeChart({utc:new Date('2001-12-21T09:00:00Z'),latitude:78.2232,longitude:15.6267,houseSystem,timeKnown:true});
+  return {computed,saved:{id,name:'Synthetic',relationship:'self' as const,createdAt:'2026-01-01T00:00:00.000Z',updatedAt:'2026-01-01T00:00:00.000Z',
+    birth:{date:'2001-12-21',time:'09:00',timeKnown:true,place:{name:'Synthetic place',admin1:'',country:'',lat:78.2232,lon:15.6267,tz:'Etc/UTC'}},
+    summary:{engineVersion:computed.engineVersion,utcISO:computed.input.utc.toISOString(),houseSystem:computed.houses?.system??houseSystem,bodies:computed.bodies.map(({body,lon,retrograde})=>({body,lon,retrograde})),angles:computed.angles?{asc:computed.angles.asc,mc:computed.angles.mc}:null,flags:computed.flags}}};
+}
+beforeEach(()=>{
+  storage=new MemoryStorage();vi.stubGlobal('localStorage',storage);vi.stubGlobal('window',{dispatchEvent:vi.fn()});
+  vi.stubGlobal('document',undefined);vi.stubGlobal('fetch',vi.fn(()=>{throw new Error('No network authorized by synthetic probe')}));
+  vi.useFakeTimers();vi.setSystemTime(new Date('2026-09-08T07:00:00.000Z'));
+});
+afterEach(()=>{expect(fetch).not.toHaveBeenCalled();vi.useRealTimers();vi.unstubAllGlobals()});
+afterAll(()=>{
+  const files=['src/lib/profile/schema.ts','src/lib/profile/store.ts','src/lib/profile/read-store.ts','src/lib/profile/profile-chart-handoff.ts','src/lib/account-v2/chart-wire.ts','src/lib/account-v2/mutation-fingerprint.ts','src/lib/account-v2/profile-boundary.ts','src/islands/ChartCalculator.tsx'];
+  const sources=files.map(file=>({file,sha256:createHash('sha256').update(readFileSync(`${root}/${file}`)).digest('hex')}));
+  writeFileSync(`${out}/observations.json`,JSON.stringify({scope:'Synthetic in-memory storage only; actual site functions, no browser data, no network, no account request or shared-source modification.',runtime:{node:process.version,icu:process.versions.icu,tz:process.versions.tz},sources,observations},null,2)+'\n');
+});
+
+it('RED: a new polar Placidus save must rerun the original requested system',()=>{
+  const {computed,saved}=chartFromCurrentSaveProjection('placidus');expect(computed.houses?.system).toBe('whole');expect(computed.flags).toContain('polar-fallback');
+  const mapping=readFileSync(`${root}/src/islands/ChartCalculator.tsx`,'utf8');expect(mapping).toContain('houseSystem: chart.houses?.system ?? computedInput.houseSystem');
+  expect(saveChart(saved)).toBe('saved');const rerun=profileChartRunInput(loadProfile().charts,uuid);
+  observations.push({name:'fresh-save-request-loss',request:'placidus',computedActual:computed.houses?.system,stored:loadProfile().charts[0].summary.houseSystem,rerun:rerun?.houseSystem,expected:'placidus'});
+  expect(rerun?.houseSystem).toBe('placidus');
+});
+
+it('RED: different explicit requests must not merge just because polar actual houses match',()=>{
+  const fallback=chartFromCurrentSaveProjection('placidus');const whole=chartFromCurrentSaveProjection('whole','22222222-2222-4222-8222-222222222222');
+  expect(saveChart(fallback.saved)).toBe('saved');const status=saveChart(whole.saved);const charts=loadProfile().charts;
+  observations.push({name:'different-request-identity-collapse',requests:['placidus','whole'],actuals:[fallback.computed.houses?.system,whole.computed.houses?.system],secondStatus:status,chartCount:charts.length,retainedIds:charts.map(x=>x.id),expectedCount:2});
+  expect(status).toBe('saved');expect(charts).toHaveLength(2);
+});
+
+it('proves a same-key version2 profile is hidden then overwritten by the current writer',()=>{
+  const {saved}=chartFromCurrentSaveProjection('placidus');
+  const version2={...EMPTY_PROFILE,version:2,charts:[{...saved,houseRequest:{system:'placidus',origin:'recorded-request'}}]};
+  storage.setItem(PROFILE_KEY,JSON.stringify(version2));expect(loadProfile().charts).toHaveLength(0);
+  saveChart(chartFromCurrentSaveProjection('whole').saved);const after=JSON.parse(storage.getItem(PROFILE_KEY)!);
+  observations.push({name:'same-key-version-bump-is-not-safe',beforeVersion:2,oldReaderVisibleCount:0,afterVersion:after.version,metadataSurvives:Boolean(after.charts[0].houseRequest)});
+  expect(after.version).toBe(1);expect(after.charts[0].houseRequest).toBeUndefined();
+});
+
+it('proves optional metadata in v1 is lost by a normal old-client full-record re-save',()=>{
+  const {saved}=chartFromCurrentSaveProjection('placidus');const richer={...saved,houseRequest:{system:'placidus',origin:'recorded-request'},actualHouseSystem:'whole'};
+  storage.setItem(PROFILE_KEY,JSON.stringify({...EMPTY_PROFILE,charts:[richer]}));expect((loadProfile().charts[0] as any).houseRequest.system).toBe('placidus');
+  saveChart(saved);const after=loadProfile().charts[0] as any;
+  observations.push({name:'same-key-additive-metadata-downgrade',beforeRequest:richer.houseRequest,afterRequest:after.houseRequest??null,oldUpdatedAt:after.updatedAt});
+  expect(after.houseRequest).toBeUndefined();expect(after.actualHouseSystem).toBeUndefined();
+});
+
+it('confirms fallback and explicit-whole v1 writes remain byte/fingerprint indistinguishable',async()=>{
+  const a=chartFromCurrentSaveProjection('placidus').saved;const b=chartFromCurrentSaveProjection('whole').saved;
+  const aw=selfChartPutWire(a,uuid,uuid,3)!,bw=selfChartPutWire(b,uuid,uuid,3)!;expect(aw).not.toBeNull();expect(bw).not.toBeNull();expect(aw).toEqual(bw);
+  const aBytes=serializePrivateChartPayloadV1(aw),bBytes=serializePrivateChartPayloadV1(bw);expect(aBytes).toBe(bBytes);
+  const fingerprints=await Promise.all([putChartMutationFingerprintV1(aw),putChartMutationFingerprintV1(bw)]);expect(fingerprints[0]).toBe(fingerprints[1]);
+  observations.push({name:'v1-wire-ambiguity',differentRequests:true,identicalWire:true,identicalCanonicalBytes:true,identicalMutationFingerprints:true,fingerprint:fingerprints[0]});
+});

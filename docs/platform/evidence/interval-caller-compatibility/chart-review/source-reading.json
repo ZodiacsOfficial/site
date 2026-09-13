@@ -1,0 +1,72 @@
+{
+  "initialHead": "68412f16140f9986b11767d271eda6e14b6aba48",
+  "finalHead": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "scope": "Read-only working source snapshots while root integrates rc6; no whole-tree freeze claim",
+  "files": [
+    {
+      "path": "CLAUDE.md",
+      "sha256": "e4afd3609a8fec988efb298e03f29b055e60c1040356c8baaced53ebd91cfdae",
+      "bytes": 12153
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96",
+      "bytes": 1810
+    },
+    {
+      "path": "src/lib/moon-certainty.ts",
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994",
+      "bytes": 1909
+    },
+    {
+      "path": "src/lib/chart-context.ts",
+      "sha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a",
+      "bytes": 7527
+    },
+    {
+      "path": "src/islands/PositionsShareSurface.tsx",
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c",
+      "bytes": 19508
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11",
+      "bytes": 116026
+    },
+    {
+      "path": "src/islands/BirthFields.tsx",
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a",
+      "bytes": 3543
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890",
+      "bytes": 21866
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f",
+      "bytes": 23867
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f",
+      "bytes": 27542
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5",
+      "bytes": 26366
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3",
+      "bytes": 25488
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e",
+      "bytes": 38127
+    }
+  ]
+}

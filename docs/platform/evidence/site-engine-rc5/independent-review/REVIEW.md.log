@@ -1,0 +1,121 @@
+# Independent site rc.5 adoption review
+
+Result: no concrete adoption blocker found in the frozen candidate. This is an
+independent agent's bounded source and runtime review, not human practitioner
+sign-off, complete numerical certification, a full site gate receipt, or a
+publication/deployment/adoption claim.
+
+## Identity and execution
+
+The review froze twelve source inputs from the working tree whose HEAD was
+`d63773a3be2b4d40ff28a1075b9aaa9cb6c10793`. `snapshot.json` records each SHA-256;
+`source.patch` records the tracked dirty diff. A fresh isolated directory was
+created at `/private/tmp/zodiacs-platform-rc5-independent-review`. No prior scratch
+results were reused as execution evidence. The package archives were copied and
+extracted into separate rc.1 and rc.5 module trees; the exact installed Astronomy
+Engine 2.1.19 dependency and esbuild tooling were copied without install scripts
+or network. Root site files were not edited by this reviewer.
+
+`probe.mjs` executed successfully against both frozen installed packages on:
+
+- Node 22.23.2, ICU 78.2, tzdata 2026a: 291 checks passed.
+- Node 24.19.0, ICU 78.3, tzdata 2026b: 291 checks passed.
+
+See `probe-node22.log`, `probe-node24.log`, `result-node22.json`, and
+`result-node24.json`. Each check name is retained. The counts are assertion
+groups rather than a count of individual assertions. These executions do not
+rerun or relabel the author's 247 checks.
+
+## Compatibility and boundaries
+
+The harness bundles the actual unchanged site `full.ts`, `houses.ts`,
+`aspects.ts`, and `types.ts` separately against each extracted package. It does
+not replace the adapter with a modeled projection.
+
+- 128 natal calculations compare every existing site Chart field, excluding only
+  top-level `engineVersion`; a further five exercise unknown time, missing
+  location, LMT, DST fold, and DST gap flags. Caller input object identity is
+  retained in the regular matrix. Eight epochs cover years 0004, 0099, 1600,
+  1900, 2000, 2024, 2026 and 2199. Eight locations include the equator, northern
+  and southern mid-latitudes, the 66-degree threshold, just beyond it, both
+  polar hemispheres, and a near-pole control. Both house requests are tested.
+- Eight body/aspect sets and 192 single-body longitude/speed values agree exactly.
+- 72 direct house configurations agree exactly across nine latitudes, four
+  sidereal times and both requested systems.
+- Public/internal/site export names, function arities and non-version constants
+  are unchanged. Separate browser dependency graphs confirm receipt and geo
+  remain optional, the site math graph remains free of the astronomical
+  ephemeris, and no tested entry imports the ownership SDK. `graphs.json`
+  retains the actual esbuild module inputs.
+- 85 hostile JSON-representable metadata variations are rejected: missing and
+  null fields, malformed identities, query/fragment suffixes,
+  mutable commit refs, newline tricks, path traversal, unexpected keys and
+  inconsistent carrier paths. The original candidate and the explicitly
+  supported owned-site artifact carrier pass. This local metadata validator
+  checks canonical claims; it does not authenticate remote source commits.
+- Full public Chart receipts round-trip and replay correctly for known and
+  unknown 08:30 UTC instants with polar requested Placidus, retaining exact
+  source ISO spelling and requested versus actual houses. The receipt replay
+  intentionally emits an explicit empty input flag array when it was omitted
+  from the original input; the probe declares that single representational
+  normalization explicitly.
+
+`charts.json` records the matrix inputs, actual houses/flags and paired result
+hashes. Exact parity is not independent astronomical accuracy. No numerical
+fixture, tolerance or original site expected value was altered.
+
+Two limits remain explicit. The compact site body records omit the full public
+Chart's sign/degree fields, so direct receipt construction from that compact
+Chart correctly throws; this pin does not implement receipt storage or an
+account migration. Also, the site still calls the internal engine boundary:
+rc.5 public-input validation does not automatically harden internal callers.
+
+## Archive and preservation evidence
+
+`integrity-probe.py` also passed, with raw output in `integrity-probe.log` and
+its complete receipt in `integrity-final.json`:
+
+- All 23 actual installed package members equal the archive bytes.
+- SHA-256 equals `1809c1686843a6be148eb185535e32059a20c35896e29ccfc7583a6b2738da65`.
+- Lockfile changes are exactly the root engine spec and its version, resolved
+  archive and SHA-512 integrity; every unrelated dependency entry is unchanged.
+- All four evidence paths equal immutable local git objects at
+  `d63773a3be2b4d40ff28a1075b9aaa9cb6c10793`.
+- 265 tracked files remain byte-identical to `ba65375a34cee6a85f94b53ba45861f1b81f34ef`
+  across the old starter/archives, all public SDK reference/ownership content,
+  account/profile/living-chart/wallet/server modules, calculator, shared design,
+  footer/layout, engine adapters and numerical fixtures. Exact paths are listed.
+
+The anonymous immutable SDK artifact URL was fetched successfully and equals
+both the frozen and installed archive, with 36,065 bytes. The linked immutable
+SDK source README was fetched and equals the packed README; the linked draft
+receipt specification was also fetched successfully. `remote-provenance.json`
+and the three HTTP header receipts record those reads. This reviewer did not
+independently rebuild the SDK source commit. Headers contain no authentication
+or preview secrets; the source URLs are public.
+
+## Failed harness attempts retained
+
+`initial-harness-cjs-resolution.log` records the first harness attempting
+CommonJS `require.resolve` on an ESM-only import export. It failed before adapter
+execution. The resolver now follows each frozen package's explicit `import`
+export. The failed attempt used the shell's Node 26.4.0; successful acceptance
+uses the explicit Node 22/24 binaries above.
+
+`initial-receipt-expectation.log` records a harness expectation that omitted the
+specified `houses.absenceReason` field. The expected full record was corrected
+from the packed declared schema to include `null` or `unknown-time`; no candidate
+code was changed. Both corrected runtimes pass. These are harness failures,
+not concealed candidate passes.
+
+Full site tests, build, browser layout checks, refreshed daily/capture evidence,
+CI and preview delivery remain the accountable integrator's separate work.
+
+## Integration scope recheck
+
+The twelve frozen source hashes were checked again after the integrator committed
+the adoption source (`4c93a104`) and merged current main (`7266b131`). All twelve
+remain equal; see `root-source-recheck.json`. The subsequent daily provenance,
+Phase 1 scope allowance, screenshots, and browser driver support-row expectations
+are outside this frozen engine-adoption review. No result here certifies those
+later changes; they require the integrator’s own recorded gates.

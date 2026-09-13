@@ -1,0 +1,110 @@
+import type { ComponentChildren } from 'preact';
+import type { City } from '../lib/geo/search';
+import type { CatalogLocale as Locale } from '../lib/i18n';
+import { t } from '../lib/i18n';
+import PlaceSearch from './PlaceSearch';
+
+interface BirthFieldsProps {
+  locale: Locale;
+  dateId: string;
+  timeId: string;
+  placeId: string;
+  date: string;
+  time: string;
+  timeKnown: boolean;
+  city: City | null;
+  onDateChange: (date: string) => void;
+  onTimeChange: (time: string) => void;
+  onTimeKnownChange: (timeKnown: boolean) => void;
+  onCityChange: (city: City | null) => void;
+  onWarm?: () => unknown;
+  showUnknownTime?: boolean;
+  requireKnownTime?: boolean;
+  timeHelp?: ComponentChildren;
+  placeHelp?: ComponentChildren;
+  dateError?: string;
+  timeError?: string;
+  placeError?: string;
+}
+
+/** Shared, controlled birth date/time/place fields used by calculator islands. */
+export function BirthFields({
+  locale,
+  dateId,
+  timeId,
+  placeId,
+  date,
+  time,
+  timeKnown,
+  city,
+  onDateChange,
+  onTimeChange,
+  onTimeKnownChange,
+  onCityChange,
+  onWarm,
+  showUnknownTime = true,
+  requireKnownTime = false,
+  timeHelp,
+  placeHelp,
+  dateError,
+  timeError,
+  placeError,
+}: BirthFieldsProps) {
+  // This is the same unkeyed sibling set without a Fragment wrapper; keep the
+  // direct array return to protect the calculator host's hard bundle budget.
+  return [
+    <div class="field">
+      <label class="field__label" for={dateId}>{t(locale, 'birthDate')}</label>
+      <input
+        id={dateId} class="field__input" type="date" required
+        min="1800-01-01" max="2199-12-31" value={date}
+        aria-invalid={dateError ? 'true' : undefined}
+        aria-describedby={dateError ? `${dateId}-error` : undefined}
+        onInput={(e) => onDateChange((e.target as HTMLInputElement).value)}
+      />
+      {dateError && <p id={`${dateId}-error`} class="field__error" role="alert">{dateError}</p>}
+    </div>,
+
+    <div class="field">
+      <div class="field__labelrow">
+        <label class="field__label" for={timeId}>{t(locale, 'birthTime')}</label>
+        {showUnknownTime && (
+          <label class="field__toggle">
+            <input
+              type="checkbox" checked={!timeKnown}
+              onChange={(e) => onTimeKnownChange(!(e.target as HTMLInputElement).checked)}
+            />
+            {t(locale, 'noBirthTime')}
+          </label>
+        )}
+      </div>
+      <input
+        id={timeId} class="field__input" type="time"
+        disabled={!timeKnown} required={requireKnownTime && timeKnown} value={time}
+        aria-invalid={timeError ? 'true' : undefined}
+        aria-describedby={[
+          timeError ? `${timeId}-error` : null,
+          timeHelp !== undefined ? `${timeId}-help` : null,
+        ].filter(Boolean).join(' ') || undefined}
+        onFocus={onWarm}
+        onInput={(e) => onTimeChange((e.target as HTMLInputElement).value)}
+      />
+      {timeError && <p id={`${timeId}-error`} class="field__error" role="alert">{timeError}</p>}
+      {timeHelp !== undefined && <p id={`${timeId}-help`} class="field__help">{timeHelp}</p>}
+    </div>,
+
+    <div class="field">
+      <label class="field__label" for={placeId}>{t(locale, 'birthplace')}</label>
+      <PlaceSearch
+        id={placeId}
+        selected={city}
+        onSelect={onCityChange}
+        locale={locale}
+        validationError={placeError}
+        selectionHint={t(locale, 'placePickHint')}
+        required
+      />
+      {placeHelp !== undefined && <p class="field__help">{placeHelp}</p>}
+    </div>,
+  ];
+}

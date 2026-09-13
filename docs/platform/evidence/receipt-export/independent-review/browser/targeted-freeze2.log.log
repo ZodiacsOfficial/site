@@ -1,0 +1,8 @@
+{"name":"corrected-positions-only","status":"passed"}
+{"name":"idle-graph-birth-chart","status":"passed"}
+{"name":"idle-graph-moon-sign","status":"passed"}
+{"name":"idle-graph-rising-sign","status":"passed"}
+{"name":"delayed-helper-input-edit","status":"passed"}
+{"name":"helper-download-failure-before-natal","status":"passed"}
+{"name":"profile-revoke-during-helper","status":"passed"}
+{"passed":7,"failed":0}

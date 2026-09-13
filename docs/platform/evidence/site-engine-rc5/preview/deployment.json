@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-09-08T04:19:44.670335+00:00",
+  "id": "dpl_BsA6EAM83MD2vyAHiSAsVNzTwPm9",
+  "state": "READY",
+  "url": "https://zodiacs-kanwjkp9y-zodiacsofficial.vercel.app",
+  "sourceCommit": "8ee0e0183a3c4437af902858b1d76678d3e961a3",
+  "target": "preview",
+  "operation": "Read-only Vercel get deployment + actual browser acceptance",
+  "acceptance": "13 checks pass; Node22.23.2; Chrome152.0.7977.83",
+  "temporaryAuth": "Fresh Vercel share capability; isolated browser cookies not recorded, browser closed and temporary600file deleted. Initial unauthenticated attempt reached Vercel login and failed expected footer; preserved log."
+}

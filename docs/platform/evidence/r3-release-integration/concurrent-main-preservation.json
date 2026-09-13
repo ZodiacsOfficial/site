@@ -1,0 +1,468 @@
+{
+  "base": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
+  "since": "d4d5717d132a28cd6d7cda3007e3b898bb74669f",
+  "paths": [
+    {
+      "path": ".github/phase1-scope-allowance.json",
+      "mainSha256": "a577624f7eceab1839649d94e4fe8b83d95f7cf257d77d27030d8156c2c7fa0c",
+      "candidateSha256": "363f68ff1f4966ebd625e366b5d743e75b53554683da5625b3ec6d2a32008cd6",
+      "equal": false
+    },
+    {
+      "path": "docs/REGISTRY-RESEARCH-METHOD.md",
+      "mainSha256": "d6a93a175b58b2a247a6c7b977cef59c97a6f3f1268b6fa84021b99d14430f45",
+      "candidateSha256": "d6a93a175b58b2a247a6c7b977cef59c97a6f3f1268b6fa84021b99d14430f45",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/career-1280.png",
+      "mainSha256": "958126e80b7712e0a557b4abd0be9055ae48e95c151876f46b20b67623d4058c",
+      "candidateSha256": "958126e80b7712e0a557b4abd0be9055ae48e95c151876f46b20b67623d4058c",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/career-360.png",
+      "mainSha256": "7cef0a57e2caddf7df7395c6dc2e15dc6b7a2731f993a246600942e4af8be03b",
+      "candidateSha256": "7cef0a57e2caddf7df7395c6dc2e15dc6b7a2731f993a246600942e4af8be03b",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/daily-1280.png",
+      "mainSha256": "5b639532b7b6ffbb3fbd58276911a0f9b175d617670a1f20d8fcb11dc3a18641",
+      "candidateSha256": "5b639532b7b6ffbb3fbd58276911a0f9b175d617670a1f20d8fcb11dc3a18641",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/daily-360.png",
+      "mainSha256": "9a9d6dafd9352ad41b6e2e8b68afd14ad74ae916edb48e55ca9e76054e8cac97",
+      "candidateSha256": "9a9d6dafd9352ad41b6e2e8b68afd14ad74ae916edb48e55ca9e76054e8cac97",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-1280.png",
+      "mainSha256": "0ac0ad437ce0d115d7350d43a6b55489c83c42a7a57e485819d4c0f0ca4a9a63",
+      "candidateSha256": "0ac0ad437ce0d115d7350d43a6b55489c83c42a7a57e485819d4c0f0ca4a9a63",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/horoscopes-hub-360.png",
+      "mainSha256": "5a4924c09838dde875815f93f910a271cf89778c983913172188dae40488cddb",
+      "candidateSha256": "5a4924c09838dde875815f93f910a271cf89778c983913172188dae40488cddb",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/love-1280.png",
+      "mainSha256": "a08c51eb0dc78f7dce99d629059e586689e65d77a553f1525e94a9934b71cac8",
+      "candidateSha256": "a08c51eb0dc78f7dce99d629059e586689e65d77a553f1525e94a9934b71cac8",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/love-360.png",
+      "mainSha256": "415397e615f6dd387d1e00db2eccfaf14d95f87393199544d3205fcfba28d073",
+      "candidateSha256": "415397e615f6dd387d1e00db2eccfaf14d95f87393199544d3205fcfba28d073",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/manifest.json",
+      "mainSha256": "cf195922d05e67eb3d43a31df06d393185f793bbbc0830299b68c1a48e368fc7",
+      "candidateSha256": "cf195922d05e67eb3d43a31df06d393185f793bbbc0830299b68c1a48e368fc7",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/today-1280.png",
+      "mainSha256": "6a198f8377ebf631d7c7fcb1519bb564f043802286a4564426900e537446ab91",
+      "candidateSha256": "6a198f8377ebf631d7c7fcb1519bb564f043802286a4564426900e537446ab91",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/today-360.png",
+      "mainSha256": "4dbafa6bec080d424a32b2f9d13b23dfe85ed488f5f04a5c5ae37899b8092288",
+      "candidateSha256": "4dbafa6bec080d424a32b2f9d13b23dfe85ed488f5f04a5c5ae37899b8092288",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/tomorrow-1280.png",
+      "mainSha256": "1118f13584b125be8ef85e2b80ffa7ae26e8eba2065df0b2c8929a3cdef58221",
+      "candidateSha256": "1118f13584b125be8ef85e2b80ffa7ae26e8eba2065df0b2c8929a3cdef58221",
+      "equal": true
+    },
+    {
+      "path": "docs/acceptance/phase1/screenshots/tomorrow-360.png",
+      "mainSha256": "28befd54bef188ba618e35e9efd8683a84a74db9b38bb53d965ebcd6745dd974",
+      "candidateSha256": "28befd54bef188ba618e35e9efd8683a84a74db9b38bb53d965ebcd6745dd974",
+      "equal": true
+    },
+    {
+      "path": "package-lock.json",
+      "mainSha256": "23f14dd42c2aebcd17b51b8ad22a397ae619b70870bff86c543fef1564235cc8",
+      "candidateSha256": "4bb298bba27d8297b504096e71e86f2c6a5cf4fe5d224ebc57ca70a9821a3792",
+      "equal": false
+    },
+    {
+      "path": "public/assets/data/registry-market-history.v1.json",
+      "mainSha256": "4d32eca0cf4eaf4810a43915c581d711624d847b61f1cc9b64b96b309de6b612",
+      "candidateSha256": "4d32eca0cf4eaf4810a43915c581d711624d847b61f1cc9b64b96b309de6b612",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/index.json",
+      "mainSha256": "e82111b6b2d5df2c79cf55abc93084b8a35e845e319d8f3e631e27b5dfadc59c",
+      "candidateSha256": "e82111b6b2d5df2c79cf55abc93084b8a35e845e319d8f3e631e27b5dfadc59c",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-09.json",
+      "mainSha256": "79b880477111cbc8bbeab5b30ff84bb29fbdcc304d7fe2d46bf4c080b0d9607e",
+      "candidateSha256": "79b880477111cbc8bbeab5b30ff84bb29fbdcc304d7fe2d46bf4c080b0d9607e",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-10.json",
+      "mainSha256": "f8d28931d47e0301dd5571363d2916f97a121aba4f2baaf74aed7fb6fd56a738",
+      "candidateSha256": "f8d28931d47e0301dd5571363d2916f97a121aba4f2baaf74aed7fb6fd56a738",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-11.json",
+      "mainSha256": "fe2c4c06e7a3bb48155a29238380cbcfdda9dd6ce960699291ab12cbaf63b58a",
+      "candidateSha256": "fe2c4c06e7a3bb48155a29238380cbcfdda9dd6ce960699291ab12cbaf63b58a",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-daily-market-brief-2026-09-12.json",
+      "mainSha256": "7694067b6619839c4284ed3d7cb82e16f9edeb673ead4354214655f6d199bcc6",
+      "candidateSha256": "7694067b6619839c4284ed3d7cb82e16f9edeb673ead4354214655f6d199bcc6",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto.json",
+      "mainSha256": "80d41ef02f404ee203a3980dff417b0c7c2b6e5788ec82d16607dbf8b1d40875",
+      "candidateSha256": "80d41ef02f404ee203a3980dff417b0c7c2b6e5788ec82d16607dbf8b1d40875",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune.json",
+      "mainSha256": "189e6546a86bb6750e83c33a1af7183435e51cc35a32d20890c194628d1a83d6",
+      "candidateSha256": "189e6546a86bb6750e83c33a1af7183435e51cc35a32d20890c194628d1a83d6",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus.json",
+      "mainSha256": "17eed4c056c7b519ce34a1e663aa8b9939fdc686bdf76bd1707b2de2491bbd6d",
+      "candidateSha256": "17eed4c056c7b519ce34a1e663aa8b9939fdc686bdf76bd1707b2de2491bbd6d",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-15t18-41-31-944z-venus-square-pluto.json",
+      "mainSha256": "094a14075e31192870a0ec8d1d929b4b62ddb34486b1953d1d93417c73be50e9",
+      "candidateSha256": "094a14075e31192870a0ec8d1d929b4b62ddb34486b1953d1d93417c73be50e9",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-16t08-31-12-865z-neptune-sextile-pluto.json",
+      "mainSha256": "730aad58a0462b2ea32e095efcd4ab26c896d12075dd92dad522bf65fa3eaa8f",
+      "candidateSha256": "730aad58a0462b2ea32e095efcd4ab26c896d12075dd92dad522bf65fa3eaa8f",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn.json",
+      "mainSha256": "049c741806f7b63e21a47f02f97396bd9208bfc7a1c43ce2b2d09cbb4467a208",
+      "candidateSha256": "049c741806f7b63e21a47f02f97396bd9208bfc7a1c43ce2b2d09cbb4467a208",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t08-12-43-517z-venus-scorpio.json",
+      "mainSha256": "2129a7c9004b8e3b675ccde44b2f08a0078d1dd21922c4fca93f4a52e625fb64",
+      "candidateSha256": "2129a7c9004b8e3b675ccde44b2f08a0078d1dd21922c4fca93f4a52e625fb64",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-ingress-2026-09-10t16-21-13-543z-mercury-libra.json",
+      "mainSha256": "87bf0e3d22bb2fc0253f46397317165a1ea216570a31da0cd6957e34929e434c",
+      "candidateSha256": "87bf0e3d22bb2fc0253f46397317165a1ea216570a31da0cd6957e34929e434c",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-lunation-2026-09-11t03-26-50-210z-new-moon-virgo.json",
+      "mainSha256": "b52b4255b4eeea79b612cb8a0a733f8da19abec68586f6b8c102b19344bc38cf",
+      "candidateSha256": "b52b4255b4eeea79b612cb8a0a733f8da19abec68586f6b8c102b19344bc38cf",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-event-brief-station-2026-09-10t18-40-43-743z-uranus-retrograde-gemini.json",
+      "mainSha256": "45c5e32eedf25a574b979512aa99385ebda297d8282d7dabece31da904241192",
+      "candidateSha256": "45c5e32eedf25a574b979512aa99385ebda297d8282d7dabece31da904241192",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-01-observation-168h.json",
+      "mainSha256": "c689a6dedc29211cd9acde629b620cda170b35020b58b691a01cc98aa991c513",
+      "candidateSha256": "c689a6dedc29211cd9acde629b620cda170b35020b58b691a01cc98aa991c513",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-02-observation-168h.json",
+      "mainSha256": "0d08ad7d539e6bfad380044b9dc6a36d74584c25847e4c48a1f6162c6312ebf3",
+      "candidateSha256": "0d08ad7d539e6bfad380044b9dc6a36d74584c25847e4c48a1f6162c6312ebf3",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-03-observation-168h.json",
+      "mainSha256": "0f6b7b1d3d97086d551a31d575b950f48a1bfc9a9736cee08e7866ca0b49cc33",
+      "candidateSha256": "0f6b7b1d3d97086d551a31d575b950f48a1bfc9a9736cee08e7866ca0b49cc33",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-04-observation-168h.json",
+      "mainSha256": "cc7c90cd729772daeb6b0150d853f28dbd84f2b0b3b9e20bab6389d604f7560b",
+      "candidateSha256": "cc7c90cd729772daeb6b0150d853f28dbd84f2b0b3b9e20bab6389d604f7560b",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-05-observation-168h.json",
+      "mainSha256": "ec2a9590a843d70309c9cc9fba2f935b2ce4e6c61aa395ff6da6cb886c13ada2",
+      "candidateSha256": "ec2a9590a843d70309c9cc9fba2f935b2ce4e6c61aa395ff6da6cb886c13ada2",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-07-observation-24h.json",
+      "mainSha256": "ab13b901a24e89482af98816e9c80c6aa88ae43e71c61d3638c9d3dc7e67140e",
+      "candidateSha256": "ab13b901a24e89482af98816e9c80c6aa88ae43e71c61d3638c9d3dc7e67140e",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-08-observation-24h.json",
+      "mainSha256": "6007bdc147b4f066e529317049cacdb6bf424351b5864f3b4fc55f35612e2406",
+      "candidateSha256": "6007bdc147b4f066e529317049cacdb6bf424351b5864f3b4fc55f35612e2406",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09-observation-24h.json",
+      "mainSha256": "eee31ac19467a05a1dbfafc7e951da3688a4041634f94a042f3a94e78e3c95b2",
+      "candidateSha256": "eee31ac19467a05a1dbfafc7e951da3688a4041634f94a042f3a94e78e3c95b2",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-09.json",
+      "mainSha256": "2803fdadfd47c59255400e8b3976800be08c9f06447f8fb881680f87da45393e",
+      "candidateSha256": "2803fdadfd47c59255400e8b3976800be08c9f06447f8fb881680f87da45393e",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10-observation-24h.json",
+      "mainSha256": "88fd9cf38457b793998d4aa02121f37d16f9f4d3147c2a31674dc69a21aeae51",
+      "candidateSha256": "88fd9cf38457b793998d4aa02121f37d16f9f4d3147c2a31674dc69a21aeae51",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-10.json",
+      "mainSha256": "6fad1c10965f20ceb55e623358094a885049c5988ced906427ffc82a94ed028b",
+      "candidateSha256": "6fad1c10965f20ceb55e623358094a885049c5988ced906427ffc82a94ed028b",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11-observation-24h.json",
+      "mainSha256": "7b05af031909dc9f20d000a51591130ed47023fe5ae74c9bbc9060d258ffa7af",
+      "candidateSha256": "7b05af031909dc9f20d000a51591130ed47023fe5ae74c9bbc9060d258ffa7af",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-11.json",
+      "mainSha256": "021f830308cb839e0dbf7b9bdc3cc3ff522ceb5aa8b20a1b83cf35ccbc9ef91c",
+      "candidateSha256": "021f830308cb839e0dbf7b9bdc3cc3ff522ceb5aa8b20a1b83cf35ccbc9ef91c",
+      "equal": true
+    },
+    {
+      "path": "public/assets/data/registry-research/items/zrx-market-check-2026-09-12.json",
+      "mainSha256": "c78c06496f0a04b2e5e7247797914b6d4353dc456c08b7bcb126fbe087e3308a",
+      "candidateSha256": "c78c06496f0a04b2e5e7247797914b6d4353dc456c08b7bcb126fbe087e3308a",
+      "equal": true
+    },
+    {
+      "path": "public/assets/registry-outlook.json",
+      "mainSha256": "d66c6494d88b9a12b605243a27f3d8a65a4bc1fd6a3c2231484aac7dd201250c",
+      "candidateSha256": "d66c6494d88b9a12b605243a27f3d8a65a4bc1fd6a3c2231484aac7dd201250c",
+      "equal": true
+    },
+    {
+      "path": "public/assets/registry-research-feed.json",
+      "mainSha256": "9e4dfb03a4d9d327ad46308d977617916a4280c37a177c7d92805da3ccf1663a",
+      "candidateSha256": "9e4dfb03a4d9d327ad46308d977617916a4280c37a177c7d92805da3ccf1663a",
+      "equal": true
+    },
+    {
+      "path": "public/registry/aquarius/index.html",
+      "mainSha256": "5918454bb9c27f4695400de13d518333da549c1cf1e62eb30564c9df0cd77c8e",
+      "candidateSha256": "5918454bb9c27f4695400de13d518333da549c1cf1e62eb30564c9df0cd77c8e",
+      "equal": true
+    },
+    {
+      "path": "public/registry/aries/index.html",
+      "mainSha256": "369a8521d09093e7746b3f0d9b5b4ef8f018c410d3681d9567d066e518b16570",
+      "candidateSha256": "369a8521d09093e7746b3f0d9b5b4ef8f018c410d3681d9567d066e518b16570",
+      "equal": true
+    },
+    {
+      "path": "public/registry/cancer/index.html",
+      "mainSha256": "9d8d37757a8a37aac9ae44e6b9c67afe6329e519d4226a74520519a35f7524bc",
+      "candidateSha256": "9d8d37757a8a37aac9ae44e6b9c67afe6329e519d4226a74520519a35f7524bc",
+      "equal": true
+    },
+    {
+      "path": "public/registry/capricorn/index.html",
+      "mainSha256": "daa8ce997d8ce8b8142a7026d214536c54ac02de0d381f9288e95e22cfe95a2d",
+      "candidateSha256": "daa8ce997d8ce8b8142a7026d214536c54ac02de0d381f9288e95e22cfe95a2d",
+      "equal": true
+    },
+    {
+      "path": "public/registry/gemini/index.html",
+      "mainSha256": "0ac80242f17bf89454747d0fe804d540e9861df355015aa7543a0f9f6e664979",
+      "candidateSha256": "0ac80242f17bf89454747d0fe804d540e9861df355015aa7543a0f9f6e664979",
+      "equal": true
+    },
+    {
+      "path": "public/registry/leo/index.html",
+      "mainSha256": "340fb0b8e5f2f9b516755e59fe79fea154b5a9bdb3126f78bd69c640e60b1eb0",
+      "candidateSha256": "340fb0b8e5f2f9b516755e59fe79fea154b5a9bdb3126f78bd69c640e60b1eb0",
+      "equal": true
+    },
+    {
+      "path": "public/registry/libra/index.html",
+      "mainSha256": "a299f000635709ec64eb9b7ec14fc7a8cfcd8d7bb632a382ae32e01c0ef2d723",
+      "candidateSha256": "a299f000635709ec64eb9b7ec14fc7a8cfcd8d7bb632a382ae32e01c0ef2d723",
+      "equal": true
+    },
+    {
+      "path": "public/registry/pisces/index.html",
+      "mainSha256": "be64b46fdaba90045a41f4541ca87732210269b3b82b2055d9c73ca9a4c62573",
+      "candidateSha256": "be64b46fdaba90045a41f4541ca87732210269b3b82b2055d9c73ca9a4c62573",
+      "equal": true
+    },
+    {
+      "path": "public/registry/sagittarius/index.html",
+      "mainSha256": "ed13d1933313bf6607a3f5e7b8b0ee4aca349bea7a5e450b6eec4e44ee863f7b",
+      "candidateSha256": "ed13d1933313bf6607a3f5e7b8b0ee4aca349bea7a5e450b6eec4e44ee863f7b",
+      "equal": true
+    },
+    {
+      "path": "public/registry/scorpio/index.html",
+      "mainSha256": "bf6069cf1252cf76591d69f0cb31290d34038d90a2bcee15e3fdc34a45df38c1",
+      "candidateSha256": "bf6069cf1252cf76591d69f0cb31290d34038d90a2bcee15e3fdc34a45df38c1",
+      "equal": true
+    },
+    {
+      "path": "public/registry/taurus/index.html",
+      "mainSha256": "1cbbb6ab5eed8f6d82db0faef176fd78d48cdd16b0f3921b2140c39de23c94d4",
+      "candidateSha256": "1cbbb6ab5eed8f6d82db0faef176fd78d48cdd16b0f3921b2140c39de23c94d4",
+      "equal": true
+    },
+    {
+      "path": "public/registry/virgo/index.html",
+      "mainSha256": "793f86f6de435a85e8d0e7686db31c1dbf128444ee85276e9ab1d288614314cf",
+      "candidateSha256": "793f86f6de435a85e8d0e7686db31c1dbf128444ee85276e9ab1d288614314cf",
+      "equal": true
+    },
+    {
+      "path": "scripts/build-sign-pages.mjs",
+      "mainSha256": "28facbbc0ea70bae5b67a90e0790242a09b3cc17103391bee4866f7616ebd20c",
+      "candidateSha256": "28facbbc0ea70bae5b67a90e0790242a09b3cc17103391bee4866f7616ebd20c",
+      "equal": true
+    },
+    {
+      "path": "scripts/registry-market-snapshot-lib.mjs",
+      "mainSha256": "9276a1d5b01916074c4255b2e72c1e2de8a1c27f442441993e4ad44da9eb36c2",
+      "candidateSha256": "9276a1d5b01916074c4255b2e72c1e2de8a1c27f442441993e4ad44da9eb36c2",
+      "equal": true
+    },
+    {
+      "path": "scripts/registry-market-snapshot.test.mjs",
+      "mainSha256": "f4a22118a99529bcaeece58ff07f505ca8d513c846e05b8a13b46ecf6bb6ec79",
+      "candidateSha256": "f4a22118a99529bcaeece58ff07f505ca8d513c846e05b8a13b46ecf6bb6ec79",
+      "equal": true
+    },
+    {
+      "path": "scripts/registry-research-lib.mjs",
+      "mainSha256": "6ce4f17e623331f8121692c6ea2f5292ee19a108f075d71c75127f74f265380e",
+      "candidateSha256": "6ce4f17e623331f8121692c6ea2f5292ee19a108f075d71c75127f74f265380e",
+      "equal": true
+    },
+    {
+      "path": "scripts/registry-research.test.mjs",
+      "mainSha256": "befa82a3de1f5382d306696fdce2221e60f8b33b4983a49b1898a4ee6d230023",
+      "candidateSha256": "04d9996b6346623847057ed6d98342028107a73a340ceed8a759f64fb747a009",
+      "equal": false
+    },
+    {
+      "path": "scripts/sign-records.test.mjs",
+      "mainSha256": "e80982e239379870f3b8aa908b83ee151181eaa392fe0bb676727df823ab6f24",
+      "candidateSha256": "e80982e239379870f3b8aa908b83ee151181eaa392fe0bb676727df823ab6f24",
+      "equal": true
+    },
+    {
+      "path": "src/data/daily-publication-manifest.json",
+      "mainSha256": "2ada411045683cfba59d5e81d50b67057de93f8e72a9c9ca2ab1bfe99c05e1fb",
+      "candidateSha256": "236ebd2240ed2511b2fee88cd2b8213b4ae2140dc002ac0971645f4b909b90da",
+      "equal": false
+    },
+    {
+      "path": "src/data/daily-publication.json",
+      "mainSha256": "33b055a72d62055db934120d3498eb6bc0a429495ddc293ac9d9a6dbc7707045",
+      "candidateSha256": "33b055a72d62055db934120d3498eb6bc0a429495ddc293ac9d9a6dbc7707045",
+      "equal": true
+    },
+    {
+      "path": "src/data/daily.json",
+      "mainSha256": "3ec6bf1e9dd5041aff894f2d40079c38abeca67c1f2b05524daa9da09d13ab60",
+      "candidateSha256": "3ec6bf1e9dd5041aff894f2d40079c38abeca67c1f2b05524daa9da09d13ab60",
+      "equal": true
+    },
+    {
+      "path": "src/data/horoscope-program.json",
+      "mainSha256": "f29846e8f81d994c932aba5096e2500e5491c3f33198ff3a3338dc6b9eb1a197",
+      "candidateSha256": "f29846e8f81d994c932aba5096e2500e5491c3f33198ff3a3338dc6b9eb1a197",
+      "equal": true
+    },
+    {
+      "path": "src/data/registry-research/drafts.json",
+      "mainSha256": "5ada1fb85cb2c16af9e7e7a13cfd109af55b57eddd9f13ac9203c08819f472cc",
+      "candidateSha256": "5ada1fb85cb2c16af9e7e7a13cfd109af55b57eddd9f13ac9203c08819f472cc",
+      "equal": true
+    },
+    {
+      "path": "src/data/registry-research/publication.json",
+      "mainSha256": "e82111b6b2d5df2c79cf55abc93084b8a35e845e319d8f3e631e27b5dfadc59c",
+      "candidateSha256": "e82111b6b2d5df2c79cf55abc93084b8a35e845e319d8f3e631e27b5dfadc59c",
+      "equal": true
+    },
+    {
+      "path": "src/islands/today/TodayBrief.loading.test.ts",
+      "mainSha256": "cb7dea4f61c896f014931af5d40f57aaedff62323de1b901070bdfb893dce2a2",
+      "candidateSha256": "998f49229d2d9c7a5c80463e274525f34e8d95d24a39544f5277d0bd387c4ce2",
+      "equal": false
+    },
+    {
+      "path": "src/islands/today/TodayBrief.tsx",
+      "mainSha256": "5f9bd092c1b09f745d1f5032d1ee02647d140c14bd4f6b9d51ea200362e30375",
+      "candidateSha256": "56b168c0f74e413a3d75477a1fd740aefc7da1aa61f6107f81a380357254b23c",
+      "equal": false
+    },
+    {
+      "path": "src/lib/horoscope-program.test.ts",
+      "mainSha256": "e9185e6537e7ea1288ca0e5a9db129a359c3b63efcf5dc3a634673c912949765",
+      "candidateSha256": "38fc47025450e2f7d24e94eda94e02b32b9dae98e977ed19c187d8f28e9b185a",
+      "equal": false
+    },
+    {
+      "path": "src/pages/today/index.astro",
+      "mainSha256": "426bd8245906d7ce4f070b789073b61f195d1a751636790b7eabeacd482f52f8",
+      "candidateSha256": "426bd8245906d7ce4f070b789073b61f195d1a751636790b7eabeacd482f52f8",
+      "equal": true
+    },
+    {
+      "path": "tests/sign-record-drive.mjs",
+      "mainSha256": "c394b39bd1d1635e8588739189cdf74fabfd1353cf7996fd8a3fd430ea29debd",
+      "candidateSha256": "c394b39bd1d1635e8588739189cdf74fabfd1353cf7996fd8a3fd430ea29debd",
+      "equal": true
+    }
+  ]
+}

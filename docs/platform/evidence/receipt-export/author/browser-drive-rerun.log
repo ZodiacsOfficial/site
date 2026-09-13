@@ -1,0 +1,18 @@
+AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+false !== true
+
+    at download (file:///private/tmp/zodiacs-platform-site-receipt-export-evidence/browser-drive.mjs:45:175)
+    at async file:///private/tmp/zodiacs-platform-site-receipt-export-evidence/browser-drive.mjs:62:14 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+{
+  "run": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/browser-1788846485271",
+  "passed": 6,
+  "failed": 1
+}

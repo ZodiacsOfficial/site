@@ -1,0 +1,61 @@
+{
+  "records": [
+    {
+      "path": "RESULTS.json",
+      "bytes": 4667,
+      "sha256": "b3b011612002512975200b6d478e65ff57154cf885195017d1b056b7b8fb79cc"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 2803,
+      "sha256": "ae6059c645b4ead8c3e695c4de914998e7447bf24c3ab1b613349170ecdc6ea8"
+    },
+    {
+      "path": "candidate.json",
+      "bytes": 1296,
+      "sha256": "5afa2e8e2fbc328c4f7abe6bad1cedfdce58c0ecabedef4bc58fae78eac4792c"
+    },
+    {
+      "path": "proposed-identity.json",
+      "bytes": 421,
+      "sha256": "f5a62de278e738a0fa9882b31fd266e44f1d236b38dadfb9d34c9fe90136a466"
+    },
+    {
+      "path": "proposed-source.patch",
+      "bytes": 2665,
+      "sha256": "2a59e5e721a748178f96e5d653434c0515cc5795d7c37d82cd25338dbe83e581"
+    },
+    {
+      "path": "public-candidate-consumer.log",
+      "bytes": 4201,
+      "sha256": "05c4eed6f9e10d7ddfb4ea0de43ab9530e24ded58ade1711f4cd844a7b272c9e"
+    },
+    {
+      "path": "sdk-README.md.log",
+      "bytes": 15856,
+      "sha256": "e2f4242bd330ccc4ac63df238c9e3561d4b3ea4a6eb8b8f9fd2de8cffae7d7b2"
+    },
+    {
+      "path": "sdk-consumer-node22.log",
+      "bytes": 831,
+      "sha256": "fa89ea9c16b9b78662bcf1e2b0c7f3131072c79f68959fd3ec4a53c17e480cfe"
+    },
+    {
+      "path": "sdk-consumer-node24.log",
+      "bytes": 831,
+      "sha256": "0d89831b44cda27e491b888399dbe027f345f1452dea92eb11118fced400fce0"
+    },
+    {
+      "path": "sdk-install-method.mjs.log",
+      "bytes": 12986,
+      "sha256": "06b4f620b65983319568152bd7661ea31614391d44dd359431e2ab71ec366ab2"
+    },
+    {
+      "path": "support.index.astro.log",
+      "bytes": 13193,
+      "sha256": "7598fca770c5f5e9c26f92603ee37e48c4cc3d087d744ee1ac3783b068a49cea"
+    }
+  ],
+  "totalBytes": 59750,
+  "scope": "Independent read-only review of exact two-text support-page patch; no source mutation or execution claims beyond recorded comparison."
+}

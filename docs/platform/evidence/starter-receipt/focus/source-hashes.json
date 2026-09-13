@@ -1,0 +1,22 @@
+{
+  "rc2": {
+    "natal.html": "9189dd23900ecbf42eb85c0269d24d380d1eb64b9b4994196060eda8178b04bf",
+    "transits.html": "16f559faaaade2976cbb2d04a220db7da118b3843335b65ec2fe81f47d535c10",
+    "widget.html": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+    "app.js": "0eae52a36eea93020168111e3f17ecee6b5450f9728d8ec93c887b68c838d535",
+    "widget.js": "65364309b33b5812aa246dfd88f9846bd5b5eb1e3d420bb3d71fbfd089ebf46b",
+    "styles.css": "5ac715811203e3284da51d1fa0a60b15a8b1915acb991bd8478b9976aeb19b39",
+    "favicon.svg": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe",
+    "THIRD_PARTY_NOTICES.txt": "4f63b4496d1ff20b24a254810eac02d91648c3f5fbdc8f9df34223fd58fa3349"
+  },
+  "rc3": {
+    "natal.html": "48a10034daade86a7b6bea16a0f50218295dace5a53e567a2dfe6648540141f7",
+    "transits.html": "67c4ef1233f3d6ac6bba140c7cc31d6f53cbac5bd20d01b9b58f5371fe685adc",
+    "widget.html": "12c3ec5de764dc4bf9edb2eb8cfdfde96e66e319347684d891a499fab1185b08",
+    "app.js": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+    "widget.js": "65364309b33b5812aa246dfd88f9846bd5b5eb1e3d420bb3d71fbfd089ebf46b",
+    "styles.css": "307ae0993c62cea0a4d8b8cb70b4f676b7077fa1eb5fc6de3b508e875deef5bb",
+    "favicon.svg": "2a5d6adb395ba4c859298de7222cd13ce109942af4ff294418761d15f2d71abe",
+    "THIRD_PARTY_NOTICES.txt": "4f63b4496d1ff20b24a254810eac02d91648c3f5fbdc8f9df34223fd58fa3349"
+  }
+}

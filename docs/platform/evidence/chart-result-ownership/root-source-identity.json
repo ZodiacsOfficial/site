@@ -1,0 +1,67 @@
+{
+  "baseCommit": "30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14",
+  "supersedes": "Freeze1 correction requested; original freeze/evidence unchanged",
+  "scratch": "/private/tmp/zodiacs-platform-chart-ownership",
+  "files": [
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "src/islands/ChartCalculator.locale.test.ts",
+      "bytes": 9306,
+      "sha256": "c688e9e0591a0ecc710f8080123759d0f1fa930ace6c62327d38be7e845d3e0b"
+    },
+    {
+      "path": "src/islands/ChartCalculator.ownership.test.ts",
+      "bytes": 20598,
+      "sha256": "647d86904a9af9c3d9822b2abd609774d703033431e233ec548db1ecde8980a9"
+    },
+    {
+      "path": "tests/chart-ownership-drive.mjs",
+      "bytes": 21741,
+      "sha256": "46dee6bd1e49d610745666e1b3bc7c9105bedef83f5d866552ade2d22ce884a7"
+    }
+  ],
+  "patchSha256": "32b7413f9fcce17b192fa9f3fe28847d6b6ec7bfccc39b4437fee60df44a8e9f",
+  "validation": {
+    "focusedTests": 134,
+    "ownershipExecutionControls": 27,
+    "strictTypeCheck": "passed",
+    "astroProductionCompilation": "passed",
+    "criticalStylesPostprocessing": "passed",
+    "browser": "/private/tmp/zodiacs-platform-chart-ownership-evidence/round2/browser-1788857124161/result.json",
+    "browserGroups": 17
+  },
+  "status": "Root local acceptance complete with explicitly retained original visual failures and measured minor before/after raster difference; draft/hosted checks pending",
+  "rootBaseCommit": "abcf1a44e52040db79a369b49bc9b55d78099b22",
+  "rootCiIntegration": {
+    ".github/workflows/site-check.yml": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5"
+  },
+  "integratedAt": "2026-09-08T08:58:13.724306+00:00",
+  "rootAcceptance": {
+    "build": "passed",
+    "tests": {
+      "files": 415,
+      "passed": 4965
+    },
+    "check": {
+      "files": 1042,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 11
+    },
+    "nativeCases": 17,
+    "existingShareCases": 12,
+    "russian": "26routes+noindex404 at360/1280 passed",
+    "captures": {
+      "count": 18,
+      "allByteIdenticalToBase": true,
+      "sourceFingerprint": "eceb9de9c5b4fb30bca028951777fd2700350f1a234fe01ee656de41ab0f11ac"
+    },
+    "visual": "Three original macOS height failures persist. Two initial images byte-identical; one has1 scored pixel at unchanged threshold0.1, ratio7.30840290932903e-8 below unchanged0.001budget. Same-source repeat identical to candidate. Originals retained; no baseline/tolerance change.",
+    "integrationManifestSha256": "c861408ca630b13fd4aac9f878ddd90c9317122be513db85f7ac55d823006943"
+  },
+  "rootAcceptedAt": "2026-09-08T09:10:57.157091+00:00"
+}

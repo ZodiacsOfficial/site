@@ -1,0 +1,452 @@
+[
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/REVIEW.md",
+    "destination": "REVIEW.md",
+    "bytes": 4382,
+    "sha256": "b2b007414637734773c2704d51c5dee97cbb9d7e084b4664e8190d437a3ecae5"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/audit.py",
+    "destination": "audit.py.log",
+    "bytes": 10461,
+    "sha256": "9b0fd5df37e27733040d591d26f6daa5f59afeabc2faf069d11f4c09db32ee31"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/audit.log",
+    "destination": "audit.log",
+    "bytes": 1045,
+    "sha256": "45ae221e72776f57401e2a0f91d28da5d7d654297aba696d4f89e324fe6baee5"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/audit-result.json",
+    "destination": "audit-result.json",
+    "bytes": 9359,
+    "sha256": "10f182166fb512f2df48e2c1a13fc3487798d3b80f7d808fc0b94485ee0dce54"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/original-input-manifest.json",
+    "destination": "original-input-manifest.json",
+    "bytes": 65202,
+    "sha256": "3887f0fcafa4e6016a63a3b963e94cbb7b7ed14f921a4b4e3263a279d251933e"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/verified-driver-diff.log",
+    "destination": "verified-driver-diff.log",
+    "bytes": 6170,
+    "sha256": "68e76b59f047d4736456792514b2eadf2ecb60bdc5041b1cb3ccb511b933fa82"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/COMMANDS.md",
+    "destination": "source-review/COMMANDS.md",
+    "bytes": 2084,
+    "sha256": "0cc822fc02505ad40ea8a19202757f0edf68e494e869eb3c96bf4013b97f6823"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/REVIEW.md",
+    "destination": "source-review/REVIEW.md",
+    "bytes": 4310,
+    "sha256": "05c9a4d6578d24ea4a4916015a38d3fa609917083e8ad3c3d65440c4086c8070"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/ast-result-initial.json",
+    "destination": "source-review/ast-result-initial.json",
+    "bytes": 45099,
+    "sha256": "4aa13c2a95ed2cef47f11340c66fe0d9685f7688b988c2c281bef2db4e859e6a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/ast-result.json",
+    "destination": "source-review/ast-result.json",
+    "bytes": 45537,
+    "sha256": "bc45cd0ab305a479e46b5c78ba5d6967287f8395165ea91dd0de7c7faf066b7e"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/ast-review-initial.log",
+    "destination": "source-review/ast-review-initial.log",
+    "bytes": 435,
+    "sha256": "349d0a767c6ecee65f34b5bd7b2b38a7152b27ee833a59c39e227fec5b1e47de"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/ast-review.log",
+    "destination": "source-review/ast-review.log",
+    "bytes": 498,
+    "sha256": "e2321579658ed469fb09055446b73ae47deb10b2554f3cf1bbdbab0b4ff2838d"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/ast-review.mjs",
+    "destination": "source-review/ast-review.mjs.log",
+    "bytes": 6486,
+    "sha256": "f43b5e12075a5d35e6449b56bd1dc34f0c69f0c3dd168cd499616c4d99589192"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/c012-island-field-diff.patch",
+    "destination": "source-review/c012-island-field-diff.patch.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/c014-island-diff.patch",
+    "destination": "source-review/c014-island-diff.patch.log",
+    "bytes": 4550,
+    "sha256": "d471579a6f698257780420dd42b28326cc50f095fa5a966c572e72e6cedb9dea"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/capture.log",
+    "destination": "source-review/capture.log",
+    "bytes": 146,
+    "sha256": "9e740b60a902abc92564f4f2ac069565326be2afa3ebb64bb678b0447c0a522b"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/capture.py",
+    "destination": "source-review/capture.py.log",
+    "bytes": 2449,
+    "sha256": "94d27750e5a1462a2cd40b1824eeb3e3f9a7c68b6c85afc51476fc3be00fd95c"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/context-clear-source-references.log",
+    "destination": "source-review/context-clear-source-references.log",
+    "bytes": 797,
+    "sha256": "551f61d6a12d2fb97968c8a874c6bd7d50ee9acf1faf817de2729b074f40406b"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-advanceInputRevision.tsx",
+    "destination": "source-review/excerpts/Chart-advanceInputRevision.tsx.log",
+    "bytes": 153,
+    "sha256": "b053742dd06a34c3d232de647de747932a48dbf2533be9adf6b3f41732bc711c"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-cancelSpotlightArrival.tsx",
+    "destination": "source-review/excerpts/Chart-cancelSpotlightArrival.tsx.log",
+    "bytes": 131,
+    "sha256": "3121839ab6deefceae4a50bb05e3498e908f5807d925e2192626308b7e9ed4aa"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-clearReceiptExport.tsx",
+    "destination": "source-review/excerpts/Chart-clearReceiptExport.tsx.log",
+    "bytes": 143,
+    "sha256": "72e1ec8a33d4daf807f650fba356ddc919eaaff8e9d7e2aa131e149710f55a99"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-clearResult.tsx",
+    "destination": "source-review/excerpts/Chart-clearResult.tsx.log",
+    "bytes": 749,
+    "sha256": "4a48b848f5873a11b39bde509cad01e53507e7a86c085eed195de9edffe39aaf"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-compute.tsx",
+    "destination": "source-review/excerpts/Chart-compute.tsx.log",
+    "bytes": 1138,
+    "sha256": "d7d2f02db42e2b04c77d39cc70553e2067387d1cb5ebb31e58a5e5b75234274f"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-exitTour.tsx",
+    "destination": "source-review/excerpts/Chart-exitTour.tsx.log",
+    "bytes": 98,
+    "sha256": "897c9f6feca34f9c18a2e1025f31ac8a86b8dca37cce355a626c1109651cf52d"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-invalidateProfileHandoff.tsx",
+    "destination": "source-review/excerpts/Chart-invalidateProfileHandoff.tsx.log",
+    "bytes": 272,
+    "sha256": "6503070c8b03a8221da6f6d4c33f018158c9108081a88b8ced484bf0dcd980d1"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-onCityChange.tsx",
+    "destination": "source-review/excerpts/Chart-onCityChange.tsx.log",
+    "bytes": 221,
+    "sha256": "963d38f447aa1010798f519ea4c9fb92a1c9c00b6946cb7b6c0bbac3398bf668"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-onDateChange.tsx",
+    "destination": "source-review/excerpts/Chart-onDateChange.tsx.log",
+    "bytes": 223,
+    "sha256": "2f48e07838009756a6f4ddc3c8f820934b2ab6df0cf6c21ee5ab02c98cb7d7e7"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-onTimeChange.tsx",
+    "destination": "source-review/excerpts/Chart-onTimeChange.tsx.log",
+    "bytes": 219,
+    "sha256": "746527417d6d2ed5173d660708d59a8c461ac537a07d61ce8e1b1e8c83025b28"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-onTimeKnownChange.tsx",
+    "destination": "source-review/excerpts/Chart-onTimeKnownChange.tsx.log",
+    "bytes": 241,
+    "sha256": "828a3abde3ec293e68bef5472fbbae75f7377370897f1074dbe2fc01cf97e7ca"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-post-compute-focus-effect.tsx",
+    "destination": "source-review/excerpts/Chart-post-compute-focus-effect.tsx.log",
+    "bytes": 322,
+    "sha256": "bac517721a0f2e6bf95f16b38a0f93d4eab90e1c1a1ee9be81b188a4c1601913"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Chart-resetLens.tsx",
+    "destination": "source-review/excerpts/Chart-resetLens.tsx.log",
+    "bytes": 72,
+    "sha256": "f2e3cf711cde63288899f945dec481e9a25fff734b41c0a600567740e6eb2054"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Moon-date-input.tsx",
+    "destination": "source-review/excerpts/Moon-date-input.tsx.log",
+    "bytes": 140,
+    "sha256": "0bee6e2e3589985953dd2262fc81090e323152917c72559ba32d33ec89a952da"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Moon-invalidateLookup.tsx",
+    "destination": "source-review/excerpts/Moon-invalidateLookup.tsx.log",
+    "bytes": 177,
+    "sha256": "dd734b5e0015cba07306030ccbbe5569d79521570af6a2756a74d6e34e498ecc"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Moon-place-selection.tsx",
+    "destination": "source-review/excerpts/Moon-place-selection.tsx.log",
+    "bytes": 108,
+    "sha256": "d094099694363408fc0aba197cf368bb0e7258fde915893023cf304e4ffa9513"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Moon-post-compute-focus-effect.tsx",
+    "destination": "source-review/excerpts/Moon-post-compute-focus-effect.tsx.log",
+    "bytes": 324,
+    "sha256": "148ee66708520a7ed29fb13bc8b8e32bd08846f5a44c5d07204ee11c1170f4df"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/excerpts/Moon-time-input.tsx",
+    "destination": "source-review/excerpts/Moon-time-input.tsx.log",
+    "bytes": 140,
+    "sha256": "e306ca1e88be5cb843a773122a47aa04c00d9776aca8711e6da399fee2174b21"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/final-source-rehash.json",
+    "destination": "source-review/final-source-rehash.json",
+    "bytes": 107,
+    "sha256": "bf2a99c2df202a11725da57250a99da7f4f80bc879d6fdaf9d865d1d11b52d3f"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/harness-third-snippet-span.json",
+    "destination": "source-review/harness-third-snippet-span.json",
+    "bytes": 505,
+    "sha256": "fb3437adc56c59bb10fdaa559373a1bdab5dff2158f041b64a9d3ca76808a97a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/inputs/c014-source-freeze.json",
+    "destination": "source-review/inputs/c014-source-freeze.json",
+    "bytes": 2624,
+    "sha256": "328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/inputs/normal-chart-harness-correction.json",
+    "destination": "source-review/inputs/normal-chart-harness-correction.json",
+    "bytes": 1240,
+    "sha256": "c6b033390df51c5d5e7354de6911d85c0c2d418e3b0efd8150524f32975ee933"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/manifest.json",
+    "destination": "source-review/manifest.json",
+    "bytes": 9508,
+    "sha256": "1bae612a7b931777e30d09b565d14b2b4ac42c24c49770581288fb9c1f06bfca"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/components/EmailCaptureEnhancement.astro",
+    "destination": "source-review/source/c7/src/components/EmailCaptureEnhancement.astro.log",
+    "bytes": 8891,
+    "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/islands/BirthFields.tsx",
+    "destination": "source-review/source/c7/src/islands/BirthFields.tsx.log",
+    "bytes": 3543,
+    "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/islands/ChartCalculator.tsx",
+    "destination": "source-review/source/c7/src/islands/ChartCalculator.tsx.log",
+    "bytes": 120491,
+    "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/islands/MoonPhaseTool.tsx",
+    "destination": "source-review/source/c7/src/islands/MoonPhaseTool.tsx.log",
+    "bytes": 11616,
+    "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/islands/PostChartDailyBrief.tsx",
+    "destination": "source-review/source/c7/src/islands/PostChartDailyBrief.tsx.log",
+    "bytes": 13369,
+    "sha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/c7/src/lib/profile/post-chart-context.ts",
+    "destination": "source-review/source/c7/src/lib/profile/post-chart-context.ts.log",
+    "bytes": 1468,
+    "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/frozen/src/islands/ChartCalculator.tsx",
+    "destination": "source-review/source/frozen/src/islands/ChartCalculator.tsx.log",
+    "bytes": 120926,
+    "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/frozen/src/islands/MoonPhaseTool.tsx",
+    "destination": "source-review/source/frozen/src/islands/MoonPhaseTool.tsx.log",
+    "bytes": 12032,
+    "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/components/EmailCaptureEnhancement.astro",
+    "destination": "source-review/source/head3845/src/components/EmailCaptureEnhancement.astro.log",
+    "bytes": 10545,
+    "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/islands/BirthFields.tsx",
+    "destination": "source-review/source/head3845/src/islands/BirthFields.tsx.log",
+    "bytes": 3543,
+    "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/islands/ChartCalculator.tsx",
+    "destination": "source-review/source/head3845/src/islands/ChartCalculator.tsx.log",
+    "bytes": 120491,
+    "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/islands/MoonPhaseTool.tsx",
+    "destination": "source-review/source/head3845/src/islands/MoonPhaseTool.tsx.log",
+    "bytes": 11616,
+    "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/islands/PostChartDailyBrief.tsx",
+    "destination": "source-review/source/head3845/src/islands/PostChartDailyBrief.tsx.log",
+    "bytes": 14534,
+    "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/head3845/src/lib/profile/post-chart-context.ts",
+    "destination": "source-review/source/head3845/src/lib/profile/post-chart-context.ts.log",
+    "bytes": 1676,
+    "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/components/EmailCaptureEnhancement.astro",
+    "destination": "source-review/source/root/src/components/EmailCaptureEnhancement.astro.log",
+    "bytes": 10545,
+    "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/islands/BirthFields.tsx",
+    "destination": "source-review/source/root/src/islands/BirthFields.tsx.log",
+    "bytes": 3543,
+    "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/islands/ChartCalculator.tsx",
+    "destination": "source-review/source/root/src/islands/ChartCalculator.tsx.log",
+    "bytes": 120926,
+    "sha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/islands/MoonPhaseTool.tsx",
+    "destination": "source-review/source/root/src/islands/MoonPhaseTool.tsx.log",
+    "bytes": 12032,
+    "sha256": "7ce6b5683b7d00c4aa1bfc9aeee1d0de593b500df55b988690cb2062a8f5730f"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/islands/PostChartDailyBrief.tsx",
+    "destination": "source-review/source/root/src/islands/PostChartDailyBrief.tsx.log",
+    "bytes": 14534,
+    "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source/root/src/lib/profile/post-chart-context.ts",
+    "destination": "source-review/source/root/src/lib/profile/post-chart-context.ts.log",
+    "bytes": 1676,
+    "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-normal-page-audit/source-review/source-identity.json",
+    "destination": "source-review/source-identity.json",
+    "bytes": 4250,
+    "sha256": "8e65288826e11a6cd5bef7288b36103b237d6bb12df293feeceeac9f944015c7"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-build-drive.original.mjs",
+    "destination": "root-records/normal-build-drive.original.mjs.log",
+    "bytes": 15943,
+    "sha256": "fb37a5a83bb02266583ce61014c88591dc78720befadce9c4525ea574d0c7758"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-build-drive.mjs",
+    "destination": "root-records/normal-build-drive.mjs.log",
+    "bytes": 15943,
+    "sha256": "fb37a5a83bb02266583ce61014c88591dc78720befadce9c4525ea574d0c7758"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-corrected-drive.mjs",
+    "destination": "root-records/normal-chart-corrected-drive.mjs.log",
+    "bytes": 16216,
+    "sha256": "6b8eb27b192a33c0f1103435b98ea38435a8908f58546187224d3319b2ac378c"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/result.json",
+    "destination": "root-records/normal-page-run1/result.json",
+    "bytes": 800984,
+    "sha256": "99fe209813cfff11b96d76e3b450fb9b2d75966b0cfd1c09f5bbfbd0aa4f4227"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/result.json",
+    "destination": "root-records/normal-chart-run2/result.json",
+    "bytes": 889811,
+    "sha256": "ff45c1cc3b8faeac924c562de8a760c6e86a79b80172005518f72d9493f6f223"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-harness-correction.json",
+    "destination": "root-records/normal-chart-harness-correction.json",
+    "bytes": 1240,
+    "sha256": "c6b033390df51c5d5e7354de6911d85c0c2d418e3b0efd8150524f32975ee933"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-final-analysis.json",
+    "destination": "root-records/normal-page-final-analysis.json",
+    "bytes": 16689,
+    "sha256": "19de1cdbaf5f4e055ed9835458265524f5b854912ee6300bfe64ba2856d068af"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/build-receipt-final.json",
+    "destination": "root-records/build-receipt-final.json",
+    "bytes": 710,
+    "sha256": "553b1bf1ff70c86675353e8f124af45ce0bc1044294c4a0fdec91d6660b7e5b6"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/capture-comparison-final.json",
+    "destination": "root-records/capture-comparison-final.json",
+    "bytes": 5176,
+    "sha256": "925145e2904bca4969afaa49498ef733cfcd253f31b4096917cd8f28ae20cc18"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1.log",
+    "destination": "root-records/normal-page-run1.log",
+    "bytes": 969,
+    "sha256": "3fd0cc7ca042b845a2e347fbb6859e6b34000206fa26098ed948442549fca3ed"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2.log",
+    "destination": "root-records/normal-chart-run2.log",
+    "bytes": 506,
+    "sha256": "b14a4978e37f064c933a3a977d4da99bf003f332300a8304d7dfa8644568708d"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-page-run1/served-files.json",
+    "destination": "root-records/normal-page-run1/served-files.json",
+    "bytes": 20543,
+    "sha256": "e1048b885afac2a9b65186ea24e0ec4b5f19d5cb333789eb018014d597194c18"
+  },
+  {
+    "source": "/private/tmp/zodiacs-platform-local-date-root-acceptance/normal-chart-run2/served-files.json",
+    "destination": "root-records/normal-chart-run2/served-files.json",
+    "bytes": 16949,
+    "sha256": "85accd61c3a9e01a0f64a1a99a0e94e020207b04409a4e8d2ab8ca4ccb0e1531"
+  }
+]

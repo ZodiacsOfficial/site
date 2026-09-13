@@ -1,0 +1,144 @@
+{
+  "allMatched": true,
+  "count": 23,
+  "results": [
+    {
+      "name": "control-inert",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "plain-vendor",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "escaped-static-vendor",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "escaped-reexport-vendor",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "escaped-dynamic-vendor",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "escaped-require-vendor",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "parenthesized-dynamic-literal",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "parenthesized-require-literal",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "parenthesized-require-callee",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "versioned-cdn-static",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "cdn-dynamic",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "comment-static",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "inert-template",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "inert-import-string",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "aliased-dynamic",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "computed-dynamic",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "comment-local-side-effect",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "escaped-local-reference",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "reexport-home",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "cycle-shared",
+      "previousStatus": 0,
+      "status": 0,
+      "expectedStatus": 0
+    },
+    {
+      "name": "whitespace-source-sideeffect",
+      "previousStatus": 0,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "comment-source-named",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    },
+    {
+      "name": "reexport-two-over-budget",
+      "previousStatus": 1,
+      "status": 1,
+      "expectedStatus": 1
+    }
+  ]
+}

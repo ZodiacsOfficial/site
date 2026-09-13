@@ -1,0 +1,312 @@
+// source/src/lib/time/technical-locales.ts
+var TECHNICAL_OFFSET_LOCALE = "en-US";
+var TECHNICAL_WALL_LOCALE = "en-CA";
+
+// source/src/lib/time/civil-date.ts
+function parseCivilDate(value) {
+  if (typeof value !== "string" || value.length !== 10) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1) return null;
+  const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+  const days = month === 2 ? leap ? 29 : 28 : [4, 6, 9, 11].includes(month) ? 30 : 31;
+  return day <= days ? { year, month, day } : null;
+}
+function parseCivilTime(value) {
+  if (typeof value !== "string" || value.length !== 5) return null;
+  const match = /^(\d{2}):(\d{2})$/.exec(value);
+  if (!match) return null;
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  return hour <= 23 && minute <= 59 ? { hour, minute } : null;
+}
+
+// source/src/lib/time/localToUtc.ts
+var offsetFormatters = /* @__PURE__ */ new Map();
+var wallFormatters = /* @__PURE__ */ new Map();
+function offsetFormatter(tz) {
+  if (typeof tz !== "string" || tz.length === 0) {
+    throw new RangeError("An explicit supported timezone is required.");
+  }
+  let f = offsetFormatters.get(tz);
+  if (!f) {
+    try {
+      f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: "longOffset" });
+    } catch {
+      throw new RangeError("An explicit supported timezone is required.");
+    }
+    offsetFormatters.set(tz, f);
+  }
+  return f;
+}
+function wallFormatter(tz) {
+  let f = wallFormatters.get(tz);
+  if (!f) {
+    f = new Intl.DateTimeFormat(TECHNICAL_WALL_LOCALE, {
+      timeZone: tz,
+      calendar: "gregory",
+      numberingSystem: "latn",
+      era: "short",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      fractionalSecondDigits: 3,
+      hourCycle: "h23"
+    });
+    wallFormatters.set(tz, f);
+  }
+  return f;
+}
+function offsetAt(tz, utcMs) {
+  const parts = offsetFormatter(tz).formatToParts(utcMs);
+  const name = parts.find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+  const m = name.match(/GMT([+-])?(\d{1,2})?(?::(\d{2}))?(?::(\d{2}))?/);
+  if (!m) return 0;
+  const sign = m[1] === "-" ? -1 : 1;
+  const h = Number(m[2] ?? 0);
+  const min = Number(m[3] ?? 0);
+  const s = Number(m[4] ?? 0);
+  return sign * (h * 60 + min + s / 60);
+}
+function wallStringAt(tz, utcMs) {
+  const parts = wallFormatter(tz).formatToParts(utcMs);
+  const part = (type) => parts.find((candidate) => candidate.type === type)?.value ?? "";
+  const era = part("era");
+  if (era !== "AD" && era !== "BC") throw new RangeError("Could not read Gregorian era.");
+  const year = era === "BC" ? 1 - Number(part("year")) : Number(part("year"));
+  const isoYear = year >= 0 && year <= 9999 ? String(year).padStart(4, "0") : `${year < 0 ? "-" : "+"}${String(Math.abs(year)).padStart(6, "0")}`;
+  return `${isoYear}-${part("month")}-${part("day")}T${part("hour")}:${part("minute")}:${part("second")}.${part("fractionalSecond")}`;
+}
+function resolveLocalToUtc(date, time, tz) {
+  const civilDate = parseCivilDate(date);
+  const civilTime = parseCivilTime(time);
+  if (!civilDate || !civilTime) {
+    throw new RangeError("resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time.");
+  }
+  const wallDate = /* @__PURE__ */ new Date(0);
+  wallDate.setUTCFullYear(civilDate.year, civilDate.month - 1, civilDate.day);
+  wallDate.setUTCHours(civilTime.hour, civilTime.minute, 0, 0);
+  const wallMs = wallDate.getTime();
+  const wallStr = `${date}T${time}:00.000`;
+  const sampled = [
+    offsetAt(tz, wallMs - 36 * 36e5),
+    offsetAt(tz, wallMs),
+    offsetAt(tz, wallMs + 36 * 36e5)
+  ];
+  const candidates = [...new Set(sampled)];
+  const matches = [];
+  for (const off of candidates) {
+    const utcMs = wallMs - Math.round(off * 6e4);
+    if (wallStringAt(tz, utcMs) === wallStr) {
+      matches.push({ utcMs, offset: offsetAt(tz, utcMs) });
+    }
+  }
+  const flags = [];
+  let chosen;
+  if (matches.length === 1) {
+    chosen = matches[0];
+  } else if (matches.length > 1) {
+    matches.sort((a, b) => a.utcMs - b.utcMs);
+    chosen = matches[0];
+    flags.push("dst-fold");
+  } else {
+    const before = offsetAt(tz, wallMs - 36 * 36e5);
+    const utcMs = wallMs - Math.round(before * 6e4);
+    chosen = { utcMs, offset: offsetAt(tz, utcMs) };
+    flags.push("dst-gap");
+  }
+  if (Math.abs(chosen.offset % 1) > 1e-9) flags.push("lmt");
+  return { utc: new Date(chosen.utcMs), offsetMinutes: chosen.offset, flags };
+}
+
+// source/src/lib/time/local-date-intervals.ts
+var DAY = 864e5;
+var DATE_LIMIT = 864e13;
+var MAX_TRANSITIONS = 32;
+function createNativeTemporalTransitionProvider() {
+  const temporal = Reflect.get(globalThis, "Temporal");
+  if (!temporal || typeof temporal !== "object") return null;
+  const instant = Reflect.get(temporal, "Instant");
+  const zoned = Reflect.get(temporal, "ZonedDateTime");
+  if (typeof instant !== "function" || typeof zoned !== "function") return null;
+  const from = Reflect.get(instant, "fromEpochMilliseconds");
+  const prototype = Reflect.get(zoned, "prototype");
+  if (typeof from !== "function" || !prototype || typeof prototype !== "object" || typeof Reflect.get(prototype, "getTimeZoneTransition") !== "function") return null;
+  let validatedZone;
+  const at = (timeZone, milliseconds) => {
+    if (validatedZone !== timeZone) {
+      new Intl.DateTimeFormat("en-US", { timeZone });
+      validatedZone = timeZone;
+    }
+    const value = Reflect.apply(from, instant, [milliseconds]);
+    return value.toZonedDateTimeISO(timeZone);
+  };
+  return Object.freeze({
+    completeness: "complete-transitions-v1",
+    offsetMilliseconds(timeZone, instantMilliseconds) {
+      const nanoseconds = at(timeZone, instantMilliseconds).offsetNanoseconds;
+      if (!Number.isSafeInteger(nanoseconds) || nanoseconds % 1e6 !== 0) {
+        throw new ProviderViolation();
+      }
+      const milliseconds = nanoseconds / 1e6;
+      if (Math.round(offsetAt(timeZone, instantMilliseconds) * 6e4) !== milliseconds) {
+        throw new ProviderViolation();
+      }
+      return milliseconds;
+    },
+    nextTransitionMilliseconds(timeZone, after) {
+      const next = at(timeZone, after).getTimeZoneTransition("next");
+      if (next === null) return null;
+      const nanoseconds = next.epochNanoseconds;
+      if (typeof nanoseconds !== "bigint" || nanoseconds % 1000000n !== 0n) {
+        throw new ProviderViolation();
+      }
+      return Number(nanoseconds / 1000000n);
+    }
+  });
+}
+var ProviderViolation = class extends Error {
+};
+function unresolved(reason) {
+  return Object.freeze({ status: "unresolved", reason });
+}
+function validInstant(value) {
+  return typeof value === "number" && Number.isSafeInteger(value) && Math.abs(value) <= DATE_LIMIT;
+}
+function resolveLocalDateIntervals(date, timeZone, provider) {
+  const civil = parseCivilDate(date);
+  if (!civil || typeof timeZone !== "string" || timeZone.trim().length === 0) {
+    return unresolved("invalid-input");
+  }
+  const wall = /* @__PURE__ */ new Date(0);
+  wall.setUTCFullYear(civil.year, civil.month - 1, civil.day);
+  wall.setUTCHours(0, 0, 0, 0);
+  const midnight = wall.getTime();
+  const lower = midnight - DAY;
+  const upper = midnight + 2 * DAY;
+  const intervals = [];
+  try {
+    const source = provider === void 0 ? createNativeTemporalTransitionProvider() : provider;
+    if (source === null) return unresolved("provider-unavailable");
+    if (!source || typeof source !== "object" || Reflect.get(source, "completeness") !== "complete-transitions-v1") {
+      return unresolved("invalid-provider");
+    }
+    const offsetMethod = Reflect.get(source, "offsetMilliseconds");
+    const transitionMethod = Reflect.get(source, "nextTransitionMilliseconds");
+    if (typeof offsetMethod !== "function" || typeof transitionMethod !== "function") {
+      return unresolved("invalid-provider");
+    }
+    const offsetAt2 = (instant) => {
+      const offset2 = Reflect.apply(offsetMethod, source, [timeZone, instant]);
+      if (typeof offset2 !== "number" || !Number.isSafeInteger(offset2) || Math.abs(offset2) >= DAY) {
+        throw new ProviderViolation();
+      }
+      return offset2;
+    };
+    const append = (start, endExclusive, offset2) => {
+      const first = Math.max(start, midnight - offset2);
+      const end = Math.min(endExclusive, midnight + DAY - offset2);
+      if (first >= end) return;
+      const previous = intervals.at(-1);
+      if (previous && previous.endExclusive === first) {
+        intervals[intervals.length - 1] = { start: previous.start, endExclusive: end };
+      } else {
+        intervals.push({ start: first, endExclusive: end });
+      }
+    };
+    let cursor = lower;
+    let offset = offsetAt2(cursor);
+    for (let transitions = 0; transitions <= MAX_TRANSITIONS; transitions += 1) {
+      const candidate = Reflect.apply(transitionMethod, source, [timeZone, cursor]);
+      let next;
+      if (candidate === null) next = null;
+      else if (validInstant(candidate) && candidate > cursor) next = candidate;
+      else throw new ProviderViolation();
+      const end = next === null ? upper : Math.min(next, upper);
+      if (offsetAt2(end - 1) !== offset) throw new ProviderViolation();
+      append(cursor, end, offset);
+      if (next === null || next >= upper) {
+        const frozen = Object.freeze(intervals.map((interval) => Object.freeze(interval)));
+        if (frozen.length === 0) return Object.freeze({ status: "empty", intervals: Object.freeze([]) });
+        return Object.freeze({ status: "existing", intervals: frozen });
+      }
+      if (transitions === MAX_TRANSITIONS) return unresolved("transition-limit");
+      const nextOffset = offsetAt2(next);
+      if (nextOffset === offset) throw new ProviderViolation();
+      cursor = next;
+      offset = nextOffset;
+    }
+    return unresolved("transition-limit");
+  } catch (error) {
+    return unresolved(error instanceof ProviderViolation ? "provider-violation" : "provider-failed");
+  }
+}
+
+// endpoint-extracted.ts
+function nextIsoDate(date) {
+  const [year, month, day] = date.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
+}
+function localDateEndpointsUtc(date, timeZone) {
+  const start = resolveLocalToUtc(date, "00:00", timeZone).utc;
+  const nextStart = resolveLocalToUtc(nextIsoDate(date), "00:00", timeZone).utc;
+  return { start, end: new Date(nextStart.getTime() - 1) };
+}
+
+// finite-probe.mjs
+function finiteProbe(fixtures, api) {
+  const iso = (ms) => new Date(ms).toISOString();
+  const rows = [];
+  for (const input of fixtures) {
+    let wall = function(ms) {
+      const parts = formatter.formatToParts(ms), p = (t) => parts.find((x) => x.type === t)?.value;
+      const y = p("era") === "BC" ? 1 - Number(p("year")) : Number(p("year"));
+      return `${String(y).padStart(4, "0")}-${p("month")}-${p("day")}T${p("hour")}:${p("minute")}:${p("second")}.${p("fractionalSecond")}`;
+    };
+    const formatter = new Intl.DateTimeFormat("en-US", { timeZone: input.zone, calendar: "gregory", numberingSystem: "latn", era: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3, hourCycle: "h23" });
+    const noon = api.resolveLocalToUtc(input.date, "12:00", input.zone), noonWall = wall(noon.utc.getTime());
+    const intervals = api.resolveLocalDateIntervals(input.date, input.zone);
+    const ends = api.localDateEndpointsUtc(input.date, input.zone);
+    const midnight = api.resolveLocalToUtc(input.date, "00:00", input.zone), lastMinute = api.resolveLocalToUtc(input.date, "23:59", input.zone);
+    const row = {
+      ...input,
+      noon: { utc: noon.utc.toISOString(), wall: noonWall, offsetMinutes: noon.offsetMinutes, flags: noon.flags, sameRequestedDate: noonWall.slice(0, 10) === input.date },
+      intervals,
+      existingEndpointHelper: { start: ends.start.toISOString(), endInclusive: ends.end.toISOString(), startWall: wall(ends.start.getTime()), endWall: wall(ends.end.getTime()), nominalMilliseconds: ends.end.getTime() + 1 - ends.start.getTime() },
+      independentClockProbes: { midnight: { utc: midnight.utc.toISOString(), wall: wall(midnight.utc.getTime()), flags: midnight.flags }, lastMinute: { utc: lastMinute.utc.toISOString(), wall: wall(lastMinute.utc.getTime()), flags: lastMinute.flags } }
+    };
+    if (intervals.status !== "unresolved") {
+      const ranges = intervals.intervals, start = ends.start.getTime(), end = ends.end.getTime() + 1;
+      const member = (t) => ranges.some((x) => t >= x.start && t < x.endExclusive);
+      const overlap = ranges.reduce((sum, x) => sum + Math.max(0, Math.min(end, x.endExclusive) - Math.max(start, x.start)), 0);
+      const total = ranges.reduce((sum, x) => sum + x.endExclusive - x.start, 0);
+      const spanMember = (t) => start <= t && t < end;
+      const boundaries = [start, end, ...ranges.flatMap((x) => [x.start, x.endExclusive])].sort((a, b) => a - b);
+      const witnesses = boundaries.flatMap((x, i) => [x, x - 1, ...i + 1 < boundaries.length ? [Math.floor((x + boundaries[i + 1]) / 2)] : []]);
+      const extra = witnesses.find((x) => spanMember(x) && !member(x));
+      const missing = witnesses.find((x) => member(x) && !spanMember(x));
+      const membershipPoints = [noon.utc.getTime(), ...ranges.flatMap((x) => [x.start - 1, x.start, x.endExclusive - 1, x.endExclusive])];
+      for (const t of membershipPoints) {
+        if (member(t) !== (wall(t).slice(0, 10) === input.date)) throw Error("Native interval/Intl boundary mismatch " + JSON.stringify(input) + " " + iso(t));
+      }
+      row.coverage = { intervalCount: ranges.length, totalMilliseconds: total, noonInCompleteIntervals: member(noon.utc.getTime()), intervalsUtc: ranges.map((x) => ({ start: iso(x.start), endExclusive: iso(x.endExclusive) })), existingHelperExtraMilliseconds: Math.max(0, end - start) - overlap, existingHelperMissingMilliseconds: total - overlap, ...extra === void 0 ? {} : { extraWitness: { utc: iso(extra), wall: wall(extra) } }, ...missing === void 0 ? {} : { missingWitness: { utc: iso(missing), wall: wall(missing) } }, finiteIntlMembershipChecks: membershipPoints.length };
+    }
+    rows.push(row);
+  }
+  const summary = { count: rows.length, noonDateMismatches: rows.filter((r) => !r.noon.sameRequestedDate).map((r) => ({ date: r.date, zone: r.zone, status: r.intervals.status, noonWall: r.noon.wall })), nonemptyNoonDateMismatches: rows.filter((r) => r.intervals.status === "existing" && !r.noon.sameRequestedDate).map((r) => ({ date: r.date, zone: r.zone, noonWall: r.noon.wall })), sameDateNoonCoverageCounterexamples: rows.filter((r) => r.noon.sameRequestedDate && r.coverage && (r.coverage.existingHelperExtraMilliseconds > 0 || r.coverage.existingHelperMissingMilliseconds > 0)).map((r) => ({ date: r.date, zone: r.zone, extraMilliseconds: r.coverage.existingHelperExtraMilliseconds, missingMilliseconds: r.coverage.existingHelperMissingMilliseconds, intervalCount: r.coverage.intervalCount })), unresolvedCount: rows.filter((r) => r.intervals.status === "unresolved").length };
+  return { rows, summary, forcedUnavailable: api.resolveLocalDateIntervals("2011-12-30", "Pacific/Apia", null), qualification: "Exactly the listed17 real-zone/date inputs, host data only. A matching representative date does not certify complete civil-date coverage; unresolved is not empty. No known-time product-policy or public positions change is inferred." };
+}
+export {
+  createNativeTemporalTransitionProvider,
+  finiteProbe,
+  localDateEndpointsUtc,
+  offsetAt,
+  resolveLocalDateIntervals,
+  resolveLocalToUtc
+};

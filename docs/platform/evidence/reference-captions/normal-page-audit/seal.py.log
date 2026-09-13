@@ -1,0 +1,12 @@
+import pathlib,json,hashlib
+p=pathlib.Path(__file__).resolve().parent;d=p/'delivery';assert not d.exists();d.mkdir()
+h=lambda b:hashlib.sha256(b).hexdigest()
+mapping={name:name for name in ['REVIEW.md','audit-result.json','catalog-values.json','package-audit.json','audit-final.log','catalog-audit.log']}
+mapping.update({'audit.py':'audit.py.log','catalog-audit.mjs':'catalog-audit.mjs.log','seal.py':'seal.py.log','manifest-original.json':'root-manifest.json','raw-members.json':'root-raw-members.json','README.md':'root-README.md','COMMANDS.md':'root-COMMANDS.md','acceptance-summary.json':'root-acceptance-summary.json','sharing-image-disposition.json':'root-sharing-image-disposition.json','source-manifest.json':'root-source-manifest.json','final-source-manifest.json':'root-final-source-manifest.json','raw/normal-pages.mjs.log':'root-normal-pages.mjs.log','raw/normal-pages.preflight1.mjs.log':'root-normal-pages.preflight1.mjs.log','raw/normal-pages.log':'root-normal-pages.log'})
+for source,dest in mapping.items():(d/dest).write_bytes((p/source).read_bytes())
+manifest={'records':[],'qualification':'Independent read-only evidence audit. Original root package/archives remain unchanged. Exact root package manifest and raw member mapping bind all original observed outputs. No browser rerun.'}
+for f in sorted(d.iterdir()):manifest['records'].append({'path':f.name,'bytes':f.stat().st_size,'sha256':h(f.read_bytes())})
+(d/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+for r in manifest['records']:
+ b=(d/r['path']).read_bytes();assert len(b)==r['bytes'] and h(b)==r['sha256']
+print(json.dumps({'manifestSha256':h((d/'manifest.json').read_bytes()),'records':len(manifest['records']),'bytes':sum(r['bytes'] for r in manifest['records']),'delivery':str(d)}))

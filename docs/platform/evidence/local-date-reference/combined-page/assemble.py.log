@@ -1,0 +1,46 @@
+from pathlib import Path
+import hashlib, json, shutil, subprocess, tarfile
+
+root=Path(__file__).resolve().parent
+site=root/'site'
+base='c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3'
+repo='/Users/chiburashka/.codex/worktrees/4806/site'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+freezes=[
+ ('C-014',Path('/private/tmp/zodiacs-platform-local-date-reference-evidence'),'source-freeze.json','frozen-source','328ea15bd192573894639dab699058cb83185e0c61e907dde7f275305cfe48c2'),
+ ('C-012',Path('/private/tmp/zodiacs-platform-post-chart-clear-evidence'),'source-freeze2.json','frozen-source2','fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc'),
+]
+assert not site.exists(), 'Never overwrite an existing integration checkout'
+site.mkdir()
+process=subprocess.Popen(['git','-C',repo,'archive',base],stdout=subprocess.PIPE)
+with tarfile.open(fileobj=process.stdout,mode='r|') as archive:
+    # Python 3.9 on this host predates extraction filters. Validate each
+    # generated Git-archive member before extracting into the owned directory.
+    for member in archive:
+        target=(site/member.name).resolve()
+        assert target.is_relative_to(site.resolve()), 'Archive member leaves owned checkout'
+        assert member.isfile() or member.isdir() or member.issym(), 'Unexpected archive member type'
+        if member.issym():
+            assert not Path(member.linkname).is_absolute()
+            assert (target.parent/member.linkname).resolve().is_relative_to(site.resolve())
+        archive.extract(member,site)
+assert process.wait()==0
+before={str(p.relative_to(site)):sha(p.read_bytes()) for p in site.rglob('*') if p.is_file()}
+overlays=[]
+for label,folder,identity_name,files_dir,expected_identity in freezes:
+    identity_bytes=(folder/identity_name).read_bytes();assert sha(identity_bytes)==expected_identity
+    identity=json.loads(identity_bytes);assert identity['base']==base
+    (root/(label+'-'+identity_name)).write_bytes(identity_bytes)
+    patch=(folder/identity['patch']['path']).read_bytes();assert sha(patch)==identity['patch']['sha256'];(root/(label+'-implementation.patch')).write_bytes(patch)
+    for rec in identity['files']:
+        b=(folder/files_dir/rec['path']).read_bytes();assert sha(b)==rec['sha256']
+        assert rec['path'] not in [r['path'] for r in overlays], 'Overlapping implementation slices need review'
+        dest=site/rec['path'];dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(b)
+        overlays.append({'slice':label,**rec})
+after={str(p.relative_to(site)):sha(p.read_bytes()) for p in site.rglob('*') if p.is_file()}
+changed={key for key in before.keys()|after.keys() if before.get(key)!=after.get(key)}
+assert changed=={r['path'] for r in overlays}, (changed,[r['path'] for r in overlays])
+(root/'source-identity.json').write_text(json.dumps({'base':base,'baseRegularFiles':len(before),'combinedRegularFiles':len(after),'overlays':overlays,'allOtherBaseFileBytesUnchanged':True,'combinedSource': [{'path':p,'sha256':s} for p,s in sorted(after.items())]},indent=2)+'\n')
+# Physical copy only; do not share mutable Astro/Vite generated output.
+shutil.copytree(Path(repo)/'node_modules',site/'node_modules',symlinks=True,ignore=shutil.ignore_patterns('.vite','.cache'))
+print(json.dumps({'site':str(site),'baseFiles':len(before),'overlays':len(overlays),'allOtherBaseFileBytesUnchanged':True,'nodeModules':'Physically copied existing installed dependencies; no network install or build in another checkout.'}))

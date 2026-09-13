@@ -1,0 +1,132 @@
+/** Prepared actual normal-build acceptance; no product code or numerical probes injected. */
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir,stat} from 'node:fs/promises';
+import {resolve,extname,sep} from 'node:path';
+import {pathToFileURL} from 'node:url';
+import {createRequire} from 'node:module';
+import {execFileSync} from 'node:child_process';
+
+const root=resolve(process.env.SOURCE_ROOT??'/Users/chiburashka/.codex/worktrees/4806/site');
+const dist=resolve(process.env.DIST_DIR??resolve(root,'dist'));
+const out=process.env.OUT_DIR&&resolve(process.env.OUT_DIR);
+if(!out)throw new Error('OUT_DIR must name a new evidence directory');
+await mkdir(out,{recursive:false});
+const require=createRequire(resolve(root,'package.json'));
+const {chromium}=require('playwright-core');
+const {findChromium,STABLE_CHROMIUM_ARGS,isSiteFooterIconTeardownAbort}=await import(pathToFileURL(resolve(root,'tests/visual/browser.mjs')));
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const locales=['en','es','fr','it','pt','ru'];
+const expected={
+ en:'We couldn’t establish a calculation time within this local date. Check the date and place.',
+ es:'No pudimos establecer una hora de cálculo dentro de esta fecha local. Comprueba la fecha y el lugar.',
+ fr:'Nous n’avons pas pu déterminer une heure de calcul correspondant à cette date locale. Vérifie la date et le lieu.',
+ it:'Non è stato possibile stabilire un orario di calcolo all’interno di questa data locale. Controlla la data e il luogo.',
+ pt:'Não foi possível estabelecer um horário de cálculo dentro desta data local. Verifique a data e o local.',
+ ru:'Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.',
+};
+const freezePath=process.env.C014_FREEZE_JSON??'/private/tmp/zodiacs-platform-local-date-reference-evidence/source-freeze.json';
+const freezeBytes=await readFile(freezePath);const freeze=JSON.parse(freezeBytes);
+const sourceFiles=[...new Set([...freeze.files.map(row=>row.path),'src/islands/BirthFields.tsx','src/islands/PlaceSearch.tsx','src/lib/geo/search.ts','src/lib/profile/post-chart-context.ts','tests/visual/browser.mjs','package-lock.json'])];
+const identities=async()=>Promise.all(sourceFiles.map(async path=>{const bytes=await readFile(resolve(root,path));return {path,bytes:bytes.length,sha256:sha(bytes)};}));
+const sourceBefore=await identities();
+for(const row of freeze.files)assert.equal(sourceBefore.find(value=>value.path===row.path)?.sha256,row.sha256,`Frozen source mismatch: ${row.path}`);
+for(const locale of locales)assert.ok((await readFile(resolve(root,`src/lib/i18n/ui/${locale}.ts`),'utf8')).includes(expected[locale]));
+const sourceHead=execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim();
+const sourceStatus=execFileSync('git',['status','--short'],{cwd:root,encoding:'utf8'});
+const cityIndexBytes=await readFile(resolve(dist,'data/cities/index.json'));
+const cityShardBytes=await readFile(resolve(dist,'data/cities/a.json'));
+const cityIndex=JSON.parse(cityIndexBytes),cityRows=JSON.parse(cityShardBytes);
+const apiaRows=cityRows.filter(row=>row[0]==='Apia'&&cityIndex.tz[row[6]]==='Pacific/Apia');
+assert.equal(apiaRows.length,1,'Actual built GeoNames Apia must be unique');
+const apia=apiaRows[0];const city={name:apia[0],admin:cityIndex.admin1[apia[2]],country:cityIndex.countries[apia[3]],lat:apia[4]/100,lon:apia[5]/100,zone:cityIndex.tz[apia[6]]};
+const chip=[city.name,[city.admin,city.country].filter(Boolean).join(', ')].filter(Boolean).join(' · ');
+const requests=[],served=new Map(),contexts=new Set(),results=[];
+const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.woff2':'font/woff2','.ico':'image/x-icon','.mp4':'video/mp4','.webm':'video/webm','.xml':'application/xml','.txt':'text/plain'};
+const server=createServer(async(req,res)=>{
+ try{
+  if(req.method!=='GET'){requests.push({method:req.method,path:req.url,status:405});res.writeHead(405);res.end();return;}
+  const path=decodeURIComponent(new URL(req.url,'http://127.0.0.1').pathname);
+  let file=resolve(dist,'.'+path);if(file!==dist&&!file.startsWith(dist+sep))throw new Error('Invalid path');
+  if((await stat(file)).isDirectory())file=resolve(file,'index.html');
+  const bytes=await readFile(file);const relative=file.slice(dist.length+1);const hash=sha(bytes);
+  if(served.has(relative)&&served.get(relative).sha256!==hash)throw new Error('Build changed while serving');
+  served.set(relative,{path:relative,bytes:bytes.length,sha256:hash});requests.push({method:req.method,path,status:200});
+  res.writeHead(200,{'Content-Type':types[extname(file)]??'application/octet-stream','Cache-Control':'no-store'});res.end(bytes);
+ }catch(error){requests.push({method:req.method,path:req.url,status:404,error:String(error)});res.writeHead(404);res.end('Not found');}
+});
+let browser,origin;const report={at:new Date().toISOString(),node:process.version,root,dist,sourceHead,sourceStatus,freezeSha256:sha(freezeBytes),sourceBefore,city,cityArtifacts:[{path:'data/cities/index.json',sha256:sha(cityIndexBytes)},{path:'data/cities/a.json',sha256:sha(cityShardBytes)}],results,outcome:'failed',qualification:'Actual local normal-build pages, real offline GeoNames selection, six locales × birth-chart only × two widths. The original12 Moon groups remain separately recorded; this is the affected chart rerun after correcting the pre-submit error-clear assumption. No component/SDK/date/loader/network-result substitution. No numerical-call counts, independent oracle, empty-date proof, complete-date coverage, signed-in lifecycle, remote preview or publication claim. External requests and all non-GET requests are blocked. Expected refusal console.error and blocked external resource messages are retained separately from uncaught page errors. Plausible delivery is not exercised.'};
+const actionSelector='[data-share-card],[data-save-chart],[data-share-options],[data-download-calculation-receipt],[data-chart-more]';
+async function settle(page){await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));}
+async function snapshot(page,mode){return page.evaluate(({mode,actionSelector})=>({
+ date:document.querySelector(mode==='chart'?'#birth-date':'#mp-date')?.value,
+ time:document.querySelector(mode==='chart'?'#birth-time':'#mp-time')?.value,
+ unknown:mode==='chart'?document.querySelector('.field__toggle input[type=checkbox]')?.checked:document.querySelector('#mp-time')?.value==='',
+ place:document.querySelector(mode==='chart'?'#place':'#mp-place')?.value,
+ result:!!document.querySelector('.calc__result'),
+ resultText:document.querySelector('.calc__result')?.textContent?.trim()??null,
+ error:document.querySelector('.calc__form .calc__error[role=alert]')?.textContent??null,
+ busy:document.querySelector('.calc__form')?.getAttribute('aria-busy'),
+ actions:document.querySelectorAll(actionSelector).length,
+ context:window.zodiacsPostChartContext??null,
+ focus:{tag:document.activeElement?.tagName,id:document.activeElement?.id,role:document.activeElement?.getAttribute('role'),text:document.activeElement?.textContent?.trim()},
+ noSavedProfile:localStorage.getItem('zodiacs.profile.v1')===null,
+ overflow:document.documentElement.scrollWidth>innerWidth+1,
+}),{mode,actionSelector});}
+async function capture(page,name){const path=resolve(out,name+'.png');await page.screenshot({path,fullPage:false,animations:'disabled'});const bytes=await readFile(path);return {path:name+'.png',bytes:bytes.length,sha256:sha(bytes)};}
+async function cleared(page,mode){
+ await page.waitForFunction(selector=>!document.querySelector('.calc__result')&&!document.querySelector(selector)&&window.zodiacsPostChartContext===undefined,actionSelector);
+ const value=await snapshot(page,mode);assert.equal(value.result,false);assert.equal(value.actions,0);assert.equal(value.context,null);assert.equal(value.busy,'false');assert.equal(value.noSavedProfile,true);return value;
+}
+async function success(page,mode){
+ await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false'&&document.activeElement===document.querySelector('.calc__result h2'));
+ if(mode==='chart'){
+  await page.locator('[data-save-chart]').first().waitFor({state:'attached'});
+  await page.locator('[data-download-calculation-receipt]').waitFor({state:'attached'});
+  await page.waitForFunction(()=>window.zodiacsPostChartContext?.mode==='full');
+  assert.equal(await page.locator('[data-download-calculation-receipt]').isEnabled(),true);
+ }
+ await settle(page);const value=await snapshot(page,mode);assert.ok(value.resultText);assert.equal(value.error,null);assert.equal(value.noSavedProfile,true);assert.equal(value.overflow,false);if(mode==='chart')assert.ok(value.actions>0);return value;
+}
+async function runGroup(locale,mode,width){
+ const name=`${locale}-${mode}-${width}`;const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',timezoneId:'UTC',serviceWorkers:'block'});contexts.add(context);
+ context.setDefaultTimeout(20000);const row={name,locale,mode,width,pageErrors:[],consoleErrors:[],browserRequests:[],blocked:[],requestFailures:[],screenshots:[],passed:false};let page;
+ try{
+  await context.route('**/*',async route=>{const request=route.request();const url=new URL(request.url());const blocked=url.origin!==origin||request.method()!=='GET';row.browserRequests.push({method:request.method(),url:request.url(),kind:request.resourceType(),blocked});if(blocked){row.blocked.push({method:request.method(),url:request.url(),reason:url.origin!==origin?'external-origin':'non-GET'});await route.abort('blockedbyclient');}else await route.continue();});
+  page=await context.newPage();page.on('pageerror',error=>row.pageErrors.push(String(error)));page.on('console',message=>{if(message.type()==='error')row.consoleErrors.push({text:message.text(),location:message.location()});});
+  page.on('requestfailed',request=>row.requestFailures.push({url:request.url(),method:request.method(),error:request.failure()?.errorText,knownFooterTeardown:isSiteFooterIconTeardownAbort(request)}));
+  row.path=(locale==='en'?'':'/'+locale)+(mode==='chart'?'/birth-chart/':'/moon-phase/');const response=await page.goto(origin+row.path,{waitUntil:'domcontentloaded'});assert.equal(response.status(),200);assert.equal(await page.locator('footer.zfooter').count(),1);
+  const date=page.locator(mode==='chart'?'#birth-date':'#mp-date'),time=page.locator(mode==='chart'?'#birth-time':'#mp-time'),place=page.locator(mode==='chart'?'#place':'#mp-place');
+  await date.focus();await page.locator(`astro-island[component-url*="${mode==='chart'?'ChartCalculator':'MoonPhaseTool'}"]:not([ssr])`).waitFor();
+  await date.fill('2011-12-29');
+  if(mode==='chart'){await time.fill('08:30');await page.locator('.field__toggle input[type=checkbox]').check();}else await time.fill('');
+  await place.fill('Apia');const option=page.getByRole('option').filter({has:page.locator('.place__name',{hasText:/^Apia$/})});await option.waitFor({state:'visible'});assert.equal(await option.count(),1);row.offlineOption=await option.innerText();assert.ok(row.offlineOption.includes(city.country));await option.click();assert.equal(await place.inputValue(),chip);assert.equal(await place.getAttribute('readonly'),'');
+  assert.ok(row.browserRequests.some(r=>new URL(r.url).pathname==='/data/cities/index.json'&&!r.blocked));assert.ok(row.browserRequests.some(r=>new URL(r.url).pathname==='/data/cities/a.json'&&!r.blocked));
+  row.ordinary=await success(page,mode);assert.equal(row.ordinary.date,'2011-12-29');assert.equal(row.ordinary.unknown,true);
+  await date.fill('2011-12-30');row.edited=await cleared(page,mode);assert.equal(row.edited.date,'2011-12-30');assert.equal(row.edited.place,chip);assert.equal(row.edited.time,mode==='chart'?'08:30':'');assert.equal(row.edited.unknown,true);
+  await page.locator('.calc__submit').click();const error=page.locator('.calc__form .calc__error[role=alert]');await error.waitFor({state:'visible'});await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__form .calc__error[role=alert]')&&document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');
+  row.refused=await cleared(page,mode);assert.equal(row.refused.error,expected[locale]);assert.equal(row.refused.date,'2011-12-30');assert.equal(row.refused.place,chip);assert.equal(row.refused.time,mode==='chart'?'08:30':'');assert.equal(row.refused.unknown,true);assert.equal(row.refused.focus.role,'alert');assert.equal(await page.locator('.calc__submit').isEnabled(),true);await settle(page);row.screenshots.push(await capture(page,name+'-refused'));
+  await date.fill('2011-12-31');await settle(page);row.beforeRetry=await cleared(page,mode);assert.equal(row.beforeRetry.error,expected[locale]);assert.equal(row.beforeRetry.focus.id,'birth-date');row.recovered=await success(page,mode);assert.equal(row.recovered.date,'2011-12-31');assert.equal(row.recovered.place,chip);assert.equal(row.recovered.time,mode==='chart'?'08:30':'');assert.equal(row.recovered.unknown,true);row.screenshots.push(await capture(page,name+'-recovered'));
+  if(locale==='en'&&width===1280){
+   await date.fill('2011-12-30');await cleared(page,mode);if(mode==='chart')await page.locator('.field__toggle input[type=checkbox]').uncheck();else await time.fill('08:30');
+   row.knownTime=await success(page,mode);assert.equal(row.knownTime.date,'2011-12-30');assert.equal(row.knownTime.unknown,false);assert.equal(row.knownTime.time,'08:30');
+  }
+  assert.deepEqual(row.pageErrors,[]);row.final=await snapshot(page,mode);assert.equal(row.final.noSavedProfile,true);
+  const unexpectedFailures=row.requestFailures.filter(f=>!f.knownFooterTeardown&&!row.blocked.some(r=>r.url===f.url));assert.deepEqual(unexpectedFailures,[]);
+  row.passed=true;
+ }catch(error){row.failure=String(error.stack??error);if(page){row.failureState=await snapshot(page,mode).catch(()=>null);row.screenshots.push(await capture(page,name+'-failure').catch(error=>({captureError:String(error)})));}}
+ finally{await context.close();contexts.delete(context);row.contextClosed=true;await writeFile(resolve(out,name+'.json'),JSON.stringify(row,null,2)+'\n');results.push(row);console.log(JSON.stringify({name,passed:row.passed}));}
+}
+try{
+ await new Promise(done=>server.listen(0,'127.0.0.1',done));origin=`http://127.0.0.1:${server.address().port}`;
+ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});report.browser=browser.version();report.origin=origin;
+ for(const locale of locales)for(const mode of ['chart'])for(const width of [1280,390])await runGroup(locale,mode,width);
+ report.sourceAfter=await identities();assert.deepEqual(report.sourceAfter,sourceBefore);assert.equal(results.length,12);assert.equal(results.filter(row=>!row.passed).length,0);assert.equal(requests.filter(row=>row.status!==200).length,0);report.outcome='passed';
+}catch(error){report.failure=String(error.stack??error);process.exitCode=1;}
+finally{
+ for(const context of contexts)await context.close().catch(()=>{});await browser?.close();await new Promise(done=>server.close(done));
+ report.requests=requests;report.served=[...served.values()];report.passed=results.filter(row=>row.passed).length;report.failed=results.filter(row=>!row.passed).length;report.driverSha256=sha(await readFile(new URL(import.meta.url)));report.cleanup={contextsClosed:true,browserClosed:true,serverClosed:true};
+ await writeFile(resolve(out,'served-files.json'),JSON.stringify(report.served,null,2)+'\n');await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed,outcome:report.outcome}));
+}

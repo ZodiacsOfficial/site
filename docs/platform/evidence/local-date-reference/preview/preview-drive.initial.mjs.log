@@ -1,0 +1,97 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {chromium} from 'playwright-core';
+import {parseNatalEnvelope} from '@zodiacs/engine/receipt';
+import {findChromium,STABLE_CHROMIUM_ARGS,isSiteFooterIconTeardownAbort} from './source/tests/visual/browser.mjs';
+const origin='https://zodiacs-qg1besfdu-zodiacsofficial.vercel.app';
+const commit='f803d2543ad81343b22d49326b8b46d0e2ea03a0';
+const out=process.env.OUT_DIR;if(!out)throw Error('OUT_DIR required');fs.mkdirSync(out,{recursive:false});
+const hash=b=>createHash('sha256').update(b).digest('hex');
+const resolve=path.resolve,readFile=fs.promises.readFile,sha=hash;
+const snapshot=JSON.parse(fs.readFileSync('source-snapshot.json','utf8'));
+for(const row of snapshot.records)assert.equal(hash(fs.readFileSync('source/'+row.path)),row.sha256);
+fs.mkdirSync(out+'/remote-modules');fs.mkdirSync(out+'/remote-data');
+const report={at:new Date().toISOString(),node:process.version,sourceCommit:commit,sourceSnapshot:snapshot,origin,checks:[],requests:[],responses:[],modules:{},data:{},outcome:'failed',qualification:'Actual remote preview and native form/city controls. Passive chart events only; no source, engine, resolver, date, loader or network-result injection. No numerical-call counts or complete-date/candidate claim. Unknown-time Moon certainty/banner is captured as unchanged baseline, not certified. External/non-GET/API requests blocked. Separate unobserved isolated auth bootstrap.'};
+let browser,cookies=[];const pending=[],contexts=new Set();
+const chip='Apia · Tuamasaga, Samoa';
+const expected={
+ en:'We couldn’t establish a calculation time within this local date. Check the date and place.',
+ es:'No pudimos establecer una hora de cálculo dentro de esta fecha local. Comprueba la fecha y el lugar.',
+ fr:'Nous n’avons pas pu déterminer une heure de calcul correspondant à cette date locale. Vérifie la date et le lieu.',
+ it:'Non è stato possibile stabilire un orario di calcolo all’interno di questa data locale. Controlla la data e il luogo.',
+ pt:'Não foi possível estabelecer um horário de cálculo dentro desta data local. Verifique a data e o local.',
+ ru:'Не удалось определить время для расчёта в пределах этой местной даты. Проверьте дату и место.',
+};
+const actionSelector='[data-share-card],[data-save-chart],[data-share-options],[data-download-calculation-receipt],[data-chart-more]';
+async function settle(page){await page.evaluate(()=>new Promise(done=>requestAnimationFrame(()=>requestAnimationFrame(done))));}
+async function snapshot(page,mode){return page.evaluate(({mode,actionSelector})=>({
+ date:document.querySelector(mode==='chart'?'#birth-date':'#mp-date')?.value,
+ time:document.querySelector(mode==='chart'?'#birth-time':'#mp-time')?.value,
+ unknown:mode==='chart'?document.querySelector('.field__toggle input[type=checkbox]')?.checked:document.querySelector('#mp-time')?.value==='',
+ place:document.querySelector(mode==='chart'?'#place':'#mp-place')?.value,
+ result:!!document.querySelector('.calc__result'),
+ resultText:document.querySelector('.calc__result')?.textContent?.trim()??null,
+ error:document.querySelector('.calc__form .calc__error[role=alert]')?.textContent??null,
+ busy:document.querySelector('.calc__form')?.getAttribute('aria-busy'),
+ actions:document.querySelectorAll(actionSelector).length,
+ context:window.zodiacsPostChartContext??null,
+ focus:{tag:document.activeElement?.tagName,id:document.activeElement?.id,role:document.activeElement?.getAttribute('role'),text:document.activeElement?.textContent?.trim()},
+ noSavedProfile:localStorage.getItem('zodiacs.profile.v1')===null,
+ overflow:document.documentElement.scrollWidth>innerWidth+1,
+}),{mode,actionSelector});}
+async function capture(page,name){const path=resolve(out,name+'.png');await page.screenshot({path,fullPage:false,animations:'disabled'});const bytes=await readFile(path);return {path:name+'.png',bytes:bytes.length,sha256:sha(bytes)};}
+async function cleared(page,mode){
+ await page.waitForFunction(selector=>!document.querySelector('.calc__result')&&!document.querySelector(selector)&&window.zodiacsPostChartContext===undefined,actionSelector);
+ const value=await snapshot(page,mode);assert.equal(value.result,false);assert.equal(value.actions,0);assert.equal(value.context,null);assert.equal(value.busy,'false');assert.equal(value.noSavedProfile,true);return value;
+}
+async function success(page,mode){
+ await page.locator('.calc__submit').click();await page.locator('.calc__result').waitFor({state:'visible'});
+ await page.waitForFunction(()=>document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false'&&document.activeElement===document.querySelector('.calc__result h2'));
+ if(mode==='chart'){
+  await page.locator('[data-save-chart]').first().waitFor({state:'attached'});
+  await page.locator('[data-download-calculation-receipt]').waitFor({state:'attached'});
+  await page.waitForFunction(()=>window.zodiacsPostChartContext?.mode==='full');
+  assert.equal(await page.locator('[data-download-calculation-receipt]').isEnabled(),true);
+ }
+ await settle(page);const value=await snapshot(page,mode);assert.ok(value.resultText);assert.equal(value.error,null);assert.equal(value.noSavedProfile,true);assert.equal(value.overflow,false);if(mode==='chart')assert.ok(value.actions>0);return value;
+}
+
+async function setup(name,mode,width){
+ const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce',timezoneId:'UTC',serviceWorkers:'block',acceptDownloads:true});contexts.add(context);context.setDefaultTimeout(20000);await context.addCookies(cookies);
+ const row={name,mode,width,pageErrors:[],consoleErrors:[],browserRequests:[],blocked:[],requestFailures:[],screenshots:[],passed:false};
+ await context.route('**/*',async route=>{const r=route.request(),u=new URL(r.url()),blocked=u.origin!==origin||r.method()!=='GET'||u.pathname.startsWith('/api/');row.browserRequests.push({method:r.method(),origin:u.origin,path:u.pathname,blocked});if(blocked){row.blocked.push({method:r.method(),origin:u.origin,path:u.pathname,reason:r.method()!=='GET'?'non-GET':u.origin!==origin?'external':'api'});return route.abort('blockedbyclient');}return route.continue();});
+ await context.addInitScript(()=>{window.__datePreviewEvents={computed:[],cleared:[]};addEventListener('zodiacs:chart-computed',e=>window.__datePreviewEvents.computed.push(e.detail));addEventListener('zodiacs:chart-context-cleared',e=>window.__datePreviewEvents.cleared.push({type:e.constructor.name,detail:typeof e.detail,contextAbsent:window.zodiacsPostChartContext===undefined}));});
+ const page=await context.newPage();page.on('pageerror',e=>row.pageErrors.push(String(e)));page.on('console',m=>{if(m.type()==='error')row.consoleErrors.push({text:m.text(),location:m.location()});});
+ page.on('request',r=>{const u=new URL(r.url());report.requests.push({case:name,method:r.method(),origin:u.origin,path:u.pathname});});
+ page.on('requestfailed',r=>{const u=new URL(r.url());row.requestFailures.push({origin:u.origin,path:u.pathname,method:r.method(),error:r.failure()?.errorText,knownFooterTeardown:isSiteFooterIconTeardownAbort(r)});});
+ page.on('response',response=>{const u=new URL(response.url());if(u.origin!==origin)return;pending.push((async()=>{try{const bytes=await response.body(),identity={path:u.pathname,bytes:bytes.length,sha256:hash(bytes)};report.responses.push({case:name,status:response.status(),...identity});if(response.status()===200&&u.pathname.endsWith('.js')){if(report.modules[u.pathname])assert.deepEqual(report.modules[u.pathname],identity);else{report.modules[u.pathname]=identity;fs.writeFileSync(out+'/remote-modules/'+path.basename(u.pathname),bytes);}}if(response.status()===200&&u.pathname.startsWith('/data/cities/')){if(report.data[u.pathname])assert.deepEqual(report.data[u.pathname],identity);else{report.data[u.pathname]=identity;fs.writeFileSync(out+'/remote-data/'+path.basename(u.pathname),bytes);}}}catch(e){report.responses.push({case:name,path:u.pathname,status:response.status(),bodyUnavailable:true,error:String(e)});}})());});
+ return {page,context,row};
+}
+async function finish(s){
+ const {page,context,row}=s;await Promise.allSettled(pending);row.events=await page.evaluate(()=>window.__datePreviewEvents);row.final=await snapshot(page,row.mode);assert.equal(row.final.noSavedProfile,true);assert.deepEqual(row.pageErrors,[]);
+ const unexpected=row.requestFailures.filter(f=>!f.knownFooterTeardown&&!row.blocked.some(b=>b.origin===f.origin&&b.path===f.path&&b.method===f.method));assert.deepEqual(unexpected,[]);
+ const expectedErrors=row.consoleErrors.filter(e=>e.text.split('\n')[0]==='Error: Could not establish a calculation time within the local date.');
+ const other=row.consoleErrors.filter(e=>!expectedErrors.includes(e)&&!row.blocked.some(b=>e.location?.url===b.origin+b.path)&&!e.text.startsWith('Failed to load resource: net::ERR_BLOCKED_BY_CLIENT'));
+ assert.deepEqual(other,[]);row.expectedRefusalDiagnostics=expectedErrors.length;row.passed=true;
+}
+async function test(name,mode,width,run){const s=await setup(name,mode,width);try{await run(s);await finish(s);}catch(e){s.row.failure=String(e.stack??e);s.row.failureState=await snapshot(s.page,mode).catch(()=>null);s.row.screenshots.push(await capture(s.page,name+'-failure').catch(e=>({error:String(e)})));}finally{await s.context.close();contexts.delete(s.context);s.row.contextClosed=true;fs.writeFileSync(out+'/'+name+'.json',JSON.stringify(s.row,null,2)+'\n');report.checks.push(s.row);console.log(JSON.stringify({name,passed:s.row.passed,failure:s.row.failure?.split('\n')[0]}));}}
+async function openPage(s,locale,mode,url){const route=(locale==='en'?'':'/'+locale)+(mode==='chart'?'/birth-chart/':'/moon-phase/');s.row.path=route;const response=await s.page.goto(url??origin+route,{waitUntil:'domcontentloaded',timeout:45000});assert.equal(response.status(),200);await s.page.locator(mode==='chart'?'#birth-date':'#mp-date').focus();await s.page.locator(`astro-island[component-url*="${mode==='chart'?'ChartCalculator':'MoonPhaseTool'}"]:not([ssr])`).waitFor();}
+async function verifyRemoteCity(){await Promise.allSettled(pending);const index=JSON.parse(fs.readFileSync(out+'/remote-data/index.json')),rows=JSON.parse(fs.readFileSync(out+'/remote-data/a.json'));const matches=rows.filter(r=>r[0]==='Apia'&&index.tz[r[6]]==='Pacific/Apia');assert.equal(matches.length,1);const a=matches[0],city={name:a[0],admin:index.admin1[a[2]],country:index.countries[a[3]],lat:a[4]/100,lon:a[5]/100,zone:index.tz[a[6]]};assert.equal([city.name,[city.admin,city.country].join(', ')].join(' · '),chip);report.observedCity=city;}
+async function downloadReceipt(s){const details=s.page.locator('[data-chart-more]');if(await details.getAttribute('open')===null){await details.locator(':scope > summary').focus();await s.page.keyboard.press('Enter');}const button=s.page.locator('[data-download-calculation-receipt]');assert.equal(await button.isEnabled(),true);const downloadPromise=s.page.waitForEvent('download');await button.focus();await s.page.keyboard.press('Enter');const download=await downloadPromise;assert.equal(download.suggestedFilename(),'zodiacs-calculation-receipt.json');const file=out+'/'+s.row.name+'-receipt.json';await download.saveAs(file);const bytes=fs.readFileSync(file),parsed=parseNatalEnvelope(bytes.toString());assert.equal(parsed.ok,true);assert.equal(parsed.envelope.receipt.engine.version,'0.1.1-rc.6');s.row.receipt={sha256:hash(bytes),bytes:bytes.length,localResolution:parsed.envelope.receipt.localResolution,unknownTime:parsed.envelope.receipt.input?.unknownTime};return parsed.envelope;}
+try{
+ browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:STABLE_CHROMIUM_ARGS});report.browser=browser.version();const bootstrap=await browser.newContext();try{const auth=JSON.parse(fs.readFileSync(process.env.ZODIACS_PREVIEW_AUTH_FILE,'utf8')),page=await bootstrap.newPage();await page.goto(auth.url,{waitUntil:'networkidle',timeout:60000});cookies=await bootstrap.cookies();report.authBootstrap={isolated:true,observed:false,completed:true};}catch{throw Error('Protected preview bootstrap failed');}finally{await bootstrap.close();}
+ for(const locale of ['en','ru'])for(const mode of ['chart','moon'])for(const width of [1280,390])await test(`${locale}-${mode}-${width}`,mode,width,async s=>{
+  const {page,row}=s;row.locale=locale;await openPage(s,locale,mode);const date=page.locator(mode==='chart'?'#birth-date':'#mp-date'),time=page.locator(mode==='chart'?'#birth-time':'#mp-time'),place=page.locator(mode==='chart'?'#place':'#mp-place');await date.fill('2011-12-29');if(mode==='chart'){await time.fill('08:30');await page.locator('.field__toggle input[type=checkbox]').check();}else await time.fill('');
+  await place.fill('Apia');const option=page.getByRole('option').filter({has:page.locator('.place__name',{hasText:/^Apia$/})});await option.waitFor();assert.equal(await option.count(),1);row.offlineOption=await option.innerText();await option.click();assert.equal(await place.inputValue(),chip);assert.equal(await place.getAttribute('readonly'),'');await verifyRemoteCity();
+  row.ordinary=await success(page,mode);if(mode==='moon')row.baselineMoonText=row.ordinary.resultText;
+  await date.fill('2011-12-30');row.edited=await cleared(page,mode);assert.equal(row.edited.place,chip);assert.equal(row.edited.unknown,true);const computedBefore=await page.evaluate(()=>window.__datePreviewEvents.computed.length);
+  await page.locator('.calc__submit').click();const error=page.locator('.calc__form .calc__error[role=alert]');await error.waitFor();await page.waitForFunction(()=>document.activeElement===document.querySelector('.calc__form .calc__error[role=alert]')&&document.querySelector('.calc__form')?.getAttribute('aria-busy')==='false');row.refused=await cleared(page,mode);assert.equal(row.refused.error,expected[locale]);assert.equal(row.refused.date,'2011-12-30');assert.equal(row.refused.unknown,true);assert.equal(row.refused.focus.role,'alert');assert.equal(row.refused.overflow,false);assert.equal(await page.locator('.calc__submit').isEnabled(),true);assert.equal(await page.evaluate(()=>window.__datePreviewEvents.computed.length),computedBefore);row.screenshots.push(await capture(page,row.name+'-refused'));
+  await date.fill('2011-12-31');await settle(page);row.beforeRetry=await cleared(page,mode);assert.equal(row.beforeRetry.error,mode==='chart'?expected[locale]:null);assert.equal(row.beforeRetry.focus.id,mode==='chart'?'birth-date':'mp-date');row.recovered=await success(page,mode);assert.equal(row.recovered.date,'2011-12-31');assert.equal(row.recovered.unknown,true);row.screenshots.push(await capture(page,row.name+'-recovered'));if(mode==='chart'){const envelope=await downloadReceipt(s);assert.equal(envelope.receipt.localResolution.date,'2011-12-31');assert.equal(envelope.receipt.localResolution.timeZone,'Pacific/Apia');}else row.baselineRecoveredMoonText=row.recovered.resultText;
+  if(locale==='en'&&width===1280){await date.fill('2011-12-30');await cleared(page,mode);if(mode==='chart')await page.locator('.field__toggle input[type=checkbox]').uncheck();else await time.fill('08:30');row.knownTime=await success(page,mode);assert.equal(row.knownTime.unknown,false);assert.equal(row.knownTime.time,'08:30');}
+ });
+ await test('moon-no-city-utc','moon',390,async s=>{await openPage(s,'en','moon');await s.page.locator('#mp-date').fill('2011-12-30');await s.page.locator('#mp-time').fill('');assert.equal(await s.page.locator('#mp-place').inputValue(),'');s.row.utc=await success(s.page,'moon');assert.equal(s.row.utc.date,'2011-12-30');assert.equal(s.row.utc.unknown,true);s.row.screenshots.push(await capture(s.page,s.row.name));});
+ await test('public-positions-only','chart',390,async s=>{const token='2.'+Buffer.from(JSON.stringify({b:Array.from({length:12},(_,i)=>i*27),h:'w',v:'0.1.1-rc.6'})).toString('base64url');await openPage(s,'en','chart',origin+'/birth-chart/#p='+token);await s.page.locator('[data-positions-only]').waitFor();assert.equal(await s.page.locator('[data-calculation-receipt-export]').count(),0);assert.equal(await s.page.evaluate(()=>window.__datePreviewEvents.computed.length),0);assert.ok(!s.row.browserRequests.some(r=>/\/(?:calculator-receipt|chart-adapter|full)\./.test(r.path)));s.row.positionsOnly=true;s.row.screenshots.push(await capture(s.page,s.row.name));});
+ report.outcome=report.checks.length===10&&report.checks.every(r=>r.passed)?'passed':'failed';
+}catch(e){report.failure=String(e.stack??e);}finally{for(const context of contexts)await context.close().catch(()=>{});await browser?.close();await Promise.allSettled(pending);cookies=[];report.cleanup={contextsClosed:true,browserClosed:true,localServerStarted:false};report.driverSha256=hash(fs.readFileSync(new URL(import.meta.url)));fs.writeFileSync(out+'/result.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({groups:report.checks.length,passed:report.checks.filter(r=>r.passed).length,outcome:report.outcome}));if(report.outcome!=='passed')process.exitCode=1;}

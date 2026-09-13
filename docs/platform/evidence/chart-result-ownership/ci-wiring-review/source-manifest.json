@@ -1,0 +1,34 @@
+{
+  "records": [
+    {
+      "path": "RESULTS.json",
+      "bytes": 1181,
+      "sha256": "59940e39213a5743e9028ebad11c322a578ee1ba0cdff712a69a313c2dc90380"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 899,
+      "sha256": "c3e483c84156a1f5627e5d82a9925750a1da602fb83c7eac8b3f42f85d25db2b"
+    },
+    {
+      "path": "check.log",
+      "bytes": 1052,
+      "sha256": "ceb37a4b493d18acbacdc9dce523abd74a8a7e671ab1d2bebb31a04fbeec25ea"
+    },
+    {
+      "path": "check.mjs",
+      "bytes": 4718,
+      "sha256": "259f7a597030bb273a35de018a6ec89e1808bd9bab0ba01b1c270b2e83163c7e"
+    },
+    {
+      "path": "ci-proposed.patch.log",
+      "bytes": 475,
+      "sha256": "03598760abef8901835676901ff6b4cd0f1f802b2f2e498350b71c0b9b0d2b32"
+    },
+    {
+      "path": "workflow.proposed.yml.log",
+      "bytes": 15717,
+      "sha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5"
+    }
+  ]
+}

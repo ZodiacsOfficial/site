@@ -1,0 +1,24 @@
+{
+  "frozenFilesVerified": 4,
+  "unchangedBaseSourcesVerified": 39,
+  "originalFreeze1DeliveryUnchanged": true,
+  "node": "v22.23.2",
+  "browser": "152.0.7977.83",
+  "suites": [
+    {
+      "name": "original",
+      "passed": 6,
+      "total": 18
+    },
+    {
+      "name": "candidate",
+      "passed": 18,
+      "total": 18
+    }
+  ],
+  "exactNativeProfileWriteCountVerified": true,
+  "pageErrors": [],
+  "externalRequests": [],
+  "driverSha256": "20c88acdc636d03fe67f3a5472c0db96c35e4da499f69ab83127fabb26cdcbd1",
+  "nativeResultSha256": "5b16ad4efe345b6fadc56d7a9b1631380698e4984b334b47afc27ca1e8f9ca0b"
+}

@@ -1,0 +1,204 @@
+{
+  "records": [
+    {
+      "path": "COMMANDS.md",
+      "bytes": 1743,
+      "sha256": "7e1d5d217b3a3cb5d0f2c29ba5004280bd27c528880bcfc057ec786627bdc705"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 10226,
+      "sha256": "cddae680abfd8505db4ef529e8e3f8748bd92ac60da82102ecb613a042851afc"
+    },
+    {
+      "path": "build.log",
+      "bytes": 291,
+      "sha256": "df4bd2164ab0b44d8f81869e2fb3175b85ecbd0b4e4332c3615f84aa8a4a85ed"
+    },
+    {
+      "path": "build.mjs",
+      "bytes": 2855,
+      "sha256": "b57d9122b67319a936d3424b422628258145457eb217b12b27311795a1113959"
+    },
+    {
+      "path": "calculation-subject.mjs",
+      "bytes": 78573,
+      "sha256": "70ecafb389dc136b1787e08acbc92641e312713b83367653d36d3ea36ec2a20f"
+    },
+    {
+      "path": "edge-node22.log",
+      "bytes": 169,
+      "sha256": "707163ec79907a9d7acfcb77c9b4a511ed089bbbac0dc3216cd62803cad2d3e0"
+    },
+    {
+      "path": "edge-node24.log",
+      "bytes": 169,
+      "sha256": "1819684a4c9a359fd8e6ac28fb50e0011083f7aed06379327c153e9a261a5ba3"
+    },
+    {
+      "path": "edge-probe.mjs",
+      "bytes": 4849,
+      "sha256": "4637fdf5530da70b4859bffd7e95868acfec60e143a259db13050e34d56f6c6e"
+    },
+    {
+      "path": "edge-result-v22.23.2.json",
+      "bytes": 8449,
+      "sha256": "aff34fd5640c921aa9a99cea37b989c9f9c3e42ef239bea918c29cf870cafa34"
+    },
+    {
+      "path": "edge-result-v24.19.0.json",
+      "bytes": 8449,
+      "sha256": "8146381766a9cbfd0a205ceb451c584aa406a00c2bb3c9384ff31abc4e7082ab"
+    },
+    {
+      "path": "identity.json",
+      "bytes": 5278,
+      "sha256": "95c874938bc0da8d6ec4bf917ce3001b2edf087c7a3402561abdf02a3a837324"
+    },
+    {
+      "path": "linked-evidence-verification.json",
+      "bytes": 611,
+      "sha256": "34c8a6059dc9fe4cbb0d46fa909752161523f48dbde4fe943cf74375048da85f"
+    },
+    {
+      "path": "probe-node22.log",
+      "bytes": 1944,
+      "sha256": "f762f56551d4aed11760c63b049fb98649577f4c22fe1a1ec864239c17b7bacd"
+    },
+    {
+      "path": "probe-node24.log",
+      "bytes": 1944,
+      "sha256": "4f9119d46dbe43f8a23ca6cef53c5e393732c967c9aa34d92a01816836b81ee0"
+    },
+    {
+      "path": "probe.mjs",
+      "bytes": 5028,
+      "sha256": "4e2f9b2de89f57ad09ee4ebf7b6614deb071942dde6e87ed3debc809cebf5290"
+    },
+    {
+      "path": "result-v22.23.2.json",
+      "bytes": 12668,
+      "sha256": "cfa04ec1575826e3f80c9fab537098afe7b63b87897650ecc05a8012119fe871"
+    },
+    {
+      "path": "result-v24.19.0.json",
+      "bytes": 12668,
+      "sha256": "f5c48eece5b2ae0b6ce38427e1013fa4ecd050fdfd408a73228388620feb20da"
+    },
+    {
+      "path": "seal.mjs",
+      "bytes": 2808,
+      "sha256": "2fc719c1c2b8b0b54a76681018965d3bf51561bb9bd92232327974b6e3bcea8c"
+    },
+    {
+      "path": "source-verification.json",
+      "bytes": 5265,
+      "sha256": "cdc899faf05d74d08ffa2bd44ad10b45137c0ff81535cfaeb4aa2fc594472455"
+    },
+    {
+      "path": "source/src/islands/CalculationReload.tsx",
+      "bytes": 986,
+      "sha256": "3a20a3781c773a16d615f7b5f4a1b1fc17830a00b0d65fc83ee616501c39e20e"
+    },
+    {
+      "path": "source/src/islands/ChartCalculator.tsx",
+      "bytes": 120491,
+      "sha256": "fea737333ea5df9a894dafa99de06cd1dcc8390f3bd43d9e627992b466dfa4d0"
+    },
+    {
+      "path": "source/src/islands/MoonPhaseTool.tsx",
+      "bytes": 11616,
+      "sha256": "0661eb17ee4bdcd32f2d7d0e4311691036bb5335c0ce14176b1e1234f3f976bb"
+    },
+    {
+      "path": "source/src/lib/chart-date-certainty.ts",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "path": "source/src/lib/engine/calculator-receipt.ts",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "path": "source/src/lib/engine/chart-adapter.ts",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "path": "source/src/lib/engine/full.ts",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "path": "source/src/lib/engine/portable.ts",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "path": "source/src/lib/i18n/core.ts",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/client.ts",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/index.ts",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "path": "source/src/lib/i18n/ru-runtime/server.ts",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/en.ts",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "path": "source/src/lib/i18n/ui/ru.ts",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "path": "source/src/lib/share.ts",
+      "bytes": 4808,
+      "sha256": "505d2f826c8c77de58b5c189438c33fc50325646419a948363b1722d0c7fb436"
+    },
+    {
+      "path": "source/src/lib/signs.ts",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "path": "source/src/lib/time/civil-date.ts",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "path": "source/src/lib/time/local-date-intervals.ts",
+      "bytes": 9341,
+      "sha256": "d3479d72e69966cbe491f29bb132c254a7c0e3adddf0a6f9a74df8691fe61313"
+    },
+    {
+      "path": "source/src/lib/time/localToUtc.ts",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "path": "source/src/lib/time/technical-locales.ts",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "path": "time-subject.mjs",
+      "bytes": 5341,
+      "sha256": "ec628844fbd4f4637c2920a2baccd732685b747ea4c6de57a73b0a34f016c87b"
+    }
+  ]
+}

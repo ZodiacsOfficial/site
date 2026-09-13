@@ -1,0 +1,15 @@
+[
+  "<define:import.meta.env>",
+  "snapshot/src/lib/account-v2/profile-access-reader.ts",
+  "snapshot/src/lib/account-v2/storage-identity.ts",
+  "snapshot/src/lib/account-v2/profile-lease.ts",
+  "snapshot/src/lib/account-v2/types.ts",
+  "snapshot/src/lib/account-v2/mutation-fingerprint.ts",
+  "snapshot/src/lib/account-v2/local-state.ts",
+  "snapshot/src/lib/living-chart/owner.ts",
+  "snapshot/src/lib/living-chart/types.ts",
+  "snapshot/src/lib/living-chart/forecast-snapshot.ts",
+  "snapshot/src/lib/living-chart/schema.ts",
+  "snapshot/src/lib/living-chart/store.ts",
+  "idb-control-entry.ts"
+]

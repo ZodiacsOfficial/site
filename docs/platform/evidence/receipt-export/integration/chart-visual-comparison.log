@@ -1,0 +1,41 @@
+{
+  "priorSource": "8ee0e0183a3c4437af902858b1d76678d3e961a3",
+  "priorEvidence": "docs/platform/evidence/portable-calculation/release/chart-visual-parity.json",
+  "originalGate": "FAIL: same three pre-existing dimensions",
+  "baselineUpdated": false,
+  "newMasks": 0,
+  "pixelmatchThreshold": 0.1,
+  "maxDiffRatio": 0.001,
+  "cases": [
+    {
+      "name": "birth-chart-kahlo-desktop",
+      "width": 1440,
+      "height": 9502,
+      "currentSha256": "b55f7ba96d2c253a34b644e0096967619ce01e29a5eb55edc4d5ea08071a4d40",
+      "priorSha256": "506af433a1b3f05d4f7399a4395c4ea2bdc4c113a44beda5b95a658ee0cbb99a",
+      "byteIdentical": false,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    },
+    {
+      "name": "birth-chart-kahlo-mobile",
+      "width": 390,
+      "height": 14011,
+      "currentSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "priorSha256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "byteIdentical": true,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    },
+    {
+      "name": "birth-chart-kahlo-desktop-reduced-motion",
+      "width": 1440,
+      "height": 9502,
+      "currentSha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "priorSha256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "byteIdentical": true,
+      "scoredDifferentPixels": 0,
+      "scoredDiffRatio": 0
+    }
+  ]
+}

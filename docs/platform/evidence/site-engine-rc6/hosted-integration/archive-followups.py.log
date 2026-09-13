@@ -1,0 +1,24 @@
+from pathlib import Path
+import json,hashlib,shutil
+root=Path.cwd()
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+items=[('/private/tmp/zodiacs-platform-rc6-preview-review/delivery','docs/platform/evidence/site-engine-rc6/preview','fdbe6aedd0793514ac0a638857d2922899dc0a4de2c50111231be5041a2a3ba2'),('/private/tmp/zodiacs-platform-interval-caller-compatibility/delivery','docs/platform/evidence/interval-caller-compatibility/chart-review','962ff4ac6291bf1156fa4345d7256d779d74621693b26a4a4d9c81eedb534d90'),('/private/tmp/zodiacs-platform-interval-caller-compatibility/moon-review/delivery','docs/platform/evidence/interval-caller-compatibility/moon-review','6d98a848b6de211380a33f924f0e7c8d95c67f12779993ac5f165a2a3565a850')]
+for src,dst,h in items:
+ src=Path(src);dst=root/dst;m=src/'manifest.json';assert sha(m)==h
+ entries=json.loads(m.read_text())['records']
+ for r in entries:
+  p=src/r['path'];assert p.stat().st_size==r['bytes'] and sha(p)==r['sha256']
+ shutil.copytree(src,dst,dirs_exist_ok=True)
+ for r in entries:assert sha(dst/r['path'])==r['sha256']
+ print(dst.relative_to(root),len(entries),'records verified')
+source=Path('/private/tmp/zodiacs-platform-rc6-release');dest=root/'docs/platform/evidence/site-engine-rc6/hosted-integration';dest.mkdir(parents=True,exist_ok=True);records=[]
+for p in sorted(source.rglob('*')):
+ if not p.is_file():continue
+ assert 'auth' not in p.name.lower()
+ if p.suffix in ['.json','.txt','.md','.log']:assert '_vercel_share=' not in p.read_text()
+ target=dest/p.relative_to(source)
+ if p.suffix in ['.py','.mjs']:target=target.with_name(target.name+'.log')
+ target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,target);assert sha(target)==sha(p)
+ records.append({'path':str(target.relative_to(dest)),'bytes':target.stat().st_size,'sha256':sha(target)})
+(dest/'manifest.json').write_text(json.dumps({'sourceCommit':'30b41cd8f1a353cce0cee36bc76c1e9fa21b4c14','records':records},indent=2)+'\n')
+print('Root hosted records',len(records),'manifest',sha(dest/'manifest.json'))

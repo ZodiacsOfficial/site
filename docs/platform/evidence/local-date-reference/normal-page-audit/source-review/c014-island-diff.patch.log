@@ -1,0 +1,86 @@
+diff --git a/src/islands/ChartCalculator.tsx b/src/islands/ChartCalculator.tsx
+index bdc8d01e..3cd92b3f 100644
+--- a/src/islands/ChartCalculator.tsx
++++ b/src/islands/ChartCalculator.tsx
+@@ -35,7 +35,7 @@ import {
+ } from '../lib/scene/types';
+ import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
+ import { bigThree } from '../lib/interpretations';
+-import { resolveLocalToUtc } from '../lib/time/localToUtc';
++import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+ import { localDateEndpointsUtc, stableBodySignSlug } from '../lib/chart-date-certainty';
+ import { houseOf } from '../lib/engine/houses';
+ import { moonPhaseName } from '../lib/engine/lite';
+@@ -1135,6 +1135,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+     advanceInputRevision();
+     clearResult();
+     const runInputRevision = inputRevisionRef.current;
++    const localDateReferenceFailure = new Error('Could not establish a calculation time within the local date.');
+     const signatureModule = mode === 'full' && showsEnglishInterpretation
+       ? import('../lib/chart-signature').catch(() => null)
+       : null;
+@@ -1176,6 +1177,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       }
+       const effectiveTime = input.timeKnown ? input.time : '12:00';
+       const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
++      if (!input.timeKnown) {
++        try {
++          if (!localDateContainsUtc(input.date, resolved.utc, input.city.tz)) throw localDateReferenceFailure;
++        } catch { throw localDateReferenceFailure; }
++      }
+       const calculationInput = {
+         utc: resolved.utc,
+         latitude: input.city.lat,
+@@ -1287,7 +1293,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
+       runChartIdRef.current += 1;
+       clearResult();
+       setBusy(false);
+-      setError(calculationError(err, locale, t(locale, 'chartError')));
++      setError(err === localDateReferenceFailure ? t(locale, 'localDateReferenceError')
++        : calculationError(err, locale, t(locale, 'chartError')));
+       console.error(err);
+     } finally {
+       if (runId === runChartIdRef.current) setBusy(false);
+diff --git a/src/islands/MoonPhaseTool.tsx b/src/islands/MoonPhaseTool.tsx
+index 574e10e8..720b5797 100644
+--- a/src/islands/MoonPhaseTool.tsx
++++ b/src/islands/MoonPhaseTool.tsx
+@@ -12,7 +12,7 @@ import {
+ } from '../lib/engine/lite';
+ import type { MoonPhaseName } from '../lib/engine/lite';
+ import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
+-import { resolveLocalToUtc } from '../lib/time/localToUtc';
++import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+ import type { City } from '../lib/geo/search';
+ import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
+ import { formatDateTime } from '../lib/i18n/dates';
+@@ -100,6 +100,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+     e.preventDefault();
+     if (!date) return;
+     const revision = ++lookupRevisionRef.current;
++    const localDateReferenceFailure = new Error('Could not establish a calculation time within the local date.');
+     const isCurrent = () => revision === lookupRevisionRef.current;
+     focusAfterComputeRef.current = true;
+     setBusy(true);
+@@ -114,6 +115,11 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+       let dayEnd: Date;
+       if (city) {
+         utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
++        if (!hasTime) {
++          try {
++            if (!localDateContainsUtc(date, utc, city.tz)) throw localDateReferenceFailure;
++          } catch { throw localDateReferenceFailure; }
++        }
+         dayStart = resolveLocalToUtc(date, '00:00', city.tz).utc;
+         dayEnd = resolveLocalToUtc(date, '23:59', city.tz).utc;
+       } else {
+@@ -154,7 +160,8 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
+     } catch (err) {
+       if (!isCurrent()) return;
+       setResult(null);
+-      setError(calculationError(err, locale, t(locale, 'moonError')));
++      setError(err === localDateReferenceFailure ? t(locale, 'localDateReferenceError')
++        : calculationError(err, locale, t(locale, 'moonError')));
+       console.error(err);
+     } finally {
+       if (isCurrent()) setBusy(false);

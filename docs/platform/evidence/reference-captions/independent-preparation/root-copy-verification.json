@@ -1,0 +1,473 @@
+{
+  "sourceManifestSha256": "eebd3b26ffd427767ce98ced83edcf6eeae86e027c4a5ef838f21d588c7eff52",
+  "verifiedRecords": 116,
+  "verifiedOrdinaryMembers": null,
+  "verifiedOriginalArchiveRecords": null,
+  "fileMap": [
+    {
+      "sourcePath": "COMMANDS.md",
+      "path": "COMMANDS.md"
+    },
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md"
+    },
+    {
+      "sourcePath": "build-metafile.json",
+      "path": "build-metafile.json"
+    },
+    {
+      "sourcePath": "build.log",
+      "path": "build.log"
+    },
+    {
+      "sourcePath": "build.mjs",
+      "path": "build.mjs.log"
+    },
+    {
+      "sourcePath": "capture-dependencies.json",
+      "path": "capture-dependencies.json"
+    },
+    {
+      "sourcePath": "capture-supplement.json",
+      "path": "capture-supplement.json"
+    },
+    {
+      "sourcePath": "capture.json",
+      "path": "capture.json"
+    },
+    {
+      "sourcePath": "consumed-inputs.json",
+      "path": "consumed-inputs.json"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-GBH7JIYF.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-H7RJKCBO.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/chunk-INI453VG.js",
+      "path": "dependency-source/@zodiacs/engine/dist/chunk-INI453VG.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/internal-math.js",
+      "path": "dependency-source/@zodiacs/engine/dist/internal-math.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/@zodiacs/engine/dist/internal.js",
+      "path": "dependency-source/@zodiacs/engine/dist/internal.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/astronomy-engine/esm/astronomy.js",
+      "path": "dependency-source/astronomy-engine/esm/astronomy.js.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/dist/preact.mjs",
+      "path": "dependency-source/preact/dist/preact.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/hooks/dist/hooks.mjs",
+      "path": "dependency-source/preact/hooks/dist/hooks.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact/jsx-runtime/dist/jsxRuntime.mjs",
+      "path": "dependency-source/preact/jsx-runtime/dist/jsxRuntime.mjs.log"
+    },
+    {
+      "sourcePath": "dependency-source/preact-render-to-string/dist/index.mjs",
+      "path": "dependency-source/preact-render-to-string/dist/index.mjs.log"
+    },
+    {
+      "sourcePath": "fourth-build.log",
+      "path": "fourth-build.log"
+    },
+    {
+      "sourcePath": "fourth-build.mjs",
+      "path": "fourth-build.mjs.log"
+    },
+    {
+      "sourcePath": "initial-build.log",
+      "path": "initial-build.log"
+    },
+    {
+      "sourcePath": "initial-build.mjs",
+      "path": "initial-build.mjs.log"
+    },
+    {
+      "sourcePath": "initial-lookup.log",
+      "path": "initial-lookup.log"
+    },
+    {
+      "sourcePath": "initial-result.json",
+      "path": "initial-result.json"
+    },
+    {
+      "sourcePath": "initial-result.stderr",
+      "path": "initial-result.stderr"
+    },
+    {
+      "sourcePath": "output/known-0617-html.html",
+      "path": "output/known-0617-html.html"
+    },
+    {
+      "sourcePath": "output/known-0617-inspector.html",
+      "path": "output/known-0617-inspector.html"
+    },
+    {
+      "sourcePath": "output/known-0617-receiver.html",
+      "path": "output/known-0617-receiver.html"
+    },
+    {
+      "sourcePath": "output/known-1843-html.html",
+      "path": "output/known-1843-html.html"
+    },
+    {
+      "sourcePath": "output/known-1843-inspector.html",
+      "path": "output/known-1843-inspector.html"
+    },
+    {
+      "sourcePath": "output/known-1843-receiver.html",
+      "path": "output/known-1843-receiver.html"
+    },
+    {
+      "sourcePath": "output/reference-0617-html.html",
+      "path": "output/reference-0617-html.html"
+    },
+    {
+      "sourcePath": "output/reference-0617-inspector.html",
+      "path": "output/reference-0617-inspector.html"
+    },
+    {
+      "sourcePath": "output/reference-0617-receiver.html",
+      "path": "output/reference-0617-receiver.html"
+    },
+    {
+      "sourcePath": "output/reference-1843-html.html",
+      "path": "output/reference-1843-html.html"
+    },
+    {
+      "sourcePath": "output/reference-1843-inspector.html",
+      "path": "output/reference-1843-inspector.html"
+    },
+    {
+      "sourcePath": "output/reference-1843-receiver.html",
+      "path": "output/reference-1843-receiver.html"
+    },
+    {
+      "sourcePath": "probe.mjs",
+      "path": "probe.mjs.log"
+    },
+    {
+      "sourcePath": "probe.tsx",
+      "path": "probe.tsx.log"
+    },
+    {
+      "sourcePath": "result.json",
+      "path": "result.json"
+    },
+    {
+      "sourcePath": "result.stderr",
+      "path": "result.stderr"
+    },
+    {
+      "sourcePath": "second-build.log",
+      "path": "second-build.log"
+    },
+    {
+      "sourcePath": "second-build.mjs",
+      "path": "second-build.mjs.log"
+    },
+    {
+      "sourcePath": "source/scripts/build-i18n-additions.mjs",
+      "path": "source/scripts/build-i18n-additions.mjs.log"
+    },
+    {
+      "sourcePath": "source/scripts/build-i18n-additions.test.mjs",
+      "path": "source/scripts/build-i18n-additions.test.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/components/AspectGlyph.tsx",
+      "path": "source/src/components/AspectGlyph.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/components/PlanetGlyph.tsx",
+      "path": "source/src/components/PlanetGlyph.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/data/context-help.ts",
+      "path": "source/src/data/context-help.ts.log"
+    },
+    {
+      "sourcePath": "source/src/islands/AstroTerm.tsx",
+      "path": "source/src/islands/AstroTerm.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/ChartCalculator.tsx",
+      "path": "source/src/islands/ChartCalculator.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/PositionsShareSurface.tsx",
+      "path": "source/src/islands/PositionsShareSurface.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/SignChip.tsx",
+      "path": "source/src/islands/SignChip.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/islands/explorer/Inspector.tsx",
+      "path": "source/src/islands/explorer/Inspector.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/lib/analytics-config.mjs",
+      "path": "source/src/lib/analytics-config.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/lib/analytics.ts",
+      "path": "source/src/lib/analytics.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/approach.ts",
+      "path": "source/src/lib/approach.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/brand-icons.mjs",
+      "path": "source/src/lib/brand-icons.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/lib/chart-signature.ts",
+      "path": "source/src/lib/chart-signature.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/communication.ts",
+      "path": "source/src/lib/communication.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/compat.ts",
+      "path": "source/src/lib/compat.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/context-help-client.ts",
+      "path": "source/src/lib/context-help-client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/dignities.ts",
+      "path": "source/src/lib/dignities.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/aspects.ts",
+      "path": "source/src/lib/engine/aspects.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/chart-adapter.ts",
+      "path": "source/src/lib/engine/chart-adapter.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/full.ts",
+      "path": "source/src/lib/engine/full.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/houses.ts",
+      "path": "source/src/lib/engine/houses.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/engine/synastry.ts",
+      "path": "source/src/lib/engine/synastry.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/glyphs/paths.ts",
+      "path": "source/src/lib/glyphs/paths.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/astrology.ts",
+      "path": "source/src/lib/i18n/astrology.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/core.ts",
+      "path": "source/src/lib/i18n/core.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/english-only.ts",
+      "path": "source/src/lib/i18n/english-only.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/index.ts",
+      "path": "source/src/lib/i18n/index.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/plural.ts",
+      "path": "source/src/lib/i18n/plural.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/client.ts",
+      "path": "source/src/lib/i18n/ru-runtime/client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/index.ts",
+      "path": "source/src/lib/i18n/ru-runtime/index.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ru-runtime/server.ts",
+      "path": "source/src/lib/i18n/ru-runtime/server.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/client.ts",
+      "path": "source/src/lib/i18n/ui/client.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/en.ts",
+      "path": "source/src/lib/i18n/ui/en.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/es.ts",
+      "path": "source/src/lib/i18n/ui/es.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/fr.ts",
+      "path": "source/src/lib/i18n/ui/fr.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/growth.ts",
+      "path": "source/src/lib/i18n/ui/growth.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/it.ts",
+      "path": "source/src/lib/i18n/ui/it.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/pt.ts",
+      "path": "source/src/lib/i18n/ui/pt.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/ru.ts",
+      "path": "source/src/lib/i18n/ui/ru.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/i18n/ui/server.ts",
+      "path": "source/src/lib/i18n/ui/server.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/interpretations.ts",
+      "path": "source/src/lib/interpretations.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/moon-certainty.ts",
+      "path": "source/src/lib/moon-certainty.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/natal-context.ts",
+      "path": "source/src/lib/natal-context.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/natal.ts",
+      "path": "source/src/lib/natal.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/build.ts",
+      "path": "source/src/lib/scene/build.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/emphasis.ts",
+      "path": "source/src/lib/scene/emphasis.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/layout.ts",
+      "path": "source/src/lib/scene/layout.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/scene/types.ts",
+      "path": "source/src/lib/scene/types.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-brand.ts",
+      "path": "source/src/lib/share-card-brand.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-copy.ts",
+      "path": "source/src/lib/share-card-copy.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card-pastel-icons.ts",
+      "path": "source/src/lib/share-card-pastel-icons.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card.test.ts",
+      "path": "source/src/lib/share-card.test.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-card.ts",
+      "path": "source/src/lib/share-card.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-positions-reading.ts",
+      "path": "source/src/lib/share-positions-reading.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/share-positions.ts",
+      "path": "source/src/lib/share-positions.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/signs.ts",
+      "path": "source/src/lib/signs.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/TechnicalWheel.tsx",
+      "path": "source/src/lib/wheel/TechnicalWheel.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/Wheel.tsx",
+      "path": "source/src/lib/wheel/Wheel.tsx.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/body-leader.ts",
+      "path": "source/src/lib/wheel/body-leader.ts.log"
+    },
+    {
+      "sourcePath": "source/src/lib/wheel/technical-layout.ts",
+      "path": "source/src/lib/wheel/technical-layout.ts.log"
+    },
+    {
+      "sourcePath": "source/src/server/chart-preview-model.ts",
+      "path": "source/src/server/chart-preview-model.ts.log"
+    },
+    {
+      "sourcePath": "source/src/server/chart-preview.ts",
+      "path": "source/src/server/chart-preview.ts.log"
+    },
+    {
+      "sourcePath": "source/src/strings/additions.fr.mjs",
+      "path": "source/src/strings/additions.fr.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/strings/additions.it.mjs",
+      "path": "source/src/strings/additions.it.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/strings/additions.pt.mjs",
+      "path": "source/src/strings/additions.pt.mjs.log"
+    },
+    {
+      "sourcePath": "source/src/styles/context-help.css",
+      "path": "source/src/styles/context-help.css"
+    },
+    {
+      "sourcePath": "source-locations.log",
+      "path": "source-locations.log"
+    },
+    {
+      "sourcePath": "source-proof.json",
+      "path": "source-proof.json"
+    },
+    {
+      "sourcePath": "third-build.log",
+      "path": "third-build.log"
+    },
+    {
+      "sourcePath": "third-build.mjs",
+      "path": "third-build.mjs.log"
+    }
+  ],
+  "sourceBytesUnchanged": true
+}

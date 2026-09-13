@@ -1,0 +1,16 @@
+{
+  "comparison": "Exact original lookup try-body preserved after removing the two new ownership guards; no other statement changed",
+  "passed": true,
+  "originalSha256": "c887de8f36c6cf1f0e5305bdd621fdb424f712143230476a57188e2a2c22a9b6",
+  "guardStrippedCandidateSha256": "c887de8f36c6cf1f0e5305bdd621fdb424f712143230476a57188e2a2c22a9b6",
+  "nativeUnchangedControls": [
+    {
+      "name": "Successful known-time UTC result retains calculations and heading focus",
+      "identicalEvidence": true
+    },
+    {
+      "name": "Unknown UTC and local-date engine inputs remain unchanged",
+      "identicalEvidence": true
+    }
+  ]
+}

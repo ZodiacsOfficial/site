@@ -1,0 +1,69 @@
+{
+  "base": "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf",
+  "runtime": "Node22.23.2",
+  "implementationPatchSha256": "5d61510dec09e42ad2196c173da5a88f206a85af5809a27562b1daf0cc2f83a5",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-09-08T05:12:33.251646+00:00",
+      "elapsedSeconds": 53.026,
+      "exitCode": 0,
+      "log": "build.log"
+    },
+    {
+      "name": "captures",
+      "command": [
+        "npm",
+        "run",
+        "test:phase1:acceptance"
+      ],
+      "startedAt": "2026-09-08T05:13:26.280580+00:00",
+      "elapsedSeconds": 32.718,
+      "exitCode": 0,
+      "log": "captures.log"
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--fileParallelism=false"
+      ],
+      "startedAt": "2026-09-08T05:13:58.999182+00:00",
+      "elapsedSeconds": 125.09,
+      "exitCode": 0,
+      "log": "test.log"
+    },
+    {
+      "name": "check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-09-08T05:16:04.090849+00:00",
+      "elapsedSeconds": 31.777,
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "scripts/phase1-scope-guard.mjs",
+        "--base",
+        "c761a49c55d125bca48ff38d81b0a9ff6fd5adcf"
+      ],
+      "startedAt": "2026-09-08T05:16:35.868673+00:00",
+      "elapsedSeconds": 0.263,
+      "exitCode": 0,
+      "log": "scope.log"
+    }
+  ]
+}

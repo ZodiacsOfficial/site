@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /Users/chiburashka/.codex/worktrees/4806/site
+
+ ✓ src/lib/engine/portable.test.ts (21 tests) 133ms
+ ✓ src/lib/engine/package-integration.test.ts (6 tests) 153ms
+ ✓ src/lib/engine/engine.test.ts (53 tests) 58ms
+
+ Test Files  3 passed (3)
+      Tests  80 passed (80)
+   Start at  11:21:48
+   Duration  617ms (transform 391ms, setup 0ms, collect 659ms, tests 344ms, environment 0ms, prepare 154ms)
+

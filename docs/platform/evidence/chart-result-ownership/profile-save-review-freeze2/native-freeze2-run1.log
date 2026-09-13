@@ -1,0 +1,9 @@
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    source/src/lib/i18n/ru-runtime/index.ts:7:9:
+      7 │   return import.meta.env.SSR ? serverRussianRuntime() : clientRussi...
+        ╵          ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+{"out":"/private/tmp/zodiacs-platform-chart-ownership-independent-review/frozen-profile-save-freeze2/native-freeze2-run1","browser":"152.0.7977.83","groups":[{"name":"original","passed":6,"failed":["requested-save-import-settles-after-edit","pending-save-profile-revoke","pending-save-independent-primary-revoke-regrant","actual-storage-commit-event-revokes-profile","actual-storage-commit-event-edits-result","committed-save-delayed-A2HS-after-edit","committed-save-delayed-A2HS-after-revoke","queued-close-frame-after-edit","queued-committed-save-close-after-mine-only-revoke","queued-committed-save-close-after-revoke-regrant","same-result-replacement-prompt-before-close-frame","same-result-replacement-prompt-before-save-import"]},{"name":"candidate","passed":18,"failed":[]}]}

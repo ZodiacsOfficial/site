@@ -1,0 +1,13 @@
+(function shareChartFromAction() {
+    const primary = shareRuntimeRef.current.primary;
+    if (!primary) {
+        void openShareOptions();
+        return;
+    }
+    if (card === 'busy')
+        return;
+    setCard('busy');
+    // This call reaches navigator.share before yielding, preserving the
+    // exact tap's activation on iOS. Rendering happened after computation.
+    void primary.share(primary.artifact, mode).then(setCard);
+})

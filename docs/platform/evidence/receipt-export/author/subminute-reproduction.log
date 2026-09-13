@@ -1,0 +1,16 @@
+{
+  "freeze": 1,
+  "node": "v22.23.2",
+  "zone": "America/Manaus",
+  "date": "1914-01-01",
+  "time": "00:00",
+  "legacySucceeded": true,
+  "utc": "1914-01-01T04:00:04.000Z",
+  "offsetMinutes": -240,
+  "flags": [],
+  "portable": {
+    "name": "PortableChartError",
+    "code": "calculation_failed",
+    "message": "Unable to prepare a portable chart."
+  }
+}

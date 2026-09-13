@@ -1,0 +1,47 @@
+// source/src/lib/engine/full.ts
+import {
+  bodyLongitude as engineBodyLongitude,
+  computeBodies as engineComputeBodies,
+  computeChart as engineComputeChart,
+  longitudeSpeed as engineLongitudeSpeed
+} from "@zodiacs/engine/internal";
+
+// source/src/lib/engine/chart-adapter.ts
+var adaptBody = (position) => ({
+  body: position.body,
+  lon: position.lon,
+  lat: position.lat,
+  speed: position.speed,
+  retrograde: position.retrograde
+});
+function adaptChart(chart, input) {
+  return {
+    input,
+    bodies: chart.bodies.map(adaptBody),
+    angles: chart.angles,
+    houses: chart.houses,
+    aspects: chart.aspects,
+    flags: [...chart.flags],
+    engineVersion: chart.engineVersion
+  };
+}
+
+// source/src/lib/engine/full.ts
+function bodyLongitude(name, date) {
+  return engineBodyLongitude(name, date);
+}
+function longitudeSpeed(name, date) {
+  return engineLongitudeSpeed(name, date);
+}
+function computeBodies(date) {
+  return engineComputeBodies(date).map(adaptBody);
+}
+function computeChart(input) {
+  return adaptChart(engineComputeChart(input), input);
+}
+export {
+  bodyLongitude,
+  computeBodies,
+  computeChart,
+  longitudeSpeed
+};

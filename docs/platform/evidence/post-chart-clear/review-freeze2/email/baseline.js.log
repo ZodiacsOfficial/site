@@ -1,0 +1,170 @@
+(() => {
+  function trackCaptureView(surface) {
+    if (surface.dataset.viewTracked === "true") return;
+    surface.dataset.viewTracked = "true";
+    window.zodiacsAnalytics?.track?.("email_capture_viewed", {
+      placement: surface.dataset.placement ?? "unknown"
+    });
+  }
+  const captureSurfaces = document.querySelectorAll("[data-email-capture-shell]");
+  if ("IntersectionObserver" in window) {
+    const captureObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        trackCaptureView(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.2 });
+    captureSurfaces.forEach((surface) => captureObserver.observe(surface));
+  } else {
+    captureSurfaces.forEach((surface) => {
+      if (!surface.hidden) trackCaptureView(surface);
+    });
+  }
+  function preselectCaptureSign(surface, sign) {
+    if (!sign) return;
+    const radios = Array.from(surface.querySelectorAll('input[name="sign"]'));
+    const radio = radios.find((input) => input.value === sign);
+    if (!radio) return;
+    surface.dataset.personalizedSign = "true";
+    radios.forEach((input) => {
+      input.checked = input === radio;
+      input.defaultChecked = input === radio;
+    });
+    renderCaptureSign(surface, radio, true);
+  }
+  function fillSignTemplate(template, signName) {
+    return (template ?? "").replace("{sign}", signName);
+  }
+  function renderCaptureSign(surface, radio, collapse) {
+    const title = surface.querySelector("[data-email-title]");
+    const summary = surface.querySelector("[data-email-sign-summary]");
+    const summaryCopy = surface.querySelector("[data-email-sign-summary-copy]");
+    const chooser = surface.querySelector("[data-email-signs]");
+    const change = surface.querySelector("[data-email-sign-change]");
+    if (!title || !summary || !summaryCopy || !chooser || !change) return;
+    const name = radio?.value ? radio.dataset.signName : void 0;
+    if (!name) {
+      title.textContent = title.dataset.defaultTitle ?? "";
+      summary.hidden = true;
+      chooser.hidden = false;
+      change.setAttribute("aria-expanded", "true");
+      return;
+    }
+    title.textContent = fillSignTemplate(title.dataset.personalTitle, name);
+    summaryCopy.textContent = fillSignTemplate(summary.dataset.summaryTemplate, name);
+    summary.hidden = false;
+    chooser.hidden = collapse;
+    change.setAttribute("aria-expanded", String(!collapse));
+  }
+  function setupSignChooser(surface) {
+    if (surface.dataset.signChooserEnhanced === "true") return;
+    const chooser = surface.querySelector("[data-email-signs]");
+    const summary = surface.querySelector("[data-email-sign-summary]");
+    const change = surface.querySelector("[data-email-sign-change]");
+    if (!chooser || !summary || !change) return;
+    surface.dataset.signChooserEnhanced = "true";
+    change.addEventListener("click", () => {
+      const selected = chooser.querySelector('input[name="sign"]:checked');
+      const opening = chooser.hidden;
+      renderCaptureSign(surface, selected ?? void 0, !opening);
+      if (opening) requestAnimationFrame(() => selected?.focus());
+    });
+    chooser.addEventListener("change", (event) => {
+      const radio = event.target.closest('input[name="sign"]');
+      if (!radio || surface.dataset.personalizedSign !== "true") return;
+      const radios = Array.from(chooser.querySelectorAll('input[name="sign"]'));
+      radios.forEach((input) => {
+        input.defaultChecked = input === radio;
+      });
+      renderCaptureSign(surface, radio, Boolean(radio.value));
+      if (radio.value) change.focus({ preventScroll: true });
+    });
+    chooser.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || surface.dataset.personalizedSign !== "true") return;
+      const selected = chooser.querySelector('input[name="sign"]:checked');
+      if (!selected?.value) return;
+      event.preventDefault();
+      renderCaptureSign(surface, selected, true);
+      change.focus({ preventScroll: true });
+    });
+  }
+  function revealChartCapture(event) {
+    const detail = event.detail;
+    const mode = detail?.mode;
+    if (mode !== "full") return;
+    document.querySelectorAll('[data-reveal-on-chart="true"]').forEach((surface) => {
+      preselectCaptureSign(surface, detail?.sunSign);
+      const managed = surface.dataset.postChartManaged === "true" && document.documentElement.hasAttribute("data-daily-email-lifecycle");
+      surface.hidden = managed;
+    });
+  }
+  window.addEventListener("zodiacs:chart-computed", revealChartCapture);
+  captureSurfaces.forEach(setupSignChooser);
+  document.querySelectorAll("[data-email-capture]").forEach((form) => {
+    if (form.dataset.enhanced === "true") return;
+    form.dataset.enhanced = "true";
+    form.addEventListener("reset", () => {
+      queueMicrotask(() => {
+        const surface = form.closest("[data-email-capture-shell]");
+        if (!surface || surface.dataset.personalizedSign !== "true") return;
+        const selected = form.querySelector('input[name="sign"]:checked');
+        renderCaptureSign(surface, selected ?? void 0, Boolean(selected?.value));
+      });
+    });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      const status = form.querySelector("[data-email-status]");
+      if (!button || !status) return;
+      const email = form.querySelector('input[name="email"]');
+      const selectedSign = form.querySelector('input[name="sign"]:checked');
+      const surface = form.closest("[data-email-capture-shell]");
+      if (!email?.validity.valid) {
+        status.textContent = form.querySelector("[data-invalid-email-copy]")?.textContent ?? "";
+        email?.reportValidity();
+        email?.focus();
+        return;
+      }
+      if (surface?.dataset.dailyCapture === "true" && !selectedSign?.value) {
+        status.textContent = form.querySelector("[data-missing-sign-copy]")?.textContent ?? "";
+        const chooser = form.querySelector("[data-email-signs]");
+        if (chooser) chooser.hidden = false;
+        form.querySelector('input[name="sign"]')?.focus();
+        return;
+      }
+      if (!form.reportValidity()) return;
+      const idle = button.dataset.label ?? button.textContent ?? "";
+      button.disabled = true;
+      button.textContent = button.dataset.busyLabel ?? idle;
+      status.textContent = "";
+      try {
+        const response = await fetch(form.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new URLSearchParams(new FormData(form))
+        });
+        if (!response.ok) throw new Error("subscription unavailable");
+        status.textContent = form.querySelector("[data-success-copy]")?.textContent ?? "";
+        if (surface?.dataset.dailyCapture === "true" && selectedSign?.value) {
+          const radios = Array.from(form.querySelectorAll('input[name="sign"]'));
+          radios.forEach((input) => {
+            input.defaultChecked = input === selectedSign;
+          });
+          surface.dataset.personalizedSign = "true";
+        }
+        form.reset();
+        if (surface?.dataset.dailyCapture === "true" && selectedSign?.value) {
+          renderCaptureSign(surface, selectedSign, true);
+        }
+        const placement = form.dataset.placement ?? "unknown";
+        window.zodiacsAnalytics?.track?.("email_subscribed", { placement });
+      } catch {
+        status.textContent = form.querySelector("[data-error-copy]")?.textContent ?? "";
+      } finally {
+        button.disabled = false;
+        button.textContent = idle;
+      }
+    });
+  });
+})();

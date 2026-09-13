@@ -1,0 +1,51 @@
+import hashlib,json,pathlib,shutil,subprocess,tarfile
+P=pathlib.Path('/private/tmp/zodiacs-platform-rc6-public-consumer-review')
+S=pathlib.Path('/private/tmp/zodiacs-platform-site-seconds-independent-review')
+E=pathlib.Path('/private/tmp/zodiacs-platform-site-seconds-adoption-evidence')
+def sha(p): return hashlib.sha256(p.read_bytes()).hexdigest()
+archive=E/'anonymous-engine-rc6.tgz'
+assert sha(archive)=='09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e'
+shutil.copy2(archive,P/'anonymous-engine-rc6.tgz')
+engine=P/'node_modules/@zodiacs/engine'
+with tarfile.open(archive) as t:
+    members=t.getmembers()
+    assert len(members)==23 and all(m.isfile() for m in members)
+    assert len({m.name for m in members})==23
+    for m in members:
+        p=pathlib.PurePosixPath(m.name)
+        assert p.parts[0]=='package' and '..' not in p.parts and not p.is_absolute()
+        out=engine.joinpath(*p.parts[1:]);out.parent.mkdir(parents=True,exist_ok=True)
+        out.write_bytes(t.extractfile(m).read())
+dependency_sources={
+ 'astronomy-engine':'/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/astronomy-engine',
+ 'typescript':'/Users/chiburashka/.codex/worktrees/4806/site/node_modules/typescript',
+}
+for name,path in dependency_sources.items(): shutil.copytree(path,P/'node_modules'/name,symlinks=False)
+assert json.loads((P/'node_modules/astronomy-engine/package.json').read_text())['version']=='2.1.19'
+assert json.loads((engine/'package.json').read_text())['version']=='0.1.1-rc.6'
+(P/'package.json').write_text(json.dumps({'name':'independent-rc6-public-consumer','private':True,'type':'module'},indent=2)+'\n')
+records={'archive':{'path':str(archive),'sha256':sha(archive)},'extraction':'Validated exactly 23 unique regular package/ members, no absolute/traversal paths or links; manually wrote extracted archive bytes into node_modules/@zodiacs/engine. No npm install, lifecycle script, network, or source rebuild. Existing dependency and TypeScript trees physically copied, dereferencing links.','archiveFiles':{str(p.relative_to(engine)):sha(p) for p in sorted(engine.rglob('*')) if p.is_file()},'dependencies':{name:{'source':str(pathlib.Path(path).resolve()),'version':json.loads((P/'node_modules'/name/'package.json').read_text())['version'],'files':{str(p.relative_to(P/'node_modules'/name)):sha(p) for p in sorted((P/'node_modules'/name).rglob('*')) if p.is_file()}} for name,path in dependency_sources.items()}}
+(P/'setup-identity.json').write_text(json.dumps(records,indent=2)+'\n')
+identities=[]
+for stem in ['source','receipt-companion']:
+    identity=json.loads((E/(stem+'-freeze1-identity.json')).read_text())
+    patch=E/(stem+'-freeze1.patch');assert sha(patch)==identity['patchSha256']
+    shutil.copy2(patch,S/patch.name);shutil.copy2(E/(stem+'-freeze1-identity.json'),S/(stem+'-freeze1-identity.json'))
+    for name,expected in identity['files'].items():
+        source=pathlib.Path(identity['sourceCheckout'])/name
+        assert sha(source)==expected,(name,sha(source),expected)
+        target=S/'candidate'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
+    identities.append(identity)
+repo=pathlib.Path(identities[0]['sourceCheckout'])
+for name in ['src/lib/time/localToUtc.ts','src/lib/time/technical-locales.ts','src/lib/time/civil-date.ts']:
+    old=subprocess.check_output(['git','show',identities[0]['baseCommit']+':'+name],cwd=repo)
+    target=S/'baseline'/name;target.parent.mkdir(parents=True,exist_ok=True);target.write_bytes(old)
+    if name!='src/lib/time/localToUtc.ts':
+        current=repo/name;assert current.read_bytes()==old
+        target=S/'candidate'/name;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(current,target)
+for name in ['esbuild','@esbuild/darwin-arm64']:
+    shutil.copytree('/private/tmp/zodiacs-platform-sdk-seconds-independent-review/node_modules/'+name,S/'node_modules'/name,symlinks=False)
+shutil.copy2('/private/tmp/zodiacs-platform-sdk-seconds-independent-review/checks.mjs',S/'retained-checks.mjs')
+shutil.copy2('/private/tmp/zodiacs-platform-sdk-seconds-independent-review/retained-controls-and-model.json',S/'retained-controls-and-model.json')
+(S/'snapshot-identity.json').write_text(json.dumps({'frozenSourceMatched':True,'sourceBase':identities[0]['baseCommit'],'companionBase':identities[1]['baseCommit'],'provisionalMetadataExcluded':identities[0]['excludedProvisionalMetadata'],'files':{str(p.relative_to(S)):sha(p) for name in ['baseline','candidate','node_modules'] for p in sorted((S/name).rglob('*')) if p.is_file()}},indent=2)+'\n')
+print(json.dumps({'archiveSha256':sha(archive),'archiveFiles':len(records['archiveFiles']),'astronomyEngine':records['dependencies']['astronomy-engine']['version'],'typescript':records['dependencies']['typescript']['version'],'frozenSiteFilesMatched':sum(len(i['files']) for i in identities),'allFilesPhysicallyCopied':True}))

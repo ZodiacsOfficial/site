@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/zodiacs-platform-reference-confidence-preview-review/verify.py", line 14, in <module>
+    d=root/f'browser-run{n}';assert r['sourceCommit']==source['commit'];requestCount+=len(r['requests']);responseCount+=len(r['responses']);assert not any(v.get('bodyUnavailable') for v in r['responses'])
+AssertionError

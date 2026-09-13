@@ -1,0 +1,101 @@
+{
+  "status": "passed",
+  "runtime": "v22.23.2",
+  "source": "examples/platform/scripts/build.mjs",
+  "sourceSHA256": "3da4170d63ab93cf1cd6b87e36fa79696c2785bd1d19718a801770fecbadc903",
+  "scratch": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+  "sharedWorkspaceMutations": false,
+  "results": [
+    {
+      "name": "correct-control",
+      "passed": true,
+      "exitCode": 0,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": null,
+      "outputLog": "correct-control.log",
+      "distAppBefore": null,
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": true
+    },
+    {
+      "name": "candidate-version-mismatch",
+      "passed": true,
+      "exitCode": 1,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": "Resolved ephemeris version does not match the locked candidate facts.",
+      "outputLog": "candidate-version-mismatch.log",
+      "distAppBefore": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": false
+    },
+    {
+      "name": "lock-version-mismatch",
+      "passed": true,
+      "exitCode": 1,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": "Resolved ephemeris version does not match the locked candidate facts.",
+      "outputLog": "lock-version-mismatch.log",
+      "distAppBefore": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": false
+    },
+    {
+      "name": "installed-version-mismatch",
+      "passed": true,
+      "exitCode": 1,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": "Resolved ephemeris version does not match the locked candidate facts.",
+      "outputLog": "installed-version-mismatch.log",
+      "distAppBefore": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": false
+    },
+    {
+      "name": "installed-name-mismatch",
+      "passed": true,
+      "exitCode": 1,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": "Resolved ephemeris version does not match the locked candidate facts.",
+      "outputLog": "installed-name-mismatch.log",
+      "distAppBefore": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": false
+    },
+    {
+      "name": "nested-same-version",
+      "passed": true,
+      "exitCode": 1,
+      "command": [
+        "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+        "scripts/build.mjs"
+      ],
+      "cwd": "/private/tmp/zodiacs-platform-starter-build-review/final/scratch-fybAiB",
+      "expectedRejection": "Bundled ephemeris does not match the verified candidate installation.",
+      "outputLog": "nested-same-version.log",
+      "distAppBefore": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppAfter": "e1e2240c4acdfcf5c6606cdf84a1241860037e2dde69b0ecb13531143d00dcb4",
+      "distAppChanged": false
+    }
+  ],
+  "scope": "Installed version/identity and actual bundled dependency-path guard only; not authentication of arbitrary modified dependency content."
+}

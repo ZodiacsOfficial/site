@@ -1,0 +1,9 @@
+# Primary language sources inspected 2026-09-08
+
+The current official ECMAScript specification explicitly describes the general finite-input results of Math.cos, Math.sin and Math.atan2 as implementation-approximated Number values:
+
+- [Math.cos, §21.3.2.12](https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-math.cos), step 4.
+- [Math.sin, §21.3.2.31](https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-math.sin), step 4.
+- [Math.atan2, §21.3.2.8](https://tc39.es/ecma262/multipage/numbers-and-dates.html#sec-math.atan2), step 15.
+
+These primary sources were opened and inspected using web.run in this review. They explain why identical general transcendental arguments do not carry a portable bit-equality promise. The empirical trace and causal replay establish the particular difference here; the specification alone does not prove the cause, nor supply an astronomical accuracy bound.

@@ -1,0 +1,52 @@
+{
+  "id": "dpl_2Z94CZozTG7aXCNiEEbCLz2GR27t",
+  "name": "zodiacs-org",
+  "url": "zodiacs-280vhfvby-zodiacsofficial.vercel.app",
+  "type": "LAMBDAS",
+  "state": "READY",
+  "createdAt": 1788859193470,
+  "creator": {
+    "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+    "username": "zodiacs-org"
+  },
+  "project": {
+    "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+    "name": "zodiacs-org",
+    "framework": null
+  },
+  "meta": {
+    "githubCommitAuthorName": "diasmal917",
+    "githubCommitAuthorEmail": "diasmal917@gmail.com",
+    "githubCommitMessage": "Keep birth-chart results and delayed actions bound to current input",
+    "githubCommitOrg": "ZodiacsOfficial",
+    "githubCommitRef": "codex/platform-chart-result-ownership",
+    "githubCommitRepo": "site",
+    "githubCommitSha": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+    "githubDeployment": "1",
+    "githubOrg": "ZodiacsOfficial",
+    "githubRepo": "site",
+    "githubRepoOwnerType": "Organization",
+    "githubCommitRepoId": "1251096896",
+    "githubRepoId": "1251096896",
+    "githubRepoVisibility": "public",
+    "githubHost": "github.com",
+    "githubCommitAuthorLogin": "diasmal917",
+    "githubCommitVerification": "unverified",
+    "repoPushedAt": "1788859189000",
+    "branchAlias": "zodiacs-org-git-codex-platform-chart-res-c3fea5-zodiacsofficial.vercel.app",
+    "githubPrId": "434",
+    "lambdaRuntimeStats": "{\"nodejs\":12}"
+  },
+  "alias": [
+    "zodiacs-org-git-codex-platform-chart-res-c3fea5-zodiacsofficial.vercel.app"
+  ],
+  "target": null,
+  "regions": [
+    "iad1"
+  ],
+  "buildingAt": 1788859194761,
+  "ready": 1788859345388,
+  "readyState": "READY",
+  "source": "git",
+  "aliasError": null
+}

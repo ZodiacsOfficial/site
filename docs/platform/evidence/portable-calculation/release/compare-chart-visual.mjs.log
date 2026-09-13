@@ -1,0 +1,35 @@
+// Run with Node from the repository after copying this .log to .mjs beside it.
+import { readFileSync, writeFileSync, copyFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { PNG } from 'pngjs';
+import pixelmatch from 'pixelmatch';
+const root = 'docs/platform/evidence/portable-calculation/release';
+const output = join(root, 'chart-visual-parity.json');
+const report = JSON.parse(readFileSync(output, 'utf8'));
+for (const row of report.cases) {
+  const currentPath = join('tests/visual/artifacts/visual', row.case);
+  const basePath = join('/private/tmp/zodiacs-platform-rc1-visual-control/current-candidate-visual', row.case);
+  const current = PNG.sync.read(readFileSync(currentPath));
+  const base = PNG.sync.read(readFileSync(basePath));
+  if (current.width !== base.width || current.height !== base.height) throw new Error('Candidate/control dimensions differ');
+  let rawDifferentPixels = 0, maxChannelDifference = 0;
+  for (let index = 0; index < current.data.length; index += 4) {
+    let different = false;
+    for (let channel = 0; channel < 4; channel++) {
+      const delta = Math.abs(current.data[index + channel] - base.data[index + channel]);
+      maxChannelDifference = Math.max(maxChannelDifference, delta);
+      different ||= delta !== 0;
+    }
+    if (different) rawDifferentPixels++;
+  }
+  const scoredDifferentPixels = pixelmatch(current.data, base.data, null, current.width, current.height, { threshold: 0.1 });
+  Object.assign(row, { width: current.width, height: current.height, rawDifferentPixels, maxChannelDifference, scoredDifferentPixels, scoredDiffRatio: scoredDifferentPixels / (current.width * current.height) });
+  if (!row.byteIdentical) {
+    copyFileSync(currentPath, join(root, 'portable-' + row.case));
+    copyFileSync(basePath, join(root, 'prior-' + row.case));
+  }
+}
+Object.assign(report, { originalPixelmatchThreshold: 0.1, originalMaxDiffRatio: 0.001, newMasks: 0, originalBaselineUpdated: false });
+writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+console.log(JSON.stringify(report, null, 2));
+if (report.cases.some(row => row.scoredDiffRatio > 0.001)) process.exitCode = 1;

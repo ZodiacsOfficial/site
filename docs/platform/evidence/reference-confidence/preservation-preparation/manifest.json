@@ -1,0 +1,42 @@
+[
+  {
+    "path": "BASELINE.md",
+    "bytes": 3242,
+    "sha256": "75bc29ebeb4c441aaa7932e0efa7a9c09610926ce52f6808a6c09ebe7bc11e31"
+  },
+  {
+    "path": "PREPARATION.md",
+    "bytes": 5601,
+    "sha256": "7745bc3a881e035b634dcc5c1e0fbf2d0bb13548f303d693aaa0bc9d212ea51e"
+  },
+  {
+    "path": "base-source.json",
+    "bytes": 311193,
+    "sha256": "2dc395ea08b60e488fb9e6fc6afefb4740b95bed779481bd426f1c27883e316a"
+  },
+  {
+    "path": "baseline-summary.json",
+    "bytes": 8565,
+    "sha256": "1a431a71f967a5d5118231e203446c558a47fe258c0817ea911344777597b8e5"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 1227672,
+    "sha256": "879dc3270c48c275889ec11dbe209f9b5c4e8c9e19a53550652419c4d36d991a"
+  },
+  {
+    "path": "raw-manifest.json",
+    "bytes": 68306,
+    "sha256": "0cb0acb2ba0f78160f752a6821bca71d13778671788813812eebbee62835dc96"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 187,
+    "sha256": "d38e6255b8007829f1f884cc8191233d72df32f84030064e47ecbf8a67c7789a"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1039,
+    "sha256": "62b33ce255b500c2143c257cd255169f3c10249f90260e8dab8481281e7764c2"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "files": [
+    {
+      "path": "tests/post-chart-daily.mjs",
+      "bytes": 2286,
+      "sha256": "3f7714e4cf44721db0aa34d4bf43d3f9b28c82b75972cad5a1fd5b7d3b944919"
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "bytes": 43425,
+      "sha256": "b71a171931b06c3e012267d4d5afd8b5b81cceb40c995e363dd7fe9cd40a9153"
+    },
+    {
+      "path": "tests/visual/preview-server.mjs",
+      "bytes": 3656,
+      "sha256": "43c17306256473fe4ad0c0a6460fcebc3220d84b47234ec6717d689a6cc184d1"
+    },
+    {
+      "path": "tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "src/islands/BirthFields.tsx",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "path": "src/islands/PlaceSearch.tsx",
+      "bytes": 6578,
+      "sha256": "ef71e615ae208ffe4ddab55b4048505d5d4f96db2af33272564e99ab2877b2c2"
+    },
+    {
+      "path": "src/lib/geo/search.ts",
+      "bytes": 2751,
+      "sha256": "625dbb71976c5f4c357349b78be38744c77471517e1d9d6c97eb1c62a202b7ba"
+    },
+    {
+      "path": "public/data/cities/a.json",
+      "bytes": 101875,
+      "sha256": "eb2d002d5051abb7c1273a65f144452e426115dfe55182f6c94c7df3ef2a81cc"
+    },
+    {
+      "path": "public/data/cities/index.json",
+      "bytes": 47087,
+      "sha256": "3efa920843be21788d47ed236109127a270025b1fc81aa2e3f6dae835c429dd6"
+    },
+    {
+      "path": "src/lib/email/daily-config.ts",
+      "bytes": 2192,
+      "sha256": "b55454e77f5f0e74f6a12fd12aa0216c47bc2365002aa2cfffefb1ec45de21c7"
+    }
+  ]
+}

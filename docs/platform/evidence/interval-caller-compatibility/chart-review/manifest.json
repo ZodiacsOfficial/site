@@ -1,0 +1,234 @@
+{
+  "scope": "Read-only ChartCalculator caller compatibility; no source edit or interval/certainty activation. Code copies are inert .log records. Moon independent evidence is separately sealed.",
+  "records": [
+    {
+      "sourcePath": "REVIEW.md",
+      "path": "REVIEW.md",
+      "bytes": 8256,
+      "sha256": "fd2e9d57720b5e088067101b96ccdebd6a19e25e24c9d33c737cc258bccf6fe2"
+    },
+    {
+      "sourcePath": "chart-review/probe.log",
+      "path": "chart-review/probe.log",
+      "bytes": 8178,
+      "sha256": "42e2064c0ca12a202cad475d7040fbacd2b892bc3b498a398a7b5a451d265af1"
+    },
+    {
+      "sourcePath": "chart-review/probe.mjs",
+      "path": "chart-review/probe.mjs.log",
+      "bytes": 6540,
+      "sha256": "3e032a39ea224b8600574deca5dbb897099d2919f99cafc76c86e2aafe099feb"
+    },
+    {
+      "sourcePath": "chart-review/result.json",
+      "path": "chart-review/result.json",
+      "bytes": 10927,
+      "sha256": "a982d85528d2a75e6670d5da28be8514b548f83f9cf73177d6e197d4ab106bc8"
+    },
+    {
+      "sourcePath": "chart-review/runChart-extracted.js",
+      "path": "chart-review/runChart-extracted.js.log",
+      "bytes": 7229,
+      "sha256": "d19ba49f306f0d2a1b7c4ca4aa482476b415ca75080e8a14e3c48bce16f36023"
+    },
+    {
+      "sourcePath": "chart-review/source/CLAUDE.md",
+      "path": "chart-review/source/CLAUDE.md",
+      "bytes": 12153,
+      "sha256": "e4afd3609a8fec988efb298e03f29b055e60c1040356c8baaced53ebd91cfdae"
+    },
+    {
+      "sourcePath": "chart-review/source/src/islands/BirthFields.tsx",
+      "path": "chart-review/source/src/islands/BirthFields.tsx.log",
+      "bytes": 3543,
+      "sha256": "9db5445208889076b5560d957f054fc8e31415e17a6d4c45383c39eeae6c6b3a"
+    },
+    {
+      "sourcePath": "chart-review/source/src/islands/ChartCalculator.tsx",
+      "path": "chart-review/source/src/islands/ChartCalculator.tsx.log",
+      "bytes": 116026,
+      "sha256": "a55cbae08d115c32f3cecb4f95b141fa6480f63cf75fa2f8e35345a233d39d11"
+    },
+    {
+      "sourcePath": "chart-review/source/src/islands/PositionsShareSurface.tsx",
+      "path": "chart-review/source/src/islands/PositionsShareSurface.tsx.log",
+      "bytes": 19508,
+      "sha256": "919ea095f8d5a5d5710588573f5a2f37ece374da446c8a2a0801b9eb13e1b31c"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/chart-context.ts",
+      "path": "chart-review/source/src/lib/chart-context.ts.log",
+      "bytes": 7527,
+      "sha256": "27b1c7986f6f98bac0d08df1a21f9cb3c4dbdd1ab7029c774161ebfd132d575a"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/chart-date-certainty.ts",
+      "path": "chart-review/source/src/lib/chart-date-certainty.ts.log",
+      "bytes": 1810,
+      "sha256": "7be5c9cd9d344bb0a3b9708b6586f032d9c608fbc1c7e9a99c18229774b0bb96"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/engine/calculator-receipt.ts",
+      "path": "chart-review/source/src/lib/engine/calculator-receipt.ts.log",
+      "bytes": 2725,
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/engine/chart-adapter.ts",
+      "path": "chart-review/source/src/lib/engine/chart-adapter.ts.log",
+      "bytes": 788,
+      "sha256": "e48b9645fd4d5f9b1744be1a166d1105551db47277c672a83590a8cb368b4ea9"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/engine/full.ts",
+      "path": "chart-review/source/src/lib/engine/full.ts.log",
+      "bytes": 1215,
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/engine/portable.ts",
+      "path": "chart-review/source/src/lib/engine/portable.ts.log",
+      "bytes": 3084,
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/core.ts",
+      "path": "chart-review/source/src/lib/i18n/core.ts.log",
+      "bytes": 4611,
+      "sha256": "7efde023dd1e9d0b30374c2a613cba406de16e2d6e815aeb4ce996d426047760"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/english-only.ts",
+      "path": "chart-review/source/src/lib/i18n/english-only.ts.log",
+      "bytes": 1516,
+      "sha256": "cf3d95de210519f0f81b798d11e8d3b2f1bdd1df56ef06a30a1f2f39aa0cbdef"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/index.ts",
+      "path": "chart-review/source/src/lib/i18n/index.ts.log",
+      "bytes": 8203,
+      "sha256": "2a436231455868ba2ce6f4a0c8d30ab74966e341d7cdb9fc2f5432bc9ee64303"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/plural.ts",
+      "path": "chart-review/source/src/lib/i18n/plural.ts.log",
+      "bytes": 1657,
+      "sha256": "397d989e04bbfabd4ba8b5d0fcc028bfb7c421d3e84e72cc31efdf5af74c889d"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ru-runtime/client.ts",
+      "path": "chart-review/source/src/lib/i18n/ru-runtime/client.ts.log",
+      "bytes": 465,
+      "sha256": "0461fd3bd631b8b511e2527ef46d5231d6a7887911e60aa3450b3c3d62c32b72"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ru-runtime/index.ts",
+      "path": "chart-review/source/src/lib/i18n/ru-runtime/index.ts.log",
+      "bytes": 474,
+      "sha256": "7afce6cd42ff042777e13ce1500753dc90d8e3744137c60f85f61a75c065dcfc"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ru-runtime/server.ts",
+      "path": "chart-review/source/src/lib/i18n/ru-runtime/server.ts.log",
+      "bytes": 6883,
+      "sha256": "9fb8c587434d45bec1ebfaf3cb1177ed9803603c8d957259c0d0f05c8d35c10e"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/client.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/client.ts.log",
+      "bytes": 802,
+      "sha256": "5319e26e0a1926e0dd1f59df1c6eeb1685f5632ed02a7e5177329824aa200a75"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/en.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/en.ts.log",
+      "bytes": 21866,
+      "sha256": "0d9d6be58d1e9c9de2093e754866ec8219267266140278478cded09e3313a890"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/es.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/es.ts.log",
+      "bytes": 23867,
+      "sha256": "a7765491183cb21cc94f18e50f7de7f7749ce84e4a841726eb537a645483af7f"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/fr.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/fr.ts.log",
+      "bytes": 27542,
+      "sha256": "39d594d153d8d86190a7210a24e3f4e5fc863764310619f8cc1239a26375712f"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/growth.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/growth.ts.log",
+      "bytes": 4309,
+      "sha256": "a0630997cb02c1fe7dc4226ce1632c57b822f39fe8005a5b33a8d0eee6344273"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/it.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/it.ts.log",
+      "bytes": 26366,
+      "sha256": "5db6cc6f90d31fa4f053addaff09de38d1b724d6f1ca22eb9af258976ef4f4f5"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/pt.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/pt.ts.log",
+      "bytes": 25488,
+      "sha256": "53534df49cd4a8dcd7245e806c696b5f521ecea8bdf6a9bf4cf16415c24019b3"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/ru.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/ru.ts.log",
+      "bytes": 38127,
+      "sha256": "7658f2fffbc1de4541db893e969528ea041bfab0dee2e8e3428d4aa3c454673e"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/i18n/ui/server.ts",
+      "path": "chart-review/source/src/lib/i18n/ui/server.ts.log",
+      "bytes": 614,
+      "sha256": "5e6ada084ee309154ddc51c311bcee36f5dac9980284a9a2e0122bd5a7ed9ab9"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/moon-certainty.ts",
+      "path": "chart-review/source/src/lib/moon-certainty.ts.log",
+      "bytes": 1909,
+      "sha256": "a1786be7d1734b7c58eda862f900a3a1081c944c1e4efc6a131bb0bcdcf3e994"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/signs.ts",
+      "path": "chart-review/source/src/lib/signs.ts.log",
+      "bytes": 16338,
+      "sha256": "1c63218d01b33b963106fb1c11030816833b0d6a79f9f765df433830ef5cfaa4"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/time/civil-date.ts",
+      "path": "chart-review/source/src/lib/time/civil-date.ts.log",
+      "bytes": 1480,
+      "sha256": "d6901209c3d726c1b83a93c64fcaf4879add5e988cc591e2523fb45421092671"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/time/localToUtc.ts",
+      "path": "chart-review/source/src/lib/time/localToUtc.ts.log",
+      "bytes": 6897,
+      "sha256": "934b6955ca7be98c36161b77fd1d749fbdd603315ad2537af173a5c3a80038fd"
+    },
+    {
+      "sourcePath": "chart-review/source/src/lib/time/technical-locales.ts",
+      "path": "chart-review/source/src/lib/time/technical-locales.ts.log",
+      "bytes": 167,
+      "sha256": "cf501f8d79078e0464c6808a0eff968a2b2b2026b13bb6131aaa45d08da73397"
+    },
+    {
+      "sourcePath": "chart-review/subject.mjs",
+      "path": "chart-review/subject.mjs.log",
+      "bytes": 371742,
+      "sha256": "5e888a9ebe7d8680c703bff69d6c3997193b35073e72f399b8f88a617e81c322"
+    },
+    {
+      "sourcePath": "source-reading.json",
+      "path": "source-reading.json",
+      "bytes": 2318,
+      "sha256": "6e7f7f1a360fa0c1f9d5a79035da73bb0c45a34bf6d1c20b721afd52454e183a"
+    }
+  ],
+  "totalBytes": 803150
+}

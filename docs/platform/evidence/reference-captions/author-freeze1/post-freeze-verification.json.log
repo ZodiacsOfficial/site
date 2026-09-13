@@ -1,0 +1,174 @@
+{
+  "files": [
+    {
+      "path": "src/islands/ChartCalculator.registry-bridge.test.ts",
+      "sha256": "aad60215d8402db09629be6b778e023003d70747386684bce8ba93d05911a90e",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "a34917a06e1ba706055853f1234a86dc3060b6acf247a8101b6445331a350420",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.reference.test.ts",
+      "sha256": "188ee835c265218e708a3ba0a81a0eb1923fd150b2c2dc311fa23f7cc1beb5e8",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/MoonPhaseTool.tsx",
+      "sha256": "0bcedc894c958dcb0f4d8de3f3a8303acc4c39916d6de7cd66488778a871e966",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/explorer/lens/copy.ts",
+      "sha256": "7a5550da22189adf498eceb9a51a9ffceb8cbb5e47fdbdca8e5a65907dfd712f",
+      "unchanged": true
+    },
+    {
+      "path": "src/islands/explorer/tour/copy.ts",
+      "sha256": "458b966c684500e92830471f37045e3dcdade5e378570ebcf268c686f3af1d7e",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "6907ff98ad00cdeee4ae4e2039bbe5091e51f2a4eeac88209b314c34f5d1a94f",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "0c41181ec1a0cb0c662abc8729f3a65c97af8ed3249c8dbadeff4e5e0036468f",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "326b535847825f281d22c3d8c63f0a0c59d528f2fa2bc3a9cc7da75629674bd0",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "dc91557a619238e188a56c8523b9a01cea3f04cd0c12343b2a6dbf2cba0cf56c",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "be16a43a077c34a9468505e3866e910dd52d36cfc5ff2fa7c0d6ee63ca0f15b5",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "87eacf0fb0247543b764499bfeedc9a7aa1d9cb46ef4245f44cfabb15967f338",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/moon-certainty.test.tsx",
+      "sha256": "3f082b29987c12a17b241c421c4e7dd99185ca73b9806f39939e91adb949d003",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/reference-captions.test.tsx",
+      "sha256": "e75e76f457528fc7e3b54ae654d310d86cbabb2fe63f89666e722a87e8edacab",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/share-card-copy.ts",
+      "sha256": "fe78d8f8a3ab71d2901711b7c2e62f6991ceacc7ed1545424d8570aaf78ff889",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/share-card.test.ts",
+      "sha256": "ebd8c449ccc5007f04fd16837cd79c264caa4de05afc5326dc6dc30cb7783084",
+      "unchanged": true
+    },
+    {
+      "path": "src/lib/share-card.ts",
+      "sha256": "d7a03eddfcb64d63562721c9a76039012efddb47a1b02d735089ebd14598b03c",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/es/moon-phase/index.astro",
+      "sha256": "19b00096c5002e7b7dca5c64d0a0aeb3aa5ceeb8a65af8ec17f9f4d4fd355e1d",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/fr/moon-phase/index.astro",
+      "sha256": "b9e6d1a6716a3f9bf0f88c4dd3480c01518ab0f69c1239e4fa272f723b3d2c0f",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/it/moon-phase/index.astro",
+      "sha256": "246ce9b53802a509c3431e3eee06c5e019ee0eeec46e937f2f5a7b3710e9b2ae",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/moon-phase/index.astro",
+      "sha256": "79dcb762be2f906e59244fe55bb2e8c16d0e9536e2018f933aa66b6e78592010",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/pt/moon-phase/index.astro",
+      "sha256": "f084ce6914222304b844edbe912ab69bd044cf42dfebabe43d2b92a57dab60e8",
+      "unchanged": true
+    },
+    {
+      "path": "src/pages/ru/moon-phase/index.astro",
+      "sha256": "14779c200a70b69f7a0800f9c81e09c585cca8567385a89c924fd1b214a61241",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/chart-preview-model.ts",
+      "sha256": "c705fb513a38c47cf7560812c46524be0ab4ac6a1818e30fbcc4d5585d220957",
+      "unchanged": true
+    },
+    {
+      "path": "src/server/chart-preview.ts",
+      "sha256": "4aaa2cbb5a25242165df6b9fea352719b2d7b62d466c8bee3af1107783f2bebc",
+      "unchanged": true
+    },
+    {
+      "path": "src/strings/additions.fr.mjs",
+      "sha256": "511c05cb2af1421848eaa4e29ae2d1a3b9f411e16db4ce06f4128961760d5ad2",
+      "unchanged": true
+    },
+    {
+      "path": "src/strings/additions.it.mjs",
+      "sha256": "849357c77c36c8997dfb226b204c81d8df114cc2461446125102c700aab2ae61",
+      "unchanged": true
+    },
+    {
+      "path": "src/strings/additions.pt.mjs",
+      "sha256": "f8de1b2b734a79689672b49317375da9ebcd75f724b602347f2fab93b9df9a5e",
+      "unchanged": true
+    },
+    {
+      "path": "tests/api/og-chart.test.ts",
+      "sha256": "1722c64098aa1a6c4d4345797caab9480873e25daa798b6f76b0e188c07b56f2",
+      "unchanged": true
+    },
+    {
+      "path": "tests/local-date-reference-drive.mjs",
+      "sha256": "88c455fa41e795da277b12fa829bb456dcdb1811a09a6c175b47f3e46b2b0bfc",
+      "unchanged": true
+    },
+    {
+      "path": "tests/moon-result-ownership-drive.mjs",
+      "sha256": "69467106c47d74819452aadea68f57857e381f7288f2db9f5b102ae9b443effd",
+      "unchanged": true
+    },
+    {
+      "path": "tests/reference-caption-drive.mjs",
+      "sha256": "8eed49f7d612defe35b223e9fc9d3598ab2c30fd317ef23d1cc6ad1ae185f97f",
+      "unchanged": true
+    },
+    {
+      "path": "tests/t17-positions-share.mjs",
+      "sha256": "bebee112dd7155005999653344006f9a9a29ce170ebd858d5b45f2e644cc0b31",
+      "unchanged": true
+    }
+  ],
+  "initialLocalDateDriverReconstructedFromExactRecordedEdit": {
+    "sha256": "80ebd22bc75b75a2293ab341fb940a39ac88e880ce6f99a4dac8df3bcb7d8fad",
+    "matchesExecutedReport": true
+  },
+  "rootGeneratedManifestUntouched": true
+}

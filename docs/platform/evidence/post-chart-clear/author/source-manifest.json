@@ -1,0 +1,40 @@
+{
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "freeze": 2,
+  "sourceFreezeSha256": "fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc",
+  "files": [
+    {
+      "path": "AUTHOR.md.log",
+      "bytes": 6308,
+      "sha256": "c9cad25949b6a822039cfc97ece079a147c82e4d5a5aa976559e1f826b0889a1"
+    },
+    {
+      "path": "COMMANDS.md.log",
+      "bytes": 2751,
+      "sha256": "6b834c0f5cc091cd8a5f280da51eaa26beab7d9f4440d38fc4dab252937a3207"
+    },
+    {
+      "path": "archive-members.json",
+      "bytes": 64954,
+      "sha256": "75a8b39180990755129c7992f843ba9146d673f04c82b5281a265841c39427e6"
+    },
+    {
+      "path": "author-raw-evidence.tar.gz",
+      "bytes": 4315487,
+      "sha256": "3afe4b3ed40bf89f13e409da103397fe022f1fcec93c27853b325386e3d60c3c"
+    },
+    {
+      "path": "implementation-freeze2.patch.log",
+      "bytes": 43339,
+      "sha256": "7202443237f2bebf826a9a0ef24da3fd8062b4cd2aff2b4edfed02f3a51fc5d8"
+    },
+    {
+      "path": "source-freeze2.json.log",
+      "bytes": 2004,
+      "sha256": "fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc"
+    }
+  ],
+  "fileCount": 6,
+  "bytes": 4434843,
+  "qualification": "Author implementation and execution evidence only. Source frozen for independent review; root owns delivery/CI/publication. Archive members preserve original failures and rejected Freeze1."
+}

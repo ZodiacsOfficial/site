@@ -1,0 +1,29 @@
+# Independent frozen local-date interval review
+
+No unresolved defect found in the inactive three-file Freeze 1 patch. The result is suitable for root integration review as an additive primitive, with conditional provider completeness and explicit unresolved outcomes preserved. This is not caller activation or all-runtime compatibility approval.
+
+## Exact scope
+
+Base 804c70309d2508e67e8462df526b5f9e71a112e9; patch SHA-256 9854a47e9a2d60845cf023f4b12eb16f7defe8b4ca81083f1f6a4ec6d4667e78. All three author files and three unchanged base dependencies were physically copied and hashed. Independent bundles consume only those copied source files. Final hashes still match the frozen author source, and copied tool dependencies remain unchanged. No product files were edited.
+
+## Correctness assessment
+
+Membership is the predicate w <= t + offset(t) < w + D. The strict offset bound -D < offset < D places every member strictly inside the 72-hour search window; years 0000 through 9999 and an internal exclusive end in 10000 remain far inside Date's integer range. Exact transition segmentation and half-open intersection correctly cover both ordinary and disconnected dates. Coalescing only touching intervals preserves intervening nonmember instants. A change at the lower boundary is represented by its new offset; a change at the exclusive upper boundary does not affect membership.
+
+The first-change, stable synchronous provider contract is essential. Native Temporal's specified transition and offset semantics support that obligation for a conforming host; the checked primary sources are linked in PRIMARY-SOURCE.md. The literal marker does not establish arbitrary code's honesty. The independent negative control deliberately hides a one-second returning pair and confirms that finite validation can admit an incomplete answer from that nonconforming provider. This is an expressly documented trust limit, not an algorithm defect under the stated contract. The same qualification applies to unobserved disagreement in a defective or replaced host interface.
+
+Thirty-two interior transitions are accepted; the thirty-third returns only unresolved, even after earlier membership was found or before membership begins. Out-of-order, duplicate, asynchronous, nonintegral, throwing and false-change observations do not expose partially built intervals or exception details. A synchronous provider that never returns cannot be preempted; providers remain trusted executable code.
+
+## Independent execution
+
+- Node 22.23.2 and Node 24.19.0 each passed 1,500 deterministic complete transition schedules against an independently constructed critical-point membership oracle. These include 19 empty and 1,059 disconnected results, with up to eight intervals. The runs also passed 20 explicit near-offset-bound/millisecond/window-edge controls, six transition-cap controls and five provider-failure controls. Detailed results are identical across runtimes.
+- The oracle determines all possible membership-change points from the known schedule and civil-date crossings, then tests the member predicate at each partition's first and last millisecond. It does not call the implementation's interval constructor or use the implementation's source as its expected result.
+- Actual Chrome 152.0.7977.83, in a disposable context on an owned blank page, passed 16 explicit native cases and six signed offsets including +23:59 and -23:59. Independent Gregorian Intl formatting agreed at 4,699 finite membership points: first/last/adjacent milliseconds and a 72-hour grid. Native cases include Toronto's cross-midnight gap, both St Johns disconnected dates, empty and repeated Apia, Manaus seconds, Monrovia, Kolkata, modern US DST and 0000/0099/9999 rollover.
+- Native capability absence, a throwing Temporal accessor, an observed Temporal/Intl offset mismatch and broader Temporal timeZoneLike syntax produce unresolved. All monitored host accesses were zero at import. Observed storage/network APIs and page requests remained zero throughout. The owned browser was closed; no loopback server was created.
+- Strict TypeScript 5.9.3 passed for the copied implementation and an independent consumer, including readonly results, discriminated unresolved/empty outcomes and deliberate invalid-type checks.
+
+## Evidence limits and handoff
+
+The finite native checks do not certify all host histories or native API availability. Before a consumer is activated, root must choose its unsupported-runtime policy and carry forward empty/disconnected/unresolved outcomes without collapsing them into shifted noon or a single enclosing range. Existing Moon/Sun whole-date candidate completeness remains separate work. This review neither activates those callers nor repeats the parent's author tests as independent evidence.
+
+Raw setup/build/type/algebra/browser logs and original review drivers are retained. Initial setup and sandbox launch failures were environmental review errors and are preserved; the corrected setup and approved native launch passed. The only external reference lookup was read-only TC39 specification browsing. No dependency install, account action, outreach, publication or deployment occurred.

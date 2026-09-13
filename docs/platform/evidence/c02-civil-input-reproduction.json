@@ -1,0 +1,94 @@
+{
+  "observedAt": "2026-09-07T20:17:45.340Z",
+  "sourceCommit": "80dff5f16ec17045bcb52110a8105a9ad3492a99",
+  "sourceSHA256": {
+    "src/lib/share.ts": "ac07e4edbcac00589f75f1378fe2295b5b3324a50d61afa4ff72d38908da372a",
+    "src/lib/time/localToUtc.ts": "98483dc9c43ac4238620e3314085e6de57ba69f759536e5ff97eea6989faed43"
+  },
+  "scope": "Synthetic read-only source reproduction; no user data, browser storage, network, upload or repository edits",
+  "node": "v22.23.2",
+  "icu": "78.2",
+  "tzdata": "2026a",
+  "syntheticFragment": "#c=1.eyJkIjoiMjAwMS0wMi0yOSIsInQiOiIwODozMCIsInoiOiJVVEMiLCJsYSI6MTMuNzU2MywibG8iOjEwMC41MDE4fQ",
+  "wire": {
+    "d": "2001-02-29",
+    "t": "08:30",
+    "z": "UTC",
+    "la": 13.7563,
+    "lo": 100.5018
+  },
+  "decoded": {
+    "date": "2001-02-29",
+    "time": "08:30",
+    "timeKnown": true,
+    "lat": 13.7563,
+    "lon": 100.5018,
+    "tz": "UTC",
+    "houseSystem": "whole"
+  },
+  "actual": {
+    "resolvedUTC": "2001-03-01T08:30:00.000Z",
+    "resolverFlags": [
+      "dst-gap"
+    ],
+    "engineVersion": "0.1.1-rc.1",
+    "chartInstant": "2001-03-01T08:30:00.000Z",
+    "chartFlags": [
+      "dst-gap"
+    ],
+    "matchesMarch1BodiesExactly": true
+  },
+  "strictCoreRejection": {
+    "name": "RangeError",
+    "message": "birth.utc must be a valid Date, finite epoch-millisecond timestamp, or ISO calendar date/date-time with an explicit UTC offset."
+  },
+  "cases": [
+    {
+      "date": "2001-02-29",
+      "decoderAccepted": true,
+      "normalized": {
+        "utc": "2001-03-01T08:30:00.000Z",
+        "flags": [
+          "dst-gap"
+        ]
+      }
+    },
+    {
+      "date": "1900-02-29",
+      "decoderAccepted": true,
+      "normalized": {
+        "utc": "1900-03-01T08:30:00.000Z",
+        "flags": [
+          "dst-gap"
+        ]
+      }
+    },
+    {
+      "date": "2100-02-29",
+      "decoderAccepted": true,
+      "normalized": {
+        "utc": "2100-03-01T08:30:00.000Z",
+        "flags": [
+          "dst-gap"
+        ]
+      }
+    },
+    {
+      "date": "2001-04-31",
+      "decoderAccepted": true,
+      "normalized": {
+        "utc": "2001-05-01T08:30:00.000Z",
+        "flags": [
+          "dst-gap"
+        ]
+      }
+    },
+    {
+      "date": "2001-12-21\n",
+      "decoderAccepted": false,
+      "normalized": {
+        "error": "resolveLocalToUtc needs 'YYYY-MM-DD' and 'HH:MM' input, got '2001-12-21\n' '08:30'"
+      }
+    }
+  ]
+}

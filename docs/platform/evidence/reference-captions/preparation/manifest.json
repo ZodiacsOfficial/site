@@ -1,0 +1,47 @@
+[
+  {
+    "path": "REVIEW.md.log",
+    "bytes": 13700,
+    "sha256": "677a20c9c56ae1618412276c171c6a3b25dfb7ccf1df53b927cf9164463b12c0"
+  },
+  {
+    "path": "browser-result.json.log",
+    "bytes": 49569,
+    "sha256": "8ed675483aa4bb4b0def150502ac77c6c9ca18fafd40f492a20f4239f601b67d"
+  },
+  {
+    "path": "output-result.json.log",
+    "bytes": 6937,
+    "sha256": "f671f7d2657e0a97383b2310db6bba93fb84c1bdf13da158bd4ebb842dfd39b1"
+  },
+  {
+    "path": "raw-evidence.tar.gz",
+    "bytes": 903182,
+    "sha256": "dbd1371bbea32fb4aba15183a7841ba6362201e5356393070dc7c0e9a1952761"
+  },
+  {
+    "path": "raw-members.json",
+    "bytes": 34061,
+    "sha256": "e543f48d39f92c3f43de9b78317e4ef851224b42398eb14563fc7e3eeaa43b0d"
+  },
+  {
+    "path": "root-copy-verification.json",
+    "bytes": 903,
+    "sha256": "257289cf8a1af99ba477aa48a2ee36eaec441fc6b55ed010365936bbeaa011d5"
+  },
+  {
+    "path": "scope-map.json.log",
+    "bytes": 8336,
+    "sha256": "ebc41eaf64f86f503651f59c4397b9fb19762f665e40e49a2d692fb5e6076451"
+  },
+  {
+    "path": "source-manifest.json",
+    "bytes": 1251,
+    "sha256": "00412e89d5edf1a302f899e9ddee255116149939557433edd2ab17d9dc0c70a9"
+  },
+  {
+    "path": "source-verification.json.log",
+    "bytes": 36749,
+    "sha256": "a98b5d33f024be1bf2ccf8198035e204fe4a245d1036e264ac073ad6fe11709c"
+  }
+]

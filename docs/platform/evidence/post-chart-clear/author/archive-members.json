@@ -1,0 +1,1782 @@
+{
+  "files": [
+    {
+      "path": "AUTHOR.md",
+      "bytes": 6308,
+      "sha256": "c9cad25949b6a822039cfc97ece079a147c82e4d5a5aa976559e1f826b0889a1"
+    },
+    {
+      "path": "COMMANDS.md",
+      "bytes": 2751,
+      "sha256": "6b834c0f5cc091cd8a5f280da51eaa26beab7d9f4440d38fc4dab252937a3207"
+    },
+    {
+      "path": "astro-check-freeze2.log",
+      "bytes": 3938,
+      "sha256": "ed847ad621853abdc68413c9e9b070a7dd9396c79fc34c015cc60b6558e2df32"
+    },
+    {
+      "path": "astro-check.log",
+      "bytes": 3938,
+      "sha256": "a694d479199ed06fa1f7d10e12f9b7dab0e3ce6027c75bc65e7436e99580423c"
+    },
+    {
+      "path": "astro-sync.log",
+      "bytes": 177,
+      "sha256": "7ebc0cd9fc8680248923c7f6edd42964b7acfd976f8805069d66da96119a4172"
+    },
+    {
+      "path": "base.json",
+      "bytes": 764,
+      "sha256": "6b4c0358b9c12c04fdd1e215a9b924dace5dbdc49ff41e09a16387f30450a172"
+    },
+    {
+      "path": "baseline-source/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 8891,
+      "sha256": "c3ea10e5495a769700808f80d2ef6b2fe131fe573d37f10ba0680b403fbe3f0b"
+    },
+    {
+      "path": "baseline-source/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 13369,
+      "sha256": "a624163f226f7907b9221265579afe42d987d20f9dcaf5e71626ec9e0ed763b1"
+    },
+    {
+      "path": "baseline-source/src/lib/profile/post-chart-context.ts",
+      "bytes": 1468,
+      "sha256": "7622c364e6471acd6ba849ceddb03fde6998bbaf70160c3d35b604a0e845b905"
+    },
+    {
+      "path": "baseline-source/tests/post-chart-daily-drive.mjs",
+      "bytes": 43425,
+      "sha256": "b71a171931b06c3e012267d4d5afd8b5b81cceb40c995e363dd7fe9cd40a9153"
+    },
+    {
+      "path": "candidate-11-source/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "candidate-11-source/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 13842,
+      "sha256": "5e729061a94d5921b32ddb894ab40a7a425868457a5368a91264441d56ece046"
+    },
+    {
+      "path": "candidate-11-source/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "candidate-11-source/tests/post-chart-context-clear-drive.mjs",
+      "bytes": 18820,
+      "sha256": "61f19b84c0a151ca97e7d20186d2f90bcc9b541c45172ca561cd891b282d54dc"
+    },
+    {
+      "path": "capture-baseline.py",
+      "bytes": 817,
+      "sha256": "8445958033167f29c22617a6feac0a6d9cd0770a36d035a4b0b837649e782052"
+    },
+    {
+      "path": "driver-baseline.mjs.log",
+      "bytes": 17464,
+      "sha256": "10f639986c4d4d469266f7338500351b2b3f59e12a9a11a91922f7aca42b1150"
+    },
+    {
+      "path": "driver-session-race-before.mjs.log",
+      "bytes": 22114,
+      "sha256": "f24e29314b50e67acae20072cfca38d6be431552b307881fe7441f87eae2584c"
+    },
+    {
+      "path": "final-fixture-output/_astro/AccountBoundProfileSurface.Cb36eu_K.js",
+      "bytes": 2506,
+      "sha256": "0fc3259efbee0fabb5b9035e11c20216ad0947d421f43206d84b70135cf13001"
+    },
+    {
+      "path": "final-fixture-output/_astro/AccountProfileAccessBootstrap.-Ry39sOR.js",
+      "bytes": 2584,
+      "sha256": "49f677d26852bd8cd16241b69739afb083db5accb0b53674840593c2809b9156"
+    },
+    {
+      "path": "final-fixture-output/_astro/AccountSyncV2Panel.C2BnQdgS.js",
+      "bytes": 50765,
+      "sha256": "023383590cca932ddadeace67504087a2038000f764faaa75d296c1d499b9754"
+    },
+    {
+      "path": "final-fixture-output/_astro/ApproachRead.Bcve0KbT.js",
+      "bytes": 4282,
+      "sha256": "1e06923242495b805c94895c93da3aa11784457e9526269d995add8444264d69"
+    },
+    {
+      "path": "final-fixture-output/_astro/AspectGlyph.DMIAGIQV.js",
+      "bytes": 488,
+      "sha256": "ecdefca57e6790a7adb230908af5aac6eb308e0cbcc80097871c54297124c10a"
+    },
+    {
+      "path": "final-fixture-output/_astro/AspectPatternDiagram.Bdky6RVX.js",
+      "bytes": 9646,
+      "sha256": "c5a2025df9ce4551a3650cf836c641e2c99525bbc8f68bca088168bf92e20f52"
+    },
+    {
+      "path": "final-fixture-output/_astro/AspectPatternFeature.JIFgyNsc.js",
+      "bytes": 1978,
+      "sha256": "488e8b0a06e3c4fd991795c5249504261ab26777dd5cafe1e648b937f186d362"
+    },
+    {
+      "path": "final-fixture-output/_astro/AspectPatternPanel.C2x-Lc9n.js",
+      "bytes": 9072,
+      "sha256": "0d3a76da1290aa5b4b1dded05271cd5a48f2a671130a99754075f6b36b13a307"
+    },
+    {
+      "path": "final-fixture-output/_astro/AstroTerm.7K8SAipO.js",
+      "bytes": 9025,
+      "sha256": "17af4a5e86f3270f2aa6364ab24d0de9f444c2839b4018a181de22448a581cbe"
+    },
+    {
+      "path": "final-fixture-output/_astro/AstroTerm.astro_astro_type_script_index_0_lang.DB1iYTmP.js",
+      "bytes": 773,
+      "sha256": "e5e0beef4df10d80ce52048ae4dde287d85081dc1ef43a7ae1d2b7cd0d9c57ca"
+    },
+    {
+      "path": "final-fixture-output/_astro/BabyZodiac.Bk6vq9Sm.js",
+      "bytes": 4721,
+      "sha256": "7f2d477c8c897e90c29ab56de8a659ad09e0ce964f7ecaf93b2a98e4902dfea7"
+    },
+    {
+      "path": "final-fixture-output/_astro/Base.Bryss0yT.css",
+      "bytes": 46112,
+      "sha256": "4877c6226e887495ac2c87605485f8011cbd605ab9c0ab4a5400310591712486"
+    },
+    {
+      "path": "final-fixture-output/_astro/BigThreeQuick.ky7KTaXZ.js",
+      "bytes": 6618,
+      "sha256": "ac5ec1a8e687393134094670ddcee647f6e095f8b4f76cb700e60e1c572be048"
+    },
+    {
+      "path": "final-fixture-output/_astro/BirthFields.VmY_J4-2.js",
+      "bytes": 1752,
+      "sha256": "19e06f8315f7c93b377f7409a4720365386a7299105cc996abb511eac88c583d"
+    },
+    {
+      "path": "final-fixture-output/_astro/CalculationReload.DXyGkRsn.js",
+      "bytes": 763,
+      "sha256": "7e2446346104d1763f368f626e5985841253b06c69d963d70b805d9c97b4f0ef"
+    },
+    {
+      "path": "final-fixture-output/_astro/CalendarSubscribe.DXtj1Bbr.js",
+      "bytes": 5142,
+      "sha256": "002553e4521b4da36a4819c8897ec7f383309f924a2e9d94f8e7e0badd55ba7e"
+    },
+    {
+      "path": "final-fixture-output/_astro/ChartActionDock.Cc8zzTbx.css",
+      "bytes": 14972,
+      "sha256": "cab0ce96a6285f99bbfbcea67006a99a09d7f345bb1459d03ddf9ae7a71eeffc"
+    },
+    {
+      "path": "final-fixture-output/_astro/ChartActionDock.v70WmYt8.js",
+      "bytes": 49982,
+      "sha256": "6fc1964eb9f9c16a46b315c7f92b1c32642fb944831b6f8803db06dac440d23f"
+    },
+    {
+      "path": "final-fixture-output/_astro/ChartCalculator.CjYF41no.js",
+      "bytes": 59184,
+      "sha256": "bc731c207e46d695883dc6f35eeb104e86330ba488d26c72b8d8cd3752b3f854"
+    },
+    {
+      "path": "final-fixture-output/_astro/ChartLens.CWDBmx69.js",
+      "bytes": 16671,
+      "sha256": "4e2ce31225abe0ba09a5bd52bb10b77908cdf08aeb47a93789504fd983a651ec"
+    },
+    {
+      "path": "final-fixture-output/_astro/ChartShareDialog.DXZIDyL8.js",
+      "bytes": 9682,
+      "sha256": "814bb134837fa59abf162b4ba688344f6d237315792fed1b6ee342825e19d6e2"
+    },
+    {
+      "path": "final-fixture-output/_astro/CommunicationRead.ooCKD9f4.js",
+      "bytes": 4211,
+      "sha256": "5a2f060e7bb499de541abac24a79d06953f09aac28e54204c34f15796c6730e7"
+    },
+    {
+      "path": "final-fixture-output/_astro/CompatibilityShareControl.HwBj_BZe.js",
+      "bytes": 2870,
+      "sha256": "298e6e011d78f44465275db5468add36227f1464a105ffc0e0e902712236f176"
+    },
+    {
+      "path": "final-fixture-output/_astro/CopyLinkButton.BrGf_3C3.js",
+      "bytes": 931,
+      "sha256": "c2fd76b4f0c5ab8e9e081e4760a46e438cf858a99d1f9d7faca126fd13a19b45"
+    },
+    {
+      "path": "final-fixture-output/_astro/DailyForYou.C3Ev6TKr.js",
+      "bytes": 4520,
+      "sha256": "2f7bc87c4a6b35fcdcb429dd631db85e0ba81e341bf35caf344cb7eb40f2373b"
+    },
+    {
+      "path": "final-fixture-output/_astro/EclipticView.DgiHa5qn.js",
+      "bytes": 37400,
+      "sha256": "a483eb21f15f2d7df6f0e94a3284fcbeee98f2143007ceb275513cbb1a2ffe09"
+    },
+    {
+      "path": "final-fixture-output/_astro/EmailCaptureEnhancement.astro_astro_type_script_index_0_lang.CNNz1T1u.js",
+      "bytes": 4919,
+      "sha256": "5ea9b61e098b772bba2920815890b1ba6d9cc4c4149daa0a210c48efc0cd9eec"
+    },
+    {
+      "path": "final-fixture-output/_astro/EvidenceDisclosure.LNSfDkU7.js",
+      "bytes": 548,
+      "sha256": "40817121a14b5ea05546b30f4ccbc321ef993fd0fea6cf79f2bd9b144d2ac55a"
+    },
+    {
+      "path": "final-fixture-output/_astro/HoroscopeProgramPage.BkNGpWEr.css",
+      "bytes": 12475,
+      "sha256": "05d5eb24c08df064a8227d394c60575083a51d721498f61a5fd3639963f080da"
+    },
+    {
+      "path": "final-fixture-output/_astro/LearningPath.CTpMSkbu.js",
+      "bytes": 8017,
+      "sha256": "97bfcd9473320ee51adc639219928695521fa0d2de5e4839bbc825830793d67b"
+    },
+    {
+      "path": "final-fixture-output/_astro/LearningPractice.CSqTNZrv.js",
+      "bytes": 3156,
+      "sha256": "63ee2d2f4bc68cc5c5b81ae686b8eecdc6e08e687b1aa6adf6dc162119568709"
+    },
+    {
+      "path": "final-fixture-output/_astro/LearningSavedEntry.rTyMBxXh.js",
+      "bytes": 1468,
+      "sha256": "ce15d4ed4ecbc6da9cb6d42dbaab298371a1e5c7958488e91b905345bb13bc63"
+    },
+    {
+      "path": "final-fixture-output/_astro/LivingChartTimeline.R0ISjbq1.css",
+      "bytes": 8967,
+      "sha256": "8c3b5e874c2b154eb124df355cc8aaa56e8787a7b2b86c70ff5221fa052b17a7"
+    },
+    {
+      "path": "final-fixture-output/_astro/LivingChartTimeline.dx5aqxAC.js",
+      "bytes": 9271,
+      "sha256": "11eb96aaee21c15babe8a4f0404dd16e97a03c4af7962d10959f87d9a1340e57"
+    },
+    {
+      "path": "final-fixture-output/_astro/LivingMomentCapture.DnPpLwlY.js",
+      "bytes": 6953,
+      "sha256": "64aa933b53174750a5fdfa8fc53918e42cc6505552837c633c7ff72eceade512"
+    },
+    {
+      "path": "final-fixture-output/_astro/LivingMomentComposer.DRB8UxSc.js",
+      "bytes": 4567,
+      "sha256": "49c013d1f48bf750832f29fba20c999d546220543d771cc94069d9dfb8af59e0"
+    },
+    {
+      "path": "final-fixture-output/_astro/LivingSelfChartChooser.D-PtEqsa.js",
+      "bytes": 1826,
+      "sha256": "196c7e5d199ef68e5a164feb339b838bf34e27bff561a70cdd5a68c7db3173d7"
+    },
+    {
+      "path": "final-fixture-output/_astro/LocalizedDisclosurePage.Dz_7_Pjo.css",
+      "bytes": 5678,
+      "sha256": "1a0ae6c98a52d05f6b9fee3c1003e18096afa7955583173e135e17f5c716acb5"
+    },
+    {
+      "path": "final-fixture-output/_astro/LunarReturnCalculator.B-nOkjvX.js",
+      "bytes": 7546,
+      "sha256": "91b75c7f50404d4d1de86970a72dcb6e3a643f83bb09204afd9516a51e492481"
+    },
+    {
+      "path": "final-fixture-output/_astro/LunarReturnResult.Bo3AzNPY.js",
+      "bytes": 13934,
+      "sha256": "f78b167ff0f96604e29fae4b7ee115183fea7fa6726539f4c5689b93781d4408"
+    },
+    {
+      "path": "final-fixture-output/_astro/MiniBirthChartWidget.fW5E2Wbc.js",
+      "bytes": 8184,
+      "sha256": "bd170d04ddee6d66ea3bfcc934f217aed79cbb5fc86ed50736b1ca796b52828d"
+    },
+    {
+      "path": "final-fixture-output/_astro/MoonPhaseTool.BTXtrlp9.js",
+      "bytes": 5877,
+      "sha256": "737f8ed5c5e9a19c9b3b238c4f99996ddcc98396522df7bdf8b691599bf5dcbe"
+    },
+    {
+      "path": "final-fixture-output/_astro/NextActionCard.eDMj-LSr.js",
+      "bytes": 713,
+      "sha256": "896a238bdec6e2898c5ae225469345e9a1f931918c26b6e6963bd77b65fa42f7"
+    },
+    {
+      "path": "final-fixture-output/_astro/NumerologyCalculator.CBAwMwPi.js",
+      "bytes": 26246,
+      "sha256": "73044602ebdf2e1f50deb07f1141a682b6e45301c156ae0aa5476e35313e93e0"
+    },
+    {
+      "path": "final-fixture-output/_astro/PlaceSearch.D1WsU_jW.js",
+      "bytes": 3472,
+      "sha256": "9f384108f99e4e65ac31f34e627d405a5fad82aee9ff840d149be58183f380c9"
+    },
+    {
+      "path": "final-fixture-output/_astro/PlanetGlyph.BhITbtcc.js",
+      "bytes": 575,
+      "sha256": "57a8ba42fb26d5c455b964998d5fbc23fc0585de59f9c0137374ddba12b2bf04"
+    },
+    {
+      "path": "final-fixture-output/_astro/PositionsShareSurface.DT0CW1_r.js",
+      "bytes": 17938,
+      "sha256": "f108fe7f60261ea9f0c561cd5b6d1db680adf882544651d4e30e01aa40701717"
+    },
+    {
+      "path": "final-fixture-output/_astro/PostChartDailyBrief.pO3UMUER.js",
+      "bytes": 9339,
+      "sha256": "81c68136fc45c900ebb2394191b9d347533f8235482feae85c93e00f864c1e67"
+    },
+    {
+      "path": "final-fixture-output/_astro/PrefilledPairNotice.p23P2LJN.js",
+      "bytes": 2880,
+      "sha256": "9d3bf4aaa0f08fd999eead432bf5bdce7be95d17604a7ef7d07df0c022f6c8b3"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileDashboard.DUeIiGVQ.js",
+      "bytes": 12290,
+      "sha256": "ed8166160b9cfed9dd810f3c1f5fb2eea4b28db99ee625f056512bba192d3bca"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileDashboard.TgzX3Tcj.js",
+      "bytes": 72,
+      "sha256": "2a4728335d4ff0c60221cf2af4690ef8cea85f3331e26e0eac5fb73a1bb261c4"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileInvites.Br0PL3RV.js",
+      "bytes": 11237,
+      "sha256": "5eaeba4672045c3a189cb7541555ad9b88e374aa1cba6c158dad49198207a416"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileManager.BCYPzRJT.js",
+      "bytes": 90,
+      "sha256": "bd60162e4e5bc72cdebfc380fb3c9a5b017c16b26ae4275adf7dc14bcd8d2ce2"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileManager.CwGXsBX3.js",
+      "bytes": 23533,
+      "sha256": "f4dd08e90f4315ebe398533cf50081ad486ccb7070786c0f623f4250690c5786"
+    },
+    {
+      "path": "final-fixture-output/_astro/ProfileSunSignCapture.BuuxZ0_j.js",
+      "bytes": 1384,
+      "sha256": "49ddd141dcdb92697a0739857f5bfccc9fcb9aac654a390b8842366789b2d756"
+    },
+    {
+      "path": "final-fixture-output/_astro/PwaInstallPrompt.BCohgdPv.js",
+      "bytes": 4062,
+      "sha256": "a8dc3e6a121d6560fc00a782c8ebf38e11184496c065e1ab9e71e95588d1b1a3"
+    },
+    {
+      "path": "final-fixture-output/_astro/RaceBoard.OsYr1Raw.js",
+      "bytes": 12794,
+      "sha256": "64e578ff127cda4d0cf52e5df48a75a31eca2f58a1b76a42330a0fa68c326790"
+    },
+    {
+      "path": "final-fixture-output/_astro/RegistryAura.D6TsRWyP.js",
+      "bytes": 57079,
+      "sha256": "886e6d3b5a7b2ad8225cb9ead9bab935d98e70fa59f302f338747c8ce3a1cfd2"
+    },
+    {
+      "path": "final-fixture-output/_astro/RelationshipWheel.OI74YnP7.js",
+      "bytes": 50965,
+      "sha256": "d2cb5ba150f26f8c790b5737271210ca62f5f53c7a253c6fe6645477c47b90a8"
+    },
+    {
+      "path": "final-fixture-output/_astro/RelationshipWheel.kKlIsxGV.css",
+      "bytes": 4954,
+      "sha256": "dd974d58743e3c3835e5cc482e3f87f56f89c0d0539f7ccc87a42928b20a1fd2"
+    },
+    {
+      "path": "final-fixture-output/_astro/SaturnReturnCalculator.RRIaf3lC.js",
+      "bytes": 5421,
+      "sha256": "6154374f0b0bc1cca9a162777bca9deb8e05b97ef6168d9b14491ebfd319083a"
+    },
+    {
+      "path": "final-fixture-output/_astro/SendBackExperience.CoTGmW3A.js",
+      "bytes": 7973,
+      "sha256": "3730952a8c020b4534f5f4696ac96422da846a417fef69ca592e8d82ef7e8c56"
+    },
+    {
+      "path": "final-fixture-output/_astro/SignChip.Dx3tQVZl.js",
+      "bytes": 550,
+      "sha256": "646a0460f7a067c5fb3a73900214c973dabf4876a2f86148e236d6c2d424a324"
+    },
+    {
+      "path": "final-fixture-output/_astro/SkyTicker.D7S90JGP.js",
+      "bytes": 2747,
+      "sha256": "ec8be30753704528344e9d2f651d96609b1b1cd6eb97bf4ac552153f4a4753cc"
+    },
+    {
+      "path": "final-fixture-output/_astro/SolarReturnCalculator.CIRZ7gKS.js",
+      "bytes": 7742,
+      "sha256": "9dd6f7b6041a74ad5f3eb989fa36bc302cba6c7b83fae173467f2f9b5347865a"
+    },
+    {
+      "path": "final-fixture-output/_astro/SolarReturnResult.cXXcmdvB.js",
+      "bytes": 14422,
+      "sha256": "cbc4eaba86b9ee68b9f751841565bb6a0a0347165f633a754b2dab1a6b4b3ae6"
+    },
+    {
+      "path": "final-fixture-output/_astro/SomeoneElseChart.w89xPClc.js",
+      "bytes": 14761,
+      "sha256": "de4ba285eeedc7afd2c614760ee4c83edf279c66b0240e1c18f7dce7d698ef77"
+    },
+    {
+      "path": "final-fixture-output/_astro/SynastryCalculator.CgMhZs2i.js",
+      "bytes": 35196,
+      "sha256": "76de4a32d5b8c935e41fac616eeb7bb6293e123454f457e3522129b248f17db8"
+    },
+    {
+      "path": "final-fixture-output/_astro/TodayBrief.Bph9mF21.js",
+      "bytes": 16718,
+      "sha256": "6dd4266bdf4f2e769bc4cb5ad3c5352a02b378e006b1dd5774072eacd14c9491"
+    },
+    {
+      "path": "final-fixture-output/_astro/TodayBySign.Dmerhbuq.js",
+      "bytes": 16294,
+      "sha256": "2c9f7bcbfc95c57654a4edef72c5e36d84998c762d2d1a3c505f09522ba8a967"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitItinerary.worker-D8SQaIlK.js",
+      "bytes": 60481,
+      "sha256": "3c8fd7b99b4051b46425f74ed239364d473ef1ad5dda8b2fc4fb36c9aef9df8f"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitItinerary.xeUzHRFW.js",
+      "bytes": 8692,
+      "sha256": "c774ff7889fc2cf6dc58ce997cd746e73bfe10a5ac0337f008e66f89073db4b9"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitRing.DcURVCdV.js",
+      "bytes": 17844,
+      "sha256": "ef75bbdf48c299aee34249f6fae8f9f4b62435f8a0a516d1f87471b2b8321e2d"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitSearch.DFLV-NyH.js",
+      "bytes": 6602,
+      "sha256": "9c61fbb6c6e63ab06acae3317378ae8c943b5c933650072214d5e7c060bfc133"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitSearch.worker-D0cVm2k7.js",
+      "bytes": 56349,
+      "sha256": "aab41e03267100559d84490807378ba62f5c5aabb0711557c5887fbbd85b0927"
+    },
+    {
+      "path": "final-fixture-output/_astro/TransitTracker.ZyhHUJiY.js",
+      "bytes": 12626,
+      "sha256": "5fa14c071aa2e93b2ef49519ba2434c921481a7f782e791213e707862fa8e4e0"
+    },
+    {
+      "path": "final-fixture-output/_astro/WalletChart.UKBbEUYA.js",
+      "bytes": 9665,
+      "sha256": "b35e4f366d062395465762d5aea5f0cf7488d6d34e4eec69c64ed2b0071e4ca4"
+    },
+    {
+      "path": "final-fixture-output/_astro/WelcomeBack.BFyvE5Rr.js",
+      "bytes": 2846,
+      "sha256": "534fc39113603424f95d04374f48a35b7580b5fa68c97158b54ebdb32ed50c2b"
+    },
+    {
+      "path": "final-fixture-output/_astro/Wheel.RNRSqGob.js",
+      "bytes": 12355,
+      "sha256": "d7da588ac840dfd90aba737f3b6d01e4e70c09c9ec00ccfbc7916377751b2f0e"
+    },
+    {
+      "path": "final-fixture-output/_astro/_slug_.CNYm49gS.css",
+      "bytes": 5848,
+      "sha256": "f114c88c286f72321ff816721983cee800d40ecc67284c845b8a1e807480face"
+    },
+    {
+      "path": "final-fixture-output/_astro/_slug_.EMTACCJi.css",
+      "bytes": 6162,
+      "sha256": "5a1f7704822a9d27cb59a31aaaec19212b6a05e5d568cfdc46b1a729dea996bc"
+    },
+    {
+      "path": "final-fixture-output/_astro/a2hs.WonhOqdm.js",
+      "bytes": 2797,
+      "sha256": "944d41da8648bb3fe09b4bf0374c458b14ceb450afcc6be3f2907c8229897316"
+    },
+    {
+      "path": "final-fixture-output/_astro/address.DeT4XF7Z.js",
+      "bytes": 616,
+      "sha256": "33d3a5d85abf88046eeaa982ceb2c2056729604a86c74e74c9fede5c18ae3180"
+    },
+    {
+      "path": "final-fixture-output/_astro/analytics.CH5T6e-b.js",
+      "bytes": 4190,
+      "sha256": "56e90fb699bd1011541cdb4d08db91eddd597aed43c60b230334be26a2034252"
+    },
+    {
+      "path": "final-fixture-output/_astro/aspect-pattern-card.o2JlF_P-.js",
+      "bytes": 5293,
+      "sha256": "e8569dd6a974239b849ecfe646d89b6d6d5fafc031806af4705cb3bdd3688087"
+    },
+    {
+      "path": "final-fixture-output/_astro/aspects.BNC-J2iD.js",
+      "bytes": 286,
+      "sha256": "9be0562c40b6bec157c1e484a6847fd5dfef09d4934f297a3b97d9e2119b3533"
+    },
+    {
+      "path": "final-fixture-output/_astro/astrology.BHib5efU.js",
+      "bytes": 3245,
+      "sha256": "e94055469669e92e81c0dd91a9abfd798f3117b043722af9d00bed9862ea375d"
+    },
+    {
+      "path": "final-fixture-output/_astro/aura-cabinet-card-capture.0ZwHYBrD.js",
+      "bytes": 8168,
+      "sha256": "354d8a7d5d91b4578c9e432acb34ccfd4e5dae1b9764ed9cfd053de333878f90"
+    },
+    {
+      "path": "final-fixture-output/_astro/aura-cabinet-card.P1caGyJQ.js",
+      "bytes": 5362,
+      "sha256": "3b3944e5f6848b628b6716ac2291f41bcab9ee2a944005d3d62ac853cbf2fc2c"
+    },
+    {
+      "path": "final-fixture-output/_astro/aura-connectors.BEnCPdyx.js",
+      "bytes": 2209,
+      "sha256": "eea208cfa7dc659da8e3ef4fbcc7dd0ccf93801dd5cd410716b5045738be0472"
+    },
+    {
+      "path": "final-fixture-output/_astro/aura-share-card.B61k9KG6.js",
+      "bytes": 10445,
+      "sha256": "bb162d3cd650525dcc52edd0fb85dac3a938dc39966febffe7a2245711341661"
+    },
+    {
+      "path": "final-fixture-output/_astro/aura-share.B5aHWz9M.js",
+      "bytes": 450,
+      "sha256": "a84d1427bec8530fd8d9ea6ed8255c6e77ea0513523a50abf168f150de2f3519"
+    },
+    {
+      "path": "final-fixture-output/_astro/browser-storage.DQD40XWj.js",
+      "bytes": 6836,
+      "sha256": "061f51d21547514731cf536f343a5c43918d5cb30bb405604b02deebb553233f"
+    },
+    {
+      "path": "final-fixture-output/_astro/cabinet-finish.CoDfrcH7.js",
+      "bytes": 275,
+      "sha256": "a2f772a9c53a25dd2fbac3c819cb7d9e8761d2ebb054e9a4d9a18f60041d1d44"
+    },
+    {
+      "path": "final-fixture-output/_astro/calculator-receipt.Sj7p-7nE.js",
+      "bytes": 16370,
+      "sha256": "7c0fc529b892d3bdca5e34221a22fb551fd687312a04ec11c61205faabb0d5b6"
+    },
+    {
+      "path": "final-fixture-output/_astro/calculator.MBHg3tIV.css",
+      "bytes": 62573,
+      "sha256": "e4606bd37837f898c7b5e0a5e2da987c1de2bcfe97130a72beb2e5c22d154004"
+    },
+    {
+      "path": "final-fixture-output/_astro/catalog.VigqsYAe.css",
+      "bytes": 9035,
+      "sha256": "e50a4934fdaa32118a5910143f66fd988ddfe858b3241847d34f63c5b78b9aab"
+    },
+    {
+      "path": "final-fixture-output/_astro/chart-adapter.K-QfJlbI.js",
+      "bytes": 50306,
+      "sha256": "20f5ee939b52b2c435ab12f4c3fd20e8a3195f1ec57a727d7933b9356fdbeb95"
+    },
+    {
+      "path": "final-fixture-output/_astro/chart-context-card.DM6VeR4O.js",
+      "bytes": 4044,
+      "sha256": "1237064867418b410464d8c4f8fb057b5df282e1a110edf390b7afb124c59d37"
+    },
+    {
+      "path": "final-fixture-output/_astro/chart-context-copy.UBOz97Jz.js",
+      "bytes": 27575,
+      "sha256": "f8ca6b3ad758a7f70d34b779c66627c4b6ee9621a2269f0e141d87f182a3318a"
+    },
+    {
+      "path": "final-fixture-output/_astro/chart-handoff.Dvz2AAcL.js",
+      "bytes": 2042,
+      "sha256": "6cbebae5f3208b46424ee9b969e574d566f8195bef4f717ed4f16bcacbd61de8"
+    },
+    {
+      "path": "final-fixture-output/_astro/chart-signature.-is-2T7w.js",
+      "bytes": 6020,
+      "sha256": "a9df3a6ba5a17fb3d393f12da0c9a7c523073d7d65d813bb8eb1681248045f0c"
+    },
+    {
+      "path": "final-fixture-output/_astro/chunk-H7RJKCBO.BUIGSNBz.js",
+      "bytes": 1763,
+      "sha256": "512e429a3a775bc634547fce725852305dfe9ab982d5f42dd9478d10de9a8523"
+    },
+    {
+      "path": "final-fixture-output/_astro/chunk-INI453VG.BxjMUPBs.js",
+      "bytes": 2569,
+      "sha256": "efa084e2eae5485eccfaad870772aec3ac07d92c962418d8cc609a54ebbc287b"
+    },
+    {
+      "path": "final-fixture-output/_astro/civil-date.CpOZUt7Z.js",
+      "bytes": 533,
+      "sha256": "74a94adc5da6547b114096c562cc0f2490d057a3b599d90578ea0972d2044df9"
+    },
+    {
+      "path": "final-fixture-output/_astro/client.DPkn9Lbl.js",
+      "bytes": 1447,
+      "sha256": "d3be63c8d0105f6032306ace6829ffea98abed0096ddeb191582c25b21406999"
+    },
+    {
+      "path": "final-fixture-output/_astro/client.DWKO6fmW.js",
+      "bytes": 202808,
+      "sha256": "a5e759d120118659c42f70eb32691a665c8c2c13af63021b163bc494667da41f"
+    },
+    {
+      "path": "final-fixture-output/_astro/cloud.CAw4qv-c.js",
+      "bytes": 8878,
+      "sha256": "8ac4e8d3666e69b4354441fe56ba8f77898c408148bb1ff429dcf7431572fa5d"
+    },
+    {
+      "path": "final-fixture-output/_astro/compat.Bjc3uaB7.js",
+      "bytes": 1242,
+      "sha256": "77bbabb1768676c75048d2a263743e05b2bca1625d18e38739729c59aeb248f7"
+    },
+    {
+      "path": "final-fixture-output/_astro/compatibility-card.AR1YJ82_.js",
+      "bytes": 5069,
+      "sha256": "311f3a0d5a2f47a3af83203a152feac01fa05325a9a9e3e2518c2ce975c2965e"
+    },
+    {
+      "path": "final-fixture-output/_astro/compose.DzawFU8q.js",
+      "bytes": 41089,
+      "sha256": "740f28aa23bef8107a25374adef51600286708ffadffd569aabcc134c853d4a0"
+    },
+    {
+      "path": "final-fixture-output/_astro/composite-card.CGcLzAWw.js",
+      "bytes": 4228,
+      "sha256": "30f43ceb5694de6f547a8b900e2600ef40ce2c5af2ece5b107a2a5b9927797fa"
+    },
+    {
+      "path": "final-fixture-output/_astro/compositeCopy.DlSaZTHD.js",
+      "bytes": 17796,
+      "sha256": "58292f6441582fdc1a1e0544c5929c424e1033d6f10ad26e55a8bca4bd50429f"
+    },
+    {
+      "path": "final-fixture-output/_astro/compute.CNSfTo0w.js",
+      "bytes": 2997,
+      "sha256": "b566433fdefebb76e8122f33292100b7d9d8e4d41a699125bf763b583dc45a07"
+    },
+    {
+      "path": "final-fixture-output/_astro/compute.aaxxePZE.js",
+      "bytes": 1330,
+      "sha256": "824576fe5c30560e907c590798c0d96e8e741de4247c37b5eaeca8761fb62bbd"
+    },
+    {
+      "path": "final-fixture-output/_astro/contacts.DQBEQyUR.js",
+      "bytes": 1239,
+      "sha256": "1a4961dd433946573ea2457f805ee1f25debc90dfda7265b3d56d7c5f7fac255"
+    },
+    {
+      "path": "final-fixture-output/_astro/context-help-client.BqVrBbz0.js",
+      "bytes": 2472,
+      "sha256": "52898761ddcbdc056db7ca336cd74278a03e2295fe1bb45bbaa08ce2c8df37ce"
+    },
+    {
+      "path": "final-fixture-output/_astro/copy.Dh3HZbfE.js",
+      "bytes": 1114,
+      "sha256": "88e2af91ce40aa7d9f87e39c20457a21bb5115a846e321dff5ae77f90f6e9188"
+    },
+    {
+      "path": "final-fixture-output/_astro/daily-email-client.bT6sKl-Y.js",
+      "bytes": 4966,
+      "sha256": "54cda7ddb9231991ee887b6410eaa19e6ed34ab0ffc6b9e662f1b695dae5c9fa"
+    },
+    {
+      "path": "final-fixture-output/_astro/daily.BrwY5FMX.js",
+      "bytes": 1160,
+      "sha256": "beb20a710233ed45034d16d85df0e338a264452dbea9facce630848b793f3592"
+    },
+    {
+      "path": "final-fixture-output/_astro/daily.Co2kNXQh.js",
+      "bytes": 4263,
+      "sha256": "95e3f76d694c493f6b1649479efd15a418f2456879751cacc1f4f34077a0fedd"
+    },
+    {
+      "path": "final-fixture-output/_astro/dates.D4PDcYt5.js",
+      "bytes": 395,
+      "sha256": "378304c0c70feb036cd849897964f4a4acb1b8f88ac05cadbefb2ccd6a95cf4a"
+    },
+    {
+      "path": "final-fixture-output/_astro/deletions.DUQYISzq.js",
+      "bytes": 958,
+      "sha256": "28744fcc33ddb02b6df893a9579135219176d767bf768f625f65e13c51cae82b"
+    },
+    {
+      "path": "final-fixture-output/_astro/dignities.BycBkP8Y.js",
+      "bytes": 1822,
+      "sha256": "a925e7ba2284ebe5efc85bcd0e3e6aac10249c09ce84d50c5190c1d2c7460d17"
+    },
+    {
+      "path": "final-fixture-output/_astro/edition-freshness.PlCrFbNa.js",
+      "bytes": 722,
+      "sha256": "554a686456e865236eaaa561383fff1a238733ad5e9feda4150b84cf4e99622d"
+    },
+    {
+      "path": "final-fixture-output/_astro/explorer.ijMRUwvv.css",
+      "bytes": 19962,
+      "sha256": "741806551de3bf6e2ff210ea3c7e76f9361ed2e26894f23f8ad0870faed312a5"
+    },
+    {
+      "path": "final-fixture-output/_astro/feature-flags.BT17fOoR.js",
+      "bytes": 147,
+      "sha256": "3123399c017250a4ca6ec6eb7a83d1cac95173a5a3f5ed90210dfe8c394fe099"
+    },
+    {
+      "path": "final-fixture-output/_astro/forecast-snapshot.d9YwdRdi.js",
+      "bytes": 2522,
+      "sha256": "7d65705cc779b04e2656f700effd7014b406fbf0a950570a8afd7f6d0cd03e63"
+    },
+    {
+      "path": "final-fixture-output/_astro/full.AQ--_mi-.js",
+      "bytes": 392,
+      "sha256": "b051134ff641cb449c2c786973c7dea029240e9adecae82b909225b5bc123829"
+    },
+    {
+      "path": "final-fixture-output/_astro/hooks.module.C0_8FjiD.js",
+      "bytes": 2875,
+      "sha256": "70a0edc427ea0e3966f512ed162307b8a5afb48573954980940e3192514f706d"
+    },
+    {
+      "path": "final-fixture-output/_astro/houses.5SlbILVS.js",
+      "bytes": 213,
+      "sha256": "2c050d7626f63d79c7841d0693182fe4169818fe281a60846f19164b7c62e838"
+    },
+    {
+      "path": "final-fixture-output/_astro/how-to-buy.BDNQRYQU.css",
+      "bytes": 21302,
+      "sha256": "90a0cc32cc863ff130742794e822d0bf70cd41910eb11b3496ec193decbab0b2"
+    },
+    {
+      "path": "final-fixture-output/_astro/i18n.Cg_lCJuc.js",
+      "bytes": 6936,
+      "sha256": "70a9b92ff3baa35ed2be7696d32de5c76cae626de229e50c6487c25c2e18715d"
+    },
+    {
+      "path": "final-fixture-output/_astro/ical-download.BoWEGtdj.js",
+      "bytes": 231,
+      "sha256": "68beba5fbb4459f1b6925b5d3a64d2c6e3dc35ad2379fcf31c3f94299cd39629"
+    },
+    {
+      "path": "final-fixture-output/_astro/ical.LUSALqzY.js",
+      "bytes": 3135,
+      "sha256": "b8184934a9425dc34fdb405b3778998c50298fde62e84ad22732928ea5405e6f"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.0zjNinwZ.css",
+      "bytes": 8428,
+      "sha256": "67d7f5a5183db4ea1f6ce7845be81a1358e87b72ea5b812fe32c35a7a850590c"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.B4iAm-J2.css",
+      "bytes": 10847,
+      "sha256": "207f5609b5441e8354c2f5cbabec3ca66ef6ca7a57cb0cf8215a03c0f6733900"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.B5Ruz6j_.css",
+      "bytes": 11033,
+      "sha256": "90a9bb294c9d85a143718c358bf218eafa7ab8fd5da9065f792e372c1dadfc93"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.BFlKyFlo.css",
+      "bytes": 5261,
+      "sha256": "3cd1fd648d16cbf52136f9bc74dab436259f351e29490e4c52b96e30effc214f"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.BQAP-ia7.css",
+      "bytes": 8284,
+      "sha256": "2ae9d40058262b3848b29260816843214cf921b1117e0b86cb0bd737771a7de0"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.BUa7xpDv.css",
+      "bytes": 7485,
+      "sha256": "32bdc95b2e77ba0d32aa9e0b53712efca193e063e51b223f0d8a26aba8a57775"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.Blx45Yx9.css",
+      "bytes": 4225,
+      "sha256": "6612359cf40d7c28564eeb23ecc147584932203ad3de0ad21a108a9f79be7f60"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.CIqtxf1I.css",
+      "bytes": 89554,
+      "sha256": "9b3a0de4def89b2df3585d746baa6aa21538a5df8b0fd49d8b32b896556ffaa1"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.CO2ntbgO.css",
+      "bytes": 33090,
+      "sha256": "20f3e864a9a6a555bd4dd58868e330830f432118a36de806d9a301e6e6ed19d9"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.Cq3ehTjA.css",
+      "bytes": 7740,
+      "sha256": "6f2490eb13a21dea7688f2c6c82ec0689255986fa8b7a67295537dfead954799"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.CxNu4Dho.css",
+      "bytes": 11263,
+      "sha256": "8d06f1753d3dfdb0823bca57d1580b4d6379f01e7a1ad24dec21cda04f858e9a"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.DAA5KBmB.css",
+      "bytes": 11157,
+      "sha256": "30423341115b094f07c3f89ebca716c57397abe36da843618fe3771d0dec473c"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.DOeQiSXo.css",
+      "bytes": 17797,
+      "sha256": "24dbce3ccae0a7747169a3babaaf913d3d62561c7881f4ba8249ea275d64ee70"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.GuuCeoGt.css",
+      "bytes": 7485,
+      "sha256": "9fcadfbd0998b42eeb923cf6fe57c252ee23060b9c4c8a4e910015f74291afe8"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.GxTM_jj6.css",
+      "bytes": 10800,
+      "sha256": "f9f01ce6f820df32f8c226996225421af92f7137149e0cab055e99dcbe377e18"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.JWuXqrmy.css",
+      "bytes": 7485,
+      "sha256": "8aefaca653eacc1d8ab8dc5e0915b7051f3e634f629fd654048dc7ca91c90231"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.astro_astro_type_script_index_0_lang.Bvvb-7cf.js",
+      "bytes": 5385,
+      "sha256": "dddf27f1fd7c5fa12120101e42778879779a38c5ec1b45f7ed85709a10a37004"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.astro_astro_type_script_index_0_lang.CUteZSnt.js",
+      "bytes": 2546,
+      "sha256": "e1b3c6913dda3b0871bdcbcc81382f7fafe5ce75ca3b6a9617f4eee3ffc0f211"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.astro_astro_type_script_index_0_lang.c1iyogCz.js",
+      "bytes": 7042,
+      "sha256": "f12bf41a385d7f275200efa0ec10c7d4c1097be96765862944f18d8b39cc3ab5"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.gDevBLCU.css",
+      "bytes": 7485,
+      "sha256": "19164004e1d3a8e886fd437907b0430605a4370fd1cab186bed4224c1240adc1"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.uhOzkb5U.css",
+      "bytes": 5133,
+      "sha256": "5a829722b332a02973f41efc85a17f63be3656022e8bc6a62168ea859ae131af"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.zJrpaAAF.css",
+      "bytes": 7902,
+      "sha256": "caa82ae7ee399a2557002f50718a649fffea690295de59c0316eee15aa8ea4af"
+    },
+    {
+      "path": "final-fixture-output/_astro/index.zlrWpJ2J.css",
+      "bytes": 6038,
+      "sha256": "1a28d177ac300f8762ab849d0430391d34f8a9003ba325a85876ac587fdbfa74"
+    },
+    {
+      "path": "final-fixture-output/_astro/ingresses.DItRkcad.js",
+      "bytes": 46532,
+      "sha256": "72cf5c79936a533e86d4b678622d383bbf48269c436754d76994c94e3cc776f0"
+    },
+    {
+      "path": "final-fixture-output/_astro/interpretations.BaZkYN67.js",
+      "bytes": 8979,
+      "sha256": "5aa7453429b2bf749187d7cc798ee5b36ca2aae705d087c333664101e5198dae"
+    },
+    {
+      "path": "final-fixture-output/_astro/inviteClient.Dg75Mf5M.js",
+      "bytes": 3833,
+      "sha256": "359a1a5040470fee9394221819a0d97e50e58650e9181c65de4de129b1b8b1a0"
+    },
+    {
+      "path": "final-fixture-output/_astro/jsxRuntime.module.BG9KJlGc.js",
+      "bytes": 430,
+      "sha256": "7ddcbbccf1cc5b5de237799db0cae97c8f7fdd5d9165217bdb6589e1784c4daa"
+    },
+    {
+      "path": "final-fixture-output/_astro/learning-input-identity.C-WLv51I.js",
+      "bytes": 146,
+      "sha256": "5106f2126175d7ff8e312ba0cbc6eb0147633260d0a22efae31e75a2de1d5eb9"
+    },
+    {
+      "path": "final-fixture-output/_astro/lite.DKWHZC5_.js",
+      "bytes": 831,
+      "sha256": "476fab7cec6bcb6af7fef8a37f86632f70def966fc429b9f9aba7e79e5bc191a"
+    },
+    {
+      "path": "final-fixture-output/_astro/localToUtc.CrWG2CBc.js",
+      "bytes": 2236,
+      "sha256": "f28d63762eadf519fd875bcb21a8f5a1c5b5c6934a079274d7e8ed12f27d744f"
+    },
+    {
+      "path": "final-fixture-output/_astro/longitude-crossings.DNfRcLup.js",
+      "bytes": 601,
+      "sha256": "ee32fd4f9269192c2c35ff649a978e68dd37f8e72a87dc6248b217467b678a78"
+    },
+    {
+      "path": "final-fixture-output/_astro/lunar-return-card.DIYN-ltn.js",
+      "bytes": 5555,
+      "sha256": "d0227af18ab9abb53dc1d221520849f26043e61d6df6abb843ac0cb9a72d7003"
+    },
+    {
+      "path": "final-fixture-output/_astro/lunar-return-ical.BNC4Zj37.js",
+      "bytes": 1380,
+      "sha256": "4351f9610db95850fcd5f72107ba77428942b574ea941954ae2693aa16573f14"
+    },
+    {
+      "path": "final-fixture-output/_astro/natal.D7JKDSdx.js",
+      "bytes": 13113,
+      "sha256": "7c110a349995c403e271185603cdff4a9b9ea60be2860dd0a4880b7d0f4c4778"
+    },
+    {
+      "path": "final-fixture-output/_astro/pairs.I60nosrI.js",
+      "bytes": 2164,
+      "sha256": "67d01b81d95862ea7bc3b4909e09c75547273c8b482b16fe9a823086fc0b6af8"
+    },
+    {
+      "path": "final-fixture-output/_astro/paths.DYbAuceH.js",
+      "bytes": 1629,
+      "sha256": "77317e53ca4be342c789290b02f93192d52a7623db0b9c4bf871df17082a8720"
+    },
+    {
+      "path": "final-fixture-output/_astro/people.tB23VtvH.css",
+      "bytes": 8838,
+      "sha256": "62c8afc0c5907c91206d1a4bc8a08b1c1cfdd27c6523799134337ebb22640411"
+    },
+    {
+      "path": "final-fixture-output/_astro/post-chart-context.cHI09JaB.js",
+      "bytes": 730,
+      "sha256": "f4d39da742e14a40b183af8267a7aaf41096d1fb606f590c693f3f2c9b24b6b1"
+    },
+    {
+      "path": "final-fixture-output/_astro/preact.module.Bjq9tLsx.js",
+      "bytes": 10499,
+      "sha256": "796cb24cfe472a03b823ebf5cfbded9e8a72d0b2ca7e9b664ac86f00a4ae5635"
+    },
+    {
+      "path": "final-fixture-output/_astro/preload-helper.L5lOfJxi.js",
+      "bytes": 1402,
+      "sha256": "8bf772fcf734da4b451168642b9e1e058d1b50662c2a7d3898e381a93821e927"
+    },
+    {
+      "path": "final-fixture-output/_astro/profile-access-reader.DoQqlSjt.js",
+      "bytes": 438,
+      "sha256": "ac2ba400a524418b089be2106d34a11f9bb7643fefc6b64037c1e70817c95390"
+    },
+    {
+      "path": "final-fixture-output/_astro/profile-access.BWCAi7Eq.js",
+      "bytes": 1050,
+      "sha256": "7b3c2eaf02bbce0574663ece61f8a8b9cda16cc522fad18671acf152663c3201"
+    },
+    {
+      "path": "final-fixture-output/_astro/profile-chart-handoff.C2lGDuya.js",
+      "bytes": 382,
+      "sha256": "746d06362b622979ba33eac8fa3f9eb675624aa08208be194edd824a5c46aca6"
+    },
+    {
+      "path": "final-fixture-output/_astro/progressions.DbMxD7zH.js",
+      "bytes": 212,
+      "sha256": "6952ee6001039e69f6a809c2042ec848a04584824e1698b6732492f0865701c2"
+    },
+    {
+      "path": "final-fixture-output/_astro/read-store.CIuzJaHq.js",
+      "bytes": 1301,
+      "sha256": "680103dc780e645458b2546ccd6af93f51351bfb6960910b2493fc5afb45691e"
+    },
+    {
+      "path": "final-fixture-output/_astro/renderTransitOverlay.CuVT6C2P.js",
+      "bytes": 3032,
+      "sha256": "3a110f2e524fc3e8a28e5211a95e2aa797f0ec2592ab4f279afc2f6b74dbed6f"
+    },
+    {
+      "path": "final-fixture-output/_astro/returns.B2BtOUVs.js",
+      "bytes": 829,
+      "sha256": "9765a4fee13909bd87498096cf5e0a02ae6dbc66f660215619ccb1bccd47daf9"
+    },
+    {
+      "path": "final-fixture-output/_astro/rolldown-runtime.DK3Fl9T5.js",
+      "bytes": 158,
+      "sha256": "a526d1bb3288ef04d001028843220a24b0867a4edf8c685b69506d6525af36ff"
+    },
+    {
+      "path": "final-fixture-output/_astro/schema.DqKqbGHb.js",
+      "bytes": 99,
+      "sha256": "2d3a1ca10f5d7cb644905a1ee3d1dbd8a2dffdfaaad03cdd722453c51b4b4c53"
+    },
+    {
+      "path": "final-fixture-output/_astro/search.BXcwbrsc.js",
+      "bytes": 1096,
+      "sha256": "eaf4da24fcbeb817ac868f6ac023797a7dc5419743251d58f650d58b009dd00b"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-card-brand.CJKZtcRK.js",
+      "bytes": 1434,
+      "sha256": "36430edb6904d9d1db657b81930a970587911aad2604a37db32b441c4d4fb5b6"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-card-copy.D0c42nic.js",
+      "bytes": 9572,
+      "sha256": "f1b7a708bc6151f1c0bdab37332a11c0355a2e9239c45fb49f85eafbaecc075b"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-card.C0RwTH6_.js",
+      "bytes": 2912,
+      "sha256": "8737df57c03b78a75b635e62a58a990ccf0ec9c832a0e2c27abed0673ab558f1"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-card.DovPi6oZ.js",
+      "bytes": 46135,
+      "sha256": "08535414a77a24d3ee0b3dddcdd77de2beacdd5e48c177b6b80e53b7ac4783b7"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-positions.D3o0ugj4.js",
+      "bytes": 2554,
+      "sha256": "71378cf3d6f07f65bca19b89a557118cfe1bea78bafe4d37f3709b6870434985"
+    },
+    {
+      "path": "final-fixture-output/_astro/share-synastry.BTOQnOD8.js",
+      "bytes": 2103,
+      "sha256": "03b38e5759c614ec5bf6c1bdaabd6c44c22fe182a819391f8ad3eaa574174405"
+    },
+    {
+      "path": "final-fixture-output/_astro/share.BRlg0eGS.js",
+      "bytes": 2132,
+      "sha256": "f3a348fb12040c31c28f228429082eef8c165dab93c24c85d23fabc246819308"
+    },
+    {
+      "path": "final-fixture-output/_astro/signals.module.DUW9LGUt.js",
+      "bytes": 7690,
+      "sha256": "952b887f195bc45efa4c2f2aeab22270eac65f5115e76dc8896320382ebd39d5"
+    },
+    {
+      "path": "final-fixture-output/_astro/signs.BMXPKoMF.js",
+      "bytes": 11693,
+      "sha256": "21b146a22aa299589f659504f61ab2104f8ad9b0e1ed7e157225846e1380b2bc"
+    },
+    {
+      "path": "final-fixture-output/_astro/sky.h6RT9_eE.js",
+      "bytes": 13203,
+      "sha256": "c61e6dc654a5422c5efc3d492c32eedb4f8a390dbeaf62baa38130355cd2c3e4"
+    },
+    {
+      "path": "final-fixture-output/_astro/solar-return-ical.BjkFq5nf.js",
+      "bytes": 1466,
+      "sha256": "c0feb7e61e30b23483044d0b1ae273ab447f192f8e4d036f82a1a1f3f0499ee1"
+    },
+    {
+      "path": "final-fixture-output/_astro/solar-return.DxauoSVA.js",
+      "bytes": 747,
+      "sha256": "b7dc4e2a20c660edb2f8a77143ca2ff8cc567c81292eef7f5bb16421b1aa9e1a"
+    },
+    {
+      "path": "final-fixture-output/_astro/store.CwXe3dEm.js",
+      "bytes": 4061,
+      "sha256": "714358b2f337fc065c210e2da6306938584f8d99c633a0d2887ec68de22a1508"
+    },
+    {
+      "path": "final-fixture-output/_astro/store.DvK4i8mg.js",
+      "bytes": 38964,
+      "sha256": "b55d566f2c3bd77c283877ee20e90734694d0165621f21605b86ed85cba6d68b"
+    },
+    {
+      "path": "final-fixture-output/_astro/synastry.rhUg9_9F.js",
+      "bytes": 1349,
+      "sha256": "c7846d24e6a83bc96b9dc0722d3daa8cb69bf62fb1ca60fb4d0ff45082c9efef"
+    },
+    {
+      "path": "final-fixture-output/_astro/sync.DDFFUUJT.js",
+      "bytes": 9037,
+      "sha256": "68f658854b797a0e433be977419775054fd7c579a0984e98221351c77f9b8429"
+    },
+    {
+      "path": "final-fixture-output/_astro/sync._hAAXu9f.js",
+      "bytes": 5151,
+      "sha256": "a3a23c1abe091d17d49d5c3474923ab6912e4483ddd026a873aec78bfadd4980"
+    },
+    {
+      "path": "final-fixture-output/_astro/talisman.MYJeOYP1.js",
+      "bytes": 3282,
+      "sha256": "06173216aefc7a13b80afc09b3b32d7dcc8b6481cab30e009c49cb51a67e31ad"
+    },
+    {
+      "path": "final-fixture-output/_astro/technical-layout.DQIjXHHb.js",
+      "bytes": 860,
+      "sha256": "68a00271f2f7ca0a13b4ebb91a551621055cb4ba300f129a7f51e6f37e8d5f3a"
+    },
+    {
+      "path": "final-fixture-output/_astro/technical-locales.DDKucXXd.js",
+      "bytes": 46,
+      "sha256": "69bc1979f1929b7cb2ce9131fe3d21dd6ea7462b6442d503d883d6aa64d1a5b6"
+    },
+    {
+      "path": "final-fixture-output/_astro/tour.Cas-CP6D.js",
+      "bytes": 70042,
+      "sha256": "a8dbebfdffc290ad34ba8d6289e6d38a76e95f1ceafe8e85c61d0dddc3fab4ca"
+    },
+    {
+      "path": "final-fixture-output/_astro/transit-scan-shared.CveTorJc.js",
+      "bytes": 339,
+      "sha256": "12f03c932586d1362a756f3651c4aa8bf62df37e18a69efc1020f204fea6cf6a"
+    },
+    {
+      "path": "final-fixture-output/_astro/transit-scan.De0sfP5a.js",
+      "bytes": 4293,
+      "sha256": "8d019f775fc2fe4d6594c3b099787ddfbb2b1a1e850f7ec19e7e73b396c9b112"
+    },
+    {
+      "path": "final-fixture-output/_astro/transits.BU3rf54A.js",
+      "bytes": 1404,
+      "sha256": "36152c8d6c5df562f7d8f18fbbe678a16ed2e53ae1c8af6b5f434191bcec82f2"
+    },
+    {
+      "path": "final-fixture-output/_astro/types.qvajGbs_.js",
+      "bytes": 136,
+      "sha256": "df4f4f2f05d45b1eb22af368488476259e0701517873e64132a2a94a3e9a2711"
+    },
+    {
+      "path": "final-fixture-output/_astro/use-learning-sources.rIwWXPg-.js",
+      "bytes": 2796,
+      "sha256": "a9c60afeec22d8e482f946e249d0021d44a93d67563a590f4e1fdd6aafa3ed4f"
+    },
+    {
+      "path": "final-fixture-output/_astro/useEngine.BV92cVg4.js",
+      "bytes": 504,
+      "sha256": "36943543a570571105b171fbec02544260e7b56445610da713ee084c3d787ea4"
+    },
+    {
+      "path": "final-fixture-output/_astro/useLivingChart.DLn0GZEl.js",
+      "bytes": 9010,
+      "sha256": "25fde154c81768b2094983bb51ac5295216f74af3afa1f9e539bf5a61d7ba0f8"
+    },
+    {
+      "path": "final-fixture-output/_astro/useProfile.DU-90edO.js",
+      "bytes": 558,
+      "sha256": "ada7d287762073b7b262db14e615bf536e76076574fa3f23b9306b2333aefde5"
+    },
+    {
+      "path": "final-fixture-output/_astro/useProfileAccessGeneration.w2JLb1F6.js",
+      "bytes": 340,
+      "sha256": "8ccce5b321237b4d1cecd2c69650d62e2860db72ce71fdd43e9ddc2310ede47f"
+    },
+    {
+      "path": "final-fixture-output/_astro/wallet-chart.CGDEev9x.js",
+      "bytes": 4895,
+      "sha256": "051fa2bb671df12791393281cd4efcd4a2294cf57c8e0a24485706b89889e28c"
+    },
+    {
+      "path": "final-fixture-output/_astro/year-scan.BiT31nVt.js",
+      "bytes": 905,
+      "sha256": "4f77b48c58e30f4f0d7176f9545f0a25e7b9fbfba6f8c0df7badecea06eda90b"
+    },
+    {
+      "path": "final-fixture-output/assets/app.js",
+      "bytes": 255274,
+      "sha256": "c03d0610caa13deaee51ee00144c353938dcdde854bd77264062e39fe36f780f"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-chunks/chunk-5BXQA2BE.js",
+      "bytes": 180,
+      "sha256": "d9cad469beb0997cded3780659461d023f24353d6a947fe77434f079536af5f9"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-chunks/chunk-PGRMLIRE.js",
+      "bytes": 4207,
+      "sha256": "49fd215dce28c6770bd2480122c3ef59a5f1c0020ef1e4abdaa3c0941702fc9d"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-chunks/client-SCEXY4BM.js",
+      "bytes": 210120,
+      "sha256": "38db846f731d4b08733886bd22264659f1ce9111ff4b80837b4e33aad75e8c53"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-chunks/full-T4HTR2KQ.js",
+      "bytes": 52500,
+      "sha256": "f56a0ee330dfde0e9c24a4816b2aaf8b79b34a6f925371b6575c851418aa4774"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-chunks/localToUtc-RCVCWU44.js",
+      "bytes": 2635,
+      "sha256": "2cd5a0921b0e933e5a5dbcd719f9850cbf600831d324425970ce9eb6bcad64be"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-drawer.css",
+      "bytes": 9008,
+      "sha256": "3eea7b55b9ffa213802605c975b80283661cd2aa1c42b109d7a4b2c75158110a"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-drawer.js",
+      "bytes": 52393,
+      "sha256": "bf2e0da487f18ca8c2e5bee8118da6c074d70976f6800dee40d4c5f77bc4aa08"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-ui.css",
+      "bytes": 1396,
+      "sha256": "eaf7e9531749d921c0947df7894e2fd447dcd800da620b3a14ba673af1cb7e0d"
+    },
+    {
+      "path": "final-fixture-output/assets/assistant-ui.js",
+      "bytes": 4088,
+      "sha256": "238a125c27cb9d23f5267524a6e2a30f38b357d6d54f4b396b776617b56563eb"
+    },
+    {
+      "path": "final-fixture-output/assets/discovery.css",
+      "bytes": 4856,
+      "sha256": "258d53dcd498fa0d3a21212a25f398b52cbe439da32c17eb3d2d2f16203a9019"
+    },
+    {
+      "path": "final-fixture-output/assets/exchange.js",
+      "bytes": 59586,
+      "sha256": "d9636d8b500e8364644a1778ff8b1e74d075e13ae5ad0f928a53519f351e30fc"
+    },
+    {
+      "path": "final-fixture-output/assets/gallery.js",
+      "bytes": 613935,
+      "sha256": "507f3fe0472fe0ccbb979b5bb5205086fc1afc093e43fe6a5b99b71f4a1dfccb"
+    },
+    {
+      "path": "final-fixture-output/assets/registry-token-chart.js",
+      "bytes": 16175,
+      "sha256": "91736d11b173606947e80100a211dea47d4a3245af62db15d21bb6cf8818d374"
+    },
+    {
+      "path": "final-fixture-output/assets/site-footer.css",
+      "bytes": 10397,
+      "sha256": "d6088ed5422a2ec37639adb906b1c6ed81ff93df7f36d3d50de1d23ab94e0700"
+    },
+    {
+      "path": "final-fixture-output/assets/trade.js",
+      "bytes": 46330,
+      "sha256": "146e8959b91892f344910f91a09b6f97121e5368c6634e77d0d68d6899390c4d"
+    },
+    {
+      "path": "final-fixture-output/assets/vendor/react-18.3.1.production.min.js",
+      "bytes": 10751,
+      "sha256": "d949f1c3687aedadcedac85261865f29b17cd273997e7f6b2bfc53b2f9d4c4dd"
+    },
+    {
+      "path": "final-fixture-output/assets/vendor/react-dom-18.3.1.production.min.js",
+      "bytes": 131835,
+      "sha256": "35f4f974f4b2bcd44da73963347f8952e341f83909e4498227d4e26b98f66f0d"
+    },
+    {
+      "path": "final-fixture-output/assets/widgets.js",
+      "bytes": 2029,
+      "sha256": "352009a7af6eb8cedb92a68298cded4993b6a5e6cdaf951efc202679722da0f9"
+    },
+    {
+      "path": "final-fixture-output/birth-chart/index.html",
+      "bytes": 121212,
+      "sha256": "5e59242d80d791f0a8f7f990709319ce0a19b1eb537dfdfa3e4f92579353acbb"
+    },
+    {
+      "path": "final-fixture-output/es/birth-chart/index.html",
+      "bytes": 115829,
+      "sha256": "873975b7ebd18ca7b3b44bf7524abc929730d865940e12717a2de3b9c2cd6e63"
+    },
+    {
+      "path": "final-fixture-output/profile/index.html",
+      "bytes": 81922,
+      "sha256": "589e0c91eca2cc549e4305a2d9edc3635f2013956f2cb37ec3d865c7abdf8cd1"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/custom.css",
+      "bytes": 2638,
+      "sha256": "ad5a4df7df5f246bee8bc2074e419e7793caf0ec26a9bf70b5058afae4e5ebb6"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/hierarchy.js",
+      "bytes": 233,
+      "sha256": "02b13de664484021efcf0388944b451d63196637a7b93f53ff29e3b6bb112e05"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/highlight.css",
+      "bytes": 2173,
+      "sha256": "4abc5499c3252c13d00d803656af2c1ac992d98eb708382168cbce958da65755"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/icons.js",
+      "bytes": 15087,
+      "sha256": "ef46752ace8ec936ceeaf75e4499774ba970ae6e8fc663f35a3a6c08ed7c7e1b"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/main.js",
+      "bytes": 51129,
+      "sha256": "a91e49305d77aa7e55d9e1f3dc0ee0d64a472b1218d3b52fb261632a1a9f60d8"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/navigation.js",
+      "bytes": 1342,
+      "sha256": "08e294b44ea73818fd82b99f90d6d5949d39c6d75fabdb9009dad20818be4908"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/search.js",
+      "bytes": 14383,
+      "sha256": "910b9d7ee63b87af9b82890bbad292b220e5db4488531b32455188916772d1f3"
+    },
+    {
+      "path": "final-fixture-output/sdk/engine/assets/style.css",
+      "bytes": 49683,
+      "sha256": "f8e91600fb75222763624abb9015ddec164d8a11d6f2c4f3b6a1db04a7bad0ba"
+    },
+    {
+      "path": "final-fixture-output/sw.js",
+      "bytes": 7971,
+      "sha256": "75c3f24c1b4de3570403363d7cf44016e012a8434023e3e1a20eba818bbe0a3b"
+    },
+    {
+      "path": "final-fixture-output.json",
+      "bytes": 41564,
+      "sha256": "49a0635bcfc3fe9213f82ad7bb4f64a83066e15dda2650585231ec991d8e406d"
+    },
+    {
+      "path": "focused-final.log",
+      "bytes": 505,
+      "sha256": "05797971cdfc962befc21042ed45e3c9db5666987b58b037b8b96ec2bdcbdea3"
+    },
+    {
+      "path": "focused-freeze2.log",
+      "bytes": 505,
+      "sha256": "6dfd0c16bb632f45cf0d3c7a263fa74990d0f3de5071d6a534671e841fb11a5a"
+    },
+    {
+      "path": "focused-initial.log",
+      "bytes": 505,
+      "sha256": "3b00a0c4bc25537234fee8d947c698c1272c922afa31765ba42816f1da00d7bf"
+    },
+    {
+      "path": "frozen-source/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "frozen-source/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14413,
+      "sha256": "d2e58aab1d6a2cb9f34bc449a9e97c8db8d1791e0ddbed7da95348557ad7481e"
+    },
+    {
+      "path": "frozen-source/src/lib/profile/post-chart-context.test.ts",
+      "bytes": 1993,
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e"
+    },
+    {
+      "path": "frozen-source/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "frozen-source/tests/post-chart-context-clear-drive.mjs",
+      "bytes": 21409,
+      "sha256": "f60a0858fe7afbffd813bc1f9d4fca91e5a1e983b48b60374426bc37b9f86364"
+    },
+    {
+      "path": "frozen-source/tests/post-chart-daily-drive.mjs",
+      "bytes": 44367,
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654"
+    },
+    {
+      "path": "frozen-source2/src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "frozen-source2/src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14534,
+      "sha256": "3dd16171ac8f19d47d380ed9ec22d51fcfc6f8284697c27f0418a68a1be66158"
+    },
+    {
+      "path": "frozen-source2/src/lib/profile/post-chart-context.test.ts",
+      "bytes": 1993,
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e"
+    },
+    {
+      "path": "frozen-source2/src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "frozen-source2/tests/post-chart-context-clear-drive.mjs",
+      "bytes": 23894,
+      "sha256": "3e98393b5ce53e0f15d9ccc6a49fd6da199186da7076e35f9a22938daec9ccfe"
+    },
+    {
+      "path": "frozen-source2/tests/post-chart-daily-drive.mjs",
+      "bytes": 44367,
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654"
+    },
+    {
+      "path": "full-post-chart-gate-freeze2.log",
+      "bytes": 92,
+      "sha256": "803b0595dd163554fc639302cf41e7df2177ab58f313112daa6c47d5fcbb4bca"
+    },
+    {
+      "path": "full-post-chart-gate.log",
+      "bytes": 873,
+      "sha256": "87ec1f9b80da15e4351494ec69f4b5e325e24cbf5bfcf36b8df905b6d35f5fca"
+    },
+    {
+      "path": "implementation-freeze2.patch",
+      "bytes": 43339,
+      "sha256": "7202443237f2bebf826a9a0ef24da3fd8062b4cd2aff2b4edfed02f3a51fc5d8"
+    },
+    {
+      "path": "implementation.patch",
+      "bytes": 40054,
+      "sha256": "391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b"
+    },
+    {
+      "path": "native-baseline/build.json",
+      "bytes": 11926,
+      "sha256": "0780adb8183bd3a9fd32aea6c48be6131ce439c5053de1fa240ad47d1042ef93"
+    },
+    {
+      "path": "native-baseline/clear-before-session-read.png",
+      "bytes": 44206,
+      "sha256": "6f94d2e2ad4f4f058160021902e7b02cd75497454136a8cd8ac4bb6dc4ac2ae3"
+    },
+    {
+      "path": "native-baseline/clear-during-preference-read.png",
+      "bytes": 44206,
+      "sha256": "6f94d2e2ad4f4f058160021902e7b02cd75497454136a8cd8ac4bb6dc4ac2ae3"
+    },
+    {
+      "path": "native-baseline/clear-during-session-read.png",
+      "bytes": 44206,
+      "sha256": "6f94d2e2ad4f4f058160021902e7b02cd75497454136a8cd8ac4bb6dc4ac2ae3"
+    },
+    {
+      "path": "native-baseline/clear-propagates-and-preserves-fields.png",
+      "bytes": 48524,
+      "sha256": "bc4d98d09eb26fc71a0ec5f908ac05cc49923ad30ae740ed9d64ade5c0fff1de"
+    },
+    {
+      "path": "native-baseline/entry.tsx.log",
+      "bytes": 10943,
+      "sha256": "da91927fcabdbe552970cc7c6a68bad4c7ca9490df6177d16be741a916bb39c0"
+    },
+    {
+      "path": "native-baseline/fixture.js",
+      "bytes": 60451,
+      "sha256": "948b900519b17f9540b6b47dbb65c1baa2b51c8161bc3c8848608d44cad4c42e"
+    },
+    {
+      "path": "native-baseline/resend-frame-cannot-focus-replacement.png",
+      "bytes": 35194,
+      "sha256": "c86bab780a86a61686f93ace4beb7ff0b84d763c81b9fbc3829f5fe666d70056"
+    },
+    {
+      "path": "native-baseline/result.json",
+      "bytes": 19195,
+      "sha256": "5623936a4d161493efb21ac55e6fb541c0fe485c429bfcce26a7c8eb403f4cd0"
+    },
+    {
+      "path": "native-baseline/submitted-capture-clear.png",
+      "bytes": 45171,
+      "sha256": "e4f2017a2c8d8b8ed1db3e6d1990a4ef51b2796726361de95e48abb6c130d1fc"
+    },
+    {
+      "path": "native-baseline/submitted-capture-replacement.png",
+      "bytes": 43068,
+      "sha256": "8ecec1c9ece0ae319f7d58e32f340258d3b4e4da23e40b67a4a25acf4bf9f693"
+    },
+    {
+      "path": "native-baseline/submitted-resend-clears-without-retry.png",
+      "bytes": 42118,
+      "sha256": "1f8eb4cf2467dd6de5b1e81cf4729159fac9d8348c6d9fb27dbc24f50d917bf7"
+    },
+    {
+      "path": "native-baseline.log",
+      "bytes": 603,
+      "sha256": "7aeb0ff2568025e2c04ef2941b7dc595af48d1ca73fc792e65838a0414c0e05f"
+    },
+    {
+      "path": "native-candidate/build.json",
+      "bytes": 11928,
+      "sha256": "95a8bee67833afc599b944f028b3a67b90fa814d86cd213e450bb950abb9dd0d"
+    },
+    {
+      "path": "native-candidate/entry.tsx.log",
+      "bytes": 12597,
+      "sha256": "a37959e25cba12c791bd4a6dd3731c848735600611c9ae0121906f98ed45917e"
+    },
+    {
+      "path": "native-candidate/fixture.js",
+      "bytes": 62408,
+      "sha256": "28e4eb9fd0def55849adc1af889e8a0de7b811d5cba1c0bcd11dbf96f2a8c701"
+    },
+    {
+      "path": "native-candidate/result.json",
+      "bytes": 22658,
+      "sha256": "d0e61fee3f3f4d94b6a3efc258d2341b1ef9043ba0195d8b89090b12bcaca9a8"
+    },
+    {
+      "path": "native-candidate.log",
+      "bytes": 655,
+      "sha256": "07935a245f8622d42904958a0a4539ff8bfa5636b993f71c16f717f16053b115"
+    },
+    {
+      "path": "native-freeze2/build.json",
+      "bytes": 11926,
+      "sha256": "f184525dc735bbdc1922c93d6bfef556e3a751a221add398e5ed54a3cecf46f3"
+    },
+    {
+      "path": "native-freeze2/entry.tsx.log",
+      "bytes": 12728,
+      "sha256": "cd0b04b8b712ecda69ea4519689d0d0a929b4efcf1c3cedf180659633992c6f8"
+    },
+    {
+      "path": "native-freeze2/fixture.js",
+      "bytes": 62988,
+      "sha256": "321cd8b2769d20fc844eb256bbdaebacdc42b95950f0b23d1a25b2a4b83ba8e5"
+    },
+    {
+      "path": "native-freeze2/result.json",
+      "bytes": 47261,
+      "sha256": "5860a7e4dbd092482f35327167f5aebda6b97a14ab77551e057bc67f9fb2d4ae"
+    },
+    {
+      "path": "native-freeze2.log",
+      "bytes": 1241,
+      "sha256": "c85a4e4dad80550e1312f3b7900d57297c4fbcb9b1b1a326d4962ecb51b54b6d"
+    },
+    {
+      "path": "native-refined/build.json",
+      "bytes": 11926,
+      "sha256": "cc2ba76619f94eb1d3b84789968baf141769e95b44c74bc4a12a3d7fb811bb61"
+    },
+    {
+      "path": "native-refined/entry.tsx.log",
+      "bytes": 12728,
+      "sha256": "cd0b04b8b712ecda69ea4519689d0d0a929b4efcf1c3cedf180659633992c6f8"
+    },
+    {
+      "path": "native-refined/fixture.js",
+      "bytes": 62978,
+      "sha256": "1c8c4aa9f0d4645c62091248758f8f585d379708c99c04ad1026d1a9e04f5f32"
+    },
+    {
+      "path": "native-refined/result.json",
+      "bytes": 33199,
+      "sha256": "99f934ac696cfb2bff3db075337f11e9b73079ef4b11e76ed57e17a03231a1a7"
+    },
+    {
+      "path": "native-refined.log",
+      "bytes": 977,
+      "sha256": "45d3d7ae6e8b02cf5346b89e329967a9520d6933ffe1b531bef0626a9b54cc90"
+    },
+    {
+      "path": "native-session-race-before/build.json",
+      "bytes": 11938,
+      "sha256": "8c75924c0002397f62b4a56a7ce09863f5cfe5858ab445ef4abd24cfbe47a1d0"
+    },
+    {
+      "path": "native-session-race-before/entry.tsx.log",
+      "bytes": 12728,
+      "sha256": "cd0b04b8b712ecda69ea4519689d0d0a929b4efcf1c3cedf180659633992c6f8"
+    },
+    {
+      "path": "native-session-race-before/fixture.js",
+      "bytes": 62978,
+      "sha256": "1c8c4aa9f0d4645c62091248758f8f585d379708c99c04ad1026d1a9e04f5f32"
+    },
+    {
+      "path": "native-session-race-before/profile-sync-cannot-certify-an-unknown-session-as-signed-out.png",
+      "bytes": 28356,
+      "sha256": "7ac42010b74724a6935422977c98d9feb9580fcde89cfcf5aa8503caa5c667e8"
+    },
+    {
+      "path": "native-session-race-before/result.json",
+      "bytes": 34564,
+      "sha256": "c840624ec44686ff644945987678207055a8827347ec3cbc6fdd063b3a9b92ab"
+    },
+    {
+      "path": "native-session-race-before.log",
+      "bytes": 1064,
+      "sha256": "6dd5deeeb8c6458b5701af3fe68712c2e431e5a08fdc2f2db615ce08bc4003b2"
+    },
+    {
+      "path": "package-delivery.py",
+      "bytes": 2552,
+      "sha256": "61e2f52bd1d147fc4b6d5b0b40d7eb21d3970b943e2d3b07841b823efc83a5e1"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-0-1280.json",
+      "bytes": 10885,
+      "sha256": "7828e5a6c56a5c3e657663925e660d18767b0c56959b9e2ea12590e3424f4227"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-0-360.json",
+      "bytes": 11360,
+      "sha256": "1ee68a190f6b63b0ca001e6efa8658b58506c55de36edea54775c7928dc579fe"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-1-1280.json",
+      "bytes": 10937,
+      "sha256": "0ecd5138666806c8d78342ee87ba53d5e70d2790e80e3ba428c19cb1df7cc2b5"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-1-360.json",
+      "bytes": 11490,
+      "sha256": "d766aa7dd0302abee56fcc55d5f05356faa0384c5d331f62e53beb1e9e0ab054"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-2-1280.json",
+      "bytes": 11379,
+      "sha256": "36dde573716e3071a6b99dedcd4bdee0a3273dbe2868254cca084bff48bb3f39"
+    },
+    {
+      "path": "paused-diagnostic-freeze2-pass-2-360.json",
+      "bytes": 11546,
+      "sha256": "588a1d35d6f49d0491a25be4cea00178e55f384354cfa5f73d25eb7381d7e7a9"
+    },
+    {
+      "path": "paused-diagnostic-freeze2.log",
+      "bytes": 231,
+      "sha256": "09b5eeda69cd74069ab029bb1ba9015cc34cab76cc542b08beb20455b37e4b40"
+    },
+    {
+      "path": "paused-diagnostic-freeze2.mjs",
+      "bytes": 16074,
+      "sha256": "b9ec0a92d04e6d5dba61cbc2be977b348a55a1d326438e15605b1c99c5a5a18e"
+    },
+    {
+      "path": "paused-diagnostic-pass-0-1280.json",
+      "bytes": 10753,
+      "sha256": "a218a89fe14f823fb8b54115f95547a51f8f8c5b65b36e80e21f203f17d7a5a8"
+    },
+    {
+      "path": "paused-diagnostic-pass-0-360.json",
+      "bytes": 10736,
+      "sha256": "d0f2840fba400dc5d77ce15194c371ea9543e6c76c38139b55c64bf6b3273e03"
+    },
+    {
+      "path": "paused-diagnostic-pass-2-1280.json",
+      "bytes": 10752,
+      "sha256": "e31e36dba7befbb1304f2257b95edf8b4c9767662947321a2343dec4dfdd6375"
+    },
+    {
+      "path": "paused-diagnostic-pass-2-360.json",
+      "bytes": 10737,
+      "sha256": "8b310fc9df38c7ec3ff86b219c970d1a84b7c70da8ffc0c2343df3c18d497352"
+    },
+    {
+      "path": "paused-diagnostic-paused-1-1280.json",
+      "bytes": 23782,
+      "sha256": "aa4eb095371dfa08ba19c164dac5275eb63c192e48ed0b2303368cf312630c84"
+    },
+    {
+      "path": "paused-diagnostic-paused-1-1280.png",
+      "bytes": 1327770,
+      "sha256": "42366d9c588f82e165d653bf579825fc57593e975afeaf20a553d5dad86ac774"
+    },
+    {
+      "path": "paused-diagnostic-paused-1-360.json",
+      "bytes": 23754,
+      "sha256": "5f0789f0894a8ebe74dce17514d04672506b1aee8e3fffe922d8124c4b0f613e"
+    },
+    {
+      "path": "paused-diagnostic-paused-1-360.png",
+      "bytes": 1260691,
+      "sha256": "a243ad739c447f8a4f4e7f014e0e7c81d4f997898798671f2ae0aaeb3fb2fa74"
+    },
+    {
+      "path": "paused-diagnostic.log",
+      "bytes": 637,
+      "sha256": "7296d28ae8b8d3e21cb4914ed6f84f43501644c09d80e6fd934a01f63c2652f7"
+    },
+    {
+      "path": "paused-diagnostic.mjs",
+      "bytes": 16050,
+      "sha256": "9df7268b875145fd143deb392b63d57ffce5c5392d816575615af85c6470c942"
+    },
+    {
+      "path": "prepare-page-diagnostic.py",
+      "bytes": 3035,
+      "sha256": "593f1d1acdb64a7cb42260669eaf65851badb3582521693124abbac1724a5ef0"
+    },
+    {
+      "path": "seal-source.log",
+      "bytes": 180,
+      "sha256": "c8567e0661c5ac16e14e03f02bbffcfd128153a6efb8e46e7d9b8d5fdea8efc5"
+    },
+    {
+      "path": "seal-source.py",
+      "bytes": 2175,
+      "sha256": "f6aa1f3cb94a5e7e46dace244d1cd7d47d591caeb777b84cdc356819f3ddfc85"
+    },
+    {
+      "path": "seal-source2.log",
+      "bytes": 180,
+      "sha256": "4093c823980999861c073e96f7627bd46b75db77bd1f25980680ccebda644e0b"
+    },
+    {
+      "path": "seal-source2.py",
+      "bytes": 2446,
+      "sha256": "bfa32a3c758f293c2d555f0d328e174a6f7f36a437fa4399e83567c7e425ce2b"
+    },
+    {
+      "path": "source-freeze.json",
+      "bytes": 1835,
+      "sha256": "e64eb26e34b1b5442a1a1e12f851b77a8a17d7d820a0e5a9b2b611c583cdd242"
+    },
+    {
+      "path": "source-freeze2.json",
+      "bytes": 2004,
+      "sha256": "fc22bd7c2c6d3efa44022f49f42427545a35915afd49ee66fee6b4d7b6a09cbc"
+    },
+    {
+      "path": "support-source/src/lib/account-v2/profile-access-reader.ts",
+      "bytes": 1335,
+      "sha256": "2f163f1f29cc0a8ed72e39b0957480a2a04169eb5409635f8fb86927ce86c048"
+    },
+    {
+      "path": "support-source/src/lib/hooks/useProfileAccessGeneration.ts",
+      "bytes": 851,
+      "sha256": "79abaaa6c12a606cf2c49bacf4c451e4abda3fc5374881dab7119377571416b9"
+    },
+    {
+      "path": "support-source/src/lib/profile/daily-email-client.ts",
+      "bytes": 10225,
+      "sha256": "19c31b36c3fd0996259cfbf3567a5a8a57f1abb31bb6062948933468c44dd20a"
+    },
+    {
+      "path": "support-source/src/lib/profile/sync.ts",
+      "bytes": 7820,
+      "sha256": "0c884287355fc79d244d76d505b1b4977565127e7e58e58d801365b59c22a2e8"
+    },
+    {
+      "path": "support-source/tests/post-chart-daily.mjs",
+      "bytes": 2286,
+      "sha256": "3f7714e4cf44721db0aa34d4bf43d3f9b28c82b75972cad5a1fd5b7d3b944919"
+    },
+    {
+      "path": "support-source/tests/visual/browser.mjs",
+      "bytes": 3304,
+      "sha256": "20f9ff3c6d797d164f388b115cb42c9484337b6204b99a1ac2af39c2f0fa6b3a"
+    },
+    {
+      "path": "support-source/tests/visual/preview-server.mjs",
+      "bytes": 3656,
+      "sha256": "43c17306256473fe4ad0c0a6460fcebc3220d84b47234ec6717d689a6cc184d1"
+    },
+    {
+      "path": "support-source.json",
+      "bytes": 1105,
+      "sha256": "2ed72aab072ff33d33f9236b97241820d9b91f259aac4c316c6e6f088e3c9555"
+    },
+    {
+      "path": "types-final.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "types-freeze2.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fileCount": 355,
+  "bytes": 8522881,
+  "archiveSha256": "3afe4b3ed40bf89f13e409da103397fe022f1fcec93c27853b325386e3d60c3c"
+}

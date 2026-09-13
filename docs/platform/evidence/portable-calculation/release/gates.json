@@ -1,0 +1,92 @@
+{
+  "base": "6ab85278bea708337e20947966a54a5072ad0627",
+  "runtime": "Node22.23.2",
+  "implementationPatchSha256": "69a5fa55efbf961bb2760bffec4edfdc16ee6df575a84045961fe4e9ee5bbb45",
+  "steps": [
+    {
+      "name": "daily-provenance",
+      "command": [
+        "npm",
+        "run",
+        "editorial:daily:build"
+      ],
+      "startedAt": "2026-09-08T04:22:31.437211+00:00",
+      "elapsedSeconds": 0.399,
+      "exitCode": 0,
+      "log": "daily-provenance.log"
+    },
+    {
+      "name": "build",
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-09-08T04:22:31.836929+00:00",
+      "elapsedSeconds": 43.955,
+      "exitCode": 0,
+      "log": "build.log"
+    },
+    {
+      "name": "captures",
+      "command": [
+        "npm",
+        "run",
+        "test:phase1:acceptance"
+      ],
+      "startedAt": "2026-09-08T04:23:15.800346+00:00",
+      "elapsedSeconds": 34.968,
+      "exitCode": 0,
+      "log": "captures.log"
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--fileParallelism=false"
+      ],
+      "startedAt": "2026-09-08T04:23:50.770271+00:00",
+      "elapsedSeconds": 120.216,
+      "exitCode": 0,
+      "log": "test.log"
+    },
+    {
+      "name": "check",
+      "command": [
+        "npm",
+        "run",
+        "check"
+      ],
+      "startedAt": "2026-09-08T04:25:50.988485+00:00",
+      "elapsedSeconds": 32.515,
+      "exitCode": 0,
+      "log": "check.log"
+    },
+    {
+      "name": "scope",
+      "command": [
+        "node",
+        "scripts/phase1-scope-guard.mjs",
+        "--base",
+        "6ab85278bea708337e20947966a54a5072ad0627"
+      ],
+      "startedAt": "2026-09-08T04:26:23.504973+00:00",
+      "elapsedSeconds": 0.115,
+      "exitCode": 0,
+      "log": "scope.log"
+    },
+    {
+      "name": "share",
+      "command": [
+        "node",
+        "tests/platform-share-boundary-drive.mjs"
+      ],
+      "startedAt": "2026-09-08T04:26:23.620393+00:00",
+      "elapsedSeconds": 24.382,
+      "exitCode": 0,
+      "log": "share.log"
+    }
+  ]
+}

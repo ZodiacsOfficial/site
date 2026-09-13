@@ -1,0 +1,12 @@
+Visual regression · 152.0.7977.83 · http://127.0.0.1:4327
+  FAIL birth-chart-kahlo-desktop: 1440×8809 expected, 1440×9502 received
+  FAIL birth-chart-kahlo-mobile: 390×13360 expected, 390×14011 received
+  FAIL birth-chart-kahlo-desktop-reduced-motion: 1440×8809 expected, 1440×9502 received
+file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/visual-regression.mjs:491
+  throw new Error(`${failures} visual regression case${failures === 1 ? '' : 's'} failed. Artifacts: ${artifactRoot}`);
+        ^
+
+Error: 3 visual regression cases failed. Artifacts: /Users/chiburashka/.codex/worktrees/4806/site/tests/visual/artifacts/visual
+    at file:///Users/chiburashka/.codex/worktrees/4806/site/tests/visual/visual-regression.mjs:491:9
+
+Node.js v22.23.2

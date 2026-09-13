@@ -1,0 +1,25 @@
+{
+  "qualification": "Exact contiguous AST-bounded source span, unchanged inside independent wrapper. The wrapper fixes runIsCurrent true and instruments existing endpoint/body calls only; this is not complete component or asynchronous ownership execution.",
+  "records": [
+    {
+      "variant": "baseline",
+      "sourcePath": "src/islands/ChartCalculator.tsx",
+      "sourceSha256": "b1e293351add28ece576d95ccfec5fb84a54bc92097528076acfb78da02dc263",
+      "startLine": 1202,
+      "endLine": 1220,
+      "extractedBytes": 1158,
+      "snippetSha256": "5186603429cd24ea15350275241c396585a9a8c2488d4c09f0ce0216b656e56c",
+      "wrapperSha256": "068889d1a49dfe556fb8c42540a1bfc3c1af390f7437c132fe45a1b18311528c"
+    },
+    {
+      "variant": "candidate",
+      "sourcePath": "src/islands/ChartCalculator.tsx",
+      "sourceSha256": "188ccf4759f5586d832751be1de888d8f2d204a267bd5eaa1cf1823dd6c73475",
+      "startLine": 1201,
+      "endLine": 1212,
+      "extractedBytes": 709,
+      "snippetSha256": "39a3e31f3b1edccf5732a93d4ecbbfcf5addac1a3284e760135f44db5ddbfaa1",
+      "wrapperSha256": "1db10c4a93164ec07ea54614510c5037f200671161aa6b2a9c95bcdc4699a98d"
+    }
+  ]
+}

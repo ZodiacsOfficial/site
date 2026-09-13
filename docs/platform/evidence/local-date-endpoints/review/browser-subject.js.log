@@ -1,0 +1,249 @@
+(() => {
+  // ../../../../../../private/tmp/zodiacs-platform-local-date-endpoints-review/subject.mjs
+  var SIGNS = [
+    { slug: "aries", name: "Aries", glyph: "\u2648", dates: "Mar 21 \u2013 Apr 19", start: [3, 21], end: [4, 19], element: "fire", modality: "cardinal", ruler: "Mars", polarity: "day", house: 1, hue: "#DE8E79", essence: "First out of the gate \u2014 direct, fast, unafraid to start." },
+    { slug: "taurus", name: "Taurus", glyph: "\u2649", dates: "Apr 20 \u2013 May 20", start: [4, 20], end: [5, 20], element: "earth", modality: "fixed", ruler: "Venus", polarity: "night", house: 2, hue: "#B9D4BE", essence: "Steady hands, good taste, and a long memory for comfort." },
+    { slug: "gemini", name: "Gemini", glyph: "\u264A", dates: "May 21 \u2013 Jun 20", start: [5, 21], end: [6, 20], element: "air", modality: "mutable", ruler: "Mercury", polarity: "day", house: 3, hue: "#B29DD0", essence: "Quick, curious, wired for conversation." },
+    { slug: "cancer", name: "Cancer", glyph: "\u264B", dates: "Jun 21 \u2013 Jul 22", start: [6, 21], end: [7, 22], element: "water", modality: "cardinal", ruler: "Moon", polarity: "night", house: 4, hue: "#B6D4E4", essence: "Feels first, remembers everything, protects what it loves." },
+    { slug: "leo", name: "Leo", glyph: "\u264C", dates: "Jul 23 \u2013 Aug 22", start: [7, 23], end: [8, 22], element: "fire", modality: "fixed", ruler: "Sun", polarity: "day", house: 5, hue: "#E0A9B4", essence: "Warm-hearted, expressive, born for the spotlight." },
+    { slug: "virgo", name: "Virgo", glyph: "\u264D", dates: "Aug 23 \u2013 Sep 22", start: [8, 23], end: [9, 22], element: "earth", modality: "mutable", ruler: "Mercury", polarity: "night", house: 6, hue: "#B7D9B0", essence: "Precise, useful, quietly running the whole operation." },
+    { slug: "libra", name: "Libra", glyph: "\u264E", dates: "Sep 23 \u2013 Oct 22", start: [9, 23], end: [10, 22], element: "air", modality: "cardinal", ruler: "Venus", polarity: "day", house: 7, hue: "#D3A9DE", essence: "Balance-seeking, charming, allergic to unfairness." },
+    { slug: "scorpio", name: "Scorpio", glyph: "\u264F", dates: "Oct 23 \u2013 Nov 21", start: [10, 23], end: [11, 21], element: "water", modality: "fixed", ruler: "Pluto", classicRuler: "Mars", polarity: "night", house: 8, hue: "#B9DCE8", essence: "Intense, private, all-or-nothing." },
+    { slug: "sagittarius", name: "Sagittarius", glyph: "\u2650", dates: "Nov 22 \u2013 Dec 21", start: [11, 22], end: [12, 21], element: "fire", modality: "mutable", ruler: "Jupiter", polarity: "day", house: 9, hue: "#E0B080", essence: "Restless, honest, aimed at the horizon." },
+    { slug: "capricorn", name: "Capricorn", glyph: "\u2651", dates: "Dec 22 \u2013 Jan 19", start: [12, 22], end: [1, 19], element: "earth", modality: "cardinal", ruler: "Saturn", polarity: "night", house: 10, hue: "#C0DEA8", essence: "Patient, ambitious, building something that lasts." },
+    { slug: "aquarius", name: "Aquarius", glyph: "\u2652", dates: "Jan 20 \u2013 Feb 18", start: [1, 20], end: [2, 18], element: "air", modality: "fixed", ruler: "Uranus", classicRuler: "Saturn", polarity: "day", house: 11, hue: "#AE8FC9", essence: "Independent, inventive, loyal to the future." },
+    { slug: "pisces", name: "Pisces", glyph: "\u2653", dates: "Feb 19 \u2013 Mar 20", start: [2, 19], end: [3, 20], element: "water", modality: "mutable", ruler: "Neptune", classicRuler: "Jupiter", polarity: "night", house: 12, hue: "#A9D4C4", essence: "Porous, imaginative, tuned to what goes unspoken." }
+  ];
+  var SIGN_SLUGS = SIGNS.map((s) => s.slug);
+  var TECHNICAL_OFFSET_LOCALE = "en-US";
+  var TECHNICAL_WALL_LOCALE = "en-CA";
+  function parseCivilDate(value) {
+    if (typeof value !== "string" || value.length !== 10) return null;
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    if (month < 1 || month > 12 || day < 1) return null;
+    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const days = month === 2 ? leap ? 29 : 28 : [4, 6, 9, 11].includes(month) ? 30 : 31;
+    return day <= days ? { year, month, day } : null;
+  }
+  function parseCivilTime(value) {
+    if (typeof value !== "string" || value.length !== 5) return null;
+    const match = /^(\d{2}):(\d{2})$/.exec(value);
+    if (!match) return null;
+    const hour = Number(match[1]);
+    const minute = Number(match[2]);
+    return hour <= 23 && minute <= 59 ? { hour, minute } : null;
+  }
+  var offsetFormatters = /* @__PURE__ */ new Map();
+  var wallFormatters = /* @__PURE__ */ new Map();
+  function offsetFormatter(tz) {
+    if (typeof tz !== "string" || tz.length === 0) {
+      throw new RangeError("An explicit supported timezone is required.");
+    }
+    let f = offsetFormatters.get(tz);
+    if (!f) {
+      try {
+        f = new Intl.DateTimeFormat(TECHNICAL_OFFSET_LOCALE, { timeZone: tz, timeZoneName: "longOffset" });
+      } catch {
+        throw new RangeError("An explicit supported timezone is required.");
+      }
+      offsetFormatters.set(tz, f);
+    }
+    return f;
+  }
+  function wallFormatter(tz) {
+    let f = wallFormatters.get(tz);
+    if (!f) {
+      f = new Intl.DateTimeFormat(TECHNICAL_WALL_LOCALE, {
+        timeZone: tz,
+        calendar: "gregory",
+        numberingSystem: "latn",
+        era: "short",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23"
+      });
+      wallFormatters.set(tz, f);
+    }
+    return f;
+  }
+  function offsetAt(tz, utcMs) {
+    const parts2 = offsetFormatter(tz).formatToParts(utcMs);
+    const name = parts2.find((p) => p.type === "timeZoneName")?.value ?? "GMT";
+    const m = name.match(/GMT([+-])?(\d{1,2})?(?::(\d{2}))?(?::(\d{2}))?/);
+    if (!m) return 0;
+    const sign = m[1] === "-" ? -1 : 1;
+    const h = Number(m[2] ?? 0);
+    const min = Number(m[3] ?? 0);
+    const s = Number(m[4] ?? 0);
+    return sign * (h * 60 + min + s / 60);
+  }
+  function wallStringAt(tz, utcMs) {
+    const parts2 = wallFormatter(tz).formatToParts(utcMs);
+    const part = (type) => parts2.find((candidate) => candidate.type === type)?.value ?? "";
+    const era = part("era");
+    if (era !== "AD" && era !== "BC") throw new RangeError("Could not read Gregorian era.");
+    const year = era === "BC" ? 1 - Number(part("year")) : Number(part("year"));
+    const isoYear = year >= 0 && year <= 9999 ? String(year).padStart(4, "0") : `${year < 0 ? "-" : "+"}${String(Math.abs(year)).padStart(6, "0")}`;
+    return `${isoYear}-${part("month")}-${part("day")}T${part("hour")}:${part("minute")}`;
+  }
+  function resolveLocalToUtc(date, time, tz) {
+    const civilDate = parseCivilDate(date);
+    const civilTime = parseCivilTime(time);
+    if (!civilDate || !civilTime) {
+      throw new RangeError("resolveLocalToUtc needs a valid YYYY-MM-DD date and HH:MM time.");
+    }
+    const wallDate = /* @__PURE__ */ new Date(0);
+    wallDate.setUTCFullYear(civilDate.year, civilDate.month - 1, civilDate.day);
+    wallDate.setUTCHours(civilTime.hour, civilTime.minute, 0, 0);
+    const wallMs = wallDate.getTime();
+    const wallStr = `${date}T${time}`;
+    const sampled = [
+      offsetAt(tz, wallMs - 36 * 36e5),
+      offsetAt(tz, wallMs),
+      offsetAt(tz, wallMs + 36 * 36e5)
+    ];
+    const candidates = [...new Set(sampled)];
+    const matches = [];
+    for (const off of candidates) {
+      const utcMs = wallMs - off * 6e4;
+      if (wallStringAt(tz, utcMs) === wallStr) {
+        matches.push({ utcMs, offset: offsetAt(tz, utcMs) });
+      }
+    }
+    const flags = [];
+    let chosen;
+    if (matches.length === 1) {
+      chosen = matches[0];
+    } else if (matches.length > 1) {
+      matches.sort((a, b) => a.utcMs - b.utcMs);
+      chosen = matches[0];
+      flags.push("dst-fold");
+    } else {
+      const before = offsetAt(tz, wallMs - 36 * 36e5);
+      const utcMs = wallMs - before * 6e4;
+      chosen = { utcMs, offset: offsetAt(tz, utcMs) };
+      flags.push("dst-gap");
+    }
+    if (Math.abs(chosen.offset % 1) > 1e-9) flags.push("lmt");
+    return { utc: new Date(chosen.utcMs), offsetMinutes: chosen.offset, flags };
+  }
+  function nextIsoDate(date) {
+    const [year, month, day] = date.split("-").map(Number);
+    return new Date(Date.UTC(year, month - 1, day + 1)).toISOString().slice(0, 10);
+  }
+  function localDateEndpointsUtc(date, timeZone) {
+    const start = resolveLocalToUtc(date, "00:00", timeZone).utc;
+    const nextStart = resolveLocalToUtc(nextIsoDate(date), "00:00", timeZone).utc;
+    return { start, end: new Date(nextStart.getTime() - 1) };
+  }
+  var offsetFormatters2 = /* @__PURE__ */ new Map();
+  function validateTimeZone(timeZone) {
+    if (typeof timeZone !== "string" || timeZone.trim().length === 0) {
+      throw new RangeError("timeZone must be an explicit nonempty timezone string.");
+    }
+  }
+  function offsetFormatter2(timeZone) {
+    validateTimeZone(timeZone);
+    let formatter2 = offsetFormatters2.get(timeZone);
+    if (!formatter2) {
+      formatter2 = new Intl.DateTimeFormat("en-US", {
+        timeZone,
+        calendar: "gregory",
+        numberingSystem: "latn",
+        timeZoneName: "longOffset"
+      });
+      offsetFormatters2.set(timeZone, formatter2);
+    }
+    return formatter2;
+  }
+  function offsetAt2(timeZone, utcMilliseconds) {
+    if (typeof utcMilliseconds !== "number" || !Number.isFinite(utcMilliseconds)) {
+      throw new RangeError("utcMilliseconds must be a finite epoch-millisecond timestamp.");
+    }
+    const name = offsetFormatter2(timeZone).formatToParts(utcMilliseconds).find((part) => part.type === "timeZoneName")?.value;
+    const match = (name ?? "GMT").match(/^GMT(?:([+-])(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?)?$/u);
+    if (!match) {
+      throw new RangeError(`Could not read UTC offset for timezone: ${timeZone}`);
+    }
+    const sign = match[1] === "-" ? -1 : 1;
+    return sign * (Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0) + Number(match[4] ?? 0) / 60);
+  }
+
+  // <stdin>
+  var DAY = 864e5;
+  var HOUR = 36e5;
+  var formatter = /* @__PURE__ */ new Map();
+  function parts(zone, t) {
+    if (!formatter.has(zone)) formatter.set(zone, new Intl.DateTimeFormat("en-US", { timeZone: zone, calendar: "gregory", numberingSystem: "latn", era: "short", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", fractionalSecondDigits: 3, hourCycle: "h23" }));
+    const p = Object.fromEntries(formatter.get(zone).formatToParts(t).map((x) => [x.type, x.value]));
+    const year = p.era === "BC" ? 1 - Number(p.year) : Number(p.year);
+    return { year, month: Number(p.month), day: Number(p.day), hour: Number(p.hour), minute: Number(p.minute), second: Number(p.second), millisecond: Number(p.fractionalSecond) };
+  }
+  function wallEpoch(p) {
+    const d = /* @__PURE__ */ new Date(0);
+    d.setUTCFullYear(p.year, p.month - 1, p.day);
+    d.setUTCHours(p.hour ?? 0, p.minute ?? 0, p.second ?? 0, p.millisecond ?? 0);
+    return +d;
+  }
+  function dateMs(date) {
+    const [year, month, day] = date.split("-").map(Number);
+    return wallEpoch({ year, month, day });
+  }
+  var iso = (t) => new Date(t).toISOString();
+  function probe() {
+    const cases = [["2000-01-01", "Asia/Tokyo"], ["2024-03-10", "America/New_York"], ["2024-11-03", "America/New_York"], ["1919-03-30", "America/Toronto"], ["1919-03-31", "America/Toronto"], ["2011-12-29", "Pacific/Apia"], ["2011-12-30", "Pacific/Apia"], ["2011-12-31", "Pacific/Apia"], ["2009-10-31", "America/St_Johns"], ["2009-11-01", "America/St_Johns"], ["1988-10-29", "America/Goose_Bay"], ["1988-10-30", "America/Goose_Bay"], ["1892-07-04", "Pacific/Apia"], ["0000-01-01", "UTC"], ["0000-02-29", "UTC"], ["0099-12-31", "UTC"], ["9999-12-31", "UTC"]];
+    const rows = [];
+    for (const [date, zone] of cases) {
+      const w = dateMs(date), lo = w - 2 * DAY, hi = w + 3 * DAY;
+      const off = (t) => Math.round(offsetAt2(zone, t) * 6e4);
+      const transitions = [];
+      let queries = 0;
+      const query = (t) => (queries++, off(t));
+      for (let a = lo; a < hi; a += HOUR) {
+        let oa = query(a), b = Math.min(a + HOUR, hi), ob = query(b);
+        if (oa !== ob) {
+          let left = a, right = b;
+          while (right - left > 1) {
+            const m = Math.floor((left + right) / 2);
+            if (query(m) === oa) left = m;
+            else right = m;
+          }
+          transitions.push(right);
+        }
+      }
+      const boundaries = [lo, ...transitions, hi], segments = [];
+      for (let i = 0; i < boundaries.length - 1; i++) {
+        const a = boundaries[i], b = boundaries[i + 1], o = off(a), start = Math.max(a, w - o), endExclusive = Math.min(b, w + DAY - o);
+        if (start < endExclusive) {
+          const prior = segments.at(-1);
+          if (prior && prior.endExclusive === start) prior.endExclusive = endExclusive;
+          else segments.push({ start, endExclusive });
+        }
+      }
+      const reference = { kind: segments.length ? "existing" : "empty", segments: segments.map((s) => ({ start: iso(s.start), endExclusive: iso(s.endExclusive), last: iso(s.endExclusive - 1), durationMs: s.endExclusive - s.start })), first: segments.length ? iso(segments[0].start) : null, last: segments.length ? iso(segments.at(-1).endExclusive - 1) : null };
+      const checks = [];
+      for (const s of segments) for (const t of [s.start, s.endExclusive - 1]) {
+        const p = parts(zone, t);
+        checks.push({ instant: iso(t), wall: p, dateMatches: wallEpoch({ ...p, hour: 0, minute: 0, second: 0, millisecond: 0 }) === w, arithmeticAgrees: wallEpoch(p) === t + off(t) });
+      }
+      const transitionDetails = transitions.map((t) => ({ instant: iso(t), before: parts(zone, t - 1), after: parts(zone, t), beforeOffset: off(t - 1), afterOffset: off(t) }));
+      let actual;
+      try {
+        const v = localDateEndpointsUtc(date, zone);
+        actual = { start: v.start.toISOString(), end: v.end.toISOString(), durationMs: +v.end - +v.start + 1, startWall: parts(zone, +v.start), endWall: parts(zone, +v.end) };
+      } catch (e) {
+        actual = { error: String(e) };
+      }
+      rows.push({ date, zone, actual, reference, actualMatches: actual.start === reference.first && actual.end === reference.last, transitions: transitionDetails, checks, queries });
+    }
+    return { at: (/* @__PURE__ */ new Date()).toISOString(), runtime: typeof process === "undefined" ? { browser: true } : { node: process.version, versions: process.versions }, model: "Reviewer-only piecewise-constant offset interval algebra; offsets discovered at hourly UTC probes in a five-day window, changed cells bisected to1ms. Assumes no hidden pair of transitions within one probe cell and all applicable offsets inside48h. Complete for these discovered schedules, not a proof of all host Intl histories.", rows };
+  }
+  window.endpointProbe = probe;
+})();

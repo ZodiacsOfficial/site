@@ -1,0 +1,199 @@
+{
+  "observedAt": "2026-09-07T22:01:58.789Z",
+  "browser": "152.0.7977.83",
+  "scope": "Actual native zoom plus raw viewport screenshots via Page.captureScreenshot without clip. Earlier Playwright fullPage screenshots at zoom>1 were clipped capture artifacts and are not accepted visual evidence. Settings restored in isolated browser.",
+  "observations": [
+    {
+      "factor": 2,
+      "theme": "dark",
+      "viewport": {
+        "innerWidth": 640,
+        "innerHeight": 450,
+        "devicePixelRatio": 2
+      },
+      "parent": {
+        "x": 19.1953125,
+        "y": -24.1796875,
+        "width": 480,
+        "height": 300
+      },
+      "focused": {
+        "text": "Powered by Zodiacs.org →",
+        "rect": {
+          "x": 324.5703125,
+          "y": 240.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 240.5,
+          "right": 464,
+          "bottom": 258,
+          "left": 324.5703125
+        },
+        "scrollY": 0,
+        "innerWidth": 480,
+        "innerHeight": 300
+      },
+      "afterPageDown": {
+        "scrollY": 0,
+        "scrollHeight": 300,
+        "innerHeight": 300,
+        "active": "Powered by Zodiacs.org →"
+      },
+      "fallback": {
+        "tag": "A",
+        "href": "https://zodiacs.org/today/",
+        "rect": {
+          "x": 19.1953125,
+          "y": 169.3203125,
+          "width": 208.296875,
+          "height": 19,
+          "top": 169.3203125,
+          "right": 227.4921875,
+          "bottom": 188.3203125,
+          "left": 19.1953125
+        }
+      },
+      "attributionScreenshot": {
+        "file": "nativeZoom2-dark-attribution-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "scrollScreenshot": {
+        "file": "nativeZoom2-dark-pagedown-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "keyboardScrollPass": true,
+      "attributionGloballyVisible": true,
+      "fallbackPass": true
+    },
+    {
+      "factor": 4,
+      "theme": "dark",
+      "viewport": {
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "devicePixelRatio": 4
+      },
+      "parent": {
+        "x": 19.19921875,
+        "y": -177.84765625,
+        "width": 281.6015625,
+        "height": 300
+      },
+      "focused": {
+        "text": "Powered by Zodiacs.org →",
+        "rect": {
+          "x": 126.0703125,
+          "y": 281.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 281.5,
+          "right": 265.5,
+          "bottom": 299,
+          "left": 126.0703125
+        },
+        "scrollY": 0,
+        "innerWidth": 281,
+        "innerHeight": 300
+      },
+      "afterPageDown": {
+        "scrollY": 44.5,
+        "scrollHeight": 345,
+        "innerHeight": 300,
+        "active": "Powered by Zodiacs.org →"
+      },
+      "fallback": {
+        "tag": "A",
+        "href": "https://zodiacs.org/today/",
+        "rect": {
+          "x": 19.19921875,
+          "y": 140.65234375,
+          "width": 208.296875,
+          "height": 19,
+          "top": 140.65234375,
+          "right": 227.49609375,
+          "bottom": 159.65234375,
+          "left": 19.19921875
+        }
+      },
+      "attributionScreenshot": {
+        "file": "nativeZoom4-dark-attribution-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "scrollScreenshot": {
+        "file": "nativeZoom4-dark-pagedown-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "keyboardScrollPass": true,
+      "attributionGloballyVisible": true,
+      "fallbackPass": true
+    },
+    {
+      "factor": 4,
+      "theme": "light",
+      "viewport": {
+        "innerWidth": 320,
+        "innerHeight": 225,
+        "devicePixelRatio": 4
+      },
+      "parent": {
+        "x": 19.19921875,
+        "y": -177.84765625,
+        "width": 281.6015625,
+        "height": 300
+      },
+      "focused": {
+        "text": "Powered by Zodiacs.org →",
+        "rect": {
+          "x": 126.0703125,
+          "y": 281.5,
+          "width": 139.4296875,
+          "height": 17.5,
+          "top": 281.5,
+          "right": 265.5,
+          "bottom": 299,
+          "left": 126.0703125
+        },
+        "scrollY": 0,
+        "innerWidth": 281,
+        "innerHeight": 300
+      },
+      "afterPageDown": {
+        "scrollY": 45,
+        "scrollHeight": 345,
+        "innerHeight": 300,
+        "active": "Powered by Zodiacs.org →"
+      },
+      "fallback": {
+        "tag": "A",
+        "href": "https://zodiacs.org/today/",
+        "rect": {
+          "x": 19.19921875,
+          "y": 140.65234375,
+          "width": 208.296875,
+          "height": 19,
+          "top": 140.65234375,
+          "right": 227.49609375,
+          "bottom": 159.65234375,
+          "left": 19.19921875
+        }
+      },
+      "attributionScreenshot": {
+        "file": "nativeZoom4-light-attribution-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "scrollScreenshot": {
+        "file": "nativeZoom4-light-pagedown-viewport.png",
+        "width": 1280,
+        "height": 900
+      },
+      "keyboardScrollPass": true,
+      "attributionGloballyVisible": true,
+      "fallbackPass": true
+    }
+  ]
+}

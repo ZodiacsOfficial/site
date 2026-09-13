@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/private/tmp/zodiacs-platform-runtime/node_modules/node/bin/node",
+    "--check",
+    "/private/tmp/zodiacs-platform-reference-confidence-independent-review/freeze2/site/tests/chart-reference-confidence-drive.mjs"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": ""
+}

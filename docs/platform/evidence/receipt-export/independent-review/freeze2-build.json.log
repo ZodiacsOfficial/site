@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-08T05:46:37.060665+00:00",
+  "sourcePatchSha256": "d6639f7bd46ed9adce30c1d1f374394356350593234dacdcc82baa20086fa425",
+  "staticRoot": "/private/tmp/zodiacs-platform-site-receipt-export/dist",
+  "authorBuildLog": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/freeze2-astro-build.log",
+  "staticGuideBuildLog": "/private/tmp/zodiacs-platform-site-receipt-export-evidence/freeze2-static-guide-build.log",
+  "inspectedAssets": {
+    "_astro/calculator-receipt.DqIFvBmX.js": "191e125ef6bb163412662bcf2313dc37d542aff47686615081f7064b626e4588"
+  }
+}

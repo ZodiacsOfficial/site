@@ -1,0 +1,12 @@
+
+ RUN  v3.2.6 /private/tmp/zodiacs-platform-site-seconds-receipt-companion
+
+ ✓ src/lib/time/localToUtc-precision.test.ts (27 tests) 85ms
+ ✓ src/lib/engine/portable.test.ts (21 tests) 143ms
+ ✓ src/lib/engine/calculator-receipt.test.ts (57 tests) 175ms
+
+ Test Files  3 passed (3)
+      Tests  105 passed (105)
+   Start at  13:50:24
+   Duration  499ms (transform 258ms, setup 0ms, collect 360ms, tests 402ms, environment 0ms, prepare 116ms)
+

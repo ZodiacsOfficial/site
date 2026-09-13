@@ -1,0 +1,26 @@
+{
+  "originalDriverSha256": "fb37a5a83bb02266583ce61014c88591dc78720befadce9c4525ea574d0c7758",
+  "correctedDriverSha256": "6b8eb27b192a33c0f1103435b98ea38435a8908f58546187224d3319b2ac378c",
+  "productChanged": false,
+  "reason": "Original shared harness expected Moon error-on-edit semantics for Chart. Actual unchanged Chart clear/invalidation retain prior error until next submission, where setError clears it. Corrected chart-only rerun asserts retained error, input focus, cleared output/actions/context, then successful error-free retry. Original12 chart assertion failures and12 Moon successes remain intact.",
+  "sourceProof": [
+    {
+      "start": "  function advanceInputRevision()",
+      "sha256": "7ecd8d2f7c41a23c83d44ac5fa46fcadb0091d12a7c4209737e0ad26486e2d55",
+      "unchanged": true,
+      "clearsError": false
+    },
+    {
+      "start": "  function clearResult()",
+      "sha256": "a10dcb83e77e2d9e0db8ac8940479f27086a094d120d301bf52ffc8d8b619af8",
+      "unchanged": true,
+      "clearsError": false
+    },
+    {
+      "start": "  function invalidateProfileHandoff()",
+      "sha256": "cfef931079b665cf1a88a7c4f59c534dc6e8d64490dee8dff64180c5ff3d1cfd",
+      "unchanged": true,
+      "clearsError": false
+    }
+  ]
+}

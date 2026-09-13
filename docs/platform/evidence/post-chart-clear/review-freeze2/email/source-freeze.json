@@ -1,0 +1,55 @@
+{
+  "freeze": 1,
+  "base": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "files": [
+    {
+      "path": "src/components/EmailCaptureEnhancement.astro",
+      "bytes": 10545,
+      "sha256": "173f5ec0452cc25c4c9e4279fe203a9fabd79e965302ecab02990e1a070f2deb"
+    },
+    {
+      "path": "src/islands/PostChartDailyBrief.tsx",
+      "bytes": 14413,
+      "sha256": "d2e58aab1d6a2cb9f34bc449a9e97c8db8d1791e0ddbed7da95348557ad7481e"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.test.ts",
+      "bytes": 1993,
+      "sha256": "1d8476ed9ced6990adf339e85b44d2a70e0813033065eb82647ab1dab72e2b7e"
+    },
+    {
+      "path": "src/lib/profile/post-chart-context.ts",
+      "bytes": 1676,
+      "sha256": "4250e0ff73c93a1dd211ddfca2cd2291e018455ea2c22c67e29baf1353eb341a"
+    },
+    {
+      "path": "tests/post-chart-context-clear-drive.mjs",
+      "bytes": 21409,
+      "sha256": "f60a0858fe7afbffd813bc1f9d4fca91e5a1e983b48b60374426bc37b9f86364"
+    },
+    {
+      "path": "tests/post-chart-daily-drive.mjs",
+      "bytes": 44367,
+      "sha256": "36bc9d6fa176f38d35c521bd71364c153e1605e6a28842533a77ce4c81848654"
+    }
+  ],
+  "patch": {
+    "path": "implementation.patch",
+    "bytes": 40054,
+    "sha256": "391af1a908fece28f57dfffe16ce435d1dce9ead828b9bcc77a505d1b6c0609b"
+  },
+  "validation": {
+    "focusedTestsPassed": 52,
+    "strictProjectTypes": "passed",
+    "astroCheck": {
+      "files": 1043,
+      "errors": 0,
+      "warnings": 0,
+      "hints": 11
+    },
+    "nativeGroupsPassed": 17,
+    "fullExistingPageGate": "fixture build passed; browser gate pending at source freeze"
+  },
+  "scope": "Six-file downstream presentation ownership only; no calculator/date, backend, auth, SQL, provider or publication change.",
+  "state": "Author source freeze for independent review; not release-ready/published/deployed."
+}

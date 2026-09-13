@@ -1,0 +1,16 @@
+(async function openShareOptions() {
+    if (!chart || !shareInput)
+        return;
+    shareReturnRef.current = document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    try {
+        const surface = await reviewImport('./ChartShareDialog');
+        shareRuntimeRef.current.dialog = surface.default;
+        setShareDialogOpen(true);
+    }
+    catch (err) {
+        console.error(err);
+        setCard('error');
+    }
+})

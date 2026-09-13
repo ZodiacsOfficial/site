@@ -1,0 +1,8 @@
+{
+  "sourceBase": "c7b9eb4a769e39a46aebc0a5ecedcb9fc40949e3",
+  "path": ".github/workflows/site-check.yml",
+  "beforeSha256": "74ba1e991909472d7e7d03318e9eb06874df13fc1b1c44059bdcedc20c382ca5",
+  "afterSha256": "286ca48156fb294f2af629fdf973d921565c5601142396a4d31fe5f1d95633a9",
+  "patchSha256": "f9ce2b49d843e6d6c65b5bd49155554f63aa82b146b48313e13d90ad6a5cadf4",
+  "scope": "Proposed four-line CI step only; root source not modified. Native driver freeze pending."
+}

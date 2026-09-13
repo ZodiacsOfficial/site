@@ -1,0 +1,291 @@
+{
+  "checkedAt": "2026-09-08T04:14:05.567Z",
+  "method": "Original pixelmatch threshold 0.1 and maxDiffRatio 0.001, no masks added or baseline updates.",
+  "records": [
+    {
+      "file": "aries-desktop-reduced-motion.actual.png",
+      "controlSHA256": "b5541a3628a68a7f3cde06d2a9f1db2513e6919ea990b03148cea57a6cd0904a",
+      "candidateSHA256": "b5541a3628a68a7f3cde06d2a9f1db2513e6919ea990b03148cea57a6cd0904a",
+      "controlDimensions": [
+        1440,
+        6856
+      ],
+      "candidateDimensions": [
+        1440,
+        6856
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "aries-desktop.actual.png",
+      "controlSHA256": "b5541a3628a68a7f3cde06d2a9f1db2513e6919ea990b03148cea57a6cd0904a",
+      "candidateSHA256": "b5541a3628a68a7f3cde06d2a9f1db2513e6919ea990b03148cea57a6cd0904a",
+      "controlDimensions": [
+        1440,
+        6856
+      ],
+      "candidateDimensions": [
+        1440,
+        6856
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "aries-mobile.actual.png",
+      "controlSHA256": "e7af12a417bf6f2cc62f56cfb1e26dcc258aff2308128fe0b149c4caeb4bc06d",
+      "candidateSHA256": "e7af12a417bf6f2cc62f56cfb1e26dcc258aff2308128fe0b149c4caeb4bc06d",
+      "controlDimensions": [
+        390,
+        10202
+      ],
+      "candidateDimensions": [
+        390,
+        10202
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "birth-chart-kahlo-desktop-reduced-motion.actual.png",
+      "controlSHA256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "candidateSHA256": "6485a2f54de2f8c14acf300ca36008c4d55631bdf7c8bb1a35ae221120094553",
+      "controlDimensions": [
+        1440,
+        9502
+      ],
+      "candidateDimensions": [
+        1440,
+        9502
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "birth-chart-kahlo-desktop.actual.png",
+      "controlSHA256": "506af433a1b3f05d4f7399a4395c4ea2bdc4c113a44beda5b95a658ee0cbb99a",
+      "candidateSHA256": "506af433a1b3f05d4f7399a4395c4ea2bdc4c113a44beda5b95a658ee0cbb99a",
+      "controlDimensions": [
+        1440,
+        9502
+      ],
+      "candidateDimensions": [
+        1440,
+        9502
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "birth-chart-kahlo-mobile.actual.png",
+      "controlSHA256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "candidateSHA256": "fe433c1ed2871de2749d1c7fd3b2b00e77bbad736177b9ebc1d7df8b18821d35",
+      "controlDimensions": [
+        390,
+        14011
+      ],
+      "candidateDimensions": [
+        390,
+        14011
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "event-full-moon-desktop-reduced-motion.actual.png",
+      "controlSHA256": "aebcead25e87a9de12bd6259e59ed7cf0c4c68b88d7ac5cfe07557a9c25fbfb5",
+      "candidateSHA256": "aebcead25e87a9de12bd6259e59ed7cf0c4c68b88d7ac5cfe07557a9c25fbfb5",
+      "controlDimensions": [
+        1440,
+        4785
+      ],
+      "candidateDimensions": [
+        1440,
+        4785
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "event-full-moon-desktop.actual.png",
+      "controlSHA256": "aebcead25e87a9de12bd6259e59ed7cf0c4c68b88d7ac5cfe07557a9c25fbfb5",
+      "candidateSHA256": "aebcead25e87a9de12bd6259e59ed7cf0c4c68b88d7ac5cfe07557a9c25fbfb5",
+      "controlDimensions": [
+        1440,
+        4785
+      ],
+      "candidateDimensions": [
+        1440,
+        4785
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "event-full-moon-mobile.actual.png",
+      "controlSHA256": "219ece4e71a2044e3617d49abdd4033bdb5134474fd045a36e26ce1bddbd5a6d",
+      "candidateSHA256": "219ece4e71a2044e3617d49abdd4033bdb5134474fd045a36e26ce1bddbd5a6d",
+      "controlDimensions": [
+        390,
+        6888
+      ],
+      "candidateDimensions": [
+        390,
+        6888
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "events-hub-desktop-reduced-motion.actual.png",
+      "controlSHA256": "76a5e4850b1551d867cddd30300ac8267327ab238ae785a65dc27b9cccbfc3e9",
+      "candidateSHA256": "76a5e4850b1551d867cddd30300ac8267327ab238ae785a65dc27b9cccbfc3e9",
+      "controlDimensions": [
+        1440,
+        16743
+      ],
+      "candidateDimensions": [
+        1440,
+        16743
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "events-hub-desktop.actual.png",
+      "controlSHA256": "76a5e4850b1551d867cddd30300ac8267327ab238ae785a65dc27b9cccbfc3e9",
+      "candidateSHA256": "76a5e4850b1551d867cddd30300ac8267327ab238ae785a65dc27b9cccbfc3e9",
+      "controlDimensions": [
+        1440,
+        16743
+      ],
+      "candidateDimensions": [
+        1440,
+        16743
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "events-hub-mobile.actual.png",
+      "controlSHA256": "5061d16f9cb991faf69bec35940292e11202417efa7b129c3f061aedd4354baa",
+      "candidateSHA256": "5061d16f9cb991faf69bec35940292e11202417efa7b129c3f061aedd4354baa",
+      "controlDimensions": [
+        390,
+        20953
+      ],
+      "candidateDimensions": [
+        390,
+        20953
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    },
+    {
+      "file": "home-desktop-reduced-motion.actual.png",
+      "controlSHA256": "5cde32cc7073f18a9789f0578130c915163a0d85a5e1d9c9019d3d1930f415e0",
+      "candidateSHA256": "f42b5559d14da406737f5e1f7c53896dcaef4032c46faac8ef86b539a608135f",
+      "controlDimensions": [
+        1440,
+        6493
+      ],
+      "candidateDimensions": [
+        1440,
+        6493
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 252012,
+      "decodedPixelsIdentical": false
+    },
+    {
+      "file": "home-desktop.actual.png",
+      "controlSHA256": "d07f0067115cdbadc84d20204909cfc06f2929f5ad1972a702f5cab55c26c6f4",
+      "candidateSHA256": "d4700cb43cd6ab0719f77a0a6ad6ba723c7f8fa042eeb18a50977ca69fce0cdf",
+      "controlDimensions": [
+        1440,
+        6493
+      ],
+      "candidateDimensions": [
+        1440,
+        6493
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 248570,
+      "decodedPixelsIdentical": false
+    },
+    {
+      "file": "home-mobile.actual.png",
+      "controlSHA256": "62aacaadd34aa237ff248434892a6da0d45ba1bb06ec0d1e08a6f661ae4aa29c",
+      "candidateSHA256": "62aacaadd34aa237ff248434892a6da0d45ba1bb06ec0d1e08a6f661ae4aa29c",
+      "controlDimensions": [
+        390,
+        8122
+      ],
+      "candidateDimensions": [
+        390,
+        8122
+      ],
+      "dimensionsEqual": true,
+      "diffPixels": 0,
+      "diffRatio": 0,
+      "withinOriginalBudget": true,
+      "rawPixelDifferences": 0,
+      "decodedPixelsIdentical": true
+    }
+  ]
+}

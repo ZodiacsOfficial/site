@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import { writeFileSync } from 'node:fs';
+import { ENGINE_VERSION, natalChart } from '@zodiacs/engine';
+import { resolveBirth, resolveLocalToUtc, offsetAt } from '@zodiacs/engine/geo';
+import { createNatalEnvelope, parseNatalEnvelope, serializeNatalEnvelope, natalReplayInput, redactNatalEnvelope } from '@zodiacs/engine/receipt';
+assert.equal(ENGINE_VERSION,'0.1.1-rc.6');
+const fixtures=[
+ {name:'Manaus-four-second-gap',date:'1914-01-01',time:'00:00',timeZone:'America/Manaus',latitude:-3.1,longitude:-60.02,timeKnown:true,instant:'1914-01-01T04:00:04.000Z',flags:['dst-gap'],shift:4/60},
+ {name:'unknown-time-local-noon-no-false-fold',date:'1914-01-01',timeZone:'America/Manaus',latitude:-3.1,longitude:-60.02,timeKnown:false,instant:'1914-01-01T16:00:00.000Z',flags:[],shift:0},
+ {name:'polar-Placidus-fallback',date:'2024-01-01',time:'12:00',timeZone:'Arctic/Longyearbyen',latitude:89,longitude:15.63,timeKnown:true,instant:'2024-01-01T11:00:00.000Z',flags:[],shift:0},
+ {name:'true-four-second-Denver-fold',date:'1883-11-18',time:'12:00',timeZone:'America/Denver',latitude:39.74,longitude:-104.99,timeKnown:true,instant:'1883-11-18T18:59:56.000Z',flags:['dst-fold','lmt'],shift:0},
+ {name:'historical-second-offset-Mexico',date:'1907-07-06',time:'08:30',timeZone:'America/Mexico_City',latitude:19.43,longitude:-99.13,timeKnown:true,instant:'1907-07-06T15:06:36.000Z',flags:['lmt'],shift:0},
+];
+const results=fixtures.map(f=>{
+ const local={date:f.date,timeZone:f.timeZone,latitude:f.latitude,longitude:f.longitude,timeKnown:f.timeKnown,houseSystem:'placidus',...(f.time===undefined?{}:{time:f.time})};
+ const input=resolveBirth(local),resolved=resolveLocalToUtc(f.date,f.time??'12:00',f.timeZone);
+ assert.equal(new Date(input.utc).toISOString(),f.instant);assert.deepEqual(input.flags,f.flags);
+ assert.equal(resolved.utc.toISOString(),f.instant);assert.deepEqual(resolved.flags,f.flags);
+ assert.equal(offsetAt(f.timeZone,resolved.utc.getTime()),resolved.offsetMinutes);
+ const chart=natalChart(input),envelope=createNatalEnvelope(chart,{reference:f.timeKnown?'supplied-instant':'local-noon',localResolution:{date:f.date,time:f.time??'12:00',timeZone:f.timeZone,offsetMinutes:resolved.offsetMinutes,gapShiftMinutes:f.shift,policy:{fold:'earlier',gap:'shift-forward'}}});
+ const wire=serializeNatalEnvelope(envelope),parsed=parseNatalEnvelope(wire);assert.equal(parsed.ok,true);assert.deepEqual(parsed.envelope,envelope);
+ const replay=natalReplayInput(parsed.envelope);assert.equal(new Date(replay.utc).toISOString(),f.instant);assert.equal(replay.houseSystem,'placidus');
+ const replayed=natalChart(replay);assert.deepEqual(replayed.bodies,chart.bodies);assert.deepEqual(replayed.angles,chart.angles);assert.deepEqual(replayed.houses,chart.houses);assert.deepEqual(replayed.aspects,chart.aspects);
+ assert.equal(envelope.receipt.sourceInstant,null);assert.equal(envelope.receipt.provenance,null);assert.deepEqual(envelope.receipt.inputFlags,f.flags);
+ if(!f.timeKnown){assert.equal(envelope.receipt.houses.actual,null);assert.equal(envelope.receipt.houses.absenceReason,'unknown-time');assert.equal(chart.angles,null);assert.equal(chart.houses,null);}
+ if(f.name==='polar-Placidus-fallback'){assert.equal(envelope.receipt.houses.requested,'placidus');assert.equal(envelope.receipt.houses.actual,'whole');assert.ok(envelope.receipt.resultFlags.includes('high-latitude-fallback'));}
+ const diagnostic=redactNatalEnvelope(envelope);assert.equal(diagnostic.status,'redacted-not-anonymous');assert.equal('instant' in diagnostic,false);assert.equal('coordinates' in diagnostic,false);
+ return{name:f.name,instant:f.instant,flags:input.flags,offsetMinutes:resolved.offsetMinutes,gapShiftMinutes:f.shift,houses:envelope.receipt.houses,resultFlags:envelope.receipt.resultFlags,roundtrip:true,replayNumericsEqual:true,sourceInstant:null,provenance:null,wireBytes:Buffer.byteLength(wire)};
+});
+const evidence={version:ENGINE_VERSION,node:process.version,icu:process.versions.icu,tzdb:process.versions.tz,publicImports:['@zodiacs/engine','@zodiacs/engine/geo','@zodiacs/engine/receipt'],examples:results.length,passed:true,results};
+writeFileSync(process.argv[2],JSON.stringify(evidence,null,2)+'\n');console.log(JSON.stringify(evidence));

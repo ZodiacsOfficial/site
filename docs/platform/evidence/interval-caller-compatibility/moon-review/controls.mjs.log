@@ -1,0 +1,32 @@
+import fs from'node:fs';import assert from'node:assert/strict';import {captureLookup}from'./lookup-subject.mjs';import * as engine from'./engine-subject.mjs';import{resolveLocalToUtc}from'./resolver-subject.mjs';import{moonPhaseName,moonPhaseAngle}from'./lite-subject.mjs';import{resolveLocalDateIntervals}from'./reviewed-interval-subject.mjs';
+const event={preventDefault(){}};const state=()=>({result:null,error:'',busy:false,events:[],errors:[]});
+const sign=lon=>['aries','taurus','gemini','cancer','leo','virgo','libra','scorpio','sagittarius','capricorn','aquarius','pisces'][Math.floor(((lon%360)+360)%360/30)];
+function schedule(initial,changes){return{completeness:'complete-transitions-v1',offsetMilliseconds(_,ms){let offset=initial;for(const[at,next]of changes)if(at<=ms)offset=next;return offset;},nextTransitionMilliseconds(_,ms){return changes.find(([at])=>at>ms)?.[0]??null;}};}
+const fixtures=[
+ {date:'2011-12-30',zone:'Pacific/Apia',initial:-36000000,changes:[[Date.parse('2011-12-30T10:00:00Z'),50400000]]},
+ {date:'1892-07-04',zone:'Pacific/Apia',initial:45184000,changes:[[Date.parse('1892-07-04T11:26:56Z'),-41216000]]},
+ {date:'1919-03-31',zone:'America/Toronto',initial:-18000000,changes:[[Date.parse('1919-03-31T04:30:00Z'),-14400000]]},
+ {date:'2009-11-01',zone:'America/St_Johns',initial:-9000000,changes:[[Date.parse('2009-11-01T02:31:00Z'),-12600000]]},
+];
+const rows=[];
+for(const fixture of fixtures){
+ const calls=[],wrapper={...engine,bodyLongitude(name,date){calls.push({name,instant:date.toISOString()});return engine.bodyLongitude(name,date);}},s=state();await captureLookup({date:fixture.date,time:'',city:{tz:fixture.zone},loadEngine:async()=>wrapper},s)(event);assert.ok(s.result&&!s.error);
+ const intervals=resolveLocalDateIntervals(fixture.date,fixture.zone,schedule(fixture.initial,fixture.changes));assert.ok(intervals.status!=='unresolved');
+ const formatter=new Intl.DateTimeFormat('en-US',{timeZone:fixture.zone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'});
+ const points=calls.map(call=>({...call,hostWall:formatter.format(new Date(call.instant)),inRequestedDate:intervals.intervals.some(x=>Date.parse(call.instant)>=x.start&&Date.parse(call.instant)<x.endExclusive)}));
+ const actualEndpoints=intervals.intervals.flatMap(x=>[x.start,x.endExclusive-1]).map(ms=>{const longitude=engine.bodyLongitude('Moon',new Date(ms));return{instant:new Date(ms).toISOString(),longitude,sign:sign(longitude)};});
+ rows.push({date:fixture.date,zone:fixture.zone,existingLookupResult:s.result,existingDisplayedSigns:[sign(s.result.lon),...(s.result.altLon===null?[]:[sign(s.result.altLon)])],calls:points,reviewedIntervals:intervals,actualIntervalEndpointObservations:actualEndpoints,qualification:'Finite host/known-transition control and actual engine behavior; endpoint observations do not certify all intervening Moon candidates.'});
+}
+assert.equal(rows[0].reviewedIntervals.status,'empty');assert.ok(rows[0].calls.every(x=>!x.inRequestedDate));
+const repeated=rows[1];assert.equal(repeated.reviewedIntervals.intervals[0].endExclusive-repeated.reviewedIntervals.intervals[0].start,172800000);assert.ok(Date.parse(repeated.calls[3].instant)<repeated.reviewedIntervals.intervals[0].start+86400000);
+const toronto=rows[2];assert.equal(Date.parse(toronto.calls[2].instant)-toronto.reviewedIntervals.intervals[0].start,1800000);
+let release;const deferred=new Promise(resolve=>{release=resolve;});const shared=state(),inputA={date:'2000-01-01',time:'',city:null,loadEngine:()=>deferred};const pending=captureLookup(inputA,shared)(event);assert.equal(shared.busy,true);
+const visibleInput={date:'2000-06-15',time:'',city:null};release(engine);await pending;const freshState=state();await captureLookup({...visibleInput,loadEngine:async()=>engine},freshState)(event);assert.notEqual(shared.result.lon,freshState.result.lon);
+const stale={oldCapturedInput:inputA.date,visibleEditedInput:visibleInput.date,oldCompletionResult:shared.result,freshEditedInputResult:freshState.result,oldResultCommittedAfterEdit:true,resultContainsDateIdentity:'date'in shared.result,qualification:'Exact production closure executed with observable setters and a controlled pending loader; enabled edit controls and missing revision checks are confirmed in copied source. Not a DOM/browser timing claim.'};
+const previous=shared.result;await captureLookup({...visibleInput,loadEngine:async()=>{throw new Error('synthetic load failure');}},shared)(event);assert.equal(shared.result,previous);assert.equal(shared.error,'moonError');
+const staleError={existingResultPreservedAfterFailedNewInput:true,errorKey:shared.error,busy:shared.busy};
+const phaseRows=[];for(const date of ['2024-01-01','2024-01-03','2024-01-09','2024-01-16','2024-01-24','2024-04-07','2024-04-13','2024-04-14','2024-04-15']){
+ const start=new Date(date+'T00:00:00Z'),end=new Date(date+'T23:59:59.999Z');phaseRows.push({date,startPhase:moonPhaseName(start),endPhase:moonPhaseName(end),startAngle:moonPhaseAngle(start),endAngle:moonPhaseAngle(end),phaseChanged:moonPhaseName(start)!==moonPhaseName(end)});
+}
+assert.ok(phaseRows.some(x=>x.phaseChanged));
+const result={node:process.version,icu:process.versions.icu,tzdb:process.versions.tz,rows,stale,staleError,finitePhaseNameControls:phaseRows,defaultIntervalCapability:resolveLocalDateIntervals('2000-01-01','UTC')};fs.writeFileSync('results.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify({dateControls:rows.map(x=>({date:x.date,zone:x.zone,status:x.reviewedIntervals.status,displayedSigns:x.existingDisplayedSigns,intervalEndpointSigns:x.actualIntervalEndpointObservations.map(x=>x.sign)})),staleCommit:true,staleError:true,phaseChanges:phaseRows.filter(x=>x.phaseChanged),nativeDefault:result.defaultIntervalCapability}));
