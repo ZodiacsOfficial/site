@@ -1,43 +1,25 @@
 # Platform evidence ledger
 
-## L2b candidate — conditional complete-date coverage
+## Current checkpoint — L1 released; bounded L2 interpretation correction
 
-The owner authorizes one bounded L2b draft from current main
-`87f18e0a101b96abf847be58e8a0c31a691992f8`. The retained interval algebra is now
-consumed only to adjudicate unknown-time local reference membership when the
-native complete-transition contract is available. An immutable enumeration trace
-stays temporary; no coverage metadata enters calculations, receipts or storage.
-Missing/failed completeness retains a qualified Intl-verified reference. Detected
-provider contradictions refuse it. Known-time and no-city UTC Moon paths remain
-unchanged; no alternative reference or Sun/Moon sign certainty is inferred.
+L1 / C-017 is merged in [#476](https://github.com/ZodiacsOfficial/site/pull/476)
+as `307c832e662e1996ee904f11fb1678e402808a03`, with the exact owner-approved tree.
+All 14 automatic post-merge jobs passed in
+[run 34756055748](https://github.com/ZodiacsOfficial/site/actions/runs/34756055748).
+Production and rollback verification found no critical regression.
+Current main/production at the L2 starting refresh is
+`0490c4f8a92f045417d7f81ed502f0789e8ecdc2`, an automated Registry snapshot descendant
+with unchanged L1 runtime. [Production evidence](evidence/l1-production/README.md).
 
-[Runtime/date policy contract](evidence/l2b-date-coverage/CONTRACT.md).
-Implementation and local verification are in progress; hosted CI and exact-source
-preview remain pending. This is not merged or production-deployed. SDK merge/npm
-publication remains held; L3–L6, Astrofolio and Zodia remain excluded.
+The owner now authorizes only downstream unknown-time reference-Sun interpretation
+in L2, based on this current main. Calculated positions, receipt bytes, known-time
+behavior and approved design stay intact. Complete-date interval activation is
+separate until provider completeness, runtime support and skipped/repeated-date
+policies are established. [L2 scope and evidence](evidence/l2-reference-sun/README.md).
+No merge/deployment, SDK merge/npm publication, L3–L6, Astrofolio or Zodia work is
+included. The SDK publication hold remains explicit.
 
-## Current checkpoint — L2a released and production-verified
-
-The owner approved site-only PR #480 at `2e7b676d5026aaeaa78fc9b541b01972a7c81424`.
-Head and main were unchanged, all 14 candidate jobs passed, and the exact-source
-preview evidence remained valid. Marked ready and merged as
-`87f18e0a101b96abf847be58e8a0c31a691992f8`; tree
-`0305b08b378d6c9ae470e0f621a9ce1ecb532f98` equals the approved tree exactly.
-
-Production `dpl_44tNRbymWxhKRRhUwg92gv945paY` is READY on zodiacs.org and www.
-Live known/unknown-time chart replacement, neutral automatic naming, Today, Profile,
-uncertainty copy and exact current-edition publication checks pass. Numerical and
-receipt comparisons reuse valid unchanged-source evidence. No release regression
-found; rollback baseline `dpl_DRnrXu34g9od11bzmgoYCb368QYr` was recorded before merge.
-Automatic [post-merge CI](https://github.com/ZodiacsOfficial/site/actions/runs/34765077240)
-passed all 14 jobs. Production verification and release closeout are complete.
-
-[Release evidence](evidence/l2-production/README.md).
-SDK merge/npm publication remains held. Complete-date intervals stay inactive in production;
-L3–L6, Astrofolio and Zodia remain excluded. L1 remains released and verified.
-The [pre-release checkpoint](EVIDENCE-2026-09-13-pre-l2-release.md) retains the earlier draft status.
-
-## Historical L2a draft delivery — superseded by release above
+## L2a delivery — verified draft, 2026-09-13
 
 Draft [#480](https://github.com/ZodiacsOfficial/site/pull/480) is delivered at
 `2e7b676d5026aaeaa78fc9b541b01972a7c81424`, tree

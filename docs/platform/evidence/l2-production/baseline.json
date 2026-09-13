@@ -1,0 +1,61 @@
+{
+  "approvedHead": "2e7b676d5026aaeaa78fc9b541b01972a7c81424",
+  "approvedTree": "0305b08b378d6c9ae470e0f621a9ce1ecb532f98",
+  "main": "0490c4f8a92f045417d7f81ed502f0789e8ecdc2",
+  "passedRun": 34759307903,
+  "rollback": {
+    "id": "dpl_DRnrXu34g9od11bzmgoYCb368QYr",
+    "name": "zodiacs-org",
+    "url": "zodiacs-7848lendj-zodiacsofficial.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1789302057980,
+    "creator": {
+      "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+      "username": "zodiacs-org"
+    },
+    "project": {
+      "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+      "name": "zodiacs-org",
+      "framework": null
+    },
+    "meta": {
+      "githubCommitAuthorName": "github-actions[bot]",
+      "githubCommitAuthorEmail": "41898282+github-actions[bot]@users.noreply.github.com",
+      "githubCommitMessage": "Archive Registry market snapshot 2026-09-13",
+      "githubCommitOrg": "ZodiacsOfficial",
+      "githubCommitRef": "main",
+      "githubCommitRepo": "site",
+      "githubCommitSha": "0490c4f8a92f045417d7f81ed502f0789e8ecdc2",
+      "githubDeployment": "1",
+      "githubOrg": "ZodiacsOfficial",
+      "githubRepo": "site",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1251096896",
+      "githubRepoId": "1251096896",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "github-actions[bot]",
+      "githubCommitVerification": "verified",
+      "repoPushedAt": "1789302054000",
+      "branchAlias": "zodiacs-org-git-main-zodiacsofficial.vercel.app",
+      "lambdaRuntimeStats": "{\"nodejs\":12}"
+    },
+    "alias": [
+      "zodiacs.org",
+      "www.zodiacs.org",
+      "zodiacs-org.vercel.app",
+      "zodiacs-org-zodiacsofficial.vercel.app",
+      "zodiacs-org-git-main-zodiacsofficial.vercel.app"
+    ],
+    "target": "production",
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1789302059235,
+    "ready": 1789302274595,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as engine from '../lib/engine/full';
 import { moonPhaseName, moonPhaseNameFromAngle } from '../lib/engine/lite';
 import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { signForLongitude } from '../lib/signs';
 import { t, type CatalogLocale } from '../lib/i18n';
 
@@ -25,7 +26,7 @@ const execute = new Function('context', `with(context){${ts.transpile([...functi
 })};return lookup({preventDefault(){}});}`);
 type Result = { phase: ReturnType<typeof moonPhaseName>; angle: number; illum: number; lon: number; caption: string };
 type Input = { date: string; time: string; zone: string | null; locale?: CatalogLocale };
-async function capture({ date, time, zone, locale = 'en' }: Input, longitudes?: { Moon: number; Sun: number }) {
+async function capture({ date, time, zone, locale = 'en' }: Input, longitudes?: { Moon: number; Sun: number }, assess = assessLocalDateReference) {
   const calls: Array<{ body: string; utc: string; value: number }> = [];
   const resolutions: string[][] = [];
   const state: { result: Result | null; error: string; busy: boolean } = { result: null, error: '', busy: false };
@@ -39,7 +40,7 @@ async function capture({ date, time, zone, locale = 'en' }: Input, longitudes?: 
         ? longitudes[args[0]] : engine.bodyLongitude(...args); calls.push({ body: args[0], utc: args[1].toISOString(), value }); return value;
     } }),
     resolveLocalToUtc: (...args: Parameters<typeof resolveLocalToUtc>) => { resolutions.push(args); return resolveLocalToUtc(...args); },
-    localDateContainsUtc, calculationError: (_error: unknown, _locale: string, fallback: string) => fallback,
+    assessLocalDateReference: assess, calculationError: (_error: unknown, _locale: string, fallback: string) => fallback,
     console: { error() {} },
   });
   return { ...state, calls, resolutions };
@@ -56,6 +57,52 @@ const controls: Array<[string, Input]> = [
 ];
 
 describe('Moon phase reference result', () => {
+  it.each(['complete', 'unavailable', 'failed'] as const)('preserves the same reference longitudes and phase with %s date coverage', state => {
+    const provider = state === 'unavailable' ? null : {
+      completeness: 'complete-transitions-v1' as const, offsetMilliseconds: () => 0,
+      nextTransitionMilliseconds: () => { if (state === 'failed') throw Error('private'); return null; },
+    };
+    const assess = vi.fn((date: string, utc: Date, zone: string) => assessLocalDateReference(date, utc, zone, provider));
+    return (async () => {
+      const request = { date: '2024-03-20', time: '', zone: 'UTC' };
+      const actual = await capture(request, undefined, assess);
+      const baseline = await capture(request, undefined, (date, utc, zone) => assessLocalDateReference(date, utc, zone, null));
+      expect(actual).toEqual(baseline);
+      expect(actual.calls).toHaveLength(2);
+      expect(actual.result!.caption).toBe(t('en', 'referenceLocalCaption'));
+      expect(actual.result).not.toHaveProperty('coverage');
+      expect(assess).toHaveBeenCalledOnce();
+    })();
+  });
+
+  it.each([
+    { date: '2011-12-30', time: '08:30', zone: 'Pacific/Apia' },
+    { date: '2024-03-20', time: '', zone: null },
+    { date: '2024-03-20', time: '08:30', zone: null },
+  ])('leaves known-time and explicit UTC paths unchanged (%j)', async request => {
+    const assess = vi.fn(() => { throw Error('Unexpected coverage call'); });
+    const result = await capture(request, undefined, assess);
+    expect(result.error).toBe(''); expect(result.calls).toHaveLength(2);
+    expect(assess).not.toHaveBeenCalled();
+  });
+
+  it('refuses a provider violation before either longitude calculation', async () => {
+    const assess = (date: string, utc: Date, zone: string) => assessLocalDateReference(date, utc, zone, {
+      completeness: 'complete-transitions-v1', offsetMilliseconds: () => 0,
+      nextTransitionMilliseconds: () => 0,
+    });
+    const result = await capture({ date: '2024-03-20', time: '', zone: 'UTC' }, undefined, assess);
+    expect(result.result).toBeNull(); expect(result.calls).toEqual([]);
+    expect(result.error).toBe(t('en', 'localDateReferenceError'));
+  });
+
+  it.each(['outside-date', 'unresolved'] as const)('refuses %s without ephemeris work', async referenceStatus => {
+    const assess = () => ({ referenceStatus, coverage: { status: 'unresolved' as const, reason: 'provider-violation' as const }, evidence: null });
+    const result = await capture({ date: '2024-03-20', time: '', zone: 'UTC' }, undefined, assess);
+    expect(result.result).toBeNull(); expect(result.calls).toEqual([]);
+    expect(result.error).toBe(t('en', 'localDateReferenceError'));
+  });
+
   it('corrects the real January 16 boundary disagreement without changing full values', async () => {
     const actual = await capture({ date: '2024-01-16', time: '10:18', zone: null });
     expect(moonPhaseName(new Date('2024-01-16T10:18:00Z'))).toBe('Waxing Crescent');

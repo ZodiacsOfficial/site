@@ -1,0 +1,54 @@
+{
+  "README.md": {
+    "bytes": 3989,
+    "sha256": "6f5bf6bdf386fad823894b352a2060fab0a5486509eebe2afc49cf514d65b5ab"
+  },
+  "baseline.json": {
+    "bytes": 2037,
+    "sha256": "24c44a4f09f091fcaef8d735e416bc72cad4cdcc8014fb3587e0f9baeadfac76"
+  },
+  "ci-summary.txt": {
+    "bytes": 24877,
+    "sha256": "c700217c44ec390542baedc461ca89cbe88931cb4dcfa4ff666a6282b3ae1e82"
+  },
+  "live-editions.log": {
+    "bytes": 127,
+    "sha256": "77fc9730faee2d538999a7045aaf7e95ab1da6b7380b5020a509580cd7ae9c0c"
+  },
+  "main-final.json": {
+    "bytes": 101,
+    "sha256": "89f6f84521549c50a0e79f7ad5d102dcea2cb924db2ed2812acb651f3a082db4"
+  },
+  "merge.json": {
+    "bytes": 2665,
+    "sha256": "5f1aef4e4eb30f3a0ec1867f165556c5d9fd6ecf091b913abb9374f0604e3af8"
+  },
+  "post-merge-ci.json": {
+    "bytes": 28964,
+    "sha256": "10f1ca87d91d62127442096717ff19ddec669424649f9a6b43eb72df843c0efe"
+  },
+  "post-merge-ci.log.gz": {
+    "bytes": 555994,
+    "sha256": "75e179623470d9e446b1e2b81d9cb888790fc2323efaeebeb2e03ef36ff6b2ee"
+  },
+  "production-final.json": {
+    "bytes": 1854,
+    "sha256": "6951666a3e464a73d9dc3e3c5c054b629632cb035e8df5be3aa61b0a34f02f15"
+  },
+  "production.json": {
+    "bytes": 1854,
+    "sha256": "6951666a3e464a73d9dc3e3c5c054b629632cb035e8df5be3aa61b0a34f02f15"
+  },
+  "rollback-ready.json": {
+    "bytes": 1833,
+    "sha256": "cf3fef100e521296f3aa3627f00c25c4d309014fbc51d0a243d4a9240e94e103"
+  },
+  "runtime-errors.txt": {
+    "bytes": 118,
+    "sha256": "7c1f722208b17462127fa1edb6acc3362e14ad2b0378aaf6626f8480f89940e2"
+  },
+  "www-production.json": {
+    "bytes": 1854,
+    "sha256": "6951666a3e464a73d9dc3e3c5c054b629632cb035e8df5be3aa61b0a34f02f15"
+  }
+}

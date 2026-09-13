@@ -66,7 +66,7 @@ function harness() {
     readFirstReadingProgress: () => ({}),
     track: () => {}, signForLongitude: () => ({ slug: 'aries' }),
     resolveLocalToUtc: (date: string) => ({ utc: new Date(date + 'T14:30:00Z'), offsetMinutes: 0, flags: [] }),
-    localDateContainsUtc: () => true,
+    assessLocalDateReference: () => ({ referenceStatus: 'member' }),
     moonIsUncertain: (chart: any) => chart.moonSignCandidates?.length !== 1,
   };
   for (const name of ['inputRevision', 'runChartId', 'chartContextId', 'profileAccessGeneration', 'profileHandoffId', 'savePromptGeneration']) context[name + (name === 'profileAccessGeneration' ? '' : 'Ref')] = { current: 0 };
@@ -133,12 +133,12 @@ describe('ChartCalculator result ownership', () => {
     const h = harness(); await h.context.runChart(input(), true); await flush();
     const workingLoader = h.context.loadCalculatorReceipt;
     if (boundary === 'calculation') h.context.loadCalculatorReceipt = () => Promise.resolve({ computeCalculatorReceipt: () => { throw Error('Synthetic private failure'); } });
-    else h.context.localDateContainsUtc = () => { throw Error('Synthetic reference failure'); };
+    else h.context.assessLocalDateReference = () => { throw Error('Synthetic reference failure'); };
     await h.context.runChart({ ...input('1991-06-15'), timeKnown: boundary !== 'local-date reference' }, true); await flush();
     expectEmpty(h.context); expect(h.context.error).toBe(boundary === 'calculation' ? 'Generic calculation error' : 'Generic error'); expect(h.context.busy).toBe(false);
     expect(h.context.date).toBe('1990-06-15'); expect(h.context.time).toBe('14:30');
     h.context.loadCalculatorReceipt = workingLoader;
-    h.context.localDateContainsUtc = () => true;
+    h.context.assessLocalDateReference = () => ({ referenceStatus: 'member' });
     await h.context.runChart(input('1992-06-15'), true); await flush();
     expect(h.context.computedInput.date).toBe('1992-06-15'); expect(h.context.error).toBe('');
   });

@@ -12,7 +12,8 @@ import {
 } from '../lib/engine/lite';
 import type { MoonPhaseName } from '../lib/engine/lite';
 import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
-import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 import { formatDateTime } from '../lib/i18n/dates';
@@ -113,7 +114,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
         utc = resolveLocalToUtc(date, hasTime ? time : '12:00', city.tz).utc;
         if (!hasTime) {
           try {
-            if (!localDateContainsUtc(date, utc, city.tz)) throw localDateReferenceFailure;
+            if (assessLocalDateReference(date, utc, city.tz).referenceStatus !== 'member') throw localDateReferenceFailure;
           } catch { throw localDateReferenceFailure; }
         }
       } else {

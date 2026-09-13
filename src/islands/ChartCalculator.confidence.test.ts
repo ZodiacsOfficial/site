@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as actualEngine from '../lib/engine/full';
 import * as actualReceipt from '../lib/engine/calculator-receipt';
 import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { moonCandidates, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import { signForLongitude } from '../lib/signs';
 import { buildChartContext } from '../lib/chart-context';
@@ -37,7 +38,7 @@ const execute = new Function('context', `with(context){${ts.transpile(calculatio
 })}; return {result, portable, resolved, nextMoonAmbiguous, nextRegistryRecordSlug};}`);
 const input = (date: string, zone: string, known = false) => ({ date, time: '12:00', timeKnown: known,
   city: { name: 'Synthetic place', tz: zone, lat: 43.65, lon: -79.38 }, houseSystem: 'whole' });
-function capture(value: ReturnType<typeof input>, mode = 'full', fallback = false) {
+function capture(value: ReturnType<typeof input>, mode = 'full', fallback = false, assess = assessLocalDateReference) {
   const calls = { publicNatal: 0, legacyNatal: 0, endpoints: 0 };
   const receiptModule = fallback || mode !== 'full' ? undefined : { computeCalculatorReceipt: (...args: Parameters<typeof actualReceipt.computeCalculatorReceipt>) => {
     const result = actualReceipt.computeCalculatorReceipt(...args); if (result) calls.publicNatal++; return result;
@@ -45,7 +46,7 @@ function capture(value: ReturnType<typeof input>, mode = 'full', fallback = fals
   const engine = { ...actualEngine, computeChart: (arg: ChartInput) => {
     calls.legacyNatal++; return actualEngine.computeChart(arg);
   }, computeBodies: () => { calls.endpoints++; throw Error('Unexpected endpoint calculation'); } };
-  const result = execute({ input: value, mode, engine, receiptModule, resolveLocalToUtc, localDateContainsUtc,
+  const result = execute({ input: value, mode, engine, receiptModule, resolveLocalToUtc, assessLocalDateReference: assess,
     signForLongitude, moonIsUncertain, runIsCurrent: () => true,
     localDateReferenceFailure: new Error('local-date reference refused'),
   });
@@ -73,6 +74,49 @@ const controls = [
 ] as const;
 
 describe('ChartCalculator reference confidence', () => {
+  it.each(['complete', 'unavailable', 'failed'] as const)('keeps reference receipt bytes and unverified signs with %s date coverage', state => {
+    const value = input('1990-06-15', 'UTC'), expected = reference(value);
+    const provider = state === 'unavailable' ? null : {
+      completeness: 'complete-transitions-v1' as const,
+      offsetMilliseconds: () => 0,
+      nextTransitionMilliseconds: () => { if (state === 'failed') throw Error('private'); return null; },
+    };
+    const assess = vi.fn((date: string, utc: Date, zone: string) => assessLocalDateReference(date, utc, zone, provider));
+    const actual = capture(value, 'full', false, assess);
+    expect(assess).toHaveBeenCalledOnce();
+    expect(assess.mock.results[0].value.coverage.status).toBe(state === 'complete' ? 'existing' : 'unresolved');
+    expect(actual.portable!.envelopeJson).toBe(expected.envelopeJson);
+    expect(positions(actual.result)).toBe(positions(expected.chart));
+    expect(actual.result.moonSignCandidates).toEqual([]);
+    expect(actual.nextRegistryRecordSlug).toBeNull();
+    expect(actual.result).not.toHaveProperty('coverage');
+    expect(actual.calls).toEqual({ publicNatal: 1, legacyNatal: 0, endpoints: 0 });
+  });
+
+  it.each(['full', 'moon', 'rising'])('does no coverage work for known-time %s requests', mode => {
+    const assess = vi.fn(() => { throw Error('Coverage must not run for known time'); });
+    expect(capture(input('2011-12-30', 'Pacific/Apia', true), mode, false, assess).result).toBeTruthy();
+    expect(assess).not.toHaveBeenCalled();
+  });
+
+  it('refuses a provider violation before receipt calculation even when the point belongs to the date', () => {
+    const receipt = vi.spyOn(actualReceipt, 'computeCalculatorReceipt');
+    const assess = (date: string, utc: Date, zone: string) => assessLocalDateReference(date, utc, zone, {
+      completeness: 'complete-transitions-v1', offsetMilliseconds: () => 0,
+      nextTransitionMilliseconds: () => 0, // nonadvancing; contradictory provider evidence
+    });
+    try {
+      expect(() => capture(input('1990-06-15', 'UTC'), 'full', false, assess)).toThrow('local-date reference refused');
+      expect(receipt).not.toHaveBeenCalled();
+    } finally { receipt.mockRestore(); }
+  });
+
+  it.each(['outside-date', 'unresolved'] as const)('refuses %s coverage adjudication before natal or receipt work', referenceStatus => {
+    const assess = vi.fn(() => ({ referenceStatus, coverage: { status: 'unresolved' as const, reason: 'provider-violation' as const }, evidence: null }));
+    expect(() => capture(input('1990-06-15', 'UTC'), 'full', false, assess)).toThrow('local-date reference refused');
+    expect(assess).toHaveBeenCalledOnce();
+  });
+
   it.each(controls)('%s keeps exact reference bytes and uses unresolved Moon confidence', (_name, date, zone) => {
     const value = input(date, zone), expected = reference(value), actual = capture(value);
     const { moonSignCandidates, ...numerical } = actual.result;
