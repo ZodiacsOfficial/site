@@ -1,0 +1,216 @@
+{
+  "node": "v22.23.2",
+  "browser": "152.0.7977.84",
+  "passed": 20,
+  "failed": 0,
+  "identity": [
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "c4e275d5b5068f1cea7a10300dbfdc0f1c0fd13b74e1a279cd3474e7440c01a5"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "0149919b8f62622e544c4a9e19b3bc4a6826b85e57a46b4eb8774aa14b3714ab"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "3f1f56caf0efadbe82e2522bcf98682ea9c8a80341a1433ee60c21eca2d28c86"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "692f8d5b0fdf497d10df626a35d001a705cc516b38e233dc28679685b973e69b"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "ce9e10ca16edd87cde4805f773c4420f341fe4aa113bfd508c2924950ea9d531"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "4212a6ec013753943656a647cd50f2f7ce993962edcc46eee70a0d8addc8d161"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "09d1f1015a36eb3946a64890b9a0cad867bb9497bfb6d4b27e801a56ce0ff74d"
+    }
+  ],
+  "finalIdentity": [
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb"
+    },
+    {
+      "path": "src/islands/ChartCalculator.tsx",
+      "sha256": "c4e275d5b5068f1cea7a10300dbfdc0f1c0fd13b74e1a279cd3474e7440c01a5"
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936"
+    },
+    {
+      "path": "src/lib/i18n/ui/en.ts",
+      "sha256": "0149919b8f62622e544c4a9e19b3bc4a6826b85e57a46b4eb8774aa14b3714ab"
+    },
+    {
+      "path": "src/lib/i18n/ui/es.ts",
+      "sha256": "3f1f56caf0efadbe82e2522bcf98682ea9c8a80341a1433ee60c21eca2d28c86"
+    },
+    {
+      "path": "src/lib/i18n/ui/fr.ts",
+      "sha256": "692f8d5b0fdf497d10df626a35d001a705cc516b38e233dc28679685b973e69b"
+    },
+    {
+      "path": "src/lib/i18n/ui/it.ts",
+      "sha256": "ce9e10ca16edd87cde4805f773c4420f341fe4aa113bfd508c2924950ea9d531"
+    },
+    {
+      "path": "src/lib/i18n/ui/pt.ts",
+      "sha256": "4212a6ec013753943656a647cd50f2f7ce993962edcc46eee70a0d8addc8d161"
+    },
+    {
+      "path": "src/lib/i18n/ui/ru.ts",
+      "sha256": "09d1f1015a36eb3946a64890b9a0cad867bb9497bfb6d4b27e801a56ce0ff74d"
+    }
+  ],
+  "driverSha256": "ed96f61959bc27eab9c93ed4c2274533f07138b7d920dbd361a3b19f189b19e1",
+  "qualification": "Actual Preact ChartCalculator and actual rc6 numerical/receipt modules in an owned static fixture. Explicit loader/city/call probes are retained. Optional baseline overlay compares same-browser reference bytes; confidence changes are recorded separately. This is not an ephemeris oracle, full-date coverage proof or production-layout acceptance. Reference Sun personalization is intentionally withheld and its uncertainty wording is checked; numerical positions, serialized receipt bytes and existing phase captions are preserved.",
+  "results": [
+    {
+      "name": "reference Toronto",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "4b6c55ef931c05c4b8184ab5c40ddf6ef22c1f7ae64b4c741a3d7a631a1813bd",
+        "candidate": "4b6c55ef931c05c4b8184ab5c40ddf6ef22c1f7ae64b4c741a3d7a631a1813bd"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "reference Juneau",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "0fcb106d5b49c79b7b267f5dd7471031a60095c1b4d2b74b9a708d3800b67a85",
+        "candidate": "0fcb106d5b49c79b7b267f5dd7471031a60095c1b4d2b74b9a708d3800b67a85"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "reference ordinary singleton",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "2f4e952f9ac38df974e3099239b7cb0aa978d20341409e7376710b03860f130f",
+        "candidate": "2f4e952f9ac38df974e3099239b7cb0aa978d20341409e7376710b03860f130f"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "reference ordinary two signs",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "178e1853efe15e72e0aa7f5f596177c503461e9e4aa8830146985cffe07639d2",
+        "candidate": "178e1853efe15e72e0aa7f5f596177c503461e9e4aa8830146985cffe07639d2"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "reference same-date gap",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "491d6847b17eebbdec48fddd6c3559dc46894796a0a04f07b999fbc763aff828",
+        "candidate": "491d6847b17eebbdec48fddd6c3559dc46894796a0a04f07b999fbc763aff828"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "reference repeated Apia",
+      "passed": true,
+      "sameBrowserExactReferenceParity": true,
+      "downloads": {
+        "baseline": "b2fe180f2e981d1fadd4aadaf2009bf3728928bd6c9842dcfc81e84e404296d1",
+        "candidate": "b2fe180f2e981d1fadd4aadaf2009bf3728928bd6c9842dcfc81e84e404296d1"
+      },
+      "intentionalSunContextChange": null
+    },
+    {
+      "name": "localized unresolved result en",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "localized unresolved result es",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "localized unresolved result fr",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "localized unresolved result it",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "localized unresolved result pt",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "localized unresolved result ru",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "known-time preserved full",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "known-time preserved moon",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "known-time preserved rising",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "C014 skipped-date clearing and recovery",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "pending reference ownership edit",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "pending reference ownership replacement",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "pending reference ownership unmount",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    },
+    {
+      "name": "positions-only stays unresolved without calculation or receipt",
+      "passed": true,
+      "sameBrowserExactReferenceParity": null
+    }
+  ]
+}

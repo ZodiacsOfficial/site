@@ -277,6 +277,8 @@ const pt = {
   dstFoldNotice: 'Os relógios repetiram essa hora no seu local de nascimento; usamos a primeira ocorrência. Se você sabe que foi a segunda, seu mapa quase não muda — a Lua avança cerca de meio grau por hora.',
   lmtNotice: 'Você nasceu antes da padronização dos fusos horários — usamos a hora média local daquela época, a mesma convenção dos programas profissionais.',
   polarNotice: 'As casas de Placidus não são definidas tão perto do polo, então este mapa usa casas de signos inteiros.',
+  referenceChartName: "Referência",
+  unknownTimeSunReference: "A hora de nascimento é desconhecida. São posições de um momento de referência; o signo solar não foi verificado para toda a data de nascimento.",
   noTimeNotice: "Sem a hora de nascimento, mostramos posições de referência e omitimos ascendente, ângulos e casas.",
   moonUnverifiedNotice: "Os possíveis signos da Lua ao longo desta data de nascimento não foram verificados. Adicione uma hora de nascimento para obter um resultado daquele momento.",
   moonAmbiguousNotice: 'A Lua também mudou de signo nesse dia — é razoável ler os dois signos vizinhos até você descobrir a hora.',

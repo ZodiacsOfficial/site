@@ -140,6 +140,27 @@ try{
   if(replacement){await publish(s,2,'leo');await s.page.locator('#weekly input[type=email]').fill('replacement@example.com');}
   held.release();await frames(s);await s.page.waitForTimeout(50);const value=await observation(s);assert.equal(value.weeklyHidden,!replacement);assert.equal(value.weeklyEmail,replacement?'replacement@example.com':'first@example.com');assert.equal(value.weeklyStatus,'');assert.equal(value.weeklySign,replacement?'leo':'cancer');assert.equal(value.weeklyButton,'Subscribe');assert.equal(s.requests.filter(r=>r.path.endsWith('/subscribe')).length,1);assert.equal(value.analytics.filter(row=>row.name==='email_subscribed').length,1);return value;
  });
+ for (const lifecycle of [false, true]) await group('unknown-reference-clears-inferred-sign-'+lifecycle, async s => {
+  await s.page.evaluate(() => window.fixture.publish(1, 'cancer'));
+  await s.page.locator('#weekly').waitFor({state:'visible'});
+  assert.equal((await observation(s)).weeklySign, 'cancer');
+  await s.page.locator('#weekly input[type=email]').fill('retained@example.com');
+  await s.page.evaluate(() => { window.fixture.clear(); window.fixture.publish(2, null); });
+  await s.page.locator('#weekly').waitFor({state:'visible'});
+  assert.equal((await observation(s)).weeklySign, null);
+  assert.equal(await s.page.locator('#weekly [data-email-signs]').isVisible(), true);
+  assert.equal(await s.page.locator('#weekly [data-email-sign-summary]').isVisible(), false);
+  assert.equal(await s.page.locator('#weekly [data-email-title]').innerText(), 'Choose a brief');
+  assert.equal(await s.page.locator('#weekly input[type=email]').inputValue(), 'retained@example.com');
+  await s.page.evaluate(() => document.querySelector('#weekly form').reset()); await frames(s);
+  assert.equal((await observation(s)).weeklySign, null);
+  await s.page.locator('#weekly input[value=leo]').check();
+  assert.equal((await observation(s)).weeklySign, 'leo');
+  await s.page.evaluate(() => window.fixture.publish(3, 'cancer'));
+  assert.equal((await observation(s)).weeklySign, 'cancer');
+  assert.equal(s.requests.filter(r => r.method === 'POST').length, 0);
+  return {unknownReferenceNeedsChoice:true,knownAndManualChoicesPreserved:true};
+ }, lifecycle);
  await group('unrelated-footer-request-completes',async s=>{await publish(s);await s.page.locator('#footer input[type=email]').fill('footer@example.com');const held=gate(s,'/api/email/subscribe','POST');await s.page.locator('#footer button[type=submit]').click();await held.begun;await s.page.evaluate(()=>window.fixture.clear());held.release();await s.page.locator('#footer [data-email-status]').filter({hasText:'Done'}).waitFor();assert.equal(await s.page.locator('#footer').isVisible(),true);assert.equal(await s.page.locator('#footer input[type=email]').inputValue(),'');assert.equal(s.requests.filter(r=>r.path.endsWith('/subscribe')).length,1);return {unrelatedCompletionPreserved:true};});
  await group('sign-focus-frame-cannot-escape-clear',async s=>{await publish(s);await s.page.evaluate(()=>{window.fixture.holdFocus=true;});await s.page.locator('#weekly [data-email-sign-change]').click();await s.page.waitForFunction(()=>window.fixture.focusFrames.length>0);await s.page.evaluate(()=>window.fixture.clear());await publish(s,2,'leo');await s.page.locator('#weekly [data-email-sign-change]').click();await s.page.locator('#outside').focus();await s.page.evaluate(()=>window.fixture.focusFrames.shift()(performance.now()));assert.equal((await observation(s)).focus,'outside');await s.page.evaluate(()=>window.fixture.releaseFocus());assert.equal(await s.page.evaluate(()=>document.activeElement?.getAttribute('value')),'leo');return {obsoleteFocusSuppressed:true,currentFocusPreserved:true};});
  await group('capture-markup-with-lifecycle-off',async s=>{await s.page.evaluate(()=>window.fixture.publish());await s.page.locator('#weekly').waitFor({state:'visible'});await s.page.locator('#weekly input[type=email]').fill('retained@example.com');await s.page.evaluate(()=>window.fixture.clear());const cleared=await observation(s);assert.equal(cleared.weeklyHidden,true);assert.equal(cleared.managedHidden,true);assert.equal(cleared.footerHidden,false);assert.equal(cleared.weeklyEmail,'retained@example.com');assert.equal(s.requests.length,0);await s.page.evaluate(()=>window.fixture.publish(2,'leo'));await s.page.locator('#weekly').waitFor({state:'visible'});assert.equal((await observation(s)).weeklySign,'leo');assert.equal(s.requests.length,0);return {markupPresent:true,lifecycleFlag:false,cleared};},false);

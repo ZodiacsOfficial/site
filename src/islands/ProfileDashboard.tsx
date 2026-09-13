@@ -197,7 +197,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
     const to = new Date(now.getTime() + YEAR_MS);
     const natal = chart.summary.bodies.map(({ body, lon }) => ({ body, lon }));
     const sunLon = natal.find((n) => n.body === 'Sun')?.lon;
-    const sunSign = sunLon != null ? signForLongitude(sunLon).slug : '';
+    const sunSign = chart.birth.timeKnown === true && sunLon != null ? signForLongitude(sunLon).slug : '';
     const asc = chart.birth.timeKnown ? chart.summary.angles?.asc : null;
     const risingSign = asc != null ? signForLongitude(asc).slug : null;
     const parts = [
@@ -241,6 +241,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {daily.date} · {moonPhaseLabel(locale, daily.moon.phase)}
             </span>
           </div>
+          {chart.birth.timeKnown !== true && <p class="pfd__quiet">{t(locale, 'unknownTimeSunReference')}</p>}
           {charts.length > 1 && (
             <label class="pfd__pick">
               <span class="mono">{t(locale, 'pfdChartPick')}</span>
@@ -305,6 +306,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
             <h2>{t(locale, 'pfdYearAhead')}</h2>
             <span class="mono pfd__stamp">{chart.name}</span>
           </div>
+          {chart.birth.timeKnown !== true && <p class="pfd__quiet">{t(locale, 'unknownTimeSunReference')}</p>}
           {yearError && (
             <div>
               <p class="field__error" role="alert">{yearError}</p>

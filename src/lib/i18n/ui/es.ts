@@ -277,6 +277,8 @@ const es = {
     dstFoldNotice: 'Los relojes repitieron esa hora donde naciste; usamos la primera pasada. Si sabes que fue la segunda, tu carta casi no cambia — la Luna avanza cerca de medio grado por hora.',
     lmtNotice: 'Naciste antes de las zonas horarias estandarizadas — usamos hora media local para esa época, la misma convención que usa el software profesional.',
     polarNotice: 'Las casas Placidus no están definidas tan cerca del polo, así que esta carta usa signos completos.',
+  referenceChartName: "Referencia",
+  unknownTimeSunReference: "La hora de nacimiento es desconocida. Son posiciones de un momento de referencia; el signo solar no se ha verificado para toda la fecha de nacimiento.",
     noTimeNotice: "Sin hora de nacimiento, mostramos posiciones de referencia y omitimos el ascendente, los ángulos y las casas.",
     moonUnverifiedNotice: "No se han verificado los posibles signos de la Luna a lo largo de esta fecha de nacimiento. Añade una hora de nacimiento para obtener un resultado de ese momento.",
     moonAmbiguousNotice: 'La Luna también cambió de signo ese día — leer los dos signos vecinos es razonable hasta encontrar la hora.',

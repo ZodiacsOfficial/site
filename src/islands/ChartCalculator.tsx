@@ -247,6 +247,12 @@ const AUTO_NAME_SUN = {
   it: 'Sole',
 } as const satisfies Record<ReleasedLocale, string>;
 
+// Recognition spans locales, while each browser page loads only its own catalog.
+const AUTO_NAME_REFERENCE = {
+  en: 'Reference', es: 'Referencia', pt: 'Referência',
+  fr: 'Référence', it: 'Riferimento', ru: 'Ориентир',
+} as const;
+
 function russianNameTemplate(template: string, name: string): string {
   return template.replaceAll('{name}', name);
 }
@@ -1270,7 +1276,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       window.dispatchEvent(new CustomEvent('zodiacs:chart-computed', {
         detail: {
           mode,
-          sunSign: computedSun ? signForLongitude(computedSun.lon).slug : undefined,
+          sunSign: input.timeKnown && computedSun ? signForLongitude(computedSun.lon).slug : undefined,
           contextId,
         },
       }));
@@ -1450,7 +1456,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       : AUTO_NAME_SUN[candidate];
     return `${signName(sunSign, candidate)} ${sunLabel} · ${computedInput?.date ?? date}`;
   });
-  const autoName = sunSign
+  // Keep legacy automatic names recognizable without rewriting stored names.
+  const referenceName = `${t(locale, 'referenceChartName')} · ${computedInput?.date ?? date}`;
+  autoNames.push(...autoNameLocales.map(candidate => `${AUTO_NAME_REFERENCE[candidate]} · ${computedInput?.date ?? date}`));
+  const autoName = computedInput?.timeKnown === false ? referenceName : sunSign
     ? `${signName(sunSign, locale)} ${locale === 'ru' ? russianCopy!.chart.autoNameSun : AUTO_NAME_SUN[locale]} · ${computedInput?.date ?? date}`
     : '';
   const isAutoName = (name: string | null) => name !== null && autoNames.includes(name);
@@ -1505,7 +1514,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       setMatchedName(match?.name ?? null);
       publishPostChartContext({
         mode: 'full',
-        sunSign: sunSign?.slug ?? null,
+        sunSign: computedInput.timeKnown ? sunSign?.slug ?? null : null,
         chartId: match?.id ?? null,
         contextId,
       });
@@ -1629,7 +1638,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         setMatchedName(match?.name ?? explicitName ?? matchedName ?? autoName);
         publishPostChartContext({
           mode: 'full',
-          sunSign: sunSign?.slug ?? null,
+          sunSign: computedInput.timeKnown ? sunSign?.slug ?? null : null,
           chartId: match?.id ?? null,
           contextId: chartContextIdRef.current,
         });
@@ -1918,7 +1927,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           )}
           {chart.flags.includes('no-time') && (
             <p class="notice" role="status">
-              {t(locale, 'noTimeNotice')}
+              {t(locale, 'noTimeNotice')} {t(locale, 'unknownTimeSunReference')}
               {moonAmbiguous && ` ${t(locale, 'moonUnverifiedNotice')}`}
             </p>
           )}

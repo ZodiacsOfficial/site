@@ -1,0 +1,71 @@
+{
+  "base": "0490c4f8a92f045417d7f81ed502f0789e8ecdc2",
+  "files": [
+    {
+      "path": "src/lib/engine/full.ts",
+      "sha256": "e33380582a0c85a702b8102fe92f4c9e608293a08a4c2e3cb6128315cecf0c79",
+      "bytes": 1215,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/engine/lite.ts",
+      "sha256": "4af8a944ed1e6fea0ab03a975ffbf40df55d0bd7619fabda9b815171e6d8fe2f",
+      "bytes": 2824,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/engine/portable.ts",
+      "sha256": "3da4a72f35d6e56ced6145d3bed19b48d0001abc29f28299cb8a645c7c22618f",
+      "bytes": 3084,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/engine/calculator-receipt.ts",
+      "sha256": "eef1861e9c284e5f365b643ca36895ec3eeafd0afcb595aa7ae715d437ac5c3d",
+      "bytes": 2725,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/share-positions.ts",
+      "sha256": "cb0790a4fca750cd1b6a4ff44b67976bd2df375c628314a3d609829104b80b2e",
+      "bytes": 7908,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/chart-date-certainty.ts",
+      "sha256": "2ba8257d01516622ae425b7b6d8a16ff16831f6e6f2fb9b4ad21b3b354afc936",
+      "bytes": 1879,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/time/localToUtc.ts",
+      "sha256": "c6d0b218d90810f88403d677a65980440e9bcb9ec2e0032f7ecffe45ea92c1bb",
+      "bytes": 7916,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "src/lib/living-chart/forecast-snapshot.ts",
+      "sha256": "d6beb01d92999434563196d6daf03479e9a0efc8b68d627501813da4620b7b24",
+      "bytes": 4297,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "package.json",
+      "sha256": "a37af7beb612ad7dd8e19e5f3cdcacdc9f424e41fa134a014b34f32417636c7c",
+      "bytes": 11388,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "4bb298bba27d8297b504096e71e86f2c6a5cf4fe5d224ebc57ca70a9821a3792",
+      "bytes": 433716,
+      "equalsStartingMain": true
+    },
+    {
+      "path": "vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+      "sha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+      "bytes": 36591,
+      "equalsStartingMain": true
+    }
+  ]
+}

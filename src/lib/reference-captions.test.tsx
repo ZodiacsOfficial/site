@@ -46,9 +46,11 @@ describe('reference caption output contracts', () => {
     expect(shareCardTimeNotes(locale, { referenceTime: false })).toEqual([]);
   });
 
-  it.each(locales)('%s preserves 420 keys with complete one-for-one caption retirement', locale => {
+  it.each(locales)('%s preserves 422 keys with complete caption retirement and two reference-Sun additions', locale => {
     const catalog = catalogs[locale];
-    expect(Object.keys(catalog)).toHaveLength(420);
+    expect(Object.keys(catalog)).toHaveLength(422);
+    expect(catalog.referenceChartName).toBeTruthy();
+    expect(catalog.unknownTimeSunReference).toBeTruthy();
     for (const key of ['middayLocalCaption', 'middayUtcCaption', 'moonChangedNotice']) expect(catalog).not.toHaveProperty(key);
     for (const key of ['referenceLocalCaption', 'referenceUtcCaption', 'moonPhaseAtReference']) expect(catalog).toHaveProperty(key);
     expect(t(locale, 'moonPhaseAtReference')).not.toBe(t(locale, 'moonPhaseAtBirth'));

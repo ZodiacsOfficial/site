@@ -322,6 +322,8 @@ const it = {
     "La tua nascita precede la standardizzazione dei fusi orari — abbiamo usato il tempo medio locale dell’epoca, la stessa convenzione dei software professionali.",
   polarNotice:
     "Le case Placidus non sono definite così vicino al polo, quindi questo tema usa invece le case a segno intero.",
+  referenceChartName: "Riferimento",
+  unknownTimeSunReference: "L’ora di nascita è sconosciuta. Queste posizioni si riferiscono a un momento di riferimento; il segno solare non è stato verificato per l’intera data di nascita.",
   noTimeNotice: "Senza l’ora di nascita, mostriamo posizioni di riferimento e omettiamo ascendente, angoli e case.",
   moonUnverifiedNotice: "I possibili segni della Luna nell’arco di questa data di nascita non sono verificati. Aggiungi un’ora di nascita per ottenere un risultato relativo a quel momento.",
   moonAmbiguousNotice:

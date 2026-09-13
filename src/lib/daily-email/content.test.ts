@@ -312,4 +312,48 @@ describe('daily email content', () => {
     expect(message.text).toContain(quiet);
     expect(message.html).toContain(quiet);
   });
+
+  it('does not infer a whole-date Sun-sign baseline from an unknown-time saved reference', () => {
+    const timed = chartWithBodies([{ body: 'Sun', lon: quietLongitude(), retrograde: false }]);
+    const reference = structuredClone(timed);
+    reference.birth.timeKnown = false;
+    reference.birth.time = null;
+    const before = JSON.stringify(reference);
+    const messageFor = (chart: SavedChart) => renderDailyEmail({
+      recipient: { tier: 'chart', email: 'reference@example.com', userId: 'user', chartId: chart.id, chart, timezone: 'UTC' },
+      daily, publication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
+    });
+    const known = messageFor(timed), unknown = messageFor(reference);
+    expect(known.text).toContain('Sun-sign baseline');
+    expect(known.preheader).not.toContain('Birth time is unknown');
+    expect(known.subject).toBe('Your chart today — a quieter sky');
+    for (const body of [unknown.text, unknown.html]) {
+      expect(body).not.toContain('Sun-sign baseline');
+      expect(body).toContain('reference-moment positions');
+      expect(body).toContain('the Sun sign has not been verified across the whole birth date');
+    }
+    expect(unknown.subject).toBe('Your reference chart today — a quieter sky');
+    expect(unknown.preheader).toContain('Birth time is unknown');
+    expect(JSON.stringify(reference)).toBe(before);
+  });
+
+  it('qualifies unknown-time chart contacts while preserving their numerical receipt and input bytes', () => {
+    const timed = chartWithBodies(daily.bodies.slice(0, 3).map(body => ({ body: body.body, lon: body.lon, retrograde: false })));
+    const reference = structuredClone(timed);
+    reference.birth.timeKnown = false;
+    reference.birth.time = null;
+    const before = JSON.stringify(reference);
+    const messageFor = (chart: SavedChart) => renderDailyEmail({
+      recipient: { tier: 'chart', email: 'reference@example.com', userId: 'user', chartId: chart.id, chart, timezone: 'UTC' },
+      daily, publication, program, baseUrl: 'https://zodiacs.org', unsubscribeUrl,
+    });
+    const known = messageFor(timed), unknown = messageFor(reference);
+    const receipt = (text: string) => text.split('\n').find(line => line.startsWith('Why this appeared:'));
+    expect(receipt(known.text)).toBeTruthy();
+    expect(receipt(unknown.text)).toBe(receipt(known.text));
+    expect(unknown.subject).toBe(known.subject.replace('Your chart', 'Your reference chart'));
+    expect(unknown.text).toContain('reference-moment positions');
+    expect(unknown.html).toContain('reference-moment positions');
+    expect(JSON.stringify(reference)).toBe(before);
+  });
 });

@@ -45,10 +45,15 @@
   }
 
   function preselectCaptureSign(surface: HTMLElement, sign: string | undefined) {
-    if (!sign) return;
     const radios = Array.from(surface.querySelectorAll<HTMLInputElement>('input[name="sign"]'));
     const radio = radios.find((input) => input.value === sign);
-    if (!radio) return;
+    if (!radio || !sign) {
+      // A reference Sun must not retain the previous chart's inferred choice.
+      delete surface.dataset.personalizedSign;
+      radios.forEach(input => { input.checked = input.value === ''; input.defaultChecked = input.value === ''; });
+      renderCaptureSign(surface, undefined, false);
+      return;
+    }
     surface.dataset.personalizedSign = 'true';
     radios.forEach((input) => {
       input.checked = input === radio;

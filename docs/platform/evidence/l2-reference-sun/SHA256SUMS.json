@@ -1,0 +1,15 @@
+{
+  "README.md": "c2670f87c2d2ad29b9910382480209329003c505e0594a1536230f8797972559",
+  "acceptance-captures.log.gz": "ed1e3b55c6ae85124942d490e420c9cbf2d17e5c36c9f247f6dde6137cffaa31",
+  "build.log.gz": "2e86062a857c459830c21f5a6487e04bc1aee2b58ac99da43e5b2f661da9877f",
+  "catalog-test-corrected.log.gz": "4959687feeff4a419dda7d2c36d2d68915d03bc05470c47966991a152ddcff52",
+  "check.log.gz": "61a25f6f29907dd3c3a668c6f8f65c4ba3b35ac203d15fbf6fd03d22de9a0447",
+  "dependency-audit.json": "c1d56be65565abfa0f0068f7790c533ebaba686fc58f8c956ddb41824ad53e30",
+  "full-test-initial.log.gz": "092eddcbe31b5fa262955b6a24c12097b9c158c6281d2a65ad45c47413f4740a",
+  "post-chart-browser.log.gz": "b616adc758e27475a03d8d1f8fb5433f39546d14e95e3382f40cb55cefb84384",
+  "preserved-sources.json": "77fd751f87ec2ce6397f25ef23c69089190b9980930075d1c470e2ad7a6c8905",
+  "reference-browser-summary.json": "036b3917616d6a1e72bbed1135857bbf9a288365852f1eece21eb979e17d58c0",
+  "reference-browser.log.gz": "4433ea6610157823e125c40d2252c2bfe51d038b80d33de0c8415625bb345cdd",
+  "review.md": "a37f8d585f9ad5addd00f6dc15b99d653db9c23a74853f77b1d7ceed7819e42c",
+  "today-browser.log.gz": "9e61cfc3f039b140d16df3fd0b93ce6ef97f3903c8f4342c0d332ddfe0ee65d0"
+}
