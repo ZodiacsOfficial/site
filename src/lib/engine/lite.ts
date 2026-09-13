@@ -55,7 +55,14 @@ export type MoonPhaseName =
   | 'Full Moon' | 'Waning Gibbous' | 'Last Quarter' | 'Waning Crescent';
 
 export function moonPhaseName(date: Date): MoonPhaseName {
-  const a = moonPhaseAngle(date);
+  return moonPhaseNameFromAngle(moonPhaseAngle(date));
+}
+
+/** Existing UI categories for an already-normalized phase angle in [0, 360).
+ * Classify the retained value directly: normalizing again can round across a
+ * category boundary. This function does not calculate or modify an angle.
+ */
+export function moonPhaseNameFromAngle(a: number): MoonPhaseName {
   if (a < 22.5 || a >= 337.5) return 'New Moon';
   if (a < 67.5) return 'Waxing Crescent';
   if (a < 112.5) return 'First Quarter';

@@ -8,7 +8,7 @@ import EvidenceDisclosure from './EvidenceDisclosure';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import {
-  moonIllumination, moonLongitude, moonPhaseAngle, moonPhaseName,
+  moonIllumination, moonLongitude, moonPhaseAngle, moonPhaseName, moonPhaseNameFromAngle,
 } from '../lib/engine/lite';
 import type { MoonPhaseName } from '../lib/engine/lite';
 import { formatLongitude, signForLongitude, signName, signPrepositional } from '../lib/signs';
@@ -133,7 +133,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
 
       if (!isCurrent()) return;
       setResult({
-        phase: moonPhaseName(utc),
+        phase: moonPhaseNameFromAngle(angle),
         angle,
         illum: moonIlluminationFromAngle(angle),
         lon,
