@@ -5,7 +5,8 @@ change, merge or production deployment. Starting main is the released site
 f592d5143f52851b8f47be17e43fbf9fd5be8b8f (approved #471 tree unchanged).
 The automatic post-merge Site Check run 34744052278 was inspected first: all
 13 parallel jobs passed; Build & Check was still running without a failure.
-Its final disposition will be recorded before delivery.
+It subsequently completed successfully: all 14 jobs pass, including visual,
+Lighthouse and widget gates. No release regression was reported.
 
 Retained C-017 preparation directories were inspected under
 /private/tmp/zodiacs-platform-phase-category*. Their named source/delivery
@@ -49,3 +50,19 @@ not a claim that a category name identifies an exact astronomical quarter instan
 
 Implemented and under verification; not merged or deployed. Preview is not
 production. SDK merge/npm publication remains held; Astrofolio and Zodia excluded.
+
+## Required evidence refresh
+
+The changed render inputs correctly invalidate the prior Phase 1 receipt. The
+unchanged repository acceptance driver regenerated all 18 captures at exact
+360/1280 widths; all pass, with template source SHA-256
+91ee09cc0087cd6f7617863509f20d80d7af7386edcdbc4460bedb2099c6f62c. Five images
+remain byte-identical. This updates acceptance evidence, not visual-regression
+baselines or budgets. Representative mobile Today and desktop monthly captures
+were inspected; existing layout and typography are retained.
+
+The first complete local retry passed 419 suites but exposed the correctly stale
+receipt and two astronomy imports resolving through a reused external node_modules
+symlink. A clean installation from the unchanged lockfile replaces that symlink.
+The final complete run follows the finished build and receipt refresh, with two
+workers and unchanged assertions/timeouts. Hosted result remains pending.
