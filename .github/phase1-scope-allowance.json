@@ -1,8 +1,8 @@
 {
   "version": 1,
   "id": "platform-r3-release-integration",
-  "baseCommit": "1d7d0d0e3baf06f813e9f164aa8ec5394bbd6af7",
-  "authorization": "Owner explicitly authorizes R3: reconcile the selected accepted release stack against refreshed site and SDK main in isolated integration drafts. These exact paths carry previously accepted SDK reference pages, localized reference captions and the combined Registry research regression tests. Current main published Registry items, canonical identities/disclosures, security/freshness gates, and performance budgets are preserved. Astrofolio remains separate. SDK publication hold remains explicit. No merge to main, package publication, production deployment, or L1–L6 work is authorized.",
+  "baseCommit": "6ded3e09d018e22d413016bd9856805911c5c68f",
+  "authorization": "Owner explicitly authorizes R3: reconcile the selected accepted release stack against refreshed site and SDK main in isolated integration drafts. These exact paths carry previously accepted SDK reference pages, localized reference captions and the combined Registry research regression tests. Current main published Registry items, canonical identities/disclosures, security/freshness gates, and performance budgets are preserved. Astrofolio remains separate. SDK publication hold remains explicit. No merge to main, package publication, production deployment, or L1\u2013L6 work is authorized. Owner additionally authorizes final site #471 preparation: refresh only release-critical facts, reconcile current paired edition and preserve concurrent main work; no merge or deployment.",
   "protectedPaths": [
     "public/sdk/engine/assets/hierarchy.js",
     "public/sdk/engine/assets/navigation.js",
