@@ -277,6 +277,8 @@ const fr = {
   dstFoldNotice: 'À ton lieu de naissance, les horloges ont affiché deux fois cette heure ; nous avons retenu la première occurrence. Si tu sais qu’il s’agissait de la seconde, ton thème change à peine — la Lune avance d’environ un demi-degré par heure.',
   lmtNotice: 'Ta naissance remonte à une époque antérieure à la normalisation des fuseaux horaires — nous avons utilisé l’heure moyenne locale de l’époque, comme le font les logiciels professionnels.',
   polarNotice: 'Les maisons de Placidus ne sont pas définies aussi près du pôle ; ce thème utilise donc les maisons en signes entiers.',
+  referenceChartName: "Référence",
+  unknownTimeSunReference: "L’heure de naissance est inconnue. Ces positions correspondent à un instant de référence ; le signe solaire n’a pas été vérifié pour toute la date de naissance.",
   noTimeNotice: "Sans heure de naissance, nous affichons des positions de référence et omettons l’ascendant, les angles et les maisons.",
   moonUnverifiedNotice: "Les signes possibles de la Lune au cours de cette date de naissance ne sont pas vérifiés. Ajoute une heure de naissance pour obtenir un résultat à ce moment précis.",
   moonAmbiguousNotice: 'La Lune a également changé de signe ce jour-là — il est raisonnable de lire les deux signes voisins tant que tu n’as pas retrouvé l’heure.',

@@ -123,6 +123,7 @@ export function validateDailyEmailSources({
 }
 
 function chartSunSign(recipient: Extract<DailyEmailRecipient, { tier: 'chart' }>): string | null {
+  if (recipient.chart.birth.timeKnown !== true) return null;
   const sun = recipient.chart.summary.bodies.find((body) => body.body === 'Sun');
   return sun && Number.isFinite(sun.lon) ? signForLongitude(sun.lon).slug : null;
 }
@@ -244,6 +245,8 @@ function chartModel(
   postalAddress: string,
 ): MessageModel {
   const name = chartName(recipient.chart.name);
+  const referenceOnly = recipient.chart.birth.timeKnown !== true;
+  const referenceNotice = 'Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date.';
   const contacts = selectTodayContacts(
     natalPointsForChart(recipient.chart),
     daily.bodies,
@@ -281,11 +284,11 @@ function chartModel(
   const strongest = contacts[0];
   return {
     subject: strongest
-      ? `Your chart today — ${contactSubject(strongest)}`
-      : 'Your chart today — a quieter sky',
-    preheader: [personal[0], sharedSky[0]].filter(Boolean).join(' '),
+      ? `${referenceOnly ? 'Your reference chart' : 'Your chart'} today — ${contactSubject(strongest)}`
+      : `${referenceOnly ? 'Your reference chart' : 'Your chart'} today — a quieter sky`,
+    preheader: [referenceOnly ? referenceNotice : null, personal[0], sharedSky[0]].filter(Boolean).join(' '),
     identity: `FOR ${name.toUpperCase()} · ${dateLabel(program.anchorDate, true).toUpperCase()}`,
-    identityDetail: chartBirthSummary(recipient.chart),
+    identityDetail: [chartBirthSummary(recipient.chart), referenceOnly ? referenceNotice : null].filter(Boolean).join(' · '),
     title: personal[0],
     sections,
     ...(strongest ? {

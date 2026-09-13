@@ -93,7 +93,7 @@ const livingChartCloudSyncEnabled = livingChartEnabled && livingChartSyncEnabled
             var sun = primaryChart.summary.bodies.find(function (body) {
               return body && body.body === 'Sun' && Number.isFinite(body.lon);
             });
-            if (sun) {
+            if (sun && primaryChart.birth && primaryChart.birth.timeKnown === true) {
               var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
               var longitude = ((sun.lon % 360) + 360) % 360;
               document.documentElement.setAttribute('data-today-chart-sun-sign', signNames[Math.floor(longitude / 30)]);

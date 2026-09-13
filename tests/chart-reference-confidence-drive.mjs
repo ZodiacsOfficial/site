@@ -152,7 +152,7 @@ try{
     if(variant==='candidate'){
      assert.deepEqual(JSON.parse(value.outputs.committedChart).moonSignCandidates,[]);assert.equal(value.registry,null);assert.equal(value.events.filter(row=>row.kind==='publicNatal').length,1);
      assert.equal(value.events.filter(row=>['endpoints','bodies','legacyNatal'].includes(row.kind)).length,0);noMoonAdvice(inspect);
-     const message=await s.page.evaluate(()=>window.__ZDX_UI__.messages.moonUnverifiedNotice);assert.ok(value.notice.includes(message));assert.ok(!value.notice.includes('Moon also changed signs'));
+     const messages=await s.page.evaluate(()=>window.__ZDX_UI__.messages);assert.ok(value.notice.includes(messages.moonUnverifiedNotice));assert.ok(value.notice.includes(messages.unknownTimeSunReference));assert.equal(value.postContext.sunSign,null);assert.ok(!value.notice.includes('Moon also changed signs'));
      assert.equal(await s.page.locator('[data-moon-uncertain] .three-card__deg').count(),0);
      if(instant){const witness=await s.page.evaluate(args=>window.fixture.witness(...args),[date,zone,instant]);assert.equal(witness.member,true);assert.equal(witness.sign,sign);value.witness=witness;}
     }
@@ -164,13 +164,14 @@ try{
    assert.equal(newer.value.outputs.native,old.value.outputs.native);assert.equal(newer.value.outputs.envelopeJson,old.value.outputs.envelopeJson);assert.equal(newer.downloadSha256,old.downloadSha256);assert.equal(newer.inspect.token,old.inspect.token);
    const {moonSignCandidates:oldConfidence,...oldChart}=JSON.parse(old.value.outputs.committedChart),{moonSignCandidates:newConfidence,...newChart}=JSON.parse(newer.value.outputs.committedChart);
    assert.equal(JSON.stringify(newChart),JSON.stringify(oldChart));
-   assert.equal(newer.value.postContext.sunSign,old.value.postContext.sunSign);
+   assert.equal(newer.value.postContext.sunSign,null);
+   observations.intentionalSunContextChange={old:old.value.postContext.sunSign,current:newer.value.postContext.sunSign};
    observations.intentionalConfidenceChange={oldConfidence,newConfidence,oldRegistry:old.value.registry,newRegistry:newer.value.registry};
   }
   return {sameBrowserExactReferenceParity:!!observations.baseline,observations};
  });
  for(const locale of ['en','es','fr','it','pt','ru'])await group('localized unresolved result '+locale,async()=>{
-  const s=await setup('candidate',locale,'full');try{await fill(s,'1990-01-04','Asia/Bangkok');await submit(s);const value=await data(s);const messages=await s.page.evaluate(()=>window.__ZDX_UI__.messages);assert.ok(value.notice.includes(messages.moonUnverifiedNotice));assert.ok(value.hero.includes(messages.needsBirthTime));assert.equal(await s.page.locator('[data-moon-uncertain] .three-card__deg').count(),0);assert.equal(value.registry,null);assert.equal(await download(s,'locale-'+locale),value.outputs.envelopeJson);assert.deepEqual(s.errors,[]);return value;}finally{await s.context.close();}
+  const s=await setup('candidate',locale,'full');try{await fill(s,'1990-01-04','Asia/Bangkok');await submit(s);const value=await data(s);const messages=await s.page.evaluate(()=>window.__ZDX_UI__.messages);assert.ok(value.notice.includes(messages.moonUnverifiedNotice));assert.ok(value.notice.includes(messages.unknownTimeSunReference));assert.equal(value.postContext.sunSign,null);assert.ok(value.hero.includes(messages.needsBirthTime));assert.equal(await s.page.locator('[data-moon-uncertain] .three-card__deg').count(),0);assert.equal(value.registry,null);assert.equal(await download(s,'locale-'+locale),value.outputs.envelopeJson);assert.deepEqual(s.errors,[]);return value;}finally{await s.context.close();}
  });
  for(const mode of ['full','moon','rising'])await group('known-time preserved '+mode,async()=>{
   const observations={};for(const variant of bundles.keys()){
@@ -188,6 +189,6 @@ try{
  });
 }finally{
  for(const context of contexts)await context.close().catch(()=>{});const version=browser?.version();await browser?.close();await new Promise(done=>server.close(done));
- const report={node:process.version,browser:version,identity,finalIdentity:await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))}))),driverSha256:hash(await readFile(new URL(import.meta.url))),baselineDirectory:baseline??null,results,requests,passed:results.filter(row=>row.passed).length,failed:results.filter(row=>!row.passed).length,qualification:'Actual Preact ChartCalculator and actual rc6 numerical/receipt modules in an owned static fixture. Explicit loader/city/call probes are retained. Optional baseline overlay compares same-browser reference bytes; confidence changes are recorded separately. This is not an ephemeris oracle, full-date coverage proof or production-layout acceptance. Reference Sun personalization and existing noon/phase captions are unchanged.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
+ const report={node:process.version,browser:version,identity,finalIdentity:await Promise.all(sourcePaths.map(async path=>({path,sha256:hash(await readFile(resolve(root,path)))}))),driverSha256:hash(await readFile(new URL(import.meta.url))),baselineDirectory:baseline??null,results,requests,passed:results.filter(row=>row.passed).length,failed:results.filter(row=>!row.passed).length,qualification:'Actual Preact ChartCalculator and actual rc6 numerical/receipt modules in an owned static fixture. Explicit loader/city/call probes are retained. Optional baseline overlay compares same-browser reference bytes; confidence changes are recorded separately. This is not an ephemeris oracle, full-date coverage proof or production-layout acceptance. Reference Sun personalization is intentionally withheld and its uncertainty wording is checked; numerical positions, serialized receipt bytes and existing phase captions are preserved.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
  await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed}));if(report.failed)process.exitCode=1;
 }

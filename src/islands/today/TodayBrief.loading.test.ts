@@ -1,4 +1,5 @@
 import type { VNode } from 'preact';
+import { readFileSync } from 'node:fs';
 import type { Profile, SavedChart } from '../../lib/profile/schema';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -85,7 +86,7 @@ function profile(charts: SavedChart[], ready = true) {
   };
 }
 
-function render() {
+function render(overrides: Partial<Parameters<TodayBriefComponent>[0]> = {}) {
   harness.cursor = 0;
   harness.memoCursor = 0;
   harness.effectCursor = 0;
@@ -94,6 +95,7 @@ function render() {
     bodies: [{ body: 'Sun', lon: 168.5, retrograde: false }, { body: 'Moon', lon: 42, retrograde: false }],
     sunSignReadings: readings,
     generatorVersion: 'fixture',
+    ...overrides,
   });
   harness.pending.splice(0).forEach((effect) => effect());
   return view;
@@ -104,6 +106,13 @@ function nodes(value: unknown): VNode<Record<string, any>>[] {
   if (!value || typeof value !== 'object' || !('props' in value)) return [];
   const node = value as VNode<Record<string, any>>;
   return [node, ...nodes(node.props.children)];
+}
+
+function textContent(value: unknown): string {
+  if (typeof value === 'string') return value;
+  if (Array.isArray(value)) return value.map(textContent).join('');
+  if (value && typeof value === 'object' && 'props' in value) return textContent((value as VNode).props.children);
+  return '';
 }
 
 function comparisonUnavailable(view: unknown): boolean {
@@ -156,6 +165,12 @@ beforeEach(async () => {
     await harness.loadContacts();
     return importOriginal();
   });
+  vi.doMock('../../lib/living-chart/forecast-snapshot', () => ({ createLivingForecastSnapshot: (value: unknown) => value }));
+  vi.doMock('../living-chart/LivingMomentCapture', () => ({
+    default: () => null,
+    possibleContactLine: () => 'Possible fixture contact.',
+    reflectionForContact: () => null,
+  }));
   TodayBrief = (await import('./TodayBrief')).default;
 });
 
@@ -163,6 +178,8 @@ afterEach(() => {
   harness.effects.forEach((effect) => effect.cleanup?.());
   vi.doUnmock('../../lib/transits');
   vi.doUnmock('../../lib/engine/aspects');
+  vi.doUnmock('../../lib/living-chart/forecast-snapshot');
+  vi.doUnmock('../living-chart/LivingMomentCapture');
   vi.unstubAllGlobals();
 });
 
@@ -313,5 +330,85 @@ describe('Today saved-chart transit loading', () => {
     expect(harness.load).not.toHaveBeenCalled();
     expect(view.props['data-today-state']).toBe('empty');
     expect(comparisonUnavailable(view)).toBe(true);
+  });
+
+  it.each([
+    { timeKnown: true, active: false },
+    { timeKnown: false, active: false },
+    { timeKnown: true, active: true },
+    { timeKnown: false, active: true },
+  ])('keeps a saved-chart Sun baseline only for known time and validates its snapshot (known=$timeKnown, active=$active)', async ({ timeKnown, active }) => {
+    const saved = chart('A');
+    saved.id = '10000000-0000-4000-8000-000000000001';
+    saved.relationship = 'self';
+    saved.birth.timeKnown = timeKnown;
+    saved.birth.time = timeKnown ? '12:00' : null;
+    // The active fixture has an exact Sun contact; 10° has no contact within 3°.
+    saved.summary.bodies[0].lon = active ? 168.5 : 10;
+    const before = JSON.stringify(saved);
+    profile([saved]);
+    render({ livingChartEnabled: true });
+    await vi.dynamicImportSettled();
+    const view = render({ livingChartEnabled: true });
+    const rows = nodes(view);
+    expect(rows.some(node => node.type === 'p' && textContent(node) === 'Aries Sun-sign baseline')).toBe(timeKnown && !active);
+    expect(rows.some(node => typeof node.props.children === 'string'
+      && node.props.children.includes('the Sun sign has not been verified across the whole birth date'))).toBe(!timeKnown);
+    const forecast = rows.find(node => node.props.forecast)?.props.forecast;
+    expect(forecast).toBeTruthy();
+    expect(forecast.lines.some((line: { id: string }) => line.id.startsWith('sun-sign:'))).toBe(timeKnown && !active);
+    expect(forecast.lines[0].text.includes('reference-moment positions')).toBe(!timeKnown);
+    expect(forecast.lines[0].receipt).toBe(active ? 'Fixture contact receipt.' : 'Nearest checked contact · Fixture contact receipt.');
+    const { createLivingForecastSnapshot, parseLivingForecastSnapshot } = await vi.importActual<typeof import('../../lib/living-chart/forecast-snapshot')>('../../lib/living-chart/forecast-snapshot');
+    const accepted = createLivingForecastSnapshot(forecast);
+    expect(accepted).not.toBeNull();
+    expect(accepted?.source).toBe(active ? 'personalized' : 'quiet');
+    expect(accepted?.lines).toEqual(forecast.lines);
+    expect(parseLivingForecastSnapshot(JSON.parse(JSON.stringify(accepted)))).toEqual(accepted);
+    expect(JSON.stringify(saved)).toBe(before);
+  });
+
+  it('uses reference wording when an unknown-time saved comparison cannot load', async () => {
+    const saved = chart('A');
+    saved.birth.timeKnown = false;
+    saved.birth.time = null;
+    profile([saved]);
+    harness.load.mockRejectedValue(new Error('offline'));
+    render();
+    await vi.dynamicImportSettled();
+    const rows = nodes(render());
+    const status = rows.find(node => typeof node.props.class === 'string' && node.props.class.includes('today-returning-chart-status'));
+    expect(status?.props.children).toContain('reference-moment positions');
+    expect(status?.props.children).not.toContain('Your Sun-sign baseline is ready');
+  });
+});
+
+describe('Today prehydration saved-Sun hint', () => {
+  it.each([true, false, undefined])('requires explicit known time without changing the manual Sun preference: %s', timeKnown => {
+    const source = readFileSync(new URL('../../pages/today/index.astro', import.meta.url), 'utf8');
+    const start = source.indexOf('    /* Private return-state hint.');
+    const script = source.slice(start, source.indexOf('</script>', start));
+    expect(start).toBeGreaterThan(0);
+    const saved = chart('A');
+    saved.birth.timeKnown = timeKnown as boolean;
+    const values = new Map([['zodiacs.profile.v1', JSON.stringify({ version: 1, charts: [saved] })], ['zodiacs:today-sun-sign:v1', 'leo']]);
+    const attributes = new Map<string, string>();
+    const events = new EventTarget();
+    const document = { documentElement: {
+      setAttribute: (name: string, value: string) => attributes.set(name, value),
+      removeAttribute: (name: string) => attributes.delete(name),
+      hasAttribute: (name: string) => attributes.has(name),
+    }, addEventListener() {} };
+    new Function('localStorage', 'document', 'window', 'livingChartEnabled', script)(
+      { getItem: (key: string) => values.get(key) ?? null }, document, events, false,
+    );
+    expect(attributes.has('data-today-saved-chart')).toBe(true);
+    expect(attributes.get('data-today-chart-sun-sign')).toBe(timeKnown === true ? 'cancer' : undefined);
+    expect(attributes.get('data-today-sun-sign')).toBe('leo');
+    saved.birth.timeKnown = false;
+    values.set('zodiacs.profile.v1', JSON.stringify({ version: 1, charts: [saved] }));
+    events.dispatchEvent(new Event('zodiacs:profile'));
+    expect(attributes.has('data-today-chart-sun-sign')).toBe(false);
+    expect(attributes.get('data-today-sun-sign')).toBe('leo');
   });
 });

@@ -277,6 +277,8 @@ const en = {
     dstFoldNotice: 'Clocks repeated that hour where you were born; we used the earlier pass. If you know it was the later one, your chart barely changes — the Moon moves about half a degree an hour.',
     lmtNotice: 'Born before standardized time zones — we used local mean time for that era, the same convention professional software uses.',
     polarNotice: "Placidus houses aren't defined that close to the pole, so this chart uses whole sign houses instead.",
+  referenceChartName: "Reference",
+  unknownTimeSunReference: "Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date.",
     noTimeNotice: "Without a birth time, we show reference positions and omit the rising sign, angles, and houses.",
     moonUnverifiedNotice: "The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment.",
     moonAmbiguousNotice: 'The Moon also changed signs that day — reading both neighbors is fair until you find the time.',

@@ -66,6 +66,7 @@ function LivingSelfChartPlaceholder() {
 }
 
 const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
+const REFERENCE_NOTICE = 'Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date.';
 
 interface Props {
   editionDate: string;
@@ -140,6 +141,7 @@ export default function TodayBrief({
   }, [needsTransits, transitsModule]);
 
   const chartSunSign = useMemo(() => {
+    if (chart?.birth?.timeKnown !== true) return null;
     const sun = chart?.summary?.bodies?.find((body) => (
       body?.body === 'Sun' && Number.isFinite(body.lon)
     ));
@@ -223,6 +225,9 @@ export default function TodayBrief({
         receipt: baseline.receipt,
       });
     }
+    if (chart.birth?.timeKnown !== true) {
+      lines[0].text = `${REFERENCE_NOTICE} ${lines[0].text}`;
+    }
     return snapshotFactory({
       editionDate,
       chartId: chart.id,
@@ -276,7 +281,9 @@ export default function TodayBrief({
                   class={`today-returning-chart-status${comparisonUnavailable ? ' is-visible' : ''}`}
                   aria-hidden={comparisonUnavailable ? undefined : 'true'}
                 >
-                  Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.
+                  {chart && chart.birth?.timeKnown !== true
+                    ? REFERENCE_NOTICE
+                    : 'Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.'}
                 </p>
                 <div class="today-returning-sun-baselines" data-nosnippet>
                   {SIGNS.map((sign) => (
@@ -353,7 +360,9 @@ export default function TodayBrief({
                   {personalized.chart.name || (livingChartEnabled ? 'your chart' : 'your latest chart')}
                 </span>
               </h2>
-              <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
+              <p>{personalized.chart.birth?.timeKnown !== true
+                ? REFERENCE_NOTICE
+                : <>A few themes from the {editionLabel} sky, compared with your saved birth chart.</>}</p>
             </div>
 
             <div class="today-reading__body">

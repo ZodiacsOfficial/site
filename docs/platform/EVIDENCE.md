@@ -1,14 +1,25 @@
 # Platform evidence ledger
 
-## L1 / C-017 — bounded phase-name correction in review
+## Current checkpoint — L1 released; bounded L2 interpretation correction
 
-The owner authorized L1 against released main f592d514. Full-result phase labels
-now use retained full values and the existing categories, without a second angle
-normalization. Lite/live math, numerical/receipt values and SDK publication status
-are preserved. [Scope and verification](evidence/l1-phase-category/README.md).
-Hosted checks and exact-source preview are pending at this implementation commit.
-No merge, production deployment, or L2–L6 work is authorized.
+L1 / C-017 is merged in [#476](https://github.com/ZodiacsOfficial/site/pull/476)
+as `307c832e662e1996ee904f11fb1678e402808a03`, with the exact owner-approved tree.
+All 14 automatic post-merge jobs passed in
+[run 34756055748](https://github.com/ZodiacsOfficial/site/actions/runs/34756055748).
+Production and rollback verification found no critical regression.
+Current main/production at the L2 starting refresh is
+`0490c4f8a92f045417d7f81ed502f0789e8ecdc2`, an automated Registry snapshot descendant
+with unchanged L1 runtime. [Production evidence](evidence/l1-production/README.md).
 
+The owner now authorizes only downstream unknown-time reference-Sun interpretation
+in L2, based on this current main. Calculated positions, receipt bytes, known-time
+behavior and approved design stay intact. Complete-date interval activation is
+separate until provider completeness, runtime support and skipped/repeated-date
+policies are established. [L2 scope and evidence](evidence/l2-reference-sun/README.md).
+No merge/deployment, SDK merge/npm publication, L3–L6, Astrofolio or Zodia work is
+included. The SDK publication hold remains explicit.
+
+## Historical records (original source and authorization scope)
 
 Checkpoint: **2026-09-07 18:39 UTC** (2026-09-08 Asia/Bangkok). Stage A.
 This records observed results, including intermediate failures. Final full-site tests and browser acceptance passed below. No merge, npm publication,

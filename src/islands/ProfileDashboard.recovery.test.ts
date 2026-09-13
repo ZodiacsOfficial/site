@@ -47,6 +47,8 @@ import CalculationReload, { calculationLoadMessage } from './CalculationReload';
 import { ModuleLoadError } from '../lib/module-load';
 import { YEAR_AHEAD_CACHE_KEY } from '../lib/year-ahead';
 import { t } from '../lib/i18n';
+import ingressesData from '../data/ingresses.json';
+import { SIGN_SLUGS } from '../lib/signs';
 
 const chart = (): SavedChart => ({
   id: 'saved-chart', name: 'Saved chart', createdAt: '2026-09-01T00:00:00Z', updatedAt: '2026-09-01T00:00:00Z',
@@ -110,6 +112,31 @@ afterEach(() => {
 });
 
 describe('saved-chart year scan recovery', () => {
+  it.each([true, false])('qualifies reference results and personalizes solar ingresses only with known time: %s', async timeKnown => {
+    const from = new Date('2026-09-05T12:00:00Z');
+    const to = new Date(from.getTime() + 366 * 86400_000);
+    const ingress = ingressesData.windows.find(window => (window.planet === 'Jupiter' || window.planet === 'Saturn')
+      && new Date(window.from) >= from && new Date(window.from) <= to)!;
+    expect(ingress).toBeTruthy();
+    const saved = chart();
+    saved.birth.timeKnown = timeKnown;
+    saved.birth.time = timeKnown ? '11:30' : null;
+    saved.summary.bodies[0].lon = SIGN_SLUGS.indexOf(ingress.sign) * 30 + 15;
+    if (!timeKnown) saved.summary.angles = null;
+    harness.charts = [saved];
+    const before = JSON.stringify(saved);
+    render();
+    await flush();
+    const rows = nodes(render());
+    const copy = rows.map(node => node.props.children).filter((value): value is string => typeof value === 'string');
+    expect(copy.some(value => value.includes('That is your sun sign'))).toBe(timeKnown);
+    expect(copy.filter(value => value === t('en', 'unknownTimeSunReference'))).toHaveLength(timeKnown ? 0 : 2);
+    expect(copy.some(value => value.startsWith(`${ingress.planet} enters `))).toBe(true);
+    expect(harness.scan).toHaveBeenCalledWith(expect.objectContaining({ sunLon: saved.summary.bodies[0].lon,
+      birthUtc: new Date(saved.summary.utcISO) }), from, to);
+    expect(JSON.stringify(saved)).toBe(before);
+  });
+
   it('announces pending calculation before the first scan effect has run', () => {
     const view = nodes(render(true));
     expect(view.some((node) => node.props.role === 'status')).toBe(true);
