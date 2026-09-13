@@ -121,6 +121,10 @@ jobs:
         timeout-minutes: 5
         run: OUT_DIR=tests/visual/artifacts/post-chart-context-clear node tests/post-chart-context-clear-drive.mjs
 
+      - name: Native complete local-date coverage
+        timeout-minutes: 3
+        run: OUT_DIR=tests/visual/artifacts/local-date-intervals node tests/local-date-intervals-drive.mjs
+
       - name: Unknown-time local date reference
         timeout-minutes: 5
         run: OUT_DIR=tests/visual/artifacts/local-date-reference node tests/local-date-reference-drive.mjs

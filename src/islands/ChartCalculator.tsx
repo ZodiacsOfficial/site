@@ -35,7 +35,8 @@ import {
 } from '../lib/scene/types';
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
-import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseNameFromAngle } from '../lib/engine/lite';
 import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
@@ -1184,7 +1185,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
       if (!input.timeKnown) {
         try {
-          if (!localDateContainsUtc(input.date, resolved.utc, input.city.tz)) throw localDateReferenceFailure;
+          if (assessLocalDateReference(input.date, resolved.utc, input.city.tz).referenceStatus !== 'member') throw localDateReferenceFailure;
         } catch { throw localDateReferenceFailure; }
       }
       const calculationInput = {

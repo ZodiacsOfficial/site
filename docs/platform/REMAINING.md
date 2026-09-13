@@ -1,6 +1,6 @@
 # Finite remaining platform checklist
 
-Current checkpoint: 2026-09-13. This replaces the stale L1 draft/outage status.
+Current checkpoint: 2026-09-13. L2a is released and production-verified; all 14 post-merge jobs passed.
 Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Completed release work
@@ -17,15 +17,17 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Current bounded L2 work
 
-- [ ] **L2a — Downstream unknown-time reference-Sun interpretation.** Withhold
+- [x] **L2a — Downstream unknown-time reference-Sun interpretation.** Withhold
   unverified automatic sign personalization, qualify reference readings and names,
-  preserve known-time/manual choices and numerical/receipt bytes. Implementation
-  complete locally; required checks, draft and exact-source preview in progress.
-  [Evidence](evidence/l2-reference-sun/README.md). No merge/deployment authorized.
-- [ ] **L2b — Complete-date interval activation (separate, not begun).** Establish
-  provider completeness, runtime support and skipped/repeated-date policies before
-  activating the retained inactive prerequisite. Sampling is not proof of whole-date
-  certainty. No whole-date Sun sign certification is introduced by L2a.
+  preserve known-time/manual choices and numerical/receipt bytes. Released [#480](https://github.com/ZodiacsOfficial/site/pull/480)
+  at `2e7b676d`: all 14 hosted jobs and exact-source protected preview pass.
+  Merged as `87f18e0a`; production flows verified. All 14 automatic post-merge jobs passed.
+  [Release evidence](evidence/l2-production/README.md).
+- [ ] **L2b — Conditional complete-date interval activation (draft in progress).**
+  Native contract, explicit date policies and reference-only caller activation are
+  implemented; local/hosted checks and exact-source preview are being completed.
+  No sampled completeness, replacement instant or Sun/Moon sign certification.
+  [Contract](evidence/l2b-date-coverage/CONTRACT.md). No merge or production deployment.
 
 ## Later features — outside this slice
 
@@ -42,8 +44,8 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 - [x] **O1/O2/O3 for released site #471 and L1:** exact owner approval and production
   verification recorded; no pending L1 human-review or production gate remains.
-- [ ] **Future L2 release:** owner review/approval of the final exact candidate before
-  merge and resulting production deployment. This task delivers a draft only.
+- [x] **L2a owner release approval:** exact candidate `2e7b676d` approved and released.
+  Production and automatic post-merge CI closeout completed; no further L2a approval needed.
 - [ ] **SDK merge/npm publication:** explicit hold remains; not required for the
   already-vendored site path. Any future publication requires separate authorization
   and external registry/artifact verification.

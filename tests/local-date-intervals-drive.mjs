@@ -21,6 +21,7 @@ const cases = [
   ['1919-03-31', 'America/Toronto', [['1919-03-31T04:30:00.000Z', '1919-04-01T04:00:00.000Z']]],
   ['2011-12-29', 'Pacific/Apia', [['2011-12-29T10:00:00.000Z', '2011-12-30T10:00:00.000Z']]],
   ['2011-12-30', 'Pacific/Apia', []],
+  ['1844-12-31', 'Pacific/Guam', []],
   ['2011-12-31', 'Pacific/Apia', [['2011-12-30T10:00:00.000Z', '2011-12-31T10:00:00.000Z']]],
   ['2009-10-31', 'America/St_Johns', [['2009-10-31T02:30:00.000Z', '2009-11-01T02:30:00.000Z'], ['2009-11-01T02:31:00.000Z', '2009-11-01T03:30:00.000Z']]],
   ['2009-11-01', 'America/St_Johns', [['2009-11-01T02:30:00.000Z', '2009-11-01T02:31:00.000Z'], ['2009-11-01T03:30:00.000Z', '2009-11-02T03:30:00.000Z']]],
@@ -41,7 +42,7 @@ const cases = [
 await mkdir(out, { recursive: true });
 const bundle = await build({
   absWorkingDir: root,
-  stdin: { contents: "export { resolveLocalDateIntervals, createNativeTemporalTransitionProvider } from './src/lib/time/local-date-intervals';", resolveDir: root },
+  stdin: { contents: "export { resolveLocalDateIntervals, createNativeTemporalTransitionProvider } from './src/lib/time/local-date-intervals'; export { assessLocalDateReference } from './src/lib/time/local-date-reference'; export { resolveLocalToUtc } from './src/lib/time/localToUtc';", resolveDir: root },
   bundle: true, write: false, format: 'iife', globalName: 'dateIntervalsSubject',
   platform: 'browser', target: 'es2022', metafile: true,
 });
@@ -91,7 +92,7 @@ try {
   report.importEffects = await page.evaluate(() => ({ ...globalThis.moduleEffects }));
   assert.deepEqual(report.importEffects, { temporalReads: 0, intl: 0, storage: 0, idb: 0, fetch: 0, xhr: 0, beacon: 0 });
   report.native = await page.evaluate((fixtures) => {
-    const { resolveLocalDateIntervals: resolve, createNativeTemporalTransitionProvider: provider } = globalThis.dateIntervalsSubject;
+    const { resolveLocalDateIntervals: resolve, createNativeTemporalTransitionProvider: provider, assessLocalDateReference: assess, resolveLocalToUtc: local } = globalThis.dateIntervalsSubject;
     const nativeAvailable = provider() !== null;
     const rows = [];
     const iso = (n) => new Date(n).toISOString();
@@ -105,7 +106,14 @@ try {
         return `${String(year).padStart(4, '0')}-${parts.month}-${parts.day}`;
       };
       const boundaries = result.status !== 'existing' ? [] : result.intervals.flatMap(({ start, endExclusive }) => [[start - 1, false], [start, true], [endExclusive - 1, true], [endExclusive, false]].map(([instant, expectedMember]) => ({ instant: iso(instant), localDate: localDate(instant), expectedMember, passed: (localDate(instant) === date) === expectedMember })));
-      rows.push({ date, zone, expected, result, actual, boundaries, passed: JSON.stringify(actual) === JSON.stringify(expected) && boundaries.every((row) => row.passed) });
+      const reference = local(date, '12:00', zone).utc;
+      const assessment = assess(date, reference, zone);
+      const expectedReference = expected.some(([start, end]) => Date.parse(start) <= reference.getTime() && reference.getTime() < Date.parse(end));
+      const assessmentPassed = JSON.stringify(assessment.coverage) === JSON.stringify(result)
+        && assessment.referenceStatus === (expectedReference ? 'member' : 'outside-date')
+        && assessment.evidence?.provider === 'host-temporal'
+        && assessment.evidence?.observations.some(row => row.kind === 'next-transition');
+      rows.push({ date, zone, expected, result, actual, boundaries, reference: reference.toISOString(), assessment, passed: assessmentPassed && JSON.stringify(actual) === JSON.stringify(expected) && boundaries.every((row) => row.passed) });
     }
     const offsets = [['+01:00', 3600000], ['+0100', 3600000], ['-02:30', -9000000], ['-00:00', 0]].map(([zone, offset]) => {
       let intlAccepted = true;
@@ -123,16 +131,18 @@ try {
     const original = Object.getOwnPropertyDescriptor(globalThis, 'Temporal');
     Object.defineProperty(globalThis, 'Temporal', { configurable: true, value: undefined });
     const unavailable = resolve('2000-01-01', 'UTC');
+    const unavailableAssessment = assess('2000-01-01', new Date('2000-01-01T12:00Z'), 'UTC');
     Object.defineProperty(globalThis, 'Temporal', original);
     const invalidNativeZone = resolve('2000-01-01', '2000-01-01T00:00+01:00');
     const failing = resolve('2000-01-01', 'UTC', { completeness: 'complete-transitions-v1', offsetMilliseconds() { return 0; }, nextTransitionMilliseconds() { throw new Error('private synthetic detail'); } });
     const effects = { ...globalThis.moduleEffects };
-    return { nativeAvailable, rows, offsets, unavailable, invalidNativeZone, failing, effects };
+    return { nativeAvailable, rows, offsets, unavailable, unavailableAssessment, invalidNativeZone, failing, effects };
   }, cases);
   assert.equal(report.native.nativeAvailable, true, 'Native Temporal transition API is required for this driver; no polyfill or skipped success.');
   assert.ok(report.native.rows.every((row) => row.passed), 'Native fixture or independent Intl boundary membership mismatch.');
   assert.ok(report.native.offsets.every((row) => row.passed), 'Fixed-offset acceptance or unresolved boundary mismatch.');
   assert.deepEqual(report.native.unavailable, { status: 'unresolved', reason: 'provider-unavailable' });
+  assert.deepEqual(report.native.unavailableAssessment, { referenceStatus: 'member', coverage: { status: 'unresolved', reason: 'provider-unavailable' }, evidence: null });
   assert.deepEqual(report.native.invalidNativeZone, { status: 'unresolved', reason: 'provider-failed' });
   assert.deepEqual(report.native.failing, { status: 'unresolved', reason: 'provider-failed' });
   for (const key of ['storage', 'idb', 'fetch', 'xhr', 'beacon']) assert.equal(report.native.effects[key], 0);
@@ -144,7 +154,7 @@ try {
   process.exitCode = 1;
 } finally {
   await browser?.close();
-  await new Promise((done, reject) => server.close((error) => error ? reject(error) : done()));
+  if (server.listening) await new Promise((done, reject) => server.close((error) => error ? reject(error) : done()));
   report.cleanup = 'Owned browser context and loopback server closed.';
   await writeFile(join(out, 'result.json'), `${JSON.stringify(report, null, 2)}\n`);
   console.log(JSON.stringify(report));

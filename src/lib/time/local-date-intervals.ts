@@ -119,7 +119,8 @@ function validInstant(value: unknown): value is number {
  * No birth-time fold/gap disambiguation is applied. Disconnected dates remain
  * disconnected; an empty result is never a shifted representative instant.
  * Completeness is conditional on the supplied provider honoring its contract.
- * This additive API is not connected to calculator, account or save behavior.
+ * The reference assessment caller uses this only for date membership; it never
+ * derives full-date Sun/Moon certainty or changes calculation/receipt inputs.
  */
 export function resolveLocalDateIntervals(
   date: unknown,
