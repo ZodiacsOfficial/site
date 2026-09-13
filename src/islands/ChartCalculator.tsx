@@ -37,7 +37,7 @@ import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/
 import { bigThree } from '../lib/interpretations';
 import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
-import { moonPhaseName } from '../lib/engine/lite';
+import { moonPhaseNameFromAngle } from '../lib/engine/lite';
 import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
 import { decodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
@@ -1436,6 +1436,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
+  // Use the retained full positions; normalize their difference exactly once.
+  const moonPhase = mode === 'moon' && sun && moon
+    ? moonPhaseNameFromAngle((((moon.lon - sun.lon) % 360) + 360) % 360)
+    : null;
   const asc = chart?.angles?.asc ?? null;
   const sunSign = sun ? signForLongitude(sun.lon) : null;
   const autoNameLocales = locale === 'ru' ? CATALOG_LOCALES : RELEASED_LOCALES;
@@ -2053,8 +2057,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           )}
 
           {/* Moon-mode extra: phase at the calculated moment */}
-          {mode === 'moon' && (
-            <p class="calc__phase mono">{t(locale, chart.input.timeKnown ? 'moonPhaseAtBirth' : 'moonPhaseAtReference')}: {moonPhaseLabel(locale, moonPhaseName(chart.input.utc))}</p>
+          {mode === 'moon' && moonPhase && (
+            <p class="calc__phase mono">{t(locale, chart.input.timeKnown ? 'moonPhaseAtBirth' : 'moonPhaseAtReference')}: {moonPhaseLabel(locale, moonPhase)}</p>
           )}
 
           {/* Rising-mode extra: chart ruler */}

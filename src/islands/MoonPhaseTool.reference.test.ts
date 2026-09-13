@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 import * as engine from '../lib/engine/full';
-import { moonPhaseName } from '../lib/engine/lite';
+import { moonPhaseName, moonPhaseNameFromAngle } from '../lib/engine/lite';
 import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { signForLongitude } from '../lib/signs';
 import { t, type CatalogLocale } from '../lib/i18n';
@@ -25,17 +25,18 @@ const execute = new Function('context', `with(context){${ts.transpile([...functi
 })};return lookup({preventDefault(){}});}`);
 type Result = { phase: ReturnType<typeof moonPhaseName>; angle: number; illum: number; lon: number; caption: string };
 type Input = { date: string; time: string; zone: string | null; locale?: CatalogLocale };
-async function capture({ date, time, zone, locale = 'en' }: Input) {
+async function capture({ date, time, zone, locale = 'en' }: Input, longitudes?: { Moon: number; Sun: number }) {
   const calls: Array<{ body: string; utc: string; value: number }> = [];
   const resolutions: string[][] = [];
   const state: { result: Result | null; error: string; busy: boolean } = { result: null, error: '', busy: false };
-  await execute({ date, time, city: zone ? { tz: zone } : null, locale, t, moonPhaseName,
+  await execute({ date, time, city: zone ? { tz: zone } : null, locale, t, moonPhaseNameFromAngle,
     lookupRevisionRef: { current: 0 }, focusAfterComputeRef: { current: false },
     setBusy: (value: boolean) => { state.busy = value; },
     setError: (value: string) => { state.error = value; },
     setResult: (value: Result | null) => { state.result = value; },
     loadEngine: async () => ({ ...engine, bodyLongitude: (...args: Parameters<typeof engine.bodyLongitude>) => {
-      const value = engine.bodyLongitude(...args); calls.push({ body: args[0], utc: args[1].toISOString(), value }); return value;
+      const value = longitudes && (args[0] === 'Moon' || args[0] === 'Sun')
+        ? longitudes[args[0]] : engine.bodyLongitude(...args); calls.push({ body: args[0], utc: args[1].toISOString(), value }); return value;
     } }),
     resolveLocalToUtc: (...args: Parameters<typeof resolveLocalToUtc>) => { resolutions.push(args); return resolveLocalToUtc(...args); },
     localDateContainsUtc, calculationError: (_error: unknown, _locale: string, fallback: string) => fallback,
@@ -55,6 +56,24 @@ const controls: Array<[string, Input]> = [
 ];
 
 describe('Moon phase reference result', () => {
+  it('corrects the real January 16 boundary disagreement without changing full values', async () => {
+    const actual = await capture({ date: '2024-01-16', time: '10:18', zone: null });
+    expect(moonPhaseName(new Date('2024-01-16T10:18:00Z'))).toBe('Waxing Crescent');
+    expect(actual.result!.angle).toBe(67.50700818137483);
+    expect(actual.result!.lon).toBe(3.2722751872874483);
+    expect(actual.result!.phase).toBe('First Quarter');
+    expect(actual.result!.illum).toBe((1 - Math.cos((actual.result!.angle * Math.PI) / 180)) / 2);
+  });
+
+  it('names the retained full result even when the lite date calculation disagrees', async () => {
+    const input = { date: '1990-01-04', time: '12:00', zone: null };
+    expect(moonPhaseName(new Date('1990-01-04T12:00:00Z'))).toBe('First Quarter');
+    const actual = await capture(input, { Moon: 180, Sun: 0 });
+    expect(actual.result).toEqual({ phase: 'Full Moon', angle: 180, illum: 1,
+      lon: 180, caption: t('en', 'utcTimeCaption') });
+    expect(actual.calls.map(call => call.body)).toEqual(['Moon', 'Sun']);
+  });
+
   it.each(controls)('%s preserves every primary value and omits endpoint confidence work', async (_name, input) => {
     const actual = await capture(input);
     const utc = input.zone ? resolveLocalToUtc(input.date, input.time || '12:00', input.zone).utc
@@ -64,7 +83,7 @@ describe('Moon phase reference result', () => {
     expect(actual.error).toBe('');
     expect(actual.busy).toBe(false);
     const { caption, ...numerical } = actual.result!;
-    expect(JSON.stringify(numerical)).toBe(JSON.stringify({ phase: moonPhaseName(utc), angle,
+    expect(JSON.stringify(numerical)).toBe(JSON.stringify({ phase: moonPhaseNameFromAngle(angle), angle,
       illum: (1 - Math.cos((angle * Math.PI) / 180)) / 2, lon }));
     expect(actual.calls).toEqual([{ body: 'Moon', utc: utc.toISOString(), value: lon }, { body: 'Sun', utc: utc.toISOString(), value: sun }]);
     expect(actual.resolutions).toEqual(input.zone ? [[input.date, input.time || '12:00', input.zone]] : []);

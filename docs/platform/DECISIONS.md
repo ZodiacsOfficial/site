@@ -1,5 +1,15 @@
 # Platform decisions
 
+## L1 / C-017 — bounded phase-name correction in review
+
+The owner authorized L1 against released main f592d514. Full-result phase labels
+now use retained full values and the existing categories, without a second angle
+normalization. Lite/live math, numerical/receipt values and SDK publication status
+are preserved. [Scope and verification](evidence/l1-phase-category/README.md).
+Hosted checks and exact-source preview are pending at this implementation commit.
+No merge, production deployment, or L2–L6 work is authorized.
+
+
 ## A-001 — Integrate from refreshed sources in isolated branches
 
 Use current site main and a separate SDK checkout based on the still-held
