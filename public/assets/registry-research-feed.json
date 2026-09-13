@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-12T11:17:42.410Z",
+  "generatedAt": "2026-09-13T00:09:08.435Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-13T00:00:00.000Z",
-    "endsBefore": "2026-09-20T00:00:00.000Z"
+    "startsAt": "2026-08-14T00:00:00.000Z",
+    "endsBefore": "2026-09-21T00:00:00.000Z"
   },
   "items": [
     {
@@ -98,6 +98,67 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-13",
+      "slug": "daily-market-brief-2026-09-13",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-13T12:00:00.000Z",
+      "visibleAt": "2026-09-13T12:00:00.000Z",
+      "title": "Saturn in Aries · daily market brief",
+      "summary": "Saturn in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-13/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-12-observation-24h",
+      "slug": "market-check-2026-09-12-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-13T00:09:08.435Z",
+      "visibleAt": "2026-09-13T00:09:08.435Z",
+      "title": "Libra 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.01 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-12-observation-24h/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-13",
+      "slug": "market-check-2026-09-13",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-13T00:09:08.435Z",
+      "visibleAt": "2026-09-13T00:09:08.435Z",
+      "title": "Aries market check · 2026-09-13",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-13/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune",
       "slug": "event-brief-aspect-2026-09-12t16-41-18-624z-mercury-opposition-neptune",
       "kind": "event-brief",
@@ -117,7 +178,7 @@
         "astrology",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-aspect-2026-09-12t15-59-18-579z-mercury-trine-pluto",
@@ -139,7 +200,7 @@
         "astrology",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-daily-market-brief-2026-09-12",
@@ -161,7 +222,7 @@
         "daily-sky",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-05-observation-168h",
