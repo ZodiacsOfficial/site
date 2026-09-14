@@ -405,10 +405,13 @@ describe('Today prehydration saved-Sun hint', () => {
     expect(attributes.has('data-today-saved-chart')).toBe(true);
     expect(attributes.get('data-today-chart-sun-sign')).toBe(timeKnown === true ? 'cancer' : undefined);
     expect(attributes.get('data-today-sun-sign')).toBe('leo');
+    // A Leo quick-read preference differs from the chart's Cancer Sun only when that Sun is verified.
+    expect(attributes.has('data-today-sign-mismatch')).toBe(timeKnown === true);
     saved.birth.timeKnown = false;
     values.set('zodiacs.profile.v1', JSON.stringify({ version: 1, charts: [saved] }));
     events.dispatchEvent(new Event('zodiacs:profile'));
     expect(attributes.has('data-today-chart-sun-sign')).toBe(false);
+    expect(attributes.has('data-today-sign-mismatch')).toBe(false);
     expect(attributes.get('data-today-sun-sign')).toBe('leo');
   });
 });

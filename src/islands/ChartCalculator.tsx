@@ -21,7 +21,6 @@ import { createModuleLoader } from '../lib/module-load';
 import { downloadCalculationReceipt } from '../lib/receipt-download';
 import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
 import type { SavedRecordsCopy } from './saved-records-copy';
-import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import type { ReadingScrollBehavior } from './explorer/ReadingPath';
 import {
   EMPTY_FIRST_READING,
@@ -116,7 +115,6 @@ interface ChartResultOwner {
   requiresProfileAccess: boolean;
 }
 interface ChartReceiptExport extends ChartResultOwner {
-  envelope: NatalEnvelope;
   envelopeJson: string;
 }
 type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
@@ -1341,7 +1339,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       setChart(result);
       if (portable) {
         const captured: ChartReceiptExport = {
-          ...owner, envelope: portable.envelope, envelopeJson: portable.envelopeJson,
+          ...owner, envelopeJson: portable.envelopeJson,
         };
         receiptExportRef.current = captured;
         setReceiptExport(captured);
@@ -1453,7 +1451,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     // store reports it as uncertain and that is what the visitor is told.
     const run = recordResultRunRef.current;
     const envelopeJson = captured.envelopeJson;
-    const envelope = captured.envelope;
+    // The exact bytes are the record; the store re-serializes the parsed
+    // envelope canonically and the confirmation below checks equality.
+    const envelope = api.parseCalculationEnvelope(envelopeJson);
+    if (!envelope) { setRecordKeep('failed'); return; }
     // The label is display-only metadata around the immutable bytes, derived
     // from the calculation itself (never copied from a legacy saved chart,
     // which can be renamed or deleted independently); keep it printable.

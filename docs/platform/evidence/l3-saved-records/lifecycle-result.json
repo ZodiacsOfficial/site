@@ -1,5 +1,5 @@
 {
-  "completedAt": "2026-09-14T13:18:14.783Z",
+  "completedAt": "2026-09-14T17:29:08.620Z",
   "node": "v22.22.2",
   "results": [
     {
@@ -9,7 +9,7 @@
         "bytes": 4823,
         "sha256": "ccbf7b71a3b1561865f960f683de473498348e95597abb84e6778cb1031d4e32"
       },
-      "ms": 4420
+      "ms": 5134
     },
     {
       "name": "device mode: remove all, then an explicit keep readmits a new set",
@@ -17,7 +17,7 @@
       "detail": {
         "readmitted": true
       },
-      "ms": 8920
+      "ms": 9677
     },
     {
       "name": "device mode: an uncertain keep is stated, never retried, and reconciled in Profile",
@@ -25,7 +25,7 @@
       "detail": {
         "state": "uncertain"
       },
-      "ms": 2611
+      "ms": 3588
     },
     {
       "name": "simulated account-sync-v2: guest, account A, hidden guest records, A→B→A staleness",
@@ -33,7 +33,7 @@
       "detail": {
         "state": "uncertain"
       },
-      "ms": 7840
+      "ms": 8392
     },
     {
       "name": "simulated account-sync-v2: retained is read-only; guest view switches only the record scope",
@@ -42,7 +42,7 @@
         "retainedReadOnly": true,
         "guestView": true
       },
-      "ms": 11767
+      "ms": 11502
     },
     {
       "name": "device mode: an interrupted removal is finished on the next visit; keeping afterwards starts a new set",
@@ -50,7 +50,7 @@
       "detail": {
         "recovered": true
       },
-      "ms": 8255
+      "ms": 8201
     },
     {
       "name": "device mode: a removal in another tab reaches an open calculator without reload",
@@ -58,7 +58,7 @@
       "detail": {
         "crossTab": true
       },
-      "ms": 12910
+      "ms": 11775
     },
     {
       "name": "simulated account-sync-v2: locked without a grant, never a guest fallback",
@@ -66,7 +66,7 @@
       "detail": {
         "databases": []
       },
-      "ms": 1639
+      "ms": 1581
     },
     {
       "name": "blocked storage is an honest unavailable state; legacy saves still work",
@@ -74,7 +74,7 @@
       "detail": {
         "legacySaveUnaffected": true
       },
-      "ms": 3228
+      "ms": 3195
     },
     {
       "name": "a browser without indexedDB.databases() is an honest unsupported state; legacy saves still work",
@@ -82,7 +82,7 @@
       "detail": {
         "legacySaveUnaffected": true
       },
-      "ms": 3192
+      "ms": 2914
     },
     {
       "name": "device mode: two tabs keeping at once admit exactly one set; a loser, if any, is told nothing was stored",
@@ -93,7 +93,7 @@
           "kept"
         ]
       },
-      "ms": 13563
+      "ms": 14813
     },
     {
       "name": "an unreleased schema-2 database is refused intact",
@@ -108,7 +108,7 @@
           }
         ]
       },
-      "ms": 1681
+      "ms": 1725
     }
   ],
   "passed": 12,

@@ -376,6 +376,15 @@ jobs:
       - name: Explicit keep, inventory, exact export, deletion, recovery and readmission acceptance
         run: OUT_DIR=tests/visual/artifacts/saved-records-lifecycle npm run test:saved-records:browser
 
+      - name: Upload saved-records lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: saved-records-lifecycle-${{ github.run_id }}
+          path: tests/visual/artifacts/saved-records-lifecycle/
+          if-no-files-found: ignore
+          retention-days: 30
+
   zodiac-games-sql:
     name: Zodiac Games SQL
     runs-on: ubuntu-latest

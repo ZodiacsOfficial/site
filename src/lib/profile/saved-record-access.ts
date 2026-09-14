@@ -21,6 +21,7 @@ import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import { readProfileAccessGrant } from '../account-v2/profile-access';
 import { ACCOUNT_V2_PROFILE_REVOKE_EVENT } from '../account-v2/profile-lease';
 import { ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY } from '../account-v2/storage-identity';
+import { parseNatalEnvelope, type NatalEnvelope } from '@zodiacs/engine/receipt';
 import { savedRecordsEnabled } from './saved-record-flags';
 import {
   IndexedDbSavedNatalAdapter,
@@ -396,6 +397,22 @@ export async function eraseSavedRecords(
     return result;
   } finally {
     adapter.abortPending();
+  }
+}
+
+/**
+ * The calculator keeps the exact receipt bytes it offers for download; the
+ * store takes the envelope object and re-serializes it canonically, so the
+ * stored bytes equal the offered bytes (the calculator verifies that
+ * equality before confirming). Parsing lives here so the calculator's own
+ * bundle carries no codec beyond the serializer it already uses.
+ */
+export function parseCalculationEnvelope(envelopeJson: string): NatalEnvelope | null {
+  try {
+    const parsed = parseNatalEnvelope(envelopeJson);
+    return parsed.ok ? parsed.envelope : null;
+  } catch {
+    return null;
   }
 }
 

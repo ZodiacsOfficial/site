@@ -76,6 +76,8 @@ async function check(name, run) {
     results.push({ name, passed: false, error: String(error?.stack ?? error), ms: Date.now() - start });
   }
   console.log(`${results.at(-1).passed ? 'PASS' : 'FAIL'} ${name}`);
+  // Hosted logs must carry the cause; result.json is only an artifact.
+  if (!results.at(-1).passed) console.log(results.at(-1).error.split('\n').slice(0, 14).map((line) => `  ${line}`).join('\n'));
 }
 
 async function gotoChart(page) {
@@ -182,10 +184,11 @@ try {
   await withPreview({ port: 4411 }, async (baseURL) => {
     base = baseURL;
 
-    // The legacy stores themselves (charts, deletion tombstones, Living Chart); derived caches such as the
-    // year-ahead forecast are written by the Profile dashboard and are not record data.
+    // The legacy saved-chart store itself (charts and deletion tombstones). Derived caches (year-ahead
+    // forecast) and the Living Chart's lazily created guest vault are written by Profile islands on
+    // their own schedule and are not saved-chart data.
     const legacyBytes = (page) => page.evaluate(() => JSON.stringify(Object.entries(localStorage)
-      .filter(([key]) => key.startsWith('zodiacs.profile.') || key.startsWith('zodiacs.living-chart.')).sort()));
+      .filter(([key]) => key.startsWith('zodiacs.profile.')).sort()));
     const databases = (page) => page.evaluate(async () => (await indexedDB.databases()).map((entry) => entry.name));
 
     await check('device mode: keep, find, exact download, remove, reload', async () => {
