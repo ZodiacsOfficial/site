@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "l3bc-usability-2026-09-14",
-  "baseCommit": "74ae0f03241fe61786e79b4213ba36c878f11349",
+  "baseCommit": "74cc4cafbbb50fe8581cb5a3397bacff5de4524d",
   "protectedPaths": [
     "src/pages/es/birth-chart/index.astro",
     "src/pages/es/profile/index.astro",

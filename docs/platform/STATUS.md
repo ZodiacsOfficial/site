@@ -30,7 +30,7 @@ Remaining decisions: one pull request or two (usability first, then storage:
 the branch is ordered so the usability commit can be cherry-picked alone);
 whether to authorize a bounded preview build; when, if ever, to set the flag.
 The exact next release action is to open the draft pull request(s) from this
-branch against main with the scope allowance pinned to `74ae0f03`, let the
+branch against main with the scope allowance pinned to the main head `74cc4caf` (re-pin whenever main moves before the base is set), let the
 hosted checks run, and request review; the flag stays unset. SDK merge/npm
 publication stays held; L4–L6, Astrofolio and Zodia stay excluded.
 
