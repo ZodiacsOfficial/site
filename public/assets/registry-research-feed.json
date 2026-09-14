@@ -1,14 +1,36 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-13T12:20:39.493Z",
+  "generatedAt": "2026-09-14T00:09:07.175Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-14T00:00:00.000Z",
-    "endsBefore": "2026-09-21T00:00:00.000Z"
+    "startsAt": "2026-08-15T00:00:00.000Z",
+    "endsBefore": "2026-09-22T00:00:00.000Z"
   },
   "items": [
+    {
+      "id": "zrx-event-brief-aspect-2026-09-21t22-51-01-669z-mercury-sextile-jupiter",
+      "slug": "event-brief-aspect-2026-09-21t22-51-01-669z-mercury-sextile-jupiter",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T12:00:00.000Z",
+      "visibleAt": "2026-09-21T22:51:01.669Z",
+      "title": "Mercury Sextile Jupiter · event brief",
+      "summary": "Mercury Sextile Jupiter becomes exact at 2026-09-21T22:51:01.669Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-21t22-51-01-669z-mercury-sextile-jupiter/",
+      "signs": [
+        "leo",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
     {
       "id": "zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn",
       "slug": "event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn",
@@ -76,6 +98,51 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-14",
+      "slug": "daily-market-brief-2026-09-14",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T12:00:00.000Z",
+      "visibleAt": "2026-09-14T12:00:00.000Z",
+      "title": "Mercury trine Uranus · daily market brief",
+      "summary": "Mercury trine Uranus leads the disclosed symbolic index; Gemini market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-14/",
+      "signs": [
+        "libra",
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-weekly-outlook-2026-09-14",
+      "slug": "weekly-outlook-2026-09-14",
+      "kind": "weekly-outlook",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T12:00:00.000Z",
+      "visibleAt": "2026-09-14T12:00:00.000Z",
+      "title": "Weekly symbolic outlook · 2026-09-14",
+      "summary": "Aries, Libra, Aquarius hold the three highest disclosed attention ranks for the next seven UTC days.",
+      "url": "/terminal/research/weekly-outlook-2026-09-14/",
+      "signs": [
+        "aries",
+        "libra",
+        "aquarius"
+      ],
+      "topics": [
+        "markets",
+        "weekly-outlook",
+        "astrology"
+      ],
+      "status": "scheduled"
+    },
+    {
       "id": "zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
       "slug": "event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
       "kind": "event-brief",
@@ -96,6 +163,26 @@
         "aspect"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-14",
+      "slug": "market-check-2026-09-14",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T00:09:07.175Z",
+      "visibleAt": "2026-09-14T00:09:07.175Z",
+      "title": "Gemini market check · 2026-09-14",
+      "summary": "Gemini price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-14/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-06-observation-168h",

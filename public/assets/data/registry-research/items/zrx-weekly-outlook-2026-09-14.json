@@ -1,0 +1,108 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-weekly-outlook-2026-09-14",
+  "slug": "weekly-outlook-2026-09-14",
+  "kind": "weekly-outlook",
+  "templateId": "weekly-outlook.v1",
+  "issuedAt": "2026-09-14T12:00:00.000Z",
+  "visibleAt": "2026-09-14T12:00:00.000Z",
+  "title": "Weekly symbolic outlook · 2026-09-14",
+  "summary": "Aries, Libra, Aquarius hold the three highest disclosed attention ranks for the next seven UTC days.",
+  "url": "/terminal/research/weekly-outlook-2026-09-14/",
+  "signs": [
+    "aries",
+    "libra",
+    "aquarius"
+  ],
+  "topics": [
+    "markets",
+    "weekly-outlook",
+    "astrology"
+  ],
+  "symbolicScore": {
+    "sign": "aries",
+    "attention": 37,
+    "tone": -4,
+    "eventIntensity": 14,
+    "calculation": "18 attention / -12 tone / 15 event intensity × 0.8423 horizon multiplier",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Aries, Libra, Aquarius are ranked first through third by disclosed symbolic attention in the seven-day edition beginning 2026-09-14.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "Elevated symbolic attention for this sign, without a strong directional tone. Signal: active. This reading supplies cultural context, not a forecast of price or liquidity.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "At 2026-09-14T00:09:07.175Z, Aries was indexed at $0.00007003, with +0.06% over 24 hours, $70.01K market cap, $70.01K FDV, $14.35K indexed liquidity, $20.9 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score.",
+      "evidence": [
+        "public/assets/data/registry-market-history.v1.json"
+      ]
+    }
+  },
+  "market": {
+    "available": true,
+    "snapshotId": "registry-market:2026-09-14:2026-09-14T00:09:07.175Z",
+    "observedAt": "2026-09-14T00:09:07.175Z",
+    "provider": "DexScreener",
+    "sign": "aries",
+    "priceUsd": 0.00007003,
+    "change24hPct": 0.06,
+    "marketCapUsd": 70013,
+    "fdvUsd": 70013,
+    "liquidityUsd": 14351.75,
+    "volume24hUsd": 20.9,
+    "indexedPoolCount": 1,
+    "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is"
+  },
+  "evidence": {
+    "outlookEdition": "public/assets/registry-outlook.json#weekly:2026-09-14",
+    "marketSnapshotId": "registry-market:2026-09-14:2026-09-14T00:09:07.175Z",
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "f284144ffd721ae7bff2294634eadaf1701743e310fc3d423a2ce1f2f421f1f5",
+  "publishedAt": "2026-09-14T12:00:00.000Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-14T12:00:00.000Z",
+    "reviewer": null,
+    "artifactSha256": "f284144ffd721ae7bff2294634eadaf1701743e310fc3d423a2ce1f2f421f1f5"
+  },
+  "status": "approved"
+}
