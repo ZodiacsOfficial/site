@@ -847,3 +847,27 @@ the database removes the fence and permits stale recreation. None substitutes
 for the durable transaction barrier. Product activation remains blocked on the
 existing lease/auth coordinator, async guest discovery, awaited removal paths,
 explicit readmission policy and a complete recoverable user lifecycle.
+
+
+## L3b/c — pin every erasure to the admission it observed; state scope, not device
+
+Admission rows `{target, generation, status}` are the only durable authority for
+a namespace. An erasure intent carries the owner generation and the device
+generation it was observed under, because a device erasure recreates every
+owner row and a bare owner generation would recur. Readmission is the explicit
+first keep after an erasure, compare-and-swapped in the same transaction as the
+record; nothing readmits on the visitor's behalf. A keep that may have committed
+is stated as uncertain and reconciled under Profile; a keep refused because
+another tab changed the rows says nothing was stored and offers a second keep.
+
+Copy names the listed namespace ("these records", "kept here") rather than the
+device, because guest records kept before sign-in stay on the device unlisted
+while an account is signed in; the panel says so. Read-only retained access is
+enforced by the store, not by a hidden button. Unsupported storage cannot hold
+records this client kept, so it never blocks binding an account; a pending or
+failed discovery does. Destructive legacy actions stay fail-closed when record
+storage is unavailable, so "clear all" never claims a clean device it cannot
+verify. Alternatives rejected: keeping erased owner rows across a device wipe
+(account identifiers would survive "clear all"); a global generation counter
+(a fourth row shape and a new refusal path); a fourth grant mode for guest view
+(protects nothing the same person cannot switch back).

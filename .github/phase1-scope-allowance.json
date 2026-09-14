@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "id": "platform-l2-reference-sun-interpretation",
-  "baseCommit": "0490c4f8a92f045417d7f81ed502f0789e8ecdc2",
-  "authorization": "Owner authorizes one bounded L2 implementation correcting downstream unknown-time reference-Sun interpretation and uncertainty wording. These six catalog edits add only reference-name and unverified-whole-date-Sun messages; two catalog tests retain exact key/interpolation parity at the new 422-key count. Numerical values, receipt bytes, known-time behavior and approved design are preserved. Complete-date interval activation remains separate; SDK merge/npm hold and Astrofolio/Zodia exclusions remain. No L3–L6, merge or production deployment is authorized.",
+  "id": "l3bc-usability-2026-09-14",
+  "baseCommit": "74ae0f03241fe61786e79b4213ba36c878f11349",
   "protectedPaths": [
-    "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/ui/en.ts",
-    "src/lib/i18n/ui/es.ts",
-    "src/lib/i18n/ui/fr.ts",
-    "src/lib/i18n/ui/it.ts",
-    "src/lib/i18n/ui/pt.ts",
-    "src/lib/i18n/ui/ru.test.ts",
-    "src/lib/i18n/ui/ru.ts"
-  ]
+    "src/pages/es/birth-chart/index.astro",
+    "src/pages/es/profile/index.astro",
+    "src/pages/fr/birth-chart/index.astro",
+    "src/pages/fr/profile/index.astro",
+    "src/pages/it/birth-chart/index.astro",
+    "src/pages/it/profile/index.astro",
+    "src/pages/pt/birth-chart/index.astro",
+    "src/pages/pt/profile/index.astro"
+  ],
+  "authorization": "Owner authorizes the bounded usability improvements and the L3b/c implementation from the revision-2 handoff. Usability finding 2 (birth-chart FAQ Moon-change claim aligned with the implemented guarantee) and the L3c records panel mount on the localized Profile pages; the panel renders nothing while PUBLIC_SAVED_RECORDS_ENABLED is unset. Pinned to the main head the branch starts from; re-pin if the pull request base moves."
 }

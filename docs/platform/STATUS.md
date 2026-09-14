@@ -1,6 +1,40 @@
 # Zodiacs Platform status
 
-## Current bounded work — L3a inactive receipt lifecycle prerequisite
+## Current bounded work — L3b/c protected local records (candidate, inactive) and usability fixes
+
+Branch `claude/eager-ramanujan-razak3` from main `74ae0f03241fe61786e79b4213ba36c878f11349`
+with draft #486 (`99d22482`, L3a) merged verbatim as its first commit. Commits:
+plan `bcce493d`; L3b.1 `650768a9` (admission generations replace terminal
+erasure markers); L3b.2 `f1efe17f` (strict record capability from the profile
+access coordinator, discovery before auto-bind, awaited erasure in sign-out,
+hand-off and deletion); usability fixes `a5b1e5e2` (separate deliverable);
+review-driven hardening `35da3485`; L3c `b5666134` (keep on the result,
+records panel under Profile in six locales, exact-byte download, remove and
+remove-all, recovery and readmission, browser journey drive, flag-on CI job).
+
+Everything is local to the branch and pushed to it; nothing is merged, previewed
+on a hosted URL, deployed, published or released. Both storage surfaces stay
+behind `PUBLIC_SAVED_RECORDS_ENABLED`, unset in production and in the committed
+CI build; with the flag unset no database is created and the account bootstrap
+behaves as on main. The hosted preview is blocked by the Vercel project's
+production-only build policy, which this work does not change; a bounded
+preview build is an owner decision. Local verification on the final source:
+build, typecheck, full test suite, 18 Phase 1 captures, check-dist, scope guard
+with the pinned allowance, consumer-boundary scanner, 30 native storage groups
+and the 12-check flag-on journey drive (numbers in
+[L3BC-README](evidence/l3-saved-records/L3BC-README.md); review dispositions in
+[REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md); usability
+dispositions in [usability-2026-09-14](evidence/usability-2026-09-14/README.md)).
+
+Remaining decisions: one pull request or two (usability first, then storage:
+the branch is ordered so the usability commit can be cherry-picked alone);
+whether to authorize a bounded preview build; when, if ever, to set the flag.
+The exact next release action is to open the draft pull request(s) from this
+branch against main with the scope allowance pinned to `74ae0f03`, let the
+hosted checks run, and request review; the flag stays unset. SDK merge/npm
+publication stays held; L4–L6, Astrofolio and Zodia stay excluded.
+
+## Previous checkpoint — L3a inactive receipt lifecycle prerequisite (draft #486)
 
 The owner now authorizes L3, beginning from refreshed main
 `693c2ac90b5be78c0f0885c22763dcafff53c00e` and actual inactive #426 head

@@ -7,7 +7,9 @@ fresh contexts, every non-loopback request blocked, synthetic inputs only
 Drives and the JSON they recorded are in `drives/` and `f*-evidence.json`;
 screenshots stayed in the session scratch space and are not committed. The
 reproduction was performed by a bounded agent session; the fixes below were
-verified again on the rebuilt candidate (`verification.json`).
+verified again on the rebuilt candidate by the same session
+(`verification.json`, drives in `drives/verify/`; V7's "next Tab is the
+house-system select" expectation was off by one stop, see V7b).
 
 | # | Finding | Disposition | Change |
 | --- | --- | --- | --- |
@@ -17,7 +19,7 @@ verified again on the rebuilt candidate (`verification.json`).
 | 4 | Living Chart "Nothing saved yet." appeared above "1 chart saved." | Confirmed (desktop 1856 px vs 1998 px); export buttons are absent until a moment exists while the page note promised export "at any time" | Empty state now reads "No moments saved yet … Markdown and JSON export appear here once a moment is saved."; the library count reads "1 birth chart saved." / "N birth charts saved" in en, es, pt, fr, it (ru keeps its plural catalog string). |
 | 5 | No Developers entry in navigation; SDK only under Registry | Confirmed: `/developers/` exists (HTTP 200) but was linked only from Methodology and Widgets; header, mobile menu and footer had no Developers entry; `/sdk/` is the separate ownership SDK | "Developers" (localized label from the components' own tables) added to the footer utilities row and the mobile menu site group on every page. The developer examples page now names the supported local-time recipe (`resolveBirth` from `@zodiacs/engine/geo` with an IANA zone) next to its UTC-instant convention. No npm publication is claimed. |
 | 6 | Registry promotion sat after the Big Three and before the chart wheel | Confirmed as placement (desktop: bridge 1545 px, wheel 1643 px); copy is in the sanctioned records register | Design decision: the bridge now follows the chart's own readings and precedes the result actions, so a first-time result is the chart first. Destination, copy, analytics and the known-time gate are unchanged; the contract test pins the new placement. |
-| 7 | Keyboard smoke | Focus order, error focus (`#birth-date`, alerts) and result focus (sr-only heading) work; after selecting a birthplace with Enter, focus fell to `<body>`; the house-system context popovers add four tab stops before submit (left as a design note) | The selected-place chip now receives focus (the same labelled field), so Tab continues to the house system and submit. |
+| 7 | Keyboard smoke | Focus order, error focus (`#birth-date`, alerts) and result focus (sr-only heading) work; after selecting a birthplace with Enter, focus fell to `<body>`; the house-system context popovers add four tab stops before submit (left as a design note) | The selected-place chip now receives focus (the same labelled field); Tab then reaches the labelled "Change birthplace" button and the house-system select. |
 
 Editorial review: the Virgo Moon interpretation now opens "In this tradition,
 worry is how your care sounds from the inside." instead of a definitive

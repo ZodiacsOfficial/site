@@ -1,0 +1,487 @@
+[
+  {
+    "id": "V1a",
+    "passed": true,
+    "observed": {
+      "linkText": "Get the birth chart for this date↗",
+      "href": "/birth-chart/#date=2000-01-01&time=unknown",
+      "hashOnArrival": "#date=2000-01-01&time=unknown",
+      "afterHydration": {
+        "date": "2000-01-01",
+        "time": "",
+        "timeDisabled": true,
+        "unknownTimeChecked": true,
+        "placeChip": null,
+        "placeInput": "",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "input",
+          "id": "place",
+          "className": "field__input",
+          "readOnly": false
+        },
+        "computed": false
+      },
+      "settled": {
+        "date": "2000-01-01",
+        "time": "",
+        "timeDisabled": true,
+        "unknownTimeChecked": true,
+        "placeChip": null,
+        "placeInput": "",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "input",
+          "id": "place",
+          "className": "field__input",
+          "readOnly": false
+        },
+        "computed": false
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1a-moon-phase-result.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1a-birth-chart-prefilled.png"
+    ]
+  },
+  {
+    "id": "V1b",
+    "passed": true,
+    "observed": {
+      "picked": "LondonEngland, United Kingdom",
+      "href": "/birth-chart/#c=<token>",
+      "hrefContainsC": true,
+      "hashOnArrival": "#c=<token>",
+      "afterHydration": {
+        "date": "2000-01-01",
+        "time": "08:30",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": false
+      },
+      "settled": {
+        "date": "2000-01-01",
+        "time": "08:30",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": true
+      },
+      "final": {
+        "date": "2000-01-01",
+        "time": "08:30",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": true
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1b-moon-phase-result.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1b-birth-chart-prefilled.png"
+    ]
+  },
+  {
+    "id": "V1c",
+    "passed": true,
+    "observed": {
+      "picked": "LondonEngland, United Kingdom",
+      "linkText": "Get your free birth chart↗",
+      "href": "/birth-chart/#c=<token>",
+      "hrefContainsC": true,
+      "hashOnArrival": "#c=<token>",
+      "afterHydration": {
+        "date": "2000-01-01",
+        "time": "",
+        "timeDisabled": true,
+        "unknownTimeChecked": true,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": false
+      },
+      "settled": {
+        "date": "2000-01-01",
+        "time": "",
+        "timeDisabled": true,
+        "unknownTimeChecked": true,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": true
+      },
+      "final": {
+        "date": "2000-01-01",
+        "time": "",
+        "timeDisabled": true,
+        "unknownTimeChecked": true,
+        "placeChip": "London",
+        "placeInput": "London",
+        "hash": "",
+        "search": "",
+        "href": "http://127.0.0.1:4601/birth-chart/",
+        "activeElement": {
+          "tag": "body",
+          "id": null,
+          "className": "",
+          "readOnly": null
+        },
+        "computed": true
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1c-moon-sign-result.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v1c-birth-chart-prefilled.png"
+    ]
+  },
+  {
+    "id": "V2",
+    "passed": true,
+    "observed": {
+      "homeFaq": {
+        "question": "What if I don't know my birth time?",
+        "answer": "Choose “I don’t know it.” The calculator uses 12:00 as a reference, leaves out the rising sign and houses instead of inventing them, and marks the Moon sign as unverified until you add a time, because the Moon can change sign during a day."
+      },
+      "birthChartFaq": {
+        "question": "Do I need my exact birth time?",
+        "answer": "For your rising sign and houses, yes — the ascendant changes roughly every two hours. Without a time, we use 12:00 local civil time as a reference for body positions and omit the rising sign, angles, and houses. Because the Moon can change sign during a day, the result marks the Moon sign as unverified until you add a time. Birth certificates, baby books, and parents are the usual sources."
+      },
+      "moonSignFaq": {
+        "question": "Do I need my birth time to find my moon sign?",
+        "answer": "Usually not — the Moon spends about two and a half days in each sign, so most days it only occupies one. But it changes signs roughly every 60 hours, so on boundary days the time matters. Without a time, this calculator shows a reference result and marks the Moon sign as unverified instead of guessing."
+      },
+      "bannedPhraseHits": [
+        null,
+        null,
+        null
+      ],
+      "unknownTimeNotices": [
+        "Without a birth time, we show reference positions and omit the rising sign, angles, and houses. Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+      ]
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v2-unknown-time-notice.png"
+    ]
+  },
+  {
+    "id": "V3",
+    "passed": true,
+    "observed": {
+      "storedCharts": [
+        {
+          "name": "Gemini Sun · 1990-06-15",
+          "relationship": "self"
+        }
+      ],
+      "today": {
+        "state": "chart",
+        "heading": "For Gemini Sun · 1990-06-15",
+        "source": "This is the birth chart marked as yours on this device. Your quick-read Sun sign is Leo; this chart’s Sun is in Gemini, and the chart is used here. Change in Profile",
+        "sourceLink": "/profile/"
+      },
+      "sunSignCardWithChart": {
+        "mode": "secondary",
+        "kicker": "Quick-read Sun sign",
+        "strong": "Leo · a preference on this device, not a chart",
+        "p": "Today reads from the birth chart marked as yours; this Sun sign is only used when no chart is marked as yours.",
+        "ctaTexts": []
+      },
+      "sunSignCardPreferenceOnly": {
+        "mode": "primary",
+        "kicker": "Sun sign saved",
+        "strong": "Leo · added · on this device",
+        "p": "Add your birth time and place when you want your Moon, rising sign, and the rest of the chart.",
+        "ctaTexts": [
+          "Get your free birth chart→"
+        ]
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v3-profile-pref-only.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v3-today-with-chart.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v3-profile-with-chart.png"
+    ]
+  },
+  {
+    "id": "V4",
+    "passed": true,
+    "observed": {
+      "livingChartEmpty": "No moments saved yet. Your first moment begins with a personal forecast in Today—no account setup needed. Markdown and JSON export appear here once a moment is saved.",
+      "livingChartEmptyTop": 1789,
+      "pfCount": "1 birth chart saved.",
+      "pfCountTop": 1953,
+      "exportButtons": 0
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v4-profile-one-chart.png"
+    ]
+  },
+  {
+    "id": "V5",
+    "passed": true,
+    "observed": {
+      "/": {
+        "footerDeveloperLinks": [
+          {
+            "text": "Developers",
+            "href": "/developers/",
+            "groupLabel": null,
+            "groupClass": "zfooter__meta-links"
+          }
+        ],
+        "mobileSiteGroup": {
+          "label": "The site",
+          "links": [
+            {
+              "text": "Today",
+              "href": "/today/"
+            },
+            {
+              "text": "Learn",
+              "href": "/learn/"
+            },
+            {
+              "text": "Horoscopes",
+              "href": "/horoscopes/"
+            },
+            {
+              "text": "Saved charts",
+              "href": "/profile/"
+            },
+            {
+              "text": "Developers",
+              "href": "/developers/"
+            },
+            {
+              "text": "AstrofolioThe twelve Zodiac signs",
+              "href": "/astrofolio/"
+            }
+          ]
+        },
+        "screenshots": [
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-footer-home.png",
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-mobile-menu-home.png"
+        ]
+      },
+      "/birth-chart/": {
+        "footerDeveloperLinks": [
+          {
+            "text": "Developers",
+            "href": "/developers/",
+            "groupLabel": null,
+            "groupClass": "zfooter__meta-links"
+          }
+        ],
+        "mobileSiteGroup": {
+          "label": "The site",
+          "links": [
+            {
+              "text": "Today",
+              "href": "/today/"
+            },
+            {
+              "text": "Learn",
+              "href": "/learn/"
+            },
+            {
+              "text": "Horoscopes",
+              "href": "/horoscopes/"
+            },
+            {
+              "text": "Saved charts",
+              "href": "/profile/"
+            },
+            {
+              "text": "Developers",
+              "href": "/developers/"
+            },
+            {
+              "text": "AstrofolioThe twelve Zodiac signs",
+              "href": "/astrofolio/"
+            }
+          ]
+        },
+        "screenshots": [
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-footer-birth-chart.png",
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-mobile-menu-birth-chart.png"
+        ]
+      },
+      "examples": {
+        "status": 200,
+        "mentionsResolveBirth": true,
+        "supportLinks": [
+          "local-time resolution",
+          "support matrix and discrepancy-reporting guidance"
+        ],
+        "paragraph": "Unknown time uses 12:00 UTC on the entered date, carries no-time, and omits angles and houses. It does not infer local noon. Resolve actual birthplace timezone rules before supplying a known instant: for a local wall time and an IANA zone, use resolveBirth from @zodiacs/engine/geo (see local-time resolution) rather than converting by hand; the example’s Z instants are already resolved.",
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-developers-examples.png"
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-footer-home.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-mobile-menu-home.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-footer-birth-chart.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-mobile-menu-birth-chart.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v5-developers-examples.png"
+    ]
+  },
+  {
+    "id": "V6",
+    "passed": true,
+    "observed": {
+      "390": {
+        "bigThree": 1120,
+        "wheel": 2411,
+        "approach": 7612,
+        "communication": null,
+        "registryBridge": 10406,
+        "actions": 10566,
+        "detail": 10656
+      },
+      "1280": {
+        "bigThree": 920,
+        "wheel": 1545,
+        "approach": 5291,
+        "communication": null,
+        "registryBridge": 6476,
+        "actions": 6573,
+        "detail": 6683
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v6-registry-bridge-1280.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v6-result-order-1280.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v6-registry-bridge-390.png",
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v6-result-order-390.png"
+    ]
+  },
+  {
+    "id": "V7",
+    "passed": false,
+    "observed": {
+      "highlightedBeforeEnter": "LondrinaParana, Brazil",
+      "activeAfterEnter": {
+        "tag": "input",
+        "id": "place",
+        "className": "place__chip-value",
+        "readOnly": true,
+        "value": "Londrina · Parana, Brazil"
+      },
+      "activeAfterTab": {
+        "tag": "button",
+        "id": null,
+        "className": "place__clear",
+        "readOnly": null,
+        "value": ""
+      }
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v7-place-chip-focus.png"
+    ]
+  },
+  {
+    "id": "VOICE",
+    "passed": true,
+    "observed": {
+      "srcHits": "(none)",
+      "distHits": {}
+    },
+    "screenshot": null
+  },
+  {
+    "id": "V7b",
+    "passed": true,
+    "observed": {
+      "activeAfterEnter": {
+        "tag": "input",
+        "id": "place",
+        "className": "place__chip-value",
+        "ariaLabel": null,
+        "readOnly": true
+      },
+      "tab1": {
+        "tag": "button",
+        "id": null,
+        "className": "place__clear",
+        "ariaLabel": "Change birthplace",
+        "readOnly": null
+      },
+      "tab2": {
+        "tag": "select",
+        "id": "house-system",
+        "className": "field__input",
+        "ariaLabel": null,
+        "readOnly": null
+      },
+      "shiftTabFromTab2": {
+        "tag": "button",
+        "id": null,
+        "className": "place__clear",
+        "ariaLabel": "Change birthplace",
+        "readOnly": null
+      },
+      "shiftTabAgain": {
+        "tag": "input",
+        "id": "place",
+        "className": "place__chip-value",
+        "ariaLabel": null,
+        "readOnly": true
+      },
+      "chipDom": "<div class=\"place place--selected\"><span class=\"place__chip\"><input id=\"place\" class=\"place__chip-value\" readonly=\"\"><button type=\"button\" class=\"place__clear\" aria-label=\"Change birthplace\">×</button></span></div>"
+    },
+    "screenshot": [
+      "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/verify/v7b-tab-stops.png"
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 # Finite remaining platform checklist
 
-Current checkpoint: 2026-09-14. L2a and L2b are released and production-verified; all post-merge gates passed.
+Current checkpoint: 2026-09-14. L2a and L2b are released and production-verified; the L3b/c candidate and the usability fixes are on the branch, unmerged and inactive by flag.
 Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Completed release work
@@ -36,26 +36,32 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   Runtime absence/failure remains uncertain; broader historical truth and complete
   astronomical sign-range evidence are not established by this date-coverage slice.
 
-## Current L3 work — first dependent slice
+## Current L3 work — candidate on branch, inactive by flag
 
-- [ ] **L3a — Inactive durable receipt store:** integrate reviewed #426 record
-  codec/transaction guards, persist owner/device erasure intent before purge,
-  fence all normal transactions, preserve failures for explicit recovery, and
-  refuse incompatible old/future storage intact. Complete local/native/hosted
-  checks and exact-source preview; no product storage activation.
-- [ ] **L3b — Authoritative lifecycle integration:** existing lease/auth/access
-  coordinator across guest, account and retained scopes; asynchronous receipt
-  discovery before owner handoff; awaited owner/device deletion and retry;
-  explicit readmission/generation policy after terminal erasure.
-- [ ] **L3c — Complete user lifecycle:** explicit save, receipt inventory,
-  byte-preserving local export, per-record/owner/device deletion, recoverable
-  error states and uncertain-create reconciliation. Prove actual synthetic user
-  flows and account races together before activating storage. Do not migrate,
-  downgrade, relabel or reconstruct legacy records.
+- [x] **L3a — Inactive durable receipt store:** draft #486 (`99d22482`) merged
+  verbatim into the candidate branch; its native barriers are superseded by the
+  admission-generation protocol below.
+- [x] **L3b — Authoritative lifecycle integration (candidate):** durable admission
+  generations with two-phase, target-bound erasure (`650768a9`); strict record
+  capability derived from the existing lease/grant/marker coordinator across
+  guest, account and retained scopes, content-free discovery before the empty-browser
+  auto-bind, awaited erasure inside sign-out, hand-off and deletion transitions
+  (`f1efe17f`); owner intents pinned to the device generation, store-enforced
+  read-only, cross-tab scope announcements (`35da3485`).
+- [x] **L3c — Complete user lifecycle (candidate):** explicit keep on the result,
+  records panel under Profile (six locales), exact-byte download, per-record and
+  listed-namespace removal, recovery of interrupted removals, explicit readmission,
+  uncertain-keep reconciliation; 12-check browser journey and a flag-on CI job
+  (`b5666134`). Legacy records are never migrated, relabeled or reconstructed.
+- [ ] **L3 review and activation:** draft pull request(s), hosted checks, human
+  review; a bounded preview build needs an owner decision under the Vercel
+  production-only policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a
+  separate release decision; open coverage gaps are listed in
+  [REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md).
 
-[Concrete dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).
-L3b/L3c are dependencies for a future bounded implementation, not claims of work
-completed in L3a. This draft stops after L3a verification.
+[Candidate record](evidence/l3-saved-records/L3BC-README.md),
+[plan](evidence/l3-saved-records/L3BC-PLAN.md),
+[historical dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).
 
 ## Later features — outside this slice
 
@@ -85,5 +91,5 @@ completed in L3a. This draft stops after L3a verification.
 - [x] **O5 — Zodia exclusion:** owner-approved exclusion/archive is complete and has
   no gate in this session. Astrofolio remains a separate workstream.
 
-L3a implementation and draft verification are authorized. No merge, publication,
-production deployment, L4–L6, spending or outreach is authorized here.
+L3b/c implementation and draft verification were authorized and are delivered on the branch. No merge, publication,
+production deployment, flag activation, L4–L6, spending or outreach is authorized here.

@@ -2856,3 +2856,16 @@ and post-merge checks are complete; their durable closeout is restored from
 [evidence/l2b-production](evidence/l2b-production/README.md), not rerun.
 Current L3a draft/hosted/preview checks are pending; no active storage or release
 claim is made. See [activation dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).
+
+
+## L3b/c candidate and usability fixes — 2026-09-14
+
+[Candidate record](evidence/l3-saved-records/L3BC-README.md) lists the branch
+identities, support matrix, mechanism deviations and the verification actually
+run on the final source: unit suites, 30 native storage groups
+(`native-result.json`), the 12-check flag-on journey drive
+(`lifecycle-result.json`), and the flag-off gates. The adversarial review and
+each disposition are in [REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md);
+usability reproductions and re-verification in
+[usability-2026-09-14](evidence/usability-2026-09-14/README.md). No hosted
+check, preview or release claim is made for this candidate.

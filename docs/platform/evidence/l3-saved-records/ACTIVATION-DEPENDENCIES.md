@@ -1,5 +1,13 @@
 # Saved receipt lifecycle: inactive prerequisite
 
+> Status 2026-09-14: this document describes the L3a prerequisite (#486) and
+> the dependencies it named. The L3b/c candidate on the same branch addresses
+> them (schema 3 admission generations instead of terminal barriers, the
+> coordinator-derived capability, discovery before auto-bind, awaited erasure
+> in every transition, explicit readmission and the complete UI); see
+> [L3BC-README](L3BC-README.md). The text below is kept as the historical
+> statement of the problem, not as the current state.
+
 This slice integrates the retained #426 immutable SDK-envelope record and
 owner-bound IndexedDB primitive, and strengthens the native database with durable
 erasure barriers. No calculator, profile, account, or page caller is activated.
