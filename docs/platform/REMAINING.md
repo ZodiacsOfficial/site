@@ -53,9 +53,10 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   listed-namespace removal, recovery of interrupted removals, explicit readmission,
   uncertain-keep reconciliation; 12-check browser journey and a flag-on CI job
   (`b5666134`). Legacy records are never migrated, relabeled or reconstructed.
-- [ ] **L3 review and activation:** draft pull request(s), hosted checks, human
-  review; a bounded preview build needs an owner decision under the Vercel
-  production-only policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a
+- [ ] **L3 review and activation:** draft
+  [#490](https://github.com/ZodiacsOfficial/site/pull/490) is open; hosted
+  checks and human review are pending. A bounded preview build needs an owner
+  decision under the Vercel production-only policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a
   separate release decision; open coverage gaps are listed in
   [REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md).
 

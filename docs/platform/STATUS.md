@@ -12,8 +12,9 @@ review-driven hardening `35da3485`; L3c `b5666134` (keep on the result,
 records panel under Profile in six locales, exact-byte download, remove and
 remove-all, recovery and readmission, browser journey drive, flag-on CI job).
 
-Everything is local to the branch and pushed to it; nothing is merged, previewed
-on a hosted URL, deployed, published or released. Both storage surfaces stay
+Everything is pushed to the branch and open for review as draft
+[#490](https://github.com/ZodiacsOfficial/site/pull/490); nothing is merged,
+previewed on a hosted URL, deployed, published or released. Both storage surfaces stay
 behind `PUBLIC_SAVED_RECORDS_ENABLED`, unset in production and in the committed
 CI build; with the flag unset no database is created and the account bootstrap
 behaves as on main. The hosted preview is blocked by the Vercel project's
@@ -29,10 +30,13 @@ dispositions in [usability-2026-09-14](evidence/usability-2026-09-14/README.md))
 Remaining decisions: one pull request or two (usability first, then storage:
 the branch is ordered so the usability commit can be cherry-picked alone);
 whether to authorize a bounded preview build; when, if ever, to set the flag.
-The exact next release action is to open the draft pull request(s) from this
-branch against main with the scope allowance pinned to the main head `74cc4caf` (re-pin whenever main moves before the base is set), let the
-hosted checks run, and request review; the flag stays unset. SDK merge/npm
-publication stays held; L4–L6, Astrofolio and Zodia stay excluded.
+Draft #490 is open from this branch against main with the scope allowance
+pinned to the main head `74cc4caf` (re-pin whenever main moves before the
+checks run). One pull request was chosen over two because pushes are limited
+to this branch; the usability commit `a5b1e5e2` can still be cherry-picked
+alone. The exact next release action is the hosted checks passing on #490
+and a human review; the flag stays unset. SDK merge/npm publication stays
+held; L4–L6, Astrofolio and Zodia stay excluded.
 
 ## Previous checkpoint — L3a inactive receipt lifecycle prerequisite (draft #486)
 
