@@ -35,6 +35,16 @@ export default function PlaceSearch({
   const debounce = useRef<ReturnType<typeof setTimeout>>();
   const requestToken = useRef(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chipRef = useRef<HTMLInputElement>(null);
+  const focusChip = useRef(false);
+
+  // After a keyboard or pointer choice the combobox is replaced by the chip;
+  // focus follows to the same field instead of falling back to the body.
+  useEffect(() => {
+    if (!selected || !focusChip.current) return;
+    focusChip.current = false;
+    chipRef.current?.focus();
+  }, [selected]);
   const pickHint = validationError || (!selected && query.trim() ? selectionHint : '');
 
   useEffect(() => () => {
@@ -84,6 +94,7 @@ export default function PlaceSearch({
   function choose(city: City) {
     clearTimeout(debounce.current);
     ++requestToken.current;
+    focusChip.current = true;
     onSelect(city);
     setQuery('');
     setOpen(false);
@@ -107,7 +118,7 @@ export default function PlaceSearch({
     return (
       <div class="place place--selected">
         <span class="place__chip">
-          <input id={id} class="place__chip-value" readOnly value={chipValue} />
+          <input id={id} ref={chipRef} class="place__chip-value" readOnly value={chipValue} />
           <button type="button" class="place__clear" aria-label={t(locale, 'placeChange')} onClick={() => onSelect(null)}>×</button>
         </span>
       </div>

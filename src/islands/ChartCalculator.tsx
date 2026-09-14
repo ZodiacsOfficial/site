@@ -44,6 +44,7 @@ import { decodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import {
   chartHandoffFragment,
+  dateHandoffFromHash,
   compatibilityHandoffPath,
   mineHandoffFromHash,
   profileChartIdFromHash,
@@ -980,6 +981,19 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const nextMineHandoff = mineHandoffFromHash(hash);
     const handoffOrigins = profileHandoffOriginsFromHash(hash);
     const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
+
+    // A Moon lookup hands its date (and optional time) here without a place.
+    // The fragment is consumed and cleared; the next needed field takes focus.
+    if (params.has('date')) {
+      const handoff = dateHandoffFromHash(hash);
+      clearFragment();
+      if (!handoff) return;
+      setDate(handoff.date);
+      setTime(handoff.time ?? '');
+      setTimeKnown(handoff.time !== null);
+      queueMicrotask(() => formRef.current?.querySelector<HTMLElement>('#place')?.focus());
+      return;
+    }
 
     if (params.has('profileChartId')) {
       const profileChartId = profileChartIdFromHash(hash);
@@ -2033,39 +2047,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </aside>
           )}
 
-          {/* The one sanctioned records bridge on a tool page. It follows the
-              Big Three interpretation and resolves only when the Sun sign is
-              from a known-time calculation. */}
-          {mode === 'full' && !sharedReceiver && registryRecord && (
-            <aside
-              class="calc__record"
-              data-registry-bridge
-              data-registry-bridge-sign={registryRecord.slug}
-              data-registry-bridge-surface="birth_chart"
-              data-registry-bridge-locale={locale}
-            >
-              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
-              <span class="calc__record-copy">
-                <strong class="calc__record-sun">
-                  {tf(locale, 'recordChartSun', { sign: signName(registryRecord, locale) })}
-                </strong>
-                <span class="calc__record-text">
-                  {tf(locale, 'recordChartBody', { sign: signName(registryRecord, locale) })}
-                </span>
-              </span>
-              <a
-                class="calc__record-link"
-                href={`/registry/${registryRecord.slug}/`}
-                title={russianCopy?.chart.englishOnlyTitle}
-                onClick={() => trackAnalytics('registry_bridge_click', {
-                  sign: registryRecord.slug,
-                  surface: 'birth_chart',
-                  locale,
-                })}
-              >{tf(locale, 'recordChartLink', { sign: signName(registryRecord, locale) })}</a>
-            </aside>
-          )}
-
           {/* Moon-mode extra: phase at the calculated moment */}
           {mode === 'moon' && moonPhase && (
             <p class="calc__phase mono">{t(locale, chart.input.timeKnown ? 'moonPhaseAtBirth' : 'moonPhaseAtReference')}: {moonPhaseLabel(locale, moonPhase)}</p>
@@ -2423,6 +2404,39 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </>
           )}
 
+          {/* The one sanctioned records bridge on a tool page. It follows the
+              chart's own readings so the first-time result is the chart first,
+              and resolves only when the Sun sign is from a known-time calculation. */}
+          {mode === 'full' && !sharedReceiver && registryRecord && (
+            <aside
+              class="calc__record"
+              data-registry-bridge
+              data-registry-bridge-sign={registryRecord.slug}
+              data-registry-bridge-surface="birth_chart"
+              data-registry-bridge-locale={locale}
+            >
+              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
+              <span class="calc__record-copy">
+                <strong class="calc__record-sun">
+                  {tf(locale, 'recordChartSun', { sign: signName(registryRecord, locale) })}
+                </strong>
+                <span class="calc__record-text">
+                  {tf(locale, 'recordChartBody', { sign: signName(registryRecord, locale) })}
+                </span>
+              </span>
+              <a
+                class="calc__record-link"
+                href={`/registry/${registryRecord.slug}/`}
+                title={russianCopy?.chart.englishOnlyTitle}
+                onClick={() => trackAnalytics('registry_bridge_click', {
+                  sign: registryRecord.slug,
+                  surface: 'birth_chart',
+                  locale,
+                })}
+              >{tf(locale, 'recordChartLink', { sign: signName(registryRecord, locale) })}</a>
+            </aside>
+          )}
+
           {/* One primary action, derived from the visitor's current state. */}
           <div class="calc__actions">
             {savePromptOpen && !(mode === 'full' && shareInput) ? (
@@ -2465,7 +2479,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   <span>{shareActionStatusLabel}</span>
                   <span class="orb">↗</span>
                 </button>
-                <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
+                <a
+                  class="btn btn--ghost"
+                  href={shareInput
+                    ? `${localizePath(locale, '/birth-chart/')}#${chartHandoffFragment(shareInput, { subjectMode })}`
+                    : localizePath(locale, '/birth-chart/')}
+                  data-birth-chart-handoff
+                ><span>{t(locale, 'getBirthChart')}</span><span class="orb">↗</span></a>
               </>
             )}
           </div>

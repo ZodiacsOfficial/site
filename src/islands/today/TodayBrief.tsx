@@ -162,6 +162,15 @@ export default function TodayBrief({
   }, [bodies, chart, transitsModule]);
   const hasSavedChartHint = typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-today-saved-chart');
+  // The quick-read preference is stamped by the page head; it never selects the chart.
+  const preferredSunSign = useMemo(() => {
+    try {
+      const slug = document.documentElement.getAttribute('data-today-sun-sign');
+      return SIGNS.find((sign) => sign.slug === slug) ?? null;
+    } catch {
+      return null;
+    }
+  }, [profile]);
   const comparisonUnavailable = (needsTransits && transitsFailed)
     || (ready && chart === null && hasSavedChartHint)
     || (ready && chart !== null && transitsModule !== null && reading === null);
@@ -363,6 +372,15 @@ export default function TodayBrief({
               <p>{personalized.chart.birth?.timeKnown !== true
                 ? REFERENCE_NOTICE
                 : <>A few themes from the {editionLabel} sky, compared with your saved birth chart.</>}</p>
+              <p class="today-reading__source" data-today-chart-source>
+                {livingChartEnabled
+                  ? 'This is the birth chart marked as yours on this device.'
+                  : 'This is the birth chart you saved most recently on this device.'}
+                {preferredSunSign && chartSunSign && preferredSunSign.slug !== chartSunSign.slug
+                  ? ` Your quick-read Sun sign is ${preferredSunSign.name}; this chart’s Sun is in ${chartSunSign.name}, and the chart is used here.`
+                  : ''}
+                {' '}<a href="/profile/">Change in Profile</a>
+              </p>
             </div>
 
             <div class="today-reading__body">

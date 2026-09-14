@@ -224,7 +224,8 @@ export default function LivingChartTimeline({
         ) : moments.length === 0 ? (
           <div>
             <p class="living-chart__empty">
-              Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.
+              No moments saved yet. Your first moment begins with a personal forecast in Today—no account setup needed.
+              Markdown and JSON export appear here once a moment is saved.
             </p>
             <a class="btn btn--primary" href="/today/#save-moment">
               <span>Open Today</span><span class="orb" aria-hidden="true">→</span>

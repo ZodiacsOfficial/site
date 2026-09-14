@@ -111,3 +111,21 @@ describe('private chart handoffs', () => {
     expect(decodeChartLink(new URLSearchParams(url.hash.slice(1)).get('b')!)).toEqual(PERSON);
   });
 });
+
+describe('place-less date hand-off (Moon lookup → birth chart)', () => {
+  it('round-trips a date with a known time or an explicit unknown time', async () => {
+    const { dateHandoffFragment, dateHandoffFromHash } = await import('./chart-handoff');
+    expect(dateHandoffFragment('2000-01-01', '08:30')).toBe('date=2000-01-01&time=08%3A30');
+    expect(dateHandoffFromHash('#date=2000-01-01&time=08%3A30')).toEqual({ date: '2000-01-01', time: '08:30' });
+    expect(dateHandoffFragment('2000-01-01', null)).toBe('date=2000-01-01&time=unknown');
+    expect(dateHandoffFromHash('#date=2000-01-01&time=unknown')).toEqual({ date: '2000-01-01', time: null });
+  });
+
+  it('rejects malformed, partial, duplicated or mixed fragments', async () => {
+    const { dateHandoffFromHash } = await import('./chart-handoff');
+    for (const hash of ['#date=2000-01-01', '#time=unknown', '#date=2000-1-1&time=unknown', '#date=2000-01-01&time=8:30',
+      '#date=2000-01-01&date=2000-01-02&time=unknown', '#date=2000-01-01&time=unknown&subject=other', '#c=1.abc&date=2000-01-01', '']) {
+      expect(dateHandoffFromHash(hash), hash).toBeNull();
+    }
+  });
+});
