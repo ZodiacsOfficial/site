@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-14T10:02:05.058Z",
+  "generatedAt": "2026-09-14T13:24:17.615Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -98,6 +98,26 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-market-check-2026-09-07-observation-168h",
+      "slug": "market-check-2026-09-07-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T13:24:17.615Z",
+      "visibleAt": "2026-09-14T13:24:17.615Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.34 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-07-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-14",
       "slug": "daily-market-brief-2026-09-14",
       "kind": "daily-market-brief",
@@ -117,7 +137,7 @@
         "daily-sky",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-weekly-outlook-2026-09-14",
@@ -140,7 +160,7 @@
         "weekly-outlook",
         "astrology"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
