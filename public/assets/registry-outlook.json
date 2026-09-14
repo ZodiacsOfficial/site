@@ -118,9 +118,9 @@
         "marketCapUsd": 72630.5
       },
       "freshness": {
-        "asOf": "2026-09-14T04:39:32.082Z",
+        "asOf": "2026-09-14T10:00:51.188Z",
         "status": "current-for-horizon",
-        "ageHoursAtHorizonEnd": 19.3
+        "ageHoursAtHorizonEnd": 14
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -530,13 +530,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007352,
-          "change24hPct": 1.2,
+          "change24hPct": -0.04,
           "marketCapUsd": 73525,
           "liquidityUsd": 14187.65,
-          "volume24hUsd": 92.35,
+          "volume24hUsd": 47.35,
           "liquidityVsCollectionMedian": 0.99,
           "marketCapVsCollectionMedian": 1.01,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -980,9 +980,9 @@
         "marketCapUsd": 72630.5
       },
       "freshness": {
-        "asOf": "2026-09-14T04:39:32.082Z",
+        "asOf": "2026-09-14T10:00:51.188Z",
         "status": "stale-for-horizon",
-        "ageHoursAtHorizonEnd": 163.3
+        "ageHoursAtHorizonEnd": 158
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -1452,13 +1452,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007352,
-          "change24hPct": 1.2,
+          "change24hPct": -0.04,
           "marketCapUsd": 73525,
           "liquidityUsd": 14187.65,
-          "volume24hUsd": 92.35,
+          "volume24hUsd": 47.35,
           "liquidityVsCollectionMedian": 0.99,
           "marketCapVsCollectionMedian": 1.01,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
