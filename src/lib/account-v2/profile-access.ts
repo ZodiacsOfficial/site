@@ -13,10 +13,35 @@ export type { AccountV2ProfileAccessReader } from './profile-access-reader';
 export const ACCOUNT_V2_PROFILE_ACCESS_KEY = 'zodiacs.account-sync-v2.profile-access.v1';
 export const ACCOUNT_PROFILE_ACCESS_REEVALUATE_EVENT = 'zodiacs:profile-access-reevaluate';
 
-type ProfileAccessGrant =
+export type ProfileAccessGrant =
   | { version: 1; mode: 'unowned' }
   | { version: 1; mode: 'retained'; accountId: string }
   | { version: 1; mode: 'account'; accountId: string };
+
+/**
+ * Parses this tab's session grant exactly as the pre-hydration reader does.
+ * It reports what the coordinator granted; it is not itself authority, so
+ * callers must still require `profileAccessAllowed()` for the live verdict.
+ */
+export function readProfileAccessGrant(session: AccountV2Storage): ProfileAccessGrant | null {
+  try {
+    const raw = session.getItem(ACCOUNT_V2_PROFILE_ACCESS_KEY);
+    if (raw === null) return null;
+    const parsed: unknown = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
+    const record = parsed as Record<string, unknown>;
+    const keys = Object.keys(record).sort().join(',');
+    if (record.version !== 1) return null;
+    if (keys === 'mode,version' && record.mode === 'unowned') return { version: 1, mode: 'unowned' };
+    if (keys !== 'accountId,mode,version' || !isAccountV2Id(record.accountId)) return null;
+    if (record.mode === 'account' || record.mode === 'retained') {
+      return { version: 1, mode: record.mode, accountId: record.accountId };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 export function setProfileAccessLeaseActive(active: boolean): boolean {
   const reader = browserProfileAccessReader();

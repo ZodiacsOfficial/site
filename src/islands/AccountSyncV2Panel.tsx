@@ -74,8 +74,50 @@ import {
   waitForProfileAccess,
 } from '../lib/account-v2/profile-access';
 import { runExclusiveAccountProfileTransition } from '../lib/account-v2/profile-lease';
+import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
 
 type SyncModule = typeof import('../lib/profile/sync');
+type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
+type SavedRecordEraseTicket = import('../lib/profile/saved-record-access').SavedRecordEraseTicket;
+type SavedRecordDiscovery = import('../lib/profile/saved-record-access').SavedRecordDiscovery;
+
+/** Loaded only when the local calculation-record lifecycle is built in. */
+function loadSavedRecordAccess(): Promise<SavedRecordAccess | null> {
+  if (!savedRecordsEnabled()) return Promise.resolve(null);
+  return import('../lib/profile/saved-record-access').catch(() => null);
+}
+
+type SavedRecordErasePlan =
+  | { status: 'none' }
+  | { status: 'ready'; ticket: SavedRecordEraseTicket; api: SavedRecordAccess }
+  | { status: 'blocked'; message: string };
+
+const RECORDS_BLOCKED_MESSAGE = 'Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings.';
+
+/** Pins a records erasure before the exclusive transition; absent scopes need no erasure. */
+async function planSavedRecordErasure(
+  target: 'device' | 'guest' | { accountId: string },
+): Promise<SavedRecordErasePlan> {
+  const api = await loadSavedRecordAccess();
+  if (!api) return { status: 'none' };
+  const prepared = await api.prepareSavedRecordErasure(target);
+  if (prepared.status === 'ready') return { status: 'ready', ticket: prepared.ticket, api };
+  if (prepared.status === 'absent' || prepared.status === 'disabled') return { status: 'none' };
+  return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
+}
+
+/** Two-phase erasure inside the transition: a failure before intent stops the caller. */
+async function runPlannedSavedRecordErasure(
+  plan: SavedRecordErasePlan,
+  authorized: () => boolean,
+): Promise<SavedRecordEraseOutcome> {
+  if (plan.status !== 'ready') return 'skipped';
+  const result = await plan.api.eraseSavedRecords(plan.ticket, authorized);
+  if (result.ok) return 'erased';
+  return result.mayHaveCommitted ? 'pending' : 'failed';
+}
+
+type SavedRecordEraseOutcome = 'skipped' | 'erased' | 'pending' | 'failed';
 type ConsentState = 'pending' | 'granted' | 'withdrawn';
 type ViewState = 'loading' | 'signed-out' | 'boundary' | 'legacy' | 'deleting' | 'ready' | 'error';
 
@@ -213,6 +255,7 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
   const [deleteText, setDeleteText] = useState('');
   const [clearDeviceOnDelete, setClearDeviceOnDelete] = useState(true);
   const [pendingDeletions, setPendingDeletions] = useState<AccountDeletionRequestV1[]>([]);
+  const [recordsBoundary, setRecordsBoundary] = useState<SavedRecordDiscovery | null>(null);
   const authEpoch = useRef(0);
   const profileAccessGeneration = useProfileAccessGeneration(() => {
     setAttestedChartId(null);
@@ -265,7 +308,7 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       setView('error');
       return;
     }
-    const nextBoundary = inspectLocalAccountBoundary(
+    let nextBoundary = inspectLocalAccountBoundary(
       storage,
       nextSession.user.id,
       hasAccountBoundLocalProfileData(storage),
@@ -275,6 +318,32 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       setView('error');
       return;
     }
+    // Guest calculation records are invisible to the synchronous legacy check.
+    // Discover them (content-free) before the browser can be treated as empty.
+    const recordsApi = await loadSavedRecordAccess();
+    if (authEpoch.current !== epoch) return;
+    let records: SavedRecordDiscovery | null = null;
+    if (recordsApi) {
+      records = await recordsApi.discoverSavedRecordBoundary();
+      if (authEpoch.current !== epoch) return;
+      if (records.status === 'pending' || records.status === 'unavailable' || records.status === 'unsupported') {
+        setMessage(records.status === 'pending'
+          ? 'Calculation records on this device are still being removed. Open Profile again in a moment; no chart was uploaded.'
+          : 'Calculation records on this device could not be checked safely, so sign-in stays locked here. No chart was uploaded.');
+        setView('error');
+        return;
+      }
+      if (records.status === 'guest-records' && nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null) {
+        nextBoundary = {
+          status: 'decision-required',
+          reason: 'unowned-local-data',
+          authenticatedAccountId: nextSession.user.id,
+          localOwnerAccountId: null,
+          decisions: ['import', 'clear', 'cancel'],
+        };
+      }
+    }
+    setRecordsBoundary(records);
     if (nextBoundary.status === 'decision-required') {
       setBoundary(nextBoundary);
       setView('boundary');
@@ -612,11 +681,24 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
         return;
       }
       assertActionCurrent(epoch);
+      // Clearing erases the same owner's calculation records (guest, or the
+      // other account); keeping leaves guest records as guest records.
+      const plan = decision === 'clear'
+        ? await planSavedRecordErasure(boundary.localOwnerAccountId ? { accountId: boundary.localOwnerAccountId } : 'guest')
+        : { status: 'none' as const };
+      assertActionCurrent(epoch);
+      if (plan.status === 'blocked') {
+        setMessage(plan.message);
+        return;
+      }
       const transition = await runExclusiveAccountProfileTransition(
         accountStorage,
-        () => authEpoch.current === epoch
-          ? completeAccountBoundaryDecision(accountStorage, boundary, decision)
-          : { ok: false, restoredPreviousArchive: false },
+        async () => {
+          if (authEpoch.current !== epoch) return { ok: false, restoredPreviousArchive: false };
+          const records = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+          if (records === 'failed') return { ok: false, restoredPreviousArchive: false };
+          return completeAccountBoundaryDecision(accountStorage, boundary, decision);
+        },
       );
       if (!transition.ok || !transition.value.ok) throw new Error('bind');
       assertActionCurrent(epoch);
@@ -1109,17 +1191,33 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       return;
     }
     const accountId = session.user.id;
+    // "Clear all Zodiacs data" is whole-device: every calculation-record
+    // namespace on this device, not only the signed-in account's.
+    const plan = removeFromDevice ? await planSavedRecordErasure('device') : { status: 'none' as const };
+    if (authEpoch.current !== epoch) return;
+    if (plan.status === 'blocked') {
+      setMessage(`${plan.message} Sign-out was stopped.`);
+      setBusy(false);
+      return;
+    }
+    const outcome = { records: 'skipped' as SavedRecordEraseOutcome };
     const transition = await runExclusiveAccountProfileTransition(
       accountStorage,
-      () => authEpoch.current === epoch
-        ? removeFromDevice
-          ? clearAllZodiacsDataFromDevice(accountStorage, browserStorage.session)
-          : { ok: retainCurrentAccountProfile(accountStorage, accountId) }
-        : { ok: false },
+      async () => {
+        if (authEpoch.current !== epoch) return { ok: false };
+        if (!removeFromDevice) return { ok: retainCurrentAccountProfile(accountStorage, accountId) };
+        // Record intent commits before the legacy stores are touched; a
+        // failure before intent stops sign-out with nothing removed.
+        outcome.records = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+        if (outcome.records === 'failed') return { ok: false };
+        return clearAllZodiacsDataFromDevice(accountStorage, browserStorage.session);
+      },
     );
     if (authEpoch.current !== epoch) return;
     if (!transition.ok || !transition.value.ok) {
-      setMessage('The browser profile could not be prepared safely, so sign-out was stopped. Close other Zodiacs tabs and try again.');
+      setMessage(outcome.records === 'failed'
+        ? `${RECORDS_BLOCKED_MESSAGE} Sign-out was stopped and nothing else was removed.`
+        : 'The browser profile could not be prepared safely, so sign-out was stopped. Close other Zodiacs tabs and try again.');
       setBusy(false);
       return;
     }
@@ -1288,7 +1386,14 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
     preserveRecovery: boolean,
   ): Promise<boolean> {
     if (!accountStorage) return false;
-    const transition = await runExclusiveAccountProfileTransition(accountStorage, () => {
+    // Only the deleted account's own record namespace is removed; an active
+    // different account and guest records stay untouched.
+    const plan = removeFromDevice ? await planSavedRecordErasure({ accountId: request.accountId }) : { status: 'none' as const };
+    if (plan.status === 'blocked') return false;
+    const epoch = authEpoch.current;
+    const transition = await runExclusiveAccountProfileTransition(accountStorage, async () => {
+      const recordsOutcome = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+      if (recordsOutcome === 'failed') return false;
       const localCompletion = completeDeletedAccountLocalData(
         accountStorage,
         request.accountId,
@@ -1440,6 +1545,13 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
                 ? 'These charts are not attached to an account. You may make them available for individual selection, clear them, or cancel sign-in.'
                 : 'These charts belong to a different signed-in account on this browser. They will never be claimed by the new account.'}
             </p>
+            {recordsBoundary?.status === 'guest-records' && (
+              <p data-records-boundary>
+                {boundary.reason === 'unowned-local-data'
+                  ? `${recordsBoundary.guestRecords === 1 ? 'One calculation record was' : `${recordsBoundary.guestRecords} calculation records were`} kept on this device before sign-in. Keeping leaves ${recordsBoundary.guestRecords === 1 ? 'it' : 'them'} on this device as guest records, separate from the account and hidden while you are signed in; clearing removes ${recordsBoundary.guestRecords === 1 ? 'it' : 'them'} from this device.`
+                  : 'Calculation records kept on this device as a guest are not affected by this choice.'}
+              </p>
+            )}
             <div class="pf-sync__actions">
               {boundary.reason === 'unowned-local-data' ? (
                 <button class="btn btn--primary" type="button" disabled={busy} onClick={() => void onBoundaryDecision('import')}>

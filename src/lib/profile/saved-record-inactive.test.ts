@@ -95,14 +95,28 @@ afterEach(() => {
   vi.resetModules();
 });
 
+/**
+ * The only production entry points into the record lifecycle. The coordinator
+ * islands reach it through the flag module and a dynamic import; nothing else
+ * (pages, hooks, legacy stores, other islands) may import any saved-record module.
+ */
+const ALLOWED_INBOUND = new Set([
+  'src/islands/AccountProfileAccessBootstrap.tsx -> src/lib/profile/saved-record-access.ts',
+  'src/islands/AccountProfileAccessBootstrap.tsx -> src/lib/profile/saved-record-flags.ts',
+  'src/islands/AccountSyncV2Panel.tsx -> src/lib/profile/saved-record-access.ts',
+  'src/islands/AccountSyncV2Panel.tsx -> src/lib/profile/saved-record-flags.ts',
+]);
+
 describe('inactive saved receipt integration boundary', () => {
-  it('has no runtime caller and no dependency path into legacy profile writers or another private database', async () => {
+  it('has only the coordinator as runtime caller and no dependency path into legacy profile writers or another private database', async () => {
     const graph = await runtimeImportGraph();
     const savedModules = [...graph.keys()].filter(savedRecordModule);
     expect(savedModules.length).toBeGreaterThan(0);
     const inbound = [...graph].flatMap(([caller, dependencies]) => savedRecordModule(caller) ? []
       : dependencies.filter(savedRecordModule).map((dependency) => `${relative(ROOT, caller)} -> ${relative(ROOT, dependency)}`));
-    expect(inbound).toEqual([]);
+    expect(inbound.filter((edge) => !ALLOWED_INBOUND.has(edge))).toEqual([]);
+    // The coordinator islands never import the store or codec directly.
+    expect(inbound.filter((edge) => /saved-record(?:-store)?\.ts$/u.test(edge))).toEqual([]);
 
     const visited = new Set<string>();
     const visit = (path: string) => {
