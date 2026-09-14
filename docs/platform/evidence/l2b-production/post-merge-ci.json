@@ -1,0 +1,1413 @@
+{
+  "conclusion": "success",
+  "createdAt": "2026-09-13T18:04:59Z",
+  "databaseId": 34773522987,
+  "headSha": "dfeae5f9178a6d887209710083c2a74fae258236",
+  "jobs": [
+    {
+      "completedAt": "2026-09-13T18:05:50Z",
+      "conclusion": "success",
+      "databaseId": 103767332427,
+      "name": "Zodiac Games SQL",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:27Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:49Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration, privacy, and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:49Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:49Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:49Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332427"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:38Z",
+      "conclusion": "success",
+      "databaseId": 103767332473,
+      "name": "Account Sync v2 SQL",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:24Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:36Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration, privacy, and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:37Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:37Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:37Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332473"
+    },
+    {
+      "completedAt": "2026-09-13T18:40:55Z",
+      "conclusion": "success",
+      "databaseId": 103767332478,
+      "name": "Build & Check",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:34Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:37Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:38Z",
+          "conclusion": "success",
+          "name": "Phase 1 protected-scope guard",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:54Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:55Z",
+          "conclusion": "success",
+          "name": "Dependency advisories stay at zero",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:06Z",
+          "conclusion": "success",
+          "name": "Install pinned Chromium",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:06Z",
+          "conclusion": "success",
+          "name": "Validate registry JSON",
+          "number": 8,
+          "startedAt": "2026-09-13T18:06:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:06Z",
+          "conclusion": "success",
+          "name": "Check for stale repo or bridge wording",
+          "number": 9,
+          "startedAt": "2026-09-13T18:06:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:09Z",
+          "conclusion": "success",
+          "name": "Wing language stays in the wing",
+          "number": 10,
+          "startedAt": "2026-09-13T18:06:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:09Z",
+          "conclusion": "success",
+          "name": "Voice \u2014 banned tells stay out of the copy",
+          "number": 11,
+          "startedAt": "2026-09-13T18:06:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:09Z",
+          "conclusion": "success",
+          "name": "Authorship stays transparent",
+          "number": 12,
+          "startedAt": "2026-09-13T18:06:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:10Z",
+          "conclusion": "success",
+          "name": "Verify daily editorial package",
+          "number": 13,
+          "startedAt": "2026-09-13T18:06:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:11Z",
+          "conclusion": "success",
+          "name": "Replay 30 daily editions",
+          "number": 14,
+          "startedAt": "2026-09-13T18:06:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:12Z",
+          "conclusion": "success",
+          "name": "Build",
+          "number": 15,
+          "startedAt": "2026-09-13T18:06:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:09:03Z",
+          "conclusion": "success",
+          "name": "Typecheck",
+          "number": 16,
+          "startedAt": "2026-09-13T18:08:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:11:05Z",
+          "conclusion": "success",
+          "name": "Thesis reading and evidence at six viewport widths",
+          "number": 17,
+          "startedAt": "2026-09-13T18:09:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:11:06Z",
+          "conclusion": "success",
+          "name": "Upload thesis screenshots",
+          "number": 18,
+          "startedAt": "2026-09-13T18:11:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:11:24Z",
+          "conclusion": "success",
+          "name": "Birth chart export and sharing acceptance",
+          "number": 19,
+          "startedAt": "2026-09-13T18:11:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:11:47Z",
+          "conclusion": "success",
+          "name": "Imported calendar input boundaries",
+          "number": 20,
+          "startedAt": "2026-09-13T18:11:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:11:55Z",
+          "conclusion": "success",
+          "name": "Moon lookup result ownership",
+          "number": 21,
+          "startedAt": "2026-09-13T18:11:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:12:11Z",
+          "conclusion": "success",
+          "name": "Birth chart result ownership",
+          "number": 22,
+          "startedAt": "2026-09-13T18:11:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:12:19Z",
+          "conclusion": "success",
+          "name": "Chart-linked prompt result ownership",
+          "number": 23,
+          "startedAt": "2026-09-13T18:12:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:12:21Z",
+          "conclusion": "success",
+          "name": "Native complete local-date coverage",
+          "number": 24,
+          "startedAt": "2026-09-13T18:12:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:12:50Z",
+          "conclusion": "success",
+          "name": "Unknown-time local date reference",
+          "number": 25,
+          "startedAt": "2026-09-13T18:12:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:13:09Z",
+          "conclusion": "success",
+          "name": "Unknown-time chart confidence",
+          "number": 26,
+          "startedAt": "2026-09-13T18:12:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:13:32Z",
+          "conclusion": "success",
+          "name": "Current reference captions",
+          "number": 27,
+          "startedAt": "2026-09-13T18:13:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:16:12Z",
+          "conclusion": "success",
+          "name": "Engine accuracy vectors",
+          "number": 28,
+          "startedAt": "2026-09-13T18:13:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:16:14Z",
+          "conclusion": "success",
+          "name": "Platform starter fresh consumer",
+          "number": 29,
+          "startedAt": "2026-09-13T18:16:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:16:17Z",
+          "conclusion": "success",
+          "name": "Phase 1 exact-width acceptance evidence",
+          "number": 30,
+          "startedAt": "2026-09-13T18:16:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:16:18Z",
+          "conclusion": "success",
+          "name": "Weekly digest smoke",
+          "number": 31,
+          "startedAt": "2026-09-13T18:16:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:17:22Z",
+          "conclusion": "success",
+          "name": "Link & artifact integrity over dist",
+          "number": 32,
+          "startedAt": "2026-09-13T18:16:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:17:36Z",
+          "conclusion": "success",
+          "name": "I18n route-boundary regression",
+          "number": 33,
+          "startedAt": "2026-09-13T18:17:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:18:03Z",
+          "conclusion": "success",
+          "name": "Russian R2 public-locale acceptance",
+          "number": 34,
+          "startedAt": "2026-09-13T18:17:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:18:13Z",
+          "conclusion": "success",
+          "name": "Homepage poster motion and deferred video",
+          "number": 35,
+          "startedAt": "2026-09-13T18:18:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:18:30Z",
+          "conclusion": "success",
+          "name": "Homepage interactive chart preview",
+          "number": 36,
+          "startedAt": "2026-09-13T18:18:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:19:06Z",
+          "conclusion": "success",
+          "name": "Phase 2 sky-events publication drive",
+          "number": 37,
+          "startedAt": "2026-09-13T18:18:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:20:56Z",
+          "conclusion": "success",
+          "name": "Phase 5 People noindex pilot",
+          "number": 38,
+          "startedAt": "2026-09-13T18:19:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:21:08Z",
+          "conclusion": "success",
+          "name": "Phase 6 Ask Zodiacs drive",
+          "number": 39,
+          "startedAt": "2026-09-13T18:20:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:21:28Z",
+          "conclusion": "success",
+          "name": "Today SSR and personalization",
+          "number": 40,
+          "startedAt": "2026-09-13T18:21:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:22:14Z",
+          "conclusion": "success",
+          "name": "Horoscope templates, SSR, and responsive behavior",
+          "number": 41,
+          "startedAt": "2026-09-13T18:21:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:22:24Z",
+          "conclusion": "success",
+          "name": "Link-in-bio page acceptance",
+          "number": 42,
+          "startedAt": "2026-09-13T18:22:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:24:24Z",
+          "conclusion": "success",
+          "name": "Existing compatibility regression drive",
+          "number": 43,
+          "startedAt": "2026-09-13T18:22:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:25:02Z",
+          "conclusion": "success",
+          "name": "Existing Registry selector regression drive",
+          "number": 44,
+          "startedAt": "2026-09-13T18:24:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:25:22Z",
+          "conclusion": "success",
+          "name": "Zodiac Markets mobile terminal acceptance",
+          "number": 45,
+          "startedAt": "2026-09-13T18:25:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:25:45Z",
+          "conclusion": "success",
+          "name": "Phase 1 mobile frame cadence",
+          "number": 46,
+          "startedAt": "2026-09-13T18:25:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:25:47Z",
+          "conclusion": "success",
+          "name": "Structured data validation",
+          "number": 47,
+          "startedAt": "2026-09-13T18:25:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:25:48Z",
+          "conclusion": "success",
+          "name": "Bundle size & engine isolation gates",
+          "number": 48,
+          "startedAt": "2026-09-13T18:25:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:27:09Z",
+          "conclusion": "success",
+          "name": "Visual regression",
+          "number": 49,
+          "startedAt": "2026-09-13T18:25:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:06Z",
+          "conclusion": "success",
+          "name": "Lighthouse performance budgets",
+          "number": 50,
+          "startedAt": "2026-09-13T18:27:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:19Z",
+          "conclusion": "success",
+          "name": "Foreign-origin widget integration",
+          "number": 51,
+          "startedAt": "2026-09-13T18:40:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:45Z",
+          "conclusion": "success",
+          "name": "Widget Lighthouse thresholds",
+          "number": 52,
+          "startedAt": "2026-09-13T18:40:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:53Z",
+          "conclusion": "success",
+          "name": "Upload Phase 1 browser and performance evidence",
+          "number": 53,
+          "startedAt": "2026-09-13T18:40:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:53Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 105,
+          "startedAt": "2026-09-13T18:40:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:54Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 106,
+          "startedAt": "2026-09-13T18:40:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:40:54Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 107,
+          "startedAt": "2026-09-13T18:40:54Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332478"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:41Z",
+      "conclusion": "success",
+      "databaseId": 103767332479,
+      "name": "Phase 6 assistant quota SQL",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:24Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:39Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration, privacy, and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:40Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:40Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:40Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332479"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:47Z",
+      "conclusion": "success",
+      "databaseId": 103767332494,
+      "name": "Legacy wing drift",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:27Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:29Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:43Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:43Z",
+          "conclusion": "success",
+          "name": "Verify Registry hub generated output",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Rebuild wing output from sources",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Drift gate",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 13,
+          "startedAt": "2026-09-13T18:05:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 14,
+          "startedAt": "2026-09-13T18:05:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-09-13T18:05:45Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332494"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:48Z",
+      "conclusion": "success",
+      "databaseId": 103767332512,
+      "name": "Phase 7 Living Chart sync SQL",
+      "startedAt": "2026-09-13T18:05:03Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:26Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration, RLS, replay, and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:46Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332512"
+    },
+    {
+      "completedAt": "2026-09-13T18:08:50Z",
+      "conclusion": "success",
+      "databaseId": 103767332516,
+      "name": "Phase 3 push drive",
+      "startedAt": "2026-09-13T18:05:21Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:22Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:43Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:45Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:00Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:11Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:06:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:09Z",
+          "conclusion": "success",
+          "name": "Build (push flags on, fixture key only)",
+          "number": 6,
+          "startedAt": "2026-09-13T18:06:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:30Z",
+          "conclusion": "success",
+          "name": "Today returning layout (push flags on)",
+          "number": 7,
+          "startedAt": "2026-09-13T18:08:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:48Z",
+          "conclusion": "success",
+          "name": "Browser acceptance drive",
+          "number": 8,
+          "startedAt": "2026-09-13T18:08:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:48Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 15,
+          "startedAt": "2026-09-13T18:08:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:49Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 16,
+          "startedAt": "2026-09-13T18:08:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:49Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-13T18:08:49Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332516"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:41Z",
+      "conclusion": "success",
+      "databaseId": 103767332519,
+      "name": "Phase 4 compatibility invite SQL",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:25Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:39Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration, privacy, and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:40Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:40Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:40Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332519"
+    },
+    {
+      "completedAt": "2026-09-13T18:05:50Z",
+      "conclusion": "success",
+      "databaseId": 103767332526,
+      "name": "Phase 3 delivery SQL",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:27Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:48Z",
+          "conclusion": "success",
+          "name": "PostgreSQL 17 migration and concurrency gates",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:48Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:48Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 7,
+          "startedAt": "2026-09-13T18:05:48Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332526"
+    },
+    {
+      "completedAt": "2026-09-13T18:08:06Z",
+      "conclusion": "success",
+      "databaseId": 103767332543,
+      "name": "Phase 7 Living Chart drive",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:26Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:30Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:56Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:55Z",
+          "conclusion": "success",
+          "name": "Build (Living Chart capture flag on)",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:03Z",
+          "conclusion": "success",
+          "name": "Local save, persistence, export, and deletion acceptance",
+          "number": 7,
+          "startedAt": "2026-09-13T18:07:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:03Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 13,
+          "startedAt": "2026-09-13T18:08:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:04Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 14,
+          "startedAt": "2026-09-13T18:08:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:04Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-09-13T18:08:04Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332543"
+    },
+    {
+      "completedAt": "2026-09-13T18:08:31Z",
+      "conclusion": "success",
+      "databaseId": 103767332577,
+      "name": "Registry Aura drive",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:25Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:28Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:44Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:28Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:54Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:55Z",
+          "conclusion": "success",
+          "name": "Build (feature flag on)",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:29Z",
+          "conclusion": "success",
+          "name": "Browser acceptance drive",
+          "number": 7,
+          "startedAt": "2026-09-13T18:07:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:29Z",
+          "conclusion": "skipped",
+          "name": "Upload regenerated proofs",
+          "number": 8,
+          "startedAt": "2026-09-13T18:08:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:30Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 15,
+          "startedAt": "2026-09-13T18:08:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:30Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 16,
+          "startedAt": "2026-09-13T18:08:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:30Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-09-13T18:08:30Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332577"
+    },
+    {
+      "completedAt": "2026-09-13T18:06:41Z",
+      "conclusion": "success",
+      "databaseId": 103767332605,
+      "name": "Phase 4 sharing drive",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:26Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:30Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:38Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:39Z",
+          "conclusion": "success",
+          "name": "Feature-off and fixture-enabled browser acceptance",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:39Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 11,
+          "startedAt": "2026-09-13T18:06:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:39Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 12,
+          "startedAt": "2026-09-13T18:06:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:06:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-09-13T18:06:39Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332605"
+    },
+    {
+      "completedAt": "2026-09-13T18:07:10Z",
+      "conclusion": "success",
+      "databaseId": 103767332632,
+      "name": "Phase 3 post-chart drive",
+      "startedAt": "2026-09-13T18:05:03Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:04Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:26Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:30Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:46Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:56Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:07Z",
+          "conclusion": "success",
+          "name": "Browser acceptance drive",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:07Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 11,
+          "startedAt": "2026-09-13T18:07:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:07Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 12,
+          "startedAt": "2026-09-13T18:07:07Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:07Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "startedAt": "2026-09-13T18:07:07Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332632"
+    },
+    {
+      "completedAt": "2026-09-13T18:08:11Z",
+      "conclusion": "success",
+      "databaseId": 103767332642,
+      "name": "Phase 3 PWA drive",
+      "startedAt": "2026-09-13T18:05:02Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-09-13T18:05:03Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:25Z",
+          "conclusion": "success",
+          "name": "Checkout",
+          "number": 2,
+          "startedAt": "2026-09-13T18:05:03Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:27Z",
+          "conclusion": "success",
+          "name": "Setup Node",
+          "number": 3,
+          "startedAt": "2026-09-13T18:05:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:42Z",
+          "conclusion": "success",
+          "name": "Install",
+          "number": 4,
+          "startedAt": "2026-09-13T18:05:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:05:52Z",
+          "conclusion": "success",
+          "name": "Install Chromium",
+          "number": 5,
+          "startedAt": "2026-09-13T18:05:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:07:49Z",
+          "conclusion": "success",
+          "name": "Build",
+          "number": 6,
+          "startedAt": "2026-09-13T18:05:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:09Z",
+          "conclusion": "success",
+          "name": "Browser acceptance drive",
+          "number": 7,
+          "startedAt": "2026-09-13T18:07:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:09Z",
+          "conclusion": "success",
+          "name": "Post Setup Node",
+          "number": 13,
+          "startedAt": "2026-09-13T18:08:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:09Z",
+          "conclusion": "success",
+          "name": "Post Checkout",
+          "number": 14,
+          "startedAt": "2026-09-13T18:08:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-09-13T18:08:09Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-09-13T18:08:09Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987/job/103767332642"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-09-13T18:40:56Z",
+  "url": "https://github.com/ZodiacsOfficial/site/actions/runs/34773522987"
+}

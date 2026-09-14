@@ -29,6 +29,20 @@ function visibleMarkup(html) {
     .replace(/<!--([\s\S]*?)-->/gu, '');
 }
 
+// Execute only the existing pure formatter declarations, never the page builder
+// or market-fetching script. Matching indentation keeps adjacent code excluded.
+function priceFormatter(source, name, dependencies = []) {
+  const declarations = [...dependencies, name].map((functionName) => {
+    const declaration = source.match(new RegExp(
+      String.raw`^([ \t]*)function ${functionName}\([^)]*\) \{[\s\S]*?^\1\}`,
+      'mu',
+    ));
+    expect(declaration, `Missing ${functionName} formatter`).not.toBeNull();
+    return declaration[0];
+  });
+  return new Function(`${declarations.join('\n')}\nreturn ${name};`)();
+}
+
 describe('Zodiac token records', () => {
   it('keeps one validated, sign-specific rally line for every profile', () => {
     expect(Object.keys(SIGN_PROFILE_RALLY_LINES)).toEqual(signs);
@@ -348,10 +362,19 @@ describe('Zodiac token records', () => {
       read('scripts/build-sign-pages.mjs'),
       read('public/registry/scorpio/index.html'),
     ]);
-    // Sub-cent prices keep their full precision instead of rounding to
-    // $0.00. The snapshot workflow refreshes these pages daily, so assert
-    // the precision invariant rather than any one day's price.
-    expect(scorpio).toMatch(/data-live-price>\$0\.0{2,}\d+</u);
+    // A daily quote may be missing or leave the sub-cent range. Exercise the
+    // server formatter and the shipped live formatter with stable prices.
+    const formatters = [priceFormatter(source, 'formatPrice'), priceFormatter(scorpio, 'fmtPrice', ['finiteNumber'])];
+    for (const format of formatters) {
+      for (const [value, expected] of [
+        [0.00000001, '$0.00000001'], [0.00001234, '$0.00001234'],
+        [0.00009999, '$0.00009999'], [0.0001, '$0.0001'],
+        [0.001234, '$0.001234'], [0.01, '$0.01'],
+      ]) {
+        expect(format(value)).toBe(expected);
+        expect(format(String(value))).toBe(expected);
+      }
+    }
     expect(source).not.toContain('wing_acquisition_click');
     expect(scorpio).not.toMatch(/href="https:\/\/jup\.ag\//u);
     expect(source).toContain('function canPublishRank(snapshot, standings)');

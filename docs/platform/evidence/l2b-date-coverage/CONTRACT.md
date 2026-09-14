@@ -53,8 +53,9 @@ defensible universal historical cutoff that would turn modeled data into certain
 
 Actual Chrome 152.0.7977.84 exposes the required native API and passes the retained
 counterexamples plus the activated reference/evidence checks. The hosted pinned
-Chromium must pass the native driver; absence fails that job, never becomes a
-skipped success. Node 22.23.2 (ICU 78.2, tz 2026a) has no Temporal: its supported
+Chromium 149.0.7827.55 (`chromium-1228`) also passes all 23 fixtures and 100
+adjacent-boundary assertions. The native driver is required; absence fails that
+job, never becomes a skipped success. Node 22.23.2 (ICU 78.2, tz 2026a) has no Temporal: its supported
 outcome is unresolved date coverage. Unit tests verify this fallback explicitly.
 Other browsers without the required interface keep the existing reference behavior
 and uncertainty. Native availability alone does not warrant a new astronomical

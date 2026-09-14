@@ -1,0 +1,247 @@
+{
+  "startedAt": "2026-09-14T07:52:32.961Z",
+  "completedAt": "2026-09-14T07:52:42.152Z",
+  "node": "v26.4.0",
+  "browser": "152.0.7977.84",
+  "source": [
+    {
+      "path": "src/lib/profile/saved-record.ts",
+      "sha256": "3b7400fccc4d6f4e62e54e1e1525b81a4d93b54ce6602beb165d43e7b2d3af33"
+    },
+    {
+      "path": "src/lib/profile/saved-record-store.ts",
+      "sha256": "b1686081c67483109e3d82d4438bf777cdcb094f3f3f9f12128edb326ab5577e"
+    }
+  ],
+  "bundleSha256": "c2b908ec693e18dc060d858f49ab9a862d814c2766410429292b4b52de921977",
+  "sourceInstrumented": false,
+  "faultModel": "Native IndexedDB request-success aborts and commit-boundary authority revocation",
+  "results": [
+    {
+      "name": "inert import and immutable receipt bytes",
+      "passed": true,
+      "detail": {
+        "version": 2,
+        "saved": 4,
+        "exactBytes": true
+      },
+      "milliseconds": 1334.0365420000003
+    },
+    {
+      "name": "cap enforced across native connections",
+      "passed": true,
+      "detail": {
+        "saved": 40
+      },
+      "milliseconds": 512.2769579999995
+    },
+    {
+      "name": "terminal owner marker denies existing and reopened handles",
+      "passed": true,
+      "detail": {
+        "remainingOwners": [
+          "account:20000000-0000-4000-8000-000000000002"
+        ],
+        "terminal": true
+      },
+      "milliseconds": 173.11533400000008
+    },
+    {
+      "name": "marker transaction abort preserves records and permits retry",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": false
+        },
+        "retried": true
+      },
+      "milliseconds": 158.37412499999937
+    },
+    {
+      "name": "purge abort survives reload and recovers without read authority",
+      "passed": true,
+      "detail": {
+        "initialFailure": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": true
+        },
+        "recovered": 1,
+        "secondRecovery": 0,
+        "unrelatedBytesPreserved": true
+      },
+      "milliseconds": 201.85900000000038
+    },
+    {
+      "name": "authority loss after marker commit retains recoverable intent",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": true
+        },
+        "recovered": true
+      },
+      "milliseconds": 149.20179199999984
+    },
+    {
+      "name": "create commit ambiguity preserves exact receipt without retry",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "stale",
+          "mayHaveCommitted": true
+        },
+        "committedRows": 1
+      },
+      "milliseconds": 146.9740410000004
+    },
+    {
+      "name": "queued clear blocks second-handle create",
+      "passed": true,
+      "detail": {
+        "outcome": {
+          "ok": false,
+          "code": "erasure-pending",
+          "mayHaveCommitted": false
+        },
+        "separatePage": false,
+        "resurrectedRows": 0
+      },
+      "milliseconds": 159.73504199999934
+    },
+    {
+      "name": "queued clear blocks second-page create",
+      "passed": true,
+      "detail": {
+        "outcome": {
+          "ok": false,
+          "code": "erasure-pending",
+          "mayHaveCommitted": false
+        },
+        "separatePage": true,
+        "resurrectedRows": 0
+      },
+      "milliseconds": 248.13304100000005
+    },
+    {
+      "name": "device erasure covers guest and inactive account partitions",
+      "passed": true,
+      "detail": {
+        "partitions": 3,
+        "remaining": 0,
+        "terminal": true
+      },
+      "milliseconds": 151.2474999999995
+    },
+    {
+      "name": "aborted device purge retains a global barrier across reload",
+      "passed": true,
+      "detail": {
+        "recovered": 1,
+        "remaining": 0
+      },
+      "milliseconds": 191.30283400000008
+    },
+    {
+      "name": "device marker abort reports no committed intent",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": false
+        },
+        "newWritesRemainAllowed": true
+      },
+      "milliseconds": 154.44187499999953
+    },
+    {
+      "name": "owner acknowledgment abort rolls back the entire purge",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": true
+        },
+        "originalRowsRolledBack": 2,
+        "retryCompleted": true
+      },
+      "milliseconds": 150.23733299999913
+    },
+    {
+      "name": "global acknowledgment abort rolls back the entire purge",
+      "passed": true,
+      "detail": {
+        "result": {
+          "ok": false,
+          "code": "aborted",
+          "mayHaveCommitted": true
+        },
+        "originalRowsRolledBack": 2,
+        "retryCompleted": true
+      },
+      "milliseconds": 158.0043339999993
+    },
+    {
+      "name": "owner completion cannot acknowledge a pending device erasure",
+      "passed": true,
+      "detail": {
+        "isolatedOwnerCompletion": true,
+        "globalRecovered": true
+      },
+      "milliseconds": 152.71099999999933
+    },
+    {
+      "name": "concurrent owner and device erasures preserve every terminal marker",
+      "passed": true,
+      "detail": {
+        "terminalMarkers": 3,
+        "remaining": 0
+      },
+      "milliseconds": 158.1052920000002
+    },
+    {
+      "name": "corrupt erasure markers fail closed and remain intact",
+      "passed": true,
+      "detail": {
+        "markerPreserved": true,
+        "receiptPreserved": true
+      },
+      "milliseconds": 147.6110410000001
+    },
+    {
+      "name": "schema v1 refusal preserves the existing database",
+      "passed": true,
+      "detail": {
+        "version": 1,
+        "preserved": true
+      },
+      "milliseconds": 134.1583750000009
+    },
+    {
+      "name": "schema v3 refusal preserves the existing database",
+      "passed": true,
+      "detail": {
+        "version": 3,
+        "preserved": true
+      },
+      "milliseconds": 134.6158749999995
+    },
+    {
+      "name": "version 2 incompatible store shape remains intact",
+      "passed": true,
+      "detail": {
+        "preserved": true
+      },
+      "milliseconds": 132.86466699999983
+    }
+  ],
+  "passed": 20,
+  "failed": 0
+}
