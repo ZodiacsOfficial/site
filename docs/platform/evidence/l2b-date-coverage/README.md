@@ -4,6 +4,41 @@ Starting main: `87f18e0a101b96abf847be58e8a0c31a691992f8`, refreshed from GitHub
 The preceding L2a release is production-verified with all 14 post-merge jobs passed;
 its durable checkpoint is carried into this draft without another release audit.
 
+## Verified draft identity
+
+Draft [#481](https://github.com/ZodiacsOfficial/site/pull/481):
+`370fddf7224053ca42d0942945d850ab5b8d608c`, tree
+`8dc403a558a83fae15950fc54f8a5978c6da7b13`. Main remains `87f18e0a`.
+GitHub's tested merge `585ab51d9a13e153e311cc1909662bd8efc7c4eb` has the same tree.
+All 14 hosted jobs pass in [run 34768985284](https://github.com/ZodiacsOfficial/site/actions/runs/34768985284).
+The exact-source preview `dpl_F1r75PYxU71coJhD133ge28uETuC` is READY;
+[protected preview flows](PREVIEW.md) pass without changing protection.
+No required check rerun, timeout change or performance/security waiver was used.
+The optional Browser Evidence companion is skipped by its unchanged opt-in policy;
+that is not counted as a passing required job.
+
+This is implemented, tested, preview-verified and review-ready, not merged or
+production-deployed. Final source identities and full hosted logs are retained here;
+final closeout docs are local commits mirrored to the shared workspace, and the
+remote draft stays at the exact verified source with updated results in its body.
+
+## Hosted result
+
+- All 5,211 tests in 424 files pass. `scripts/build-transits.test.mjs` passes all
+  four tests in 84,169 ms (full suite 135.54 s), resolving the unchanged-source
+  local timeout without a retry or timeout change.
+- Native Chromium 149.0.7827.55, Playwright `chromium-1228`: 23/23 date fixtures,
+  100 adjacent-boundary assertions and 4/4 signed fixed-offset controls pass.
+  Includes two empty-date and four disconnected-date fixtures, with no page
+  errors or import effects. Local native Chrome 152 remains independent evidence.
+- Canonical browser groups: local-date reference 35/35, chart confidence 20/20,
+  captions 34/34, chart ownership 17/17, prompt ownership 23/23.
+- Visual regression: 15/15. Lighthouse: 30 routes, three samples each, all budgets pass.
+- Both widget integration groups pass. Widget performance is 100 on all three;
+  accessibility Moon 100, Sky 96, Chart 100, within unchanged thresholds.
+- Full source-checked metadata: `hosted-run.json.gz`; complete logs:
+  `hosted-run.log.gz`. The manifest records their SHA-256 hashes.
+
 ## Implemented guarantee
 
 Unknown-time local chart/Moon requests now consult the retained exact interval
@@ -46,7 +81,7 @@ in that bounded review. This is not an invented owner or external signoff.
   ephemeris calls and refusal before receipt/longitude calculation.
 - Native Chrome 152: 23 date fixtures, exact transition traces and boundary checks pass; no import/storage/network API side effects. Actual chart-confidence browser drive passes all 20 groups against released main. A temporary cleanup diagnostic retains all 35 reference-driver assertion groups and passes; its only driver changes close live contexts and print cleanup progress, and it is recorded separately from canonical hosted evidence.
 - Required 18 acceptance captures pass against final source; their evidence gate is checked before push.
-- Full hosted workflow and exact-source preview remain pending. No merged or
+- All 14 required hosted jobs and exact-source preview pass. No merged or
   production-deployed L2b candidate is claimed here.
 
 Initial diagnostic failures are retained rather than rewritten as successes:
@@ -56,8 +91,12 @@ initially invoked with a current baseline where its optional historical mode
 expects pre-C014 skipped-date behavior; the normal current-source mode is required.
 Local broad checks also encountered cross-checkout dependency resolution errors
 and cold-start/resource timeouts. Dependencies were isolated with the unchanged
-lockfile; four affected suites now pass (including all 67 previously uncollected numerical tests); the unchanged transit-generation subprocess test still times out locally. Canonical hosted gates remain required and are being completed without
-changing assertions, timeouts or performance budgets.
+lockfile; four affected suites then passed (including all 67 previously uncollected
+numerical tests). The unchanged transit-generation subprocess test still timed out
+locally. The exact-source hosted full test step subsequently passed, resolving that
+local evidence gap without changing assertions, timeouts or performance budgets.
+Canonical hosted reference and confidence drivers also passed; local cleanup
+diagnostics are retained as diagnostics rather than relabeled as canonical successes.
 
 SDK merge/npm publication remains held. L3–L6, Astrofolio, Zodia, merge and
 production deployment remain outside this task. Broader runtime availability,

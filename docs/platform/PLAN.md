@@ -285,3 +285,24 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 release integration — 2026-09-12
 
 Current bounded task: reconcile fresh main plus accepted site/SDK stack in isolated main-target drafts. Preserve current main data and fixes, exact candidate archive, optional ownership SDK and rollback. Run integration-invalidated local and required hosted checks; preserve unchanged numerical evidence. Exclude Astrofolio and #426; no L1–L6 or release authority is inferred.
+
+
+## L3a — inactive saved receipt lifecycle prerequisite — 2026-09-14
+
+Current main `693c2ac90b5be78c0f0885c22763dcafff53c00e` and actual #426 head
+`46b36e2c887405efc70762297e1087f6d14195f9` were refreshed. Its four source/test
+files equal the previously reviewed `a0bf5517` versions; the stacked branch is
+not merged. Preserve current main editions and all existing profile/account paths.
+
+The full active lifecycle has concrete dependencies: legacy-mode auth lacks the
+new verified scope, synchronous guest discovery cannot see receipt-only data,
+and existing boundary cleanup does not await durable receipt erasure. First land
+an inactive store with transactional owner/device erasure intent, terminal
+barriers and erase-only retry. Native tests must establish multi-handle/tab
+ordering, failed marker/purge/acknowledgment recovery and incompatible schema
+preservation. Production graph guards prevent accidental activation.
+
+Then stop with a reviewable draft, passing hosted checks and exact-source preview.
+The future coordinator and complete UI must be verified together before activation.
+SDK merge/npm stays held; no L4–L6, Astrofolio, Zodia, merge or production release.
+[Evidence and finite dependencies](evidence/l3-saved-records/README.md).

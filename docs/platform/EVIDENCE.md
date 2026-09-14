@@ -2845,3 +2845,14 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 refreshed evidence — 2026-09-12
 
 See [R3 release integration](evidence/r3-release-integration/README.md) for fresh source identities, conflict resolutions, dependency/artifact proofs, rollback, local checks and hosted results. Historical evidence is not relabeled as final-tree evidence.
+
+
+## L3a inactive saved receipt prerequisite — 2026-09-14
+
+[Current verification record](evidence/l3-saved-records/README.md) records the
+refreshed main and actual #426 identities, selective integration, immutable
+receipt/legacy checks and new native durable erasure cases. Previous L2b release
+and post-merge checks are complete; their durable closeout is restored from
+[evidence/l2b-production](evidence/l2b-production/README.md), not rerun.
+Current L3a draft/hosted/preview checks are pending; no active storage or release
+claim is made. See [activation dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).

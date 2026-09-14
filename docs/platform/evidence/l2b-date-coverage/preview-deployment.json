@@ -1,0 +1,55 @@
+{
+  "verifiedAt": "2026-09-13T16:44:03.776Z",
+  "deployment": {
+    "id": "dpl_F1r75PYxU71coJhD133ge28uETuC",
+    "name": "zodiacs-org",
+    "url": "zodiacs-oz3qdp29g-zodiacsofficial.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1789317245719,
+    "creator": {
+      "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+      "username": "zodiacs-org"
+    },
+    "project": {
+      "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+      "name": "zodiacs-org",
+      "framework": null
+    },
+    "meta": {
+      "githubCommitAuthorName": "diasmal917",
+      "githubCommitAuthorEmail": "diasmal917@gmail.com",
+      "githubCommitMessage": "Adjudicate unknown-time references with complete native date coverage",
+      "githubCommitOrg": "ZodiacsOfficial",
+      "githubCommitRef": "codex/l2b-date-coverage",
+      "githubCommitRepo": "site",
+      "githubCommitSha": "370fddf7224053ca42d0942945d850ab5b8d608c",
+      "githubDeployment": "1",
+      "githubOrg": "ZodiacsOfficial",
+      "githubRepo": "site",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1251096896",
+      "githubRepoId": "1251096896",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "diasmal917",
+      "githubCommitVerification": "unverified",
+      "repoPushedAt": "1789317242000",
+      "branchAlias": "zodiacs-org-git-codex-l2b-date-coverage-zodiacsofficial.vercel.app",
+      "githubPrId": "481",
+      "lambdaRuntimeStats": "{\"nodejs\":12}"
+    },
+    "alias": [
+      "zodiacs-org-git-codex-l2b-date-coverage-zodiacsofficial.vercel.app"
+    ],
+    "target": null,
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1789317246793,
+    "ready": 1789317496669,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

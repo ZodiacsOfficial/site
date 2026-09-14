@@ -816,3 +816,34 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 integration decisions — 2026-09-12
 
 Preserve newer main dependency closure, replacing only the two accepted engine lock entries. Preserve all immutable published Registry main bytes, including same-ID records that differ from historical R1 output. Combine Research regression assertions and Today props with deferred transit loading. Keep source-stable numerical evidence and rerun compiler/render/integration checks. SDK package artifacts remain byte-identical; root release-truth notice does not rewrite immutable archive contents. Main rollback is rehearsed as a complete tree, not a piecemeal engine downgrade.
+
+
+## L3a — commit erasure intent before purging; keep activation separate
+
+Same-origin transactions, not broadcasts or localStorage flags, serialize the
+receipt barrier with every native read/write. Owner and device-wide erasure first
+commit a content-free `{target,status}` intent, then purge rows and acknowledge
+completion atomically. A crash, abort or quota failure during purge preserves
+pending intent and original rows. Recovery can finish only a committed request;
+it cannot read receipts, authorize an owner or create new deletion intent.
+
+Completed barriers remain terminal. There is deliberately no reset/readmission
+API in this prerequisite, so fresh handles, reloads and old async work cannot
+recreate erased content. A future reviewed coordinator must bind an explicit new
+admission generation to verified access; silently removing markers is prohibited.
+A pre-intent failure is not durable erasure: callers must stay locked and retry
+with authority. This library cannot promise recovery of an intent never stored.
+
+Storage schema 2 keeps the existing database identity, so retained v1 writers
+receive VersionError instead of bypassing barriers. Upgrades from any existing
+schema are refused and aborted; no old/future data is migrated or discarded.
+Legacy profile localStorage and receipt schema/SDK bytes are unchanged. Malformed
+barrier metadata fails closed. Explicit erase never parses or downgrades receipt
+payloads. Native transaction completion is the success boundary.
+
+Compared alternatives: a best-effort broadcast permits stale/reloaded writers;
+a localStorage marker cannot commit atomically with IndexedDB checks; deleting
+the database removes the fence and permits stale recreation. None substitutes
+for the durable transaction barrier. Product activation remains blocked on the
+existing lease/auth coordinator, async guest discovery, awaited removal paths,
+explicit readmission policy and a complete recoverable user lifecycle.
