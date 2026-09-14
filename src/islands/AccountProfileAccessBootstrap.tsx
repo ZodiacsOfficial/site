@@ -38,7 +38,10 @@ async function discoverSavedRecords(): Promise<'empty' | 'decision' | 'unavailab
   try {
     const api = await import('../lib/profile/saved-record-access');
     const discovery = await api.discoverSavedRecordBoundary();
-    return discovery.status === 'empty' ? 'empty'
+    // Unsupported storage (no `indexedDB.databases()`, or an unreadable
+    // schema) can hold nothing this client kept, so it never blocks binding;
+    // a pending or failed discovery on a supported runtime does.
+    return discovery.status === 'empty' || discovery.status === 'unsupported' ? 'empty'
       : discovery.status === 'guest-records' ? 'decision' : 'unavailable';
   } catch {
     return 'unavailable';

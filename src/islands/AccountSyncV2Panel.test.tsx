@@ -164,6 +164,22 @@ describe('AccountSyncV2Panel server-safe shell', () => {
     expect(source).toContain('preserveRecovery || clearConfirmedAccountDeletionRequest');
   });
 
+  it('gates the records hand-off only for an empty-looking browser and authorizes deletion erasure by its own transition', async () => {
+    const source = await readFile(new URL('./AccountSyncV2Panel.tsx', import.meta.url), 'utf8');
+    const initialize = source.slice(source.indexOf('const recordsApi = await loadSavedRecordAccess();'), source.indexOf('const waitForProfileAccess'));
+    expect(initialize).toContain("const emptyLookingBrowser = nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null;");
+    expect(initialize).toContain("if (emptyLookingBrowser && (records.status === 'pending' || records.status === 'unavailable')) {");
+    expect(initialize).not.toContain("records.status === 'unsupported'");
+    expect(initialize).not.toContain('sign-in stays locked here');
+    const deletion = source.slice(source.indexOf('async function completeConfirmedDeletionOnDevice('), source.indexOf('\n  async function ', source.indexOf('async function completeConfirmedDeletionOnDevice(') + 1));
+    const epoch = deletion.indexOf('const epoch = authEpoch.current;');
+    const plan = deletion.indexOf('await planSavedRecordErasure(');
+    expect(epoch).toBeGreaterThan(-1);
+    expect(epoch).toBeLessThan(plan);
+    expect(deletion).toContain("if (plan.status === 'blocked' || authEpoch.current !== epoch) return false;");
+    expect(deletion).toContain('() => authEpoch.current === epoch');
+  });
+
   it('keeps export, withdrawal, and permanent deletion reachable when sync bootstrap is unavailable', async () => {
     const source = await readFile(new URL('./AccountSyncV2Panel.tsx', import.meta.url), 'utf8');
     expect(source).toContain('Account privacy controls remain available');

@@ -469,7 +469,7 @@ try {
     const before = {};
     for (const owner of [h.A, h.B, h.G]) before[owner] = h.value(await h.save(await h.bound(owner))).record;
     const stale = await h.bound(h.A);
-    h.equal(await h.adapter().erase(h.DEVICE, 1, () => {}), { ok: true, value: 'erased' }, 'Device erase');
+    h.equal(await h.adapter().erase(h.DEVICE, 1, 1, () => {}), { ok: true, value: 'erased' }, 'Device erase');
     let state = await h.snapshot();
     h.expectAdmission(state, h.DEVICE, 1, 'erased');
     h.insist(state.rows.records.length === 0, 'Device clear left an owner partition');
@@ -496,7 +496,7 @@ try {
       const before = await h.snapshot();
       const hook = h.onRequest('records', ['delete', 'clear'], transaction => transaction.abort());
       let result;
-      try { result = await h.adapter().erase(h.DEVICE, 1, () => {}); } finally { hook.restore(); }
+      try { result = await h.adapter().erase(h.DEVICE, 1, 1, () => {}); } finally { hook.restore(); }
       h.failure(result, 'aborted', 'storage-unavailable');
       h.insist(result.mayHaveCommitted === true, 'Device purge abort hid committed intent');
       h.insist(hook.count() === 1, 'Device purge fault was not applied');
@@ -523,7 +523,7 @@ try {
     const before = await h.snapshot();
     const hook = h.onRequest('admissions', ['put'], transaction => transaction.abort(), { match: key => key?.status === 'pending' });
     let result;
-    try { result = await h.adapter().erase(h.DEVICE, 1, () => {}); } finally { hook.restore(); }
+    try { result = await h.adapter().erase(h.DEVICE, 1, 1, () => {}); } finally { hook.restore(); }
     h.failure(result, 'aborted', 'storage-unavailable');
     h.insist(result.mayHaveCommitted === false, 'Aborted global intent reported committed');
     h.insist(hook.count() === 1, 'Global intent request was not aborted');
@@ -541,7 +541,7 @@ try {
       // put() that follows every native deletion request.
       const hook = h.onRequest('admissions', ['put'], transaction => transaction.abort(), { match: key => key?.status === 'erased' });
       let result;
-      try { result = all ? await h.adapter().erase(h.DEVICE, 1, () => {}) : await store.clearOwner(); }
+      try { result = all ? await h.adapter().erase(h.DEVICE, 1, 1, () => {}) : await store.clearOwner(); }
       finally { hook.restore(); }
       h.failure(result, 'aborted', 'storage-unavailable');
       h.insist(result.mayHaveCommitted === true, 'Acknowledgment abort lost committed intent');
@@ -562,12 +562,12 @@ try {
   await group('owner completion cannot acknowledge a pending device erasure', page => page.evaluate(async () => {
     for (const owner of [h.A, h.B, h.G]) h.value(await h.save(await h.bound(owner)));
     const hook = h.onRequest('records', ['delete', 'clear'], transaction => transaction.abort());
-    try { h.failure(await h.adapter().erase(h.DEVICE, 1, () => {}), 'aborted', 'storage-unavailable'); }
+    try { h.failure(await h.adapter().erase(h.DEVICE, 1, 1, () => {}), 'aborted', 'storage-unavailable'); }
     finally { hook.restore(); }
     h.expectAdmission(await h.snapshot(), h.DEVICE, 1, 'pending');
     // A separately authorized owner erase can finish, but it cannot remove or
     // acknowledge the older device intent while other partitions remain.
-    h.equal(await h.adapter().erase(h.A, 1, () => {}), { ok: true, value: 'erased' }, 'Owner erase under device intent');
+    h.equal(await h.adapter().erase(h.A, 1, 1, () => {}), { ok: true, value: 'erased' }, 'Owner erase under device intent');
     const partial = await h.snapshot();
     h.expectAdmission(partial, h.A, 1, 'erased');
     h.expectAdmission(partial, h.DEVICE, 1, 'pending');
@@ -583,7 +583,7 @@ try {
   await group('concurrent owner and device erasures preserve every durable fence', page => page.evaluate(async () => {
     for (const owner of [h.A, h.B, h.G]) h.value(await h.save(await h.bound(owner)));
     const a = h.adapter(), b = h.adapter(), device = h.adapter();
-    const results = await Promise.all([a.erase(h.A, 1, () => {}), b.erase(h.B, 1, () => {}), device.erase(h.DEVICE, 1, () => {})]);
+    const results = await Promise.all([a.erase(h.A, 1, 1, () => {}), b.erase(h.B, 1, 1, () => {}), device.erase(h.DEVICE, 1, 1, () => {})]);
     h.value(results[2]);
     const state = await h.snapshot();
     h.expectAdmission(state, h.DEVICE, 1, 'erased');
@@ -712,7 +712,7 @@ try {
     h.failure(await store.create(h.envelope()), 'unsupported-storage');
     h.failure(await store.delete(original.id), 'unsupported-storage');
     h.failure(await h.adapter().recoverPendingErasures(), 'unsupported-storage');
-    h.failure(await h.adapter().erase(h.A, 1, () => {}), 'unsupported-storage');
+    h.failure(await h.adapter().erase(h.A, 1, 1, () => {}), 'unsupported-storage');
     const state = await h.snapshot();
     h.equal(h.admission(state), corrupt, 'Corrupt row was normalized or discarded');
     h.equal(h.ownRows(state), [original], 'Corrupt row permitted receipt mutation');
@@ -735,7 +735,7 @@ try {
       const before = await h.snapshot();
       h.failure(await (await h.bound(h.A, { scope: { ownerKey: h.A, device: null, owner: null } })).create(h.envelope(), undefined, { admit: true }), 'unsupported-storage');
       h.failure(await h.adapter().recoverPendingErasures(), 'unsupported-storage');
-      h.failure(await h.adapter().erase(h.DEVICE, 0, () => {}), 'unsupported-storage');
+      h.failure(await h.adapter().erase(h.DEVICE, 0, 0, () => {}), 'unsupported-storage');
       let discovery;
       try { await h.adapter().inspect(h.A, () => {}); discovery = 'allowed'; } catch { discovery = 'refused'; }
       h.insist(discovery === 'refused', 'Discovery accepted an incompatible database');
@@ -815,6 +815,95 @@ try {
       h.close(); return { postVersionChange: result.ok ? 'reopened' : result.code };
     });
   });
+
+  await group('device erasure and same-owner readmission fence a device-era owner erasure and a pre-wipe ticket', page => page.evaluate(async () => {
+    const early = await h.bound(); h.value(await h.save(early));
+    h.value(await h.save(await h.bound(h.B)));
+    // A ticket prepared before the wipe observes A at generation 1 under device generation 1.
+    const preWipe = { target: h.A, expected: 1, expectedDevice: 1 };
+    h.equal(await h.adapter().erase(h.DEVICE, 1, 1, () => {}), { ok: true, value: 'erased' }, 'Device erase');
+    // The same owner string signs back in and keeps a calculation: A is generation 1 again, under device generation 2.
+    const readmitted = h.value(await (await h.bound(h.A)).create(h.envelope('whole', true), undefined, { admit: true }));
+    h.equal(readmitted.scope, { ownerKey: h.A, device: { target: h.DEVICE, generation: 2, status: 'active' }, owner: { target: h.A, generation: 1, status: 'active' } }, 'Readmission after wipe');
+    // The device-era handle and the pre-wipe ticket both observed {device 1, A 1}; neither reaches the new namespace.
+    h.failure(await early.clearOwner(), 'stale');
+    h.failure(await h.adapter().erase(preWipe.target, preWipe.expected, preWipe.expectedDevice, () => {}), 'stale');
+    let state = await h.snapshot();
+    h.expectAdmission(state, h.A, 1, 'active');
+    h.expectAdmission(state, h.DEVICE, 2, 'active');
+    h.equal(h.ownRows(state).map(row => row.id), [readmitted.record.id], 'A stale owner erasure reached the readmitted namespace');
+    // A capability that observed the current admission still clears it.
+    h.equal(await (await h.bound(h.A)).clearOwner(), { ok: true, value: 'erased' }, 'Current-admission clear');
+    state = await h.snapshot();
+    h.expectAdmission(state, h.A, 1, 'erased');
+    h.insist(h.ownRows(state).length === 0, 'Current clear left rows');
+    h.close(); return { readmittedOwnerGeneration: 1, deviceGeneration: 2, staleErasures: 2 };
+  }));
+
+  await group('an adapter revocation while a write is queued reports the first cause and rolls back', page => page.evaluate(async () => {
+    h.value(await h.save(await h.bound()));
+    const before = await h.snapshot();
+    const adapter = h.adapter();
+    const store = await h.bound(h.A, { adapter });
+    const original = IDBObjectStore.prototype.add;
+    let hooked = 0;
+    // The versionchange/onclose path: the adapter aborts its live transaction
+    // while the add request is still pending; Chromium then fires AbortError on it.
+    IDBObjectStore.prototype.add = function (...args) {
+      const request = original.apply(this, args);
+      if (this.name === 'records' && hooked++ === 0) adapter.abortPending();
+      return request;
+    };
+    let result;
+    try { result = await store.create(h.envelope('whole', true)); } finally { IDBObjectStore.prototype.add = original; }
+    h.failure(result, 'stale');
+    h.insist(result.mayHaveCommitted === false, 'Rolled-back write reported as possibly committed');
+    h.insist(hooked === 1, 'Write hook was not applied');
+    h.equal(await h.snapshot(), before, 'Aborted write changed persistent state');
+    h.close(); return { code: result.code, mayHaveCommitted: result.mayHaveCommitted };
+  }));
+
+  await group('an aborted acknowledgment is recovered after reload without read authority', async page => {
+    await page.evaluate(async () => {
+      h.value(await h.save(await h.bound()));
+      const hook = h.onRequest('admissions', ['put'], transaction => transaction.abort(), { match: key => key?.status === 'erased' });
+      let result;
+      try { result = await h.adapter().erase(h.A, 1, 1, () => {}); } finally { hook.restore(); }
+      h.failure(result, 'aborted', 'storage-unavailable');
+      h.insist(result.mayHaveCommitted === true, 'Acknowledgment abort hid the committed intent');
+      h.insist(hook.count() === 1, 'Acknowledgment fault was not applied');
+      const state = await h.snapshot();
+      h.expectAdmission(state, h.A, 1, 'pending');
+      h.insist(h.ownRows(state).length === 1, 'Aborted acknowledgment lost or purged rows');
+      h.close();
+    });
+    await page.reload();
+    await page.waitForFunction(() => !!window.h);
+    return page.evaluate(async () => {
+      h.insist(h.value(await h.adapter().recoverPendingErasures()) === 1, 'Acknowledgment-phase intent did not recover after reload');
+      const state = await h.snapshot();
+      h.expectAdmission(state, h.A, 1, 'erased');
+      h.insist(h.ownRows(state).length === 0, 'Recovery left rows');
+      h.close(); return { recovered: 1 };
+    });
+  });
+
+  await group('a device readmission racing a pre-wipe owner erasure yields exactly one durable outcome', page => page.evaluate(async () => {
+    h.value(await h.save(await h.bound()));
+    h.equal(await h.adapter().erase(h.DEVICE, 1, 1, () => {}), { ok: true, value: 'erased' }, 'Device erase');
+    const readmitter = await h.bound(h.A);
+    const [created, erased] = await Promise.all([
+      readmitter.create(h.envelope('whole', true), undefined, { admit: true }),
+      h.adapter().erase(h.A, 1, 1, () => {}),
+    ]);
+    const record = h.value(created).record;
+    h.insist((erased.ok && erased.value === 'absent') || (!erased.ok && erased.code === 'stale'), `Pre-wipe erasure outcome ${JSON.stringify(erased)}`);
+    const state = await h.snapshot();
+    h.expectAdmission(state, h.DEVICE, 2, 'active');
+    h.expectAdmission(state, h.A, 1, 'active');
+    h.equal(h.ownRows(state).map(row => row.id), [record.id], 'Racing pre-wipe erasure reached the readmitted namespace');
+    h.close(); return { erasure: erased.ok ? erased.value : erased.code };
+  }));
 
   await mkdir(out, { recursive: true });
   const report = {

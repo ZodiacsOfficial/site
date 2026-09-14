@@ -39,6 +39,8 @@ import {
 /** Tab-scoped explicit selection of the device guest scope while signed out with retained access. */
 export const SAVED_RECORD_GUEST_VIEW_KEY = 'zodiacs.saved-records.guest-view.v1';
 export const SAVED_RECORD_SCOPE_EVENT = 'zodiacs:saved-records-scope';
+/** Cross-tab announcement of a record-scope change (erasure, admission); the value is opaque. */
+export const SAVED_RECORD_SCOPE_KEY = 'zodiacs.saved-records.scope-change.v1';
 
 export type SavedRecordRights = 'full' | 'read-only';
 export interface SavedRecordMode {
@@ -121,6 +123,9 @@ export function readSavedRecordMode(deps: SavedRecordDeps = browserSavedRecordDe
     }
     if (owner.status !== 'ready' || owner.accountId !== grant.accountId) return { status: 'locked', reason: 'owner-marker' };
     if (grant.mode === 'account') {
+      // Re-authentication consumes any per-tab guest-view selection: the next
+      // retained sign-out starts on the account's records again.
+      try { deps.storage.session.removeItem(SAVED_RECORD_GUEST_VIEW_KEY); } catch { /* The selection is advisory. */ }
       return { status: 'ready', mode: { kind: 'account', source: 'account-sync-v2', accountId: grant.accountId, rights: 'full', guestView: false } };
     }
     if (!retainedProfileAccessAllowed(deps.storage.local, grant.accountId)) return { status: 'locked', reason: 'retention-marker' };
@@ -160,7 +165,7 @@ export function installSavedRecordScopeInvalidation(): void {
   window.addEventListener(ACCOUNT_V2_PROFILE_REVOKE_EVENT, advance);
   window.addEventListener(SAVED_RECORD_SCOPE_EVENT, advance);
   window.addEventListener('storage', (event) => {
-    if (event.key === ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY) advance();
+    if (event.key === ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY || event.key === SAVED_RECORD_SCOPE_KEY) advance();
   });
 }
 
@@ -175,6 +180,18 @@ export function announceSavedRecordScopeChange(): void {
   if (typeof window === 'undefined') { advance(); return; }
   installSavedRecordScopeInvalidation();
   window.dispatchEvent(new Event(SAVED_RECORD_SCOPE_EVENT));
+  broadcastSavedRecordScopeChange();
+}
+
+/**
+ * Tells other tabs only (the storage event never fires in its own tab) that
+ * admissions changed, for example after an explicit keep readmitted a
+ * namespace; this tab's own handle already observed the new rows.
+ */
+export function broadcastSavedRecordScopeChange(): void {
+  if (typeof window === 'undefined') return;
+  // The value carries nothing; it only has to differ from the last one.
+  try { window.localStorage.setItem(SAVED_RECORD_SCOPE_KEY, `${Date.now()}:${Math.random().toString(36).slice(2)}`); } catch { /* Other tabs fail closed on their next operation instead. */ }
 }
 
 /**
@@ -297,7 +314,7 @@ export async function openSavedRecordScope(deps: SavedRecordDeps = browserSavedR
         const sameNamespace = current.mode.kind === 'guest'
           ? expectedMode.kind === 'guest' && current.mode.guestView === expectedMode.guestView && isGuestSavedNatalOwnerKey(ownerKey)
           : current.mode.kind === expectedMode.kind && current.mode.accountId !== null && ownerKeyFor(current.mode.accountId) === ownerKey;
-        return sameNamespace ? { ownerKey, epoch: evaluation } : null;
+        return sameNamespace ? { ownerKey, epoch: evaluation, rights: current.mode.rights } : null;
       },
     });
     return {
@@ -320,6 +337,8 @@ export async function openSavedRecordScope(deps: SavedRecordDeps = browserSavedR
 export interface SavedRecordEraseTicket {
   readonly target: string;
   readonly expected: number;
+  /** The device admission generation the target was observed under. */
+  readonly expectedDevice: number;
   readonly guestRecords: number;
 }
 export type SavedRecordEraseTarget = 'device' | 'guest' | { readonly accountId: string };
@@ -347,6 +366,7 @@ export async function prepareSavedRecordErasure(target: SavedRecordEraseTarget, 
     if (row?.status === 'pending') return { status: 'pending', reason: 'erasure-pending' };
     if (!row || row.status === 'erased') return target === 'device' && inventory.device === null && inventory.owners === 0 ? { status: 'absent' } : row ? { status: 'absent' } : { status: 'absent' };
     return { status: 'ready', ticket: { target: row.target, expected: row.generation,
+      expectedDevice: inventory.device?.generation ?? 0,
       guestRecords: target === 'guest' ? inventory.guestRecords : 0 } };
   } catch {
     return { status: 'unavailable', reason: 'storage' };
@@ -371,7 +391,7 @@ export async function eraseSavedRecords(
   const adapter = deps.adapter();
   try {
     const guard = () => { if (!authorized()) throw savedNatalAdapterFailure('stale'); };
-    const result = await adapter.erase(ticket.target, ticket.expected, guard);
+    const result = await adapter.erase(ticket.target, ticket.expected, ticket.expectedDevice, guard);
     if (result.ok || result.mayHaveCommitted) announceSavedRecordScopeChange();
     return result;
   } finally {

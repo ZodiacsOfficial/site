@@ -57,7 +57,12 @@ export interface SavedNatalFailure {
   readonly mayHaveCommitted: boolean;
 }
 export type SavedNatalResult<T> = { readonly ok: true; readonly value: T } | SavedNatalFailure;
-export interface SavedNatalAuthority { readonly ownerKey: string; readonly epoch: number }
+export interface SavedNatalAuthority {
+  readonly ownerKey: string;
+  readonly epoch: number;
+  /** Omitted means full; `read-only` refuses create at the store, not only in the UI. */
+  readonly rights?: 'full' | 'read-only';
+}
 export type SavedNatalErasureOutcome = 'erased' | 'absent';
 
 type Guard = () => void;
@@ -75,8 +80,14 @@ export interface SavedNatalAdapter {
   read(scope: SavedNatalScope, id: string | null, guard: Guard): Promise<unknown[]>;
   /** With `admit`, the same transaction creates or rotates admission rows by compare-and-swap. */
   mutate<T>(scope: SavedNatalScope, guard: Guard, operation: (rows: unknown[]) => Mutation<T>, admit?: boolean): Promise<{ result: T; admitted: Admitted }>;
-  /** Durable intent; `expected` pins the generation the authorizing capability observed (0 = observed absent). */
-  requestErasure(target: string, expected: number, guard: Guard): Promise<SavedNatalErasureOutcome | 'queued'>;
+  /**
+   * Durable intent. `expected` pins the target's generation the authorizing
+   * capability observed (0 = observed absent); `expectedDevice` pins the device
+   * generation it was observed under (ignored for the device target itself),
+   * so an owner intent from before a device erasure cycle can never reach the
+   * same owner string readmitted after it.
+   */
+  requestErasure(target: string, expected: number, expectedDevice: number, guard: Guard): Promise<SavedNatalErasureOutcome | 'queued'>;
   /** Erase-only completion of a committed intent; needs no authority. */
   finishErasure(target: string): Promise<void>;
   abortPending(): void;
@@ -218,6 +229,9 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
           this.connection = database;
           // A newer schema elsewhere must never observe this connection writing around it.
           database.onversionchange = () => this.abortPending();
+          // A forced close (site-data clear, eviction) must not leave a dead
+          // connection that every later transaction trips over.
+          database.onclose = () => this.abortPending();
           settled = true;
           if (this.cancelOpen === cancel) this.cancelOpen = null;
           resolve(database);
@@ -236,7 +250,7 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
   private async execute<T>(
     mode: IDBTransactionMode,
     guard: Guard,
-    queue: (store: IDBObjectStore, admissions: IDBObjectStore, done: (value: T) => void, fail: (error: unknown) => void, check: Guard) => void,
+    queue: (store: IDBObjectStore, admissions: IDBObjectStore, done: (value: T) => void, fail: (error: unknown) => void, check: Guard, wrote: () => void) => void,
   ): Promise<T> {
     guard();
     const database = await this.open(guard);
@@ -255,6 +269,9 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
       let priorFailure: unknown;
       let settled = false;
       let abortRequested = false;
+      // Only a queued write can have committed; an empty readwrite cannot.
+      let didWrite = false;
+      const wrote = () => { didWrite = true; };
       const finishFailure = (error: unknown, committed = false) => {
         if (settled) return;
         settled = true;
@@ -262,10 +279,11 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
         reject(rethrow(error, committed));
       };
       const abort = (error: unknown) => {
-        priorFailure = error;
+        // Keep the first cause: cancelled requests fire AbortError afterwards.
+        priorFailure ??= error;
         if (abortRequested || settled) return;
         try { transaction.abort(); abortRequested = true; }
-        catch { finishFailure(error, mode === 'readwrite'); }
+        catch { finishFailure(priorFailure, mode === 'readwrite' && didWrite); }
       };
       const active = { abort: () => abort(issue('stale')) };
       this.transactions.add(active);
@@ -279,7 +297,7 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
           if (!ready) throw issue('storage-unavailable');
           settled = true;
           resolve(result);
-        } catch (error) { finishFailure(error, mode === 'readwrite'); }
+        } catch (error) { finishFailure(error, mode === 'readwrite' && didWrite); }
       };
       try {
         check();
@@ -294,7 +312,7 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
         if (admissions.autoIncrement || admissions.keyPath !== 'target' || admissions.indexNames.length !== 0) {
           throw issue('unsupported-storage');
         }
-        queue(store, admissions, (value) => { check(); result = value; ready = true; }, abort, check);
+        queue(store, admissions, (value) => { check(); result = value; ready = true; }, abort, check, wrote);
       } catch (error) { abort(error); }
     });
   }
@@ -384,7 +402,7 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
 
   mutate<T>(scope: SavedNatalScope, guard: Guard, operation: (rows: unknown[]) => Mutation<T>, admit = false): Promise<{ result: T; admitted: Admitted }> {
     if (!isSavedNatalOwnerKey(scope.ownerKey)) return Promise.reject(issue('invalid-input'));
-    return this.execute('readwrite', guard, (store, admissions, done, fail, check) => {
+    return this.execute('readwrite', guard, (store, admissions, done, fail, check, wrote) => {
       const proceed = (admitted: Admitted) => {
         const request = store.index(OWNER_INDEX).getAll(scope.ownerKey, MAX_SAVED_NATAL_RECORDS + 1);
         request.onsuccess = () => {
@@ -397,10 +415,12 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
               if (mutation.add.ownerKey !== scope.ownerKey || !isSavedNatalId(mutation.add.id)) throw issue('invalid-input');
               const add = store.add(mutation.add);
               add.onerror = () => fail(add.error);
+              wrote();
             } else if (mutation.deleteId) {
               if (!isSavedNatalId(mutation.deleteId)) throw issue('invalid-input');
               const remove = store.delete([scope.ownerKey, mutation.deleteId]);
               remove.onerror = () => fail(remove.error);
+              wrote();
             }
             done({ result: mutation.result, admitted });
           } catch (error) { fail(error); }
@@ -439,39 +459,55 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
         if (nextDevice !== device) writes.push(admissions.put(nextDevice));
         if (nextOwner !== owner) writes.push(admissions.put(nextOwner));
         for (const write of writes) write.onerror = () => fail(write.error);
+        if (writes.length > 0) wrote();
         proceed({ device: nextDevice, owner: nextOwner });
       }, fail, check);
     });
   }
 
-  requestErasure(target: string, expected: number, guard: Guard): Promise<SavedNatalErasureOutcome | 'queued'> {
-    if (!isSavedNatalAdmissionTarget(target) || !Number.isSafeInteger(expected) || expected < 0) return Promise.reject(issue('invalid-input'));
-    return this.execute<SavedNatalErasureOutcome | 'queued'>('readwrite', guard, (_store, admissions, done, fail, check) => {
-      const request = admissions.get(target);
-      request.onsuccess = () => {
+  requestErasure(target: string, expected: number, expectedDevice: number, guard: Guard): Promise<SavedNatalErasureOutcome | 'queued'> {
+    if (!isSavedNatalAdmissionTarget(target) || !Number.isSafeInteger(expected) || expected < 0
+      || !Number.isSafeInteger(expectedDevice) || expectedDevice < 0) return Promise.reject(issue('invalid-input'));
+    return this.execute<SavedNatalErasureOutcome | 'queued'>('readwrite', guard, (_store, admissions, done, fail, check, wrote) => {
+      const deviceRequest = admissions.get(DEVICE);
+      deviceRequest.onsuccess = () => {
         try {
           check();
-          const row = parseAdmission(request.result, target);
-          if (!row) { done('absent'); return; }
-          if (row.status === 'erased') { done('erased'); return; }
-          if (row.status === 'active') {
-            // A capability captured against an older admission cannot queue
-            // deletion of a newer one, even for the same owner string.
-            if (expected !== row.generation) throw issue('stale');
-            const intent = admissions.put({ target, generation: row.generation, status: 'pending' } satisfies SavedNatalAdmissionRow);
-            intent.onerror = () => fail(intent.error);
-          }
-          done('queued');
+          const device = parseAdmission(deviceRequest.result, DEVICE);
+          const decide = (row: SavedNatalAdmissionRow | null) => {
+            check();
+            if (!row) { done('absent'); return; }
+            if (row.status === 'erased') { done('erased'); return; }
+            if (row.status === 'active') {
+              // A capability captured against an older admission cannot queue
+              // deletion of a newer one, even for the same owner string. Owner
+              // rows are recreated from scratch after every device erasure, so
+              // an owner intent is also pinned to the device admission it was
+              // observed under; a device cycle rotates that generation.
+              if (expected !== row.generation) throw issue('stale');
+              if (target !== DEVICE && device?.generation !== expectedDevice) throw issue('stale');
+              const intent = admissions.put({ target, generation: row.generation, status: 'pending' } satisfies SavedNatalAdmissionRow);
+              intent.onerror = () => fail(intent.error);
+              wrote();
+            }
+            done('queued');
+          };
+          if (target === DEVICE) { decide(device); return; }
+          const request = admissions.get(target);
+          request.onsuccess = () => {
+            try { decide(parseAdmission(request.result, target)); } catch (error) { fail(error); }
+          };
+          request.onerror = () => fail(request.error);
         } catch (error) { fail(error); }
       };
-      request.onerror = () => fail(request.error);
+      deviceRequest.onerror = () => fail(deviceRequest.error);
     });
   }
 
   /** Only a persisted pending intent authorizes this erase-only operation. */
   finishErasure(target: string): Promise<void> {
     if (!isSavedNatalAdmissionTarget(target)) return Promise.reject(issue('invalid-input'));
-    return this.execute('readwrite', () => {}, (store, admissions, done, fail, check) => {
+    return this.execute('readwrite', () => {}, (store, admissions, done, fail, check, wrote) => {
       const request = admissions.get(target);
       request.onsuccess = () => {
         try {
@@ -480,6 +516,7 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
           // A stale completion can neither purge a readmitted namespace nor
           // acknowledge anything but the exact pending row.
           if (!row || row.status !== 'pending') { done(undefined); return; }
+          wrote();
           const acknowledge = () => {
             // Purge + acknowledgment commit together. A failed purge leaves
             // the prior durable pending row and all original rows intact.
@@ -529,10 +566,10 @@ export class IndexedDbSavedNatalAdapter implements SavedNatalAdapter {
    * commit together afterwards without it. `mayHaveCommitted` reports a committed
    * intent, never physical deletion: after it, recovery finishes the exact target.
    */
-  async erase(target: string, expected: number, guard: Guard): Promise<SavedNatalResult<SavedNatalErasureOutcome>> {
+  async erase(target: string, expected: number, expectedDevice: number, guard: Guard): Promise<SavedNatalResult<SavedNatalErasureOutcome>> {
     let intentCommitted = false;
     try {
-      const outcome = await this.requestErasure(target, expected, guard);
+      const outcome = await this.requestErasure(target, expected, expectedDevice, guard);
       if (outcome !== 'queued') return { ok: true, value: outcome };
       intentCommitted = true;
       await this.finishErasure(target);
@@ -635,6 +672,10 @@ export class SavedNatalStore {
   private guard(ticket: Ticket): Guard {
     return () => { if (!this.allowed(ticket)) throw issue('stale'); };
   }
+  /** Read-only authority (a retained sign-out) keeps find, export and delete; create is refused here, not only in the UI. */
+  private writable(): boolean {
+    try { return this.readAuthority()?.rights !== 'read-only'; } catch { return false; }
+  }
   private start(): Ticket {
     const ticket = { generation: this.generation, state: 'active' } as const;
     if (!this.allowed(ticket)) throw issue('access-denied');
@@ -673,6 +714,7 @@ export class SavedNatalStore {
   async create(envelope: Readonly<NatalEnvelope>, label?: string, options: { readonly admit?: boolean } = {}): Promise<SavedNatalResult<SavedNatalCreated>> {
     try {
       const ticket = this.start();
+      if (!this.writable()) return { ok: false, code: 'access-denied', mayHaveCommitted: false };
       const blocked = savedNatalScopeState(this.scope);
       if (blocked && (!options.admit || blocked === 'erasure-pending')) return { ok: false, code: blocked, mayHaveCommitted: false };
       const id = this.randomUUID();
@@ -765,9 +807,12 @@ export class SavedNatalStore {
       this.adapter.abortPending();
       const ticket = { generation: this.generation, state: 'clearing' } as const;
       const expected = this.scope.owner?.status === 'active' ? this.scope.owner.generation : 0;
+      const expectedDevice = this.scope.device?.generation ?? 0;
       let intentCommitted = false;
-      const result = await this.perform(ticket, true, async (guard) => {
-        const outcome = await this.adapter.requestErasure(this.scope.ownerKey, expected, guard);
+      // Only a committed intent (or the adapter's own ambiguity) may have
+      // committed anything: an outcome of absent/erased wrote nothing.
+      const result = await this.perform(ticket, false, async (guard) => {
+        const outcome = await this.adapter.requestErasure(this.scope.ownerKey, expected, expectedDevice, guard);
         if (outcome !== 'queued') return outcome;
         intentCommitted = true;
         await this.adapter.finishErasure(this.scope.ownerKey);

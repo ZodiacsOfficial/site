@@ -27,9 +27,14 @@ vi.mock('../lib/profile/sync', () => ({
   },
 }));
 
-const discovery = { status: 'empty' as 'empty' | 'guest-records' | 'pending' | 'unavailable' | 'unsupported', calls: 0 };
+type DiscoveryStatus = 'empty' | 'guest-records' | 'pending' | 'unavailable' | 'unsupported';
+const discovery = { status: 'empty' as DiscoveryStatus, calls: 0, sequence: [] as DiscoveryStatus[] };
 vi.mock('../lib/profile/saved-record-access', () => ({
-  discoverSavedRecordBoundary: async () => { discovery.calls += 1; return { status: discovery.status, guestRecords: discovery.status === 'guest-records' ? 2 : 0 }; },
+  discoverSavedRecordBoundary: async () => {
+    discovery.calls += 1;
+    const status = discovery.sequence.shift() ?? discovery.status;
+    return { status, guestRecords: status === 'guest-records' ? 2 : 0 };
+  },
 }));
 const flags = { enabled: true };
 vi.mock('../lib/profile/saved-record-flags', () => ({ savedRecordsEnabled: () => flags.enabled }));
@@ -101,12 +106,30 @@ describe('bootstrap auto-bind discovers guest calculation records first', () => 
     expect(lease.active).toBe(false);
   });
 
-  it.each(['pending', 'unavailable', 'unsupported'] as const)('stays locked instead of binding when record storage is %s', async (status) => {
+  it.each(['pending', 'unavailable'] as const)('stays locked instead of binding when record storage is %s', async (status) => {
     sync.session = { user: { id: A } };
     discovery.status = status;
     await mount();
     expect(local.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBeNull();
     expect(lease.active).toBe(false);
+  });
+
+  it('refuses to bind when a guest save lands between the first discovery and the recheck under the lock', async () => {
+    sync.session = { user: { id: A } };
+    discovery.sequence = ['empty', 'guest-records'];
+    await mount();
+    expect(discovery.calls).toBe(2);
+    expect(local.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBeNull();
+    expect(lease.active).toBe(false);
+  });
+
+  it('binds exactly as before when record storage is unsupported, because this client cannot have kept records there', async () => {
+    sync.session = { user: { id: A } };
+    discovery.status = 'unsupported';
+    await mount();
+    expect(discovery.calls).toBeGreaterThanOrEqual(1);
+    expect(JSON.parse(local.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY) ?? 'null')).toEqual({ version: 1, accountId: A });
+    expect(lease.active).toBe(true);
   });
 
   it('skips discovery entirely and keeps today’s behaviour when the record feature is off', async () => {

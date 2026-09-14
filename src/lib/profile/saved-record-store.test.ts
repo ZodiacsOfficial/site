@@ -140,7 +140,7 @@ class MemoryAdapter implements SavedNatalAdapter {
       return { result: mutation.result, admitted: { device, owner } };
     });
   }
-  async requestErasure(target: string, expected: number, guard: () => void) {
+  async requestErasure(target: string, expected: number, expectedDevice: number, guard: () => void) {
     this.calls++;
     const generation = this.generation;
     return this.backend.serial(async () => {
@@ -154,6 +154,7 @@ class MemoryAdapter implements SavedNatalAdapter {
       if (current.status === 'erased') return 'erased' as const;
       if (current.status === 'active') {
         if (expected !== current.generation) throw savedNatalAdapterFailure('stale');
+        if (target !== DEVICE && this.backend.admissions.get(DEVICE)?.generation !== expectedDevice) throw savedNatalAdapterFailure('stale');
         this.backend.admissions.set(target, row(target, current.generation, 'pending'));
       }
       await this.afterIntent?.();
@@ -539,7 +540,7 @@ describe('explicit admission and durable generations', () => {
     const backend = new Backend();
     for (const owner of [A, B, G]) value(await fixture(owner, backend).store.create(polar.envelope));
     const adapter = new MemoryAdapter(backend);
-    expect(await adapter.requestErasure(DEVICE, 1, () => {})).toBe('queued');
+    expect(await adapter.requestErasure(DEVICE, 1, 1, () => {})).toBe('queued');
     expect(backend.admissions.get(DEVICE)).toEqual(row(DEVICE, 1, 'pending'));
     for (const owner of [A, B, G]) {
       expect(await fixture(owner, backend, { admitted: false }).store.list()).toEqual({ ok: false, code: 'erasure-pending', mayHaveCommitted: false });
@@ -555,18 +556,56 @@ describe('explicit admission and durable generations', () => {
     expect(backend.admissions.get(B)).toBeUndefined();
   });
 
+  it('fences a device-era owner capability and a pre-wipe owner erasure after a device cycle readmits the same owner', async () => {
+    const backend = new Backend();
+    const first = fixture(A, backend);
+    value(await first.store.create(polar.envelope));
+    // Sign-out "clear all": the device is erased and every owner row goes with it.
+    const wiper = new MemoryAdapter(backend);
+    expect(await wiper.requestErasure(DEVICE, 1, 1, () => {})).toBe('queued');
+    await wiper.finishErasure(DEVICE);
+    expect(backend.admissions.get(DEVICE)).toEqual(row(DEVICE, 1, 'erased'));
+    expect(backend.admissions.has(A)).toBe(false);
+    // The same account signs in again and keeps a new calculation: A is readmitted at generation 1 under device generation 2.
+    const again = new SavedNatalStore({ scope: backend.scope(A), epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }),
+      adapter: new MemoryAdapter(backend), now: () => new Date(WHEN), randomUUID: () => '00000099-0000-4000-8000-000000000000' });
+    const readmitted = value(await again.create(whole.envelope, undefined, { admit: true }));
+    expect(readmitted.scope).toEqual({ ownerKey: A, device: row(DEVICE, 2), owner: row(A, 1) });
+    // The device-era handle observed {device 1, A 1}; its clear must not reach the readmitted namespace.
+    expect(await first.store.clearOwner()).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(backend.admissions.get(A)).toEqual(row(A, 1));
+    expect(backend.owner(A).size).toBe(1);
+    // A ticket pinned before the wipe (A generation 1 under device generation 1) is refused the same way.
+    await expect(new MemoryAdapter(backend).requestErasure(A, 1, 1, () => {})).rejects.toThrow();
+    expect(backend.admissions.get(A)).toEqual(row(A, 1));
+    // The current admission can still be cleared by a handle that observed it.
+    expect(await again.clearOwner()).toEqual({ ok: true, value: 'erased' });
+    expect(backend.owner(A).size).toBe(0);
+  });
+  it('reports no committed write when a no-op clear loses authority after the adapter answered', async () => {
+    const backend = new Backend();
+    backend.admit(A);
+    backend.admissions.set(A, row(A, 1, 'erased'));
+    const f = fixture(A, backend, { admitted: false });
+    const original = f.adapter.requestErasure.bind(f.adapter);
+    f.adapter.requestErasure = async (...args: Parameters<typeof original>) => { const outcome = await original(...args); f.setAuthority(null); return outcome; };
+    expect(await f.store.clearOwner()).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(backend.admissions.get(A)).toEqual(row(A, 1, 'erased'));
+  });
   it('never queues deletion of a newer admission from a capability pinned to an older one', async () => {
     const backend = new Backend();
     const adapter = new MemoryAdapter(backend);
     backend.admissions.set(DEVICE, row(DEVICE, 1));
     backend.admissions.set(A, row(A, 3));
-    await expect(adapter.requestErasure(A, 2, () => {})).rejects.toThrow();
+    await expect(adapter.requestErasure(A, 2, 1, () => {})).rejects.toThrow();
+    // The same owner generation under a rotated device admission is a different admission.
+    await expect(adapter.requestErasure(A, 3, 2, () => {})).rejects.toThrow();
     expect(backend.admissions.get(A)).toEqual(row(A, 3));
-    expect(await adapter.requestErasure(A, 3, () => {})).toBe('queued');
-    expect(await adapter.requestErasure(A, 3, () => {})).toBe('queued');
-    expect(await adapter.requestErasure(B, 0, () => {})).toBe('absent');
+    expect(await adapter.requestErasure(A, 3, 1, () => {})).toBe('queued');
+    expect(await adapter.requestErasure(A, 3, 1, () => {})).toBe('queued');
+    expect(await adapter.requestErasure(B, 0, 1, () => {})).toBe('absent');
     await adapter.finishErasure(A);
-    expect(await adapter.requestErasure(A, 3, () => {})).toBe('erased');
+    expect(await adapter.requestErasure(A, 3, 1, () => {})).toBe('erased');
   });
 
   it('refuses admission while an erasure is pending and fails closed on generation exhaustion', async () => {
@@ -655,6 +694,28 @@ describe('native adapter bounded opening failures', () => {
     (request.onsuccess as () => void)();
     expect(close).toHaveBeenCalledTimes(1);
     expect(indexedDB.open).toHaveBeenCalledWith(SAVED_NATAL_DATABASE_NAME, SAVED_NATAL_SCHEMA_VERSION);
+  });
+
+  it('drops a connection the browser force-closed instead of failing every later transaction on it', async () => {
+    const requests: Record<string, unknown>[] = [];
+    const open = vi.fn(() => { const request: Record<string, unknown> = {}; requests.push(request); return request; });
+    vi.stubGlobal('indexedDB', { open });
+    const adapter = new IndexedDbSavedNatalAdapter();
+    const store = new SavedNatalStore({ scope, epoch: 1, readAuthority: () => ({ ownerKey: A, epoch: 1 }), adapter });
+    const close = vi.fn();
+    const database: Record<string, unknown> = { close, version: SAVED_NATAL_SCHEMA_VERSION,
+      objectStoreNames: { length: 2, contains: () => true },
+      transaction: () => { throw new DOMException('closed', 'InvalidStateError'); } };
+    const first = store.list();
+    requests[0]!.result = database;
+    (requests[0]!.onsuccess as () => void)();
+    expect(await first).toEqual({ ok: false, code: 'storage-unavailable', mayHaveCommitted: false });
+    // The user agent closes the connection (site-data clear, eviction).
+    (database.onclose as () => void)();
+    const second = store.list();
+    expect(open).toHaveBeenCalledTimes(2);
+    (requests[1]!.onblocked as () => void)();
+    expect(await second).toEqual({ ok: false, code: 'blocked', mayHaveCommitted: false });
   });
 
   it('closes a late successful native open after revocation', async () => {

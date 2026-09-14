@@ -326,14 +326,21 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
     if (recordsApi) {
       records = await recordsApi.discoverSavedRecordBoundary();
       if (authEpoch.current !== epoch) return;
-      if (records.status === 'pending' || records.status === 'unavailable' || records.status === 'unsupported') {
+      // Only an empty-looking browser is gated on discovery (the bootstrap
+      // applies the same rule before auto-binding). A bound or mismatched
+      // browser keeps its legacy hand-off; the records panel reports its own
+      // failure state there.
+      // Unsupported record storage (no readable database) means this client
+      // could not have kept guest records there, so it never gates the hand-off.
+      const emptyLookingBrowser = nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null;
+      if (emptyLookingBrowser && (records.status === 'pending' || records.status === 'unavailable')) {
         setMessage(records.status === 'pending'
           ? 'Calculation records on this device are still being removed. Open Profile again in a moment; no chart was uploaded.'
-          : 'Calculation records on this device could not be checked safely, so sign-in stays locked here. No chart was uploaded.');
+          : 'Calculation records on this device could not be checked safely, so this browser cannot be bound to the account yet. No chart was uploaded.');
         setView('error');
         return;
       }
-      if (records.status === 'guest-records' && nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null) {
+      if (records.status === 'guest-records' && emptyLookingBrowser) {
         nextBoundary = {
           status: 'decision-required',
           reason: 'unowned-local-data',
@@ -1387,10 +1394,12 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
   ): Promise<boolean> {
     if (!accountStorage) return false;
     // Only the deleted account's own record namespace is removed; an active
-    // different account and guest records stay untouched.
-    const plan = removeFromDevice ? await planSavedRecordErasure({ accountId: request.accountId }) : { status: 'none' as const };
-    if (plan.status === 'blocked') return false;
+    // different account and guest records stay untouched. The erasure is
+    // authorized by the transition this call started under, sampled before
+    // the asynchronous plan, never by whatever transition is current later.
     const epoch = authEpoch.current;
+    const plan = removeFromDevice ? await planSavedRecordErasure({ accountId: request.accountId }) : { status: 'none' as const };
+    if (plan.status === 'blocked' || authEpoch.current !== epoch) return false;
     const transition = await runExclusiveAccountProfileTransition(accountStorage, async () => {
       const recordsOutcome = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
       if (recordsOutcome === 'failed') return false;

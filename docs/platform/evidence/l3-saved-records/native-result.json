@@ -1,8 +1,8 @@
 {
-  "startedAt": "2026-09-14T07:52:32.961Z",
-  "completedAt": "2026-09-14T07:52:42.152Z",
-  "node": "v26.4.0",
-  "browser": "152.0.7977.84",
+  "startedAt": "2026-09-14T12:53:51.751Z",
+  "completedAt": "2026-09-14T12:53:59.061Z",
+  "node": "v22.22.2",
+  "browser": "141.0.7390.37",
   "source": [
     {
       "path": "src/lib/profile/saved-record.ts",
@@ -10,22 +10,22 @@
     },
     {
       "path": "src/lib/profile/saved-record-store.ts",
-      "sha256": "b1686081c67483109e3d82d4438bf777cdcb094f3f3f9f12128edb326ab5577e"
+      "sha256": "d11dbb60544be4dad252a335e072e6363ebc5a5116f9f2681ea1d650eec8b4ed"
     }
   ],
-  "bundleSha256": "c2b908ec693e18dc060d858f49ab9a862d814c2766410429292b4b52de921977",
+  "bundleSha256": "b96e8ca459a4df9d2d86e3c119081380befdac5b2d44d7350fa3081a717ef551",
   "sourceInstrumented": false,
   "faultModel": "Native IndexedDB request-success aborts and commit-boundary authority revocation",
   "results": [
     {
-      "name": "inert import and immutable receipt bytes",
+      "name": "inert import, content-free discovery without creation, immutable receipt bytes",
       "passed": true,
       "detail": {
-        "version": 2,
+        "version": 3,
         "saved": 4,
         "exactBytes": true
       },
-      "milliseconds": 1334.0365420000003
+      "milliseconds": 226.53124000000003
     },
     {
       "name": "cap enforced across native connections",
@@ -33,21 +33,22 @@
       "detail": {
         "saved": 40
       },
-      "milliseconds": 512.2769579999995
+      "milliseconds": 1018.011012
     },
     {
-      "name": "terminal owner marker denies existing and reopened handles",
+      "name": "owner erasure fences existing and reopened handles until explicit readmission",
       "passed": true,
       "detail": {
         "remainingOwners": [
+          "account:10000000-0000-4000-8000-000000000001",
           "account:20000000-0000-4000-8000-000000000002"
         ],
-        "terminal": true
+        "readmittedGeneration": 2
       },
-      "milliseconds": 173.11533400000008
+      "milliseconds": 183.34734999999978
     },
     {
-      "name": "marker transaction abort preserves records and permits retry",
+      "name": "intent transaction abort preserves records and permits retry",
       "passed": true,
       "detail": {
         "result": {
@@ -57,7 +58,7 @@
         },
         "retried": true
       },
-      "milliseconds": 158.37412499999937
+      "milliseconds": 155.26892100000032
     },
     {
       "name": "purge abort survives reload and recovers without read authority",
@@ -72,10 +73,10 @@
         "secondRecovery": 0,
         "unrelatedBytesPreserved": true
       },
-      "milliseconds": 201.85900000000038
+      "milliseconds": 202.56463299999996
     },
     {
-      "name": "authority loss after marker commit retains recoverable intent",
+      "name": "authority loss after intent commit retains recoverable intent",
       "passed": true,
       "detail": {
         "result": {
@@ -85,7 +86,7 @@
         },
         "recovered": true
       },
-      "milliseconds": 149.20179199999984
+      "milliseconds": 138.6677239999999
     },
     {
       "name": "create commit ambiguity preserves exact receipt without retry",
@@ -96,12 +97,12 @@
           "code": "stale",
           "mayHaveCommitted": true
         },
-        "committedRows": 1
+        "committedRows": 2
       },
-      "milliseconds": 146.9740410000004
+      "milliseconds": 148.897923
     },
     {
-      "name": "queued clear blocks second-handle create",
+      "name": "queued erasure blocks second-handle create",
       "passed": true,
       "detail": {
         "outcome": {
@@ -112,10 +113,10 @@
         "separatePage": false,
         "resurrectedRows": 0
       },
-      "milliseconds": 159.73504199999934
+      "milliseconds": 152.97215000000006
     },
     {
-      "name": "queued clear blocks second-page create",
+      "name": "queued erasure blocks second-page create",
       "passed": true,
       "detail": {
         "outcome": {
@@ -126,17 +127,17 @@
         "separatePage": true,
         "resurrectedRows": 0
       },
-      "milliseconds": 248.13304100000005
+      "milliseconds": 283.0081519999999
     },
     {
-      "name": "device erasure covers guest and inactive account partitions",
+      "name": "device erasure covers every partition, removes owner admissions, and readmits owners anew",
       "passed": true,
       "detail": {
         "partitions": 3,
         "remaining": 0,
-        "terminal": true
+        "deviceGeneration": 2
       },
-      "milliseconds": 151.2474999999995
+      "milliseconds": 170.76735400000007
     },
     {
       "name": "aborted device purge retains a global barrier across reload",
@@ -145,10 +146,10 @@
         "recovered": 1,
         "remaining": 0
       },
-      "milliseconds": 191.30283400000008
+      "milliseconds": 203.99917099999993
     },
     {
-      "name": "device marker abort reports no committed intent",
+      "name": "device intent abort reports no committed intent",
       "passed": true,
       "detail": {
         "result": {
@@ -158,7 +159,7 @@
         },
         "newWritesRemainAllowed": true
       },
-      "milliseconds": 154.44187499999953
+      "milliseconds": 149.53042300000016
     },
     {
       "name": "owner acknowledgment abort rolls back the entire purge",
@@ -172,10 +173,10 @@
         "originalRowsRolledBack": 2,
         "retryCompleted": true
       },
-      "milliseconds": 150.23733299999913
+      "milliseconds": 151.35100699999975
     },
     {
-      "name": "global acknowledgment abort rolls back the entire purge",
+      "name": "device acknowledgment abort rolls back the entire purge",
       "passed": true,
       "detail": {
         "result": {
@@ -186,7 +187,7 @@
         "originalRowsRolledBack": 2,
         "retryCompleted": true
       },
-      "milliseconds": 158.0043339999993
+      "milliseconds": 153.98726100000022
     },
     {
       "name": "owner completion cannot acknowledge a pending device erasure",
@@ -195,53 +196,151 @@
         "isolatedOwnerCompletion": true,
         "globalRecovered": true
       },
-      "milliseconds": 152.71099999999933
+      "milliseconds": 164.97843099999955
     },
     {
-      "name": "concurrent owner and device erasures preserve every terminal marker",
+      "name": "concurrent owner and device erasures preserve every durable fence",
       "passed": true,
       "detail": {
-        "terminalMarkers": 3,
+        "results": [
+          "erased",
+          "erased",
+          "erased"
+        ],
         "remaining": 0
       },
-      "milliseconds": 158.1052920000002
+      "milliseconds": 173.000086
     },
     {
-      "name": "corrupt erasure markers fail closed and remain intact",
+      "name": "concurrent readmissions compare-and-swap so only one succeeds",
       "passed": true,
       "detail": {
-        "markerPreserved": true,
+        "winners": 1,
+        "generation": 2
+      },
+      "milliseconds": 179.22415400000045
+    },
+    {
+      "name": "a stale acknowledgment cannot erase or complete a newer admission",
+      "passed": true,
+      "detail": {
+        "lateCompletionNoOp": true
+      },
+      "milliseconds": 254.04605999999967
+    },
+    {
+      "name": "repeated erase/readmit cycles keep bounded metadata and monotonic generations",
+      "passed": true,
+      "detail": {
+        "cycles": 25,
+        "admissionRows": 2,
+        "generation": 25
+      },
+      "milliseconds": 386.5634120000004
+    },
+    {
+      "name": "generation exhaustion and owner capacity fail closed without evicting fences",
+      "passed": true,
+      "detail": {
+        "exhaustionRefused": true,
+        "capacityRefused": true,
+        "overCapacityFailsClosed": true
+      },
+      "milliseconds": 282.927917
+    },
+    {
+      "name": "one guest namespace per device and content-free guest discovery",
+      "passed": true,
+      "detail": {
+        "singleGuest": true
+      },
+      "milliseconds": 154.2005079999999
+    },
+    {
+      "name": "corrupt admission rows fail closed and remain intact",
+      "passed": true,
+      "detail": {
+        "rowPreserved": true,
         "receiptPreserved": true
       },
-      "milliseconds": 147.6110410000001
+      "milliseconds": 147.07272300000022
     },
     {
-      "name": "schema v1 refusal preserves the existing database",
+      "name": "schema v1 and unreleased v2 databases are refused intact",
       "passed": true,
-      "detail": {
-        "version": 1,
-        "preserved": true
-      },
-      "milliseconds": 134.1583750000009
+      "detail": [
+        {
+          "version": 1,
+          "preserved": true
+        },
+        {
+          "version": 2,
+          "preserved": true
+        }
+      ],
+      "milliseconds": 147.18317000000025
     },
     {
-      "name": "schema v3 refusal preserves the existing database",
+      "name": "old v2 client and future v4 schema cannot write around schema 3",
       "passed": true,
       "detail": {
-        "version": 3,
-        "preserved": true
+        "oldClient": "VersionError",
+        "futurePreserved": true
       },
-      "milliseconds": 134.6158749999995
+      "milliseconds": 149.80658700000004
     },
     {
-      "name": "version 2 incompatible store shape remains intact",
+      "name": "version 3 incompatible store shape remains intact",
       "passed": true,
       "detail": {
         "preserved": true
       },
-      "milliseconds": 132.86466699999983
+      "milliseconds": 147.80237599999964
+    },
+    {
+      "name": "a blocked upgrade from another page closes this connection and fails closed",
+      "passed": true,
+      "detail": {
+        "postVersionChange": "reopened"
+      },
+      "milliseconds": 235.60366299999987
+    },
+    {
+      "name": "device erasure and same-owner readmission fence a device-era owner erasure and a pre-wipe ticket",
+      "passed": true,
+      "detail": {
+        "readmittedOwnerGeneration": 1,
+        "deviceGeneration": 2,
+        "staleErasures": 2
+      },
+      "milliseconds": 156.73245999999926
+    },
+    {
+      "name": "an adapter revocation while a write is queued reports the first cause and rolls back",
+      "passed": true,
+      "detail": {
+        "code": "stale",
+        "mayHaveCommitted": false
+      },
+      "milliseconds": 149.02238899999975
+    },
+    {
+      "name": "an aborted acknowledgment is recovered after reload without read authority",
+      "passed": true,
+      "detail": {
+        "recovered": 1
+      },
+      "milliseconds": 190.74440700000014
+    },
+    {
+      "name": "a device readmission racing a pre-wipe owner erasure yields exactly one durable outcome",
+      "passed": true,
+      "detail": {
+        "erasure": "stale"
+      },
+      "milliseconds": 150.61895800000002
     }
   ],
-  "passed": 20,
+  "passed": 30,
   "failed": 0
 }

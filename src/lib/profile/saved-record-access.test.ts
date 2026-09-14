@@ -95,10 +95,13 @@ class FakeAdapter {
     let device = FakeAdapter.admissions.get(DEVICE) ?? null;
     let owner = FakeAdapter.admissions.get(scope.ownerKey) ?? null;
     if (admit) {
-      if (!device) { device = row(DEVICE, 1); FakeAdapter.admissions.set(DEVICE, device); }
-      if (!owner) {
-        if (scope.ownerKey.startsWith('guest:') && [...FakeAdapter.admissions.keys()].some((key) => key.startsWith('guest:'))) throw savedNatalAdapterFailure('stale');
-        owner = row(scope.ownerKey, 1); FakeAdapter.admissions.set(scope.ownerKey, owner);
+      // Mirrors the native rotation: an erased device is readmitted at the next
+      // generation and every owner is admitted anew under it.
+      const deviceRotated = device !== null && device.status !== 'active';
+      if (!device || deviceRotated) { device = row(DEVICE, (device?.generation ?? 0) + 1); FakeAdapter.admissions.set(DEVICE, device); }
+      if (!owner || deviceRotated || owner.status !== 'active') {
+        if (scope.ownerKey.startsWith('guest:') && [...FakeAdapter.admissions.keys()].some((key) => key.startsWith('guest:') && key !== scope.ownerKey)) throw savedNatalAdapterFailure('stale');
+        owner = row(scope.ownerKey, deviceRotated ? 1 : (owner?.generation ?? 0) + 1); FakeAdapter.admissions.set(scope.ownerKey, owner);
       }
     }
     if (!device || !owner) throw savedNatalAdapterFailure('not-admitted');
@@ -110,13 +113,14 @@ class FakeAdapter {
     if (mutation.deleteId) rows.delete(mutation.deleteId);
     return { result: mutation.result, admitted: { device, owner } };
   }
-  async requestErasure(target: string, expected: number, guard: () => void) {
+  async requestErasure(target: string, expected: number, expectedDevice: number, guard: () => void) {
     guard();
     const current = FakeAdapter.admissions.get(target);
     if (!current) return 'absent' as const;
     if (current.status === 'erased') return 'erased' as const;
     if (current.status === 'active') {
       if (expected !== current.generation) throw savedNatalAdapterFailure('stale');
+      if (target !== DEVICE && FakeAdapter.admissions.get(DEVICE)?.generation !== expectedDevice) throw savedNatalAdapterFailure('stale');
       FakeAdapter.admissions.set(target, row(target, current.generation, 'pending'));
     }
     return 'queued' as const;
@@ -128,10 +132,10 @@ class FakeAdapter {
     else FakeAdapter.rows.delete(target);
     FakeAdapter.admissions.set(target, row(target, current.generation, 'erased'));
   }
-  async erase(target: string, expected: number, guard: () => void) {
+  async erase(target: string, expected: number, expectedDevice: number, guard: () => void) {
     let intent = false;
     try {
-      const outcome = await this.requestErasure(target, expected, guard);
+      const outcome = await this.requestErasure(target, expected, expectedDevice, guard);
       if (outcome !== 'queued') return { ok: true as const, value: outcome };
       intent = true;
       await this.finishErasure(target);
@@ -245,7 +249,10 @@ describe('strict record mode derived from the coordinator', () => {
     // Re-authentication grants the account; the selection is inert and A never becomes the guest.
     grant(h.session, 'account', A);
     expect(access.readSavedRecordMode(h.deps)).toMatchObject({ status: 'ready', mode: { kind: 'account', guestView: false } });
+    // The account session consumed the selection: the next retained sign-out starts on A's records.
+    expect(h.session.getItem(access.SAVED_RECORD_GUEST_VIEW_KEY)).toBeNull();
     grant(h.session, 'retained', A);
+    expect(access.readSavedRecordMode(h.deps)).toMatchObject({ status: 'ready', mode: { kind: 'retained', guestView: false } });
     expect(access.selectSavedRecordGuestView(false, h.deps)).toMatchObject({ status: 'ready', mode: { kind: 'retained' } });
     // Guest mode outside retention cannot select anything.
     h.local.removeItem(ACCOUNT_V2_LOCAL_OWNER_KEY); h.local.removeItem(ACCOUNT_V2_RETAINED_OWNER_KEY);
@@ -267,14 +274,18 @@ describe('evaluation fencing and scope handles', () => {
     const storageEvent = new Event('storage') as Event & { key?: string };
     storageEvent.key = ACCOUNT_V2_PROFILE_LEASE_REVOKE_KEY;
     window.dispatchEvent(storageEvent);
+    // Another tab's erasure or admission announces itself through its own key.
+    const scopeEvent = new Event('storage') as Event & { key?: string };
+    scopeEvent.key = access.SAVED_RECORD_SCOPE_KEY;
+    window.dispatchEvent(scopeEvent);
     const unrelated = new Event('storage') as Event & { key?: string };
     unrelated.key = 'zodiacs.profile.v1';
     window.dispatchEvent(unrelated);
-    expect(access.savedRecordEvaluation()).toBe(start + 4);
-    expect(seen).toEqual([start + 1, start + 2, start + 3, start + 4]);
+    expect(access.savedRecordEvaluation()).toBe(start + 5);
+    expect(seen).toEqual([start + 1, start + 2, start + 3, start + 4, start + 5]);
     unsubscribe();
     access.announceSavedRecordScopeChange();
-    expect(seen).toHaveLength(4);
+    expect(seen).toHaveLength(5);
   });
 
   it('opens the exact account namespace, then withholds a delayed result across A to B to A', async () => {
@@ -301,6 +312,30 @@ describe('evaluation fencing and scope handles', () => {
     const reopened = await access.openSavedRecordScope(h.deps);
     expect(reopened.status).toBe('ready');
     if (reopened.status === 'ready') expect((await reopened.scope.store.list()).ok).toBe(true);
+  });
+
+  it('keeps an erased owner fenced across re-authentication until an explicit keep readmits it', async () => {
+    const h = harness();
+    owner(h.local, A); grant(h.session, 'account', A);
+    FakeAdapter.absent = false;
+    FakeAdapter.admissions.set(DEVICE, row(DEVICE, 1));
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 1));
+    FakeAdapter.rows.set(`account:${A}`, new Map([['x', { synthetic: true }]]));
+    const opened = await access.openSavedRecordScope(h.deps);
+    expect(opened.status === 'ready' && await opened.scope.store.clearOwner()).toEqual({ ok: true, value: 'erased' });
+    // Sign out retaining the profile, then sign in again: two access events, same account.
+    owner(h.local, A, true); grant(h.session, 'retained', A);
+    window.dispatchEvent(new Event('zodiacs:profile-access'));
+    owner(h.local, A); grant(h.session, 'account', A);
+    window.dispatchEvent(new Event('zodiacs:profile-access'));
+    const reopened = await access.openSavedRecordScope(h.deps);
+    expect(reopened.status === 'ready' && reopened.scope.state).toBe('owner-erased');
+    if (reopened.status !== 'ready') return;
+    expect(await reopened.scope.store.list()).toEqual({ ok: false, code: 'owner-erased', mayHaveCommitted: false });
+    expect(await reopened.scope.store.create(envelope)).toEqual({ ok: false, code: 'owner-erased', mayHaveCommitted: false });
+    const readmitted = await reopened.scope.store.create(envelope, undefined, { admit: true });
+    expect(readmitted.ok && readmitted.value.scope.owner).toEqual(row(`account:${A}`, 2));
+    expect(FakeAdapter.rows.get(`account:${A}`)?.size).toBe(1);
   });
 
   it('withholds a scope whose discovery resolved after a newer evaluation began', async () => {
@@ -341,6 +376,11 @@ describe('evaluation fencing and scope handles', () => {
     const retained = await access.openSavedRecordScope(h.deps);
     expect(retained.status === 'ready' && retained.scope.ownerKey).toBe(`account:${A}`);
     expect(retained.status === 'ready' && retained.scope.canSave).toBe(false);
+    // Read-only is enforced by the store itself, not only by the button that hides.
+    expect(await (retained.status === 'ready' ? retained.scope.store.create(envelope) : Promise.resolve(null)))
+      .toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
+    expect(FakeAdapter.rows.get(`account:${A}`)).toBeUndefined();
+    expect(await (retained.status === 'ready' ? retained.scope.store.list() : Promise.resolve(null))).toEqual({ ok: true, value: [] });
     access.selectSavedRecordGuestView(true, h.deps);
     expect(await (retained.status === 'ready' ? retained.scope.store.list() : Promise.resolve(null))).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
     const guest = await access.openSavedRecordScope(h.deps);
@@ -391,7 +431,7 @@ describe('content-free discovery and erasure authority', () => {
     FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 4));
     FakeAdapter.rows.set(`account:${A}`, new Map([['x', { synthetic: true }]]));
     const prepared = await access.prepareSavedRecordErasure({ accountId: A }, h.deps);
-    expect(prepared).toEqual({ status: 'ready', ticket: { target: `account:${A}`, expected: 4, guestRecords: 0 } });
+    expect(prepared).toEqual({ status: 'ready', ticket: { target: `account:${A}`, expected: 4, expectedDevice: 1, guestRecords: 0 } });
     if (prepared.status !== 'ready') return;
     // The exclusive transition revokes ordinary access before erasing.
     h.access.allowed = false;
@@ -405,11 +445,26 @@ describe('content-free discovery and erasure authority', () => {
     FakeAdapter.rows.set(`account:${A}`, new Map([['y', { synthetic: true }]]));
     expect(await access.eraseSavedRecords(prepared.ticket, () => authorized, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
     expect(FakeAdapter.rows.get(`account:${A}`)?.size).toBe(1);
+    // Nor can a ticket from before a device erasure cycle reach the same owner string readmitted at its old generation.
+    const preWipe = await access.prepareSavedRecordErasure({ accountId: A }, h.deps);
+    expect(preWipe).toMatchObject({ status: 'ready', ticket: { expected: 5, expectedDevice: 1 } });
+    const wipe = await access.prepareSavedRecordErasure('device', h.deps);
+    expect(wipe.status === 'ready' && await access.eraseSavedRecords(wipe.ticket, () => true, h.deps)).toEqual({ ok: true, value: 'erased' });
+    grant(h.session, 'account', A); h.access.allowed = true;
+    const reopened = await access.openSavedRecordScope(h.deps);
+    expect(reopened.status === 'ready' && (await reopened.scope.store.create(envelope, undefined, { admit: true })).ok).toBe(true);
+    expect(FakeAdapter.admissions.get(DEVICE)).toEqual(row(DEVICE, 2));
+    expect(FakeAdapter.admissions.get(`account:${A}`)).toEqual(row(`account:${A}`, 1));
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 5));
+    expect(preWipe.status === 'ready' && await access.eraseSavedRecords(preWipe.ticket, () => true, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(FakeAdapter.rows.get(`account:${A}`)?.size).toBe(1);
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 1));
+    h.access.allowed = false;
     // The caller's own authority ends the action before intent.
     const fresh = await access.prepareSavedRecordErasure({ accountId: A }, h.deps);
     authorized = false;
     expect(fresh.status === 'ready' && await access.eraseSavedRecords(fresh.ticket, () => authorized, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
-    expect(FakeAdapter.admissions.get(`account:${A}`)).toEqual(row(`account:${A}`, 5));
+    expect(FakeAdapter.admissions.get(`account:${A}`)).toEqual(row(`account:${A}`, 1));
   });
 
   it('prepares device and guest targets, reports absent scopes, and refuses pending ones', async () => {
@@ -417,8 +472,8 @@ describe('content-free discovery and erasure authority', () => {
     expect(await access.prepareSavedRecordErasure('device', h.deps)).toEqual({ status: 'absent' });
     expect(await access.prepareSavedRecordErasure('guest', h.deps)).toEqual({ status: 'absent' });
     FakeAdapter.seedGuest(2);
-    expect(await access.prepareSavedRecordErasure('guest', h.deps)).toEqual({ status: 'ready', ticket: { target: `guest:${GUEST}`, expected: 1, guestRecords: 2 } });
-    expect(await access.prepareSavedRecordErasure('device', h.deps)).toEqual({ status: 'ready', ticket: { target: DEVICE, expected: 1, guestRecords: 0 } });
+    expect(await access.prepareSavedRecordErasure('guest', h.deps)).toEqual({ status: 'ready', ticket: { target: `guest:${GUEST}`, expected: 1, expectedDevice: 1, guestRecords: 2 } });
+    expect(await access.prepareSavedRecordErasure('device', h.deps)).toEqual({ status: 'ready', ticket: { target: DEVICE, expected: 1, expectedDevice: 1, guestRecords: 0 } });
     expect(await access.prepareSavedRecordErasure({ accountId: B }, h.deps)).toEqual({ status: 'absent' });
     expect(await access.prepareSavedRecordErasure({ accountId: 'nope' }, h.deps)).toEqual({ status: 'unavailable', reason: 'invalid-account' });
     expect(await access.prepareSavedRecordErasure('guest', { ...h.deps, enabled: false })).toEqual({ status: 'disabled', reason: 'flag-off' });
