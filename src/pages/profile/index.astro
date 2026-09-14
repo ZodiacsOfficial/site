@@ -6,6 +6,8 @@ import ProfileManager from '../../islands/ProfileManager';
 import AccountSyncV2Panel from '../../islands/AccountSyncV2Panel';
 import AccountBoundProfileSurface from '../../islands/AccountBoundProfileSurface';
 import ProfileSunSignCapture from '../../islands/ProfileSunSignCapture';
+import SavedRecordsPanel from '../../islands/SavedRecordsPanel';
+import { savedRecordsEnabled } from '../../lib/profile/saved-record-flags';
 import LivingChartTimeline from '../../islands/living-chart/LivingChartTimeline';
 import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
 import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../lib/account-v2/feature-flags';
@@ -22,6 +24,9 @@ const livingChartSyncPrivacyEnabled = livingChartSyncEnabled({
   PUBLIC_LIVING_CHART_SYNC_ENABLED: process.env.PUBLIC_LIVING_CHART_SYNC_ENABLED,
 });
 const livingChartSurfaceEnabled = true;
+const savedRecordsSurfaceEnabled = savedRecordsEnabled({
+  PUBLIC_SAVED_RECORDS_ENABLED: process.env.PUBLIC_SAVED_RECORDS_ENABLED,
+});
 ---
 <Base
   clientUi
@@ -58,6 +63,8 @@ const livingChartSurfaceEnabled = true;
         <ProfileManager dailyEmailEnabled={dailyEmailEnabled} client:load />
       </>
     )}
+
+    <SavedRecordsPanel enabled={savedRecordsSurfaceEnabled} locale="en" client:load />
 
     <AccountSyncV2Panel enabled={accountSyncV2Enabled} client:load />
 

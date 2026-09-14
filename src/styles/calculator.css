@@ -2585,3 +2585,18 @@
 @media (prefers-reduced-motion: reduce) {
   .num__y { transition: none; }
 }
+
+/* Calculation records kept on this device (Profile). */
+.pf-records { margin: clamp(18px, 4vw, 30px) 0; }
+.pf-records__core { display: grid; gap: 14px; padding: clamp(18px, 4vw, 24px); }
+.pf-records__head { display: grid; gap: 6px; }
+.pf-records__head h2 { margin: 0; font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 500; letter-spacing: -0.01em; }
+.pf-records__head p, .pf-records__status, .pf-records__empty, .pf-records__privacy, .pf-records__notice { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.6; }
+.pf-records__notice { color: var(--text-2); }
+.pf-records__list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.pf-records__item { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 12px 14px; border: 1px solid var(--hair-2); border-radius: 12px; }
+.pf-records__facts { display: grid; gap: 3px; min-width: 0; }
+.pf-records__facts strong { color: var(--text); font-weight: 500; overflow-wrap: anywhere; }
+.pf-records__meta { font-size: 11px; letter-spacing: 0.04em; color: var(--faint); }
+.pf-records__item .pf-chart__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.calc__record-keep { display: grid; gap: 8px; margin-top: 10px; }

@@ -19,6 +19,9 @@ import LayerChips from './explorer/LayerChips';
 import { moonCandidates, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import { createModuleLoader } from '../lib/module-load';
 import { downloadCalculationReceipt } from '../lib/receipt-download';
+import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
+import type { SavedRecordsCopy } from './saved-records-copy';
+import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import type { ReadingScrollBehavior } from './explorer/ReadingPath';
 import {
   EMPTY_FIRST_READING,
@@ -113,8 +116,14 @@ interface ChartResultOwner {
   requiresProfileAccess: boolean;
 }
 interface ChartReceiptExport extends ChartResultOwner {
+  envelope: NatalEnvelope;
   envelopeJson: string;
 }
+type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
+type SavedRecordScope = import('../lib/profile/saved-record-access').SavedRecordScope;
+type SavedRecordMode = import('../lib/profile/saved-record-access').SavedRecordMode;
+/** Explicit keep-on-this-device outcome for the current result; never retried automatically. */
+type RecordKeepStatus = 'opening' | 'idle' | 'busy' | 'kept' | 'uncertain' | 'changed' | 'failed' | 'full' | 'unavailable' | 'locked' | 'read-only' | 'pending' | 'stale';
 type PreparedPrimaryShare = Awaited<ReturnType<ShareSurfaceModule['preparePrimaryShareArtifact']>>;
 type PrimaryShareHandle = {
   artifact: PreparedPrimaryShare;
@@ -353,6 +362,22 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
   const receiptExportRef = useRef<ChartReceiptExport | null>(null);
   const [receiptDownloadError, setReceiptDownloadError] = useState(false);
+  const [recordKeep, setRecordKeep] = useState<RecordKeepStatus>('idle');
+  const [recordMode, setRecordMode] = useState<SavedRecordMode | null>(null);
+  const [recordErasedNote, setRecordErasedNote] = useState(false);
+  // Copy loads with the record module, keeping the route closure unchanged when nothing is kept.
+  const [recordCopy, setRecordCopy] = useState<SavedRecordsCopy | null>(null);
+  const recordScopeRef = useRef<SavedRecordScope | null>(null);
+  const recordAccessRef = useRef<SavedRecordAccess | null>(null);
+  /** Fences scope re-opens (any access or scope change) against each other. */
+  const recordKeepRunRef = useRef(0);
+  /** Fences a keep outcome to the result it was clicked for; only a new or cleared result advances it. */
+  const recordResultRunRef = useRef(0);
+  /** Re-opens the record scope after a refusal that a fresh inventory can explain (erased elsewhere). */
+  const recordReopenRef = useRef<(() => void) | null>(null);
+  /** The namespace this result was kept in; a re-open of the same admitted namespace keeps the confirmation. */
+  const recordKeptOwnerRef = useRef<string | null>(null);
+  const recordsEnabled = mode === 'full' && savedRecordsEnabled();
   const [signature, setSignature] = useState<ChartSignature | null>(null);
   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
   const [registryRecordSlug, setRegistryRecordSlug] = useState<string | null>(null);
@@ -463,6 +488,84 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     shareRuntimeRef.current.primary = undefined;
     clearPostChartContext();
   }, []);
+
+  // The record scope answers "can this result be kept, and for whom?" It is
+  // opened lazily once a result exists and re-opened after every access or
+  // scope change; a stale handle is closed, never reused.
+  useEffect(() => {
+    // A new or cleared result invalidates every keep outcome of the previous one.
+    recordResultRunRef.current += 1;
+    recordKeepRunRef.current += 1;
+    recordKeptOwnerRef.current = null;
+    setRecordErasedNote(false);
+    if (!recordsEnabled || !receiptExport) { setRecordKeep('idle'); recordReopenRef.current = null; return; }
+    setRecordKeep('opening');
+    let live = true;
+    let unsubscribe = () => {};
+    const reopen = async () => {
+      const run = ++recordKeepRunRef.current;
+      recordScopeRef.current?.close();
+      recordScopeRef.current = null;
+      setRecordMode(null);
+      // The button waits until the scope is known; a keep in flight and an
+      // uncertain outcome for this result keep their own state.
+      setRecordKeep((current) => (current === 'busy' || current === 'uncertain' ? current : 'opening'));
+      try {
+        const [api, copyModule] = await Promise.all([
+          recordAccessRef.current ?? import('../lib/profile/saved-record-access'),
+          import('./saved-records-copy'),
+        ]);
+        recordAccessRef.current = api;
+        if (live) setRecordCopy(copyModule.SAVED_RECORDS_COPY[locale]);
+        const opened = await api.openSavedRecordScope();
+        if (!live || run !== recordKeepRunRef.current) { if (opened.status === 'ready') opened.scope.close(); return; }
+        if (opened.status === 'stale') {
+          // The evaluation moved during the open; the change that moved it
+          // has scheduled its own re-open unless it landed before subscribing.
+          setTimeout(() => { if (live && run === recordKeepRunRef.current) void reopen(); }, 0);
+          return;
+        }
+        if (opened.status !== 'ready') {
+          setRecordKeep((current) => (current === 'busy' || current === 'uncertain' || current === 'changed' ? current
+            : opened.status === 'locked' ? 'locked' : opened.status === 'pending' ? 'pending' : 'unavailable'));
+          return;
+        }
+        recordScopeRef.current = opened.scope;
+        setRecordMode(opened.scope.mode);
+        setRecordErasedNote(opened.scope.state === 'owner-erased' || opened.scope.state === 'device-erased');
+        const next: RecordKeepStatus = !opened.scope.canSave ? 'read-only' : opened.scope.state === 'erasure-pending' ? 'pending' : 'idle';
+        // A keep still in flight reports its own outcome, and an uncertain
+        // outcome for this result stays stated until the visitor reconciles
+        // it under Profile; a confirmed keep survives only while the same
+        // namespace is still admitted. The fresh scope replaces the rest.
+        const sameKeptNamespace = opened.scope.state === null && opened.scope.ownerKey === recordKeptOwnerRef.current;
+        setRecordKeep((current) => (current === 'busy' || current === 'uncertain' || current === 'changed'
+          || (current === 'kept' && sameKeptNamespace) ? current : next));
+      } catch {
+        if (live && run === recordKeepRunRef.current) setRecordKeep('unavailable');
+      }
+    };
+    recordReopenRef.current = () => { if (live) void reopen(); };
+    void reopen();
+    void import('../lib/profile/saved-record-access').then((api) => {
+      if (!live) return;
+      recordAccessRef.current = api;
+      unsubscribe = api.subscribeSavedRecordScope(() => {
+        recordKeepRunRef.current += 1;
+        setRecordKeep((current) => (current === 'busy' || current === 'uncertain' || current === 'changed' ? current : 'stale'));
+        setTimeout(() => { if (live) void reopen(); }, 0);
+      });
+    }).catch(() => {});
+    return () => {
+      live = false;
+      unsubscribe();
+      recordReopenRef.current = null;
+      recordResultRunRef.current += 1;
+      recordKeepRunRef.current += 1;
+      recordScopeRef.current?.close();
+      recordScopeRef.current = null;
+    };
+  }, [recordsEnabled, receiptExport]);
   const profileHandoffIdRef = useRef(0);
   const shareRuntimeRef = useRef<ShareRuntime>({});
   const profileAccessGeneration = useProfileAccessGeneration(() => {
@@ -1238,7 +1341,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       setChart(result);
       if (portable) {
         const captured: ChartReceiptExport = {
-          ...owner, envelopeJson: portable.envelopeJson,
+          ...owner, envelope: portable.envelope, envelopeJson: portable.envelopeJson,
         };
         receiptExportRef.current = captured;
         setReceiptExport(captured);
@@ -1312,6 +1415,76 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     } finally {
       if (runId === runChartIdRef.current) setBusy(false);
     }
+  }
+
+  function receiptExportIsCurrent(captured: ChartReceiptExport | null): captured is ChartReceiptExport {
+    return captured !== null && captured === receiptExportRef.current && captured.chart === chart
+      && captured.runId === runChartIdRef.current
+      && captured.inputRevision === inputRevisionRef.current
+      && !(captured.requiresProfileAccess && (
+        captured.accessGeneration !== profileAccessGeneration.current || !profileAccessAllowed()
+      ));
+  }
+
+  /**
+   * Explicit "keep on this device". The exact bytes and the scope are
+   * captured before any await; the result is re-checked after each await and
+   * a stale completion shows nothing. An uncertain outcome is stated, never
+   * retried: the visitor reconciles under Profile.
+   */
+  async function keepRecord(): Promise<void> {
+    const captured = receiptExportRef.current;
+    const scope = recordScopeRef.current;
+    const api = recordAccessRef.current;
+    if (!receiptExportIsCurrent(captured) || recordKeep === 'busy') return;
+    if (!scope || !api) {
+      // The scope is being replaced (a change in another tab or in the
+      // sign-in state landed between the click and the re-render that
+      // disables the button): nothing was stored, and the visitor is told.
+      setRecordKeep('changed');
+      return;
+    }
+    // A click while the scope is being replaced (another tab changed the
+    // records, or the sign-in state moved) stores nothing and says so; the
+    // re-open already scheduled keeps this outcome until the next click.
+    if (scope.epoch !== api.savedRecordEvaluation()) { setRecordKeep('changed'); return; }
+    if (!scope.canSave) { setRecordKeep('read-only'); return; }
+    // A scope change during the commit must not swallow the outcome: the
+    // store reports it as uncertain and that is what the visitor is told.
+    const run = recordResultRunRef.current;
+    const envelopeJson = captured.envelopeJson;
+    const envelope = captured.envelope;
+    // The label is display-only metadata around the immutable bytes, derived
+    // from the calculation itself (never copied from a legacy saved chart,
+    // which can be renamed or deleted independently); keep it printable.
+    const label = [...autoName.replace(/[\u0000-\u001f\u007f-\u009f]/gu, ' ').trim()].slice(0, 120).join('');
+    const admit = scope.state === 'not-admitted' || scope.state === 'owner-erased' || scope.state === 'device-erased';
+    setRecordKeep('busy');
+    track('record_keep', { admit: String(admit) });
+    const created = await scope.store.create(envelope, label || undefined, { admit });
+    if (run !== recordResultRunRef.current || !receiptExportIsCurrent(captured)) return;
+    if (created.ok) {
+      // The stored bytes must be exactly the bytes offered for download.
+      const exact = created.value.record.envelopeJson === envelopeJson;
+      recordKeptOwnerRef.current = exact ? scope.ownerKey : null;
+      setRecordKeep(exact ? 'kept' : 'uncertain');
+      setRecordErasedNote(false);
+      // A readmission changes what other tabs may do; this tab's handle already observed it.
+      if (admit) api.broadcastSavedRecordScopeChange();
+      return;
+    }
+    // Records removed or admitted from another tab are only visible to a
+    // fresh inventory: state that nothing was stored, re-open so the next
+    // explicit keep observes the new rows, and retry nothing on the
+    // visitor's behalf.
+    const changedElsewhere = !created.mayHaveCommitted && (created.code === 'stale' || created.code === 'access-denied'
+      || created.code === 'owner-erased' || created.code === 'device-erased' || created.code === 'not-admitted');
+    setRecordKeep(created.mayHaveCommitted ? 'uncertain'
+      : changedElsewhere ? 'changed'
+        : created.code === 'full' ? 'full'
+          : created.code === 'erasure-pending' ? 'pending'
+            : created.code === 'unsupported-storage' ? 'unavailable' : 'failed');
+    if (changedElsewhere) recordReopenRef.current?.();
   }
 
   function exportReceipt(): void {
@@ -2537,6 +2710,51 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                     <p class="field__help" id="calculation-receipt-privacy">{t(locale,
                       receiptExport && receiptExport.chart === chart ? 'chartReceiptPrivacy' : 'chartReceiptUnavailable')}</p>
                     {receiptDownloadError && <p class="calc__error" role="alert">{t(locale, 'chartReceiptError')}</p>}
+                    {recordsEnabled && recordCopy && receiptExport && receiptExport.chart === chart && (
+                      <div class="calc__record-keep" data-record-keep data-record-keep-state={recordKeep}>
+                        <button
+                          class="btn btn--glass"
+                          type="button"
+                          onClick={() => void keepRecord()}
+                          disabled={recordKeep === 'opening' || recordKeep === 'busy' || recordKeep === 'kept' || recordKeep === 'read-only'
+                            || recordKeep === 'locked' || recordKeep === 'unavailable' || recordKeep === 'pending'}
+                          aria-describedby="calculation-record-scope"
+                          data-keep-calculation-record
+                        >
+                          <span>{recordKeep === 'busy' ? recordCopy.keeping
+                            : recordKeep === 'kept' ? recordCopy.keptButton
+                              : recordKeep === 'uncertain' || recordKeep === 'changed' || recordKeep === 'failed' ? recordCopy.keepAgain
+                                : recordCopy.keep}</span>
+                          <span class="orb" aria-hidden="true">{recordKeep === 'kept' ? '✓' : '+'}</span>
+                        </button>
+                        <p class="field__help" id="calculation-record-scope">
+                          {recordMode === null ? ''
+                            : recordMode.kind === 'account' ? recordCopy.accountScope
+                              : recordMode.kind === 'retained' ? recordCopy.retainedScope
+                                : recordCopy.guestScope}
+                          {recordMode !== null && recordErasedNote && recordKeep === 'idle' ? ` ${recordCopy.keepErasedNote}` : ''}
+                        </p>
+                        {recordKeep === 'kept' && (
+                          <p class="calc__saved" role="status" data-record-kept>
+                            {recordCopy.kept}{' '}
+                            <a href={`${localizePath(locale, '/profile/')}#calculation-records`}>{recordCopy.keptLink}</a>
+                          </p>
+                        )}
+                        {recordKeep !== 'opening' && recordKeep !== 'idle' && recordKeep !== 'busy' && recordKeep !== 'kept' && (
+                          <p class="calc__error" role="alert" data-record-keep-message>
+                            {recordKeep === 'uncertain' ? recordCopy.keepUncertain
+                              : recordKeep === 'changed' ? recordCopy.keepChanged
+                              : recordKeep === 'failed' ? recordCopy.keepFailed
+                                : recordKeep === 'full' ? recordCopy.keepFull
+                                  : recordKeep === 'unavailable' ? recordCopy.keepUnavailable
+                                    : recordKeep === 'locked' ? recordCopy.keepLocked
+                                      : recordKeep === 'read-only' ? recordCopy.keepReadOnly
+                                        : recordKeep === 'pending' ? recordCopy.keepPending
+                                          : recordCopy.staleRefresh}
+                          </p>
+                        )}
+                      </div>
+                    )}
                 </div>
                 {card === 'saved' && (
                   <p class="sr-only" role="status">{t(locale, 'chartCardSaved')}</p>

@@ -47,7 +47,7 @@ export function computeCalculatorReceipt(input: BirthInput, local: CalculatorWal
       },
     });
     // Strings remain immutable even while the presentation chart is augmented.
-    return { chart, envelopeJson: serializeNatalEnvelope(envelope) };
+    return { chart, envelope, envelopeJson: serializeNatalEnvelope(envelope) };
   } catch {
     throw new PortableChartError();
   }

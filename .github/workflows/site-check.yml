@@ -348,6 +348,34 @@ jobs:
       - name: Local save, persistence, export, and deletion acceptance
         run: npm run test:phase7:living-chart
 
+  saved-records-lifecycle-drive:
+    name: Saved calculation records lifecycle drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUBLIC_SAVED_RECORDS_ENABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install chromium
+
+      - name: Build (saved calculation records flag on)
+        run: npm run build
+
+      - name: Explicit keep, inventory, exact export, deletion, recovery and readmission acceptance
+        run: OUT_DIR=tests/visual/artifacts/saved-records-lifecycle npm run test:saved-records:browser
+
   zodiac-games-sql:
     name: Zodiac Games SQL
     runs-on: ubuntu-latest

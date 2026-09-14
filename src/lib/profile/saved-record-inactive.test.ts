@@ -105,6 +105,16 @@ const ALLOWED_INBOUND = new Set([
   'src/islands/AccountProfileAccessBootstrap.tsx -> src/lib/profile/saved-record-flags.ts',
   'src/islands/AccountSyncV2Panel.tsx -> src/lib/profile/saved-record-access.ts',
   'src/islands/AccountSyncV2Panel.tsx -> src/lib/profile/saved-record-flags.ts',
+  'src/islands/ChartCalculator.tsx -> src/lib/profile/saved-record-access.ts',
+  'src/islands/ChartCalculator.tsx -> src/lib/profile/saved-record-flags.ts',
+  'src/islands/SavedRecordsPanel.tsx -> src/lib/profile/saved-record-access.ts',
+  'src/islands/SavedRecordsPanel.tsx -> src/lib/profile/saved-record.ts',
+  'src/pages/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
+  'src/pages/es/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
+  'src/pages/pt/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
+  'src/pages/fr/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
+  'src/pages/it/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
+  'src/pages/ru/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
 ]);
 
 describe('inactive saved receipt integration boundary', () => {
@@ -115,8 +125,8 @@ describe('inactive saved receipt integration boundary', () => {
     const inbound = [...graph].flatMap(([caller, dependencies]) => savedRecordModule(caller) ? []
       : dependencies.filter(savedRecordModule).map((dependency) => `${relative(ROOT, caller)} -> ${relative(ROOT, dependency)}`));
     expect(inbound.filter((edge) => !ALLOWED_INBOUND.has(edge))).toEqual([]);
-    // The coordinator islands never import the store or codec directly.
-    expect(inbound.filter((edge) => /saved-record(?:-store)?\.ts$/u.test(edge))).toEqual([]);
+    // No caller imports the store directly; the inventory reads only the record type.
+    expect(inbound.filter((edge) => /saved-record-store\.ts$/u.test(edge))).toEqual([]);
 
     const visited = new Set<string>();
     const visit = (path: string) => {
