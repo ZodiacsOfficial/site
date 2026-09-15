@@ -19,6 +19,9 @@ const links = [
   { href: '/learn/', label: t(locale, 'navLearn') },
   { href: '/horoscopes/', label: t(locale, 'navHoroscopes') },
 ] as const;
+const developersLabel: Record<Locale, string> = {
+  en: 'Developers', es: 'Desarrolladores', pt: 'Desenvolvedores', fr: 'Développeurs', it: 'Sviluppatori', ru: 'Разработчикам',
+};
 const astrofolioLabel: Record<Locale, string> = {
   en: 'The twelve Zodiac signs',
   es: 'Los doce signos del Zodiaco — por ahora en inglés',
@@ -182,7 +185,8 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={englishOnlyHref('/learn/') ? 'en' : undefined} title={englishOnlyHref('/learn/') ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{englishOnlyHref('/learn/') ? englishOnly?.suffix : ''}</a>
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishOnly?.suffix : ''}</a>
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 3 : 2}`} href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${hasDailyReading ? 4 : 3}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 4 : 3}`} href="/developers/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>{developersLabel[locale]}{englishOnly?.suffix ?? ''}</a>
+      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${hasDailyReading ? 5 : 4}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{astrofolioLabel[locale]}</small>
       </a>

@@ -1,0 +1,591 @@
+{
+  "viewports": {
+    "desktop": {
+      "blocks": [
+        {
+          "name": "form",
+          "selector": "form.calc__form",
+          "found": true,
+          "box": {
+            "top": 378,
+            "height": 502,
+            "visible": true
+          },
+          "heading": null,
+          "text": "Birth dateBirth timeI don't know itNo birth time? You'll get reference positions without rising or houses; the Moon’s possible signs are unverified.Birthplace×S"
+        },
+        {
+          "name": "notices (first)",
+          "selector": ".calc__result > .notice, .notice[role=status]",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "big-three cards (.calc__three)",
+          "selector": ".calc__three",
+          "found": true,
+          "box": {
+            "top": 920,
+            "height": 322,
+            "visible": true
+          },
+          "heading": "Sun",
+          "text": "SunGemini24°11′ GeminiYour identity runs on curiosity and exchange — you think by talking, learn by skimming everything, and stay young by staying interested. D"
+        },
+        {
+          "name": "first-reading prompt (.calc__first-reading)",
+          "selector": ".calc__first-reading",
+          "found": true,
+          "box": {
+            "top": 1271,
+            "height": 246,
+            "visible": true
+          },
+          "heading": "Your 2-minute reading",
+          "text": "Your 2-minute readingWhat does your chart say about you — and what comes next?See your personality mix, where it plays out, one pattern you may recognize, and h"
+        },
+        {
+          "name": "registry bridge ([data-registry-bridge])",
+          "selector": "[data-registry-bridge]",
+          "found": true,
+          "box": {
+            "top": 1545,
+            "height": 70,
+            "visible": true
+          },
+          "heading": "Collector’s wing",
+          "text": "Collector’s wingYour Sun is in Gemini.Gemini is one of the Twelve—with its own artwork, history, and official Registry record.Explore the Gemini Registry →"
+        },
+        {
+          "name": "moon phase line (.calc__phase)",
+          "selector": ".calc__phase",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "chart wheel (.calc__wheel)",
+          "selector": ".calc__wheel",
+          "found": true,
+          "box": {
+            "top": 1643,
+            "height": 906,
+            "visible": true
+          },
+          "heading": "Your chart signature",
+          "text": "Left and right arrow keys move between placements; Enter opens the details panel.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPisces12"
+        },
+        {
+          "name": "chart context (ChartContext)",
+          "selector": "[data-chart-context], .calc__context, .chart-context",
+          "found": true,
+          "box": {
+            "top": 4903,
+            "height": 392,
+            "visible": true
+          },
+          "heading": "Shape and classical rulers",
+          "text": "Shape and classical rulersChart shapeLocomotiveLargest empty arc: 119.498°Occupied span: 240.502°Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptu"
+        },
+        {
+          "name": "approach read ([data-approach-read])",
+          "selector": "[data-approach-read]",
+          "found": true,
+          "box": {
+            "top": 5389,
+            "height": 529,
+            "visible": true
+          },
+          "heading": "A guide for the people in your life",
+          "text": "A guide for the people in your lifeHow to approach youShare how to approach me↗A practical guide to making a good first move, saying things so they land, buildi"
+        },
+        {
+          "name": "communication read",
+          "selector": "[data-communication-read], .calc__communication",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "action dock ([data-chart-action-dock])",
+          "selector": "[data-chart-action-dock]",
+          "found": true,
+          "box": {
+            "top": 1798,
+            "height": 236,
+            "visible": true
+          },
+          "heading": "Your chart signature",
+          "text": "Your chart signatureMoon trine Jupiter0.3° orbSave my chart+Share your chart↗"
+        },
+        {
+          "name": "detail/planet table (.calc__detail)",
+          "selector": ".calc__detail",
+          "found": true,
+          "box": {
+            "top": 6683,
+            "height": 52,
+            "visible": true
+          },
+          "heading": "See exact chart data — 12 placements · 17 aspects",
+          "text": "See exact chart data — 12 placements · 17 aspects1990-06-15 · 13:30:00 UTC · 51.51°, -0.13° · Whole sign housesIn plain EnglishWhole sign housesA house system i"
+        },
+        {
+          "name": "planet table (.calc__table)",
+          "selector": ".calc__table",
+          "found": true,
+          "box": {
+            "top": 6782,
+            "height": 646,
+            "visible": true
+          },
+          "heading": null,
+          "text": "BodyPositionSignHouseMotion Sun24°11′Gemini9 Moon16°11′Pisces6 Mercury5°47′Gemini9 Venus18°51′Taurus8 Mars11°05′Aries7 Jupiter15°54′Cancer10 Saturn24°01′Caprico"
+        },
+        {
+          "name": "aspects (.calc__aspects)",
+          "selector": ".calc__aspects",
+          "found": true,
+          "box": {
+            "top": 7453,
+            "height": 522,
+            "visible": true
+          },
+          "heading": "Aspects - 17 found",
+          "text": "Aspects - 17 found Moon trine Jupiter · orb 0.3° · separating Jupiter trine Pluto · orb 0.5° · separating Moon trine Pluto · orb 0.8° · separating Neptune sexti"
+        }
+      ],
+      "registryDetail": {
+        "label": "Collector’s wing",
+        "sun": "Your Sun is in Gemini.",
+        "copy": "Gemini is one of the Twelve—with its own artwork, history, and official Registry record.",
+        "link": {
+          "text": "Explore the Gemini Registry →",
+          "href": "/registry/gemini/"
+        },
+        "sign": "gemini"
+      },
+      "headings": [
+        {
+          "tag": "h2",
+          "text": "Birth chart",
+          "top": 919,
+          "srOnly": true
+        },
+        {
+          "tag": "h2",
+          "text": "What does your chart say about you — and what comes next?",
+          "top": 1333,
+          "srOnly": false
+        },
+        {
+          "tag": "span",
+          "text": "Collector’s wing",
+          "top": 1572,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "Read your chart, one step at a time.",
+          "top": 2812,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Locate your big three",
+          "top": 3091,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "See where life happens",
+          "top": 3473,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Find your strongest push-pulls",
+          "top": 3882,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Read your overall pattern",
+          "top": 4499,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "Shape and classical rulers",
+          "top": 4929,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "How to approach you",
+          "top": 5439,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How to open",
+          "top": 5697,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How to say it",
+          "top": 5697,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What builds trust",
+          "top": 5697,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What to avoid under pressure",
+          "top": 5697,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "How you communicate",
+          "top": 6031,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How you phrase things",
+          "top": 6295,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What helps you feel heard",
+          "top": 6295,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How you handle friction",
+          "top": 6295,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Aspects - 17 found",
+          "top": 7474,
+          "srOnly": false
+        }
+      ],
+      "detailsOpen": false,
+      "pageHeight": 9412,
+      "screenshots": [
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f6-result-order-desktop.png",
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f6-registry-bridge-desktop.png"
+      ],
+      "blocked": 0
+    },
+    "mobile": {
+      "blocks": [
+        {
+          "name": "form",
+          "selector": "form.calc__form",
+          "found": true,
+          "box": {
+            "top": 320,
+            "height": 776,
+            "visible": true
+          },
+          "heading": null,
+          "text": "Birth dateBirth timeI don't know itNo birth time? You'll get reference positions without rising or houses; the Moon’s possible signs are unverified.Birthplace×S"
+        },
+        {
+          "name": "notices (first)",
+          "selector": ".calc__result > .notice, .notice[role=status]",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "big-three cards (.calc__three)",
+          "selector": ".calc__three",
+          "found": true,
+          "box": {
+            "top": 1120,
+            "height": 895,
+            "visible": true
+          },
+          "heading": "Sun",
+          "text": "SunGemini24°11′ GeminiYour identity runs on curiosity and exchange — you think by talking, learn by skimming everything, and stay young by staying interested. D"
+        },
+        {
+          "name": "first-reading prompt (.calc__first-reading)",
+          "selector": ".calc__first-reading",
+          "found": true,
+          "box": {
+            "top": 2033,
+            "height": 360,
+            "visible": true
+          },
+          "heading": "Your 2-minute reading",
+          "text": "Your 2-minute readingWhat does your chart say about you — and what comes next?See your personality mix, where it plays out, one pattern you may recognize, and h"
+        },
+        {
+          "name": "registry bridge ([data-registry-bridge])",
+          "selector": "[data-registry-bridge]",
+          "found": true,
+          "box": {
+            "top": 2411,
+            "height": 142,
+            "visible": true
+          },
+          "heading": "Collector’s wing",
+          "text": "Collector’s wingYour Sun is in Gemini.Gemini is one of the Twelve—with its own artwork, history, and official Registry record.Explore the Gemini Registry →"
+        },
+        {
+          "name": "moon phase line (.calc__phase)",
+          "selector": ".calc__phase",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "chart wheel (.calc__wheel)",
+          "selector": ".calc__wheel",
+          "found": true,
+          "box": {
+            "top": 2571,
+            "height": 943,
+            "visible": true
+          },
+          "heading": "Your chart signature",
+          "text": "Left and right arrow keys move between placements; Enter opens the details panel.AriesTaurusGeminiCancerLeoVirgoLibraScorpioSagittariusCapricornAquariusPisces12"
+        },
+        {
+          "name": "chart context (ChartContext)",
+          "selector": "[data-chart-context], .calc__context, .chart-context",
+          "found": true,
+          "box": {
+            "top": 7297,
+            "height": 392,
+            "visible": true
+          },
+          "heading": "Shape and classical rulers",
+          "text": "Shape and classical rulersChart shapeLocomotiveLargest empty arc: 119.498°Occupied span: 240.502°Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptu"
+        },
+        {
+          "name": "approach read ([data-approach-read])",
+          "selector": "[data-approach-read]",
+          "found": true,
+          "box": {
+            "top": 7773,
+            "height": 1411,
+            "visible": true
+          },
+          "heading": "A guide for the people in your life",
+          "text": "A guide for the people in your lifeHow to approach youShare how to approach me↗A practical guide to making a good first move, saying things so they land, buildi"
+        },
+        {
+          "name": "communication read",
+          "selector": "[data-communication-read], .calc__communication",
+          "found": false,
+          "box": null,
+          "heading": null,
+          "text": null
+        },
+        {
+          "name": "action dock ([data-chart-action-dock])",
+          "selector": "[data-chart-action-dock]",
+          "found": true,
+          "box": {
+            "top": 3254,
+            "height": 236,
+            "visible": true
+          },
+          "heading": "Your chart signature",
+          "text": "Your chart signatureMoon trine Jupiter0.3° orbSave my chart+Share your chart↗"
+        },
+        {
+          "name": "detail/planet table (.calc__detail)",
+          "selector": ".calc__detail",
+          "found": true,
+          "box": {
+            "top": 10656,
+            "height": 52,
+            "visible": true
+          },
+          "heading": "See exact chart data — 12 placements · 17 aspects",
+          "text": "See exact chart data — 12 placements · 17 aspects1990-06-15 · 13:30:00 UTC · 51.51°, -0.13° · Whole sign housesIn plain EnglishWhole sign housesA house system i"
+        },
+        {
+          "name": "planet table (.calc__table)",
+          "selector": ".calc__table",
+          "found": true,
+          "box": {
+            "top": 10773,
+            "height": 646,
+            "visible": true
+          },
+          "heading": null,
+          "text": "BodyPositionSignHouseMotion Sun24°11′Gemini9 Moon16°11′Pisces6 Mercury5°47′Gemini9 Venus18°51′Taurus8 Mars11°05′Aries7 Jupiter15°54′Cancer10 Saturn24°01′Caprico"
+        },
+        {
+          "name": "aspects (.calc__aspects)",
+          "selector": ".calc__aspects",
+          "found": true,
+          "box": {
+            "top": 11443,
+            "height": 622,
+            "visible": true
+          },
+          "heading": "Aspects - 17 found",
+          "text": "Aspects - 17 found Moon trine Jupiter · orb 0.3° · separating Jupiter trine Pluto · orb 0.5° · separating Moon trine Pluto · orb 0.8° · separating Neptune sexti"
+        }
+      ],
+      "registryDetail": {
+        "label": "Collector’s wing",
+        "sun": "Your Sun is in Gemini.",
+        "copy": "Gemini is one of the Twelve—with its own artwork, history, and official Registry record.",
+        "link": {
+          "text": "Explore the Gemini Registry →",
+          "href": "/registry/gemini/"
+        },
+        "sign": "gemini"
+      },
+      "headings": [
+        {
+          "tag": "h2",
+          "text": "Birth chart",
+          "top": 1119,
+          "srOnly": true
+        },
+        {
+          "tag": "h2",
+          "text": "What does your chart say about you — and what comes next?",
+          "top": 2085,
+          "srOnly": false
+        },
+        {
+          "tag": "span",
+          "text": "Collector’s wing",
+          "top": 2424,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "Read your chart, one step at a time.",
+          "top": 3712,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Locate your big three",
+          "top": 3966,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "See where life happens",
+          "top": 4724,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Find your strongest push-pulls",
+          "top": 5282,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Read your overall pattern",
+          "top": 6557,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "Shape and classical rulers",
+          "top": 7324,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "How to approach you",
+          "top": 7824,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How to open",
+          "top": 8340,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How to say it",
+          "top": 8539,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What builds trust",
+          "top": 8739,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What to avoid under pressure",
+          "top": 8959,
+          "srOnly": false
+        },
+        {
+          "tag": "h2",
+          "text": "How you communicate",
+          "top": 9287,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How you phrase things",
+          "top": 9796,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "What helps you feel heard",
+          "top": 10101,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "How you handle friction",
+          "top": 10332,
+          "srOnly": false
+        },
+        {
+          "tag": "h3",
+          "text": "Aspects - 17 found",
+          "top": 11464,
+          "srOnly": false
+        }
+      ],
+      "detailsOpen": false,
+      "pageHeight": 13350,
+      "screenshots": [
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f6-result-order-mobile.png",
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f6-registry-bridge-mobile.png"
+      ],
+      "blocked": 0
+    }
+  },
+  "errors": []
+}

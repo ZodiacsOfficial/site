@@ -1,0 +1,85 @@
+{
+  "completedAt": "2026-09-15T08:22:10.554Z",
+  "node": "v22.22.2",
+  "fixtureOrigin": "https://saved-records-test.supabase.co",
+  "results": [
+    {
+      "name": "real coordinator: bind an empty browser, keep for the account, sign out keeping this device: retained read-only with the exact bytes",
+      "passed": true,
+      "detail": {
+        "calls": [
+          "POST /api/account/bootstrap",
+          "POST /auth/v1/logout"
+        ],
+        "sha256": "ccbf7b71a3b1561865f960f683de473498348e95597abb84e6778cb1031d4e32"
+      },
+      "ms": 5077
+    },
+    {
+      "name": "real coordinator: a guest record before sign-in needs the hand-off decision; \"clear all Zodiacs data\" then removes every namespace",
+      "passed": true,
+      "detail": {
+        "calls": [
+          "POST /api/account/bootstrap",
+          "POST /api/account/bootstrap",
+          "POST /auth/v1/logout"
+        ]
+      },
+      "ms": 5976
+    },
+    {
+      "name": "real coordinator: confirmed account deletion with browser removal erases only the account namespace; guest records stay",
+      "passed": true,
+      "detail": {
+        "calls": [
+          "POST /api/account/bootstrap",
+          "POST /api/account/bootstrap",
+          "GET /auth/v1/user",
+          "GET /auth/v1/user",
+          "GET /auth/v1/user",
+          "GET /rest/v1/living_chart_sync_consents",
+          "GET /auth/v1/user",
+          "POST /api/account/delete-prepare",
+          "POST /api/account/delete-finish",
+          "POST /auth/v1/logout"
+        ],
+        "message": "The account, cloud charts, and this account’s charts in this browser were deleted. The Daily Sun subscription for this email was deleted."
+      },
+      "ms": 5548
+    },
+    {
+      "name": "real coordinator: an account change while a removal is pending locks the tab and drops the pending feedback",
+      "passed": true,
+      "detail": {
+        "calls": [
+          "POST /api/account/bootstrap",
+          "GET /auth/v1/user",
+          "GET /auth/v1/user",
+          "GET /auth/v1/user",
+          "GET /rest/v1/living_chart_sync_consents",
+          "GET /auth/v1/user"
+        ]
+      },
+      "ms": 4625
+    },
+    {
+      "name": "real coordinator: an enabled records module that fails to load stops \"clear all Zodiacs data\"; nothing is removed",
+      "passed": true,
+      "detail": {
+        "message": "Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings. Sign-out was stopped.",
+        "refusedRequests": 1
+      },
+      "ms": 3398
+    },
+    {
+      "name": "real coordinator: a namespace admitted between a clear-all observation and its exclusive transition is refused, not skipped",
+      "passed": true,
+      "detail": {
+        "message": "Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings. Sign-out was stopped and nothing else was removed."
+      },
+      "ms": 7558
+    }
+  ],
+  "passed": 6,
+  "failed": 0
+}

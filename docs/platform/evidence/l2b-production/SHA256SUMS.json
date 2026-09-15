@@ -1,0 +1,20 @@
+{
+  "README.md": "666f35b8dd0d399f52f12465c4cc5a9cc12a53c1a0bf493564cadb94d3deb654",
+  "baseline.json": "8827e3b737808733ad16d7bee0458a705aa9f5caa2463b4c0c24b69fb230a344",
+  "candidate.json": "a75c7bc472f6c98a82600b1f79c43b4fb6a0d9ecfa5b3e403af67abbc20cd896",
+  "http-smoke.log": "96bde177c05abc5af3a5a6d1d7e2679df951beadcbb912531b3c18ad36d3b889",
+  "live-editions.log": "77fc9730faee2d538999a7045aaf7e95ab1da6b7380b5020a509580cd7ae9c0c",
+  "main-before.json": "f3f8b7cf3ad7daeee4f3da0e7db4e976473463769de76201ce5a1d635e491eb8",
+  "main-final.json": "2d7fc55a4882e0ce782b302bde635f754b5fc83f6ec664cc9d8e9f2b7e355de1",
+  "main-merged.json": "2d7fc55a4882e0ce782b302bde635f754b5fc83f6ec664cc9d8e9f2b7e355de1",
+  "merge.json": "212f30682436b0edee51b5e884013089d338f8aed85d85b962c3b0c468645f99",
+  "post-merge-ci.json": "4a9cd0b03c73f19517ad5ca9120373ad219a457bb6deac2a31ec1483a3564240",
+  "post-merge-ci.log.gz": "762d2eb4e1c9f9449a685fa194dfcda99c69bc601404d4d2b68f3c13925732f4",
+  "pre-release-live-editions.log": "77fc9730faee2d538999a7045aaf7e95ab1da6b7380b5020a509580cd7ae9c0c",
+  "production-aliases.json": "be1c0f59290d845278c844a51f00f74c534b38257a2d7c1dc29da0ddd1eaf0dc",
+  "production-final.json": "8b4ccff2f14dadf11c472d2ff681c9212830669d9c522f1b8c2a81b13f79f55f",
+  "production.json": "3f8f210aaf30e0e7c75bb42be2ad732df4302f0933b76cfe183da036804be629",
+  "protection.json": "7e0d69f41f0c0867af1f41e7e9a21838f6be6af86f6169844c295d9305e0c2ea",
+  "rollback-ready.json": "778734edf16f87878368c7610253ecc1f65103ea260079c9bb18ec27d7cc7029",
+  "runtime-errors.json": "60ca47d16b61d6620ff1e780a55fb5a4caf1de1c6e74e398d7586b9083a05175"
+}

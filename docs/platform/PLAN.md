@@ -285,3 +285,46 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 release integration — 2026-09-12
 
 Current bounded task: reconcile fresh main plus accepted site/SDK stack in isolated main-target drafts. Preserve current main data and fixes, exact candidate archive, optional ownership SDK and rollback. Run integration-invalidated local and required hosted checks; preserve unchanged numerical evidence. Exclude Astrofolio and #426; no L1–L6 or release authority is inferred.
+
+
+## L3a — inactive saved receipt lifecycle prerequisite — 2026-09-14
+
+Current main `693c2ac90b5be78c0f0885c22763dcafff53c00e` and actual #426 head
+`46b36e2c887405efc70762297e1087f6d14195f9` were refreshed. Its four source/test
+files equal the previously reviewed `a0bf5517` versions; the stacked branch is
+not merged. Preserve current main editions and all existing profile/account paths.
+
+The full active lifecycle has concrete dependencies: legacy-mode auth lacks the
+new verified scope, synchronous guest discovery cannot see receipt-only data,
+and existing boundary cleanup does not await durable receipt erasure. First land
+an inactive store with transactional owner/device erasure intent, terminal
+barriers and erase-only retry. Native tests must establish multi-handle/tab
+ordering, failed marker/purge/acknowledgment recovery and incompatible schema
+preservation. Production graph guards prevent accidental activation.
+
+Then stop with a reviewable draft, passing hosted checks and exact-source preview.
+The future coordinator and complete UI must be verified together before activation.
+SDK merge/npm stays held; no L4–L6, Astrofolio, Zodia, merge or production release.
+[Evidence and finite dependencies](evidence/l3-saved-records/README.md).
+
+## L3b/c — protected local records and usability fixes — 2026-09-14
+
+Refreshed main `74ae0f03241fe61786e79b4213ba36c878f11349`; draft #486 head
+`99d22482` merged verbatim first. Six reproduced usability findings were fixed
+in one separately reviewable commit (`a5b1e5e2`) before any storage change.
+The handoff's proposal was used as a starting point and simplified where the
+evidence allowed: durable admission generations replace terminal markers and a
+separate readmission chore; the erasure journal is the admission row itself;
+guest creation needs no exclusive lock because the compare-and-swap is the lock;
+guest view switches only the record scope. Required invariants kept: no cross-
+owner exposure, no automatic retry of an ambiguous write, immutable receipt
+bytes, legacy records untouched, fail-closed storage states, explicit consent
+for readmission, one guest namespace per device.
+
+An adversarial review (four lenses, refutation stage) found one major native
+hole (owner intents not pinned to the device cycle) and several honesty and
+authority gaps; all are fixed and pinned by tests, with the deliberate
+non-changes recorded. The candidate stops at a verified, inactive branch: the
+flag stays unset, no pull request is opened without the owner's split decision,
+and the hosted preview waits on a bounded preview-build decision.
+[Candidate record](evidence/l3-saved-records/L3BC-README.md).

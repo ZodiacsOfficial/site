@@ -31,7 +31,7 @@ async function capture({ date, time, zone, locale = 'en' }: Input, longitudes?: 
   const resolutions: string[][] = [];
   const state: { result: Result | null; error: string; busy: boolean } = { result: null, error: '', busy: false };
   await execute({ date, time, city: zone ? { tz: zone } : null, locale, t, moonPhaseNameFromAngle,
-    lookupRevisionRef: { current: 0 }, focusAfterComputeRef: { current: false },
+    lookupRevisionRef: { current: 0 }, focusAfterComputeRef: { current: false }, handoffInputsRef: { current: null },
     setBusy: (value: boolean) => { state.busy = value; },
     setError: (value: string) => { state.error = value; },
     setResult: (value: Result | null) => { state.result = value; },

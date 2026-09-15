@@ -162,6 +162,19 @@ export default function TodayBrief({
   }, [bodies, chart, transitsModule]);
   const hasSavedChartHint = typeof document !== 'undefined'
     && document.documentElement.hasAttribute('data-today-saved-chart');
+  // Why this chart is read. Rendered identically in the pre-hydration
+  // placeholder and the resolved reading; the page head decides whether the
+  // quick-read Sun-sign preference differs and reveals that sentence by CSS,
+  // so the head's height never changes at hydration.
+  const chartSourceLine = (
+    <p class="today-reading__source" data-today-chart-source>
+      {livingChartEnabled
+        ? 'This is the birth chart marked as yours on this device.'
+        : 'This is the birth chart you saved most recently on this device.'}
+      <span class="today-reading__source-mismatch"> Your quick-read Sun sign is different from this chart’s Sun; the chart is used here.</span>
+      {' '}<a href="/profile/">Change in Profile</a>
+    </p>
+  );
   const comparisonUnavailable = (needsTransits && transitsFailed)
     || (ready && chart === null && hasSavedChartHint)
     || (ready && chart !== null && transitsModule !== null && reading === null);
@@ -275,6 +288,7 @@ export default function TodayBrief({
               <div class="today-reading__head">
                 <h2>For your saved chart</h2>
                 <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
+                {chartSourceLine}
               </div>
               <div class="today-reading__body today-reading__body--fallback">
                 <p
@@ -363,6 +377,7 @@ export default function TodayBrief({
               <p>{personalized.chart.birth?.timeKnown !== true
                 ? REFERENCE_NOTICE
                 : <>A few themes from the {editionLabel} sky, compared with your saved birth chart.</>}</p>
+              {chartSourceLine}
             </div>
 
             <div class="today-reading__body">

@@ -1,0 +1,149 @@
+{
+  "completedAt": "2026-09-15T08:11:46.317Z",
+  "node": "v22.22.2",
+  "results": [
+    {
+      "name": "device mode: keep, find, exact download, remove, reload",
+      "passed": true,
+      "detail": {
+        "bytes": 4823,
+        "sha256": "ccbf7b71a3b1561865f960f683de473498348e95597abb84e6778cb1031d4e32"
+      },
+      "ms": 3986
+    },
+    {
+      "name": "device mode: remove all, then an explicit keep readmits a new set",
+      "passed": true,
+      "detail": {
+        "readmitted": true
+      },
+      "ms": 7831
+    },
+    {
+      "name": "device mode: an uncertain keep is stated, never retried, and reconciled in Profile",
+      "passed": true,
+      "detail": {
+        "state": "uncertain"
+      },
+      "ms": 2827
+    },
+    {
+      "name": "simulated account-sync-v2: guest, account A, hidden guest records, A→B→A staleness",
+      "passed": true,
+      "detail": {
+        "state": "uncertain"
+      },
+      "ms": 7890
+    },
+    {
+      "name": "simulated account-sync-v2: retained is read-only; guest view switches only the record scope",
+      "passed": true,
+      "detail": {
+        "retainedReadOnly": true,
+        "guestView": true
+      },
+      "ms": 9058
+    },
+    {
+      "name": "device mode: an interrupted removal is finished on the next visit; keeping afterwards starts a new set",
+      "passed": true,
+      "detail": {
+        "recovered": true
+      },
+      "ms": 5593
+    },
+    {
+      "name": "device mode: a removal in another tab reaches an open calculator without reload",
+      "passed": true,
+      "detail": {
+        "crossTab": true
+      },
+      "ms": 5076
+    },
+    {
+      "name": "simulated account-sync-v2: locked without a grant, never a guest fallback",
+      "passed": true,
+      "detail": {
+        "databases": []
+      },
+      "ms": 1804
+    },
+    {
+      "name": "blocked storage is an honest unavailable state; legacy saves still work",
+      "passed": true,
+      "detail": {
+        "legacySaveUnaffected": true
+      },
+      "ms": 2359
+    },
+    {
+      "name": "a browser without indexedDB.databases() is an honest unsupported state; legacy saves still work",
+      "passed": true,
+      "detail": {
+        "legacySaveUnaffected": true
+      },
+      "ms": 1926
+    },
+    {
+      "name": "device mode: two tabs keeping at once admit exactly one set; a loser, if any, is told nothing was stored",
+      "passed": true,
+      "detail": {
+        "outcomes": [
+          "kept",
+          "kept"
+        ]
+      },
+      "ms": 8017
+    },
+    {
+      "name": "device mode: a single removal in another tab reaches open inventories and the calculator without reload",
+      "passed": true,
+      "detail": {
+        "singleRemovalPropagated": true
+      },
+      "ms": 5182
+    },
+    {
+      "name": "simulated account-sync-v2: removal feedback stays with the namespace that asked for it",
+      "passed": true,
+      "detail": {
+        "staleFeedbackSuppressed": true
+      },
+      "ms": 3369
+    },
+    {
+      "name": "device mode: unknown birth time: keep, find, exact download",
+      "passed": true,
+      "detail": {
+        "bytes": 4083,
+        "sha256": "0d02dc65cfc57f77337225bb452b72d5976a6398ddf664bfdd0d5cde5b1077e0"
+      },
+      "ms": 3264
+    },
+    {
+      "name": "device mode: the fortieth record is kept; the forty-first is refused and nothing is stored",
+      "passed": true,
+      "detail": {
+        "limit": 40
+      },
+      "ms": 11226
+    },
+    {
+      "name": "an unreleased schema-2 database is refused intact",
+      "passed": true,
+      "detail": {
+        "version": 2,
+        "rows": [
+          {
+            "ownerKey": "guest:30000000-0000-4000-8000-000000000003",
+            "id": "40000000-0000-4000-8000-000000000004",
+            "preserved": "synthetic"
+          }
+        ]
+      },
+      "ms": 2184
+    }
+  ],
+  "passed": 16,
+  "failed": 0
+}

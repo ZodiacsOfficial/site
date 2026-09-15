@@ -16,15 +16,16 @@ describe('ChartCalculator Registry bridge contract', () => {
     expect(source).not.toContain("resolveLocalToUtc(input.date, '23:59'");
   });
 
-  it('places one measured bridge after the Big Three prompt and before the explorer', async () => {
+  it('places one measured bridge after the chart readings and before the result actions', async () => {
     const source = await readFile(calculatorUrl, 'utf8');
-    const prompt = source.indexOf('{firstReadingPromptVisible && (');
+    const readings = source.indexOf('<CommunicationRead chart={chart} locale={locale} />');
     const bridge = source.indexOf('data-registry-bridge-surface="birth_chart"');
-    const explorer = source.indexOf('{/* Moon-mode extra: phase at the calculated moment */}');
+    const actions = source.indexOf("{/* One primary action, derived from the visitor's current state. */}");
 
-    expect(prompt).toBeGreaterThan(-1);
-    expect(bridge).toBeGreaterThan(prompt);
-    expect(explorer).toBeGreaterThan(bridge);
+    expect(readings).toBeGreaterThan(-1);
+    expect(bridge).toBeGreaterThan(readings);
+    expect(actions).toBeGreaterThan(bridge);
+    expect(source.indexOf('data-registry-bridge-surface="birth_chart"', bridge + 1)).toBe(-1);
     expect(source).toContain("trackAnalytics('registry_bridge_impression'");
     expect(source).toContain("trackAnalytics('registry_bridge_click'");
     expect(source).toContain("tf(locale, 'recordChartSun'");
