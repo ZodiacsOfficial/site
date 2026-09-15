@@ -53,12 +53,20 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   listed-namespace removal, recovery of interrupted removals, explicit readmission,
   uncertain-keep reconciliation; 12-check browser journey and a flag-on CI job
   (`b5666134`). Legacy records are never migrated, relabeled or reconstructed.
+- [x] **L3 deletion and activation hardening (2026-09-15):** module load
+  failure blocks destructive cleanup; absence re-checked under the exclusive
+  transition; single removals broadcast; feedback bound to its namespace; real
+  bootstrap/panel browser journeys with intercepted auth and backend,
+  unknown-time keep, 40-record refusal, Firefox native and lifecycle runs
+  ([HARDENING-2026-09-15](evidence/l3-saved-records/HARDENING-2026-09-15.md)).
 - [ ] **L3 review and activation:** draft
   [#490](https://github.com/ZodiacsOfficial/site/pull/490) is open; hosted
-  checks and human review are pending. A bounded preview build needs an owner
-  decision under the Vercel production-only policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a
-  separate release decision; open coverage gaps are listed in
-  [REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md).
+  checks on the hardened candidate and human review are pending. A bounded
+  preview build needs an owner decision under the Vercel production-only
+  policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a separate release
+  decision. Still open: hydrated interaction tests for the records panel (its
+  states are covered by the browser drives only); the account-coordinator
+  drive has run in Chromium only.
 
 [Candidate record](evidence/l3-saved-records/L3BC-README.md),
 [plan](evidence/l3-saved-records/L3BC-PLAN.md),

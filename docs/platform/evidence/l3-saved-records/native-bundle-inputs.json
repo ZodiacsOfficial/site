@@ -48,7 +48,7 @@
       "format": "esm"
     },
     "src/lib/profile/saved-record-store.ts": {
-      "bytes": 25339,
+      "bytes": 42337,
       "imports": [
         {
           "path": "src/lib/profile/saved-record.ts",
@@ -157,8 +157,142 @@
       ],
       "format": "esm"
     },
+    "src/lib/account-v2/browser-storage.ts": {
+      "bytes": 547,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/lib/account-v2/types.ts": {
+      "bytes": 3679,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/lib/account-v2/mutation-fingerprint.ts": {
+      "bytes": 4520,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/lib/account-v2/local-state.ts": {
+      "bytes": 25624,
+      "imports": [
+        {
+          "path": "src/lib/account-v2/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        },
+        {
+          "path": "src/lib/account-v2/mutation-fingerprint.ts",
+          "kind": "import-statement",
+          "original": "./mutation-fingerprint"
+        },
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "./storage-identity"
+        },
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "./storage-identity"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/account-v2/profile-access-reader.ts": {
+      "bytes": 1335,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/lib/account-v2/profile-access.ts": {
+      "bytes": 4047,
+      "imports": [
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "./storage-identity"
+        },
+        {
+          "path": "src/lib/account-v2/profile-access-reader.ts",
+          "kind": "import-statement",
+          "original": "./profile-access-reader"
+        },
+        {
+          "path": "src/lib/account-v2/profile-access-reader.ts",
+          "kind": "import-statement",
+          "original": "./profile-access-reader"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/account-v2/profile-lease.ts": {
+      "bytes": 4237,
+      "imports": [
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "./storage-identity"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/lib/profile/saved-record-flags.ts": {
+      "bytes": 616,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/lib/profile/saved-record-access.ts": {
+      "bytes": 22030,
+      "imports": [
+        {
+          "path": "src/lib/account-v2/browser-storage.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/browser-storage"
+        },
+        {
+          "path": "src/lib/account-v2/local-state.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/local-state"
+        },
+        {
+          "path": "src/lib/account-v2/profile-access-reader.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/profile-access-reader"
+        },
+        {
+          "path": "src/lib/account-v2/profile-access.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/profile-access"
+        },
+        {
+          "path": "src/lib/account-v2/profile-lease.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/profile-lease"
+        },
+        {
+          "path": "src/lib/account-v2/storage-identity.ts",
+          "kind": "import-statement",
+          "original": "../account-v2/storage-identity"
+        },
+        {
+          "path": "node_modules/@zodiacs/engine/dist/receipt.js",
+          "kind": "import-statement",
+          "original": "@zodiacs/engine/receipt"
+        },
+        {
+          "path": "src/lib/profile/saved-record-flags.ts",
+          "kind": "import-statement",
+          "original": "./saved-record-flags"
+        },
+        {
+          "path": "src/lib/profile/saved-record-store.ts",
+          "kind": "import-statement",
+          "original": "./saved-record-store"
+        }
+      ],
+      "format": "esm"
+    },
     "<stdin>": {
-      "bytes": 262,
+      "bytes": 467,
       "imports": [
         {
           "path": "src/lib/profile/saved-record-store.ts",
@@ -174,6 +308,11 @@
           "path": "node_modules/@zodiacs/engine/dist/receipt.js",
           "kind": "import-statement",
           "original": "@zodiacs/engine/receipt"
+        },
+        {
+          "path": "src/lib/profile/saved-record-access.ts",
+          "kind": "import-statement",
+          "original": "./src/lib/profile/saved-record-access"
         }
       ],
       "format": "esm"
@@ -186,7 +325,7 @@
       "entryPoint": "<stdin>",
       "inputs": {
         "<stdin>": {
-          "bytesInOutput": 345
+          "bytesInOutput": 699
         },
         "node_modules/@zodiacs/engine/dist/chunk-CPALRSPC.js": {
           "bytesInOutput": 1474
@@ -204,7 +343,7 @@
           "bytesInOutput": 3664
         },
         "src/lib/profile/saved-record-store.ts": {
-          "bytesInOutput": 21672
+          "bytesInOutput": 34086
         },
         "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js": {
           "bytesInOutput": 2621
@@ -226,9 +365,30 @@
         },
         "src/lib/engine/portable.ts": {
           "bytesInOutput": 1198
+        },
+        "src/lib/account-v2/browser-storage.ts": {
+          "bytesInOutput": 246
+        },
+        "src/lib/account-v2/local-state.ts": {
+          "bytesInOutput": 104
+        },
+        "src/lib/account-v2/profile-access-reader.ts": {
+          "bytesInOutput": 825
+        },
+        "src/lib/account-v2/profile-access.ts": {
+          "bytesInOutput": 0
+        },
+        "src/lib/account-v2/profile-lease.ts": {
+          "bytesInOutput": 72
+        },
+        "src/lib/profile/saved-record-flags.ts": {
+          "bytesInOutput": 141
+        },
+        "src/lib/profile/saved-record-access.ts": {
+          "bytesInOutput": 5370
         }
       },
-      "bytes": 157999
+      "bytes": 177790
     }
   }
 }

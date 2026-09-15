@@ -56,8 +56,10 @@ created, and the account bootstrap behaves exactly as on main.
 | Involuntary sign-out, mismatch, decision pending, no grant | none | locked | no grant, or guest records pending a hand-off decision |
 | No IndexedDB / `indexedDB.databases()`, denied storage, blocked upgrade, v1/v2/future or malformed database, >1000 owner rows, unfinished removal | none | unavailable / unsupported / pending, each stated | fail-closed reads; legacy saved charts unaffected. Unsupported storage (no discovery API or an unreadable schema) cannot hold records this client kept, so it never blocks binding an account; a pending or failed discovery on a supported runtime does |
 
-Runtime targets: current Chromium (drives), browsers with IndexedDB,
-`indexedDB.databases()` and (in v2 mode) Web Locks. No wider claim is made.
+Runtime targets: current Chromium (all drives) and Firefox 151 (native
+drive and representative lifecycle checks, `ENGINE=firefox`), browsers with
+IndexedDB, `indexedDB.databases()` and (in v2 mode) Web Locks. No wider claim
+is made.
 
 ## Mechanism decisions and deviations from the handoff proposal
 
@@ -87,13 +89,18 @@ Runtime targets: current Chromium (drives), browsers with IndexedDB,
   device erasure, so an intent from before a device cycle can never reach the
   same owner string readmitted after it. A device ticket is not pinned to
   owner admissions made after it was prepared; a whole-device clear is what
-  the visitor asked for.
+  the visitor asked for. An observed absence is not authority to skip: it is
+  re-checked under the exclusive transition and a namespace admitted in
+  between refuses completion (2026-09-15 hardening).
 - Read-only authority (retained sign-out) is enforced by the store, which
   refuses `create`; the UI only mirrors it. A per-tab guest-view selection is
   consumed by the next account grant.
 - Record-scope changes are announced to other tabs through a localStorage key
-  (erasure, admission by an explicit keep); the same-tab evaluation counter is
-  unaffected by the tab's own admission. Only a queued write can report
+  (erasure, every confirmed keep, every committed single removal); the
+  same-tab evaluation counter is unaffected by the tab's own admission. A
+  calculator withdraws "Kept" when its record is removed elsewhere, and the
+  records panel binds removal feedback to the namespace it describes
+  (2026-09-15 hardening). Only a queued write can report
   "may have committed"; the first failure cause is kept when a transaction is
   aborted; a browser-forced connection close is treated like a version change.
 
@@ -125,6 +132,11 @@ Runtime targets: current Chromium (drives), browsers with IndexedDB,
   missing `indexedDB.databases()`; schema-2 refusal.
 - CI: the existing native step plus a new flag-on job
   `saved-records-lifecycle-drive` in `site-check.yml`.
+- 2026-09-15 hardening: 31 native groups in Chromium and Firefox, 16
+  lifecycle checks, and the account-coordinator drive
+  `tests/saved-records-account-drive.mjs` (real bootstrap and panel, fixture
+  auth origin, its own CI job); numbers and dispositions in
+  [HARDENING-2026-09-15](HARDENING-2026-09-15.md).
 
 ## Compatibility and rollback
 

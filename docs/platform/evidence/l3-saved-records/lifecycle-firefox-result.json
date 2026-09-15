@@ -1,0 +1,28 @@
+{
+  "completedAt": "2026-09-15T08:14:26.306Z",
+  "node": "v22.22.2",
+  "engine": "firefox",
+  "browser": "151.0",
+  "note": "Representative lifecycle checks run in Firefox with ONLY filters; the full 16-check drive is the Chromium run in lifecycle-result.json.",
+  "results": [
+    {
+      "name": "device mode: keep, find, exact download, remove, reload",
+      "passed": true,
+      "detail": {
+        "bytes": 4817,
+        "sha256": "01aadf7fc4e40d2968d77c0e4ded9c03ba31b14b97a384372ed9f003e2a9dde7"
+      },
+      "ms": 7279
+    },
+    {
+      "name": "device mode: a single removal in another tab reaches open inventories and the calculator without reload",
+      "passed": true,
+      "detail": {
+        "singleRemovalPropagated": true
+      },
+      "ms": 6601
+    }
+  ],
+  "passed": 2,
+  "failed": 0
+}

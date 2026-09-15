@@ -25,7 +25,7 @@ import { recordHelpers } from './saved-records-browser-lib.mjs';
 import { findChromium, isSiteFooterIconTeardownAbort, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
-export const FIXTURE_SUPABASE_ORIGIN = 'https://saved-records-test.supabase.co';
+const FIXTURE_SUPABASE_ORIGIN = 'https://saved-records-test.supabase.co';
 const AUTH_KEY = 'sb-saved-records-test-auth-token';
 const OUT = resolve(process.env.OUT_DIR ?? 'tests/visual/artifacts/saved-records-account');
 const A = '11111111-1111-4111-8111-111111111111';
@@ -33,13 +33,13 @@ const B = '22222222-2222-4222-8222-222222222222';
 const GRANT_KEY = 'zodiacs.account-sync-v2.profile-access.v1';
 const OWNER_KEY = 'zodiacs.account-sync-v2.local-owner.v1';
 const RETAINED_KEY = 'zodiacs.account-sync-v2.retained-owner.v1';
-const REVOKE_KEY = 'zodiacs.account-sync-v2.profile-lease-revoke.v1';
+const LOCK_NAME = 'zodiacs-profile-boundary-v1';
 const DATABASE = 'zodiacs-saved-natal-v1';
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const results = [];
 let browser;
 let base;
-let gotoChart, computeKnownTime, waitKeepState, keep, downloadBytes, waitRecordsSettled, gotoProfile, recordCount, durableRows;
+let computeKnownTime, waitKeepState, keep, downloadBytes, waitRecordsSettled, recordCount, durableRows;
 
 const base64url = (value) => Buffer.from(JSON.stringify(value)).toString('base64url');
 function session(userId, email) {
@@ -75,6 +75,8 @@ async function newContext(options = {}) {
       calls.push(`${request.method()} ${pathname}`);
       if (pathname === '/auth/v1/logout') return route.fulfill({ status: 204, body: '' });
       if (pathname === '/auth/v1/user') return json(route, 200, SESSION_A.user);
+      // Signed-in Profile islands outside this feature (Living Chart consent) read the REST origin; nothing is stored there.
+      if (pathname.startsWith('/rest/v1/') && request.method() === 'GET') return json(route, 200, []);
       blocked.push(url);
       return json(route, 404, { error: 'unexpected auth request' });
     }
@@ -108,9 +110,12 @@ async function newContext(options = {}) {
   context.on('page', (page) => {
     page.on('pageerror', (error) => errors.push(String(error)));
     page.on('requestfailed', (request) => {
-      if (isSiteFooterIconTeardownAbort(request)) return;
+      const failure = request.failure()?.errorText ?? 'failed';
+      // A navigation (the panel's own reload after clear-all or a completed
+      // deletion) cancels requests still in flight; only real failures count.
+      if (failure === 'net::ERR_ABORTED' || isSiteFooterIconTeardownAbort(request)) return;
       if (options.blockRecordsModule && /saved-record-access/u.test(request.url())) return;
-      errors.push(`requestfailed ${request.method()} ${request.url()} — ${request.failure()?.errorText ?? 'failed'}`);
+      errors.push(`requestfailed ${request.method()} ${request.url()} — ${failure}`);
     });
   });
   return { context, blocked, calls, errors };
@@ -145,6 +150,25 @@ const retainedMarker = (page) => page.evaluate((key) => { try { return JSON.pars
 const signedIn = (page) => page.evaluate((key) => localStorage.getItem(key) !== null, AUTH_KEY);
 const zodiacsKeys = (page) => page.evaluate(() => [...Object.keys(localStorage), ...Object.keys(sessionStorage)].filter((key) => key.startsWith('zodiacs')).sort());
 const accountMessage = (page) => page.textContent('#profile-sync .pf-sync__message').catch(() => '');
+/**
+ * Under the real coordinator every full navigation starts locked and the
+ * bootstrap re-grants asynchronously, so the records panel is awaited after
+ * the grant, not at its first settled state.
+ */
+async function waitRecordsReady(page) {
+  await page.waitForFunction(() => document.querySelector('[data-saved-records-state]')?.getAttribute('data-saved-records-state') === 'ready');
+}
+async function gotoProfileAs(page, mode) {
+  await page.goto(`${base}/profile/`);
+  await waitGrant(page, mode);
+  await waitRecordsReady(page);
+}
+/** Clicks a control whose success ends in the panel's own reload, and waits for the reloaded document. */
+async function clickAndReload(page, selector) {
+  const loaded = page.waitForEvent('load');
+  await page.click(selector);
+  await loaded;
+}
 async function waitAccountReady(page) {
   await page.waitForSelector('#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
 }
@@ -171,13 +195,13 @@ try {
   browser = await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
   await withPreview({ port: 4412 }, async (baseURL) => {
     base = baseURL;
-    ({ gotoChart, computeKnownTime, waitKeepState, keep, downloadBytes, waitRecordsSettled, gotoProfile, recordCount, durableRows } = recordHelpers(base));
+    ({ computeKnownTime, waitKeepState, keep, downloadBytes, waitRecordsSettled, recordCount, durableRows } = recordHelpers(base));
 
     await check('real coordinator: bind an empty browser, keep for the account, sign out keeping this device: retained read-only with the exact bytes', async () => {
       const { context, blocked, calls, errors } = await newContext();
       const page = await context.newPage();
       const receipt = await bindAndKeep(page);
-      assert.equal(await gotoProfile(page), 'ready');
+      await gotoProfileAs(page, 'account');
       assert.equal(await recordCount(page), 1);
       await waitAccountReady(page);
       assert.ok(calls.includes('POST /api/account/bootstrap'), `bootstrap call expected: ${calls.join(', ')}`);
@@ -189,7 +213,7 @@ try {
       assert.equal(await ownerMarker(page), A);
       assert.equal(await retainedMarker(page), A);
       await page.waitForSelector('[data-records-retained]');
-      await page.waitForFunction(() => document.querySelector('[data-saved-records-state]')?.getAttribute('data-saved-records-state') === 'ready');
+      await waitRecordsReady(page);
       assert.equal(await recordCount(page), 1);
       const retained = await downloadBytes(page, '[data-record-download]');
       assert.equal(sha(retained.bytes), sha(receipt.bytes), 'retained download must be the exact receipt');
@@ -219,7 +243,7 @@ try {
       // The decision completes under the exclusive transition and reloads bound to A.
       await page.waitForFunction((key) => { try { return JSON.parse(localStorage.getItem(key))?.accountId; } catch { return null; } }, OWNER_KEY);
       await waitGrant(page, 'account');
-      assert.equal(await waitRecordsSettled(page), 'ready');
+      await waitRecordsReady(page);
       assert.equal(await recordCount(page), 0, 'guest records are never listed to the account');
       await page.waitForSelector('[data-records-hidden-guest="1"]');
       await computeKnownTime(page, { date: '1985-03-02', time: '09:15', place: 'Paris' });
@@ -227,9 +251,9 @@ try {
       assert.equal(await keep(page), 'kept');
       let rows = await durableRows(page);
       assert.deepEqual(rows.records.map((row) => row.ownerKey.split(':')[0]).sort(), ['account', 'guest']);
-      assert.equal(await gotoProfile(page), 'ready');
+      await gotoProfileAs(page, 'account');
       await waitAccountReady(page);
-      await page.click('#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
+      await clickAndReload(page, '#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
       // Whole-device: both namespaces erased under the transition, legacy stores cleared, session ended, page reloaded unowned.
       await waitGrant(page, 'unowned');
       await page.waitForFunction((key) => localStorage.getItem(key) === null, AUTH_KEY);
@@ -238,9 +262,12 @@ try {
       rows = await durableRows(page);
       assert.deepEqual(rows.records, [], 'clear-all must purge every record');
       assert.deepEqual(rows.admissions, [{ target: '*', generation: 1, status: 'erased' }]);
-      assert.equal(await waitRecordsSettled(page), 'ready');
+      await waitRecordsReady(page);
       await page.waitForSelector('[data-records-empty="erased"]');
-      assert.deepEqual((await zodiacsKeys(page)).filter((key) => key !== GRANT_KEY), [], 'no Zodiacs storage may survive clear-all beyond the fresh unowned grant');
+      // The reloaded page issues a fresh unowned grant and the Living Chart island lazily recreates its guest vault;
+      // no account marker, sync metadata, legacy profile or record-scope key may survive the clear.
+      assert.deepEqual((await zodiacsKeys(page)).filter((key) => key !== GRANT_KEY && !key.startsWith('zodiacs.living-chart.')), [],
+        'no account or profile storage may survive clear-all');
       assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
       await context.close();
       return { calls };
@@ -260,7 +287,7 @@ try {
       await computeKnownTime(page, { date: '1985-03-02', time: '09:15', place: 'Paris' });
       await waitGrant(page, 'account');
       assert.equal(await keep(page), 'kept');
-      assert.equal(await gotoProfile(page), 'ready');
+      await gotoProfileAs(page, 'account');
       assert.equal(await recordCount(page), 1);
       await waitAccountReady(page);
       await page.click('#profile-sync details.pf-account-v2__delete summary');
@@ -289,7 +316,7 @@ try {
       const { context, blocked, calls, errors } = await newContext();
       const page = await context.newPage();
       await bindAndKeep(page);
-      assert.equal(await gotoProfile(page), 'ready');
+      await gotoProfileAs(page, 'account');
       await waitAccountReady(page);
       assert.equal(await recordCount(page), 1);
       // Another tab signs in as B the moment A's purge commits: the persisted
@@ -330,7 +357,7 @@ try {
       const { context, blocked, calls, errors } = await newContext();
       const page = await context.newPage();
       await bindAndKeep(page);
-      assert.equal(await gotoProfile(page), 'ready');
+      await gotoProfileAs(page, 'account');
       await waitAccountReady(page);
       await context.close();
       // A fresh browser bound the same way, whose records module is lost from the very first request.
@@ -366,8 +393,7 @@ try {
       const { context, blocked, calls, errors } = await newContext();
       const panel = await context.newPage();
       await signIn(panel, SESSION_A);
-      assert.equal(await gotoProfile(panel), 'ready');
-      await waitGrant(panel, 'account');
+      await gotoProfileAs(panel, 'account');
       assert.equal(await recordCount(panel), 0);
       await waitAccountReady(panel);
       const calculator = await context.newPage();
@@ -376,10 +402,11 @@ try {
       await waitKeepState(calculator, ['idle']);
       assert.equal((await durableRows(panel)).present, false, 'no database before the observation');
       // The panel's pre-transition observation sees an absent database; the
-      // calculator tab's keep lands right after that observation and before
-      // the transition's lease revocation, after which the real rows are read.
+      // calculator tab's keep lands right after that observation. From the
+      // panel's exclusive lock request onwards (the transition), the real
+      // rows are read.
       await panel.exposeFunction('__keepElsewhere', async () => { assert.equal(await keep(calculator), 'kept'); });
-      await panel.evaluate(({ database, revokeKey }) => {
+      await panel.evaluate(({ database, lockName }) => {
         const databases = IDBFactory.prototype.databases;
         let stalled = false;
         IDBFactory.prototype.databases = async function (...args) {
@@ -388,14 +415,15 @@ try {
           if (!stalled) { stalled = true; await window.__keepElsewhere(); }
           return real.filter((entry) => entry.name !== database);
         };
-        const setItem = Storage.prototype.setItem;
-        Storage.prototype.setItem = function (key, value) {
-          if (key === revokeKey) window.__staleAbsent = false;
-          return setItem.call(this, key, value);
+        const request = LockManager.prototype.request;
+        LockManager.prototype.request = function (name, ...rest) {
+          const options = typeof rest[0] === 'object' && rest[0] !== null ? rest[0] : null;
+          if (name === lockName && options?.mode === 'exclusive') window.__staleAbsent = false;
+          return request.call(this, name, ...rest);
         };
         window.__staleAbsent = true;
         window.__sameDocument = true;
-      }, { database: DATABASE, revokeKey: REVOKE_KEY });
+      }, { database: DATABASE, lockName: LOCK_NAME });
       await panel.click('#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
       const message = await waitAccountMessage(panel, /Sign-out was stopped and nothing else was removed/u);
       assert.match(message, /could not be prepared for removal safely/u);
@@ -406,11 +434,10 @@ try {
       assert.equal(rows.records.length, 1, 'the record admitted in between must survive a refused clear-all');
       assert.deepEqual(rows.admissions.map((row) => row.status), ['active', 'active']);
       // The refusal is honest: after a reload the record is listed, and a fresh clear-all observes it and removes it.
-      assert.equal(await gotoProfile(panel), 'ready');
-      await waitGrant(panel, 'account');
+      await gotoProfileAs(panel, 'account');
       assert.equal(await recordCount(panel), 1);
       await waitAccountReady(panel);
-      await panel.click('#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
+      await clickAndReload(panel, '#profile-sync button:text-is("Sign out · clear all Zodiacs data")');
       await waitGrant(panel, 'unowned');
       assert.deepEqual((await durableRows(panel)).records, []);
       assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
