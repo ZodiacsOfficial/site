@@ -118,7 +118,7 @@
         "marketCapUsd": 71229
       },
       "freshness": {
-        "asOf": "2026-09-15T09:31:25.541Z",
+        "asOf": "2026-09-15T09:32:34.814Z",
         "status": "current-for-horizon",
         "ageHoursAtHorizonEnd": 14.5
       },
@@ -980,7 +980,7 @@
         "marketCapUsd": 71229
       },
       "freshness": {
-        "asOf": "2026-09-15T09:31:25.541Z",
+        "asOf": "2026-09-15T09:32:34.814Z",
         "status": "stale-for-horizon",
         "ageHoursAtHorizonEnd": 158.5
       },
