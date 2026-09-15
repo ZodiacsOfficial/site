@@ -35,14 +35,14 @@ a data-safety issue; it is recorded here so it is not mistaken for one.
 | --- | --- |
 | Source candidate | `9c8bf67b` (`src/` unchanged afterwards) |
 | Unit (targeted while fixing) | `saved-record-access.test.ts` 16, `saved-record-store.test.ts` 52, `AccountSyncV2Panel.test.tsx` 16, `SavedRecordsPanel.test.tsx` 3, `saved-record-inactive.test.ts` 4 |
-| Full unit suite (final candidate) | FULL_SUITE |
+| Full unit suite (final source, flag-off build in place) | 5317 of 5317 tests in 430 files |
 | Native storage drive, Chromium 141 | 31 of 31 (`native-result.json`) |
 | Native storage drive, Firefox 151 (`ENGINE=firefox`) | 31 of 31 (`native-firefox-result.json`) |
 | Lifecycle drive, flag-on build, Chromium | 16 of 16 (`lifecycle-result.json`) |
 | Lifecycle drive, Firefox 151, representative checks | 2 of 2: "keep, find, exact download, remove, reload" and "a single removal in another tab reaches open inventories and the calculator" (`lifecycle-firefox-result.json`) |
 | Account-coordinator drive, fixture build, Chromium | 6 of 6 (`account-result.json`) |
 | Flag-off build, typecheck, check-dist, scope guard, Phase 1 captures | Build within bundle budgets; `astro check` 0 errors, 0 warnings; check-dist, consumer-boundary and footer checks pass; scope guard passes with the allowance pinned to main `9c9e232f`; 18 of 18 captures regenerated on the final source |
-| Hosted checks on the candidate | HOSTED |
+| Hosted checks | On the preceding heads: the flag-on lifecycle job 16 of 16 and the account-coordinator job 6 of 6 on its first hosted run; Build & Check was red only on a stale capture digest, corrected by the regenerated manifest (`cfd79265`). The run on the final head is the remaining hosted gate; the pull request checks carry its outcome. |
 
 Fixture builds used locally: `PUBLIC_SAVED_RECORDS_ENABLED=1` for the
 lifecycle drive; that plus `PUBLIC_ACCOUNT_SYNC_V2_ENABLED=1`,
