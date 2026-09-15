@@ -1,0 +1,57 @@
+{
+  "deployment": {
+    "id": "dpl_QmGqNQr8KuWEQYkaRfe34c6MMg6x",
+    "name": "zodiacs-org",
+    "url": "zodiacs-dboy261we-zodiacsofficial.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1789322699741,
+    "creator": {
+      "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+      "username": "zodiacs-org"
+    },
+    "project": {
+      "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+      "name": "zodiacs-org",
+      "framework": null
+    },
+    "meta": {
+      "githubCommitAuthorName": "Zodiacs",
+      "githubCommitAuthorEmail": "admin@zodiacs.org",
+      "githubCommitMessage": "Merge pull request #481 from ZodiacsOfficial/codex/l2b-date-coverage\n\nCheck unknown-time reference membership with complete native date intervals",
+      "githubCommitOrg": "ZodiacsOfficial",
+      "githubCommitRef": "main",
+      "githubCommitRepo": "site",
+      "githubCommitSha": "dfeae5f9178a6d887209710083c2a74fae258236",
+      "githubDeployment": "1",
+      "githubOrg": "ZodiacsOfficial",
+      "githubRepo": "site",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1251096896",
+      "githubRepoId": "1251096896",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "zodiacs-org",
+      "githubCommitVerification": "verified",
+      "repoPushedAt": "1789322696000",
+      "branchAlias": "zodiacs-org-git-main-zodiacsofficial.vercel.app",
+      "lambdaRuntimeStats": "{\"nodejs\":12}"
+    },
+    "alias": [
+      "zodiacs.org",
+      "www.zodiacs.org",
+      "zodiacs-org.vercel.app",
+      "zodiacs-org-zodiacsofficial.vercel.app",
+      "zodiacs-org-git-main-zodiacsofficial.vercel.app"
+    ],
+    "target": "production",
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1789322700929,
+    "ready": 1789322943498,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

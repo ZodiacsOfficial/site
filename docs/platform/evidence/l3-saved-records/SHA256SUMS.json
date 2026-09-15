@@ -1,0 +1,17 @@
+{
+  "ACTIVATION-DEPENDENCIES.md": "e11b17b8017b8da1bc6bcbf9e858c1fd27f64879c5cf0fcb6c810ce55caf84e2",
+  "README.md": "7ec40a15dd2583bf0b6d5942562203d9d4fd42b94046a64dfaa6520877a494f7",
+  "SIGN-RECORD-CONTROL.md": "1a499970842e3d26f366aec03a1e54228154001a2f3820e63209d01a13c83849",
+  "build.log.gz": "faeb4e8263084977dce3787dd7b1fa2cfd2cad8020bfc6b5807c6da22893be70",
+  "captures.log.gz": "13e084a1901363df088dead245dce213e660f1d8202839bac30d0dd9ac961cac",
+  "full-suite.log.gz": "3a0110385b5a9f2cabb8ffe93e79e72dc560cdd680178629dd77c79d62785839",
+  "initial-focused.log.gz": "dfe2d6d498aedd2879ecedc631952b8d7c4c52b108b5caf606bf9e093e02fd85",
+  "initial-full-suite.log.gz": "f9028b63cf09ca9396618bf645fb21d30452d3d9d4f68da6dffafe496148d3f7",
+  "main-start.json": "747db2fc250aff1ab5fd8b188afb491d36b9290a49e286ad8dc288818562a1f2",
+  "native-bundle-inputs.json": "de5cfbbd858504a267460ac0ca7368812928be36ded5fe334ae3a8f0ba9a3ba0",
+  "native-result.json": "0cc5a2597e8f206fa236bd6b9ea0ee8628717edc1f80912a9e3158bec94ec192",
+  "retained-pr.json": "215b83844340467be86b65d07f954e5ba70afefbb4a328f1d2efc05b8fc3e82b",
+  "scope.log": "46c349a731727dd237f04a9f1e18893509219d197a546ad74a825a86fea737cb",
+  "typecheck.log.gz": "148f39a36e1c510f437d166b47d2f4b9fac1a38d8a6830aa2d8a6bb924412701",
+  "unchanged-sources.json": "5bce615e68549ae712d4b2153d68ff7a9dc84916f2d37db170036d9b09bf896e"
+}

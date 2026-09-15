@@ -1,0 +1,58 @@
+{
+  "verifiedAt": "2026-09-13T18:28:09.098Z",
+  "deployment": {
+    "id": "dpl_44tNRbymWxhKRRhUwg92gv945paY",
+    "name": "zodiacs-org",
+    "url": "zodiacs-oklxtcs6m-zodiacsofficial.vercel.app",
+    "type": "LAMBDAS",
+    "state": "READY",
+    "createdAt": 1789312555473,
+    "creator": {
+      "uid": "BcnvhMnmrQpRvxQmYbTC8rn1",
+      "username": "zodiacs-org"
+    },
+    "project": {
+      "id": "prj_nRTO3q3aNYLfaM3dotAowOc028fO",
+      "name": "zodiacs-org",
+      "framework": null
+    },
+    "meta": {
+      "githubCommitAuthorName": "Zodiacs",
+      "githubCommitAuthorEmail": "admin@zodiacs.org",
+      "githubCommitMessage": "Merge pull request #480 from ZodiacsOfficial/codex/l2-reference-sun\n\nQualify unknown-time reference Sun interpretation",
+      "githubCommitOrg": "ZodiacsOfficial",
+      "githubCommitRef": "main",
+      "githubCommitRepo": "site",
+      "githubCommitSha": "87f18e0a101b96abf847be58e8a0c31a691992f8",
+      "githubDeployment": "1",
+      "githubOrg": "ZodiacsOfficial",
+      "githubRepo": "site",
+      "githubRepoOwnerType": "Organization",
+      "githubCommitRepoId": "1251096896",
+      "githubRepoId": "1251096896",
+      "githubRepoVisibility": "public",
+      "githubHost": "github.com",
+      "githubCommitAuthorLogin": "zodiacs-org",
+      "githubCommitVerification": "verified",
+      "repoPushedAt": "1789312552000",
+      "branchAlias": "zodiacs-org-git-main-zodiacsofficial.vercel.app",
+      "lambdaRuntimeStats": "{\"nodejs\":12}"
+    },
+    "alias": [
+      "zodiacs.org",
+      "www.zodiacs.org",
+      "zodiacs-org.vercel.app",
+      "zodiacs-org-zodiacsofficial.vercel.app",
+      "zodiacs-org-git-main-zodiacsofficial.vercel.app"
+    ],
+    "target": "production",
+    "regions": [
+      "iad1"
+    ],
+    "buildingAt": 1789312556663,
+    "ready": 1789312794335,
+    "readyState": "READY",
+    "source": "git",
+    "aliasError": null
+  }
+}

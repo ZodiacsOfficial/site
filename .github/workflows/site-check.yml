@@ -137,6 +137,10 @@ jobs:
         timeout-minutes: 5
         run: OUT_DIR=tests/visual/artifacts/reference-captions node tests/reference-caption-drive.mjs
 
+      - name: Inactive saved receipt storage and durable erasure
+        timeout-minutes: 3
+        run: OUT_DIR=tests/visual/artifacts/saved-natal-storage node tests/saved-natal-storage-drive.mjs
+
       - name: Engine accuracy vectors
         run: npm test
 
