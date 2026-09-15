@@ -1,7 +1,8 @@
 /** Native IndexedDB acceptance for the inactive saved-record protocol (schema 3).
  * The production source is bundled unchanged. Faults abort real transactions at
  * request-success or commit boundaries; no in-memory storage adapter is used.
- * Run: node tests/saved-natal-storage-drive.mjs (OUT_DIR overrides evidence).
+ * Run: node tests/saved-natal-storage-drive.mjs (OUT_DIR overrides evidence;
+ * ENGINE=firefox runs the same cases in a Playwright-managed Firefox).
  */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -9,13 +10,15 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import { resolve } from 'node:path';
 import { build } from 'esbuild';
-import { chromium } from 'playwright-core';
+import { chromium, firefox } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+
+const ENGINE = process.env.ENGINE === 'firefox' ? 'firefox' : 'chromium';
 
 const root = resolve(import.meta.dirname, '..');
 const out = resolve(process.env.OUT_DIR ?? resolve(root, 'tests/visual/artifacts/saved-natal-storage'));
 const hash = value => createHash('sha256').update(value).digest('hex');
-const sourcePaths = ['src/lib/profile/saved-record.ts', 'src/lib/profile/saved-record-store.ts'];
+const sourcePaths = ['src/lib/profile/saved-record.ts', 'src/lib/profile/saved-record-store.ts', 'src/lib/profile/saved-record-access.ts'];
 const source = await Promise.all(sourcePaths.map(async path => ({ path, sha256: hash(await readFile(resolve(root, path))) })));
 const entry = `
 export { SavedNatalStore, IndexedDbSavedNatalAdapter, SAVED_NATAL_DATABASE_NAME, SAVED_NATAL_SCHEMA_VERSION,
@@ -23,17 +26,24 @@ export { SavedNatalStore, IndexedDbSavedNatalAdapter, SAVED_NATAL_DATABASE_NAME,
   from './src/lib/profile/saved-record-store';
 export { computePortableChart } from './src/lib/engine/portable';
 export { serializeNatalEnvelope } from '@zodiacs/engine/receipt';
+export { prepareSavedRecordErasure, confirmSavedRecordsAbsent, eraseSavedRecords } from './src/lib/profile/saved-record-access';
 `;
 const bundled = await build({
   absWorkingDir: root, stdin: { contents: entry, resolveDir: root },
   bundle: true, write: false, format: 'iife', globalName: 'SavedNatalFixture',
   platform: 'browser', target: 'es2022', metafile: true, logLevel: 'silent',
+  // The access module's browser defaults read build flags; the cases below pass explicit deps.
+  define: { 'import.meta.env.PUBLIC_SAVED_RECORDS_ENABLED': '"1"' },
 });
+if (bundled.warnings.some(warning => /import\.meta/u.test(warning.text))) {
+  throw new Error(`Fixture bundle left import.meta unresolved: ${bundled.warnings.map(warning => warning.text).join('; ')}`);
+}
 
 // This function is serialized as browser fixture code. Every value is synthetic.
 function installNativeFixture() {
   const { SavedNatalStore, IndexedDbSavedNatalAdapter, SAVED_NATAL_DATABASE_NAME: DB, SAVED_NATAL_SCHEMA_VERSION: VERSION,
-    MAX_SAVED_NATAL_OWNERS, savedNatalScopeState, computePortableChart, serializeNatalEnvelope } = window.SavedNatalFixture;
+    MAX_SAVED_NATAL_OWNERS, savedNatalScopeState, computePortableChart, serializeNatalEnvelope,
+    prepareSavedRecordErasure, confirmSavedRecordsAbsent, eraseSavedRecords } = window.SavedNatalFixture;
   const A = 'account:10000000-0000-4000-8000-000000000001';
   const B = 'account:20000000-0000-4000-8000-000000000002';
   const G = 'guest:30000000-0000-4000-8000-000000000003';
@@ -185,9 +195,13 @@ function installNativeFixture() {
     await acquired;
     return { release: () => { keepAlive = false; }, done };
   };
+  /** The access module's erasure authority over this page's real database, account-free device mode. */
+  const accessDeps = () => ({ enabled: true, accountSyncV2: false, accessAllowed: () => true,
+    storage: { local: localStorage, session: sessionStorage }, randomUUID: () => crypto.randomUUID(), adapter });
+  const access = { prepareSavedRecordErasure, confirmSavedRecordsAbsent, eraseSavedRecords };
   window.h = { A, B, G, G2, ID, DB, DEVICE, VERSION, MAX_SAVED_NATAL_OWNERS, insist, equal, value, failure, envelope,
     bound, save, scopeFor, adapter, openRaw, exists, snapshot, rawPut, ownRows, admission, expectAdmission, serializeNatalEnvelope,
-    savedNatalScopeState, onRequest, onWriteComplete, watchTransactions, blockWrites,
+    savedNatalScopeState, onRequest, onWriteComplete, watchTransactions, blockWrites, access, accessDeps,
     close: () => { for (const handle of handles) handle.revoke(); },
   };
 }
@@ -252,7 +266,9 @@ async function group(name, run) {
 try {
   await new Promise((resolve, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', resolve); });
   origin = `http://127.0.0.1:${server.address().port}`;
-  browser = await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
+  browser = ENGINE === 'firefox'
+    ? await firefox.launch({ headless: true })
+    : await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
 
   await group('inert import, content-free discovery without creation, immutable receipt bytes', page => page.evaluate(async () => {
     const { insist, value, failure, envelope, bound, save, serializeNatalEnvelope, snapshot, adapter, exists, A } = h;
@@ -888,6 +904,35 @@ try {
     });
   });
 
+  await group('an absence observed before the exclusive transition is re-checked under it and refuses a namespace admitted in between', page => page.evaluate(async () => {
+    const { insist, equal, value, bound, save, snapshot, exists, ownRows, access, accessDeps, DEVICE, A } = h;
+    const deps = accessDeps();
+    // T1: the account panel observes an absent device before its exclusive transition.
+    equal(await access.prepareSavedRecordErasure('device', deps), { status: 'absent' }, 'Fresh device is not absent');
+    // Unchanged, the absence is confirmed under the transition without creating a database to learn it.
+    equal(await access.confirmSavedRecordsAbsent('device', () => true, deps), { ok: true, value: 'absent' }, 'Unchanged absence not confirmed');
+    insist(!await exists(), 'Confirming an absence created the database');
+    // T2: another tab's explicit keep admits the device and an owner, with one record, before T1's transition.
+    const record = value(await save(await bound())).record;
+    // T3: under the transition the observation no longer holds; the whole-device clear refuses instead of skipping.
+    equal(await access.confirmSavedRecordsAbsent('device', () => true, deps), { ok: false, code: 'stale', mayHaveCommitted: false }, 'Admitted namespace was not refused');
+    equal(await access.confirmSavedRecordsAbsent({ accountId: A.slice('account:'.length) }, () => true, deps), { ok: false, code: 'stale', mayHaveCommitted: false }, 'Admitted owner was not refused');
+    equal(await access.confirmSavedRecordsAbsent('guest', () => true, deps), { ok: true, value: 'absent' }, 'A still-absent guest namespace must confirm');
+    let state = await snapshot();
+    equal(ownRows(state).map(row => row.id), [record.id], 'A refusal must remove nothing');
+    // The caller prepares a fresh ticket on its next attempt; that ticket pins the admitted generation and erases exactly it.
+    const prepared = await access.prepareSavedRecordErasure('device', deps);
+    equal(prepared, { status: 'ready', ticket: { target: DEVICE, expected: 1, expectedDevice: 1, guestRecords: 0 } }, 'Fresh observation did not pin the admitted generation');
+    equal(await access.eraseSavedRecords(prepared.ticket, () => true, deps), { ok: true, value: 'erased' }, 'Pinned erasure failed');
+    state = await snapshot();
+    h.expectAdmission(state, DEVICE, 1, 'erased');
+    insist(state.rows.records.length === 0 && state.rows.admissions.length === 1, 'Device erasure left rows or owner admissions');
+    // An erased device with no owners is absent again; the caller's own authority ends the check before any read.
+    equal(await access.confirmSavedRecordsAbsent('device', () => true, deps), { ok: true, value: 'absent' }, 'Erased device not absent');
+    equal(await access.confirmSavedRecordsAbsent('device', () => false, deps), { ok: false, code: 'stale', mayHaveCommitted: false }, 'Lost authority not refused');
+    h.close(); return { refused: 'stale', erased: 1 };
+  }));
+
   await group('a device readmission racing a pre-wipe owner erasure yields exactly one durable outcome', page => page.evaluate(async () => {
     h.value(await h.save(await h.bound()));
     h.equal(await h.adapter().erase(h.DEVICE, 1, 1, () => {}), { ok: true, value: 'erased' }, 'Device erase');
@@ -908,7 +953,7 @@ try {
   await mkdir(out, { recursive: true });
   const report = {
     startedAt, completedAt: new Date().toISOString(), node: process.version,
-    browser: await browser.version(), source, bundleSha256: hash(script),
+    engine: ENGINE, browser: await browser.version(), source, bundleSha256: hash(script),
     sourceInstrumented: false, faultModel: 'Native IndexedDB request-success aborts and commit-boundary authority revocation',
     results, passed: results.filter(result => result.passed).length, failed: results.filter(result => !result.passed).length,
   };

@@ -374,7 +374,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   /** Re-opens the record scope after a refusal that a fresh inventory can explain (erased elsewhere). */
   const recordReopenRef = useRef<(() => void) | null>(null);
   /** The namespace this result was kept in; a re-open of the same admitted namespace keeps the confirmation. */
-  const recordKeptOwnerRef = useRef<string | null>(null);
+  /** The record this result was confirmed kept as, so a removal elsewhere can withdraw "Kept". */
+  const recordKeptRef = useRef<{ ownerKey: string; id: string } | null>(null);
   const recordsEnabled = mode === 'full' && savedRecordsEnabled();
   const [signature, setSignature] = useState<ChartSignature | null>(null);
   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
@@ -494,7 +495,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     // A new or cleared result invalidates every keep outcome of the previous one.
     recordResultRunRef.current += 1;
     recordKeepRunRef.current += 1;
-    recordKeptOwnerRef.current = null;
+    recordKeptRef.current = null;
     setRecordErasedNote(false);
     if (!recordsEnabled || !receiptExport) { setRecordKeep('idle'); recordReopenRef.current = null; return; }
     setRecordKeep('opening');
@@ -536,9 +537,20 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         // outcome for this result stays stated until the visitor reconciles
         // it under Profile; a confirmed keep survives only while the same
         // namespace is still admitted. The fresh scope replaces the rest.
-        const sameKeptNamespace = opened.scope.state === null && opened.scope.ownerKey === recordKeptOwnerRef.current;
+        const kept = recordKeptRef.current;
+        const sameKeptNamespace = opened.scope.state === null && kept !== null && opened.scope.ownerKey === kept.ownerKey;
         setRecordKeep((current) => (current === 'busy' || current === 'uncertain' || current === 'changed'
           || (current === 'kept' && sameKeptNamespace) ? current : next));
+        if (!sameKeptNamespace) return;
+        // The namespace survived the change that re-opened it, but the kept
+        // record itself may have been removed under Profile in another tab:
+        // "Kept" is withdrawn only once its absence is read from the store.
+        const found = await opened.scope.store.get(kept.id);
+        if (!live || run !== recordKeepRunRef.current || recordKeptRef.current !== kept) return;
+        if (found.ok && found.value === null) {
+          recordKeptRef.current = null;
+          setRecordKeep((current) => (current === 'kept' ? next : current));
+        }
       } catch {
         if (live && run === recordKeepRunRef.current) setRecordKeep('unavailable');
       }
@@ -1467,11 +1479,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (created.ok) {
       // The stored bytes must be exactly the bytes offered for download.
       const exact = created.value.record.envelopeJson === envelopeJson;
-      recordKeptOwnerRef.current = exact ? scope.ownerKey : null;
+      recordKeptRef.current = exact ? { ownerKey: scope.ownerKey, id: created.value.record.id } : null;
       setRecordKeep(exact ? 'kept' : 'uncertain');
       setRecordErasedNote(false);
-      // A readmission changes what other tabs may do; this tab's handle already observed it.
-      if (admit) api.broadcastSavedRecordScopeChange();
+      // A kept record is a fact for every open tab (inventories re-open on it,
+      // and a readmission changes what other tabs may do); this tab's handle
+      // already observed the new rows.
+      api.broadcastSavedRecordScopeChange();
       return;
     }
     // Records removed or admitted from another tab are only visible to a

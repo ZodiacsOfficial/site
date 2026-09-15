@@ -79,45 +79,76 @@ import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
 type SyncModule = typeof import('../lib/profile/sync');
 type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
 type SavedRecordEraseTicket = import('../lib/profile/saved-record-access').SavedRecordEraseTicket;
+type SavedRecordEraseTarget = import('../lib/profile/saved-record-access').SavedRecordEraseTarget;
 type SavedRecordDiscovery = import('../lib/profile/saved-record-access').SavedRecordDiscovery;
 
-/** Loaded only when the local calculation-record lifecycle is built in. */
-function loadSavedRecordAccess(): Promise<SavedRecordAccess | null> {
-  if (!savedRecordsEnabled()) return Promise.resolve(null);
-  return import('../lib/profile/saved-record-access').catch(() => null);
+/**
+ * Loaded only when the local calculation-record lifecycle is built in. With
+ * the feature built in, a module that fails to load (a lost chunk after a
+ * deploy, a blocked request) is `unavailable`, never the same as `disabled`:
+ * the records on this device cannot be inspected, so no destructive action
+ * may report that it removed them.
+ */
+export type SavedRecordAccessLoad =
+  | { status: 'disabled' }
+  | { status: 'unavailable' }
+  | { status: 'ready'; api: SavedRecordAccess };
+function loadSavedRecordAccess(): Promise<SavedRecordAccessLoad> {
+  if (!savedRecordsEnabled()) return Promise.resolve({ status: 'disabled' });
+  return import('../lib/profile/saved-record-access')
+    .then((api): SavedRecordAccessLoad => ({ status: 'ready', api }))
+    .catch((): SavedRecordAccessLoad => ({ status: 'unavailable' }));
 }
 
-type SavedRecordErasePlan =
+export type SavedRecordErasePlan =
   | { status: 'none' }
+  | { status: 'absent'; target: SavedRecordEraseTarget; api: SavedRecordAccess }
   | { status: 'ready'; ticket: SavedRecordEraseTicket; api: SavedRecordAccess }
   | { status: 'blocked'; message: string };
 
-const RECORDS_BLOCKED_MESSAGE = 'Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings.';
+export const RECORDS_BLOCKED_MESSAGE = 'Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings.';
 
-/** Pins a records erasure before the exclusive transition; absent scopes need no erasure. */
-async function planSavedRecordErasure(
-  target: 'device' | 'guest' | { accountId: string },
+/**
+ * Pins a records erasure before the exclusive transition. `none` means the
+ * feature is not built in; an observed absence is carried into the transition
+ * and re-checked there, never treated as proof that nothing needs removing.
+ */
+export async function planSavedRecordErasure(
+  target: SavedRecordEraseTarget,
+  load: () => Promise<SavedRecordAccessLoad> = loadSavedRecordAccess,
 ): Promise<SavedRecordErasePlan> {
-  const api = await loadSavedRecordAccess();
-  if (!api) return { status: 'none' };
+  const loaded = await load();
+  if (loaded.status === 'disabled') return { status: 'none' };
+  if (loaded.status === 'unavailable') return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
+  const { api } = loaded;
   const prepared = await api.prepareSavedRecordErasure(target);
   if (prepared.status === 'ready') return { status: 'ready', ticket: prepared.ticket, api };
-  if (prepared.status === 'absent' || prepared.status === 'disabled') return { status: 'none' };
+  if (prepared.status === 'absent') return { status: 'absent', target, api };
+  if (prepared.status === 'disabled') return { status: 'none' };
   return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
 }
 
-/** Two-phase erasure inside the transition: a failure before intent stops the caller. */
-async function runPlannedSavedRecordErasure(
+/**
+ * Two-phase erasure inside the transition: a failure before intent stops the
+ * caller, and so does an absence that no longer holds under the transition
+ * (`failed`, nothing removed). Only a `none` plan skips without looking.
+ */
+export async function runPlannedSavedRecordErasure(
   plan: SavedRecordErasePlan,
   authorized: () => boolean,
 ): Promise<SavedRecordEraseOutcome> {
-  if (plan.status !== 'ready') return 'skipped';
+  if (plan.status === 'none') return 'skipped';
+  if (plan.status === 'blocked') return 'failed';
+  if (plan.status === 'absent') {
+    const confirmed = await plan.api.confirmSavedRecordsAbsent(plan.target, authorized);
+    return confirmed.ok ? 'skipped' : 'failed';
+  }
   const result = await plan.api.eraseSavedRecords(plan.ticket, authorized);
   if (result.ok) return 'erased';
   return result.mayHaveCommitted ? 'pending' : 'failed';
 }
 
-type SavedRecordEraseOutcome = 'skipped' | 'erased' | 'pending' | 'failed';
+export type SavedRecordEraseOutcome = 'skipped' | 'erased' | 'pending' | 'failed';
 type ConsentState = 'pending' | 'granted' | 'withdrawn';
 type ViewState = 'loading' | 'signed-out' | 'boundary' | 'legacy' | 'deleting' | 'ready' | 'error';
 
@@ -320,11 +351,15 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
     }
     // Guest calculation records are invisible to the synchronous legacy check.
     // Discover them (content-free) before the browser can be treated as empty.
-    const recordsApi = await loadSavedRecordAccess();
+    const recordsAccess = await loadSavedRecordAccess();
     if (authEpoch.current !== epoch) return;
     let records: SavedRecordDiscovery | null = null;
-    if (recordsApi) {
-      records = await recordsApi.discoverSavedRecordBoundary();
+    if (recordsAccess.status !== 'disabled') {
+      // A module that cannot load is as opaque as unavailable storage: this
+      // browser cannot be shown to be empty, so it is not bound.
+      records = recordsAccess.status === 'ready'
+        ? await recordsAccess.api.discoverSavedRecordBoundary()
+        : { status: 'unavailable', guestRecords: 0 };
       if (authEpoch.current !== epoch) return;
       // Only an empty-looking browser is gated on discovery (the bootstrap
       // applies the same rule before auto-binding). A bound or mismatched

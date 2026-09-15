@@ -120,6 +120,10 @@ function rethrow(error: unknown, committed = false): Error {
 export function savedNatalAdapterFailure(code: SavedNatalFailureCode): Error {
   return issue(code);
 }
+/** Maps a thrown adapter or guard error to its failure result; no private diagnostic escapes. */
+export function savedNatalFailureFrom(error: unknown): SavedNatalFailure {
+  return failure(error);
+}
 
 export function isSavedNatalAdmissionTarget(value: unknown): value is string {
   return value === DEVICE || isSavedNatalOwnerKey(value);

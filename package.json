@@ -78,6 +78,8 @@
     "test:registry-bridge:dist": "node scripts/check-registry-bridge-dist.mjs",
     "test:today:browser": "node tests/today-drive.mjs",
     "test:saved-records:browser": "node tests/saved-records-lifecycle-drive.mjs",
+    "test:saved-records:account": "node tests/saved-records-account-drive.mjs",
+    "test:saved-records:native": "node tests/saved-natal-storage-drive.mjs",
     "test:bio:browser": "node tests/bio-drive.mjs",
     "test:horoscopes:browser": "node tests/horoscope-program-drive.mjs",
     "test:phase1:acceptance": "node tests/phase1-acceptance-drive.mjs",

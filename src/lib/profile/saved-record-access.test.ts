@@ -467,6 +467,37 @@ describe('content-free discovery and erasure authority', () => {
     expect(FakeAdapter.admissions.get(`account:${A}`)).toEqual(row(`account:${A}`, 1));
   });
 
+  it('re-checks an observed absence under the transition and refuses a namespace admitted in between', async () => {
+    const h = harness();
+    // T1: the panel observes an absent device before the exclusive transition.
+    expect(await access.prepareSavedRecordErasure('device', h.deps)).toEqual({ status: 'absent' });
+    // Nothing changed: the absence is confirmed under the transition, and nothing is created to learn it.
+    expect(await access.confirmSavedRecordsAbsent('device', () => true, h.deps)).toEqual({ ok: true, value: 'absent' });
+    expect(FakeAdapter.absent).toBe(true);
+    // T2: another tab's explicit keep admits the device and a guest, with one record, before T1's transition.
+    FakeAdapter.seedGuest(1);
+    // T3: under the transition the observation no longer holds; whole-device and guest clears refuse, nothing is removed.
+    expect(await access.confirmSavedRecordsAbsent('device', () => true, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(await access.confirmSavedRecordsAbsent('guest', () => true, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(FakeAdapter.rows.get(`guest:${GUEST}`)?.size).toBe(1);
+    // An account namespace that is still missing is still absent; once admitted it refuses; erased is nothing to erase; pending refuses.
+    expect(await access.confirmSavedRecordsAbsent({ accountId: A }, () => true, h.deps)).toEqual({ ok: true, value: 'absent' });
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 1));
+    expect(await access.confirmSavedRecordsAbsent({ accountId: A }, () => true, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 1, 'erased'));
+    expect(await access.confirmSavedRecordsAbsent({ accountId: A }, () => true, h.deps)).toEqual({ ok: true, value: 'absent' });
+    FakeAdapter.admissions.set(`account:${A}`, row(`account:${A}`, 1, 'pending'));
+    expect(await access.confirmSavedRecordsAbsent({ accountId: A }, () => true, h.deps)).toEqual({ ok: false, code: 'erasure-pending', mayHaveCommitted: false });
+    // An erased device with no owners is absent again; the caller's own authority ends the check first.
+    FakeAdapter.admissions.clear(); FakeAdapter.rows.clear();
+    FakeAdapter.admissions.set(DEVICE, row(DEVICE, 1, 'erased'));
+    expect(await access.confirmSavedRecordsAbsent('device', () => true, h.deps)).toEqual({ ok: true, value: 'absent' });
+    expect(await access.confirmSavedRecordsAbsent('device', () => false, h.deps)).toEqual({ ok: false, code: 'stale', mayHaveCommitted: false });
+    expect(await access.confirmSavedRecordsAbsent({ accountId: 'nope' }, () => true, h.deps)).toEqual({ ok: false, code: 'invalid-input', mayHaveCommitted: false });
+    expect(await access.confirmSavedRecordsAbsent('device', () => true, { ...h.deps, enabled: false })).toEqual({ ok: false, code: 'access-denied', mayHaveCommitted: false });
+    expect(FakeAdapter.instances.every((instance) => instance.aborted === 1)).toBe(true);
+  });
+
   it('prepares device and guest targets, reports absent scopes, and refuses pending ones', async () => {
     const h = harness();
     expect(await access.prepareSavedRecordErasure('device', h.deps)).toEqual({ status: 'absent' });

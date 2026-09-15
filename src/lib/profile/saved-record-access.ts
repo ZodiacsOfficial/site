@@ -29,7 +29,9 @@ import {
   SAVED_NATAL_DEVICE_TARGET,
   SavedNatalStore,
   savedNatalAdapterFailure,
+  savedNatalFailureFrom,
   savedNatalScopeState,
+  type SavedNatalAdmissionRow,
   type SavedNatalErasureOutcome,
   type SavedNatalFailureCode,
   type SavedNatalInventory,
@@ -348,10 +350,17 @@ export type SavedRecordErasePreparation =
   | { readonly status: 'absent' }
   | { readonly status: 'disabled' | 'unavailable' | 'unsupported' | 'pending'; readonly reason: string };
 
+function erasureRow(target: SavedRecordEraseTarget, inventory: SavedNatalInventory): SavedNatalAdmissionRow | null {
+  return target === 'device' ? inventory.device : target === 'guest' ? inventory.guest : inventory.owner;
+}
+
 /**
  * Pins the erasure to the admission generation observed now. Must run before
  * the exclusive transition; the transition then re-validates inside the
- * intent transaction (a rotated generation refuses the stale ticket).
+ * intent transaction (a rotated generation refuses the stale ticket). An
+ * `absent` observation is not authority to skip: it is re-checked under the
+ * transition by `confirmSavedRecordsAbsent`, because a keep in another tab can
+ * admit a namespace between this observation and the transition.
  */
 export async function prepareSavedRecordErasure(target: SavedRecordEraseTarget, deps: SavedRecordDeps = browserSavedRecordDeps()): Promise<SavedRecordErasePreparation> {
   if (!deps.enabled) return { status: 'disabled', reason: 'flag-off' };
@@ -363,14 +372,50 @@ export async function prepareSavedRecordErasure(target: SavedRecordEraseTarget, 
     const ownerKey = typeof target === 'object' ? ownerKeyFor(target.accountId) : null;
     const inventory = await adapter.inspect(ownerKey, () => {});
     if (inventory.absent) return { status: 'absent' };
-    const row = target === 'device' ? inventory.device : target === 'guest' ? inventory.guest : inventory.owner;
+    const row = erasureRow(target, inventory);
     if (row?.status === 'pending') return { status: 'pending', reason: 'erasure-pending' };
-    if (!row || row.status === 'erased') return target === 'device' && inventory.device === null && inventory.owners === 0 ? { status: 'absent' } : row ? { status: 'absent' } : { status: 'absent' };
+    if (!row || row.status === 'erased') return { status: 'absent' };
     return { status: 'ready', ticket: { target: row.target, expected: row.generation,
       expectedDevice: inventory.device?.generation ?? 0,
       guestRecords: target === 'guest' ? inventory.guestRecords : 0 } };
   } catch {
     return { status: 'unavailable', reason: 'storage' };
+  } finally {
+    adapter.abortPending();
+  }
+}
+
+/**
+ * Re-checks, under the caller's exclusive transition, an absence that
+ * `prepareSavedRecordErasure` observed before it. The transition has revoked
+ * every reader lease, so a namespace admitted in between is already durable
+ * and visible here; it is reported as `stale` and the caller refuses to
+ * complete rather than reporting a whole-device removal that left records
+ * behind. Nothing is created, admitted or retargeted: the caller prepares a
+ * fresh ticket on its next attempt.
+ */
+export async function confirmSavedRecordsAbsent(
+  target: SavedRecordEraseTarget,
+  authorized: () => boolean,
+  deps: SavedRecordDeps = browserSavedRecordDeps(),
+): Promise<SavedNatalResult<'absent'>> {
+  if (!deps.enabled) return { ok: false, code: 'access-denied', mayHaveCommitted: false };
+  if (typeof target === 'object' && !isAccountV2Id(target.accountId)) return { ok: false, code: 'invalid-input', mayHaveCommitted: false };
+  const adapter = deps.adapter();
+  try {
+    const guard = () => { if (!authorized()) throw savedNatalAdapterFailure('stale'); };
+    guard();
+    const inventory = await adapter.inspect(typeof target === 'object' ? ownerKeyFor(target.accountId) : null, guard);
+    guard();
+    if (inventory.absent) return { ok: true, value: 'absent' };
+    const row = erasureRow(target, inventory);
+    if (row?.status === 'pending') return { ok: false, code: 'erasure-pending', mayHaveCommitted: false };
+    // A device erasure purges every owner admission; owner rows beside a
+    // missing or erased device row are not a layout this client wrote.
+    const admitted = row?.status === 'active' || (target === 'device' && inventory.owners > 0);
+    return admitted ? { ok: false, code: 'stale', mayHaveCommitted: false } : { ok: true, value: 'absent' };
+  } catch (error) {
+    return savedNatalFailureFrom(error);
   } finally {
     adapter.abortPending();
   }

@@ -11,13 +11,16 @@
  */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { chromium } from 'playwright-core';
+import { chromium, firefox } from 'playwright-core';
+import { recordHelpers } from './saved-records-browser-lib.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = resolve(process.env.OUT_DIR ?? 'tests/visual/artifacts/saved-records-lifecycle');
+/** ENGINE=firefox runs the same journeys in a Playwright-managed Firefox (device mode; the simulated v2 reader needs no Web Locks). */
+const ENGINE = process.env.ENGINE === 'firefox' ? 'firefox' : 'chromium';
 const A = '11111111-1111-4111-8111-111111111111';
 const B = '22222222-2222-4222-8222-222222222222';
 const GRANT_KEY = 'zodiacs.account-sync-v2.profile-access.v1';
@@ -80,87 +83,8 @@ async function check(name, run) {
   if (!results.at(-1).passed) console.log(results.at(-1).error.split('\n').slice(0, 14).map((line) => `  ${line}`).join('\n'));
 }
 
-async function gotoChart(page) {
-  await page.goto(`${base}/birth-chart/`);
-  await page.waitForSelector('astro-island[component-url*="ChartCalculator"]:not([ssr])');
-  await page.waitForSelector('.calc__form[aria-busy="false"]');
-}
-
-async function computeKnownTime(page, { date = '1990-06-15', time = '14:30', place = 'London' } = {}) {
-  await gotoChart(page);
-  await page.fill('#birth-date', date);
-  await page.fill('#birth-time', time);
-  await page.fill('#place', place);
-  await page.waitForSelector('#place-opt-0');
-  await page.press('#place', 'Enter');
-  await page.waitForSelector('.place--selected');
-  await page.click('.calc__submit');
-  await page.waitForSelector('.calc__three');
-  // The receipt and keep actions sit inside the collapsed "More ways" disclosure.
-  await page.waitForSelector('details[data-chart-more]');
-  await page.evaluate(() => { document.querySelector('details[data-chart-more]').open = true; });
-  await page.waitForSelector('[data-download-calculation-receipt]:not([disabled])');
-  await page.waitForSelector('[data-keep-calculation-record]');
-}
-
-async function keepState(page) {
-  return page.getAttribute('[data-record-keep]', 'data-record-keep-state');
-}
-
-async function waitKeepState(page, states, options = {}) {
-  const wanted = [].concat(states);
-  await page.waitForFunction((list) => list.includes(document.querySelector('[data-record-keep]')?.getAttribute('data-record-keep-state')), wanted, options);
-  return keepState(page);
-}
-
-const KEEP_OUTCOMES = ['kept', 'uncertain', 'changed', 'failed', 'full', 'unavailable', 'locked', 'read-only', 'pending', 'stale'];
-
-async function keep(page) {
-  for (let attempt = 0; ; attempt++) {
-    await page.waitForFunction(() => !document.querySelector('[data-keep-calculation-record]')?.disabled
-      || document.querySelector('[data-record-keep-message]'));
-    await page.click('[data-keep-calculation-record]');
-    try {
-      return await waitKeepState(page, KEEP_OUTCOMES, { timeout: attempt < 2 ? 5000 : 30_000 });
-    } catch (error) {
-      // A click can land on the button in the instant a concurrent re-open
-      // (another tab changed the records) disables it; the click is inert and
-      // the button returns to its idle label, so a person clicks again.
-      if (attempt >= 2 || await keepState(page) !== 'idle') throw error;
-    }
-  }
-}
-
-async function downloadBytes(page, selector) {
-  const [download] = await Promise.all([page.waitForEvent('download'), page.click(selector)]);
-  return { name: download.suggestedFilename(), bytes: await readFile(await download.path()) };
-}
-
-async function gotoProfile(page) {
-  await page.goto(`${base}/profile/`);
-  await page.waitForSelector('[data-saved-records]');
-  await page.waitForFunction(() => {
-    const state = document.querySelector('[data-saved-records]')?.getAttribute('data-saved-records-state');
-    return state && state !== 'loading';
-  });
-  return page.getAttribute('[data-saved-records]', 'data-saved-records-state');
-}
-
-async function recordCount(page) {
-  const empty = await page.$('[data-records-empty]');
-  if (empty) return 0;
-  return Number(await page.getAttribute('[data-records-count]', 'data-records-count'));
-}
-
-async function removeRecord(page, index = 0) {
-  const buttons = await page.$$('[data-record-remove]');
-  await buttons[index].click();
-  await buttons[index].click();
-  await page.waitForFunction((expected) => {
-    const count = document.querySelector('[data-records-count]')?.getAttribute('data-records-count');
-    return document.querySelector('[data-records-empty]') !== null || Number(count) === expected;
-  }, (await page.$$('[data-record-remove]')).length - 1);
-}
+// Page helpers shared with the account-coordinator drive; bound to the preview origin below.
+let gotoChart, computeKnownTime, keepState, waitKeepState, keep, downloadBytes, gotoProfile, recordCount, removeRecord;
 
 async function setV2(page, mode) {
   await page.evaluate(({ mode, A, B, GRANT_KEY, OWNER_KEY, RETAINED_KEY }) => {
@@ -180,9 +104,12 @@ async function setV2(page, mode) {
 
 try {
   await mkdir(OUT, { recursive: true });
-  browser = await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
+  browser = ENGINE === 'firefox'
+    ? await firefox.launch({ headless: true })
+    : await chromium.launch({ executablePath: await findChromium(), headless: true, args: STABLE_CHROMIUM_ARGS });
   await withPreview({ port: 4411 }, async (baseURL) => {
     base = baseURL;
+    ({ gotoChart, computeKnownTime, keepState, waitKeepState, keep, downloadBytes, gotoProfile, recordCount, removeRecord } = recordHelpers(base));
 
     // The legacy saved-chart store itself (charts and deletion tombstones). Derived caches (year-ahead
     // forecast) and the Living Chart's lazily created guest vault are written by Profile islands on
@@ -537,6 +464,144 @@ try {
       return { outcomes };
     });
 
+    await check('device mode: a single removal in another tab reaches open inventories and the calculator without reload', async () => {
+      const { context, blocked, errors } = await newContext();
+      const calculator = await context.newPage();
+      await computeKnownTime(calculator);
+      assert.equal(await keep(calculator), 'kept');
+      const first = await context.newPage();
+      assert.equal(await gotoProfile(first), 'ready');
+      assert.equal(await recordCount(first), 1);
+      const second = await context.newPage();
+      assert.equal(await gotoProfile(second), 'ready');
+      await removeRecord(second);
+      assert.equal(await recordCount(second), 0);
+      // The other inventory learns of the removal without a reload: no listed
+      // record, and no download button for bytes that no longer exist.
+      await first.waitForSelector('[data-records-empty="none"]');
+      assert.equal(await first.$('[data-record-download]'), null);
+      // The calculator withdraws "Kept" for the removed record; the device set
+      // itself is still admitted, so the scope line carries no erased note.
+      await waitKeepState(calculator, ['idle']);
+      assert.equal(await calculator.$('[data-record-kept]'), null, 'a removed record must not stay "Kept"');
+      assert.doesNotMatch(await calculator.textContent('#calculation-record-scope'), /removed earlier/u);
+      // Keeping again stores a new record, and open inventories learn of it too.
+      assert.equal(await keep(calculator), 'kept');
+      await first.waitForFunction(() => document.querySelector('[data-records-count]')?.getAttribute('data-records-count') === '1');
+      await second.waitForFunction(() => document.querySelector('[data-records-count]')?.getAttribute('data-records-count') === '1');
+      assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
+      await context.close();
+      return { singleRemovalPropagated: true };
+    });
+
+    await check('simulated account-sync-v2: removal feedback stays with the namespace that asked for it', async () => {
+      const { context, blocked, errors } = await newContext({ v2: true });
+      const page = await context.newPage();
+      await page.goto(`${base}/`);
+      await setV2(page, 'accountA');
+      await computeKnownTime(page);
+      await setV2(page, 'accountA');
+      await waitKeepState(page, ['idle']);
+      assert.equal(await keep(page), 'kept');
+      assert.equal(await gotoProfile(page), 'ready');
+      await setV2(page, 'accountA');
+      await page.waitForFunction(() => document.querySelector('[data-saved-records-state]')?.getAttribute('data-saved-records-state') === 'ready');
+      assert.equal(await recordCount(page), 1);
+      // Ownership moves to B the moment A's purge commits, before the outcome reaches the panel.
+      await page.evaluate(({ B, GRANT_KEY, OWNER_KEY }) => {
+        const original = IDBDatabase.prototype.transaction;
+        let writes = 0;
+        IDBDatabase.prototype.transaction = function (...args) {
+          const transaction = original.apply(this, args);
+          if (this.name === 'zodiacs-saved-natal-v1' && transaction.mode === 'readwrite' && ++writes === 2) {
+            IDBDatabase.prototype.transaction = original;
+            transaction.addEventListener('complete', () => {
+              localStorage.setItem(OWNER_KEY, JSON.stringify({ version: 1, accountId: B }));
+              sessionStorage.setItem(GRANT_KEY, JSON.stringify({ version: 1, mode: 'account', accountId: B }));
+              window.dispatchEvent(new Event('zodiacs:profile-access'));
+            }, { once: true });
+          }
+          return transaction;
+        };
+      }, { B, GRANT_KEY, OWNER_KEY });
+      await page.click('[data-records-remove-all]');
+      await page.click('[data-records-remove-all]');
+      // B's own (empty, never erased) inventory is shown, with no word about A's removal.
+      await page.waitForFunction(() => document.querySelector('[data-saved-records-state]')?.getAttribute('data-saved-records-state') === 'ready'
+        && document.querySelector('[data-records-empty="none"]') !== null);
+      await page.waitForFunction(() => !document.querySelector('[data-records-remove-all][disabled]'));
+      assert.equal(await page.$('[data-records-message]'), null, 'feedback about A must not be shown under B');
+      // Back on A the removal is visible as fact; the dropped feedback is not resurrected.
+      await setV2(page, 'accountA');
+      await page.waitForSelector('[data-records-empty="erased"]');
+      assert.equal(await page.$('[data-records-message]'), null);
+      assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
+      await context.close();
+      return { staleFeedbackSuppressed: true };
+    });
+
+    await check('device mode: unknown birth time: keep, find, exact download', async () => {
+      const { context, blocked, errors } = await newContext();
+      const page = await context.newPage();
+      await computeKnownTime(page, { date: '1968-02-29', place: 'Lisbon', timeKnown: false });
+      await waitKeepState(page, ['idle']);
+      const receipt = await downloadBytes(page, '[data-download-calculation-receipt]');
+      assert.match(receipt.bytes.toString('utf8'), /"timeKnown":false/u);
+      assert.equal(await keep(page), 'kept');
+      assert.equal(await gotoProfile(page), 'ready');
+      assert.equal(await recordCount(page), 1);
+      assert.match(await page.textContent('[data-record-id]'), /1968-02-29 · time unknown · Europe\/Lisbon/u);
+      const record = await downloadBytes(page, '[data-record-download]');
+      assert.equal(sha(record.bytes), sha(receipt.bytes), 'unknown-time record bytes differ from the calculator receipt');
+      assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
+      await context.close();
+      return { bytes: receipt.bytes.length, sha256: sha(receipt.bytes) };
+    });
+
+    await check('device mode: the fortieth record is kept; the forty-first is refused and nothing is stored', async () => {
+      const { context, blocked, errors } = await newContext();
+      const page = await context.newPage();
+      await computeKnownTime(page);
+      assert.equal(await keep(page), 'kept');
+      // Thirty-eight further records with the same exact bytes, written as the store would (synthetic ids).
+      await page.evaluate(() => new Promise((resolve, reject) => {
+        const request = indexedDB.open('zodiacs-saved-natal-v1');
+        request.onsuccess = () => {
+          const database = request.result;
+          const transaction = database.transaction('records', 'readwrite');
+          const store = transaction.objectStore('records');
+          const all = store.getAll();
+          all.onsuccess = () => {
+            const [template] = all.result;
+            for (let index = 1; index <= 38; index++) {
+              store.add({ ...template, id: `${String(index).padStart(8, '0')}-0000-4000-8000-000000000000` });
+            }
+          };
+          transaction.oncomplete = () => { database.close(); resolve(); };
+          transaction.onerror = () => { database.close(); reject(transaction.error); };
+        };
+        request.onerror = () => reject(request.error);
+      }));
+      assert.equal(await gotoProfile(page), 'ready');
+      assert.equal(await recordCount(page), 39);
+      await computeKnownTime(page, { date: '1985-03-02', time: '09:15', place: 'Paris' });
+      assert.equal(await keep(page), 'kept', 'the fortieth record is within the limit');
+      await computeKnownTime(page, { date: '1977-08-09', time: '06:00', place: 'Tokyo' });
+      assert.equal(await keep(page), 'full');
+      assert.match(await page.textContent('[data-record-keep-message]'), /maximum of 40\. Remove one under Profile/u);
+      assert.equal(await page.$('[data-record-kept]'), null);
+      assert.equal(await gotoProfile(page), 'ready');
+      assert.equal(await recordCount(page), 40, 'the refused keep stored nothing');
+      // Removing one restores room: the same calculation can then be kept.
+      await removeRecord(page);
+      assert.equal(await recordCount(page), 39);
+      await computeKnownTime(page, { date: '1977-08-09', time: '06:00', place: 'Tokyo' });
+      assert.equal(await keep(page), 'kept');
+      assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
+      await context.close();
+      return { limit: 40 };
+    });
+
     await check('an unreleased schema-2 database is refused intact', async () => {
       const { context, blocked, errors } = await newContext();
       const page = await context.newPage();
@@ -576,7 +641,7 @@ try {
   });
 } finally {
   await browser?.close();
-  const report = { completedAt: new Date().toISOString(), node: process.version, results,
+  const report = { completedAt: new Date().toISOString(), node: process.version, engine: ENGINE, browser: await browser?.version?.(), results,
     passed: results.filter((r) => r.passed).length, failed: results.filter((r) => !r.passed).length };
   await mkdir(OUT, { recursive: true });
   await writeFile(resolve(OUT, 'result.json'), `${JSON.stringify(report, null, 2)}\n`);

@@ -53,11 +53,36 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   const scopeRef = useRef<Scope | null>(null);
   const apiRef = useRef<Access | null>(null);
   const openRun = useRef(0);
+  // Feedback belongs to the owner namespace whose records it describes. A
+  // reopen that settles on a different namespace (sign-in, the guest view) or
+  // on none (locked: signed out, or another account) drops it; one that keeps
+  // the namespace keeps it, including a reopen that fails at the storage
+  // level, where "queued but did not finish" is exactly what must stay
+  // visible. `undefined` means a reopen is in flight.
+  const shownOwner = useRef<string | null | undefined>(null);
+  const knownOwner = useRef<string | null>(null);
+  const messageOwner = useRef<string | null>(null);
+
+  function say(text: string, owner: string | null): void {
+    messageOwner.current = text ? owner : null;
+    setMessage(text);
+  }
+  function settle(owner: string | null | 'unchanged'): void {
+    const next = owner === 'unchanged' ? knownOwner.current : owner;
+    knownOwner.current = next;
+    shownOwner.current = next;
+    if (messageOwner.current !== null && messageOwner.current !== next) say('', null);
+  }
+  /** Whether an outcome for `scope` may still be reported here. */
+  function reportable(scope: Scope): boolean {
+    return shownOwner.current === undefined || shownOwner.current === scope.ownerKey;
+  }
 
   async function open(): Promise<void> {
     const run = ++openRun.current;
     scopeRef.current?.close();
     scopeRef.current = null;
+    shownOwner.current = undefined;
     setArmed(null);
     try {
       const api = apiRef.current ?? await import('../lib/profile/saved-record-access');
@@ -65,17 +90,20 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
       const opened = await api.openSavedRecordScope();
       if (run !== openRun.current) { if (opened.status === 'ready') opened.scope.close(); return; }
       if (opened.status !== 'ready') {
+        settle(opened.status === 'locked' || opened.status === 'disabled' ? null : 'unchanged');
         setState({ status: opened.status === 'blocked' ? 'unavailable' : opened.status === 'disabled' ? 'disabled' : opened.status });
         return;
       }
       scopeRef.current = opened.scope;
       if (opened.scope.state !== null) {
         // Not admitted, erased, or pending: the inventory is honestly empty or blocked.
+        settle(opened.scope.ownerKey);
         setState(opened.scope.state === 'erasure-pending' ? { status: 'pending' } : { status: 'ready', records: [] });
         return;
       }
       const listed = await opened.scope.store.list();
       if (run !== openRun.current) return;
+      settle(opened.scope.ownerKey);
       if (!listed.ok) {
         setState(listed.code === 'stale' || listed.code === 'access-denied' ? { status: 'stale' }
           : listed.code === 'unsupported-storage' || listed.code === 'corrupt-record' || listed.code === 'unsupported-record' ? { status: 'unsupported' }
@@ -84,7 +112,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
       }
       setState({ status: 'ready', records: listed.value });
     } catch {
-      if (run === openRun.current) setState({ status: 'unavailable' });
+      if (run === openRun.current) { settle('unchanged'); setState({ status: 'unavailable' }); }
     }
   }
 
@@ -118,7 +146,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   function download(record: SavedNatalRecord): void {
     const scope = scopeRef.current;
     const api = apiRef.current;
-    setMessage('');
+    say('', null);
     if (!scope || !api || scope.epoch !== api.savedRecordEvaluation() || state.status !== 'ready'
       || !state.records.some((entry) => entry === record)) {
       setState({ status: 'stale' });
@@ -128,7 +156,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
       const facts = describeRecord(record);
       downloadCalculationReceipt(record.envelopeJson, `zodiacs-calculation-record${facts.date ? `-${facts.date}` : ''}.json`);
     } catch {
-      setMessage(copy.downloadFailed);
+      say(copy.downloadFailed, scope.ownerKey);
     }
   }
 
@@ -137,12 +165,16 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
     if (!scope || busy) return;
     if (armed !== record.id) { setArmed(record.id); return; }
     setBusy(true);
-    setMessage('');
+    say('', null);
     try {
       const result = await scope.store.delete(record.id);
-      if (scopeRef.current !== scope) return;
-      if (!result.ok && !result.mayHaveCommitted) {
-        setMessage(result.code === 'stale' || result.code === 'access-denied' ? copy.staleRefresh : copy.removeFailed);
+      // A removal that committed (or may have) is a fact for every open tab:
+      // their inventories, download buttons and calculators re-open on it.
+      // This tab re-opens below; an uncertain outcome is reconciled by that
+      // fresh inventory, never by a retry.
+      if (result.ok || result.mayHaveCommitted) apiRef.current?.broadcastSavedRecordScopeChange();
+      if (!result.ok && !result.mayHaveCommitted && reportable(scope)) {
+        say(result.code === 'stale' || result.code === 'access-denied' ? copy.staleRefresh : copy.removeFailed, scope.ownerKey);
       }
     } finally {
       setBusy(false);
@@ -156,12 +188,17 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
     if (!scope || busy) return;
     if (armed !== 'all') { setArmed('all'); return; }
     setBusy(true);
-    setMessage('');
+    say('', null);
     try {
       const result = await scope.store.clearOwner();
-      if (result.ok) setMessage(copy.removeAllDone);
-      else if (result.mayHaveCommitted) setMessage(copy.removeAllPending);
-      else setMessage(result.code === 'stale' || result.code === 'access-denied' ? copy.staleRefresh : copy.removeAllFailed);
+      // The outcome describes `scope`'s namespace. If ownership moved while
+      // it was pending, the listing now shown is someone else's, and the
+      // result is not said there; the same namespace keeps its feedback.
+      if (reportable(scope)) {
+        say(result.ok ? copy.removeAllDone
+          : result.mayHaveCommitted ? copy.removeAllPending
+            : result.code === 'stale' || result.code === 'access-denied' ? copy.staleRefresh : copy.removeAllFailed, scope.ownerKey);
+      }
       apiRef.current?.announceSavedRecordScopeChange();
     } finally {
       setBusy(false);
@@ -172,7 +209,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
 
   function switchGuestView(select: boolean): void {
     if (!apiRef.current || busy) return;
-    setMessage('');
+    say('', null);
     apiRef.current.selectSavedRecordGuestView(select);
   }
 
