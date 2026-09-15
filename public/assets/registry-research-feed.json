@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-14T10:02:05.058Z",
+  "generatedAt": "2026-09-15T04:40:05.221Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-15T00:00:00.000Z",
-    "endsBefore": "2026-09-22T00:00:00.000Z"
+    "startsAt": "2026-08-16T00:00:00.000Z",
+    "endsBefore": "2026-09-23T00:00:00.000Z"
   },
   "items": [
     {
@@ -98,6 +98,88 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-15",
+      "slug": "daily-market-brief-2026-09-15",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-15T12:00:00.000Z",
+      "visibleAt": "2026-09-15T12:00:00.000Z",
+      "title": "Venus square Pluto · daily market brief",
+      "summary": "Venus square Pluto leads the disclosed symbolic index; Scorpio market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-15/",
+      "signs": [
+        "scorpio",
+        "aquarius"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-14-observation-24h",
+      "slug": "market-check-2026-09-14-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-15T00:14:08.796Z",
+      "visibleAt": "2026-09-15T00:14:08.796Z",
+      "title": "Gemini 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.08 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-14-observation-24h/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-15",
+      "slug": "market-check-2026-09-15",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-15T00:08:45.603Z",
+      "visibleAt": "2026-09-15T00:08:45.603Z",
+      "title": "Scorpio market check · 2026-09-15",
+      "summary": "Scorpio price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-15/",
+      "signs": [
+        "scorpio"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-07-observation-168h",
+      "slug": "market-check-2026-09-07-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-14T13:24:17.615Z",
+      "visibleAt": "2026-09-14T13:24:17.615Z",
+      "title": "Virgo 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.34 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-07-observation-168h/",
+      "signs": [
+        "virgo"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-14",
       "slug": "daily-market-brief-2026-09-14",
       "kind": "daily-market-brief",
@@ -117,7 +199,7 @@
         "daily-sky",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-weekly-outlook-2026-09-14",
@@ -140,7 +222,7 @@
         "weekly-outlook",
         "astrology"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-aspect-2026-09-14t02-39-54-936z-mercury-trine-uranus",
