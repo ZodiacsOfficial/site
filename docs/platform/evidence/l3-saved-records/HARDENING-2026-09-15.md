@@ -41,7 +41,7 @@ a data-safety issue; it is recorded here so it is not mistaken for one.
 | Lifecycle drive, flag-on build, Chromium | 16 of 16 (`lifecycle-result.json`) |
 | Lifecycle drive, Firefox 151, representative checks | 2 of 2: "keep, find, exact download, remove, reload" and "a single removal in another tab reaches open inventories and the calculator" (`lifecycle-firefox-result.json`) |
 | Account-coordinator drive, fixture build, Chromium | 6 of 6 (`account-result.json`) |
-| Flag-off build, typecheck, check-dist, scope guard, Phase 1 captures | FINAL_GATES |
+| Flag-off build, typecheck, check-dist, scope guard, Phase 1 captures | Build within bundle budgets; `astro check` 0 errors, 0 warnings; check-dist, consumer-boundary and footer checks pass; scope guard passes with the allowance pinned to main `9c9e232f`; 18 of 18 captures regenerated on the final source |
 | Hosted checks on the candidate | HOSTED |
 
 Fixture builds used locally: `PUBLIC_SAVED_RECORDS_ENABLED=1` for the
