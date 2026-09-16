@@ -138,7 +138,11 @@ is made.
   `saved-records-lifecycle-drive` in `site-check.yml`.
 - 2026-09-16: `tests/saved-records-rollback.mjs` builds this source four times
   (off → on → off → on) and drives one persistent browser profile through the
-  whole sequence; the lifecycle drive gained the armed-confirm check.
+  whole sequence (`rollback-result.json`); the lifecycle drive gained the
+  armed-confirm check. Re-run on the reviewed candidate: 5,320 unit tests, 31
+  native groups, 17 lifecycle checks in Chromium and 17 in Firefox 151, 6
+  account-coordinator journeys, 4 rollback phases, 18 of 18 Phase 1 captures,
+  and the flag-off build within its bundle budgets.
 - 2026-09-15 hardening: 31 native groups in Chromium and Firefox, 16
   lifecycle checks, and the account-coordinator drive
   `tests/saved-records-account-drive.mjs` (real bootstrap and panel, fixture

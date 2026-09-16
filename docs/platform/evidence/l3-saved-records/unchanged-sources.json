@@ -37,7 +37,7 @@
   },
   {
     "path": "src/islands/ChartCalculator.tsx",
-    "sha256": "153b4e41f31537e0c97c9a8df9bb4d82343ec5608cc256003dd4ecfe82ebe5f0",
+    "sha256": "636703d30fb73b02b99aa10565901447e9436131e3ea071b1330d95e115e629b",
     "baseSha256": "2d5bd78733a827a1cf3181e431ba12e20ddae97ecb9fe3694312c51e8963125a",
     "unchangedFromMain": false
   },

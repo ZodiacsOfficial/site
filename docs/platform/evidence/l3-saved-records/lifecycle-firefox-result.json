@@ -1,9 +1,8 @@
 {
-  "completedAt": "2026-09-15T08:14:26.306Z",
+  "completedAt": "2026-09-16T13:27:58.785Z",
   "node": "v22.22.2",
   "engine": "firefox",
   "browser": "151.0",
-  "note": "Representative lifecycle checks run in Firefox with ONLY filters; the full 16-check drive is the Chromium run in lifecycle-result.json.",
   "results": [
     {
       "name": "device mode: keep, find, exact download, remove, reload",
@@ -12,7 +11,105 @@
         "bytes": 4817,
         "sha256": "01aadf7fc4e40d2968d77c0e4ded9c03ba31b14b97a384372ed9f003e2a9dde7"
       },
-      "ms": 7279
+      "ms": 8706
+    },
+    {
+      "name": "device mode: an armed removal is cancellable and expires; only a deliberate second activation removes",
+      "passed": true,
+      "detail": {
+        "cancelled": [
+          "escape",
+          "pointer-elsewhere",
+          "blur",
+          "timeout"
+        ],
+        "removedAfterConfirm": 1
+      },
+      "ms": 18194
+    },
+    {
+      "name": "device mode: remove all, then an explicit keep readmits a new set",
+      "passed": true,
+      "detail": {
+        "readmitted": true
+      },
+      "ms": 10307
+    },
+    {
+      "name": "device mode: an uncertain keep is stated, never retried, and reconciled in Profile",
+      "passed": true,
+      "detail": {
+        "state": "uncertain"
+      },
+      "ms": 3147
+    },
+    {
+      "name": "simulated account-sync-v2: guest, account A, hidden guest records, A→B→A staleness",
+      "passed": true,
+      "detail": {
+        "state": "uncertain"
+      },
+      "ms": 9882
+    },
+    {
+      "name": "simulated account-sync-v2: retained is read-only; guest view switches only the record scope",
+      "passed": true,
+      "detail": {
+        "retainedReadOnly": true,
+        "guestView": true
+      },
+      "ms": 10224
+    },
+    {
+      "name": "device mode: an interrupted removal is finished on the next visit; keeping afterwards starts a new set",
+      "passed": true,
+      "detail": {
+        "recovered": true
+      },
+      "ms": 8446
+    },
+    {
+      "name": "device mode: a removal in another tab reaches an open calculator without reload",
+      "passed": true,
+      "detail": {
+        "crossTab": true
+      },
+      "ms": 4539
+    },
+    {
+      "name": "simulated account-sync-v2: locked without a grant, never a guest fallback",
+      "passed": true,
+      "detail": {
+        "databases": []
+      },
+      "ms": 1820
+    },
+    {
+      "name": "blocked storage is an honest unavailable state; legacy saves still work",
+      "passed": true,
+      "detail": {
+        "legacySaveUnaffected": true
+      },
+      "ms": 3861
+    },
+    {
+      "name": "a browser without indexedDB.databases() is an honest unsupported state; legacy saves still work",
+      "passed": true,
+      "detail": {
+        "legacySaveUnaffected": true
+      },
+      "ms": 3074
+    },
+    {
+      "name": "device mode: two tabs keeping at once admit exactly one set; a loser, if any, is told nothing was stored",
+      "passed": true,
+      "detail": {
+        "outcomes": [
+          "kept",
+          "kept"
+        ]
+      },
+      "ms": 5283
     },
     {
       "name": "device mode: a single removal in another tab reaches open inventories and the calculator without reload",
@@ -20,9 +117,49 @@
       "detail": {
         "singleRemovalPropagated": true
       },
-      "ms": 6601
+      "ms": 5191
+    },
+    {
+      "name": "simulated account-sync-v2: removal feedback stays with the namespace that asked for it",
+      "passed": true,
+      "detail": {
+        "staleFeedbackSuppressed": true
+      },
+      "ms": 3890
+    },
+    {
+      "name": "device mode: unknown birth time: keep, find, exact download",
+      "passed": true,
+      "detail": {
+        "bytes": 4082,
+        "sha256": "8ed654eb8c6f0720533a440ecbe0730402dfc60a42a9f3da28b9cc0ee68da0d3"
+      },
+      "ms": 3810
+    },
+    {
+      "name": "device mode: the fortieth record is kept; the forty-first is refused and nothing is stored",
+      "passed": true,
+      "detail": {
+        "limit": 40
+      },
+      "ms": 11193
+    },
+    {
+      "name": "an unreleased schema-2 database is refused intact",
+      "passed": true,
+      "detail": {
+        "version": 2,
+        "rows": [
+          {
+            "ownerKey": "guest:30000000-0000-4000-8000-000000000003",
+            "id": "40000000-0000-4000-8000-000000000004",
+            "preserved": "synthetic"
+          }
+        ]
+      },
+      "ms": 1955
     }
   ],
-  "passed": 2,
+  "passed": 17,
   "failed": 0
 }

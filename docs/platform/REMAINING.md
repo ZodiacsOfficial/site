@@ -1,6 +1,6 @@
 # Finite remaining platform checklist
 
-Current checkpoint: 2026-09-14. L2a and L2b are released and production-verified; the L3b/c candidate and the usability fixes are on the branch, unmerged and inactive by flag.
+Current checkpoint: 2026-09-16. L2a and L2b are released and production-verified; the L3b/c candidate and the usability fixes are on the branch, reviewed by automated adversarial review and inactive by flag.
 Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Completed release work
@@ -59,14 +59,20 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   bootstrap/panel browser journeys with intercepted auth and backend,
   unknown-time keep, 40-record refusal, Firefox native and lifecycle runs
   ([HARDENING-2026-09-15](evidence/l3-saved-records/HARDENING-2026-09-15.md)).
-- [ ] **L3 review and activation:** draft
-  [#490](https://github.com/ZodiacsOfficial/site/pull/490) is open; hosted
-  checks on the hardened candidate and human review are pending. A bounded
-  preview build needs an owner decision under the Vercel production-only
-  policy. Activation (`PUBLIC_SAVED_RECORDS_ENABLED=1`) is a separate release
-  decision. Still open: hydrated interaction tests for the records panel (its
-  states are covered by the browser drives only); the account-coordinator
-  drive has run in Chromium only.
+- [ ] **L3 review and activation:** [#490](https://github.com/ZodiacsOfficial/site/pull/490).
+  Three bounded AI reviewers ran against `ed585d3c`; their two release-blocking
+  findings, the merge blocker and the product findings are closed, each with a
+  test that reproduces the original gap
+  ([REVIEW-2026-09-16](evidence/l3-saved-records/REVIEW-2026-09-16.md),
+  [product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)). The
+  off → on → off → on flag sequence is gated
+  ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)). Remaining: merge, deploy,
+  verify, then activate `PUBLIC_SAVED_RECORDS_ENABLED=1` and verify again. Still
+  open and recorded rather than claimed: no real assistive technology was used
+  (the screen-reader findings are measured DOM and ARIA facts); WebKit and real
+  iOS Safari were not available, so no Safari claim is made; a hosted preview
+  remains blocked by the Vercel production-only build policy, which this branch
+  does not change.
 
 [Candidate record](evidence/l3-saved-records/L3BC-README.md),
 [plan](evidence/l3-saved-records/L3BC-PLAN.md),

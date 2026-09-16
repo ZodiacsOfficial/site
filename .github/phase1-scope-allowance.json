@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "l3bc-usability-2026-09-14",
-  "baseCommit": "9c9e232f08f5265ff49f769855038adc8d24a2de",
+  "id": "l3bc-records-2026-09-16",
+  "baseCommit": "7fd426614b2aeda775f679a7dafdcb10e16e1e0b",
   "protectedPaths": [
     "src/pages/es/birth-chart/index.astro",
     "src/pages/es/profile/index.astro",
@@ -12,5 +12,5 @@
     "src/pages/pt/birth-chart/index.astro",
     "src/pages/pt/profile/index.astro"
   ],
-  "authorization": "Owner authorizes the bounded usability improvements and the L3b/c implementation from the revision-2 handoff. Usability finding 2 (birth-chart FAQ Moon-change claim aligned with the implemented guarantee) and the L3c records panel mount on the localized Profile pages; the panel renders nothing while PUBLIC_SAVED_RECORDS_ENABLED is unset. Pinned to the main head the branch starts from; re-pin if the pull request base moves."
+  "authorization": "Owner authorizes the L3b/c records candidate and the bounded usability improvements under the 2026-09-16 authorization to complete, review and release (docs/platform/DECISIONS.md). The eight localized pages carry the birth-chart FAQ correction and the Profile records-panel mount; the panel renders nothing while PUBLIC_SAVED_RECORDS_ENABLED is unset, and on a build where it is unset after an activation it finds, exports and removes only what is already on the device. Pinned to the base the required checks measure this push against; re-pin if the pull request base moves."
 }

@@ -108,6 +108,7 @@ const ALLOWED_INBOUND = new Set([
   'src/islands/ChartCalculator.tsx -> src/lib/profile/saved-record-access.ts',
   'src/islands/ChartCalculator.tsx -> src/lib/profile/saved-record-flags.ts',
   'src/islands/SavedRecordsPanel.tsx -> src/lib/profile/saved-record-access.ts',
+  'src/islands/SavedRecordsPanel.tsx -> src/lib/profile/saved-record-flags.ts',
   'src/islands/SavedRecordsPanel.tsx -> src/lib/profile/saved-record.ts',
   'src/pages/profile/index.astro -> src/lib/profile/saved-record-flags.ts',
   'src/pages/es/profile/index.astro -> src/lib/profile/saved-record-flags.ts',

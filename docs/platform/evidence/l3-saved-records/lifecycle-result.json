@@ -1,6 +1,8 @@
 {
-  "completedAt": "2026-09-15T08:11:46.317Z",
+  "completedAt": "2026-09-16T13:22:38.868Z",
   "node": "v22.22.2",
+  "engine": "chromium",
+  "browser": "141.0.7390.37",
   "results": [
     {
       "name": "device mode: keep, find, exact download, remove, reload",
@@ -9,7 +11,21 @@
         "bytes": 4823,
         "sha256": "ccbf7b71a3b1561865f960f683de473498348e95597abb84e6778cb1031d4e32"
       },
-      "ms": 3986
+      "ms": 4544
+    },
+    {
+      "name": "device mode: an armed removal is cancellable and expires; only a deliberate second activation removes",
+      "passed": true,
+      "detail": {
+        "cancelled": [
+          "escape",
+          "pointer-elsewhere",
+          "blur",
+          "timeout"
+        ],
+        "removedAfterConfirm": 1
+      },
+      "ms": 18837
     },
     {
       "name": "device mode: remove all, then an explicit keep readmits a new set",
@@ -17,7 +33,7 @@
       "detail": {
         "readmitted": true
       },
-      "ms": 7831
+      "ms": 10170
     },
     {
       "name": "device mode: an uncertain keep is stated, never retried, and reconciled in Profile",
@@ -25,7 +41,7 @@
       "detail": {
         "state": "uncertain"
       },
-      "ms": 2827
+      "ms": 3415
     },
     {
       "name": "simulated account-sync-v2: guest, account A, hidden guest records, A→B→A staleness",
@@ -33,7 +49,7 @@
       "detail": {
         "state": "uncertain"
       },
-      "ms": 7890
+      "ms": 9096
     },
     {
       "name": "simulated account-sync-v2: retained is read-only; guest view switches only the record scope",
@@ -42,7 +58,7 @@
         "retainedReadOnly": true,
         "guestView": true
       },
-      "ms": 9058
+      "ms": 10687
     },
     {
       "name": "device mode: an interrupted removal is finished on the next visit; keeping afterwards starts a new set",
@@ -50,7 +66,7 @@
       "detail": {
         "recovered": true
       },
-      "ms": 5593
+      "ms": 5686
     },
     {
       "name": "device mode: a removal in another tab reaches an open calculator without reload",
@@ -58,7 +74,7 @@
       "detail": {
         "crossTab": true
       },
-      "ms": 5076
+      "ms": 11776
     },
     {
       "name": "simulated account-sync-v2: locked without a grant, never a guest fallback",
@@ -66,7 +82,7 @@
       "detail": {
         "databases": []
       },
-      "ms": 1804
+      "ms": 1358
     },
     {
       "name": "blocked storage is an honest unavailable state; legacy saves still work",
@@ -74,7 +90,7 @@
       "detail": {
         "legacySaveUnaffected": true
       },
-      "ms": 2359
+      "ms": 1931
     },
     {
       "name": "a browser without indexedDB.databases() is an honest unsupported state; legacy saves still work",
@@ -82,7 +98,7 @@
       "detail": {
         "legacySaveUnaffected": true
       },
-      "ms": 1926
+      "ms": 3049
     },
     {
       "name": "device mode: two tabs keeping at once admit exactly one set; a loser, if any, is told nothing was stored",
@@ -93,7 +109,7 @@
           "kept"
         ]
       },
-      "ms": 8017
+      "ms": 11177
     },
     {
       "name": "device mode: a single removal in another tab reaches open inventories and the calculator without reload",
@@ -101,7 +117,7 @@
       "detail": {
         "singleRemovalPropagated": true
       },
-      "ms": 5182
+      "ms": 4775
     },
     {
       "name": "simulated account-sync-v2: removal feedback stays with the namespace that asked for it",
@@ -109,7 +125,7 @@
       "detail": {
         "staleFeedbackSuppressed": true
       },
-      "ms": 3369
+      "ms": 3983
     },
     {
       "name": "device mode: unknown birth time: keep, find, exact download",
@@ -118,7 +134,7 @@
         "bytes": 4083,
         "sha256": "0d02dc65cfc57f77337225bb452b72d5976a6398ddf664bfdd0d5cde5b1077e0"
       },
-      "ms": 3264
+      "ms": 1818
     },
     {
       "name": "device mode: the fortieth record is kept; the forty-first is refused and nothing is stored",
@@ -126,7 +142,7 @@
       "detail": {
         "limit": 40
       },
-      "ms": 11226
+      "ms": 11213
     },
     {
       "name": "an unreleased schema-2 database is refused intact",
@@ -141,9 +157,9 @@
           }
         ]
       },
-      "ms": 2184
+      "ms": 1681
     }
   ],
-  "passed": 16,
+  "passed": 17,
   "failed": 0
 }
