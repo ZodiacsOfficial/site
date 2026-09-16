@@ -1,12 +1,16 @@
 import { h } from 'preact';
 import render from 'preact-render-to-string';
 import { readFile } from 'node:fs/promises';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import AccountSyncV2Panel, {
   accountDeletionCompletionMessage,
   displayAccountV2Error,
+  planSavedRecordErasure,
+  RECORDS_BLOCKED_MESSAGE,
   reconcileBootstrapConsentMetadata,
   reconcilePulledConsent,
+  runPlannedSavedRecordErasure,
+  type SavedRecordAccessLoad,
 } from './AccountSyncV2Panel';
 import { AccountV2ClientError } from '../lib/account-v2/client';
 import type { AccountSyncMetadataV1 } from '../lib/account-v2/types';
@@ -164,6 +168,24 @@ describe('AccountSyncV2Panel server-safe shell', () => {
     expect(source).toContain('preserveRecovery || clearConfirmedAccountDeletionRequest');
   });
 
+  it('gates the records hand-off only for an empty-looking browser and authorizes deletion erasure by its own transition', async () => {
+    const source = await readFile(new URL('./AccountSyncV2Panel.tsx', import.meta.url), 'utf8');
+    const initialize = source.slice(source.indexOf('const recordsAccess = await loadSavedRecordAccess();'), source.indexOf('const waitForProfileAccess'));
+    expect(initialize).toContain("const emptyLookingBrowser = nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null;");
+    // A records module that cannot load is as opaque as unavailable storage.
+    expect(initialize).toContain(": { status: 'unavailable', guestRecords: 0 };");
+    expect(initialize).toContain("if (emptyLookingBrowser && (records.status === 'pending' || records.status === 'unavailable')) {");
+    expect(initialize).not.toContain("records.status === 'unsupported'");
+    expect(initialize).not.toContain('sign-in stays locked here');
+    const deletion = source.slice(source.indexOf('async function completeConfirmedDeletionOnDevice('), source.indexOf('\n  async function ', source.indexOf('async function completeConfirmedDeletionOnDevice(') + 1));
+    const epoch = deletion.indexOf('const epoch = authEpoch.current;');
+    const plan = deletion.indexOf('await planSavedRecordErasure(');
+    expect(epoch).toBeGreaterThan(-1);
+    expect(epoch).toBeLessThan(plan);
+    expect(deletion).toContain("if (plan.status === 'blocked' || authEpoch.current !== epoch) return false;");
+    expect(deletion).toContain('() => authEpoch.current === epoch');
+  });
+
   it('keeps export, withdrawal, and permanent deletion reachable when sync bootstrap is unavailable', async () => {
     const source = await readFile(new URL('./AccountSyncV2Panel.tsx', import.meta.url), 'utf8');
     expect(source).toContain('Account privacy controls remain available');
@@ -174,5 +196,99 @@ describe('AccountSyncV2Panel server-safe shell', () => {
     expect(source).toContain("result.outcome === 'not_bootstrapped'");
     expect(source).toContain("result.outcome === 'device_limit_reached'");
     expect(source).toContain('persistAccountPrivacyWithdrawal');
+  });
+});
+
+describe('records erasure plan for sign-out, boundary clear and confirmed deletion', () => {
+  afterEach(() => {
+    vi.doUnmock('../lib/profile/saved-record-access');
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+    vi.resetModules();
+  });
+
+  it('skips only when the feature is not built in; an enabled module that cannot load blocks the action', async () => {
+    expect(await planSavedRecordErasure('device', async () => ({ status: 'disabled' }))).toEqual({ status: 'none' });
+    expect(await planSavedRecordErasure('device', async () => ({ status: 'unavailable' })))
+      .toEqual({ status: 'blocked', message: RECORDS_BLOCKED_MESSAGE });
+    expect(await runPlannedSavedRecordErasure({ status: 'none' }, () => true)).toBe('skipped');
+    // A blocked plan never reaches a transition; if one did, it would still refuse.
+    expect(await runPlannedSavedRecordErasure({ status: 'blocked', message: RECORDS_BLOCKED_MESSAGE }, () => true)).toBe('failed');
+  });
+
+  it('keeps cleanup working after a rollback: flag off with records still on the device', async () => {
+    // The build flag gates writing and the record surfaces, never cleanup. A
+    // device that kept records while the feature was on must still have them
+    // removed by a destructive account action after the flag goes off again.
+    vi.stubEnv('PUBLIC_SAVED_RECORDS_ENABLED', '');
+    const present = vi.fn(async () => [{ name: 'zodiacs-saved-natal-v1' }]);
+    vi.stubGlobal('indexedDB', { databases: present });
+    const retainedDeps = { enabled: true, rights: 'read-only' } as never;
+    const api = {
+      retainedSavedRecordDeps: vi.fn(() => retainedDeps),
+      prepareSavedRecordErasure: vi.fn(async () => ({
+        status: 'ready' as const,
+        ticket: { target: '*', expected: 1, expectedDevice: 1, guestRecords: 0 },
+      })),
+      eraseSavedRecords: vi.fn(async () => ({ ok: true as const, value: 'erased' as const })),
+      confirmSavedRecordsAbsent: vi.fn(),
+    };
+    vi.doMock('../lib/profile/saved-record-access', () => api);
+    vi.resetModules();
+    const panel = await import('./AccountSyncV2Panel');
+
+    const plan = await panel.planSavedRecordErasure('device');
+    expect(present).toHaveBeenCalled();
+    expect(plan.status).toBe('ready');
+    expect(api.prepareSavedRecordErasure).toHaveBeenCalledWith('device', retainedDeps);
+    expect(await panel.runPlannedSavedRecordErasure(plan, () => true)).toBe('erased');
+    expect(api.eraseSavedRecords).toHaveBeenCalledWith(expect.anything(), expect.any(Function), retainedDeps);
+
+    // A device that never had the feature on keeps exactly today's behaviour:
+    // nothing is imported and the plan skips.
+    present.mockResolvedValueOnce([{ name: 'some-other-database' }]);
+    expect(await panel.planSavedRecordErasure('device')).toEqual({ status: 'none' });
+  });
+
+  it('uses the real loader: flag off is disabled, flag on with a failed import is unavailable', async () => {
+    vi.stubEnv('PUBLIC_SAVED_RECORDS_ENABLED', '');
+    vi.stubGlobal('indexedDB', { databases: async () => [] });
+    vi.doMock('../lib/profile/saved-record-access', () => { throw new Error('chunk load failed'); });
+    vi.resetModules();
+    const off = await import('./AccountSyncV2Panel');
+    expect(await off.planSavedRecordErasure('device')).toEqual({ status: 'none' });
+    vi.stubEnv('PUBLIC_SAVED_RECORDS_ENABLED', '1');
+    vi.resetModules();
+    const on = await import('./AccountSyncV2Panel');
+    expect(await on.planSavedRecordErasure('device')).toEqual({ status: 'blocked', message: on.RECORDS_BLOCKED_MESSAGE });
+    expect(await on.planSavedRecordErasure({ accountId: '11111111-1111-4111-8111-111111111111' }))
+      .toEqual({ status: 'blocked', message: on.RECORDS_BLOCKED_MESSAGE });
+  });
+
+  it('carries an observed absence into the transition and refuses when it no longer holds', async () => {
+    const api = {
+      prepareSavedRecordErasure: vi.fn(async () => ({ status: 'absent' as const })),
+      confirmSavedRecordsAbsent: vi.fn(async () => ({ ok: false as const, code: 'stale' as const, mayHaveCommitted: false })),
+      eraseSavedRecords: vi.fn(),
+    };
+    const load = async (): Promise<SavedRecordAccessLoad> => ({ status: 'ready', api: api as never });
+    const plan = await planSavedRecordErasure('device', load);
+    expect(plan).toMatchObject({ status: 'absent', target: 'device' });
+    const authorized = () => true;
+    expect(await runPlannedSavedRecordErasure(plan, authorized)).toBe('failed');
+    expect(api.confirmSavedRecordsAbsent).toHaveBeenCalledWith('device', authorized, undefined);
+    api.confirmSavedRecordsAbsent.mockResolvedValueOnce({ ok: true, value: 'absent' } as never);
+    expect(await runPlannedSavedRecordErasure(plan, authorized)).toBe('skipped');
+    expect(api.eraseSavedRecords).not.toHaveBeenCalled();
+    // Every destructive handler stops on a failed records outcome before touching legacy stores.
+    const source = await readFile(new URL('./AccountSyncV2Panel.tsx', import.meta.url), 'utf8');
+    for (const handler of ['onBoundaryDecision', 'onSignOut', 'completeConfirmedDeletionOnDevice']) {
+      const start = source.indexOf(`async function ${handler}(`);
+      const next = source.indexOf('\n  async function ', start + 1);
+      const body = source.slice(start, next === -1 ? undefined : next);
+      expect(body, handler).toContain('runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch)');
+      expect(body, handler).toMatch(/=== 'failed'\) return/u);
+      expect(body, handler).toContain("plan.status === 'blocked'");
+    }
   });
 });

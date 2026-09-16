@@ -25,6 +25,34 @@ import {
   runExclusiveAccountProfileTransition,
   type AccountProfileReadLease,
 } from '../lib/account-v2/profile-lease';
+import { savedRecordsEnabled, savedRecordsRetainedOnDevice } from '../lib/profile/saved-record-flags';
+
+/**
+ * Receipt-only guest data lives in IndexedDB and is invisible to the
+ * synchronous five-key legacy check. Before binding an apparently empty
+ * browser to an account, discover it (content-free, erase-only recovery).
+ * With the feature off nothing is loaded and the result is always 'empty'.
+ */
+async function discoverSavedRecords(): Promise<'empty' | 'decision' | 'unavailable'> {
+  if (!savedRecordsEnabled()) {
+    // The feature is not built in, but records kept while it was may still be
+    // here. Binding such a browser to an account silently would record a clear
+    // decision the visitor never made, so the hand-off is required instead.
+    // Probing enumerates databases and creates nothing.
+    return await savedRecordsRetainedOnDevice() ? 'decision' : 'empty';
+  }
+  try {
+    const api = await import('../lib/profile/saved-record-access');
+    const discovery = await api.discoverSavedRecordBoundary();
+    // Unsupported storage (no `indexedDB.databases()`, or an unreadable
+    // schema) can hold nothing this client kept, so it never blocks binding;
+    // a pending or failed discovery on a supported runtime does.
+    return discovery.status === 'empty' || discovery.status === 'unsupported' ? 'empty'
+      : discovery.status === 'guest-records' ? 'decision' : 'unavailable';
+  } catch {
+    return 'unavailable';
+  }
+}
 
 function announceAccessChange(): void {
   window.dispatchEvent(new Event('zodiacs:profile-access'));
@@ -123,16 +151,23 @@ export default function AccountProfileAccessBootstrap() {
       if (boundary.status !== 'ready') return;
 
       if (boundary.localOwnerAccountId === null) {
-        const transition = await runExclusiveAccountProfileTransition(local, () => {
+        // Guest calculation records require the same explicit hand-off as
+        // legacy charts; the account panel presents it. Unavailable or
+        // pending record storage keeps this tab locked rather than binding.
+        if (await discoverSavedRecords() !== 'empty') return;
+        if (!live || authVersion !== expectedAuthVersion) return;
+        const transition = await runExclusiveAccountProfileTransition(local, async () => {
           if (!live || authVersion !== expectedAuthVersion) return false;
           const current = inspectLocalAccountBoundary(
             local,
             accountId,
             hasAccountBoundLocalProfileData(local),
           );
-          return current.status === 'ready'
-            && current.localOwnerAccountId === null
-            && recordCompletedAccountBoundaryDecision(local, accountId, 'clear');
+          if (current.status !== 'ready' || current.localOwnerAccountId !== null) return false;
+          // A count sampled before the lock is not proof; recheck under it.
+          if (await discoverSavedRecords() !== 'empty') return false;
+          if (!live || authVersion !== expectedAuthVersion) return false;
+          return recordCompletedAccountBoundaryDecision(local, accountId, 'clear');
         });
         if (!transition.ok || !transition.value) return;
         boundary = inspectLocalAccountBoundary(local, accountId, hasAccountBoundLocalProfileData(local));

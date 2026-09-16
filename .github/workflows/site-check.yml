@@ -137,6 +137,10 @@ jobs:
         timeout-minutes: 5
         run: OUT_DIR=tests/visual/artifacts/reference-captions node tests/reference-caption-drive.mjs
 
+      - name: Inactive saved receipt storage and durable erasure
+        timeout-minutes: 3
+        run: OUT_DIR=tests/visual/artifacts/saved-natal-storage node tests/saved-natal-storage-drive.mjs
+
       - name: Engine accuracy vectors
         run: npm test
 
@@ -343,6 +347,93 @@ jobs:
 
       - name: Local save, persistence, export, and deletion acceptance
         run: npm run test:phase7:living-chart
+
+  saved-records-lifecycle-drive:
+    name: Saved calculation records lifecycle drive
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PUBLIC_SAVED_RECORDS_ENABLED: "1"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install chromium
+
+      - name: Build (saved calculation records flag on)
+        run: npm run build
+
+      # The flag-on build is the configuration activation ships. It must pass the
+      # same integrity gates as the flag-off build, or a records-only regression
+      # reaches production with CI fully green.
+      - name: Consumer boundary, footer and type checks (flag on)
+        run: npm run check
+
+      - name: Link and artifact integrity over dist (flag on)
+        run: node scripts/check-dist.mjs
+
+      - name: Bundle size and engine isolation gates (flag on)
+        run: node scripts/report-bundles.mjs --fail
+
+      - name: Explicit keep, inventory, exact export, deletion, recovery and readmission acceptance
+        run: OUT_DIR=tests/visual/artifacts/saved-records-lifecycle npm run test:saved-records:browser
+
+      - name: Flag rollback gates (off, on, off, on with one browser profile)
+        run: OUT_DIR=tests/visual/artifacts/saved-records-rollback npm run test:saved-records:rollback
+
+      - name: Upload saved-records lifecycle evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: saved-records-lifecycle-${{ github.run_id }}
+          path: tests/visual/artifacts/saved-records-lifecycle/
+          if-no-files-found: ignore
+          retention-days: 30
+
+  saved-records-account-drive:
+    name: Saved calculation records under the real account coordinator
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright-core install chromium
+
+      # Fixture-only build: the records flag, the account coordinator and a
+      # synthetic auth origin the drive answers. Never a real project; the
+      # builder sets the flags itself (tests/saved-records-account.mjs).
+      - name: Fixture build, then the real bootstrap and account panel journeys with intercepted auth and backend
+        run: OUT_DIR=tests/visual/artifacts/saved-records-account npm run test:saved-records:account
+
+      - name: Upload saved-records account evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: saved-records-account-${{ github.run_id }}
+          path: tests/visual/artifacts/saved-records-account/
+          if-no-files-found: ignore
+          retention-days: 30
 
   zodiac-games-sql:
     name: Zodiac Games SQL

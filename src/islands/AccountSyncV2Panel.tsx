@@ -74,8 +74,92 @@ import {
   waitForProfileAccess,
 } from '../lib/account-v2/profile-access';
 import { runExclusiveAccountProfileTransition } from '../lib/account-v2/profile-lease';
+import { savedRecordsEnabled, savedRecordsRetainedOnDevice } from '../lib/profile/saved-record-flags';
 
 type SyncModule = typeof import('../lib/profile/sync');
+type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
+type SavedRecordEraseTicket = import('../lib/profile/saved-record-access').SavedRecordEraseTicket;
+type SavedRecordEraseTarget = import('../lib/profile/saved-record-access').SavedRecordEraseTarget;
+type SavedRecordDiscovery = import('../lib/profile/saved-record-access').SavedRecordDiscovery;
+type SavedRecordDeps = import('../lib/profile/saved-record-access').SavedRecordDeps;
+
+/**
+ * Loaded when the local calculation-record lifecycle is built in, and also when
+ * it is not but records kept while it was are still on this device: the build
+ * flag gates writing and the record surfaces, never cleanup. With the module
+ * needed, one that fails to load (a lost chunk after a deploy, a blocked
+ * request) is `unavailable`, never the same as `disabled`: the records on this
+ * device cannot be inspected, so no destructive action may report that it
+ * removed them. `deps` is present only for the retained-data mode, where it
+ * caps every operation to find, export and remove.
+ */
+export type SavedRecordAccessLoad =
+  | { status: 'disabled' }
+  | { status: 'unavailable' }
+  | { status: 'ready'; api: SavedRecordAccess; deps?: SavedRecordDeps };
+async function loadSavedRecordAccess(): Promise<SavedRecordAccessLoad> {
+  const enabled = savedRecordsEnabled();
+  // Probing enumerates databases and creates nothing, so a device that never
+  // had the feature on takes exactly the path it takes today.
+  const retained = enabled ? false : await savedRecordsRetainedOnDevice();
+  if (!enabled && !retained) return { status: 'disabled' };
+  try {
+    const api = await import('../lib/profile/saved-record-access');
+    return { status: 'ready', api, ...(retained ? { deps: api.retainedSavedRecordDeps() } : {}) };
+  } catch {
+    return { status: 'unavailable' };
+  }
+}
+
+export type SavedRecordErasePlan =
+  | { status: 'none' }
+  | { status: 'absent'; target: SavedRecordEraseTarget; api: SavedRecordAccess; deps?: SavedRecordDeps }
+  | { status: 'ready'; ticket: SavedRecordEraseTicket; api: SavedRecordAccess; deps?: SavedRecordDeps }
+  | { status: 'blocked'; message: string };
+
+export const RECORDS_BLOCKED_MESSAGE = 'Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings.';
+
+/**
+ * Pins a records erasure before the exclusive transition. `none` means the
+ * feature is not built in; an observed absence is carried into the transition
+ * and re-checked there, never treated as proof that nothing needs removing.
+ */
+export async function planSavedRecordErasure(
+  target: SavedRecordEraseTarget,
+  load: () => Promise<SavedRecordAccessLoad> = loadSavedRecordAccess,
+): Promise<SavedRecordErasePlan> {
+  const loaded = await load();
+  if (loaded.status === 'disabled') return { status: 'none' };
+  if (loaded.status === 'unavailable') return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
+  const { api, deps } = loaded;
+  const prepared = await api.prepareSavedRecordErasure(target, deps);
+  if (prepared.status === 'ready') return { status: 'ready', ticket: prepared.ticket, api, deps };
+  if (prepared.status === 'absent') return { status: 'absent', target, api, deps };
+  if (prepared.status === 'disabled') return { status: 'none' };
+  return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
+}
+
+/**
+ * Two-phase erasure inside the transition: a failure before intent stops the
+ * caller, and so does an absence that no longer holds under the transition
+ * (`failed`, nothing removed). Only a `none` plan skips without looking.
+ */
+export async function runPlannedSavedRecordErasure(
+  plan: SavedRecordErasePlan,
+  authorized: () => boolean,
+): Promise<SavedRecordEraseOutcome> {
+  if (plan.status === 'none') return 'skipped';
+  if (plan.status === 'blocked') return 'failed';
+  if (plan.status === 'absent') {
+    const confirmed = await plan.api.confirmSavedRecordsAbsent(plan.target, authorized, plan.deps);
+    return confirmed.ok ? 'skipped' : 'failed';
+  }
+  const result = await plan.api.eraseSavedRecords(plan.ticket, authorized, plan.deps);
+  if (result.ok) return 'erased';
+  return result.mayHaveCommitted ? 'pending' : 'failed';
+}
+
+export type SavedRecordEraseOutcome = 'skipped' | 'erased' | 'pending' | 'failed';
 type ConsentState = 'pending' | 'granted' | 'withdrawn';
 type ViewState = 'loading' | 'signed-out' | 'boundary' | 'legacy' | 'deleting' | 'ready' | 'error';
 
@@ -213,6 +297,7 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
   const [deleteText, setDeleteText] = useState('');
   const [clearDeviceOnDelete, setClearDeviceOnDelete] = useState(true);
   const [pendingDeletions, setPendingDeletions] = useState<AccountDeletionRequestV1[]>([]);
+  const [recordsBoundary, setRecordsBoundary] = useState<SavedRecordDiscovery | null>(null);
   const authEpoch = useRef(0);
   const profileAccessGeneration = useProfileAccessGeneration(() => {
     setAttestedChartId(null);
@@ -265,7 +350,7 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       setView('error');
       return;
     }
-    const nextBoundary = inspectLocalAccountBoundary(
+    let nextBoundary = inspectLocalAccountBoundary(
       storage,
       nextSession.user.id,
       hasAccountBoundLocalProfileData(storage),
@@ -275,6 +360,43 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       setView('error');
       return;
     }
+    // Guest calculation records are invisible to the synchronous legacy check.
+    // Discover them (content-free) before the browser can be treated as empty.
+    const recordsAccess = await loadSavedRecordAccess();
+    if (authEpoch.current !== epoch) return;
+    let records: SavedRecordDiscovery | null = null;
+    if (recordsAccess.status !== 'disabled') {
+      // A module that cannot load is as opaque as unavailable storage: this
+      // browser cannot be shown to be empty, so it is not bound.
+      records = recordsAccess.status === 'ready'
+        ? await recordsAccess.api.discoverSavedRecordBoundary(recordsAccess.deps)
+        : { status: 'unavailable', guestRecords: 0 };
+      if (authEpoch.current !== epoch) return;
+      // Only an empty-looking browser is gated on discovery (the bootstrap
+      // applies the same rule before auto-binding). A bound or mismatched
+      // browser keeps its legacy hand-off; the records panel reports its own
+      // failure state there.
+      // Unsupported record storage (no readable database) means this client
+      // could not have kept guest records there, so it never gates the hand-off.
+      const emptyLookingBrowser = nextBoundary.status === 'ready' && nextBoundary.localOwnerAccountId === null;
+      if (emptyLookingBrowser && (records.status === 'pending' || records.status === 'unavailable')) {
+        setMessage(records.status === 'pending'
+          ? 'Calculation records on this device are still being removed. Open Profile again in a moment; no chart was uploaded.'
+          : 'Calculation records on this device could not be checked safely, so this browser cannot be bound to the account yet. No chart was uploaded.');
+        setView('error');
+        return;
+      }
+      if (records.status === 'guest-records' && emptyLookingBrowser) {
+        nextBoundary = {
+          status: 'decision-required',
+          reason: 'unowned-local-data',
+          authenticatedAccountId: nextSession.user.id,
+          localOwnerAccountId: null,
+          decisions: ['import', 'clear', 'cancel'],
+        };
+      }
+    }
+    setRecordsBoundary(records);
     if (nextBoundary.status === 'decision-required') {
       setBoundary(nextBoundary);
       setView('boundary');
@@ -612,11 +734,24 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
         return;
       }
       assertActionCurrent(epoch);
+      // Clearing erases the same owner's calculation records (guest, or the
+      // other account); keeping leaves guest records as guest records.
+      const plan = decision === 'clear'
+        ? await planSavedRecordErasure(boundary.localOwnerAccountId ? { accountId: boundary.localOwnerAccountId } : 'guest')
+        : { status: 'none' as const };
+      assertActionCurrent(epoch);
+      if (plan.status === 'blocked') {
+        setMessage(plan.message);
+        return;
+      }
       const transition = await runExclusiveAccountProfileTransition(
         accountStorage,
-        () => authEpoch.current === epoch
-          ? completeAccountBoundaryDecision(accountStorage, boundary, decision)
-          : { ok: false, restoredPreviousArchive: false },
+        async () => {
+          if (authEpoch.current !== epoch) return { ok: false, restoredPreviousArchive: false };
+          const records = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+          if (records === 'failed') return { ok: false, restoredPreviousArchive: false };
+          return completeAccountBoundaryDecision(accountStorage, boundary, decision);
+        },
       );
       if (!transition.ok || !transition.value.ok) throw new Error('bind');
       assertActionCurrent(epoch);
@@ -1109,17 +1244,33 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       return;
     }
     const accountId = session.user.id;
+    // "Clear all Zodiacs data" is whole-device: every calculation-record
+    // namespace on this device, not only the signed-in account's.
+    const plan = removeFromDevice ? await planSavedRecordErasure('device') : { status: 'none' as const };
+    if (authEpoch.current !== epoch) return;
+    if (plan.status === 'blocked') {
+      setMessage(`${plan.message} Sign-out was stopped.`);
+      setBusy(false);
+      return;
+    }
+    const outcome = { records: 'skipped' as SavedRecordEraseOutcome };
     const transition = await runExclusiveAccountProfileTransition(
       accountStorage,
-      () => authEpoch.current === epoch
-        ? removeFromDevice
-          ? clearAllZodiacsDataFromDevice(accountStorage, browserStorage.session)
-          : { ok: retainCurrentAccountProfile(accountStorage, accountId) }
-        : { ok: false },
+      async () => {
+        if (authEpoch.current !== epoch) return { ok: false };
+        if (!removeFromDevice) return { ok: retainCurrentAccountProfile(accountStorage, accountId) };
+        // Record intent commits before the legacy stores are touched; a
+        // failure before intent stops sign-out with nothing removed.
+        outcome.records = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+        if (outcome.records === 'failed') return { ok: false };
+        return clearAllZodiacsDataFromDevice(accountStorage, browserStorage.session);
+      },
     );
     if (authEpoch.current !== epoch) return;
     if (!transition.ok || !transition.value.ok) {
-      setMessage('The browser profile could not be prepared safely, so sign-out was stopped. Close other Zodiacs tabs and try again.');
+      setMessage(outcome.records === 'failed'
+        ? `${RECORDS_BLOCKED_MESSAGE} Sign-out was stopped and nothing else was removed.`
+        : 'The browser profile could not be prepared safely, so sign-out was stopped. Close other Zodiacs tabs and try again.');
       setBusy(false);
       return;
     }
@@ -1288,7 +1439,16 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
     preserveRecovery: boolean,
   ): Promise<boolean> {
     if (!accountStorage) return false;
-    const transition = await runExclusiveAccountProfileTransition(accountStorage, () => {
+    // Only the deleted account's own record namespace is removed; an active
+    // different account and guest records stay untouched. The erasure is
+    // authorized by the transition this call started under, sampled before
+    // the asynchronous plan, never by whatever transition is current later.
+    const epoch = authEpoch.current;
+    const plan = removeFromDevice ? await planSavedRecordErasure({ accountId: request.accountId }) : { status: 'none' as const };
+    if (plan.status === 'blocked' || authEpoch.current !== epoch) return false;
+    const transition = await runExclusiveAccountProfileTransition(accountStorage, async () => {
+      const recordsOutcome = await runPlannedSavedRecordErasure(plan, () => authEpoch.current === epoch);
+      if (recordsOutcome === 'failed') return false;
       const localCompletion = completeDeletedAccountLocalData(
         accountStorage,
         request.accountId,
@@ -1440,6 +1600,13 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
                 ? 'These charts are not attached to an account. You may make them available for individual selection, clear them, or cancel sign-in.'
                 : 'These charts belong to a different signed-in account on this browser. They will never be claimed by the new account.'}
             </p>
+            {recordsBoundary?.status === 'guest-records' && (
+              <p data-records-boundary>
+                {boundary.reason === 'unowned-local-data'
+                  ? `${recordsBoundary.guestRecords === 1 ? 'One calculation record was' : `${recordsBoundary.guestRecords} calculation records were`} kept on this device before sign-in. Keeping leaves ${recordsBoundary.guestRecords === 1 ? 'it' : 'them'} on this device as guest records, separate from the account and hidden while you are signed in; clearing removes ${recordsBoundary.guestRecords === 1 ? 'it' : 'them'} from this device.`
+                  : 'Calculation records kept on this device as a guest are not affected by this choice.'}
+              </p>
+            )}
             <div class="pf-sync__actions">
               {boundary.reason === 'unowned-local-data' ? (
                 <button class="btn btn--primary" type="button" disabled={busy} onClick={() => void onBoundaryDecision('import')}>

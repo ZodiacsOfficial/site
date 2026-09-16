@@ -33,17 +33,18 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Guide', language: 'Language', legal: 'Legal', utilities: 'More', licenses: 'Data & licenses' },
-  es: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Más', licenses: 'Datos y licencias' },
-  pt: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Mais', licenses: 'Dados e licenças' },
-  fr: { assistant: 'Guide', language: 'Langue', legal: 'Mentions légales', utilities: 'Plus', licenses: 'Données et licences' },
-  it: { assistant: 'Guide', language: 'Lingua', legal: 'Note legali', utilities: 'Altro', licenses: 'Dati e licenze' },
-  ru: { assistant: 'Guide — пока по-английски', language: 'Язык', legal: 'Правовая информация', utilities: 'Ещё', licenses: 'Данные и лицензии' },
+  en: { assistant: 'Guide', language: 'Language', legal: 'Legal', utilities: 'More', licenses: 'Data & licenses', developers: 'Developers' },
+  es: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Más', licenses: 'Datos y licencias', developers: 'Desarrolladores' },
+  pt: { assistant: 'Guide', language: 'Idioma', legal: 'Legal', utilities: 'Mais', licenses: 'Dados e licenças', developers: 'Desenvolvedores' },
+  fr: { assistant: 'Guide', language: 'Langue', legal: 'Mentions légales', utilities: 'Plus', licenses: 'Données et licences', developers: 'Développeurs' },
+  it: { assistant: 'Guide', language: 'Lingua', legal: 'Note legali', utilities: 'Altro', licenses: 'Dati e licenze', developers: 'Sviluppatori' },
+  ru: { assistant: 'Guide — пока по-английски', language: 'Язык', legal: 'Правовая информация', utilities: 'Ещё', licenses: 'Данные и лицензии', developers: 'Разработчикам' },
 } as const satisfies Record<Locale, {
   assistant: string;
   language: string;
   legal: string;
   utilities: string;
+  developers: string;
   licenses: string;
 }>;
 // The English-only courtesy (hreflang="en" + a visible cue) reads from the
@@ -170,6 +171,7 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
       <nav class="zfooter__meta" aria-label={FOOTER_COPY[locale].utilities}>
         <span class="zfooter__label">{FOOTER_COPY[locale].utilities}</span>
         <div class="zfooter__meta-links">
+          <a href="/developers/" hreflang={englishHreflang} title={englishOnlyAria}>{FOOTER_COPY[locale].developers}{englishSuffix}</a>
           <a href="/widgets/" hreflang={englishHreflang} title={englishOnlyAria}>{t(locale, 'footerWidgets')}{englishSuffix}</a>
           <a href="/feeds/horoscopes.xml" hreflang={englishHreflang} title={englishOnlyAria}>RSS{englishSuffix}</a>
         </div>

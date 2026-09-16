@@ -1,0 +1,799 @@
+{
+  "a_fresh": {
+    "desktop": {
+      "today": {
+        "url": "http://127.0.0.1:4503/today/",
+        "state": "empty",
+        "kicker": "Your daily brief",
+        "h1": "Today",
+        "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+        "resolvedHeading": null,
+        "resolvedHeadingAria": null,
+        "chartName": null,
+        "chartNameTitle": null,
+        "resolvedSub": null,
+        "fallbackH2": "Start with your Sun sign",
+        "fallbackStatus": {
+          "text": "No saved chart on this device. Your Sun sign still gives you a useful starting point.",
+          "visible": true
+        },
+        "placeholderH2": {
+          "text": "For your saved chart",
+          "visible": false
+        },
+        "activeSunReading": "Mar 21 – Apr 19",
+        "activeSunSlug": "aries",
+        "sunSignReadingTitle": "Aries · September 14, 2026",
+        "chooserHeading": null,
+        "chooserVisible": false,
+        "allH2": [
+          "Start with your Sun sign",
+          "Coming up in the sky"
+        ],
+        "allKickers": [
+          "Your daily brief",
+          "Mar 21 – Apr 19",
+          "Apr 20 – May 20",
+          "May 21 – Jun 20",
+          "Jun 21 – Jul 22",
+          "Jul 23 – Aug 22",
+          "Aug 23 – Sep 22",
+          "Sep 23 – Oct 22",
+          "Oct 23 – Nov 21",
+          "Nov 22 – Dec 21",
+          "Dec 22 – Jan 19",
+          "Jan 20 – Feb 18",
+          "Feb 19 – Mar 20"
+        ],
+        "mentionsDemo": false,
+        "htmlAttrs": {
+          "sunSign": null,
+          "savedChart": false,
+          "chartSun": null,
+          "needsSelf": false
+        },
+        "storage": {
+          "sunSign": null,
+          "profile": null
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3a-today-fresh-desktop.png"
+      },
+      "profile": {
+        "url": "http://127.0.0.1:4503/profile/",
+        "h1": "Your charts, today and ahead.",
+        "sunPreference": null,
+        "livingChartEmpty": {
+          "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+          "top": 861,
+          "visible": true
+        },
+        "livingChartHeading": "Living Chart",
+        "livingChartStatus": null,
+        "savedCount": null,
+        "exportButtons": [],
+        "chartCards": [],
+        "dashboardHeadings": [
+          {
+            "text": "Your sky, once you save a chart",
+            "top": 449
+          },
+          {
+            "text": "Living Chart",
+            "top": 734
+          }
+        ],
+        "mentionsDemo": false,
+        "storage": {
+          "sunSign": null,
+          "profile": null
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3a-profile-fresh-desktop.png"
+      }
+    },
+    "mobile": {
+      "today": {
+        "url": "http://127.0.0.1:4503/today/",
+        "state": "empty",
+        "kicker": "Your daily brief",
+        "h1": "Today",
+        "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+        "resolvedHeading": null,
+        "resolvedHeadingAria": null,
+        "chartName": null,
+        "chartNameTitle": null,
+        "resolvedSub": null,
+        "fallbackH2": "Start with your Sun sign",
+        "fallbackStatus": {
+          "text": "No saved chart on this device. Your Sun sign still gives you a useful starting point.",
+          "visible": true
+        },
+        "placeholderH2": {
+          "text": "For your saved chart",
+          "visible": false
+        },
+        "activeSunReading": "Mar 21 – Apr 19",
+        "activeSunSlug": "aries",
+        "sunSignReadingTitle": "Aries · September 14, 2026",
+        "chooserHeading": null,
+        "chooserVisible": false,
+        "allH2": [
+          "Start with your Sun sign",
+          "Coming up in the sky"
+        ],
+        "allKickers": [
+          "Your daily brief",
+          "Mar 21 – Apr 19",
+          "Apr 20 – May 20",
+          "May 21 – Jun 20",
+          "Jun 21 – Jul 22",
+          "Jul 23 – Aug 22",
+          "Aug 23 – Sep 22",
+          "Sep 23 – Oct 22",
+          "Oct 23 – Nov 21",
+          "Nov 22 – Dec 21",
+          "Dec 22 – Jan 19",
+          "Jan 20 – Feb 18",
+          "Feb 19 – Mar 20"
+        ],
+        "mentionsDemo": false,
+        "htmlAttrs": {
+          "sunSign": null,
+          "savedChart": false,
+          "chartSun": null,
+          "needsSelf": false
+        },
+        "storage": {
+          "sunSign": null,
+          "profile": null
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3a-today-fresh-mobile.png"
+      },
+      "profile": {
+        "url": "http://127.0.0.1:4503/profile/",
+        "h1": "Your charts, today and ahead.",
+        "sunPreference": null,
+        "livingChartEmpty": {
+          "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+          "top": 951,
+          "visible": true
+        },
+        "livingChartHeading": "Living Chart",
+        "livingChartStatus": null,
+        "savedCount": null,
+        "exportButtons": [],
+        "chartCards": [],
+        "dashboardHeadings": [
+          {
+            "text": "Your sky, once you save a chart",
+            "top": 424
+          },
+          {
+            "text": "Living Chart",
+            "top": 740
+          }
+        ],
+        "mentionsDemo": false,
+        "storage": {
+          "sunSign": null,
+          "profile": null
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3a-profile-fresh-mobile.png"
+      }
+    }
+  },
+  "b_pref_plus_chart": {
+    "profileAfterPreference": {
+      "url": "http://127.0.0.1:4503/profile/",
+      "h1": "Your charts, today and ahead.",
+      "sunPreference": {
+        "kicker": "Sun sign saved",
+        "strong": "Leo added · on this device",
+        "p": "Add your birth time and place when you want your Moon, rising sign, and the rest of the chart.",
+        "top": 421
+      },
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 1162,
+        "visible": true
+      },
+      "livingChartHeading": "Living Chart",
+      "livingChartStatus": null,
+      "savedCount": null,
+      "exportButtons": [],
+      "chartCards": [],
+      "dashboardHeadings": [
+        {
+          "text": "Your sky, once you save a chart",
+          "top": 750
+        },
+        {
+          "text": "Living Chart",
+          "top": 1035
+        }
+      ],
+      "mentionsDemo": false,
+      "storage": {
+        "sunSign": "leo",
+        "profile": null
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-profile-pref-only-desktop.png"
+    },
+    "save": {
+      "before": "Save my chart+",
+      "promptOpen": false,
+      "promptDetail": null,
+      "after": "Saved · on this device✓",
+      "place": "LondonEngland, United Kingdom",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-birth-chart-saved-desktop.png"
+    },
+    "today": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "chart",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": "For Gemini Sun · 1990-06-15",
+      "resolvedHeadingAria": "For Gemini Sun · 1990-06-15",
+      "chartName": "Gemini Sun · 1990-06-15",
+      "chartNameTitle": "Gemini Sun · 1990-06-15",
+      "resolvedSub": "A few themes from the September 14, 2026 sky, compared with your saved birth chart.",
+      "fallbackH2": null,
+      "fallbackStatus": {
+        "text": null,
+        "visible": false
+      },
+      "placeholderH2": {
+        "text": null,
+        "visible": false
+      },
+      "activeSunReading": null,
+      "activeSunSlug": null,
+      "sunSignReadingTitle": null,
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "For Gemini Sun · 1990-06-15",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": "leo",
+        "savedChart": true,
+        "chartSun": "gemini",
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": "leo",
+        "profile": [
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "self",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-today-pref-plus-chart-desktop.png"
+    },
+    "profile": {
+      "url": "http://127.0.0.1:4503/profile/",
+      "h1": "Your charts, today and ahead.",
+      "sunPreference": {
+        "kicker": "Sun sign saved",
+        "strong": "Leo added · on this device",
+        "p": "Add your birth time and place when you want your Moon, rising sign, and the rest of the chart.",
+        "top": 421
+      },
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 1856,
+        "visible": true
+      },
+      "livingChartHeading": "Living Chart",
+      "livingChartStatus": null,
+      "savedCount": {
+        "text": "1 chart saved.",
+        "top": 1998,
+        "visible": true
+      },
+      "exportButtons": [],
+      "chartCards": [
+        "Gemini Sun · 1990-06-15"
+      ],
+      "dashboardHeadings": [
+        {
+          "text": "Today for this chart",
+          "top": 750
+        },
+        {
+          "text": "The year ahead for this chart",
+          "top": 1316
+        },
+        {
+          "text": "Living Chart",
+          "top": 1729
+        },
+        {
+          "text": "Gemini Sun · 1990-06-15",
+          "top": 2060
+        }
+      ],
+      "mentionsDemo": false,
+      "storage": {
+        "sunSign": "leo",
+        "profile": [
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "self",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-profile-pref-plus-chart-desktop.png"
+    },
+    "todayMobile": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "chart",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": "For Gemini Sun · 1990-06-15",
+      "resolvedHeadingAria": "For Gemini Sun · 1990-06-15",
+      "chartName": "Gemini Sun · 1990-06-15",
+      "chartNameTitle": "Gemini Sun · 1990-06-15",
+      "resolvedSub": "A few themes from the September 14, 2026 sky, compared with your saved birth chart.",
+      "fallbackH2": null,
+      "fallbackStatus": {
+        "text": null,
+        "visible": false
+      },
+      "placeholderH2": {
+        "text": null,
+        "visible": false
+      },
+      "activeSunReading": null,
+      "activeSunSlug": null,
+      "sunSignReadingTitle": null,
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "For Gemini Sun · 1990-06-15",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": "leo",
+        "savedChart": true,
+        "chartSun": "gemini",
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": "leo",
+        "profile": [
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "self",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-today-pref-plus-chart-mobile.png"
+    }
+  },
+  "c_pref_only": {
+    "today": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "empty",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": null,
+      "resolvedHeadingAria": null,
+      "chartName": null,
+      "chartNameTitle": null,
+      "resolvedSub": null,
+      "fallbackH2": "Start with your Sun sign",
+      "fallbackStatus": {
+        "text": "No saved chart on this device. Your Sun sign still gives you a useful starting point.",
+        "visible": true
+      },
+      "placeholderH2": {
+        "text": "For your saved chart",
+        "visible": false
+      },
+      "activeSunReading": "Mar 21 – Apr 19",
+      "activeSunSlug": "aries",
+      "sunSignReadingTitle": "Aries · September 14, 2026",
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "Start with your Sun sign",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief",
+        "Jul 23 – Aug 22"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": "leo",
+        "savedChart": false,
+        "chartSun": null,
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": "leo",
+        "profile": null
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3c-today-pref-only-desktop.png"
+    },
+    "todayMobile": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "empty",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": null,
+      "resolvedHeadingAria": null,
+      "chartName": null,
+      "chartNameTitle": null,
+      "resolvedSub": null,
+      "fallbackH2": "Start with your Sun sign",
+      "fallbackStatus": {
+        "text": "No saved chart on this device. Your Sun sign still gives you a useful starting point.",
+        "visible": true
+      },
+      "placeholderH2": {
+        "text": "For your saved chart",
+        "visible": false
+      },
+      "activeSunReading": "Mar 21 – Apr 19",
+      "activeSunSlug": "aries",
+      "sunSignReadingTitle": "Aries · September 14, 2026",
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "Start with your Sun sign",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief",
+        "Jul 23 – Aug 22"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": "leo",
+        "savedChart": false,
+        "chartSun": null,
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": "leo",
+        "profile": null
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3c-today-pref-only-mobile.png"
+    }
+  },
+  "d_two_self_charts": {
+    "save": {
+      "before": "Save my chart+",
+      "promptOpen": false,
+      "promptDetail": null,
+      "after": "Saved · on this device✓"
+    },
+    "today": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "chart",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": "For Pisces Sun · 1985-03-02",
+      "resolvedHeadingAria": "For Pisces Sun · 1985-03-02",
+      "chartName": "Pisces Sun · 1985-03-02",
+      "chartNameTitle": "Pisces Sun · 1985-03-02",
+      "resolvedSub": "A few themes from the September 14, 2026 sky, compared with your saved birth chart.",
+      "fallbackH2": null,
+      "fallbackStatus": {
+        "text": null,
+        "visible": false
+      },
+      "placeholderH2": {
+        "text": null,
+        "visible": false
+      },
+      "activeSunReading": null,
+      "activeSunSlug": null,
+      "sunSignReadingTitle": null,
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "For Pisces Sun · 1985-03-02",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": "leo",
+        "savedChart": true,
+        "chartSun": "pisces",
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": "leo",
+        "profile": [
+          {
+            "name": "Pisces Sun · 1985-03-02",
+            "relationship": "self",
+            "date": "1985-03-02"
+          },
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "other",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3d-today-two-self-charts-desktop.png"
+    },
+    "profile": {
+      "url": "http://127.0.0.1:4503/profile/",
+      "h1": "Your charts, today and ahead.",
+      "sunPreference": {
+        "kicker": "Sun sign saved",
+        "strong": "Leo added · on this device",
+        "p": "Add your birth time and place when you want your Moon, rising sign, and the rest of the chart.",
+        "top": 421
+      },
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 1848,
+        "visible": true
+      },
+      "livingChartHeading": "Living Chart",
+      "livingChartStatus": null,
+      "savedCount": {
+        "text": "2 charts saved — yours and the people you read for.",
+        "top": 1990,
+        "visible": true
+      },
+      "exportButtons": [],
+      "chartCards": [
+        "Pisces Sun · 1985-03-02",
+        "Gemini Sun · 1990-06-15"
+      ],
+      "dashboardHeadings": [
+        {
+          "text": "Today for this chart",
+          "top": 750
+        },
+        {
+          "text": "The year ahead for this chart",
+          "top": 1368
+        },
+        {
+          "text": "Living Chart",
+          "top": 1721
+        },
+        {
+          "text": "Pisces Sun · 1985-03-02",
+          "top": 2052
+        },
+        {
+          "text": "Gemini Sun · 1990-06-15",
+          "top": 2258
+        }
+      ],
+      "mentionsDemo": false,
+      "storage": {
+        "sunSign": "leo",
+        "profile": [
+          {
+            "name": "Pisces Sun · 1985-03-02",
+            "relationship": "self",
+            "date": "1985-03-02"
+          },
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "other",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3d-profile-two-self-charts-desktop.png"
+    }
+  },
+  "e_self_plus_other": {
+    "otherFlow": {
+      "consentLabels": [
+        null,
+        null
+      ],
+      "submitText": "Open their full chart→",
+      "landed": "http://127.0.0.1:4503/birth-chart/#c=1.eyJkIjoiMTk4NS0wMy0wMiIsInoiOiJFdXJvcGUvUGFyaXMiLCJsYSI6NDguODUsImxvIjoyLjM1LCJuIjoiT3RoZXIgcGVyc29uIiwicCI6IlBhcmlzLCBJbGUtZGUtRnJhbmNlLCBGcmFuY2UifQ&subject=other&mineId=72dcebf5-ab49-4583-ba2c-72f4181bdcbe&mineSource=profile",
+      "subjectNotice": "You’re reading Other person’s chart. “You” below means Other person.",
+      "save": {
+        "before": "Save this chart+",
+        "promptOpen": true,
+        "promptDetail": {
+          "label": "Whose chart is this?",
+          "prefill": "Other person"
+        },
+        "after": "Saved · on this device✓"
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3e-birth-chart-other-saved-desktop.png"
+    },
+    "today": {
+      "url": "http://127.0.0.1:4503/today/",
+      "state": "chart",
+      "kicker": "Your daily brief",
+      "h1": "Today",
+      "intro": "Start with the zodiac sign you know. Then choose which saved birth chart is yours to get a more personal comparison.",
+      "resolvedHeading": "For Gemini Sun · 1990-06-15",
+      "resolvedHeadingAria": "For Gemini Sun · 1990-06-15",
+      "chartName": "Gemini Sun · 1990-06-15",
+      "chartNameTitle": "Gemini Sun · 1990-06-15",
+      "resolvedSub": "A few themes from the September 14, 2026 sky, compared with your saved birth chart.",
+      "fallbackH2": null,
+      "fallbackStatus": {
+        "text": null,
+        "visible": false
+      },
+      "placeholderH2": {
+        "text": null,
+        "visible": false
+      },
+      "activeSunReading": null,
+      "activeSunSlug": null,
+      "sunSignReadingTitle": null,
+      "chooserHeading": null,
+      "chooserVisible": false,
+      "allH2": [
+        "For Gemini Sun · 1990-06-15",
+        "Coming up in the sky"
+      ],
+      "allKickers": [
+        "Your daily brief"
+      ],
+      "mentionsDemo": false,
+      "htmlAttrs": {
+        "sunSign": null,
+        "savedChart": true,
+        "chartSun": "gemini",
+        "needsSelf": false
+      },
+      "storage": {
+        "sunSign": null,
+        "profile": [
+          {
+            "name": "Other person",
+            "relationship": "other",
+            "date": "1985-03-02"
+          },
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "self",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3e-today-self-plus-other-desktop.png"
+    },
+    "profile": {
+      "url": "http://127.0.0.1:4503/profile/",
+      "h1": "Your charts, today and ahead.",
+      "sunPreference": null,
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 1607,
+        "visible": true
+      },
+      "livingChartHeading": "Living Chart",
+      "livingChartStatus": null,
+      "savedCount": {
+        "text": "2 charts saved — yours and the people you read for.",
+        "top": 1749,
+        "visible": true
+      },
+      "exportButtons": [],
+      "chartCards": [
+        "Other person",
+        "Gemini Sun · 1990-06-15"
+      ],
+      "dashboardHeadings": [
+        {
+          "text": "Today for this chart",
+          "top": 449
+        },
+        {
+          "text": "The year ahead for this chart",
+          "top": 1067
+        },
+        {
+          "text": "Living Chart",
+          "top": 1480
+        },
+        {
+          "text": "Other person",
+          "top": 1811
+        },
+        {
+          "text": "Gemini Sun · 1990-06-15",
+          "top": 2017
+        }
+      ],
+      "mentionsDemo": false,
+      "storage": {
+        "sunSign": null,
+        "profile": [
+          {
+            "name": "Other person",
+            "relationship": "other",
+            "date": "1985-03-02"
+          },
+          {
+            "name": "Gemini Sun · 1990-06-15",
+            "relationship": "self",
+            "date": "1990-06-15"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3e-profile-self-plus-other-desktop.png"
+    }
+  },
+  "f4": {
+    "desktop": {
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 1856,
+        "visible": true
+      },
+      "savedCount": {
+        "text": "1 chart saved.",
+        "top": 1998,
+        "visible": true
+      },
+      "exportButtons": [],
+      "headings": [
+        {
+          "text": "Today for this chart",
+          "top": 750
+        },
+        {
+          "text": "The year ahead for this chart",
+          "top": 1316
+        },
+        {
+          "text": "Living Chart",
+          "top": 1729
+        },
+        {
+          "text": "Gemini Sun · 1990-06-15",
+          "top": 2060
+        }
+      ],
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-profile-pref-plus-chart-desktop.png"
+    },
+    "mobile": {
+      "livingChartEmpty": {
+        "text": "Nothing saved yet. Your first entry begins with a personal forecast in Today—no account setup needed.",
+        "top": 2154,
+        "visible": true
+      },
+      "savedCount": {
+        "text": "1 chart saved.",
+        "top": 2321,
+        "visible": true
+      },
+      "exportButtons": [],
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f3b-profile-pref-plus-chart-mobile.png"
+    }
+  },
+  "errors": []
+}

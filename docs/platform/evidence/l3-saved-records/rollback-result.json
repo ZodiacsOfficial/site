@@ -1,0 +1,64 @@
+{
+  "schema": "zodiacs.saved-records-rollback.v1",
+  "sequence": [
+    "fresh-off",
+    "keep",
+    "disabled",
+    "reenabled"
+  ],
+  "node": "v22.22.2",
+  "phases": [
+    {
+      "phase": "fresh-off",
+      "failed": false,
+      "checks": [
+        {
+          "name": "flag-off build renders nothing and creates no database",
+          "detail": {
+            "database": false
+          }
+        }
+      ]
+    },
+    {
+      "phase": "keep",
+      "failed": false,
+      "checks": [
+        {
+          "name": "flag-on build kept two records with exact receipt bytes",
+          "detail": {
+            "count": 2
+          }
+        }
+      ]
+    },
+    {
+      "phase": "disabled",
+      "failed": false,
+      "checks": [
+        {
+          "name": "rolled-back build keeps discovery, exact export and removal",
+          "detail": {
+            "exported": [
+              "ba9f0db325d883ed793185deee66bd081e9d575b347c7d5f3e8af1bf8f9f1413",
+              "ccbf7b71a3b1561865f960f683de473498348e95597abb84e6778cb1031d4e32"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "phase": "reenabled",
+      "failed": false,
+      "checks": [
+        {
+          "name": "re-enabling readmits cleanly with no stranded or resurrected rows",
+          "detail": {
+            "count": 1
+          }
+        }
+      ]
+    }
+  ],
+  "failed": false
+}

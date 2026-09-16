@@ -1,0 +1,426 @@
+{
+  "tabOrder": [
+    {
+      "step": 1,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "skip",
+      "tabindex": null,
+      "text": "Skip to content"
+    },
+    {
+      "step": 2,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__mark",
+      "tabindex": null,
+      "text": "Zodiacs·org"
+    },
+    {
+      "step": 3,
+      "tag": "button",
+      "id": null,
+      "type": "button",
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link nav__dropdown-btn",
+      "tabindex": null,
+      "text": "Tools"
+    },
+    {
+      "step": 4,
+      "tag": "button",
+      "id": null,
+      "type": "button",
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link nav__dropdown-btn",
+      "tabindex": null,
+      "text": "Signs"
+    },
+    {
+      "step": 5,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link",
+      "tabindex": null,
+      "text": "Today"
+    },
+    {
+      "step": 6,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link",
+      "tabindex": null,
+      "text": "Learn"
+    },
+    {
+      "step": 7,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link",
+      "tabindex": null,
+      "text": "Horoscopes"
+    },
+    {
+      "step": 8,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__link nav__saved",
+      "tabindex": null,
+      "text": "Saved charts"
+    },
+    {
+      "step": 9,
+      "tag": "button",
+      "id": null,
+      "type": "button",
+      "ariaLabel": "Search the site",
+      "role": null,
+      "className": "nav__search",
+      "tabindex": null,
+      "text": "/"
+    },
+    {
+      "step": 10,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "nav__chip",
+      "tabindex": null,
+      "text": "Astrofolio"
+    },
+    {
+      "step": 11,
+      "tag": "input",
+      "id": "birth-date",
+      "type": "date",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 12,
+      "tag": "input",
+      "id": "birth-date",
+      "type": "date",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 13,
+      "tag": "input",
+      "id": "birth-date",
+      "type": "date",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 14,
+      "tag": "input",
+      "id": "birth-date",
+      "type": "date",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 15,
+      "tag": "input",
+      "id": null,
+      "type": "checkbox",
+      "ariaLabel": null,
+      "role": null,
+      "className": "",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 16,
+      "tag": "input",
+      "id": "birth-time",
+      "type": "time",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 17,
+      "tag": "input",
+      "id": "birth-time",
+      "type": "time",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 18,
+      "tag": "input",
+      "id": "birth-time",
+      "type": "time",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 19,
+      "tag": "input",
+      "id": "birth-time",
+      "type": "time",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 20,
+      "tag": "input",
+      "id": "place",
+      "type": null,
+      "ariaLabel": null,
+      "role": "combobox",
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    {
+      "step": 21,
+      "tag": "select",
+      "id": "house-system",
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": "Whole sign (default)Placidus"
+    },
+    {
+      "step": 22,
+      "tag": "button",
+      "id": null,
+      "type": "button",
+      "ariaLabel": null,
+      "role": null,
+      "className": "astro-term__trigger",
+      "tabindex": null,
+      "text": "Whole sign"
+    },
+    {
+      "step": 23,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "astro-term__link",
+      "tabindex": null,
+      "text": "Learn more about Whole sign houses →"
+    },
+    {
+      "step": 24,
+      "tag": "button",
+      "id": null,
+      "type": "button",
+      "ariaLabel": null,
+      "role": null,
+      "className": "astro-term__trigger",
+      "tabindex": null,
+      "text": "Placidus"
+    },
+    {
+      "step": 25,
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "astro-term__link",
+      "tabindex": null,
+      "text": "Learn more about Placidus →"
+    },
+    {
+      "step": 26,
+      "tag": "button",
+      "id": null,
+      "type": "submit",
+      "ariaLabel": null,
+      "role": null,
+      "className": "btn btn--primary calc__submit",
+      "tabindex": null,
+      "text": "Get your free birth chart↗"
+    }
+  ],
+  "errors": [],
+  "reachedSubmit": true,
+  "tabsToSubmit": 26,
+  "placeKeyboard": {
+    "options": [
+      {
+        "id": "place-opt-0",
+        "text": "LondonEngland, United Kingdom",
+        "selected": "true"
+      },
+      {
+        "id": "place-opt-1",
+        "text": "LondrinaParana, Brazil",
+        "selected": "false"
+      },
+      {
+        "id": "place-opt-2",
+        "text": "LondonOntario, Canada",
+        "selected": "false"
+      },
+      {
+        "id": "place-opt-3",
+        "text": "Londonderry County BoroughNorthern Ireland, United Kingdom",
+        "selected": "false"
+      },
+      {
+        "id": "place-opt-4",
+        "text": "LonduimbaliHuambo, Angola",
+        "selected": "false"
+      }
+    ],
+    "beforeArrow": {
+      "activeDescendant": "place-opt-0",
+      "expanded": "true"
+    },
+    "afterArrow": {
+      "activeDescendant": "place-opt-1",
+      "selectedText": "LondrinaParana, Brazil"
+    },
+    "afterEnter": {
+      "selected": true,
+      "chipValue": "Londrina · Parana, Brazil",
+      "inputValue": "Londrina · Parana, Brazil",
+      "urlUnchanged": "/birth-chart/",
+      "active": {
+        "tag": "body",
+        "id": null,
+        "ariaLabel": null,
+        "className": ""
+      }
+    },
+    "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f7-place-selected-desktop.png"
+  },
+  "emptySubmit": {
+    "active": {
+      "tag": "input",
+      "id": "birth-date",
+      "type": "date",
+      "ariaInvalid": "true",
+      "describedBy": "birth-date-error"
+    },
+    "alerts": [
+      {
+        "id": "birth-date-error",
+        "text": "Enter your birth date.",
+        "className": "field__error"
+      },
+      {
+        "id": "birth-time-error",
+        "text": "Enter your birth time.",
+        "className": "field__error"
+      }
+    ],
+    "dateValue": "",
+    "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f7-empty-submit-desktop.png"
+  },
+  "emptySubmitViaButton": {
+    "active": {
+      "tag": "input",
+      "id": "birth-date"
+    },
+    "alerts": [
+      "Enter your birth date.",
+      "Enter your birth time."
+    ]
+  },
+  "resultFocus": {
+    "beforeResult": {
+      "tag": "input",
+      "id": "birth-time",
+      "type": "time",
+      "ariaLabel": null,
+      "role": null,
+      "className": "field__input",
+      "tabindex": null,
+      "text": ""
+    },
+    "afterResult": {
+      "active": {
+        "tag": "h2",
+        "id": null,
+        "className": "sr-only",
+        "text": "Birth chart",
+        "isBody": false
+      },
+      "resultHeading": {
+        "text": "Birth chart",
+        "tabindex": "-1",
+        "isFocused": true,
+        "srOnly": true
+      },
+      "resultRegion": {
+        "tabindex": null,
+        "role": null,
+        "ariaLabel": null,
+        "ariaLive": null
+      },
+      "scrollY": 840,
+      "resultTopInViewport": 80,
+      "statusTexts": [
+        "Open to inspect linked groups of three or four planets."
+      ]
+    },
+    "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f7-after-result-desktop.png",
+    "nextTab": {
+      "tag": "a",
+      "id": null,
+      "type": null,
+      "ariaLabel": null,
+      "role": null,
+      "className": "three-card__more",
+      "tabindex": null,
+      "text": "Read Gemini →"
+    }
+  },
+  "blocked": []
+}

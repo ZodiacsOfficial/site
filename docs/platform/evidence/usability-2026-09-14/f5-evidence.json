@@ -1,0 +1,1247 @@
+{
+  "pages": {
+    "home": {
+      "desktop": {
+        "header": {
+          "visibleItems": [
+            {
+              "tag": "a",
+              "text": "Zodiacs·org",
+              "href": "/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "Tools",
+              "href": null,
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "Signs",
+              "href": null,
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Today",
+              "href": "/today/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Learn",
+              "href": "/learn/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Horoscopes",
+              "href": "/horoscopes/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Saved charts",
+              "href": "/profile/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "/",
+              "href": null,
+              "ariaLabel": "Search the site"
+            },
+            {
+              "tag": "a",
+              "text": "Astrofolio",
+              "href": "/astrofolio/",
+              "ariaLabel": null
+            }
+          ],
+          "toolsMenu": [
+            {
+              "text": "Birth chartSee your sun, moon, rising, planets, houses, and what they mean.",
+              "href": "/birth-chart/"
+            },
+            {
+              "text": "CompatibilityCompare two charts and see where they click, clash, and grow.",
+              "href": "/compatibility/"
+            },
+            {
+              "text": "TransitsSee today's sky next to your chart.",
+              "href": "/transits/"
+            },
+            {
+              "text": "Moon signHow you feel, and what settles you.",
+              "href": "/moon-sign/"
+            },
+            {
+              "text": "Rising signFind the sign people meet first. Birth time helps.",
+              "href": "/rising-sign/"
+            },
+            {
+              "text": "Moon phaseTonight’s moon, and the moon of any date you care about.",
+              "href": "/moon-phase/"
+            },
+            {
+              "text": "Saturn returnWhen yours hits, exactly, and what it tends to ask.",
+              "href": "/saturn-return/"
+            },
+            {
+              "text": "BirthdayPick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.",
+              "href": "/birthday/"
+            },
+            {
+              "text": "All tools →",
+              "href": "/tools/"
+            }
+          ],
+          "signsMenuCount": 12
+        },
+        "footer": {
+          "groups": [
+            {
+              "label": "Tools",
+              "links": [
+                {
+                  "text": "Birth chart",
+                  "href": "/birth-chart/"
+                },
+                {
+                  "text": "Today",
+                  "href": "/today/"
+                },
+                {
+                  "text": "Compatibility",
+                  "href": "/compatibility/"
+                },
+                {
+                  "text": "Moon sign",
+                  "href": "/moon-sign/"
+                },
+                {
+                  "text": "Rising sign",
+                  "href": "/rising-sign/"
+                },
+                {
+                  "text": "Moon phase",
+                  "href": "/moon-phase/"
+                },
+                {
+                  "text": "Saturn return",
+                  "href": "/saturn-return/"
+                },
+                {
+                  "text": "Transits",
+                  "href": "/transits/"
+                },
+                {
+                  "text": "Retrogrades",
+                  "href": "/retrogrades/"
+                }
+              ]
+            },
+            {
+              "label": "Learn",
+              "links": [
+                {
+                  "text": "Start here",
+                  "href": "/learn/"
+                },
+                {
+                  "text": "Horoscopes",
+                  "href": "/horoscopes/"
+                },
+                {
+                  "text": "The planets",
+                  "href": "/learn/planets/"
+                },
+                {
+                  "text": "The houses",
+                  "href": "/learn/houses/"
+                },
+                {
+                  "text": "Zodiac dates",
+                  "href": "/learn/zodiac-dates/"
+                },
+                {
+                  "text": "Glossary",
+                  "href": "/learn/glossary/"
+                },
+                {
+                  "text": "How we compute",
+                  "href": "/methodology/"
+                },
+                {
+                  "text": "Saved charts",
+                  "href": "/profile/"
+                }
+              ]
+            },
+            {
+              "label": "Registry",
+              "links": [
+                {
+                  "text": "Astrofolio",
+                  "href": "/astrofolio/"
+                },
+                {
+                  "text": "Registry",
+                  "href": "/registry/"
+                },
+                {
+                  "text": "SDK",
+                  "href": "/sdk/"
+                },
+                {
+                  "text": "Disclosure",
+                  "href": "/disclosure/"
+                }
+              ]
+            },
+            {
+              "label": "The twelve",
+              "links": [
+                {
+                  "text": "Aries",
+                  "href": "/aries/"
+                },
+                {
+                  "text": "Taurus",
+                  "href": "/taurus/"
+                },
+                {
+                  "text": "Gemini",
+                  "href": "/gemini/"
+                },
+                {
+                  "text": "Cancer",
+                  "href": "/cancer/"
+                },
+                {
+                  "text": "Leo",
+                  "href": "/leo/"
+                },
+                {
+                  "text": "Virgo",
+                  "href": "/virgo/"
+                },
+                {
+                  "text": "Libra",
+                  "href": "/libra/"
+                },
+                {
+                  "text": "Scorpio",
+                  "href": "/scorpio/"
+                },
+                {
+                  "text": "Sagittarius",
+                  "href": "/sagittarius/"
+                },
+                {
+                  "text": "Capricorn",
+                  "href": "/capricorn/"
+                },
+                {
+                  "text": "Aquarius",
+                  "href": "/aquarius/"
+                },
+                {
+                  "text": "Pisces",
+                  "href": "/pisces/"
+                }
+              ]
+            }
+          ],
+          "allFooterLinks": [
+            {
+              "text": "Zodiacs.org",
+              "href": "/"
+            },
+            {
+              "text": "Birth chart",
+              "href": "/birth-chart/"
+            },
+            {
+              "text": "Today",
+              "href": "/today/"
+            },
+            {
+              "text": "Compatibility",
+              "href": "/compatibility/"
+            },
+            {
+              "text": "Moon sign",
+              "href": "/moon-sign/"
+            },
+            {
+              "text": "Rising sign",
+              "href": "/rising-sign/"
+            },
+            {
+              "text": "Moon phase",
+              "href": "/moon-phase/"
+            },
+            {
+              "text": "Saturn return",
+              "href": "/saturn-return/"
+            },
+            {
+              "text": "Transits",
+              "href": "/transits/"
+            },
+            {
+              "text": "Retrogrades",
+              "href": "/retrogrades/"
+            },
+            {
+              "text": "Start here",
+              "href": "/learn/"
+            },
+            {
+              "text": "Horoscopes",
+              "href": "/horoscopes/"
+            },
+            {
+              "text": "The planets",
+              "href": "/learn/planets/"
+            },
+            {
+              "text": "The houses",
+              "href": "/learn/houses/"
+            },
+            {
+              "text": "Zodiac dates",
+              "href": "/learn/zodiac-dates/"
+            },
+            {
+              "text": "Glossary",
+              "href": "/learn/glossary/"
+            },
+            {
+              "text": "How we compute",
+              "href": "/methodology/"
+            },
+            {
+              "text": "Saved charts",
+              "href": "/profile/"
+            },
+            {
+              "text": "Astrofolio",
+              "href": "/astrofolio/"
+            },
+            {
+              "text": "Registry",
+              "href": "/registry/"
+            },
+            {
+              "text": "SDK",
+              "href": "/sdk/"
+            },
+            {
+              "text": "Disclosure",
+              "href": "/disclosure/"
+            },
+            {
+              "text": "Aries",
+              "href": "/aries/"
+            },
+            {
+              "text": "Taurus",
+              "href": "/taurus/"
+            },
+            {
+              "text": "Gemini",
+              "href": "/gemini/"
+            },
+            {
+              "text": "Cancer",
+              "href": "/cancer/"
+            },
+            {
+              "text": "Leo",
+              "href": "/leo/"
+            },
+            {
+              "text": "Virgo",
+              "href": "/virgo/"
+            },
+            {
+              "text": "Libra",
+              "href": "/libra/"
+            },
+            {
+              "text": "Scorpio",
+              "href": "/scorpio/"
+            },
+            {
+              "text": "Sagittarius",
+              "href": "/sagittarius/"
+            },
+            {
+              "text": "Capricorn",
+              "href": "/capricorn/"
+            },
+            {
+              "text": "Aquarius",
+              "href": "/aquarius/"
+            },
+            {
+              "text": "Pisces",
+              "href": "/pisces/"
+            },
+            {
+              "text": "Español",
+              "href": "/es/"
+            },
+            {
+              "text": "Português (Brasil)",
+              "href": "/pt/"
+            },
+            {
+              "text": "Français",
+              "href": "/fr/"
+            },
+            {
+              "text": "Italiano",
+              "href": "/it/"
+            },
+            {
+              "text": "Русский",
+              "href": "/ru/"
+            },
+            {
+              "text": "About",
+              "href": "/about/"
+            },
+            {
+              "text": "Privacy",
+              "href": "/privacy/"
+            },
+            {
+              "text": "Terms",
+              "href": "/terms/"
+            },
+            {
+              "text": "Widgets",
+              "href": "/widgets/"
+            },
+            {
+              "text": "RSS",
+              "href": "/feeds/horoscopes.xml"
+            },
+            {
+              "text": "GeoNames",
+              "href": "https://www.geonames.org/"
+            },
+            {
+              "text": "SIL OFL 1.1",
+              "href": "/fonts/OFL-instrument-sans.txt"
+            }
+          ]
+        },
+        "developerMentionsInHeaderOrFooter": [],
+        "screenshots": [
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-home-header-desktop.png",
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-home-footer-desktop.png"
+        ]
+      },
+      "mobile": {
+        "burgerLabel": "Open menu",
+        "menu": {
+          "hidden": false,
+          "expanded": "true",
+          "groups": [
+            {
+              "label": "The site",
+              "links": [
+                {
+                  "text": "Today",
+                  "href": "/today/"
+                },
+                {
+                  "text": "Learn",
+                  "href": "/learn/"
+                },
+                {
+                  "text": "Horoscopes",
+                  "href": "/horoscopes/"
+                },
+                {
+                  "text": "Saved charts",
+                  "href": "/profile/"
+                },
+                {
+                  "text": "AstrofolioThe twelve Zodiac signs",
+                  "href": "/astrofolio/"
+                }
+              ]
+            },
+            {
+              "label": "Tools",
+              "links": [
+                {
+                  "text": "Birth chart",
+                  "href": "/birth-chart/"
+                },
+                {
+                  "text": "Compatibility",
+                  "href": "/compatibility/"
+                },
+                {
+                  "text": "Transits",
+                  "href": "/transits/"
+                },
+                {
+                  "text": "Moon sign",
+                  "href": "/moon-sign/"
+                },
+                {
+                  "text": "Rising sign",
+                  "href": "/rising-sign/"
+                },
+                {
+                  "text": "Moon phase",
+                  "href": "/moon-phase/"
+                },
+                {
+                  "text": "Saturn return",
+                  "href": "/saturn-return/"
+                },
+                {
+                  "text": "Birthday",
+                  "href": "/birthday/"
+                },
+                {
+                  "text": "All tools →",
+                  "href": "/tools/"
+                }
+              ]
+            },
+            {
+              "label": "The twelve",
+              "links": [
+                {
+                  "text": "Aries",
+                  "href": "/aries/"
+                },
+                {
+                  "text": "Taurus",
+                  "href": "/taurus/"
+                },
+                {
+                  "text": "Gemini",
+                  "href": "/gemini/"
+                },
+                {
+                  "text": "Cancer",
+                  "href": "/cancer/"
+                },
+                {
+                  "text": "Leo",
+                  "href": "/leo/"
+                },
+                {
+                  "text": "Virgo",
+                  "href": "/virgo/"
+                },
+                {
+                  "text": "Libra",
+                  "href": "/libra/"
+                },
+                {
+                  "text": "Scorpio",
+                  "href": "/scorpio/"
+                },
+                {
+                  "text": "Sagittarius",
+                  "href": "/sagittarius/"
+                },
+                {
+                  "text": "Capricorn",
+                  "href": "/capricorn/"
+                },
+                {
+                  "text": "Aquarius",
+                  "href": "/aquarius/"
+                },
+                {
+                  "text": "Pisces",
+                  "href": "/pisces/"
+                }
+              ]
+            }
+          ],
+          "developerLinks": []
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-home-mobile-menu.png"
+      }
+    },
+    "birth-chart": {
+      "desktop": {
+        "header": {
+          "visibleItems": [
+            {
+              "tag": "a",
+              "text": "Zodiacs·org",
+              "href": "/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "Tools",
+              "href": null,
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "Signs",
+              "href": null,
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Today",
+              "href": "/today/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Learn",
+              "href": "/learn/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Horoscopes",
+              "href": "/horoscopes/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "a",
+              "text": "Saved charts",
+              "href": "/profile/",
+              "ariaLabel": null
+            },
+            {
+              "tag": "button",
+              "text": "/",
+              "href": null,
+              "ariaLabel": "Search the site"
+            },
+            {
+              "tag": "a",
+              "text": "Astrofolio",
+              "href": "/astrofolio/",
+              "ariaLabel": null
+            }
+          ],
+          "toolsMenu": [
+            {
+              "text": "Birth chartSee your sun, moon, rising, planets, houses, and what they mean.",
+              "href": "/birth-chart/"
+            },
+            {
+              "text": "CompatibilityCompare two charts and see where they click, clash, and grow.",
+              "href": "/compatibility/"
+            },
+            {
+              "text": "TransitsSee today's sky next to your chart.",
+              "href": "/transits/"
+            },
+            {
+              "text": "Moon signHow you feel, and what settles you.",
+              "href": "/moon-sign/"
+            },
+            {
+              "text": "Rising signFind the sign people meet first. Birth time helps.",
+              "href": "/rising-sign/"
+            },
+            {
+              "text": "Moon phaseTonight’s moon, and the moon of any date you care about.",
+              "href": "/moon-phase/"
+            },
+            {
+              "text": "Saturn returnWhen yours hits, exactly, and what it tends to ask.",
+              "href": "/saturn-return/"
+            },
+            {
+              "text": "BirthdayPick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.",
+              "href": "/birthday/"
+            },
+            {
+              "text": "All tools →",
+              "href": "/tools/"
+            }
+          ],
+          "signsMenuCount": 12
+        },
+        "footer": {
+          "groups": [
+            {
+              "label": "Tools",
+              "links": [
+                {
+                  "text": "Birth chart",
+                  "href": "/birth-chart/"
+                },
+                {
+                  "text": "Today",
+                  "href": "/today/"
+                },
+                {
+                  "text": "Compatibility",
+                  "href": "/compatibility/"
+                },
+                {
+                  "text": "Moon sign",
+                  "href": "/moon-sign/"
+                },
+                {
+                  "text": "Rising sign",
+                  "href": "/rising-sign/"
+                },
+                {
+                  "text": "Moon phase",
+                  "href": "/moon-phase/"
+                },
+                {
+                  "text": "Saturn return",
+                  "href": "/saturn-return/"
+                },
+                {
+                  "text": "Transits",
+                  "href": "/transits/"
+                },
+                {
+                  "text": "Retrogrades",
+                  "href": "/retrogrades/"
+                }
+              ]
+            },
+            {
+              "label": "Learn",
+              "links": [
+                {
+                  "text": "Start here",
+                  "href": "/learn/"
+                },
+                {
+                  "text": "Horoscopes",
+                  "href": "/horoscopes/"
+                },
+                {
+                  "text": "The planets",
+                  "href": "/learn/planets/"
+                },
+                {
+                  "text": "The houses",
+                  "href": "/learn/houses/"
+                },
+                {
+                  "text": "Zodiac dates",
+                  "href": "/learn/zodiac-dates/"
+                },
+                {
+                  "text": "Glossary",
+                  "href": "/learn/glossary/"
+                },
+                {
+                  "text": "How we compute",
+                  "href": "/methodology/"
+                },
+                {
+                  "text": "Saved charts",
+                  "href": "/profile/"
+                }
+              ]
+            },
+            {
+              "label": "Registry",
+              "links": [
+                {
+                  "text": "Astrofolio",
+                  "href": "/astrofolio/"
+                },
+                {
+                  "text": "Registry",
+                  "href": "/registry/"
+                },
+                {
+                  "text": "SDK",
+                  "href": "/sdk/"
+                },
+                {
+                  "text": "Disclosure",
+                  "href": "/disclosure/"
+                }
+              ]
+            },
+            {
+              "label": "The twelve",
+              "links": [
+                {
+                  "text": "Aries",
+                  "href": "/aries/"
+                },
+                {
+                  "text": "Taurus",
+                  "href": "/taurus/"
+                },
+                {
+                  "text": "Gemini",
+                  "href": "/gemini/"
+                },
+                {
+                  "text": "Cancer",
+                  "href": "/cancer/"
+                },
+                {
+                  "text": "Leo",
+                  "href": "/leo/"
+                },
+                {
+                  "text": "Virgo",
+                  "href": "/virgo/"
+                },
+                {
+                  "text": "Libra",
+                  "href": "/libra/"
+                },
+                {
+                  "text": "Scorpio",
+                  "href": "/scorpio/"
+                },
+                {
+                  "text": "Sagittarius",
+                  "href": "/sagittarius/"
+                },
+                {
+                  "text": "Capricorn",
+                  "href": "/capricorn/"
+                },
+                {
+                  "text": "Aquarius",
+                  "href": "/aquarius/"
+                },
+                {
+                  "text": "Pisces",
+                  "href": "/pisces/"
+                }
+              ]
+            }
+          ],
+          "allFooterLinks": [
+            {
+              "text": "Zodiacs.org",
+              "href": "/"
+            },
+            {
+              "text": "Birth chart",
+              "href": "/birth-chart/"
+            },
+            {
+              "text": "Today",
+              "href": "/today/"
+            },
+            {
+              "text": "Compatibility",
+              "href": "/compatibility/"
+            },
+            {
+              "text": "Moon sign",
+              "href": "/moon-sign/"
+            },
+            {
+              "text": "Rising sign",
+              "href": "/rising-sign/"
+            },
+            {
+              "text": "Moon phase",
+              "href": "/moon-phase/"
+            },
+            {
+              "text": "Saturn return",
+              "href": "/saturn-return/"
+            },
+            {
+              "text": "Transits",
+              "href": "/transits/"
+            },
+            {
+              "text": "Retrogrades",
+              "href": "/retrogrades/"
+            },
+            {
+              "text": "Start here",
+              "href": "/learn/"
+            },
+            {
+              "text": "Horoscopes",
+              "href": "/horoscopes/"
+            },
+            {
+              "text": "The planets",
+              "href": "/learn/planets/"
+            },
+            {
+              "text": "The houses",
+              "href": "/learn/houses/"
+            },
+            {
+              "text": "Zodiac dates",
+              "href": "/learn/zodiac-dates/"
+            },
+            {
+              "text": "Glossary",
+              "href": "/learn/glossary/"
+            },
+            {
+              "text": "How we compute",
+              "href": "/methodology/"
+            },
+            {
+              "text": "Saved charts",
+              "href": "/profile/"
+            },
+            {
+              "text": "Astrofolio",
+              "href": "/astrofolio/"
+            },
+            {
+              "text": "Registry",
+              "href": "/registry/"
+            },
+            {
+              "text": "SDK",
+              "href": "/sdk/"
+            },
+            {
+              "text": "Disclosure",
+              "href": "/disclosure/"
+            },
+            {
+              "text": "Aries",
+              "href": "/aries/"
+            },
+            {
+              "text": "Taurus",
+              "href": "/taurus/"
+            },
+            {
+              "text": "Gemini",
+              "href": "/gemini/"
+            },
+            {
+              "text": "Cancer",
+              "href": "/cancer/"
+            },
+            {
+              "text": "Leo",
+              "href": "/leo/"
+            },
+            {
+              "text": "Virgo",
+              "href": "/virgo/"
+            },
+            {
+              "text": "Libra",
+              "href": "/libra/"
+            },
+            {
+              "text": "Scorpio",
+              "href": "/scorpio/"
+            },
+            {
+              "text": "Sagittarius",
+              "href": "/sagittarius/"
+            },
+            {
+              "text": "Capricorn",
+              "href": "/capricorn/"
+            },
+            {
+              "text": "Aquarius",
+              "href": "/aquarius/"
+            },
+            {
+              "text": "Pisces",
+              "href": "/pisces/"
+            },
+            {
+              "text": "Español",
+              "href": "/es/birth-chart/"
+            },
+            {
+              "text": "Português (Brasil)",
+              "href": "/pt/birth-chart/"
+            },
+            {
+              "text": "Français",
+              "href": "/fr/birth-chart/"
+            },
+            {
+              "text": "Italiano",
+              "href": "/it/birth-chart/"
+            },
+            {
+              "text": "Русский",
+              "href": "/ru/birth-chart/"
+            },
+            {
+              "text": "About",
+              "href": "/about/"
+            },
+            {
+              "text": "Privacy",
+              "href": "/privacy/"
+            },
+            {
+              "text": "Terms",
+              "href": "/terms/"
+            },
+            {
+              "text": "Widgets",
+              "href": "/widgets/"
+            },
+            {
+              "text": "RSS",
+              "href": "/feeds/horoscopes.xml"
+            },
+            {
+              "text": "GeoNames",
+              "href": "https://www.geonames.org/"
+            },
+            {
+              "text": "SIL OFL 1.1",
+              "href": "/fonts/OFL-instrument-sans.txt"
+            }
+          ]
+        },
+        "developerMentionsInHeaderOrFooter": [],
+        "screenshots": [
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-birth-chart-header-desktop.png",
+          "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-birth-chart-footer-desktop.png"
+        ]
+      },
+      "mobile": {
+        "burgerLabel": "Open menu",
+        "menu": {
+          "hidden": false,
+          "expanded": "true",
+          "groups": [
+            {
+              "label": "The site",
+              "links": [
+                {
+                  "text": "Today",
+                  "href": "/today/"
+                },
+                {
+                  "text": "Learn",
+                  "href": "/learn/"
+                },
+                {
+                  "text": "Horoscopes",
+                  "href": "/horoscopes/"
+                },
+                {
+                  "text": "Saved charts",
+                  "href": "/profile/"
+                },
+                {
+                  "text": "AstrofolioThe twelve Zodiac signs",
+                  "href": "/astrofolio/"
+                }
+              ]
+            },
+            {
+              "label": "Tools",
+              "links": [
+                {
+                  "text": "Birth chart",
+                  "href": "/birth-chart/"
+                },
+                {
+                  "text": "Compatibility",
+                  "href": "/compatibility/"
+                },
+                {
+                  "text": "Transits",
+                  "href": "/transits/"
+                },
+                {
+                  "text": "Moon sign",
+                  "href": "/moon-sign/"
+                },
+                {
+                  "text": "Rising sign",
+                  "href": "/rising-sign/"
+                },
+                {
+                  "text": "Moon phase",
+                  "href": "/moon-phase/"
+                },
+                {
+                  "text": "Saturn return",
+                  "href": "/saturn-return/"
+                },
+                {
+                  "text": "Birthday",
+                  "href": "/birthday/"
+                },
+                {
+                  "text": "All tools →",
+                  "href": "/tools/"
+                }
+              ]
+            },
+            {
+              "label": "The twelve",
+              "links": [
+                {
+                  "text": "Aries",
+                  "href": "/aries/"
+                },
+                {
+                  "text": "Taurus",
+                  "href": "/taurus/"
+                },
+                {
+                  "text": "Gemini",
+                  "href": "/gemini/"
+                },
+                {
+                  "text": "Cancer",
+                  "href": "/cancer/"
+                },
+                {
+                  "text": "Leo",
+                  "href": "/leo/"
+                },
+                {
+                  "text": "Virgo",
+                  "href": "/virgo/"
+                },
+                {
+                  "text": "Libra",
+                  "href": "/libra/"
+                },
+                {
+                  "text": "Scorpio",
+                  "href": "/scorpio/"
+                },
+                {
+                  "text": "Sagittarius",
+                  "href": "/sagittarius/"
+                },
+                {
+                  "text": "Capricorn",
+                  "href": "/capricorn/"
+                },
+                {
+                  "text": "Aquarius",
+                  "href": "/aquarius/"
+                },
+                {
+                  "text": "Pisces",
+                  "href": "/pisces/"
+                }
+              ]
+            }
+          ],
+          "developerLinks": []
+        },
+        "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-birth-chart-mobile-menu.png"
+      }
+    }
+  },
+  "developers": {
+    "index": {
+      "status": 200,
+      "h1": "Charts, data, and embeds.",
+      "kicker": "For developers and AI agents",
+      "paths": [
+        {
+          "status": "Unpublished candidate · 0.1.1-rc.6",
+          "heading": "Calculate locally",
+          "href": "/developers/examples/#natal"
+        },
+        {
+          "status": "Available · public files",
+          "heading": "Fetch shared sky data",
+          "href": "#sky-data"
+        },
+        {
+          "status": "Available · hosted embeds",
+          "heading": "Embed a tool",
+          "href": "/widgets/"
+        },
+        {
+          "status": "Planned · no public endpoint",
+          "heading": "Use hosted computation",
+          "href": "/developers/support/#hosted"
+        }
+      ],
+      "codeBlocks": [
+        {
+          "ariaLabel": "JavaScript quick start",
+          "code": "const response = await fetch('https://zodiacs.org/api/v1/sky/today.json', {\n  cache: 'no-cache',\n  signal: AbortSignal.timeout(10_000),\n});\nif (!response.ok) throw new Error(`Sky request failed: HTTP ${response.status}`);\n\nconst sky = await response.json();\nif (sky?.schema !== 'zodiacs.sky-api.today.v1'\n  || typeof sky.date !== 'string'\n  || typeof sky.snapshotAt !== 'string'\n  || typeof sky.summary !== 'string'\n  || !Array.isArray(sky.bodies)\n  || sky.bodies.length === 0\n  || sky.bodies.some((body) => !body\n    || typeof body !== 'object'\n    || typeof body.body !== 'string'\n    || typeof body.position !== 'string'\n    || typeof body.retrograde !== 'boolean')) {\n  throw new Error('Unexpected sky payload');\n}\n\nconst today = new Date().toISOString().slice(0, 10);\nif (sky.date !== today) {\n  throw new Error(`Sky edition ${sky.date} is not current (${today} UTC)`);\n}\nif (sky.snapshotAt !== `${sky.date}T12:00:00.000Z`) {\n  throw new Error('Unexpected sky snapshot time');\n}\n\nconsole.log(`Computed positions for ${sky.snapshotAt}`);\nconsole.log(sky.summary);\nfor (const body of sky.bodies) {\n  console.log(body.body, body.position, body.retrograde ? 'Rx' : '');\n}\n"
+        },
+        {
+          "ariaLabel": null,
+          "code": "<iframe src=\"https://zodiacs.org/embed/sky/?theme=dark\" title=\"The sky today — Zodiacs.org\" width=\"480\" height=\"250\" style=\"border:0;border-radius:14px;overflow:hidden;max-width:100%\" loading=\"lazy\" sandbox=\"allow-scripts allow-forms allow-same-origin allow-popups allow-popups-to-escape-sandbox\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>"
+        }
+      ],
+      "mentions": {
+        "noon": true,
+        "twelve": true,
+        "timezone": false,
+        "utc": true,
+        "engineLinks": [
+          {
+            "text": "Calculate locally",
+            "href": "/developers/examples/#natal"
+          },
+          {
+            "text": "Use hosted computation",
+            "href": "/developers/support/#hosted"
+          },
+          {
+            "text": "Run the three examples",
+            "href": "/developers/examples/"
+          },
+          {
+            "text": "Compare support, runtime requirements, and known limits",
+            "href": "/developers/support/"
+          }
+        ]
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-developers-desktop.png"
+    },
+    "examples": {
+      "status": 200,
+      "h1": "Start with a working result.",
+      "natal": {
+        "heading": "1. Calculate a natal chart locally",
+        "paragraphs": [
+          "Open /natal.html on the local server and select Calculate locally. The synthetic default is December 21, 2001 at 09:00 UTC, latitude 78.2232°, longitude 15.6267°, requesting Placidus houses.Success: 12 bodies, an ascendant near 23.871984° Aries, and whole-sign houses with polar-fallback. Requested and actual house systems are both visible.Try a failure: enter 2001-02-29T09:00:00Z. The impossible date must show an error and clear the previous result.Unknown time uses 12:00 UTC on the entered date, carries no-time, and omits angles and houses. It does not infer local noon. Resolve actual birthplace timezone rules before supplying a known instant.The natal example also exports and imports one draft natal receipt locally. A full export includes birth details. Imported records display their stored result as unverified claims; they do not refill the form, recalculate, upload data, or change a supplied reference time. Re-export retains the requested and actual house systems and the original receipt assumptions.Use the redacted diagnostic for a smaller report that omits dates, coordinates, positions, imported metadata, and stable hashes. Redaction does not guarantee anonymity. Unsupported versions, required features, duplicate JSON keys, and oversized files produce a safe error."
+        ],
+        "setupCode": "( set -eu\nmkdir zodiacs-starter\ncd zodiacs-starter\ncurl --disable --fail --silent --show-error --proto '=https' --max-time 30 \\\n  'https://raw.githubusercontent.com/ZodiacsOfficial/site/dd5d83cdf2a2a5d7096175f01ce985b47824a376/public/examples/zodiacs-platform-starter-0.1.0-rc.3.tgz' -o 'zodiacs-platform-starter-0.1.0-rc.3.tgz'\nnode --input-type=module <<'JS'\nimport { readFileSync } from 'node:fs';\nimport { createHash } from 'node:crypto';\nconst bytes = readFileSync('zodiacs-platform-starter-0.1.0-rc.3.tgz');\nconst expected = 'facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a';\nif (createHash('sha256').update(bytes).digest('hex') !== expected) {\n  throw new Error('Archive checksum mismatch. Do not extract or install.');\n}\nconsole.log('Archive verified');\nJS\ntar -xzf 'zodiacs-platform-starter-0.1.0-rc.3.tgz'\ncd package\nnpm ci --ignore-scripts --no-audit --no-fund\nnpm test\nnpm run build\nnpm start\n)",
+        "preCount": 1
+      },
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f5-developers-examples-desktop.png"
+    },
+    "support": {
+      "status": 200,
+      "h1": "Choose the right integration.",
+      "timezoneLines": [
+        "Resolved instant input\tA valid Date, finite epoch milliseconds, or validated ISO date/time. Date-times require Z or an explicit numeric offset; date-only YYYY-MM-DD means midnight UTC. Invalid ISO calendar dates, unresolved local date-times, leap seconds, and more than three fractional-second digits are rejected. A Date already normalized by its caller cannot reveal that earlier rollover. Outputs normalize to Date and do not preserve the original offset or local timezone.",
+        "Local-time resolution\tOptional @zodiacs/engine/geo accepts a local YYYY-MM-DD date, HH:mm time, and explicit IANA timezone. Folds select the earlier instant; gaps shift forward, with flags. Historical offsets depend on the host Intl/ICU data. No place records or timezone database are bundled.",
+        "Public JSON and Markdown files work with any HTTP client, without a key or account. They contain shared-sky data, not personalized charts or houses. The daily positions cover the Sun, Moon, and eight planets in the tropical, geocentric system; positions are computed for 12:00 UTC on the edition date rather than updated continuously."
+      ]
+    }
+  },
+  "errors": []
+}

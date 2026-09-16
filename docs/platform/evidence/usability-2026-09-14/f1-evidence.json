@@ -1,0 +1,152 @@
+{
+  "moonPhase": {
+    "desktop": {
+      "status": 200,
+      "h1": "The moon, tonight and any night.",
+      "moonForm": {
+        "dateEntered": "2000-01-01",
+        "timeFieldValue": "",
+        "placeFieldValue": ""
+      },
+      "moonResult": {
+        "phase": "Waning Crescent",
+        "signline": "Moon in Scorpio",
+        "caption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment."
+      },
+      "link": {
+        "text": "Get the birth chart for this date↗",
+        "href": "/birth-chart/"
+      },
+      "birthChartAfterClick": {
+        "landedUrl": "http://127.0.0.1:4501/birth-chart/",
+        "date": "",
+        "time": "",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "place": "",
+        "placeSelected": false,
+        "search": "",
+        "hash": "",
+        "sessionStorageKeys": [],
+        "localStorageKeys": [],
+        "noticeTexts": []
+      },
+      "screenshots": [
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-phase-result-desktop.png",
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-phase-to-birth-chart-desktop.png"
+      ],
+      "blockedRequests": []
+    },
+    "mobile": {
+      "status": 200,
+      "h1": "The moon, tonight and any night.",
+      "moonForm": {
+        "dateEntered": "2000-01-01",
+        "timeFieldValue": "",
+        "placeFieldValue": ""
+      },
+      "moonResult": {
+        "phase": "Waning Crescent",
+        "signline": "Moon in Scorpio",
+        "caption": "Reference result for this UTC date. The Moon’s sign and phase may differ at other times that day. Add a time and place to calculate a local moment."
+      },
+      "link": {
+        "text": "Get the birth chart for this date↗",
+        "href": "/birth-chart/"
+      },
+      "birthChartAfterClick": {
+        "landedUrl": "http://127.0.0.1:4501/birth-chart/",
+        "date": "",
+        "time": "",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "place": "",
+        "placeSelected": false,
+        "search": "",
+        "hash": "",
+        "sessionStorageKeys": [],
+        "localStorageKeys": [],
+        "noticeTexts": []
+      },
+      "screenshots": [
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-phase-result-mobile.png",
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-phase-to-birth-chart-mobile.png"
+      ],
+      "blockedRequests": []
+    }
+  },
+  "moonSign": {
+    "desktop": {
+      "status": 200,
+      "h1": "Find your moon sign.",
+      "fieldIds": [
+        {
+          "tag": "input",
+          "id": "birth-date",
+          "type": "date",
+          "text": null
+        },
+        {
+          "tag": "input",
+          "id": null,
+          "type": "checkbox",
+          "text": null
+        },
+        {
+          "tag": "input",
+          "id": "birth-time",
+          "type": "time",
+          "text": null
+        },
+        {
+          "tag": "input",
+          "id": "place",
+          "type": null,
+          "text": null
+        },
+        {
+          "tag": "button",
+          "id": null,
+          "type": "submit",
+          "text": "Find your moon sign↗"
+        }
+      ],
+      "picked": "LondonEngland, United Kingdom",
+      "notices": [
+        "Without a birth time, we show reference positions and omit the rising sign, angles, and houses. Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+      ],
+      "resultLinks": [
+        {
+          "text": "Get your free birth chart↗",
+          "href": "/birth-chart/"
+        }
+      ],
+      "link": {
+        "text": "Get your free birth chart↗",
+        "href": "/birth-chart/"
+      },
+      "birthChartAfterClick": {
+        "landedUrl": "http://127.0.0.1:4501/birth-chart/",
+        "date": "",
+        "time": "",
+        "timeDisabled": false,
+        "unknownTimeChecked": false,
+        "place": "",
+        "placeSelected": false,
+        "search": "",
+        "hash": "",
+        "sessionStorageKeys": [],
+        "localStorageKeys": [
+          "zodiacs.install.compute-count.v1"
+        ],
+        "noticeTexts": []
+      },
+      "screenshots": [
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-sign-result-desktop.png",
+        "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f1-moon-sign-to-birth-chart-desktop.png"
+      ],
+      "blockedRequests": []
+    }
+  },
+  "errors": []
+}

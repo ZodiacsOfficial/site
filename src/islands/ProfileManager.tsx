@@ -125,40 +125,40 @@ const PF_DAILY_DELETE_BLOCKED = {
 export const PF_BOOK_COPY = {
   en: {
     count: (n: number) => n === 1
-      ? '1 chart saved.'
-      : `${n} charts saved — yours and the people you read for.`,
+      ? '1 birth chart saved.'
+      : `${n} birth charts saved — yours and the people you read for.`,
     add: "Add someone's chart",
     privacy: 'Saved on this device. Nothing is uploaded unless you turn sync on.',
     details: 'Birth details',
   },
   es: {
     count: (n: number) => n === 1
-      ? '1 carta guardada.'
-      : `${n} cartas guardadas: la tuya y las de las personas para quienes haces lecturas.`,
+      ? '1 carta natal guardada.'
+      : `${n} cartas natales guardadas: la tuya y las de las personas para quienes haces lecturas.`,
     add: 'Añade la carta de alguien',
     privacy: 'Guardado en este dispositivo. No se sube nada salvo que actives la sincronización.',
     details: 'Datos de nacimiento',
   },
   pt: {
     count: (n: number) => n === 1
-      ? '1 mapa salvo.'
-      : `${n} mapas salvos: o seu e os das pessoas para quem você faz leituras.`,
+      ? '1 mapa astral salvo.'
+      : `${n} mapas astrais salvos: o seu e os das pessoas para quem você faz leituras.`,
     add: 'Adicionar o mapa de alguém',
     privacy: 'Salvo neste dispositivo. Nada é enviado, a menos que você ative a sincronização.',
     details: 'Dados de nascimento',
   },
   fr: {
     count: (n: number) => n === 1
-      ? '1 thème enregistré.'
-      : `${n} thèmes enregistrés : le tien et ceux que tu interprètes pour d’autres personnes.`,
+      ? '1 thème natal enregistré.'
+      : `${n} thèmes nataux enregistrés : le tien et ceux que tu interprètes pour d’autres personnes.`,
     add: 'Ajouter le thème de quelqu’un',
     privacy: 'Enregistré sur cet appareil. Rien n’est envoyé tant que tu n’actives pas la synchronisation.',
     details: 'Données de naissance',
   },
   it: {
     count: (n: number) => n === 1
-      ? '1 tema salvato.'
-      : `${n} temi salvati: il tuo e quelli che interpreti per altre persone.`,
+      ? '1 tema natale salvato.'
+      : `${n} temi natali salvati: il tuo e quelli che interpreti per altre persone.`,
     add: 'Aggiungi il tema di qualcuno',
     privacy: 'Salvato su questo dispositivo. Non viene caricato nulla, a meno che tu non attivi la sincronizzazione.',
     details: 'Dati di nascita',

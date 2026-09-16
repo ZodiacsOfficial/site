@@ -1,5 +1,38 @@
 # Platform decisions
 
+## D-2026-09-16 — Owner authorization to complete, review and release
+
+The owner superseded the earlier discretionary approval conditions on 2026-09-16.
+Recorded here exactly as granted, and deliberately not backdated: every decision
+before this date was taken under the previous, narrower permissions.
+
+Authorized from this date: implementing the remaining scoped platform work;
+evidence-based automated adversarial review **in place of** a human engineering
+reviewer; preparing and merging reviewed pull requests through the existing
+protected workflow; releasing the site through the existing deployment process;
+validating and activating `PUBLIC_SAVED_RECORDS_ENABLED`; a bounded protected
+validation deployment within existing infrastructure and spending limits;
+completing the engine review, merge sequence and first public package release
+under its existing verified licenses and owned namespace; an appropriately
+restricted hosted beta; and the bounded chart-difference and agent-integration
+work. The prior L4-L6 exclusion is lifted for those bounded deliverables.
+
+Explicitly **not** authorized: overriding system, tool or organization policy;
+bypassing branch protection or required status checks; fabricated reviewer
+identities or approvals; asserting ownership of material not actually owned or
+licensed; license changes, paid services, unbounded infrastructure cost, billing
+activation, external outreach or legal commitments; deleting real user data for
+testing.
+
+AI review is recorded as AI review. No human, practitioner, attorney, customer or
+independent-auditor signoff is claimed anywhere in this programme.
+
+Unchanged exclusions: Astrofolio Verification & Provenance remains a separate
+workstream; Zodia and native-app work remain excluded; canonical Registry
+addresses, token economics, trading flows, licenses and the consumer-assistant
+persona are not touched by this mandate.
+
+
 ## L2b candidate — conditional complete-date coverage
 
 The owner authorizes one bounded L2b draft from current main
@@ -816,3 +849,58 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 integration decisions — 2026-09-12
 
 Preserve newer main dependency closure, replacing only the two accepted engine lock entries. Preserve all immutable published Registry main bytes, including same-ID records that differ from historical R1 output. Combine Research regression assertions and Today props with deferred transit loading. Keep source-stable numerical evidence and rerun compiler/render/integration checks. SDK package artifacts remain byte-identical; root release-truth notice does not rewrite immutable archive contents. Main rollback is rehearsed as a complete tree, not a piecemeal engine downgrade.
+
+
+## L3a — commit erasure intent before purging; keep activation separate
+
+Same-origin transactions, not broadcasts or localStorage flags, serialize the
+receipt barrier with every native read/write. Owner and device-wide erasure first
+commit a content-free `{target,status}` intent, then purge rows and acknowledge
+completion atomically. A crash, abort or quota failure during purge preserves
+pending intent and original rows. Recovery can finish only a committed request;
+it cannot read receipts, authorize an owner or create new deletion intent.
+
+Completed barriers remain terminal. There is deliberately no reset/readmission
+API in this prerequisite, so fresh handles, reloads and old async work cannot
+recreate erased content. A future reviewed coordinator must bind an explicit new
+admission generation to verified access; silently removing markers is prohibited.
+A pre-intent failure is not durable erasure: callers must stay locked and retry
+with authority. This library cannot promise recovery of an intent never stored.
+
+Storage schema 2 keeps the existing database identity, so retained v1 writers
+receive VersionError instead of bypassing barriers. Upgrades from any existing
+schema are refused and aborted; no old/future data is migrated or discarded.
+Legacy profile localStorage and receipt schema/SDK bytes are unchanged. Malformed
+barrier metadata fails closed. Explicit erase never parses or downgrades receipt
+payloads. Native transaction completion is the success boundary.
+
+Compared alternatives: a best-effort broadcast permits stale/reloaded writers;
+a localStorage marker cannot commit atomically with IndexedDB checks; deleting
+the database removes the fence and permits stale recreation. None substitutes
+for the durable transaction barrier. Product activation remains blocked on the
+existing lease/auth coordinator, async guest discovery, awaited removal paths,
+explicit readmission policy and a complete recoverable user lifecycle.
+
+
+## L3b/c — pin every erasure to the admission it observed; state scope, not device
+
+Admission rows `{target, generation, status}` are the only durable authority for
+a namespace. An erasure intent carries the owner generation and the device
+generation it was observed under, because a device erasure recreates every
+owner row and a bare owner generation would recur. Readmission is the explicit
+first keep after an erasure, compare-and-swapped in the same transaction as the
+record; nothing readmits on the visitor's behalf. A keep that may have committed
+is stated as uncertain and reconciled under Profile; a keep refused because
+another tab changed the rows says nothing was stored and offers a second keep.
+
+Copy names the listed namespace ("these records", "kept here") rather than the
+device, because guest records kept before sign-in stay on the device unlisted
+while an account is signed in; the panel says so. Read-only retained access is
+enforced by the store, not by a hidden button. Unsupported storage cannot hold
+records this client kept, so it never blocks binding an account; a pending or
+failed discovery does. Destructive legacy actions stay fail-closed when record
+storage is unavailable, so "clear all" never claims a clean device it cannot
+verify. Alternatives rejected: keeping erased owner rows across a device wipe
+(account identifiers would survive "clear all"); a global generation counter
+(a fourth row shape and a new refusal path); a fourth grant mode for guest view
+(protects nothing the same person cannot switch back).

@@ -2845,3 +2845,27 @@ documentation-only hosted rerun is requested and no release is performed.
 ## R3 refreshed evidence — 2026-09-12
 
 See [R3 release integration](evidence/r3-release-integration/README.md) for fresh source identities, conflict resolutions, dependency/artifact proofs, rollback, local checks and hosted results. Historical evidence is not relabeled as final-tree evidence.
+
+
+## L3a inactive saved receipt prerequisite — 2026-09-14
+
+[Current verification record](evidence/l3-saved-records/README.md) records the
+refreshed main and actual #426 identities, selective integration, immutable
+receipt/legacy checks and new native durable erasure cases. Previous L2b release
+and post-merge checks are complete; their durable closeout is restored from
+[evidence/l2b-production](evidence/l2b-production/README.md), not rerun.
+Current L3a draft/hosted/preview checks are pending; no active storage or release
+claim is made. See [activation dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).
+
+
+## L3b/c candidate and usability fixes — 2026-09-14
+
+[Candidate record](evidence/l3-saved-records/L3BC-README.md) lists the branch
+identities, support matrix, mechanism deviations and the verification actually
+run on the final source: unit suites, 30 native storage groups
+(`native-result.json`), the 12-check flag-on journey drive
+(`lifecycle-result.json`), and the flag-off gates. The adversarial review and
+each disposition are in [REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md);
+usability reproductions and re-verification in
+[usability-2026-09-14](evidence/usability-2026-09-14/README.md). No hosted
+check, preview or release claim is made for this candidate.

@@ -1,0 +1,74 @@
+{
+  "faq": {
+    "home": {
+      "question": "What if I don't know my birth time?",
+      "answer": "Choose “I don’t know it.” The calculator uses 12:00 as a reference, leaves out the rising sign and houses instead of inventing them, and tells you if the Moon may have changed signs that day.",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f2-home-faq.png"
+    },
+    "birthChart": {
+      "question": "Do I need my exact birth time?",
+      "answer": "For your rising sign and houses, yes — the ascendant changes roughly every two hours. Without a time, we use 12:00 local civil time as a reference for body positions and omit the rising sign, angles, and houses. If the Moon changed signs that day, the result flags the uncertainty. Birth certificates, baby books, and parents are the usual sources.",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f2-birth-chart-faq.png"
+    }
+  },
+  "runs": [
+    {
+      "date": "2000-01-01",
+      "notices": [
+        {
+          "role": "status",
+          "text": "Without a birth time, we show reference positions and omit the rising sign, angles, and houses. Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+        }
+      ],
+      "moonCardText": "MoonNeeds a birth timeNeeds a birth time",
+      "moonUncertainCards": 2,
+      "containsUnverifiedNotice": true,
+      "containsAmbiguousNotice": false,
+      "containsPhrase_changedSigns": false,
+      "containsPhrase_mayHaveChanged": false,
+      "containsPhrase_flags": false,
+      "approachReadExcerpt": "A guide for the people in your lifeHow to approach youShare how to approach me↗A practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.CapricornHow to say itAquariusWhat to avoid under pressureASCHow to open A birth time is needed to know how you first come across.MercuryHow to say itCapricornLead with the conclusion, t",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f2-unknown-time-2000-01-01.png",
+      "blocked": 0
+    },
+    {
+      "date": "2000-01-02",
+      "notices": [
+        {
+          "role": "status",
+          "text": "Without a birth time, we show reference positions and omit the rising sign, angles, and houses. Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+        }
+      ],
+      "moonCardText": "MoonNeeds a birth timeNeeds a birth time",
+      "moonUncertainCards": 2,
+      "containsUnverifiedNotice": true,
+      "containsAmbiguousNotice": false,
+      "containsPhrase_changedSigns": false,
+      "containsPhrase_mayHaveChanged": false,
+      "containsPhrase_flags": false,
+      "approachReadExcerpt": "A guide for the people in your lifeHow to approach youShare how to approach me↗A practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.CapricornHow to say itAquariusWhat to avoid under pressureASCHow to open A birth time is needed to know how you first come across.MercuryHow to say itCapricornLead with the conclusion, t",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f2-unknown-time-2000-01-02.png",
+      "blocked": 0
+    },
+    {
+      "date": "2000-01-03",
+      "notices": [
+        {
+          "role": "status",
+          "text": "Without a birth time, we show reference positions and omit the rising sign, angles, and houses. Birth time is unknown. These are reference-moment positions; the Sun sign has not been verified across the whole birth date. The Moon’s possible signs across this birth date are unverified. Add a birth time for a result at that moment."
+        }
+      ],
+      "moonCardText": "MoonNeeds a birth timeNeeds a birth time",
+      "moonUncertainCards": 2,
+      "containsUnverifiedNotice": true,
+      "containsAmbiguousNotice": false,
+      "containsPhrase_changedSigns": false,
+      "containsPhrase_mayHaveChanged": false,
+      "containsPhrase_flags": false,
+      "approachReadExcerpt": "A guide for the people in your lifeHow to approach youShare how to approach me↗A practical guide to making a good first move, saying things so they land, building trust, and keeping pressure from becoming conflict.CapricornHow to say itAquariusWhat to avoid under pressureASCHow to open A birth time is needed to know how you first come across.MercuryHow to say itCapricornLead with the conclusion, t",
+      "screenshot": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/usability/f2-unknown-time-2000-01-03.png",
+      "blocked": 0
+    }
+  ],
+  "errors": []
+}

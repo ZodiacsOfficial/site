@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "id": "platform-l2-reference-sun-interpretation",
-  "baseCommit": "0490c4f8a92f045417d7f81ed502f0789e8ecdc2",
-  "authorization": "Owner authorizes one bounded L2 implementation correcting downstream unknown-time reference-Sun interpretation and uncertainty wording. These six catalog edits add only reference-name and unverified-whole-date-Sun messages; two catalog tests retain exact key/interpolation parity at the new 422-key count. Numerical values, receipt bytes, known-time behavior and approved design are preserved. Complete-date interval activation remains separate; SDK merge/npm hold and Astrofolio/Zodia exclusions remain. No L3–L6, merge or production deployment is authorized.",
+  "id": "l3bc-records-2026-09-16",
+  "baseCommit": "7fd426614b2aeda775f679a7dafdcb10e16e1e0b",
   "protectedPaths": [
-    "src/lib/i18n/index.test.ts",
-    "src/lib/i18n/ui/en.ts",
-    "src/lib/i18n/ui/es.ts",
-    "src/lib/i18n/ui/fr.ts",
-    "src/lib/i18n/ui/it.ts",
-    "src/lib/i18n/ui/pt.ts",
-    "src/lib/i18n/ui/ru.test.ts",
-    "src/lib/i18n/ui/ru.ts"
-  ]
+    "src/pages/es/birth-chart/index.astro",
+    "src/pages/es/profile/index.astro",
+    "src/pages/fr/birth-chart/index.astro",
+    "src/pages/fr/profile/index.astro",
+    "src/pages/it/birth-chart/index.astro",
+    "src/pages/it/profile/index.astro",
+    "src/pages/pt/birth-chart/index.astro",
+    "src/pages/pt/profile/index.astro"
+  ],
+  "authorization": "Owner authorizes the L3b/c records candidate and the bounded usability improvements under the 2026-09-16 authorization to complete, review and release (docs/platform/DECISIONS.md). The eight localized pages carry the birth-chart FAQ correction and the Profile records-panel mount; the panel renders nothing while PUBLIC_SAVED_RECORDS_ENABLED is unset, and on a build where it is unset after an activation it finds, exports and removes only what is already on the device. Pinned to the base the required checks measure this push against; re-pin if the pull request base moves."
 }

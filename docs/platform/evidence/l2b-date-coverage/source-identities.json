@@ -1,0 +1,15 @@
+{
+  "candidate": "370fddf7224053ca42d0942945d850ab5b8d608c",
+  "candidateTree": "8dc403a558a83fae15950fc54f8a5978c6da7b13",
+  "base": "87f18e0a101b96abf847be58e8a0c31a691992f8",
+  "baseTree": "0305b08b378d6c9ae470e0f621a9ce1ecb532f98",
+  "githubTestedMerge": "585ab51d9a13e153e311cc1909662bd8efc7c4eb",
+  "githubTestedMergeTree": "8dc403a558a83fae15950fc54f8a5978c6da7b13",
+  "githubTestedMergeParents": [
+    "87f18e0a101b96abf847be58e8a0c31a691992f8",
+    "370fddf7224053ca42d0942945d850ab5b8d608c"
+  ],
+  "previewDeployment": "dpl_F1r75PYxU71coJhD133ge28uETuC",
+  "previewSource": "370fddf7224053ca42d0942945d850ab5b8d608c",
+  "phase1SourceFingerprint": "a87eb6b6fd254b6fe14259f089d7d9c34da336a091696044be10677c415b279d"
+}

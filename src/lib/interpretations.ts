@@ -28,7 +28,7 @@ export const MOON: Table = {
   gemini: 'You metabolize feelings by naming them — talking, texting, journaling them into shape. Restlessness is usually a signal you need new input, not a new life.',
   cancer: 'The Moon rules Cancer, and it shows: tidal moods, elephant memory, fierce protectiveness. Home is not a place so much as a feeling you can carry and recreate.',
   leo: 'You need to be someone’s favorite — not everyone’s, someone’s. Appreciation is oxygen; give it as freely as you need it and your relationships thrive.',
-  virgo: 'Anxiety is how your care sounds from the inside. You soothe yourself by making order — lists, plans, a clean kitchen — and love others through useful details.',
+  virgo: 'In this tradition, worry is how your care sounds from the inside. You soothe yourself by making order — lists, plans, a clean kitchen — and love others through useful details.',
   libra: 'Conflict sits in your body like static; you feel best when things are fair and aesthetically calm. The practice: disagreeing early, before the resentment invoices arrive.',
   scorpio: 'You feel everything at full depth and show almost none of it on purpose. Intimacy for you is letting one person watch the water level change.',
   sagittarius: 'Your moods need mileage — literal or intellectual. When feelings close in, you widen the frame: the joke, the trip, the bigger picture that makes it survivable.',

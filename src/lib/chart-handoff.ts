@@ -97,6 +97,36 @@ export function chartHandoffFragment(
   return params.toString();
 }
 
+const CIVIL_DATE = /^\d{4}-\d{2}-\d{2}$/u;
+const CIVIL_TIME = /^\d{2}:\d{2}$/u;
+const DATE_PARAM = 'date';
+const TIME_PARAM = 'time';
+const UNKNOWN_TIME = 'unknown';
+
+export interface DateHandoff {
+  date: string;
+  /** HH:MM, or null when the visitor chose no time. */
+  time: string | null;
+}
+
+/** A place-less hand-off (Moon lookup → birth chart): the date and optional time only, in the fragment. */
+export function dateHandoffFragment(date: string, time: string | null): string {
+  const params = new URLSearchParams();
+  params.set(DATE_PARAM, date);
+  params.set(TIME_PARAM, time ?? UNKNOWN_TIME);
+  return params.toString();
+}
+
+/** Exactly the two date parameters, well formed; anything else is not a date hand-off. */
+export function dateHandoffFromHash(hash: string): DateHandoff | null {
+  const params = fragmentParams(hash);
+  if (params.size !== 2 || params.getAll(DATE_PARAM).length !== 1 || params.getAll(TIME_PARAM).length !== 1) return null;
+  const date = params.get(DATE_PARAM) ?? '';
+  const time = params.get(TIME_PARAM) ?? '';
+  if (!CIVIL_DATE.test(date) || (time !== UNKNOWN_TIME && !CIVIL_TIME.test(time))) return null;
+  return { date, time: time === UNKNOWN_TIME ? null : time };
+}
+
 export function subjectModeFromHash(hash: string): SubjectMode {
   const values = fragmentParams(hash).getAll('subject');
   return values.length === 1 && values[0] === 'other' ? 'other' : 'self';

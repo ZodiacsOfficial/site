@@ -16,6 +16,7 @@ import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
+import { chartHandoffFragment, dateHandoffFragment } from '../lib/chart-handoff';
 import { formatDateTime } from '../lib/i18n/dates';
 import { moonPhaseLabel } from '../lib/i18n/astrology';
 import { useEngine } from '../lib/hooks/useEngine';
@@ -64,6 +65,25 @@ interface Lookup {
   caption: string;
 }
 
+/** Exactly the inputs a shown result was computed from; the chart hand-off reads only these. */
+interface LookupInputs {
+  date: string;
+  time: string | null;
+  city: City | null;
+}
+
+/**
+ * Birth details travel in the fragment only: never in a query string, a
+ * request, or a log. A known place carries the full details codec.
+ */
+function birthChartHandoff(inputs: LookupInputs): string {
+  const { date, time, city } = inputs;
+  return city
+    ? chartHandoffFragment({ date, time, timeKnown: time !== null, lat: city.lat, lon: city.lon,
+      tz: city.tz, place: city.name.slice(0, 40), houseSystem: 'whole' })
+    : dateHandoffFragment(date, time);
+}
+
 export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeCatalogLocale(rawLocale);
   const loadEngine = useEngine();
@@ -78,6 +98,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const lookupRevisionRef = useRef(0);
+  const handoffInputsRef = useRef<LookupInputs | null>(null);
 
   useEffect(() => {
     setNow(new Date());
@@ -133,6 +154,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
             : t(locale, 'referenceUtcCaption');
 
       if (!isCurrent()) return;
+      handoffInputsRef.current = { date, time: hasTime ? time : null, city };
       setResult({
         phase: moonPhaseNameFromAngle(angle),
         angle,
@@ -264,7 +286,13 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
             </p>
           )}
           <div class="calc__actions">
-            <a class="btn btn--ghost" href={localizePath(locale, '/birth-chart/')}>
+            <a
+              class="btn btn--ghost"
+              href={handoffInputsRef.current
+                ? `${localizePath(locale, '/birth-chart/')}#${birthChartHandoff(handoffInputsRef.current)}`
+                : localizePath(locale, '/birth-chart/')}
+              data-birth-chart-handoff
+            >
               <span>{t(locale, 'birthChartForDate')}</span><span class="orb">↗</span>
             </a>
           </div>
