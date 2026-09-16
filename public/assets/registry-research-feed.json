@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-16T00:07:55.783Z",
+  "generatedAt": "2026-09-16T00:13:21.002Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -117,6 +117,26 @@
         "aspect"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-15-observation-24h",
+      "slug": "market-check-2026-09-15-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-16T00:13:21.002Z",
+      "visibleAt": "2026-09-16T00:13:21.002Z",
+      "title": "Scorpio 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.08 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-15-observation-24h/",
+      "signs": [
+        "scorpio"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-16",
