@@ -1,6 +1,6 @@
 # Finite remaining platform checklist
 
-Current checkpoint: 2026-09-16. L2a and L2b are released and production-verified; the L3b/c candidate and the usability fixes are on the branch, reviewed by automated adversarial review and inactive by flag.
+Current checkpoint: 2026-09-16. L2a, L2b and L3b/c are released and production-verified. The saved-records feature is merged and deployed but inactive: activating its flag is a Vercel project change this environment cannot make.
 Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Completed release work
@@ -59,20 +59,28 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   bootstrap/panel browser journeys with intercepted auth and backend,
   unknown-time keep, 40-record refusal, Firefox native and lifecycle runs
   ([HARDENING-2026-09-15](evidence/l3-saved-records/HARDENING-2026-09-15.md)).
-- [ ] **L3 review and activation:** [#490](https://github.com/ZodiacsOfficial/site/pull/490).
-  Three bounded AI reviewers ran against `ed585d3c`; their two release-blocking
-  findings, the merge blocker and the product findings are closed, each with a
-  test that reproduces the original gap
+- [x] **L3 review, merge and release.** Three bounded AI reviewers ran against
+  `ed585d3c`; their two release-blocking findings, the merge blocker and the
+  product findings are closed, each with a test that reproduces the original gap
   ([REVIEW-2026-09-16](evidence/l3-saved-records/REVIEW-2026-09-16.md),
-  [product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)). The
+  [product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)).
+  [#490](https://github.com/ZodiacsOfficial/site/pull/490) merged as `52ae6eeb`
+  with all 19 checks green; production deployment
+  `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` is READY from that commit and verified live
+  as flag-off. Superseded draft #486 closed without merging. The
   off → on → off → on flag sequence is gated
-  ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)). Remaining: merge, deploy,
-  verify, then activate `PUBLIC_SAVED_RECORDS_ENABLED=1` and verify again. Still
-  open and recorded rather than claimed: no real assistive technology was used
-  (the screen-reader findings are measured DOM and ARIA facts); WebKit and real
-  iOS Safari were not available, so no Safari claim is made; a hosted preview
-  remains blocked by the Vercel production-only build policy, which this branch
-  does not change.
+  ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)).
+- [ ] **L3 activation.** `PUBLIC_SAVED_RECORDS_ENABLED=1` in the Vercel project,
+  then redeploy and verify the live journeys. **Blocked here:** the Vercel tools
+  in this session are read-only for project configuration, there is no Vercel CLI
+  or token, and baking the flag into the repository would break the documented
+  rollback and turn the flag-off CI build into a flag-on one. Steps, verification
+  and the smallest missing action:
+  [ACTIVATION](evidence/l3-saved-records/ACTIVATION.md). Still open and recorded
+  rather than claimed: no real assistive technology was used (the screen-reader
+  findings are measured DOM and ARIA facts); WebKit and real iOS Safari were not
+  available, so no Safari claim is made; a hosted preview remains blocked by the
+  Vercel production-only build policy.
 
 [Candidate record](evidence/l3-saved-records/L3BC-README.md),
 [plan](evidence/l3-saved-records/L3BC-PLAN.md),
