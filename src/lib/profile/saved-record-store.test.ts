@@ -190,6 +190,16 @@ function fixture(owner = A, backend = new Backend(), options: { admitted?: boole
 
 afterEach(() => vi.unstubAllGlobals());
 
+import { SAVED_RECORDS_DATABASE_NAME } from './saved-record-flags';
+
+describe('always-shipped flag module', () => {
+  it('spells the database name exactly as the store does', () => {
+    // The flag module is shipped even when the feature is off and must carry no
+    // dependency on the store, so the name is duplicated there on purpose.
+    expect(SAVED_RECORDS_DATABASE_NAME).toBe(SAVED_NATAL_DATABASE_NAME);
+  });
+});
+
 describe('owner-bound immutable saved natal operations', () => {
   it('creates/reads/exports an unlabeled record without local metadata in the envelope', async () => {
     const { store } = fixture();

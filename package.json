@@ -79,6 +79,7 @@
     "test:today:browser": "node tests/today-drive.mjs",
     "test:saved-records:browser": "node tests/saved-records-lifecycle-drive.mjs",
     "test:saved-records:account": "node tests/saved-records-account.mjs",
+    "test:saved-records:rollback": "node tests/saved-records-rollback.mjs",
     "test:saved-records:account:drive": "node tests/saved-records-account-drive.mjs",
     "test:saved-records:native": "node tests/saved-natal-storage-drive.mjs",
     "test:bio:browser": "node tests/bio-drive.mjs",

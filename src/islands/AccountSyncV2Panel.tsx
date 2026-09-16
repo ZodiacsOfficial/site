@@ -74,36 +74,47 @@ import {
   waitForProfileAccess,
 } from '../lib/account-v2/profile-access';
 import { runExclusiveAccountProfileTransition } from '../lib/account-v2/profile-lease';
-import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
+import { savedRecordsEnabled, savedRecordsRetainedOnDevice } from '../lib/profile/saved-record-flags';
 
 type SyncModule = typeof import('../lib/profile/sync');
 type SavedRecordAccess = typeof import('../lib/profile/saved-record-access');
 type SavedRecordEraseTicket = import('../lib/profile/saved-record-access').SavedRecordEraseTicket;
 type SavedRecordEraseTarget = import('../lib/profile/saved-record-access').SavedRecordEraseTarget;
 type SavedRecordDiscovery = import('../lib/profile/saved-record-access').SavedRecordDiscovery;
+type SavedRecordDeps = import('../lib/profile/saved-record-access').SavedRecordDeps;
 
 /**
- * Loaded only when the local calculation-record lifecycle is built in. With
- * the feature built in, a module that fails to load (a lost chunk after a
- * deploy, a blocked request) is `unavailable`, never the same as `disabled`:
- * the records on this device cannot be inspected, so no destructive action
- * may report that it removed them.
+ * Loaded when the local calculation-record lifecycle is built in, and also when
+ * it is not but records kept while it was are still on this device: the build
+ * flag gates writing and the record surfaces, never cleanup. With the module
+ * needed, one that fails to load (a lost chunk after a deploy, a blocked
+ * request) is `unavailable`, never the same as `disabled`: the records on this
+ * device cannot be inspected, so no destructive action may report that it
+ * removed them. `deps` is present only for the retained-data mode, where it
+ * caps every operation to find, export and remove.
  */
 export type SavedRecordAccessLoad =
   | { status: 'disabled' }
   | { status: 'unavailable' }
-  | { status: 'ready'; api: SavedRecordAccess };
-function loadSavedRecordAccess(): Promise<SavedRecordAccessLoad> {
-  if (!savedRecordsEnabled()) return Promise.resolve({ status: 'disabled' });
-  return import('../lib/profile/saved-record-access')
-    .then((api): SavedRecordAccessLoad => ({ status: 'ready', api }))
-    .catch((): SavedRecordAccessLoad => ({ status: 'unavailable' }));
+  | { status: 'ready'; api: SavedRecordAccess; deps?: SavedRecordDeps };
+async function loadSavedRecordAccess(): Promise<SavedRecordAccessLoad> {
+  const enabled = savedRecordsEnabled();
+  // Probing enumerates databases and creates nothing, so a device that never
+  // had the feature on takes exactly the path it takes today.
+  const retained = enabled ? false : await savedRecordsRetainedOnDevice();
+  if (!enabled && !retained) return { status: 'disabled' };
+  try {
+    const api = await import('../lib/profile/saved-record-access');
+    return { status: 'ready', api, ...(retained ? { deps: api.retainedSavedRecordDeps() } : {}) };
+  } catch {
+    return { status: 'unavailable' };
+  }
 }
 
 export type SavedRecordErasePlan =
   | { status: 'none' }
-  | { status: 'absent'; target: SavedRecordEraseTarget; api: SavedRecordAccess }
-  | { status: 'ready'; ticket: SavedRecordEraseTicket; api: SavedRecordAccess }
+  | { status: 'absent'; target: SavedRecordEraseTarget; api: SavedRecordAccess; deps?: SavedRecordDeps }
+  | { status: 'ready'; ticket: SavedRecordEraseTicket; api: SavedRecordAccess; deps?: SavedRecordDeps }
   | { status: 'blocked'; message: string };
 
 export const RECORDS_BLOCKED_MESSAGE = 'Calculation records on this device could not be prepared for removal safely, so nothing was removed. Try again, or clear this site’s data in browser settings.';
@@ -120,10 +131,10 @@ export async function planSavedRecordErasure(
   const loaded = await load();
   if (loaded.status === 'disabled') return { status: 'none' };
   if (loaded.status === 'unavailable') return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
-  const { api } = loaded;
-  const prepared = await api.prepareSavedRecordErasure(target);
-  if (prepared.status === 'ready') return { status: 'ready', ticket: prepared.ticket, api };
-  if (prepared.status === 'absent') return { status: 'absent', target, api };
+  const { api, deps } = loaded;
+  const prepared = await api.prepareSavedRecordErasure(target, deps);
+  if (prepared.status === 'ready') return { status: 'ready', ticket: prepared.ticket, api, deps };
+  if (prepared.status === 'absent') return { status: 'absent', target, api, deps };
   if (prepared.status === 'disabled') return { status: 'none' };
   return { status: 'blocked', message: RECORDS_BLOCKED_MESSAGE };
 }
@@ -140,10 +151,10 @@ export async function runPlannedSavedRecordErasure(
   if (plan.status === 'none') return 'skipped';
   if (plan.status === 'blocked') return 'failed';
   if (plan.status === 'absent') {
-    const confirmed = await plan.api.confirmSavedRecordsAbsent(plan.target, authorized);
+    const confirmed = await plan.api.confirmSavedRecordsAbsent(plan.target, authorized, plan.deps);
     return confirmed.ok ? 'skipped' : 'failed';
   }
-  const result = await plan.api.eraseSavedRecords(plan.ticket, authorized);
+  const result = await plan.api.eraseSavedRecords(plan.ticket, authorized, plan.deps);
   if (result.ok) return 'erased';
   return result.mayHaveCommitted ? 'pending' : 'failed';
 }
@@ -358,7 +369,7 @@ export default function AccountSyncV2Panel({ enabled = false }: AccountSyncV2Pan
       // A module that cannot load is as opaque as unavailable storage: this
       // browser cannot be shown to be empty, so it is not bound.
       records = recordsAccess.status === 'ready'
-        ? await recordsAccess.api.discoverSavedRecordBoundary()
+        ? await recordsAccess.api.discoverSavedRecordBoundary(recordsAccess.deps)
         : { status: 'unavailable', guestRecords: 0 };
       if (authEpoch.current !== epoch) return;
       // Only an empty-looking browser is gated on discovery (the bootstrap

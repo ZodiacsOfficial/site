@@ -1,60 +1,56 @@
 # Zodiacs Platform status
 
-## Current bounded work — L3b/c protected local records (candidate, inactive) and usability fixes
+## Current bounded work — L3 saved calculation records, under the 2026-09-16 authorization
 
-Branch `claude/eager-ramanujan-razak3` from main `74ae0f03241fe61786e79b4213ba36c878f11349`
-with draft #486 (`99d22482`, L3a) merged verbatim as its first commit. Commits:
-plan `bcce493d`; L3b.1 `650768a9` (admission generations replace terminal
-erasure markers); L3b.2 `f1efe17f` (strict record capability from the profile
-access coordinator, discovery before auto-bind, awaited erasure in sign-out,
-hand-off and deletion); usability fixes `a5b1e5e2` (separate deliverable);
-review-driven hardening `35da3485`; L3c `b5666134` (keep on the result,
-records panel under Profile in six locales, exact-byte download, remove and
-remove-all, recovery and readmission, browser journey drive, flag-on CI job).
+The owner replaced human engineering review with evidence-based automated
+adversarial review and authorized merge, release and flag activation
+([D-2026-09-16](DECISIONS.md)). This section records what that produced; it is
+updated as each step actually completes, and nothing below is claimed before it
+is verified.
 
-Everything is pushed to the branch and open for review as draft
-[#490](https://github.com/ZodiacsOfficial/site/pull/490); nothing is merged,
-previewed on a hosted URL, deployed, published or released. Both storage surfaces stay
-behind `PUBLIC_SAVED_RECORDS_ENABLED`, unset in production and in the committed
-CI build; with the flag unset no database is created and the account bootstrap
-behaves as on main. The hosted preview is blocked by the Vercel project's
-production-only build policy, which this work does not change; a bounded
-preview build is an owner decision. Local verification on the final source:
-build, typecheck, full test suite, 18 Phase 1 captures, check-dist, scope guard
-with the pinned allowance, consumer-boundary scanner, 31 native storage groups
-(Chromium and Firefox), the 16-check flag-on journey drive and the
-account-coordinator drive (numbers in
-[L3BC-README](evidence/l3-saved-records/L3BC-README.md); review dispositions in
-[REVIEW-2026-09-14](evidence/l3-saved-records/REVIEW-2026-09-14.md); usability
-dispositions in [usability-2026-09-14](evidence/usability-2026-09-14/README.md)).
+Three bounded AI reviewers ran against candidate `ed585d3c` in isolated
+worktrees: data safety and lifecycle, integration and release, and product and
+clean-room browser experience. Their findings are in
+[REVIEW-2026-09-16](evidence/l3-saved-records/REVIEW-2026-09-16.md).
 
-Hardening pass 2026-09-15 on the same draft (main `9c9e232f` merged in;
-commits from `9c8bf67b`): the five activation findings are closed with code and
-reproducing tests — an enabled records module that fails to load now blocks
-"clear all Zodiacs data", the boundary clear and confirmed deletion instead of
-skipping the records step; an absence observed before the exclusive transition
-is re-checked under it and a namespace admitted in between refuses completion;
-single removals reach open tabs and withdraw the calculator's "Kept"; removal
-feedback is bound to the namespace it describes; and a new browser drive runs
-the real profile-access bootstrap and account panel with intercepted auth and
-backend responses (bind, retained sign-out, hand-off decision, clear-all,
-confirmed deletion with browser removal, account change during a pending
-removal, module load failure, admitted-in-between refusal), with unknown-time
-keep, the 40-record refusal and Firefox runs of the native and lifecycle
-drives. Dispositions, evidence and the exact candidate head:
-[HARDENING-2026-09-15](evidence/l3-saved-records/HARDENING-2026-09-15.md).
+The decisive finding was that the build flag gated cleanup as well as writing.
+Reproduced in a real browser against the unmodified production modules: after an
+activation and rollback, records kept while the feature was on stayed on the
+device while "clear all Zodiacs data", the boundary clear and confirmed account
+deletion all reported success; an erasure interrupted after its durable intent
+was never finished; and signing in auto-bound a browser holding guest records
+while recording a clear decision the visitor never made. The flag now gates
+writing and the record surfaces only. A flag-off build still finds, exports and
+removes records kept earlier, still finishes an interrupted removal, still
+honours destructive account actions and still refuses that silent bind, while
+creating no database on a device that never had the feature on. The sequence is
+gated by `npm run test:saved-records:rollback`, which builds the same source
+four times (off, on, off, on) against one persistent browser profile, and the
+procedure is written down in [ROLLBACK](evidence/l3-saved-records/ROLLBACK.md).
 
-Remaining decisions: one pull request or two (usability first, then storage:
-the branch is ordered so the usability commit can be cherry-picked alone);
-whether to authorize a bounded preview build; when, if ever, to set the flag.
-Draft #490 is open from this branch against main with the scope allowance
-pinned to the main head `9c9e232f` (re-pin whenever main moves before the
-checks run). One pull request was chosen over two because pushes are limited
-to this branch; the usability diff (`a5b1e5e2` plus the Today refinements in
-`8e340b97`) can still be cherry-picked alone. The exact next release action is
-the hosted checks passing on the hardened candidate and a human review; the
-flag stays unset. SDK merge/npm publication stays held; L4–L6, Astrofolio and
-Zodia stay excluded.
+The second material finding was that no CI job ran the site integrity gates on a
+flag-on build: every check lived in the flag-off `build-check` job. The
+flag-on job now also runs `npm run check`, `check-dist` and the bundle and
+engine-isolation gates, so the configuration activation ships is actually
+validated.
+
+The third was in the product surface. A destructive control armed for its second
+activation never expired and no ordinary cancel gesture reached it, so a
+"Remove" or "Remove all" left armed would destroy records on one later tap —
+reproduced in Chromium and Firefox. An armed control is now unmistakable and
+short-lived: it fills, announces what it is waiting for and how to back out, and
+returns to its safe label on Escape, on a pointer down anywhere else, on losing
+focus, or after twelve seconds. A removal that happens is now said out loud and
+the keyboard stays inside the panel, the panel's live region exists before it
+has anything to announce, and the intro states plainly what destroys these
+records — clearing site data, or the browser reclaiming storage. The findings
+and their dispositions are in
+[REVIEW-2026-09-16-product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md).
+
+Both storage surfaces remain behind `PUBLIC_SAVED_RECORDS_ENABLED`. Production
+runs with that flag and `PUBLIC_ACCOUNT_SYNC_V2_ENABLED` unset today, verified
+by probing the live pages: `/profile/` carries no `data-account-sync-v2` and no
+records panel, and `/birth-chart/` carries no keep affordance.
 
 ## Previous checkpoint — L3a inactive receipt lifecycle prerequisite (draft #486)
 

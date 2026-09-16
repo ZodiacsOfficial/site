@@ -203,6 +203,7 @@ describe('records erasure plan for sign-out, boundary clear and confirmed deleti
   afterEach(() => {
     vi.doUnmock('../lib/profile/saved-record-access');
     vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
     vi.resetModules();
   });
 
@@ -215,8 +216,43 @@ describe('records erasure plan for sign-out, boundary clear and confirmed deleti
     expect(await runPlannedSavedRecordErasure({ status: 'blocked', message: RECORDS_BLOCKED_MESSAGE }, () => true)).toBe('failed');
   });
 
+  it('keeps cleanup working after a rollback: flag off with records still on the device', async () => {
+    // The build flag gates writing and the record surfaces, never cleanup. A
+    // device that kept records while the feature was on must still have them
+    // removed by a destructive account action after the flag goes off again.
+    vi.stubEnv('PUBLIC_SAVED_RECORDS_ENABLED', '');
+    const present = vi.fn(async () => [{ name: 'zodiacs-saved-natal-v1' }]);
+    vi.stubGlobal('indexedDB', { databases: present });
+    const retainedDeps = { enabled: true, rights: 'read-only' } as never;
+    const api = {
+      retainedSavedRecordDeps: vi.fn(() => retainedDeps),
+      prepareSavedRecordErasure: vi.fn(async () => ({
+        status: 'ready' as const,
+        ticket: { target: '*', expected: 1, expectedDevice: 1, guestRecords: 0 },
+      })),
+      eraseSavedRecords: vi.fn(async () => ({ ok: true as const, value: 'erased' as const })),
+      confirmSavedRecordsAbsent: vi.fn(),
+    };
+    vi.doMock('../lib/profile/saved-record-access', () => api);
+    vi.resetModules();
+    const panel = await import('./AccountSyncV2Panel');
+
+    const plan = await panel.planSavedRecordErasure('device');
+    expect(present).toHaveBeenCalled();
+    expect(plan.status).toBe('ready');
+    expect(api.prepareSavedRecordErasure).toHaveBeenCalledWith('device', retainedDeps);
+    expect(await panel.runPlannedSavedRecordErasure(plan, () => true)).toBe('erased');
+    expect(api.eraseSavedRecords).toHaveBeenCalledWith(expect.anything(), expect.any(Function), retainedDeps);
+
+    // A device that never had the feature on keeps exactly today's behaviour:
+    // nothing is imported and the plan skips.
+    present.mockResolvedValueOnce([{ name: 'some-other-database' }]);
+    expect(await panel.planSavedRecordErasure('device')).toEqual({ status: 'none' });
+  });
+
   it('uses the real loader: flag off is disabled, flag on with a failed import is unavailable', async () => {
     vi.stubEnv('PUBLIC_SAVED_RECORDS_ENABLED', '');
+    vi.stubGlobal('indexedDB', { databases: async () => [] });
     vi.doMock('../lib/profile/saved-record-access', () => { throw new Error('chunk load failed'); });
     vi.resetModules();
     const off = await import('./AccountSyncV2Panel');
@@ -240,7 +276,7 @@ describe('records erasure plan for sign-out, boundary clear and confirmed deleti
     expect(plan).toMatchObject({ status: 'absent', target: 'device' });
     const authorized = () => true;
     expect(await runPlannedSavedRecordErasure(plan, authorized)).toBe('failed');
-    expect(api.confirmSavedRecordsAbsent).toHaveBeenCalledWith('device', authorized);
+    expect(api.confirmSavedRecordsAbsent).toHaveBeenCalledWith('device', authorized, undefined);
     api.confirmSavedRecordsAbsent.mockResolvedValueOnce({ ok: true, value: 'absent' } as never);
     expect(await runPlannedSavedRecordErasure(plan, authorized)).toBe('skipped');
     expect(api.eraseSavedRecords).not.toHaveBeenCalled();

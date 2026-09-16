@@ -14,7 +14,7 @@ export function recordHelpers(base) {
     await page.waitForSelector('.calc__form[aria-busy="false"]');
   }
 
-  async function computeKnownTime(page, { date = '1990-06-15', time = '14:30', place = 'London', timeKnown = true } = {}) {
+  async function computeKnownTime(page, { date = '1990-06-15', time = '14:30', place = 'London', timeKnown = true, expectKeep = true } = {}) {
     await gotoChart(page);
     await page.fill('#birth-date', date);
     if (timeKnown) await page.fill('#birth-time', time);
@@ -32,7 +32,8 @@ export function recordHelpers(base) {
     await page.waitForSelector('details[data-chart-more]');
     await page.evaluate(() => { document.querySelector('details[data-chart-more]').open = true; });
     await page.waitForSelector('[data-download-calculation-receipt]:not([disabled])');
-    await page.waitForSelector('[data-keep-calculation-record]');
+    // A build without the record feature offers no keep affordance at all.
+    if (expectKeep) await page.waitForSelector('[data-keep-calculation-record]');
   }
 
   async function keepState(page) {

@@ -153,6 +153,57 @@ try {
       return { bytes: receipt.bytes.length, sha256: sha(receipt.bytes) };
     });
 
+    await check('device mode: an armed removal is cancellable and expires; only a deliberate second activation removes', async () => {
+      const { context, blocked, errors } = await newContext();
+      const page = await context.newPage();
+      await computeKnownTime(page);
+      await waitKeepState(page, ['idle']);
+      assert.equal(await keep(page), 'kept');
+      await computeKnownTime(page, { date: '1985-03-02', time: '09:15', place: 'Paris' });
+      await waitKeepState(page, ['idle']);
+      assert.equal(await keep(page), 'kept');
+      assert.equal(await gotoProfile(page), 'ready');
+      assert.equal(await recordCount(page), 2);
+
+      const armedNow = () => page.$eval('[data-saved-records]', (panel) => panel.querySelector('[aria-pressed="true"]') !== null);
+      const liveText = () => page.textContent('[data-records-live]');
+      const arm = async (selector) => {
+        await page.click(selector);
+        assert.equal(await armedNow(), true, `${selector} must arm on the first activation`);
+      };
+      // The armed state is not only a changed label: it is announced, and it says how to back out.
+      await arm('[data-record-remove]');
+      assert.match(await liveText(), /press Escape to cancel/u);
+
+      // Every ordinary way of saying "not that" returns the control to safe.
+      await page.keyboard.press('Escape');
+      assert.equal(await armedNow(), false, 'Escape must disarm');
+      await arm('[data-record-remove]');
+      await page.click('#calculation-records-heading');
+      assert.equal(await armedNow(), false, 'a pointer down anywhere else must disarm');
+      await arm('[data-record-remove]');
+      await page.$eval('[data-record-remove]', (button) => button.blur());
+      assert.equal(await armedNow(), false, 'moving focus away must disarm');
+      await arm('[data-records-remove-all]');
+      await page.click('#calculation-records-heading');
+      assert.equal(await armedNow(), false, 'remove-all must disarm the same way');
+
+      // And one left alone expires on its own, so a later stray tap cannot destroy anything.
+      await arm('[data-record-remove]');
+      await page.waitForFunction(() => document.querySelector('[data-saved-records] [aria-pressed="true"]') === null, null, { timeout: 30_000 });
+      assert.equal(await recordCount(page), 2, 'nothing may be removed by arming alone');
+
+      // A deliberate second activation still removes, says so, and leaves the keyboard inside the panel.
+      await arm('[data-record-remove]');
+      await page.click('[data-record-remove]');
+      await page.waitForFunction(() => document.querySelector('[data-records-count]')?.getAttribute('data-records-count') === '1');
+      assert.match(await liveText(), /The record was removed\./u);
+      assert.equal(await page.evaluate(() => document.activeElement?.id ?? ''), 'calculation-records-heading');
+      assert.deepEqual(blocked, []); assert.deepEqual(errors, []);
+      await context.close();
+      return { cancelled: ['escape', 'pointer-elsewhere', 'blur', 'timeout'], removedAfterConfirm: 1 };
+    });
+
     await check('device mode: remove all, then an explicit keep readmits a new set', async () => {
       const { context, blocked, errors } = await newContext();
       const page = await context.newPage();

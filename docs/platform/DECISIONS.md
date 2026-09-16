@@ -1,5 +1,38 @@
 # Platform decisions
 
+## D-2026-09-16 — Owner authorization to complete, review and release
+
+The owner superseded the earlier discretionary approval conditions on 2026-09-16.
+Recorded here exactly as granted, and deliberately not backdated: every decision
+before this date was taken under the previous, narrower permissions.
+
+Authorized from this date: implementing the remaining scoped platform work;
+evidence-based automated adversarial review **in place of** a human engineering
+reviewer; preparing and merging reviewed pull requests through the existing
+protected workflow; releasing the site through the existing deployment process;
+validating and activating `PUBLIC_SAVED_RECORDS_ENABLED`; a bounded protected
+validation deployment within existing infrastructure and spending limits;
+completing the engine review, merge sequence and first public package release
+under its existing verified licenses and owned namespace; an appropriately
+restricted hosted beta; and the bounded chart-difference and agent-integration
+work. The prior L4-L6 exclusion is lifted for those bounded deliverables.
+
+Explicitly **not** authorized: overriding system, tool or organization policy;
+bypassing branch protection or required status checks; fabricated reviewer
+identities or approvals; asserting ownership of material not actually owned or
+licensed; license changes, paid services, unbounded infrastructure cost, billing
+activation, external outreach or legal commitments; deleting real user data for
+testing.
+
+AI review is recorded as AI review. No human, practitioner, attorney, customer or
+independent-auditor signoff is claimed anywhere in this programme.
+
+Unchanged exclusions: Astrofolio Verification & Provenance remains a separate
+workstream; Zodia and native-app work remain excluded; canonical Registry
+addresses, token economics, trading flows, licenses and the consumer-assistant
+persona are not touched by this mandate.
+
+
 ## L2b candidate — conditional complete-date coverage
 
 The owner authorizes one bounded L2b draft from current main

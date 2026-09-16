@@ -376,6 +376,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   /** The namespace this result was kept in; a re-open of the same admitted namespace keeps the confirmation. */
   /** The record this result was confirmed kept as, so a removal elsewhere can withdraw "Kept". */
   const recordKeptRef = useRef<{ ownerKey: string; id: string } | null>(null);
+  const recordKeptNoteRef = useRef<HTMLParagraphElement | null>(null);
   const recordsEnabled = mode === 'full' && savedRecordsEnabled();
   const [signature, setSignature] = useState<ChartSignature | null>(null);
   const [moonAmbiguous, setMoonAmbiguous] = useState(false);
@@ -1480,7 +1481,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       // The stored bytes must be exactly the bytes offered for download.
       const exact = created.value.record.envelopeJson === envelopeJson;
       recordKeptRef.current = exact ? { ownerKey: scope.ownerKey, id: created.value.record.id } : null;
+      // The button disables itself on the kept state, which drops the keyboard
+      // to the top of the document; land on the confirmation instead, where
+      // the Profile link is.
+      const fromButton = document.activeElement instanceof HTMLElement
+        && document.activeElement.hasAttribute('data-keep-calculation-record');
       setRecordKeep(exact ? 'kept' : 'uncertain');
+      if (exact && fromButton) setTimeout(() => recordKeptNoteRef.current?.focus(), 0);
       setRecordErasedNote(false);
       // A kept record is a fact for every open tab (inventories re-open on it,
       // and a readmission changes what other tabs may do); this tab's handle
@@ -2750,7 +2757,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           {recordMode !== null && recordErasedNote && recordKeep === 'idle' ? ` ${recordCopy.keepErasedNote}` : ''}
                         </p>
                         {recordKeep === 'kept' && (
-                          <p class="calc__saved" role="status" data-record-kept>
+                          <p class="calc__saved" role="status" tabIndex={-1} ref={recordKeptNoteRef} data-record-kept>
                             {recordCopy.kept}{' '}
                             <a href={`${localizePath(locale, '/profile/')}#calculation-records`}>{recordCopy.keptLink}</a>
                           </p>

@@ -36,8 +36,11 @@ vi.mock('../lib/profile/saved-record-access', () => ({
     return { status, guestRecords: status === 'guest-records' ? 2 : 0 };
   },
 }));
-const flags = { enabled: true };
-vi.mock('../lib/profile/saved-record-flags', () => ({ savedRecordsEnabled: () => flags.enabled }));
+const flags = { enabled: true, retained: false };
+vi.mock('../lib/profile/saved-record-flags', () => ({
+  savedRecordsEnabled: () => flags.enabled,
+  savedRecordsRetainedOnDevice: async () => flags.retained,
+}));
 
 class MemoryStorage {
   readonly values = new Map<string, string>();
@@ -64,6 +67,7 @@ beforeEach(() => {
   sync.session = null; sync.listeners = []; sync.configured = true;
   discovery.status = 'empty'; discovery.calls = 0;
   flags.enabled = true;
+  flags.retained = false;
   effectCleanup = null;
   const target = new EventTarget();
   vi.stubGlobal('window', Object.assign(target, {
@@ -138,6 +142,18 @@ describe('bootstrap auto-bind discovers guest calculation records first', () => 
     await mount();
     expect(discovery.calls).toBe(0);
     expect(JSON.parse(local.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY) ?? 'null')).toEqual({ version: 1, accountId: A });
+  });
+
+  it('refuses to bind over records kept while the feature was on, after the flag goes off again', async () => {
+    // A rollback must not let sign-in silently claim a browser that still holds
+    // records and record a clear decision the visitor never made.
+    sync.session = { user: { id: A } };
+    flags.enabled = false;
+    flags.retained = true;
+    await mount();
+    expect(discovery.calls).toBe(0);
+    expect(local.getItem(ACCOUNT_V2_LOCAL_OWNER_KEY)).toBeNull();
+    expect(lease.active).toBe(false);
   });
 
   it('grants the account-free lease signed out without touching record storage', async () => {

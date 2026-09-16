@@ -72,33 +72,78 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 [plan](evidence/l3-saved-records/L3BC-PLAN.md),
 [historical dependencies](evidence/l3-saved-records/ACTIVATION-DEPENDENCIES.md).
 
-## Later features — outside this slice
+## Forward backlog — one list (A–E), reconciled with the L-series
 
-- [ ] **L4 — Wider numerical/support hardening:** recorded range, degenerate-angle,
-  hostile-input and return-search limitations remain before broader support claims.
-- [ ] **L5 — Narrow hosted beta:** requires reviewed contracts and explicit privacy,
-  retention, abuse, quota, cost, failure and rollback boundaries.
-- [ ] **L6 — Diagnostics/adoption tooling:** bounded discrepancy workflow and actual
-  supported client verification; wider traditions/marketplaces/content remain deferred.
+The original A–E acceptance letters and the later L-series checklist described
+the same programme twice. They are reconciled here once, and this is now the
+only forward list. The L numbers are kept as aliases so older evidence still
+resolves.
+
+- [ ] **A — Engine release and support contract** (subsumes L4 and the former
+  SDK publication hold). Bounded numerical and support work for the advertised
+  release: recorded ranges, degenerate angles, invalid inputs, timezone limits
+  and bounded return/event searches, validated against independently sourced
+  reference cases with matched conventions. Then the release version, exact
+  artifact, retained notices and a clean external installation.
+  **State:** `@zodiacs/engine@0.1.1-rc.6` is built, vendored and verified
+  (artifact SHA-256 matches its record, and a clean external project installs
+  the exact tarball and computes an ordinary natal chart through the documented
+  public entry points). It is **not published**: `@zodiacs/engine` returns 404
+  from the public registry and this environment holds no npm credentials.
+  See [the engine release record](evidence/engine-release/README.md).
+- [ ] **B — Developer onboarding and existing public data.** An ordinary
+  successful chart first, advanced verification after; a working demonstration
+  on the real engine; documented setup verified from a clean environment;
+  freshness, schema, timestamp, coverage, caching, attribution and stale/error
+  behaviour for the shared-sky API; the lightweight embed path kept private,
+  isolated, keyboard-operable and attributed. Public data and local
+  calculations stay useful with no wallet, token or account.
+- [ ] **C — Narrow hosted beta** (alias L5). Natal-chart and transit-snapshot
+  operations only, on the shared validated engine, behind explicit schemas,
+  input/date/duration/concurrency limits, authentication or tightly bounded
+  demonstrator access, quotas, cancellation and dependency-failure behaviour,
+  no secrets in browser bundles, no birth details or credentials in logs, no
+  personal responses in public caches, no automatic persistence, measured
+  latency and bounded cost, health checks, release identity and tested rollback.
+- [ ] **D — First diagnostic and real agent integration** (alias L6). The
+  bounded chart-difference explainer over validated receipts, numbers before
+  prose, every explanation classified as established from metadata, reproduced
+  by controlled recalculation, hypothesis, or unresolved; false confident
+  explanations measured, not just successes. Then a thin agent adapter over
+  existing functions, verified against an actual supported client, with
+  deterministic calculation never routed through a model.
+- [ ] **E — Adoption and reference materials.** Source-backed reference and
+  contribution materials prioritising chart differences, calculation
+  assumptions, uncertainty and integration examples; AI-generated editorial work
+  identified as such; an invitation for independent builders through an existing
+  approved contact path; onboarding tasks, a feedback template and a prospect
+  packet prepared but not sent; an adoption ledger separating prospect, trial,
+  independently live, retained and paying.
+
+Birth-time sensitivity, broad generated interpretation, new traditions,
+marketplaces and large content programmes are later opportunities, not
+dependencies of this release.
 
 ## Owner and external gates
 
 - [x] **O1/O2/O3 for released site #471 and L1:** exact owner approval and production
   verification recorded; no pending L1 human-review or production gate remains.
 - [x] **L2a owner release approval:** exact candidate `2e7b676d` approved and released.
-  Production and automatic post-merge CI closeout completed; no further L2a approval needed.
 - [x] **L2b release:** exact candidate `370fddf` approved and released through #481.
-  Production, rollback readiness and all 14 automatic post-merge jobs verified.
-  No further L2b release approval or verification gate remains.
-- [ ] **SDK merge/npm publication:** explicit hold remains; not required for the
-  already-vendored site path. Any future publication requires separate authorization
-  and external registry/artifact verification.
-- [ ] **Recommended external reviews:** practitioner, outside-counsel and native-speaker
-  reviews remain unclaimed; these were not universal mandatory site-release signatures.
-- [ ] **O4 — External adoption:** authorized unfamiliar-developer walkthroughs/outreach
-  and real integrations/feedback/retained use remain unestablished.
-- [x] **O5 — Zodia exclusion:** owner-approved exclusion/archive is complete and has
-  no gate in this session. Astrofolio remains a separate workstream.
-
-L3b/c implementation and draft verification were authorized and are delivered on the branch. No merge, publication,
-production deployment, flag activation, L4–L6, spending or outreach is authorized here.
+- [x] **Human engineering review:** superseded on 2026-09-16. The owner replaced
+  it with evidence-based automated adversarial review for this programme
+  ([D-2026-09-16](DECISIONS.md)). AI review is recorded as AI review; no human,
+  practitioner, attorney, customer or independent-auditor signoff is claimed.
+- [ ] **Engine npm publication:** authorized by the owner, blocked by the
+  environment. `npm whoami` fails with `ENEEDAUTH`, there is no `~/.npmrc` and
+  no token in the environment, so the publish step cannot run from here. The
+  smallest missing action is an npm automation token with publish rights to the
+  `@zodiacs` scope (or a maintainer running `npm publish` from the prepared
+  artifact). Attaching `ZodiacsOfficial/sdk` for push was also denied by the
+  session's permission layer; the repository can be read but not written.
+- [ ] **Recommended external reviews:** practitioner, outside-counsel and
+  native-speaker reviews remain unclaimed and are not release signatures.
+- [ ] **O4 — External adoption:** real integrations, feedback and retained use
+  remain unestablished. A model testing our own example is not a customer.
+- [x] **O5 — Zodia exclusion:** owner-approved exclusion is complete. Astrofolio
+  Verification & Provenance remains a separate workstream.

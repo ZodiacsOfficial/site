@@ -25,7 +25,7 @@ import {
   runExclusiveAccountProfileTransition,
   type AccountProfileReadLease,
 } from '../lib/account-v2/profile-lease';
-import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
+import { savedRecordsEnabled, savedRecordsRetainedOnDevice } from '../lib/profile/saved-record-flags';
 
 /**
  * Receipt-only guest data lives in IndexedDB and is invisible to the
@@ -34,7 +34,13 @@ import { savedRecordsEnabled } from '../lib/profile/saved-record-flags';
  * With the feature off nothing is loaded and the result is always 'empty'.
  */
 async function discoverSavedRecords(): Promise<'empty' | 'decision' | 'unavailable'> {
-  if (!savedRecordsEnabled()) return 'empty';
+  if (!savedRecordsEnabled()) {
+    // The feature is not built in, but records kept while it was may still be
+    // here. Binding such a browser to an account silently would record a clear
+    // decision the visitor never made, so the hand-off is required instead.
+    // Probing enumerates databases and creates nothing.
+    return await savedRecordsRetainedOnDevice() ? 'decision' : 'empty';
+  }
   try {
     const api = await import('../lib/profile/saved-record-access');
     const discovery = await api.discoverSavedRecordBoundary();

@@ -28,6 +28,10 @@ disposition are in [REVIEW-2026-09-14.md](REVIEW-2026-09-14.md).
    date, time (or "time unknown"), zone and when it was kept; Download (exact
    bytes, `zodiacs-calculation-record-<date>.json`); Remove (arm, then confirm);
    Remove all of these records (arm, then confirm; the listed namespace only).
+   An armed control is unmistakable and short-lived: it fills, announces what it
+   is waiting for and how to cancel, and returns to its safe label on Escape, on
+   a pointer down anywhere else, on losing focus, or after twelve seconds. A
+   removal that happens is said, and the keyboard stays inside the panel.
    Signed in, the panel names guest records kept before sign-in that stay on
    the device unlisted, and that "Sign out · clear all Zodiacs data" removes
    them. Empty, erased, locked, unavailable, unsupported-storage and
@@ -132,6 +136,9 @@ is made.
   missing `indexedDB.databases()`; schema-2 refusal.
 - CI: the existing native step plus a new flag-on job
   `saved-records-lifecycle-drive` in `site-check.yml`.
+- 2026-09-16: `tests/saved-records-rollback.mjs` builds this source four times
+  (off → on → off → on) and drives one persistent browser profile through the
+  whole sequence; the lifecycle drive gained the armed-confirm check.
 - 2026-09-15 hardening: 31 native groups in Chromium and Firefox, 16
   lifecycle checks, and the account-coordinator drive
   `tests/saved-records-account-drive.mjs` (real bootstrap and panel, fixture
@@ -140,9 +147,15 @@ is made.
 
 ## Compatibility and rollback
 
-- New code, new database: fresh schema 3 only. Old code (main) never opens
-  the database; a rollback leaves records preserved but unavailable until a
-  forward fix ships the reader again. Rollback never restores records that a
+- New code, new database: fresh schema 3 only. The build flag gates writing and
+  the record surfaces, never cleanup: a flag-off build still finds, exports and
+  removes records kept while the feature was on, still finishes an interrupted
+  removal, still honours destructive account actions, and still refuses to bind
+  an account over a browser that holds records. It never writes, so an older
+  client cannot overwrite or corrupt newer rows. A device that never had the
+  feature on creates no database. The full procedure and the reasoning behind it
+  are in [ROLLBACK.md](ROLLBACK.md); the sequence is gated by
+  `npm run test:saved-records:rollback`. Rollback never restores records that a
   committed removal already purged.
 - The unreleased schema 2 from L3a tests and any v1 database are refused
   intact (native and journey drives), with the "unsupported" state shown.

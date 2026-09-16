@@ -2587,6 +2587,8 @@
 }
 
 /* Calculation records kept on this device (Profile). */
+/* Shared by every profile page: the records panel's loading line. */
+.pf-loading { color: var(--muted); }
 .pf-records { margin: clamp(18px, 4vw, 30px) 0; }
 .pf-records__core { display: grid; gap: 14px; padding: clamp(18px, 4vw, 24px); }
 .pf-records__head { display: grid; gap: 6px; }
@@ -2599,4 +2601,19 @@
 .pf-records__facts strong { color: var(--text); font-weight: 500; overflow-wrap: anywhere; }
 .pf-records__meta { font-size: 11px; letter-spacing: 0.04em; color: var(--faint); }
 .pf-records__item .pf-chart__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+/* Remove sits next to Download and costs incomparably more, so it never relies
+   on :hover to say so — touch devices have no hover at all. The armed state
+   fills, so a control waiting for its second activation cannot be mistaken for
+   an ordinary one, and the extra gap makes the destructive control the harder
+   of the two to hit by accident. */
+.pf-records .pf-chart__action--danger {
+  border-color: color-mix(in oklab, var(--sign-aries) 30%, var(--hair-2));
+  color: color-mix(in oklab, var(--sign-aries) 60%, var(--text-2));
+}
+.pf-records .pf-chart__action--danger[aria-pressed="true"] {
+  border-color: color-mix(in oklab, var(--sign-aries) 70%, transparent);
+  background: color-mix(in oklab, var(--sign-aries) 14%, transparent);
+  color: var(--sign-aries);
+}
+.pf-records__item .pf-chart__action--danger { margin-left: 8px; }
 .calc__record-keep { display: grid; gap: 8px; margin-top: 10px; }

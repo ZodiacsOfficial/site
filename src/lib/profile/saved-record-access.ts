@@ -66,6 +66,12 @@ export interface SavedRecordDeps {
   readonly randomUUID: () => string;
   readonly adapter: () => IndexedDbSavedNatalAdapter;
   readonly now?: () => Date;
+  /**
+   * Caps the rights of every ready mode. The retained-data mode (the build flag
+   * is off, but records kept while it was on are still here) uses `read-only`
+   * so nothing new can be admitted while find, export and removal keep working.
+   */
+  readonly rights?: SavedRecordRights;
 }
 
 function accountSyncV2Active(): boolean {
@@ -89,6 +95,21 @@ export function browserSavedRecordDeps(): SavedRecordDeps {
   };
 }
 
+/**
+ * Deps for the retained-data mode. The build flag is off and this module would
+ * normally refuse everything, but a database kept while the feature was on is
+ * still on the device: the visitor must keep find, export and removal, an
+ * interrupted removal must still be finished, and a destructive account action
+ * must not report a removal it did not perform. Nothing here can create or
+ * admit a record — the rights cap is enforced by the store, not only the UI.
+ *
+ * Callers must establish that the database exists first
+ * (`savedRecordsRetainedOnDevice`); these deps never create one.
+ */
+export function retainedSavedRecordDeps(base: SavedRecordDeps = browserSavedRecordDeps()): SavedRecordDeps {
+  return { ...base, enabled: true, rights: 'read-only' };
+}
+
 function ownerKeyFor(accountId: string): string {
   return `account:${accountId.toLowerCase()}`;
 }
@@ -103,6 +124,12 @@ function guestViewSelected(storage: AccountV2BrowserStorage, accountId: string):
 
 /** Synchronous, fail-closed mode read. Ready never means a namespace is admitted. */
 export function readSavedRecordMode(deps: SavedRecordDeps = browserSavedRecordDeps()): SavedRecordModeState {
+  const state = readUncappedSavedRecordMode(deps);
+  if (state.status !== 'ready' || deps.rights !== 'read-only' || state.mode.rights === 'read-only') return state;
+  return { status: 'ready', mode: { ...state.mode, rights: 'read-only' } };
+}
+
+function readUncappedSavedRecordMode(deps: SavedRecordDeps): SavedRecordModeState {
   try {
     if (!deps.enabled) return { status: 'disabled', reason: 'flag-off' };
     if (!deps.storage) return { status: 'unavailable', reason: 'storage' };

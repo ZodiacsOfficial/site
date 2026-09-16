@@ -4,15 +4,17 @@
  * signed-out retained view to the guest scope. Every state is stated as it
  * is; nothing here syncs, migrates or reconstructs a legacy saved chart.
  */
-import { useEffect, useRef, useState } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef, useState } from 'preact/hooks';
 import { downloadCalculationReceipt } from '../lib/receipt-download';
 import { localizePath, normalizeCatalogLocale, type CatalogLocale } from '../lib/i18n';
 import { formatDateTime } from '../lib/i18n/dates';
 import type { SavedNatalRecord } from '../lib/profile/saved-record';
+import { savedRecordsRetainedOnDevice } from '../lib/profile/saved-record-flags';
 import { SAVED_RECORDS_COPY } from './saved-records-copy';
 
 type Access = typeof import('../lib/profile/saved-record-access');
 type Scope = import('../lib/profile/saved-record-access').SavedRecordScope;
+type Deps = import('../lib/profile/saved-record-access').SavedRecordDeps;
 
 interface Props {
   /** Server-computed build flag; client code cannot enable this surface. */
@@ -23,6 +25,9 @@ interface Props {
 type PanelState =
   | { status: 'loading' | 'disabled' | 'locked' | 'unavailable' | 'unsupported' | 'pending' | 'stale' }
   | { status: 'ready'; records: readonly SavedNatalRecord[] };
+
+/** How long a destructive control stays armed before it returns to its safe label. */
+const ARM_TIMEOUT_MS = 12_000;
 
 /** Display facts read from the exact record bytes; nothing is recalculated. */
 export function describeRecord(record: SavedNatalRecord): { date: string; time: string | null; zone: string | null } {
@@ -53,6 +58,15 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   const scopeRef = useRef<Scope | null>(null);
   const apiRef = useRef<Access | null>(null);
   const openRun = useRef(0);
+  const headingRef = useRef<HTMLHeadingElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  // Records kept while the feature was switched on, on a build where it no
+  // longer is. The panel stays invisible unless such a database really exists;
+  // when it does, find, export and removal must keep working, because a
+  // rollback must never strand what someone was told they could delete.
+  const [retained, setRetained] = useState(false);
+  const retainedRef = useRef(false);
+  const depsRef = useRef<Deps | undefined>(undefined);
   // Feedback belongs to the owner namespace whose records it describes. A
   // reopen that settles on a different namespace (sign-in, the guest view) or
   // on none (locked: signed out, or another account) drops it; one that keeps
@@ -87,7 +101,8 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
     try {
       const api = apiRef.current ?? await import('../lib/profile/saved-record-access');
       apiRef.current = api;
-      const opened = await api.openSavedRecordScope();
+      if (retainedRef.current && !depsRef.current) depsRef.current = api.retainedSavedRecordDeps();
+      const opened = await api.openSavedRecordScope(depsRef.current);
       if (run !== openRun.current) { if (opened.status === 'ready') opened.scope.close(); return; }
       if (opened.status !== 'ready') {
         settle(opened.status === 'locked' || opened.status === 'disabled' ? null : 'unchanged');
@@ -117,22 +132,33 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   }
 
   useEffect(() => {
-    if (!enabled) return;
     let live = true;
     let scheduled = false;
     let unsubscribe = () => {};
-    void open();
-    void import('../lib/profile/saved-record-access').then((api) => {
+    const start = async () => {
+      if (!enabled) {
+        // Enumerating databases creates nothing: a device that never had the
+        // feature on takes exactly the path it takes today and renders nothing.
+        if (!await savedRecordsRetainedOnDevice() || !live) return;
+        retainedRef.current = true;
+        setRetained(true);
+        setState({ status: 'loading' });
+      }
       if (!live) return;
-      apiRef.current = api;
-      unsubscribe = api.subscribeSavedRecordScope(() => {
-        // Invalidation is synchronous; the fresh inventory follows on the next task.
-        setState((current) => (current.status === 'ready' ? { status: 'stale' } : current));
-        if (scheduled) return;
-        scheduled = true;
-        setTimeout(() => { scheduled = false; if (live) void open(); }, 0);
-      });
-    }).catch(() => {});
+      void open();
+      await import('../lib/profile/saved-record-access').then((api) => {
+        if (!live) return;
+        apiRef.current = api;
+        unsubscribe = api.subscribeSavedRecordScope(() => {
+          // Invalidation is synchronous; the fresh inventory follows on the next task.
+          setState((current) => (current.status === 'ready' ? { status: 'stale' } : current));
+          if (scheduled) return;
+          scheduled = true;
+          setTimeout(() => { scheduled = false; if (live) void open(); }, 0);
+        });
+      }).catch(() => {});
+    };
+    void start();
     return () => {
       live = false;
       openRun.current += 1;
@@ -141,6 +167,48 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
       scopeRef.current = null;
     };
   }, [enabled]);
+
+  // A destructive control that is waiting for its second activation must not
+  // wait forever. These records are the only copy there is, so an armed button
+  // left behind — by a changed mind, a scroll away, a pocket — would turn one
+  // ordinary later tap into an unrecoverable removal. Every ordinary way of
+  // saying "not that" disarms it: Escape, moving the pointer down anywhere
+  // else, tabbing away, or simply leaving it alone. Re-arming costs one click
+  // and loses nothing, so reverting to the safe state is always the right
+  // default. This is a layout effect on purpose: an ordinary effect is deferred
+  // past paint, which would leave a live armed control briefly uncancellable.
+  useLayoutEffect(() => {
+    if (armed === null) return;
+    const disarm = () => setArmed(null);
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') disarm(); };
+    // Pointer, not click: Safari does not focus a button that was clicked, so
+    // blur alone would never fire there.
+    const onPointerDown = (event: Event) => {
+      const target = event.target as Node | null;
+      const control = sectionRef.current?.querySelector('[aria-pressed="true"]') ?? null;
+      if (!target || !control || !control.contains(target)) disarm();
+    };
+    const timer = setTimeout(disarm, ARM_TIMEOUT_MS);
+    document.addEventListener('keydown', onKeyDown, true);
+    document.addEventListener('pointerdown', onPointerDown, true);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('keydown', onKeyDown, true);
+      document.removeEventListener('pointerdown', onPointerDown, true);
+    };
+  }, [armed]);
+
+  /**
+   * Put the keyboard back somewhere real after a row unmounts under it, but
+   * only when it was inside this panel: focus that has moved on is not ours
+   * to take.
+   */
+  function refocusPanel(): void {
+    const section = sectionRef.current;
+    const active = document.activeElement;
+    if (!section || (active !== null && active !== document.body && !section.contains(active))) return;
+    headingRef.current?.focus();
+  }
 
   /** The download is decided at the click, synchronously, from the already verified bytes. */
   function download(record: SavedNatalRecord): void {
@@ -163,7 +231,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   async function remove(record: SavedNatalRecord): Promise<void> {
     const scope = scopeRef.current;
     if (!scope || busy) return;
-    if (armed !== record.id) { setArmed(record.id); return; }
+    if (armed !== record.id) { say('', null); setArmed(record.id); return; }
     setBusy(true);
     say('', null);
     try {
@@ -173,12 +241,22 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
       // This tab re-opens below; an uncertain outcome is reconciled by that
       // fresh inventory, never by a retry.
       if (result.ok || result.mayHaveCommitted) apiRef.current?.broadcastSavedRecordScopeChange();
+      // A removal that succeeded said nothing at all before: the row simply
+      // vanished. Someone who cannot see the list has to be told which of
+      // "removed", "failed" and "did nothing" happened, or the natural next
+      // move is to try the destructive action again.
+      // An uncertain outcome stays unsaid on purpose: the fresh inventory
+      // below is the honest answer, and it arrives either way.
+      if (result.ok && reportable(scope)) say(copy.removeDone, scope.ownerKey);
       if (!result.ok && !result.mayHaveCommitted && reportable(scope)) {
         say(result.code === 'stale' || result.code === 'access-denied' ? copy.staleRefresh : copy.removeFailed, scope.ownerKey);
       }
     } finally {
       setBusy(false);
       setArmed(null);
+      // The row this was activated from is about to unmount; without this the
+      // keyboard lands on <body>, at the top of the document.
+      refocusPanel();
       void open();
     }
   }
@@ -186,7 +264,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   async function removeAll(): Promise<void> {
     const scope = scopeRef.current;
     if (!scope || busy) return;
-    if (armed !== 'all') { setArmed('all'); return; }
+    if (armed !== 'all') { say('', null); setArmed('all'); return; }
     setBusy(true);
     say('', null);
     try {
@@ -203,6 +281,8 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
     } finally {
       setBusy(false);
       setArmed(null);
+      // The control this was activated from unmounts with the list.
+      refocusPanel();
       void open();
     }
   }
@@ -210,22 +290,34 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
   function switchGuestView(select: boolean): void {
     if (!apiRef.current || busy) return;
     say('', null);
-    apiRef.current.selectSavedRecordGuestView(select);
+    apiRef.current.selectSavedRecordGuestView(select, depsRef.current);
   }
 
-  if (!enabled || state.status === 'disabled') return null;
+  if ((!enabled && !retained) || state.status === 'disabled') return null;
   const scope = scopeRef.current;
   const mode = scope?.mode ?? null;
   const emptyErased = scope?.state === 'owner-erased' || scope?.state === 'device-erased';
   // Guest records kept before sign-in are never listed to an account; say that they exist.
   const hiddenGuest = scope && scope.inventory.guest?.status === 'active' ? scope.inventory.guestRecords : 0;
 
+  // An armed destructive control says what it is waiting for and how to back
+  // out; otherwise the only signal is a button label someone may not be able
+  // to see.
+  const announcement = armed === 'all' ? copy.removeAllArmed : armed !== null ? copy.removeArmed : message;
+
   return (
-    <section class="pf-records shell" id="calculation-records" aria-labelledby="calculation-records-heading" data-saved-records data-saved-records-state={state.status}>
+    <section ref={sectionRef} class="pf-records shell" id="calculation-records" aria-labelledby="calculation-records-heading" data-saved-records data-saved-records-state={state.status}>
       <div class="core pf-records__core">
+        {/* Present from the first render and empty: an announcement has to be a
+            text change inside a region that already exists, not a region and
+            its text arriving in the same mutation. */}
+        <p class="sr-only" role="status" aria-live="polite" data-records-live>{announcement}</p>
         <div class="pf-records__head">
-          <h2 id="calculation-records-heading">{copy.heading}</h2>
+          <h2 id="calculation-records-heading" ref={headingRef} tabIndex={-1}>{copy.heading}</h2>
           <p>{copy.intro}</p>
+          {retained && (
+            <p class="pf-records__notice" data-records-retired>{copy.retiredNotice}</p>
+          )}
           {mode?.kind === 'retained' && !mode.guestView && (
             <p class="pf-records__notice" data-records-retained>{copy.retainedNotice}{' '}
               <button class="pf-chart__action" type="button" disabled={busy} onClick={() => switchGuestView(true)} data-records-use-guest>{copy.useGuest}</button>
@@ -286,6 +378,7 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
                         disabled={busy}
                         aria-pressed={armed === record.id}
                         onClick={() => void remove(record)}
+                        onBlur={() => setArmed((current) => (current === record.id ? null : current))}
                         data-record-remove
                       >{armed === record.id ? copy.removeConfirm : copy.remove}</button>
                     </div>
@@ -301,12 +394,15 @@ export default function SavedRecordsPanel({ enabled = false, locale: rawLocale =
                 disabled={busy}
                 aria-pressed={armed === 'all'}
                 onClick={() => void removeAll()}
+                onBlur={() => setArmed((current) => (current === 'all' ? null : current))}
                 data-records-remove-all
               >{armed === 'all' ? copy.removeAllConfirm : copy.removeAll}</button>
             </div>
           </>
         )}
-        {message && <p class="pf-records__status" role="status" aria-live="polite" data-records-message>{message}</p>}
+        {/* The announcement above carries this text to assistive technology;
+            repeating the roles here would say everything twice. */}
+        {message && <p class="pf-records__status" data-records-message>{message}</p>}
       </div>
     </section>
   );

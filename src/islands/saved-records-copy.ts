@@ -37,6 +37,8 @@ export interface SavedRecordsCopy {
   readonly pending: string;
   readonly pendingRetry: string;
   readonly retainedNotice: string;
+  /** Records kept while the feature was offered, on a build that no longer offers it. */
+  readonly retiredNotice: string;
   /** Signed in: guest records kept before sign-in exist on the device and are not listed. */
   readonly hiddenGuest: (count: number) => string;
   readonly useGuest: string;
@@ -46,9 +48,14 @@ export interface SavedRecordsCopy {
   readonly downloadFailed: string;
   readonly remove: string;
   readonly removeConfirm: string;
+  /** Announced while a single removal waits for its second activation. */
+  readonly removeArmed: string;
+  readonly removeDone: string;
   readonly removeFailed: string;
   readonly removeAll: string;
   readonly removeAllConfirm: string;
+  /** Announced while the whole-list removal waits for its second activation. */
+  readonly removeAllArmed: string;
   readonly removeAllDone: string;
   readonly removeAllPending: string;
   readonly removeAllFailed: string;
@@ -61,7 +68,7 @@ export interface SavedRecordsCopy {
 
 const en: SavedRecordsCopy = {
   heading: 'Calculation records on this device',
-  intro: 'Each record is the exact calculation file for a chart you chose to keep. Records stay in this browser only; they are never part of account sync.',
+  intro: 'Each record is the exact calculation file for a chart you chose to keep. Records stay in this browser only; they are never part of account sync. Clearing this browser’s site data removes them, and the browser can discard them if storage runs low — download anything you want to keep for good.',
   keep: 'Keep this calculation on this device',
   keeping: 'Keeping…',
   kept: 'Kept on this device.',
@@ -89,6 +96,7 @@ const en: SavedRecordsCopy = {
   pending: 'Records on this device are marked for removal but the removal did not finish.',
   pendingRetry: 'Finish removing',
   retainedNotice: 'You are signed out. These records stay readable; sign in to keep new ones.',
+  retiredNotice: 'Keeping new calculations is not offered here at the moment. Records kept earlier are still on this device: you can download or remove them below.',
   hiddenGuest: (n) => n === 1 ? '1 calculation record kept without an account also stays on this device, hidden while you are signed in. “Sign out · clear all Zodiacs data” removes it too.' : `${n} calculation records kept without an account also stay on this device, hidden while you are signed in. “Sign out · clear all Zodiacs data” removes them too.`,
   useGuest: 'Use this device as a guest instead',
   useAccount: 'Show the account’s records again',
@@ -97,9 +105,12 @@ const en: SavedRecordsCopy = {
   downloadFailed: 'The download could not start. Try again.',
   remove: 'Remove',
   removeConfirm: 'Remove this record from this device?',
+  removeArmed: 'Confirm removal: choose Remove again, or press Escape to cancel. This confirmation expires on its own.',
+  removeDone: 'The record was removed.',
   removeFailed: 'The record could not be removed. Refresh the list and try again.',
   removeAll: 'Remove all of these records',
   removeAllConfirm: 'Remove every record listed here? This cannot be undone.',
+  removeAllArmed: 'Confirm removing every record listed here: choose Remove all again, or press Escape to cancel. This confirmation expires on its own.',
   removeAllDone: 'All listed records were removed.',
   removeAllPending: 'Removal was queued but did not finish. Records stay locked until it completes; reopen Profile to finish.',
   removeAllFailed: 'Nothing was removed. Try again.',
@@ -113,7 +124,7 @@ const en: SavedRecordsCopy = {
 const es: SavedRecordsCopy = {
   ...en,
   heading: 'Registros de cálculo en este dispositivo',
-  intro: 'Cada registro es el archivo de cálculo exacto de una carta que decidiste conservar. Los registros se quedan solo en este navegador; nunca forman parte de la sincronización de la cuenta.',
+  intro: 'Cada registro es el archivo de cálculo exacto de una carta que decidiste conservar. Los registros se quedan solo en este navegador; nunca forman parte de la sincronización de la cuenta. Si borras los datos de este sitio, desaparecen, y el navegador puede descartarlos si se queda sin espacio: descarga lo que quieras conservar para siempre.',
   keep: 'Conservar este cálculo en este dispositivo',
   keeping: 'Conservando…',
   kept: 'Conservado en este dispositivo.',
@@ -141,7 +152,8 @@ const es: SavedRecordsCopy = {
   pending: 'Los registros de este dispositivo están marcados para eliminarse, pero la eliminación no terminó.',
   pendingRetry: 'Terminar la eliminación',
   retainedNotice: 'Has cerrado sesión. Estos registros siguen legibles; inicia sesión para conservar nuevos.',
-  hiddenGuest: (n) => n === 1 ? '1 registro de cálculo conservado sin cuenta también sigue en este dispositivo, oculto mientras tienes la sesión iniciada. «Cerrar sesión · borrar todos los datos de Zodiacs» también lo elimina.' : `${n} registros de cálculo conservados sin cuenta también siguen en este dispositivo, ocultos mientras tienes la sesión iniciada. «Cerrar sesión · borrar todos los datos de Zodiacs» también los elimina.`,
+  retiredNotice: 'Por ahora no se ofrece guardar nuevos cálculos aquí. Los registros guardados antes siguen en este dispositivo: puedes descargarlos o eliminarlos abajo.',
+  hiddenGuest: (n) => n === 1 ? '1 registro de cálculo conservado sin cuenta también sigue en este dispositivo, oculto mientras tienes la sesión iniciada. Cerrar la sesión borrando todos los datos de Zodiacs de este navegador también lo elimina.' : `${n} registros de cálculo conservados sin cuenta también siguen en este dispositivo, ocultos mientras tienes la sesión iniciada. Cerrar la sesión borrando todos los datos de Zodiacs de este navegador también los elimina.`,
   useGuest: 'Usar este dispositivo como invitado',
   useAccount: 'Mostrar de nuevo los registros de la cuenta',
   guestViewNotice: 'Mostrando los registros de invitado de este dispositivo. Los registros de la cuenta de la que cerraste sesión quedan ocultos hasta que vuelvas.',
@@ -149,9 +161,12 @@ const es: SavedRecordsCopy = {
   downloadFailed: 'La descarga no pudo empezar. Inténtalo de nuevo.',
   remove: 'Eliminar',
   removeConfirm: '¿Eliminar este registro de este dispositivo?',
+  removeArmed: 'Confirma la eliminación: vuelve a elegir Eliminar o pulsa Escape para cancelar. Esta confirmación caduca sola.',
+  removeDone: 'El registro se eliminó.',
   removeFailed: 'No se pudo eliminar el registro. Actualiza la lista e inténtalo de nuevo.',
   removeAll: 'Eliminar todos estos registros',
   removeAllConfirm: '¿Eliminar todos los registros de esta lista? Esto no se puede deshacer.',
+  removeAllArmed: 'Confirma que quieres eliminar todos los registros de esta lista: vuelve a elegir Eliminar todo o pulsa Escape para cancelar. Esta confirmación caduca sola.',
   removeAllDone: 'Se eliminaron todos los registros de la lista.',
   removeAllPending: 'La eliminación quedó en cola pero no terminó. Los registros quedan bloqueados hasta que se complete; vuelve a abrir Perfil para terminar.',
   removeAllFailed: 'No se eliminó nada. Inténtalo de nuevo.',
@@ -165,7 +180,7 @@ const es: SavedRecordsCopy = {
 const pt: SavedRecordsCopy = {
   ...en,
   heading: 'Registros de cálculo neste dispositivo',
-  intro: 'Cada registro é o arquivo de cálculo exato de um mapa que você decidiu guardar. Os registros ficam apenas neste navegador; nunca fazem parte da sincronização da conta.',
+  intro: 'Cada registro é o arquivo de cálculo exato de um mapa que você decidiu guardar. Os registros ficam apenas neste navegador; nunca fazem parte da sincronização da conta. Limpar os dados deste site remove os registros, e o navegador pode descartá-los se faltar espaço — baixe o que você quiser guardar de vez.',
   keep: 'Guardar este cálculo neste dispositivo',
   keeping: 'Guardando…',
   kept: 'Guardado neste dispositivo.',
@@ -193,7 +208,8 @@ const pt: SavedRecordsCopy = {
   pending: 'Os registros deste dispositivo estão marcados para remoção, mas a remoção não terminou.',
   pendingRetry: 'Concluir a remoção',
   retainedNotice: 'Você saiu da conta. Estes registros continuam legíveis; entre para guardar novos.',
-  hiddenGuest: (n) => n === 1 ? '1 registro de cálculo guardado sem conta também continua neste dispositivo, oculto enquanto você está conectado. “Sair · limpar todos os dados do Zodiacs” também o remove.' : `${n} registros de cálculo guardados sem conta também continuam neste dispositivo, ocultos enquanto você está conectado. “Sair · limpar todos os dados do Zodiacs” também os remove.`,
+  retiredNotice: 'Guardar novos cálculos não está disponível aqui neste momento. Os registros guardados antes continuam neste dispositivo: você pode baixá-los ou removê-los abaixo.',
+  hiddenGuest: (n) => n === 1 ? '1 registro de cálculo guardado sem conta também continua neste dispositivo, oculto enquanto você está conectado. Sair da conta limpando todos os dados do Zodiacs neste navegador também o remove.' : `${n} registros de cálculo guardados sem conta também continuam neste dispositivo, ocultos enquanto você está conectado. Sair da conta limpando todos os dados do Zodiacs neste navegador também os remove.`,
   useGuest: 'Usar este dispositivo como visitante',
   useAccount: 'Mostrar os registros da conta novamente',
   guestViewNotice: 'Mostrando os registros de visitante deste dispositivo. Os registros da conta da qual você saiu ficam ocultos até você voltar.',
@@ -201,9 +217,12 @@ const pt: SavedRecordsCopy = {
   downloadFailed: 'O download não pôde começar. Tente novamente.',
   remove: 'Remover',
   removeConfirm: 'Remover este registro deste dispositivo?',
+  removeArmed: 'Confirme a remoção: escolha Remover outra vez ou pressione Escape para cancelar. Esta confirmação expira sozinha.',
+  removeDone: 'O registro foi removido.',
   removeFailed: 'Não foi possível remover o registro. Atualize a lista e tente novamente.',
   removeAll: 'Remover todos estes registros',
   removeAllConfirm: 'Remover todos os registros desta lista? Isso não pode ser desfeito.',
+  removeAllArmed: 'Confirme a remoção de todos os registros desta lista: escolha Remover tudo outra vez ou pressione Escape para cancelar. Esta confirmação expira sozinha.',
   removeAllDone: 'Todos os registros da lista foram removidos.',
   removeAllPending: 'A remoção foi enfileirada, mas não terminou. Os registros ficam bloqueados até ela concluir; reabra o Perfil para concluir.',
   removeAllFailed: 'Nada foi removido. Tente novamente.',
@@ -217,7 +236,7 @@ const pt: SavedRecordsCopy = {
 const fr: SavedRecordsCopy = {
   ...en,
   heading: 'Relevés de calcul sur cet appareil',
-  intro: 'Chaque relevé est le fichier de calcul exact d’un thème que tu as choisi de garder. Les relevés restent dans ce navigateur uniquement ; ils ne font jamais partie de la synchronisation du compte.',
+  intro: 'Chaque relevé est le fichier de calcul exact d’un thème que tu as choisi de garder. Les relevés restent dans ce navigateur uniquement ; ils ne font jamais partie de la synchronisation du compte. Effacer les données de ce site les supprime, et le navigateur peut les écarter si l’espace manque : télécharge ce que tu veux garder pour de bon.',
   keep: 'Garder ce calcul sur cet appareil',
   keeping: 'Enregistrement…',
   kept: 'Gardé sur cet appareil.',
@@ -245,7 +264,8 @@ const fr: SavedRecordsCopy = {
   pending: 'Les relevés de cet appareil sont marqués pour suppression, mais la suppression n’a pas abouti.',
   pendingRetry: 'Terminer la suppression',
   retainedNotice: 'Tu es déconnecté. Ces relevés restent lisibles ; connecte-toi pour en garder de nouveaux.',
-  hiddenGuest: (n) => n === 1 ? '1 relevé de calcul gardé sans compte reste aussi sur cet appareil, masqué tant que tu es connecté. « Se déconnecter · effacer toutes les données Zodiacs » le supprime aussi.' : `${n} relevés de calcul gardés sans compte restent aussi sur cet appareil, masqués tant que tu es connecté. « Se déconnecter · effacer toutes les données Zodiacs » les supprime aussi.`,
+  retiredNotice: 'Conserver de nouveaux calculs n’est pas proposé ici pour le moment. Les relevés conservés auparavant sont toujours sur cet appareil : tu peux les télécharger ou les supprimer ci-dessous.',
+  hiddenGuest: (n) => n === 1 ? '1 relevé de calcul gardé sans compte reste aussi sur cet appareil, masqué tant que tu es connecté. Te déconnecter en effaçant toutes les données Zodiacs de ce navigateur le supprime aussi.' : `${n} relevés de calcul gardés sans compte restent aussi sur cet appareil, masqués tant que tu es connecté. Te déconnecter en effaçant toutes les données Zodiacs de ce navigateur les supprime aussi.`,
   useGuest: 'Utiliser cet appareil en tant qu’invité',
   useAccount: 'Afficher à nouveau les relevés du compte',
   guestViewNotice: 'Affichage des relevés invité de cet appareil. Les relevés du compte dont tu t’es déconnecté restent masqués jusqu’à ce que tu reviennes.',
@@ -253,9 +273,12 @@ const fr: SavedRecordsCopy = {
   downloadFailed: 'Le téléchargement n’a pas pu démarrer. Réessaie.',
   remove: 'Supprimer',
   removeConfirm: 'Supprimer ce relevé de cet appareil ?',
+  removeArmed: 'Confirme la suppression : choisis de nouveau Supprimer, ou appuie sur Échap pour annuler. Cette confirmation expire d’elle-même.',
+  removeDone: 'Le relevé a été supprimé.',
   removeFailed: 'Le relevé n’a pas pu être supprimé. Actualise la liste et réessaie.',
   removeAll: 'Supprimer tous ces relevés',
   removeAllConfirm: 'Supprimer tous les relevés de cette liste ? Cette action est irréversible.',
+  removeAllArmed: 'Confirme la suppression de tous les relevés de cette liste : choisis de nouveau Tout supprimer, ou appuie sur Échap pour annuler. Cette confirmation expire d’elle-même.',
   removeAllDone: 'Tous les relevés de la liste ont été supprimés.',
   removeAllPending: 'La suppression a été lancée mais n’a pas abouti. Les relevés restent verrouillés jusqu’à la fin ; rouvre Profil pour terminer.',
   removeAllFailed: 'Rien n’a été supprimé. Réessaie.',
@@ -269,7 +292,7 @@ const fr: SavedRecordsCopy = {
 const it: SavedRecordsCopy = {
   ...en,
   heading: 'Resoconti di calcolo su questo dispositivo',
-  intro: 'Ogni resoconto è il file di calcolo esatto di un tema che hai scelto di conservare. I resoconti restano solo in questo browser; non fanno mai parte della sincronizzazione dell’account.',
+  intro: 'Ogni resoconto è il file di calcolo esatto di un tema che hai scelto di conservare. I resoconti restano solo in questo browser; non fanno mai parte della sincronizzazione dell’account. Cancellare i dati di questo sito li rimuove, e il browser può scartarli se lo spazio si esaurisce: scarica ciò che vuoi conservare per sempre.',
   keep: 'Conserva questo calcolo su questo dispositivo',
   keeping: 'Salvataggio…',
   kept: 'Conservato su questo dispositivo.',
@@ -297,7 +320,8 @@ const it: SavedRecordsCopy = {
   pending: 'I resoconti di questo dispositivo sono contrassegnati per la rimozione, ma la rimozione non è terminata.',
   pendingRetry: 'Completa la rimozione',
   retainedNotice: 'Sei disconnesso. Questi resoconti restano leggibili; accedi per conservarne di nuovi.',
-  hiddenGuest: (n) => n === 1 ? '1 resoconto di calcolo conservato senza account resta anche su questo dispositivo, nascosto finché hai effettuato l’accesso. «Esci · cancella tutti i dati Zodiacs» rimuove anche quello.' : `${n} resoconti di calcolo conservati senza account restano anche su questo dispositivo, nascosti finché hai effettuato l’accesso. «Esci · cancella tutti i dati Zodiacs» rimuove anche quelli.`,
+  retiredNotice: 'Conservare nuovi calcoli non è disponibile qui al momento. I resoconti conservati in precedenza restano su questo dispositivo: puoi scaricarli o rimuoverli qui sotto.',
+  hiddenGuest: (n) => n === 1 ? '1 resoconto di calcolo conservato senza account resta anche su questo dispositivo, nascosto finché hai effettuato l’accesso. Uscire cancellando tutti i dati Zodiacs di questo browser rimuove anche quello.' : `${n} resoconti di calcolo conservati senza account restano anche su questo dispositivo, nascosti finché hai effettuato l’accesso. Uscire cancellando tutti i dati Zodiacs di questo browser rimuove anche quelli.`,
   useGuest: 'Usa questo dispositivo come ospite',
   useAccount: 'Mostra di nuovo i resoconti dell’account',
   guestViewNotice: 'Stai vedendo i resoconti ospite di questo dispositivo. I resoconti dell’account da cui sei uscito restano nascosti finché non torni indietro.',
@@ -305,9 +329,12 @@ const it: SavedRecordsCopy = {
   downloadFailed: 'Il download non è partito. Riprova.',
   remove: 'Rimuovi',
   removeConfirm: 'Rimuovere questo resoconto da questo dispositivo?',
+  removeArmed: 'Conferma la rimozione: scegli di nuovo Rimuovi, oppure premi Esc per annullare. Questa conferma scade da sola.',
+  removeDone: 'Il resoconto è stato rimosso.',
   removeFailed: 'Il resoconto non è stato rimosso. Aggiorna l’elenco e riprova.',
   removeAll: 'Rimuovi tutti questi resoconti',
   removeAllConfirm: 'Rimuovere tutti i resoconti di questo elenco? L’operazione non può essere annullata.',
+  removeAllArmed: 'Conferma la rimozione di tutti i resoconti elencati qui: scegli di nuovo Rimuovi tutto, oppure premi Esc per annullare. Questa conferma scade da sola.',
   removeAllDone: 'Tutti i resoconti dell’elenco sono stati rimossi.',
   removeAllPending: 'La rimozione è stata avviata ma non è terminata. I resoconti restano bloccati finché non si completa; riapri Profilo per completarla.',
   removeAllFailed: 'Non è stato rimosso nulla. Riprova.',
@@ -321,7 +348,7 @@ const it: SavedRecordsCopy = {
 const ru: SavedRecordsCopy = {
   ...en,
   heading: 'Записи расчёта на этом устройстве',
-  intro: 'Каждая запись — это точный файл расчёта карты, которую вы решили сохранить. Записи остаются только в этом браузере и никогда не участвуют в синхронизации аккаунта.',
+  intro: 'Каждая запись — это точный файл расчёта карты, которую вы решили сохранить. Записи остаются только в этом браузере и никогда не участвуют в синхронизации аккаунта. Очистка данных сайта удаляет их, а браузер может отбросить их при нехватке места: скачайте то, что хотите сохранить навсегда.',
   keep: 'Сохранить этот расчёт на этом устройстве',
   keeping: 'Сохраняем…',
   kept: 'Сохранено на этом устройстве.',
@@ -349,7 +376,8 @@ const ru: SavedRecordsCopy = {
   pending: 'Записи на этом устройстве помечены на удаление, но удаление не завершилось.',
   pendingRetry: 'Завершить удаление',
   retainedNotice: 'Вы вышли из аккаунта. Эти записи остаются доступными для чтения; войдите, чтобы сохранять новые.',
-  hiddenGuest: (n) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'запись расчёта, сохранённая' : 'записи расчёта, сохранённые'} без аккаунта, также ${n % 10 === 1 && n % 100 !== 11 ? 'остаётся' : 'остаются'} на этом устройстве и ${n % 10 === 1 && n % 100 !== 11 ? 'скрыта' : 'скрыты'}, пока вы вошли в аккаунт. «Выйти · удалить все данные Zodiacs» удаляет их тоже.`,
+  retiredNotice: 'Сохранение новых расчётов здесь сейчас недоступно. Записи, сохранённые ранее, остаются на этом устройстве: их можно скачать или удалить ниже.',
+  hiddenGuest: (n) => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'запись расчёта, сохранённая' : 'записи расчёта, сохранённые'} без аккаунта, также ${n % 10 === 1 && n % 100 !== 11 ? 'остаётся' : 'остаются'} на этом устройстве и ${n % 10 === 1 && n % 100 !== 11 ? 'скрыта' : 'скрыты'}, пока вы вошли в аккаунт. Выход из аккаунта с удалением всех данных Zodiacs в этом браузере удаляет и их.`,
   useGuest: 'Использовать это устройство как гость',
   useAccount: 'Снова показать записи аккаунта',
   guestViewNotice: 'Показаны гостевые записи этого устройства. Записи аккаунта, из которого вы вышли, скрыты, пока вы не переключитесь обратно.',
@@ -357,9 +385,12 @@ const ru: SavedRecordsCopy = {
   downloadFailed: 'Не удалось начать скачивание. Попробуйте ещё раз.',
   remove: 'Удалить',
   removeConfirm: 'Удалить эту запись с этого устройства?',
+  removeArmed: 'Подтвердите удаление: снова выберите «Удалить» или нажмите Escape, чтобы отменить. Это подтверждение истекает само.',
+  removeDone: 'Запись удалена.',
   removeFailed: 'Не удалось удалить запись. Обновите список и попробуйте ещё раз.',
   removeAll: 'Удалить все эти записи',
   removeAllConfirm: 'Удалить все записи из этого списка? Это нельзя отменить.',
+  removeAllArmed: 'Подтвердите удаление всех записей из этого списка: снова выберите «Удалить все» или нажмите Escape, чтобы отменить. Это подтверждение истекает само.',
   removeAllDone: 'Все записи из списка удалены.',
   removeAllPending: 'Удаление поставлено в очередь, но не завершилось. Записи остаются заблокированными до завершения; откройте Профиль снова, чтобы закончить.',
   removeAllFailed: 'Ничего не удалено. Попробуйте ещё раз.',
