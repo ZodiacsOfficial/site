@@ -54,10 +54,36 @@ environment. Attaching `ZodiacsOfficial/sdk` for push was separately refused by
 the session's permission layer, so the engine repository can be read (it was
 cloned anonymously) but not written.
 
-**Smallest missing action:** an npm automation token with publish rights to the
-`@zodiacs` scope made available to this environment, or a maintainer running
-`npm publish` on the prepared artifact. Either path must still pass the
-registry's own two-factor and account checks; nothing here bypasses them.
+### Rechecked 2026-09-17
+
+- `npm whoami` → `ENEEDAUTH`; no `~/.npmrc`; no `NPM_TOKEN` or `NODE_AUTH_TOKEN`.
+- `npm view @zodiacs/engine versions` → 404, still unpublished.
+- `npm view @zodiacs/sdk version` → **1.0.1**. The scope exists and is owned, so
+  this is a first publication *into an established scope*, not a new-scope
+  bootstrap, and no scope-creation step is needed.
+- **No publish workflow and no trusted publishing anywhere.** Nothing in
+  `.github/workflows/` references `npm publish`, `NPM_TOKEN`, `NODE_AUTH_TOKEN`
+  or `id-token`. That matters for where the fix goes: the engine's source is in
+  `ZodiacsOfficial/sdk`, so an OIDC publish workflow belongs in that repository,
+  not this one — and attaching that repository for write was refused by this
+  session's permission layer.
+
+**Two distinct blockers, not one.** Missing npm authentication in this
+environment, and missing write access to `ZodiacsOfficial/sdk`. Either alone
+would stop publication.
+
+**Smallest missing action, in preference order:**
+
+1. Add an npm trusted-publishing (OIDC) workflow to `ZodiacsOfficial/sdk` and
+   publish from it. No long-lived token is stored anywhere, which is why this is
+   preferred.
+2. Or a maintainer runs `npm publish` locally on the prepared artifact.
+3. Or an npm automation token with publish rights to `@zodiacs` is made
+   available to a release environment — not to this session, and never pasted
+   into chat or committed.
+
+Every path still passes npm's own account and two-factor checks; nothing here
+bypasses them.
 
 After publication the remaining steps are mechanical and must actually be
 performed before any public claim changes: download the published tarball from
