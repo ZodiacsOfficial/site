@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-16T12:11:22.768Z",
+  "generatedAt": "2026-09-17T04:40:37.055Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-17T00:00:00.000Z",
-    "endsBefore": "2026-09-24T00:00:00.000Z"
+    "startsAt": "2026-08-18T00:00:00.000Z",
+    "endsBefore": "2026-09-25T00:00:00.000Z"
   },
   "items": [
     {
@@ -73,6 +73,87 @@
         "aspect"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-daily-market-brief-2026-09-17",
+      "slug": "daily-market-brief-2026-09-17",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-17T12:00:00.000Z",
+      "visibleAt": "2026-09-17T12:00:00.000Z",
+      "title": "Saturn in Aries · daily market brief",
+      "summary": "Saturn in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-17/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-10-observation-168h",
+      "slug": "market-check-2026-09-10-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-17T04:39:30.165Z",
+      "visibleAt": "2026-09-17T04:39:30.165Z",
+      "title": "Gemini 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.31 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-10-observation-168h/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-16-observation-24h",
+      "slug": "market-check-2026-09-16-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-17T00:12:44.629Z",
+      "visibleAt": "2026-09-17T00:12:44.629Z",
+      "title": "Aries 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.08 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-16-observation-24h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-17",
+      "slug": "market-check-2026-09-17",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-17T00:07:42.986Z",
+      "visibleAt": "2026-09-17T00:07:42.986Z",
+      "title": "Aries market check · 2026-09-17",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-17/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-daily-market-brief-2026-09-16",
