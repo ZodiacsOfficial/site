@@ -7,7 +7,7 @@
  * becomes a command to run, a path to open, a module to import, a URL to
  * fetch, or a version to download. The adapter imports no filesystem, process
  * or network module at all, so that property is structural rather than a
- * check that could be forgotten — `bundle.test.ts` asserts it against the
+ * check that could be forgotten — `scripts/mcp-artifact.test.mjs` asserts it against the
  * built artifact.
  */
 import { NATAL_ENVELOPE_LIMITS } from '@zodiacs/engine/receipt';
@@ -32,9 +32,54 @@ const EPOCH_MAX = Date.parse(EPOCH_MAX_UTC);
 export const HOUSE_SYSTEMS = Object.freeze(['placidus', 'whole'] as const);
 export type HouseSystemName = (typeof HOUSE_SYSTEMS)[number];
 
-/** The envelope's reference vocabulary. Omission never infers noon. */
-export const REFERENCES = Object.freeze(['supplied-instant', 'utc-noon', 'local-noon'] as const);
+/**
+ * The references this adapter can actually produce. Omission never infers noon.
+ *
+ * The envelope vocabulary has a third value, `local-noon`, and it is not
+ * offered here: the codec refuses it unless the record also carries a captured
+ * local resolution — a date, a wall time, an IANA zone and the offset in force
+ * at that instant — and this adapter resolves no timezones, so it has none to
+ * supply. Advertising an option that is refused in every combination is worse
+ * than not offering it. An AI review found it advertised and unusable.
+ */
+export const REFERENCES = Object.freeze(['supplied-instant', 'utc-noon'] as const);
 export type ReferenceName = (typeof REFERENCES)[number];
+
+/**
+ * `utc-noon` has two preconditions the codec enforces and neither the schema
+ * nor the documentation used to state: the instant must be exactly midday UTC,
+ * and the birth time must be declared unknown. That is what the value means —
+ * "no time was known, so midday UTC stands in" — and a caller who sets it
+ * beside a real birth time is describing something else.
+ */
+export const UTC_NOON_MS = 12 * 60 * 60 * 1000;
+export function utcNoonMisused(instant: Date, timeKnown: boolean): string | null {
+  if (timeKnown) {
+    return 'reference "utc-noon" records that no birth time was known, so it needs timeKnown: false.'
+      + ' For a real birth time use "supplied-instant", or omit reference entirely';
+  }
+  if (((instant.getTime() % 86_400_000) + 86_400_000) % 86_400_000 !== UTC_NOON_MS) {
+    return 'reference "utc-noon" needs utc to be exactly 12:00:00Z on the date in question';
+  }
+  return null;
+}
+
+/**
+ * The engine does not compute angles at the exact geographic poles — its own
+ * receipts record `angleExclusions: "exact-geographic-poles-and-ecliptic-horizon-coincidence"`.
+ * The schema still admits ±90 because a chart with no known time has no angles
+ * to compute and succeeds there; this is the case the schema bound alone got
+ * wrong, and it was refused with an internal error code until an AI review
+ * pointed at it.
+ */
+export function polarAngleExclusion(
+  coordinates: { readonly latitude: number } | null,
+  timeKnown: boolean,
+): string | null {
+  if (!coordinates || !timeKnown || Math.abs(coordinates.latitude) !== 90) return null;
+  return 'the engine does not compute angles at the exact poles, so latitude 90 or -90 needs'
+    + ' timeKnown: false. Use 89.999999 for a chart that is nearly there';
+}
 
 export const OUTPUTS = Object.freeze(['summary', 'record'] as const);
 export type OutputName = (typeof OUTPUTS)[number];
@@ -46,9 +91,15 @@ export type OutputName = (typeof OUTPUTS)[number];
  * string reaches `JSON.parse` so an oversized argument costs a length test
  * rather than a parse. `INSTANT_CHARS` bounds the date argument so a
  * megabyte-long string is refused by the schema, not by a regex walking it.
- * `RESULT_BYTES` bounds what goes back: a comparison of two maximally
- * different charts runs to roughly 20 KB, and the cap is stated so a result
- * is never silently cut — it is refused, with its size named.
+ *
+ * `resultBytes`, `differences` and `explanations` are headroom rather than
+ * operative limits, and an AI review was right that they should not be
+ * described as bounds a caller could reach. The comparison's own structure caps
+ * it near 206 rows and a dozen candidate causes, and the largest result anyone
+ * has produced from it is 20,756 bytes — under 8% of the byte cap. They are
+ * here so the bound is a fixed number rather than an assumption, and so an
+ * engine change that made results much larger is refused with its size named
+ * instead of returned.
  */
 export const LIMITS = Object.freeze({
   recordBytes: NATAL_ENVELOPE_LIMITS.bytes,
@@ -94,7 +145,10 @@ export function parseInstant(value: string): InstantParse {
   if (!match) {
     return {
       ok: false,
-      reason: 'utc must be an ISO-8601 instant with an explicit zone, such as 1990-06-15T13:30:00Z or 1990-06-15T19:00:00+05:30',
+      // The example date here is deliberately not one any test supplies as
+      // input. A refusal that names a fixed example is fine; a check for an
+      // echoed argument cannot tell the two apart if they are the same string.
+      reason: 'utc must be an ISO-8601 instant with an explicit zone, such as 2000-01-01T00:00:00Z or 2000-01-01T05:30:00+05:30',
     };
   }
   const [, y, mo, d, h, mi, s, , zone] = match;

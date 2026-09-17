@@ -6,7 +6,12 @@ const SOURCE_EXTENSIONS = new Set([
   '.astro', '.js', '.jsx', '.json', '.md', '.mdx', '.mjs', '.ts', '.tsx', '.txt',
 ]);
 
-const SOURCE_ROOTS = Object.freeze([
+/**
+ * Exported so the scanner's own test seeds exactly the roots it will read. A
+ * hand-kept copy of this list in the test drifted the moment a root was added,
+ * and the scanner failing loudly on a missing root is the behaviour to keep.
+ */
+export const SOURCE_ROOTS = Object.freeze([
   'api',
   'src/components',
   'src/content',

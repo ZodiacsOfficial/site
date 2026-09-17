@@ -306,25 +306,25 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     // angles and cusps are identical — two polar charts that both fell back to
     // whole sign, say — has nothing here for a house system to account for, and
     // a replay that "matches" values that never moved demonstrates nothing.
-    const movedAngles = idsIn('Angles').filter((id) => id.startsWith('angle-'));
+    // A house system moves the cusps. It cannot move the angles: the ascendant
+    // and midheaven come from the time and the place, and every system in this
+    // engine derives from them — two charts differing only in house system have
+    // identical angles, which is why `angle-` rows are held out of what this
+    // cause may claim, in both branches. Offering it as "the obvious candidate
+    // for the angle differences" was a hypothesis refuted by a recalculation
+    // the comparison already knows how to run.
     const movedCusps = idsIn('Houses').filter((id) => id.startsWith('cusp-'));
     let promoted = false;
-    if (canReplayLeft && input && typeof requested === 'string' && movedAngles.length + movedCusps.length > 0) {
+    if (canReplayLeft && input && typeof requested === 'string' && movedCusps.length > 0) {
       const replayed = replay!({ ...input, houseSystem: requested });
-      const targetAngles = (right.result as any).angles as Record<string, number> | null;
       const targetCusps = (right.result as any).houses?.cusps as number[] | undefined;
       if (replayed) {
-        // Every moved row must be reproduced, and the replay must have returned
-        // the values that moved: a null cusp list cannot demonstrate a cusp
-        // difference, and matching untouched angles is not evidence.
-        const anglesReproduced = movedAngles.length === 0 || Boolean(
-          replayed.angles && targetAngles
-          && movedAngles.every((id) => {
-            const key = id.slice('angle-'.length);
-            return compareAngles(replayed.angles![key], targetAngles[key]) !== 'different';
-          }),
-        );
-        const cuspsReproduced = movedCusps.length === 0 || Boolean(
+        // The replay must have returned the values that moved: a null cusp list
+        // cannot demonstrate a cusp difference, and matching values that never
+        // moved is not evidence. A pair that also differs in moment or place
+        // fails here, because replaying the first chart's own inputs cannot
+        // land on the second chart's cusps.
+        const cuspsReproduced = Boolean(
           Array.isArray(replayed.cusps) && Array.isArray(targetCusps)
           && replayed.cusps.length === targetCusps.length
           && movedCusps.every((id) => {
@@ -332,34 +332,43 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
             return compareAngles(replayed.cusps![index], targetCusps[index]) !== 'different';
           }),
         );
-        if (anglesReproduced && cuspsReproduced) {
+        if (cuspsReproduced) {
           promoted = true;
-          const moved = movedCusps.length > 0 && movedAngles.length > 0 ? 'angles and cusps'
-            : movedCusps.length > 0 ? 'house cusps' : 'angles';
           explanations.push({
             id: 'house-system', evidence: 'reproduced',
-            statement: `The different house system accounts for the ${moved}.`,
-            covers: [...movedAngles, ...movedCusps,
+            statement: 'The different house system accounts for the house cusps.',
+            covers: [...movedCusps,
               ...['houses-requested', 'houses-actual', 'houses-system'].filter(has)],
-            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's ${moved} on engine ${available}.`,
+            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's house cusps on engine ${available}.`,
           });
         }
       }
     }
     if (!promoted) {
-      const unexplainedAngles = movedAngles.length + movedCusps.length > 0;
+      const unexplainedCusps = movedCusps.length > 0;
+      // One side having no house table at all is not two charts using different
+      // systems, and saying so of a pair that agreed on the system — which is
+      // what an unknown birth time produces — invites exactly the wrong
+      // conclusion. The rows still need a claimant, so this keeps the coverage
+      // and corrects the sentence.
+      const absent = ((left.receipt as any).houses?.actual ?? null) === null
+        || ((right.receipt as any).houses?.actual ?? null) === null;
       explanations.push({
-        id: 'house-system', evidence: unexplainedAngles ? 'hypothesis' : 'reported',
-        statement: has('houses-actual') && !has('houses-requested')
-          ? 'The same house system was requested, but a different one was actually used.'
-          : 'The two charts asked for different house systems.',
+        id: 'house-system', evidence: unexplainedCusps ? 'hypothesis' : 'reported',
+        statement: absent
+          ? 'One chart has no house table at all, so there is no house system to compare.'
+          : has('houses-actual') && !has('houses-requested')
+            ? 'The same house system was requested, but a different one was actually used.'
+            : 'The two charts asked for different house systems.',
         covers: [
           ...['houses-requested', 'houses-actual', 'houses-system', 'houses-absence'].filter(has),
-          ...(unexplainedAngles ? [...movedAngles, ...movedCusps] : []),
+          ...(unexplainedCusps ? movedCusps : []),
         ],
-        detail: unexplainedAngles
-          ? 'This is the obvious candidate for the angle and cusp differences, but it was not reproduced here, so it stays a hypothesis.'
-          : 'The angles and cusps are the same in both files, so this difference changed nothing that was computed.',
+        detail: absent
+          ? 'Whatever left one chart without houses is the difference here; the house system is not.'
+          : unexplainedCusps
+            ? 'This is a candidate for the cusp differences, but it was not reproduced here, so it stays a hypothesis. It accounts for no angle: those come from the time and the place.'
+            : 'The cusps are the same in both files, so this difference changed nothing that was computed.',
       });
     }
   }

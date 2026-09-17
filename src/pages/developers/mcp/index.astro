@@ -55,10 +55,8 @@ const tools = [
       </p>
       <p>
         <strong>{manifest.releaseStatus === 'unpublished-candidate' ? 'Unpublished candidate' : manifest.releaseStatus}
-        · {manifest.name} {manifest.version}.</strong> It is not on npm, so there is no
-        <code>npm install</code> for it — an install command for a package that does not
-        exist would be worse than none. Install from the archive below, whose SHA-256 is
-        published beside it.
+        · {manifest.name} {manifest.version}.</strong> It is not on npm. Install it from the
+        archive below, whose SHA-256 is published beside it.
       </p>
     </div>
 
@@ -66,7 +64,10 @@ const tools = [
     <div class="prose">
       <p>
         The server runs on your machine and calculates there. Nothing reaches
-        Zodiacs.org, nothing is saved, nothing is logged.
+        Zodiacs.org and nothing is saved. It writes one line to its diagnostic channel
+        when it starts and one if the connection errors — your host may show those, or
+        keep them in its own log — and they carry a version number and an error class,
+        never a birth detail or a record.
       </p>
       <p>
         That is not the same as a local AI experience, and the difference matters more
@@ -179,14 +180,22 @@ const tools = [
         <li>No timezone resolution. Supply an instant with an explicit offset; the
           adapter does not turn a place name and a wall clock into a moment.</li>
         <li>No file access and no fetching. Records are passed as content.</li>
-        <li>No cancellation, and no timeout pretending to be one. A calculation is
-          synchronous, so a timer could not stop it mid-way; the work is bounded by
-          refusing unbounded operations instead.</li>
+        <li>No cancellation and no timeout. A calculation is synchronous, so a timer
+          could not stop it mid-way; the work is bounded by refusing unbounded
+          operations — one chart per call, no searches, no date ranges.</li>
         <li>No authentication of anything — not a record, not an engine version, not
           the claim that two records came from independent software. Two records from
           one engine agreeing shows consistency, not independent accuracy.</li>
         <li>Two house systems, <code>placidus</code> and <code>whole</code>, because
           those are the two the engine computes.</li>
+        <li>No body-to-house mapping. The summary returns the cusps and the body
+          longitudes; which house a body falls in is left to the caller.</li>
+        <li>No <code>outputSchema</code> on the tools. Arguments are schema-bounded;
+          result shapes are documented rather than declared.</li>
+        <li>A single request longer than 1 MB is dropped rather than answered. The
+          stdio framing is one JSON message per line, so a line that cannot be buffered
+          cannot be refused with a reply; it is discarded at the next newline and the
+          session carries on.</li>
       </ul>
     </div>
 

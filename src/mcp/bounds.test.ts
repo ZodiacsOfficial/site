@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
-  EPOCH_MAX_UTC, EPOCH_MIN_UTC, HOUSE_SYSTEMS, LIMITS,
-  parseCoordinates, parseInstant, recordTooLarge, resultTooLarge,
+  EPOCH_MAX_UTC, EPOCH_MIN_UTC, HOUSE_SYSTEMS, LIMITS, REFERENCES,
+  parseCoordinates, parseInstant, polarAngleExclusion, recordTooLarge, resultTooLarge,
+  utcNoonMisused,
 } from './bounds';
 
 describe('the instant a model is allowed to supply', () => {
@@ -78,10 +79,35 @@ describe('coordinates', () => {
     expect(parseCoordinates(latitude, longitude).ok).toBe(false);
   });
 
-  it('accepts the poles and the dateline exactly', () => {
+  it('accepts the dateline exactly, and the poles as coordinates', () => {
     for (const pair of [[90, 180], [-90, -180], [0, 0]] as const) {
       expect(parseCoordinates(pair[0], pair[1]).ok).toBe(true);
     }
+  });
+
+  it('refuses an exact pole only when a birth time is known', () => {
+    // This module accepts ±90 because a chart with no time has no angles to
+    // compute and succeeds there. The earlier version of the test above was
+    // titled "accepts the poles… exactly" and stopped here, so it passed while
+    // every ordinary request at ±90 was refused with an internal error code.
+    expect(polarAngleExclusion({ latitude: 90 }, true)).toMatch(/does not compute angles at the exact poles/);
+    expect(polarAngleExclusion({ latitude: -90 }, true)).not.toBeNull();
+    expect(polarAngleExclusion({ latitude: 90 }, false)).toBeNull();
+    expect(polarAngleExclusion({ latitude: 89.999999 }, true)).toBeNull();
+    expect(polarAngleExclusion(null, true)).toBeNull();
+  });
+
+  it('states the two rules the utc-noon reference actually has', () => {
+    const noon = new Date('1990-06-15T12:00:00.000Z');
+    expect(utcNoonMisused(noon, false)).toBeNull();
+    expect(utcNoonMisused(noon, true)).toMatch(/timeKnown: false/);
+    expect(utcNoonMisused(new Date('1990-06-15T13:30:00.000Z'), false)).toMatch(/exactly 12:00:00Z/);
+  });
+
+  it('does not offer a reference it cannot produce', () => {
+    // `local-noon` needs a captured local date, wall time, zone and offset, and
+    // this adapter resolves no timezones, so every call using it was refused.
+    expect([...REFERENCES]).toEqual(['supplied-instant', 'utc-noon']);
   });
 });
 
@@ -102,10 +128,12 @@ describe('the size gates', () => {
     expect(resultTooLarge(huge)).toBeGreaterThan(LIMITS.resultBytes);
   });
 
-  it('bounds the transport well below the SDK default and above any valid request', () => {
-    // Two records at the byte limit, escaped into JSON strings at the worst
-    // case of six characters per byte, still fit.
-    expect(LIMITS.requestBytes).toBeGreaterThan(2 * LIMITS.recordBytes);
+  it('bounds the request line above the worst case its own comment describes', () => {
+    // Two records at the byte limit, each byte escaping to at most six bytes of
+    // JSON string. The assertion used to be `> 2 * recordBytes`, which is six
+    // times weaker than the comment defending it and would have passed for a
+    // limit that could refuse a legitimate request.
+    expect(LIMITS.requestBytes).toBeGreaterThan(2 * 6 * LIMITS.recordBytes);
     expect(LIMITS.requestBytes).toBeLessThan(10 * 1024 * 1024);
   });
 });

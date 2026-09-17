@@ -98,6 +98,11 @@ const PREDICATES = {
     const offending = claimed.filter((id) => new RegExp(want.pattern).test(id));
     return [offending.length === 0, { offending }];
   },
+  explanationStatementExcludes: (want, view) => {
+    const statement = view.explanations.find((row) => row.id === want.explanation)?.statement ?? null;
+    if (statement === null) return [true, 'that explanation was not offered, so it says nothing'];
+    return [!new RegExp(want.pattern).test(statement), statement];
+  },
   rowDeltaBelow: (want, view) => {
     const row = view.differences.find((entry) => entry.id === want.id);
     if (!row || typeof row.delta !== 'number') return [false, 'no such row, or it carries no delta'];

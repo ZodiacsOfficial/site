@@ -49,7 +49,7 @@ describe('the built server bundle', () => {
       .map((line, index) => ({ line: line.trim(), number: index + 1 }))
       .filter((row) => row.line.includes('process.stdout'));
     expect(uses).toHaveLength(1);
-    expect(uses[0].line).toContain('new StdioServerTransport(process.stdin, process.stdout');
+    expect(uses[0].line).toContain('new StdioServerTransport(gate, process.stdout');
   });
 
   /**
@@ -70,10 +70,13 @@ describe('the built server bundle', () => {
     expect(/console\.trace\(\s*[^)\s]/.test(bundle)).toBe(false);
   });
 
-  it('imports only the three pinned published packages', () => {
+  it('imports only the three pinned published packages, plus node:stream', () => {
+    // `node:stream` arrived with the line gate that keeps an oversized request
+    // from ending the session. It is not in the forbidden family above: a
+    // stream transform cannot run a command, open a file or reach a network.
     const specifiers = [...bundle.matchAll(/^import\s.*?from\s+"([^"]+)";$/gm)].map((match) => match[1]);
     expect([...new Set(specifiers)].sort()).toEqual([
-      '@modelcontextprotocol/server', '@modelcontextprotocol/server/stdio', 'zod',
+      '@modelcontextprotocol/server', '@modelcontextprotocol/server/stdio', 'node:stream', 'zod',
     ]);
   });
 
@@ -83,6 +86,23 @@ describe('the built server bundle', () => {
       expect(bundle.slice(0, 1200)).toContain(claim);
     }
   });
+});
+
+describe('the recorded evidence', () => {
+  /**
+   * The drives refuse to run against a stale bundle, but nothing checked that
+   * the record they wrote names the bundle that ships — and an AI review found
+   * `protocol-drive.json` pinned to a superseded artifact while the claims
+   * README quoted its 70/70 as established for this commit. The guard protected
+   * the run; this guards the record.
+   */
+  const digest = createHash('sha256').update(bundle).digest('hex');
+  it.each(['protocol-drive.json', 'benchmark.json', 'host-drive.json'])(
+    '%s was measured against the bundle that ships', async (name) => {
+      const record = JSON.parse(await readFile(resolve(ROOT, 'docs/platform/evidence/mcp-adapter', name), 'utf8'));
+      expect(record.server?.sha256, `${name} names another artifact`).toBe(digest);
+    },
+  );
 });
 
 describe('the archive the site distributes', () => {

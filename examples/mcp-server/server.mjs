@@ -9,6 +9,7 @@
 // Opens no listener, binds no port, makes no outbound request, touches no file.
 
 // src/mcp/server.ts
+import { Transform } from "node:stream";
 import { McpServer } from "@modelcontextprotocol/server";
 import { StdioServerTransport, serveStdio } from "@modelcontextprotocol/server/stdio";
 
@@ -3271,7 +3272,21 @@ var EPOCH_MAX_UTC = "2199-12-31T23:59:59.999Z";
 var EPOCH_MIN = Date.parse(EPOCH_MIN_UTC);
 var EPOCH_MAX = Date.parse(EPOCH_MAX_UTC);
 var HOUSE_SYSTEMS3 = Object.freeze(["placidus", "whole"]);
-var REFERENCES = Object.freeze(["supplied-instant", "utc-noon", "local-noon"]);
+var REFERENCES = Object.freeze(["supplied-instant", "utc-noon"]);
+var UTC_NOON_MS = 12 * 60 * 60 * 1e3;
+function utcNoonMisused(instant, timeKnown) {
+  if (timeKnown) {
+    return 'reference "utc-noon" records that no birth time was known, so it needs timeKnown: false. For a real birth time use "supplied-instant", or omit reference entirely';
+  }
+  if ((instant.getTime() % 864e5 + 864e5) % 864e5 !== UTC_NOON_MS) {
+    return 'reference "utc-noon" needs utc to be exactly 12:00:00Z on the date in question';
+  }
+  return null;
+}
+function polarAngleExclusion(coordinates, timeKnown) {
+  if (!coordinates || !timeKnown || Math.abs(coordinates.latitude) !== 90) return null;
+  return "the engine does not compute angles at the exact poles, so latitude 90 or -90 needs timeKnown: false. Use 89.999999 for a chart that is nearly there";
+}
 var OUTPUTS = Object.freeze(["summary", "record"]);
 var LIMITS = Object.freeze({
   recordBytes: NATAL_ENVELOPE_LIMITS.bytes,
@@ -3301,7 +3316,10 @@ function parseInstant(value) {
   if (!match) {
     return {
       ok: false,
-      reason: "utc must be an ISO-8601 instant with an explicit zone, such as 1990-06-15T13:30:00Z or 1990-06-15T19:00:00+05:30"
+      // The example date here is deliberately not one any test supplies as
+      // input. A refusal that names a fixed example is fine; a check for an
+      // echoed argument cannot tell the two apart if they are the same string.
+      reason: "utc must be an ISO-8601 instant with an explicit zone, such as 2000-01-01T00:00:00Z or 2000-01-01T05:30:00+05:30"
     };
   }
   const [, y, mo, d, h, mi, s, , zone] = match;
@@ -3537,54 +3555,45 @@ function explain(left, right, differences, options) {
   if (has("houses-requested") || has("houses-actual") || has("houses-system")) {
     const requested = right.receipt.houses?.requested;
     const input = replayInputOf(left);
-    const movedAngles = idsIn("Angles").filter((id) => id.startsWith("angle-"));
     const movedCusps = idsIn("Houses").filter((id) => id.startsWith("cusp-"));
     let promoted = false;
-    if (canReplayLeft && input && typeof requested === "string" && movedAngles.length + movedCusps.length > 0) {
+    if (canReplayLeft && input && typeof requested === "string" && movedCusps.length > 0) {
       const replayed = replay2({ ...input, houseSystem: requested });
-      const targetAngles = right.result.angles;
       const targetCusps = right.result.houses?.cusps;
       if (replayed) {
-        const anglesReproduced = movedAngles.length === 0 || Boolean(
-          replayed.angles && targetAngles && movedAngles.every((id) => {
-            const key = id.slice("angle-".length);
-            return compareAngles(replayed.angles[key], targetAngles[key]) !== "different";
-          })
-        );
-        const cuspsReproduced = movedCusps.length === 0 || Boolean(
+        const cuspsReproduced = Boolean(
           Array.isArray(replayed.cusps) && Array.isArray(targetCusps) && replayed.cusps.length === targetCusps.length && movedCusps.every((id) => {
             const index = Number(id.slice("cusp-".length)) - 1;
             return compareAngles(replayed.cusps[index], targetCusps[index]) !== "different";
           })
         );
-        if (anglesReproduced && cuspsReproduced) {
+        if (cuspsReproduced) {
           promoted = true;
-          const moved = movedCusps.length > 0 && movedAngles.length > 0 ? "angles and cusps" : movedCusps.length > 0 ? "house cusps" : "angles";
           explanations.push({
             id: "house-system",
             evidence: "reproduced",
-            statement: `The different house system accounts for the ${moved}.`,
+            statement: "The different house system accounts for the house cusps.",
             covers: [
-              ...movedAngles,
               ...movedCusps,
               ...["houses-requested", "houses-actual", "houses-system"].filter(has)
             ],
-            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's ${moved} on engine ${available}.`
+            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's house cusps on engine ${available}.`
           });
         }
       }
     }
     if (!promoted) {
-      const unexplainedAngles = movedAngles.length + movedCusps.length > 0;
+      const unexplainedCusps = movedCusps.length > 0;
+      const absent = (left.receipt.houses?.actual ?? null) === null || (right.receipt.houses?.actual ?? null) === null;
       explanations.push({
         id: "house-system",
-        evidence: unexplainedAngles ? "hypothesis" : "reported",
-        statement: has("houses-actual") && !has("houses-requested") ? "The same house system was requested, but a different one was actually used." : "The two charts asked for different house systems.",
+        evidence: unexplainedCusps ? "hypothesis" : "reported",
+        statement: absent ? "One chart has no house table at all, so there is no house system to compare." : has("houses-actual") && !has("houses-requested") ? "The same house system was requested, but a different one was actually used." : "The two charts asked for different house systems.",
         covers: [
           ...["houses-requested", "houses-actual", "houses-system", "houses-absence"].filter(has),
-          ...unexplainedAngles ? [...movedAngles, ...movedCusps] : []
+          ...unexplainedCusps ? movedCusps : []
         ],
-        detail: unexplainedAngles ? "This is the obvious candidate for the angle and cusp differences, but it was not reproduced here, so it stays a hypothesis." : "The angles and cusps are the same in both files, so this difference changed nothing that was computed."
+        detail: absent ? "Whatever left one chart without houses is the difference here; the house system is not." : unexplainedCusps ? "This is a candidate for the cusp differences, but it was not reproduced here, so it stays a hypothesis. It accounts for no angle: those come from the time and the place." : "The cusps are the same in both files, so this difference changed nothing that was computed."
       });
     }
   }
@@ -3748,11 +3757,11 @@ var instantDescription = `The birth instant as ISO-8601 with an explicit zone, s
 var CAPABILITIES_INPUT = z.strictObject({});
 var NATAL_INPUT = z.strictObject({
   utc: z.string().max(LIMITS.instantChars).describe(instantDescription),
-  latitude: z.number().min(-90).max(90).optional().describe("Degrees north, -90 to 90. Supply both coordinates or neither; with neither, the result carries no angles or houses and says why."),
+  latitude: z.number().min(-90).max(90).optional().describe("Degrees north, -90 to 90. Supply both coordinates or neither; with neither, the result carries no angles or houses and says why. Exactly 90 or -90 needs timeKnown: false: the engine does not compute angles at the poles."),
   longitude: z.number().min(-180).max(180).optional().describe("Degrees east, -180 to 180. Supply both coordinates or neither."),
   houseSystem: z.enum(HOUSE_SYSTEMS3).default("placidus").describe("Requested house system. Both the request and what the engine could actually use are reported, which differ at high latitudes."),
   timeKnown: z.boolean().default(true).describe("False means utc is a reference instant rather than a birth time, which suppresses angles and houses. It does not imply noon."),
-  reference: z.enum(REFERENCES).optional().describe("What the supplied instant represents, recorded in the result. Omitting it infers nothing, including when timeKnown is false."),
+  reference: z.enum(REFERENCES).optional().describe('What the supplied instant represents, recorded in the calculation record. Omitting it is the usual case and infers nothing, including when timeKnown is false. "utc-noon" means no birth time was known and midday UTC stands in, so it needs timeKnown: false and utc at exactly 12:00:00Z.'),
   output: z.enum(OUTPUTS).default("summary").describe("summary returns the computed chart and the four fields needed to read it. record additionally returns the full calculation record, which repeats every input back \u2014 ask for it only when the record is what you need, such as to compare two of them.")
 });
 var COMPARE_INPUT = z.strictObject({
@@ -3776,8 +3785,23 @@ function readRecord(side, record2) {
     return { ok: false, refusal: `The ${side} record is ${oversized} bytes, over the ${LIMITS.recordBytes}-byte limit.` };
   }
   const parsed = parseNatalEnvelope(record2);
-  if (!parsed.ok) return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.` };
+  if (!parsed.ok) {
+    return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.${looksLikeSummary(record2, parsed.code)}` };
+  }
   return { ok: true, envelope: parsed.envelope };
+}
+function looksLikeSummary(record2, code) {
+  if (code !== "unsupported_version") return "";
+  let value;
+  try {
+    value = JSON.parse(record2);
+  } catch {
+    return "";
+  }
+  if (value === null || typeof value !== "object" || Array.isArray(value)) return "";
+  const keys = new Set(Object.keys(value));
+  if (!keys.has("bodies") || !keys.has("engine") || keys.has("schema")) return "";
+  return ' It looks like a chart summary: call calculate_natal_chart again with output: "record".';
 }
 function describeCapabilities() {
   return {
@@ -3789,8 +3813,16 @@ function describeCapabilities() {
       supported: {
         houseSystems: [...HOUSE_SYSTEMS3],
         references: [...REFERENCES],
+        referenceRules: {
+          "utc-noon": "needs timeKnown: false and utc at exactly 12:00:00Z; it records that no birth time was known",
+          "local-noon": "not offered: it needs a captured local date, wall time, zone and offset, and this adapter resolves no timezones"
+        },
         epoch: { from: EPOCH_MIN_UTC, to: EPOCH_MAX_UTC },
-        coordinates: { latitude: [-90, 90], longitude: [-180, 180] },
+        coordinates: {
+          latitude: [-90, 90],
+          longitude: [-180, 180],
+          excluded: "latitude exactly 90 or -90 with timeKnown: true \u2014 the engine does not compute angles at the exact poles"
+        },
         limits: { ...LIMITS }
       },
       unsupported: [...UNSUPPORTED],
@@ -3803,6 +3835,10 @@ function calculateNatalChart(args) {
   if (!instant.ok) return { ok: false, refusal: `${instant.reason}.` };
   const place = parseCoordinates(args.latitude, args.longitude);
   if (!place.ok) return { ok: false, refusal: `${place.reason}.` };
+  const misused = args.reference === "utc-noon" ? utcNoonMisused(instant.instant, args.timeKnown) : null;
+  if (misused !== null) return { ok: false, refusal: `${misused}.` };
+  const polar = polarAngleExclusion(place.coordinates, args.timeKnown);
+  if (polar !== null) return { ok: false, refusal: `${polar}.` };
   let envelope;
   try {
     const chart = natalChart({
@@ -3873,10 +3909,15 @@ function compareCalculationRecords(args) {
   });
 }
 function refusalOf(error) {
-  if (error instanceof RangeError || error instanceof TypeError) return error.message;
-  if (error instanceof Error && error.name === "NatalEnvelopeError") return error.message;
+  const code = error instanceof Error && error.name === "NatalEnvelopeError" ? error.code : void 0;
+  if (code !== void 0 && Object.hasOwn(PARSE_REFUSALS, code)) {
+    return `the calculation record it produced ${PARSE_REFUSALS[code]}`;
+  }
+  if (error instanceof RangeError || error instanceof TypeError) return trimStop(error.message);
+  if (error instanceof Error && error.name === "NatalEnvelopeError") return trimStop(error.message);
   return error instanceof Error ? error.name : "unknown error";
 }
+var trimStop = (message) => message.replace(/\.+$/, "");
 function bounded(value) {
   const oversized = resultTooLarge(value);
   if (oversized !== null) {
@@ -3953,9 +3994,52 @@ function build() {
   }, (args) => guard(() => compareCalculationRecords(args)));
   return server;
 }
+function lineGate(limit) {
+  let pending = [];
+  let pendingBytes = 0;
+  let discarding = false;
+  return new Transform({
+    transform(chunk, _encoding, done) {
+      let start = 0;
+      while (start < chunk.length) {
+        const newline = chunk.indexOf(10, start);
+        const end = newline === -1 ? chunk.length : newline + 1;
+        const segment = chunk.subarray(start, end);
+        start = end;
+        if (discarding) {
+          if (newline !== -1) discarding = false;
+          continue;
+        }
+        if (pendingBytes + segment.length > limit) {
+          pending = [];
+          pendingBytes = 0;
+          discarding = newline === -1;
+          note(`dropped one request line over the ${limit}-byte limit; the session is unaffected`);
+          continue;
+        }
+        pending.push(segment);
+        pendingBytes += segment.length;
+        if (newline !== -1) {
+          this.push(Buffer.concat(pending));
+          pending = [];
+          pendingBytes = 0;
+        }
+      }
+      done();
+    },
+    flush(done) {
+      if (pendingBytes > 0) this.push(Buffer.concat(pending));
+      done();
+    }
+  });
+}
+var gate = lineGate(LIMITS.requestBytes);
+process.stdin.pipe(gate);
 var handle = serveStdio(build, {
-  // Set explicitly rather than left at the SDK's 10 MB default.
-  transport: new StdioServerTransport(process.stdin, process.stdout, { maxBufferSize: LIMITS.requestBytes }),
+  // The gate above guarantees no forwarded line exceeds LIMITS.requestBytes, so
+  // this buffer — deliberately a little larger — can no longer overflow. It is
+  // still set rather than left at the SDK's 10 MB default, as a second bound.
+  transport: new StdioServerTransport(gate, process.stdout, { maxBufferSize: LIMITS.requestBytes + 4096 }),
   onerror: (error) => note(`transport reported ${error.name}`)
 });
 for (const signal of ["SIGINT", "SIGTERM"]) {

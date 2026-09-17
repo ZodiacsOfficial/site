@@ -6,9 +6,10 @@
  *
  * Nothing here is mocked: the drive spawns `examples/mcp-server/server.mjs` as
  * a child process, speaks MCP over its stdio, and reads what comes back. It
- * initializes, lists the tools, calls all three, drives fourteen malformed or
+ * initializes, lists the tools, calls all three, drives eighteen malformed or
  * refused requests, checks that a valid request still works after every one of
- * them, and closes the process.
+ * them, probes four raw line shapes the SDK client cannot express, and closes
+ * the process.
  *
  * Every chart in here is synthetic: round coordinates for well-known cities on
  * dates chosen for what they exercise. No real person's birth details are used
@@ -132,8 +133,36 @@ async function requireFreshBundle() {
 }
 await requireFreshBundle();
 
+/**
+ * Feed raw bytes to a fresh server and report what came back. This covers what
+ * the SDK client cannot express: a line too long to buffer, a JSON-RPC batch,
+ * and syntactically invalid JSON. Each of those is a shape a caller can send,
+ * and the question for every one of them is the same — does the session
+ * survive it?
+ */
+function rawExchange(lines, label) {
+  return new Promise((done) => {
+    const child = spawn(process.execPath, [SERVER], { cwd: ROOT, stdio: ['pipe', 'pipe', 'pipe'] });
+    let out = '';
+    let err = '';
+    const timer = setTimeout(() => { child.kill('SIGKILL'); done({ label, out, err, exit: 'timeout' }); }, 30000);
+    child.stdout.on('data', (chunk) => { out += chunk; });
+    child.stderr.on('data', (chunk) => { err += chunk; });
+    child.on('close', (code) => { clearTimeout(timer); done({ label, out, err, exit: code }); });
+    child.on('error', (error) => { clearTimeout(timer); done({ label, out, err, exit: error.message }); });
+    for (const line of lines) child.stdin.write(line);
+    child.stdin.end();
+  });
+}
+
+const answeredIds = (out) => out.split('\n')
+  .filter((line) => line.trim().startsWith('{'))
+  .map((line) => { try { return JSON.parse(line).id; } catch { return undefined; } })
+  .filter((id) => id !== undefined);
+
 const startedAt = new Date().toISOString();
 const wire = [];
+const rawShapes = [];
 let closedCleanly = null;
 
 try {
@@ -289,7 +318,9 @@ try {
   for (const [label, run] of refusals) {
     const outcome = await run();
     check(`refuses ${label}`, outcome.layer !== 'ok', outcome.layer === 'ok' ? 'accepted' : undefined);
-    refusalDetail.push({ case: label, layer: outcome.layer, message: (outcome.text ?? '').slice(0, 200) });
+    // Stored whole, not truncated: a check for an echoed value that reads only
+    // the first 200 characters passes on an echo at character 201.
+    refusalDetail.push({ case: label, layer: outcome.layer, message: outcome.text ?? '' });
     await recovers(label);
   }
 
@@ -303,14 +334,34 @@ try {
     && refusalDetail.filter((row) => row.layer === 'protocol').length === 1
     && refusalDetail.find((row) => row.layer === 'protocol')?.case === 'an unknown tool name',
     refusalDetail.map((row) => [row.case, row.layer]));
+  // Recorded as observed, not as a claim of a closed object with no exceptions.
+  // The adapter's schema refuses all three hostile key names; the SDK's own
+  // parse of `params.arguments` drops `__proto__` before the schema sees it, so
+  // end to end that one key is ignored rather than reported — and, as the next
+  // check establishes, a value smuggled through it has no effect.
+  const smuggled = await attempt('calculate_natal_chart',
+    JSON.parse(`{"utc":"${LONDON.utc}","latitude":${LONDON.latitude},"longitude":${LONDON.longitude},"__proto__":{"timeKnown":false}}`));
+  check('__proto__ is dropped upstream rather than refused, and changes nothing',
+    smuggled.layer === 'ok' && smuggled.result?.structuredContent?.timeKnown === true
+    && smuggled.result?.structuredContent?.angles !== null,
+    { layer: smuggled.layer, timeKnown: smuggled.result?.structuredContent?.timeKnown });
+  check('every other unknown key, including the other two hostile names, is refused',
+    (await Promise.all(['totallyUnknown', 'constructor', 'prototype']
+      .map((key) => attempt('calculate_natal_chart', { ...LONDON, [key]: 1 }))))
+      .every((outcome) => outcome.layer !== 'ok'));
+
   check('a schema violation names the field at fault so a caller can correct it',
     /latitude/.test(refusalDetail.find((row) => row.case === 'a wrongly typed argument')?.message ?? '')
     && /houseSystemm/.test(refusalDetail.find((row) => row.case === 'an unknown extra argument')?.message ?? ''),
     refusalDetail.filter((row) => /argument/.test(row.case)).map((row) => row.message));
-  check('no refusal message echoes a coordinate or record content',
-    refusalDetail.every((row) => !row.message.includes('51.5074')
-      && !row.message.includes('-0.1278') && !row.message.includes('natal-envelope.draft-v1')),
-    refusalDetail.map((row) => row.message).filter((message) => /51\.5074|-0\.1278/.test(message)));
+  check('no refusal message echoes a coordinate, an instant or record content', (() => {
+    // The instants belong in this list: several of the eighteen cases supply a
+    // bad `utc`, and quoting it back is the natural implementation.
+    const forbidden = ['51.5074', '-0.1278', LONDON.utc, POLAR.utc,
+      '1799-12-31T00:00:00Z', '2001-02-29T00:00:00Z', 'natal-envelope.draft-v1'];
+    return refusalDetail.every((row) => forbidden.every((needle) => !row.message.includes(needle)));
+  })(), refusalDetail.filter((row) => /51\.5074|-0\.1278|1990-06-15|2001-02-29|1799-12-31/.test(row.message))
+    .map((row) => [row.case, row.message]));
   check('an unsupported version is refused distinctly from a malformed record',
     /does not declare a schema version/.test(refusalDetail.find((row) =>
       row.case === 'a record declaring an unsupported schema')?.message ?? '')
@@ -318,8 +369,13 @@ try {
       row.case === 'a record that is not JSON')?.message ?? ''));
 
   // ---- what left the process on its diagnostic channel ----
+  // Asserted non-empty first. `[].every(...)` is true, so both of these checks
+  // would have passed on a stderr capture that never arrived at all.
+  const stderrLines = stderrText.split('\n').filter(Boolean);
+  check('stderr carried the adapter\'s startup note, so the capture is real',
+    /^zodiacs-mcp-server: ready on stdio:/m.test(stderrText), stderrText.slice(0, 200));
   check('stderr carried only the adapter\'s own notes',
-    stderrText.split('\n').filter(Boolean).every((line) => line.startsWith('zodiacs-mcp-server: ')),
+    stderrLines.length > 0 && stderrLines.every((line) => line.startsWith('zodiacs-mcp-server: ')),
     stderrText.slice(0, 400));
   check('stderr carried no birth detail, coordinate or record content', (() => {
     const forbidden = [LONDON.utc, '51.5074', '-0.1278', POLAR.utc, 'natal-envelope', 'bodies'];
@@ -328,12 +384,14 @@ try {
 
   // ---- clean close ----
   const child = transport.pid;
+  // Accepting "no pid observed" as a pass turned this into a no-op the moment
+  // the transport stopped exposing one, so the pid itself is now a check.
+  check('the transport exposes the server process id, so the next check measures something',
+    typeof child === 'number' && child > 0, child);
   await client.close();
   await new Promise((done) => { setTimeout(done, 1500); });
-  closedCleanly = child === null || child === undefined
-    ? 'no pid observed'
-    : !processAlive(child);
-  check('the server process is gone after the client closes', closedCleanly === true || closedCleanly === 'no pid observed', closedCleanly);
+  closedCleanly = typeof child === 'number' ? !processAlive(child) : 'no pid observed';
+  check('the server process is gone after the client closes', closedCleanly === true, closedCleanly);
 
   // ---- raw wire probe across every revision the SDK client supports ----
   for (const version of SUPPORTED_PROTOCOL_VERSIONS) wire.push(await rawHandshake(version));
@@ -341,8 +399,45 @@ try {
     wire.every((row) => row.negotiated && SUPPORTED_PROTOCOL_VERSIONS.includes(row.negotiated)), wire);
   const unsupported = await rawHandshake('1999-01-01');
   wire.push(unsupported);
+  // `rawHandshake` reports its own 20-second timeout as an error, so accepting
+  // any truthy error let a dropped handshake pass a check named "answered".
   check('an unknown protocol revision is answered rather than dropped',
-    Boolean(unsupported.negotiated || unsupported.error), unsupported);
+    Boolean(unsupported.negotiated) || (Boolean(unsupported.error) && unsupported.error !== 'timeout'),
+    unsupported);
+
+  // ---- raw line shapes, and whether the session survives each ----
+  const open = `${JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: LATEST_PROTOCOL_VERSION, capabilities: {}, clientInfo: { name: 'raw', version: '0' } } })}\n`;
+  const ready = `${JSON.stringify({ jsonrpc: '2.0', method: 'notifications/initialized' })}\n`;
+  const valid = (id) => `${JSON.stringify({ jsonrpc: '2.0', id, method: 'tools/call', params: { name: 'calculate_natal_chart', arguments: LONDON } })}\n`;
+  const overlong = `${JSON.stringify({ jsonrpc: '2.0', id: 90, method: 'tools/call', params: { name: 'compare_calculation_records', arguments: { left: 'a'.repeat(1_200_000), right: 'x' } } })}\n`;
+
+  const raws = [
+    ['a request line too long to buffer', [open, ready, valid(2), overlong, valid(3)], 3],
+    ['the same line split across two writes', [open, ready, overlong.slice(0, 500_000), overlong.slice(500_000), valid(4)], 4],
+    ['a JSON-RPC batch array', [open, ready, '[{"jsonrpc":"2.0","id":80,"method":"ping"}]\n', valid(5)], 5],
+    ['syntactically invalid JSON', [open, ready, '{"jsonrpc":"2.0","id":81,"method":"ping",}\n', valid(6)], 6],
+    // Two large lines in sequence. Each is answered on its own, and the second
+    // one plus everything after it went unanswered when the gate was not there,
+    // with no error and no exit code to show for it. Not the buffer limit: it
+    // reproduced at the SDK's 10 MB default too.
+    ['two large lines in sequence', [open, ready,
+      `${JSON.stringify({ jsonrpc: '2.0', id: 82, method: 'tools/call', params: { name: 'compare_calculation_records', arguments: { left: `{"x":"${'a'.repeat(70_000)}"}`, right: '{}' } } })}\n`,
+      `${JSON.stringify({ jsonrpc: '2.0', id: 83, method: 'tools/call', params: { name: 'compare_calculation_records', arguments: { left: `{"x":"${'\u20ac'.repeat(40_000)}"}`, right: '{}' } } })}\n`,
+      valid(7)], 7],
+  ];
+  for (const [label, lines, survivor] of raws) {
+    const raw = await rawExchange(lines, label);
+    const answered = answeredIds(raw.out);
+    // The oversized line is dropped rather than answered — it was never parsed,
+    // so there is no id to answer with. What matters is the next request.
+    check(`the session survives ${label}`, raw.exit === 0 && answered.includes(survivor),
+      { exit: raw.exit, answered, stderr: raw.err.trim().split('\n').slice(-1)[0] });
+    if (label === 'two large lines in sequence') {
+      check('both large lines are answered, not only survived',
+        answered.includes(82) && answered.includes(83), answered);
+    }
+    rawShapes.push({ case: label, exit: raw.exit, answered, unansweredOffender: !answered.includes(80) && !answered.includes(90) });
+  }
 } catch (error) {
   check('the drive ran to completion', false, error instanceof Error ? error.stack : String(error));
 } finally {
@@ -369,6 +464,7 @@ const evidence = {
   },
   server: { path: 'examples/mcp-server/server.mjs', bytes: bundle.length, sha256: createHash('sha256').update(bundle).digest('hex') },
   wire,
+  rawShapes,
   checks: results.length,
   passed: results.filter((row) => row.ok).length,
   results,

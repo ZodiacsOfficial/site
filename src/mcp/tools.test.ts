@@ -24,6 +24,20 @@ describe('the schemas a host reads before calling anything', () => {
     expect(COMPARE_INPUT.safeParse({ left: '{}', right: '{}', follow: 'http://x' }).success).toBe(false);
   });
 
+  it('refuses the three hostile key names as it refuses any other unknown key', () => {
+    // The schema itself is closed against all three. What an AI review found is
+    // a layer up: the SDK's own parse of `params.arguments` drops `__proto__`
+    // before this schema is reached, so end to end that one key is silently
+    // ignored rather than reported. The drive records that; the schema's own
+    // behaviour is here, and it is not the weak link.
+    const smuggled = JSON.parse('{"utc":"1990-06-15T13:30:00Z","__proto__":{"timeKnown":false}}');
+    expect(NATAL_INPUT.safeParse(smuggled).success).toBe(false);
+    for (const key of ['totallyUnknown', 'constructor', 'prototype']) {
+      expect(NATAL_INPUT.safeParse({ utc: '1990-06-15T13:30:00Z', [key]: 1 }).success,
+        `${key} was accepted`).toBe(false);
+    }
+  });
+
   it('applies its bounds in the schema, not only in the handler', () => {
     expect(NATAL_INPUT.safeParse({ ...LONDON, latitude: 95 }).success).toBe(false);
     expect(NATAL_INPUT.safeParse({ ...LONDON, houseSystem: 'koch' }).success).toBe(false);

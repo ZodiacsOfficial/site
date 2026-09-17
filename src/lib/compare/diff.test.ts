@@ -310,6 +310,22 @@ describe('regressions an adversarial review found', () => {
     expect(evidenceFor(comparison, 'house-system')).toBe('reported');
   });
 
+  it('does not call an absent house table two different house systems', () => {
+    // Both sides requested placidus; the right has no time, so it has no houses
+    // at all. An AI review found this reported as "a different one was actually
+    // used", which a reader can only take to mean the systems disagreed.
+    const comparison = compareEnvelopes(
+      buildEnvelope(ORDINARY), buildEnvelope({ ...ORDINARY, timeKnown: false }), live,
+    );
+    const houseSystem = comparison.explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.statement).toBe('One chart has no house table at all, so there is no house system to compare.');
+    expect(houseSystem?.statement).not.toMatch(/different one was actually used|asked for different/);
+    // …and the rows it was claiming are still claimed, so nothing slid into the
+    // unresolved bucket in exchange for a better sentence.
+    expect(houseSystem?.covers).toContain('houses-actual');
+    expect(evidenceFor(comparison, 'unexplained')).toBeNull();
+  });
+
   it('will not build evidence about a time-unknown receipt out of a time-known replay', () => {
     const left = buildEnvelope({ ...ORDINARY, utc: '1990-06-15T12:00:00Z', timeKnown: false });
     expect(left.result.angles).toBeNull();
@@ -376,8 +392,12 @@ describe('a cause never claims a row it could not have caused', () => {
     // which house system the calculation was asked for.
     instant: /^houses-(requested|actual|system)$/u,
     location: /^houses-(requested|actual|system)$/u,
-    // A house system moves angles and cusps. Bodies are geocentric.
-    'house-system': /^(body-.*-(lon|lat|speed|degree|sign|retrograde)|aspect-)/u,
+    // A house system moves the cusps and nothing else. Bodies are geocentric,
+    // and the angles come from the time and the place — every system in this
+    // engine derives from the same ascendant and midheaven, so a pair differing
+    // only in house system has identical angles. Claiming an angle row is a
+    // hypothesis a recalculation refutes, which is what this pattern forbids.
+    'house-system': /^(body-|angle-|aspect-)/u,
     // Writing the same instant two ways changes nothing computed at all.
     'equivalent-instants': /^(body-|angle-|cusp-|aspect-)/u,
   };
@@ -389,6 +409,12 @@ describe('a cause never claims a row it could not have caused', () => {
     { name: 'different moment and different house system',
       left: ORDINARY,
       right: { ...ORDINARY, utc: '1990-06-15T18:45:00Z', houseSystem: 'whole' } as const },
+    // One hour apart and a different house system. The angles move, but not
+    // because of the house system — an AI review found the comparison naming it
+    // as "the obvious candidate for the angle differences" here.
+    { name: 'one hour apart and a different house system',
+      left: ORDINARY,
+      right: { ...ORDINARY, utc: '1990-06-15T14:30:00Z', houseSystem: 'whole' } as const },
     { name: 'different moment, place and house system at once',
       left: ORDINARY,
       right: { utc: '1990-06-15T18:45:00Z', latitude: 40.7128, longitude: -74.006, houseSystem: 'whole' } as const },

@@ -37,23 +37,36 @@ Two smaller points in the same family:
 
 ## Install and start
 
-Four commands. The pinned download URL and the expected SHA-256 are published on
-<https://zodiacs.org/developers/mcp/> — this README travels inside the archive,
-so it cannot name the commit that hosts it.
+The download URL and the expected SHA-256 are published on
+<https://zodiacs.org/developers/mcp/>. They are not repeated here: this README
+travels inside the archive, so printing the archive's own digest in it would
+change the digest.
+
+If you are reading this you have already extracted, which is fine — check the
+`.tgz` you downloaded against the published value either way, and re-download if
+it does not match.
 
 ```sh
-# 1. fetch the archive and check its digest against the published one BEFORE extracting
+# 1. against the SHA-256 published on the page above
 shasum -a 256 zodiacs-mcp-server-0.1.0-rc.1.tgz
 
 # 2. extract
 tar xzf zodiacs-mcp-server-0.1.0-rc.1.tgz && cd package
 
-# 3. install the three pinned runtime dependencies
+# 3. install
 npm install
 
 # 4. check the install works
 npm run verify
 ```
+
+`npm install` brings 14 packages. Three are the server's own, pinned exactly —
+`@modelcontextprotocol/server`, `@modelcontextprotocol/core`, `zod` — and the
+other eleven are development dependencies of the MCP *client*, which only
+`npm run verify` uses. `npm ls --omit=dev` lists the three the server actually
+loads. If you would rather not have the client's OAuth and SSE dependencies on
+disk, `npm install --omit=dev` installs the three and `npm start` works; only
+`npm run verify` needs the rest.
 
 `npm run verify` launches `server.mjs` as a real child process, speaks MCP to it
 with the official client SDK, calls all three tools with synthetic charts,
@@ -62,9 +75,13 @@ prints one line per check and exits 0 when they all pass. That is the
 clean-environment verification: if it passes in a directory you just extracted,
 the install is good.
 
-`npm start` runs the server in the foreground. It will sit there waiting for MCP
-messages on stdin, which is correct and not very interesting — a host normally
-starts it for you.
+`npm start` runs the server in the foreground, waiting for MCP messages on
+stdin. A host normally starts it for you.
+
+**Do not configure `npm start` as a host's command.** npm prints two banner
+lines to stdout before the server begins, and a host reading stdout as the
+protocol stream will fail to parse them and drop the session. Point the host at
+`node /absolute/path/to/package/server.mjs`, as below.
 
 ## Connect it to a host
 
@@ -99,8 +116,10 @@ The entry itself is the same everywhere:
 }
 ```
 
-Use an absolute path. The server needs no environment variables, and it is not
-given any: there is no key, credential or secret anywhere in this package.
+Use an absolute path. The server reads no environment variable and there is no
+key, credential or secret anywhere in this package. What a host passes it is the
+host's business — most pass their whole environment — but nothing here looks at
+it.
 
 ## The three tools
 
@@ -116,11 +135,11 @@ first rather than guessing at supported options.
 | argument | type | notes |
 | --- | --- | --- |
 | `utc` | string, required | ISO-8601 with an explicit zone: `1990-06-15T13:30:00Z` or `1990-06-15T19:00:00+05:30`. A wall time with no zone is refused, not assumed to be UTC. Within 1800-01-01 to 2199-12-31. |
-| `latitude` | number | −90 to 90. Supply both coordinates or neither. |
+| `latitude` | number | −90 to 90. Supply both coordinates or neither. Exactly 90 or −90 needs `timeKnown: false`: the engine does not compute angles at the poles, which its own records state as `angleExclusions`. |
 | `longitude` | number | −180 to 180. |
 | `houseSystem` | `placidus` \| `whole` | Default `placidus`. |
 | `timeKnown` | boolean | Default `true`. `false` makes `utc` a reference instant and suppresses angles and houses. It does not imply noon. |
-| `reference` | `supplied-instant` \| `utc-noon` \| `local-noon` | Recorded in the result. Omitting it infers nothing. |
+| `reference` | `supplied-instant` \| `utc-noon` | Recorded in the calculation record, not in the summary. Omitting it is the usual case and infers nothing. `utc-noon` means no birth time was known and midday UTC stands in, so it needs `timeKnown: false` and `utc` at exactly `12:00:00Z`. The envelope's third value, `local-noon`, is not offered: it requires a captured local date, wall time, zone and offset, and this adapter resolves no timezones. |
 | `output` | `summary` \| `record` | Default `summary`. |
 
 `summary` returns the computed chart — twelve bodies, four angles, twelve cusps,
@@ -149,7 +168,9 @@ evidence behind each claim:
   difference, and all of them are listed.
 - **unresolved** — nothing in either record accounts for it.
 
-Longitudes are compared around the circle, so 359° and 1° are two degrees apart.
+Each angular row carries `delta` as **right minus left**, the shortest way round
+the circle: from 191.24° to 180.00° is −11.24°, and from 359.19° to 1.18° is
++1.99°, not −358°. Longitudes are compared around the circle throughout.
 Two numbers that print the same at the six decimals these records carry are
 called a rounding difference rather than a different calculation, decided on what
 they print rather than on a tolerance. A record naming an engine version other
@@ -190,9 +211,8 @@ original: the cause stays a hypothesis and the limit is stated.
 
 Placidus cannot be computed there, so `houses` comes back
 `{ "requested": "placidus", "actual": "whole", "absenceReason": null }` and
-`resultFlags` carries `"polar-fallback"`. You asked for one thing and got
-another, and the result says so rather than presenting the fallback as what you
-requested.
+`resultFlags` carries `"polar-fallback"`. The requested system and the one used
+are separate fields, so a fallback is visible rather than silent.
 
 **3. Two records that differ only in house system.**
 
@@ -206,20 +226,29 @@ requested.
   "differences": [
     { "id": "houses-requested", "area": "Houses", "label": "House system requested",
       "left": "placidus", "right": "whole", "delta": null, "kind": "metadata" },
+    { "id": "houses-actual", "…": "same two values" },
+    { "id": "houses-system", "…": "same two values" },
     { "id": "cusp-1", "area": "Houses", "label": "House 1 cusp",
       "left": "191.239748", "right": "180.000000", "delta": -11.239747550482207,
-      "kind": "numeric" }, "…13 more" ],
+      "kind": "numeric" },
+    "…cusp-2 through cusp-12" ],
   "explanations": [
     { "id": "house-system", "evidence": "reproduced",
       "statement": "The different house system accounts for the house cusps.",
-      "covers": [ "cusp-1", "…", "houses-requested", "houses-actual", "houses-system" ],
+      "covers": [ "cusp-1", "…cusp-12", "houses-requested", "houses-actual", "houses-system" ],
       "detail": "Recalculating the first chart's own inputs with whole houses, changing nothing else, reproduces the second chart's house cusps on engine 0.1.1-rc.6." } ],
-  "limits": [],
+  "limits": [
+    "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
+    "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy." ],
   "disclosure": "A comparison reports the exact difference between two charts. …not anonymous." }
 ```
 
 Not one body and not one angle appears in those fifteen rows, because a house
-system cannot move them.
+system cannot move them — and the `house-system` cause claims none of them
+either, for the same reason.
+
+`limits` is not an error channel. It is where the comparison says what it could
+not settle, and it is worth reading even when everything else looks resolved.
 
 ## Versions
 
@@ -245,17 +274,24 @@ the engine artifact's own SHA-256 and the source paths every part was built from
 - **No timezone resolution.** Supply an instant with an explicit offset. This
   adapter does not turn a place name and a wall clock into a moment.
 - **No file access and no fetching.** Records are passed as content. The adapter
-  imports no filesystem, process or network module at all, which is checked
-  against the built artifact rather than asserted.
-- **No cancellation, and no timeout that pretends to be one.** A calculation is
-  synchronous, so a timer could not interrupt it mid-way. The work is bounded by
-  refusing unbounded operations instead, not by a timeout we could not honour.
+  imports no filesystem, process or network module at all.
+- **No cancellation and no timeout.** A calculation is synchronous, so a timer
+  could not interrupt it mid-way. The work is bounded by refusing unbounded
+  operations: one chart per call, no searches, no date ranges.
 - **No authentication of anything.** Not of a record, not of an engine version,
   not of the claim that two records came from independent software. Two records
   from one engine agreeing shows consistency, not independent astronomical
   accuracy.
 - **Only two house systems**, `placidus` and `whole`, because those are the two
   the engine computes.
+- **No body-to-house mapping.** The summary returns the cusps and the body
+  longitudes; which house a body falls in is left to the caller, and getting it
+  right needs the same wraparound care as everything else here. Worth adding;
+  not in this first integration.
+- **No `outputSchema` on the tools.** Arguments are schema-bounded and a host
+  reads those; results come back as `structuredContent` with their shapes
+  documented here rather than declared, so a shape that drifted from the handler
+  could not turn a correct result into a protocol error.
 - **1800 to 2199.** The engine's own records state
   `broadDateRange: "not-certified"`; this is the range the rest of Zodiacs
   supports and the adapter adopts it rather than inventing a wider one.
@@ -265,9 +301,9 @@ the engine artifact's own SHA-256 and the source paths every part was built from
 
 ## Uninstall
 
-Nothing is installed outside the directory you extracted, and nothing is written
-anywhere else: no config file, no cache, no database, no state. Removal is two
-steps.
+The server writes nothing anywhere: no config of its own, no cache, no database,
+no state. `npm install` does use npm's own cache under `~/.npm`, as any install
+does, and that survives deleting this directory. Removal is two steps.
 
 ```sh
 claude mcp remove zodiacs           # or delete the entry from your host's config file

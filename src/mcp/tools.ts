@@ -25,7 +25,8 @@ import { compareEnvelopes } from '../lib/compare/diff';
 import { replay } from '../lib/compare/replay';
 import {
   ADAPTER_NAME, ADAPTER_VERSION, EPOCH_MAX_UTC, EPOCH_MIN_UTC, HOUSE_SYSTEMS, LIMITS,
-  OUTPUTS, REFERENCES, parseCoordinates, parseInstant, recordTooLarge, resultTooLarge,
+  OUTPUTS, REFERENCES, parseCoordinates, parseInstant, polarAngleExclusion,
+  recordTooLarge, resultTooLarge, utcNoonMisused,
 } from './bounds';
 
 /**
@@ -67,7 +68,7 @@ export const CAPABILITIES_INPUT = z.strictObject({});
 export const NATAL_INPUT = z.strictObject({
   utc: z.string().max(LIMITS.instantChars).describe(instantDescription),
   latitude: z.number().min(-90).max(90).optional()
-    .describe('Degrees north, -90 to 90. Supply both coordinates or neither; with neither, the result carries no angles or houses and says why.'),
+    .describe('Degrees north, -90 to 90. Supply both coordinates or neither; with neither, the result carries no angles or houses and says why. Exactly 90 or -90 needs timeKnown: false: the engine does not compute angles at the poles.'),
   longitude: z.number().min(-180).max(180).optional()
     .describe('Degrees east, -180 to 180. Supply both coordinates or neither.'),
   houseSystem: z.enum(HOUSE_SYSTEMS).default('placidus')
@@ -75,7 +76,7 @@ export const NATAL_INPUT = z.strictObject({
   timeKnown: z.boolean().default(true)
     .describe('False means utc is a reference instant rather than a birth time, which suppresses angles and houses. It does not imply noon.'),
   reference: z.enum(REFERENCES).optional()
-    .describe('What the supplied instant represents, recorded in the result. Omitting it infers nothing, including when timeKnown is false.'),
+    .describe('What the supplied instant represents, recorded in the calculation record. Omitting it is the usual case and infers nothing, including when timeKnown is false. "utc-noon" means no birth time was known and midday UTC stands in, so it needs timeKnown: false and utc at exactly 12:00:00Z.'),
   output: z.enum(OUTPUTS).default('summary')
     .describe('summary returns the computed chart and the four fields needed to read it. record additionally returns the full calculation record, which repeats every input back — ask for it only when the record is what you need, such as to compare two of them.'),
 });
@@ -111,8 +112,27 @@ function readRecord(side: 'first' | 'second', record: string): { ok: true; envel
     return { ok: false, refusal: `The ${side} record is ${oversized} bytes, over the ${LIMITS.recordBytes}-byte limit.` };
   }
   const parsed = parseNatalEnvelope(record);
-  if (!parsed.ok) return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.` };
+  if (!parsed.ok) {
+    return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.${looksLikeSummary(record, parsed.code)}` };
+  }
   return { ok: true, envelope: parsed.envelope };
+}
+
+/**
+ * The likeliest way to get this wrong is to pass what `calculate_natal_chart`
+ * returns by default, which is a chart summary and not a record. Both come back
+ * as `unsupported_version`, so without this the caller cannot tell "the wrong
+ * kind of Zodiacs object" from "not a Zodiacs object at all", and is not told
+ * the one-word fix. Key presence only: nothing here is executed or reflected.
+ */
+function looksLikeSummary(record: string, code: NatalEnvelopeErrorCode): string {
+  if (code !== 'unsupported_version') return '';
+  let value: unknown;
+  try { value = JSON.parse(record); } catch { return ''; }
+  if (value === null || typeof value !== 'object' || Array.isArray(value)) return '';
+  const keys = new Set(Object.keys(value as Record<string, unknown>));
+  if (!keys.has('bodies') || !keys.has('engine') || keys.has('schema')) return '';
+  return ' It looks like a chart summary: call calculate_natal_chart again with output: "record".';
 }
 
 export function describeCapabilities(): ToolOutcome {
@@ -125,8 +145,16 @@ export function describeCapabilities(): ToolOutcome {
       supported: {
         houseSystems: [...HOUSE_SYSTEMS],
         references: [...REFERENCES],
+        referenceRules: {
+          'utc-noon': 'needs timeKnown: false and utc at exactly 12:00:00Z; it records that no birth time was known',
+          'local-noon': 'not offered: it needs a captured local date, wall time, zone and offset, and this adapter resolves no timezones',
+        },
         epoch: { from: EPOCH_MIN_UTC, to: EPOCH_MAX_UTC },
-        coordinates: { latitude: [-90, 90], longitude: [-180, 180] },
+        coordinates: {
+          latitude: [-90, 90],
+          longitude: [-180, 180],
+          excluded: 'latitude exactly 90 or -90 with timeKnown: true — the engine does not compute angles at the exact poles',
+        },
         limits: { ...LIMITS },
       },
       unsupported: [...UNSUPPORTED],
@@ -140,6 +168,12 @@ export function calculateNatalChart(args: z.infer<typeof NATAL_INPUT>): ToolOutc
   if (!instant.ok) return { ok: false, refusal: `${instant.reason}.` };
   const place = parseCoordinates(args.latitude, args.longitude);
   if (!place.ok) return { ok: false, refusal: `${place.reason}.` };
+  // Two rules the engine enforces with an internal error code. Checked here so
+  // the caller is told the rule rather than shown a code from inside the codec.
+  const misused = args.reference === 'utc-noon' ? utcNoonMisused(instant.instant, args.timeKnown) : null;
+  if (misused !== null) return { ok: false, refusal: `${misused}.` };
+  const polar = polarAngleExclusion(place.coordinates, args.timeKnown);
+  if (polar !== null) return { ok: false, refusal: `${polar}.` };
 
   let envelope: NatalEnvelope;
   try {
@@ -224,12 +258,25 @@ export function compareCalculationRecords(args: z.infer<typeof COMPARE_INPUT>): 
  * error class is kept because those are fixed strings the engine authors wrote;
  * anything else is reported by class alone, because an unknown throw could
  * carry an argument value in its message.
+ *
+ * A codec rejection is translated rather than quoted: its message carries the
+ * raw error code, which tells a caller nothing they can act on. The same
+ * sentences the comparison path uses are reused here — an AI review found this
+ * path returning `Natal envelope rejected: invalid_context..`, complete with the
+ * doubled full stop from appending one to a message that already ended in it.
  */
 function refusalOf(error: unknown): string {
-  if (error instanceof RangeError || error instanceof TypeError) return error.message;
-  if (error instanceof Error && error.name === 'NatalEnvelopeError') return error.message;
+  const code = error instanceof Error && error.name === 'NatalEnvelopeError'
+    ? (error as { code?: NatalEnvelopeErrorCode }).code : undefined;
+  if (code !== undefined && Object.hasOwn(PARSE_REFUSALS, code)) {
+    return `the calculation record it produced ${PARSE_REFUSALS[code]}`;
+  }
+  if (error instanceof RangeError || error instanceof TypeError) return trimStop(error.message);
+  if (error instanceof Error && error.name === 'NatalEnvelopeError') return trimStop(error.message);
   return error instanceof Error ? error.name : 'unknown error';
 }
+
+const trimStop = (message: string) => message.replace(/\.+$/, '');
 
 function bounded(value: Record<string, unknown>): ToolOutcome {
   const oversized = resultTooLarge(value);

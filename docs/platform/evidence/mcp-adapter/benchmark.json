@@ -1,14 +1,14 @@
 {
   "kind": "synthetic regression benchmark",
   "whatItIsNot": "Not a measured accuracy rate. Every pair here is built by the same engine from synthetic inputs, so this measures whether the comparison classifies the cases its rules describe. It says nothing about how often the tool is right about a disagreement between two independently authored astrology engines, and nothing about real-world users, because no such corpus exists here.",
-  "startedAt": "2026-09-17T18:25:39.030Z",
-  "completedAt": "2026-09-17T18:25:39.364Z",
+  "startedAt": "2026-09-17T19:13:29.377Z",
+  "completedAt": "2026-09-17T19:13:29.703Z",
   "node": "v22.22.2",
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "bb86e5b775fea23d262a8f0fc5b362eb3f5a08fa082b4ee823c67d3e49bc3009"
+    "sha256": "4b7b4183797086b9636c9f50201be4b210183937c17d1d02a5784facb3cc3418"
   },
-  "expectationsSha256": "2a9662dda2ce97b80719d72c9ce72645294b38c91451d7d700af3ad76022a762",
+  "expectationsSha256": "6754bf9167079a8fe85e5908058374a7e7a9dc8231c1260cab93309acca270b3",
   "scenarios": {
     "passed": 10,
     "of": 10
@@ -78,8 +78,8 @@
           "covers": 1
         }
       ],
-      "assertions": 6,
-      "passed": 6,
+      "assertions": 7,
+      "passed": 7,
       "failures": []
     },
     {
@@ -124,8 +124,8 @@
       "explanations": [
         {
           "id": "house-system",
-          "evidence": "hypothesis",
-          "covers": 19
+          "evidence": "reproduced",
+          "covers": 15
         },
         {
           "id": "instant",
@@ -133,8 +133,8 @@
           "covers": 79
         }
       ],
-      "assertions": 6,
-      "passed": 6,
+      "assertions": 5,
+      "passed": 5,
       "failures": []
     },
     {

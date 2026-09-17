@@ -1,7 +1,7 @@
 {
   "type": "official-SDK protocol interoperability against the real server process; not a named end-user host, and not a model-driven demonstration",
-  "startedAt": "2026-09-17T18:20:19.700Z",
-  "completedAt": "2026-09-17T18:20:22.417Z",
+  "startedAt": "2026-09-17T19:27:34.941Z",
+  "completedAt": "2026-09-17T19:27:38.769Z",
   "node": "v22.22.2",
   "client": {
     "package": "@modelcontextprotocol/client",
@@ -17,8 +17,8 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "bytes": 159035,
-    "sha256": "81d4476f1de4f6ae6b87d1a95feb15f1baf20ab6dce75d6fbc128ec08ec2f202"
+    "bytes": 163355,
+    "sha256": "4b7b4183797086b9636c9f50201be4b210183937c17d1d02a5784facb3cc3418"
   },
   "wire": [
     {
@@ -52,8 +52,58 @@
       "error": null
     }
   ],
-  "checks": 70,
-  "passed": 70,
+  "rawShapes": [
+    {
+      "case": "a request line too long to buffer",
+      "exit": 0,
+      "answered": [
+        1,
+        2,
+        3
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "the same line split across two writes",
+      "exit": 0,
+      "answered": [
+        1,
+        4
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "a JSON-RPC batch array",
+      "exit": 0,
+      "answered": [
+        1,
+        5
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "syntactically invalid JSON",
+      "exit": 0,
+      "answered": [
+        1,
+        6
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "two large lines in sequence",
+      "exit": 0,
+      "answered": [
+        1,
+        82,
+        83,
+        7
+      ],
+      "unansweredOffender": true
+    }
+  ],
+  "checks": 80,
+  "passed": 80,
   "results": [
     {
       "name": "initialize succeeds and names the adapter",
@@ -424,6 +474,18 @@
       ]
     },
     {
+      "name": "__proto__ is dropped upstream rather than refused, and changes nothing",
+      "ok": true,
+      "detail": {
+        "layer": "ok",
+        "timeKnown": true
+      }
+    },
+    {
+      "name": "every other unknown key, including the other two hostile names, is refused",
+      "ok": true
+    },
+    {
       "name": "a schema violation names the field at fault so a caller can correct it",
       "ok": true,
       "detail": [
@@ -433,13 +495,18 @@
       ]
     },
     {
-      "name": "no refusal message echoes a coordinate or record content",
+      "name": "no refusal message echoes a coordinate, an instant or record content",
       "ok": true,
       "detail": []
     },
     {
       "name": "an unsupported version is refused distinctly from a malformed record",
       "ok": true
+    },
+    {
+      "name": "stderr carried the adapter's startup note, so the capture is real",
+      "ok": true,
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network\n"
     },
     {
       "name": "stderr carried only the adapter's own notes",
@@ -450,6 +517,11 @@
       "name": "stderr carried no birth detail, coordinate or record content",
       "ok": true,
       "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network\n"
+    },
+    {
+      "name": "the transport exposes the server process id, so the next check measures something",
+      "ok": true,
+      "detail": 30529
     },
     {
       "name": "the server process is gone after the client closes",
@@ -500,6 +572,79 @@
         "negotiated": "2025-11-25",
         "error": null
       }
+    },
+    {
+      "name": "the session survives a request line too long to buffer",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          2,
+          3
+        ],
+        "stderr": "zodiacs-mcp-server: dropped one request line over the 1048576-byte limit; the session is unaffected"
+      }
+    },
+    {
+      "name": "the session survives the same line split across two writes",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          4
+        ],
+        "stderr": "zodiacs-mcp-server: dropped one request line over the 1048576-byte limit; the session is unaffected"
+      }
+    },
+    {
+      "name": "the session survives a JSON-RPC batch array",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          5
+        ],
+        "stderr": "zodiacs-mcp-server: transport reported ZodError"
+      }
+    },
+    {
+      "name": "the session survives syntactically invalid JSON",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          6
+        ],
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network"
+      }
+    },
+    {
+      "name": "the session survives two large lines in sequence",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          82,
+          83,
+          7
+        ],
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network"
+      }
+    },
+    {
+      "name": "both large lines are answered, not only survived",
+      "ok": true,
+      "detail": [
+        1,
+        82,
+        83,
+        7
+      ]
     }
   ]
 }

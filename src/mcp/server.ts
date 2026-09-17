@@ -19,6 +19,7 @@
  * inside `guard`, so a malformed request produces a refusal and leaves the
  * session able to serve the next valid one.
  */
+import { Transform } from 'node:stream';
 import { McpServer } from '@modelcontextprotocol/server';
 import { StdioServerTransport, serveStdio } from '@modelcontextprotocol/server/stdio';
 import { ENGINE_VERSION } from '@zodiacs/engine';
@@ -107,9 +108,75 @@ function build(): McpServer {
   return server;
 }
 
+/**
+ * A line gate in front of the transport.
+ *
+ * A request is one JSON message on one line. When a line is longer than the
+ * SDK's read buffer, that buffer throws and the stdio transport answers by
+ * closing the connection — so one oversized line ended the session and the
+ * process exited, with the next valid request never answered. An AI review
+ * found it: 1048577 bytes in, no response, server gone. Lowering the buffer
+ * from the SDK's 10 MB default had made it ten times easier to reach.
+ *
+ * This holds each line until it is complete and forwards it whole, or discards
+ * it whole once it passes the limit and resynchronises at the next newline. A
+ * partly-forwarded line would be worse than the crash: its fragment would join
+ * the following line and destroy a legitimate request.
+ *
+ * A discarded line gets no reply. It was never parsed, so there is no request
+ * id to answer with, and inventing one would be worse than silence. The only
+ * thing inspected is the length: not one byte of a discarded line is parsed,
+ * read or written anywhere.
+ */
+function lineGate(limit: number): Transform {
+  let pending: Buffer[] = [];
+  let pendingBytes = 0;
+  let discarding = false;
+  return new Transform({
+    transform(chunk: Buffer, _encoding, done) {
+      let start = 0;
+      while (start < chunk.length) {
+        const newline = chunk.indexOf(0x0a, start);
+        const end = newline === -1 ? chunk.length : newline + 1;
+        const segment = chunk.subarray(start, end);
+        start = end;
+        if (discarding) {
+          if (newline !== -1) discarding = false;
+          continue;
+        }
+        if (pendingBytes + segment.length > limit) {
+          pending = [];
+          pendingBytes = 0;
+          discarding = newline === -1;
+          note(`dropped one request line over the ${limit}-byte limit; the session is unaffected`);
+          continue;
+        }
+        pending.push(segment);
+        pendingBytes += segment.length;
+        if (newline !== -1) {
+          this.push(Buffer.concat(pending));
+          pending = [];
+          pendingBytes = 0;
+        }
+      }
+      done();
+    },
+    flush(done) {
+      // A final line with no newline is still a message the SDK can read.
+      if (pendingBytes > 0) this.push(Buffer.concat(pending));
+      done();
+    },
+  });
+}
+
+const gate = lineGate(LIMITS.requestBytes);
+process.stdin.pipe(gate);
+
 const handle = serveStdio(build, {
-  // Set explicitly rather than left at the SDK's 10 MB default.
-  transport: new StdioServerTransport(process.stdin, process.stdout, { maxBufferSize: LIMITS.requestBytes }),
+  // The gate above guarantees no forwarded line exceeds LIMITS.requestBytes, so
+  // this buffer — deliberately a little larger — can no longer overflow. It is
+  // still set rather than left at the SDK's 10 MB default, as a second bound.
+  transport: new StdioServerTransport(gate, process.stdout, { maxBufferSize: LIMITS.requestBytes + 4096 }),
   onerror: (error) => note(`transport reported ${error.name}`),
 });
 
