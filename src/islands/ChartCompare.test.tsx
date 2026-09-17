@@ -90,6 +90,14 @@ describe('the page around it', () => {
     expect(island).not.toMatch(/sides:\s*files\./u);
   });
 
+  it('installs the shared locale catalog the site-wide audit requires', () => {
+    // The island reads none of it — its copy is its own — but the invariant in
+    // src/lib/i18n is that every page carrying an island installs exactly one
+    // catalog, and that tree is under the Phase 1 scope freeze. Satisfying the
+    // rule costs less than carving an exception into a frozen file.
+    expect(page).toContain('clientUi');
+  });
+
   it('loads its own stylesheet instead of borrowing the calculator page classes', () => {
     expect(page).toContain("import '../../../styles/chart-compare.css'");
     // These classes live in page-scoped <style> blocks elsewhere, so they
