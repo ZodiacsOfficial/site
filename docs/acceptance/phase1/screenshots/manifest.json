@@ -6,27 +6,27 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 4
   },
-  "capturedAt": "2026-09-17T12:34:24.685Z",
+  "capturedAt": "2026-09-17T18:49:43.611Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-09-17",
   "publicationCanonicalSha256": "7ba5022db214c667717e6d45cf5f43f67c9f7531d1e6464e78839f2865b00a2a",
-  "templateSourceSha256": "515ecf6ceff0296a262938d470fc86540f0190b1e5c3713f419c823e3c6492ea",
+  "templateSourceSha256": "c41edca495069fb43f1c8c70124de90f7d9103fba72b15ab786132a44020943b",
   "renderPayloadSha256": {
     "daily": "e104b1a3d5590c1796330db6b770438b5747300682f6ebf58ed832b980e0590c",
     "dailyPublication": "0f547078deb7f06b4f71d7a90e8477ed00833d5437bc922a3c5be5c6ec65f1d3",
-    "dailyPublicationManifest": "a3b53bb22c2acae2403903700e29084440ba17ebdb422090f2cfc72a2059e5e0",
+    "dailyPublicationManifest": "b811bb71b71024ce28a241d7e5b7b7267a5ed565e0348ca28f397d19e71c9c04",
     "horoscopeProgram": "5c84f7f680deadce7792d9004574b21f01b46e918727e53c70888e743da9d3b2"
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-09-17T12:31:41.317Z",
-    "templateSourceSha256": "515ecf6ceff0296a262938d470fc86540f0190b1e5c3713f419c823e3c6492ea",
+    "builtAt": "2026-09-17T18:48:52.980Z",
+    "templateSourceSha256": "c41edca495069fb43f1c8c70124de90f7d9103fba72b15ab786132a44020943b",
     "dailyDate": "2026-09-17",
     "publicationCanonicalSha256": "7ba5022db214c667717e6d45cf5f43f67c9f7531d1e6464e78839f2865b00a2a",
     "renderPayloadSha256": {
       "daily": "e104b1a3d5590c1796330db6b770438b5747300682f6ebf58ed832b980e0590c",
       "dailyPublication": "0f547078deb7f06b4f71d7a90e8477ed00833d5437bc922a3c5be5c6ec65f1d3",
-      "dailyPublicationManifest": "a3b53bb22c2acae2403903700e29084440ba17ebdb422090f2cfc72a2059e5e0",
+      "dailyPublicationManifest": "b811bb71b71024ce28a241d7e5b7b7267a5ed565e0348ca28f397d19e71c9c04",
       "horoscopeProgram": "5c84f7f680deadce7792d9004574b21f01b46e918727e53c70888e743da9d3b2"
     }
   },
