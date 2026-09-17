@@ -368,3 +368,49 @@ describe('regressions an adversarial review found', () => {
     expect(evidenceFor(comparison, 'unexplained')).toBe('unresolved');
   });
 });
+
+describe('a cause never claims a row it could not have caused', () => {
+  /** Which rows each explanation is physically capable of accounting for. */
+  const CANNOT: Record<string, RegExp> = {
+    // A different moment or place moves computed values; neither can change
+    // which house system the calculation was asked for.
+    instant: /^houses-(requested|actual|system)$/u,
+    location: /^houses-(requested|actual|system)$/u,
+    // A house system moves angles and cusps. Bodies are geocentric.
+    'house-system': /^(body-.*-(lon|lat|speed|degree|sign|retrograde)|aspect-)/u,
+    // Writing the same instant two ways changes nothing computed at all.
+    'equivalent-instants': /^(body-|angle-|cusp-|aspect-)/u,
+  };
+
+  const cases = [
+    { name: 'different place and different house system',
+      left: ORDINARY,
+      right: { utc: ORDINARY.utc, latitude: 40.7128, longitude: -74.006, houseSystem: 'whole' } as const },
+    { name: 'different moment and different house system',
+      left: ORDINARY,
+      right: { ...ORDINARY, utc: '1990-06-15T18:45:00Z', houseSystem: 'whole' } as const },
+    { name: 'different moment, place and house system at once',
+      left: ORDINARY,
+      right: { utc: '1990-06-15T18:45:00Z', latitude: 40.7128, longitude: -74.006, houseSystem: 'whole' } as const },
+  ];
+
+  for (const scenario of cases) {
+    it(`holds for ${scenario.name}`, () => {
+      const comparison = compareEnvelopes(
+        buildEnvelope(scenario.left), buildEnvelope(scenario.right), live,
+      );
+      for (const item of comparison.explanations) {
+        const forbidden = CANNOT[item.id];
+        if (!forbidden) continue;
+        const overreach = item.covers.filter((id) => forbidden.test(id));
+        expect(overreach, `${item.id} claims rows it cannot cause`).toEqual([]);
+      }
+      // And the house-system rows are still accounted for by something.
+      const covered = new Set(comparison.explanations.flatMap((item) => item.covers));
+      for (const row of comparison.differences) {
+        if (row.kind === 'display') continue;
+        expect(covered.has(row.id), `${row.id} is claimed by nobody`).toBe(true);
+      }
+    });
+  }
+});

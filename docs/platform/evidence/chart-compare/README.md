@@ -33,8 +33,11 @@ cannot do. The user-facing version of the same material is on the page itself.
    | `unresolved` | Nothing in either file accounts for it. |
 
 4. **Whatever is left over is named.** Coverage is computed from what the
-   explanations actually claim, so an unrelated difference cannot absorb one it
-   could not have caused.
+   explanations actually claim, in both directions: an unrelated difference
+   cannot absorb one it could not have caused, and a cause cannot claim a row it
+   could not have moved. A different moment or place moves computed values; it
+   does not change which house system was asked for, and is not allowed to say
+   it did.
 
 ## The rules that keep it honest
 
@@ -125,6 +128,12 @@ made, and each now has a regression test that fails on `fef5f9bf`:
 | a `does any input differ?` test decided abstention | one unrelated house-system row silenced an unexplained 3° position difference |
 | the export read the loaded files, not the result | a preset's summary silently carried redacted metadata about the user's own records |
 | a file chosen mid-comparison did not cancel it | an error message was replaced by the abandoned comparison's result |
+
+One more of the same family was found afterwards, by probing the fix for its
+inverse: the corrected coverage let a different place or moment claim the
+house-system rows, which neither can cause. Same error as the one it replaced,
+pointing the other way. Three scenarios now assert that no explanation claims a
+row it could not have moved, while every row still has a claimant.
 
 The epsilon defect is not a corner case. Two ordinary calculations ten
 milliseconds apart — the realistic shape of "two programs disagree slightly" —

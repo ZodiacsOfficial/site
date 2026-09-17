@@ -261,12 +261,19 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   /**
    * Everything a cause upstream of the calculation can move, of any kind: a
    * different moment changes signs and which aspects exist, not only numbers.
-   * Rows recording that a whole section is missing are excluded — those follow
-   * from an absent birth time, which has its own explanation.
+   *
+   * Two families are held back. Rows recording that a whole section is missing
+   * follow from an absent birth time, and rows recording which house system was
+   * asked for or used are a setting, not a result — a different moment or place
+   * cannot change either, and letting one claim them is the same error as
+   * letting a house system absorb a moved body, only pointing the other way.
    */
-  const ABSENCE_ROWS = new Set(['angles-presence', 'houses-absence', 'cusps-shape']);
+  const NOT_DOWNSTREAM = new Set([
+    'angles-presence', 'houses-absence', 'cusps-shape',
+    'houses-requested', 'houses-actual', 'houses-system',
+  ]);
   const downstream = (areas: readonly string[]) => differences
-    .filter((row) => areas.includes(row.area) && row.kind !== 'display' && !ABSENCE_ROWS.has(row.id))
+    .filter((row) => areas.includes(row.area) && row.kind !== 'display' && !NOT_DOWNSTREAM.has(row.id))
     .map((row) => row.id);
 
   const leftEngine = engineVersionOf(left);
