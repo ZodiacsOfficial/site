@@ -105,13 +105,39 @@ resolves.
   public entry points). It is **not published**: `@zodiacs/engine` returns 404
   from the public registry and this environment holds no npm credentials.
   See [the engine release record](evidence/engine-release/README.md).
-- [ ] **B — Developer onboarding and existing public data.** An ordinary
-  successful chart first, advanced verification after; a working demonstration
-  on the real engine; documented setup verified from a clean environment;
-  freshness, schema, timestamp, coverage, caching, attribution and stale/error
-  behaviour for the shared-sky API; the lightweight embed path kept private,
-  isolated, keyboard-operable and attributed. Public data and local
-  calculations stay useful with no wallet, token or account.
+- [x] **B — Developer onboarding and existing public data.** Audited against
+  each named requirement on 2026-09-17; most of it was already built, two gates
+  were missing and are now closed.
+  - *Ordinary successful chart first, advanced verification after* — met.
+    `/developers/examples/` runs "Start with a working result" → set up once →
+    calculate a natal chart locally → transit snapshot → embed a widget.
+  - *A working demonstration on the real engine, and documented setup verified
+    from a clean environment* — met by the platform starter and
+    `scripts/verify-platform-starter.mjs`, which installs it in a fresh
+    directory in CI.
+  - *Freshness, schema, timestamp, coverage, attribution, stale/error* — met.
+    `sky-api.test.mjs` validates every payload against its published schema,
+    bounds each window by its scan horizon and flags truncated ones; payloads
+    carry `generatedAt`, `snapshotAt`, `coverage`, `versioning`, `license` and
+    `attribution`; the quickstart rejects HTTP errors before decoding.
+  - *Caching* — **was ungated.** The delivery contract lived in `vercel.json`
+    alone. `scripts/sky-api-headers.test.mjs` now checks all 43 files the
+    builder writes for wildcard CORS, `noindex`, `must-revalidate` and a
+    `max-age` within the advertised cadence, and pins the tiering.
+  - *Embed path private, isolated, attributed* — **was partly ungated.**
+    `verify-widgets.mjs` checked three routes while four were building;
+    `/embed/sky/light/` shipped with no backlink, tracking or budget check at
+    all. Routes are now discovered from the build.
+  - *Embed path keyboard-operable* — **was unverified.** The widget drive now
+    tabs to the attribution link on every route and requires a painted focus
+    indicator.
+  - Recommendation, not changed: the `/developers/` quick start leads with a
+    fully hardened fetch snippet and puts the plain
+    `curl https://zodiacs.org/api/v1/sky/today.json` third. Inverting those
+    would match the same "simplest thing that works first" ordering the
+    examples page already uses. That is an editorial call for the owner, not a
+    defect.
+
 - [ ] **C — Narrow hosted beta** (alias L5). Natal-chart and transit-snapshot
   operations only, on the shared validated engine, behind explicit schemas,
   input/date/duration/concurrency limits, authentication or tightly bounded
