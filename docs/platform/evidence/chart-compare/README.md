@@ -83,8 +83,16 @@ production, so the first drive of the *deployed* page recorded a request to
 on nearly every route, which never saw chart data. The page nonetheless now
 carries `privateSurface`, the same opt-out `/profile/` and `/ask/` use, so the
 one page whose claim is that your records never leave the device is not also the
-one still calling a third-party origin. Re-verified on the deployed page after
-that change.
+one still calling a third-party origin.
+
+That the opt-out works is demonstrated, not assumed. A local build cannot show
+it — the analytics variables are unset locally, so *every* page emits zero
+references and the control proves nothing. Building with
+`PUBLIC_PLAUSIBLE_SCRIPT_URL` set separates them: `/developers/compare/` emits
+0, `/developers/` emits 12, and `/profile/` — the established `privateSurface`
+page — emits 0. The deployed page then confirmed it: 0 references in the served
+HTML, and a live Chromium drive recording no off-origin request at all
+(`live-drive.json`).
 
 The lesson is worth keeping: a local drive cannot answer a question about
 production configuration, and reporting a local result as a live one is the
