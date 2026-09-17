@@ -27,15 +27,50 @@ const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
 const servedPaths = [...build.files.keys()].map((file) => `/api/v1/${file}`);
 const advertised = build.payloads.get('index.json').endpoints;
 
+/**
+ * Vercel's `source` is a path pattern, not a regular expression: every literal
+ * character must be escaped before `(.*)` and `:param` are translated, or a `.`
+ * in a filename silently matches anything. Verified against production, where
+ * `/api/v1/sky/today.json` really does return `max-age=300` from its own rule
+ * and inherits `noindex` from the family rule above it.
+ */
+function sourcePattern(source) {
+  let out = '';
+  for (let index = 0; index < source.length;) {
+    if (source.startsWith('(.*)', index)) { out += '(.*)'; index += 4; continue; }
+    const param = /^:[A-Za-z_][A-Za-z0-9_]*(\*|\+|\?)?/u.exec(source.slice(index));
+    if (param) {
+      // `:path*` spans segments; a bare `:path` is one segment.
+      out += param[1] === '*' || param[1] === '+' ? '(.*)' : '[^/]+';
+      index += param[0].length;
+      continue;
+    }
+    out += source[index].replace(/[.*+?^${}()|[\]\\]/u, '\\$&');
+    index += 1;
+  }
+  return new RegExp(`^${out}$`, 'u');
+}
+
 /** Vercel applies every matching rule in order; a later rule wins on the same key. */
 function effectiveHeaders(path) {
   const headers = new Map();
   for (const rule of config.headers ?? []) {
-    const pattern = new RegExp(`^${rule.source.replace(/\(\.\*\)/gu, '(.*)').replace(/:[a-z]+/giu, '[^/]+')}$`);
-    if (!pattern.test(path)) continue;
+    if (!sourcePattern(rule.source).test(path)) continue;
     for (const { key, value } of rule.headers) headers.set(key.toLowerCase(), value);
   }
   return headers;
+}
+
+/**
+ * The longest a cached copy may live, read from the endpoint's own `updates`
+ * sentence rather than assumed. An unrecognised cadence is a failure, not a
+ * default: a new one has to be classified here deliberately.
+ */
+function cadenceSeconds(updates) {
+  if (/\bhourly\b/u.test(updates)) return 3_600;
+  if (/\bdaily\b/u.test(updates)) return DAY_SECONDS;
+  if (/underlying yearly data is refreshed/u.test(updates)) return DAY_SECONDS;
+  throw new Error(`Unclassified update cadence, add it to cadenceSeconds: ${updates}`);
 }
 
 function maxAge(path) {
@@ -46,7 +81,10 @@ function maxAge(path) {
 
 describe('shared sky API delivery headers', () => {
   it('serves every file it writes cross-origin, unindexed, and revalidated', () => {
-    expect(servedPaths.length).toBeGreaterThan(40);
+    // Pinned to what the builder really writes, so files disappearing from the
+    // API cannot quietly shrink what this test covers.
+    expect(servedPaths.length).toBe(build.files.size);
+    expect(servedPaths.length).toBeGreaterThanOrEqual(59);
 
     for (const path of servedPaths) {
       const headers = effectiveHeaders(path);
@@ -62,17 +100,19 @@ describe('shared sky API delivery headers', () => {
   });
 
   it('never caches an endpoint for longer than the cadence it advertises', () => {
-    // Two cadences exist: daily editions, and yearly files that change only
-    // when their source data is refreshed. A daily endpoint cached for more
-    // than a day would hand consumers an edition the API says was replaced;
-    // the yearly ones are bounded by the family default, which is a day.
-    const daily = advertised.filter(({ updates }) => /daily/u.test(updates));
-    expect(daily.length).toBeGreaterThan(0);
+    expect(advertised.length).toBeGreaterThanOrEqual(43);
 
     for (const { path, updates } of advertised) {
+      // Every advertised endpoint must actually be a file the builder writes;
+      // otherwise the API promises a URL that 404s while still inheriting a
+      // cache header from the family rule.
+      expect(servedPaths, `${path} is advertised but never written`).toContain(path);
+
       const age = maxAge(path);
+      const limit = cadenceSeconds(updates);
       expect(age, `${path} has no max-age`).not.toBeNull();
-      expect(age, `${path} is cached past its stated cadence: ${updates}`).toBeLessThanOrEqual(DAY_SECONDS);
+      expect(age, `${path} is cached ${age}s against its stated cadence (${limit}s): ${updates}`)
+        .toBeLessThanOrEqual(limit);
     }
   });
 
@@ -85,9 +125,12 @@ describe('shared sky API delivery headers', () => {
     const others = servedPaths
       .filter((path) => path !== '/api/v1/sky/today.json' && path !== '/api/v1/index.json')
       .map((path) => maxAge(path));
+    const family = Math.max(...others);
 
-    expect(today).toBeLessThanOrEqual(Math.min(...others));
-    expect(index).toBeLessThanOrEqual(Math.max(...others));
+    expect(today, 'today.json must not be cached longer than anything else').toBeLessThanOrEqual(Math.min(...others));
+    // Strictly tighter than the family default, so deleting the index rule and
+    // letting it fall back to the wildcard is a failure rather than a no-op.
+    expect(index, 'index.json must be cached more tightly than the family default').toBeLessThan(family);
     expect(today).toBeLessThanOrEqual(index);
   });
 

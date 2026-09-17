@@ -127,16 +127,22 @@ resolves.
     carry `generatedAt`, `snapshotAt`, `coverage`, `versioning`, `license` and
     `attribution`; the quickstart rejects HTTP errors before decoding.
   - *Caching* — **was ungated.** The delivery contract lived in `vercel.json`
-    alone. `scripts/sky-api-headers.test.mjs` now checks all 43 files the
-    builder writes for wildcard CORS, `noindex`, `must-revalidate` and a
-    `max-age` within the advertised cadence, and pins the tiering.
+    alone. `scripts/sky-api-headers.test.mjs` now checks all 59 files the
+    builder writes for wildcard CORS, `noindex` and `must-revalidate`, requires
+    each of the 43 advertised endpoints to be a file that is actually written,
+    and bounds every `max-age` by a limit parsed from that endpoint's own
+    `updates` sentence rather than a constant. It pins the tiering so
+    `today.json` cannot become the stalest thing in the family and `index.json`
+    must stay strictly tighter than the family default.
   - *Embed path private, isolated, attributed* — **was partly ungated.**
     `verify-widgets.mjs` checked three routes while four were building;
     `/embed/sky/light/` shipped with no backlink, tracking or budget check at
-    all. Routes are now discovered from the build.
+    all. Routes are now discovered from the build, with `sky/light` in the
+    required floor so a route that stops building is noticed too.
   - *Embed path keyboard-operable* — **was unverified.** The widget drive now
-    tabs to the attribution link on every route and requires a painted focus
-    indicator.
+    tabs to the attribution link on every route it discovers from the build, and
+    requires a focus indicator that is actually painted — a fully transparent
+    outline or shadow fails.
   - *Quick-start ordering* — done. The `/developers/` quick start now leads with
     the one-line `curl`, states the freshness limitation next to it, and keeps
     the hardened fetch example immediately below.

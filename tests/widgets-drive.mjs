@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
+import { builtRoutes } from '../scripts/embed-routes.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
 export async function verifyWidgetBuilder({ browser, baseURL, check, outDir = null }) {
@@ -207,11 +208,15 @@ export async function verifyEmbedKeyboard({ browser, baseURL, routes }) {
           const element = document.activeElement;
           if (!element || element === document.body) return null;
           const style = getComputedStyle(element);
+          // A fully transparent ring paints nothing, so colour is part of the
+          // question, not just presence.
+          const opaque = (colour) => !/rgba?\([^)]*,\s*0\s*\)$/u.test(colour ?? '');
           return {
             tag: element.tagName,
             text: (element.textContent ?? '').trim(),
-            outlined: style.outlineStyle !== 'none' && Number.parseFloat(style.outlineWidth) > 0,
-            shadowed: style.boxShadow !== 'none',
+            outlined: style.outlineStyle !== 'none' && Number.parseFloat(style.outlineWidth) > 0
+              && opaque(style.outlineColor),
+            shadowed: style.boxShadow !== 'none' && opaque(style.boxShadow),
           };
         });
         if (!focused) break;
@@ -288,7 +293,9 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const forbidden = requests.filter((url) => /plausible|analytics|session[-_]?record|fingerprint|\/api\//i.test(url));
     if (forbidden.length > 0) throw new Error(`embed made forbidden requests:\n${forbidden.join('\n')}`);
     console.log('widgets-drive: foreign-origin iframe, script mount, branding, icons, and private chart all pass');
-    await verifyEmbedKeyboard({ browser, baseURL, routes: ['sky', 'sky/light', 'moon', 'chart'] });
+    // Discovered, not listed: the same source of truth verify-widgets uses, so
+    // a new embed route is exercised here the day it ships.
+    await verifyEmbedKeyboard({ browser, baseURL, routes: await builtRoutes() });
     await verifyWidgetBuilder({ browser, baseURL, outDir: process.env.OUT_DIR ?? 'tests/visual/artifacts/widgets' });
   } finally {
     await browser.close();

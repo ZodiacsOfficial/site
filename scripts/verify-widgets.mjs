@@ -1,34 +1,16 @@
-import { readdir, readFile, stat } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import { dirname, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { builtRoutes, REQUIRED_EMBED_ROUTES } from './embed-routes.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-
-/**
- * Every embed route that actually built, not a hand-kept list: a new one is
- * publicly reachable the moment it ships, so it has to carry the same backlink,
- * privacy and budget guarantees as the rest without anyone remembering to add
- * it here. `/embed/sky/light/` shipped unverified under the old list.
- */
-async function builtRoutes() {
-  const embedRoot = resolve(root, 'dist', 'embed');
-  const entries = await readdir(embedRoot, { recursive: true, withFileTypes: true });
-  return entries
-    .filter((entry) => entry.isFile() && entry.name === 'index.html')
-    .map((entry) => posix.relative(
-      embedRoot.split('\\').join('/'),
-      resolve(entry.parentPath ?? entry.path, entry.name).split('\\').join('/'),
-    ).replace(/\/index\.html$/u, ''))
-    .sort();
-}
 
 const routes = await builtRoutes();
 const failures = [];
 
 // Discovery finding nothing would pass every check below vacuously.
-const REQUIRED = ['chart', 'moon', 'sky'];
-for (const route of REQUIRED) {
+for (const route of REQUIRED_EMBED_ROUTES) {
   if (!routes.includes(route)) failures.push(`/embed/${route}/ is missing from the build`);
 }
 
