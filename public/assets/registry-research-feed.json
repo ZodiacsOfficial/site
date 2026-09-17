@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-17T09:35:09.963Z",
+  "generatedAt": "2026-09-17T12:12:08.212Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -93,7 +93,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-10-observation-168h",
