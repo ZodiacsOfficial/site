@@ -21,6 +21,10 @@ export const replay: Replay = (request: ReplayRequest): ReplayResult | null => {
       latitude: request.latitude,
       longitude: request.longitude,
       houseSystem: request.houseSystem,
+      // A time-unknown receipt has no angles and no houses. Replaying it as
+      // though the time were known would invent a chart the receipt never
+      // described, and then offer it as evidence about that receipt.
+      timeKnown: request.timeKnown,
     } as Parameters<typeof natalChart>[0]) as unknown as ChartShape;
     return { angles: chart.angles, bodies: chart.bodies, cusps: chart.houses?.cusps ?? null };
   } catch {

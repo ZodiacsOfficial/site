@@ -12,6 +12,29 @@ function htmlFiles(directory: string): string[] {
   });
 }
 
+/**
+ * Whether anything a page actually ships would read the catalog. Walking the
+ * chunk graph is what makes an exemption a demonstration rather than a claim:
+ * `clientUi()` throws when the catalog is absent, so a page is safe without one
+ * only if no chunk it can reach ever looks for it.
+ */
+function readsClientCatalog(html: string): boolean {
+  const queue = [...html.matchAll(/\/_astro\/([A-Za-z0-9._-]+\.js)/g)].map((match) => match[1]);
+  const seen = new Set<string>();
+  while (queue.length) {
+    const name = queue.pop() as string;
+    if (seen.has(name)) continue;
+    seen.add(name);
+    const path = join(distRoot, '_astro', name);
+    if (!existsSync(path)) continue;
+    const source = readFileSync(path, 'utf8');
+    if (source.includes('__ZDX_UI__')) return true;
+    for (const match of source.matchAll(/["'(]\.\/([A-Za-z0-9._-]+\.js)["')]/g)) queue.push(match[1]);
+    for (const match of source.matchAll(/\/_astro\/([A-Za-z0-9._-]+\.js)/g)) queue.push(match[1]);
+  }
+  return false;
+}
+
 describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
   it('offers Guide quick prompts as plain links on every horoscope surface', () => {
     const surfaces = [
@@ -104,6 +127,14 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
         || /^horoscopes\/[^/]+\/index\.html$/.test(relativePath);
       if (html.includes('data-standalone-widget') || ownsItsCopy) {
         expect(installs, relative(distRoot, path)).toHaveLength(0);
+        continue;
+      }
+      // An English-only developer tool whose island carries its own strings:
+      // the 22KB inline catalog would be payload nothing on the page reads.
+      // The exemption is proved below, not taken on trust.
+      if (relativePath === 'developers/compare/index.html') {
+        expect(installs, relativePath).toHaveLength(0);
+        expect(readsClientCatalog(html), `${relativePath} ships a chunk that needs the catalog`).toBe(false);
         continue;
       }
       expect(installs, relative(distRoot, path)).toHaveLength(1);

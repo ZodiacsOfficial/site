@@ -78,12 +78,20 @@
 .cmp__limits { padding: 12px 14px; border: 1px solid var(--hair-2); border-radius: 12px; }
 .cmp__limits h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: 0.04em; color: var(--text-2); font-weight: 500; }
 .cmp__limits ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: var(--text-sm); line-height: 1.65; }
-.cmp__table summary { cursor: pointer; color: var(--text-2); font-size: var(--text-sm); }
+.cmp__table summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
 .cmp__table table { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 12px; }
 .cmp__table th, .cmp__table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--hair-1); vertical-align: top; }
 .cmp__table thead th { color: var(--faint); font-weight: 500; letter-spacing: 0.04em; }
 .cmp__table tbody th { color: var(--text-2); font-weight: 400; }
 .cmp__table td { color: var(--text); overflow-wrap: anywhere; }
+.cmp__table td:last-child { overflow-wrap: normal; word-break: keep-all; }
 .cmp__table tr[data-kind="display"] td, .cmp__table tr[data-kind="display"] th { color: var(--faint); }
 @media (max-width: 560px) {
   .cmp__table table, .cmp__table thead, .cmp__table tbody, .cmp__table tr, .cmp__table th, .cmp__table td { display: block; }

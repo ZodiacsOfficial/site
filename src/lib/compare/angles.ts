@@ -8,12 +8,19 @@
 /** Two values closer than this are the same number, not a difference. */
 export const IDENTICAL_EPSILON = 1e-12;
 
+/** The decimals these receipts carry, and the decimals the tables print. */
+export const DISPLAYED_DECIMALS = 6;
+
 /**
- * Below this, a difference is explainable by rounding at the six decimal places
- * these receipts display, rather than by a different calculation. Reporting it
- * as a numerical difference would be misleading.
+ * A value as the page prints it. The display verdict below is decided on these
+ * strings rather than on a tolerance: rounding at a fixed number of decimals is
+ * a step function, so no epsilon can stand in for it. Two values 8e-7 apart can
+ * print identically and two values 2e-8 apart can print differently, and an
+ * epsilon gets both of those backwards.
  */
-export const DISPLAY_EPSILON = 5e-7;
+export function displayed(value: number): string {
+  return Number.isFinite(value) ? value.toFixed(DISPLAYED_DECIMALS) : String(value);
+}
 
 /**
  * Signed shortest rotation from `a` to `b`, in (-180, 180]. Positive means `b`
@@ -39,20 +46,26 @@ export function compareAngles(a: number, b: number): NumericVerdict {
   const distance = circularDistance(a, b);
   if (!Number.isFinite(distance)) return 'different';
   if (distance <= IDENTICAL_EPSILON) return 'identical';
-  return distance < DISPLAY_EPSILON ? 'display-only' : 'different';
+  return displayed(a) === displayed(b) ? 'display-only' : 'different';
 }
 
 /** The same separation for plain (non-circular) quantities such as latitude. */
 export function compareScalars(a: number, b: number): NumericVerdict {
-  if (!Number.isFinite(a) || !Number.isFinite(b)) return a === b ? 'identical' : 'different';
-  const distance = Math.abs(a - b);
-  if (distance <= IDENTICAL_EPSILON) return 'identical';
-  return distance < DISPLAY_EPSILON ? 'display-only' : 'different';
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return 'different';
+  if (Math.abs(a - b) <= IDENTICAL_EPSILON) return 'identical';
+  return displayed(a) === displayed(b) ? 'display-only' : 'different';
 }
 
-/** A signed degree difference, written the way the tables show it. */
+/**
+ * A signed degree difference, written the way the tables show it. A difference
+ * too small to survive six decimals is written in exponential form rather than
+ * printed as a bare zero, so a row never claims a difference of 0.000000°.
+ */
 export function formatDelta(delta: number): string {
   if (!Number.isFinite(delta)) return '—';
-  const sign = delta > 0 ? '+' : delta < 0 ? '−' : '';
-  return `${sign}${Math.abs(delta).toFixed(6)}°`;
+  if (delta === 0) return '0.000000°';
+  const sign = delta > 0 ? '+' : '−';
+  const magnitude = Math.abs(delta);
+  const fixed = magnitude.toFixed(DISPLAYED_DECIMALS);
+  return `${sign}${Number(fixed) === 0 ? magnitude.toExponential(1) : fixed}°`;
 }

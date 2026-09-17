@@ -10,7 +10,9 @@
  * different calculation, not the original one, and is never presented as one.
  */
 import type { NatalEnvelope } from '@zodiacs/engine/receipt';
-import { compareAngles, compareScalars, circularDelta, formatDelta, type NumericVerdict } from './angles';
+import {
+  circularDelta, compareAngles, compareScalars, displayed, formatDelta, type NumericVerdict,
+} from './angles';
 
 /** How strongly a proposed cause is supported. */
 export type Evidence = 'reproduced' | 'reported' | 'hypothesis' | 'unresolved';
@@ -65,8 +67,20 @@ export type Replay = (request: ReplayRequest) => ReplayResult | null;
 interface BodyRow {
   readonly body: string;
   readonly lon?: unknown;
+  readonly lat?: unknown;
+  readonly speed?: unknown;
+  readonly degree?: unknown;
   readonly sign?: unknown;
   readonly retrograde?: unknown;
+}
+
+/** One aspect as receipts carry it. */
+interface AspectRow {
+  readonly a?: unknown;
+  readonly b?: unknown;
+  readonly type?: unknown;
+  readonly orb?: unknown;
+  readonly applying?: unknown;
 }
 
 export interface CompareOptions {
@@ -83,12 +97,21 @@ function verdictKind(verdict: NumericVerdict): DifferenceKind | null {
 }
 
 function num(value: number): string {
-  return Number.isFinite(value) ? value.toFixed(6) : '—';
+  return Number.isFinite(value) ? displayed(value) : '—';
 }
 
 function engineVersionOf(envelope: NatalEnvelope): string | null {
   const engine = (envelope.receipt as { engine?: { version?: unknown } }).engine;
   return typeof engine?.version === 'string' ? engine.version : null;
+}
+
+/**
+ * The part of a version that decides precedence. SemVer §10 ignores build
+ * metadata, so `0.1.1-rc.6+abc` and `0.1.1-rc.6` are the same engine and must
+ * not be reported as different ones — or be refused a replay as if they were.
+ */
+function enginePrecedence(version: string | null): string | null {
+  return version === null ? null : version.split('+')[0];
 }
 
 function replayInputOf(envelope: NatalEnvelope): ReplayRequest | null {
@@ -144,10 +167,14 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
 
   const conventionKeys = [...new Set([...Object.keys(lr.conventions ?? {}), ...Object.keys(rr.conventions ?? {})])].sort();
   for (const key of conventionKeys) {
-    text(`convention-${key}`, 'Conventions', key, lr.conventions?.[key], rr.conventions?.[key]);
+    const own = (source: Record<string, unknown> | undefined | null) =>
+      (source && Object.hasOwn(source, key) ? source[key] : null);
+    text(`convention-${key}`, 'Conventions', key, own(lr.conventions), own(rr.conventions));
   }
 
   text('engine-version', 'Provenance', 'Engine version', engineVersionOf(left), engineVersionOf(right));
+  // Reported above whatever the difference is; `explain` decides separately
+  // whether it is a difference in the engine or only in its build metadata.
   text('schema', 'Provenance', 'Receipt schema', left.schema, right.schema);
   text('result-flags', 'Provenance', 'Result flags', JSON.stringify(lr.resultFlags ?? []), JSON.stringify(rr.resultFlags ?? []));
   text('input-flags', 'Provenance', 'Input flags', JSON.stringify(lr.inputFlags ?? []), JSON.stringify(rr.inputFlags ?? []));
@@ -156,7 +183,8 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
   const ra = (right.result as any).angles as Record<string, number> | null;
   if (la && ra) {
     for (const key of [...new Set([...Object.keys(la), ...Object.keys(ra)])].sort()) {
-      angle(`angle-${key}`, 'Angles', ANGLE_LABELS[key] ?? key, la[key], ra[key]);
+      const label = Object.hasOwn(ANGLE_LABELS, key) ? ANGLE_LABELS[key] : key;
+      angle(`angle-${key}`, 'Angles', label, la[key], ra[key]);
     }
   } else if (Boolean(la) !== Boolean(ra)) {
     text('angles-presence', 'Angles', 'Angles available', Boolean(la), Boolean(ra));
@@ -171,17 +199,44 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
     const a = lb.get(body);
     const b = rb.get(body);
     if (!a || !b) { text(`body-${body}`, 'Positions', `${body} present`, Boolean(a), Boolean(b)); continue; }
+    // Every field a body row carries, not only the longitude: two receipts that
+    // agree on longitude can still disagree on ecliptic latitude or on speed,
+    // and calling those two files the same calculation would be false.
     angle(`body-${body}-lon`, 'Positions', `${body} longitude`, a.lon, b.lon);
+    scalar(`body-${body}-lat`, 'Positions', `${body} ecliptic latitude`, a.lat, b.lat);
+    scalar(`body-${body}-speed`, 'Positions', `${body} speed`, a.speed, b.speed);
+    scalar(`body-${body}-degree`, 'Positions', `${body} degree in sign`, a.degree, b.degree);
     text(`body-${body}-sign`, 'Positions', `${body} sign`, a.sign, b.sign);
     text(`body-${body}-retrograde`, 'Positions', `${body} retrograde`, a.retrograde, b.retrograde);
   }
 
+  // Aspects are keyed by the pair and the type, so a list in a different order
+  // is not a difference and a genuinely missing aspect is.
+  const byAspect = (result: unknown): Map<string, AspectRow> => new Map(
+    (((result as { aspects?: readonly AspectRow[] }).aspects ?? []) as readonly AspectRow[])
+      .map((entry) => [`${String(entry.a)}|${String(entry.b)}|${String(entry.type)}`, entry] as const),
+  );
+  const lasp = byAspect(left.result);
+  const rasp = byAspect(right.result);
+  for (const key of [...new Set([...lasp.keys(), ...rasp.keys()])].sort()) {
+    const a = lasp.get(key);
+    const b = rasp.get(key);
+    const label = key.split('|').join(' ');
+    if (!a || !b) { text(`aspect-${key}`, 'Aspects', `${label} present`, Boolean(a), Boolean(b)); continue; }
+    scalar(`aspect-${key}-orb`, 'Aspects', `${label} orb`, a.orb, b.orb);
+    text(`aspect-${key}-applying`, 'Aspects', `${label} applying`, a.applying, b.applying);
+  }
+
+  text('houses-system', 'Houses', 'House system in the result',
+    (left.result as any).houses?.system ?? null, (right.result as any).houses?.system ?? null);
   const lc = (left.result as any).houses?.cusps as number[] | undefined;
   const rc = (right.result as any).houses?.cusps as number[] | undefined;
   if (Array.isArray(lc) && Array.isArray(rc) && lc.length === rc.length) {
     for (let index = 0; index < lc.length; index += 1) {
       angle(`cusp-${index + 1}`, 'Houses', `House ${index + 1} cusp`, lc[index], rc[index]);
     }
+  } else if (Array.isArray(lc) !== Array.isArray(rc) || (lc?.length ?? 0) !== (rc?.length ?? 0)) {
+    text('cusps-shape', 'Houses', 'House cusps present', lc?.length ?? '—', rc?.length ?? '—');
   }
 
   return rows;
@@ -199,67 +254,105 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
 } {
   const explanations: Explanation[] = [];
   const limits: string[] = [];
-  const has = (id: string) => differences.some((row) => row.id === id);
+  const has = (id: string) => differences.some((row) => row.id === id && row.kind !== 'display');
   const idsIn = (area: string) => differences.filter((row) => row.area === area && row.kind === 'numeric').map((row) => row.id);
-  const computed = [...idsIn('Positions'), ...idsIn('Angles'), ...idsIn('Houses')];
+  const computed = [...idsIn('Positions'), ...idsIn('Angles'), ...idsIn('Houses'), ...idsIn('Aspects')];
+
+  /**
+   * Everything a cause upstream of the calculation can move, of any kind: a
+   * different moment changes signs and which aspects exist, not only numbers.
+   * Rows recording that a whole section is missing are excluded — those follow
+   * from an absent birth time, which has its own explanation.
+   */
+  const ABSENCE_ROWS = new Set(['angles-presence', 'houses-absence', 'cusps-shape']);
+  const downstream = (areas: readonly string[]) => differences
+    .filter((row) => areas.includes(row.area) && row.kind !== 'display' && !ABSENCE_ROWS.has(row.id))
+    .map((row) => row.id);
 
   const leftEngine = engineVersionOf(left);
   const rightEngine = engineVersionOf(right);
   const available = options.engineVersion ?? null;
   const replay = options.replay ?? null;
-  const sameEngine = leftEngine !== null && leftEngine === rightEngine;
-  const canReplayLeft = Boolean(replay) && available !== null && leftEngine === available;
+  const leftPrecedence = enginePrecedence(leftEngine);
+  const sameEngine = leftPrecedence !== null && leftPrecedence === enginePrecedence(rightEngine);
+  const canReplayLeft = Boolean(replay) && Boolean(available)
+    && leftPrecedence !== null && leftPrecedence === enginePrecedence(available);
+  const engineDiffers = leftPrecedence !== enginePrecedence(rightEngine);
 
   if (has('source-instant') && !has('instant')) {
     explanations.push({
       id: 'equivalent-instants', evidence: 'reported',
-      statement: 'The same moment was written two different ways.',
-      covers: ['source-instant'],
+      statement: computed.length === 0
+        ? 'These differ only in how the instant is written. Every computed value agrees.'
+        : 'The same moment was written two different ways.',
+      covers: ['source-instant', 'zone', 'reference'].filter(has),
       detail: 'Both files resolve to the same UTC instant, so nothing downstream can differ because of this.',
     });
   }
 
   // House system: a metadata difference that can be promoted to a demonstrated
   // cause by recalculating one side with the other's system and nothing else.
-  if (has('houses-requested') || has('houses-actual')) {
+  if (has('houses-requested') || has('houses-actual') || has('houses-system')) {
     const requested = (right.receipt as any).houses?.requested;
     const input = replayInputOf(left);
+    // Only the rows that actually moved are up for explanation. A pair whose
+    // angles and cusps are identical — two polar charts that both fell back to
+    // whole sign, say — has nothing here for a house system to account for, and
+    // a replay that "matches" values that never moved demonstrates nothing.
+    const movedAngles = idsIn('Angles').filter((id) => id.startsWith('angle-'));
+    const movedCusps = idsIn('Houses').filter((id) => id.startsWith('cusp-'));
     let promoted = false;
-    if (canReplayLeft && input && typeof requested === 'string' && computed.length > 0) {
+    if (canReplayLeft && input && typeof requested === 'string' && movedAngles.length + movedCusps.length > 0) {
       const replayed = replay!({ ...input, houseSystem: requested });
       const targetAngles = (right.result as any).angles as Record<string, number> | null;
       const targetCusps = (right.result as any).houses?.cusps as number[] | undefined;
       if (replayed) {
-        // Compare whatever actually moved. Between Placidus and whole sign the
-        // angles are unchanged and every cusp shifts, so checking the angles
-        // alone would "demonstrate" the cause without testing anything.
-        const anglesMatch = !targetAngles || !replayed.angles
-          || Object.keys(targetAngles).every((key) => compareAngles(replayed.angles![key], targetAngles[key]) !== 'different');
-        const cuspsMatch = !Array.isArray(targetCusps) || !Array.isArray(replayed.cusps)
-          || (replayed.cusps.length === targetCusps.length
-            && targetCusps.every((value, index) => compareAngles(replayed.cusps![index], value) !== 'different'));
-        const compared = Boolean(replayed.angles && targetAngles) || Boolean(Array.isArray(replayed.cusps) && Array.isArray(targetCusps));
-        if (compared && anglesMatch && cuspsMatch) {
+        // Every moved row must be reproduced, and the replay must have returned
+        // the values that moved: a null cusp list cannot demonstrate a cusp
+        // difference, and matching untouched angles is not evidence.
+        const anglesReproduced = movedAngles.length === 0 || Boolean(
+          replayed.angles && targetAngles
+          && movedAngles.every((id) => {
+            const key = id.slice('angle-'.length);
+            return compareAngles(replayed.angles![key], targetAngles[key]) !== 'different';
+          }),
+        );
+        const cuspsReproduced = movedCusps.length === 0 || Boolean(
+          Array.isArray(replayed.cusps) && Array.isArray(targetCusps)
+          && replayed.cusps.length === targetCusps.length
+          && movedCusps.every((id) => {
+            const index = Number(id.slice('cusp-'.length)) - 1;
+            return compareAngles(replayed.cusps![index], targetCusps[index]) !== 'different';
+          }),
+        );
+        if (anglesReproduced && cuspsReproduced) {
           promoted = true;
+          const moved = movedCusps.length > 0 && movedAngles.length > 0 ? 'angles and cusps'
+            : movedCusps.length > 0 ? 'house cusps' : 'angles';
           explanations.push({
             id: 'house-system', evidence: 'reproduced',
-            statement: 'The different house system accounts for the angles and cusps.',
-            covers: [...idsIn('Angles'), ...idsIn('Houses'), 'houses-requested', 'houses-actual'].filter((id) => has(id) || id.startsWith('angle') || id.startsWith('cusp')),
-            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's angles on engine ${available}.`,
+            statement: `The different house system accounts for the ${moved}.`,
+            covers: [...movedAngles, ...movedCusps,
+              ...['houses-requested', 'houses-actual', 'houses-system'].filter(has)],
+            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's ${moved} on engine ${available}.`,
           });
         }
       }
     }
     if (!promoted) {
+      const unexplainedAngles = movedAngles.length + movedCusps.length > 0;
       explanations.push({
-        id: 'house-system', evidence: computed.length > 0 ? 'hypothesis' : 'reported',
+        id: 'house-system', evidence: unexplainedAngles ? 'hypothesis' : 'reported',
         statement: has('houses-actual') && !has('houses-requested')
           ? 'The same house system was requested, but a different one was actually used.'
           : 'The two charts asked for different house systems.',
-        covers: ['houses-requested', 'houses-actual', 'houses-absence'].filter(has),
-        detail: computed.length > 0
+        covers: [
+          ...['houses-requested', 'houses-actual', 'houses-system', 'houses-absence'].filter(has),
+          ...(unexplainedAngles ? [...movedAngles, ...movedCusps] : []),
+        ],
+        detail: unexplainedAngles
           ? 'This is the obvious candidate for the angle and cusp differences, but it was not reproduced here, so it stays a hypothesis.'
-          : null,
+          : 'The angles and cusps are the same in both files, so this difference changed nothing that was computed.',
       });
     }
   }
@@ -268,7 +361,10 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     explanations.push({
       id: 'instant', evidence: 'hypothesis',
       statement: 'The two charts are for different moments, which moves every position.',
-      covers: ['instant', ...computed],
+      covers: [
+        ...['instant', 'source-instant', 'reference', 'zone'].filter(has),
+        ...downstream(['Positions', 'Angles', 'Houses', 'Aspects']),
+      ],
       detail: 'Positions change continuously with time, so a different instant is expected to change all of them.',
     });
   }
@@ -277,7 +373,7 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     explanations.push({
       id: 'location', evidence: 'hypothesis',
       statement: 'The two charts are for different places, which moves the angles and houses.',
-      covers: ['latitude', 'longitude', ...idsIn('Angles'), ...idsIn('Houses')].filter((id) => has(id)),
+      covers: [...['latitude', 'longitude'].filter(has), ...downstream(['Angles', 'Houses'])],
       detail: 'Body longitudes are geocentric and barely move with location; the angles and house cusps depend on it directly.',
     });
   }
@@ -301,9 +397,36 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     });
   }
 
+  if (has('engine-version') && !engineDiffers) {
+    explanations.push({
+      id: 'engine-build', evidence: 'reported',
+      statement: 'The two files name the same engine version with different build metadata.',
+      covers: ['engine-version'],
+      detail: 'Build metadata does not change which version a receipt was produced by.',
+    });
+  }
+
+  if (has('result-flags') || has('input-flags')) {
+    explanations.push({
+      id: 'flags', evidence: 'reported',
+      statement: 'The two files record different flags about how the calculation went.',
+      covers: ['result-flags', 'input-flags'].filter(has),
+      detail: 'A flag records something the engine had to do — a fallback, or a missing input — rather than a result.',
+    });
+  }
+
+  if (has('schema')) {
+    explanations.push({
+      id: 'schema', evidence: 'reported',
+      statement: 'The two files use different receipt schemas.',
+      covers: ['schema'],
+      detail: 'A schema difference can change what a field means, so values across the two are not necessarily comparable.',
+    });
+  }
+
   // Engine difference with no input difference: candidate cause, but this tool
   // holds exactly one engine build and cannot rerun the other one.
-  if (has('engine-version') && computed.length > 0) {
+  if (has('engine-version') && engineDiffers && computed.length > 0) {
     explanations.push({
       id: 'engine', evidence: 'hypothesis',
       statement: 'The two charts were produced by different engine versions.',
@@ -314,16 +437,36 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
       + `This page has ${available ?? 'no engine'} only, so no recalculation can decide it.`);
   }
 
-  const inputDifference = ['instant', 'latitude', 'longitude', 'time-known', 'houses-requested', 'houses-actual'].some(has);
-  if (computed.length > 0 && !inputDifference && !has('engine-version') && conventionRows.length === 0) {
+  // Whatever no explanation above claimed is unresolved, and it is named. An
+  // unrelated difference — one house system, one latitude — must never absorb a
+  // position difference it cannot cause, which a "does any input differ?" test
+  // would let it do.
+  const covered = new Set(explanations.flatMap((item) => item.covers));
+  const uncovered = differences
+    .filter((row) => row.kind !== 'display' && !covered.has(row.id))
+    .map((row) => row.id);
+  if (uncovered.length > 0) {
+    const anyComputed = uncovered.some((id) => computed.includes(id));
     explanations.push({
       id: 'unexplained', evidence: 'unresolved',
-      statement: 'The computed values differ although every stated input, convention and engine version matches.',
-      covers: computed,
-      detail: 'Nothing in either file accounts for this. Treat both results as unverified until it is understood.',
+      statement: anyComputed
+        ? 'Some computed values differ and nothing in either file accounts for them.'
+        : 'Some differences are not accounted for by anything in either file.',
+      covers: uncovered,
+      detail: anyComputed
+        ? 'Treat those values as unverified until the difference is understood.'
+        : null,
     });
   }
 
+  if (has('instant') && (has('latitude') || has('longitude')) && computed.length > 0) {
+    limits.push('The moment and the place both differ, so what each one contributed cannot be '
+      + 'separated from these two files.');
+  }
+  if (computed.length > 0) {
+    limits.push('Only the house system is re-run here. A different moment or place is never '
+      + 'promoted past a hypothesis, even when both records name the same engine.');
+  }
   if (sameEngine && computed.length > 0) {
     limits.push('Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy.');
   }
@@ -332,14 +475,6 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
       ? 'No local engine was available, so nothing was reproduced by recalculation.'
       : `Local recalculation uses engine ${available}; the first receipt names ${leftEngine ?? 'no engine'}, so replaying it would be a different calculation, not the original.`);
   }
-  if (explanations.length === 0 && differences.length > 0) {
-    explanations.push({
-      id: 'no-candidate', evidence: 'unresolved',
-      statement: 'The files differ, but nothing in them suggests a cause.',
-      covers: differences.map((row) => row.id), detail: null,
-    });
-  }
-
   return { explanations, limits };
 }
 

@@ -7,12 +7,11 @@ import ChartCompare from './ChartCompare';
 const page = await readFile(new URL('../pages/developers/compare/index.astro', import.meta.url), 'utf8');
 const styles = await readFile(new URL('../styles/chart-compare.css', import.meta.url), 'utf8');
 const island = await readFile(new URL('./ChartCompare.tsx', import.meta.url), 'utf8');
+const markup = render(h(ChartCompare, {}));
 
 describe('the chart-difference tool before it hydrates', () => {
-  const markup = render(h(ChartCompare, {}));
-
   it('states the local-only promise in the server-rendered shell', () => {
-    expect(markup).toContain('nothing is uploaded, nothing is kept');
+    expect(markup).toContain('your records are never uploaded and never kept');
   });
 
   it('offers the file inputs without JavaScript having run', () => {
@@ -27,6 +26,11 @@ describe('the chart-difference tool before it hydrates', () => {
 
   it('warns that a full record carries birth details', () => {
     expect(markup).toContain('A full record contains birth details');
+  });
+
+  it('promises only what it controls: the records, not the whole page', () => {
+    expect(markup).toContain('your records are never uploaded and never kept');
+    expect(page).toContain('Your records never leave the device');
   });
 });
 
@@ -48,8 +52,42 @@ describe('the page around it', () => {
     expect(page).toContain('general third-party compatibility');
   });
 
-  it('says redaction is not anonymity', () => {
-    expect(page).toContain('safer to share — not anonymous');
+  it('says redaction is not anonymity, and that the deltas survive it', () => {
+    expect(page).toContain('not anonymous');
+    expect(page).toContain('keeps the exact difference');
+    // Every mention of the word is a denial of it, never a claim.
+    for (const match of page.matchAll(/(\S+\s+)?anonymous/gu)) {
+      expect(match[0]).toMatch(/\bnot\s+anonymous/u);
+    }
+  });
+
+  it('renders the presets without JavaScript, and without loading an engine to do it', () => {
+    // Reading four titles out of the fixtures module would pull the ephemeris
+    // onto a page that has not been asked for a comparison yet.
+    for (const title of ['The same calculation twice', 'Same birth details, different house system']) {
+      expect(markup).toContain(title);
+    }
+    expect(island).toContain("from '../lib/compare/presets'");
+    expect(island).not.toMatch(/import\('\.\.\/lib\/compare\/fixtures'\)[^)]*PRESETS\.map/su);
+  });
+
+  it('keeps the run control reachable while it is waiting for a second record', () => {
+    // A disabled button is out of the tab order, so a keyboard user never meets
+    // the one control that would tell them what is missing.
+    expect(island).toContain('aria-disabled={!bothChosen}');
+    expect(island).toContain('Choose both records to compare');
+    expect(island).not.toContain('disabled={!files.left || !files.right}');
+  });
+
+  it('invalidates a comparison in flight when a new file is chosen', () => {
+    // Otherwise a result the reader abandoned lands on top of the error the
+    // new file just produced.
+    expect(island).toMatch(/const onPick[\s\S]{0,400}run\.current \+= 1;/u);
+  });
+
+  it('exports the comparison on screen, not whatever files are loaded', () => {
+    expect(island).toContain('sides: status.sides');
+    expect(island).not.toMatch(/sides:\s*files\./u);
   });
 
   it('loads its own stylesheet instead of borrowing the calculator page classes', () => {

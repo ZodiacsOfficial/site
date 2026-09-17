@@ -17,7 +17,7 @@ const description = 'Load two calculation records and see what differs between t
         Two programs can calculate the same birth chart and disagree. Usually the reason is
         written down in the records themselves — a different house system, a different moment,
         a different convention — and reading it off is faster than arguing about it. This page
-        does that reading, and it says so when the answer is not in the files.
+        does that reading.
       </p>
     </div>
 
@@ -27,17 +27,20 @@ const description = 'Load two calculation records and see what differs between t
     <div class="prose">
       <p>
         Differences come first, because they are facts: both files are read, and every value
-        that disagrees is listed. Longitudes are compared around the circle, so 359° and 1° are
-        two degrees apart rather than 358, and a difference smaller than the six decimal places
-        these records display is called rounding rather than a different calculation.
+        that disagrees is listed — inputs, conventions, angles, house cusps, every field of
+        every body, and the aspect list. Longitudes are compared around the circle, so 359° and
+        1° are two degrees apart rather than 358. Two numbers that print the same at the six
+        decimals these records carry are called a rounding difference rather than a different
+        calculation; the test is what they print, not a tolerance, because rounding is a step
+        and no tolerance sits exactly on it.
       </p>
       <p>Explanations are then labelled by the evidence behind them:</p>
       <ul>
         <li><strong>Reproduced</strong> — recalculated on this device, changing one setting and
           leaving everything else alone, and the result matched.</li>
         <li><strong>Reported</strong> — stated by the files themselves, with nothing to compute.</li>
-        <li><strong>Hypothesis</strong> — fits, and is not demonstrated. Several can fit at once,
-          and when they do you are told so instead of handed a winner.</li>
+        <li><strong>Hypothesis</strong> — fits the evidence, not demonstrated. Several
+          hypotheses can fit one difference, and all of them are listed.</li>
         <li><strong>Unresolved</strong> — nothing in either file accounts for it.</li>
       </ul>
       <p>
@@ -48,9 +51,16 @@ const description = 'Load two calculation records and see what differs between t
         about itself, not proof that it is genuine.
       </p>
       <p>
-        Both sides of a comparison usually come from the same engine. Agreement between them
-        shows the two runs are consistent; it is not an independent check of astronomical
-        accuracy, and the page says so rather than letting a match imply more than it does.
+        Reproduced is withheld unless the recalculation demonstrated the values that actually
+        moved. Two polar charts that both fell back to whole sign have the same cusps however
+        they were requested, and matching values neither file disputes demonstrates nothing.
+        Only the house system is re-run: a different moment or place stays a hypothesis. Rows
+        left over once each candidate is matched to what it can account for are listed as
+        unresolved, by name.
+      </p>
+      <p>
+        Both sides of a comparison usually come from the same engine. Agreement between two runs
+        of one engine is consistency, not an independent check of astronomical accuracy.
       </p>
     </div>
 
@@ -69,10 +79,12 @@ const description = 'Load two calculation records and see what differs between t
         general third-party compatibility here.
       </p>
       <p>
-        Nothing leaves the device. The files are read in the browser, compared in memory and
-        dropped when you clear them or close the page. No account, no upload, no birth details
-        in the address bar, and nothing written to storage. The optional summary download leaves
-        out dates, coordinates and positions, which makes it safer to share — not anonymous.
+        Your records never leave the device. The files are read in the browser, compared in
+        memory and dropped when you clear them or close the page. No account, no upload, no
+        birth details in the address bar, and nothing written to storage. The optional summary
+        download leaves out dates, coordinates and positions but keeps the exact difference
+        between them, so anyone holding one of the two charts can recover the other: safer to
+        share than a full record, not anonymous.
       </p>
     </div>
   </section>
