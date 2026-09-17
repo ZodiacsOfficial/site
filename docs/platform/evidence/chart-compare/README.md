@@ -126,6 +126,13 @@ made, and each now has a regression test that fails on `fef5f9bf`:
 | the export read the loaded files, not the result | a preset's summary silently carried redacted metadata about the user's own records |
 | a file chosen mid-comparison did not cancel it | an error message was replaced by the abandoned comparison's result |
 
+The epsilon defect is not a corner case. Two ordinary calculations ten
+milliseconds apart — the realistic shape of "two programs disagree slightly" —
+carry both misclassifications at once: Mars moves 8e-8° and prints differently
+while the Sun moves further and prints the same, so no threshold on distance
+could separate the two sets. The regression test for it uses exactly that pair,
+with nothing edited.
+
 Also fixed from the same reviews: the rounding-only verdict read "These differ
 in 0 places"; the engine was pulled onto the page at load (73 KB) to read four
 preset titles, so the presets are plain data now and the page renders its

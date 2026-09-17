@@ -237,6 +237,42 @@ describe('regressions an adversarial review found', () => {
     expect(compareEnvelopes(left, accept(shuffled), live).identical).toBe(true);
   });
 
+  it('classifies two real charts a millisecond apart by what they print, not by how far apart they are', () => {
+    // Nothing is edited here: two ordinary calculations at instants a few
+    // milliseconds apart, which is the realistic shape of "two programs
+    // disagree slightly". One millisecond moves every body by less than the
+    // sixth decimal, so every row prints the same and every row is rounding.
+    const base = buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.000Z' });
+    const oneMs = compareEnvelopes(base, buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.001Z' }), live);
+    const oneMsRows = oneMs.differences.filter((row) => row.id.endsWith('-lon'));
+    expect(oneMsRows.length).toBeGreaterThan(0);
+    for (const row of oneMsRows) {
+      expect(row.kind, `${row.id} ${row.left} vs ${row.right}`).toBe('display');
+      expect(row.left).toBe(row.right);
+    }
+    // The instants themselves differ, and that is what accounts for the angles,
+    // which do move a visible amount in a millisecond. Nothing is unresolved.
+    expect(evidenceFor(oneMs, 'instant')).toBe('hypothesis');
+    expect(evidenceFor(oneMs, 'unexplained')).toBeNull();
+
+    // Ten milliseconds moves the faster bodies across a rounding boundary while
+    // the slower ones stay put, so one comparison carries both kinds at once —
+    // and the distance between the two is not what separates them. Mars moves
+    // 8e-8 and prints differently; the Sun moves further and prints the same.
+    const tenMs = compareEnvelopes(base, buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.010Z' }), live);
+    const moved = tenMs.differences.filter((row) => row.id.endsWith('-lon') && row.kind === 'numeric');
+    const still = tenMs.differences.filter((row) => row.id.endsWith('-lon') && row.kind === 'display');
+    expect(moved.length).toBeGreaterThan(0);
+    expect(still.length).toBeGreaterThan(0);
+    for (const row of moved) expect(row.left, row.id).not.toBe(row.right);
+    for (const row of still) expect(row.left, row.id).toBe(row.right);
+    // The smallest real difference is smaller than the largest rounding one:
+    // no threshold on distance could have separated these two sets.
+    const smallestMoved = Math.min(...moved.map((row) => Math.abs(row.delta!)));
+    const largestStill = Math.max(...still.map((row) => Math.abs(row.delta!)));
+    expect(smallestMoved).toBeLessThan(largestStill);
+  });
+
   it('calls two values that print the same a rounding difference, not a different calculation', () => {
     const base = buildEnvelope(ORDINARY);
     const comparison = compareEnvelopes(
