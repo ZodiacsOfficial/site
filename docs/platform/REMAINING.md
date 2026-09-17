@@ -105,12 +105,18 @@ resolves.
   public entry points). It is **not published**: `@zodiacs/engine` returns 404
   from the public registry and this environment holds no npm credentials.
   See [the engine release record](evidence/engine-release/README.md).
-- [x] **B — Developer onboarding and existing public data.** Audited against
+- [ ] **B — Developer onboarding and existing public data.** Audited against
   each named requirement on 2026-09-17; most of it was already built, two gates
-  were missing and are now closed.
-  - *Ordinary successful chart first, advanced verification after* — met.
-    `/developers/examples/` runs "Start with a working result" → set up once →
-    calculate a natal chart locally → transit snapshot → embed a widget.
+  were missing and are now closed, and one requirement was marked met in error
+  and is still open.
+  - *Ordinary successful chart first, advanced verification after* — **not met;
+    previously marked met in error.** The heading reads "Start with a working
+    result", but the first example's actual inputs are December 21 2001 at
+    78.2232°N, 15.6267°E requesting Placidus and succeeding through
+    `polar-fallback` — an edge-case demonstration, inside the starter artifact
+    itself (`src/natal.html` and `tests/calculate.check.mjs` in
+    `zodiacs-platform-starter-0.1.0-rc.3`). The claim was made from the heading
+    without reading the inputs. Tracked separately below.
   - *A working demonstration on the real engine, and documented setup verified
     from a clean environment* — met by the platform starter and
     `scripts/verify-platform-starter.mjs`, which installs it in a fresh
@@ -131,12 +137,18 @@ resolves.
   - *Embed path keyboard-operable* — **was unverified.** The widget drive now
     tabs to the attribution link on every route and requires a painted focus
     indicator.
-  - Recommendation, not changed: the `/developers/` quick start leads with a
-    fully hardened fetch snippet and puts the plain
-    `curl https://zodiacs.org/api/v1/sky/today.json` third. Inverting those
-    would match the same "simplest thing that works first" ordering the
-    examples page already uses. That is an editorial call for the owner, not a
-    defect.
+  - *Quick-start ordering* — done. The `/developers/` quick start now leads with
+    the one-line `curl`, states the freshness limitation next to it, and keeps
+    the hardened fetch example immediately below.
+- [ ] **B1 — Ordinary first chart in the developer starter.** The starter's
+  `src/natal.html` ships Svalbard defaults (78.2232°N, 15.6267°E, 2001-12-21,
+  Placidus) that resolve through `polar-fallback`, and its `calculate.check.mjs`
+  and `receipt.check.mjs` use the same case as their primary fixture. Replace the
+  default with an ordinary non-polar chart inside the documented support scope,
+  keep the polar case as a named advanced example, and keep the docs page, the
+  starter defaults, the stated expected output and the clean-consumer tests
+  consistent. The archive is immutable and published, so this produces a new
+  `rc.4` artifact and manifest; `rc.2` and `rc.3` stay untouched.
 
 - [ ] **C — Narrow hosted beta** (alias L5). Natal-chart and transit-snapshot
   operations only, on the shared validated engine, behind explicit schemas,

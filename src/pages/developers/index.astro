@@ -109,14 +109,20 @@ const jsonLd = [{
     </div>
 
     <h2 class="dev-h2">Quick start</h2>
+    <p class="dev-note">One request returns today's sky. No key, no account:</p>
+    <pre class="dev-code" tabindex="0" role="region" aria-label="Terminal quick start"><code>curl --fail --silent --show-error https://zodiacs.org/api/v1/sky/today.json</code></pre>
+    <p class="dev-note">
+      The payload opens with a <code>summary</code> you can read straight out,
+      and names the edition it was computed for in <code>date</code> and{' '}
+      <code>snapshotAt</code>. Editions change daily and delivery can be delayed,
+      so read those fields rather than assuming the file you hold is current.
+      Before noon, a snapshot describes positions computed for later that day.
+    </p>
+    <p class="dev-note">In JavaScript, with the checks worth keeping in production:</p>
     <pre class="dev-code" tabindex="0" role="region" aria-label="JavaScript quick start"><code>{skyQuickStart}</code></pre>
     <p class="dev-note">
-      This example checks the payload kind, fields used here, and current UTC
-      edition before displaying its computed snapshot. Keep the snapshot time visible; before
-      noon, it describes positions computed for later that day.
-    </p>
-    <p class="dev-note">
-      Or from a terminal: <code>curl --fail --silent --show-error https://zodiacs.org/api/v1/sky/today.json</code>
+      This one checks the payload kind, the fields it uses, and the current UTC
+      edition before displaying the computed snapshot.
     </p>
 
     <h2 class="dev-h2">Built for AI agents</h2>
