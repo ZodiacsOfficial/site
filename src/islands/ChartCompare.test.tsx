@@ -28,6 +28,12 @@ describe('the chart-difference tool before it hydrates', () => {
     expect(markup).toContain('A full record contains birth details');
   });
 
+  it('opts out of the site-wide analytics scripts, like the other private surfaces', () => {
+    // Found by driving production, where the scripts are enabled; a local
+    // preview has them off, so no local drive could have caught it.
+    expect(page).toContain('privateSurface');
+  });
+
   it('promises only what it controls: the records, not the whole page', () => {
     expect(markup).toContain('your records are never uploaded and never kept');
     expect(page).toContain('Your records never leave the device');

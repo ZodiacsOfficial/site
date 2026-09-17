@@ -8,7 +8,14 @@ const title = 'Compare Two Chart Calculations | Zodiacs.org';
 const description = 'Load two calculation records and see what differs between them, and how much of it can be explained. Runs in your browser; nothing is uploaded.';
 ---
 
-<Base title={title} description={description} path="/developers/compare/" clientUi>
+<!--
+  privateSurface: this page reads whole birth records out of imported files, so
+  it opts out of the site-wide analytics scripts the way /profile/ and /ask/ do.
+  Neither script ever saw chart data — they are page-level measurement — but a
+  page whose whole claim is that your records never leave the device should not
+  be the one page in that category still calling a third-party origin.
+-->
+<Base title={title} description={description} path="/developers/compare/" clientUi privateSurface>
   <section class="section container container--narrow">
     <em class="kicker">Developer tools</em>
     <h1 class="display">Why do these two charts differ?</h1>
