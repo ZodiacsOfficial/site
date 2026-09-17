@@ -47,10 +47,17 @@ the local build that the browser drives ran against.
 
 Remove the variable (or set it to anything other than `1`) and redeploy. What a
 visitor gets afterwards, and why the flag cannot gate cleanup, is in
-[ROLLBACK](ROLLBACK.md). The pre-activation production deployment is
-`dpl_Fj7nBapUmw4vshEy8HycqKRXNQRy` (main `7fd42661`), and it is a rollback
-candidate in the project's deployment list, so the served artifact can be put
-back without touching the repository.
+[ROLLBACK](ROLLBACK.md).
+
+**Do not reach for the pre-activation deployment once the flag has been on.**
+`dpl_Fj7nBapUmw4vshEy8HycqKRXNQRy` (main `7fd42661`) predates #490, so it has no
+retained-data path at all: records already on a device would become unreachable,
+and destructive account actions there report success without removing them. The
+correct target is `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` (main `52ae6eeb`, flag
+unset) or any later build — `52ae6eeb` is the version floor, and
+[ROLLBACK §3](ROLLBACK.md) gives the incident procedure. Before the flag has ever
+been `1` in production no records can exist, and the older deployment is an
+ordinary rollback target.
 
 ## The blocker, exactly
 

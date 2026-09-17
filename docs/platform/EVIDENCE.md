@@ -22,8 +22,12 @@ and [the product review](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)
 `0f5b76f3`, through the existing protected workflow with nothing bypassed,
 skipped or loosened. Superseded draft #486 was closed unmerged after verifying
 its tip is an ancestor of the merge. Production `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS`
-is READY from the merge commit; the rollback baseline recorded beforehand is
-`dpl_Fj7nBapUmw4vshEy8HycqKRXNQRy` (main `7fd42661`).
+is READY from the merge commit. `dpl_Fj7nBapUmw4vshEy8HycqKRXNQRy` (main
+`7fd42661`) was recorded beforehand as the pre-merge baseline, and is a valid
+rollback target only while the flag has never been `1` in production: it predates
+the retained-data path, so once records exist it would strand them. `52ae6eeb` is
+the version floor, and the incident procedure is in
+[ROLLBACK §3](evidence/l3-saved-records/ROLLBACK.md).
 
 Live verification, not inferred from the merge: `/profile/` in en, es and ru and
 `/birth-chart/` return 200 with no records surfaces, and the deployed
