@@ -1,0 +1,66 @@
+{
+  "note": "Chromium against https://zodiacs.org, after the deploy carrying the privateSurface opt-out (957dfd68). The sandbox re-terminates TLS at its egress proxy, so the drive pins that one CA by its public-key hash rather than disabling certificate verification.",
+  "origin": "https://zodiacs.org/developers/compare/",
+  "checks": [
+    {
+      "id": "live.loads",
+      "v": "PASS",
+      "d": "Compare Two Chart Calculations | Zodiacs.org"
+    },
+    {
+      "id": "live.presets",
+      "v": "PASS",
+      "d": "4 preset buttons server-rendered, no JavaScript needed"
+    },
+    {
+      "id": "live.house-system.reproduced",
+      "v": "PASS",
+      "d": "15 values differ: houses. | The different house system accounts for the house cusps."
+    },
+    {
+      "id": "live.ambiguous.abstains",
+      "v": "PASS",
+      "d": "evidence=hypothesis,hypothesis — nothing reproduced"
+    },
+    {
+      "id": "live.ambiguous.states-the-confound",
+      "v": "PASS",
+      "d": "The moment and the place both differ, so what each one contributed cannot be separated from these two files."
+    },
+    {
+      "id": "live.identical",
+      "v": "PASS",
+      "d": "These two records describe the same calculation."
+    },
+    {
+      "id": "live.no-offsite-requests",
+      "v": "PASS",
+      "d": "none, after the privateSurface opt-out"
+    },
+    {
+      "id": "live.no-uploads",
+      "v": "PASS",
+      "d": "no non-GET request of any kind"
+    },
+    {
+      "id": "live.no-persistence",
+      "v": "PASS",
+      "d": "localStorage, sessionStorage and cookies all empty"
+    },
+    {
+      "id": "live.url-clean",
+      "v": "PASS",
+      "d": "https://zodiacs.org/developers/compare/ — no query, no hash"
+    },
+    {
+      "id": "live.console-clean",
+      "v": "PASS",
+      "d": "no errors"
+    },
+    {
+      "id": "live.hub-link",
+      "v": "PASS",
+      "d": "1 link from /developers/"
+    }
+  ]
+}
