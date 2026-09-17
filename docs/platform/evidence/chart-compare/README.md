@@ -142,5 +142,16 @@ unreachable by keyboard while inert; a bundler's chunk-load exception was shown
 to the reader verbatim; and six sentences narrating the tool's own scrupulousness
 were cut for the voice rules.
 
-`browser-drive.json` in this directory is the drive's own output: 32 checks, all
+`browser-drive.json` in this directory is the drive's own output: 33 checks, all
 passing, at 1280×900 and at 390×844 / 360×740 with touch.
+
+## One thing that costs more than it should
+
+The island reads none of the site's shared locale catalog — its copy is entirely
+its own — but the site-wide rule is that every page carrying an island installs
+exactly one catalog, so this page installs ~22KB of inline payload it never
+reads. The rule lives in `src/lib/i18n`, which is under the Phase 1
+protected-scope freeze. An exemption derived from the page's own chunk graph was
+written and proved, then reverted: editing a frozen path to install a better
+test is not a call to make from inside the change that benefits from it. Worth
+revisiting whenever that freeze is lifted.

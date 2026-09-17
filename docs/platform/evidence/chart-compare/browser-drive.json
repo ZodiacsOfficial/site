@@ -137,7 +137,12 @@
   {
     "id": "reset.clears-everything",
     "v": "PASS",
-    "d": "result=false names=[\"No file chosen\",\"No file chosen\"]"
+    "d": "result=false names=[]"
+  },
+  {
+    "id": "run-control.reachable-and-explains-itself",
+    "v": "PASS",
+    "d": "\"Choose both records to compare\" focusable=true"
   },
   {
     "id": "mobile.390x844.no-h-scroll",
