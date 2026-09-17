@@ -185,6 +185,53 @@ function close(server) {
   return new Promise((resolveClose) => server.close(resolveClose));
 }
 
+/**
+ * Someone embedding a widget inherits its keyboard behaviour on their own page,
+ * so the one control every embed carries — the backlink that attributes it —
+ * has to be reachable by Tab and has to show where the focus went. Chromium
+ * paints `outline: auto` as a contrasting ring, so what this catches is the
+ * regression that actually happens: a stylesheet suppressing the indicator.
+ */
+export async function verifyEmbedKeyboard({ browser, baseURL, routes }) {
+  const page = await browser.newPage({ viewport: { width: 420, height: 360 } });
+  try {
+    for (const route of routes) {
+      await page.goto(`${baseURL}/embed/${route}/`, { waitUntil: 'networkidle' });
+      // The chart embed is a form, so its first stop is a field, not the
+      // backlink; what matters is that tabbing reaches the link at all.
+      let reached = null;
+      const visited = [];
+      for (let stop = 0; stop < 12 && !reached; stop += 1) {
+        await page.keyboard.press('Tab');
+        const focused = await page.evaluate(() => {
+          const element = document.activeElement;
+          if (!element || element === document.body) return null;
+          const style = getComputedStyle(element);
+          return {
+            tag: element.tagName,
+            text: (element.textContent ?? '').trim(),
+            outlined: style.outlineStyle !== 'none' && Number.parseFloat(style.outlineWidth) > 0,
+            shadowed: style.boxShadow !== 'none',
+          };
+        });
+        if (!focused) break;
+        visited.push(`${focused.tag}:${focused.text.slice(0, 20)}`);
+        if (/Powered by Zodiacs\.org/u.test(focused.text)) reached = focused;
+      }
+      if (visited.length === 0) throw new Error(`/embed/${route}/ has nothing reachable by keyboard`);
+      if (!reached) {
+        throw new Error(`/embed/${route}/ never reaches its attribution link by keyboard; stops: ${visited.join(', ')}`);
+      }
+      if (!reached.outlined && !reached.shadowed) {
+        throw new Error(`/embed/${route}/ focuses its attribution link without showing a focus indicator`);
+      }
+    }
+    console.log(`widgets-drive: ${routes.length} embed routes are keyboard reachable with a visible focus indicator`);
+  } finally {
+    await page.close();
+  }
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) await withPreview({ port: Number(process.env.WIDGET_PREVIEW_PORT ?? 4331) }, async (baseURL) => {
   const host = createServer((_request, response) => {
     response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
@@ -241,6 +288,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     const forbidden = requests.filter((url) => /plausible|analytics|session[-_]?record|fingerprint|\/api\//i.test(url));
     if (forbidden.length > 0) throw new Error(`embed made forbidden requests:\n${forbidden.join('\n')}`);
     console.log('widgets-drive: foreign-origin iframe, script mount, branding, icons, and private chart all pass');
+    await verifyEmbedKeyboard({ browser, baseURL, routes: ['sky', 'sky/light', 'moon', 'chart'] });
     await verifyWidgetBuilder({ browser, baseURL, outDir: process.env.OUT_DIR ?? 'tests/visual/artifacts/widgets' });
   } finally {
     await browser.close();
