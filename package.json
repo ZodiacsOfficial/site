@@ -26,6 +26,10 @@
     "legacy:registry-token-chart": "node scripts/build-registry-token-chart.mjs",
     "registry:hub:build": "node scripts/build-registry-hub.mjs",
     "registry:hub:check": "node scripts/build-registry-hub.mjs --check",
+    "mcp:build": "node scripts/build-mcp-server.mjs",
+    "mcp:build:check": "node scripts/build-mcp-server.mjs --check",
+    "mcp:pack": "node scripts/pack-mcp-server.mjs",
+    "mcp:pack:check": "node scripts/pack-mcp-server.mjs --check",
     "legacy:shelf": "node scripts/build-shelf.mjs",
     "legacy:trade": "node scripts/build-trade.mjs",
     "legacy:og": "node scripts/build-og-cards.mjs",
@@ -68,6 +72,9 @@
     "test:visual:update": "node tests/visual/visual-regression.mjs --update",
     "test:lighthouse": "node tests/visual/lighthouse.mjs",
     "test:webmcp": "node tests/webmcp-drive.mjs",
+    "test:mcp:protocol": "node tests/mcp-protocol-drive.mjs",
+    "test:mcp:host": "node tests/mcp-host-drive.mjs",
+    "test:mcp:benchmark": "node tests/mcp-benchmark.mjs",
     "test:home-hero:browser": "node tests/hero-video-drive.mjs",
     "test:home-demo:browser": "node tests/home-demo-drive.mjs",
     "test:thesis:browser": "node tests/thesis-qa-drive.mjs",
@@ -152,6 +159,8 @@
     "@fontsource-variable/jetbrains-mono": "^5.2.0",
     "@fontsource/eb-garamond": "^5.2.7",
     "@mcp-b/webmcp-polyfill": "4.0.0",
+    "@modelcontextprotocol/client": "2.0.0",
+    "@modelcontextprotocol/server": "2.0.0",
     "@types/node": "^22.20.0",
     "@zodiacs/sdk": "1.0.1",
     "ajv": "^8.20.0",
@@ -167,6 +176,7 @@
     "typescript": "^5.8.0",
     "vite-node": "^3.2.4",
     "vitest": "^3.2.0",
-    "web-push": "^3.6.7"
+    "web-push": "^3.6.7",
+    "zod": "^4.6.5"
   }
 }

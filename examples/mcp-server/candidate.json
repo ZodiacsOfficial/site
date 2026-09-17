@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "package": "zodiacs-mcp-server",
+  "version": "0.1.0-rc.1",
+  "status": "Unpublished release candidate. Not on npm, under this or any other name. Install from the versioned archive at https://zodiacs.org/examples/, whose SHA-256 is published beside it.",
+  "sourceRepository": "https://github.com/ZodiacsOfficial/site",
+  "sourcePaths": [
+    "src/mcp/server.ts",
+    "src/mcp/tools.ts",
+    "src/mcp/bounds.ts",
+    "src/lib/compare/diff.ts",
+    "src/lib/compare/angles.ts",
+    "src/lib/compare/replay.ts",
+    "scripts/build-mcp-server.mjs"
+  ],
+  "bundled": {
+    "note": "Inlined into server.mjs by esbuild because neither is published: the engine is an unpublished candidate, and the comparison is TypeScript in the site repository. Bundling is what keeps one copy of the comparison rules rather than two.",
+    "engine": {
+      "package": "@zodiacs/engine",
+      "version": "0.1.1-rc.6",
+      "releaseStatus": "unpublished-candidate",
+      "sourceRepository": "https://github.com/ZodiacsOfficial/sdk",
+      "sourcePackagePath": "packages/engine",
+      "artifactSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e"
+    },
+    "ephemeris": { "name": "astronomy-engine", "version": "2.1.19" },
+    "comparison": {
+      "module": "src/lib/compare/diff.ts",
+      "note": "The same module the browser tool at https://zodiacs.org/developers/compare/ runs."
+    }
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "@modelcontextprotocol/core": "2.0.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.0.0"
+  },
+  "protocol": {
+    "transport": "stdio",
+    "sdkLatest": "2025-11-25",
+    "negotiatedInTesting": ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05", "2024-10-07"],
+    "note": "Revisions observed to negotiate against this server on the wire, one probe each. The official SDK client offers 2025-11-25."
+  },
+  "builtWith": {
+    "esbuild": "0.28.1",
+    "target": "node22",
+    "format": "esm",
+    "node": "v22.22.2"
+  },
+  "schemas": {
+    "record": "zodiacs.natal-envelope.draft-v1",
+    "receipt": "zodiacs.calculation-receipt.draft-v1",
+    "note": "Zodiacs-owned draft vocabulary, not an industry interoperability standard."
+  }
+}

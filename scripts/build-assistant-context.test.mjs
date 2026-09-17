@@ -62,12 +62,13 @@ describe('assistant site context', () => {
       // The void-of-course Moon calendar adds one more English tool and static page.
       // Developer support and runnable examples add two static pages.
       // The chart-difference tool at /developers/compare/ adds one more.
-      consumerRoutes: 693,
+      // The local MCP adapter's page at /developers/mcp/ adds one more again.
+      consumerRoutes: 694,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 54,
+      staticPages: 55,
       tools: 20,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');

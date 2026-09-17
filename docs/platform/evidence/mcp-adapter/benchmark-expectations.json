@@ -1,0 +1,359 @@
+{
+  "kind": "synthetic regression benchmark",
+  "whatItIs": "A fixed set of constructed record pairs with the classification each one should receive, written from the comparison's specification before the candidate was run against any of them.",
+  "whatItIsNot": "Not a measured accuracy rate. Every pair here is built by the same engine from synthetic inputs, so this measures whether the comparison classifies the cases its rules describe. It says nothing about how often the tool is right about a disagreement between two independently authored astrology engines, and nothing about real-world users, because no such corpus exists here.",
+  "inputs": "Synthetic throughout: round coordinates for well-known cities, and dates chosen for what they exercise. No real person's birth details.",
+  "evidenceRanking": [
+    "unresolved",
+    "hypothesis",
+    "reported",
+    "reproduced"
+  ],
+  "scenarios": [
+    {
+      "id": "identical",
+      "required": "identical records",
+      "purpose": "The same record twice must report nothing, and must not manufacture an explanation for nothing.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "expect": {
+        "identical": true,
+        "explanationCountEqual": 0,
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "house-system",
+      "required": "a real house-system difference",
+      "purpose": "Placidus against whole sign in an ordinary place: every cusp moves, no body and no angle moves, and the cause is demonstrable by recalculating one side.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "houses-requested",
+          "houses-actual",
+          "houses-system"
+        ],
+        "differenceIdsExclude": [
+          "body-Sun-lon",
+          "angle-asc",
+          "instant"
+        ],
+        "cuspRowsEqual": 12,
+        "strongestEvidence": "reproduced",
+        "explanationIdsInclude": [
+          "house-system"
+        ],
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "equivalent-instants",
+      "required": "equivalent instants with different offsets",
+      "purpose": "The same moment written 13:30Z and 19:00+05:30. Only how it was written differs; nothing computed may differ, and the cause is read off the files rather than guessed.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T19:00:00+05:30",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "expect": {
+        "identical": false,
+        "allDifferenceKindsIn": [
+          "metadata"
+        ],
+        "differenceIdsInclude": [
+          "source-instant"
+        ],
+        "differenceIdsExclude": [
+          "instant",
+          "body-Sun-lon",
+          "cusp-1"
+        ],
+        "strongestEvidence": "reported",
+        "explanationIdsInclude": [
+          "equivalent-instants"
+        ],
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "unknown-time",
+      "required": "unknown time",
+      "purpose": "A known birth time against an unknown one. The bodies are the same instant either way; the angles, the houses and the cusps are absent on one side, and an absent birth time accounts for all three.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus",
+        "timeKnown": false
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "time-known",
+          "houses-absence",
+          "angles-presence",
+          "cusps-shape"
+        ],
+        "differenceIdsExclude": [
+          "body-Sun-lon",
+          "instant"
+        ],
+        "strongestEvidence": "reported",
+        "explanationIdsInclude": [
+          "time-known"
+        ],
+        "unresolvedRowsEqual": 0,
+        "explanationStatementExcludes": {
+          "explanation": "house-system",
+          "pattern": "different one was actually used|asked for different house systems"
+        }
+      }
+    },
+    {
+      "id": "wraparound",
+      "required": "circular wraparound",
+      "purpose": "Two charts two days either side of the vernal equinox, with the Sun at 359.19 degrees and 1.18 degrees. Those are two degrees apart around the circle; a subtraction would call them 358 apart.",
+      "left": {
+        "utc": "2000-03-19T12:00:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "2000-03-21T12:00:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "instant",
+          "body-Sun-lon"
+        ],
+        "rowDeltaBelow": {
+          "id": "body-Sun-lon",
+          "magnitude": 5
+        },
+        "rowValuesStraddleZero": {
+          "id": "body-Sun-lon",
+          "low": 10,
+          "high": 350
+        },
+        "noEvidenceStrongerThan": "hypothesis",
+        "explanationIdsInclude": [
+          "instant"
+        ],
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "mixed-versions",
+      "required": "mixed versions",
+      "purpose": "A record claiming engine 99.0.0 against one from the pinned engine, with a real house-system difference between them. The obvious cause must stay a hypothesis: recalculating a 99.0.0 record on the pinned engine is a different calculation, not the original, and the limit must say so by naming both versions.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": {
+        "side": "left",
+        "engineVersion": "99.0.0"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "engine-version",
+          "houses-requested"
+        ],
+        "cuspRowsEqual": 12,
+        "noEvidenceStrongerThan": "hypothesis",
+        "limitsMatch": "99\\.0\\.0",
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "unrelated-simultaneous",
+      "required": "unrelated simultaneous differences",
+      "purpose": "A different house system and a different hour at once. The house system moves cusps and cannot move a body, so its explanation must claim no body row — the direction of over-claim that a does-any-input-differ test gets wrong.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T14:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "instant",
+          "houses-requested",
+          "body-Sun-lon"
+        ],
+        "explanationIdsInclude": [
+          "house-system",
+          "instant"
+        ],
+        "explanationExcludesPattern": {
+          "explanation": "house-system",
+          "pattern": "^(body-|angle-)"
+        },
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "insufficient-evidence",
+      "required": "insufficient evidence",
+      "purpose": "Two different places and two different moments at once. Several causes fit and none is demonstrable; the tool must offer them all and state that it cannot separate their contributions rather than picking one.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1985-01-20T04:15:00Z",
+        "latitude": -33.8688,
+        "longitude": 151.2093,
+        "houseSystem": "placidus"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "instant",
+          "latitude",
+          "longitude"
+        ],
+        "noEvidenceStrongerThan": "hypothesis",
+        "hypothesisCountAtLeast": 2,
+        "limitsMatch": "moment and the place both differ",
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "polar-fallback",
+      "required": "a requested house system that was not the one used",
+      "purpose": "Placidus and whole sign both requested at 78 degrees north, where Placidus falls back to whole. The requested systems differ and not one cusp moves, so nothing was reproduced and reproduced must not be claimed: matching values that never moved demonstrates nothing.",
+      "left": {
+        "utc": "1990-12-15T09:00:00Z",
+        "latitude": 78.2232,
+        "longitude": 15.6267,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-12-15T09:00:00Z",
+        "latitude": 78.2232,
+        "longitude": 15.6267,
+        "houseSystem": "whole"
+      },
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "houses-requested"
+        ],
+        "differenceIdsExclude": [
+          "houses-actual",
+          "houses-system",
+          "angle-asc"
+        ],
+        "cuspRowsEqual": 0,
+        "noEvidenceStrongerThan": "reported",
+        "explanationIdsInclude": [
+          "house-system"
+        ],
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "display-rounding",
+      "required": "a difference smaller than the printed precision",
+      "purpose": "Two calculations ten milliseconds apart. Some values move far enough to print differently at six decimals and some do not, and the smallest real difference is smaller than the largest rounding one — so no tolerance on distance could separate them, which is why the verdict is decided on what is printed.",
+      "left": {
+        "utc": "1990-06-15T13:30:00.000Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00.010Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "expect": {
+        "identical": false,
+        "differenceKindsInclude": [
+          "metadata",
+          "numeric",
+          "display"
+        ],
+        "smallestNumericDeltaBelowLargestDisplayDelta": true,
+        "unresolvedRowsEqual": 0
+      }
+    }
+  ],
+  "amendments": [
+    {
+      "date": "2026-09-17",
+      "scenario": "unrelated-simultaneous",
+      "after": "the candidate had already been run against the original plan",
+      "removed": "noEvidenceStrongerThan: \"hypothesis\"",
+      "added": "explanationExcludesPattern now guards ^(body-|angle-) instead of ^body-",
+      "why": "A bounded AI review found the comparison naming the house system as \"the obvious candidate for the angle differences\" in this exact pair. A house system cannot move an angle — the ascendant and midheaven come from the time and the place — so that was a hypothesis a recalculation refutes, and the original guard could not catch it because it forbade only body rows. Fixing it also removed the reason nothing here reached \"reproduced\": promotion had been blocked by requiring the replay to reproduce angles the house system never moved. With that gone the house-system cause is demonstrated for this pair, and an assertion that nothing may be demonstrated would be asserting the defect. Recorded rather than quietly edited: this is a post-hoc change to a pre-registered plan, and the strengthened guard is the assertion that actually matches the scenario purpose."
+    },
+    {
+      "date": "2026-09-17",
+      "scenario": "unknown-time",
+      "after": "the candidate had already been run against the original plan",
+      "added": "explanationStatementExcludes for the house-system cause",
+      "why": "The same review found this pair reported as \"The same house system was requested, but a different one was actually used\" when both sides requested placidus and one simply had no house table. The original expectations checked coverage and evidence rank but nothing about what a statement says, so a reader could be told the systems disagreed. The rows still need a claimant, so the fix corrected the sentence and kept the coverage, and this assertion pins it."
+    }
+  ]
+}

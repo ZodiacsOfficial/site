@@ -178,7 +178,31 @@ resolves.
   explanations measured, not just successes. Then a thin agent adapter over
   existing functions, verified against an actual supported client, with
   deterministic calculation never routed through a model.
-  **State: the diagnostic half is delivered**, the agent adapter is not.
+  **State: both halves are now delivered.** The agent adapter landed
+  2026-09-17: `zodiacs-mcp-server@0.1.0-rc.1`, a local stdio MCP server over
+  the real `natalChart`, the real envelope codec and the real
+  `compareEnvelopes` — no copied formula, validator or explanation rule, which
+  is why it lives in this repository rather than the SDK's. Three tools,
+  stdio only, no listener and no network. Verified in four separate records
+  because they are four separate claims: the official SDK client against the
+  real server process (70/70), the Claude Code CLI launching it and reporting
+  it connected (7/7), a model actually calling the tools through that host
+  (one run, verbatim), and a synthetic regression corpus of ten record pairs
+  whose expected classifications were committed before the candidate ran
+  (10/10 scenarios, 59/59 assertions). Deterministic calculation is never
+  routed through a model: the model supplies arguments and reads results, and
+  the numbers come from the engine.
+  Neither the adapter nor the engine is published; both report
+  `unpublished-candidate`. Claude Desktop could not be exercised — macOS and
+  Windows only — and that is stated rather than worked around. See
+  [what was built and what was established](evidence/mcp-adapter/README.md).
+
+  That corpus also earned its keep on the first run: writing the expectations
+  first found `cusps-shape` reported as explained by nothing when an absent
+  birth time was its stated cause, and then found that the coverage test which
+  should have caught it was unfalsifiable — it counted the unresolved bucket,
+  which claims every leftover row by construction. Both fixed, both verified by
+  mutation.
   `/developers/compare/` reads two `zodiacs.natal-envelope.draft-v1` receipts in
   the browser, lists every differing value before any prose, and labels each
   offered cause `reproduced`, `reported`, `hypothesis` or `unresolved`. Two
@@ -222,18 +246,32 @@ dependencies of this release.
   ([D-2026-09-16](DECISIONS.md)). AI review is recorded as AI review; no human,
   practitioner, attorney, customer or independent-auditor signoff is claimed.
 - [ ] **Engine npm publication:** authorized by the owner, blocked by the
-  environment — by **two independent blockers, either of which alone stops it**.
-  (1) No npm authentication here: `npm whoami` fails with `ENEEDAUTH`, there is
-  no `~/.npmrc`, and no `NPM_TOKEN` or `NODE_AUTH_TOKEN` in the environment.
-  (2) No write access to `ZodiacsOfficial/sdk`, where the engine's source lives;
-  attaching it for push was denied by the session's permission layer, so it can
-  be read but not written. There is also no publish workflow anywhere: nothing
-  in `.github/workflows/` references `npm publish`, a token, or `id-token`.
-  The scope itself is not a blocker — `@zodiacs/sdk@1.0.1` is published, so this
-  is a first publication into an established scope, not a new-scope bootstrap.
-  Preferred fix is an npm trusted-publishing (OIDC) workflow in
-  `ZodiacsOfficial/sdk`, storing no long-lived token anywhere; a maintainer
-  running `npm publish` on the prepared artifact also works. See
+  environment. Corrected 2026-09-17 — the earlier entry here named two blockers
+  and the wrong preferred fix.
+  **The blocker is npm authentication, and no workflow substitutes for it on a
+  first publication.** `npm whoami` fails with `ENEEDAUTH`, there is no
+  `~/.npmrc`, and no `NPM_TOKEN` or `NODE_AUTH_TOKEN` in the environment. This
+  entry previously called an npm trusted-publishing (OIDC) workflow the
+  preferred fix; that is the right destination and the wrong first step. Trusted
+  publishing is configured per package, on that package's settings page on
+  npmjs.com, so the package must already exist —
+  [`npm/cli#8544`](https://github.com/npm/cli/issues/8544) is the open request to
+  allow an initial version over OIDC and states the limitation directly. So the
+  first release needs a credential and a maintainer; OIDC can only take over
+  from the second. `npm whoami` alone never settled this: it answers whether
+  this shell is authenticated, not whether CI could publish.
+  **No longer a blocker:** the earlier entry said write access to
+  `ZodiacsOfficial/sdk` was denied. That access is available as of 2026-09-17 and
+  was verified in this session.
+  **Also worth recording:** the engine is not on sdk `main`. `main` (`b49e0f14`)
+  contains only `packages/sdk`; `@zodiacs/engine@0.1.1-rc.6` exists on
+  `codex/platform-release-integration-sdk` (`f747be50`) alone, so it has to land
+  on `main` or be published from that branch deliberately. There is still no
+  publish workflow anywhere: sdk `main` has `app-ci.yml` and `ci.yml`, and
+  neither references `npm publish`, a token, or `id-token`. The scope is not a
+  blocker — `@zodiacs/sdk@1.0.1` is published, so this is a first publication
+  into an established scope, not a new-scope bootstrap.
+  The exact sequence is [Card 2](../ACTION-CARDS.md); see also
   [the engine release record](evidence/engine-release/README.md).
 - [ ] **Recommended external reviews:** practitioner, outside-counsel and
   native-speaker reviews remain unclaimed and are not release signatures.

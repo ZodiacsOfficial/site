@@ -1,0 +1,30 @@
+{
+  "name": "zodiacs-mcp-server",
+  "version": "0.1.0-rc.1",
+  "private": true,
+  "description": "A local stdio MCP server over the Zodiacs engine and its chart comparison. Unpublished release candidate.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "server.mjs",
+    "verify.mjs",
+    "README.md",
+    "candidate.json",
+    "npm-shrinkwrap.json"
+  ],
+  "scripts": {
+    "start": "node server.mjs",
+    "verify": "node verify.mjs",
+    "test": "node verify.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server": "2.0.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/client": "2.0.0"
+  }
+}

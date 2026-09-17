@@ -7,6 +7,7 @@ import {
   extractConsumerFragments,
   findConsumerBoundaryViolations,
   scanConsumerBoundary,
+  SOURCE_ROOTS,
 } from './consumer-boundary-lib.mjs';
 
 function rules(source, file) {
@@ -213,7 +214,10 @@ const description = 'A free astrology calculator.';
   it('fails a seeded full-tree source while keeping Registry exclusions exact', async () => {
     const repo = await mkdtemp(join(tmpdir(), 'consumer-boundary-'));
     try {
-      for (const root of ['api', 'src/components', 'src/content', 'src/data/registry-research', 'src/islands', 'src/layouts', 'src/lib/email', 'src/pages', 'src/server', 'src/strings', 'public']) {
+      // Seeded from the scanner's own root list, plus the subdirectories these
+      // assertions need. A hand-kept copy here drifted the first time a root
+      // was added and failed with ENOENT rather than a boundary result.
+      for (const root of [...SOURCE_ROOTS, 'src/data/registry-research', 'src/lib/email', 'public']) {
         await mkdir(join(repo, root), { recursive: true });
       }
       await writeFile(join(repo, 'public/llms.txt'), 'Free astrology tools.');

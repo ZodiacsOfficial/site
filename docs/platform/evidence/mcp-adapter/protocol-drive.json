@@ -1,0 +1,650 @@
+{
+  "type": "official-SDK protocol interoperability against the real server process; not a named end-user host, and not a model-driven demonstration",
+  "startedAt": "2026-09-17T19:27:34.941Z",
+  "completedAt": "2026-09-17T19:27:38.769Z",
+  "node": "v22.22.2",
+  "client": {
+    "package": "@modelcontextprotocol/client",
+    "version": "2.0.0",
+    "offeredProtocolVersion": "2025-11-25",
+    "supportedProtocolVersions": [
+      "2025-11-25",
+      "2025-06-18",
+      "2025-03-26",
+      "2024-11-05",
+      "2024-10-07"
+    ]
+  },
+  "server": {
+    "path": "examples/mcp-server/server.mjs",
+    "bytes": 163355,
+    "sha256": "4b7b4183797086b9636c9f50201be4b210183937c17d1d02a5784facb3cc3418"
+  },
+  "wire": [
+    {
+      "version": "2025-11-25",
+      "negotiated": "2025-11-25",
+      "error": null
+    },
+    {
+      "version": "2025-06-18",
+      "negotiated": "2025-06-18",
+      "error": null
+    },
+    {
+      "version": "2025-03-26",
+      "negotiated": "2025-03-26",
+      "error": null
+    },
+    {
+      "version": "2024-11-05",
+      "negotiated": "2024-11-05",
+      "error": null
+    },
+    {
+      "version": "2024-10-07",
+      "negotiated": "2024-10-07",
+      "error": null
+    },
+    {
+      "version": "1999-01-01",
+      "negotiated": "2025-11-25",
+      "error": null
+    }
+  ],
+  "rawShapes": [
+    {
+      "case": "a request line too long to buffer",
+      "exit": 0,
+      "answered": [
+        1,
+        2,
+        3
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "the same line split across two writes",
+      "exit": 0,
+      "answered": [
+        1,
+        4
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "a JSON-RPC batch array",
+      "exit": 0,
+      "answered": [
+        1,
+        5
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "syntactically invalid JSON",
+      "exit": 0,
+      "answered": [
+        1,
+        6
+      ],
+      "unansweredOffender": true
+    },
+    {
+      "case": "two large lines in sequence",
+      "exit": 0,
+      "answered": [
+        1,
+        82,
+        83,
+        7
+      ],
+      "unansweredOffender": true
+    }
+  ],
+  "checks": 80,
+  "passed": 80,
+  "results": [
+    {
+      "name": "initialize succeeds and names the adapter",
+      "ok": true,
+      "detail": {
+        "name": "zodiacs-mcp-server",
+        "version": "0.1.0-rc.1"
+      }
+    },
+    {
+      "name": "server version is the adapter candidate",
+      "ok": true,
+      "detail": "0.1.0-rc.1"
+    },
+    {
+      "name": "server declares the tools capability",
+      "ok": true
+    },
+    {
+      "name": "lists exactly the three tools",
+      "ok": true,
+      "detail": [
+        "calculate_natal_chart",
+        "compare_calculation_records",
+        "get_capabilities"
+      ]
+    },
+    {
+      "name": "every tool closes its argument object",
+      "ok": true
+    },
+    {
+      "name": "every tool is annotated read-only, non-destructive and closed-world",
+      "ok": true
+    },
+    {
+      "name": "the natal schema bounds the epoch, coordinates and options",
+      "ok": true
+    },
+    {
+      "name": "every tool description states the assistant-routing distinction",
+      "ok": true
+    },
+    {
+      "name": "capabilities name the pinned engine",
+      "ok": true,
+      "detail": {
+        "name": "@zodiacs/engine",
+        "version": "0.1.1-rc.6",
+        "releaseStatus": "unpublished-candidate"
+      }
+    },
+    {
+      "name": "capabilities label both releases as unpublished candidates",
+      "ok": true
+    },
+    {
+      "name": "capabilities state the privacy distinction in full",
+      "ok": true
+    },
+    {
+      "name": "capabilities list what is unsupported, including the absent timeout",
+      "ok": true
+    },
+    {
+      "name": "capabilities publish every limit the server enforces",
+      "ok": true
+    },
+    {
+      "name": "a summary carries twelve bodies, four angles, twelve cusps and aspects",
+      "ok": true
+    },
+    {
+      "name": "a summary reports requested against actual house system",
+      "ok": true
+    },
+    {
+      "name": "a summary does not echo the birth details back",
+      "ok": true
+    },
+    {
+      "name": "an unknown time suppresses angles and houses and says why",
+      "ok": true
+    },
+    {
+      "name": "a chart with no place keeps the bodies and reports the missing location",
+      "ok": true
+    },
+    {
+      "name": "a polar chart reports the house system it could actually use",
+      "ok": true,
+      "detail": {
+        "absenceReason": null,
+        "actual": "whole",
+        "requested": "placidus"
+      }
+    },
+    {
+      "name": "record output returns a parseable envelope and nothing else",
+      "ok": true,
+      "detail": [
+        "engine",
+        "schema",
+        "record"
+      ]
+    },
+    {
+      "name": "two identical records compare identical",
+      "ok": true,
+      "detail": {
+        "differences": 0,
+        "substantive": 0,
+        "displayOnly": 0,
+        "explanations": 0
+      }
+    },
+    {
+      "name": "a house-system difference is found and every cusp moves",
+      "ok": true,
+      "detail": {
+        "differences": 15,
+        "substantive": 15,
+        "displayOnly": 0,
+        "explanations": 1
+      }
+    },
+    {
+      "name": "the house-system cause is reproduced by local recalculation",
+      "ok": true,
+      "detail": [
+        [
+          "house-system",
+          "reproduced"
+        ]
+      ]
+    },
+    {
+      "name": "a comparison labels its own output as not anonymous",
+      "ok": true
+    },
+    {
+      "name": "the same instant written two ways differs only in what was reported",
+      "ok": true,
+      "detail": [
+        "source-instant"
+      ]
+    },
+    {
+      "name": "refuses an unknown tool name",
+      "ok": true
+    },
+    {
+      "name": "recovers after an unknown tool name",
+      "ok": true
+    },
+    {
+      "name": "refuses a missing required argument",
+      "ok": true
+    },
+    {
+      "name": "recovers after a missing required argument",
+      "ok": true
+    },
+    {
+      "name": "refuses an unknown extra argument",
+      "ok": true
+    },
+    {
+      "name": "recovers after an unknown extra argument",
+      "ok": true
+    },
+    {
+      "name": "refuses a wrongly typed argument",
+      "ok": true
+    },
+    {
+      "name": "recovers after a wrongly typed argument",
+      "ok": true
+    },
+    {
+      "name": "refuses an out-of-range latitude",
+      "ok": true
+    },
+    {
+      "name": "recovers after an out-of-range latitude",
+      "ok": true
+    },
+    {
+      "name": "refuses an unsupported house system",
+      "ok": true
+    },
+    {
+      "name": "recovers after an unsupported house system",
+      "ok": true
+    },
+    {
+      "name": "refuses a date before the supported epoch",
+      "ok": true
+    },
+    {
+      "name": "recovers after a date before the supported epoch",
+      "ok": true
+    },
+    {
+      "name": "refuses a date that does not exist",
+      "ok": true
+    },
+    {
+      "name": "recovers after a date that does not exist",
+      "ok": true
+    },
+    {
+      "name": "refuses a wall time with no zone",
+      "ok": true
+    },
+    {
+      "name": "recovers after a wall time with no zone",
+      "ok": true
+    },
+    {
+      "name": "refuses one coordinate without the other",
+      "ok": true
+    },
+    {
+      "name": "recovers after one coordinate without the other",
+      "ok": true
+    },
+    {
+      "name": "refuses a record that is not JSON",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record that is not JSON",
+      "ok": true
+    },
+    {
+      "name": "refuses a record that is JSON but not an envelope",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record that is JSON but not an envelope",
+      "ok": true
+    },
+    {
+      "name": "refuses a record declaring an unsupported schema",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record declaring an unsupported schema",
+      "ok": true
+    },
+    {
+      "name": "refuses a record requiring an unimplemented feature",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record requiring an unimplemented feature",
+      "ok": true
+    },
+    {
+      "name": "refuses a record whose result contradicts its receipt",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record whose result contradicts its receipt",
+      "ok": true
+    },
+    {
+      "name": "refuses a record over the character cap",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record over the character cap",
+      "ok": true
+    },
+    {
+      "name": "refuses a record over the byte cap but under the character cap",
+      "ok": true
+    },
+    {
+      "name": "recovers after a record over the byte cap but under the character cap",
+      "ok": true
+    },
+    {
+      "name": "refuses an empty record",
+      "ok": true
+    },
+    {
+      "name": "recovers after an empty record",
+      "ok": true
+    },
+    {
+      "name": "every refusal reaches the caller, and only an unknown tool name is a protocol error",
+      "ok": true,
+      "detail": [
+        [
+          "an unknown tool name",
+          "protocol"
+        ],
+        [
+          "a missing required argument",
+          "tool"
+        ],
+        [
+          "an unknown extra argument",
+          "tool"
+        ],
+        [
+          "a wrongly typed argument",
+          "tool"
+        ],
+        [
+          "an out-of-range latitude",
+          "tool"
+        ],
+        [
+          "an unsupported house system",
+          "tool"
+        ],
+        [
+          "a date before the supported epoch",
+          "tool"
+        ],
+        [
+          "a date that does not exist",
+          "tool"
+        ],
+        [
+          "a wall time with no zone",
+          "tool"
+        ],
+        [
+          "one coordinate without the other",
+          "tool"
+        ],
+        [
+          "a record that is not JSON",
+          "tool"
+        ],
+        [
+          "a record that is JSON but not an envelope",
+          "tool"
+        ],
+        [
+          "a record declaring an unsupported schema",
+          "tool"
+        ],
+        [
+          "a record requiring an unimplemented feature",
+          "tool"
+        ],
+        [
+          "a record whose result contradicts its receipt",
+          "tool"
+        ],
+        [
+          "a record over the character cap",
+          "tool"
+        ],
+        [
+          "a record over the byte cap but under the character cap",
+          "tool"
+        ],
+        [
+          "an empty record",
+          "tool"
+        ]
+      ]
+    },
+    {
+      "name": "__proto__ is dropped upstream rather than refused, and changes nothing",
+      "ok": true,
+      "detail": {
+        "layer": "ok",
+        "timeKnown": true
+      }
+    },
+    {
+      "name": "every other unknown key, including the other two hostile names, is refused",
+      "ok": true
+    },
+    {
+      "name": "a schema violation names the field at fault so a caller can correct it",
+      "ok": true,
+      "detail": [
+        "Input validation error: Invalid arguments for tool calculate_natal_chart: utc: Invalid input: expected string, received undefined",
+        "Input validation error: Invalid arguments for tool calculate_natal_chart: Unrecognized key: \"houseSystemm\"",
+        "Input validation error: Invalid arguments for tool calculate_natal_chart: latitude: Invalid input: expected number, received string"
+      ]
+    },
+    {
+      "name": "no refusal message echoes a coordinate, an instant or record content",
+      "ok": true,
+      "detail": []
+    },
+    {
+      "name": "an unsupported version is refused distinctly from a malformed record",
+      "ok": true
+    },
+    {
+      "name": "stderr carried the adapter's startup note, so the capture is real",
+      "ok": true,
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network\n"
+    },
+    {
+      "name": "stderr carried only the adapter's own notes",
+      "ok": true,
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network\n"
+    },
+    {
+      "name": "stderr carried no birth detail, coordinate or record content",
+      "ok": true,
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network\n"
+    },
+    {
+      "name": "the transport exposes the server process id, so the next check measures something",
+      "ok": true,
+      "detail": 30529
+    },
+    {
+      "name": "the server process is gone after the client closes",
+      "ok": true,
+      "detail": true
+    },
+    {
+      "name": "every protocol revision the SDK supports negotiates a supported revision",
+      "ok": true,
+      "detail": [
+        {
+          "version": "2025-11-25",
+          "negotiated": "2025-11-25",
+          "error": null
+        },
+        {
+          "version": "2025-06-18",
+          "negotiated": "2025-06-18",
+          "error": null
+        },
+        {
+          "version": "2025-03-26",
+          "negotiated": "2025-03-26",
+          "error": null
+        },
+        {
+          "version": "2024-11-05",
+          "negotiated": "2024-11-05",
+          "error": null
+        },
+        {
+          "version": "2024-10-07",
+          "negotiated": "2024-10-07",
+          "error": null
+        },
+        {
+          "version": "1999-01-01",
+          "negotiated": "2025-11-25",
+          "error": null
+        }
+      ]
+    },
+    {
+      "name": "an unknown protocol revision is answered rather than dropped",
+      "ok": true,
+      "detail": {
+        "version": "1999-01-01",
+        "negotiated": "2025-11-25",
+        "error": null
+      }
+    },
+    {
+      "name": "the session survives a request line too long to buffer",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          2,
+          3
+        ],
+        "stderr": "zodiacs-mcp-server: dropped one request line over the 1048576-byte limit; the session is unaffected"
+      }
+    },
+    {
+      "name": "the session survives the same line split across two writes",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          4
+        ],
+        "stderr": "zodiacs-mcp-server: dropped one request line over the 1048576-byte limit; the session is unaffected"
+      }
+    },
+    {
+      "name": "the session survives a JSON-RPC batch array",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          5
+        ],
+        "stderr": "zodiacs-mcp-server: transport reported ZodError"
+      }
+    },
+    {
+      "name": "the session survives syntactically invalid JSON",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          6
+        ],
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network"
+      }
+    },
+    {
+      "name": "the session survives two large lines in sequence",
+      "ok": true,
+      "detail": {
+        "exit": 0,
+        "answered": [
+          1,
+          82,
+          83,
+          7
+        ],
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.1, engine 0.1.1-rc.6, no network"
+      }
+    },
+    {
+      "name": "both large lines are answered, not only survived",
+      "ok": true,
+      "detail": [
+        1,
+        82,
+        83,
+        7
+      ]
+    }
+  ]
+}
