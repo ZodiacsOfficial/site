@@ -14,6 +14,7 @@ const SOURCE_ROOTS = Object.freeze([
   'src/islands',
   'src/layouts',
   'src/lib',
+  'src/mcp',
   'src/pages',
   'src/server',
   'src/strings',

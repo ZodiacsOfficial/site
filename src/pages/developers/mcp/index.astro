@@ -1,0 +1,244 @@
+---
+import Base from '../../../layouts/Base.astro';
+import manifest from '../../../../public/examples/mcp-server.json';
+
+const title = 'Connect an AI Assistant to the Engine | Zodiacs.org';
+const description = 'A local MCP server that lets an assistant you connect it to calculate natal charts and compare two calculation records. Runs on your machine over stdio; no listener, no port, no network.';
+
+// The download is pinned to a commit, not to a path on this site: a commit's
+// contents cannot change, so the archive and its digest cannot be replaced
+// together. No commit can name itself, so the pin is written by a second pass
+// after the archive lands — and until it exists there is nothing honest to
+// publish here, so the build stops rather than advertising an unpinned file.
+if (!/^[0-9a-f]{40}$/.test(manifest.artifactCommit ?? '')) {
+  throw new Error('public/examples/mcp-server.json has no artifactCommit;'
+    + ' run node scripts/pack-mcp-server.mjs --artifact-commit <sha> after committing the archive');
+}
+const archiveUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${manifest.artifactCommit}/public/examples/${manifest.file}`;
+
+const install = `curl -fsSL '${archiveUrl}' -o '${manifest.file}'
+
+# check the digest before extracting anything
+shasum -a 256 '${manifest.file}'
+# expect: ${manifest.sha256}
+
+tar xzf '${manifest.file}' && cd package
+npm install
+npm run verify`;
+
+const connect = `claude mcp add zodiacs -- node "$PWD/server.mjs"
+claude mcp list`;
+
+const entry = `{
+  "command": "node",
+  "args": ["/absolute/path/to/package/server.mjs"]
+}`;
+
+const tools = [
+  ['get_capabilities', 'No arguments. The engine and adapter versions, the record schemas, every limit a request must respect, and the list of what this adapter does not do. Worth calling before the other two rather than guessing at supported options.'],
+  ['calculate_natal_chart', 'One chart from an instant and, optionally, coordinates. Returns the bodies, angles, cusps and aspects, plus whether the time was known and which house system was requested against which one was actually used. The full calculation record is a separate, explicit request.'],
+  ['compare_calculation_records', 'Two records, passed as content. Returns every value that differs, then what accounts for it — reproduced by a local recalculation, reported by the records, a hypothesis that fits, or unresolved.'],
+];
+---
+
+<Base title={title} description={description} path="/developers/mcp/">
+  <section class="section container container--narrow mcp-page">
+    <em class="kicker">Developer tools</em>
+    <h1 class="display">Connect an assistant to the engine</h1>
+    <div class="prose">
+      <p>
+        A local MCP server, so an AI assistant you connect it to can calculate a natal
+        chart and read what differs between two calculation records. It speaks the
+        Model Context Protocol over stdio: one process on your machine, started by
+        whichever host you point at it. No listener, no port, no outbound request, no
+        files read or written.
+      </p>
+      <p>
+        <strong>{manifest.releaseStatus === 'unpublished-candidate' ? 'Unpublished candidate' : manifest.releaseStatus}
+        · {manifest.name} {manifest.version}.</strong> It is not on npm, so there is no
+        <code>npm install</code> for it — an install command for a package that does not
+        exist would be worse than none. Install from the archive below, whose SHA-256 is
+        published beside it.
+      </p>
+    </div>
+
+    <h2 id="privacy">The calculation is local. The conversation may not be.</h2>
+    <div class="prose">
+      <p>
+        The server runs on your machine and calculates there. Nothing reaches
+        Zodiacs.org, nothing is saved, nothing is logged.
+      </p>
+      <p>
+        That is not the same as a local AI experience, and the difference matters more
+        than the first sentence. Whatever assistant you connect this to decides what
+        reaches its model provider: your message, the arguments it builds for these
+        tools, and the results it reads back. If the assistant runs in the cloud — and
+        most do — assume the birth details in a request reach it, under that provider's
+        terms rather than ours. A local calculation server does not make a cloud
+        assistant local.
+      </p>
+      <p>
+        Two smaller points in the same family. A comparison reports the <em>exact</em>
+        difference between two charts, so anyone holding one of the two can reconstruct
+        the other from it: safer to pass on than a full record, not anonymous. And a
+        version, checksum or source URL inside a record you supply is a claim that
+        record makes about itself — nothing here authenticates it.
+      </p>
+    </div>
+
+    <h2 id="install">Install</h2>
+    <div class="prose">
+      <p>
+        The download is pinned to the commit that holds it, so the bytes cannot change
+        under the digest. Check the digest before extracting.
+      </p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Install commands"><code>{install}</code></pre>
+    <div class="prose">
+      <p>
+        <code>npm run verify</code> is the check that the install works: it launches the
+        server as a real process, speaks MCP to it with the official client library,
+        calls all three tools with synthetic charts, refuses two bad requests, and
+        confirms the session still works afterwards. Fifteen checks, one line each,
+        exit 0 when they all pass.
+      </p>
+      <p>
+        <code>npm install</code> fetches three pinned packages —
+        <code>@modelcontextprotocol/server {manifest.dependencies['@modelcontextprotocol/server']}</code>,
+        <code>@modelcontextprotocol/core {manifest.dependencies['@modelcontextprotocol/core']}</code> and
+        <code>zod {manifest.dependencies.zod}</code> — and nothing else. The engine
+        ({manifest.engine.package} {manifest.engine.version}) and the comparison are
+        already inside <code>server.mjs</code>, because neither is published and
+        bundling them keeps one copy of the comparison rules rather than two.
+        Node {manifest.node}.
+      </p>
+    </div>
+
+    <h2 id="connect">Connect it to a host</h2>
+    <div class="prose">
+      <p>Claude Code is the host this was tested against, from the extracted directory:</p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Claude Code commands"><code>{connect}</code></pre>
+    <div class="prose">
+      <p>
+        Expect <code>zodiacs: node … - ✓ Connected</code>. Add <code>--scope project</code>
+        to write it into a <code>.mcp.json</code> your repository shares, or
+        <code>--scope user</code> for every project on the machine.
+      </p>
+      <p>
+        For Claude Desktop, VS Code or Cursor, add the same entry to the config file
+        their own documentation names — <code>claude_desktop_config.json</code> under
+        <code>mcpServers</code>, <code>.vscode/mcp.json</code> under <code>servers</code>,
+        <code>.cursor/mcp.json</code> under <code>mcpServers</code>. Those locations come
+        from their docs rather than from a run here, so they are not tested claims;
+        Claude Desktop is macOS and Windows only and could not be exercised on the
+        machine this was built on.
+      </p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Host configuration entry"><code>{entry}</code></pre>
+    <div class="prose">
+      <p>
+        Use an absolute path. The server needs no environment variables and is given
+        none: there is no key, credential or secret anywhere in the package.
+      </p>
+    </div>
+
+    <h2 id="tools">The three tools</h2>
+    <dl class="mcp-tools">
+      {tools.map(([name, summary]) => (
+        <div>
+          <dt><code>{name}</code></dt>
+          <dd>{summary}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="prose">
+      <p>
+        Every argument is bounded by a schema the host can read: an instant needs an
+        explicit zone and falls within 1800 to 2199, coordinates come as a pair or not
+        at all, the house system is one of two the engine computes, and a record is at
+        most 64 KB of content. An argument the schema does not know is refused rather
+        than ignored. A model-supplied value becomes a number, a date or one of a fixed
+        set of option strings — never a command, a path, a module name, a URL or a
+        package version, because the adapter imports nothing that could carry one out.
+      </p>
+      <p>
+        The comparison is the same code as the
+        <a href="/developers/compare/"> browser tool on this site</a>, which is the
+        reason the adapter lives in the site's own repository: one set of rules, not a
+        copy that drifts.
+      </p>
+    </div>
+
+    <h2 id="limits">Known limits</h2>
+    <div class="prose">
+      <ul>
+        <li>One chart at a time. No transits, progressions, returns or eclipses, and
+          nothing that scans a date range.</li>
+        <li>No interpretation. Positions and differences, no readings.</li>
+        <li>No timezone resolution. Supply an instant with an explicit offset; the
+          adapter does not turn a place name and a wall clock into a moment.</li>
+        <li>No file access and no fetching. Records are passed as content.</li>
+        <li>No cancellation, and no timeout pretending to be one. A calculation is
+          synchronous, so a timer could not stop it mid-way; the work is bounded by
+          refusing unbounded operations instead.</li>
+        <li>No authentication of anything — not a record, not an engine version, not
+          the claim that two records came from independent software. Two records from
+          one engine agreeing shows consistency, not independent accuracy.</li>
+        <li>Two house systems, <code>placidus</code> and <code>whole</code>, because
+          those are the two the engine computes.</li>
+      </ul>
+    </div>
+
+    <h2 id="uninstall">Uninstall</h2>
+    <div class="prose">
+      <p>
+        Nothing is installed outside the directory you extracted and nothing is written
+        anywhere else — no config of its own, no cache, no database, no state. Remove
+        the entry from your host (<code>claude mcp remove zodiacs</code>, or delete it
+        from the config file you added it to) and delete the directory.
+      </p>
+    </div>
+
+    <h2 id="testing">How it was tested</h2>
+    <div class="prose">
+      <p>
+        Recorded in the repository under
+        <code>docs/platform/evidence/mcp-adapter/</code>, kept as separate records
+        because they establish separate things: the official client library against the
+        real server process; the Claude Code CLI launching it and reporting it
+        connected; a model actually calling the tools through that host; and a fixed
+        synthetic corpus of ten record pairs with the classification each should
+        receive, written before the candidate ran against any of them. That last one is
+        a regression corpus rather than an accuracy rate — both sides of every pair
+        come from the same engine, so it says nothing about how often the tool is right
+        about a disagreement between independently authored software.
+      </p>
+      <p>
+        Every chart in every test is synthetic: round coordinates for well-known cities
+        on dates chosen for what they exercise.
+      </p>
+      <p>
+        Building something on this? Open an
+        <a href="https://github.com/ZodiacsOfficial/site/issues">issue on the site
+        repository</a> — what you connected it to, what you asked it for, and what it
+        got wrong. Use a synthetic chart: a public issue should not carry someone's
+        name or real birth details. Our own tests are not adoption and are not counted
+        as any.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mcp-page h1 { margin: var(--s-1) 0 var(--s-4); }
+  .mcp-page h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); scroll-margin-top: 96px; }
+  .mcp-page .prose { max-width: 68ch; }
+  .mcp-page code { font-family: var(--font-mono); font-size: .9em; overflow-wrap: anywhere; }
+  pre { margin: var(--s-6) 0; padding: var(--s-4); border: 1px solid var(--hair-2); border-radius: var(--radius-sm); max-width: 100%; overflow-x: auto; font-size: var(--text-sm); line-height: 1.7; }
+  pre:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  pre code { overflow-wrap: normal; }
+  .mcp-tools { margin: var(--s-6) 0 0; max-width: 68ch; display: grid; gap: var(--s-5); }
+  .mcp-tools dt { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-1); }
+  .mcp-tools dd { margin: var(--s-2) 0 0; color: var(--text-2); }
+</style>

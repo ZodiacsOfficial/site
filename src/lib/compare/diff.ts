@@ -388,8 +388,13 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   if (has('time-known')) {
     explanations.push({
       id: 'time-known', evidence: 'reported',
+      // `cusps-shape` belongs here with the other two absence rows. Without a
+      // time there is no house table at all, so the cusp list is missing on one
+      // side for exactly this reason — and the receipt says so, in a field this
+      // comparison already read. Leaving it out reported a row as accounted for
+      // by nothing while its cause was printed two rows above it.
+      covers: ['time-known', 'angles-presence', 'houses-absence', 'cusps-shape'].filter(has),
       statement: 'One chart has a known birth time and the other does not.',
-      covers: ['time-known', 'angles-presence', 'houses-absence'].filter(has),
       detail: 'Without a time there is no ascendant and no houses, and the positions use a stated convention rather than a real moment.',
     });
   }

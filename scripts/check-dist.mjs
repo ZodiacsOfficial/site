@@ -1155,7 +1155,8 @@ const sitemapPolicy = {
   // +1 for the void-of-course Moon calendar.
   // +2 for the platform support contract and runnable developer examples.
   // +1 for /developers/compare/, the browser-local chart-difference tool.
-  total: 996 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
+  // +1 for /developers/mcp/, the local MCP adapter's install and privacy page.
+  total: 997 + Number(registryAuraIndexed) + Number(raceIndexed) + Number(trophyHallIndexed)
     + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
     + indexedRegistryResearchPaths.size,

@@ -1,5 +1,44 @@
 # Zodiacs Platform status
 
+## Released — the chart-difference tool, and a local MCP adapter over it
+
+Two deliveries after L3, both recorded here because this page was behind
+`REMAINING.md` and said nothing about either.
+
+**`/developers/compare/`** shipped in
+[#509](https://github.com/ZodiacsOfficial/site/pull/509) and is live. It reads
+two `zodiacs.natal-envelope.draft-v1` records in the browser, lists every
+differing value before any prose, and labels each offered cause `reproduced`,
+`reported`, `hypothesis` or `unresolved`. Two bounded AI reviews of the first
+candidate found nine defects; each was reproduced before it was fixed and each
+carries a regression test verified to fail on `fef5f9bf`.
+[#513](https://github.com/ZodiacsOfficial/site/pull/513) then took analytics off
+that page after a live drive recorded a request to `plausible.io`, and
+[#514](https://github.com/ZodiacsOfficial/site/pull/514) recorded the deployed
+drive. Method and tested limits: [evidence/chart-compare](evidence/chart-compare/README.md).
+
+**`zodiacs-mcp-server@0.1.0-rc.1`** is the agent half of the same stage,
+delivered 2026-09-17. A local stdio MCP server with three tools, over the real
+`natalChart`, the real envelope codec and the real `compareEnvelopes` — the same
+module the browser tool runs, not a copy. No listener, no port, no outbound
+request, no file access. Established separately, because these are separate
+claims: the official SDK client against the real server process (70/70 checks),
+the Claude Code CLI launching it and reporting it connected (7/7), a model
+actually calling the tools through that host (one run, recorded verbatim), and a
+synthetic regression corpus of ten record pairs whose expected classifications
+were committed before the candidate ran (10/10 scenarios, 59/59 assertions).
+
+Not claimed: publication (neither the adapter nor the engine is on npm; both
+report `unpublished-candidate`), any host other than Claude Code (Claude Desktop
+is macOS and Windows only and could not run here), any measure of how reliably a
+model uses the tools, and any adoption. What was built and what was actually
+established: [evidence/mcp-adapter](evidence/mcp-adapter/README.md).
+
+Still not activated, and still for the same reason: `PUBLIC_SAVED_RECORDS_ENABLED`
+is a Vercel project setting this environment cannot write. Both that and the
+engine publication now have precise action cards —
+[ACTION-CARDS.md](ACTION-CARDS.md).
+
 ## Released — L3 saved calculation records, merged and deployed, flag still off
 
 [#490](https://github.com/ZodiacsOfficial/site/pull/490) merged as

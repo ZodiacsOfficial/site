@@ -392,6 +392,16 @@ describe('a cause never claims a row it could not have caused', () => {
     { name: 'different moment, place and house system at once',
       left: ORDINARY,
       right: { utc: '1990-06-15T18:45:00Z', latitude: 40.7128, longitude: -74.006, houseSystem: 'whole' } as const },
+    // The synthetic MCP benchmark found `cusps-shape` reported as accounted for
+    // by nothing here, with its cause — an absent birth time — printed two rows
+    // above it. The suite above had every pair with a known time on both sides,
+    // which is how the gap survived, so the unknown-time pairs join it.
+    { name: 'a known birth time against an unknown one',
+      left: ORDINARY,
+      right: { ...ORDINARY, timeKnown: false } as const },
+    { name: 'an unknown birth time and a different house system at once',
+      left: ORDINARY,
+      right: { ...ORDINARY, houseSystem: 'whole', timeKnown: false } as const },
   ];
 
   for (const scenario of cases) {
@@ -405,12 +415,20 @@ describe('a cause never claims a row it could not have caused', () => {
         const overreach = item.covers.filter((id) => forbidden.test(id));
         expect(overreach, `${item.id} claims rows it cannot cause`).toEqual([]);
       }
-      // And the house-system rows are still accounted for by something.
-      const covered = new Set(comparison.explanations.flatMap((item) => item.covers));
+      // And every substantive row is still accounted for by a real cause.
+      //
+      // The unresolved bucket is excluded from `covered` on purpose. It is
+      // pushed with whatever no other explanation claimed, so counting it made
+      // this loop unfalsifiable: no row could ever be claimed by nobody, and
+      // the assertion passed while rows were being reported as explained by
+      // nothing. The synthetic MCP benchmark found the first such row.
+      const real = comparison.explanations.filter((item) => item.evidence !== 'unresolved');
+      const covered = new Set(real.flatMap((item) => item.covers));
       for (const row of comparison.differences) {
         if (row.kind === 'display') continue;
         expect(covered.has(row.id), `${row.id} is claimed by nobody`).toBe(true);
       }
+      expect(evidenceFor(comparison, 'unexplained'), 'fell back to unresolved').toBeNull();
     });
   }
 });
