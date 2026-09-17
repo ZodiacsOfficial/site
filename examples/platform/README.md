@@ -6,7 +6,7 @@ account, API key, private environment variable, wallet, telemetry, or database
 is needed. The calculators use the public `@zodiacs/engine` root; natal portability uses its
 optional public `/receipt` entry.
 
-This is a **private example-project archive**, version `0.1.0-rc.3`. Its bundled
+This is a **private example-project archive**, version `0.1.0-rc.4`. Its bundled
 engine is the **unpublished npm release candidate `0.1.1-rc.3`**. Downloading or
 running this project does not publish either package or close the engine's
 numerical review and operator publication gates. This is not evidence of
@@ -17,7 +17,7 @@ external developer adoption.
 Use Node.js **22** and npm (tested with Node 22.23.2). In an empty directory:
 
 ```sh
-tar -xzf /path/to/zodiacs-platform-starter-0.1.0-rc.3.tgz
+tar -xzf /path/to/zodiacs-platform-starter-0.1.0-rc.4.tgz
 cd package
 npm ci --ignore-scripts --no-audit --no-fund
 npm test
@@ -47,13 +47,25 @@ file with the wrong hash is rejected, not overwritten.
 ## 1. Browser-local natal chart
 
 After the setup above, open **http://127.0.0.1:4178/natal.html** and select
-**Calculate locally**. The visible inputs are synthetic: December 21, 2001 at
-09:00 UTC, latitude 78.2232°, longitude 15.6267°, requested Placidus houses.
+**Calculate locally**. The visible inputs are synthetic and describe nobody:
+June 15, 1990 at 13:30 UTC, latitude 51.5074°, longitude −0.1278°, requested
+Placidus houses.
 
-Expected result: 12 bodies; ASC approximately **23.871984°** (Aries);
-`houses.requested: "placidus"`, `houses.actual: "whole"`, and
-`resultFlags: ["polar-fallback"]` in the draft receipt. The engine falls back above 66° absolute latitude.
-Changing to Whole sign shows the requested and actual whole-sign system.
+Expected result: 12 bodies; ASC approximately **191.239748°** (Libra), MC
+**104.688705°**, Sun at **84.189085°** (Gemini). In the draft receipt,
+`houses.requested` and `houses.actual` are both `"placidus"` and `resultFlags`
+is empty — the house system you asked for is the one you got, and there is
+nothing to explain. That is what an ordinary success looks like here.
+
+### Advanced: a polar latitude, where Placidus cannot be computed
+
+Set latitude to **78.2232°**, longitude to **15.6267°** and the instant to
+`2001-12-21T09:00:00Z`, keeping Placidus. Above 66° absolute latitude the engine
+falls back to whole sign rather than inventing houses, and it says so: ASC
+approximately **23.871984°** (Aries), `houses.requested: "placidus"`,
+`houses.actual: "whole"`, and `resultFlags: ["polar-fallback"]`. Requested and
+actual stay distinct so a downstream reader can tell a fallback from a choice.
+Changing the selector to Whole sign shows both as whole sign, with no flag.
 
 Expected failure: set the instant to `2001-02-29T09:00:00Z` and calculate.
 The impossible date produces an error and clears the previous result; it does

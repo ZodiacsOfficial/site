@@ -140,7 +140,14 @@ resolves.
   - *Quick-start ordering* — done. The `/developers/` quick start now leads with
     the one-line `curl`, states the freshness limitation next to it, and keeps
     the hardened fetch example immediately below.
-- [ ] **B1 — Ordinary first chart in the developer starter.** The starter's
+- [x] **B1 — Ordinary first chart in the developer starter.** Done in starter
+  `0.1.0-rc.4`: the shipped defaults are June 15 1990 at 13:30 UTC, 51.5074° /
+  −0.1278°, requesting Placidus and getting it — `houses.actual: "placidus"`,
+  `resultFlags: []`, ASC 191.239748° computed on the starter's own pinned engine
+  `0.1.1-rc.3`, not transcribed from the site's newer one. The polar case stays,
+  named as an advanced example, in the README, the examples page, both
+  clean-consumer test files and the browser drive. `rc.2` and `rc.3` are
+  untouched; the manifest points at the new archive. Original scope: The starter's
   `src/natal.html` ships Svalbard defaults (78.2232°N, 15.6267°E, 2001-12-21,
   Placidus) that resolve through `polar-fallback`, and its `calculate.check.mjs`
   and `receipt.check.mjs` use the same case as their primary fixture. Replace the

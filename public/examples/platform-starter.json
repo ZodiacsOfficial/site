@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "name": "zodiacs-platform-starter",
-  "version": "0.1.0-rc.3",
-  "file": "zodiacs-platform-starter-0.1.0-rc.3.tgz",
-  "sha256": "facafd75a8366a69dfae7397c9c2c68ee636987fb25d479ef380533408bd8d8a",
+  "version": "0.1.0-rc.4",
+  "file": "zodiacs-platform-starter-0.1.0-rc.4.tgz",
+  "sha256": "1b413959aff1263b6ab0c12c6426b1a8edd50eb2618591f989a5e5b29f79e19b",
   "artifactCommit": "dd5d83cdf2a2a5d7096175f01ce985b47824a376"
 }
