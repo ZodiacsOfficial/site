@@ -73,3 +73,7 @@ It also says "your records are never uploaded" rather than "nothing is
 uploaded". The page carries the site-wide Ask-the-guide widget like every other
 page, and a visitor who pastes part of a record into that does upload it. The
 narrower claim is the one the tool can actually keep.
+
+The page does not carry the site-wide analytics scripts: it sets
+`privateSurface`, as `/profile/` and `/ask/` do. That was added after driving
+the deployed page, where analytics is on and a local preview's is off.

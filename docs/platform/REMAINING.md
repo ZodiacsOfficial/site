@@ -116,7 +116,8 @@ resolves.
     `polar-fallback` — an edge-case demonstration, inside the starter artifact
     itself (`src/natal.html` and `tests/calculate.check.mjs` in
     `zodiacs-platform-starter-0.1.0-rc.3`). The claim was made from the heading
-    without reading the inputs. Tracked separately below.
+    without reading the inputs. **Fixed in B1 below** (starter `0.1.0-rc.4`);
+    this entry records the finding, not an open item.
   - *A working demonstration on the real engine, and documented setup verified
     from a clean environment* — met by the platform starter and
     `scripts/verify-platform-starter.mjs`, which installs it in a fresh
@@ -177,6 +178,27 @@ resolves.
   explanations measured, not just successes. Then a thin agent adapter over
   existing functions, verified against an actual supported client, with
   deterministic calculation never routed through a model.
+  **State: the diagnostic half is delivered**, the agent adapter is not.
+  `/developers/compare/` reads two `zodiacs.natal-envelope.draft-v1` receipts in
+  the browser, lists every differing value before any prose, and labels each
+  offered cause `reproduced`, `reported`, `hypothesis` or `unresolved`. Two
+  bounded AI reviews of the first candidate found nine defects, each reproduced
+  before it was fixed and each with a regression test verified to fail on
+  `fef5f9bf`. See [the method and tested limits](evidence/chart-compare/README.md).
+
+  On *"false confident explanations measured, not just successes"* — partly.
+  What exists is targeted adversarial cases, not a rate over a corpus: a
+  recalculation may not reach `reproduced` unless it reproduced the rows that
+  actually moved and the engine version matches the one the receipt names; an
+  explanation may not claim a row it could not have moved, nor may an unrelated
+  difference absorb one it could not have caused; and a receipt claiming an
+  engine this page does not hold is never re-run and presented as the original.
+  Each of those is asserted, and each assertion was checked to fail without its
+  fix. **A false-confidence rate over a corpus of real disagreements has not
+  been measured**, because the corpus does not exist yet — which is what the
+  prepared, unsent feedback request in
+  [the announcement draft](evidence/chart-compare/ANNOUNCEMENT-DRAFT.md) asks
+  for.
 - [ ] **E — Adoption and reference materials.** Source-backed reference and
   contribution materials prioritising chart differences, calculation
   assumptions, uncertainty and integration examples; AI-generated editorial work
@@ -200,12 +222,19 @@ dependencies of this release.
   ([D-2026-09-16](DECISIONS.md)). AI review is recorded as AI review; no human,
   practitioner, attorney, customer or independent-auditor signoff is claimed.
 - [ ] **Engine npm publication:** authorized by the owner, blocked by the
-  environment. `npm whoami` fails with `ENEEDAUTH`, there is no `~/.npmrc` and
-  no token in the environment, so the publish step cannot run from here. The
-  smallest missing action is an npm automation token with publish rights to the
-  `@zodiacs` scope (or a maintainer running `npm publish` from the prepared
-  artifact). Attaching `ZodiacsOfficial/sdk` for push was also denied by the
-  session's permission layer; the repository can be read but not written.
+  environment — by **two independent blockers, either of which alone stops it**.
+  (1) No npm authentication here: `npm whoami` fails with `ENEEDAUTH`, there is
+  no `~/.npmrc`, and no `NPM_TOKEN` or `NODE_AUTH_TOKEN` in the environment.
+  (2) No write access to `ZodiacsOfficial/sdk`, where the engine's source lives;
+  attaching it for push was denied by the session's permission layer, so it can
+  be read but not written. There is also no publish workflow anywhere: nothing
+  in `.github/workflows/` references `npm publish`, a token, or `id-token`.
+  The scope itself is not a blocker — `@zodiacs/sdk@1.0.1` is published, so this
+  is a first publication into an established scope, not a new-scope bootstrap.
+  Preferred fix is an npm trusted-publishing (OIDC) workflow in
+  `ZodiacsOfficial/sdk`, storing no long-lived token anywhere; a maintainer
+  running `npm publish` on the prepared artifact also works. See
+  [the engine release record](evidence/engine-release/README.md).
 - [ ] **Recommended external reviews:** practitioner, outside-counsel and
   native-speaker reviews remain unclaimed and are not release signatures.
 - [ ] **O4 — External adoption:** real integrations, feedback and retained use

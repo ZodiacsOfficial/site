@@ -70,10 +70,25 @@ Files are read with `file.text()`, compared in memory and dropped on reset or
 page close. A Chromium drive recorded every request across load, all four
 presets, two imports, a comparison, an export and a reset:
 
-- no off-origin request, and no non-`GET` request of any kind;
+- no non-`GET` request of any kind — nothing is ever sent anywhere;
 - `localStorage`, `sessionStorage` and cookies empty at every step;
 - the URL never carries birth details;
 - the comparison still runs with the network cut after load.
+
+**Off-origin requests need a distinction the first draft of this file missed.**
+The local drive recorded none, and that was reported here as though it settled
+the question. It did not: analytics is off in a local preview and on in
+production, so the first drive of the *deployed* page recorded a request to
+`plausible.io` for the site-wide measurement script — page-level chrome present
+on nearly every route, which never saw chart data. The page nonetheless now
+carries `privateSurface`, the same opt-out `/profile/` and `/ask/` use, so the
+one page whose claim is that your records never leave the device is not also the
+one still calling a third-party origin. Re-verified on the deployed page after
+that change.
+
+The lesson is worth keeping: a local drive cannot answer a question about
+production configuration, and reporting a local result as a live one is the
+same overstatement this tool exists to avoid.
 
 The optional summary download is redacted — no dates, coordinates or positions —
 which is **not** the same as anonymous. It keeps the exact signed difference for
