@@ -2,10 +2,17 @@ import { readFile, stat } from 'node:fs/promises';
 import { gzipSync } from 'node:zlib';
 import { dirname, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { builtRoutes, REQUIRED_EMBED_ROUTES } from './embed-routes.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const routes = ['moon', 'sky', 'chart'];
+
+const routes = await builtRoutes();
 const failures = [];
+
+// Discovery finding nothing would pass every check below vacuously.
+for (const route of REQUIRED_EMBED_ROUTES) {
+  if (!routes.includes(route)) failures.push(`/embed/${route}/ is missing from the build`);
+}
 
 for (const route of routes) {
   const path = resolve(root, 'dist', 'embed', route, 'index.html');

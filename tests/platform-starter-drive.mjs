@@ -128,18 +128,34 @@ async function driveLocal(browser, baseURL, mode, width) {
     const initial = await calculate('default via keyboard', true);
     check(`${label}: 12 positions and exact candidate provenance`, (initial.result.bodies ?? initial.result.positions).length === 12
       && initial.receipt.engine.version === candidate.version && initial.receipt.engine.artifactSHA256 === engineHash);
-    check(`${label}: requested Placidus, actual whole sign and polar flag`, initial.receipt.requestedHouseSystem === 'placidus'
-      && initial.receipt.actualHouseSystem === 'whole' && JSON.stringify(initial.receipt.flags) === '["polar-fallback"]');
-    if (mode === 'natal') check(`${label}: independently specified corrected polar ASC`, Math.abs(initial.result.angles.asc - 23.871984112302016) < 1e-10);
+    check(`${label}: shipped defaults honour the requested Placidus with nothing to explain`, initial.receipt.requestedHouseSystem === 'placidus'
+      && initial.receipt.actualHouseSystem === 'placidus' && JSON.stringify(initial.receipt.flags) === '[]');
+    if (mode === 'natal') check(`${label}: independently specified ordinary ASC`, Math.abs(initial.result.angles.asc - 191.23974755048215) < 1e-10);
     else check(`${label}: explicit transit instant and moving-to-natal aspects`, initial.receipt.transitUtc === '2026-09-07T12:00:00.000Z'
       && initial.result.aspects.length > 0 && initial.result.aspects.every((aspect) => aspect.a && aspect.b));
     check(`${label}: result fits viewport`, await noOverflow(page));
     await capture(page, `${label}-known`);
 
-    await page.locator('#birthInstant').fill('2001-12-21T14:30:00+05:30');
+    // The polar case is an advanced example now, driven explicitly rather than
+    // shipped as the default: above 66° the engine refuses to invent Placidus
+    // houses, and the receipt keeps requested and actual distinct so a reader
+    // can tell a fallback from a choice.
+    if (mode === 'natal') {
+      await page.locator('#latitude').fill('78.2232');
+      await page.locator('#longitude').fill('15.6267');
+      await page.locator('#birthInstant').fill('2001-12-21T09:00:00Z');
+      const polar = await calculate('advanced polar fallback');
+      check(`${label}: polar latitude falls back to whole sign and flags it`, polar.receipt.requestedHouseSystem === 'placidus'
+        && polar.receipt.actualHouseSystem === 'whole' && JSON.stringify(polar.receipt.flags) === '["polar-fallback"]'
+        && Math.abs(polar.result.angles.asc - 23.871984112302016) < 1e-10);
+      await page.locator('#latitude').fill('51.5074');
+      await page.locator('#longitude').fill('-0.1278');
+    }
+
+    await page.locator('#birthInstant').fill('1990-06-15T19:00:00+05:30');
     const offset = await calculate('equivalent explicit offset');
     check(`${label}: equivalent offset preserves identical results and submitted value`, JSON.stringify(offset.result) === JSON.stringify(initial.result)
-      && offset.receipt.birthUtc === initial.receipt.birthUtc && offset.receipt.submittedBirthInstant === '2001-12-21T14:30:00+05:30');
+      && offset.receipt.birthUtc === initial.receipt.birthUtc && offset.receipt.submittedBirthInstant === '1990-06-15T19:00:00+05:30');
     if (mode === 'transits') {
       await page.locator('#transitInstant').fill('2026-09-08T12:00:00Z');
       const changed = await calculate('changed transit instant');
@@ -166,7 +182,7 @@ async function driveLocal(browser, baseURL, mode, width) {
 
     await page.locator('#timeKnown').selectOption('unknown');
     const unknown = await calculate('unknown time');
-    check(`${label}: unknown time is noon UTC without actual houses`, unknown.receipt.birthUtc === '2001-12-21T12:00:00.000Z'
+    check(`${label}: unknown time is noon UTC without actual houses`, unknown.receipt.birthUtc === '1990-06-15T12:00:00.000Z'
       && unknown.receipt.birthTimeKnown === false && unknown.receipt.actualHouseSystem === null && JSON.stringify(unknown.receipt.flags) === '["no-time"]');
     if (mode === 'natal') check(`${label}: unknown time has null angles and houses`, unknown.result.angles === null && unknown.result.houses === null);
     await invalid('birthDate', '2001-02-29', 'unknown-time impossible date');

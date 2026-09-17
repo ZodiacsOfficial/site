@@ -1,6 +1,6 @@
 # Finite remaining platform checklist
 
-Current checkpoint: 2026-09-16. L2a and L2b are released and production-verified; the L3b/c candidate and the usability fixes are on the branch, reviewed by automated adversarial review and inactive by flag.
+Current checkpoint: 2026-09-16. L2a, L2b and L3b/c are released and production-verified. The saved-records feature is merged and deployed but inactive: activating its flag is a Vercel project change this environment cannot make.
 Historical source-specific evidence remains linked from [STATUS](STATUS.md).
 
 ## Completed release work
@@ -59,20 +59,28 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   bootstrap/panel browser journeys with intercepted auth and backend,
   unknown-time keep, 40-record refusal, Firefox native and lifecycle runs
   ([HARDENING-2026-09-15](evidence/l3-saved-records/HARDENING-2026-09-15.md)).
-- [ ] **L3 review and activation:** [#490](https://github.com/ZodiacsOfficial/site/pull/490).
-  Three bounded AI reviewers ran against `ed585d3c`; their two release-blocking
-  findings, the merge blocker and the product findings are closed, each with a
-  test that reproduces the original gap
+- [x] **L3 review, merge and release.** Three bounded AI reviewers ran against
+  `ed585d3c`; their two release-blocking findings, the merge blocker and the
+  product findings are closed, each with a test that reproduces the original gap
   ([REVIEW-2026-09-16](evidence/l3-saved-records/REVIEW-2026-09-16.md),
-  [product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)). The
+  [product](evidence/l3-saved-records/REVIEW-2026-09-16-product.md)).
+  [#490](https://github.com/ZodiacsOfficial/site/pull/490) merged as `52ae6eeb`
+  with all 19 checks green; production deployment
+  `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` is READY from that commit and verified live
+  as flag-off. Superseded draft #486 closed without merging. The
   off → on → off → on flag sequence is gated
-  ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)). Remaining: merge, deploy,
-  verify, then activate `PUBLIC_SAVED_RECORDS_ENABLED=1` and verify again. Still
-  open and recorded rather than claimed: no real assistive technology was used
-  (the screen-reader findings are measured DOM and ARIA facts); WebKit and real
-  iOS Safari were not available, so no Safari claim is made; a hosted preview
-  remains blocked by the Vercel production-only build policy, which this branch
-  does not change.
+  ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)).
+- [ ] **L3 activation.** `PUBLIC_SAVED_RECORDS_ENABLED=1` in the Vercel project,
+  then redeploy and verify the live journeys. **Blocked here:** the Vercel tools
+  in this session are read-only for project configuration, there is no Vercel CLI
+  or token, and baking the flag into the repository would break the documented
+  rollback and turn the flag-off CI build into a flag-on one. Steps, verification
+  and the smallest missing action:
+  [ACTIVATION](evidence/l3-saved-records/ACTIVATION.md). Still open and recorded
+  rather than claimed: no real assistive technology was used (the screen-reader
+  findings are measured DOM and ARIA facts); WebKit and real iOS Safari were not
+  available, so no Safari claim is made; a hosted preview remains blocked by the
+  Vercel production-only build policy.
 
 [Candidate record](evidence/l3-saved-records/L3BC-README.md),
 [plan](evidence/l3-saved-records/L3BC-PLAN.md),
@@ -97,13 +105,64 @@ resolves.
   public entry points). It is **not published**: `@zodiacs/engine` returns 404
   from the public registry and this environment holds no npm credentials.
   See [the engine release record](evidence/engine-release/README.md).
-- [ ] **B — Developer onboarding and existing public data.** An ordinary
-  successful chart first, advanced verification after; a working demonstration
-  on the real engine; documented setup verified from a clean environment;
-  freshness, schema, timestamp, coverage, caching, attribution and stale/error
-  behaviour for the shared-sky API; the lightweight embed path kept private,
-  isolated, keyboard-operable and attributed. Public data and local
-  calculations stay useful with no wallet, token or account.
+- [ ] **B — Developer onboarding and existing public data.** Audited against
+  each named requirement on 2026-09-17; most of it was already built, two gates
+  were missing and are now closed, and one requirement was marked met in error
+  and is still open.
+  - *Ordinary successful chart first, advanced verification after* — **not met;
+    previously marked met in error.** The heading reads "Start with a working
+    result", but the first example's actual inputs are December 21 2001 at
+    78.2232°N, 15.6267°E requesting Placidus and succeeding through
+    `polar-fallback` — an edge-case demonstration, inside the starter artifact
+    itself (`src/natal.html` and `tests/calculate.check.mjs` in
+    `zodiacs-platform-starter-0.1.0-rc.3`). The claim was made from the heading
+    without reading the inputs. Tracked separately below.
+  - *A working demonstration on the real engine, and documented setup verified
+    from a clean environment* — met by the platform starter and
+    `scripts/verify-platform-starter.mjs`, which installs it in a fresh
+    directory in CI.
+  - *Freshness, schema, timestamp, coverage, attribution, stale/error* — met.
+    `sky-api.test.mjs` validates every payload against its published schema,
+    bounds each window by its scan horizon and flags truncated ones; payloads
+    carry `generatedAt`, `snapshotAt`, `coverage`, `versioning`, `license` and
+    `attribution`; the quickstart rejects HTTP errors before decoding.
+  - *Caching* — **was ungated.** The delivery contract lived in `vercel.json`
+    alone. `scripts/sky-api-headers.test.mjs` now checks all 59 files the
+    builder writes for wildcard CORS, `noindex` and `must-revalidate`, requires
+    each of the 43 advertised endpoints to be a file that is actually written,
+    and bounds every `max-age` by a limit parsed from that endpoint's own
+    `updates` sentence rather than a constant. It pins the tiering so
+    `today.json` cannot become the stalest thing in the family and `index.json`
+    must stay strictly tighter than the family default.
+  - *Embed path private, isolated, attributed* — **was partly ungated.**
+    `verify-widgets.mjs` checked three routes while four were building;
+    `/embed/sky/light/` shipped with no backlink, tracking or budget check at
+    all. Routes are now discovered from the build, with `sky/light` in the
+    required floor so a route that stops building is noticed too.
+  - *Embed path keyboard-operable* — **was unverified.** The widget drive now
+    tabs to the attribution link on every route it discovers from the build, and
+    requires a focus indicator that is actually painted — a fully transparent
+    outline or shadow fails.
+  - *Quick-start ordering* — done. The `/developers/` quick start now leads with
+    the one-line `curl`, states the freshness limitation next to it, and keeps
+    the hardened fetch example immediately below.
+- [x] **B1 — Ordinary first chart in the developer starter.** Done in starter
+  `0.1.0-rc.4`: the shipped defaults are June 15 1990 at 13:30 UTC, 51.5074° /
+  −0.1278°, requesting Placidus and getting it — `houses.actual: "placidus"`,
+  `resultFlags: []`, ASC 191.239748° computed on the starter's own pinned engine
+  `0.1.1-rc.3`, not transcribed from the site's newer one. The polar case stays,
+  named as an advanced example, in the README, the examples page, both
+  clean-consumer test files and the browser drive. `rc.2` and `rc.3` are
+  untouched; the manifest points at the new archive. Original scope: The starter's
+  `src/natal.html` ships Svalbard defaults (78.2232°N, 15.6267°E, 2001-12-21,
+  Placidus) that resolve through `polar-fallback`, and its `calculate.check.mjs`
+  and `receipt.check.mjs` use the same case as their primary fixture. Replace the
+  default with an ordinary non-polar chart inside the documented support scope,
+  keep the polar case as a named advanced example, and keep the docs page, the
+  starter defaults, the stated expected output and the clean-consumer tests
+  consistent. The archive is immutable and published, so this produces a new
+  `rc.4` artifact and manifest; `rc.2` and `rc.3` stay untouched.
+
 - [ ] **C — Narrow hosted beta** (alias L5). Natal-chart and transit-snapshot
   operations only, on the shared validated engine, behind explicit schemas,
   input/date/duration/concurrency limits, authentication or tightly bounded

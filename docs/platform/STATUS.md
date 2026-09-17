@@ -1,6 +1,36 @@
 # Zodiacs Platform status
 
-## Current bounded work — L3 saved calculation records, under the 2026-09-16 authorization
+## Released — L3 saved calculation records, merged and deployed, flag still off
+
+[#490](https://github.com/ZodiacsOfficial/site/pull/490) merged as
+`52ae6eeb2bfc0e5d2697e7a50205025b3f5d65b9` with all 19 checks green, and
+production deployment `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` is READY from that exact
+commit. Superseded draft #486 was closed without merging after verifying its tip
+`99d22482` is an ancestor of the merge.
+
+Verified on the live site rather than inferred from the merge: `/profile/` in en,
+es and ru and `/birth-chart/` all return 200 and carry no `data-saved-records`,
+no `data-keep-calculation-record` and no records heading, and the deployed
+`/_astro/SavedRecordsPanel.--giIpmA.js` is byte-identical (SHA-256
+`64f41d8c324ce4510d18db98f62a21da0dba4ff7495b4ce366d3f5d3baeec71f`) to the local
+build the browser drives ran against, carrying the Escape handler, the
+pointer-down-elsewhere disarm and the twelve-second expiry. A browser session
+against the production origin was not run from here: this environment's egress
+proxy re-terminates TLS and the headless browser could not be given the proxy CA.
+
+`PUBLIC_SAVED_RECORDS_ENABLED` is **still unset**, so nothing new renders for
+anyone yet. Activation is a Vercel project setting this environment cannot
+write; the steps, the verification to run afterwards and the exact blocker are in
+[ACTIVATION](evidence/l3-saved-records/ACTIVATION.md).
+
+Three timing failures on the Lighthouse and composite gates delayed the merge by
+four attempts. They were root-caused, not waited out: the same commit reported
+TBT 288 ms and then 0 ms for one route, the gate takes the worst of three runs
+across ~90 samples by design, and the affected routes measured 1–9 ms locally on
+the same build while shipping byte-identical budgets. Nothing was skipped,
+loosened or re-pinned to get past them.
+
+## How that candidate was reviewed
 
 The owner replaced human engineering review with evidence-based automated
 adversarial review and authorized merge, release and flag activation

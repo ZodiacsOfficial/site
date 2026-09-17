@@ -1,0 +1,91 @@
+---
+import Base from '../../../layouts/Base.astro';
+import '../../../styles/chart-compare.css';
+import ChartCompare from '../../../islands/ChartCompare';
+import candidate from '../../../data/platform-engine-candidate.json';
+
+const title = 'Compare Two Chart Calculations | Zodiacs.org';
+const description = 'Load two calculation records and see what differs between them, and how much of it can be explained. Runs in your browser; nothing is uploaded.';
+---
+
+<Base title={title} description={description} path="/developers/compare/" clientUi>
+  <section class="section container container--narrow">
+    <em class="kicker">Developer tools</em>
+    <h1 class="display">Why do these two charts differ?</h1>
+    <div class="prose">
+      <p>
+        Two programs can calculate the same birth chart and disagree. Usually the reason is
+        written down in the records themselves — a different house system, a different moment,
+        a different convention — and reading it off is faster than arguing about it. This page
+        does that reading.
+      </p>
+    </div>
+
+    <ChartCompare client:load />
+
+    <h2 id="how-it-decides">How it decides</h2>
+    <div class="prose">
+      <p>
+        Differences come first, because they are facts: both files are read, and every value
+        that disagrees is listed — inputs, conventions, angles, house cusps, every field of
+        every body, and the aspect list. Longitudes are compared around the circle, so 359° and
+        1° are two degrees apart rather than 358. Two numbers that print the same at the six
+        decimals these records carry are called a rounding difference rather than a different
+        calculation; the test is what they print, not a tolerance, because rounding is a step
+        and no tolerance sits exactly on it.
+      </p>
+      <p>Explanations are then labelled by the evidence behind them:</p>
+      <ul>
+        <li><strong>Reproduced</strong> — recalculated on this device, changing one setting and
+          leaving everything else alone, and the result matched.</li>
+        <li><strong>Reported</strong> — stated by the files themselves, with nothing to compute.</li>
+        <li><strong>Hypothesis</strong> — fits the evidence, not demonstrated. Several
+          hypotheses can fit one difference, and all of them are listed.</li>
+        <li><strong>Unresolved</strong> — nothing in either file accounts for it.</li>
+      </ul>
+      <p>
+        A recalculation only ever runs on engine <code>{candidate.version}</code>, the version
+        this page carries. If a record was produced by a different version it is not re-run and
+        presented as the original: the difference stays a hypothesis and the limit is stated.
+        A version, checksum or source URL inside an imported file is a claim that file makes
+        about itself, not proof that it is genuine.
+      </p>
+      <p>
+        Reproduced is withheld unless the recalculation demonstrated the values that actually
+        moved. Two polar charts that both fell back to whole sign have the same cusps however
+        they were requested, and matching values neither file disputes demonstrates nothing.
+        Only the house system is re-run: a different moment or place stays a hypothesis. Rows
+        left over once each candidate is matched to what it can account for are listed as
+        unresolved, by name.
+      </p>
+      <p>
+        Both sides of a comparison usually come from the same engine. Agreement between two runs
+        of one engine is consistency, not an independent check of astronomical accuracy.
+      </p>
+    </div>
+
+    <h2 id="formats">What it reads, and what it does not</h2>
+    <div class="prose">
+      <p>
+        Supported: the calculation record this site offers for download from a birth chart, and
+        the records the <a href="/developers/examples/">developer starter</a> produces. Both are
+        <code>zodiacs.natal-envelope.draft-v1</code>, validated with the engine's own parser and
+        its size, depth and node limits. A record from a different engine version of that same
+        schema is read, and the version difference is reported.
+      </p>
+      <p>
+        Not supported, and not silently reinterpreted as something else: charts from other
+        software in their own formats, PDFs, images and screenshots. There is no claim of
+        general third-party compatibility here.
+      </p>
+      <p>
+        Your records never leave the device. The files are read in the browser, compared in
+        memory and dropped when you clear them or close the page. No account, no upload, no
+        birth details in the address bar, and nothing written to storage. The optional summary
+        download leaves out dates, coordinates and positions but keeps the exact difference
+        between them, so anyone holding one of the two charts can recover the other: safer to
+        share than a full record, not anonymous.
+      </p>
+    </div>
+  </section>
+</Base>

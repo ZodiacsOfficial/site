@@ -46,7 +46,16 @@ indefinitely. The flag now gates writing and the record surfaces only.
 
 ## 2. Code rollback — revert the merge
 
-Use this only if the feature's code itself is implicated, not merely its flag.
+Use this only if the feature's code itself is implicated, not merely its flag,
+and only after reading the version floor in section 3.
+
+**Reverting #490 removes the cleanup path along with the feature.** The revert
+takes the tree below `52ae6eeb`, so a visitor who already kept records is left
+with a database no part of the product can list, export or delete, and with
+destructive account actions that report success without touching it. If any
+records may exist, the flag rollback in section 1 is the correct instrument and
+this one is not; if the code itself must go, section 3's third case applies and
+the remediation comes first.
 
 `git revert -m 1 <merge commit>` alone is **not sufficient**: it restores the
 previous `.github/phase1-scope-allowance.json`, whose `baseCommit` and
@@ -70,13 +79,50 @@ The revert commit must therefore carry a fresh allowance in the same commit:
 4. Commit and push the revert and the allowance together.
 
 A code rollback does not restore records that a committed removal already
-purged, and it leaves any database on a visitor's device in place. Prefer the
-flag rollback whenever the question is "should this be switched off".
+purged, and it leaves any database on a visitor's device in place — unreachable,
+for as long as the revert is deployed. Prefer the flag rollback whenever the
+question is "should this be switched off".
 
-## Deployment rollback
+## 3. Deployment rollback — and the version floor it must respect
 
-The Vercel production deployment immediately before this release is recorded in
-[the release evidence](README.md) and can be promoted back from the project's
-deployment list. That reverts the served artifact without touching the
-repository, and is the fastest way to undo a bad release; follow it with one of
-the two rollbacks above so the repository and production agree.
+Promoting an older production deployment reverts the served artifact without
+touching the repository, and it is the fastest way to undo a bad release. It is
+**not** unconditionally safe here, because the ability to find, export, recover
+and remove records is a property of the code, not of the flag.
+
+**The floor is `52ae6eeb2bfc0e5d2697e7a50205025b3f5d65b9`**, the merge of #490.
+`savedRecordsRetainedOnDevice()` and the retained-data mode first appear in
+`f34479c1` inside that pull request; the symbol is absent from
+`src/lib/profile/saved-record-flags.ts` at `7fd42661`, the main commit before it.
+
+| Target | Once records exist on a device |
+| --- | --- |
+| Unset the flag on a build at or after `52ae6eeb` | **Safe.** Discovery, export, recovery and deletion all keep working. |
+| Deploy any commit at or after `52ae6eeb` | **Safe.** The cleanup path travels with the code. |
+| Promote a deployment built before `52ae6eeb` | **Not a rollback. Do not do this.** |
+
+A pre-`52ae6eeb` build has no records panel and no flag module. Records already
+written stay in IndexedDB with no surface anywhere in the product that can list,
+export or delete them, and "Sign out · clear all Zodiacs data", the boundary
+clear and confirmed account deletion each report success without removing them —
+precisely the defect #490 was merged to fix. Reverting to it during an incident
+would reintroduce that defect on devices that already hold data.
+
+### Choosing a target during an incident
+
+1. **If `PUBLIC_SAVED_RECORDS_ENABLED` has never been `1` in production**, no
+   records can exist on any visitor's device, and a pre-`52ae6eeb` deployment is
+   an ordinary rollback target like any other.
+2. **Once it has been on, even briefly**, treat `52ae6eeb` as a hard floor.
+   Unset the flag and redeploy, or promote a deployment built from a commit at or
+   after the floor. `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` (main `52ae6eeb`, flag
+   unset) is the nearest such target and the correct one to reach for.
+3. **If the incident genuinely requires code older than the floor**, that needs a
+   separately validated remediation before the revert — for example shipping a
+   minimal cleanup-capable build first, giving visitors a window to export and
+   erase, and only then reverting. Never erase a visitor's records to make a
+   rollback simpler; the point of the floor is that their data stays theirs to
+   remove.
+
+Follow any deployment rollback with the matching repository change, so the two
+agree.

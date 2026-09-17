@@ -1,5 +1,54 @@
 # Platform evidence ledger
 
+## Current checkpoint — L3b/c saved calculation records, released and deployed, inactive by flag
+
+The owner replaced human engineering review with evidence-based automated
+adversarial review on 2026-09-16 ([D-2026-09-16](DECISIONS.md)). Three bounded
+reviewers ran concurrently in isolated worktrees against `ed585d3c`. **This is AI
+review and is recorded as AI review**; no human, practitioner, attorney, customer
+or independent-auditor signoff exists or is claimed.
+
+They produced two release-blocking findings and one merge blocker, each
+reproduced in a real browser before it was fixed: the build flag gated cleanup as
+well as writing, so a rollback stranded records while destructive account actions
+reported success; an armed destructive confirm never expired and no cancel
+gesture reached it; and the Phase 1 scope allowance was pinned to a base main had
+moved past. All are closed, each with a test that fails without the fix.
+Dispositions: [REVIEW-2026-09-16](evidence/l3-saved-records/REVIEW-2026-09-16.md)
+and [the product review](evidence/l3-saved-records/REVIEW-2026-09-16-product.md).
+
+[#490](https://github.com/ZodiacsOfficial/site/pull/490) merged as
+`52ae6eeb2bfc0e5d2697e7a50205025b3f5d65b9` with all 19 checks green on
+`0f5b76f3`, through the existing protected workflow with nothing bypassed,
+skipped or loosened. Superseded draft #486 was closed unmerged after verifying
+its tip is an ancestor of the merge. Production `dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS`
+is READY from the merge commit. `dpl_Fj7nBapUmw4vshEy8HycqKRXNQRy` (main
+`7fd42661`) was recorded beforehand as the pre-merge baseline, and is a valid
+rollback target only while the flag has never been `1` in production: it predates
+the retained-data path, so once records exist it would strand them. `52ae6eeb` is
+the version floor, and the incident procedure is in
+[ROLLBACK §3](evidence/l3-saved-records/ROLLBACK.md).
+
+Live verification, not inferred from the merge: `/profile/` in en, es and ru and
+`/birth-chart/` return 200 with no records surfaces, and the deployed
+`/_astro/SavedRecordsPanel.--giIpmA.js` is byte-identical (SHA-256
+`64f41d8c…eec71f`) to the build the browser drives ran against. A browser session
+against the production origin was not run from this environment, whose egress
+proxy re-terminates TLS.
+
+Gates on the released tree: 5,320 unit tests, 31 native storage groups, 17
+lifecycle checks in Chromium and 17 in Firefox 151, 6 account-coordinator
+journeys, 4 rollback phases across four builds and one persistent profile, 18 of
+18 Phase 1 captures, check-dist, consumer-boundary, footer, astro check and the
+bundle and engine-isolation budgets.
+
+`PUBLIC_SAVED_RECORDS_ENABLED` remains unset, so no visitor sees the feature.
+Activation is a Vercel project setting this environment cannot write:
+[ACTIVATION](evidence/l3-saved-records/ACTIVATION.md). Engine npm publication
+stays blocked on a missing credential:
+[the engine release record](evidence/engine-release/README.md). Nothing here
+establishes activation, npm publication or external adoption.
+
 ## L2b candidate — conditional complete-date coverage
 
 The owner authorizes one bounded L2b draft from current main

@@ -8,15 +8,29 @@ import {
 import { calculate, importNatalFile } from '../src/calculate.mjs';
 import candidate from '../candidate.json' with { type: 'json' };
 
-const input = { birthInstant: '2001-12-21T09:00:00Z', birthDate: '2001-12-21', timeKnown: 'known',
+const polarInput = { birthInstant: '2001-12-21T09:00:00Z', birthDate: '2001-12-21', timeKnown: 'known',
   latitude: '78.2232', longitude: '15.6267', houseSystem: 'placidus' };
+
+/** The shipped defaults: an ordinary location where Placidus is honoured. */
+const input = { birthInstant: '1990-06-15T13:30:00Z', birthDate: '1990-06-15', timeKnown: 'known',
+  latitude: '51.5074', longitude: '-0.1278', houseSystem: 'placidus' };
+
+test('the shipped defaults produce a receipt with no fallback to explain', () => {
+  const envelope = calculate(input).envelope;
+  assert.equal(envelope.receipt.houses.requested, 'placidus');
+  assert.equal(envelope.receipt.houses.actual, 'placidus');
+  assert.deepEqual(envelope.receipt.resultFlags, []);
+  assert.equal(envelope.receipt.sourceInstant, input.birthInstant);
+  assert.equal(envelope.receipt.instant, '1990-06-15T13:30:00.000Z');
+  assert.equal(envelope.receipt.timeKnown, true);
+});
 const secret = 'SYNTHETIC-SECRET-DO-NOT-EMIT';
 const file = (json, name = 'synthetic.json') => new File([json], name, { type: 'application/json' });
-const fresh = () => calculate(input).envelope;
+const fresh = () => calculate(polarInput).envelope;
 const read = (envelope) => importNatalFile(file(serializeNatalEnvelope(envelope)));
 
 test('fresh natal calculation adds the draft without dropping existing result or metadata', () => {
-  const result = calculate(input);
+  const result = calculate(polarInput);
   const envelope = result.envelope;
   assert.deepEqual(envelope.result, {
     bodies: result.bodies, angles: result.angles, houses: result.houses, aspects: result.aspects,
@@ -25,7 +39,7 @@ test('fresh natal calculation adds the draft without dropping existing result or
   assert.equal(envelope.receipt.houses.requested, 'placidus');
   assert.equal(envelope.receipt.houses.actual, 'whole');
   assert.deepEqual(envelope.receipt.resultFlags, ['polar-fallback']);
-  assert.equal(envelope.receipt.sourceInstant, input.birthInstant);
+  assert.equal(envelope.receipt.sourceInstant, polarInput.birthInstant);
   assert.equal(envelope.receipt.reference, 'supplied-instant');
   assert.equal(envelope.receipt.localResolution, null);
   assert.deepEqual(envelope.receipt.provenance, {
@@ -40,7 +54,7 @@ test('fresh natal calculation adds the draft without dropping existing result or
 });
 
 test('the existing unknown-date calculation explicitly declares UTC noon without inventing source spelling', () => {
-  const envelope = calculate({ ...input, timeKnown: 'unknown' }).envelope;
+  const envelope = calculate({ ...polarInput, timeKnown: 'unknown' }).envelope;
   assert.equal(envelope.receipt.instant, '2001-12-21T12:00:00.000Z');
   assert.equal(envelope.receipt.reference, 'utc-noon');
   assert.equal(envelope.receipt.sourceInstant, null);
@@ -54,14 +68,14 @@ test('the existing unknown-date calculation explicitly declares UTC noon without
 
 test('offset-equivalent fresh results retain the exact captured source spelling', () => {
   const utc = fresh();
-  const offset = calculate({ ...input, birthInstant: '2001-12-21T14:30:00+05:30' }).envelope;
+  const offset = calculate({ ...polarInput, birthInstant: '2001-12-21T14:30:00+05:30' }).envelope;
   assert.deepEqual(offset.result, utc.result);
   assert.equal(offset.receipt.instant, utc.receipt.instant);
   assert.equal(offset.receipt.sourceInstant, '2001-12-21T14:30:00+05:30');
 });
 
 test('transits retain their existing snapshot contract without a misleading natal-only envelope', () => {
-  const result = calculate({ ...input, transitInstant: '2026-09-07T12:00:00Z' }, 'transits');
+  const result = calculate({ ...polarInput, transitInstant: '2026-09-07T12:00:00Z' }, 'transits');
   assert.equal(Object.hasOwn(result, 'envelope'), false);
   assert.equal(result.receipt.transitUtc, '2026-09-07T12:00:00.000Z');
   assert.equal(result.positions.length, 12);
@@ -92,7 +106,7 @@ test('unknown 08:30 is imported and re-exported without passing through the noon
 });
 
 test('valid known-time receipt without coordinates remains importable even though the birth form requires them', async () => {
-  const envelope = createNatalEnvelope(natalChart({ utc: input.birthInstant, timeKnown: true, houseSystem: 'placidus' }));
+  const envelope = createNatalEnvelope(natalChart({ utc: polarInput.birthInstant, timeKnown: true, houseSystem: 'placidus' }));
   const imported = await read(envelope);
   assert.equal(imported.ok, true);
   assert.equal(imported.envelope.receipt.coordinates, null);
@@ -112,7 +126,7 @@ test('imported engine and artifact claims are preserved without upgrading them t
   assert.equal(imported.envelope.receipt.provenance.artifact.sha256, 'a'.repeat(64));
 });
 
-test('redaction excludes precise input, results, extensions, and claimed provenance', async () => {
+test('redaction excludes precise polarInput, results, extensions, and claimed provenance', async () => {
   const envelope = fresh();
   envelope.extensions = { secret };
   envelope.receipt.provenance.runtime = { name: secret };

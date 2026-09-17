@@ -13,3 +13,6 @@ build/
 .cache/
 supabase/.temp/
 .email-preview/
+
+# Scratch checkouts the agent harness creates for isolated subagents.
+.claude/worktrees/

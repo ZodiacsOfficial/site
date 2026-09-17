@@ -1,0 +1,172 @@
+[
+  {
+    "id": "desktop.presets.rendered",
+    "v": "PASS",
+    "d": "4 preset buttons"
+  },
+  {
+    "id": "preset.identical",
+    "v": "PASS",
+    "d": "identical · \"These two records describe the same calculation.\" · 0 explanations"
+  },
+  {
+    "id": "preset.house-system.reproduced",
+    "v": "PASS",
+    "d": "evidence=reproduced · 15 rows · \"The different house system accounts for the house cusps.\""
+  },
+  {
+    "id": "preset.equivalent-instants.reported",
+    "v": "PASS",
+    "d": "reported"
+  },
+  {
+    "id": "preset.ambiguous.abstains",
+    "v": "PASS",
+    "d": "2 candidates: hypothesis,hypothesis"
+  },
+  {
+    "id": "preset.ambiguous.limits",
+    "v": "PASS",
+    "d": "The moment and the place both differ, so what each one contributed cannot be separated from these two files. | Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even w"
+  },
+  {
+    "id": "privacy.no-offsite-requests",
+    "v": "PASS",
+    "d": "none"
+  },
+  {
+    "id": "privacy.no-uploads",
+    "v": "PASS",
+    "d": "no non-GET requests at all"
+  },
+  {
+    "id": "privacy.no-details-in-url",
+    "v": "PASS",
+    "d": "http://127.0.0.1:4361/developers/compare/"
+  },
+  {
+    "id": "privacy.no-persistence",
+    "v": "PASS",
+    "d": "local=[] session=[] cookie=\"\""
+  },
+  {
+    "id": "console.clean",
+    "v": "PASS",
+    "d": "no errors"
+  },
+  {
+    "id": "keyboard.reaches-preset",
+    "v": "PASS",
+    "d": "12 tab stops"
+  },
+  {
+    "id": "keyboard.announced",
+    "v": "PASS",
+    "d": "live region: \"15 values differ.\""
+  },
+  {
+    "id": "offline.after-load",
+    "v": "PASS",
+    "d": "comparison still ran with the network cut"
+  },
+  {
+    "id": "import.real-receipts",
+    "v": "PASS",
+    "d": "differs · evidence=reproduced · columns=What | a.json | b.json | Difference"
+  },
+  {
+    "id": "import.filenames-shown",
+    "v": "PASS",
+    "d": "What | a.json | b.json | Difference"
+  },
+  {
+    "id": "hostile.not-json",
+    "v": "PASS",
+    "d": "junk.json is not a calculation record this page can read."
+  },
+  {
+    "id": "hostile.wrong-shape",
+    "v": "PASS",
+    "d": "wrong.json is not a calculation record this page can read."
+  },
+  {
+    "id": "hostile.duplicate-keys",
+    "v": "INFO",
+    "d": "error=dup.json is not a calculation record this page can read."
+  },
+  {
+    "id": "hostile.oversized",
+    "v": "PASS",
+    "d": "big.json is 70053 bytes; the limit is 65536."
+  },
+  {
+    "id": "hostile.deep-nesting",
+    "v": "PASS",
+    "d": "deep.json is not a calculation record this page can read."
+  },
+  {
+    "id": "hostile.claimed-version.no-false-reproduction",
+    "v": "PASS",
+    "d": "evidence=hypothesis,hypothesis · limits: Reproducing the difference would need engine 99.0.0 and 0.1.1-rc.6 side by side. This page has 0.1.1-rc.6 only, so no recalculation can decide it. | Only the house system is re-run here. A different m"
+  },
+  {
+    "id": "rounding.verdict-says-rounding",
+    "v": "PASS",
+    "d": "\"These two records agree on every value they display. What differs is below the sixth decimal place shown, which is rounding rather than a different calculation.\" · live \"The two records agree to the precision they display.\""
+  },
+  {
+    "id": "rounding.cell-explains-itself",
+    "v": "PASS",
+    "d": "[\"51.507400\",\"51.507400\",\"agrees to displayed precision\"]"
+  },
+  {
+    "id": "presets.none-pressed-for-a-file-comparison",
+    "v": "PASS",
+    "d": "identical=false house-system=false equivalent-instants=false ambiguous=false"
+  },
+  {
+    "id": "export.matches-the-result-on-screen",
+    "v": "PASS",
+    "d": "sides=null note=\"An example comparison. The two records it describes are synt\""
+  },
+  {
+    "id": "stale.error-survives-an-abandoned-run",
+    "v": "PASS",
+    "d": "immediate=\"garbage.json is not a calculation record this page can read.\" after={\"error\":\"garbage.json is not a calculation record this page can read.\",\"result\":false}"
+  },
+  {
+    "id": "reset.clears-everything",
+    "v": "PASS",
+    "d": "result=false names=[]"
+  },
+  {
+    "id": "run-control.reachable-and-explains-itself",
+    "v": "PASS",
+    "d": "\"Choose both records to compare\" focusable=true"
+  },
+  {
+    "id": "mobile.390x844.no-h-scroll",
+    "v": "PASS",
+    "d": "page scrollWidth=390 clientWidth=390 (table 298 in 298)"
+  },
+  {
+    "id": "mobile.390x844.tap-targets",
+    "v": "PASS",
+    "d": "all >= 44px tall"
+  },
+  {
+    "id": "mobile.360x740.no-h-scroll",
+    "v": "PASS",
+    "d": "page scrollWidth=360 clientWidth=360 (table 268 in 268)"
+  },
+  {
+    "id": "mobile.360x740.tap-targets",
+    "v": "PASS",
+    "d": "all >= 44px tall"
+  },
+  {
+    "id": "nojs.presets-are-server-rendered",
+    "v": "PASS",
+    "d": "4 buttons: The same calculation twice | Same birth details, different house system | The same moment, written two ways | Not enough information to say"
+  }
+]

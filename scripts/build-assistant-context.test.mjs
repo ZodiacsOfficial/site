@@ -61,12 +61,13 @@ describe('assistant site context', () => {
       // its twelve Life Path pages come from a dynamic route and are not counted.
       // The void-of-course Moon calendar adds one more English tool and static page.
       // Developer support and runnable examples add two static pages.
-      consumerRoutes: 692,
+      // The chart-difference tool at /developers/compare/ adds one more.
+      consumerRoutes: 693,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 53,
+      staticPages: 54,
       tools: 20,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');

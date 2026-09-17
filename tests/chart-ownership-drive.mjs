@@ -19,24 +19,41 @@ const source = await readFile(sourcePath);
 await writeFile(resolve(run, 'ChartCalculator.source.tsx'), source);
 const dist = resolve(root, 'dist');
 const ts = createRequire(resolve(root, 'package.json'))('typescript');
-const nativeFile = (await readdir(resolve(dist, '_astro'))).find((file) => /^chart-adapter\..*\.js$/.test(file));
-assert.ok(nativeFile);
-const nativeBytes = await readFile(resolve(dist, '_astro', nativeFile));
-const nativeAst = ts.createSourceFile(nativeFile, nativeBytes.toString(), ts.ScriptTarget.Latest, true);
-const nativeFunctions = [];
-function findNative(node) {
-  if (ts.isFunctionDeclaration(node) && node.parameters.length === 1) {
-    const parameter = node.parameters[0].name.getText(nativeAst);
-    const returned = node.body?.statements.find((statement) => ts.isReturnStatement(statement));
-    const expression = returned?.expression;
-    if (expression && ts.isObjectLiteralExpression(expression)) {
-      const properties = new Map(expression.properties.filter(ts.isPropertyAssignment).map((property) => [property.name.getText(nativeAst), property.initializer.getText(nativeAst)]));
-      if (properties.get('input') === parameter && properties.has('bodies') && properties.has('engineVersion')) nativeFunctions.push(node.name.text);
+/**
+ * Find the engine's own natal calculation in whatever chunk the bundler put it.
+ *
+ * It is the one served function that takes the caller's input and returns the
+ * chart built from it with that input passed through unmodified. The shape is
+ * what identifies it; the chunk it lands in is the bundler's business, and it
+ * moves as soon as a second island imports the engine and the shared code is
+ * split out. Pinning a chunk name measured the bundler, not the site.
+ */
+const chunkDir = resolve(dist, '_astro');
+const natalCandidates = [];
+for (const file of (await readdir(chunkDir)).filter((name) => name.endsWith('.js'))) {
+  const source = (await readFile(resolve(chunkDir, file))).toString();
+  const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
+  (function walk(node) {
+    if (ts.isFunctionDeclaration(node) && node.parameters.length === 1 && node.name) {
+      const parameter = node.parameters[0].name.getText(ast);
+      const returned = node.body?.statements.find((statement) => ts.isReturnStatement(statement));
+      const expression = returned?.expression;
+      if (expression && ts.isObjectLiteralExpression(expression)) {
+        const properties = new Map(expression.properties.filter(ts.isPropertyAssignment)
+          .map((property) => [property.name.getText(ast), property.initializer.getText(ast)]));
+        if (properties.get('input') === parameter
+          && properties.has('bodies') && properties.has('engineVersion')) {
+          natalCandidates.push({ file, function: node.name.text });
+        }
+      }
     }
-  }
-  ts.forEachChild(node, findNative);
+    ts.forEachChild(node, walk);
+  })(ast);
 }
-findNative(nativeAst); assert.equal(nativeFunctions.length, 1);
+assert.equal(natalCandidates.length, 1, `expected exactly one served natal calculation, found ${JSON.stringify(natalCandidates)}`);
+const nativeFile = natalCandidates[0].file;
+const nativeBytes = await readFile(resolve(chunkDir, nativeFile));
+const nativeFunctions = [natalCandidates[0].function];
 const nativeIdentity = { file: nativeFile, sha256: sha(nativeBytes), function: nativeFunctions[0], mapping: 'One-argument function returning its exact input plus bodies and engineVersion; parsed from actual served chunk.' };
 const served = {}, requests = [], results = [], contexts = [], releases = [];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.ico': 'image/x-icon', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.webm': 'video/webm' };
