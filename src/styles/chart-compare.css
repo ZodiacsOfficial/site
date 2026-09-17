@@ -1,0 +1,108 @@
+/*
+ * The chart-difference tool at /developers/compare/. Kept out of
+ * calculator.css so a developer page does not pull in the whole calculator
+ * stylesheet for one island.
+ */
+.cmp { margin: clamp(18px, 4vw, 30px) 0; }
+.cmp__core { display: grid; gap: 18px; padding: clamp(18px, 4vw, 24px); }
+.cmp__head { display: grid; gap: 8px; }
+.cmp__head h2 { margin: 0; font-family: var(--font-serif); font-size: var(--text-xl); font-weight: 500; letter-spacing: -0.01em; }
+.cmp__head p, .cmp__note { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.65; }
+/* A fieldset's intrinsic minimum width is min-content, which the file input
+   pushes past the viewport on a phone; min-inline-size lets it shrink. */
+.cmp__presets, .cmp__files {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px;
+  min-inline-size: 0;
+  border: 1px solid var(--hair-2);
+  border-radius: 12px;
+}
+.cmp__presets legend, .cmp__files legend { padding: 0 6px; font-size: 12px; letter-spacing: 0.04em; color: var(--text-2); }
+.cmp__preset-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.cmp__file { display: grid; gap: 4px; min-inline-size: 0; font-size: var(--text-sm); color: var(--text-2); }
+.cmp__file input[type="file"] { max-width: 100%; font-size: 12px; color: var(--muted); }
+.cmp__file input[type="file"]::file-selector-button {
+  margin-right: 10px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.cmp__filename { font-size: 11px; color: var(--faint); overflow-wrap: anywhere; }
+.cmp__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.cmp__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 16px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-full);
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  text-align: center;
+  white-space: normal;
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.cmp__btn:hover { border-color: var(--hair-3); color: var(--text); }
+.cmp__btn:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 2px; }
+.cmp__btn:disabled { opacity: 0.45; cursor: default; }
+.cmp__btn:disabled:hover { border-color: var(--hair-2); color: var(--text-2); }
+.cmp__btn[aria-pressed="true"] { border-color: var(--hair-3); color: var(--text); background: rgba(198, 204, 218, 0.06); }
+.cmp__working { margin: 0; color: var(--muted); font-size: var(--text-sm); }
+.cmp__error { margin: 0; color: var(--sign-aries); font-size: var(--text-sm); }
+.cmp__result { display: grid; gap: 14px; }
+.cmp__verdict { margin: 0; font-family: var(--font-serif); font-size: var(--text-lg); font-weight: 500; color: var(--text); }
+.cmp__why { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.cmp__why li { display: grid; gap: 4px; padding: 12px 14px; border: 1px solid var(--hair-2); border-radius: 12px; }
+.cmp__badge {
+  justify-self: start; padding: 2px 9px; border-radius: var(--r-full);
+  border: 1px solid var(--hair-2); font-family: var(--font-mono);
+  font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+}
+.cmp__badge[data-badge="reproduced"] { border-color: color-mix(in oklab, var(--sign-virgo) 55%, transparent); color: var(--sign-virgo); }
+.cmp__badge[data-badge="hypothesis"] { border-color: color-mix(in oklab, var(--sign-libra) 50%, transparent); color: var(--sign-libra); }
+.cmp__badge[data-badge="unresolved"] { border-color: color-mix(in oklab, var(--sign-aries) 50%, transparent); color: var(--sign-aries); }
+.cmp__statement { margin: 0; color: var(--text); font-size: var(--text-sm); line-height: 1.6; }
+.cmp__evidence-note { margin: 0; color: var(--faint); font-size: 12px; line-height: 1.6; }
+.cmp__limits { padding: 12px 14px; border: 1px solid var(--hair-2); border-radius: 12px; }
+.cmp__limits h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: 0.04em; color: var(--text-2); font-weight: 500; }
+.cmp__limits ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: var(--text-sm); line-height: 1.65; }
+.cmp__table summary { cursor: pointer; color: var(--text-2); font-size: var(--text-sm); }
+.cmp__table table { width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 12px; }
+.cmp__table th, .cmp__table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--hair-1); vertical-align: top; }
+.cmp__table thead th { color: var(--faint); font-weight: 500; letter-spacing: 0.04em; }
+.cmp__table tbody th { color: var(--text-2); font-weight: 400; }
+.cmp__table td { color: var(--text); overflow-wrap: anywhere; }
+.cmp__table tr[data-kind="display"] td, .cmp__table tr[data-kind="display"] th { color: var(--faint); }
+@media (max-width: 560px) {
+  .cmp__table table, .cmp__table thead, .cmp__table tbody, .cmp__table tr, .cmp__table th, .cmp__table td { display: block; }
+  .cmp__table thead { display: none; }
+  .cmp__table tr { padding: 8px 0; border-bottom: 1px solid var(--hair-1); }
+  .cmp__table tbody th { padding: 2px 0 4px; border: 0; }
+  /* Stacked rows lose the header row, so each value states its own column. */
+  .cmp__table td {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: 10px;
+    padding: 2px 0;
+    border: 0;
+  }
+  .cmp__table td::before {
+    content: attr(data-label);
+    color: var(--faint);
+    font-family: var(--font-sans);
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+}

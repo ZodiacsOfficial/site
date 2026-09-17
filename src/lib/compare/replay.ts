@@ -1,0 +1,31 @@
+/**
+ * The local recalculation the comparison uses to promote a guess to a
+ * demonstration. Kept in its own module so the page can load without an engine
+ * and pull this in only when a comparison actually needs it.
+ */
+import { ENGINE_VERSION, natalChart } from '@zodiacs/engine';
+import type { Replay, ReplayRequest, ReplayResult } from './diff';
+
+interface ChartShape {
+  readonly angles: Record<string, number> | null;
+  readonly bodies: readonly { readonly body: string; readonly lon: number }[];
+  readonly houses: { readonly cusps?: readonly number[] } | null;
+}
+
+export const engineVersion: string = ENGINE_VERSION;
+
+export const replay: Replay = (request: ReplayRequest): ReplayResult | null => {
+  try {
+    const chart = natalChart({
+      utc: request.utc,
+      latitude: request.latitude,
+      longitude: request.longitude,
+      houseSystem: request.houseSystem,
+    } as Parameters<typeof natalChart>[0]) as unknown as ChartShape;
+    return { angles: chart.angles, bodies: chart.bodies, cusps: chart.houses?.cusps ?? null };
+  } catch {
+    // A replay that cannot run leaves the explanation a hypothesis, which is
+    // the honest outcome; it must never fail the comparison itself.
+    return null;
+  }
+};
