@@ -377,8 +377,11 @@ describe('regressions an adversarial review found', () => {
       accept(withMetadata), withMovedNode(base, nodeLon(base) + 0.01), live,
     );
 
-    // SemVer ignores build metadata, so this is not a different engine and must
-    // not be offered as a candidate cause for a moved position.
+    // SemVer orders these two version strings equally, so this tool does not
+    // treat the second as a different engine and does not offer it as a
+    // candidate cause for a moved position. That is a rule about how this tool
+    // reads a version string, not a finding that the two builds run the same
+    // code — nothing here can establish that.
     expect(evidenceFor(comparison, 'engine')).toBeNull();
     expect(evidenceFor(comparison, 'engine-build')).toBe('reported');
     expect(evidenceFor(comparison, 'unexplained')).toBe('unresolved');
@@ -401,6 +404,11 @@ describe('a cause never claims a row it could not have caused', () => {
     // Writing the same instant two ways changes nothing computed at all.
     'equivalent-instants': /^(body-|angle-|cusp-|aspect-)/u,
   };
+
+  // A synthetic input with no coordinates at all: the engine accepts it and
+  // returns no angles and no house table.
+  const { latitude: _lat, longitude: _lon, ...PLACELESS } = ORDINARY;
+  const NO_PLACE = PLACELESS as unknown as typeof ORDINARY;
 
   const cases = [
     { name: 'different place and different house system',
@@ -428,6 +436,18 @@ describe('a cause never claims a row it could not have caused', () => {
     { name: 'an unknown birth time and a different house system at once',
       left: ORDINARY,
       right: { ...ORDINARY, houseSystem: 'whole', timeKnown: false } as const },
+    // The same defect through the other absence reason. An AI review pointed
+    // out that every unknown-time pair above keeps its coordinates, so a
+    // receipt with no place at all — which also has no ascendant and no house
+    // table — still left `angles-presence` and `cusps-shape` claimed by
+    // nobody, with the cause printed above them. `idsIn` sees only numeric
+    // rows, and a missing place leaves none.
+    { name: 'a chart with a place against one without',
+      left: ORDINARY,
+      right: NO_PLACE },
+    { name: 'a missing place and a different house system at once',
+      left: ORDINARY,
+      right: { ...NO_PLACE, houseSystem: 'whole' } as const },
   ];
 
   for (const scenario of cases) {
@@ -457,4 +477,213 @@ describe('a cause never claims a row it could not have caused', () => {
       expect(evidenceFor(comparison, 'unexplained'), 'fell back to unresolved').toBeNull();
     });
   }
+});
+
+/**
+ * An audit asked whether "reproduced" can be reached without establishing that
+ * the recalculation is entitled to speak for both files. It can, in four ways,
+ * and each one is a case here. Every fixture goes through the engine's own
+ * parser first: a record the parser refuses can never reach the comparison, so
+ * a counterexample built out of one would prove nothing.
+ */
+describe('what a local recalculation has to establish before it is a cause', () => {
+  const T1 = '1990-06-15T13:30:00Z';
+  const T2 = '1990-06-15T14:30:00Z';
+  const at = (utc: string, houseSystem: 'placidus' | 'whole') =>
+    buildEnvelope({ ...ORDINARY, utc, houseSystem });
+
+  /** Parser-accepted, or the fixture is not an input this tool can receive. */
+  const accepted = (raw: unknown, label: string): NatalEnvelope => {
+    const parsed = parseNatalEnvelope(JSON.stringify(raw));
+    if (!parsed.ok) throw new Error(`${label} is not a record the parser accepts: ${parsed.code}`);
+    return parsed.envelope;
+  };
+  const edited = (envelope: NatalEnvelope, change: (copy: any) => void): any => {
+    const copy = JSON.parse(JSON.stringify(envelope));
+    change(copy);
+    return copy;
+  };
+  const houseSystemEvidence = (left: NatalEnvelope, right: NatalEnvelope) =>
+    compareEnvelopes(left, right, live).explanations.find((item) => item.id === 'house-system')?.evidence ?? null;
+
+  it('reproduces an ordinary house-system difference, which is the case that must keep working', () => {
+    const comparison = compareEnvelopes(at(T1, 'placidus'), at(T1, 'whole'), live);
+    const houseSystem = comparison.explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.evidence).toBe('reproduced');
+    expect(houseSystem?.detail).toMatch(/its own declared inputs/);
+    expect(comparison.differences.filter((row) => /^cusp-\d+$/.test(row.id))).toHaveLength(12);
+  });
+
+  it('withholds it when the other receipt names an engine this installation does not have', () => {
+    // The values are genuine — they are exactly what the installed engine
+    // produces — but the receipt says they came from somewhere else. Matching
+    // them demonstrates nothing about why these two files differ.
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    expect(houseSystemEvidence(at(T1, 'placidus'), foreign)).toBe('hypothesis');
+  });
+
+  it('gives the same verdict whichever file is passed first', () => {
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    const genuine = at(T1, 'placidus');
+    expect(houseSystemEvidence(genuine, foreign)).toBe(houseSystemEvidence(foreign, genuine));
+
+    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted');
+    expect(houseSystemEvidence(drifted, at(T1, 'whole'))).toBe(houseSystemEvidence(at(T1, 'whole'), drifted));
+  });
+
+  /**
+   * This expectation was reversed, deliberately, and the reason is worth more
+   * than the assertion.
+   *
+   * The first attempt at this audit made a differing build claim refuse the
+   * replay outright. A review showed that contradicted two things at once: the
+   * rule stated a few hundred lines above it in `diff.ts` — build metadata does
+   * not make a different engine, and such a pair must not "be refused a replay
+   * as if they were" — and the response itself, which printed "build metadata
+   * does not change which version a receipt was produced by" beside a limit
+   * saying the two claims made the replay unusable. Both sentences in one
+   * answer, saying opposite things.
+   *
+   * What actually establishes that a recalculation may speak for a receipt is
+   * the baseline below: the receipt's own values, checked against the receipt's
+   * own declared inputs. A claim printed inside the file establishes nothing
+   * either way — which is the audit's own instruction. So the claim is recorded
+   * in `limits`, where an unauthenticated assertion belongs, and the verdict
+   * rests on the arithmetic.
+   */
+  it('records a differing build claim as a limit rather than refusing the replay', () => {
+    const label = (envelope: NatalEnvelope, meta: string) => accepted(
+      edited(envelope, (o) => { o.receipt.engine.version = `${ENGINE_VERSION}+${meta}`; }), meta,
+    );
+    const different = compareEnvelopes(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.b'), live);
+    expect(evidenceFor(different, 'house-system')).toBe('reproduced');
+    expect(different.limits.join(' ')).toMatch(/each claims a different build of it/);
+    // Both naming the same build says nothing either, and is not remarked on.
+    const same = compareEnvelopes(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.a'), live);
+    expect(evidenceFor(same, 'house-system')).toBe('reproduced');
+    expect(same.limits.join(' ')).not.toMatch(/claims a different build/);
+  });
+
+  it('does not treat a receipt that claims no build as claiming a different one', () => {
+    // One file carrying build metadata and the other carrying none is not a
+    // disagreement: the second has not said anything to disagree with. An
+    // earlier version of this gate compared the two as strings and refused the
+    // replay, then described the pair in a sentence that was simply false.
+    const labelled = accepted(
+      edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = `${ENGINE_VERSION}+2000377`; }), 'labelled',
+    );
+    const comparison = compareEnvelopes(at(T1, 'placidus'), labelled, live);
+    expect(evidenceFor(comparison, 'house-system')).toBe('reproduced');
+    expect(comparison.limits.join(' ')).not.toMatch(/claims a different build/);
+    // The difference is still reported, by the cause that owns it.
+    expect(evidenceFor(comparison, 'engine-build')).toBe('reported');
+  });
+
+  /**
+   * The counterexample that forced the baseline to widen.
+   *
+   * Whole-sign cusps are quantised to sign boundaries, so they survive an hour
+   * of drift in the declared instant without moving. A baseline that checks the
+   * cusps alone therefore passes trivially on a record whose instant was
+   * rewritten, and the pair reached "reproduced" while sixty-five rows sat in
+   * the unresolved bucket. The angles and the body longitudes move continuously
+   * and are what discriminate, so the baseline checks every value the replay
+   * also produces.
+   */
+  it('withholds it when only the quantised cusps survive a rewritten instant', () => {
+    const whole = (utc: string) => buildEnvelope({ ...ORDINARY, utc, houseSystem: 'whole' });
+    // The premise, stated rather than assumed: these cusps really are identical.
+    expect(replay({ ...ORDINARY, utc: T1, houseSystem: 'whole', timeKnown: true })?.cusps)
+      .toEqual(replay({ ...ORDINARY, utc: T2, houseSystem: 'whole', timeKnown: true })?.cusps);
+    const drifted = accepted(edited(whole(T2), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted-whole');
+    for (const comparison of [
+      compareEnvelopes(drifted, at(T1, 'placidus'), live),
+      compareEnvelopes(at(T1, 'placidus'), drifted, live),
+    ]) {
+      expect(evidenceFor(comparison, 'house-system')).toBe('hypothesis');
+      expect(comparison.limits.join(' ')).toMatch(/could not be reproduced from the inputs it declares/);
+    }
+  });
+
+  it('withholds it when the declared place is not the one the values came from', () => {
+    // The same hole reached through the coordinates instead of the instant.
+    const drifted = accepted(
+      edited(buildEnvelope({ ...ORDINARY, utc: T1, houseSystem: 'whole', longitude: 2.8722 }),
+        (o) => { o.receipt.coordinates.longitude = ORDINARY.longitude; }), 'drifted-place',
+    );
+    expect(houseSystemEvidence(drifted, at(T1, 'placidus'))).toBe('hypothesis');
+  });
+
+  it('does not deny a house-system difference it is claiming in the same breath', () => {
+    // When one side has no house table the cause says so. An AI review found it
+    // saying so over a pair that ALSO requested different systems, adding "the
+    // house system is not" the difference on top of a row recording exactly
+    // that difference.
+    const { latitude: _lat, longitude: _lon, ...placeless } = ORDINARY;
+    const noPlace = buildEnvelope({ ...placeless, houseSystem: 'whole' } as unknown as typeof ORDINARY);
+    const houseSystem = compareEnvelopes(buildEnvelope({ ...ORDINARY, houseSystem: 'placidus' }), noPlace, live)
+      .explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.statement).toBe('The two charts asked for different house systems.');
+    expect(houseSystem?.detail).not.toMatch(/the house system is not/);
+    // …and it still does not claim the cusps are equal when one side has none.
+    expect(houseSystem?.detail).toMatch(/no house table/);
+  });
+
+  it('names every foreign engine, not whichever one it met first', () => {
+    const foreign = (envelope: NatalEnvelope, version: string) => accepted(
+      edited(envelope, (o) => { o.receipt.engine.version = version; }), version,
+    );
+    const comparison = compareEnvelopes(
+      foreign(at(T1, 'placidus'), '98.0.0'), foreign(at(T1, 'whole'), '99.0.0'), live,
+    );
+    const limit = comparison.limits.find((line) => line.includes('Local recalculation runs engine')) ?? '';
+    expect(limit).toMatch(/98\.0\.0/);
+    expect(limit).toMatch(/99\.0\.0/);
+  });
+
+  it('withholds it when a receipt’s own values do not follow from the inputs it declares', () => {
+    // The parser accepts a record whose declared instant is not the one its
+    // values came from: it checks internal coherence, not that the result
+    // follows from the inputs. Without a baseline the comparison called this
+    // pair reproduced, while the house system explained none of it.
+    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted');
+    const comparison = compareEnvelopes(drifted, at(T1, 'whole'), live);
+    expect(comparison.explanations.find((item) => item.id === 'house-system')?.evidence).toBe('hypothesis');
+    expect(comparison.limits.join(' ')).toMatch(/could not be reproduced from the inputs it declares/);
+  });
+
+  it('still says what the installed engine does, when only the identity is unestablished', () => {
+    // Withholding the word "reproduced" must not throw away the useful part.
+    // The arithmetic did work; what could not be established is whose engine it
+    // speaks for, and the two statements are kept apart.
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    const houseSystem = compareEnvelopes(at(T1, 'placidus'), foreign, live)
+      .explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.evidence).toBe('hypothesis');
+    expect(houseSystem?.detail).toMatch(/fact about this engine, not a demonstration about these two files/);
+  });
+
+  it('cannot be given two records that disagree about conventions', () => {
+    // The audit asked for a differing-conventions case. It cannot be built:
+    // this draft implements exactly one convention set, so a record declaring
+    // any other is refused before the comparison sees it. Recorded as a
+    // refutation rather than left as an untested worry.
+    for (const change of [
+      (o: any) => { o.receipt.conventions.angles = 'other-convention'; },
+      (o: any) => { o.receipt.conventions.zodiac = 'sidereal'; },
+      (o: any) => { o.receipt.coverage.broadDateRange = 'certified'; },
+    ]) {
+      const parsed = parseNatalEnvelope(JSON.stringify(edited(at(T1, 'placidus'), change)));
+      expect(parsed.ok ? 'accepted' : parsed.code).toBe('unsupported_feature');
+    }
+  });
 });

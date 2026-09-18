@@ -35,8 +35,11 @@ dashboard change rather than a code change.
    - The same on one localized profile page.
 4. Record the resulting deployment id beside the pre-activation one below.
 
-The deployment that carries this code with the flag still unset is
-`dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` (main `52ae6eeb`), verified live: `/profile/`
+The deployment used as the flag-off verification snapshot, taken at release, is
+`dpl_CZsZBKawNkeiKMuF1NwJSWwsdsAS` (main `52ae6eeb`). Production has advanced
+past it since — as of 2026-09-18 the current production deployment is
+`dpl_EzDeW584ExyJGwmo6fvhiPQaqLjK` — which changes nothing below, because
+`52ae6eeb` is a floor rather than a target. At the time it was verified live: `/profile/`
 in en, es and ru and `/birth-chart/` all return 200 and carry no
 `data-saved-records`, no `data-keep-calculation-record` and no records heading,
 and the deployed `/_astro/SavedRecordsPanel.--giIpmA.js` is byte-identical
@@ -61,10 +64,14 @@ ordinary rollback target.
 
 ## The blocker, exactly
 
-The Vercel tools available to this session are read-only for project
-configuration: `get_project`, `list_deployments`, `list_projects`,
-`get_deployment_build_logs`, `get_runtime_logs` and the deployment-protection
-pair. There is **no environment-variable tool**. The Vercel CLI is not installed
+The Vercel surface available to this session has **no environment-variable
+tool**. All 37 tools were enumerated and none creates or updates one. The reads
+that are useful here are `get_project`, `list_deployments`, `list_projects`,
+`get_deployment_build_logs`, `get_runtime_logs` and
+`get_project_deployment_protection`. The surface is not read-only overall —
+`pause_project`, `unpause_project` and `update_project_deployment_protection`
+do write project configuration — it simply has no way to set a variable. The
+Vercel CLI is not installed
 here, `~/.vercel` does not exist, and there is no `VERCEL_TOKEN`,
 `VERCEL_ORG_ID` or `VERCEL_PROJECT_ID` in the environment.
 

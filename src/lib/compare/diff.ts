@@ -5,9 +5,14 @@
  * Two rules shape everything here. Differences are facts read out of the two
  * files and are listed before any prose. Explanations are ranked by the
  * evidence that actually supports them, and the strongest rank — "reproduced" —
- * is only ever reached by recalculating locally with the same engine version
- * that produced the receipt. A newer engine recomputing an older receipt is a
- * different calculation, not the original one, and is never presented as one.
+ * means one thing: the engine installed here, re-running the inputs each
+ * receipt declares, produced the values that receipt records, and changing the
+ * one named setting turned each chart into the other.
+ *
+ * That is a statement about this installation and these values. It is not a
+ * statement about where either file came from, and nothing here can be. A
+ * receipt naming a version this installation does not have is never re-run and
+ * presented as the original — recomputing it would be a different calculation.
  */
 import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import {
@@ -106,12 +111,104 @@ function engineVersionOf(envelope: NatalEnvelope): string | null {
 }
 
 /**
- * The part of a version that decides precedence. SemVer §10 ignores build
- * metadata, so `0.1.1-rc.6+abc` and `0.1.1-rc.6` are the same engine and must
- * not be reported as different ones — or be refused a replay as if they were.
+ * The part of a version string that decides SemVer precedence, with build
+ * metadata dropped.
+ *
+ * Equal precedence is an ordering fact, not executable identity. SemVer §10
+ * says `0.1.1-rc.6+abc` and `0.1.1-rc.6` order equally; it does not say the two
+ * builds run the same code, and a version string is in any case a claim a file
+ * makes about itself. So this decides one narrow thing — which receipts this
+ * installation will re-run at all — and nothing downstream rests on the string.
+ * What a verdict rests on is the replay's own result.
  */
 function enginePrecedence(version: string | null): string | null {
   return version === null ? null : version.split('+')[0];
+}
+
+/**
+ * What a receipt claims about the specific build it came from, if it claims
+ * anything at all: `null` when it makes no such claim.
+ *
+ * None of this is authenticated, and a claim is never evidence that two files
+ * came from the same code. It is read for one purpose only — to say out loud,
+ * in `limits`, when two files that both make a claim make different ones. It is
+ * deliberately NOT a gate on the verdict. SemVer build metadata is not a
+ * different engine (see `enginePrecedence`), and a file that claims nothing has
+ * not claimed something different from one that does. What actually establishes
+ * that a recalculation may speak for a receipt is the baseline below, which
+ * checks the receipt's own values against its own declared inputs.
+ */
+function claimedBuild(envelope: NatalEnvelope): string | null {
+  const receipt = envelope.receipt as {
+    engine?: { version?: unknown };
+    provenance?: { artifact?: { sha256?: unknown; packageVersion?: unknown } } | null;
+  };
+  const artifact = receipt.provenance?.artifact;
+  const sha256 = typeof artifact?.sha256 === 'string' ? artifact.sha256 : null;
+  const build = typeof receipt.engine?.version === 'string' && receipt.engine.version.includes('+')
+    ? receipt.engine.version.slice(receipt.engine.version.indexOf('+') + 1) : null;
+  if (sha256 === null && build === null) return null;
+  return JSON.stringify([build, sha256]);
+}
+
+function cuspsOf(envelope: NatalEnvelope): readonly number[] | null {
+  const cusps = (envelope.result as { houses?: { cusps?: unknown } }).houses?.cusps;
+  return Array.isArray(cusps) && cusps.every((value) => typeof value === 'number') ? cusps : null;
+}
+
+function anglesOf(envelope: NatalEnvelope): Record<string, number> | null {
+  const angles = (envelope.result as { angles?: unknown }).angles;
+  return angles !== null && typeof angles === 'object' ? angles as Record<string, number> : null;
+}
+
+function bodyLongitudesOf(source: { bodies?: readonly { body: string; lon?: unknown }[] } | null): Map<string, number> {
+  return new Map((source?.bodies ?? [])
+    .filter((row) => typeof row.lon === 'number')
+    .map((row) => [row.body, row.lon as number]));
+}
+
+/** Whether two cusp lists agree at every index, by the circular rules. */
+function cuspsAgree(a: readonly number[] | null | undefined, b: readonly number[] | null | undefined, indices: readonly number[]): boolean {
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) return false;
+  return indices.every((index) => index >= 0 && index < a.length
+    && compareAngles(a[index], b[index]) !== 'different');
+}
+
+/**
+ * Whether a receipt's own recorded values follow from the inputs it declares,
+ * recalculated here.
+ *
+ * The cusps alone cannot answer this. Whole-sign cusps are quantised to sign
+ * boundaries, so they survive an hour of drift in the declared instant
+ * unchanged — a receipt whose instant was rewritten reproduces its own
+ * whole-sign cusps trivially. The angles and the body longitudes do not: they
+ * move continuously with the moment and the place, which is what makes them the
+ * discriminating evidence here. Every value a receipt carries that the replay
+ * also produces is checked, not a conveniently matching subset.
+ */
+function reproducesItsOwnValues(envelope: NatalEnvelope, replayed: ReplayResult | null): boolean {
+  if (!replayed) return false;
+  const cusps = cuspsOf(envelope);
+  if (cusps !== null) {
+    if (!cuspsAgree(replayed.cusps, cusps, cusps.map((_, index) => index))) return false;
+  }
+  const angles = anglesOf(envelope);
+  if (angles !== null) {
+    const replayedAngles = replayed.angles;
+    if (replayedAngles === null) return false;
+    for (const [key, value] of Object.entries(angles)) {
+      if (typeof value !== 'number') continue;
+      const mine = replayedAngles[key];
+      if (typeof mine !== 'number' || compareAngles(mine, value) === 'different') return false;
+    }
+  }
+  const recorded = bodyLongitudesOf(envelope.result as { bodies?: readonly { body: string; lon?: unknown }[] });
+  const produced = bodyLongitudesOf(replayed as unknown as { bodies?: readonly { body: string; lon?: unknown }[] });
+  for (const [body, lon] of recorded) {
+    const mine = produced.get(body);
+    if (typeof mine !== 'number' || compareAngles(mine, lon) === 'different') return false;
+  }
+  return true;
 }
 
 function replayInputOf(envelope: NatalEnvelope): ReplayRequest | null {
@@ -299,60 +396,129 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
 
   // House system: a metadata difference that can be promoted to a demonstrated
   // cause by recalculating one side with the other's system and nothing else.
+  //
+  // Three things have to hold before that word is earned, and an audit found the
+  // rule asking for one of them. "The installed engine produces these numbers"
+  // and "this setting explains why these two files disagree" are different
+  // claims, and only the second one is a cause.
+  //
+  //   1. Both receipts name a version this installation actually has, so both
+  //      can be re-run at all. Checking only the first one let a second receipt
+  //      claiming an engine nobody has be matched against a local recalculation
+  //      and called reproduced — and made the verdict depend on which file was
+  //      passed first. Naming the same version is not evidence that the two
+  //      files came from the same build; it is only what makes a replay
+  //      meaningful rather than a different calculation.
+  //   2. Each receipt's own recorded values — cusps, angles and body positions —
+  //      follow from its own declared inputs. Without this baseline the tool
+  //      will happily "reproduce" a difference between a genuine chart and one
+  //      whose values came from another moment entirely. The cusps alone cannot
+  //      carry it: whole-sign cusps sit on sign boundaries and survive an hour
+  //      of drift in the declared instant unchanged.
+  //   3. Changing only the house system turns each chart into the other, in
+  //      both directions, so the answer cannot depend on argument order.
+  //
+  // A differing build claim is NOT a fourth gate. It is recorded in `limits`
+  // below, because it is an unauthenticated assertion either way: it cannot
+  // grant the verdict and it is not evidence enough to refuse the arithmetic.
   if (has('houses-requested') || has('houses-actual') || has('houses-system')) {
-    const requested = (right.receipt as any).houses?.requested;
-    const input = replayInputOf(left);
     // Only the rows that actually moved are up for explanation. A pair whose
-    // angles and cusps are identical — two polar charts that both fell back to
-    // whole sign, say — has nothing here for a house system to account for, and
-    // a replay that "matches" values that never moved demonstrates nothing.
+    // cusps are identical — two polar charts that both fell back to whole sign,
+    // say — has nothing here for a house system to account for, and a replay
+    // that "matches" values that never moved demonstrates nothing.
     // A house system moves the cusps. It cannot move the angles: the ascendant
     // and midheaven come from the time and the place, and every system in this
-    // engine derives from them — two charts differing only in house system have
-    // identical angles, which is why `angle-` rows are held out of what this
-    // cause may claim, in both branches. Offering it as "the obvious candidate
-    // for the angle differences" was a hypothesis refuted by a recalculation
-    // the comparison already knows how to run.
+    // engine derives from them, which is why `angle-` rows are held out of what
+    // this cause may claim in both branches.
     const movedCusps = idsIn('Houses').filter((id) => id.startsWith('cusp-'));
-    let promoted = false;
-    if (canReplayLeft && input && typeof requested === 'string' && movedCusps.length > 0) {
-      const replayed = replay!({ ...input, houseSystem: requested });
-      const targetCusps = (right.result as any).houses?.cusps as number[] | undefined;
-      if (replayed) {
-        // The replay must have returned the values that moved: a null cusp list
-        // cannot demonstrate a cusp difference, and matching values that never
-        // moved is not evidence. A pair that also differs in moment or place
-        // fails here, because replaying the first chart's own inputs cannot
-        // land on the second chart's cusps.
-        const cuspsReproduced = Boolean(
-          Array.isArray(replayed.cusps) && Array.isArray(targetCusps)
-          && replayed.cusps.length === targetCusps.length
-          && movedCusps.every((id) => {
-            const index = Number(id.slice('cusp-'.length)) - 1;
-            return compareAngles(replayed.cusps![index], targetCusps[index]) !== 'different';
-          }),
-        );
-        if (cuspsReproduced) {
-          promoted = true;
-          explanations.push({
-            id: 'house-system', evidence: 'reproduced',
-            statement: 'The different house system accounts for the house cusps.',
-            covers: [...movedCusps,
-              ...['houses-requested', 'houses-actual', 'houses-system'].filter(has)],
-            detail: `Recalculating the first chart's own inputs with ${requested} houses, changing nothing else, reproduces the second chart's house cusps on engine ${available}.`,
-          });
-        }
+    const movedIndices = movedCusps.map((id) => Number(id.slice('cusp-'.length)) - 1);
+    const rightPrecedence = enginePrecedence(rightEngine);
+    const availablePrecedence = enginePrecedence(available);
+
+    /** Gate 1 and 2: whose engine this recalculation is entitled to speak for. */
+    const identity: string | null = (() => {
+      if (!replay || !available) return 'No local engine was available, so nothing could be recalculated.';
+      if (leftPrecedence === null || rightPrecedence === null) {
+        return 'One of the receipts names no engine version, so a local recalculation cannot stand in for it.';
+      }
+      if (leftPrecedence !== availablePrecedence || rightPrecedence !== availablePrecedence) {
+        // Name every foreign receipt, not the first one found: which side was
+        // passed first must not decide what the reader is told.
+        const foreign = [leftEngine, rightEngine]
+          .filter((version, index) => (index === 0 ? leftPrecedence : rightPrecedence) !== availablePrecedence && version !== null);
+        const named = foreign.length > 1 && foreign[0] !== foreign[1]
+          ? `the two receipts name ${foreign[0]} and ${foreign[1]}`
+          : foreign.length > 1
+            ? `both receipts name ${foreign[0]}`
+            : `one receipt names ${foreign[0]}`;
+        return `Local recalculation runs engine ${available}, and ${named}. `
+          + 'Recalculating it here would be a different calculation, not the one it records, so nothing is demonstrated about why these two differ.';
+      }
+      return null;
+    })();
+
+    // A different claimed build is not a different engine, and it is not a
+    // reason to refuse a replay — SemVer says build metadata does not change
+    // which version produced a file, and this module says the same a few
+    // hundred lines up. What it is, is worth saying out loud. It is recorded
+    // only when both files actually make a claim: one that claims nothing has
+    // not claimed something different.
+    const leftBuild = claimedBuild(left);
+    const rightBuild = claimedBuild(right);
+    const buildClaims = leftBuild !== null && rightBuild !== null && leftBuild !== rightBuild
+      ? 'Both receipts name the same engine version and each claims a different build of it. Neither claim is authenticated here, '
+        + 'and neither is what this recalculation rests on: what was checked is that each file\u2019s own values follow from its own declared inputs.'
+      : null;
+
+    const leftInput = replayInputOf(left);
+    const rightInput = replayInputOf(right);
+    const leftCusps = cuspsOf(left);
+    const rightCusps = cuspsOf(right);
+
+    // The arithmetic is worked whatever the identity gate said, because a
+    // qualified observation about what this engine produces is still useful
+    // when the identity behind it cannot be established.
+    let baselineFailure: string | null = null;
+    let controlledMatch = false;
+    if (replay && movedCusps.length > 0 && leftInput && rightInput && leftCusps && rightCusps) {
+      const leftBaseline = reproducesItsOwnValues(left, replay({ ...leftInput }));
+      const rightBaseline = reproducesItsOwnValues(right, replay({ ...rightInput }));
+      if (!leftBaseline || !rightBaseline) {
+        const side = !leftBaseline && !rightBaseline ? 'Neither receipt\u2019s'
+          : !leftBaseline ? 'The first receipt\u2019s' : 'The second receipt\u2019s';
+        baselineFailure = `${side} own recorded values \u2014 cusps, angles and body positions \u2014 could not be reproduced from the inputs it declares, `
+          + 'recalculated here on the engine it names. Its values describe a different calculation from the one it records, so nothing downstream of it can be demonstrated.';
+      } else {
+        const forward = cuspsAgree(replay({ ...leftInput, houseSystem: rightInput.houseSystem })?.cusps, rightCusps, movedIndices);
+        const backward = cuspsAgree(replay({ ...rightInput, houseSystem: leftInput.houseSystem })?.cusps, leftCusps, movedIndices);
+        controlledMatch = forward && backward;
       }
     }
-    if (!promoted) {
+    const promoted = identity === null && baselineFailure === null && controlledMatch && movedCusps.length > 0;
+
+    if (promoted) {
+      explanations.push({
+        id: 'house-system', evidence: 'reproduced',
+        statement: 'The different house system accounts for the house cusps.',
+        covers: [...movedCusps, ...['houses-requested', 'houses-actual', 'houses-system'].filter(has)],
+        detail: `Each chart's own recorded values were reproduced from its own declared inputs on engine ${available}, `
+          + 'and changing only the house system turns each one into the other, in both directions.',
+      });
+      if (buildClaims !== null) limits.push(buildClaims);
+    } else {
       const unexplainedCusps = movedCusps.length > 0;
       // One side having no house table at all is not two charts using different
       // systems, and saying so of a pair that agreed on the system — which is
       // what an unknown birth time produces — invites exactly the wrong
       // conclusion. The rows still need a claimant, so this keeps the coverage
       // and corrects the sentence.
-      const absent = ((left.receipt as any).houses?.actual ?? null) === null
-        || ((right.receipt as any).houses?.actual ?? null) === null;
+      // …but only when the two files agreed on what to ask for. A pair that
+      // requested different systems AND lost one house table has both
+      // differences in it, and saying "the house system is not the difference"
+      // over a row that records exactly that difference is false.
+      const absent = (((left.receipt as any).houses?.actual ?? null) === null
+        || ((right.receipt as any).houses?.actual ?? null) === null)
+        && !has('houses-requested');
       explanations.push({
         id: 'house-system', evidence: unexplainedCusps ? 'hypothesis' : 'reported',
         statement: absent
@@ -366,10 +532,25 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
         ],
         detail: absent
           ? 'Whatever left one chart without houses is the difference here; the house system is not.'
-          : unexplainedCusps
-            ? 'This is a candidate for the cusp differences, but it was not reproduced here, so it stays a hypothesis. It accounts for no angle: those come from the time and the place.'
-            : 'The cusps are the same in both files, so this difference changed nothing that was computed.',
+          : !unexplainedCusps
+            ? (has('cusps-shape') || has('houses-absence')
+              ? 'One chart has no house table, so there are no cusps on both sides to compare here.'
+              : 'The cusps are the same in both files, so this difference changed nothing that was computed.')
+            : controlledMatch
+              // The useful qualified case: the arithmetic worked, and only the
+              // identity behind it could not be established. Saying what the
+              // installed engine produces is not the same as saying this
+              // setting explains the original discrepancy, and the difference
+              // is the whole reason this stays a hypothesis.
+              ? `The engine installed here, ${available}, does turn each chart's declared inputs into the other chart's cusps `
+                + 'when only the house system changes, in both directions. That is a fact about this engine, not a demonstration about these two files, for the reason stated below.'
+              : 'This is a candidate for the cusp differences, but it was not reproduced here, so it stays a hypothesis. It accounts for no angle: those come from the time and the place.',
       });
+      if (unexplainedCusps) {
+        if (baselineFailure !== null) limits.push(baselineFailure);
+        if (identity !== null) limits.push(identity);
+        if (buildClaims !== null) limits.push(buildClaims);
+      }
     }
   }
 
@@ -385,12 +566,32 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     });
   }
 
-  if ((has('latitude') || has('longitude')) && (idsIn('Angles').length > 0 || idsIn('Houses').length > 0)) {
+  // One side having no place at all is the same difference wearing a different
+  // shape: no coordinates means no ascendant and no house table, so what it
+  // leaves behind is presence rows rather than moved numbers. `idsIn` sees only
+  // numeric rows, so such a pair used to reach no cause at all and its absence
+  // rows were reported as accounted for by nothing.
+  const placeMissing = ((left.receipt as any).coordinates ?? null) === null
+    || ((right.receipt as any).coordinates ?? null) === null;
+  if ((has('latitude') || has('longitude'))
+    && (idsIn('Angles').length > 0 || idsIn('Houses').length > 0
+      || (placeMissing && (has('angles-presence') || has('cusps-shape'))))) {
     explanations.push({
-      id: 'location', evidence: 'hypothesis',
-      statement: 'The two charts are for different places, which moves the angles and houses.',
-      covers: [...['latitude', 'longitude'].filter(has), ...downstream(['Angles', 'Houses'])],
-      detail: 'Body longitudes are geocentric and barely move with location; the angles and house cusps depend on it directly.',
+      id: 'location', evidence: placeMissing ? 'reported' : 'hypothesis',
+      statement: placeMissing
+        ? 'One chart has a place and the other does not.'
+        : 'The two charts are for different places, which moves the angles and houses.',
+      covers: [
+        ...['latitude', 'longitude'].filter(has),
+        ...downstream(['Angles', 'Houses']),
+        // `houses-absence` stays with the house-system cause, which always
+        // fires when one side lost its table; claiming it twice would print the
+        // same row under two explanations.
+        ...(placeMissing ? ['angles-presence', 'cusps-shape'].filter(has) : []),
+      ],
+      detail: placeMissing
+        ? 'Without coordinates there is no ascendant and no house table, so those values are missing rather than different.'
+        : 'Body longitudes are geocentric and barely move with location; the angles and house cusps depend on it directly.',
     });
   }
 
@@ -491,10 +692,17 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   if (sameEngine && computed.length > 0) {
     limits.push('Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy.');
   }
-  if (!canReplayLeft && computed.length > 0) {
-    limits.push(available === null
+  // Fires for whichever side cannot be replayed, not only the first. Checking
+  // the left alone meant swapping the two files changed which limits appeared.
+  const unreplayable = [
+    ['first', leftEngine, leftPrecedence] as const,
+    ['second', rightEngine, enginePrecedence(rightEngine)] as const,
+  ].filter(([, , precedence]) => precedence === null || precedence !== enginePrecedence(available));
+  if (unreplayable.length > 0 && computed.length > 0) {
+    limits.push(available === null || replay === null
       ? 'No local engine was available, so nothing was reproduced by recalculation.'
-      : `Local recalculation uses engine ${available}; the first receipt names ${leftEngine ?? 'no engine'}, so replaying it would be a different calculation, not the original.`);
+      : `Local recalculation uses engine ${available}; the ${unreplayable.map(([side, version]) => `${side} receipt names ${version ?? 'no engine'}`).join(' and the ')}, `
+        + 'so replaying it here would be a different calculation, not the original.');
   }
   return { explanations, limits };
 }

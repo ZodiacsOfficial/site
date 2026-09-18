@@ -1,3 +1,9 @@
+> **Superseded.** [`TRIAL-DRAFT.md`](TRIAL-DRAFT.md) replaces this draft: it
+> carries the five-step protocol with exact expected values measured against the
+> published rc.3 archive, and it keeps every constraint set here. This file is
+> left in place as the record of what the invitation looked like first. Neither
+> has been sent.
+
 # Builder invitation — prepared, not sent
 
 Nothing here has been posted, sent or published. No outreach was performed, no

@@ -71,9 +71,10 @@ Historical source-specific evidence remains linked from [STATUS](STATUS.md).
   off → on → off → on flag sequence is gated
   ([ROLLBACK](evidence/l3-saved-records/ROLLBACK.md)).
 - [ ] **L3 activation.** `PUBLIC_SAVED_RECORDS_ENABLED=1` in the Vercel project,
-  then redeploy and verify the live journeys. **Blocked here:** the Vercel tools
-  in this session are read-only for project configuration, there is no Vercel CLI
-  or token, and baking the flag into the repository would break the documented
+  then redeploy and verify the live journeys. **Blocked here:** the Vercel
+  surface in this session has no environment-variable tool — all 37 were
+  enumerated and none creates or updates one — there is no Vercel CLI or token,
+  and baking the flag into the repository would break the documented
   rollback and turn the flag-off CI build into a flag-on one. Steps, verification
   and the smallest missing action:
   [ACTIVATION](evidence/l3-saved-records/ACTIVATION.md). Still open and recorded
@@ -230,6 +231,13 @@ resolves.
   approved contact path; onboarding tasks, a feedback template and a prospect
   packet prepared but not sent; an adoption ledger separating prospect, trial,
   independently live, retained and paying.
+  **Prepared, not sent:** the five-step trial for three to five independent
+  builders is written out with exact inputs and exact expected output for every
+  step, measured against the published rc.4 archive rather than the working tree
+  — [TRIAL-DRAFT](evidence/mcp-adapter/TRIAL-DRAFT.md). The contact route is the
+  established one, issues on the site repository. It has not been sent, no
+  recipients are named, and naming them is the owner's call. Nobody outside this
+  work has used the adapter; our own drives are ours and are not adoption.
 
 Birth-time sensitivity, broad generated interpretation, new traditions,
 marketplaces and large content programmes are later opportunities, not
@@ -261,12 +269,20 @@ dependencies of this release.
   from the second. `npm whoami` alone never settled this: it answers whether
   this shell is authenticated, not whether CI could publish.
   **No longer a blocker:** the earlier entry said write access to
-  `ZodiacsOfficial/sdk` was denied. That access is available as of 2026-09-17 and
-  was verified in this session.
+  `ZodiacsOfficial/sdk` was denied. The maintainer account holds
+  `admin`/`push` on that repository — re-confirmed 2026-09-18 by
+  `GET /repos/ZodiacsOfficial/sdk` → `.permissions`. Whether *this session's*
+  push path would work is untested (the probe was refused by the local
+  permission layer, not by GitHub) and does not matter, since publication is a
+  maintainer action.
   **Also worth recording:** the engine is not on sdk `main`. `main` (`b49e0f14`)
-  contains only `packages/sdk`; `@zodiacs/engine@0.1.1-rc.6` exists on
-  `codex/platform-release-integration-sdk` (`f747be50`) alone, so it has to land
-  on `main` or be published from that branch deliberately. There is still no
+  contains only `packages/sdk`. The pinned source for `@zodiacs/engine@0.1.1-rc.6`
+  is commit `fb57af7a`, and the archive is committed at `51129a19`, both on
+  `codex/platform-time-seconds` — an earlier entry here named
+  `codex/platform-release-integration-sdk` (`f747be50`), which carries a
+  byte-identical `packages/engine` tree but is a moving branch head rather than
+  the commit the candidate record pins. The engine has to land on `main`, or the
+  archive be published deliberately. There is still no
   publish workflow anywhere: sdk `main` has `app-ci.yml` and `ci.yml`, and
   neither references `npm publish`, a token, or `id-token`. The scope is not a
   blocker — `@zodiacs/sdk@1.0.1` is published, so this is a first publication

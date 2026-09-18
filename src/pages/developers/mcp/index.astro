@@ -37,7 +37,7 @@ const entry = `{
 const tools = [
   ['get_capabilities', 'No arguments. The engine and adapter versions, the record schemas, every limit a request must respect, and the list of what this adapter does not do. Worth calling before the other two rather than guessing at supported options.'],
   ['calculate_natal_chart', 'One chart from an instant and, optionally, coordinates. Returns the bodies, angles, cusps and aspects, plus whether the time was known and which house system was requested against which one was actually used. The full calculation record is a separate, explicit request.'],
-  ['compare_calculation_records', 'Two records, passed as content. Returns every value that differs, then what accounts for it — reproduced by a local recalculation, reported by the records, a hypothesis that fits, or unresolved.'],
+  ['compare_calculation_records', 'Two records, passed as content. Names every field that differs, then what accounts for it — reproduced by a local recalculation, reported by the records, a hypothesis that fits, or unresolved. By default it leaves out the values of rows carrying birth details or computed positions, keeping their labels and their numeric differences; ask for the values explicitly when you need to read them.'],
 ];
 ---
 
@@ -100,14 +100,18 @@ const tools = [
         <code>npm run verify</code> is the check that the install works: it launches the
         server as a real process, speaks MCP to it with the official client library,
         calls all three tools with synthetic charts, refuses two bad requests, and
-        confirms the session still works afterwards. Fifteen checks, one line each,
+        confirms the session still works afterwards. Seventeen checks, one line each,
         exit 0 when they all pass.
       </p>
       <p>
-        <code>npm install</code> fetches three pinned packages —
+        <code>npm install</code> brings fourteen packages. Three are the server's own,
+        pinned exactly —
         <code>@modelcontextprotocol/server {manifest.dependencies['@modelcontextprotocol/server']}</code>,
         <code>@modelcontextprotocol/core {manifest.dependencies['@modelcontextprotocol/core']}</code> and
-        <code>zod {manifest.dependencies.zod}</code> — and nothing else. The engine
+        <code>zod {manifest.dependencies.zod}</code> — and the other eleven are
+        development dependencies of the MCP <em>client</em>, which only
+        <code>npm run verify</code> uses. <code>npm install --omit=dev</code> installs
+        the three and the server runs; only the verifier needs the rest. The engine
         ({manifest.engine.package} {manifest.engine.version}) and the comparison are
         already inside <code>server.mjs</code>, because neither is published and
         bundling them keeps one copy of the comparison rules rather than two.
@@ -168,6 +172,36 @@ const tools = [
         <a href="/developers/compare/"> browser tool on this site</a>, which is the
         reason the adapter lives in the site's own repository: one set of rules, not a
         copy that drifts.
+      </p>
+      <p>
+        A cause is called <strong>reproduced</strong> only when three things hold: both
+        records name a version this installation actually has, each record's own recorded
+        values — cusps, angles and body positions — are reproduced from its own declared
+        inputs, and changing only the house system turns each chart into the other,
+        checked in both directions so the answer cannot depend on which record you passed
+        first.
+      </p>
+      <p>
+        That is a statement about the engine on your machine and about those values. It
+        does not establish where either record came from, and nothing here can: a version,
+        checksum or source URL inside a record is a claim the record makes about itself.
+        If the two records claim different builds of the same version, the answer says so
+        in its stated limits and the verdict still rests on the recalculation rather than
+        on the claim. When the arithmetic works and only the identity behind it cannot be
+        established, the cause stays a hypothesis and the answer says what the installed
+        engine does, which is a different claim from saying that setting explains the
+        difference.
+      </p>
+      <p>
+        A comparison's answer leaves out the values of rows carrying birth details or
+        computed positions and keeps their labels, kinds and numeric differences. You
+        supplied both records to the call, so repeating their contents back tells you
+        nothing you did not have, while adding a second copy to whatever the answer
+        travels through. That shortens what travels onward; it hides nothing from the
+        assistant you are talking to, which already received both records. It is not
+        anonymisation, and the default answer is not an anonymous artifact: the exact
+        differences are still there, and anyone holding one of the two records can
+        reconstruct the other from them.
       </p>
     </div>
 

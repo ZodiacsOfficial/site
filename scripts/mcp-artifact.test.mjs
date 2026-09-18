@@ -121,6 +121,18 @@ describe('the archive the site distributes', () => {
     expect(manifest.releaseStatus).toBe('unpublished-candidate');
   });
 
+  it('tells a downloader to extract the archive they actually downloaded', async () => {
+    // The README is hand-written and travels inside the archive, so its example
+    // commands name a filename. At the rc.2 bump they kept naming rc.1, which a
+    // reader would have followed straight into a missing file. Pinned here so a
+    // version bump cannot leave them behind again.
+    const readme = await readFile(resolve(ROOT, 'examples/mcp-server/README.md'), 'utf8');
+    const named = [...readme.matchAll(/zodiacs-mcp-server-([0-9][^.\s]*(?:\.[^.\s]+)*)\.tgz/g)]
+      .map((match) => match[1]);
+    expect(new Set(named), 'README archive filenames').toEqual(new Set([manifest.version]));
+    expect(readme).toContain(`| adapter | \`${manifest.version}\`, unpublished candidate |`);
+  });
+
   it('carries exactly the six files the package declares, and no more', () => {
     // Read the tar header names directly rather than extracting: the point is
     // to know what is in the archive, not to run it.

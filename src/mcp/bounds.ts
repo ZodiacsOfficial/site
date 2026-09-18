@@ -13,7 +13,7 @@
 import { NATAL_ENVELOPE_LIMITS } from '@zodiacs/engine/receipt';
 
 /** This adapter's own version, distinct from the engine's. */
-export const ADAPTER_VERSION = '0.1.0-rc.1';
+export const ADAPTER_VERSION = '0.1.0-rc.4';
 export const ADAPTER_NAME = 'zodiacs-mcp-server';
 
 /**
@@ -83,6 +83,41 @@ export function polarAngleExclusion(
 
 export const OUTPUTS = Object.freeze(['summary', 'record'] as const);
 export type OutputName = (typeof OUTPUTS)[number];
+
+export const COMPARE_OUTPUTS = Object.freeze(['summary', 'full'] as const);
+export type CompareOutputName = (typeof COMPARE_OUTPUTS)[number];
+
+/**
+ * Rows whose two values ARE the finding, rather than a birth detail or a
+ * computed position.
+ *
+ * "The two charts asked for different house systems" is only useful if the
+ * answer says which two, and `placidus` is not anybody's birth detail. The
+ * instants, the coordinates, the supplied zone and every body, angle, cusp and
+ * aspect value are the other kind: the caller supplied both records to this
+ * call, so echoing their contents back tells them nothing they did not already
+ * have, while adding a second copy to whatever the result travels through.
+ *
+ * This is minimisation, not anonymisation. It shortens what travels onward; it
+ * hides nothing from a host that already received both records as arguments.
+ *
+ * One member is not strictly a setting, and an AI review was right to say so.
+ * `engine-version` is the record's own unauthenticated claim about itself, and
+ * SemVer build and prerelease identifiers admit `[0-9A-Za-z-]`, so a record
+ * author can carry an arbitrary digits-and-hyphens payload there and see it
+ * repeated in the default answer. It is kept anyway, for the same reason
+ * `houses-actual` is: an engine-version difference whose answer will not say
+ * which two versions is not an answer. The payload comes out of a record the
+ * caller passed in, not out of a chart this adapter computed, so it adds
+ * nothing the caller did not already send. Every other member carries a closed
+ * enum, a boolean, an array length, or a frozen conventions value — verified
+ * over the wire against the full row vocabulary, not a sample.
+ */
+const SETTING_ROW = /^(time-known|reference|houses-|cusps-shape|angles-presence|engine-version|schema|result-flags|input-flags|convention-)/u;
+
+export function rowValueIsTheFinding(id: string): boolean {
+  return SETTING_ROW.test(id);
+}
 
 /**
  * Request and response sizes.

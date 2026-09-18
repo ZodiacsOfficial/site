@@ -92,6 +92,16 @@ const PREDICATES = {
     const missing = want.filter((id) => !view.explanationIds.includes(id));
     return [missing.length === 0, { missing, present: view.explanationIds }];
   },
+  explanationEvidence: (want, view) => {
+    // Accepts one pair or a list of them, so a scenario can pin more than one
+    // cause without two keys of the same name in its `expect` object.
+    const wanted = Array.isArray(want) ? want : [want];
+    const observed = wanted.map((entry) => ({
+      explanation: entry.explanation,
+      evidence: view.explanations.find((row) => row.id === entry.explanation)?.evidence ?? null,
+    }));
+    return [observed.every((row, index) => row.evidence === wanted[index].evidence), observed];
+  },
   explanationExcludesPattern: (want, view) => {
     const claimed = view.explanations.find((row) => row.id === want.explanation)?.covers ?? null;
     if (claimed === null) return [false, 'that explanation was not offered at all'];
@@ -102,6 +112,11 @@ const PREDICATES = {
     const statement = view.explanations.find((row) => row.id === want.explanation)?.statement ?? null;
     if (statement === null) return [true, 'that explanation was not offered, so it says nothing'];
     return [!new RegExp(want.pattern).test(statement), statement];
+  },
+  rowValuesWithheld: (want, view) => {
+    const row = view.differences.find((entry) => entry.id === want.id);
+    if (!row) return [false, 'no such row'];
+    return [row.valuesWithheld === true && row.left === undefined && row.right === undefined, row];
   },
   rowDeltaBelow: (want, view) => {
     const row = view.differences.find((entry) => entry.id === want.id);
@@ -120,6 +135,11 @@ const PREDICATES = {
   limitsMatch: (want, view) => {
     const pattern = new RegExp(want);
     return [view.limits.some((line) => pattern.test(line)), view.limits];
+  },
+  /** A sentence that must NOT appear: the assertion for a wording that was wrong. */
+  limitsExclude: (want, view) => {
+    const pattern = new RegExp(want);
+    return [!view.limits.some((line) => pattern.test(line)), view.limits];
   },
   smallestNumericDeltaBelowLargestDisplayDelta: (want, view) => {
     const numeric = deltasOfKind(view, 'numeric');
@@ -162,12 +182,33 @@ async function structured(name, args) {
 
 const recordFor = async (input) => (await structured('calculate_natal_chart', { ...input, output: 'record' })).record;
 
-/** A record claiming a different engine version. The result is untouched, so
- * the pair is exactly "same numbers, different stated engine" plus whatever
- * else the scenario varies. */
-function claimEngineVersion(record, version) {
+/**
+ * Edits a record's claims without touching its computed values, so a scenario
+ * is exactly "the same numbers, a different stated provenance" plus whatever
+ * else it varies. Each edit has to survive the engine's own parser, which the
+ * runner checks by comparing what comes back.
+ *
+ * `instant` is the sharp one: the parser accepts a record whose declared
+ * instant is not the one its values came from, because it checks internal
+ * coherence rather than that the result follows from the inputs. That is what
+ * makes a missing baseline check reachable.
+ */
+function editClaims(record, edit) {
   const parsed = JSON.parse(record);
-  parsed.receipt.engine.version = version;
+  if (edit.engineVersion !== undefined) parsed.receipt.engine.version = edit.engineVersion;
+  if (edit.buildMetadata !== undefined) {
+    parsed.receipt.engine.version = `${parsed.receipt.engine.version}+${edit.buildMetadata}`;
+  }
+  if (edit.declaredInstant !== undefined) {
+    parsed.receipt.instant = new Date(edit.declaredInstant).toISOString();
+    parsed.receipt.sourceInstant = edit.declaredInstant;
+  }
+  // The same drift reached through the place instead of the moment. The parser
+  // accepts a rewritten coordinate for the same reason it accepts a rewritten
+  // instant: it checks that a record is coherent with itself, not that its
+  // values follow from the inputs it declares.
+  if (edit.declaredLongitude !== undefined) parsed.receipt.coordinates.longitude = edit.declaredLongitude;
+  if (edit.declaredLatitude !== undefined) parsed.receipt.coordinates.latitude = edit.declaredLatitude;
   return JSON.stringify(parsed);
 }
 
@@ -176,17 +217,51 @@ try {
   for (const scenario of plan.scenarios) {
     let left = await recordFor(scenario.left);
     let right = await recordFor(scenario.right);
-    if (scenario.mutate?.engineVersion) {
-      const patched = claimEngineVersion(scenario.mutate.side === 'right' ? right : left, scenario.mutate.engineVersion);
-      if (scenario.mutate.side === 'right') right = patched; else left = patched;
+    for (const edit of scenario.mutate ? [scenario.mutate].flat() : []) {
+      const patched = editClaims(edit.side === 'right' ? right : left, edit);
+      if (edit.side === 'right') right = patched; else left = patched;
     }
-    const view = observe(await structured('compare_calculation_records', { left, right }));
+    // Most scenarios read the default response. A scenario whose assertions
+    // inspect absolute values has to say so, because the default withholds
+    // them for rows carrying birth details or computed positions.
+    const compareArgs = { left, right, ...(scenario.compareOutput ? { output: scenario.compareOutput } : {}) };
+    const view = observe(await structured('compare_calculation_records', compareArgs));
     const assertions = Object.entries(scenario.expect).map(([predicate, want]) => {
       const run = PREDICATES[predicate];
       if (!run) return { predicate, want, ok: false, observed: 'no such predicate in the runner' };
       const [ok, observed] = run(want, view);
       return { predicate, want, ok, observed };
     });
+    // Argument order must not decide a verdict. Checked structurally, on every
+    // scenario that asks for it, rather than as a second copy of the scenario.
+    if (scenario.orderIndependent) {
+      const swapped = observe(await structured('compare_calculation_records', { ...compareArgs, left: right, right: left }));
+      // An AI review noted this compared evidence ranks only, so a swap that
+      // moved rows out of a cause's `covers` into the unresolved bucket would
+      // have passed. It now compares what each cause claims as well, and the
+      // size of the unresolved bucket, which is the thing such a swap changes.
+      const shapeOf = (v) => Object.fromEntries(v.explanations.map((row) => [
+        row.id, `${row.evidence}:${[...row.covers].sort().join(',')}`,
+      ]));
+      const forward = shapeOf(view);
+      const reverse = shapeOf(swapped);
+      const ids = [...new Set([...Object.keys(forward), ...Object.keys(reverse)])];
+      // The unresolved bucket's membership is compared by size, not identity:
+      // it is pushed with whatever nothing else claimed, so comparing its
+      // contents would only restate the rest of this check.
+      const unresolvedSize = (v) => (v.explanations.find((row) => row.id === 'unexplained')?.covers.length ?? 0);
+      const mismatched = ids.filter((id) => forward[id] !== reverse[id]);
+      const sameBucket = unresolvedSize(view) === unresolvedSize(swapped);
+      assertions.push({
+        predicate: 'sameVerdictWhenReversed',
+        want: true,
+        ok: mismatched.length === 0 && sameBucket && view.identical === swapped.identical,
+        observed: mismatched.length === 0 && sameBucket
+          ? 'same'
+          : mismatched.map((id) => ({ id, forward: forward[id], reverse: reverse[id] }))
+            .concat(sameBucket ? [] : [{ id: 'unexplained', forward: unresolvedSize(view), reverse: unresolvedSize(swapped) }]),
+      });
+    }
     scenarios.push({
       id: scenario.id,
       required: scenario.required,

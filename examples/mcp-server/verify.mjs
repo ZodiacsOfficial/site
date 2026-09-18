@@ -79,6 +79,19 @@ try {
     houses?.explanations?.some((row) => row.evidence === 'reproduced'));
   check('the comparison says its own output is not anonymous',
     /not anonymous/.test(houses?.disclosure ?? ''));
+  // The headline behaviour of rc.2 had no check here at all: a rebuild that
+  // dropped the withholding would still have passed this verifier. An AI review
+  // of the shipped archive found that, so the two halves of it are pinned here,
+  // in the artifact an outside builder runs, not only in the repository drives.
+  check('the default comparison leaves the birth details out of its answer',
+    !JSON.stringify(houses ?? {}).includes(LONDON.utc)
+    && !JSON.stringify(houses ?? {}).includes(String(LONDON.latitude)),
+    houses?.withheld);
+  const full = (await call('compare_calculation_records',
+    { left: left.record, right: right.record, output: 'full' })).value;
+  check('asking for the full output returns the values it withheld',
+    full?.differences?.some((row) => /^cusp-\d+$/.test(row.id) && typeof row.left === 'string'),
+    full?.output);
 
   const badDate = await call('calculate_natal_chart', { ...LONDON, utc: '2001-02-29T00:00:00Z' });
   check('a date that does not exist is refused', Boolean(badDate.refused), badDate.refused);

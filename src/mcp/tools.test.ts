@@ -158,6 +158,47 @@ describe('compare_calculation_records', () => {
     expect(value.explanations.some((row: { evidence: string }) => row.evidence === 'reproduced')).toBe(true);
   });
 
+  it('leaves birth details and positions out of the default response', () => {
+    // The caller supplied both records to this call. Repeating their contents
+    // back adds a second copy to whatever the result travels through and tells
+    // the caller nothing they did not already have.
+    const outcome = compare(recordFor(LONDON), recordFor({ ...POLAR, houseSystem: 'whole' }));
+    const text = JSON.stringify(outcome.ok ? outcome.value : {});
+    for (const leak of [LONDON.utc, POLAR.utc, '51.5074', '78.2232', '15.6267', '84.189085']) {
+      expect(text, `${leak} was echoed back`).not.toContain(leak);
+    }
+    const value = outcome.ok ? (outcome.value as Record<string, any>) : {};
+    expect(value.output).toBe('summary');
+    expect(value.withheld).toBe(PRIVACY.withheld);
+    // What makes the answer useful survives: which field, what kind, how far.
+    const instant = value.differences.find((row: { id: string }) => row.id === 'instant');
+    expect(instant).toMatchObject({ id: 'instant', label: 'Resolved instant (UTC)', valuesWithheld: true });
+    expect(instant).not.toHaveProperty('left');
+    const latitude = value.differences.find((row: { id: string }) => row.id === 'latitude');
+    expect(typeof latitude.delta).toBe('number');
+  });
+
+  it('keeps the values of rows whose values are the finding', () => {
+    // "The two charts asked for different house systems" is only useful if the
+    // answer says which two, and a house system is nobody's birth detail.
+    const outcome = compare(recordFor(LONDON), recordFor({ ...LONDON, houseSystem: 'whole' }));
+    const value = outcome.ok ? (outcome.value as Record<string, any>) : {};
+    const requested = value.differences.find((row: { id: string }) => row.id === 'houses-requested');
+    expect(requested).toMatchObject({ left: 'placidus', right: 'whole' });
+    expect(requested).not.toHaveProperty('valuesWithheld');
+  });
+
+  it('returns every value when asked, as an explicit choice', () => {
+    const outcome = compareCalculationRecords(COMPARE_INPUT.parse({
+      left: recordFor(LONDON), right: recordFor({ ...LONDON, houseSystem: 'whole' }), output: 'full',
+    }));
+    const value = outcome.ok ? (outcome.value as Record<string, any>) : {};
+    expect(value.output).toBe('full');
+    expect(value).not.toHaveProperty('withheld');
+    expect(value.differences.every((row: Record<string, unknown>) => !('valuesWithheld' in row))).toBe(true);
+    expect(value.differences.find((row: { id: string }) => row.id === 'cusp-1')).toHaveProperty('left');
+  });
+
   it('labels its own output as not anonymous', () => {
     const record = recordFor(LONDON);
     const outcome = compare(record, recordFor({ ...LONDON, houseSystem: 'whole' }));

@@ -17,22 +17,35 @@ that page after a live drive recorded a request to `plausible.io`, and
 [#514](https://github.com/ZodiacsOfficial/site/pull/514) recorded the deployed
 drive. Method and tested limits: [evidence/chart-compare](evidence/chart-compare/README.md).
 
-**`zodiacs-mcp-server@0.1.0-rc.1`** is the agent half of the same stage,
-delivered 2026-09-17. A local stdio MCP server with three tools, over the real
-`natalChart`, the real envelope codec and the real `compareEnvelopes` — the same
-module the browser tool runs, not a copy. No listener, no port, no outbound
-request, no file access. Established separately, because these are separate
-claims: the official SDK client against the real server process (70/70 checks),
-the Claude Code CLI launching it and reporting it connected (7/7), a model
-actually calling the tools through that host (one run, recorded verbatim), and a
-synthetic regression corpus of ten record pairs whose expected classifications
-were committed before the candidate ran (10/10 scenarios, 59/59 assertions).
+**`zodiacs-mcp-server@0.1.0-rc.4`** is the agent half of the same stage. A local
+stdio MCP server with three tools, over the real `natalChart`, the real envelope
+codec and the real `compareEnvelopes` — the same module the browser tool runs,
+not a copy. No listener, no port, no outbound request, no file access.
 
-Not claimed: publication (neither the adapter nor the engine is on npm; both
-report `unpublished-candidate`), any host other than Claude Code (Claude Desktop
-is macOS and Windows only and could not run here), any measure of how reliably a
-model uses the tools, and any adoption. What was built and what was actually
-established: [evidence/mcp-adapter](evidence/mcp-adapter/README.md).
+Established separately, because these are separate claims: the official SDK
+client against the real server process (84/84 checks), the Claude Code CLI
+launching it and reporting it connected (7/7), a model running the whole
+workflow through that host — capabilities, two synthetic records, a comparison,
+a refusal and a recovery, in one run recorded verbatim — the browser surface of
+the same rules driven at two viewports (34/34), and a synthetic regression
+corpus whose expected classifications were committed before each candidate ran
+(18/18 scenarios, 112/112 assertions, every post-hoc change to an expectation
+recorded with its reason).
+
+rc.1 through rc.3 are superseded and still downloadable; each archive is
+immutable. What each candidate corrected, and the two bounded AI reviews that
+found the defects, are in
+[evidence/mcp-adapter](evidence/mcp-adapter/README.md) and
+[evidence/chart-compare](evidence/chart-compare/README.md).
+
+Not claimed: publication. Neither the adapter nor the engine is on npm, both
+report `unpublished-candidate`, and `npm view @zodiacs/engine version` returned
+`E404` when re-checked on 2026-09-18. A versioned archive hosted in this
+repository is a candidate, not a release. Also not claimed: any host other than
+Claude Code (Claude Desktop is macOS and Windows only and could not run here),
+any measure of how reliably a model uses the tools, and any adoption — nobody
+outside this work has used it, and the trial that would change that is written
+and unsent.
 
 Still not activated, and still for the same reason: `PUBLIC_SAVED_RECORDS_ENABLED`
 is a Vercel project setting this environment cannot write. Both that and the
