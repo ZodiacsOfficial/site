@@ -470,7 +470,7 @@ export const PT_ADDITIONS = Object.freeze({
   'widgets.planetNames.Venus': 'Vênus',
   'widgets.poweredBy': 'Com tecnologia do Zodiacs.org',
   'widgets.previewTitle': 'Prévia ao vivo',
-  'widgets.privacyNote': 'O mini mapa é calculado dentro do próprio iframe: a data, a hora e o local de nascimento que quem visita escreve não são enviados para lugar nenhum, e o mapa nunca é carregado para fora. Escrever um local descarrega de zodiacs.org uma lista de cidades, escolhida pela primeira letra do que foi escrito, por isso esse pedido revela uma letra e mais nada. Carregar o widget é também um pedido a zodiacs.org, como qualquer recurso incorporado, por isso o navegador de quem visita revela o seu endereço IP e a origem do teu site. São coisas diferentes.',
+  'widgets.privacyNote': 'O mini mapa é calculado no próprio iframe. Data, hora e local de nascimento nunca saem do navegador.',
   'widgets.requiresJavaScript': 'O cálculo exige JavaScript, mas o formulário continua privado e não envia nenhum dado de nascimento.',
   'widgets.retrograde': 'Retrógrados: {planets}',
   'widgets.retrogradeAbbreviation': 'Rx',
