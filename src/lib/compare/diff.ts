@@ -397,7 +397,7 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   // House system: a metadata difference that can be promoted to a demonstrated
   // cause by recalculating one side with the other's system and nothing else.
   //
-  // Four things have to hold before that word is earned, and an audit found the
+  // Three things have to hold before that word is earned, and an audit found the
   // rule asking for one of them. "The installed engine produces these numbers"
   // and "this setting explains why these two files disagree" are different
   // claims, and only the second one is a cause.
