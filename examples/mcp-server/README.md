@@ -44,30 +44,36 @@ The download URL and the expected SHA-256 are published on
 travels inside the archive, so printing the archive's own digest in it would
 change the digest.
 
-If you are reading this you have already extracted, which is fine — check the
-`.tgz` you downloaded against the published value either way, and re-download if
-it does not match.
+**If you have not installed yet, use the block on that page.** It compares the
+digest and stops before extracting anything if it does not match. An earlier
+version of this README printed the digest with `shasum` and left you to check it
+by eye, with the extract and install steps on unguarded lines below it — which
+meant a tampered `zodiacs-mcp-server-0.1.0-rc.5.tgz` extracted and installed
+anyway. `npm run verify` is no backstop for that: it tests that the server
+behaves, not that these are the published bytes, so a tampered archive passes it.
+
+If you are already reading this you have extracted, so the digest check has to
+happen against the `.tgz` you still have:
 
 ```sh
-# 1. against the SHA-256 published on the page above
-shasum -a 256 zodiacs-mcp-server-0.1.0-rc.4.tgz
-
-# 2. extract
-tar xzf zodiacs-mcp-server-0.1.0-rc.4.tgz && cd package
-
-# 3. install
-npm install
-
-# 4. check the install works
-npm run verify
+# from the directory holding the archive, against the SHA-256 on the page above
+node -e 'const e=process.argv[2];const a=require("crypto").createHash("sha256").update(require("fs").readFileSync(process.argv[1])).digest("hex");if(a!==e){console.error("Mismatch. Delete this copy and install again from the page.\n  expected "+e+"\n  got      "+a);process.exit(1)}console.log("Archive verified: "+a)' \
+  zodiacs-mcp-server-0.1.0-rc.5.tgz '<the SHA-256 published on the page>'
 ```
 
-`npm install` brings 14 packages. Three are the server's own, pinned exactly —
+Then, inside the extracted directory:
+
+```sh
+npm ci          # exactly the tree in npm-shrinkwrap.json, which ships in here
+npm run verify  # proves the install runs
+```
+
+The install brings 14 packages. Three are the server's own, pinned exactly —
 `@modelcontextprotocol/server`, `@modelcontextprotocol/core`, `zod` — and the
 other eleven are development dependencies of the MCP *client*, which only
 `npm run verify` uses. `npm ls --omit=dev` lists the three the server actually
 loads. If you would rather not have the client's OAuth and SSE dependencies on
-disk, `npm install --omit=dev` installs the three and `npm start` works; only
+disk, `npm ci --omit=dev` installs the three and `npm start` works; only
 `npm run verify` needs the rest.
 
 `npm run verify` launches `server.mjs` as a real child process, speaks MCP to it
@@ -276,7 +282,7 @@ not settle, and it is worth reading even when everything else looks resolved.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.4`, unpublished candidate |
+| adapter | `0.1.0-rc.5`, unpublished candidate |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled into `server.mjs` |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` 2.0.0, pinned exactly, installed from npm |

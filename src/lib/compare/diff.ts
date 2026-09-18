@@ -346,14 +346,55 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
  * ("reproduced"), offered as a candidate ("hypothesis"), or refused
  * ("unresolved").
  */
+/**
+ * What a difference row is ABOUT, decided by the fact it reports rather than by
+ * how that fact happens to be written down.
+ *
+ * An aspect's applying flag, and an aspect's very existence, are results this
+ * engine computed — but they are booleans, so a view of "computed" built from
+ * `kind === 'numeric'` could not see them. That is how a summary came to say
+ * "Every computed value agrees" over two files whose aspect lists disagreed.
+ * Seven computed row families were invisible that way: angles-presence,
+ * body presence, body sign, body retrograde, aspect presence, aspect applying,
+ * and cusps-shape.
+ *
+ * `kind === 'display'` stays excluded everywhere, and that is a stated policy
+ * of this module rather than a loophole: two values that print identically at
+ * six decimals are a rounding difference, not a different calculation.
+ */
+type RowCategory = 'computed' | 'setting' | 'input' | 'provenance';
+
+/** Requested or actual house system: a setting, not a result. */
+const SETTING_ROWS = new Set(['houses-requested', 'houses-actual', 'houses-system']);
+/** Birth details as supplied, and how the instant was reached from them. */
+const INPUT_ROWS = new Set(['instant', 'source-instant', 'reference', 'time-known', 'zone', 'latitude', 'longitude']);
+/** What a file says about itself, or about how its run went. */
+const PROVENANCE_ROWS = new Set(['engine-version', 'schema', 'result-flags', 'input-flags', 'houses-absence']);
+
+function categoryOf(row: Difference): RowCategory {
+  if (SETTING_ROWS.has(row.id)) return 'setting';
+  if (INPUT_ROWS.has(row.id)) return 'input';
+  if (PROVENANCE_ROWS.has(row.id)) return 'provenance';
+  if (row.area === 'Conventions') return 'setting';
+  // What the Angles, Positions, Aspects and Houses areas have left is a value
+  // this engine produced: angle-*, angles-presence, body-*, aspect-*, cusp-*,
+  // cusps-shape.
+  return 'computed';
+}
+
 function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Difference[], options: CompareOptions): {
   explanations: Explanation[]; limits: string[];
 } {
   const explanations: Explanation[] = [];
   const limits: string[] = [];
   const has = (id: string) => differences.some((row) => row.id === id && row.kind !== 'display');
+  // `idsIn` stays numeric-only, which is the right test for `movedCusps` below:
+  // a house system moves cusp NUMBERS. It is the wrong test for "did anything
+  // this engine computed differ?", which is what `computed` answers.
   const idsIn = (area: string) => differences.filter((row) => row.area === area && row.kind === 'numeric').map((row) => row.id);
-  const computed = [...idsIn('Positions'), ...idsIn('Angles'), ...idsIn('Houses'), ...idsIn('Aspects')];
+  const computed = differences
+    .filter((row) => row.kind !== 'display' && categoryOf(row) === 'computed')
+    .map((row) => row.id);
 
   /**
    * Everything a cause upstream of the calculation can move, of any kind: a
@@ -384,12 +425,18 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   const engineDiffers = leftPrecedence !== enginePrecedence(rightEngine);
 
   if (has('source-instant') && !has('instant')) {
+    // "only" has to mean only. Deciding it on a count of computed rows let the
+    // sentence stand while a convention, a flag or a provenance row differed
+    // elsewhere in the same result; deciding it on coverage cannot.
+    const notationRows = ['source-instant', 'zone', 'reference'].filter(has);
+    const onlyNotation = differences
+      .every((row) => row.kind === 'display' || notationRows.includes(row.id));
     explanations.push({
       id: 'equivalent-instants', evidence: 'reported',
-      statement: computed.length === 0
+      statement: onlyNotation
         ? 'These differ only in how the instant is written. Every computed value agrees.'
         : 'The same moment was written two different ways.',
-      covers: ['source-instant', 'zone', 'reference'].filter(has),
+      covers: notationRows,
       detail: 'Both files resolve to the same UTC instant, so nothing downstream can differ because of this.',
     });
   }
@@ -648,11 +695,17 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
 
   // Engine difference with no input difference: candidate cause, but this tool
   // holds exactly one engine build and cannot rerun the other one.
-  if (has('engine-version') && engineDiffers && computed.length > 0) {
+  // `downstream`, not `computed`: an engine change can move a sign or an aspect's
+  // existence as well as a number, exactly as a different instant can, and the
+  // `instant` cause a few branches up already uses the wider view. Using the
+  // narrower one here left rows for the unresolved bucket that this cause is
+  // the honest claimant for.
+  const engineDownstream = downstream(['Positions', 'Angles', 'Houses', 'Aspects']);
+  if (has('engine-version') && engineDiffers && engineDownstream.length > 0) {
     explanations.push({
       id: 'engine', evidence: 'hypothesis',
       statement: 'The two charts were produced by different engine versions.',
-      covers: ['engine-version', ...computed],
+      covers: ['engine-version', ...engineDownstream],
       detail: 'A change between engine versions can move computed values. It cannot be demonstrated here.',
     });
     limits.push(`Reproducing the difference would need engine ${leftEngine} and ${rightEngine} side by side. `

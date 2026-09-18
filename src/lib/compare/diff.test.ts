@@ -687,3 +687,109 @@ describe('what a local recalculation has to establish before it is a cause', () 
     }
   });
 });
+
+/**
+ * An audit asked whether a summary can assert more agreement than the
+ * comparison's own difference rows support. It can, and the reason is that the
+ * summary's view of "computed" was built from `kind === 'numeric'` while several
+ * computed facts are stored as booleans or strings.
+ *
+ * Every fixture here goes through the engine's own parser first. A record the
+ * parser refuses can never reach the comparison, so a counterexample built out
+ * of one would prove nothing.
+ */
+describe('a summary never claims more agreement than the differences support', () => {
+  const T = '1990-06-15T13:30:00Z';
+  /** The same instant, written two ways. Both resolve to T. */
+  const asWritten = (sourceInstant: string) =>
+    buildEnvelope({ ...ORDINARY, utc: T, sourceInstant });
+
+  const accept = (raw: unknown, label: string): NatalEnvelope => {
+    const parsed = parseNatalEnvelope(JSON.stringify(raw));
+    if (!parsed.ok) throw new Error(`${label} is not a record the parser accepts: ${parsed.code}`);
+    return parsed.envelope;
+  };
+  const copy = (envelope: NatalEnvelope): any => JSON.parse(JSON.stringify(envelope));
+  const statementOf = (comparison: ReturnType<typeof compareEnvelopes>, id: string) =>
+    comparison.explanations.find((item) => item.id === id)?.statement ?? null;
+  const AGREES = /Every computed value agrees/;
+
+  it('says every computed value agrees when that is true', () => {
+    const comparison = compareEnvelopes(asWritten(T), asWritten('1990-06-15T14:30:00+01:00'), live);
+    expect(statementOf(comparison, 'equivalent-instants')).toMatch(AGREES);
+    // The premise: the notation really is the only difference.
+    expect(comparison.differences.filter((row) => row.kind !== 'display').map((row) => row.id))
+      .toEqual(['source-instant']);
+  });
+
+  it('does not say it when an aspect disagrees about applying', () => {
+    // `applying` is a computed result stored as a boolean, so the numeric-only
+    // view could not see it and the summary claimed agreement over it.
+    const flipped = accept(copy(asWritten('1990-06-15T14:30:00+01:00')), 'flipped-source');
+    const edited = copy(flipped);
+    const aspect = edited.result.aspects[0];
+    expect(aspect, 'the ordinary fixture must carry at least one aspect').toBeTruthy();
+    aspect.applying = !aspect.applying;
+    const comparison = compareEnvelopes(asWritten(T), accept(edited, 'flipped-applying'), live);
+    expect(comparison.differences.some((row) => /-applying$/.test(row.id))).toBe(true);
+    expect(statementOf(comparison, 'equivalent-instants')).not.toMatch(AGREES);
+  });
+
+  it('does not say it when an aspect is missing on one side', () => {
+    const edited = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    edited.result.aspects.pop();
+    const comparison = compareEnvelopes(asWritten(T), accept(edited, 'one-aspect-fewer'), live);
+    expect(comparison.differences.some((row) => /^aspect-/.test(row.id))).toBe(true);
+    expect(statementOf(comparison, 'equivalent-instants')).not.toMatch(AGREES);
+  });
+
+  it('gives the same answer whichever record is passed first', () => {
+    const edited = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    edited.result.aspects[0].applying = !edited.result.aspects[0].applying;
+    const right = accept(edited, 'flipped-applying');
+    expect(statementOf(compareEnvelopes(asWritten(T), right, live), 'equivalent-instants'))
+      .toBe(statementOf(compareEnvelopes(right, asWritten(T), live), 'equivalent-instants'));
+  });
+
+  /**
+   * The invariant, over the whole acceptance corpus plus the pairs above. This
+   * is the assertion that would have caught the defect without anyone naming
+   * the aspect rows in advance, and it is written from the rows rather than
+   * from the implementation's own condition.
+   */
+  it('holds across every pair the corpus can build', () => {
+    const editedAspect = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    editedAspect.result.aspects[0].applying = !editedAspect.result.aspects[0].applying;
+    const pairs: [NatalEnvelope, NatalEnvelope, string][] = [
+      [asWritten(T), asWritten(T), 'identical'],
+      [asWritten(T), asWritten('1990-06-15T14:30:00+01:00'), 'notation only'],
+      [asWritten(T), accept(editedAspect, 'applying'), 'notation plus applying'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, houseSystem: 'whole' }), 'house system'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }), 'different moment'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }), 'unknown time'],
+      ...PRESETS.map((preset) => {
+        const { left, right } = presetEnvelopes(preset);
+        return [left, right, `preset ${preset.id}`] as [NatalEnvelope, NatalEnvelope, string];
+      }),
+    ];
+    for (const [left, right, name] of pairs) {
+      const comparison = compareEnvelopes(left, right, live);
+      const substantive = comparison.differences.filter((row) => row.kind !== 'display');
+      const computedIds = substantive
+        .filter((row) => /^(angle-|angles-presence|body-|aspect-|cusp-|cusps-shape)/.test(row.id))
+        .map((row) => row.id);
+      for (const item of comparison.explanations) {
+        if (computedIds.length > 0) {
+          expect(item.statement, `${name}: claims agreement over ${computedIds.join(', ')}`)
+            .not.toMatch(AGREES);
+        }
+        // Any explanation saying the difference is "only" one thing has to
+        // account for every substantive row, or "only" is not true.
+        if (/\bonly\b/.test(item.statement) && item.id !== 'house-system') {
+          const unclaimed = substantive.filter((row) => !item.covers.includes(row.id)).map((row) => row.id);
+          expect(unclaimed, `${name}: "${item.statement}" leaves ${unclaimed.join(', ')} unaccounted`).toEqual([]);
+        }
+      }
+    }
+  });
+});

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "package": "zodiacs-mcp-server",
-  "version": "0.1.0-rc.4",
+  "version": "0.1.0-rc.5",
   "status": "Unpublished release candidate. Not on npm, under this or any other name. Install from the versioned archive at https://zodiacs.org/examples/, whose SHA-256 is published beside it.",
   "sourceRepository": "https://github.com/ZodiacsOfficial/site",
   "sourcePaths": [
@@ -63,6 +63,6 @@
     "receipt": "zodiacs.calculation-receipt.draft-v1",
     "note": "Zodiacs-owned draft vocabulary, not an industry interoperability standard."
   },
-  "supersedes": "0.1.0-rc.3",
-  "changedSince": "rc.1, rc.2 and rc.3 are unchanged and still downloadable; this is a separate immutable archive. Since rc.3 the executable bundle is byte-identical \u2014 this release corrects what the documents say about it. The README described a four-part rule for calling a cause reproduced, one part of which (a differing build claim refusing the replay) had already been removed, and quoted an explanation string the server no longer emits. It also said the baseline checks each record's cusps, when it checks cusps, angles and body positions. The corrected text states what is actually demonstrated: the installed engine reproduced these values from these declared inputs. Equal SemVer precedence is an ordering rule, not evidence that two builds run the same code, and nothing here authenticates a record's claims about itself in either direction."
+  "supersedes": "0.1.0-rc.4",
+  "changedSince": "rc.1 through rc.4 are unchanged and still downloadable; this is a separate immutable archive. Since rc.4 the executable bundle differs only in the version string it reports. What changed is the install instructions, and they were unsafe: the README printed the archive digest with `shasum` and left the reader to compare it by eye, with the extract and install steps on unguarded lines below. A tampered archive therefore extracted, installed, and passed `npm run verify` \u2014 which tests that the server behaves, not that these are the published bytes. The developer page now publishes a block that compares the digest and stops before extracting on any mismatch, incomplete download, or destination collision, and this README no longer presents an unguarded sequence."
 }

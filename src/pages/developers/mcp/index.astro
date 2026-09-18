@@ -16,15 +16,51 @@ if (!/^[0-9a-f]{40}$/.test(manifest.artifactCommit ?? '')) {
 }
 const archiveUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${manifest.artifactCommit}/public/examples/${manifest.file}`;
 
-const install = `curl -fsSL '${archiveUrl}' -o '${manifest.file}'
+const dest = manifest.file.replace(/\.tgz$/, '');
+// The digest is COMPARED, not printed. An earlier version of this block ran
+// `shasum -a 256` and put the expected value in a comment, which reads like a
+// check and is not one: shasum exits 0 on any readable file, and the lines after
+// it ran regardless. A tampered archive extracted, installed and passed
+// `npm run verify`, because the verifier tests behaviour rather than identity.
+// This is the same shape the starter page has used since it shipped, with the
+// destination created only after verification so a failed run leaves nothing
+// behind to block the retry.
+const install = `( set -eu
+# POSIX shell — macOS, Linux or WSL. Not PowerShell. It runs in a subshell, so a
+# failure stops the install without closing your terminal.
+FILE='${manifest.file}'
+DEST='${dest}'
+test ! -e "$FILE" || { echo "Stop: $FILE already exists here. Move or delete it first." >&2; exit 1; }
+test ! -e "$DEST" || { echo "Stop: $DEST already exists here. Move or delete it first." >&2; exit 1; }
 
-# check the digest before extracting anything
-shasum -a 256 '${manifest.file}'
-# expect: ${manifest.sha256}
+curl --disable --fail --silent --show-error --location --proto '=https' --max-time 60 \\
+  '${archiveUrl}' -o "$FILE"
 
-tar xzf '${manifest.file}' && cd package
-npm install
-npm run verify`;
+node --input-type=module <<'JS' || { rm -f "$FILE"; exit 1; }
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+const file = '${manifest.file}';
+const expected = '${manifest.sha256}';
+const expectedBytes = ${manifest.bytes};
+const bytes = readFileSync(file);
+const stop = (why) => {
+  console.error(\`Stop: \${why}\`);
+  console.error('Nothing was extracted and nothing was installed.');
+  process.exit(1);
+};
+if (bytes.length !== expectedBytes) stop(\`incomplete or altered download, \${bytes.length} bytes, expected \${expectedBytes}.\`);
+const actual = createHash('sha256').update(bytes).digest('hex');
+if (actual !== expected) stop(\`this is not the published archive.\\n  expected \${expected}\\n  got      \${actual}\`);
+console.log(\`Archive verified: \${actual}\`);
+JS
+
+mkdir "$DEST"
+tar -xzf "$FILE" --strip-components=1 -C "$DEST"
+cd "$DEST"
+npm ci --no-audit --no-fund
+npm run verify
+echo "Installed and verified in ./$DEST"
+)`;
 
 const connect = `claude mcp add zodiacs -- node "$PWD/server.mjs"
 claude mcp list`;
@@ -90,27 +126,43 @@ const tools = [
     <h2 id="install">Install</h2>
     <div class="prose">
       <p>
+        You need Node {manifest.node} and a POSIX shell — macOS, Linux, or WSL or Git
+        Bash on Windows. The block below is not PowerShell. Nothing here needs an
+        account, a key or a network service at run time.
+      </p>
+      <p>
         The download is pinned to the commit that holds it, so the bytes cannot change
-        under the digest. Check the digest before extracting.
+        under the digest. The block compares that digest and stops if it does not
+        match: it does not print it for you to check by eye. If verification fails,
+        nothing is extracted and nothing is installed.
       </p>
     </div>
     <pre tabindex="0" role="region" aria-label="Install commands"><code>{install}</code></pre>
     <div class="prose">
       <p>
-        <code>npm run verify</code> is the check that the install works: it launches the
-        server as a real process, speaks MCP to it with the official client library,
-        calls all three tools with synthetic charts, refuses two bad requests, and
-        confirms the session still works afterwards. Seventeen checks, one line each,
-        exit 0 when they all pass.
+        <code>npm run verify</code> is the check that the install <em>works</em>, not a
+        second integrity check: it launches the server as a real process, speaks MCP to
+        it with the official client library, calls all three tools with synthetic
+        charts, refuses two bad requests, and confirms the session still works
+        afterwards. Seventeen checks, one line each, exit 0 when they all pass. It
+        tests behaviour rather than identity, so a tampered archive can pass it — the
+        digest comparison above is what establishes you have the published bytes.
       </p>
       <p>
-        <code>npm install</code> brings fourteen packages. Three are the server's own,
+        <code>npm ci</code> installs exactly the tree recorded in the
+        <code>npm-shrinkwrap.json</code> inside the archive, so two people running
+        these commands get the same dependencies. This package declares no
+        <code>preinstall</code>, <code>install</code>, <code>postinstall</code> or
+        <code>prepare</code> script of its own.
+      </p>
+      <p>
+        The install brings fourteen packages. Three are the server's own,
         pinned exactly —
         <code>@modelcontextprotocol/server {manifest.dependencies['@modelcontextprotocol/server']}</code>,
         <code>@modelcontextprotocol/core {manifest.dependencies['@modelcontextprotocol/core']}</code> and
         <code>zod {manifest.dependencies.zod}</code> — and the other eleven are
         development dependencies of the MCP <em>client</em>, which only
-        <code>npm run verify</code> uses. <code>npm install --omit=dev</code> installs
+        <code>npm run verify</code> uses. <code>npm ci --omit=dev</code> installs
         the three and the server runs; only the verifier needs the rest. The engine
         ({manifest.engine.package} {manifest.engine.version}) and the comparison are
         already inside <code>server.mjs</code>, because neither is published and

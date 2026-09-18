@@ -121,6 +121,18 @@ describe('the archive the site distributes', () => {
     expect(manifest.releaseStatus).toBe('unpublished-candidate');
   });
 
+  it('ships a lockfile whose root version matches the package', async () => {
+    // The published install command is `npm ci`, which reads this file. The root
+    // version had drifted from rc.1 to rc.4 unnoticed while the command was
+    // `npm install`, which does not read it. npm turns out to enforce only
+    // dependency agreement, so `npm ci` still succeeded — but an archive that
+    // disagrees with itself about its own version is not something to ship, and
+    // nothing was watching the field.
+    const shrinkwrap = JSON.parse(await readFile(resolve(ROOT, 'examples/mcp-server/npm-shrinkwrap.json'), 'utf8'));
+    expect(shrinkwrap.version).toBe(manifest.version);
+    expect(shrinkwrap.packages[''].version).toBe(manifest.version);
+  });
+
   it('tells a downloader to extract the archive they actually downloaded', async () => {
     // The README is hand-written and travels inside the archive, so its example
     // commands name a filename. At the rc.2 bump they kept naming rc.1, which a
