@@ -43,8 +43,13 @@ which carries every site integrity gate — into a flag-on one.
 
 **Check afterwards.** The code is merged and deployed as of `52ae6eeb`; only the
 flag is missing. Production has since advanced past that commit, which does not
-matter here — `52ae6eeb` is the version floor, not the target. After the
-redeploy:
+matter here — `52ae6eeb` is the version floor, not the target.
+
+The flag-off state was validated against production itself on 2026-09-18, not
+only in a local build: `https://zodiacs.org/profile/` and
+`https://zodiacs.org/birth-chart/` both return 200 and neither carries
+`data-saved-records`. That is the before picture the checks below are measured
+against. After the redeploy:
 
 1. `/profile/` renders the saved-records panel; before the flag it returns 200
    with no records surface at all.
@@ -119,6 +124,23 @@ permission layer, not by GitHub, and several GitHub API paths are blocked by the
 outbound proxy here. So: the maintainer account can push; whether this
 environment could is untested and does not need to be, because the publication
 is a maintainer action either way.
+
+**And repository permission is not the blocker, because it was never the same
+thing as the blocker.** Three capabilities are separate, and collapsing any two
+of them is how this card went wrong the first time:
+
+| | state, re-checked 2026-09-18 |
+| --- | --- |
+| GitHub permission on `ZodiacsOfficial/sdk` | held — `admin`, `push` |
+| an authenticated npm publication path | **absent** — `npm whoami` → `ENEEDAUTH`, no `~/.npmrc`, `NPM_TOKEN` and `NODE_AUTH_TOKEN` unset |
+| `@zodiacs/engine` on the registry | **absent** — `npm view @zodiacs/engine version` → `E404` |
+
+Write access to the repository publishes nothing. Neither does hosting an
+archive in a repository: `vendor/zodiacs-engine-0.1.1-rc.6.tgz` and the pinned
+`raw.githubusercontent` copy are a **candidate archive**, not an npm release,
+and no surface here may describe them as published. The single missing
+capability is an authenticated registry session, and it is missing on this
+machine only — not denied to the owner.
 
 **Where the artifact is, exactly.**
 
