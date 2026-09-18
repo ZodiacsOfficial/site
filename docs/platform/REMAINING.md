@@ -231,6 +231,13 @@ resolves.
   approved contact path; onboarding tasks, a feedback template and a prospect
   packet prepared but not sent; an adoption ledger separating prospect, trial,
   independently live, retained and paying.
+  **Prepared, not sent:** the five-step trial for three to five independent
+  builders is written out with exact inputs and exact expected output for every
+  step, measured against the published rc.3 archive rather than the working tree
+  — [TRIAL-DRAFT](evidence/mcp-adapter/TRIAL-DRAFT.md). The contact route is the
+  established one, issues on the site repository. It has not been sent, no
+  recipients are named, and naming them is the owner's call. Nobody outside this
+  work has used the adapter; our own drives are ours and are not adoption.
 
 Birth-time sensitivity, broad generated interpretation, new traditions,
 marketplaces and large content programmes are later opportunities, not
