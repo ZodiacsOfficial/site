@@ -67,7 +67,7 @@ const jsonLd = [{
         <li>
           <p class="dev-status">{candidate.releaseLabel} · {candidate.version}</p>
           <h2><a href="/developers/examples/">Calculate a chart</a></h2>
-          <p>Run the starter and get a real natal chart out of it in a few commands. TypeScript or JavaScript, in your own browser or Node.js app; the core calculations make no network request.</p>
+          <p>Run the starter and get a real natal chart out of it in a few commands; transits and a publisher widget are in there too. TypeScript or JavaScript, in your own browser or Node.js app; the core calculations make no network request.</p>
         </li>
         <li>
           <p class="dev-status">Available · hosted embeds</p>
@@ -77,7 +77,7 @@ const jsonLd = [{
         <li>
           <p class="dev-status">{mcp.releaseStatus === 'unpublished-candidate' ? 'Unpublished candidate' : 'Available'} · {mcp.version}</p>
           <h2><a href="/developers/mcp/">Connect an AI assistant</a></h2>
-          <p>A local MCP server, tested with Claude Code. It calculates a chart or compares two records on your own machine over stdio. The calculation is local; the assistant you connect it to is a separate question, and the page is explicit about that.</p>
+          <p>A local MCP server, tested with Claude Code. It calculates a chart or compares two records on your own machine over stdio. The calculation never leaves the machine; what the assistant you connect it to does with the result is a separate question.</p>
         </li>
         <li>
           <p class="dev-status">Available · runs in your browser</p>
@@ -90,8 +90,8 @@ const jsonLd = [{
       <p>
         Also here, without an account or a key: <a href="#sky-data">shared sky data</a> as
         plain JSON files, and <a href="/developers/support/">the support matrix</a> —
-        runtime requirements, tested environments and known limits — worth reading before
-        you choose an integration. A personalized hosted chart API is
+        runtime requirements, the runtimes actually tested and known limits — worth
+        reading before you choose an integration. A personalized hosted chart API is
         <a href="/developers/support/#hosted">planned and does not exist yet</a>.
       </p>
       <p>

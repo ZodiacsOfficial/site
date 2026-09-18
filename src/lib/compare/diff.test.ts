@@ -180,6 +180,39 @@ describe('comparing two calculation receipts', () => {
     expect(comparison.differences.some((row) => row.id === 'engine-version')).toBe(true);
   });
 
+  it('keeps the engine hypothesis to values an engine can move', () => {
+    // The engine cause claims what a version change can move — a position, an
+    // angle, a cusp, an aspect. It must not claim a whole section going missing:
+    // "the angles are gone" is not something a version bump does, and an
+    // undemonstrable hypothesis over it would read as an explanation where the
+    // honest answer is that nothing here accounts for it.
+    //
+    // These two envelopes are built directly rather than parsed: the codec
+    // refuses an edited result, which is the behaviour under test one layer up.
+    // `timeKnown` is equal on both sides, so the absent angles cannot be
+    // attributed to a missing birth time and the engine cause is the only
+    // candidate left to claim them.
+    //
+    // An AI review found nothing pinning this scope, so widening it back to
+    // every non-input, non-setting row passed the whole suite unnoticed.
+    const left = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
+    const right = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
+    right.receipt.engine.version = '0.1.1-rc.3';
+    right.result.angles = null;
+    right.result.bodies[0].lon = (right.result.bodies[0].lon + 0.01) % 360;
+    const comparison = compareEnvelopes(left, right, live);
+    const engine = comparison.explanations.find((item) => item.id === 'engine');
+    expect(comparison.differences.some((row) => row.id === 'angles-presence')).toBe(true);
+    expect(engine?.evidence).toBe('hypothesis');
+    expect(engine?.covers, 'the moved body is the engine cause\u2019s to claim')
+      .toContain('body-Sun-lon');
+    expect(engine?.covers, 'a section that is simply absent is not')
+      .not.toContain('angles-presence');
+    expect(comparison.explanations.find((item) => item.id === 'unexplained')?.covers,
+      'and it is named as unaccounted for rather than quietly dropped')
+      .toContain('angles-presence');
+  });
+
   it('states that two receipts from one engine show consistency, not accuracy', () => {
     const left = buildEnvelope(ORDINARY);
     const right = buildEnvelope({ ...ORDINARY, houseSystem: 'whole' });
@@ -767,6 +800,12 @@ describe('a summary never claims more agreement than the differences support', (
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, houseSystem: 'whole' }), 'house system'],
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }), 'different moment'],
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }), 'unknown time'],
+      // Neither side has a house table, and they still asked for different
+      // systems. Nothing about the cusps is comparable, so nothing may be said
+      // about the cusps agreeing.
+      [buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }),
+        buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false, houseSystem: 'whole' }),
+        'no houses either side, different systems requested'],
       ...PRESETS.map((preset) => {
         const { left, right } = presetEnvelopes(preset);
         return [left, right, `preset ${preset.id}`] as [NatalEnvelope, NatalEnvelope, string];
@@ -778,14 +817,26 @@ describe('a summary never claims more agreement than the differences support', (
       const computedIds = substantive
         .filter((row) => /^(angle-|angles-presence|body-|aspect-|cusp-|cusps-shape)/.test(row.id))
         .map((row) => row.id);
+      // A reader gets the statement and the detail together, so a claim of
+      // agreement in either one is a claim of agreement. An AI review found the
+      // detail line asserting "the cusps are the same in both files" for pairs
+      // where neither file had cusps at all, which the statement-only sweep
+      // could not see.
+      const cuspsOnBothSides = (envelope: NatalEnvelope) =>
+        Array.isArray((envelope.result as any).houses?.cusps);
       for (const item of comparison.explanations) {
         if (computedIds.length > 0) {
           expect(item.statement, `${name}: claims agreement over ${computedIds.join(', ')}`)
             .not.toMatch(AGREES);
         }
+        if (!cuspsOnBothSides(left) || !cuspsOnBothSides(right)) {
+          expect(`${item.statement} ${item.detail ?? ''}`,
+            `${name}: says cusps are the same when a file has none`)
+            .not.toMatch(/cusps are the same/);
+        }
         // Any explanation saying the difference is "only" one thing has to
         // account for every substantive row, or "only" is not true.
-        if (/\bonly\b/.test(item.statement) && item.id !== 'house-system') {
+        if (/\bonly\b/.test(`${item.statement} ${item.detail ?? ''}`)) {
           const unclaimed = substantive.filter((row) => !item.covers.includes(row.id)).map((row) => row.id);
           expect(unclaimed, `${name}: "${item.statement}" leaves ${unclaimed.join(', ')} unaccounted`).toEqual([]);
         }

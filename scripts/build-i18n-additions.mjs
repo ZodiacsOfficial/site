@@ -241,12 +241,28 @@ function preservationInstructions(english) {
   return instructions;
 }
 
+/**
+ * A stated maximum shorter than the English it describes is not guidance, it is
+ * a contradiction: a translator reading "Maximum: 150 characters" above a
+ * four-hundred-character source has to ignore one of the two. An AI review
+ * found exactly that on the widget privacy note, after a disclosure it had to
+ * carry grew past the cap. The cap exists to keep a translation laid out like
+ * the original, so where the original is longer the cap follows it, with the
+ * usual expansion headroom, rounded to the next ten.
+ */
+function atLeastTheEnglish(maxLength, english) {
+  if (!maxLength) return maxLength;
+  const stated = /^(\d+)( visible)? characters\b/.exec(maxLength);
+  if (!stated || english.length <= Number(stated[1])) return maxLength;
+  return maxLength.replace(stated[1], String(Math.ceil((english.length * 1.1) / 10) * 10));
+}
+
 function usageContext(key, english) {
   const parts = [
     `Location: ${locationFor(key)}`,
     `Tone: ${toneFor(key)}`,
   ];
-  const maxLength = maxLengthFor(key);
+  const maxLength = atLeastTheEnglish(maxLengthFor(key), english);
   if (maxLength) parts.push(`Maximum: ${maxLength}`);
   parts.push(...preservationInstructions(english));
   return `${parts.join('. ')}.`;

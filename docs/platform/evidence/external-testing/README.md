@@ -4,7 +4,7 @@ Nothing here has been sent, posted or published. No one has been recruited,
 hired or paid. No recipients are named, and none are to be invented. No
 advertising was bought and no account was created for any of this.
 
-Written 2026-09-18 against adapter `0.1.0-rc.5`, engine `0.1.1-rc.6`, starter
+Written 2026-09-18 against adapter `0.1.0-rc.6`, engine `0.1.1-rc.6`, starter
 `0.1.0-rc.4`. Before sending anything, re-check that the live pages still
 advertise those versions; the expected values below were measured against them.
 

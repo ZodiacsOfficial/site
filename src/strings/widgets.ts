@@ -21,7 +21,7 @@ export const WIDGET_EN = Object.freeze({
   copyAction: 'Copy embed code',
   copiedAction: 'Copied',
   backlinkNote: 'The Powered by Zodiacs.org link is part of every widget and is not removable.',
-  privacyNote: 'The mini chart computes inside its iframe: birth date, time and place are never sent anywhere. Loading the widget is still a request to zodiacs.org, like any embedded asset, so a visitor\'s browser reveals its IP address and your site\'s origin. Those are separate things.',
+  privacyNote: 'The mini chart computes inside its iframe: the birth date, time and place a visitor enters are not sent anywhere, and the chart is never uploaded. Typing a place does fetch a city list from zodiacs.org, picked by the first letter of what was typed, so that request reveals one letter and nothing more. Loading the widget is a request to zodiacs.org as well, like any embedded asset, so a visitor\'s browser reveals its IP address and your site\'s origin. Those are separate things.',
   sizeNote: 'The documents are standalone and lazy-load their heavier computation only after a mini-chart submission.',
   moonTitle: 'Moon phase today',
   moonSign: 'Moon in {sign}',

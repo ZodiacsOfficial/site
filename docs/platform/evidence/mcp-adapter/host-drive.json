@@ -16,21 +16,21 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "4767039c64098402c224f05d870b14118344adf8035a0fd0bc037e76f38567fd"
+    "sha256": "a06c69da573fcd0d08c52a41344de8e168164f94c755dba911793cc3ec090331"
   },
-  "completedAt": "2026-09-18T11:04:26.680Z",
+  "completedAt": "2026-09-18T13:10:22.687Z",
   "checks": 7,
   "passed": 7,
   "results": [
     {
       "name": "the host accepts the server through its documented add command",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-GS7XcT/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-GS7XcT/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
     },
     {
       "name": "the registration landed in the throwaway config, not the real one",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-GS7XcT/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-GS7XcT/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
     },
     {
       "name": "the host launches the server and reports it connected",
@@ -45,7 +45,7 @@
     {
       "name": "the documented removal command removes it",
       "ok": true,
-      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-GS7XcT/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-GS7XcT/project]"
+      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
     },
     {
       "name": "nothing is left configured after removal",
@@ -56,8 +56,8 @@
       "name": "the machine's own Claude Code configuration is byte-identical throughout",
       "ok": true,
       "detail": {
-        "before": "3efc5366743687ee595eec96fd6539b845316dd0ba02ee6f8cba9eb7e134281a",
-        "after": "3efc5366743687ee595eec96fd6539b845316dd0ba02ee6f8cba9eb7e134281a"
+        "before": "ec9853368011f32381e3d1e20584e9124053f37438664bc3f5e3aaf96b38d85a",
+        "after": "ec9853368011f32381e3d1e20584e9124053f37438664bc3f5e3aaf96b38d85a"
       }
     }
   ]

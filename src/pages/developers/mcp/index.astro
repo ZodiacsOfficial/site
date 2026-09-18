@@ -1,5 +1,6 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import { archiveUrlFor, installBlock } from '../../../lib/mcp-install-block';
 import manifest from '../../../../public/examples/mcp-server.json';
 
 const title = 'Connect an AI Assistant to the Engine | Zodiacs.org';
@@ -14,53 +15,9 @@ if (!/^[0-9a-f]{40}$/.test(manifest.artifactCommit ?? '')) {
   throw new Error('public/examples/mcp-server.json has no artifactCommit;'
     + ' run node scripts/pack-mcp-server.mjs --artifact-commit <sha> after committing the archive');
 }
-const archiveUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${manifest.artifactCommit}/public/examples/${manifest.file}`;
+const archiveUrl = archiveUrlFor(manifest);
 
-const dest = manifest.file.replace(/\.tgz$/, '');
-// The digest is COMPARED, not printed. An earlier version of this block ran
-// `shasum -a 256` and put the expected value in a comment, which reads like a
-// check and is not one: shasum exits 0 on any readable file, and the lines after
-// it ran regardless. A tampered archive extracted, installed and passed
-// `npm run verify`, because the verifier tests behaviour rather than identity.
-// This is the same shape the starter page has used since it shipped, with the
-// destination created only after verification so a failed run leaves nothing
-// behind to block the retry.
-const install = `( set -eu
-# POSIX shell — macOS, Linux or WSL. Not PowerShell. It runs in a subshell, so a
-# failure stops the install without closing your terminal.
-FILE='${manifest.file}'
-DEST='${dest}'
-test ! -e "$FILE" || { echo "Stop: $FILE already exists here. Move or delete it first." >&2; exit 1; }
-test ! -e "$DEST" || { echo "Stop: $DEST already exists here. Move or delete it first." >&2; exit 1; }
-
-curl --disable --fail --silent --show-error --location --proto '=https' --max-time 60 \\
-  '${archiveUrl}' -o "$FILE"
-
-node --input-type=module <<'JS' || { rm -f "$FILE"; exit 1; }
-import { readFileSync } from 'node:fs';
-import { createHash } from 'node:crypto';
-const file = '${manifest.file}';
-const expected = '${manifest.sha256}';
-const expectedBytes = ${manifest.bytes};
-const bytes = readFileSync(file);
-const stop = (why) => {
-  console.error(\`Stop: \${why}\`);
-  console.error('Nothing was extracted and nothing was installed.');
-  process.exit(1);
-};
-if (bytes.length !== expectedBytes) stop(\`incomplete or altered download, \${bytes.length} bytes, expected \${expectedBytes}.\`);
-const actual = createHash('sha256').update(bytes).digest('hex');
-if (actual !== expected) stop(\`this is not the published archive.\\n  expected \${expected}\\n  got      \${actual}\`);
-console.log(\`Archive verified: \${actual}\`);
-JS
-
-mkdir "$DEST"
-tar -xzf "$FILE" --strip-components=1 -C "$DEST"
-cd "$DEST"
-npm ci --no-audit --no-fund
-npm run verify
-echo "Installed and verified in ./$DEST"
-)`;
+const install = installBlock(manifest);
 
 const connect = `claude mcp add zodiacs -- node "$PWD/server.mjs"
 claude mcp list`;
@@ -225,11 +182,15 @@ const tools = [
       </p>
       <p>
         <code>compare_calculation_records</code> reads the record format this site
-        produces — <code>zodiacs.natal-envelope.draft-v1</code>, which is what
-        <code>calculate_natal_chart</code> returns with <code>output: "record"</code>,
-        what the birth chart here offers for download, and what the developer starter
-        writes. It is a Zodiacs-owned draft vocabulary, not an industry interchange
-        format, so another program's export and a screenshot are both out of scope.
+        produces — <code>zodiacs.natal-envelope.draft-v1</code>, what the birth chart
+        here offers for download, what the developer starter writes, and what
+        <code>calculate_natal_chart</code> carries in the <code>record</code> field of
+        its reply when you pass <code>output: "record"</code>. That field holds the
+        whole record, as text; the two keys beside it name the engine that produced it
+        and the vocabulary it speaks. Pass the field, not the reply around it — the
+        reply is a different shape and the comparison refuses it. The vocabulary is a
+        Zodiacs-owned draft rather than an industry interchange format, so another
+        program's export and a screenshot are both out of scope.
       </p>
       <p>
         Every argument is bounded by a schema the host can read: an instant needs an

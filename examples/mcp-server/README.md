@@ -48,7 +48,7 @@ change the digest.
 digest and stops before extracting anything if it does not match. An earlier
 version of this README printed the digest with `shasum` and left you to check it
 by eye, with the extract and install steps on unguarded lines below it — which
-meant a tampered `zodiacs-mcp-server-0.1.0-rc.5.tgz` extracted and installed
+meant a tampered `zodiacs-mcp-server-0.1.0-rc.6.tgz` extracted and installed
 anyway. `npm run verify` is no backstop for that: it tests that the server
 behaves, not that these are the published bytes, so a tampered archive passes it.
 
@@ -58,7 +58,7 @@ happen against the `.tgz` you still have:
 ```sh
 # from the directory holding the archive, against the SHA-256 on the page above
 node -e 'const e=process.argv[2];const a=require("crypto").createHash("sha256").update(require("fs").readFileSync(process.argv[1])).digest("hex");if(a!==e){console.error("Mismatch. Delete this copy and install again from the page.\n  expected "+e+"\n  got      "+a);process.exit(1)}console.log("Archive verified: "+a)' \
-  zodiacs-mcp-server-0.1.0-rc.5.tgz '<the SHA-256 published on the page>'
+  zodiacs-mcp-server-0.1.0-rc.6.tgz '<the SHA-256 published on the page>'
 ```
 
 Then, inside the extracted directory:
@@ -155,10 +155,14 @@ the aspect list — plus the four fields you need to read it: whether the time w
 known, which house system was requested, which one the engine could actually
 use, and why one is absent. It does not repeat your birth details back at you.
 
-`output: "record"` returns the full `zodiacs.natal-envelope.draft-v1` record
-instead, which does contain every input. That is the explicit choice: ask for it
-when the record is what you need, which in practice means feeding two of them to
-the comparison below.
+`output: "record"` returns `{ engine, schema, record }`. The record itself is
+the `record` field, as text — the full `zodiacs.natal-envelope.draft-v1` record,
+which does contain every input — and the two keys beside it name the engine that
+produced it and the vocabulary it speaks. **Pass the field, not the reply around
+it:** `compare_calculation_records` takes record text, and the reply as a whole
+is a different object, so it is refused. Asking for the record is the explicit
+choice: make it when the record is what you need, which in practice means
+feeding two of them to the comparison below.
 
 ### `compare_calculation_records`
 
@@ -282,7 +286,7 @@ not settle, and it is worth reading even when everything else looks resolved.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.5`, unpublished candidate |
+| adapter | `0.1.0-rc.6`, unpublished candidate |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled into `server.mjs` |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` 2.0.0, pinned exactly, installed from npm |

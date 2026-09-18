@@ -470,7 +470,7 @@ export const IT_ADDITIONS = Object.freeze({
   'widgets.planetNames.Venus': 'Venere',
   'widgets.poweredBy': 'Offerto da Zodiacs.org',
   'widgets.previewTitle': 'Anteprima dal vivo',
-  'widgets.privacyNote': 'Il mini tema viene calcolato dentro il suo iframe: data, ora e luogo di nascita non vengono inviati da nessuna parte. Caricare il widget resta una richiesta a zodiacs.org, come qualsiasi risorsa incorporata, quindi il browser di chi visita rivela il proprio indirizzo IP e l’origine del tuo sito. Sono cose diverse.',
+  'widgets.privacyNote': 'Il mini tema viene calcolato dentro il suo iframe: data, ora e luogo di nascita inseriti da chi visita non vengono inviati da nessuna parte e il tema non viene mai caricato altrove. Digitare un luogo scarica però da zodiacs.org un elenco di città, scelto in base alla prima lettera digitata, quindi quella richiesta rivela una lettera e nulla di più. Caricare il widget è anch’esso una richiesta a zodiacs.org, come qualsiasi risorsa incorporata, quindi il browser di chi visita rivela il proprio indirizzo IP e l’origine del tuo sito. Sono cose diverse.',
   'widgets.requiresJavaScript': 'Il calcolo richiede JavaScript, ma il modulo resta privato e non invia alcun dato di nascita.',
   'widgets.retrograde': 'Retrogradi: {planets}',
   'widgets.retrogradeAbbreviation': 'Rx',

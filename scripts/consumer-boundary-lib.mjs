@@ -408,7 +408,10 @@ function vocabularyAllowed(fragment) {
  */
 const HASHING_IMPORT_BLOCKS = new Set([
   'src/pages/developers/examples/index.astro\u0000setup',
-  'src/pages/developers/mcp/index.astro\u0000install',
+  // A .ts fragment carries no key, so this one is listed by file. It narrows the
+  // same way regardless: only the complete `from 'node:crypto'` specifier is
+  // excluded, so any other crypto-market vocabulary in the file still fails.
+  'src/lib/mcp-install-block.ts\u0000',
 ]);
 
 function vocabularyText(fragment) {

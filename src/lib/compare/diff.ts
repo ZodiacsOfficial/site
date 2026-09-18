@@ -420,8 +420,6 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   const replay = options.replay ?? null;
   const leftPrecedence = enginePrecedence(leftEngine);
   const sameEngine = leftPrecedence !== null && leftPrecedence === enginePrecedence(rightEngine);
-  const canReplayLeft = Boolean(replay) && Boolean(available)
-    && leftPrecedence !== null && leftPrecedence === enginePrecedence(available);
   const engineDiffers = leftPrecedence !== enginePrecedence(rightEngine);
 
   if (has('source-instant') && !has('instant')) {
@@ -580,9 +578,19 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
         detail: absent
           ? 'Whatever left one chart without houses is the difference here; the house system is not.'
           : !unexplainedCusps
-            ? (has('cusps-shape') || has('houses-absence')
-              ? 'One chart has no house table, so there are no cusps on both sides to compare here.'
-              : 'The cusps are the same in both files, so this difference changed nothing that was computed.')
+            // Whether there are cusps to agree about is a fact about the two
+            // files, not about which difference rows happen to be present. An
+            // AI review found this branch asserting that the cusps were the
+            // same for a pair in which neither file had any: two charts with no
+            // birth time, asking for different systems, produce no cusp rows,
+            // no cusps-shape row and no houses-absence row, so the row-presence
+            // test this used to make came out false and the sentence claimed
+            // agreement over values that do not exist.
+            ? (leftCusps && rightCusps
+              ? 'The cusps are the same in both files, so this difference changed nothing that was computed.'
+              : leftCusps || rightCusps
+                ? 'One chart has no house table, so there are no cusps on both sides to compare here.'
+                : 'Neither chart has a house table, so there are no cusps here to be affected by it.')
             : controlledMatch
               // The useful qualified case: the arithmetic worked, and only the
               // identity behind it could not be established. Saying what the
@@ -695,11 +703,13 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
 
   // Engine difference with no input difference: candidate cause, but this tool
   // holds exactly one engine build and cannot rerun the other one.
-  // `downstream`, not `computed`: an engine change can move a sign or an aspect's
-  // existence as well as a number, exactly as a different instant can, and the
-  // `instant` cause a few branches up already uses the wider view. Using the
-  // narrower one here left rows for the unresolved bucket that this cause is
-  // the honest claimant for.
+  // `downstream`, not `computed`. The two differ by exactly `angles-presence`
+  // and `cusps-shape`: a section of the chart being there or not. An engine
+  // change can move a sign or an aspect's existence as well as a number, which
+  // is why this is not the numeric view either — but it does not make the
+  // angles vanish, and an undemonstrable hypothesis over a whole missing
+  // section would read as an explanation where the honest answer is that
+  // nothing in these two files accounts for it.
   const engineDownstream = downstream(['Positions', 'Angles', 'Houses', 'Aspects']);
   if (has('engine-version') && engineDiffers && engineDownstream.length > 0) {
     explanations.push({
