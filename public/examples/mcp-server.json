@@ -6,7 +6,7 @@
   "file": "zodiacs-mcp-server-0.1.0-rc.3.tgz",
   "bytes": 64960,
   "sha256": "78bbb897dc06624bf89f2cce9a2865ba77e6f0ee72018ca35018d40fa66b2603",
-  "artifactCommit": "2fc1b5e2faee7f3495aeab2f6704d224f7363382",
+  "artifactCommit": "0b6f1fe448d1510c8310a1289dd4a57aea11af4b",
   "artifactRepository": "https://github.com/ZodiacsOfficial/site",
   "artifactPath": "public/examples/zodiacs-mcp-server-0.1.0-rc.3.tgz",
   "engine": {
