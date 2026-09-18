@@ -1,6 +1,6 @@
 {
   "type": "browser acceptance for /developers/compare/ against a local preview of the built site; not a drive against the deployed origin, which is recorded separately in live-drive.json",
-  "completedAt": "2026-09-18T07:48:40.657Z",
+  "completedAt": "2026-09-18T12:03:07.438Z",
   "node": "v22.22.2",
   "viewports": [
     "1280x900",
@@ -18,11 +18,6 @@
       "ok": true
     },
     {
-      "name": "desktop: preset identical reaches a verdict",
-      "ok": true,
-      "detail": "identical"
-    },
-    {
       "name": "desktop: preset house-system reaches a verdict",
       "ok": true,
       "detail": "differs"
@@ -36,6 +31,11 @@
       "name": "desktop: preset ambiguous reaches a verdict",
       "ok": true,
       "detail": "differs"
+    },
+    {
+      "name": "desktop: preset identical reaches a verdict",
+      "ok": true,
+      "detail": "identical"
     },
     {
       "name": "desktop: an ordinary house-system difference is reproduced",
@@ -151,11 +151,6 @@
       "ok": true
     },
     {
-      "name": "mobile: preset identical reaches a verdict",
-      "ok": true,
-      "detail": "identical"
-    },
-    {
       "name": "mobile: preset house-system reaches a verdict",
       "ok": true,
       "detail": "differs"
@@ -169,6 +164,11 @@
       "name": "mobile: preset ambiguous reaches a verdict",
       "ok": true,
       "detail": "differs"
+    },
+    {
+      "name": "mobile: preset identical reaches a verdict",
+      "ok": true,
+      "detail": "identical"
     },
     {
       "name": "mobile: an ordinary house-system difference is reproduced",

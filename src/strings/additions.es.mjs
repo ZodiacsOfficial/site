@@ -395,7 +395,7 @@ export const ES_ADDITIONS = Object.freeze({
   'widgets.planetNames.Venus': 'Venus',
   'widgets.poweredBy': 'Con tecnología de Zodiacs.org',
   'widgets.previewTitle': 'Vista previa en vivo',
-  'widgets.privacyNote': 'La minicarta se calcula en su iframe. La fecha, hora y lugar de nacimiento nunca salen del navegador.',
+  'widgets.privacyNote': 'La minicarta se calcula dentro de su iframe: la fecha, la hora y el lugar de nacimiento no se envían a ninguna parte. Cargar el widget sigue siendo una petición a zodiacs.org, como cualquier recurso incrustado, así que el navegador de quien lo visita revela su dirección IP y el origen de tu sitio. Son cosas distintas.',
   'widgets.requiresJavaScript': 'El cálculo requiere JavaScript, pero el formulario sigue siendo privado y no envía ningún dato de nacimiento.',
   'widgets.retrograde': 'Retrógrados: {planets}',
   'widgets.retrogradeAbbreviation': 'Rx',

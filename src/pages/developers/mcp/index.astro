@@ -211,8 +211,32 @@ const tools = [
     </dl>
     <div class="prose">
       <p>
+        Ask your assistant, in your own words: <em>calculate a natal chart for
+        1988-03-21T06:45:00Z at latitude 40.7128, longitude -74.0060, with Placidus
+        houses</em>. Those are round public coordinates for New York on an ordinary
+        date — a synthetic chart, nobody's birth details. You should get twelve bodies,
+        four angles and twelve cusps, with the Sun at 0.873337° and the ascendant at
+        274.046910°, and <code>houses</code> reading
+        <code>{'{ requested: "placidus", actual: "placidus", absenceReason: null }'}</code>.
+        Then drop the zone — ask for <code>1988-03-21T06:45:00</code> with no
+        <code>Z</code> — and it refuses rather than guessing: <em>utc must be an ISO-8601
+        instant with an explicit zone</em>. That refusal is the limit you would meet
+        first for real, because this adapter resolves no time zones.
+      </p>
+      <p>
+        <code>compare_calculation_records</code> reads the record format this site
+        produces — <code>zodiacs.natal-envelope.draft-v1</code>, which is what
+        <code>calculate_natal_chart</code> returns with <code>output: "record"</code>,
+        what the birth chart here offers for download, and what the developer starter
+        writes. It is a Zodiacs-owned draft vocabulary, not an industry interchange
+        format, so another program's export and a screenshot are both out of scope.
+      </p>
+      <p>
         Every argument is bounded by a schema the host can read: an instant needs an
-        explicit zone and falls within 1800 to 2199, coordinates come as a pair or not
+        explicit zone and falls within 1800 to 2199 — an accepted input range, not a
+        range every date in which has been independently checked for accuracy; the
+        engine's own receipts record <code>broadDateRange</code> as not certified.
+        Coordinates come as a pair or not
         at all, the house system is one of two the engine computes, and a record is at
         most 64 KB of content. An argument the schema does not know is refused rather
         than ignored. A model-supplied value becomes a number, a date or one of a fixed
