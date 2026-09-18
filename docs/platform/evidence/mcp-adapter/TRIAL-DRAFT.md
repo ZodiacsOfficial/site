@@ -11,8 +11,8 @@ constraint that draft set.
 **Availability — passed.** `https://zodiacs.org/developers/mcp/` returns 200 in
 production and publishes a pinned archive whose digest matches what the page
 prints. The install instructions point at something real. Every expected value
-below was measured against **0.1.0-rc.4**. Before sending, check that the page
-still advertises rc.4; if a later archive has shipped, re-measure steps 2 to 4
+below was measured against **0.1.0-rc.5**. Before sending, check that the page
+still advertises rc.5; if a later archive has shipped, re-measure steps 2 to 4
 against whatever it names, because the `reproduced` wording and the withholding
 have both changed between candidates before.
 
@@ -97,7 +97,9 @@ Checks:
 - the digest you compute matches the one the page prints;
 - `npm install` reports fourteen packages — three are the server's, eleven
   belong to the MCP client the verifier uses;
-- `npm run verify` prints seventeen check lines and exits 0;
+- `npm run verify` prints seventeen check lines and exits 0 — note the page's
+  block now compares the digest itself and stops before extracting if it does not
+  match, so a corrupted download should never reach this step;
 - `claude mcp list` shows `zodiacs: node … - ✓ Connected`.
 
 If your host is Claude Desktop, VS Code or Cursor, the config shapes on the page
@@ -117,7 +119,7 @@ Ask your assistant, in your own words:
 Synthetic: round public coordinates for New York, on a date chosen for what it
 exercises. Nobody's birth details.
 
-Checks, on rc.4 with engine 0.1.1-rc.6 — `get_capabilities` will tell you what
+Checks, on rc.5 with engine 0.1.1-rc.6 — `get_capabilities` will tell you what
 you actually have:
 
 - twelve bodies, four angles, twelve cusps;
@@ -174,7 +176,7 @@ comparison as `left` and `right`.
   "houseSystem": "whole", "output": "record" }
 ```
 
-A correct answer, in full — this is what rc.4 returns:
+A correct answer, in full — this is what rc.5 returns:
 
 - `identical: false`, and
   `counts: { differences: 15, substantive: 15, displayOnly: 0, explanations: 1 }`.
@@ -333,7 +335,7 @@ Short. It links the protocol rather than repeating it.
 ## Where the expected values came from
 
 Every value in steps 2 to 4 was read off a clean extraction of the published
-`zodiacs-mcp-server-0.1.0-rc.4.tgz` (sha256 `d8751535…`), installed and verified
+`zodiacs-mcp-server-0.1.0-rc.5.tgz` (sha256 `24e167bd…`), installed and verified
 from the archive rather than run out of the working tree — the distinction
 mattered once already, when a draft of this protocol quoted a sentence that
 existed only in unreleased source. Driven over stdio with the official
