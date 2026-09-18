@@ -6,27 +6,27 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 4
   },
-  "capturedAt": "2026-09-18T07:09:53.142Z",
+  "capturedAt": "2026-09-18T07:22:17.071Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-09-18",
   "publicationCanonicalSha256": "4c62957d3d84132a500af368a17ca194d8a1c737466e67fe31f0b22bedb7a037",
-  "templateSourceSha256": "e8b34817214e7cd9022e1286f282ca85e2de7a0859b6068cc3e38f8351ccc1b6",
+  "templateSourceSha256": "1d23a2101f79c39abba0b44d7cb8d211c7e9c004df61b8ff42aea33f26964899",
   "renderPayloadSha256": {
     "daily": "752d1dbc0a893a30c2bca8a3024dbf90c70bf18dacfc5cf679997017bd26ea68",
     "dailyPublication": "f98969caa4035e12c372c680057d8bfa7d9b041a03d4a340f0fb4fbd64a4c4e0",
-    "dailyPublicationManifest": "c4557a8cffe3d67a2e47ac7b4714324d4105654d478e68ffdecbd6c968f5b6e5",
+    "dailyPublicationManifest": "5354077c477f14360166f9837dfae67949bfd50b1b9d8aa84d9a95a3b95a4447",
     "horoscopeProgram": "38fb9617230babe8fc1466e137a748a32b48a96c2070dd021a42c30e3c00d3be"
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-09-18T07:06:20.649Z",
-    "templateSourceSha256": "e8b34817214e7cd9022e1286f282ca85e2de7a0859b6068cc3e38f8351ccc1b6",
+    "builtAt": "2026-09-18T07:20:34.481Z",
+    "templateSourceSha256": "1d23a2101f79c39abba0b44d7cb8d211c7e9c004df61b8ff42aea33f26964899",
     "dailyDate": "2026-09-18",
     "publicationCanonicalSha256": "4c62957d3d84132a500af368a17ca194d8a1c737466e67fe31f0b22bedb7a037",
     "renderPayloadSha256": {
       "daily": "752d1dbc0a893a30c2bca8a3024dbf90c70bf18dacfc5cf679997017bd26ea68",
       "dailyPublication": "f98969caa4035e12c372c680057d8bfa7d9b041a03d4a340f0fb4fbd64a4c4e0",
-      "dailyPublicationManifest": "c4557a8cffe3d67a2e47ac7b4714324d4105654d478e68ffdecbd6c968f5b6e5",
+      "dailyPublicationManifest": "5354077c477f14360166f9837dfae67949bfd50b1b9d8aa84d9a95a3b95a4447",
       "horoscopeProgram": "38fb9617230babe8fc1466e137a748a32b48a96c2070dd021a42c30e3c00d3be"
     }
   },
