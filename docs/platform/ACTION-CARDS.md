@@ -156,9 +156,11 @@ archive that is not the one every gate in this repository has been run against.
 **The commands.**
 
 ```bash
-# 0. Use npm >= 11.5.1 (Node >= 22.14.0). Trusted publishing in step 3 requires
-#    it, and every npm from 11.0.0 onward refuses to tag a prerelease `latest`
-#    by accident. npm 10.x has no such guard.
+# 0. Use npm >= 11.5.1. That is the floor npm's trusted-publishing documentation
+#    states for step 3 (it names Node >= 22.14.0 alongside it; npm 11.5.1's own
+#    `engines` is looser, so take the docs' pair as the requirement for OIDC
+#    rather than for npm itself). Every npm from 11.0.0 onward also refuses to
+#    tag a prerelease `latest` by accident; npm 10.x has no such guard.
 npm --version
 
 # 1. Confirm the bytes are the audited bytes, before anything else.
@@ -214,12 +216,20 @@ curl -sSL "$(npm view @zodiacs/engine@0.1.1-rc.6 dist.tarball)" -o /tmp/served.t
 sha256sum /tmp/served.tgz   # must equal 09c3e634…
 cmp /tmp/served.tgz vendor/zodiacs-engine-0.1.1-rc.6.tgz && echo "byte-identical"
 
-# And prove a bare install does NOT pick up the candidate:
-npm view @zodiacs/engine@latest version   # expect E404 "No match found for version"
+# And prove a bare install does NOT pick up the candidate. Written as a test,
+# not as a command to eyeball: `npm view @zodiacs/engine@latest version` looks
+# like the obvious check and is the same trap again — npm skips its own E404
+# throw when the unresolved tag is literally `latest`, so it exits 0 printing
+# nothing whether or not the tag exists.
+npm dist-tag ls @zodiacs/engine | grep -q '^latest:' \
+  && echo 'FAIL: a latest tag exists' || echo 'ok: no latest tag'
 ```
 
-Each `npm view <pkg>@<exact-version> <field>` either prints the value or fails
-with E404 — unlike the tag-resolving forms, it cannot pass silently.
+Each `npm view <pkg>@<exact-version> <field>` above either prints the value or
+fails with E404 — unlike the tag-resolving forms, an exact version cannot pass
+silently. The `latest` line is the exception and is why it is written as a test
+with an explicit pass and fail message rather than as a command whose absence of
+output you are asked to interpret.
 
 **What publishing changes in this repository.** Not automatic, and not optional
 — several gates assert the unpublished state and will fail the moment it stops
@@ -235,8 +245,9 @@ being true:
   `tests/mcp-protocol-drive.mjs` pinning it — and the bundled
   `examples/mcp-server/server.mjs` has to be rebuilt, republished and re-pinned,
   not hand-edited.
-- [The engine release record](evidence/engine-release/README.md), `STATUS.md`
-  and `REMAINING.md` say `unpublished-candidate` in prose.
+- `STATUS.md` and `REMAINING.md` say `unpublished-candidate` in prose, and
+  [the engine release record](evidence/engine-release/README.md) records the
+  registry state directly — `npm view @zodiacs/engine versions` → 404.
 
 **To undo.** `npm unpublish @zodiacs/engine@0.1.1-rc.6` is allowed within 72
 hours of publication **only if** no package in the public registry depends on it.

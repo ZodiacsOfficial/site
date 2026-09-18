@@ -1,21 +1,21 @@
 {
   "kind": "synthetic regression benchmark",
   "whatItIsNot": "Not a measured accuracy rate. Every pair here is built by the same engine from synthetic inputs, so this measures whether the comparison classifies the cases its rules describe. It says nothing about how often the tool is right about a disagreement between two independently authored astrology engines, and nothing about real-world users, because no such corpus exists here.",
-  "startedAt": "2026-09-18T06:30:16.632Z",
-  "completedAt": "2026-09-18T06:30:17.121Z",
+  "startedAt": "2026-09-18T07:02:06.217Z",
+  "completedAt": "2026-09-18T07:02:06.723Z",
   "node": "v22.22.2",
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "f41dc6744abb57bb35626218e199b5f906e7472a6de8b0a26c20ad17497bb35d"
+    "sha256": "ebf7c1e9dbfd6357003542fffae42b69a0824580791cda655754f3269789e114"
   },
-  "expectationsSha256": "843cf89bd55372b22adb839230715a7b576cc6d641c61c4dcd50d032a48d05e3",
+  "expectationsSha256": "70468ade20f70f4a59c141070b5957d43e3e32a96d911accb8a4e77c94d90235",
   "scenarios": {
-    "passed": 15,
-    "of": 15
+    "passed": 18,
+    "of": 18
   },
   "assertions": {
-    "passed": 98,
-    "of": 98
+    "passed": 112,
+    "of": 112
   },
   "detail": [
     {
@@ -219,7 +219,7 @@
       "explanations": [
         {
           "id": "house-system",
-          "evidence": "hypothesis",
+          "evidence": "reproduced",
           "covers": 15
         },
         {
@@ -280,6 +280,66 @@
       ],
       "assertions": 6,
       "passed": 6,
+      "failures": []
+    },
+    {
+      "id": "quantised-cusps-drift",
+      "required": "a rewritten instant that the cusps alone cannot detect",
+      "differences": 82,
+      "explanations": [
+        {
+          "id": "house-system",
+          "evidence": "hypothesis",
+          "covers": 15
+        },
+        {
+          "id": "unexplained",
+          "evidence": "unresolved",
+          "covers": 65
+        }
+      ],
+      "assertions": 5,
+      "passed": 5,
+      "failures": []
+    },
+    {
+      "id": "drifted-place",
+      "required": "a rewritten place, reached the same way as a rewritten moment",
+      "differences": 19,
+      "explanations": [
+        {
+          "id": "house-system",
+          "evidence": "hypothesis",
+          "covers": 15
+        },
+        {
+          "id": "unexplained",
+          "evidence": "unresolved",
+          "covers": 4
+        }
+      ],
+      "assertions": 4,
+      "passed": 4,
+      "failures": []
+    },
+    {
+      "id": "one-sided-build-claim",
+      "required": "one receipt claiming a build and the other claiming none",
+      "differences": 16,
+      "explanations": [
+        {
+          "id": "house-system",
+          "evidence": "reproduced",
+          "covers": 15
+        },
+        {
+          "id": "engine-build",
+          "evidence": "reported",
+          "covers": 1
+        }
+      ],
+      "assertions": 5,
+      "passed": 5,
       "failures": []
     }
   ]

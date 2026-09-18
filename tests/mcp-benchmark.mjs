@@ -93,8 +93,14 @@ const PREDICATES = {
     return [missing.length === 0, { missing, present: view.explanationIds }];
   },
   explanationEvidence: (want, view) => {
-    const actual = view.explanations.find((row) => row.id === want.explanation)?.evidence ?? null;
-    return [actual === want.evidence, actual];
+    // Accepts one pair or a list of them, so a scenario can pin more than one
+    // cause without two keys of the same name in its `expect` object.
+    const wanted = Array.isArray(want) ? want : [want];
+    const observed = wanted.map((entry) => ({
+      explanation: entry.explanation,
+      evidence: view.explanations.find((row) => row.id === entry.explanation)?.evidence ?? null,
+    }));
+    return [observed.every((row, index) => row.evidence === wanted[index].evidence), observed];
   },
   explanationExcludesPattern: (want, view) => {
     const claimed = view.explanations.find((row) => row.id === want.explanation)?.covers ?? null;
@@ -129,6 +135,11 @@ const PREDICATES = {
   limitsMatch: (want, view) => {
     const pattern = new RegExp(want);
     return [view.limits.some((line) => pattern.test(line)), view.limits];
+  },
+  /** A sentence that must NOT appear: the assertion for a wording that was wrong. */
+  limitsExclude: (want, view) => {
+    const pattern = new RegExp(want);
+    return [!view.limits.some((line) => pattern.test(line)), view.limits];
   },
   smallestNumericDeltaBelowLargestDisplayDelta: (want, view) => {
     const numeric = deltasOfKind(view, 'numeric');
@@ -192,6 +203,12 @@ function editClaims(record, edit) {
     parsed.receipt.instant = new Date(edit.declaredInstant).toISOString();
     parsed.receipt.sourceInstant = edit.declaredInstant;
   }
+  // The same drift reached through the place instead of the moment. The parser
+  // accepts a rewritten coordinate for the same reason it accepts a rewritten
+  // instant: it checks that a record is coherent with itself, not that its
+  // values follow from the inputs it declares.
+  if (edit.declaredLongitude !== undefined) parsed.receipt.coordinates.longitude = edit.declaredLongitude;
+  if (edit.declaredLatitude !== undefined) parsed.receipt.coordinates.latitude = edit.declaredLatitude;
   return JSON.stringify(parsed);
 }
 
@@ -219,17 +236,30 @@ try {
     // scenario that asks for it, rather than as a second copy of the scenario.
     if (scenario.orderIndependent) {
       const swapped = observe(await structured('compare_calculation_records', { ...compareArgs, left: right, right: left }));
-      const evidenceOf = (v) => Object.fromEntries(v.explanations.map((row) => [row.id, row.evidence]));
-      const forward = evidenceOf(view);
-      const reverse = evidenceOf(swapped);
-      const shared = [...new Set([...Object.keys(forward), ...Object.keys(reverse)])]
-        .filter((id) => id !== 'unexplained');
-      const mismatched = shared.filter((id) => forward[id] !== reverse[id]);
+      // An AI review noted this compared evidence ranks only, so a swap that
+      // moved rows out of a cause's `covers` into the unresolved bucket would
+      // have passed. It now compares what each cause claims as well, and the
+      // size of the unresolved bucket, which is the thing such a swap changes.
+      const shapeOf = (v) => Object.fromEntries(v.explanations.map((row) => [
+        row.id, `${row.evidence}:${[...row.covers].sort().join(',')}`,
+      ]));
+      const forward = shapeOf(view);
+      const reverse = shapeOf(swapped);
+      const ids = [...new Set([...Object.keys(forward), ...Object.keys(reverse)])];
+      // The unresolved bucket's membership is compared by size, not identity:
+      // it is pushed with whatever nothing else claimed, so comparing its
+      // contents would only restate the rest of this check.
+      const unresolvedSize = (v) => (v.explanations.find((row) => row.id === 'unexplained')?.covers.length ?? 0);
+      const mismatched = ids.filter((id) => forward[id] !== reverse[id]);
+      const sameBucket = unresolvedSize(view) === unresolvedSize(swapped);
       assertions.push({
         predicate: 'sameVerdictWhenReversed',
         want: true,
-        ok: mismatched.length === 0 && view.identical === swapped.identical,
-        observed: mismatched.length === 0 ? 'same' : mismatched.map((id) => ({ id, forward: forward[id], reverse: reverse[id] })),
+        ok: mismatched.length === 0 && sameBucket && view.identical === swapped.identical,
+        observed: mismatched.length === 0 && sameBucket
+          ? 'same'
+          : mismatched.map((id) => ({ id, forward: forward[id], reverse: reverse[id] }))
+            .concat(sameBucket ? [] : [{ id: 'unexplained', forward: unresolvedSize(view), reverse: unresolvedSize(swapped) }]),
       });
     }
     scenarios.push({

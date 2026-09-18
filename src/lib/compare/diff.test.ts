@@ -402,6 +402,11 @@ describe('a cause never claims a row it could not have caused', () => {
     'equivalent-instants': /^(body-|angle-|cusp-|aspect-)/u,
   };
 
+  // A synthetic input with no coordinates at all: the engine accepts it and
+  // returns no angles and no house table.
+  const { latitude: _lat, longitude: _lon, ...PLACELESS } = ORDINARY;
+  const NO_PLACE = PLACELESS as unknown as typeof ORDINARY;
+
   const cases = [
     { name: 'different place and different house system',
       left: ORDINARY,
@@ -428,6 +433,18 @@ describe('a cause never claims a row it could not have caused', () => {
     { name: 'an unknown birth time and a different house system at once',
       left: ORDINARY,
       right: { ...ORDINARY, houseSystem: 'whole', timeKnown: false } as const },
+    // The same defect through the other absence reason. An AI review pointed
+    // out that every unknown-time pair above keeps its coordinates, so a
+    // receipt with no place at all — which also has no ascendant and no house
+    // table — still left `angles-presence` and `cusps-shape` claimed by
+    // nobody, with the cause printed above them. `idsIn` sees only numeric
+    // rows, and a missing place leaves none.
+    { name: 'a chart with a place against one without',
+      left: ORDINARY,
+      right: NO_PLACE },
+    { name: 'a missing place and a different house system at once',
+      left: ORDINARY,
+      right: { ...NO_PLACE, houseSystem: 'whole' } as const },
   ];
 
   for (const scenario of cases) {
@@ -514,17 +531,117 @@ describe('what a local recalculation has to establish before it is a cause', () 
     expect(houseSystemEvidence(drifted, at(T1, 'whole'))).toBe(houseSystemEvidence(at(T1, 'whole'), drifted));
   });
 
-  it('withholds it when the two receipts claim different builds of the same version', () => {
-    // SemVer ignores build metadata when ordering versions. That is not a
-    // licence to treat two differently labelled builds as the same code.
+  /**
+   * This expectation was reversed, deliberately, and the reason is worth more
+   * than the assertion.
+   *
+   * The first attempt at this audit made a differing build claim refuse the
+   * replay outright. A review showed that contradicted two things at once: the
+   * rule stated a few hundred lines above it in `diff.ts` — build metadata does
+   * not make a different engine, and such a pair must not "be refused a replay
+   * as if they were" — and the response itself, which printed "build metadata
+   * does not change which version a receipt was produced by" beside a limit
+   * saying the two claims made the replay unusable. Both sentences in one
+   * answer, saying opposite things.
+   *
+   * What actually establishes that a recalculation may speak for a receipt is
+   * the baseline below: the receipt's own values, checked against the receipt's
+   * own declared inputs. A claim printed inside the file establishes nothing
+   * either way — which is the audit's own instruction. So the claim is recorded
+   * in `limits`, where an unauthenticated assertion belongs, and the verdict
+   * rests on the arithmetic.
+   */
+  it('records a differing build claim as a limit rather than refusing the replay', () => {
     const label = (envelope: NatalEnvelope, meta: string) => accepted(
       edited(envelope, (o) => { o.receipt.engine.version = `${ENGINE_VERSION}+${meta}`; }), meta,
     );
-    expect(houseSystemEvidence(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.b')))
-      .toBe('hypothesis');
-    // …and allows it when both name the same build, metadata included.
-    expect(houseSystemEvidence(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.a')))
-      .toBe('reproduced');
+    const different = compareEnvelopes(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.b'), live);
+    expect(evidenceFor(different, 'house-system')).toBe('reproduced');
+    expect(different.limits.join(' ')).toMatch(/each claims a different build of it/);
+    // Both naming the same build says nothing either, and is not remarked on.
+    const same = compareEnvelopes(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.a'), live);
+    expect(evidenceFor(same, 'house-system')).toBe('reproduced');
+    expect(same.limits.join(' ')).not.toMatch(/claims a different build/);
+  });
+
+  it('does not treat a receipt that claims no build as claiming a different one', () => {
+    // One file carrying build metadata and the other carrying none is not a
+    // disagreement: the second has not said anything to disagree with. An
+    // earlier version of this gate compared the two as strings and refused the
+    // replay, then described the pair in a sentence that was simply false.
+    const labelled = accepted(
+      edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = `${ENGINE_VERSION}+2000377`; }), 'labelled',
+    );
+    const comparison = compareEnvelopes(at(T1, 'placidus'), labelled, live);
+    expect(evidenceFor(comparison, 'house-system')).toBe('reproduced');
+    expect(comparison.limits.join(' ')).not.toMatch(/claims a different build/);
+    // The difference is still reported, by the cause that owns it.
+    expect(evidenceFor(comparison, 'engine-build')).toBe('reported');
+  });
+
+  /**
+   * The counterexample that forced the baseline to widen.
+   *
+   * Whole-sign cusps are quantised to sign boundaries, so they survive an hour
+   * of drift in the declared instant without moving. A baseline that checks the
+   * cusps alone therefore passes trivially on a record whose instant was
+   * rewritten, and the pair reached "reproduced" while sixty-five rows sat in
+   * the unresolved bucket. The angles and the body longitudes move continuously
+   * and are what discriminate, so the baseline checks every value the replay
+   * also produces.
+   */
+  it('withholds it when only the quantised cusps survive a rewritten instant', () => {
+    const whole = (utc: string) => buildEnvelope({ ...ORDINARY, utc, houseSystem: 'whole' });
+    // The premise, stated rather than assumed: these cusps really are identical.
+    expect(replay({ ...ORDINARY, utc: T1, houseSystem: 'whole', timeKnown: true })?.cusps)
+      .toEqual(replay({ ...ORDINARY, utc: T2, houseSystem: 'whole', timeKnown: true })?.cusps);
+    const drifted = accepted(edited(whole(T2), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted-whole');
+    for (const comparison of [
+      compareEnvelopes(drifted, at(T1, 'placidus'), live),
+      compareEnvelopes(at(T1, 'placidus'), drifted, live),
+    ]) {
+      expect(evidenceFor(comparison, 'house-system')).toBe('hypothesis');
+      expect(comparison.limits.join(' ')).toMatch(/could not be reproduced from the inputs it declares/);
+    }
+  });
+
+  it('withholds it when the declared place is not the one the values came from', () => {
+    // The same hole reached through the coordinates instead of the instant.
+    const drifted = accepted(
+      edited(buildEnvelope({ ...ORDINARY, utc: T1, houseSystem: 'whole', longitude: 2.8722 }),
+        (o) => { o.receipt.coordinates.longitude = ORDINARY.longitude; }), 'drifted-place',
+    );
+    expect(houseSystemEvidence(drifted, at(T1, 'placidus'))).toBe('hypothesis');
+  });
+
+  it('does not deny a house-system difference it is claiming in the same breath', () => {
+    // When one side has no house table the cause says so. An AI review found it
+    // saying so over a pair that ALSO requested different systems, adding "the
+    // house system is not" the difference on top of a row recording exactly
+    // that difference.
+    const { latitude: _lat, longitude: _lon, ...placeless } = ORDINARY;
+    const noPlace = buildEnvelope({ ...placeless, houseSystem: 'whole' } as unknown as typeof ORDINARY);
+    const houseSystem = compareEnvelopes(buildEnvelope({ ...ORDINARY, houseSystem: 'placidus' }), noPlace, live)
+      .explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.statement).toBe('The two charts asked for different house systems.');
+    expect(houseSystem?.detail).not.toMatch(/the house system is not/);
+    // …and it still does not claim the cusps are equal when one side has none.
+    expect(houseSystem?.detail).toMatch(/no house table/);
+  });
+
+  it('names every foreign engine, not whichever one it met first', () => {
+    const foreign = (envelope: NatalEnvelope, version: string) => accepted(
+      edited(envelope, (o) => { o.receipt.engine.version = version; }), version,
+    );
+    const comparison = compareEnvelopes(
+      foreign(at(T1, 'placidus'), '98.0.0'), foreign(at(T1, 'whole'), '99.0.0'), live,
+    );
+    const limit = comparison.limits.find((line) => line.includes('Local recalculation runs engine')) ?? '';
+    expect(limit).toMatch(/98\.0\.0/);
+    expect(limit).toMatch(/99\.0\.0/);
   });
 
   it('withholds it when a receipt’s own values do not follow from the inputs it declares', () => {

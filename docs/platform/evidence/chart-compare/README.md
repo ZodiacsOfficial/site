@@ -208,18 +208,28 @@ accepts — a record the parser refuses can never reach the comparison, so a
 counterexample built out of one proves nothing — and each is now a regression
 test in `diff.test.ts` verified to fail without its fix.
 
-| case | before | after |
-| --- | --- | --- |
-| ordinary house-system difference | `reproduced` | `reproduced` |
-| right receipt names engine `99.0.0`, values match the installed engine | **`reproduced`** | `hypothesis` |
-| the same pair, reversed | `hypothesis` | `hypothesis` |
-| equal precedence, different build metadata and artifact claims | **`reproduced`** | `hypothesis` |
-| both sides claim the same build, metadata included | — | `reproduced` |
-| a receipt whose values are from another instant than it declares | **`reproduced`** | `hypothesis` |
-| the same pair, reversed | `hypothesis` | `hypothesis` |
-| receipts declaring different conventions | **cannot be built** | **cannot be built** |
+A bounded AI review of that fix then found two ways it was wrong, and both are in
+the table below under "first fix". They are recorded here at the same weight as
+the original findings, because a correction that introduces a new false statement
+is worse than the defect it replaced.
 
-Three things are worth saying plainly about that table.
+| case | before | first fix | after review |
+| --- | --- | --- | --- |
+| ordinary house-system difference | `reproduced` | `reproduced` | `reproduced` |
+| right receipt names engine `99.0.0`, values match the installed engine | **`reproduced`** | `hypothesis` | `hypothesis` |
+| the same pair, reversed | `hypothesis` | `hypothesis` | `hypothesis` |
+| both sides foreign, naming *different* versions | limit names one of them | limit names one of them | limit names both |
+| equal precedence, different build metadata on both sides | `reproduced` | `hypothesis` | `reproduced`, recorded as a limit |
+| one side claims a build, the other claims none | `reproduced` | **`hypothesis`, described falsely** | `reproduced` |
+| both sides claim the same build, metadata included | — | `reproduced` | `reproduced` |
+| a receipt whose values are from another instant than it declares, placidus | **`reproduced`** | `hypothesis` | `hypothesis` |
+| the same, with **whole-sign** houses on the drifted side | `hypothesis` | **`reproduced`** | `hypothesis` |
+| the same, with the *place* rewritten instead of the moment | `hypothesis` | **`reproduced`** | `hypothesis` |
+| a pair that both requested different systems and lost one house table | statement wrong | **statement denies the requested difference** | both said |
+| a chart with a place against one with none | `angles-presence`, `cusps-shape` unresolved | still unresolved | claimed by the location cause |
+| receipts declaring different conventions | **cannot be built** | **cannot be built** | **cannot be built** |
+
+Four things are worth saying plainly about that table.
 
 **The argument-order rows are the finding, not a detail.** The same two files
 reached `reproduced` one way round and `hypothesis` the other, because only the
@@ -236,6 +246,34 @@ be handed a file whose values describe a different calculation from the one it
 records, replay the declared inputs, match the other file, and report the house
 system as a demonstrated cause while it explained nothing at all.
 
+**The first fix opened a hole of its own, and a review found it.** The baseline
+it added compared the cusps, and only the cusps. Whole-sign cusps sit on sign
+boundaries, so they are quantised: at London they are byte-identical from 13:30Z
+through 14:30Z. A record with a rewritten instant therefore reproduces its own
+whole-sign cusps trivially, the baseline passes, and the pair reached
+`reproduced` while sixty-five rows — every body and every angle — sat in the
+unresolved bucket. The old code caught that pair by accident, because it required
+the angles to match too. The angles and the body longitudes move continuously
+with the moment and the place, which is exactly what makes them the
+discriminating evidence, so the baseline now checks every value the replay also
+produces rather than the one family that cannot tell. The same hole reached
+through the coordinates is closed by the same change.
+
+**The build-claim gate was the other mistake, and it was reversed.** The first
+fix made a differing build claim refuse the replay outright. That contradicted
+the rule already written in `diff.ts` — SemVer build metadata does not make a
+different engine and "must not be reported as different ones, or be refused a
+replay as if they were" — and it contradicted the response itself, which printed
+"build metadata does not change which version a receipt was produced by" beside a
+limit saying those two claims made the replay unusable. It also treated a record
+claiming *nothing* as claiming something *different*, which is simply false. The
+audit's own instruction is not to infer authentic provenance from a version or
+checksum supplied inside a receipt; that cuts both ways, so an unauthenticated
+claim now goes where an unauthenticated claim belongs — `limits` — and the
+verdict rests on evidence this installation can actually gather. That expectation
+reversal is recorded in `benchmark-expectations.json` under `amendments`, with
+its reason, rather than quietly edited.
+
 **The conventions row is a refutation, and is recorded as one.** The audit asked
 for a differing-conventions case. It cannot be built: this draft implements
 exactly one convention set, and a record declaring any other — a different angle
@@ -247,24 +285,35 @@ place as a guard rather than deleted.
 
 ### What the fix costs, and what it keeps
 
-A promotion now runs four recalculations rather than one: each receipt's own
-baseline, and the controlled alternative in both directions. Withholding never
-throws away the useful part — when the arithmetic works and only the identity
-behind it is unestablished, the cause stays a hypothesis whose detail says what
-the installed engine does, and the stated limit says which gate was not met.
+A promotion runs four recalculations rather than one: each receipt's own
+baseline, and the controlled alternative in both directions. The count is capped
+at four whatever the input. Measured on this machine, an ordinary house-system
+pair costs 1.86 ms against 0.59 ms before — 3.2×, and +1.27 ms in absolute
+terms, against tens of milliseconds of module loading the page already pays to
+reach this code at all. Reported as measured, not assumed.
 
-The synthetic corpus grew from ten scenarios and 59 assertions to fourteen and
-92, with an order-independence check on every one. **No previous expectation was
-weakened or removed**; the original ten still pass unchanged. Against the code
-before the fix, the extended corpus scores 9/14 scenarios and 80/92 assertions.
+Withholding never throws away the useful part — when the arithmetic works and
+only the identity behind it is unestablished, the cause stays a hypothesis whose
+detail says what the installed engine does, and the stated limit says which gate
+was not met.
+
+The synthetic corpus grew from ten scenarios and 59 assertions to **eighteen and
+112**, with an order-independence check on every scenario that asks for one —
+and that check now compares what each cause *claims*, not only its evidence
+rank, because comparing ranks alone would have passed a swap that moved rows
+into the unresolved bucket. One previous expectation was **reversed**, for the
+reason given above, and it is recorded as an amendment with that reason rather
+than edited away; nothing else was weakened or removed, and the original ten
+still pass unchanged.
 
 Both consumers were re-accepted, because one module serves both: the protocol
-side by `tests/mcp-protocol-drive.mjs`, and the browser side by
+side by `tests/mcp-protocol-drive.mjs` (84/84), and the browser side by
 `tests/chart-compare-drive.mjs` — which is new, because the first drive of this
 page was ad hoc. Its 33 checks were recorded and the drive itself was not, so
-there was nothing to re-run. It now runs 30 checks at 1280×900 and 390×844 with
-touch, reads the contract off the rendered page, and re-establishes the privacy
-claims below. Run it with
+there was nothing to re-run. It now runs 34 checks at 1280×900 and 390×844 with
+touch, reads the contract off the rendered page, drives the quantised-cusp
+counterexample in both argument orders, and re-establishes the privacy claims
+below. Run it with
 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=… npm run test:compare:browser`.
 
 ## One thing that costs more than it should

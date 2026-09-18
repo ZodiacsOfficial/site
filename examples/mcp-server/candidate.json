@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "package": "zodiacs-mcp-server",
-  "version": "0.1.0-rc.2",
+  "version": "0.1.0-rc.3",
   "status": "Unpublished release candidate. Not on npm, under this or any other name. Install from the versioned archive at https://zodiacs.org/examples/, whose SHA-256 is published beside it.",
   "sourceRepository": "https://github.com/ZodiacsOfficial/site",
   "sourcePaths": [
@@ -63,6 +63,6 @@
     "receipt": "zodiacs.calculation-receipt.draft-v1",
     "note": "Zodiacs-owned draft vocabulary, not an industry interoperability standard."
   },
-  "supersedes": "0.1.0-rc.1",
-  "changedSince": "rc.1 is unchanged and still downloadable; this is a separate immutable archive. Since rc.1: a cause is called reproduced only when both records name the installed engine, neither claims a different build of it, and each record reproduces its own values from its own declared inputs, checked in both directions so the verdict cannot depend on argument order; the comparison tool carries the assistant-routing sentence its siblings already had; and a comparison leaves the values of birth-detail and position rows out of its answer by default, with output: \"full\" as an explicit choice."
+  "supersedes": "0.1.0-rc.2",
+  "changedSince": "rc.1 and rc.2 are unchanged and still downloadable; this is a separate immutable archive. Since rc.2: a cause is called reproduced only when each record's own recorded values \u2014 cusps, angles and body positions, not the cusps alone \u2014 reproduce from its own declared inputs. A bounded AI review found the cusps-only check defeated by whole-sign quantisation, which let a record with a rewritten instant or place reach the strongest verdict. A differing build claim no longer refuses the replay: it is recorded as a limit, because build metadata is not a different engine and a record claiming nothing has not claimed something different. A pair that lost one house table is no longer told the house system is not the difference when the two also requested different systems, and a record with no place at all now has its missing angles and cusps accounted for rather than left unresolved."
 }

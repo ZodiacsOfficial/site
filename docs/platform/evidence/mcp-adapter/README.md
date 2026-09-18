@@ -1,9 +1,18 @@
 # The local MCP adapter: what was built, and what was actually established
 
-`zodiacs-mcp-server@0.1.0-rc.1`. A local stdio MCP server that lets an
+`zodiacs-mcp-server@0.1.0-rc.3`. A local stdio MCP server that lets an
 explicitly connected AI client use the Zodiacs engine and the site's own chart
 comparison. Source in `src/mcp/`, bundled to `examples/mcp-server/server.mjs`,
-distributed as `public/examples/zodiacs-mcp-server-0.1.0-rc.1.tgz`.
+distributed as `public/examples/zodiacs-mcp-server-0.1.0-rc.3.tgz`.
+
+rc.1 and rc.2 are unchanged and still on disk: each archive is immutable and a
+superseded one is never overwritten. rc.2 carried a defect worth recording
+rather than quietly retiring — its own README told a downloader to verify and
+extract an rc.1 filename and named the adapter as rc.1, because the install
+block and the versions table were not touched at the bump. An AI review of the
+shipped archive found it. `scripts/mcp-artifact.test.mjs` now fails if the
+README names any version but the one being packed, so the bump cannot leave
+them behind again. `public/examples/mcp-server.json` points at rc.3.
 
 ## Why it lives in this repository
 
@@ -12,8 +21,8 @@ was verified as available in this session. The adapter is here because the
 comparison it exposes is `src/lib/compare/diff.ts` — unpublished TypeScript in
 this repository — and the alternative was a second copy of the explanation rules
 in a second repository, which is exactly the thing that drifts. The engine is
-also not on the SDK repository's `main`; it exists only on the branch
-`codex/platform-release-integration-sdk`.
+also not on the SDK repository's `main`; its pinned source commit is
+`fb57af7a`, on the branch `codex/platform-time-seconds`.
 
 So the adapter imports the real functions: `natalChart` and the envelope codec
 from the pinned `@zodiacs/engine` candidate, `compareEnvelopes` and `replay`
@@ -33,11 +42,12 @@ usual way this kind of work gets overstated.
 
 | record | establishes | result |
 | --- | --- | --- |
-| `protocol-drive.json` | the official SDK client interoperates with the real server process | 80/80 checks |
+| `protocol-drive.json` | the official SDK client interoperates with the real server process | 84/84 checks |
 | `host-drive.json` | a named end-user host launches it and reports it connected | 7/7 checks |
 | `host-interop.md` | a model, in that host, called the tools and used the answers | one run, recorded verbatim |
-| `benchmark.json` | the comparison classifies the cases its rules describe | 10/10 scenarios, 59/59 assertions |
-| `benchmark-expectations.json` | those classifications, written before the candidate ran | 10 scenarios, 59 assertions |
+| `benchmark.json` | the comparison classifies the cases its rules describe | 18/18 scenarios, 112/112 assertions |
+| `benchmark-expectations.json` | those classifications, written before the candidate ran | 18 scenarios, 112 assertions, with every post-hoc change recorded under `amendments` |
+| `../chart-compare/` | the same comparison rules, driven through the browser surface | 34/34 checks |
 
 Re-run them with `npm run test:mcp:protocol`, `npm run test:mcp:host` and
 `npm run test:mcp:benchmark`. The first and last refuse to run against a stale
@@ -55,7 +65,7 @@ re-measured against the shipped bundle.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.1`, unpublished candidate, not on npm |
+| adapter | `0.1.0-rc.3`, unpublished candidate, not on npm |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` **2.0.0**, external and pinned exactly |

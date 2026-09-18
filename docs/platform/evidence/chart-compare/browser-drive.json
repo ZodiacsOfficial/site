@@ -1,6 +1,6 @@
 {
   "type": "browser acceptance for /developers/compare/ against a local preview of the built site; not a drive against the deployed origin, which is recorded separately in live-drive.json",
-  "completedAt": "2026-09-18T06:31:38.334Z",
+  "completedAt": "2026-09-18T06:59:37.449Z",
   "node": "v22.22.2",
   "viewports": [
     "1280x900",
@@ -10,8 +10,8 @@
   "offOriginRequests": [],
   "nonGetRequests": [],
   "storageWrites": 0,
-  "checks": 30,
-  "passed": 30,
+  "checks": 34,
+  "passed": 34,
   "results": [
     {
       "name": "desktop: the page renders its controls",
@@ -100,10 +100,32 @@
       "name": "desktop: and the page names the baseline that failed",
       "ok": true,
       "detail": [
-        "The first receipt’s own house cusps could not be reproduced from the inputs it declares, recalculated here on the engine it names. Its values describe a different calculation from the one it records, so nothing downstream of it can be demonstrated.",
+        "The first receipt’s own recorded values — cusps, angles and body positions — could not be reproduced from the inputs it declares, recalculated here on the engine it names. Its values describe a different calculation from the one it records, so nothing downstream of it can be demonstrated.",
         "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
         "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy."
       ]
+    },
+    {
+      "name": "desktop: a rewritten instant hidden behind quantised cusps is not reproduced",
+      "ok": true,
+      "detail": [
+        "hypothesis",
+        "unresolved"
+      ]
+    },
+    {
+      "name": "desktop: and that verdict does not depend on argument order either",
+      "ok": true,
+      "detail": {
+        "forward": [
+          "hypothesis",
+          "unresolved"
+        ],
+        "reverse": [
+          "hypothesis",
+          "unresolved"
+        ]
+      }
     },
     {
       "name": "desktop: no birth detail reaches the address bar",
@@ -211,10 +233,32 @@
       "name": "mobile: and the page names the baseline that failed",
       "ok": true,
       "detail": [
-        "The first receipt’s own house cusps could not be reproduced from the inputs it declares, recalculated here on the engine it names. Its values describe a different calculation from the one it records, so nothing downstream of it can be demonstrated.",
+        "The first receipt’s own recorded values — cusps, angles and body positions — could not be reproduced from the inputs it declares, recalculated here on the engine it names. Its values describe a different calculation from the one it records, so nothing downstream of it can be demonstrated.",
         "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
         "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy."
       ]
+    },
+    {
+      "name": "mobile: a rewritten instant hidden behind quantised cusps is not reproduced",
+      "ok": true,
+      "detail": [
+        "hypothesis",
+        "unresolved"
+      ]
+    },
+    {
+      "name": "mobile: and that verdict does not depend on argument order either",
+      "ok": true,
+      "detail": {
+        "forward": [
+          "hypothesis",
+          "unresolved"
+        ],
+        "reverse": [
+          "hypothesis",
+          "unresolved"
+        ]
+      }
     },
     {
       "name": "mobile: no birth detail reaches the address bar",

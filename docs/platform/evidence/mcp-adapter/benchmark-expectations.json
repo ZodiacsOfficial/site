@@ -224,7 +224,7 @@
     {
       "id": "unrelated-simultaneous",
       "required": "unrelated simultaneous differences",
-      "purpose": "A different house system and a different hour at once. The house system moves cusps and cannot move a body, so its explanation must claim no body row — the direction of over-claim that a does-any-input-differ test gets wrong.",
+      "purpose": "A different house system and a different hour at once. The house system moves cusps and cannot move a body, so its explanation must claim no body row \u2014 the direction of over-claim that a does-any-input-differ test gets wrong.",
       "left": {
         "utc": "1990-06-15T13:30:00Z",
         "latitude": 51.5074,
@@ -324,7 +324,7 @@
     {
       "id": "display-rounding",
       "required": "a difference smaller than the printed precision",
-      "purpose": "Two calculations ten milliseconds apart. Some values move far enough to print differently at six decimals and some do not, and the smallest real difference is smaller than the largest rounding one — so no tolerance on distance could separate them, which is why the verdict is decided on what is printed.",
+      "purpose": "Two calculations ten milliseconds apart. Some values move far enough to print differently at six decimals and some do not, and the smallest real difference is smaller than the largest rounding one \u2014 so no tolerance on distance could separate them, which is why the verdict is decided on what is printed.",
       "left": {
         "utc": "1990-06-15T13:30:00.000Z",
         "latitude": 51.5074,
@@ -352,7 +352,7 @@
     {
       "id": "foreign-engine-but-matching-values",
       "required": "a receipt naming an engine this installation does not have, whose values nevertheless match",
-      "purpose": "The second record's values are exactly what the installed engine produces, and its receipt says they came from an engine nobody here has. Reproducing them locally is then a fact about this engine, not a demonstration about why these two files differ — so the cause must stay a hypothesis, and the same verdict must come back whichever file is passed first.",
+      "purpose": "The second record's values are exactly what the installed engine produces, and its receipt says they came from an engine nobody here has. Reproducing them locally is then a fact about this engine, not a demonstration about why these two files differ \u2014 so the cause must stay a hypothesis, and the same verdict must come back whichever file is passed first.",
       "left": {
         "utc": "1990-06-15T13:30:00Z",
         "latitude": 51.5074,
@@ -385,7 +385,7 @@
     {
       "id": "different-build-claims",
       "required": "equal SemVer precedence, different build and provenance claims",
-      "purpose": "SemVer ignores build metadata when ordering versions, which is not a licence to treat two differently labelled builds as the same implementation. Neither claim is authenticated, so the disagreement is used only to withhold the strongest verdict, never to grant it.",
+      "purpose": "SemVer ignores build metadata when ordering versions, and this module says the same: a differently labelled build is not a different engine and must not be refused a replay as if it were. Neither claim is authenticated, so neither can grant or withhold a verdict. It is recorded in `limits`, where an unauthenticated assertion belongs, while the verdict rests on each record's own values reproducing from its own declared inputs.",
       "left": {
         "utc": "1990-06-15T13:30:00Z",
         "latitude": 51.5074,
@@ -414,16 +414,16 @@
         "cuspRowsEqual": 12,
         "explanationEvidence": {
           "explanation": "house-system",
-          "evidence": "hypothesis"
+          "evidence": "reproduced"
         },
-        "limitsMatch": "claim different builds of it",
+        "limitsMatch": "each claims a different build of it",
         "unresolvedRowsEqual": 0
       }
     },
     {
       "id": "same-build-claims",
       "required": "equal precedence and the same build claim on both sides",
-      "purpose": "The control for the case above. Two receipts naming the same build, metadata included, have told this tool nothing about their provenance either — but they have not told it they differ, so the ordinary demonstration still stands and withholding here would be the opposite error.",
+      "purpose": "The control for the case above. Two receipts naming the same build, metadata included, have told this tool nothing about their provenance either \u2014 but they have not told it they differ, so the ordinary demonstration still stands and withholding here would be the opposite error.",
       "left": {
         "utc": "1990-06-15T13:30:00Z",
         "latitude": 51.5074,
@@ -522,6 +522,104 @@
           "instant"
         ]
       }
+    },
+    {
+      "id": "quantised-cusps-drift",
+      "required": "a rewritten instant that the cusps alone cannot detect",
+      "purpose": "The counterexample that forced the baseline to widen. Whole-sign cusps are quantised to sign boundaries, so they survive an hour of drift in the declared instant without moving. A baseline checking the cusps alone passes trivially here, and the pair reached the strongest verdict in the vocabulary while sixty-five rows sat unresolved. The angles and body longitudes move continuously, which is what makes them the discriminating evidence.",
+      "left": {
+        "utc": "1990-06-15T14:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "mutate": {
+        "side": "left",
+        "declaredInstant": "1990-06-15T13:30:00Z"
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "hypothesis"
+        },
+        "noEvidenceStrongerThan": "hypothesis",
+        "limitsMatch": "could not be reproduced from the inputs it declares"
+      }
+    },
+    {
+      "id": "drifted-place",
+      "required": "a rewritten place, reached the same way as a rewritten moment",
+      "purpose": "The same hole through the coordinates. A chart genuinely computed three degrees east, declaring the London longitude, with whole-sign houses on the drifted side so the cusps again cannot tell.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": 2.8722,
+        "houseSystem": "whole"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "mutate": {
+        "side": "left",
+        "declaredLongitude": -0.1278
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "hypothesis"
+        },
+        "limitsMatch": "could not be reproduced from the inputs it declares"
+      }
+    },
+    {
+      "id": "one-sided-build-claim",
+      "required": "one receipt claiming a build and the other claiming none",
+      "purpose": "A file that says nothing about its build has not said something different from one that does. The first attempt at this audit compared the two as strings, refused the replay, and described the pair in a sentence that was false. The difference is still reported by the cause that owns it.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": {
+        "side": "right",
+        "buildMetadata": "2000377"
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "explanationEvidence": [
+          {
+            "explanation": "house-system",
+            "evidence": "reproduced"
+          },
+          {
+            "explanation": "engine-build",
+            "evidence": "reported"
+          }
+        ],
+        "limitsExclude": "claims a different build",
+        "unresolvedRowsEqual": 0
+      }
     }
   ],
   "amendments": [
@@ -531,7 +629,7 @@
       "after": "the candidate had already been run against the original plan",
       "removed": "noEvidenceStrongerThan: \"hypothesis\"",
       "added": "explanationExcludesPattern now guards ^(body-|angle-) instead of ^body-",
-      "why": "A bounded AI review found the comparison naming the house system as \"the obvious candidate for the angle differences\" in this exact pair. A house system cannot move an angle — the ascendant and midheaven come from the time and the place — so that was a hypothesis a recalculation refutes, and the original guard could not catch it because it forbade only body rows. Fixing it also removed the reason nothing here reached \"reproduced\": promotion had been blocked by requiring the replay to reproduce angles the house system never moved. With that gone the house-system cause is demonstrated for this pair, and an assertion that nothing may be demonstrated would be asserting the defect. Recorded rather than quietly edited: this is a post-hoc change to a pre-registered plan, and the strengthened guard is the assertion that actually matches the scenario purpose."
+      "why": "A bounded AI review found the comparison naming the house system as \"the obvious candidate for the angle differences\" in this exact pair. A house system cannot move an angle \u2014 the ascendant and midheaven come from the time and the place \u2014 so that was a hypothesis a recalculation refutes, and the original guard could not catch it because it forbade only body rows. Fixing it also removed the reason nothing here reached \"reproduced\": promotion had been blocked by requiring the replay to reproduce angles the house system never moved. With that gone the house-system cause is demonstrated for this pair, and an assertion that nothing may be demonstrated would be asserting the defect. Recorded rather than quietly edited: this is a post-hoc change to a pre-registered plan, and the strengthened guard is the assertion that actually matches the scenario purpose."
     },
     {
       "date": "2026-09-17",
@@ -554,7 +652,15 @@
       "after": "the comparison tool's default response stopped repeating birth details and positions back",
       "added": "compareOutput: \"full\" on `wraparound`, and a new scenario reading the same pair from the default response",
       "removed": "nothing",
-      "why": "`rowValuesStraddleZero` inspects the two absolute longitudes, to show the pair really does straddle 0 degrees rather than merely having a small difference. The default response withholds those values now, because a body longitude is a computed position. The assertion is unchanged and still runs — the scenario simply states which response it reads. The new scenario covers the case the change created: that the default still names the row and carries its signed circular difference. Requesting the full response for one scenario is not a weakening; asserting the straddle against a response that does not contain it would have been."
+      "why": "`rowValuesStraddleZero` inspects the two absolute longitudes, to show the pair really does straddle 0 degrees rather than merely having a small difference. The default response withholds those values now, because a body longitude is a computed position. The assertion is unchanged and still runs \u2014 the scenario simply states which response it reads. The new scenario covers the case the change created: that the default still names the row and carries its signed circular difference. Requesting the full response for one scenario is not a weakening; asserting the straddle against a response that does not contain it would have been."
+    },
+    {
+      "date": "2026-09-18",
+      "scenario": "different-build-claims, plus three additions",
+      "after": "a bounded AI review of the corrected reproduced contract",
+      "removed": "explanationEvidence: house-system = hypothesis, and limitsMatch \"claim different builds of it\"",
+      "added": "explanationEvidence: house-system = reproduced, limitsMatch \"each claims a different build of it\"; and the scenarios quantised-cusps-drift, drifted-place and one-sided-build-claim",
+      "why": "This reverses an expectation registered one day earlier, so the reason has to carry the weight. The first correction made a differing build claim refuse the replay outright. The review showed that contradicted the rule already written in diff.ts \u2014 build metadata does not make a different engine and must not be refused a replay as if it were \u2014 and contradicted the response itself, which printed \"build metadata does not change which version a receipt was produced by\" beside a limit saying the two claims made the replay unusable. It also treated a record claiming nothing as claiming something different, which is simply false. The audit's own instruction is not to infer authentic provenance from a version or checksum supplied inside a receipt; that cuts both ways, so the claim now goes to limits and the verdict rests on evidence this installation can gather. What replaced it is stronger, not weaker: the same review found the cusps-only baseline defeated by whole-sign quantisation, letting a record with a rewritten instant reach \"reproduced\". quantised-cusps-drift and drifted-place pin that hole shut from both directions, and one-sided-build-claim pins the false-sentence case. Recorded rather than quietly edited."
     }
   ]
 }

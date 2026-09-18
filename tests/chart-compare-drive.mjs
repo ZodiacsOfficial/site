@@ -145,6 +145,23 @@ await withPreview({ port: Number(process.env.COMPARE_DRIVE_PORT ?? 4437) }, asyn
         baseline.limits.some((line) => /could not be reproduced from the inputs it declares/.test(line)),
         baseline.limits);
 
+      // The same drift where the cusps cannot detect it. Whole-sign cusps sit on
+      // sign boundaries, so they survive an hour of rewritten instant unchanged;
+      // an AI review found a cusps-only baseline promoting this pair to the
+      // strongest verdict while sixty-five rows sat unresolved. Driven here as
+      // well as in the unit suite because this is the surface a person reads.
+      const quantised = record(T2, 'whole', (o) => {
+        o.receipt.instant = new Date(T1).toISOString();
+        o.receipt.sourceInstant = T1;
+      });
+      const drift = await compareInBrowser(page, quantised, genuineLeft);
+      check(`${viewport.name}: a rewritten instant hidden behind quantised cusps is not reproduced`,
+        !drift.evidence.includes('reproduced'), drift.evidence);
+      const driftReversed = await compareInBrowser(page, genuineLeft, quantised);
+      check(`${viewport.name}: and that verdict does not depend on argument order either`,
+        JSON.stringify([...drift.evidence].sort()) === JSON.stringify([...driftReversed.evidence].sort()),
+        { forward: drift.evidence, reverse: driftReversed.evidence });
+
       // --- the privacy claims this page makes about itself ---
       const url = page.url();
       check(`${viewport.name}: no birth detail reaches the address bar`,

@@ -50,10 +50,10 @@ it does not match.
 
 ```sh
 # 1. against the SHA-256 published on the page above
-shasum -a 256 zodiacs-mcp-server-0.1.0-rc.1.tgz
+shasum -a 256 zodiacs-mcp-server-0.1.0-rc.3.tgz
 
 # 2. extract
-tar xzf zodiacs-mcp-server-0.1.0-rc.1.tgz && cd package
+tar xzf zodiacs-mcp-server-0.1.0-rc.3.tgz && cd package
 
 # 3. install
 npm install
@@ -160,7 +160,7 @@ Takes `left` and `right`: the **content** of two calculation records, as JSON
 text. Not paths, not URLs, not identifiers — this adapter reads no files and
 fetches nothing. At most 65536 bytes each.
 
-Returns every value that differs, and then what accounts for it, labelled by the
+Names every field that differs, and then what accounts for it, labelled by the
 evidence behind each claim:
 
 - **reproduced** — recalculated here, changing one setting and nothing else, and
@@ -270,7 +270,7 @@ not settle, and it is worth reading even when everything else looks resolved.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.1`, unpublished candidate |
+| adapter | `0.1.0-rc.3`, unpublished candidate |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled into `server.mjs` |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` 2.0.0, pinned exactly, installed from npm |
