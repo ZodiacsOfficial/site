@@ -10,13 +10,11 @@ constraint that draft set.
 
 **Availability — passed.** `https://zodiacs.org/developers/mcp/` returns 200 in
 production and publishes a pinned archive whose digest matches what the page
-prints. The install instructions point at something real. One qualification: the
-page in production currently advertises `0.1.0-rc.1`, and the expected values
-below were measured against **rc.3**, which ships in this change and is
-advertised once it deploys. Run the trial against the deployed page, and if the
-page still names an older archive when the invitation is sent, re-measure step 4
-against whatever it names — the `reproduced` wording and the withholding both
-changed between rc.1 and rc.3.
+prints. The install instructions point at something real. Every expected value
+below was measured against **0.1.0-rc.4**. Before sending, check that the page
+still advertises rc.4; if a later archive has shipped, re-measure steps 2 to 4
+against whatever it names, because the `reproduced` wording and the withholding
+have both changed between candidates before.
 
 **Approval to send — not given.** Nobody may send this without the owner saying
 so. Three to five people is small enough to feel like nothing and still be
@@ -48,6 +46,29 @@ is a site artifact and the site tracker takes all five steps.
 
 One issue per builder, titled `MCP adapter trial: <host>`. It is public, so:
 synthetic charts only.
+
+## What runs where, and what the builder should tell people
+
+This matters more than any single step, and a builder who gets it wrong will
+describe the tool wrongly to the next person.
+
+**Local.** The chart arithmetic. The server is a process on the builder's own
+machine, speaking stdio to the host that launched it. It opens no listener, makes
+no network request, writes no file, and holds nothing between calls. The engine
+and the comparison rules are bundled into `server.mjs`; nothing is fetched to run
+them.
+
+**Not local.** The conversation. The host decides what to send its model
+provider, and on a cloud assistant that normally includes the arguments the model
+produced and the results the tool returned. So a birth instant typed into the
+chat, and a chart handed back, travel wherever that host sends them. Running the
+calculation locally does not change that, and the server cannot control it.
+
+The default comparison answer withholds absolute values, which shortens what
+travels onward — but it is minimisation, not anonymisation, and it hides nothing
+from an assistant that already received both records as arguments. The exact
+differences are still in it, so anyone holding one of the two records can
+reconstruct the other.
 
 ## The trial
 
@@ -96,7 +117,7 @@ Ask your assistant, in your own words:
 Synthetic: round public coordinates for New York, on a date chosen for what it
 exercises. Nobody's birth details.
 
-Checks, on rc.3 with engine 0.1.1-rc.6 — `get_capabilities` will tell you what
+Checks, on rc.4 with engine 0.1.1-rc.6 — `get_capabilities` will tell you what
 you actually have:
 
 - twelve bodies, four angles, twelve cusps;
@@ -153,7 +174,7 @@ comparison as `left` and `right`.
   "houseSystem": "whole", "output": "record" }
 ```
 
-A correct answer, in full — this is what rc.3 returns:
+A correct answer, in full — this is what rc.4 returns:
 
 - `identical: false`, and
   `counts: { differences: 15, substantive: 15, displayOnly: 0, explanations: 1 }`.
@@ -174,6 +195,13 @@ A correct answer, in full — this is what rc.3 returns:
   > Each chart's own recorded values were reproduced from its own declared inputs
   > on engine 0.1.1-rc.6, and changing only the house system turns each one into
   > the other, in both directions.
+
+  Read that sentence for what it claims and what it does not. It says the engine
+  on **your** machine turned each record's declared inputs into that record's
+  values, and that one setting accounts for the difference. It says nothing about
+  where either record came from. A version or checksum inside a record is the
+  record's claim about itself, and reproducing some of its values locally does not
+  authenticate it.
 
 - Two `limits` lines, worth reading rather than skipping. `limits` is not an
   error channel; it is where the comparison says what it could not settle. One of
@@ -305,7 +333,7 @@ Short. It links the protocol rather than repeating it.
 ## Where the expected values came from
 
 Every value in steps 2 to 4 was read off a clean extraction of the published
-`zodiacs-mcp-server-0.1.0-rc.3.tgz` (sha256 `78bbb897…`), installed and verified
+`zodiacs-mcp-server-0.1.0-rc.4.tgz` (sha256 `d8751535…`), installed and verified
 from the archive rather than run out of the working tree — the distinction
 mattered once already, when a draft of this protocol quoted a sentence that
 existed only in unreleased source. Driven over stdio with the official

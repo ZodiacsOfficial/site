@@ -1,12 +1,14 @@
 # The local MCP adapter: what was built, and what was actually established
 
-`zodiacs-mcp-server@0.1.0-rc.3`. A local stdio MCP server that lets an
+`zodiacs-mcp-server@0.1.0-rc.4`. A local stdio MCP server that lets an
 explicitly connected AI client use the Zodiacs engine and the site's own chart
 comparison. Source in `src/mcp/`, bundled to `examples/mcp-server/server.mjs`,
-distributed as `public/examples/zodiacs-mcp-server-0.1.0-rc.3.tgz`.
+distributed as `public/examples/zodiacs-mcp-server-0.1.0-rc.4.tgz`.
 
-rc.1 and rc.2 are unchanged and still on disk: each archive is immutable and a
-superseded one is never overwritten. rc.2 carried a defect worth recording
+rc.1, rc.2 and rc.3 are unchanged and still on disk: each archive is immutable
+and a superseded one is never overwritten, including one that was never
+advertised. rc.4's executable bundle differs from rc.3's only in the version
+string it reports; what changed is the README travelling inside it. rc.2 carried a defect worth recording
 rather than quietly retiring — its own README told a downloader to verify and
 extract an rc.1 filename and named the adapter as rc.1, because the install
 block and the versions table were not touched at the bump. An AI review of the
@@ -65,7 +67,7 @@ re-measured against the shipped bundle.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.3`, unpublished candidate, not on npm |
+| adapter | `0.1.0-rc.4`, unpublished candidate, not on npm |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` **2.0.0**, external and pinned exactly |

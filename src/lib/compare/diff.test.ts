@@ -377,8 +377,11 @@ describe('regressions an adversarial review found', () => {
       accept(withMetadata), withMovedNode(base, nodeLon(base) + 0.01), live,
     );
 
-    // SemVer ignores build metadata, so this is not a different engine and must
-    // not be offered as a candidate cause for a moved position.
+    // SemVer orders these two version strings equally, so this tool does not
+    // treat the second as a different engine and does not offer it as a
+    // candidate cause for a moved position. That is a rule about how this tool
+    // reads a version string, not a finding that the two builds run the same
+    // code — nothing here can establish that.
     expect(evidenceFor(comparison, 'engine')).toBeNull();
     expect(evidenceFor(comparison, 'engine-build')).toBe('reported');
     expect(evidenceFor(comparison, 'unexplained')).toBe('unresolved');

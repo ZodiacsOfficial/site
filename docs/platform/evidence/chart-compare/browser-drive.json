@@ -1,6 +1,6 @@
 {
   "type": "browser acceptance for /developers/compare/ against a local preview of the built site; not a drive against the deployed origin, which is recorded separately in live-drive.json",
-  "completedAt": "2026-09-18T06:59:37.449Z",
+  "completedAt": "2026-09-18T07:48:40.657Z",
   "node": "v22.22.2",
   "viewports": [
     "1280x900",

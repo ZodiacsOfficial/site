@@ -45,15 +45,16 @@ cannot do. The user-facing version of the same material is on the page itself.
   tolerance. Rounding at six decimals is a step function and no epsilon sits on
   it: two values `8e-7` apart can print identically and two values `2e-8` apart
   can print differently. `compareAngles` compares `toFixed(6)` strings.
-- **`reproduced` requires the engine that produced BOTH receipts.** Not one of
-  them: an audit found the rule checking only the left, which let a right-hand
-  receipt naming an engine nobody here has be matched against a local
-  recalculation and called demonstrated — and made the verdict depend on which
-  file was passed first. Both receipts must name the installed engine, and
-  neither may claim a different build of it: SemVer ignores build metadata when
-  ordering versions, which is not a licence to treat two differently labelled
-  builds as the same implementation. Those claims are never authenticated, and
-  are used only to withhold the strongest verdict, never to grant it.
+- **`reproduced` requires BOTH receipts to name a version this installation
+  has.** Not one of them: an audit found the rule checking only the left, which
+  let a right-hand receipt naming an engine nobody here has be matched against a
+  local recalculation and called demonstrated — and made the verdict depend on
+  which file was passed first. What that gate establishes is narrow and worth
+  stating narrowly: it makes a replay meaningful rather than a different
+  calculation. **Equal SemVer precedence is not executable identity.** Two files
+  carrying the same version string may have come from different builds; §10
+  orders them equally, which is an ordering rule, not a finding about what code
+  ran. So the verdict rests on what the replay produced, never on the string.
 - **`reproduced` requires each receipt to reproduce its own values first.**
   Before a recalculation can say anything about why two files differ, it has to
   reproduce what each file already says, from that file's own declared inputs.
@@ -77,9 +78,13 @@ cannot do. The user-facing version of the same material is on the page itself.
   independent check of astronomical accuracy. The page says so.
 - **A version, checksum or source URL inside an imported file is a claim that
   file makes about itself**, not proof that it is genuine. Nothing here treats
-  one as authentication. Two receipts naming the same build have told the tool
-  nothing about their provenance either — only that they have not told it they
-  differ, which is the weaker thing the rule above actually relies on.
+  one as authentication, in either direction: two receipts naming the same build
+  have established nothing about their provenance, and two naming different
+  builds have not established that either. A differing claim is therefore not a
+  gate — it is said out loud in `limits`, and the verdict rests on the
+  recalculation. Reproducing some of a record's values locally says that this
+  engine produces those numbers from those inputs; it says nothing about where
+  the record came from.
 - **"This engine produces those numbers" and "this setting explains the
   difference" are kept apart.** When the arithmetic works and only the identity
   behind it cannot be established, the cause stays a hypothesis and the detail

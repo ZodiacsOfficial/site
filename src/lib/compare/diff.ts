@@ -5,9 +5,14 @@
  * Two rules shape everything here. Differences are facts read out of the two
  * files and are listed before any prose. Explanations are ranked by the
  * evidence that actually supports them, and the strongest rank — "reproduced" —
- * is only ever reached by recalculating locally with the same engine version
- * that produced the receipt. A newer engine recomputing an older receipt is a
- * different calculation, not the original one, and is never presented as one.
+ * means one thing: the engine installed here, re-running the inputs each
+ * receipt declares, produced the values that receipt records, and changing the
+ * one named setting turned each chart into the other.
+ *
+ * That is a statement about this installation and these values. It is not a
+ * statement about where either file came from, and nothing here can be. A
+ * receipt naming a version this installation does not have is never re-run and
+ * presented as the original — recomputing it would be a different calculation.
  */
 import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import {
@@ -106,9 +111,15 @@ function engineVersionOf(envelope: NatalEnvelope): string | null {
 }
 
 /**
- * The part of a version that decides precedence. SemVer §10 ignores build
- * metadata, so `0.1.1-rc.6+abc` and `0.1.1-rc.6` are the same engine and must
- * not be reported as different ones — or be refused a replay as if they were.
+ * The part of a version string that decides SemVer precedence, with build
+ * metadata dropped.
+ *
+ * Equal precedence is an ordering fact, not executable identity. SemVer §10
+ * says `0.1.1-rc.6+abc` and `0.1.1-rc.6` order equally; it does not say the two
+ * builds run the same code, and a version string is in any case a claim a file
+ * makes about itself. So this decides one narrow thing — which receipts this
+ * installation will re-run at all — and nothing downstream rests on the string.
+ * What a verdict rests on is the replay's own result.
  */
 function enginePrecedence(version: string | null): string | null {
   return version === null ? null : version.split('+')[0];
@@ -391,19 +402,25 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   // and "this setting explains why these two files disagree" are different
   // claims, and only the second one is a cause.
   //
-  //   1. Both receipts name the engine actually installed here. Checking only
-  //      the first one let a second receipt claiming an engine nobody has be
-  //      matched against a local recalculation and called reproduced — and made
-  //      the verdict depend on which file was passed first.
-  //   2. Neither receipt claims a different build of it. SemVer ignores build
-  //      metadata for ordering, which is not a licence to treat two differently
-  //      labelled builds as the same implementation. These claims are never
-  //      authenticated and are used only to withhold, never to grant.
-  //   3. Each receipt's own cusps follow from its own declared inputs. Without
-  //      this baseline the tool will happily "reproduce" a difference between a
-  //      genuine chart and one whose values came from another moment entirely.
-  //   4. Changing only the house system turns each chart into the other, in
+  //   1. Both receipts name a version this installation actually has, so both
+  //      can be re-run at all. Checking only the first one let a second receipt
+  //      claiming an engine nobody has be matched against a local recalculation
+  //      and called reproduced — and made the verdict depend on which file was
+  //      passed first. Naming the same version is not evidence that the two
+  //      files came from the same build; it is only what makes a replay
+  //      meaningful rather than a different calculation.
+  //   2. Each receipt's own recorded values — cusps, angles and body positions —
+  //      follow from its own declared inputs. Without this baseline the tool
+  //      will happily "reproduce" a difference between a genuine chart and one
+  //      whose values came from another moment entirely. The cusps alone cannot
+  //      carry it: whole-sign cusps sit on sign boundaries and survive an hour
+  //      of drift in the declared instant unchanged.
+  //   3. Changing only the house system turns each chart into the other, in
   //      both directions, so the answer cannot depend on argument order.
+  //
+  // A differing build claim is NOT a fourth gate. It is recorded in `limits`
+  // below, because it is an unauthenticated assertion either way: it cannot
+  // grant the verdict and it is not evidence enough to refuse the arithmetic.
   if (has('houses-requested') || has('houses-actual') || has('houses-system')) {
     // Only the rows that actually moved are up for explanation. A pair whose
     // cusps are identical — two polar charts that both fell back to whole sign,

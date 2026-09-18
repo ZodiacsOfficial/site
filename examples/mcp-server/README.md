@@ -50,10 +50,10 @@ it does not match.
 
 ```sh
 # 1. against the SHA-256 published on the page above
-shasum -a 256 zodiacs-mcp-server-0.1.0-rc.3.tgz
+shasum -a 256 zodiacs-mcp-server-0.1.0-rc.4.tgz
 
 # 2. extract
-tar xzf zodiacs-mcp-server-0.1.0-rc.3.tgz && cd package
+tar xzf zodiacs-mcp-server-0.1.0-rc.4.tgz && cd package
 
 # 3. install
 npm install
@@ -170,14 +170,20 @@ evidence behind each claim:
   difference, and all of them are listed.
 - **unresolved** — nothing in either record accounts for it.
 
-A cause reaches **reproduced** only when four things hold: both records name the
-engine installed here, neither claims a different build of it, each record's own
-cusps are reproduced from its own declared inputs, and changing only the house
-system turns each chart into the other — checked in both directions, so the
-answer cannot depend on which record you passed first. When the arithmetic works
-and only the identity behind it cannot be established, the cause stays a
-hypothesis and says what the installed engine does, which is a different claim
-from saying that setting explains the difference.
+A cause reaches **reproduced** only when three things hold: both records name a
+version this installation actually has, each record's own recorded values —
+cusps, angles and body positions — are reproduced from its own declared inputs,
+and changing only the house system turns each chart into the other, checked in
+both directions so the answer cannot depend on which record you passed first.
+
+That is a statement about this installation and these values. It does not
+establish where either record came from, and nothing here can: a version,
+checksum or source URL inside a record is a claim the record makes about itself.
+If the two records claim different builds of the same version, the answer says so
+in `limits` and the verdict still rests on the recalculation, not on the claim.
+When the arithmetic works and only the identity behind it cannot be established,
+the cause stays a hypothesis and says what the installed engine does, which is a
+different claim from saying that setting explains the difference.
 
 Each angular row carries `delta` as **right minus left**, the shortest way round
 the circle: from 191.24° to 180.00° is −11.24°, and from 359.19° to 1.18° is
@@ -247,7 +253,7 @@ are separate fields, so a fallback is visible rather than silent.
     { "id": "house-system", "evidence": "reproduced",
       "statement": "The different house system accounts for the house cusps.",
       "covers": [ "cusp-1", "…cusp-12", "houses-requested", "houses-actual", "houses-system" ],
-      "detail": "Each chart's own cusps were reproduced from its own declared inputs on engine 0.1.1-rc.6, and changing only the house system turns each one into the other." } ],
+      "detail": "Each chart's own recorded values were reproduced from its own declared inputs on engine 0.1.1-rc.6, and changing only the house system turns each one into the other, in both directions." } ],
   "limits": [
     "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
     "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy." ],
@@ -270,7 +276,7 @@ not settle, and it is worth reading even when everything else looks resolved.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.3`, unpublished candidate |
+| adapter | `0.1.0-rc.4`, unpublished candidate |
 | engine | `@zodiacs/engine` `0.1.1-rc.6`, unpublished candidate, bundled into `server.mjs` |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` 2.0.0, pinned exactly, installed from npm |
