@@ -37,7 +37,7 @@ const entry = `{
 const tools = [
   ['get_capabilities', 'No arguments. The engine and adapter versions, the record schemas, every limit a request must respect, and the list of what this adapter does not do. Worth calling before the other two rather than guessing at supported options.'],
   ['calculate_natal_chart', 'One chart from an instant and, optionally, coordinates. Returns the bodies, angles, cusps and aspects, plus whether the time was known and which house system was requested against which one was actually used. The full calculation record is a separate, explicit request.'],
-  ['compare_calculation_records', 'Two records, passed as content. Returns every value that differs, then what accounts for it — reproduced by a local recalculation, reported by the records, a hypothesis that fits, or unresolved.'],
+  ['compare_calculation_records', 'Two records, passed as content. Names every field that differs, then what accounts for it — reproduced by a local recalculation, reported by the records, a hypothesis that fits, or unresolved. By default it leaves out the values of rows carrying birth details or computed positions, keeping their labels and their numeric differences; ask for the values explicitly when you need to read them.'],
 ];
 ---
 
@@ -168,6 +168,24 @@ const tools = [
         <a href="/developers/compare/"> browser tool on this site</a>, which is the
         reason the adapter lives in the site's own repository: one set of rules, not a
         copy that drifts.
+      </p>
+      <p>
+        A cause is called <strong>reproduced</strong> only when both records name the
+        engine installed on your machine, neither claims a different build of it, each
+        record's own house cusps are reproduced from its own declared inputs, and
+        changing only the house system turns each chart into the other — checked in both
+        directions, so the answer cannot depend on which record you passed first. When
+        the arithmetic works and only the identity behind it cannot be established, the
+        cause stays a hypothesis and the answer says what the installed engine does,
+        which is a different claim from saying that setting explains the difference.
+      </p>
+      <p>
+        A comparison's answer leaves out the values of rows carrying birth details or
+        computed positions and keeps their labels, kinds and numeric differences. You
+        supplied both records to the call, so repeating their contents back tells you
+        nothing you did not have, while adding a second copy to whatever the answer
+        travels through. That shortens what travels onward; it hides nothing from the
+        assistant you are talking to, which already received both records.
       </p>
     </div>
 

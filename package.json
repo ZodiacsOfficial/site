@@ -75,6 +75,7 @@
     "test:mcp:protocol": "node tests/mcp-protocol-drive.mjs",
     "test:mcp:host": "node tests/mcp-host-drive.mjs",
     "test:mcp:benchmark": "node tests/mcp-benchmark.mjs",
+    "test:compare:browser": "node tests/chart-compare-drive.mjs",
     "test:home-hero:browser": "node tests/hero-video-drive.mjs",
     "test:home-demo:browser": "node tests/home-demo-drive.mjs",
     "test:thesis:browser": "node tests/thesis-qa-drive.mjs",

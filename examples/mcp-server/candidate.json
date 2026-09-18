@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "package": "zodiacs-mcp-server",
-  "version": "0.1.0-rc.1",
+  "version": "0.1.0-rc.2",
   "status": "Unpublished release candidate. Not on npm, under this or any other name. Install from the versioned archive at https://zodiacs.org/examples/, whose SHA-256 is published beside it.",
   "sourceRepository": "https://github.com/ZodiacsOfficial/site",
   "sourcePaths": [
@@ -23,7 +23,10 @@
       "sourcePackagePath": "packages/engine",
       "artifactSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e"
     },
-    "ephemeris": { "name": "astronomy-engine", "version": "2.1.19" },
+    "ephemeris": {
+      "name": "astronomy-engine",
+      "version": "2.1.19"
+    },
     "comparison": {
       "module": "src/lib/compare/diff.ts",
       "note": "The same module the browser tool at https://zodiacs.org/developers/compare/ runs."
@@ -40,7 +43,13 @@
   "protocol": {
     "transport": "stdio",
     "sdkLatest": "2025-11-25",
-    "negotiatedInTesting": ["2025-11-25", "2025-06-18", "2025-03-26", "2024-11-05", "2024-10-07"],
+    "negotiatedInTesting": [
+      "2025-11-25",
+      "2025-06-18",
+      "2025-03-26",
+      "2024-11-05",
+      "2024-10-07"
+    ],
     "note": "Revisions observed to negotiate against this server on the wire, one probe each. The official SDK client offers 2025-11-25."
   },
   "builtWith": {
@@ -53,5 +62,7 @@
     "record": "zodiacs.natal-envelope.draft-v1",
     "receipt": "zodiacs.calculation-receipt.draft-v1",
     "note": "Zodiacs-owned draft vocabulary, not an industry interoperability standard."
-  }
+  },
+  "supersedes": "0.1.0-rc.1",
+  "changedSince": "rc.1 is unchanged and still downloadable; this is a separate immutable archive. Since rc.1: a cause is called reproduced only when both records name the installed engine, neither claims a different build of it, and each record reproduces its own values from its own declared inputs, checked in both directions so the verdict cannot depend on argument order; the comparison tool carries the assistant-routing sentence its siblings already had; and a comparison leaves the values of birth-detail and position rows out of its answer by default, with output: \"full\" as an explicit choice."
 }

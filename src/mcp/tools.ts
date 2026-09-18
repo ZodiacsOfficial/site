@@ -24,9 +24,10 @@ import {
 import { compareEnvelopes } from '../lib/compare/diff';
 import { replay } from '../lib/compare/replay';
 import {
-  ADAPTER_NAME, ADAPTER_VERSION, EPOCH_MAX_UTC, EPOCH_MIN_UTC, HOUSE_SYSTEMS, LIMITS,
-  OUTPUTS, REFERENCES, parseCoordinates, parseInstant, polarAngleExclusion,
-  recordTooLarge, resultTooLarge, utcNoonMisused,
+  ADAPTER_NAME, ADAPTER_VERSION, COMPARE_OUTPUTS, EPOCH_MAX_UTC, EPOCH_MIN_UTC,
+  HOUSE_SYSTEMS, LIMITS, OUTPUTS, REFERENCES, parseCoordinates, parseInstant,
+  polarAngleExclusion, recordTooLarge, resultTooLarge, rowValueIsTheFinding,
+  utcNoonMisused,
 } from './bounds';
 
 /**
@@ -37,6 +38,7 @@ export const PRIVACY = Object.freeze({
   calculation: 'This server calculates on the machine it runs on. No birth detail reaches zodiacs.org, and the server opens no network connection, listener or port of any kind.',
   assistant: 'A local calculation server is not a local AI experience. Whatever assistant you connect this to decides what reaches its model provider — your message, the arguments it builds for these tools, and the results it reads back. If that assistant runs in the cloud, assume the birth details in a request reach it. The calculation is local; the conversation is the assistant\'s to route.',
   output: 'A comparison reports the exact difference between two charts. Anyone holding one of the two can reconstruct the other from it, so that output is safer to pass on than a full record but it is not anonymous.',
+  withheld: 'By default a comparison names which fields differ and by how much, and leaves out the values of rows carrying birth details or computed positions — you supplied both records to this call, so repeating their contents back tells you nothing you did not have, while adding a second copy to whatever this result travels through. Ask for output: "full" when you need those values. This shortens what travels onward; it hides nothing from the assistant you are talking to, which already received both records as arguments.',
   claims: 'A version, checksum or source URL inside a supplied record is a claim that record makes about itself. Nothing here authenticates it.',
 });
 
@@ -86,6 +88,8 @@ export const COMPARE_INPUT = z.strictObject({
     .describe(`The content of a ${NATAL_ENVELOPE_SCHEMA} calculation record, as JSON text. Not a file path, URL or identifier: the adapter reads no files and fetches nothing. At most ${LIMITS.recordBytes} bytes.`),
   right: z.string().min(1).max(LIMITS.recordBytes)
     .describe('The content of the second calculation record, as JSON text.'),
+  output: z.enum(COMPARE_OUTPUTS).default('summary')
+    .describe('summary names every field that differs, with its label, kind and numeric difference, and leaves out the values of rows carrying birth details or computed positions — you already hold both records. full returns those values too; ask for it when you need to read them rather than act on which fields moved.'),
 });
 
 /**
@@ -238,6 +242,17 @@ export function compareCalculationRecords(args: z.infer<typeof COMPARE_INPUT>): 
   if (comparison.explanations.length > LIMITS.explanations) {
     return { ok: false, refusal: `The comparison produced ${comparison.explanations.length} candidate causes, over the ${LIMITS.explanations} limit.` };
   }
+  // The default leaves out the values of rows whose contents are birth details
+  // or computed positions, keeping the row, its label, its kind and its numeric
+  // difference. Which field moved and by how much is the diagnosis; the
+  // absolute values are a second copy of what the caller already sent.
+  const full = args.output === 'full';
+  const differences = full ? comparison.differences : comparison.differences.map((row) => {
+    if (rowValueIsTheFinding(row.id)) return row;
+    const { left: _left, right: _right, ...rest } = row;
+    return { ...rest, valuesWithheld: true as const };
+  });
+
   return bounded({
     identical: comparison.identical,
     counts: {
@@ -246,10 +261,12 @@ export function compareCalculationRecords(args: z.infer<typeof COMPARE_INPUT>): 
       displayOnly: comparison.differences.length - substantive.length,
       explanations: comparison.explanations.length,
     },
-    differences: comparison.differences,
+    output: args.output,
+    differences,
     explanations: comparison.explanations,
     limits: comparison.limits,
     disclosure: PRIVACY.output,
+    ...(full ? {} : { withheld: PRIVACY.withheld }),
   });
 }
 

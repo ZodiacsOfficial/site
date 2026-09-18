@@ -104,9 +104,18 @@ back as distinct fields and the model reported both.
 The last bullet is worth noting on its own. Nobody asked the model to qualify
 its answer that way — the qualification is in the tool descriptions, and the
 model relayed it. That is the whole reason the privacy distinction is written
-into `get_capabilities` and into every tool description rather than only into
-the README: the README is read by a person once, and the tool description is
-read by the model on every call.
+into `get_capabilities` and into the tool descriptions rather than only into the
+README: the README is read by a person once, and the tool description is read by
+the model on every call.
+
+**Corrected 2026-09-18.** This paragraph said "every tool description", and an
+audit found that untrue: the routing sentence was on `get_capabilities` and
+`calculate_natal_chart` and not on `compare_calculation_records` — the one call
+of the three that takes two whole records as arguments, which is the wrong way
+round. It is on all three now, and `tests/mcp-protocol-drive.mjs` reads the
+descriptions off the wire and requires it on each. The assertion that should
+have caught this was an OR over two different sentences, so a tool carrying
+either one passed; that is why it did not.
 
 **Does not show.** One run, one host, one model, one prompt. It is not a measure
 of how reliably a model uses these tools, and no such measure is claimed. The

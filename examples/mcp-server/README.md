@@ -31,7 +31,9 @@ Two smaller points in the same family:
 
 - A comparison reports the **exact** difference between two charts. Anyone
   holding one of the two can reconstruct the other from it. That output is safer
-  to pass on than a full record; it is not anonymous.
+  to pass on than a full record; it is not anonymous — and that stays true of the
+  default summary, which leaves out absolute values but keeps the differences
+  between them.
 - A version, checksum or source URL inside a record you supply is a claim that
   record makes about itself. Nothing here authenticates it.
 
@@ -168,6 +170,15 @@ evidence behind each claim:
   difference, and all of them are listed.
 - **unresolved** — nothing in either record accounts for it.
 
+A cause reaches **reproduced** only when four things hold: both records name the
+engine installed here, neither claims a different build of it, each record's own
+cusps are reproduced from its own declared inputs, and changing only the house
+system turns each chart into the other — checked in both directions, so the
+answer cannot depend on which record you passed first. When the arithmetic works
+and only the identity behind it cannot be established, the cause stays a
+hypothesis and says what the installed engine does, which is a different claim
+from saying that setting explains the difference.
+
 Each angular row carries `delta` as **right minus left**, the shortest way round
 the circle: from 191.24° to 180.00° is −11.24°, and from 359.19° to 1.18° is
 +1.99°, not −358°. Longitudes are compared around the circle throughout.
@@ -223,25 +234,30 @@ are separate fields, so a fallback is visible rather than silent.
 ```json
 { "identical": false,
   "counts": { "differences": 15, "substantive": 15, "displayOnly": 0, "explanations": 1 },
+  "output": "summary",
   "differences": [
     { "id": "houses-requested", "area": "Houses", "label": "House system requested",
       "left": "placidus", "right": "whole", "delta": null, "kind": "metadata" },
     { "id": "houses-actual", "…": "same two values" },
     { "id": "houses-system", "…": "same two values" },
     { "id": "cusp-1", "area": "Houses", "label": "House 1 cusp",
-      "left": "191.239748", "right": "180.000000", "delta": -11.239747550482207,
-      "kind": "numeric" },
+      "delta": -11.239747550482207, "kind": "numeric", "valuesWithheld": true },
     "…cusp-2 through cusp-12" ],
   "explanations": [
     { "id": "house-system", "evidence": "reproduced",
       "statement": "The different house system accounts for the house cusps.",
       "covers": [ "cusp-1", "…cusp-12", "houses-requested", "houses-actual", "houses-system" ],
-      "detail": "Recalculating the first chart's own inputs with whole houses, changing nothing else, reproduces the second chart's house cusps on engine 0.1.1-rc.6." } ],
+      "detail": "Each chart's own cusps were reproduced from its own declared inputs on engine 0.1.1-rc.6, and changing only the house system turns each one into the other." } ],
   "limits": [
     "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
     "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy." ],
-  "disclosure": "A comparison reports the exact difference between two charts. …not anonymous." }
+  "disclosure": "A comparison reports the exact difference between two charts. …not anonymous.",
+  "withheld": "By default a comparison names which fields differ and by how much, …" }
 ```
+
+The house-system rows keep their values; the twelve cusp rows do not, because a
+cusp longitude is a computed position. Each still carries its label and its
+signed difference, which is what tells you what moved and by how much.
 
 Not one body and not one angle appears in those fifteen rows, because a house
 system cannot move them — and the `house-system` cause claims none of them

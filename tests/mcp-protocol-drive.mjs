@@ -193,8 +193,14 @@ try {
       && JSON.stringify(p.houseSystem?.enum) === JSON.stringify(['placidus', 'whole'])
       && String(p.utc?.description).includes('1800-01-01');
   })());
+  // An OR over two different sentences is why this passed while the one tool
+  // that takes two whole records was the one missing the routing sentence.
+  // Every description must carry it; the comparison must carry both.
   check('every tool description states the assistant-routing distinction', listed.tools.every((tool) =>
-    /not a local AI experience|not anonymous/.test(tool.description ?? '')));
+    /not a local AI experience/.test(tool.description ?? '')),
+  listed.tools.filter((tool) => !/not a local AI experience/.test(tool.description ?? '')).map((tool) => tool.name));
+  check('the comparison also says its own output is not anonymous',
+    /not anonymous/.test(listed.tools.find((tool) => tool.name === 'compare_calculation_records')?.description ?? ''));
 
   // ---- get_capabilities ----
   const capabilities = await ok('get_capabilities', {});
@@ -269,6 +275,32 @@ try {
     houses.explanations.map((row) => [row.id, row.evidence]));
   check('a comparison labels its own output as not anonymous',
     /not anonymous/.test(houses.disclosure ?? ''));
+
+  // On the wire, not only in the handler: the default response must not carry
+  // the birth details the caller already supplied as arguments.
+  const differing = await ok('compare_calculation_records', {
+    left: record.record,
+    right: (await ok('calculate_natal_chart', { ...POLAR, houseSystem: 'whole', output: 'record' })).record,
+  });
+  check('the default comparison response repeats no birth detail back', (() => {
+    const text = JSON.stringify(differing);
+    return [LONDON.utc, POLAR.utc, '51.5074', '78.2232', '15.6267'].every((needle) => !text.includes(needle));
+  })(), JSON.stringify(differing).slice(0, 200));
+  check('and still says which field moved, how, and by how much',
+    differing.output === 'summary'
+    && differing.differences.some((row) => row.id === 'instant' && row.valuesWithheld === true && row.label)
+    && differing.differences.some((row) => row.id === 'latitude' && typeof row.delta === 'number')
+    && differing.differences.some((row) => row.id === 'houses-requested' && row.left === 'placidus'),
+    differing.differences.filter((row) => ['instant', 'latitude', 'houses-requested'].includes(row.id)));
+  const withValues = await ok('compare_calculation_records', {
+    left: record.record,
+    right: (await ok('calculate_natal_chart', { ...POLAR, houseSystem: 'whole', output: 'record' })).record,
+    output: 'full',
+  });
+  check('asking for full values is an explicit choice that returns them',
+    withValues.output === 'full'
+    && withValues.differences.every((row) => row.valuesWithheld === undefined)
+    && JSON.stringify(withValues).includes('51.5074'));
 
   const offset = await ok('compare_calculation_records', { left: record.record, right: offsetRecord.record });
   check('the same instant written two ways differs only in what was reported',

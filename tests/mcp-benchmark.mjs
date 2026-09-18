@@ -92,6 +92,10 @@ const PREDICATES = {
     const missing = want.filter((id) => !view.explanationIds.includes(id));
     return [missing.length === 0, { missing, present: view.explanationIds }];
   },
+  explanationEvidence: (want, view) => {
+    const actual = view.explanations.find((row) => row.id === want.explanation)?.evidence ?? null;
+    return [actual === want.evidence, actual];
+  },
   explanationExcludesPattern: (want, view) => {
     const claimed = view.explanations.find((row) => row.id === want.explanation)?.covers ?? null;
     if (claimed === null) return [false, 'that explanation was not offered at all'];
@@ -102,6 +106,11 @@ const PREDICATES = {
     const statement = view.explanations.find((row) => row.id === want.explanation)?.statement ?? null;
     if (statement === null) return [true, 'that explanation was not offered, so it says nothing'];
     return [!new RegExp(want.pattern).test(statement), statement];
+  },
+  rowValuesWithheld: (want, view) => {
+    const row = view.differences.find((entry) => entry.id === want.id);
+    if (!row) return [false, 'no such row'];
+    return [row.valuesWithheld === true && row.left === undefined && row.right === undefined, row];
   },
   rowDeltaBelow: (want, view) => {
     const row = view.differences.find((entry) => entry.id === want.id);
@@ -162,12 +171,27 @@ async function structured(name, args) {
 
 const recordFor = async (input) => (await structured('calculate_natal_chart', { ...input, output: 'record' })).record;
 
-/** A record claiming a different engine version. The result is untouched, so
- * the pair is exactly "same numbers, different stated engine" plus whatever
- * else the scenario varies. */
-function claimEngineVersion(record, version) {
+/**
+ * Edits a record's claims without touching its computed values, so a scenario
+ * is exactly "the same numbers, a different stated provenance" plus whatever
+ * else it varies. Each edit has to survive the engine's own parser, which the
+ * runner checks by comparing what comes back.
+ *
+ * `instant` is the sharp one: the parser accepts a record whose declared
+ * instant is not the one its values came from, because it checks internal
+ * coherence rather than that the result follows from the inputs. That is what
+ * makes a missing baseline check reachable.
+ */
+function editClaims(record, edit) {
   const parsed = JSON.parse(record);
-  parsed.receipt.engine.version = version;
+  if (edit.engineVersion !== undefined) parsed.receipt.engine.version = edit.engineVersion;
+  if (edit.buildMetadata !== undefined) {
+    parsed.receipt.engine.version = `${parsed.receipt.engine.version}+${edit.buildMetadata}`;
+  }
+  if (edit.declaredInstant !== undefined) {
+    parsed.receipt.instant = new Date(edit.declaredInstant).toISOString();
+    parsed.receipt.sourceInstant = edit.declaredInstant;
+  }
   return JSON.stringify(parsed);
 }
 
@@ -176,17 +200,38 @@ try {
   for (const scenario of plan.scenarios) {
     let left = await recordFor(scenario.left);
     let right = await recordFor(scenario.right);
-    if (scenario.mutate?.engineVersion) {
-      const patched = claimEngineVersion(scenario.mutate.side === 'right' ? right : left, scenario.mutate.engineVersion);
-      if (scenario.mutate.side === 'right') right = patched; else left = patched;
+    for (const edit of scenario.mutate ? [scenario.mutate].flat() : []) {
+      const patched = editClaims(edit.side === 'right' ? right : left, edit);
+      if (edit.side === 'right') right = patched; else left = patched;
     }
-    const view = observe(await structured('compare_calculation_records', { left, right }));
+    // Most scenarios read the default response. A scenario whose assertions
+    // inspect absolute values has to say so, because the default withholds
+    // them for rows carrying birth details or computed positions.
+    const compareArgs = { left, right, ...(scenario.compareOutput ? { output: scenario.compareOutput } : {}) };
+    const view = observe(await structured('compare_calculation_records', compareArgs));
     const assertions = Object.entries(scenario.expect).map(([predicate, want]) => {
       const run = PREDICATES[predicate];
       if (!run) return { predicate, want, ok: false, observed: 'no such predicate in the runner' };
       const [ok, observed] = run(want, view);
       return { predicate, want, ok, observed };
     });
+    // Argument order must not decide a verdict. Checked structurally, on every
+    // scenario that asks for it, rather than as a second copy of the scenario.
+    if (scenario.orderIndependent) {
+      const swapped = observe(await structured('compare_calculation_records', { ...compareArgs, left: right, right: left }));
+      const evidenceOf = (v) => Object.fromEntries(v.explanations.map((row) => [row.id, row.evidence]));
+      const forward = evidenceOf(view);
+      const reverse = evidenceOf(swapped);
+      const shared = [...new Set([...Object.keys(forward), ...Object.keys(reverse)])]
+        .filter((id) => id !== 'unexplained');
+      const mismatched = shared.filter((id) => forward[id] !== reverse[id]);
+      assertions.push({
+        predicate: 'sameVerdictWhenReversed',
+        want: true,
+        ok: mismatched.length === 0 && view.identical === swapped.identical,
+        observed: mismatched.length === 0 ? 'same' : mismatched.map((id) => ({ id, forward: forward[id], reverse: reverse[id] })),
+      });
+    }
     scenarios.push({
       id: scenario.id,
       required: scenario.required,

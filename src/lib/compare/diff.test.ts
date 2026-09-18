@@ -458,3 +458,112 @@ describe('a cause never claims a row it could not have caused', () => {
     });
   }
 });
+
+/**
+ * An audit asked whether "reproduced" can be reached without establishing that
+ * the recalculation is entitled to speak for both files. It can, in four ways,
+ * and each one is a case here. Every fixture goes through the engine's own
+ * parser first: a record the parser refuses can never reach the comparison, so
+ * a counterexample built out of one would prove nothing.
+ */
+describe('what a local recalculation has to establish before it is a cause', () => {
+  const T1 = '1990-06-15T13:30:00Z';
+  const T2 = '1990-06-15T14:30:00Z';
+  const at = (utc: string, houseSystem: 'placidus' | 'whole') =>
+    buildEnvelope({ ...ORDINARY, utc, houseSystem });
+
+  /** Parser-accepted, or the fixture is not an input this tool can receive. */
+  const accepted = (raw: unknown, label: string): NatalEnvelope => {
+    const parsed = parseNatalEnvelope(JSON.stringify(raw));
+    if (!parsed.ok) throw new Error(`${label} is not a record the parser accepts: ${parsed.code}`);
+    return parsed.envelope;
+  };
+  const edited = (envelope: NatalEnvelope, change: (copy: any) => void): any => {
+    const copy = JSON.parse(JSON.stringify(envelope));
+    change(copy);
+    return copy;
+  };
+  const houseSystemEvidence = (left: NatalEnvelope, right: NatalEnvelope) =>
+    compareEnvelopes(left, right, live).explanations.find((item) => item.id === 'house-system')?.evidence ?? null;
+
+  it('reproduces an ordinary house-system difference, which is the case that must keep working', () => {
+    const comparison = compareEnvelopes(at(T1, 'placidus'), at(T1, 'whole'), live);
+    const houseSystem = comparison.explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.evidence).toBe('reproduced');
+    expect(houseSystem?.detail).toMatch(/its own declared inputs/);
+    expect(comparison.differences.filter((row) => /^cusp-\d+$/.test(row.id))).toHaveLength(12);
+  });
+
+  it('withholds it when the other receipt names an engine this installation does not have', () => {
+    // The values are genuine — they are exactly what the installed engine
+    // produces — but the receipt says they came from somewhere else. Matching
+    // them demonstrates nothing about why these two files differ.
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    expect(houseSystemEvidence(at(T1, 'placidus'), foreign)).toBe('hypothesis');
+  });
+
+  it('gives the same verdict whichever file is passed first', () => {
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    const genuine = at(T1, 'placidus');
+    expect(houseSystemEvidence(genuine, foreign)).toBe(houseSystemEvidence(foreign, genuine));
+
+    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted');
+    expect(houseSystemEvidence(drifted, at(T1, 'whole'))).toBe(houseSystemEvidence(at(T1, 'whole'), drifted));
+  });
+
+  it('withholds it when the two receipts claim different builds of the same version', () => {
+    // SemVer ignores build metadata when ordering versions. That is not a
+    // licence to treat two differently labelled builds as the same code.
+    const label = (envelope: NatalEnvelope, meta: string) => accepted(
+      edited(envelope, (o) => { o.receipt.engine.version = `${ENGINE_VERSION}+${meta}`; }), meta,
+    );
+    expect(houseSystemEvidence(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.b')))
+      .toBe('hypothesis');
+    // …and allows it when both name the same build, metadata included.
+    expect(houseSystemEvidence(label(at(T1, 'placidus'), 'build.a'), label(at(T1, 'whole'), 'build.a')))
+      .toBe('reproduced');
+  });
+
+  it('withholds it when a receipt’s own values do not follow from the inputs it declares', () => {
+    // The parser accepts a record whose declared instant is not the one its
+    // values came from: it checks internal coherence, not that the result
+    // follows from the inputs. Without a baseline the comparison called this
+    // pair reproduced, while the house system explained none of it.
+    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    }), 'drifted');
+    const comparison = compareEnvelopes(drifted, at(T1, 'whole'), live);
+    expect(comparison.explanations.find((item) => item.id === 'house-system')?.evidence).toBe('hypothesis');
+    expect(comparison.limits.join(' ')).toMatch(/could not be reproduced from the inputs it declares/);
+  });
+
+  it('still says what the installed engine does, when only the identity is unestablished', () => {
+    // Withholding the word "reproduced" must not throw away the useful part.
+    // The arithmetic did work; what could not be established is whose engine it
+    // speaks for, and the two statements are kept apart.
+    const foreign = accepted(edited(at(T1, 'whole'), (o) => { o.receipt.engine.version = '99.0.0'; }), 'foreign');
+    const houseSystem = compareEnvelopes(at(T1, 'placidus'), foreign, live)
+      .explanations.find((item) => item.id === 'house-system');
+    expect(houseSystem?.evidence).toBe('hypothesis');
+    expect(houseSystem?.detail).toMatch(/fact about this engine, not a demonstration about these two files/);
+  });
+
+  it('cannot be given two records that disagree about conventions', () => {
+    // The audit asked for a differing-conventions case. It cannot be built:
+    // this draft implements exactly one convention set, so a record declaring
+    // any other is refused before the comparison sees it. Recorded as a
+    // refutation rather than left as an untested worry.
+    for (const change of [
+      (o: any) => { o.receipt.conventions.angles = 'other-convention'; },
+      (o: any) => { o.receipt.conventions.zodiac = 'sidereal'; },
+      (o: any) => { o.receipt.coverage.broadDateRange = 'certified'; },
+    ]) {
+      const parsed = parseNatalEnvelope(JSON.stringify(edited(at(T1, 'placidus'), change)));
+      expect(parsed.ok ? 'accepted' : parsed.code).toBe('unsupported_feature');
+    }
+  });
+});

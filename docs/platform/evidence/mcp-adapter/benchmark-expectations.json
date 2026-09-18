@@ -30,7 +30,8 @@
         "identical": true,
         "explanationCountEqual": 0,
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "house-system",
@@ -66,7 +67,8 @@
           "house-system"
         ],
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "equivalent-instants",
@@ -102,7 +104,8 @@
           "equivalent-instants"
         ],
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "unknown-time",
@@ -142,7 +145,8 @@
           "explanation": "house-system",
           "pattern": "different one was actually used|asked for different house systems"
         }
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "wraparound",
@@ -160,6 +164,7 @@
         "longitude": -0.1278,
         "houseSystem": "placidus"
       },
+      "compareOutput": "full",
       "expect": {
         "identical": false,
         "differenceIdsInclude": [
@@ -180,7 +185,8 @@
           "instant"
         ],
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "mixed-versions",
@@ -212,7 +218,8 @@
         "noEvidenceStrongerThan": "hypothesis",
         "limitsMatch": "99\\.0\\.0",
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "unrelated-simultaneous",
@@ -246,7 +253,8 @@
           "pattern": "^(body-|angle-)"
         },
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "insufficient-evidence",
@@ -275,7 +283,8 @@
         "hypothesisCountAtLeast": 2,
         "limitsMatch": "moment and the place both differ",
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "polar-fallback",
@@ -309,7 +318,8 @@
           "house-system"
         ],
         "unresolvedRowsEqual": 0
-      }
+      },
+      "orderIndependent": true
     },
     {
       "id": "display-rounding",
@@ -336,6 +346,181 @@
         ],
         "smallestNumericDeltaBelowLargestDisplayDelta": true,
         "unresolvedRowsEqual": 0
+      },
+      "orderIndependent": true
+    },
+    {
+      "id": "foreign-engine-but-matching-values",
+      "required": "a receipt naming an engine this installation does not have, whose values nevertheless match",
+      "purpose": "The second record's values are exactly what the installed engine produces, and its receipt says they came from an engine nobody here has. Reproducing them locally is then a fact about this engine, not a demonstration about why these two files differ — so the cause must stay a hypothesis, and the same verdict must come back whichever file is passed first.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": {
+        "side": "right",
+        "engineVersion": "99.0.0"
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "cuspRowsEqual": 12,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "hypothesis"
+        },
+        "noEvidenceStrongerThan": "hypothesis",
+        "limitsMatch": "would be a different calculation",
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "different-build-claims",
+      "required": "equal SemVer precedence, different build and provenance claims",
+      "purpose": "SemVer ignores build metadata when ordering versions, which is not a licence to treat two differently labelled builds as the same implementation. Neither claim is authenticated, so the disagreement is used only to withhold the strongest verdict, never to grant it.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": [
+        {
+          "side": "left",
+          "buildMetadata": "build.a"
+        },
+        {
+          "side": "right",
+          "buildMetadata": "build.b"
+        }
+      ],
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "cuspRowsEqual": 12,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "hypothesis"
+        },
+        "limitsMatch": "claim different builds of it",
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "same-build-claims",
+      "required": "equal precedence and the same build claim on both sides",
+      "purpose": "The control for the case above. Two receipts naming the same build, metadata included, have told this tool nothing about their provenance either — but they have not told it they differ, so the ordinary demonstration still stands and withholding here would be the opposite error.",
+      "left": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": [
+        {
+          "side": "left",
+          "buildMetadata": "build.a"
+        },
+        {
+          "side": "right",
+          "buildMetadata": "build.a"
+        }
+      ],
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "cuspRowsEqual": 12,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "reproduced"
+        },
+        "unresolvedRowsEqual": 0
+      }
+    },
+    {
+      "id": "drifted-baseline",
+      "required": "a record whose values do not follow from the inputs it declares",
+      "purpose": "A genuine 14:30 chart with its declared instant rewritten to 13:30. The parser accepts it, because it checks internal coherence rather than that a result follows from its inputs. Without reproducing each record's own values from its own declared inputs first, the comparison called this pair reproduced while the house system explained none of it.",
+      "left": {
+        "utc": "1990-06-15T14:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "1990-06-15T13:30:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "whole"
+      },
+      "mutate": {
+        "side": "left",
+        "declaredInstant": "1990-06-15T13:30:00Z"
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "explanationEvidence": {
+          "explanation": "house-system",
+          "evidence": "hypothesis"
+        },
+        "noEvidenceStrongerThan": "hypothesis",
+        "limitsMatch": "could not be reproduced from the inputs it declares"
+      }
+    },
+    {
+      "id": "wraparound-in-the-default-response",
+      "required": "the default response still carries the diagnosis",
+      "purpose": "The same pair as `wraparound`, read from the default response instead of the full one. The absolute longitudes are withheld there because a body longitude is a computed position; the signed circular difference is not, because that is what tells a caller what moved and by how much. This is the scenario that keeps the privacy default from quietly gutting the answer.",
+      "left": {
+        "utc": "2000-03-19T12:00:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "right": {
+        "utc": "2000-03-21T12:00:00Z",
+        "latitude": 51.5074,
+        "longitude": -0.1278,
+        "houseSystem": "placidus"
+      },
+      "orderIndependent": true,
+      "expect": {
+        "identical": false,
+        "differenceIdsInclude": [
+          "instant",
+          "body-Sun-lon"
+        ],
+        "rowValuesWithheld": {
+          "id": "body-Sun-lon"
+        },
+        "rowDeltaBelow": {
+          "id": "body-Sun-lon",
+          "magnitude": 5
+        },
+        "explanationIdsInclude": [
+          "instant"
+        ]
       }
     }
   ],
@@ -354,6 +539,22 @@
       "after": "the candidate had already been run against the original plan",
       "added": "explanationStatementExcludes for the house-system cause",
       "why": "The same review found this pair reported as \"The same house system was requested, but a different one was actually used\" when both sides requested placidus and one simply had no house table. The original expectations checked coverage and evidence rank but nothing about what a statement says, so a reader could be told the systems disagreed. The rows still need a claimant, so the fix corrected the sentence and kept the coverage, and this assertion pins it."
+    },
+    {
+      "date": "2026-09-18",
+      "scenario": "the corpus as a whole",
+      "after": "an audit of the shared reproduced contract",
+      "added": "four scenarios (foreign-engine-but-matching-values, different-build-claims, same-build-claims, drifted-baseline) and an orderIndependent structural check on every scenario",
+      "removed": "nothing",
+      "why": "The audit asked whether a recalculation can be called a demonstrated cause without establishing that it is entitled to speak for both records. It can, three ways, and each is now a scenario: the other receipt naming an engine nobody here has, the two receipts claiming different builds of the same version, and a record whose values do not follow from the inputs it declares. The fourth, same-build-claims, is the control that keeps the fix from being an over-correction. No previous expectation was weakened or removed; the ten original scenarios and their 59 assertions are unchanged and still pass. The orderIndependent flag adds an assertion rather than replacing one: the same two files reaching different verdicts depending on which was passed first was itself one of the findings."
+    },
+    {
+      "date": "2026-09-18",
+      "scenario": "wraparound, and a new wraparound-in-the-default-response",
+      "after": "the comparison tool's default response stopped repeating birth details and positions back",
+      "added": "compareOutput: \"full\" on `wraparound`, and a new scenario reading the same pair from the default response",
+      "removed": "nothing",
+      "why": "`rowValuesStraddleZero` inspects the two absolute longitudes, to show the pair really does straddle 0 degrees rather than merely having a small difference. The default response withholds those values now, because a body longitude is a computed position. The assertion is unchanged and still runs — the scenario simply states which response it reads. The new scenario covers the case the change created: that the default still names the row and carries its signed circular difference. Requesting the full response for one scenario is not a weakening; asserting the straddle against a response that does not contain it would have been."
     }
   ]
 }

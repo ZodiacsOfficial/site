@@ -2,7 +2,7 @@
   "type": "named end-user host interoperability: the host launched the adapter and connected to it. Separate from the official-SDK protocol drive, and separate from the model-driven demonstration recorded by hand in host-interop.md.",
   "host": {
     "name": "Claude Code CLI",
-    "version": "2.1.274 (Claude Code)",
+    "version": "2.1.276 (Claude Code)",
     "mechanism": "claude mcp add/list/get/remove, stdio"
   },
   "notTested": [
@@ -16,21 +16,21 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "4b7b4183797086b9636c9f50201be4b210183937c17d1d02a5784facb3cc3418"
+    "sha256": "f41dc6744abb57bb35626218e199b5f906e7472a6de8b0a26c20ad17497bb35d"
   },
-  "completedAt": "2026-09-17T19:13:32.357Z",
+  "completedAt": "2026-09-18T06:29:40.603Z",
   "checks": 7,
   "passed": 7,
   "results": [
     {
       "name": "the host accepts the server through its documented add command",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-7GoPS6/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-7GoPS6/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-FSl9nU/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-FSl9nU/project]"
     },
     {
       "name": "the registration landed in the throwaway config, not the real one",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-7GoPS6/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-7GoPS6/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-FSl9nU/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-FSl9nU/project]"
     },
     {
       "name": "the host launches the server and reports it connected",
@@ -45,7 +45,7 @@
     {
       "name": "the documented removal command removes it",
       "ok": true,
-      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-7GoPS6/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-7GoPS6/project]"
+      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-FSl9nU/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-FSl9nU/project]"
     },
     {
       "name": "nothing is left configured after removal",
@@ -56,8 +56,8 @@
       "name": "the machine's own Claude Code configuration is byte-identical throughout",
       "ok": true,
       "detail": {
-        "before": "220782882cb6c32431c624fff881e5b26de38fd10df3577842e7d21e2f895f6c",
-        "after": "220782882cb6c32431c624fff881e5b26de38fd10df3577842e7d21e2f895f6c"
+        "before": "a4f7a4aeb80c3630fca80d511eea0bc1798dd466b61600ea3cc7b00e8719b83b",
+        "after": "a4f7a4aeb80c3630fca80d511eea0bc1798dd466b61600ea3cc7b00e8719b83b"
       }
     }
   ]

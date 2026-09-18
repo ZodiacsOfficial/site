@@ -99,6 +99,10 @@ function build(): McpServer {
       'Read two Zodiacs calculation records and report what differs between them and how much of it is explained.',
       'Each difference is a fact read from the two records. Each proposed cause is labelled by its evidence: reproduced by a local recalculation, reported by the records themselves, a hypothesis that fits, or unresolved.',
       'Pass record content, not a path or a URL.',
+      // This tool takes two whole calculation records as arguments and was the
+      // one of the three missing the routing sentence, which is the wrong way
+      // round: it is the call that carries the most.
+      PRIVACY.assistant,
       PRIVACY.output,
     ].join(' '),
     inputSchema: COMPARE_INPUT,
