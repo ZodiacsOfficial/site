@@ -11419,7 +11419,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-09-19T08:54:18.574Z"
+        "readAt": "2026-09-19T11:37:56.788Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -11434,7 +11434,7 @@
         "fdvAssetCount": 12,
         "liquidityUsd": 209974.03,
         "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 2055.28,
+        "volume24hUsd": 1997.66,
         "volume24hReportedPoolCount": 12,
         "indexedPoolCount": 12
       },
@@ -11592,12 +11592,12 @@
           "symbol": "SCORPIO",
           "mint": "J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1",
           "priceUsd": 0.00007882,
-          "change24hPct": 5.77,
+          "change24hPct": -0.28,
           "marketCapUsd": 78829,
           "fdvUsd": 78829,
           "liquidityUsd": 16256.42,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 38.77,
+          "volume24hUsd": 9.96,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -11613,12 +11613,12 @@
           "symbol": "SAGITTARIUS",
           "mint": "8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3",
           "priceUsd": 0.0000778,
-          "change24hPct": 6.99,
+          "change24hPct": 8.02,
           "marketCapUsd": 77779,
           "fdvUsd": 77779,
           "liquidityUsd": 16370.72,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 54.62,
+          "volume24hUsd": 40.27,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -11655,12 +11655,12 @@
           "symbol": "AQUARIUS",
           "mint": "C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt",
           "priceUsd": 0.00008708,
-          "change24hPct": 15.01,
+          "change24hPct": 15.92,
           "marketCapUsd": 87087,
           "fdvUsd": 87087,
           "liquidityUsd": 17083.12,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 439.02,
+          "volume24hUsd": 424.56,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
