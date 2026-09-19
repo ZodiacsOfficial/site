@@ -21,7 +21,15 @@ export const WIDGET_EN = Object.freeze({
   copyAction: 'Copy embed code',
   copiedAction: 'Copied',
   backlinkNote: 'The Powered by Zodiacs.org link is part of every widget and is not removable.',
-  privacyNote: 'The mini chart computes in its iframe. Birth date, time, and place never leave the browser.',
+  // The sentence about the city list was added when an AI review pointed out
+  // that the note claimed nothing is sent while the place field fetches
+  // `/data/cities/<letter>.json` as a visitor types. `src/pages/widgets/` is the
+  // only surface that renders this and it renders the English, but the four
+  // localized copies in `src/strings/additions.{es,fr,it,pt}.mjs` still predate
+  // that sentence: they are under the Phase 1 locale-catalog freeze and were
+  // left alone. Re-translate them before any localized /widgets/ page ships, or
+  // that page will understate what the widget requests.
+  privacyNote: 'The mini chart computes inside its iframe: the birth date, time and place a visitor enters are not sent anywhere, and the chart is never uploaded. Typing a place does fetch a city list from zodiacs.org, picked by the first letter of what was typed, so that request reveals one letter and nothing more. Loading the widget is a request to zodiacs.org as well, like any embedded asset, so a visitor\'s browser reveals its IP address and your site\'s origin. Those are separate things.',
   sizeNote: 'The documents are standalone and lazy-load their heavier computation only after a mini-chart submission.',
   moonTitle: 'Moon phase today',
   moonSign: 'Moon in {sign}',

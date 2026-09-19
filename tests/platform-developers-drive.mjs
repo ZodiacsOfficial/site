@@ -22,23 +22,53 @@ try {
       const response = await page.goto(`${baseURL}/developers/`, { waitUntil: 'networkidle' });
       assert.equal(response.status(), 200);
       const paths = page.getByRole('navigation', { name: 'Developer integration paths', exact: true });
-      for (const [name, href] of [
-        ['Calculate locally', '/developers/examples/#natal'],
-        ['Fetch shared sky data', '#sky-data'],
+      // The four cards, in the order the hub presents them. The order is the
+      // point: an earlier version led with sky data and a hosted API that does
+      // not exist, so a first-time reader met the two things they could not use
+      // before the two they could.
+      const cards = [
+        ['Calculate a chart', '/developers/examples/'],
         ['Embed a tool', '/widgets/'],
-        ['Use hosted computation', '/developers/support/#hosted'],
-      ]) {
+        ['Connect an AI assistant', '/developers/mcp/'],
+        ['Compare two calculation records', '/developers/compare/'],
+      ];
+      for (const [name, href] of cards) {
         assert.equal(await paths.getByRole('link', { name, exact: true }).getAttribute('href'), href);
       }
+      assert.deepEqual(
+        await paths.locator('li h2 a').evaluateAll((links) => links.map((link) => link.textContent.trim())),
+        cards.map(([name]) => name),
+        'the cards must stay in the order a first-time reader can act on',
+      );
+      // The two things that are not yet usable are named, but below the cards.
+      assert.equal(await page.getByRole('link', { name: 'planned and does not exist yet', exact: true })
+        .getAttribute('href'), '/developers/support/#hosted');
+      assert.equal(await page.getByRole('link', { name: 'shared sky data', exact: true })
+        .getAttribute('href'), '#sky-data');
       await page.screenshot({ path: resolve(output, `developer-entry-${width}.png`) });
+      const terminal = page.getByRole('region', { name: 'Terminal quick start', exact: true });
       const code = page.getByRole('region', { name: 'JavaScript quick start', exact: true });
       assert.equal(await code.locator('code').textContent(), source, 'displayed example must be the executed source');
+      // Both scrollers, in the order they appear. This assertion was written
+      // when the JavaScript block was the first thing after the prose link; a
+      // later commit put the terminal block in front of it and the single Tab
+      // stopped landing where the assertion said, a week before the cards were
+      // reordered. Tabbing through both is what it meant to check, and it does
+      // not silently pass if a third scroller appears between them.
       await page.getByRole('link', { name: 'chart calculation stays on the device', exact: true }).focus();
       await page.keyboard.press('Tab');
-      assert.equal(await code.evaluate((element) => element === document.activeElement), true, 'Tab must reach the code scroller');
+      assert.equal(await terminal.evaluate((element) => element === document.activeElement), true,
+        'Tab must reach the first code scroller');
+      await page.keyboard.press('Tab');
+      assert.equal(await code.evaluate((element) => element === document.activeElement), true,
+        'a second Tab must reach the JavaScript code scroller');
       if (width <= 390) {
+        // The focused scroller, which is the JavaScript one — `.dev-code` alone
+        // picks the terminal block above it and would wait for a scroll that
+        // never happens there.
         await page.keyboard.press('ArrowRight');
-        await page.waitForFunction(() => document.querySelector('.dev-code').scrollLeft > 0);
+        await page.waitForFunction(() =>
+          document.querySelector('[aria-label="JavaScript quick start"]').scrollLeft > 0);
       }
       const layout = await code.evaluate((element) => ({
         viewport: innerWidth, pageWidth: document.documentElement.scrollWidth,
@@ -54,7 +84,7 @@ try {
       await page.screenshot({ path: resolve(output, `developers-${width}.png`) });
       checks.push({ width, sourceMatches: true, keyboardFocus: true, ...layout, pageErrors: errors });
 
-      await page.getByRole('link', { name: 'Compare support, runtime requirements, and known limits', exact: true }).click();
+      await page.getByRole('link', { name: 'the support matrix', exact: true }).click();
       await page.waitForURL('**/developers/support/');
       await page.waitForLoadState('networkidle');
       const matrix = page.getByRole('region', { name: 'Local engine support matrix', exact: true });

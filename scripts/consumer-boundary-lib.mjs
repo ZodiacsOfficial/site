@@ -398,10 +398,24 @@ function vocabularyAllowed(fragment) {
     || isTechnicalState(fragment);
 }
 
+/**
+ * Rendered install blocks that import Node's hashing API to verify an archive
+ * digest before extracting it. `node:crypto` is the standard library module, not
+ * crypto-market vocabulary, and a developer page that checks a checksum has to
+ * name it. Listed pair by pair rather than pattern-matched, and only the
+ * complete module specifier is excluded — surrounding code and prose stay in
+ * scope, so this cannot quietly cover a real boundary breach on the same page.
+ */
+const HASHING_IMPORT_BLOCKS = new Set([
+  'src/pages/developers/examples/index.astro\u0000setup',
+  // A .ts fragment carries no key, so this one is listed by file. It narrows the
+  // same way regardless: only the complete `from 'node:crypto'` specifier is
+  // excluded, so any other crypto-market vocabulary in the file still fails.
+  'src/lib/mcp-install-block.ts\u0000',
+]);
+
 function vocabularyText(fragment) {
-  // This rendered setup block imports Node's hashing API for archive integrity.
-  // Exclude only that complete module specifier, not surrounding code or prose.
-  if (fragment.file === 'src/pages/developers/examples/index.astro' && fragment.key === 'setup') {
+  if (HASHING_IMPORT_BLOCKS.has(`${fragment.file}\u0000${fragment.key}`)) {
     return fragment.text.replace(/\bfrom (['"])node:crypto\1/gu, 'from "node:hashing-module"');
   }
   return fragment.text;

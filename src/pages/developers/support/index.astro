@@ -48,9 +48,12 @@ const engineRows = [
       <p>
         Evaluate <code>{candidate.name}@{candidate.version}</code> from the exact
         public tarball below. It has been downloaded without credentials and
-        installed in a clean consumer. It is not an npm release; review and
-        publication approval remain open. This archive identifies the local
-        package; hosted data and widgets are separate deployments.
+        installed in a clean consumer. It is not an npm release — <code>npm view
+        {candidate.name}</code> returns 404 — and that is a missing credential,
+        not a missing decision: publication is authorized, and what remains is an
+        authenticated publish by a maintainer. Nothing here is waiting on a
+        review. This archive identifies the local package; hosted data and
+        widgets are separate deployments.
       </p>
       <p>
         <a href={candidate.artifactUrl}>Download engine {candidate.version} (.tgz)</a>.
@@ -145,8 +148,10 @@ const engineRows = [
     <div class="prose">
       <p>
         There is no public hosted natal or personalized-transit endpoint to
-        call yet. Input contracts, privacy and cost limits, and release approval
-        remain open. Use the local engine candidate for evaluation; the public
+        call yet, and none is being built in the current work. Its input
+        contract, privacy limits and cost limits are undecided — that is a
+        design question that has not been answered, not an artifact waiting for
+        approval. Use the local engine candidate for evaluation; the public
         shared-sky files do not accept birth inputs.
       </p>
     </div>

@@ -256,6 +256,22 @@ try {
     typeof record.record === 'string'
     && JSON.parse(record.record).schema === 'zodiacs.natal-envelope.draft-v1'
     && !('bodies' in record), Object.keys(record));
+  // What the pages describe, asserted rather than assumed. An AI review found
+  // two of them saying `output: "record"` returns the record, when it returns
+  // the record in a named field beside two labels. The reply as a whole is not
+  // a record and the comparison refuses it, so the wording has to send readers
+  // to the field.
+  check('the record reply is the record in a field, beside the two labels',
+    JSON.stringify(Object.keys(record).sort()) === '["engine","record","schema"]',
+    Object.keys(record));
+  const wrapper = await attempt('compare_calculation_records', {
+    left: JSON.stringify(record), right: JSON.stringify(record),
+  });
+  check('handing the whole reply to the comparison is refused, not compared',
+    wrapper.layer === 'tool' && /not shaped like a zodiacs\.natal-envelope/.test(wrapper.text ?? ''),
+    wrapper);
+  check('and the refusal names the field to pass instead',
+    /pass its "record" field/.test(wrapper.text ?? ''), wrapper.text);
 
   // ---- compare_calculation_records ----
   const wholeRecord = await ok('calculate_natal_chart', { ...LONDON, houseSystem: 'whole', output: 'record' });

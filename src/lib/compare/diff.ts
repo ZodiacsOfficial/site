@@ -346,14 +346,55 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
  * ("reproduced"), offered as a candidate ("hypothesis"), or refused
  * ("unresolved").
  */
+/**
+ * What a difference row is ABOUT, decided by the fact it reports rather than by
+ * how that fact happens to be written down.
+ *
+ * An aspect's applying flag, and an aspect's very existence, are results this
+ * engine computed — but they are booleans, so a view of "computed" built from
+ * `kind === 'numeric'` could not see them. That is how a summary came to say
+ * "Every computed value agrees" over two files whose aspect lists disagreed.
+ * Seven computed row families were invisible that way: angles-presence,
+ * body presence, body sign, body retrograde, aspect presence, aspect applying,
+ * and cusps-shape.
+ *
+ * `kind === 'display'` stays excluded everywhere, and that is a stated policy
+ * of this module rather than a loophole: two values that print identically at
+ * six decimals are a rounding difference, not a different calculation.
+ */
+type RowCategory = 'computed' | 'setting' | 'input' | 'provenance';
+
+/** Requested or actual house system: a setting, not a result. */
+const SETTING_ROWS = new Set(['houses-requested', 'houses-actual', 'houses-system']);
+/** Birth details as supplied, and how the instant was reached from them. */
+const INPUT_ROWS = new Set(['instant', 'source-instant', 'reference', 'time-known', 'zone', 'latitude', 'longitude']);
+/** What a file says about itself, or about how its run went. */
+const PROVENANCE_ROWS = new Set(['engine-version', 'schema', 'result-flags', 'input-flags', 'houses-absence']);
+
+function categoryOf(row: Difference): RowCategory {
+  if (SETTING_ROWS.has(row.id)) return 'setting';
+  if (INPUT_ROWS.has(row.id)) return 'input';
+  if (PROVENANCE_ROWS.has(row.id)) return 'provenance';
+  if (row.area === 'Conventions') return 'setting';
+  // What the Angles, Positions, Aspects and Houses areas have left is a value
+  // this engine produced: angle-*, angles-presence, body-*, aspect-*, cusp-*,
+  // cusps-shape.
+  return 'computed';
+}
+
 function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Difference[], options: CompareOptions): {
   explanations: Explanation[]; limits: string[];
 } {
   const explanations: Explanation[] = [];
   const limits: string[] = [];
   const has = (id: string) => differences.some((row) => row.id === id && row.kind !== 'display');
+  // `idsIn` stays numeric-only, which is the right test for `movedCusps` below:
+  // a house system moves cusp NUMBERS. It is the wrong test for "did anything
+  // this engine computed differ?", which is what `computed` answers.
   const idsIn = (area: string) => differences.filter((row) => row.area === area && row.kind === 'numeric').map((row) => row.id);
-  const computed = [...idsIn('Positions'), ...idsIn('Angles'), ...idsIn('Houses'), ...idsIn('Aspects')];
+  const computed = differences
+    .filter((row) => row.kind !== 'display' && categoryOf(row) === 'computed')
+    .map((row) => row.id);
 
   /**
    * Everything a cause upstream of the calculation can move, of any kind: a
@@ -379,17 +420,21 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
   const replay = options.replay ?? null;
   const leftPrecedence = enginePrecedence(leftEngine);
   const sameEngine = leftPrecedence !== null && leftPrecedence === enginePrecedence(rightEngine);
-  const canReplayLeft = Boolean(replay) && Boolean(available)
-    && leftPrecedence !== null && leftPrecedence === enginePrecedence(available);
   const engineDiffers = leftPrecedence !== enginePrecedence(rightEngine);
 
   if (has('source-instant') && !has('instant')) {
+    // "only" has to mean only. Deciding it on a count of computed rows let the
+    // sentence stand while a convention, a flag or a provenance row differed
+    // elsewhere in the same result; deciding it on coverage cannot.
+    const notationRows = ['source-instant', 'zone', 'reference'].filter(has);
+    const onlyNotation = differences
+      .every((row) => row.kind === 'display' || notationRows.includes(row.id));
     explanations.push({
       id: 'equivalent-instants', evidence: 'reported',
-      statement: computed.length === 0
+      statement: onlyNotation
         ? 'These differ only in how the instant is written. Every computed value agrees.'
         : 'The same moment was written two different ways.',
-      covers: ['source-instant', 'zone', 'reference'].filter(has),
+      covers: notationRows,
       detail: 'Both files resolve to the same UTC instant, so nothing downstream can differ because of this.',
     });
   }
@@ -533,9 +578,19 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
         detail: absent
           ? 'Whatever left one chart without houses is the difference here; the house system is not.'
           : !unexplainedCusps
-            ? (has('cusps-shape') || has('houses-absence')
-              ? 'One chart has no house table, so there are no cusps on both sides to compare here.'
-              : 'The cusps are the same in both files, so this difference changed nothing that was computed.')
+            // Whether there are cusps to agree about is a fact about the two
+            // files, not about which difference rows happen to be present. An
+            // AI review found this branch asserting that the cusps were the
+            // same for a pair in which neither file had any: two charts with no
+            // birth time, asking for different systems, produce no cusp rows,
+            // no cusps-shape row and no houses-absence row, so the row-presence
+            // test this used to make came out false and the sentence claimed
+            // agreement over values that do not exist.
+            ? (leftCusps && rightCusps
+              ? 'The cusps are the same in both files, so this difference changed nothing that was computed.'
+              : leftCusps || rightCusps
+                ? 'One chart has no house table, so there are no cusps on both sides to compare here.'
+                : 'Neither chart has a house table, so there are no cusps here to be affected by it.')
             : controlledMatch
               // The useful qualified case: the arithmetic worked, and only the
               // identity behind it could not be established. Saying what the
@@ -648,11 +703,19 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
 
   // Engine difference with no input difference: candidate cause, but this tool
   // holds exactly one engine build and cannot rerun the other one.
-  if (has('engine-version') && engineDiffers && computed.length > 0) {
+  // `downstream`, not `computed`. The two differ by exactly `angles-presence`
+  // and `cusps-shape`: a section of the chart being there or not. An engine
+  // change can move a sign or an aspect's existence as well as a number, which
+  // is why this is not the numeric view either — but it does not make the
+  // angles vanish, and an undemonstrable hypothesis over a whole missing
+  // section would read as an explanation where the honest answer is that
+  // nothing in these two files accounts for it.
+  const engineDownstream = downstream(['Positions', 'Angles', 'Houses', 'Aspects']);
+  if (has('engine-version') && engineDiffers && engineDownstream.length > 0) {
     explanations.push({
       id: 'engine', evidence: 'hypothesis',
       statement: 'The two charts were produced by different engine versions.',
-      covers: ['engine-version', ...computed],
+      covers: ['engine-version', ...engineDownstream],
       detail: 'A change between engine versions can move computed values. It cannot be demonstrated here.',
     });
     limits.push(`Reproducing the difference would need engine ${leftEngine} and ${rightEngine} side by side. `

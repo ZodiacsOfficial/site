@@ -117,24 +117,40 @@ function readRecord(side: 'first' | 'second', record: string): { ok: true; envel
   }
   const parsed = parseNatalEnvelope(record);
   if (!parsed.ok) {
-    return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.${looksLikeSummary(record, parsed.code)}` };
+    return { ok: false, refusal: `The ${side} record ${PARSE_REFUSALS[parsed.code]}.${hint(record, parsed.code)}` };
   }
   return { ok: true, envelope: parsed.envelope };
 }
 
 /**
- * The likeliest way to get this wrong is to pass what `calculate_natal_chart`
- * returns by default, which is a chart summary and not a record. Both come back
- * as `unsupported_version`, so without this the caller cannot tell "the wrong
- * kind of Zodiacs object" from "not a Zodiacs object at all", and is not told
- * the one-word fix. Key presence only: nothing here is executed or reflected.
+ * The two likeliest ways to get this wrong are both `calculate_natal_chart`'s
+ * own replies, and each needs a different correction.
+ *
+ * The default reply is a chart summary rather than a record. It refuses as
+ * `unsupported_version` exactly as an unrelated JSON object does, so without a
+ * hint the caller cannot tell "the wrong kind of Zodiacs object" from "not a
+ * Zodiacs object at all", and is not told the one-word fix.
+ *
+ * The `output: "record"` reply is `{ engine, schema, record }`: the record is
+ * the `record` field, as text, and the object around it is not one. Passing the
+ * whole reply is the natural reading of "ask for output: record", and it
+ * refuses as `invalid_shape` with nothing to act on. An AI review found the
+ * developer pages describing it that way; the pages now send readers to the
+ * field, and this says the same thing to a caller who arrives without them.
+ *
+ * Key presence and one `typeof` only: nothing here is executed or reflected,
+ * and no part of the caller's record appears in what comes back.
  */
-function looksLikeSummary(record: string, code: NatalEnvelopeErrorCode): string {
-  if (code !== 'unsupported_version') return '';
+function hint(record: string, code: NatalEnvelopeErrorCode): string {
   let value: unknown;
   try { value = JSON.parse(record); } catch { return ''; }
   if (value === null || typeof value !== 'object' || Array.isArray(value)) return '';
-  const keys = new Set(Object.keys(value as Record<string, unknown>));
+  const fields = value as Record<string, unknown>;
+  const keys = new Set(Object.keys(fields));
+  if (keys.has('record') && keys.has('engine') && keys.has('schema') && typeof fields.record === 'string') {
+    return ' It looks like a whole calculate_natal_chart reply: pass its "record" field, which is the record itself.';
+  }
+  if (code !== 'unsupported_version') return '';
   if (!keys.has('bodies') || !keys.has('engine') || keys.has('schema')) return '';
   return ' It looks like a chart summary: call calculate_natal_chart again with output: "record".';
 }

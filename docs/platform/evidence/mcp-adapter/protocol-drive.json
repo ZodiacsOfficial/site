@@ -1,7 +1,7 @@
 {
   "type": "official-SDK protocol interoperability against the real server process; not a named end-user host, and not a model-driven demonstration",
-  "startedAt": "2026-09-18T07:45:26.683Z",
-  "completedAt": "2026-09-18T07:45:30.591Z",
+  "startedAt": "2026-09-18T13:10:02.362Z",
+  "completedAt": "2026-09-18T13:10:06.667Z",
   "node": "v22.22.2",
   "client": {
     "package": "@modelcontextprotocol/client",
@@ -17,8 +17,8 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "bytes": 171381,
-    "sha256": "23dfb7477fda906f8f595a3dc215fe98c261c365bde6c3f9f5e26ddbac74646e"
+    "bytes": 172444,
+    "sha256": "a06c69da573fcd0d08c52a41344de8e168164f94c755dba911793cc3ec090331"
   },
   "wire": [
     {
@@ -102,21 +102,21 @@
       "unansweredOffender": true
     }
   ],
-  "checks": 84,
-  "passed": 84,
+  "checks": 87,
+  "passed": 87,
   "results": [
     {
       "name": "initialize succeeds and names the adapter",
       "ok": true,
       "detail": {
         "name": "zodiacs-mcp-server",
-        "version": "0.1.0-rc.4"
+        "version": "0.1.0-rc.6"
       }
     },
     {
       "name": "server version is the adapter candidate",
       "ok": true,
-      "detail": "0.1.0-rc.4"
+      "detail": "0.1.0-rc.6"
     },
     {
       "name": "server declares the tools capability",
@@ -214,6 +214,28 @@
         "schema",
         "record"
       ]
+    },
+    {
+      "name": "the record reply is the record in a field, beside the two labels",
+      "ok": true,
+      "detail": [
+        "engine",
+        "schema",
+        "record"
+      ]
+    },
+    {
+      "name": "handing the whole reply to the comparison is refused, not compared",
+      "ok": true,
+      "detail": {
+        "layer": "tool",
+        "text": "The first record is not shaped like a zodiacs.natal-envelope.draft-v1 record. It looks like a whole calculate_natal_chart reply: pass its \"record\" field, which is the record itself."
+      }
+    },
+    {
+      "name": "and the refusal names the field to pass instead",
+      "ok": true,
+      "detail": "The first record is not shaped like a zodiacs.natal-envelope.draft-v1 record. It looks like a whole calculate_natal_chart reply: pass its \"record\" field, which is the record itself."
     },
     {
       "name": "two identical records compare identical",
@@ -551,22 +573,22 @@
     {
       "name": "stderr carried the adapter's startup note, so the capture is real",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.4, engine 0.1.1-rc.6, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.6, engine 0.1.1-rc.6, no network\n"
     },
     {
       "name": "stderr carried only the adapter's own notes",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.4, engine 0.1.1-rc.6, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.6, engine 0.1.1-rc.6, no network\n"
     },
     {
       "name": "stderr carried no birth detail, coordinate or record content",
       "ok": true,
-      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.4, engine 0.1.1-rc.6, no network\n"
+      "detail": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.6, engine 0.1.1-rc.6, no network\n"
     },
     {
       "name": "the transport exposes the server process id, so the next check measures something",
       "ok": true,
-      "detail": 764
+      "detail": 7863
     },
     {
       "name": "the server process is gone after the client closes",
@@ -664,7 +686,7 @@
           1,
           6
         ],
-        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.4, engine 0.1.1-rc.6, no network"
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.6, engine 0.1.1-rc.6, no network"
       }
     },
     {
@@ -678,7 +700,7 @@
           83,
           7
         ],
-        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.4, engine 0.1.1-rc.6, no network"
+        "stderr": "zodiacs-mcp-server: ready on stdio: adapter 0.1.0-rc.6, engine 0.1.1-rc.6, no network"
       }
     },
     {

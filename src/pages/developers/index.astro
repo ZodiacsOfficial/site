@@ -6,6 +6,7 @@ import { completeTransitYears } from '../../lib/sky-api/build';
 import { PLANET_SLUGS } from '../../lib/sky-api/meta';
 import skyQuickStart from '../../lib/sky-api/examples/today.mjs?raw';
 import candidate from '../../data/platform-engine-candidate.json';
+import mcp from '../../../public/examples/mcp-server.json';
 
 // The same month snapshots the generator reads decide which year files exist,
 // so this page and the deployed API can never disagree about coverage.
@@ -65,41 +66,33 @@ const jsonLd = [{
       <ul class="dev-paths">
         <li>
           <p class="dev-status">{candidate.releaseLabel} · {candidate.version}</p>
-          <h2><a href="/developers/examples/#natal">Calculate locally</a></h2>
-          <p>Use TypeScript or JavaScript for tropical charts, transits, and synastry in your own browser or Node.js app. Core calculations make no network requests.</p>
-        </li>
-        <li>
-          <p class="dev-status">Available · public files</p>
-          <h2><a href="#sky-data">Fetch shared sky data</a></h2>
-          <p>Read the daily sky and dated events as JSON. No account or API key; check the edition and snapshot before displaying them.</p>
+          <h2><a href="/developers/examples/">Calculate a chart</a></h2>
+          <p>Run the starter and get a real natal chart out of it in a few commands; transits and a publisher widget are in there too. TypeScript or JavaScript, in your own browser or Node.js app; the core calculations make no network request.</p>
         </li>
         <li>
           <p class="dev-status">Available · hosted embeds</p>
           <h2><a href="/widgets/">Embed a tool</a></h2>
-          <p>Choose a Moon, sky, or mini birth-chart iframe. Set its theme and size, and keep the built-in Zodiacs.org credit.</p>
+          <p>Choose a Moon, sky, or mini birth-chart iframe, set its theme and size, and copy the embed. The credit link stays.</p>
         </li>
         <li>
-          <p class="dev-status">Planned · no public endpoint</p>
-          <h2><a href="/developers/support/#hosted">Use hosted computation</a></h2>
-          <p>A personalized chart API is planned. Its input contract, privacy limits, and release approval remain open.</p>
+          <p class="dev-status">{mcp.releaseStatus === 'unpublished-candidate' ? 'Unpublished candidate' : 'Available'} · {mcp.version}</p>
+          <h2><a href="/developers/mcp/">Connect an AI assistant</a></h2>
+          <p>A local MCP server, tested with Claude Code. It calculates a chart or compares two records on your own machine over stdio. The calculation never leaves the machine; what the assistant you connect it to does with the result is a separate question.</p>
+        </li>
+        <li>
+          <p class="dev-status">Available · runs in your browser</p>
+          <h2><a href="/developers/compare/">Compare two calculation records</a></h2>
+          <p>When two runs of this engine disagree, this lists every value that differs and says which of them anything in the two files can actually explain. It reads the record format this site produces, not screenshots or another program's export.</p>
         </li>
       </ul>
     </nav>
     <div class="prose">
-      <p><a href="/developers/examples/">Run the three examples</a>: local natal chart, personalized transits, and a publisher widget.</p>
-      <p><a href="/developers/support/">Compare support, runtime requirements, and known limits</a> before choosing an integration.</p>
       <p>
-        When two programs calculate the same chart and disagree,
-        <a href="/developers/compare/">compare the two calculation records</a> in your
-        browser. It lists every value that differs and says which of them anything in
-        the files can actually explain.
-      </p>
-      <p>
-        To let an AI assistant do the same work,
-        <a href="/developers/mcp/">run the local MCP server</a>. It calculates a chart
-        or compares two records on your own machine over stdio. The calculation is
-        local; what the assistant sends its model provider is the assistant's to
-        decide, and that page says so before it says anything else.
+        Also here, without an account or a key: <a href="#sky-data">shared sky data</a> as
+        plain JSON files, and <a href="/developers/support/">the support matrix</a> —
+        runtime requirements, the runtimes actually tested and known limits — worth
+        reading before you choose an integration. A personalized hosted chart API is
+        <a href="/developers/support/#hosted">planned and does not exist yet</a>.
       </p>
       <p>
         The <a href="/sdk/">optional ownership SDK</a> is a separate,
@@ -138,7 +131,7 @@ const jsonLd = [{
       edition before displaying the computed snapshot.
     </p>
 
-    <h2 class="dev-h2">Built for AI agents</h2>
+    <h2 class="dev-h2">Sky data for AI agents</h2>
     <div class="prose">
       <p>
         Every payload is self-describing. It opens with a{' '}

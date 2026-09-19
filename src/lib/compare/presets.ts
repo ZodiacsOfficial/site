@@ -28,18 +28,17 @@ export interface Preset {
 }
 
 /**
- * Four presets, each chosen because it produces a different kind of answer:
- * nothing, a reproducible cause, a reported cause with no numerical
- * consequence, and a case the tool refuses to call.
+ * Four presets, each chosen because it produces a different kind of answer: a
+ * reproducible cause, a reported cause with no numerical consequence, a case the
+ * tool refuses to call, and nothing at all.
+ *
+ * Order matters here — these render as buttons in this order, and the first one
+ * is what a newcomer clicks. It used to be `identical`, whose whole result is
+ * that there is no result; someone trying the tool for the first time learned
+ * nothing about what it does. The reproducible cause goes first now, and the
+ * empty case stays as the control it is.
  */
 export const PRESETS: readonly Preset[] = Object.freeze([
-  {
-    id: 'identical',
-    title: 'The same calculation twice',
-    summary: 'Nothing differs.',
-    left: ORDINARY,
-    right: ORDINARY,
-  },
   {
     id: 'house-system',
     title: 'Same birth details, different house system',
@@ -60,5 +59,12 @@ export const PRESETS: readonly Preset[] = Object.freeze([
     summary: 'Two different places and two different moments at once. Several causes fit.',
     left: ORDINARY,
     right: { utc: '1990-06-15T18:45:00Z', latitude: 40.7128, longitude: -74.006, houseSystem: 'placidus' },
+  },
+  {
+    id: 'identical',
+    title: 'The same calculation twice',
+    summary: 'Nothing differs.',
+    left: ORDINARY,
+    right: ORDINARY,
   },
 ]);

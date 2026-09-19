@@ -180,6 +180,39 @@ describe('comparing two calculation receipts', () => {
     expect(comparison.differences.some((row) => row.id === 'engine-version')).toBe(true);
   });
 
+  it('keeps the engine hypothesis to values an engine can move', () => {
+    // The engine cause claims what a version change can move — a position, an
+    // angle, a cusp, an aspect. It must not claim a whole section going missing:
+    // "the angles are gone" is not something a version bump does, and an
+    // undemonstrable hypothesis over it would read as an explanation where the
+    // honest answer is that nothing here accounts for it.
+    //
+    // These two envelopes are built directly rather than parsed: the codec
+    // refuses an edited result, which is the behaviour under test one layer up.
+    // `timeKnown` is equal on both sides, so the absent angles cannot be
+    // attributed to a missing birth time and the engine cause is the only
+    // candidate left to claim them.
+    //
+    // An AI review found nothing pinning this scope, so widening it back to
+    // every non-input, non-setting row passed the whole suite unnoticed.
+    const left = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
+    const right = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
+    right.receipt.engine.version = '0.1.1-rc.3';
+    right.result.angles = null;
+    right.result.bodies[0].lon = (right.result.bodies[0].lon + 0.01) % 360;
+    const comparison = compareEnvelopes(left, right, live);
+    const engine = comparison.explanations.find((item) => item.id === 'engine');
+    expect(comparison.differences.some((row) => row.id === 'angles-presence')).toBe(true);
+    expect(engine?.evidence).toBe('hypothesis');
+    expect(engine?.covers, 'the moved body is the engine cause\u2019s to claim')
+      .toContain('body-Sun-lon');
+    expect(engine?.covers, 'a section that is simply absent is not')
+      .not.toContain('angles-presence');
+    expect(comparison.explanations.find((item) => item.id === 'unexplained')?.covers,
+      'and it is named as unaccounted for rather than quietly dropped')
+      .toContain('angles-presence');
+  });
+
   it('states that two receipts from one engine show consistency, not accuracy', () => {
     const left = buildEnvelope(ORDINARY);
     const right = buildEnvelope({ ...ORDINARY, houseSystem: 'whole' });
@@ -684,6 +717,130 @@ describe('what a local recalculation has to establish before it is a cause', () 
     ]) {
       const parsed = parseNatalEnvelope(JSON.stringify(edited(at(T1, 'placidus'), change)));
       expect(parsed.ok ? 'accepted' : parsed.code).toBe('unsupported_feature');
+    }
+  });
+});
+
+/**
+ * An audit asked whether a summary can assert more agreement than the
+ * comparison's own difference rows support. It can, and the reason is that the
+ * summary's view of "computed" was built from `kind === 'numeric'` while several
+ * computed facts are stored as booleans or strings.
+ *
+ * Every fixture here goes through the engine's own parser first. A record the
+ * parser refuses can never reach the comparison, so a counterexample built out
+ * of one would prove nothing.
+ */
+describe('a summary never claims more agreement than the differences support', () => {
+  const T = '1990-06-15T13:30:00Z';
+  /** The same instant, written two ways. Both resolve to T. */
+  const asWritten = (sourceInstant: string) =>
+    buildEnvelope({ ...ORDINARY, utc: T, sourceInstant });
+
+  const accept = (raw: unknown, label: string): NatalEnvelope => {
+    const parsed = parseNatalEnvelope(JSON.stringify(raw));
+    if (!parsed.ok) throw new Error(`${label} is not a record the parser accepts: ${parsed.code}`);
+    return parsed.envelope;
+  };
+  const copy = (envelope: NatalEnvelope): any => JSON.parse(JSON.stringify(envelope));
+  const statementOf = (comparison: ReturnType<typeof compareEnvelopes>, id: string) =>
+    comparison.explanations.find((item) => item.id === id)?.statement ?? null;
+  const AGREES = /Every computed value agrees/;
+
+  it('says every computed value agrees when that is true', () => {
+    const comparison = compareEnvelopes(asWritten(T), asWritten('1990-06-15T14:30:00+01:00'), live);
+    expect(statementOf(comparison, 'equivalent-instants')).toMatch(AGREES);
+    // The premise: the notation really is the only difference.
+    expect(comparison.differences.filter((row) => row.kind !== 'display').map((row) => row.id))
+      .toEqual(['source-instant']);
+  });
+
+  it('does not say it when an aspect disagrees about applying', () => {
+    // `applying` is a computed result stored as a boolean, so the numeric-only
+    // view could not see it and the summary claimed agreement over it.
+    const flipped = accept(copy(asWritten('1990-06-15T14:30:00+01:00')), 'flipped-source');
+    const edited = copy(flipped);
+    const aspect = edited.result.aspects[0];
+    expect(aspect, 'the ordinary fixture must carry at least one aspect').toBeTruthy();
+    aspect.applying = !aspect.applying;
+    const comparison = compareEnvelopes(asWritten(T), accept(edited, 'flipped-applying'), live);
+    expect(comparison.differences.some((row) => /-applying$/.test(row.id))).toBe(true);
+    expect(statementOf(comparison, 'equivalent-instants')).not.toMatch(AGREES);
+  });
+
+  it('does not say it when an aspect is missing on one side', () => {
+    const edited = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    edited.result.aspects.pop();
+    const comparison = compareEnvelopes(asWritten(T), accept(edited, 'one-aspect-fewer'), live);
+    expect(comparison.differences.some((row) => /^aspect-/.test(row.id))).toBe(true);
+    expect(statementOf(comparison, 'equivalent-instants')).not.toMatch(AGREES);
+  });
+
+  it('gives the same answer whichever record is passed first', () => {
+    const edited = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    edited.result.aspects[0].applying = !edited.result.aspects[0].applying;
+    const right = accept(edited, 'flipped-applying');
+    expect(statementOf(compareEnvelopes(asWritten(T), right, live), 'equivalent-instants'))
+      .toBe(statementOf(compareEnvelopes(right, asWritten(T), live), 'equivalent-instants'));
+  });
+
+  /**
+   * The invariant, over the whole acceptance corpus plus the pairs above. This
+   * is the assertion that would have caught the defect without anyone naming
+   * the aspect rows in advance, and it is written from the rows rather than
+   * from the implementation's own condition.
+   */
+  it('holds across every pair the corpus can build', () => {
+    const editedAspect = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    editedAspect.result.aspects[0].applying = !editedAspect.result.aspects[0].applying;
+    const pairs: [NatalEnvelope, NatalEnvelope, string][] = [
+      [asWritten(T), asWritten(T), 'identical'],
+      [asWritten(T), asWritten('1990-06-15T14:30:00+01:00'), 'notation only'],
+      [asWritten(T), accept(editedAspect, 'applying'), 'notation plus applying'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, houseSystem: 'whole' }), 'house system'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }), 'different moment'],
+      [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }), 'unknown time'],
+      // Neither side has a house table, and they still asked for different
+      // systems. Nothing about the cusps is comparable, so nothing may be said
+      // about the cusps agreeing.
+      [buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }),
+        buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false, houseSystem: 'whole' }),
+        'no houses either side, different systems requested'],
+      ...PRESETS.map((preset) => {
+        const { left, right } = presetEnvelopes(preset);
+        return [left, right, `preset ${preset.id}`] as [NatalEnvelope, NatalEnvelope, string];
+      }),
+    ];
+    for (const [left, right, name] of pairs) {
+      const comparison = compareEnvelopes(left, right, live);
+      const substantive = comparison.differences.filter((row) => row.kind !== 'display');
+      const computedIds = substantive
+        .filter((row) => /^(angle-|angles-presence|body-|aspect-|cusp-|cusps-shape)/.test(row.id))
+        .map((row) => row.id);
+      // A reader gets the statement and the detail together, so a claim of
+      // agreement in either one is a claim of agreement. An AI review found the
+      // detail line asserting "the cusps are the same in both files" for pairs
+      // where neither file had cusps at all, which the statement-only sweep
+      // could not see.
+      const cuspsOnBothSides = (envelope: NatalEnvelope) =>
+        Array.isArray((envelope.result as any).houses?.cusps);
+      for (const item of comparison.explanations) {
+        if (computedIds.length > 0) {
+          expect(item.statement, `${name}: claims agreement over ${computedIds.join(', ')}`)
+            .not.toMatch(AGREES);
+        }
+        if (!cuspsOnBothSides(left) || !cuspsOnBothSides(right)) {
+          expect(`${item.statement} ${item.detail ?? ''}`,
+            `${name}: says cusps are the same when a file has none`)
+            .not.toMatch(/cusps are the same/);
+        }
+        // Any explanation saying the difference is "only" one thing has to
+        // account for every substantive row, or "only" is not true.
+        if (/\bonly\b/.test(`${item.statement} ${item.detail ?? ''}`)) {
+          const unclaimed = substantive.filter((row) => !item.covers.includes(row.id)).map((row) => row.id);
+          expect(unclaimed, `${name}: "${item.statement}" leaves ${unclaimed.join(', ')} unaccounted`).toEqual([]);
+        }
+      }
     }
   });
 });
