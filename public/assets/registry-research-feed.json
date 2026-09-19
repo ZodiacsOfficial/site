@@ -1,14 +1,79 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-18T11:53:53.646Z",
+  "generatedAt": "2026-09-19T00:08:00.495Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-19T00:00:00.000Z",
-    "endsBefore": "2026-09-26T00:00:00.000Z"
+    "startsAt": "2026-08-20T00:00:00.000Z",
+    "endsBefore": "2026-09-27T00:00:00.000Z"
   },
   "items": [
+    {
+      "id": "zrx-event-brief-lunation-2026-09-26t16-48-53-293z-full-moon-aries",
+      "slug": "event-brief-lunation-2026-09-26t16-48-53-293z-full-moon-aries",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-19T12:00:00.000Z",
+      "visibleAt": "2026-09-26T16:48:53.293Z",
+      "title": "Full Moon in Aries · event brief",
+      "summary": "Full Moon in Aries becomes exact at 2026-09-26T16:48:53.293Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-lunation-2026-09-26t16-48-53-293z-full-moon-aries/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "lunation"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-26t05-34-26-664z-sun-trine-pluto",
+      "slug": "event-brief-aspect-2026-09-26t05-34-26-664z-sun-trine-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-19T12:00:00.000Z",
+      "visibleAt": "2026-09-26T05:34:26.664Z",
+      "title": "Sun Trine Pluto · event brief",
+      "summary": "Sun Trine Pluto becomes exact at 2026-09-26T05:34:26.664Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-26t05-34-26-664z-sun-trine-pluto/",
+      "signs": [
+        "libra",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-09-26t01-41-39-388z-sun-opposition-neptune",
+      "slug": "event-brief-aspect-2026-09-26t01-41-39-388z-sun-opposition-neptune",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-19T12:00:00.000Z",
+      "visibleAt": "2026-09-26T01:41:39.388Z",
+      "title": "Sun Opposition Neptune · event brief",
+      "summary": "Sun Opposition Neptune becomes exact at 2026-09-26T01:41:39.388Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-26t01-41-39-388z-sun-opposition-neptune/",
+      "signs": [
+        "aries",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
     {
       "id": "zrx-event-brief-ingress-2026-09-23t00-05-40-396z-sun-libra",
       "slug": "event-brief-ingress-2026-09-23t00-05-40-396z-sun-libra",
@@ -53,6 +118,47 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-19",
+      "slug": "daily-market-brief-2026-09-19",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-19T12:00:00.000Z",
+      "visibleAt": "2026-09-19T12:00:00.000Z",
+      "title": "Saturn in Aries · daily market brief",
+      "summary": "Saturn in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-19/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-19",
+      "slug": "market-check-2026-09-19",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-19T00:08:00.495Z",
+      "visibleAt": "2026-09-19T00:08:00.495Z",
+      "title": "Aries market check · 2026-09-19",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-19/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-18",
       "slug": "daily-market-brief-2026-09-18",
       "kind": "daily-market-brief",
@@ -72,7 +178,7 @@
         "daily-sky",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-event-brief-aspect-2026-09-18t09-58-30-048z-mercury-opposition-saturn",
