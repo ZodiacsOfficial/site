@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "widgets-privacy-closeout-2026-09-19",
-  "baseCommit": "dfed7c6c39cd8870ba64b1585bd2533f59b9d7e5",
+  "baseCommit": "43f1024359bdbca7320bf807f1890541763e83ad",
   "protectedPaths": [
     "src/strings/additions.es.mjs",
     "src/strings/additions.fr.mjs",
