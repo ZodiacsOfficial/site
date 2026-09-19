@@ -1,0 +1,113 @@
+{
+  "schema": "zodiacs.registry-research-item.v1",
+  "sourceType": "zodiacs-research",
+  "publisher": "Zodiacs.org Research System",
+  "byline": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "riskStatement": "Symbolic research—not investment advice. Market observations never alter the sky score.",
+  "scienceNote": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value.",
+  "revisions": [],
+  "id": "zrx-market-check-2026-09-19",
+  "slug": "market-check-2026-09-19",
+  "kind": "market-check",
+  "templateId": "market-check.v1",
+  "issuedAt": "2026-09-19T00:08:00.495Z",
+  "visibleAt": "2026-09-19T00:08:00.495Z",
+  "title": "Aries market check · 2026-09-19",
+  "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+  "url": "/terminal/research/market-check-2026-09-19/",
+  "signs": [
+    "aries"
+  ],
+  "topics": [
+    "markets",
+    "market-check"
+  ],
+  "symbolicScore": {
+    "sign": "aries",
+    "attention": 11,
+    "tone": 0,
+    "eventIntensity": 0,
+    "calculation": "7 disclosed Saturn occupancy-attention points",
+    "marketFieldsUsed": false
+  },
+  "sections": {
+    "skyFact": {
+      "heading": "Sky fact",
+      "body": "Aries is the highest-ranked attention entry in the separately published 2026-09-19 daily outlook.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "traditionalReading": {
+      "heading": "Traditional reading",
+      "body": "A modest sky emphasis for this sign, without a strong directional tone. Signal: steady. The symbolic score was fixed before this market comparison.",
+      "evidence": [
+        "public/assets/registry-outlook.json"
+      ]
+    },
+    "marketObservation": {
+      "heading": "Market observation",
+      "body": "At 2026-09-19T00:08:00.495Z, Aries was indexed at $0.00007707, with +8.69% over 24 hours, $77.06K market cap, $77.06K FDV, $15.88K indexed liquidity, $144.85 24-hour volume, and 1 indexed pool. Market cap and FDV are kept separate. These descriptive fields did not alter the sky score. Aries market cap was 0.977× the collection median and indexed liquidity was 1.005× the collection median.",
+      "evidence": [
+        "public/assets/data/registry-market-history.v1.json"
+      ]
+    }
+  },
+  "market": {
+    "available": true,
+    "snapshotId": "registry-market:2026-09-19:2026-09-19T00:08:00.495Z",
+    "observedAt": "2026-09-19T00:08:00.495Z",
+    "provider": "DexScreener",
+    "sign": "aries",
+    "priceUsd": 0.00007707,
+    "change24hPct": 8.69,
+    "marketCapUsd": 77056,
+    "fdvUsd": 77055,
+    "liquidityUsd": 15884.87,
+    "volume24hUsd": 144.85,
+    "indexedPoolCount": 1,
+    "deepestPoolUrl": "https://dexscreener.com/solana/hrn98ylgigp475es1gaqyrmbqk1v4dkv6tdkylhvh2is",
+    "collectionMedian": {
+      "marketCapUsd": 78902,
+      "liquidityUsd": 15811.975
+    },
+    "vsCollectionMedian": {
+      "marketCap": 0.977,
+      "liquidity": 1.005
+    }
+  },
+  "evidence": {
+    "outlookEdition": "public/assets/registry-outlook.json#daily:2026-09-19",
+    "marketSnapshotId": "registry-market:2026-09-19:2026-09-19T00:08:00.495Z",
+    "coverage": {
+      "overall": "complete",
+      "events": "complete",
+      "occupancies": "complete",
+      "expectedTransitMonths": [
+        "2026-09"
+      ],
+      "missingTransitMonths": [],
+      "missingOccupancyPlanets": []
+    }
+  },
+  "artifactHash": "64eaf8e7cc6271a6e029e1b71186a696912d260c66e15fd5fce97834bf4caa31",
+  "publishedAt": "2026-09-19T00:08:00.495Z",
+  "publication": {
+    "mode": "post-pilot-deterministic-allowlist",
+    "publishedAt": "2026-09-19T00:08:00.495Z",
+    "reviewer": null,
+    "artifactSha256": "64eaf8e7cc6271a6e029e1b71186a696912d260c66e15fd5fce97834bf4caa31"
+  },
+  "status": "approved"
+}
