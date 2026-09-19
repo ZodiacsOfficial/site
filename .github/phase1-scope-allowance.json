@@ -1,16 +1,12 @@
 {
   "version": 1,
-  "id": "l3bc-records-2026-09-16",
-  "baseCommit": "7fd426614b2aeda775f679a7dafdcb10e16e1e0b",
+  "id": "widgets-privacy-closeout-2026-09-19",
+  "baseCommit": "dfed7c6c39cd8870ba64b1585bd2533f59b9d7e5",
   "protectedPaths": [
-    "src/pages/es/birth-chart/index.astro",
-    "src/pages/es/profile/index.astro",
-    "src/pages/fr/birth-chart/index.astro",
-    "src/pages/fr/profile/index.astro",
-    "src/pages/it/birth-chart/index.astro",
-    "src/pages/it/profile/index.astro",
-    "src/pages/pt/birth-chart/index.astro",
-    "src/pages/pt/profile/index.astro"
+    "src/strings/additions.es.mjs",
+    "src/strings/additions.fr.mjs",
+    "src/strings/additions.it.mjs",
+    "src/strings/additions.pt.mjs"
   ],
-  "authorization": "Owner authorizes the L3b/c records candidate and the bounded usability improvements under the 2026-09-16 authorization to complete, review and release (docs/platform/DECISIONS.md). The eight localized pages carry the birth-chart FAQ correction and the Profile records-panel mount; the panel renders nothing while PUBLIC_SAVED_RECORDS_ENABLED is unset, and on a build where it is unset after an activation it finds, exports and removes only what is already on the device. Pinned to the base the required checks measure this push against; re-pin if the pull request base moves."
+  "authorization": "The owner expressly authorizes a one-time edit of widgets.privacyNote in exactly these four Phase 1-frozen catalogs in the 2026-09-19 ZODIACS release-closeout request, section 3A. Translate the current English browser-calculation, city-list request and embed-request privacy meaning; preserve all other entries and the freeze. This allowance is pinned to the tested current main base."
 }

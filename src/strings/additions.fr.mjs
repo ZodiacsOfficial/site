@@ -464,7 +464,7 @@ export const FR_ADDITIONS = Object.freeze({
   'widgets.planetNames.Venus': 'Vénus',
   'widgets.poweredBy': 'Propulsé par Zodiacs.org',
   'widgets.previewTitle': 'Aperçu en direct',
-  'widgets.privacyNote': 'Le mini-thème est calculé dans son iframe. La date, l’heure et le lieu de naissance ne quittent jamais le navigateur.',
+  'widgets.privacyNote': "Le mini-thème est calculé dans son iframe : la date, l’heure et le lieu de naissance saisis ne sont envoyés nulle part, et le thème n’est jamais téléversé. Saisir un lieu déclenche toutefois le chargement d’une liste de villes depuis zodiacs.org, choisie selon la première lettre saisie : cette requête ne révèle donc qu’une lettre. Le chargement du widget est aussi une requête vers zodiacs.org, comme pour toute ressource intégrée : le navigateur révèle alors son adresse IP et l’origine de votre site. Ce sont des choses distinctes.",
   'widgets.requiresJavaScript': 'JavaScript est nécessaire au calcul, mais le formulaire reste privé et n’envoie aucune donnée de naissance.',
   'widgets.retrograde': 'Rétrogrades : {planets}',
   'widgets.retrogradeAbbreviation': 'Rx',

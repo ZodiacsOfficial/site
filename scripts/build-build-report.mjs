@@ -1,18 +1,24 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const additions = await readFile(resolve(root, 'i18n-additions.md'), 'utf8');
+// July measurements and their embedded inventory are a historical snapshot.
+// Current catalog parity and placeholders are checked by build-i18n-additions.test.mjs.
+const additions = await readFile(resolve(root, 'docs/build-report-2026-07-15/i18n-additions.md'), 'utf8');
 const additionCount = additions.match(/^- `[^`]+`$/gm)?.length ?? 0;
 
-if (additionCount !== 541 || !additions.includes('- `footerDisclosure`')) {
-  throw new Error(`Expected the complete 541-key i18n manifest; found ${additionCount}.`);
+if (additionCount !== 541 || !additions.includes('- `footerDisclosure`')
+    || createHash('sha256').update(additions).digest('hex') !== '383b4ee60a93dc8c85e3325eab349a9a22a08429430d567a8e541292ed33b3b2') {
+  throw new Error(`Expected the pinned historical 541-key i18n manifest; found ${additionCount} keys or altered bytes.`);
 }
 
 const report = `# BUILD REPORT — Trust, Growth Infrastructure & SDK Expansion
 
 Generated 2026-07-15 from site branch \`codex/trust-growth-sdk-expansion-locales\`, rebased onto main \`24a835637af8cadd43e07995611fa5d9fd86026c\`. Package evidence comes from \`codex/engine-expansion\` at \`cced011659d48877b8b73b8a85796815234cf741\`.
+
+Maintenance note (2026-09-19): the generator embeds the pinned historical inventory in \`docs/build-report-2026-07-15/i18n-additions.md\`. The root inventory describes current catalogs and is validated separately; none of the July measurements below were rerun.
 
 ## Outcome and limits of this report
 
@@ -254,7 +260,7 @@ That commit intentionally changes sitemap output, updates the drift-check baseli
 
 ## Full i18n additions manifest (embedded verbatim)
 
-The remainder of this file is the exact content of \`i18n-additions.md\`.
+The remainder is the historical content of \`i18n-additions.md\`, retained in \`docs/build-report-2026-07-15/i18n-additions.md\`.
 
 ${additions}`;
 
