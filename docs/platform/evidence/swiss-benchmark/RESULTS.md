@@ -93,11 +93,16 @@ coverage, so it was excluded from the prototype and could not be ΔT-pinned; the
 same mechanism plainly dominates there, but that is an expectation rather than
 a measurement and is not counted as established below.
 
-Two figures in this section have no committed report of their own and are
-transcribed from the run: the Swiss ΔT of 93.18 s at 2100 (astronomy-engine's
-202.65 s is reproducible offline — `A.MakeTime('2100-01-01Z')` — the Swiss side
-needs the provider), and the `prototype, engine ΔT` row in the table below.
-They are labelled here rather than left to look like the four committed JSONs.
+One figure in this section still has no committed report of its own and is
+transcribed from the run: the Swiss ΔT of 93.18 s at 2100. (astronomy-engine's
+202.65 s is reproducible offline — `A.MakeTime('2100-01-01Z')`; the Swiss side
+needs the provider.)
+
+The `prototype, engine ΔT` row no longer belongs on that list. Its original
+comparator output was recovered from the run directory and committed as
+`../precision-2026-09-20/raw/recovered-report-proto-engine-deltat.json`.
+Reading it back corrected this table: the p95 was transcribed as 1.834″ where
+the comparator wrote **1.8636″**.
 
 ## Prototype: JPL DE440s positions, same reduction
 
@@ -114,7 +119,7 @@ excluded from **both** sides, so the denominators are equal):
 | configuration | max | p50 | p95 |
 | --- | --- | --- | --- |
 | current core rc.6 | 64.768″ | 1.6651″ | 12.082″ |
-| prototype, engine ΔT | 63.887″ | 0.0823″ | 1.834″ |
+| prototype, engine ΔT | 63.887″ | 0.0823″ | 1.8636″ |
 | prototype, ΔT matched to the reference | **0.134″** | **0.0383″** | **0.117″** |
 
 Every percentile in this file is `compare.mjs`'s own interpolating quantile.

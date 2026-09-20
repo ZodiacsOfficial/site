@@ -1,0 +1,46 @@
+{
+ "what": "controlled 2x2: core/prototype x engine-time/matched-time, vs Swiss 2.10.03",
+ "commonDenominator": 160,
+ "cells": {
+  "A": {
+   "n": 160,
+   "maxAbsArcsec": 64.76822812365981,
+   "p50ArcsecAbs": 1.6650899310107548,
+   "p95ArcsecAbs": 12.081680322221365,
+   "swissBackendsObserved": [
+    "SWIEPH"
+   ],
+   "isFullSwissConfiguration": true
+  },
+  "B": {
+   "n": 160,
+   "maxAbsArcsec": 17.40362103073494,
+   "p50ArcsecAbs": 1.446054119391249,
+   "p95ArcsecAbs": 11.816808215484643,
+   "swissBackendsObserved": [
+    "SWIEPH"
+   ],
+   "isFullSwissConfiguration": true
+  },
+  "C": {
+   "n": 160,
+   "maxAbsArcsec": 63.88727429913388,
+   "p50ArcsecAbs": 0.0823272739580716,
+   "p95ArcsecAbs": 1.863554850225729,
+   "swissBackendsObserved": [
+    "SWIEPH"
+   ],
+   "isFullSwissConfiguration": true
+  },
+  "D": {
+   "n": 160,
+   "maxAbsArcsec": 0.13444391481698403,
+   "p50ArcsecAbs": 0.03826031334313029,
+   "p95ArcsecAbs": 0.11743267930171442,
+   "swissBackendsObserved": [
+    "SWIEPH"
+   ],
+   "isFullSwissConfiguration": true
+  }
+ }
+}
