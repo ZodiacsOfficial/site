@@ -314,12 +314,17 @@ for (const setName of ['corpus', 'grid']) {
     allBodies: summarise(m.rows, () => true),
     bodyCentresOnly: {
       bodies: CENTRES,
-      why: 'Swiss returns the planet centre; this pack and this kernel give a planetary-SYSTEM barycentre for Mars outward. Comparing those against Swiss measures that difference, not the reduction, so the headline is the four bodies where both sides mean the same point.',
+      // CORRECTED 2026-09-20. This subset used to be justified by
+      // "Swiss returns the planet centre; this pack and this kernel give a
+      // planetary-SYSTEM barycentre for Mars outward." That is wrong, and
+      // deflection-audit.mjs shows why: Swiss's default is the SYSTEM
+      // barycentre too. The numbers are unchanged; the reason is not.
+      why: 'kept for continuity with the earlier record, which reported this subset. It is NOT a centre-versus-barycentre correction: Swiss returns the planetary-system barycentre for Jupiter outward by default, the same point this pack does, and producing a body centre from Swiss needs SEFLG_CENTER_BODY plus planetary-moon files. See DEFLECTION-AUDIT.md.',
       ...summarise(m.rows, (r) => !r.isSystemBarycentre),
     },
     systemBarycentresOnly: {
       bodies: [...BARYCENTRES],
-      why: 'reported separately and never folded into the headline: the offset here is centre-versus-barycentre, which is a definition difference and not an error of this reduction.',
+      why: 'reported separately for continuity. The gap is NOT centre-versus-barycentre -- both sides mean the system barycentre -- and outside the solar disc these six agree with Swiss BETTER than the other four do. Every larger figure here is a body behind the Sun, where the two gravitational-deflection implementations diverge. See DEFLECTION-AUDIT.md.',
       ...summarise(m.rows, (r) => r.isSystemBarycentre),
     },
   };

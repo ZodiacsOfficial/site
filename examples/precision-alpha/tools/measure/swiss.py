@@ -30,6 +30,15 @@ BODY = {
 }
 FLAGS = swe.FLG_SWIEPH | swe.FLG_SPEED
 
+# Optional third argument: --nogdefl adds SEFLG_NOGDEFL, which turns OFF
+# Swiss's gravitational light-deflection term. It exists so the deflection
+# audit can compare like with like -- our reduction with deflection off
+# against Swiss with deflection off -- and it changes nothing when absent,
+# so the pinned four-configuration path is byte-identical to before.
+NOGDEFL = "--nogdefl" in sys.argv[3:]
+if NOGDEFL:
+    FLAGS |= swe.FLG_NOGDEFL
+
 
 def used(retflag):
     if retflag < 0:
@@ -58,6 +67,7 @@ def main():
     out = {
         "swisseph_binding": swe.version,
         "requested_flags": FLAGS,
+        "gravitationalDeflection": not NOGDEFL,
         "convention": "apparent geocentric, ecliptic of date, tropical",
         "role": "measuring instrument only; nothing here is a fitting target",
         "cases": [],

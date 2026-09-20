@@ -63,7 +63,7 @@ for (const [name, s] of Object.entries(r.sets)) {
   w(`## Set: ${name}`, '', s.what, '');
   if (s.source) w(`Source: \`${s.source}\`.`, '');
   if (s.stepDays) w(`Step: ${s.stepDays} days — ${s.stepWhy}.`, '');
-  w(`Instants offered: ${s.instantsOffered}. Body-epochs measured: ${s.allBodies.n} across all ten bodies, ${s.bodyCentresOnly.n} on the ${s.bodyCentresOnly.bodies.length} bodies where both sides mean the same point.`, '');
+  w(`Instants offered: ${s.instantsOffered}. Body-epochs measured: ${s.allBodies.n} across all ten bodies, ${s.bodyCentresOnly.n} on the ${s.bodyCentresOnly.bodies.length}-body subset the earlier record reported.`, '');
   if (s.skipped.length) {
     const why = [...new Set(s.skipped.map((x) => x.why))];
     w(`Skipped: ${s.skipped.length} — ${why.join('; ')}. (${s.skipped.map((x) => x.id).join(', ')})`, '');
@@ -132,7 +132,7 @@ w('## What this settles', '', '### The two changes do compose',
   '',
   `Configuration D, the pack and the corrected reduction together, reaches`,
   `${a(r.sets.corpus.bodyCentresOnly.vsSwissArcsec.D.max)}″ on the corpus and ${a(grid.bodyCentresOnly.vsSwissArcsec.D.max)}″ over the whole sweep, on the`,
-  `${r.sets.corpus.bodyCentresOnly.bodies.length} bodies where Swiss and this kernel mean the same point.`,
+  `${r.sets.corpus.bodyCentresOnly.bodies.length}-body subset the earlier record reported. Swiss and this kernel mean the same point for all ten.`,
   '',
   '### The 0.0107″ figure does NOT survive the broader test',
   '',

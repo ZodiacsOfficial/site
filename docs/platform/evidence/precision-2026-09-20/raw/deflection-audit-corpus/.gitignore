@@ -1,0 +1,13 @@
+# Per-instant Swiss Ephemeris longitudes, and the per-row table beside them.
+#
+# Same position as raw/four-configurations/.gitignore: RIGHTS.md treats
+# Swiss output as a MEASUREMENT and does not redistribute it, which
+# sidesteps the unsettled question of whether the AGPL reaches a program's
+# numerical output. Only report.json is committed -- it carries differences
+# and summary statistics, never a Swiss longitude.
+#
+# Re-create these by re-running the audit against a local Swiss ephemeris:
+#   node examples/precision-alpha/tools/measure/deflection-audit.mjs \
+#     --pack <pack> --ephe <swiss-ephe-dir>
+swiss-*.json
+rows.json

@@ -1,6 +1,6 @@
 {
  "what": "four configurations, measured on identical instants, bodies, clock and conventions",
- "when": "2026-09-20T14:03:54.040Z",
+ "when": "2026-09-20T18:26:43.177Z",
  "node": "v22.22.2",
  "labels": {
   "A": {
@@ -5998,7 +5998,7 @@
      "Mercury",
      "Venus"
     ],
-    "why": "Swiss returns the planet centre; this pack and this kernel give a planetary-SYSTEM barycentre for Mars outward. Comparing those against Swiss measures that difference, not the reduction, so the headline is the four bodies where both sides mean the same point.",
+    "why": "kept for continuity with the earlier record, which reported this subset. It is NOT a centre-versus-barycentre correction: Swiss returns the planetary-system barycentre for Jupiter outward by default, the same point this pack does, and producing a body centre from Swiss needs SEFLG_CENTER_BODY plus planetary-moon files. See DEFLECTION-AUDIT.md.",
     "n": 64,
     "vsSwissArcsec": {
      "A": {
@@ -6085,7 +6085,7 @@
      "Neptune",
      "Pluto"
     ],
-    "why": "reported separately and never folded into the headline: the offset here is centre-versus-barycentre, which is a definition difference and not an error of this reduction.",
+    "why": "reported separately for continuity. The gap is NOT centre-versus-barycentre -- both sides mean the system barycentre -- and outside the solar disc these six agree with Swiss BETTER than the other four do. Every larger figure here is a body behind the Sun, where the two gravitational-deflection implementations diverge. See DEFLECTION-AUDIT.md.",
     "n": 96,
     "vsSwissArcsec": {
      "A": {
@@ -6261,7 +6261,7 @@
      "Mercury",
      "Venus"
     ],
-    "why": "Swiss returns the planet centre; this pack and this kernel give a planetary-SYSTEM barycentre for Mars outward. Comparing those against Swiss measures that difference, not the reduction, so the headline is the four bodies where both sides mean the same point.",
+    "why": "kept for continuity with the earlier record, which reported this subset. It is NOT a centre-versus-barycentre correction: Swiss returns the planetary-system barycentre for Jupiter outward by default, the same point this pack does, and producing a body centre from Swiss needs SEFLG_CENTER_BODY plus planetary-moon files. See DEFLECTION-AUDIT.md.",
     "n": 11784,
     "vsSwissArcsec": {
      "A": {
@@ -6348,7 +6348,7 @@
      "Neptune",
      "Pluto"
     ],
-    "why": "reported separately and never folded into the headline: the offset here is centre-versus-barycentre, which is a definition difference and not an error of this reduction.",
+    "why": "reported separately for continuity. The gap is NOT centre-versus-barycentre -- both sides mean the system barycentre -- and outside the solar disc these six agree with Swiss BETTER than the other four do. Every larger figure here is a body behind the Sun, where the two gravitational-deflection implementations diverge. See DEFLECTION-AUDIT.md.",
     "n": 17676,
     "vsSwissArcsec": {
      "A": {
