@@ -10,6 +10,14 @@
  * SAME function. Whether the reduction matches the real sky is tier B's job,
  * and no result here is evidence about that.
  */
+
+/**
+ * Named `.nodetest.mjs`, not `.test.mjs`, on purpose: vitest's default glob
+ * collects `*.test.mjs` across the whole repository and these are
+ * `node:test` suites, not vitest ones. The repository already uses this
+ * convention for its research suites. Run them with the package's own
+ * `npm test`, or `node --test "test/tier-a/*.nodetest.mjs"`.
+ */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildPack } from './_pack.mjs';

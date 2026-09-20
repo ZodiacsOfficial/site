@@ -10,10 +10,12 @@
     "./browser": "./src/browser.mjs",
     "./node": "./src/node.mjs"
   },
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
-    "test": "node --test test/tier-a/",
-    "test:data": "node --test test/tier-b/"
+    "test": "node --test \"test/tier-a/*.nodetest.mjs\"",
+    "test:data": "node --test \"test/tier-b/*.nodetest.mjs\""
   },
   "dependencies": {},
   "devDependencies": {}

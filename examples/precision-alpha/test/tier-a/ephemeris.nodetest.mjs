@@ -2,6 +2,14 @@
  * The evaluator against polynomials this file chose. No kernel, no pack on
  * disk, nothing to blame but the code.
  */
+
+/**
+ * Named `.nodetest.mjs`, not `.test.mjs`, on purpose: vitest's default glob
+ * collects `*.test.mjs` across the whole repository and these are
+ * `node:test` suites, not vitest ones. The repository already uses this
+ * convention for its research suites. Run them with the package's own
+ * `npm test`, or `node --test "test/tier-a/*.nodetest.mjs"`.
+ */
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildPack, chebAt, chebDerivAt } from './_pack.mjs';
