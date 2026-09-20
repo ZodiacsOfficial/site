@@ -60,20 +60,43 @@ for (const { entry, file } of bundles) {
   built.set(file, result.outputFiles[0].text);
 }
 
+// Scanned RAW, not comment-stripped. The strip was `/\/\*[\s\S]*?\*\//g`
+// plus `/^\s*\/\/.*$/gm`, which happily deletes from a literal `/*`
+// inside a string to the next `*/`, and any line merely STARTING with
+// `//` -- a bundled string beginning `//evil.example/collect` is a line
+// like that. A dependency emitting `"see /* here */ fetch(u)"` would have
+// had the region containing `fetch(` blanked before the scan saw it.
+// Comments are noisier this way; a false positive is a comment to
+// reword, and a false negative is the thing this gate exists to stop.
 const problems = [];
+const BROWSER_CLEAN = [
+  ['a node: import', /from\s*["']node:/],
+  ['require(', /\brequire\s*\(/],
+  ['Buffer', /\bBuffer\b/],
+  ['process.', /\bprocess\s*\./],
+];
+// Neither bundle may carry a way to transmit or to persist. The app has
+// DOM access, so it is scanned too: before this, only the worker was, and
+// the app is the half that could reach `document` and `navigator`.
+const NO_REACH = [
+  ['fetch(', /\bfetch\s*\(/],
+  ['an http URL', /https?:\/\//],
+  ['a protocol-relative URL', /["'`]\/\/[a-z0-9.-]+\//i],
+  ['XMLHttpRequest', /XMLHttpRequest/],
+  ['importScripts', /importScripts/],
+  ['sendBeacon', /sendBeacon/],
+  ['WebSocket', /\bWebSocket\b/],
+  ['EventSource', /\bEventSource\b/],
+  ['new Request', /new\s+Request\b/],
+  ['localStorage', /localStorage/],
+  ['sessionStorage', /sessionStorage/],
+  ['indexedDB', /indexedDB/i],
+  ['caches', /\bcaches\b/],
+  ['document.cookie', /document\s*\.\s*cookie/],
+];
 for (const [file, code] of built) {
-  const stripped = code.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-  for (const [what, re] of [
-    ['a node: import', /from\s*["']node:/],
-    ['require(', /\brequire\s*\(/],
-    ['Buffer', /\bBuffer\b/],
-    ['process.', /\bprocess\s*\./],
-  ]) if (re.test(stripped)) problems.push(`${file}: ${what}`);
-}
-// The worker must have no way to reach the network at all.
-const workerCode = built.get('worker.mjs');
-for (const [what, re] of [['fetch(', /\bfetch\s*\(/], ['an http URL', /https?:\/\//], ['XMLHttpRequest', /XMLHttpRequest/]]) {
-  if (re.test(workerCode.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, ''))) problems.push(`worker.mjs: ${what}`);
+  for (const [what, re] of BROWSER_CLEAN) if (re.test(code)) problems.push(`${file}: ${what}`);
+  for (const [what, re] of NO_REACH) if (re.test(code)) problems.push(`${file}: ${what}`);
 }
 if (problems.length) {
   console.error(`the preview bundles are not clean:\n  ${problems.join('\n  ')}`);
@@ -94,4 +117,4 @@ if (check && drift) {
   console.error('public/precision-preview/ is out of date; run node scripts/build-precision-preview.mjs');
   process.exit(1);
 }
-console.log('browser-clean, and the worker has no network reachable from it');
+console.log('both bundles scanned raw: browser-clean, and no way to transmit or persist in either');

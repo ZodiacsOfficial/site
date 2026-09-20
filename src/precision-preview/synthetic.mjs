@@ -151,7 +151,15 @@ export async function buildSyntheticPack() {
     headerLen = json.byteLength;
   }
 
+  // The offsets in `placed` were computed against the PREVIOUS headerLen.
+  // If the loop above ever exits by exhausting its passes instead of
+  // converging, those offsets and the payloadOffset below disagree, and
+  // the result is a pack with a valid self-digest and wrong body offsets
+  // -- wrong silently, which is the worst kind. One line closes it.
   const json = enc.encode(JSON.stringify(header));
+  if (json.byteLength !== headerLen) {
+    throw new Error(`synthetic pack: the header length did not converge (${headerLen} then ${json.byteLength})`);
+  }
   const payloadOffset = 16 + json.byteLength;
   const total = payloadOffset + blobs.reduce((n, b) => n + b.byteLength, 0) + 32;
   const out = new Uint8Array(total);

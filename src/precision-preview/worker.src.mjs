@@ -22,7 +22,6 @@ const utcOf = (tt) => new Date(J2000_UTC_MS + (tt - TT_MINUS_UTC_SEC / 86400) * 
 
 let runtime = null;
 let synthetic = false;
-let generation = 0;
 
 const post = (m) => self.postMessage(m);
 const refuse = (reason, detail) => ({ ok: false, refused: reason, detail });
@@ -85,7 +84,6 @@ function guard(iso) {
 self.onmessage = async (event) => {
   const { type, id } = event.data;
   try {
-    if (type === 'cancel') { generation += 1; post({ id, type: 'result', payload: { ok: true, cancelled: true, generation } }); return; }
 
     if (type === 'load-synthetic') {
       if (runtime) { runtime.dispose(); runtime = null; }
@@ -131,18 +129,23 @@ self.onmessage = async (event) => {
 
     if (type === 'search') {
       if (!runtime) { post({ id, type: 'result', payload: refuse('no-pack', 'Load a pack, or start the synthetic fixture, first.') }); return; }
-      const mine = generation;
       const { mode, body, targetDeg, fromIso, toIso, epsilonDeg, maxRateDegPerDay } = event.data;
       const bad = guard(fromIso) ?? guard(toIso);
       if (bad) { post({ id, type: 'result', payload: bad }); return; }
-      const signal = { get aborted() { return generation !== mine; } };
+      // No cancel signal. There was one, wired to a `cancel` message and
+      // a generation counter, and it was unreachable: this worker cannot
+      // READ a message while it is inside a synchronous search, so the
+      // counter never changed in time. The page's Cancel terminates the
+      // worker instead and says what that costs. A signal that cannot
+      // fire is worse than none -- it implies a capability the page
+      // explicitly says it does not have.
       try {
         const verdict = mode === 'geometric'
-          ? runtime.searchGeometric({ body, targetDeg, fromTtDays: ttDays(fromIso), toTtDays: ttDays(toIso), signal })
+          ? runtime.searchGeometric({ body, targetDeg, fromTtDays: ttDays(fromIso), toTtDays: ttDays(toIso) })
           : runtime.search({
             kind: 'longitude', body, targetDeg,
             fromTtDays: ttDays(fromIso), toTtDays: ttDays(toIso),
-            epsilonDeg, options: CORRECTED, signal,
+            epsilonDeg, options: CORRECTED,
             ...(maxRateDegPerDay ? { maxRateDegPerDay } : {}),
           });
         post({ id, type: 'result', payload: { ok: true, synthetic, verdict, events: verdict.events.map((e) => ({ ...e, utc: utcOf(e.ttDays) })) } });

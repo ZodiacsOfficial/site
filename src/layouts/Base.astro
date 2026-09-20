@@ -84,8 +84,9 @@ interface Props {
    * entered there goes anywhere, an inherited same-origin component that
    * CAN transmit is not made harmless by being off by default. This also
    * drops the footer's Guide button, which without the loader would be a
-   * control that does nothing. Set only where that claim is made and
-   * tested; the footer itself stays.
+   * control that does nothing, and the WebMCP registration, which hands a
+   * browser agent a tool from the same route. Set only where that claim
+   * is made and tested; the footer itself stays.
    */
   noAssistant?: boolean;
   /** Render the Terminal-only market and venue boundary in the shared footer. */
@@ -321,7 +322,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
          preload desktop-only; People profiles opt in at every width because
          late font discovery extends their measured first-render path. -->
     <SEO {...props} />
-    {locale === 'en' && (
+    {locale === 'en' && !props.noAssistant && (
       <script is:inline>
         (function () {
           var context = document.modelContext || Reflect.get(navigator, 'modelContext');

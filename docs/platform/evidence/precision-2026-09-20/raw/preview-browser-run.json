@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:8819/developers/precision-preview/",
+  "url": "http://127.0.0.1:8820/developers/precision-preview/",
   "pack": {
     "bytes": 1737200
   },
@@ -154,6 +154,18 @@
           "viewportWidth": 390,
           "horizontalScroll": false
         },
+        "siteSearch": {
+          "fetched": [
+            "/assets/search-ui.js?v=search-ranking-2",
+            "/search-index.json"
+          ],
+          "offOrigin": [],
+          "persisted": {
+            "localStorage": 0,
+            "sessionStorage": 0,
+            "cookies": ""
+          }
+        },
         "network": {
           "all": [
             "/developers/precision-preview/",
@@ -178,7 +190,9 @@
             "/assets/zodiac-icons/48/sagittarius.webp?surface=site-footer",
             "/assets/zodiac-icons/48/capricorn.webp?surface=site-footer",
             "/assets/zodiac-icons/48/aquarius.webp?surface=site-footer",
-            "/assets/zodiac-icons/48/pisces.webp?surface=site-footer"
+            "/assets/zodiac-icons/48/pisces.webp?surface=site-footer",
+            "/assets/search-ui.js?v=search-ranking-2",
+            "/search-index.json"
           ],
           "offOrigin": [],
           "beaconLike": [],
@@ -356,6 +370,18 @@
           "viewportWidth": 390,
           "horizontalScroll": false
         },
+        "siteSearch": {
+          "fetched": [
+            "/assets/search-ui.js?v=search-ranking-2",
+            "/search-index.json"
+          ],
+          "offOrigin": [],
+          "persisted": {
+            "localStorage": 0,
+            "sessionStorage": 0,
+            "cookies": ""
+          }
+        },
         "network": {
           "all": [
             "/developers/precision-preview/",
@@ -369,7 +395,9 @@
             "/assets/app-icons/v3/apple-touch-icon.png",
             "/assets/app-icons/v3/favicon.svg",
             "/precision-preview/worker.mjs",
-            "/assets/site-footer.css"
+            "/assets/site-footer.css",
+            "/assets/search-ui.js?v=search-ranking-2",
+            "/search-index.json"
           ],
           "offOrigin": [],
           "beaconLike": [],

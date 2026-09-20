@@ -2871,6 +2871,9 @@ async function buildSyntheticPack() {
     headerLen = json2.byteLength;
   }
   const json = enc.encode(JSON.stringify(header));
+  if (json.byteLength !== headerLen) {
+    throw new Error(`synthetic pack: the header length did not converge (${headerLen} then ${json.byteLength})`);
+  }
   const payloadOffset = 16 + json.byteLength;
   const total = payloadOffset + blobs.reduce((n, b) => n + b.byteLength, 0) + 32;
   const out = new Uint8Array(total);
@@ -2898,7 +2901,6 @@ var ttDays = (iso) => (Date.parse(iso) - J2000_UTC_MS) / MS_PER_DAY2 + TT_MINUS_
 var utcOf = (tt) => new Date(J2000_UTC_MS + (tt - TT_MINUS_UTC_SEC / 86400) * MS_PER_DAY2).toISOString();
 var runtime = null;
 var synthetic = false;
-var generation = 0;
 var post = (m) => self.postMessage(m);
 var refuse = (reason, detail) => ({ ok: false, refused: reason, detail });
 function info() {
@@ -2959,11 +2961,6 @@ function guard(iso) {
 self.onmessage = async (event) => {
   const { type, id } = event.data;
   try {
-    if (type === "cancel") {
-      generation += 1;
-      post({ id, type: "result", payload: { ok: true, cancelled: true, generation } });
-      return;
-    }
     if (type === "load-synthetic") {
       if (runtime) {
         runtime.dispose();
@@ -3016,18 +3013,14 @@ self.onmessage = async (event) => {
         post({ id, type: "result", payload: refuse("no-pack", "Load a pack, or start the synthetic fixture, first.") });
         return;
       }
-      const mine = generation;
       const { mode, body, targetDeg, fromIso, toIso, epsilonDeg, maxRateDegPerDay } = event.data;
       const bad = guard(fromIso) ?? guard(toIso);
       if (bad) {
         post({ id, type: "result", payload: bad });
         return;
       }
-      const signal = { get aborted() {
-        return generation !== mine;
-      } };
       try {
-        const verdict = mode === "geometric" ? runtime.searchGeometric({ body, targetDeg, fromTtDays: ttDays(fromIso), toTtDays: ttDays(toIso), signal }) : runtime.search({
+        const verdict = mode === "geometric" ? runtime.searchGeometric({ body, targetDeg, fromTtDays: ttDays(fromIso), toTtDays: ttDays(toIso) }) : runtime.search({
           kind: "longitude",
           body,
           targetDeg,
@@ -3035,7 +3028,6 @@ self.onmessage = async (event) => {
           toTtDays: ttDays(toIso),
           epsilonDeg,
           options: CORRECTED,
-          signal,
           ...maxRateDegPerDay ? { maxRateDegPerDay } : {}
         });
         post({ id, type: "result", payload: { ok: true, synthetic, verdict, events: verdict.events.map((e) => ({ ...e, utc: utcOf(e.ttDays) })) } });

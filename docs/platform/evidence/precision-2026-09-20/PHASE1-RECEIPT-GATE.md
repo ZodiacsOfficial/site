@@ -26,7 +26,12 @@ either file invalidates the committed Phase 1 screenshot manifest at
 `docs/acceptance/phase1/screenshots/manifest.json`.
 
     manifest / HEAD 40eaf6d4  a495772c6eb1d501cb43f064d137aed8fc3810ade29dff741ea2dd0ff59d1dd6
-    with these changes        b8944e6ac36f46b9c470c71a75d95d0d65132d30aaa09e8beb2dbfe7bc07da04
+    with these changes        8ab4c8432b417bbf359b7bd078c5ceee4e5a16fe0261b30f05b2e57325a3e02d
+
+(The second figure moves whenever anything under `src/layouts` or
+`src/components` changes. It has, twice: once for `noServiceWorker` and
+`noAssistant`, and once when `noAssistant` was extended to cover the
+WebMCP tool registration.)
 
 `scripts/phase1-acceptance-evidence.test.mjs` therefore fails, and will keep
 failing until the captures are re-driven and a reviewer commits them.
@@ -52,6 +57,9 @@ without the two chrome edits:
 1. An HTML **comment** in the footer gains a sentence.
 2. The inline service-worker registration gains one guard:
    `` `serviceWorker` in navigator && !document.documentElement.hasAttribute(`data-no-service-worker`) && … ``
+3. The WebMCP registration block, already conditional on `locale === 'en'`,
+   gains `&& !props.noAssistant`. On a page that does not set
+   `noAssistant` the emitted HTML is unchanged.
 
 A comment is not rendered, and the guard is false-free on a page that does
 not set the attribute — the registration still happens, on the same timer.

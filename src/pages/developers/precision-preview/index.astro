@@ -134,8 +134,18 @@ const description = 'An experimental compact-ephemeris runtime, running in your 
     <h2 class="section-head">What the page does not do</h2>
     <ul class="pp-list">
       <li>It never downloads a pack. A pack arrives only from the file you choose, and is read in this tab.</li>
-      <li>It stores nothing: no cookies, no local storage, no session storage, no database.</li>
-      <li>It sends nothing anywhere. There is no analytics on this route and no third-party script.</li>
+      <li>It stores nothing: no cookies, no local storage, no session
+      storage, no database, and the site's offline worker is told not to
+      cache this route either.</li>
+      <li>It sends nothing anywhere. There is no analytics on this route,
+      no third-party script, no assistant and no browser-agent tool
+      registration. The worker that does the arithmetic has no way to
+      reach the network at all, which a test over the built bundle
+      checks.</li>
+      <li>The one inherited thing that still loads code here is the site's
+      own search, and only if you open it: pressing <kbd>Ctrl</kbd>+<kbd>K</kbd>
+      fetches a static index from this origin. It reads nothing from this
+      page and writes nothing.</li>
       <li>It needs no account, and there is nothing to buy.</li>
       <li>Dispose releases the pack, and every later calculation is refused until you load one again.</li>
     </ul>

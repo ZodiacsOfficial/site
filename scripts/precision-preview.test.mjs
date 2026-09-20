@@ -4,6 +4,7 @@
  */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 const page = readFileSync('src/pages/developers/precision-preview/index.astro', 'utf8');
 const app = readFileSync('public/precision-preview/app.mjs', 'utf8');
@@ -67,21 +68,25 @@ describe('the built bundles', () => {
     }
   });
 
-  it('gives the worker no way to reach the network', () => {
-    const c = strip(worker);
-    expect(c).not.toMatch(/\bfetch\s*\(/);
-    expect(c).not.toMatch(/https?:\/\//);
-    expect(c).not.toMatch(/XMLHttpRequest/);
-    expect(c).not.toMatch(/importScripts/);
+  it('gives NEITHER bundle a way to reach the network or persist anything', () => {
+    // Scanned raw. The comment strip this used to run first deletes from
+    // any literal `/*` to the next `*/`, including inside a string, and
+    // any line starting with `//` -- which a bundled
+    // "//host/path" string is. And only the worker was scanned; the app
+    // is the half with DOM access.
+    for (const [name, code] of [['app', app], ['worker', worker]]) {
+      for (const re of [
+        /\bfetch\s*\(/, /https?:\/\//, /["'`]\/\/[a-z0-9.-]+\//i, /XMLHttpRequest/,
+        /importScripts/, /sendBeacon/, /\bWebSocket\b/, /\bEventSource\b/, /new\s+Request\b/,
+      ]) expect(code, `${name}: ${re}`).not.toMatch(re);
+    }
   });
 
   it('persists nothing', () => {
     for (const code of [app, worker]) {
-      const c = strip(code);
-      expect(c).not.toMatch(/localStorage/);
-      expect(c).not.toMatch(/sessionStorage/);
-      expect(c).not.toMatch(/indexedDB/);
-      expect(c).not.toMatch(/document\.cookie/);
+      for (const re of [/localStorage/, /sessionStorage/, /indexedDB/i, /\bcaches\b/, /document\s*\.\s*cookie/]) {
+        expect(code).not.toMatch(re);
+      }
     }
   });
 
@@ -96,10 +101,23 @@ describe('the built bundles', () => {
     expect(worker).toMatch(/NOT a planetary ephemeris/);
   });
 
-  it('is generated from the committed sources without drift', () => {
+  it('is generated from the committed sources, and the generator says so', () => {
+    // This used to be called "without drift" and did not check drift: its
+    // four assertions were two files existing and two banners on line 1,
+    // so a hand-edited worker with a fetch() in it would have passed.
+    // Real drift coverage is `--check`, below.
     expect(existsSync('src/precision-preview/app.src.mjs')).toBe(true);
     expect(existsSync('src/precision-preview/worker.src.mjs')).toBe(true);
     expect(app.startsWith('// Built by scripts/build-precision-preview.mjs')).toBe(true);
     expect(worker.startsWith('// Built by scripts/build-precision-preview.mjs')).toBe(true);
+  });
+
+  it('has not drifted from its sources', () => {
+    // The generator's own --check, run here rather than only in CI, so a
+    // hand-edit to the built bundle fails at the same moment as a
+    // hand-edit to anything else in this file's scope.
+    const out = spawnSync(process.execPath, ['scripts/build-precision-preview.mjs', '--check'], { encoding: 'utf8' });
+    expect(`${out.stdout}${out.stderr}`.trim()).not.toMatch(/drift/i);
+    expect(out.status).toBe(0);
   });
 });

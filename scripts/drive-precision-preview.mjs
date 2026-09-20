@@ -386,7 +386,22 @@ async function run(name, browser) {
     horizontalScroll: document.documentElement.scrollWidth > window.innerWidth + 1,
   }));
 
-  // 13. Everything the page asked the network for, and everything it kept.
+  // 13. The one inherited loader that still runs here, exercised on
+  //     purpose. The page says pressing Ctrl+K fetches a static index and
+  //     nothing else; an inherited loader that is never triggered is an
+  //     inherited loader that was never checked.
+  const beforeSearch = requests.length;
+  await page.keyboard.press('Control+k');
+  await page.waitForTimeout(2000);
+  out.steps.siteSearch = {
+    fetched: [...new Set(requests.slice(beforeSearch))].map((u) => u.replace(BASE, '')),
+    offOrigin: requests.slice(beforeSearch).filter((u) => !u.startsWith(BASE)),
+    persisted: await page.evaluate(() => ({
+      localStorage: localStorage.length, sessionStorage: sessionStorage.length, cookies: document.cookie,
+    })),
+  };
+
+  // 14. Everything the page asked the network for, and everything it kept.
   out.steps.network = {
     all: [...new Set(requests)].map((u) => u.replace(BASE, '')),
     offOrigin: requests.filter((u) => !u.startsWith(BASE)),
@@ -417,6 +432,10 @@ async function run(name, browser) {
         || /^\/assets\/app-icons\//.test(u)
         || u === '/assets/site-footer.css'
         || /^\/assets\/zodiac-icons\/48\/[a-z]+\.webp\?surface=site-footer$/.test(u)
+        // Only reached by a deliberate Ctrl+K, and checked on its own in
+        // steps.siteSearch. Listed so the allowlist stays exhaustive.
+        || u === '/assets/search-ui.js?v=search-ranking-2'
+        || u === '/search-index.json'
       )),
   };
   // Cache Storage is the bucket this page actually lands in, and the
@@ -557,6 +576,13 @@ function verdictOf(out, hadPack) {
   if (s.network.beaconLike.length) p.push(`beacon-like requests: ${s.network.beaconLike.join(', ')}`);
   if (s.network.assistant.length) p.push(`the assistant loaded on an isolated route: ${s.network.assistant.join(', ')}`);
   if (s.network.unexpected.length) p.push(`requests outside the allowlist: ${s.network.unexpected.join(', ')}`);
+  if (s.siteSearch.offOrigin.length) p.push(`site search went off-origin: ${s.siteSearch.offOrigin.join(', ')}`);
+  for (const u of s.siteSearch.fetched) {
+    if (!/^\/(assets\/search-ui\.js|search-index\.json)/.test(u)) p.push(`site search fetched something unexpected: ${u}`);
+  }
+  if (s.siteSearch.persisted.localStorage || s.siteSearch.persisted.sessionStorage || s.siteSearch.persisted.cookies) {
+    p.push('opening the site search persisted something');
+  }
   if (s.network.serviceWorker.length) p.push(`the service worker was fetched: ${s.network.serviceWorker.join(', ')}`);
   if (s.persistence.localStorage || s.persistence.sessionStorage || s.persistence.cookies) p.push('the page persisted something');
   if (Array.isArray(s.persistence.indexedDB) && s.persistence.indexedDB.length) p.push('the page created an IndexedDB database');
