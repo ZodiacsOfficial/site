@@ -1,7 +1,12 @@
 /**
  * Tests for the compiler and the runtime.
  *
- *   node --test pack.test.mjs
+ *   node --test pack.nodetest.mjs
+ *
+ * Named `.nodetest.mjs` rather than `.test.mjs` so the site's vitest run does
+ * not collect it: it needs the compiled packs, which are not committed (see
+ * ../RIGHTS.md), and a suite that cannot pass in a fresh clone should not be
+ * in the suite everyone runs.
  *
  * These are contract tests, not the measurement. The measurement lives in
  * measure.mjs and its raw JSON; what is asserted here is that the pack means

@@ -236,7 +236,7 @@ the reduction. It is tested three ways:
 2. a **wrap cohort** is reported separately — the 615 rows whose reference
    longitude is within 1° of 0/360. Pack D's worst there is **0.00297″**,
    against 0.00488″ overall, so the seam is not where the error lives;
-3. `pack.test.mjs` bisects the Sun's actual passage through 0° in six years
+3. `pack.nodetest.mjs` bisects the Sun's actual passage through 0° in six years
    spread over the coverage and samples ±4000 s, ±400 s, ±40 s, ±4 s, ±0.4 s
    and 0 around each crossing, and walks the Moon at six-hour steps for 400
    days (1600 instants, 27 of them inside 3° of the seam). Every longitude is
@@ -279,7 +279,7 @@ against it by its own size. `resident: false` keeps the pack on disk and
 preads one record per body per chart, which the one-slot record memo makes
 sufficient. That is far fewer syscalls than the prototype's two per *position*
 evaluation, which is where most of its 0.34 ms goes. Both modes return
-bit-identical numbers (asserted in `pack.test.mjs`).
+bit-identical numbers (asserted in `pack.nodetest.mjs`).
 
 D low-memory beats the prototype on warm p50 (6.3×), warm p95 (8.6×), cold
 start and peak RSS simultaneously, on 1/19th of the data. **D resident is
@@ -335,7 +335,7 @@ Cropping *time* works, roughly linearly. **Cropping the body set does not**:
 dropping all five outer planets saves 35 KiB, because the Moon is 53% of the
 pack and Mercury 26% and neither can be dropped. A cropped pack refuses
 instants outside its own coverage with a `RangeError` rather than clamping,
-and `pack.test.mjs` asserts that.
+and `pack.nodetest.mjs` asserts that.
 
 ---
 

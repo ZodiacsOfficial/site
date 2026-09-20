@@ -1,7 +1,7 @@
 /**
  * Tests for the compiler and the runtime.
  *
- *   node --test pack.test.mjs
+ *   node --test pack.nodetest.mjs
  *
  * These are contract tests, not the measurement. The measurement lives in
  * measure.mjs and its raw JSON; what is asserted here is that the pack means
