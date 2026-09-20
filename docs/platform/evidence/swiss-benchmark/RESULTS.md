@@ -73,14 +73,31 @@ The far-future stratum looked like an ephemeris problem and was not.
 
 At 2100-01-01 the Swiss ΔT model gives 93.18 s and astronomy-engine's gives
 202.65 s — they disagree by 109.5 s. The Moon moves about 0.549″/s, so that
-alone displaces it by roughly 60″, which is essentially the entire 63.9″
-residual observed there. ΔT past the observed record is an extrapolation of the
-Earth's rotation, which is not predictable; two models diverging there is a
-**time-scale convention difference, not an algorithmic defect**, and neither
-model is "wrong".
+alone displaces it by 60.1″. The shipped core's residual at that case is
+64.768″, so ΔT accounts for about 93% of it and roughly 4.7″ is something else
+— close to the largest non-future Moon residual in the whole set (5.17″), which
+is where an unexplained few arcseconds would be expected to sit. ΔT past the
+observed record is an extrapolation of the Earth's rotation, which is not
+predictable; two models diverging there is a **time-scale convention
+difference, not an algorithmic defect**, and neither model is "wrong".
 
-Pinning the prototype's TT to the reference's own ΔT collapses that case from
-63.887″ to −0.026″. The comparison below is therefore reported both ways.
+Pinning **the prototype's** TT to the reference's own ΔT collapses the
+prototype's 2100 case from 63.887″ to −0.025″. That is a statement about the
+prototype, not about the shipped engine: the shipped engine was never re-run
+with a pinned ΔT, and subtracting the prototype's improvement from its own
+residual would put it near 0.9″ rather than near zero. The comparison below is
+therefore reported both ways, and both ways are the prototype.
+
+The 2190 case (159.379″) has no such decomposition. It falls outside DE440s
+coverage, so it was excluded from the prototype and could not be ΔT-pinned; the
+same mechanism plainly dominates there, but that is an expectation rather than
+a measurement and is not counted as established below.
+
+Two figures in this section have no committed report of their own and are
+transcribed from the run: the Swiss ΔT of 93.18 s at 2100 (astronomy-engine's
+202.65 s is reproducible offline — `A.MakeTime('2100-01-01Z')` — the Swiss side
+needs the provider), and the `prototype, engine ΔT` row in the table below.
+They are labelled here rather than left to look like the four committed JSONs.
 
 ## Prototype: JPL DE440s positions, same reduction
 
@@ -96,19 +113,33 @@ excluded from **both** sides, so the denominators are equal):
 
 | configuration | max | p50 | p95 |
 | --- | --- | --- | --- |
-| current core rc.6 | 64.768″ | 1.6651″ | 12.077″ |
+| current core rc.6 | 64.768″ | 1.6651″ | 12.082″ |
 | prototype, engine ΔT | 63.887″ | 0.0823″ | 1.834″ |
 | prototype, ΔT matched to the reference | **0.134″** | **0.0383″** | **0.117″** |
+
+Every percentile in this file is `compare.mjs`'s own interpolating quantile.
+An earlier revision of the two core rows took the floor order statistic
+instead while the prototype rows beside them were interpolated — two
+conventions in one table, both labelled p95, which understated the core by
+0.005″ here and by 0.17″ in the holdout table below.
 
 Holdout — six cases never looked at while the prototype was being built, and
 never used to tune anything. 40 matched measurements:
 
 | configuration | max | p50 | p95 |
 | --- | --- | --- | --- |
-| current core rc.6 | 17.288″ | 1.6141″ | 13.839″ |
+| current core rc.6 | 17.288″ | 1.6141″ | 14.010″ |
 | prototype, ΔT matched | **0.157″** | **0.0951″** | **0.150″** |
 
 The holdout reproduces the measurement set. Nothing was re-tuned between them.
+
+Those 40 rows are the DE440s-matched subset, and that exclusion exists for the
+prototype's sake, not the core's. On all 60 holdout rows the shipped core is
+**max 107.940″, p50 2.294″, p95 14.358″** — the maximum being the Moon at 2150,
+a third far-future case of the same kind as 2100 and 2190. It is stated here
+because a reader comparing engines wants the matched denominators, and a reader
+asking how far the shipped engine can be wrong wants this number, and the
+matched table alone understates it sixfold.
 
 ## Resource cost
 
@@ -135,10 +166,14 @@ Established:
   agree with the full Swiss configuration to **0.16″ worst case** across 200
   measurements spanning two independent sets, against 64.8″ for the shipped
   core.
-- Most of the shipped engine's far-future disagreement is ΔT model divergence,
-  not ephemeris error. Anyone reporting that 159″ as an accuracy gap would be
-  wrong about its cause.
-- The improvement costs ~2.1× compute and 31 MiB.
+- At 2100, about 93% of the shipped engine's 64.768″ disagreement is ΔT model
+  divergence rather than ephemeris error: the two ΔT models are 109.5 s apart
+  and the Moon moves 0.549″/s, which is 60.1″ of it. Anyone reporting that
+  residual as an accuracy gap would be wrong about its cause. The same
+  mechanism is expected to dominate at 2150 and 2190 and was not measured
+  there, so those two are not part of this claim.
+- The improvement costs 2.06× compute at the warm p50 and 3.39× at the warm
+  p95, plus 31 MiB of data. Quoting only the p50 ratio flatters it.
 
 Not established, and not claimed:
 

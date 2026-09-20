@@ -7,6 +7,11 @@
     "gzipKb": 24.7,
     "brotliKb": 20.7
   },
+  "localTime": {
+    "minKb": 61.1,
+    "gzipKb": 25.9,
+    "brotliKb": 21.8
+  },
   "geo": {
     "minKb": 63.9,
     "gzipKb": 27.1,

@@ -12,9 +12,28 @@
  * Its flags are asserted separately and statically. `npm` is stubbed because
  * what these cases establish is control flow: that nothing reaches `npm
  * install` unless the bytes matched.
+ *
+ * The first version of this file ran everything under `bash`, on a machine
+ * with `node` on the PATH, and asserted the curl flags by presence. An
+ * adversarial review broke the block three ways and all three passed 10/10:
+ *
+ *  - wrapping the verifier in `if command -v node; then ... else echo
+ *    "not checked, continuing" >&2; fi`, which installs tampered bytes and
+ *    exits 0 on any machine without node;
+ *  - `if [[ -e "$FILE" || -L "$FILE" ]]` in place of the POSIX guard, which
+ *    under dash — `/bin/sh` on Debian and Ubuntu, and the block says "Linux" —
+ *    is not an error but a skipped guard, so the download silently overwrites
+ *    a file the user already had and still reports success;
+ *  - dropping `|| test -L "$FILE"`, which lets `curl -o` follow a planted
+ *    dangling symlink and write 36 KB wherever it points.
+ *
+ * So every case below runs under bash, dash and sh; two of them run with
+ * `node` removed from the PATH; the symlink cases are real; and the static
+ * assertions now say what must NOT be between the download and the install
+ * rather than only what must be present.
  */
 import { execFileSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, symlinkSync, lstatSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
@@ -30,33 +49,82 @@ const archive = readFileSync(resolve(root, artifact.artifactPath));
 const block = engineInstallBlock(artifact);
 const file = archiveNameFor(artifact);
 
-function run(bytes, { seedFile = false, npmFails = false, dir = null } = {}) {
+/**
+ * Every shell the block says it runs in. `/bin/sh` is dash on Debian and
+ * Ubuntu, so "POSIX shell — macOS, Linux or WSL" is a promise about dash
+ * whether or not the author was thinking about dash.
+ */
+const SHELLS = ['bash', 'dash', 'sh'].filter((shell) => {
+  try {
+    execFileSync(shell, ['-c', 'exit 0'], { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+});
+
+/**
+ * A PATH with no `node` on it, for the cases that check the verifier cannot be
+ * skipped. Built by pointing PATH at a directory holding only the handful of
+ * binaries the block needs, so nothing else changes.
+ */
+function pathWithoutNode(dir) {
+  const bin = join(dir, 'nonode');
+  mkdirSync(bin, { recursive: true });
+  for (const tool of ['cp', 'rm', 'test', 'echo', 'pwd']) {
+    const found = ['/usr/bin', '/bin'].map((d) => join(d, tool)).find((f) => existsSync(f));
+    if (found) symlinkSync(found, join(bin, tool));
+  }
+  return bin;
+}
+
+function run(bytes, {
+  seedFile = false, seedDir = false, seedSymlinkTo = null, seedDanglingSymlink = false,
+  npmFails = false, dir = null, shell = 'bash', withoutNode = false,
+} = {}) {
   dir = dir ?? mkdtempSync(join(tmpdir(), 'zodiacs-engine-install-'));
+  const target = join(dir, file);
   const payload = join(dir, 'payload.bin');
   if (bytes) writeFileSync(payload, bytes);
-  if (seedFile) writeFileSync(join(dir, file), 'something of mine');
+  if (seedFile) writeFileSync(target, 'something of mine');
+  if (seedDir) {
+    mkdirSync(target, { recursive: true });
+    writeFileSync(join(target, 'mine.txt'), 'do not touch');
+  }
+  if (seedSymlinkTo) {
+    writeFileSync(join(dir, seedSymlinkTo), 'victim contents');
+    symlinkSync(join(dir, seedSymlinkTo), target);
+  }
+  if (seedDanglingSymlink) symlinkSync(join(dir, 'not-created-yet'), target);
   const curl = bytes
     ? `curl() { while [ $# -gt 0 ]; do [ "$1" = "-o" ] && { cp '${payload}' "$2"; return 0; }; shift; done; return 1; }`
     : `curl() { : > "${file}"; echo "curl: (22) The requested URL returned error: 404" >&2; return 22; }`;
   const npm = `npm() { echo "npm $*" >> '${dir}/npm.log'; return ${npmFails ? 1 : 0}; }`;
+  const env = withoutNode ? { ...process.env, PATH: pathWithoutNode(dir) } : process.env;
   let status = 0;
   let output = '';
   try {
-    output = execFileSync('bash', ['-c', `${curl}\n${npm}\n${block}\n`], {
-      cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'],
+    output = execFileSync(shell, ['-c', `${curl}\n${npm}\n${block}\n`], {
+      cwd: dir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], env,
     });
   } catch (error) {
     status = error.status ?? 1;
     output = `${error.stdout ?? ''}${error.stderr ?? ''}`;
   }
+  const present = existsSync(target) || lstatSync(target, { throwIfNoEntry: false }) !== undefined;
   return {
     dir,
+    shell,
     status,
     output,
-    archivePresent: existsSync(join(dir, file)),
+    archivePresent: present,
     npmLog: existsSync(join(dir, 'npm.log')) ? readFileSync(join(dir, 'npm.log'), 'utf8') : '',
-    seededIntact: seedFile && existsSync(join(dir, file))
-      ? readFileSync(join(dir, file), 'utf8') : null,
+    seededIntact: seedFile && existsSync(target) ? readFileSync(target, 'utf8') : null,
+    seededDirIntact: seedDir && existsSync(join(target, 'mine.txt'))
+      ? readFileSync(join(target, 'mine.txt'), 'utf8') : null,
+    victim: seedSymlinkTo && existsSync(join(dir, seedSymlinkTo))
+      ? readFileSync(join(dir, seedSymlinkTo), 'utf8') : null,
+    danglingTargetCreated: existsSync(join(dir, 'not-created-yet')),
   };
 }
 
@@ -69,12 +137,68 @@ describe('the install commands the engine page publishes', () => {
     expect(page).toContain('<code>{install}</code>');
   });
 
-  it('states the flags that make the real download fail closed', () => {
-    expect(block).toContain('--fail');
-    expect(block).toContain("--proto '=https'");
-    expect(block).toContain('--max-time');
+  it('parses as POSIX shell in every shell it claims to run in', () => {
+    expect(SHELLS, 'dash must be available for this suite to mean anything').toContain('dash');
+    for (const shell of SHELLS) {
+      expect(
+        () => execFileSync(shell, ['-n'], { input: block, stdio: ['pipe', 'ignore', 'pipe'] }),
+        `${shell} -n rejected the block`,
+      ).not.toThrow();
+    }
+    // The bashism that started this: syntactically fine under bash, and under
+    // dash a skipped guard rather than an error, which is worse than a crash.
+    expect(block, 'no [[ ]] — dash treats it as a command that is not found').not.toMatch(/\[\[/u);
+  });
+
+  it('gives curl exactly the flags it is supposed to have, and no others', () => {
+    // Presence assertions are a whitelist: `--insecure` would have passed all
+    // of them. The whole invocation is pinned instead.
+    const curl = /^curl (.*?) \\\n\s*'([^']+)' -o "\$FILE"$/mu.exec(block);
+    expect(curl, 'the curl invocation must be one recognisable line').toBeTruthy();
+    expect(curl[1].split(/\s+/u)).toEqual([
+      '--disable', '--fail', '--silent', '--show-error', '--location',
+      '--proto', "'=https'", '--max-time', '120',
+    ]);
+    expect(curl[2]).toBe(artifact.artifactUrl);
     expect(block).toMatch(/^\( set -eu$/mu);
-    expect(block).toContain(artifact.artifactUrl);
+  });
+
+  it('puts nothing conditional between the download and the install', () => {
+    // `if command -v node; then ... fi` around the verifier passed every
+    // behavioural case, because every case ran where node exists.
+    const from = block.indexOf('curl --disable');
+    const to = block.indexOf('npm install');
+    expect(from).toBeGreaterThan(-1);
+    expect(to).toBeGreaterThan(from);
+    // The heredoc body is JavaScript and legitimately contains `if`; what
+    // must be unconditional is the shell around it, so the JS is cut out
+    // first and the cut itself is asserted, not assumed.
+    const between = block.slice(from, to);
+    const heredoc = /<<'JS'\n[\s\S]*?\nJS\n/u;
+    expect(between, 'the verifier heredoc must be where this thinks it is').toMatch(heredoc);
+    const shellOnly = between.replace(heredoc, '\n');
+    expect(shellOnly).not.toMatch(/createHash/u);
+    for (const conditional of [/\bif\s/u, /\bcommand -v\b/u, /\bwhich\b/u, /\bcase\s/u, /\|\|/u, /&&/u]) {
+      expect(shellOnly, `the verifier must not be guarded by ${conditional}`).not.toMatch(conditional);
+    }
+  });
+
+  it('asks npm not to run the archive\'s lifecycle scripts', () => {
+    expect(block).toMatch(/npm install --ignore-scripts "\.\/\$FILE"/u);
+  });
+
+  it('refuses to render a block from a manifest it cannot safely interpolate', () => {
+    // Three fields go into a shell string and a JS heredoc unescaped.
+    const cases = [
+      ['artifactUrl', "https://example.test/a'.tgz;rm -rf /tmp/x;echo '"],
+      ['sha256', "' || true; echo '"],
+      ['version', "1.0.0'; rm -rf /"],
+    ];
+    for (const [field, value] of cases) {
+      expect(() => engineInstallBlock({ ...artifact, [field]: value }), field).toThrow(/refusing to render/u);
+    }
+    // …and a query string does not become part of the filename.
+    expect(archiveNameFor({ ...artifact, artifactUrl: `${artifact.artifactUrl}?raw=true` })).toBe(file);
   });
 
   it('compares the digest rather than printing it, before npm sees the file', () => {
@@ -86,75 +210,122 @@ describe('the install commands the engine page publishes', () => {
     expect(verified).toBeLessThan(block.indexOf('npm install'));
   });
 
-  it('installs when the archive is the published one', () => {
-    const result = run(archive);
-    discard(result.dir);
-    expect(result.status, result.output).toBe(0);
-    expect(result.npmLog).toMatch(new RegExp(`npm install \\./${file.replace(/\./gu, '\\.')}`, 'u'));
-    expect(result.output).toContain('Archive verified');
-  });
+  // Every behavioural case runs in every shell the block claims. Under dash a
+  // guard written with `[[ ]]` is skipped rather than fatal, so a bash-only
+  // suite cannot see the difference between a guard and no guard.
+  describe.each(SHELLS)('in %s', (shell) => {
+    it('installs when the archive is the published one', () => {
+      const result = run(archive, { shell });
+      discard(result.dir);
+      expect(result.status, result.output).toBe(0);
+      expect(result.npmLog).toMatch(new RegExp(`npm install --ignore-scripts \\./${file.replace(/\./gu, '\\.')}`, 'u'));
+      expect(result.output).toContain('Archive verified');
+    });
 
-  it('never reaches npm when the digest does not match', () => {
-    // Flip a byte rather than setting one: writing 0x00 over a byte that was
-    // already 0x00 produces an identical archive and proves nothing.
-    const tampered = Buffer.from(archive);
-    tampered[tampered.length - 1] ^= 0xff;
-    expect(tampered.length).toBe(archive.length);
-    expect(createHash('sha256').update(tampered).digest('hex')).not.toBe(artifact.sha256);
-    const result = run(tampered);
-    discard(result.dir);
-    expect(result.status).not.toBe(0);
-    expect(result.npmLog, 'nothing may be installed after a failed digest').toBe('');
-    expect(result.archivePresent, 'the rejected download is not left lying around').toBe(false);
-    expect(result.output).toContain('Nothing was installed.');
-  });
+    it('never reaches npm when the digest does not match', () => {
+      // Flip a byte rather than setting one: writing 0x00 over a byte that was
+      // already 0x00 produces an identical archive and proves nothing.
+      const tampered = Buffer.from(archive);
+      tampered[tampered.length - 1] ^= 0xff;
+      expect(tampered.length).toBe(archive.length);
+      expect(createHash('sha256').update(tampered).digest('hex')).not.toBe(artifact.sha256);
+      const result = run(tampered, { shell });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog, 'nothing may be installed after a failed digest').toBe('');
+      expect(result.archivePresent, 'the rejected download is not left lying around').toBe(false);
+      expect(result.output).toContain('Nothing was installed.');
+    });
 
-  it('never reaches npm when the archive is truncated', () => {
-    const result = run(archive.subarray(0, Math.floor(archive.length / 2)));
-    discard(result.dir);
-    expect(result.status).not.toBe(0);
-    expect(result.npmLog).toBe('');
-    expect(result.archivePresent).toBe(false);
-  });
+    it('never reaches npm when the archive is truncated', () => {
+      const result = run(archive.subarray(0, Math.floor(archive.length / 2)), { shell });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.archivePresent).toBe(false);
+    });
 
-  it('never reaches npm when the download fails', () => {
-    // curl --fail can leave an empty file behind on a 404; the stub does too.
-    const result = run(null);
-    discard(result.dir);
-    expect(result.status).not.toBe(0);
-    expect(result.npmLog).toBe('');
-    expect(result.archivePresent, 'the empty file curl left must not survive').toBe(false);
-  });
+    it('never reaches npm when the download fails', () => {
+      // curl --fail can leave an empty file behind on a 404; the stub does too.
+      const result = run(null, { shell });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.archivePresent, 'the empty file curl left must not survive').toBe(false);
+    });
 
-  it('refuses to overwrite an archive of the same name that it did not download', () => {
-    const result = run(archive, { seedFile: true });
-    discard(result.dir);
-    expect(result.status).not.toBe(0);
-    expect(result.npmLog).toBe('');
-    expect(result.seededIntact, 'a file in the way must survive untouched').toBe('something of mine');
-    expect(result.output).toContain('already exists here');
-  });
+    it('never reaches npm when there is no node to verify with', () => {
+      // The review's first break was `if command -v node; then ... fi` around
+      // the verifier: on a machine without node it installed tampered bytes
+      // and exited 0. A missing verifier has to stop the install.
+      const tampered = Buffer.from(archive);
+      tampered[tampered.length - 1] ^= 0xff;
+      const result = run(tampered, { shell, withoutNode: true });
+      discard(result.dir);
+      expect(result.status, result.output).not.toBe(0);
+      expect(result.npmLog, 'a skipped verifier must not become an install').toBe('');
+      expect(result.output).not.toContain('Installed @zodiacs/engine');
+    });
 
-  it('can simply be run again after a rejected download', () => {
-    const dir = mkdtempSync(join(tmpdir(), 'zodiacs-engine-retry-'));
-    const tampered = Buffer.from(archive);
-    tampered[tampered.length - 1] ^= 0xff;
-    expect(run(tampered, { dir }).status).not.toBe(0);
-    const retried = run(archive, { dir });
-    discard(dir);
-    expect(retried.status, retried.output).toBe(0);
-    expect(retried.output).not.toContain('already exists here');
-  });
+    it('leaves a file of the same name untouched', () => {
+      const result = run(archive, { shell, seedFile: true });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.seededIntact, 'a file in the way must survive untouched').toBe('something of mine');
+      expect(result.output).toContain('already exists here');
+    });
 
-  it('keeps the verified archive when npm itself fails, and does not claim success', () => {
-    // Deliberately unlike the MCP block, which cleans up a directory it created.
-    // Here npm owns whatever state it left; the verified archive is what a
-    // retry needs, so removing it would only make the failure harder to fix.
-    const result = run(archive, { npmFails: true });
-    discard(result.dir);
-    expect(result.status).not.toBe(0);
-    expect(result.npmLog).toMatch(/npm install/u);
-    expect(result.archivePresent).toBe(true);
-    expect(result.output).not.toContain('Installed @zodiacs/engine');
+    it('leaves a directory of the same name untouched', () => {
+      const result = run(archive, { shell, seedDir: true });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.seededDirIntact).toBe('do not touch');
+    });
+
+    it('will not write through a symlink someone planted', () => {
+      // `test -e` is false for a dangling symlink, so without the `test -L`
+      // half of the guard curl opens the link's target with O_CREAT and
+      // writes the archive wherever it points — then `rm -f` deletes the
+      // link and leaves the file it made.
+      const result = run(archive, { shell, seedDanglingSymlink: true });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.danglingTargetCreated, 'nothing may be created through the link').toBe(false);
+      expect(result.output).toContain('already exists here');
+    });
+
+    it('will not write through a symlink to a file that exists', () => {
+      const result = run(archive, { shell, seedSymlinkTo: 'victim.txt' });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toBe('');
+      expect(result.victim, 'the file the link points at must be unchanged').toBe('victim contents');
+    });
+
+    it('can simply be run again after a rejected download', () => {
+      const dir = mkdtempSync(join(tmpdir(), 'zodiacs-engine-retry-'));
+      const tampered = Buffer.from(archive);
+      tampered[tampered.length - 1] ^= 0xff;
+      expect(run(tampered, { dir, shell }).status).not.toBe(0);
+      const retried = run(archive, { dir, shell });
+      discard(dir);
+      expect(retried.status, retried.output).toBe(0);
+      expect(retried.output).not.toContain('already exists here');
+    });
+
+    it('keeps the verified archive when npm itself fails, and does not claim success', () => {
+      // Deliberately unlike the MCP block, which cleans up a directory it
+      // created. Here npm owns whatever state it left; the verified archive is
+      // what a retry needs, so removing it would make the failure harder to fix.
+      const result = run(archive, { shell, npmFails: true });
+      discard(result.dir);
+      expect(result.status).not.toBe(0);
+      expect(result.npmLog).toMatch(/npm install/u);
+      expect(result.archivePresent).toBe(true);
+      expect(result.output).not.toContain('Installed @zodiacs/engine');
+    });
   });
 });

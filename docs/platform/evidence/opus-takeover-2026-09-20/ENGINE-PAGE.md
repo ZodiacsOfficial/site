@@ -24,12 +24,29 @@ integrity hash — so the archive GitHub serves, the archive this repository
 vendors, and the archive the lockfile installs are one file.
 
 `scripts/engine-install-block.test.mjs` executes the same block against the
-real archive, a byte-flipped one, a truncated one, a failed download, and a
-directory with the filename already taken. Four mutations were checked against
-those cases and each was caught by the case written for it: making the
-verification non-fatal, replacing the comparison with an unconditional pass,
-deleting the existing-file guard, and moving `npm install` ahead of the digest
-check.
+real archive, a byte-flipped one, a truncated one, a failed download, a file
+of that name already present, a directory of that name, a dangling symlink, a
+symlink pointing at a file the user cares about, and a PATH with no `node` on
+it — each of those under bash, dash and sh, because `/bin/sh` is dash on
+Debian and Ubuntu and the block claims to be POSIX.
+
+That matrix is the second version. An adversarial review broke the first one
+three ways and all three passed it: wrapping the verifier in `if command -v
+node`, which installs tampered bytes and exits 0 wherever node is missing;
+writing the guard as `[[ -e "$FILE" || -L "$FILE" ]]`, which under dash is a
+skipped guard rather than an error, so the download silently overwrites a file
+the user already had and still reports success; and dropping the `test -L`
+half, which lets `curl -o` follow a planted dangling symlink and write 36 KB
+wherever it points. The suite could not see any of them because every case ran
+under bash on a machine with node.
+
+Seven mutations now fail it: those three, plus making the verification
+non-fatal, replacing the digest comparison with an unconditional pass, moving
+`npm install` ahead of the check, and adding `--insecure` to `curl` — which
+the old presence-only flag assertions accepted. The block itself now refuses
+to render at all from a manifest whose filename, URL, digest, name or version
+would not survive being interpolated into a shell string, and it passes
+`--ignore-scripts` so a verified archive still cannot run lifecycle code.
 
 ## The worked example, run in that clean consumer
 

@@ -10,7 +10,18 @@
  *
  * This block is shorter than the MCP one because nothing is unpacked: the
  * archive is downloaded, compared, and handed to npm. What it must never do is
- * reach `npm install` on bytes it did not verify. `scripts/engine-install-block.test.mjs`
+ * reach `npm install` on bytes it did not verify.
+ *
+ * Two rules follow from that, and both are asserted statically in the test
+ * because both are easy to break while making the block friendlier. The
+ * verification runs UNCONDITIONALLY — no `if`, no `command -v node`, no `||`
+ * between the download and the install, because a missing verifier has to stop
+ * the install rather than be skipped over. And the block is plain POSIX shell,
+ * because the comment in it says "macOS, Linux or WSL" and `/bin/sh` is `dash`
+ * on Debian and Ubuntu: a `[[ ... ]]` in place of the guard below is not an
+ * error there, it is a silently skipped guard that overwrites a file the user
+ * already had. The test runs every case under bash, dash and sh for that
+ * reason. `scripts/engine-install-block.test.mjs`
  * executes it against the real archive, a tampered one, a truncated one, and a
  * failing download.
  */
@@ -23,11 +34,31 @@ export interface EngineArtifact {
 
 /** The filename the archive lands under, taken from the published URL. */
 export function archiveNameFor(artifact: EngineArtifact): string {
-  return artifact.artifactUrl.slice(artifact.artifactUrl.lastIndexOf('/') + 1);
+  const path = artifact.artifactUrl.split(/[?#]/u)[0];
+  return path.slice(path.lastIndexOf('/') + 1);
+}
+
+/**
+ * Three manifest fields are interpolated into a shell string and a JS heredoc
+ * below. Nothing escapes them, so a single quote in any of the three would
+ * produce a block that runs something else — published verbatim on a page that
+ * tells strangers to paste it. The manifest is in-repo and reviewed, which
+ * makes this unlikely rather than impossible, so the build refuses instead.
+ */
+function checked(artifact: EngineArtifact, file: string): void {
+  const bad = (what: string, value: string): never => {
+    throw new Error(`engineInstallBlock: refusing to render a block from an unusable ${what}: ${value}`);
+  };
+  if (!/^[\w.@+-]+\.tgz$/u.test(file)) bad('archive filename', file);
+  if (!/^https:\/\/[\w.-]+(?:\/[\w.@+-]+)+$/u.test(artifact.artifactUrl)) bad('artifact URL', artifact.artifactUrl);
+  if (!/^[0-9a-f]{64}$/u.test(artifact.sha256)) bad('sha256', artifact.sha256);
+  if (!/^[\w.@/-]+$/u.test(artifact.name)) bad('package name', artifact.name);
+  if (!/^[\w.+-]+$/u.test(artifact.version)) bad('version', artifact.version);
 }
 
 export function engineInstallBlock(artifact: EngineArtifact): string {
   const file = archiveNameFor(artifact);
+  checked(artifact, file);
 return `( set -eu
 # POSIX shell — macOS, Linux or WSL. Not PowerShell. It runs in a subshell, so
 # a failure stops the install without closing your terminal.
@@ -61,7 +92,7 @@ console.log(\`Archive verified: \${actual}\`);
 JS
 
 trap - EXIT
-npm install "./$FILE"
+npm install --ignore-scripts "./$FILE"
 echo "Installed ${artifact.name}@${artifact.version} from the verified archive."
 )`;
 }

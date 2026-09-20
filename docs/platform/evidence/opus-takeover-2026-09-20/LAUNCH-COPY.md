@@ -12,9 +12,13 @@ repository.
    `0.1.1-rc.6` and prints the expected digest. It was verified against the
    live GitHub archive on 2026-09-20 (see `ENGINE-PAGE.md`), but the copy in
    production is what a reader will paste.
-3. The consolidated report at
-   `https://github.com/ZodiacsOfficial/site/tree/main/docs/engine-validation`
-   resolves — the posts link the page, and the page links the report.
+3. Both evidence links the pages carry resolve on `main` as **files**, not as
+   directories that happen to exist:
+   `…/blob/main/docs/engine-validation/README.md` and
+   `…/tree/main/docs/platform/evidence/swiss-benchmark`. Before this branch
+   merges the second is a hard 404 and the first is an empty directory
+   listing, so a post that went out early would cite nothing. `check-dist` is
+   dist-internal and cannot see either.
 4. Every figure below still matches
    `docs/platform/evidence/swiss-benchmark/report-measure.json`. If the
    benchmark is re-run and the distribution moves, these numbers are stale and
@@ -27,18 +31,18 @@ wrong number, which is worse.
 
 > A natal chart engine that runs in your browser or Node process — no server,
 > no key. 24.7 KB gzipped, ephemeris included. Median 1.6″ from Swiss
-> Ephemeris over 160 measurements from 1801 to 2026, and we publish the two
+> Ephemeris over 160 measurements from 1801 to 2026, and we publish the ones
 > that missed. MIT. zodiacs.org/developers/engine/
 
-## The reply (277 characters)
+## The reply (272 characters)
 
 Post as a reply to the above, not as a separate post. The point of it is that
 the interesting result is the one that looks bad.
 
-> Both misses are the Moon past 2100, by 64.8″ and 159.4″ — and that is the
-> clock, not the ephemeris. The two programs extrapolate Earth's slowing
-> rotation differently, 109.5 s apart at 2100. Pin ΔT and the case goes to
-> −0.03″. Neither model is wrong; the number isn't known yet.
+> Every miss is the Moon at 2100, 2150 or 2190, by 64.8″, 107.9″ and 159.4″ —
+> and that is the clock, not the ephemeris. The two programs extrapolate
+> Earth's slowing rotation differently, 109.5 s apart at 2100, which covers
+> about 93% of that gap. Nobody knows the number yet.
 
 ## The longer announcement
 
@@ -73,21 +77,23 @@ the same things at length and adds nothing the measurements do not carry.
 > percentile 12.1, and the worst 18.6 — Pluto in 1801. A zodiac sign is
 > 108,000 arcseconds wide.
 >
-> Two of the 180 measurements miss by more than an arcminute, both the Moon
-> far in the future: 64.8″ at 2100 and 159.4″ at 2190. That one turned out to
-> be the most interesting result in the set, because it is not an ephemeris
-> error. Past the observed record the two programs extrapolate the Earth's
-> slowing rotation differently — 109.5 seconds apart at 2100 — and the Moon
-> moves about half an arcsecond per second of time. Pin ΔT to the reference
-> and the case collapses from 63.9″ to −0.03″. Neither model is wrong. Nobody
-> knows that number yet.
+> Two of those 180 measurements miss by more than an arcminute, both the Moon
+> far in the future: 64.8″ at 2100 and 159.4″ at 2190, and a third in the
+> holdout set reaches 107.9″ at 2150. That turned out to be the most
+> interesting result we got, because it is not an ephemeris error. Past the
+> observed record the two programs extrapolate the Earth's slowing rotation
+> differently — 109.5 seconds apart at 2100 — and the Moon moves about half an
+> arcsecond per second of time, which covers 60.1″ of the 64.8″. Neither model
+> is wrong. Nobody knows that number yet.
 >
 > Two caveats that matter more than any of those figures. Swiss Ephemeris,
 > JPL Horizons and Astronomy Engine all descend from JPL development
 > ephemerides, so agreement between them is consistency between
 > implementations, not a check against observation — we have not measured
-> this engine against the sky and do not claim to have. And the engine
-> accepts dates from 1800 to 2199, which is wider than the span we measured.
+> this engine against the sky and do not claim to have. And the engine does
+> not bound its input date at all — it will compute year 900 or year 3500 and
+> return a chart with no error and no flag. zodiacs.org clamps its own forms
+> to 1800–2199; the measurements say nothing about anything outside them.
 >
 > The weakest part is event search, and it is written down rather than left
 > out: one transit-window contract is still failing, the second period's
@@ -130,9 +136,10 @@ published. Written for the prerelease tag, not `latest` — see
 > Browser bundle for the natal path: 57.7 KB minified, 24.7 KB gzipped,
 > 20.7 KB brotli, ephemeris included.
 >
-> **Not established.** None of the above is observational accuracy — every
-> oracle descends from the same JPL development ephemerides. The accepted
-> input range (1800–2199) is wider than the measured span. Event search caps
+> **Not established.** None of the above is observational accuracy. The
+> package puts no bound on its input date and will return a chart for any
+> year, with no error and no flag; the measurements cover 1801–2026 densely
+> and three point epochs beyond that. Event search caps
 > ephemeris evaluations and does not guarantee complete discovery; one
 > transit-window contract remains failing. The executed runtime matrix is Node
 > 22.23.2, Node 24.19.0 and Chrome 152, which is narrower than the manifest's

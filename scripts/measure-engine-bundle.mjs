@@ -29,8 +29,16 @@ const OUT = 'src/data/engine-bundle.json';
 const KB = 1024;
 const TOLERANCE_KB = 1;
 
+/**
+ * Three entries, because "+ geo" is two different numbers and labelling one of
+ * them as the other overstates what local-time resolution costs. `resolveBirth`
+ * is the time resolver on its own; the namespace import also pins the GeoNames
+ * HTTP client that shares the entry point, which is 1.2 KB gzipped more and,
+ * more to the point, is the part that can make a network request.
+ */
 const ENTRIES = {
   natal: "import { natalChart } from '@zodiacs/engine';\nglobalThis.__keep = natalChart;\n",
+  localTime: "import { natalChart } from '@zodiacs/engine';\nimport { resolveBirth } from '@zodiacs/engine/geo';\nglobalThis.__keep = [natalChart, resolveBirth];\n",
   geo: "import { natalChart } from '@zodiacs/engine';\nimport * as geo from '@zodiacs/engine/geo';\nglobalThis.__keep = [natalChart, geo];\n",
 };
 
@@ -66,6 +74,7 @@ let measured;
     engineVersion: JSON.parse(readFileSync('node_modules/@zodiacs/engine/package.json', 'utf8')).version,
     esbuildVersion: esbuild.version,
     natal: await measure(ENTRIES.natal, 'natal'),
+    localTime: await measure(ENTRIES.localTime, 'localTime'),
     geo: await measure(ENTRIES.geo, 'geo'),
   };
 }
@@ -76,7 +85,7 @@ if (process.argv.includes('--check')) {
   if (committed.engineVersion !== measured.engineVersion) {
     problems.push(`engineVersion: committed ${committed.engineVersion}, installed ${measured.engineVersion}`);
   }
-  for (const entry of ['natal', 'geo']) {
+  for (const entry of ['natal', 'localTime', 'geo']) {
     for (const key of ['minKb', 'gzipKb', 'brotliKb']) {
       const was = committed[entry]?.[key];
       const now = measured[entry][key];
@@ -95,6 +104,8 @@ if (process.argv.includes('--check')) {
 } else {
   writeFileSync(OUT, `${JSON.stringify(measured, null, 2)}\n`);
   console.log(`engine-bundle: wrote ${OUT}`);
-  console.log(`  natal  min ${measured.natal.minKb} KB  gzip ${measured.natal.gzipKb} KB  brotli ${measured.natal.brotliKb} KB`);
-  console.log(`  + geo  min ${measured.geo.minKb} KB  gzip ${measured.geo.gzipKb} KB  brotli ${measured.geo.brotliKb} KB`);
+  for (const [label, key] of [['natal      ', 'natal'], ['+ time     ', 'localTime'], ['+ geo (all)', 'geo']]) {
+    const e = measured[key];
+    console.log(`  ${label}  min ${e.minKb} KB  gzip ${e.gzipKb} KB  brotli ${e.brotliKb} KB`);
+  }
 }
