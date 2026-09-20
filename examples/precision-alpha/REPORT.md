@@ -318,3 +318,34 @@ pack afterwards working again; and dispose, after which the runtime refuses.
 
 The script is `demo/record.mjs`. It exits non-zero and says so if capture is
 unavailable, rather than writing a file that is not a recording.
+
+---
+
+## Appendix · The whole path, run end to end before this was written
+
+Not a summary of the sections above: one continuous run, from a fresh clone
+and a fresh pack, on 2026-09-20.
+
+| step | result |
+| --- | --- |
+| clean setup | `git clone` of the pushed branch, **no `npm install`**, `npm test` in the package: 125 of 125 |
+| compile a local pack | `compile.mjs --candidate=D` from the kernel, 21.2 s, 1,737,168 bytes |
+| seal | `tools/seal.mjs`, 1,737,168 → 1,737,200 bytes, payload digest asserted unchanged |
+| verify | self-consistent; authenticity reported as not established |
+| calculate | Moon 155.982712209°, +3.568141474°, 404,633.751 km |
+| search | Moon–Sun conjunctions over 2024: `multiple-crossings`, certified, **13**, support `empirical`, 0 unresolved |
+| cancel | `cancelled` after 40 evaluations, with the count on the error |
+| recover | the runtime still answers after the cancelled search |
+| low-memory | file-backed result identical to the resident one |
+| dispose | `disposed` on the next call |
+| load in a browser | Chromium 141 and Firefox 151, both **pass**, 70/70 rows bit-identical to Node, search verdict matching, 0 problems |
+
+**The compiler is deterministic, and the one thing that moved says why.** The
+pack compiled here has a payload digest identical to the one compiled in an
+earlier session —
+`0a2187642704459a47983c79ed4ecb70deed5ab5ba75465e89319d39089e1afa` — so every
+coefficient and every layout number is the same. The whole-artifact digests
+differ, and the entire difference is one header field:
+`compiler.sourceSha256.runtime.mjs`, because `compiler/runtime.mjs` was edited
+between the two runs. The header records a hash of the compiler's own source,
+so an artifact digest legitimately tracks it; the numbers did not move.
