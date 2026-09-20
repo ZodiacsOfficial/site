@@ -25,9 +25,19 @@ Two consequences, both acted on:
    presenting the result as independent physical accuracy would be circular,
    and it would also be a derivative use of AGPL-covered output that this
    project has not established a right to make. Any higher-precision prototype
-   must take its coefficients from a source whose terms permit it — JPL
-   development ephemerides are US Government work and are in the public
-   domain — and must be measured against Swiss afterwards, never trained on it.
+   must take its coefficients from a source whose terms permit it, and must be
+   measured against Swiss afterwards, never trained on it.
+
+   **Correction, 2026-09-20.** An earlier version of this sentence said JPL
+   development ephemerides "are US Government work and are in the public
+   domain". That was an assumption, not a reading. SPICE and its kernels are
+   produced by Caltech's Jet Propulsion Laboratory under contract to NASA, and
+   NAIF's rules page does not use the words "public domain" — it grants
+   permission explicitly, with conditions attached to modified kernels. The
+   primary text, and what it leaves genuinely unsettled, is in
+   [`../precision-2026-09-20/RIGHTS.md`](../precision-2026-09-20/RIGHTS.md).
+   The practical answer is still that this work may proceed; the reasoning was
+   wrong and the obligations were missed.
 
 Process isolation does not settle this. Running Swiss in a separate Python
 process does not make its output unencumbered, which is exactly why the rule
