@@ -101,6 +101,21 @@ Done and verified, in the order it was done:
 9. **`LAUNCH-COPY.md`** — the announcement, reply, long-form post and release
    note, prepared and **not posted**, gated on four conditions including the
    page being live.
+10. **Two bounded AI reviewers** (one numerical-methodology, one release/DX),
+    the limit section 3 allows. Both found real defects in the work above and
+    both found them the same way: by writing broken code my tests accepted.
+    The accuracy guard passed five factually wrong pages, including the exact
+    regression it was written to prevent. The install-block suite passed a
+    block that installs unverified bytes where `node` is missing, and one
+    whose guard evaporates under `dash` — silently overwriting a file the user
+    already had while reporting success. Both suites were rebuilt and the
+    twelve mutations between them now fail. The largest product correction
+    came from the same pass: the page claimed the engine accepts 1800–2199,
+    which is this site's form validation; the package bounds nothing and
+    returns a confident chart for year 3500. One reviewer detail was itself
+    wrong and is noted in the commit rather than absorbed. Separate model
+    contexts are not independent human reviewers, and nothing here is recorded
+    as one.
 
 Dispositioned rather than done:
 
