@@ -42,6 +42,17 @@ but the Sun. Anything topocentric. IAU 2000A nutation: on this corpus it moves
 apparent longitude by at most 0.0025″ for seventeen times the table, so it is
 not carried; the research track keeps it for that comparison.
 
+**Barycentric position is not offered**, and that is a decision rather than an
+omission. The compression work declared a 0.2 km target on the barycentric
+Moon and missed it: 0.165 km sampled, but **0.449 km on the proven bound**, and
+the target is on the bound. Geocentric output — which is what this package
+does expose — is a different quantity and is inside the target (0.00946 km
+sampled, 0.0224 km proven), because the EMB term cancels against the observer.
+Earth and Moon are derived from the same two stored bodies through the pack's
+EMRAT, so their errors are correlated, and no geocentric bound here is built by
+adding them as though they were independent. `CONTRACT.barycentricPositionExcluded`
+carries this.
+
 `CONTRACT` in `src/core/reduce.mjs` is this list in machine-readable form, and
 `SEARCH_CONTRACT` in `src/core/search.mjs` is the equivalent for events.
 

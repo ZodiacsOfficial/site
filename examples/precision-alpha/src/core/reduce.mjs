@@ -67,6 +67,26 @@ export const CONTRACT = Object.freeze({
     'Delta-T: the caller supplies TT, not UTC',
     'physical body centres for Mars outward (see barycentreNotCentre)',
   ]),
+  /**
+   * Barycentric POSITION is deliberately outside the contract, and this is
+   * the reason rather than an oversight. The compression work declared a
+   * 0.2 km target on the barycentric Moon and missed it: sampled 0.165 km,
+   * but PROVEN 0.449 km, and the target is on the bound. The geocentric
+   * path is a different quantity and is inside the target (0.00946 km
+   * sampled, 0.0224 km proven), because the EMB term cancels against the
+   * observer -- not because two independent errors happened to be small.
+   * Earth and Moon come from the same two stored bodies through the pack's
+   * EMRAT, so their errors are correlated and no geocentric bound may be
+   * built by adding them as if they were not.
+   */
+  barycentricPositionExcluded: Object.freeze({
+    excluded: true,
+    target: '0.2 km on the barycentric Moon (PREREGISTRATION.md T6)',
+    recordedSampledKm: 0.165,
+    recordedProvenBoundKm: 0.449,
+    verdict: 'target missed on the proven bound; barycentric position is not offered',
+    source: 'docs/platform/evidence/precision-2026-09-20/compiler/RESULTS.md, candidate D',
+  }),
 });
 
 const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
