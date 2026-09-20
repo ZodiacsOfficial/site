@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-20T00:07:25.502Z",
+  "generatedAt": "2026-09-20T00:12:33.973Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -137,6 +137,46 @@
         "occupancy"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-13-observation-168h",
+      "slug": "market-check-2026-09-13-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-20T00:12:33.973Z",
+      "visibleAt": "2026-09-20T00:12:33.973Z",
+      "title": "Aries 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.06 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-13-observation-168h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-19-observation-24h",
+      "slug": "market-check-2026-09-19-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-20T00:12:33.973Z",
+      "visibleAt": "2026-09-20T00:12:33.973Z",
+      "title": "Aries 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.08 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-19-observation-24h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-20",
