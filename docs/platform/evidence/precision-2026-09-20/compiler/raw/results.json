@@ -1,0 +1,343 @@
+{
+ "kernelBytes": 32726016,
+ "kernelMiB": 31.21,
+ "structuralBaseline": {
+  "segmentDataBytes": 32661376,
+  "afterLosslessStructureBytes": 23673952,
+  "note": "segment payload only, then minus the duplicate 399/3 segment (8987232 B) and the two identically-zero segments (192 B)"
+ },
+ "candidates": {
+  "A": {
+   "bytes": 5012656,
+   "MiB": 4.7804,
+   "ratioVsKernel": 6.53,
+   "ratioVsStructuralBaseline": 4.72,
+   "sampled": {
+    "maxPosOuterBaryKm": 0.35546648472429315,
+    "maxPosMoonBaryKm": 0.12721558824842563,
+    "maxPosMoonGeoKm": 0.0020850204955863085,
+    "maxVelAnyBodyKmS": 1.2478434036475465e-05,
+    "gridPoints": 60000
+   },
+   "proven": {
+    "maxPosOuterBaryKm": 0.6134410140274584,
+    "maxPosMoonBaryKm": 0.2559980801054021,
+    "maxPosMoonGeoKm": 0.006189411766560757,
+    "maxVelAnyBodyKmS": 2.4387273874609855e-05
+   },
+   "longitudeArcsec": {
+    "max": 0.0009114713975577615,
+    "p95": 0.00016677807934684075,
+    "rows": 120000,
+    "wrapRows": 615,
+    "wrapMax": 0.0006093551519370521,
+    "worst": {
+     "body": "Moon",
+     "lon": 182.65663634002854,
+     "dArcsec": -0.0009114713975577615
+    }
+   },
+   "perf": {
+    "dataMiB": 4.78,
+    "warmP50Ms": 0.04176150000000689,
+    "warmP95Ms": 0.1248627500000026,
+    "warmP99Ms": 0.25629818000000765,
+    "spreadP50Ms": 0.038420999999999594,
+    "spreadP95Ms": 0.08026994999999598,
+    "coldP50Ms": 0.4909189999999981,
+    "firstColdMs": 3.696753000000001,
+    "peakRssMiB": 62.73,
+    "peakRssRuns": [
+     63.39,
+     62.73,
+     62.23
+    ]
+   },
+   "perfLabel": "A low-memory",
+   "deterministic": true,
+   "sha256": "1569cf123cf5a2aa28f76d75b3c3406615f1cae9616a8c0b1cdb5002a36a2f7b"
+  },
+  "B": {
+   "bytes": 4990960,
+   "MiB": 4.7598,
+   "ratioVsKernel": 6.56,
+   "ratioVsStructuralBaseline": 4.74,
+   "sampled": {
+    "maxPosOuterBaryKm": 0.4825247207808883,
+    "maxPosMoonBaryKm": 0.24244297144617863,
+    "maxPosMoonGeoKm": 0.009483755377338005,
+    "maxVelAnyBodyKmS": 2.2046152991036698e-05,
+    "gridPoints": 60000
+   },
+   "proven": {
+    "maxPosOuterBaryKm": 0.7757602002054791,
+    "maxPosMoonBaryKm": 0.40683762206905827,
+    "maxPosMoonGeoKm": 0.01735698339923032,
+    "maxVelAnyBodyKmS": 4.559061331306784e-05
+   },
+   "longitudeArcsec": {
+    "max": 0.004851777705994209,
+    "p95": 0.00015615424217685356,
+    "rows": 120000,
+    "wrapRows": 615,
+    "wrapMax": 0.003065943019464612,
+    "worst": {
+     "body": "Moon",
+     "lon": 15.602649265725221,
+     "dArcsec": 0.004851777705994209
+    }
+   },
+   "perf": {
+    "dataMiB": 4.76,
+    "warmP50Ms": 0.05295149999999893,
+    "warmP95Ms": 0.12215034999999852,
+    "warmP99Ms": 0.27697861000000085,
+    "spreadP50Ms": 0.044959999999996114,
+    "spreadP95Ms": 0.10703759999999879,
+    "coldP50Ms": 0.9532579999999982,
+    "firstColdMs": 4.084435999999997,
+    "peakRssMiB": 63.25,
+    "peakRssRuns": [
+     63.39,
+     63.25,
+     62.55
+    ]
+   },
+   "perfLabel": "B low-memory",
+   "deterministic": true,
+   "sha256": "b41932b81231892aa10b20fa3ccd3ec655ac83578dbd4071a499f0140d74df6f"
+  },
+  "C": {
+   "bytes": 1868432,
+   "MiB": 1.7819,
+   "ratioVsKernel": 17.52,
+   "ratioVsStructuralBaseline": 12.67,
+   "sampled": {
+    "maxPosOuterBaryKm": 196.99918049374412,
+    "maxPosMoonBaryKm": 63.9779824596469,
+    "maxPosMoonGeoKm": 0.003829227608631541,
+    "maxVelAnyBodyKmS": 0.0031756009701673126,
+    "gridPoints": 6000
+   },
+   "proven": {
+    "maxPosOuterBaryKm": null,
+    "maxPosMoonBaryKm": null,
+    "maxPosMoonGeoKm": null,
+    "maxVelAnyBodyKmS": null
+   },
+   "longitudeArcsec": {
+    "max": 0.19566800751817937,
+    "p95": 0.027711430702765938,
+    "rows": 15000,
+    "wrapRows": 75,
+    "wrapMax": 0.05503641608470833,
+    "worst": {
+     "body": "Venus",
+     "lon": 205.65270756562393,
+     "dArcsec": 0.19566800751817937
+    }
+   },
+   "perf": {
+    "dataMiB": 1.78,
+    "warmP50Ms": 1.1320109999999772,
+    "warmP95Ms": 1.4473620499999922,
+    "warmP99Ms": 1.5845222899999138,
+    "spreadP50Ms": 1.197862999999984,
+    "spreadP95Ms": 1.4082188499999684,
+    "coldP50Ms": 5.076397,
+    "firstColdMs": 36.162008,
+    "peakRssMiB": 80.02,
+    "peakRssRuns": [
+     77.78,
+     80.02,
+     80.65
+    ]
+   },
+   "perfLabel": "C resident",
+   "deterministic": true,
+   "sha256": "a2470e13c5143a2ee0ba227012e481dbb8fb79a036be07c86fdd4af8eec50cd0"
+  },
+  "D": {
+   "bytes": 1737168,
+   "MiB": 1.6567,
+   "ratioVsKernel": 18.84,
+   "ratioVsStructuralBaseline": 13.63,
+   "sampled": {
+    "maxPosOuterBaryKm": 0.5299998074936195,
+    "maxPosMoonBaryKm": 0.1644996980970543,
+    "maxPosMoonGeoKm": 0.009458869199316253,
+    "maxVelAnyBodyKmS": 2.3683158135752624e-05,
+    "gridPoints": 60000
+   },
+   "proven": {
+    "maxPosOuterBaryKm": 1.286036637639937,
+    "maxPosMoonBaryKm": 0.4486475629431502,
+    "maxPosMoonGeoKm": 0.022418483584399726,
+    "maxVelAnyBodyKmS": 8.126165605176979e-05
+   },
+   "longitudeArcsec": {
+    "max": 0.0048753303474313725,
+    "p95": 0.00018229938774538736,
+    "rows": 120000,
+    "wrapRows": 615,
+    "wrapMax": 0.0029729994594163145,
+    "worst": {
+     "body": "Moon",
+     "lon": 15.602649265725221,
+     "dArcsec": 0.0048753303474313725
+    }
+   },
+   "perf": {
+    "dataMiB": 1.66,
+    "warmP50Ms": 0.054186999999998875,
+    "warmP95Ms": 0.12949784999999991,
+    "warmP99Ms": 0.3090815500000012,
+    "spreadP50Ms": 0.04797849999999926,
+    "spreadP95Ms": 0.10596960000000301,
+    "coldP50Ms": 1.2080569999999966,
+    "firstColdMs": 4.691916999999997,
+    "peakRssMiB": 62.6,
+    "peakRssRuns": [
+     62.6,
+     62.63,
+     62.57
+    ]
+   },
+   "perfLabel": "D low-memory",
+   "deterministic": true,
+   "sha256": "b52dd02cce22bbf610150f8222b7969cc25bcfe6cc571714d2625fa2e931d476"
+  }
+ },
+ "baselines": {
+  "prototype": {
+   "dataMiB": 31.21,
+   "warmP50Ms": 0.3408900000000088,
+   "warmP95Ms": 1.114786599999976,
+   "warmP99Ms": 1.3031351399999846,
+   "spreadP50Ms": 0.31339600000001155,
+   "spreadP95Ms": 1.1559607999999881,
+   "coldP50Ms": 1.8048649999999995,
+   "firstColdMs": 5.833367000000003,
+   "peakRssMiB": 63.66,
+   "peakRssRuns": [
+    63.66,
+    63.1,
+    64.31
+   ]
+  },
+  "shippedCore": {
+   "dataMiB": 0,
+   "warmP50Ms": 0.1615395000000035,
+   "warmP95Ms": 0.34401309999999613,
+   "warmP99Ms": 0.4230515700000124,
+   "spreadP50Ms": 0.16411450000001082,
+   "spreadP95Ms": 0.32590225000000267,
+   "coldP50Ms": 0.6204620000000034,
+   "firstColdMs": 26.596718999999993,
+   "peakRssMiB": 70.88,
+   "peakRssRuns": [
+    71.2,
+    70.48,
+    70.88
+   ]
+  },
+  "frozenPrototypeRecord": {
+   "warmP50Ms": 0.324,
+   "warmP95Ms": 1.071,
+   "coldP50Ms": 1.694,
+   "peakRssMiB": 63.57,
+   "source": "docs/platform/evidence/swiss-benchmark/RESULTS.md, measured on another host"
+  }
+ },
+ "croppedVariants": {
+  "1950-2050": {
+   "bytes": 594336,
+   "MiB": 0.5668
+  },
+  "1900-2100": {
+   "bytes": 1167088,
+   "MiB": 1.113
+  },
+  "inner bodies only, full span": {
+   "bytes": 1701360,
+   "MiB": 1.6225
+  },
+  "inner bodies, 1950-2050": {
+   "bytes": 577328,
+   "MiB": 0.5506
+  }
+ },
+ "equivalence": {
+  "what": "the in-memory reference against the committed prototype",
+  "rows": 4000,
+  "instants": 400,
+  "bodies": 10,
+  "refBackendFd60_vs_prototype_maxArcsec": 0,
+  "refBackendAnalyticObserverVelocity_vs_prototype_maxArcsec": 8.185452315956354e-10,
+  "reading": "the first number is the reference reproducing the prototype and must be ~0; the second is the size of the one reduction difference (observer velocity), which is what the pack comparison also carries"
+ },
+ "compileTimeMs": {
+  "A": 457,
+  "B": 18215,
+  "D": 21389,
+  "C": 134000
+ },
+ "targets": {
+  "T1": {
+   "target": "<= 7.80 MiB matched coverage and body set",
+   "D": 1.6567,
+   "pass": true
+  },
+  "T2": {
+   "target": "<= 0.05 arcsec extra max longitude vs uncompressed prototype",
+   "D": 0.004875,
+   "pass": true
+  },
+  "T6_outer": {
+   "target": "<= 2 km",
+   "D_sampled": 0.53,
+   "D_proven": 1.286,
+   "pass": true
+  },
+  "T6_moon_geocentric": {
+   "target": "<= 0.2 km",
+   "D_sampled": 0.00946,
+   "D_proven": 0.02242,
+   "pass": true
+  },
+  "T6_moon_barycentric": {
+   "target": "<= 0.2 km",
+   "D_sampled": 0.16451,
+   "D_proven": 0.44865,
+   "pass": "sampled yes, proven no"
+  },
+  "T7": {
+   "target": "<= 1e-4 km/s",
+   "D_sampled": 2.368e-05,
+   "D_proven": 8.126e-05,
+   "pass": true
+  },
+  "T4": {
+   "target": "warm p50 < 0.324 ms, no regression in warm p95 / cold / peak RSS",
+   "D_lowmem": {
+    "warmP50Ms": 0.0542,
+    "warmP95Ms": 0.1295,
+    "coldP50Ms": 1.208,
+    "peakRssMiB": 62.6
+   },
+   "prototype_thisHost": {
+    "warmP50Ms": 0.3409,
+    "warmP95Ms": 1.1148,
+    "coldP50Ms": 1.805,
+    "peakRssMiB": 63.66
+   },
+   "prototype_frozenRecord": {
+    "warmP50Ms": 0.324,
+    "warmP95Ms": 1.071,
+    "coldP50Ms": 1.694,
+    "peakRssMiB": 63.57
+   },
+   "pass": "yes in low-memory mode; resident mode regresses cold start (2.330 ms)"
+  }
+ }
+}

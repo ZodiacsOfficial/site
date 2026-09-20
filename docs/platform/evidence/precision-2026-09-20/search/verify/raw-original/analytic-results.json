@@ -1,0 +1,935 @@
+{
+  "what": "Bounded typed-verdict search over analytic functions with known topology.",
+  "boundKind": "proven -- closed-form interval arithmetic for f' and f''; these completeness claims are theorems, not sampled observations.",
+  "generatedBy": "node test-analytic.mjs",
+  "cases": [
+    {
+      "id": "A-transversal-crossing",
+      "what": "One simple transversal crossing on a monotone branch.",
+      "truth": {
+        "verdict": "crossing",
+        "rootCount": 1,
+        "rootsAt": [
+          0.5235987755982989
+        ]
+      },
+      "result": {
+        "label": "A-transversal-crossing",
+        "verdict": "crossing",
+        "outcome": "certified",
+        "reason": "single-certified-transversal-root",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "interval": [
+          0,
+          1.4
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 43,
+        "cells": 1,
+        "runs": 1,
+        "cellStatusCounts": {
+          "monotone": 1
+        },
+        "crossings": [
+          {
+            "lo": 0.5235987755983842,
+            "hi": 0.5235987755983842,
+            "width": 0,
+            "centre": 0.5235987755983842,
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": -0.5,
+          "b": 0.48544972998846014
+        },
+        "assumptions": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "B-exact-tangency",
+      "what": "f(t) = t^2 touches the level at t=0 without crossing. One non-transversal root.",
+      "truth": {
+        "verdict": "stationary-touch",
+        "rootCount": 1,
+        "rootsAt": [
+          0
+        ]
+      },
+      "result": {
+        "label": "B-exact-tangency",
+        "verdict": "stationary-touch",
+        "outcome": "certified",
+        "reason": "tangency-certified-under-declared-exact-arithmetic",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 86,
+        "cells": 82,
+        "runs": 3,
+        "cellStatusCounts": {
+          "excluded": 80,
+          "floor": 2
+        },
+        "crossings": [
+          {
+            "lo": 0,
+            "hi": 0,
+            "width": 0,
+            "centre": 0,
+            "direction": "touch-from-above",
+            "transversal": false,
+            "atIntervalEdge": false
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [
+          {
+            "from": -9.094947017729282e-13,
+            "to": 9.094947017729282e-13,
+            "width": 1.8189894035458565e-12,
+            "t": 0,
+            "value": 0,
+            "valueSlack": 3.308722450212111e-24,
+            "locatedBy": "derivative-bisection",
+            "kind": "minimum",
+            "curvatureSign": 1,
+            "certifiedSingleTurningPoint": true,
+            "singleTurningPointAssumed": false,
+            "extremeValueEnclosure": [
+              -3.308722450212111e-24,
+              3.308722450212111e-24
+            ]
+          }
+        ],
+        "endpointValues": {
+          "a": 1,
+          "b": 1
+        },
+        "assumptions": [
+          "open region holds at most one turning point (certified by the second-derivative enclosure over the whole region)"
+        ],
+        "notes": [
+          "The turning point value is exactly zero in the caller's declared exact arithmetic and the curvature has one certified sign over the cell, so the function touches the level once without crossing.",
+          "This route requires exactArithmetic and epsilon === 0. It is unavailable to any ephemeris-backed function and must stay that way."
+        ]
+      }
+    },
+    {
+      "id": "C-near-tangency-no-crossing",
+      "what": "f(t) = t^2 + 1e-9 misses the level by 1e-9. No roots, and that is certifiable at epsilon 0.",
+      "truth": {
+        "verdict": "no-crossing",
+        "rootCount": 0,
+        "rootsAt": []
+      },
+      "result": {
+        "label": "C-near-tangency-no-crossing",
+        "verdict": "no-crossing",
+        "outcome": "certified",
+        "reason": "every-cell-certified-clear-of-the-level",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 0,
+        "possibleRootCounts": [
+          0
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 3,
+        "cells": 2,
+        "runs": 1,
+        "cellStatusCounts": {
+          "excluded": 2
+        },
+        "crossings": [],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": 1.000000001,
+          "b": 1.000000001
+        },
+        "assumptions": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "C2-near-tangency-under-coarse-epsilon",
+      "what": "The same near miss, but the caller declares epsilon = 1e-8, which is larger than the 1e-9 miss. The count is genuinely undecidable and must be refused.",
+      "truth": {
+        "verdict": "unresolved-interval",
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ]
+      },
+      "result": {
+        "label": "C2-near-tangency-under-coarse-epsilon",
+        "verdict": "unresolved-interval",
+        "outcome": "incomplete",
+        "reason": "turning-region-within-epsilon-of-level",
+        "complete": false,
+        "certified": false,
+        "boundKind": "proven",
+        "epsilon": 1e-8,
+        "exactArithmetic": true,
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 86,
+        "cells": 82,
+        "runs": 5,
+        "cellStatusCounts": {
+          "excluded": 26,
+          "monotone": 54,
+          "floor": 2
+        },
+        "crossings": null,
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. These roots were certified while other cells stayed open; the true count is in possibleRootCounts, which is null when even that is unbounded.",
+          "certifiedTransversalRoots": []
+        },
+        "openRegions": [
+          {
+            "from": -0.0001220703125,
+            "to": 0.0001220703125,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -9.094947017729282e-13,
+              "to": 9.094947017729282e-13,
+              "width": 1.8189894035458565e-12,
+              "t": 0,
+              "value": 1e-9,
+              "valueSlack": 3.308722450212111e-24,
+              "locatedBy": "derivative-bisection",
+              "kind": "minimum",
+              "curvatureSign": 1,
+              "certifiedSingleTurningPoint": true,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                9.999999999999968e-10,
+                1.0000000000000034e-9
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "curvatureSign": 1,
+            "atMostOneTurningPoint": true,
+            "possibleRootCounts": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "undecidedRegions": [
+          {
+            "from": -0.0001220703125,
+            "to": 0.0001220703125,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -9.094947017729282e-13,
+              "to": 9.094947017729282e-13,
+              "width": 1.8189894035458565e-12,
+              "t": 0,
+              "value": 1e-9,
+              "valueSlack": 3.308722450212111e-24,
+              "locatedBy": "derivative-bisection",
+              "kind": "minimum",
+              "curvatureSign": 1,
+              "certifiedSingleTurningPoint": true,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                9.999999999999968e-10,
+                1.0000000000000034e-9
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "curvatureSign": 1,
+            "atMostOneTurningPoint": true,
+            "possibleRootCounts": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "turningPoints": [
+          {
+            "from": -9.094947017729282e-13,
+            "to": 9.094947017729282e-13,
+            "width": 1.8189894035458565e-12,
+            "t": 0,
+            "value": 1e-9,
+            "valueSlack": 3.308722450212111e-24,
+            "locatedBy": "derivative-bisection",
+            "kind": "minimum",
+            "curvatureSign": 1,
+            "certifiedSingleTurningPoint": true,
+            "singleTurningPointAssumed": false,
+            "extremeValueEnclosure": [
+              9.999999999999968e-10,
+              1.0000000000000034e-9
+            ]
+          }
+        ],
+        "endpointValues": {
+          "a": 1.000000001,
+          "b": 1.000000001
+        },
+        "assumptions": [
+          "open region holds at most one turning point (certified by the second-derivative enclosure over the whole region)"
+        ],
+        "notes": [
+          "1 region(s) could not be closed at epsilon=1e-8.",
+          "The root COUNT is not decidable at this epsilon.",
+          "The certified roots below are NOT an exhaustive list and must not be published as one."
+        ]
+      }
+    },
+    {
+      "id": "D-two-very-close-roots",
+      "what": "Roots at -1e-6 and +1e-6; the dip between them is only 1e-12 deep.",
+      "truth": {
+        "verdict": "multiple-crossings",
+        "rootCount": 2,
+        "rootsAt": [
+          -0.000001,
+          0.000001
+        ]
+      },
+      "result": {
+        "label": "D-two-very-close-roots",
+        "verdict": "multiple-crossings",
+        "outcome": "certified",
+        "reason": "multiple-certified-transversal-roots",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 2,
+        "possibleRootCounts": [
+          2
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-15,
+        "maxEvaluations": 50000,
+        "evaluations": 103,
+        "cells": 42,
+        "runs": 5,
+        "cellStatusCounts": {
+          "excluded": 40,
+          "monotone": 2
+        },
+        "crossings": [
+          {
+            "lo": -0.000001000000000139778,
+            "hi": -0.000001000000000139778,
+            "width": 0,
+            "centre": -0.000001000000000139778,
+            "direction": "falling",
+            "transversal": true,
+            "atIntervalEdge": false
+          },
+          {
+            "lo": 0.000001000000000139778,
+            "hi": 0.000001000000000139778,
+            "width": 0,
+            "centre": 0.000001000000000139778,
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": 0.999999999999,
+          "b": 0.999999999999
+        },
+        "assumptions": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "D2-two-very-close-roots-under-coarse-epsilon",
+      "what": "The same pair, with epsilon = 1e-11 exceeding the 1e-12 dip. The pair cannot be certified and must not be reported as found.",
+      "truth": {
+        "verdict": "unresolved-interval",
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ]
+      },
+      "result": {
+        "label": "D2-two-very-close-roots-under-coarse-epsilon",
+        "verdict": "unresolved-interval",
+        "outcome": "incomplete",
+        "reason": "turning-region-within-epsilon-of-level",
+        "complete": false,
+        "certified": false,
+        "boundKind": "proven",
+        "epsilon": 1e-11,
+        "exactArithmetic": true,
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-15,
+        "maxEvaluations": 50000,
+        "evaluations": 106,
+        "cells": 102,
+        "runs": 5,
+        "cellStatusCounts": {
+          "excluded": 36,
+          "monotone": 64,
+          "floor": 2
+        },
+        "crossings": null,
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. These roots were certified while other cells stayed open; the true count is in possibleRootCounts, which is null when even that is unbounded.",
+          "certifiedTransversalRoots": []
+        },
+        "openRegions": [
+          {
+            "from": -0.000003814697265625,
+            "to": 0.000003814697265625,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -8.881784197001252e-16,
+              "to": 8.881784197001252e-16,
+              "width": 1.7763568394002505e-15,
+              "t": 0,
+              "value": -1e-12,
+              "valueSlack": 3.1554436208840472e-30,
+              "locatedBy": "derivative-bisection",
+              "kind": "maximum",
+              "curvatureSign": 1,
+              "certifiedSingleTurningPoint": true,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                -1e-12,
+                -1e-12
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "curvatureSign": 1,
+            "atMostOneTurningPoint": true,
+            "possibleRootCounts": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "undecidedRegions": [
+          {
+            "from": -0.000003814697265625,
+            "to": 0.000003814697265625,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -8.881784197001252e-16,
+              "to": 8.881784197001252e-16,
+              "width": 1.7763568394002505e-15,
+              "t": 0,
+              "value": -1e-12,
+              "valueSlack": 3.1554436208840472e-30,
+              "locatedBy": "derivative-bisection",
+              "kind": "maximum",
+              "curvatureSign": 1,
+              "certifiedSingleTurningPoint": true,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                -1e-12,
+                -1e-12
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "curvatureSign": 1,
+            "atMostOneTurningPoint": true,
+            "possibleRootCounts": [
+              0,
+              1,
+              2
+            ]
+          }
+        ],
+        "turningPoints": [
+          {
+            "from": -8.881784197001252e-16,
+            "to": 8.881784197001252e-16,
+            "width": 1.7763568394002505e-15,
+            "t": 0,
+            "value": -1e-12,
+            "valueSlack": 3.1554436208840472e-30,
+            "locatedBy": "derivative-bisection",
+            "kind": "maximum",
+            "curvatureSign": 1,
+            "certifiedSingleTurningPoint": true,
+            "singleTurningPointAssumed": false,
+            "extremeValueEnclosure": [
+              -1e-12,
+              -1e-12
+            ]
+          }
+        ],
+        "endpointValues": {
+          "a": 0.999999999999,
+          "b": 0.999999999999
+        },
+        "assumptions": [
+          "open region holds at most one turning point (certified by the second-derivative enclosure over the whole region)"
+        ],
+        "notes": [
+          "1 region(s) could not be closed at epsilon=1e-11.",
+          "The root COUNT is not decidable at this epsilon.",
+          "The certified roots below are NOT an exhaustive list and must not be published as one."
+        ]
+      }
+    },
+    {
+      "id": "E-root-at-left-boundary",
+      "what": "sin(t) on [0,1]: a root exactly on the left endpoint.",
+      "truth": {
+        "verdict": "boundary-event",
+        "rootCount": 1,
+        "rootsAt": [
+          0
+        ]
+      },
+      "result": {
+        "label": "E-root-at-left-boundary",
+        "verdict": "boundary-event",
+        "outcome": "certified",
+        "reason": "root-on-an-interval-endpoint",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "interval": [
+          0,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 2,
+        "cells": 1,
+        "runs": 1,
+        "cellStatusCounts": {
+          "monotone": 1
+        },
+        "crossings": [
+          {
+            "lo": 0,
+            "hi": 0,
+            "width": 0,
+            "centre": 0,
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": true,
+            "edgeValue": 0,
+            "bracketClippedByIntervalEdge": true,
+            "bracketNote": "The root lies within epsilon of this interval endpoint. The bracket shown is the part of the epsilon set that falls inside the interval; the root may lie on either side of the endpoint, and which side is not certified."
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": 0,
+          "b": 0.8414709848078965
+        },
+        "assumptions": [],
+        "notes": [
+          "A root sits on an endpoint of the query interval. Half-open ownership between adjacent intervals is the caller's decision, not the search's: reporting it once in each closed view and deduplicating by identity is the only consistent choice."
+        ]
+      }
+    },
+    {
+      "id": "E2-root-at-right-boundary",
+      "what": "t - 1 on [0,1]: a root exactly on the right endpoint.",
+      "truth": {
+        "verdict": "boundary-event",
+        "rootCount": 1,
+        "rootsAt": [
+          1
+        ]
+      },
+      "result": {
+        "label": "E2-root-at-right-boundary",
+        "verdict": "boundary-event",
+        "outcome": "certified",
+        "reason": "root-on-an-interval-endpoint",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "interval": [
+          0,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 2,
+        "cells": 1,
+        "runs": 1,
+        "cellStatusCounts": {
+          "monotone": 1
+        },
+        "crossings": [
+          {
+            "lo": 1,
+            "hi": 1,
+            "width": 0,
+            "centre": 1,
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": true,
+            "edgeValue": 0,
+            "bracketClippedByIntervalEdge": true,
+            "bracketNote": "The root lies within epsilon of this interval endpoint. The bracket shown is the part of the epsilon set that falls inside the interval; the root may lie on either side of the endpoint, and which side is not certified."
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": -1,
+          "b": 0
+        },
+        "assumptions": [],
+        "notes": [
+          "A root sits on an endpoint of the query interval. Half-open ownership between adjacent intervals is the caller's decision, not the search's: reporting it once in each closed view and deduplicating by identity is the only consistent choice."
+        ]
+      }
+    },
+    {
+      "id": "F-two-well-separated-roots",
+      "what": "A cubic with two well-separated simple roots inside the interval and a deep minimum between them.",
+      "truth": {
+        "verdict": "multiple-crossings",
+        "rootCount": 2,
+        "rootsAt": [
+          -0.5,
+          0.5
+        ]
+      },
+      "result": {
+        "label": "F-two-well-separated-roots",
+        "verdict": "multiple-crossings",
+        "outcome": "certified",
+        "reason": "multiple-certified-transversal-roots",
+        "complete": true,
+        "certified": true,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": 2,
+        "possibleRootCounts": [
+          2
+        ],
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 87,
+        "cells": 6,
+        "runs": 3,
+        "cellStatusCounts": {
+          "monotone": 4,
+          "excluded": 2
+        },
+        "crossings": [
+          {
+            "lo": -0.4999999999997726,
+            "hi": -0.4999999999997726,
+            "width": 0,
+            "centre": -0.4999999999997726,
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          },
+          {
+            "lo": 0.4999999999997726,
+            "hi": 0.4999999999997726,
+            "width": 0,
+            "centre": 0.4999999999997726,
+            "direction": "falling",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "partialUncertifiedFindings": null,
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "endpointValues": {
+          "a": -3.75,
+          "b": -2.25
+        },
+        "assumptions": [],
+        "notes": []
+      }
+    },
+    {
+      "id": "G-budget-refusal",
+      "what": "The same hard tangency with an evaluation limit far too small. The search must refuse, not guess.",
+      "truth": {
+        "verdict": "unresolved-interval",
+        "outcome": "refused",
+        "rootCount": null
+      },
+      "result": {
+        "label": "G-budget-refusal",
+        "verdict": "unresolved-interval",
+        "outcome": "refused",
+        "reason": "evaluation-budget-exhausted:cell-decomposition",
+        "complete": false,
+        "certified": false,
+        "boundKind": "proven",
+        "epsilon": 0,
+        "exactArithmetic": true,
+        "rootCount": null,
+        "possibleRootCounts": null,
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-15,
+        "maxEvaluations": 20,
+        "evaluations": 21,
+        "crossings": null,
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. The search stopped at its declared evaluation limit and covered only part of the interval.",
+          "cellsClosed": 17
+        },
+        "openRegions": [],
+        "undecidedRegions": [],
+        "turningPoints": [],
+        "assumptions": [],
+        "notes": [
+          "Refused to certify: the declared evaluation limit of 20 was reached during cell-decomposition."
+        ]
+      }
+    },
+    {
+      "id": "H-unbounded-ambiguity-without-curvature",
+      "what": "An epsilon-ambiguous turning point with NO second-derivative enclosure supplied: the search cannot even bound how many roots hide in the open cell, and says so with possibleRootCounts null.",
+      "truth": {
+        "verdict": "unresolved-interval",
+        "rootCount": null,
+        "possibleRootCounts": null
+      },
+      "result": {
+        "label": "H-unbounded-ambiguity-without-curvature",
+        "verdict": "unresolved-interval",
+        "outcome": "incomplete",
+        "reason": "turning-region-within-epsilon-of-level",
+        "complete": false,
+        "certified": false,
+        "boundKind": "proven",
+        "epsilon": 1e-8,
+        "exactArithmetic": true,
+        "rootCount": null,
+        "possibleRootCounts": null,
+        "interval": [
+          -1,
+          1
+        ],
+        "minWidth": 1e-12,
+        "maxEvaluations": 50000,
+        "evaluations": 83,
+        "cells": 82,
+        "runs": 5,
+        "cellStatusCounts": {
+          "excluded": 26,
+          "monotone": 54,
+          "floor": 2
+        },
+        "crossings": null,
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. These roots were certified while other cells stayed open; the true count is in possibleRootCounts, which is null when even that is unbounded.",
+          "certifiedTransversalRoots": []
+        },
+        "openRegions": [
+          {
+            "from": -0.0001220703125,
+            "to": 0.0001220703125,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -9.094947017729282e-13,
+              "to": 9.094947017729282e-13,
+              "width": 1.8189894035458565e-12,
+              "t": 0,
+              "value": 1e-9,
+              "valueSlack": 3.308722450212111e-24,
+              "locatedBy": "cell-midpoint",
+              "kind": "minimum",
+              "curvatureSign": null,
+              "certifiedSingleTurningPoint": false,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                9.999999999999968e-10,
+                1.0000000000000034e-9
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "atMostOneTurningPoint": false,
+            "possibleRootCounts": null
+          }
+        ],
+        "undecidedRegions": [
+          {
+            "from": -0.0001220703125,
+            "to": 0.0001220703125,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "turningPoint": {
+              "from": -9.094947017729282e-13,
+              "to": 9.094947017729282e-13,
+              "width": 1.8189894035458565e-12,
+              "t": 0,
+              "value": 1e-9,
+              "valueSlack": 3.308722450212111e-24,
+              "locatedBy": "cell-midpoint",
+              "kind": "minimum",
+              "curvatureSign": null,
+              "certifiedSingleTurningPoint": false,
+              "singleTurningPointAssumed": false,
+              "extremeValueEnclosure": [
+                9.999999999999968e-10,
+                1.0000000000000034e-9
+              ]
+            },
+            "endSides": [
+              1,
+              1
+            ],
+            "atMostOneTurningPoint": false,
+            "possibleRootCounts": null
+          }
+        ],
+        "turningPoints": [
+          {
+            "from": -9.094947017729282e-13,
+            "to": 9.094947017729282e-13,
+            "width": 1.8189894035458565e-12,
+            "t": 0,
+            "value": 1e-9,
+            "valueSlack": 3.308722450212111e-24,
+            "locatedBy": "cell-midpoint",
+            "kind": "minimum",
+            "curvatureSign": null,
+            "certifiedSingleTurningPoint": false,
+            "singleTurningPointAssumed": false,
+            "extremeValueEnclosure": [
+              9.999999999999968e-10,
+              1.0000000000000034e-9
+            ]
+          }
+        ],
+        "endpointValues": {
+          "a": 1.000000001,
+          "b": 1.000000001
+        },
+        "assumptions": [],
+        "notes": [
+          "1 region(s) could not be closed at epsilon=1e-8.",
+          "The number of roots inside the open regions is not bounded above by this search: no second-derivative enclosure was supplied or it does not exclude zero there.",
+          "The certified roots below are NOT an exhaustive list and must not be published as one."
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+ "target": "packs/D.zeph",
+ "label": "pack packs/D.zeph (resident=true)",
+ "note": "ten bodies per iteration; data acquisition excluded from every timed kernel",
+ "node": "v22.22.2",
+ "dataMiB": 1.66,
+ "coldStartMsTenBodies": {
+  "n": 5,
+  "min": 1.9356730000000013,
+  "p50": 2.4599289999999954,
+  "p95": 5.249484800000001,
+  "p99": 5.763697760000001,
+  "max": 5.892251000000002
+ },
+ "firstColdRunMs": 5.892251000000002,
+ "warmMsTenBodies": {
+  "n": 400,
+  "min": 0.04422599999999477,
+  "p50": 0.08221700000000709,
+  "p95": 0.1658521500000087,
+  "p99": 0.2991300699999949,
+  "max": 4.181735000000003
+ },
+ "warmMsTenBodiesSpreadOfDates": {
+  "n": 200,
+  "min": 0.04262400000000355,
+  "p50": 0.04540999999999684,
+  "p95": 0.0790925499999936,
+  "p99": 0.25868458999999794,
+  "max": 0.33208299999999724
+ },
+ "peakRssMiB": 69.81,
+ "rssAtEndMiB": 69.81,
+ "heapUsedMiB": 7.7
+}

@@ -1,0 +1,35 @@
+{
+ "target": "prototype",
+ "label": "prototype (raw DE440s, readSync per evaluation)",
+ "note": "ten bodies per iteration; data acquisition excluded from every timed kernel",
+ "node": "v22.22.2",
+ "dataMiB": 31.21,
+ "coldStartMsTenBodies": {
+  "n": 5,
+  "min": 1.2314489999999978,
+  "p50": 1.6047359999999955,
+  "p95": 4.4602695999999975,
+  "p99": 4.903023519999998,
+  "max": 5.013711999999998
+ },
+ "firstColdRunMs": 5.013711999999998,
+ "warmMsTenBodies": {
+  "n": 400,
+  "min": 0.23613299999999526,
+  "p50": 0.3102035000000143,
+  "p95": 1.0786562999999842,
+  "p99": 1.2668163600000062,
+  "max": 3.6294989999999814
+ },
+ "warmMsTenBodiesSpreadOfDates": {
+  "n": 200,
+  "min": 0.24714099999999917,
+  "p50": 0.2820880000000159,
+  "p95": 1.1177263500000234,
+  "p99": 1.2882672099999564,
+  "max": 1.4324169999999867
+ },
+ "peakRssMiB": 64.41,
+ "rssAtEndMiB": 64.1,
+ "heapUsedMiB": 7.09
+}

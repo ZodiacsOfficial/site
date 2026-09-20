@@ -1,0 +1,911 @@
+{
+ "track": "2 - numerical references, time and frame conventions, error analysis",
+ "date": "2026-09-20",
+ "kernel": {
+  "path": "/tmp/claude-0/swisslab/de440s.bsp",
+  "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"
+ },
+ "swiss": {
+  "binding": "2.10.03",
+  "backendVerified": "SWIEPH on every call"
+ },
+ "cellD": {
+  "published": {
+   "n": 160,
+   "max": 0.13444391481698403,
+   "p50": 0.03826031334313029,
+   "p95": 0.11743267930171442
+  },
+  "reproducedHere": {
+   "n": 160,
+   "maxAbsArcsec": 0.13444391481698403,
+   "p50ArcsecAbs": 0.03826031334313029,
+   "p95ArcsecAbs": 0.11743267930171442,
+   "worstCase": null
+  },
+  "afterBestReduction": {
+   "name": "P8 best, light-time to 1e-11",
+   "options": {
+    "nutation": "2000b",
+    "bias": true,
+    "aberration": "full",
+    "deflection": "sun",
+    "timescale": "tdb",
+    "observerVelocity": "analytic",
+    "lightTimeIters": 12,
+    "lightTimeTolSec": 1e-11,
+    "deflectionLimit": 1e-14
+   },
+   "n": 160,
+   "max": 0.010729953910981749,
+   "p50": 0.0002950051339212223,
+   "p95": 0.0015444666109232206,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953910981749
+   }
+  }
+ },
+ "sweep": [
+  {
+   "name": "P0 prototype as shipped",
+   "n": 160,
+   "max": 0.13444374374103063,
+   "p50": 0.03826018892425509,
+   "p95": 0.11743251703663304,
+   "worst": {
+    "id": "geo-01",
+    "body": "Neptune",
+    "dLonArcsec": -0.13444374374103063
+   }
+  },
+  {
+   "name": "P1 + IAU2000B nutation",
+   "n": 160,
+   "max": 0.13845186158505385,
+   "p50": 0.007211968647879985,
+   "p95": 0.02670741421297862,
+   "worst": {
+    "id": "ingress-01",
+    "body": "Neptune",
+    "dLonArcsec": 0.13845186158505385
+   }
+  },
+  {
+   "name": "P1a + IAU2000A nutation",
+   "n": 160,
+   "max": 0.13838021882293106,
+   "p50": 0.007253987407551676,
+   "p95": 0.02674885300393725,
+   "worst": {
+    "id": "ingress-01",
+    "body": "Neptune",
+    "dLonArcsec": 0.13838021882293106
+   }
+  },
+  {
+   "name": "P2 + frame bias only",
+   "n": 160,
+   "max": 0.1275708008734,
+   "p50": 0.039832064533129596,
+   "p95": 0.12043219040265284,
+   "worst": {
+    "id": "geo-01",
+    "body": "Neptune",
+    "dLonArcsec": -0.1275708008734
+   }
+  },
+  {
+   "name": "P3 + 2000B + frame bias",
+   "n": 160,
+   "max": 0.14507118312394596,
+   "p50": 0.0037045325143481023,
+   "p95": 0.02066487459615015,
+   "worst": {
+    "id": "ingress-01",
+    "body": "Neptune",
+    "dLonArcsec": 0.14507118312394596
+   }
+  },
+  {
+   "name": "P4 + 2000B + bias + TDB",
+   "n": 160,
+   "max": 0.14507369257898972,
+   "p50": 0.003699118144595559,
+   "p95": 0.020564579047004337,
+   "worst": {
+    "id": "ingress-01",
+    "body": "Neptune",
+    "dLonArcsec": 0.14507369257898972
+   }
+  },
+  {
+   "name": "P5 + 2000B + bias + TDB + deflection",
+   "n": 160,
+   "max": 0.010361690590343642,
+   "p50": 0.00042192159526166506,
+   "p95": 0.0016592279166616206,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010361690590343642
+   }
+  },
+  {
+   "name": "P6 + full aberration too",
+   "n": 160,
+   "max": 0.010729953655186364,
+   "p50": 0.00029500505718260683,
+   "p95": 0.0015444664881414359,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953655186364
+   }
+  },
+  {
+   "name": "P7 + analytic observer velocity",
+   "n": 160,
+   "max": 0.010729953910981749,
+   "p50": 0.0002950051339212223,
+   "p95": 0.0015444666109232206,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953910981749
+   }
+  },
+  {
+   "name": "P8 best, light-time to 1e-11",
+   "n": 160,
+   "max": 0.010729953910981749,
+   "p50": 0.0002950051339212223,
+   "p95": 0.0015444666109232206,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953910981749
+   }
+  },
+  {
+   "name": "P8a best with IAU2000A",
+   "n": 160,
+   "max": 0.010436260751589543,
+   "p50": 0.0004955623559510514,
+   "p95": 0.0017452688894081803,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010436260751589543
+   }
+  },
+  {
+   "name": "A-nutation back to AE",
+   "n": 160,
+   "max": 0.12086854515018786,
+   "p50": 0.03473057351470743,
+   "p95": 0.1189717464794171,
+   "worst": {
+    "id": "modern-03",
+    "body": "Mars",
+    "dLonArcsec": 0.12086854515018786
+   }
+  },
+  {
+   "name": "A-bias off",
+   "n": 160,
+   "max": 0.01821426207300192,
+   "p50": 0.0069311264951466,
+   "p95": 0.009989138056880618,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.01821426207300192
+   }
+  },
+  {
+   "name": "A-TDB off (TT as TDB)",
+   "n": 160,
+   "max": 0.010685414537192628,
+   "p50": 0.00028310310256074445,
+   "p95": 0.001552798661492715,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010685414537192628
+   }
+  },
+  {
+   "name": "A-deflection off",
+   "n": 160,
+   "max": 0.1450440516236995,
+   "p50": 0.0032036570644322637,
+   "p95": 0.020524776210777387,
+   "worst": {
+    "id": "ingress-01",
+    "body": "Neptune",
+    "dLonArcsec": 0.1450440516236995
+   }
+  },
+  {
+   "name": "A-aberration first order",
+   "n": 160,
+   "max": 0.010361690871718565,
+   "p50": 0.00042192220917058876,
+   "p95": 0.0016592280240956823,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010361690871718565
+   }
+  },
+  {
+   "name": "A-aberration off",
+   "n": 160,
+   "max": 20.85930638284026,
+   "p50": 17.199189720000874,
+   "p95": 20.690706267339465,
+   "worst": {
+    "id": "historic-01",
+    "body": "Moon",
+    "dLonArcsec": 20.85930638284026
+   }
+  },
+  {
+   "name": "A-observer velocity h=60s",
+   "n": 160,
+   "max": 0.010729953655186364,
+   "p50": 0.00029500505718260683,
+   "p95": 0.0015444664881414359,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953655186364
+   }
+  },
+  {
+   "name": "A-observer velocity h=600s",
+   "n": 160,
+   "max": 0.01072993122193111,
+   "p50": 0.00029498901881197526,
+   "p95": 0.001544458962641213,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.01072993122193111
+   }
+  },
+  {
+   "name": "A-light-time 1 iteration",
+   "n": 160,
+   "max": 0.010061463393640224,
+   "p50": 0.0003839701548713492,
+   "p95": 0.002211879043443331,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010061463393640224
+   }
+  },
+  {
+   "name": "A-light-time 2 iterations",
+   "n": 160,
+   "max": 0.010729953910981749,
+   "p50": 0.00029501938172415976,
+   "p95": 0.0015444690806276616,
+   "worst": {
+    "id": "historic-02",
+    "body": "Moon",
+    "dLonArcsec": -0.010729953910981749
+   }
+  }
+ ],
+ "nutation": {
+  "ae_minus_swiss_dpsi": {
+   "n": 1964,
+   "mean": 0.001198383079693081,
+   "maxAbs": 0.2676951407721404,
+   "p50Abs": 0.053405363712488274,
+   "p95Abs": 0.15153459707595412,
+   "min": -0.2220077367894353,
+   "max": 0.2676951407721404,
+   "rms": 0.07590792617027563
+  },
+  "ae_minus_swiss_deps": {
+   "n": 1964,
+   "mean": -0.0008671228211595982,
+   "maxAbs": 0.07842961019925498,
+   "p50Abs": 0.01787647062405906,
+   "p95Abs": 0.049082904090767696,
+   "min": -0.06665333376275395,
+   "max": 0.07842961019925498,
+   "rms": 0.025448305384604877
+  },
+  "2000A_minus_swiss_dpsi": {
+   "n": 1964,
+   "mean": 0.0001320890379281924,
+   "maxAbs": 0.002249173451010833,
+   "p50Abs": 0.00036334061978937626,
+   "p95Abs": 0.0010918214244291847,
+   "min": -0.0017707295175348747,
+   "max": 0.002249173451010833,
+   "rms": 0.000559510017805404
+  },
+  "2000A_minus_swiss_deps": {
+   "n": 1964,
+   "mean": 0.00026366039820554724,
+   "maxAbs": 0.0011074849260035435,
+   "p50Abs": 0.0002892191388665921,
+   "p95Abs": 0.0006636320979202635,
+   "min": -0.0007626033191057147,
+   "max": 0.0011074849260035435,
+   "rms": 0.00036628177633422237
+  },
+  "2000AP03_minus_swiss_dpsi": {
+   "n": 1964,
+   "mean": 0.0001309416389404896,
+   "maxAbs": 0.002277430218367016,
+   "p50Abs": 0.00037095017537826583,
+   "p95Abs": 0.001088879874938264,
+   "min": -0.001807454033384559,
+   "max": 0.002277430218367016,
+   "rms": 0.0005604647097259854
+  },
+  "2000B_minus_swiss_dpsi": {
+   "n": 1964,
+   "mean": -0.00012239744492785603,
+   "maxAbs": 0.0013467280699721584,
+   "p50Abs": 0.0001511019012485626,
+   "p95Abs": 0.0009460146736297577,
+   "min": -0.0013467280699721584,
+   "max": 0.0011743543104927312,
+   "rms": 0.00039434830728003826
+  },
+  "2000B_minus_swiss_deps": {
+   "n": 1964,
+   "mean": 0.00039681846679776955,
+   "maxAbs": 0.001126065206870197,
+   "p50Abs": 0.00038800447602049815,
+   "p95Abs": 0.0007974600026266264,
+   "min": -0.00026835145686632256,
+   "max": 0.001126065206870197,
+   "rms": 0.0004490179948304973
+  },
+  "2000BP03_minus_swiss_dpsi": {
+   "n": 1964,
+   "mean": -0.00012354544192850247,
+   "maxAbs": 0.0013882911729954373,
+   "p50Abs": 0.0001523156283189664,
+   "p95Abs": 0.0009477255809222204,
+   "min": -0.0013882911729954373,
+   "max": 0.0011686175000487076,
+   "rms": 0.00039631385489523254
+  },
+  "2000B_minus_2000A_dpsi": {
+   "n": 1964,
+   "mean": -0.00025448648285604855,
+   "maxAbs": 0.0034990942954928883,
+   "p50Abs": 0.00046710097471525103,
+   "p95Abs": 0.0014859324664992172,
+   "min": -0.0034990942954928883,
+   "max": 0.002456372035817722,
+   "rms": 0.0007306036645865038
+  },
+  "2000B_minus_2000A_deps": {
+   "n": 1964,
+   "mean": 0.0001331580685922223,
+   "maxAbs": 0.0017644995874297464,
+   "p50Abs": 0.00018326143787339433,
+   "p95Abs": 0.00082394562064203,
+   "min": -0.0007558892906462944,
+   "max": 0.0017644995874297464,
+   "rms": 0.00037421713557466823
+  },
+  "ae_minus_2000A_dpsi": {
+   "n": 1964,
+   "mean": 0.0010662940417648843,
+   "maxAbs": 0.2665451036060986,
+   "p50Abs": 0.05365565998623367,
+   "p95Abs": 0.15117387640169955,
+   "min": -0.22175689296302536,
+   "max": 0.2665451036060986,
+   "rms": 0.07591548083918082
+  },
+  "ae_minus_2000B_dpsi": {
+   "n": 1964,
+   "mean": 0.0013207805246210392,
+   "maxAbs": 0.26782370362954566,
+   "p50Abs": 0.053438219289128064,
+   "p95Abs": 0.15151628520024163,
+   "min": -0.2220257803698269,
+   "max": 0.26782370362954566,
+   "rms": 0.07590892593514759
+  },
+  "aeReimpl_minus_aeLib_dpsi": {
+   "n": 1964,
+   "mean": 0.0,
+   "maxAbs": 0.0,
+   "p50Abs": 0.0,
+   "p95Abs": 0.0,
+   "min": 0.0,
+   "max": 0.0,
+   "rms": 0.0
+  },
+  "mobl_ae_minus_swiss_arcsec": {
+   "n": 1964,
+   "mean": -1.6575464279341385e-05,
+   "maxAbs": 7.771673864453987e-05,
+   "p50Abs": 4.873183456766128e-06,
+   "p95Abs": 6.537553730368016e-05,
+   "min": -7.771673864453987e-05,
+   "max": 1.0000576367019676e-06,
+   "rms": 2.7519897793166723e-05
+  },
+  "tobl_ae_minus_swiss_arcsec": {
+   "n": 1964,
+   "mean": -0.0008836982853827364,
+   "maxAbs": 0.07842766099912524,
+   "p50Abs": 0.017880469226838613,
+   "p95Abs": 0.049118568320523075,
+   "min": -0.06666973006304033,
+   "max": 0.07842766099912524,
+   "rms": 0.0254489073090026
+  }
+ },
+ "effects": {
+  "nut_ae": {
+   "n": 15010,
+   "maxAbs": 0.25026687441140893,
+   "p50Abs": 0.05293193667057494,
+   "p95Abs": 0.1472012233756459
+  },
+  "nut_2000a": {
+   "n": 15010,
+   "maxAbs": 0.002661264079506509,
+   "p50Abs": 0.0004935261735283802,
+   "p95Abs": 0.0014742506095899444
+  },
+  "bias_off": {
+   "n": 15010,
+   "maxAbs": 0.010491884199836932,
+   "p50Abs": 0.006780467029443571,
+   "p95Abs": 0.008639789018616282
+  },
+  "defl_off": {
+   "n": 15010,
+   "maxAbs": 1.7444773940269442,
+   "p50Abs": 0.0027252443885572575,
+   "p95Abs": 0.03343925308172397
+  },
+  "aberr_first": {
+   "n": 15010,
+   "maxAbs": 0.0005270009069135995,
+   "p50Abs": 0.000318639092711237,
+   "p95Abs": 0.0005111519182321445
+  },
+  "aberr_off": {
+   "n": 15010,
+   "maxAbs": 21.503448411874615,
+   "p50Abs": 17.450920935794834,
+   "p95Abs": 20.728244251631622
+  },
+  "tt_as_tdb": {
+   "n": 15010,
+   "maxAbs": 0.00105657583802099,
+   "p50Abs": 7.243613708851626e-06,
+   "p95Abs": 0.0006489330628056668
+  },
+  "vel_h60": {
+   "n": 15010,
+   "maxAbs": 8.185452315956354e-10,
+   "p50Abs": 4.092726157978177e-10,
+   "p95Abs": 6.139089236967266e-10
+  },
+  "vel_h600": {
+   "n": 15010,
+   "maxAbs": 5.745164344261866e-08,
+   "p50Abs": 4.0805758771966794e-08,
+   "p95Abs": 5.251735046840618e-08
+  },
+  "lt_1": {
+   "n": 15010,
+   "maxAbs": 0.003938656658419859,
+   "p50Abs": 2.2655925135950383e-05,
+   "p95Abs": 0.0016307194238152042
+  },
+  "lt_2": {
+   "n": 15010,
+   "maxAbs": 5.365461674955441e-06,
+   "p50Abs": 0.0,
+   "p95Abs": 1.6141200376296175e-07
+  },
+  "lt_3": {
+   "n": 15010,
+   "maxAbs": 1.0231815394945443e-09,
+   "p50Abs": 0.0,
+   "p95Abs": 0.0
+  }
+ },
+ "deflectionByElongation": {
+  "0-1deg": {
+   "n": 123,
+   "maxAbs": 1.7444773940269442,
+   "p50Abs": 0.042668164451242774
+  },
+  "1-2deg": {
+   "n": 139,
+   "maxAbs": 0.34427700401238326,
+   "p50Abs": 0.07663433279958554
+  },
+  "2-5deg": {
+   "n": 384,
+   "maxAbs": 0.19322341804013377,
+   "p50Abs": 0.044886669127208734
+  },
+  "5-10deg": {
+   "n": 700,
+   "maxAbs": 0.0869626164615056,
+   "p50Abs": 0.023638275528981012
+  },
+  "10-20deg": {
+   "n": 1515,
+   "maxAbs": 0.04443210875706427,
+   "p50Abs": 0.011639059584922506
+  },
+  "20-45deg": {
+   "n": 2978,
+   "maxAbs": 0.02216548496107862,
+   "p50Abs": 0.006630967851606329
+  },
+  "45-90deg": {
+   "n": 2963,
+   "maxAbs": 0.009664383162544254,
+   "p50Abs": 0.0047095179979805835
+  },
+  "90-135deg": {
+   "n": 2453,
+   "maxAbs": 0.004179935808679147,
+   "p50Abs": 0.0021738597865805787
+  },
+  "135-180.1deg": {
+   "n": 2254,
+   "maxAbs": 0.0017575919855516986,
+   "p50Abs": 0.0005404137809250642
+  }
+ },
+ "deflectionScan": {
+  "Moon": {
+   "daysScanned": 109591,
+   "nPeaks": 0,
+   "maxAbsDLonArcsec": 0,
+   "maxAbsDLonOutsideDiscArcsec": 0,
+   "daysWithDLonOver0p05": 0,
+   "daysWithDLonOver0p01": 0
+  },
+  "Mercury": {
+   "daysScanned": 109591,
+   "nPeaks": 1715,
+   "maxAbsDLonArcsec": 190.87731212658525,
+   "maxAbsDLonOutsideDiscArcsec": 0.39884377666794535,
+   "daysWithDLonOver0p05": 2070,
+   "daysWithDLonOver0p01": 26228
+  },
+  "Venus": {
+   "daysScanned": 109591,
+   "nPeaks": 360,
+   "maxAbsDLonArcsec": 20.14173343757193,
+   "maxAbsDLonOutsideDiscArcsec": 0.5709300820399221,
+   "daysWithDLonOver0p05": 4837,
+   "daysWithDLonOver0p01": 26870
+  },
+  "Mars": {
+   "daysScanned": 109591,
+   "nPeaks": 268,
+   "maxAbsDLonArcsec": 13.393622518162829,
+   "maxAbsDLonOutsideDiscArcsec": 0.7095308210409712,
+   "daysWithDLonOver0p05": 5459,
+   "daysWithDLonOver0p01": 27024
+  },
+  "Jupiter": {
+   "daysScanned": 109591,
+   "nPeaks": 481,
+   "maxAbsDLonArcsec": 28.18708425481873,
+   "maxAbsDLonOutsideDiscArcsec": 1.0179827833553645,
+   "daysWithDLonOver0p05": 5563,
+   "daysWithDLonOver0p01": 26966
+  },
+  "Saturn": {
+   "daysScanned": 109591,
+   "nPeaks": 541,
+   "maxAbsDLonArcsec": 8.126817236598072,
+   "maxAbsDLonOutsideDiscArcsec": 1.0898050590469666,
+   "daysWithDLonOver0p05": 5246,
+   "daysWithDLonOver0p01": 26906
+  },
+  "Uranus": {
+   "daysScanned": 109591,
+   "nPeaks": 433,
+   "maxAbsDLonArcsec": 97.75910735922366,
+   "maxAbsDLonOutsideDiscArcsec": 1.0792249311947444,
+   "daysWithDLonOver0p05": 5648,
+   "daysWithDLonOver0p01": 27051
+  },
+  "Neptune": {
+   "daysScanned": 109591,
+   "nPeaks": 548,
+   "maxAbsDLonArcsec": 20.46806228378273,
+   "maxAbsDLonOutsideDiscArcsec": 1.0666119664165308,
+   "daysWithDLonOver0p05": 5474,
+   "daysWithDLonOver0p01": 27032
+  },
+  "Pluto": {
+   "daysScanned": 109591,
+   "nPeaks": 253,
+   "maxAbsDLonArcsec": 3.7231346144324107,
+   "maxAbsDLonOutsideDiscArcsec": 0.7109150493249672,
+   "daysWithDLonOver0p05": 613,
+   "daysWithDLonOver0p01": 23785
+  }
+ },
+ "barycentreVsCentre": {
+  "Jupiter": {
+   "kernel": "/tmp/claude-0/satkernels/jup348.bsp",
+   "segment": "599<-5",
+   "coverage": {
+    "startEt": -93355200,
+    "stopEt": 6309921600
+   },
+   "n": 1500,
+   "maxOffsetKm": 220.045300566189,
+   "maxAbsDLonArcsec": 0.06649854790339305,
+   "p50AbsDLonArcsec": 0.01806356521001362,
+   "maxAbsDLatArcsec": 0.003932922108784709,
+   "minDistAu": 3.954525392597866,
+   "maxDistAu": 6.452509212273939
+  },
+  "Saturn": {
+   "kernel": "/tmp/claude-0/satkernels/sat480.bsp",
+   "segment": "699<-6",
+   "coverage": {
+    "startEt": 465134400,
+    "stopEt": 1577880000
+   },
+   "n": 1500,
+   "maxOffsetKm": 310.54020741133417,
+   "maxAbsDLonArcsec": 0.04969112287085409,
+   "p50AbsDLonArcsec": 0.027555409883461834,
+   "maxAbsDLatArcsec": 0.023258637709400176,
+   "minDistAu": 8.034270084707472,
+   "maxDistAu": 11.046875678011677
+  },
+  "Neptune": {
+   "kernel": "/tmp/claude-0/satkernels/nep097.bsp",
+   "segment": "899<-8",
+   "coverage": {
+    "startEt": -12622046400,
+    "stopEt": -320932800
+   },
+   "n": 1500,
+   "maxOffsetKm": 74.34435019401381,
+   "maxAbsDLonArcsec": 0.0035220578070038755,
+   "p50AbsDLonArcsec": 0.0020330616166575055,
+   "maxAbsDLatArcsec": 0.002660897293704778,
+   "minDistAu": 28.823895579335318,
+   "maxDistAu": 31.323863992162114
+  },
+  "Pluto": {
+   "kernel": "/tmp/claude-0/satkernels/plu060.bsp",
+   "segment": "999<-9",
+   "coverage": {
+    "startEt": 410270400,
+    "stopEt": 6311217600
+   },
+   "n": 1500,
+   "maxOffsetKm": 2132.049600662995,
+   "maxAbsDLonArcsec": 0.08327489579187386,
+   "p50AbsDLonArcsec": 0.025766911471691856,
+   "maxAbsDLatArcsec": 0.08359817255882973,
+   "minDistAu": 31.457183956864952,
+   "maxDistAu": 50.282856405856634
+  }
+ },
+ "readerAgreement": {
+  "what": "independent Python/numpy SPK reader vs the existing JavaScript reader",
+  "kernel": "/tmp/claude-0/swisslab/de440s.bsp",
+  "n": 13188,
+  "maxAbsDifferenceKm": 9.5367431640625e-07,
+  "maxRelativeDifference": 3.8607175329526883e-16,
+  "rowsIdenticalToTheLastBit": 6302,
+  "ssbMassBalance": {
+   "what": "norm of sum(GM_i * r_i)/sum(GM_i) over the ten DE440 point masses",
+   "n": 23,
+   "maxKm": 136.7114344957193,
+   "meanKm": 121.02477797521242,
+   "interpretation": "Not zero, and not reader error: it is ~1e-7 of the Sun's own barycentric excursion, it varies smoothly over centuries rather than with any planetary period, and BOTH readers reproduce it identically. DE440 integrates bodies that de440s carries no segment for (343 asteroids and 30 massive trans-Neptunian objects); the size and the century-scale variation are consistent with the TNOs, but that attribution is inferred, not proven here. What this check DOES establish is that the ten segments are mutually consistent to 1 part in 1e7 of the barycentric scale, which no reader bug would survive."
+  }
+ },
+ "coreCounterfactual": {
+  "A core, engine time": {
+   "before": {
+    "n": 160,
+    "max": 64.76822812365981,
+    "p50": 1.6650899310107548,
+    "p95": 12.081680322221365,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 64.76822812365981
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 64.78192591331435,
+    "p50": 1.7568392945605638,
+    "p95": 12.047785257859081,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 64.78192591331435
+    }
+   }
+  },
+  "B core, matched time": {
+   "before": {
+    "n": 160,
+    "max": 17.40362103073494,
+    "p50": 1.446054119391249,
+    "p95": 11.816808215484643,
+    "worst": {
+     "id": "modern-04",
+     "body": "Neptune",
+     "d": 17.40362103073494
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 17.427798398580308,
+    "p50": 1.417766057770109,
+    "p95": 11.748063965468981,
+    "worst": {
+     "id": "modern-04",
+     "body": "Neptune",
+     "d": 17.427798398580308
+    }
+   }
+  },
+  "C prototype, engine time": {
+   "before": {
+    "n": 160,
+    "max": 63.88727429913388,
+    "p50": 0.0823272739580716,
+    "p95": 1.863554850225729,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 63.88727429913388
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 63.90097208878842,
+    "p50": 0.013520390541543748,
+    "p95": 1.8759581752123369,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 63.90097208878842
+    }
+   }
+  },
+  "D prototype, matched time": {
+   "before": {
+    "n": 160,
+    "max": 0.13444391481698403,
+    "p50": 0.03826031334313029,
+    "p95": 0.11743267930171442,
+    "worst": {
+     "id": "geo-01",
+     "body": "Neptune",
+     "d": -0.13444391481698403
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 0.13845167065937858,
+    "p50": 0.0072121416678783135,
+    "p95": 0.02670758549356833,
+    "worst": {
+     "id": "ingress-01",
+     "body": "Neptune",
+     "d": 0.13845167065937858
+    }
+   }
+  }
+ },
+ "boundInputs": {
+  "coverageEt": {
+   "start": -4734072000,
+   "stop": 4735368000
+  },
+  "bodies": {
+   "Sun": {
+    "maxBarycentricSpeedKmS": 0.016092966229001807,
+    "maxSpeedOverC": 5.368035719231405e-08,
+    "maxApparentLonRateArcsecPerSec": 0.042490078438959245,
+    "maxLightTimeSec": 507.38143045149195,
+    "minGeocentricDistAu": 0.9832357166649324
+   },
+   "Moon": {
+    "maxBarycentricSpeedKmS": 31.373121302102835,
+    "maxSpeedOverC": 0.00010464946820677803,
+    "maxApparentLonRateArcsecPerSec": 0.6410883708585402,
+    "maxLightTimeSec": 1.3563906861105268,
+    "minGeocentricDistAu": 0.0023829745721424002
+   },
+   "Mercury": {
+    "maxBarycentricSpeedKmS": 58.99008280923636,
+    "maxSpeedOverC": 0.00019676973597926992,
+    "maxApparentLonRateArcsecPerSec": 0.09178507402737068,
+    "maxLightTimeSec": 724.2614157728719,
+    "minGeocentricDistAu": 0.5491066751484832
+   },
+   "Venus": {
+    "maxBarycentricSpeedKmS": 35.27592926839182,
+    "maxSpeedOverC": 0.00011766783428685128,
+    "maxApparentLonRateArcsecPerSec": 0.05244501805123036,
+    "maxLightTimeSec": 866.2338259353917,
+    "minGeocentricDistAu": 0.2643468304719612
+   },
+   "Mars": {
+    "maxBarycentricSpeedKmS": 26.517487366016656,
+    "maxSpeedOverC": 8.845281680173775e-05,
+    "maxApparentLonRateArcsecPerSec": 0.032974067138411556,
+    "maxLightTimeSec": 1335.4444138736014,
+    "minGeocentricDistAu": 0.37302892628990025
+   },
+   "Jupiter": {
+    "maxBarycentricSpeedKmS": 13.710639687577576,
+    "maxSpeedOverC": 4.573377121974688e-05,
+    "maxApparentLonRateArcsecPerSec": 0.01010194144537735,
+    "maxLightTimeSec": 3221.0381818781834,
+    "minGeocentricDistAu": 3.9502057689415047
+   },
+   "Saturn": {
+    "maxBarycentricSpeedKmS": 10.198904668811048,
+    "maxSpeedOverC": 3.401988407864166e-05,
+    "maxApparentLonRateArcsecPerSec": 0.005427373679651737,
+    "maxLightTimeSec": 5515.729365796799,
+    "minGeocentricDistAu": 8.028400812373219
+   },
+   "Uranus": {
+    "maxBarycentricSpeedKmS": 7.13393698343283,
+    "maxSpeedOverC": 2.3796252350794063e-05,
+    "maxApparentLonRateArcsecPerSec": 0.0026343906972670084,
+    "maxLightTimeSec": 10525.389242979885,
+    "minGeocentricDistAu": 17.29110805850286
+   },
+   "Neptune": {
+    "maxBarycentricSpeedKmS": 5.482253779566591,
+    "maxSpeedOverC": 1.8286830216277792e-05,
+    "maxApparentLonRateArcsecPerSec": 0.001590997464973043,
+    "maxLightTimeSec": 15633.767274799373,
+    "minGeocentricDistAu": 28.819662011559284
+   },
+   "Pluto": {
+    "maxBarycentricSpeedKmS": 6.116467083501438,
+    "maxSpeedOverC": 2.040233808517437e-05,
+    "maxApparentLonRateArcsecPerSec": 0.0016873202423539624,
+    "maxLightTimeSec": 25091.081742538783,
+    "minGeocentricDistAu": 28.687138923924625
+   }
+  },
+  "maxOverAllBodies": {
+   "speedKmS": 58.99008280923636,
+   "speedOverC": 0.00019676973597926992,
+   "lonRateArcsecPerSec": 0.6410883708585402,
+   "lightTimeSec": 25091.081742538783
+  },
+  "samples": 6000
+ }
+}
