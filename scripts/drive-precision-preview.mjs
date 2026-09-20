@@ -33,12 +33,33 @@ const ROOT = new URL('../dist/', import.meta.url).pathname;
 const BASE = `http://127.0.0.1:${PORT}`;
 const URL_ = `${BASE}/developers/precision-preview/`;
 
-const INSTALLED = {
+/**
+ * Where the builds are in THIS environment. Playwright's own
+ * `executablePath()` points at versions matching the pinned
+ * playwright-core, which are not what is installed here, so the pinned
+ * paths win when they exist.
+ *
+ * On another machine -- the Mac this hands off to -- they will not exist,
+ * and `executablePath()` after `npx playwright install` is right. So: the
+ * pinned path if it is there, else whatever Playwright itself resolves.
+ */
+const PINNED = {
   chromium: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome',
   firefox: '/opt/pw-browsers/firefox-1532/firefox/firefox',
   webkit: null,
 };
 const LAUNCHERS = { chromium, firefox, webkit };
+function resolveExecutable(name) {
+  const pinned = PINNED[name];
+  if (pinned && existsSync(pinned)) return { path: pinned, from: 'pinned' };
+  try {
+    const p = LAUNCHERS[name]?.executablePath();
+    if (p && existsSync(p)) return { path: p, from: 'playwright' };
+    return { path: null, from: 'playwright', why: `playwright resolves ${name} to ${p ?? 'nothing'}, which does not exist. Run: npx playwright install ${name}` };
+  } catch (error) {
+    return { path: null, from: 'playwright', why: String(error?.message ?? error).split('\n')[0] };
+  }
+}
 const TYPES = { '.html': 'text/html', '.mjs': 'text/javascript', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain' };
 
 const server = createServer(async (req, res) => {
@@ -72,15 +93,15 @@ const report = { url: URL_, pack: PACK ? { bytes: readFileSync(PACK).length } : 
 
 for (const name of WANT) {
   const launcher = LAUNCHERS[name];
-  const exe = INSTALLED[name];
-  if (!launcher || exe === null || !existsSync(exe)) {
-    report.browsers[name] = { attempted: true, ran: false, why: exe === null ? `no ${name} build is installed in this environment` : `no ${name} executable at the expected path` };
+  const resolved = launcher ? resolveExecutable(name) : { path: null, why: `${name} is not a Playwright browser` };
+  if (!resolved.path) {
+    report.browsers[name] = { attempted: true, ran: false, why: resolved.why ?? `no ${name} build is installed in this environment` };
     console.log(`${name}: NOT RUN — ${report.browsers[name].why}`);
     continue;
   }
-  const browser = await launcher.launch({ executablePath: exe });
+  const browser = await launcher.launch({ executablePath: resolved.path });
   try {
-    report.browsers[name] = await run(name, browser);
+    report.browsers[name] = { executable: resolved, ...await run(name, browser) };
     console.log(`${name} ${report.browsers[name].version}: ${report.browsers[name].verdict}`);
     if (report.browsers[name].problems?.length) for (const p of report.browsers[name].problems) console.log(`   - ${p}`);
   } finally {

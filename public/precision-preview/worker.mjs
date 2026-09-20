@@ -2072,15 +2072,22 @@ function describe({ kind, body, other, targetDeg }) {
   return kind === "aspect" ? `${body}-${other} at ${targetDeg}deg` : `${body} at longitude ${targetDeg}deg`;
 }
 function failureReport(error, request, bounds, p, evaluations, stage) {
-  const budget = error instanceof PrecisionError && error.code === "budget-exhausted";
-  if (!budget) throw error;
+  const known = error instanceof PrecisionError && (error.code === "budget-exhausted" || error.code === "cancelled");
+  if (!known) throw error;
+  const budget = error.code === "budget-exhausted";
   return emptyResult({
     request,
     bounds,
     p,
     evaluations,
-    status: budget ? "budget-exhausted" : "refused",
-    reason: budget ? "the evaluation budget was spent" : `${stage}-failed`,
+    status: budget ? "budget-exhausted" : "cancelled",
+    reason: budget ? "the evaluation budget was spent" : "the caller cancelled the search",
+    unresolved: [{
+      fromTtDays: bounds.a / MS_PER_DAY,
+      toTtDays: bounds.b / MS_PER_DAY,
+      why: budget ? "the run stopped on its evaluation budget before this interval was decided" : "the run was cancelled before this interval was decided",
+      turningPoint: null
+    }],
     diagnostics: { stage }
   });
 }
@@ -2502,8 +2509,8 @@ function searchGeometricLongitude(eph, spec = {}) {
       }
     }
   } catch (error) {
-    if (error instanceof PrecisionError && error.code === "budget-exhausted") {
-      status = "budget-exhausted";
+    if (error instanceof PrecisionError && (error.code === "budget-exhausted" || error.code === "cancelled")) {
+      status = error.code;
       reason = error.message;
     } else throw error;
   }
