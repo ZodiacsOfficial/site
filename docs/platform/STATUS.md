@@ -17,7 +17,7 @@ that page after a live drive recorded a request to `plausible.io`, and
 [#514](https://github.com/ZodiacsOfficial/site/pull/514) recorded the deployed
 drive. Method and tested limits: [evidence/chart-compare](evidence/chart-compare/README.md).
 
-**`zodiacs-mcp-server@0.1.0-rc.4`** is the agent half of the same stage. A local
+**`zodiacs-mcp-server@0.1.0-rc.6`** is the agent half of the same stage. A local
 stdio MCP server with three tools, over the real `natalChart`, the real envelope
 codec and the real `compareEnvelopes` — the same module the browser tool runs,
 not a copy. No listener, no port, no outbound request, no file access.

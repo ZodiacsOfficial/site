@@ -46,14 +46,18 @@ const engineRows = [
     <h2 id="engine-candidate">Local engine · {candidate.releaseLabel.toLowerCase()}</h2>
     <div class="prose">
       <p>
-        Evaluate <code>{candidate.name}@{candidate.version}</code> from the exact
-        public tarball below. It has been downloaded without credentials and
-        installed in a clean consumer. It is not an npm release — <code>npm view
-        {candidate.name}</code> returns 404 — and that is a missing credential,
-        not a missing decision: publication is authorized, and what remains is an
-        authenticated publish by a maintainer. Nothing here is waiting on a
-        review. This archive identifies the local package; hosted data and
-        widgets are separate deployments.
+        Evaluate <code>{`${candidate.name}@${candidate.version}`}</code> from the
+        exact public tarball below. It has been downloaded without credentials
+        and installed in a clean consumer. This archive identifies the local
+        package; hosted data and widgets are separate deployments.
+      </p>
+      <p>
+        It is not on npm yet: <code>{`npm view ${candidate.name}`}</code> returns
+        404. Two things are outstanding, and the candidate's own README and
+        changelog say so: an adversarial review of the engine and widgets
+        packages, which is still open, and the operator authority to publish.
+        The tarball below is therefore the whole evaluation route today, and it
+        is the same bytes a registry release would carry.
       </p>
       <p>
         <a href={candidate.artifactUrl}>Download engine {candidate.version} (.tgz)</a>.
