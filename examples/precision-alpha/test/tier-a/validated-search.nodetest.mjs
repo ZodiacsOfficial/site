@@ -272,14 +272,25 @@ test('a spent budget is a status, not a silent short list', () => {
   assert.equal(r.eventCount.support, 'none');
 });
 
-test('cancellation propagates with the count it reached', () => {
+test('cancellation comes back as a result, keeping the events already isolated', () => {
+  // It used to throw, which discarded every root the run had already
+  // proved. `cancelled` is a named execution state; the result now carries
+  // it, along with whatever was found before the stop.
   let n = 0;
   const signal = {};
   Object.defineProperty(signal, 'aborted', { get() { n += 1; return n > 50; } });
-  assert.throws(
-    () => search(chebPack(19), { fromTtDays: 0.0001, toTtDays: 5.9999, signal }),
-    (e) => e.code === 'cancelled' && typeof e.detail.evaluations === 'number',
-  );
+  const r = search(chebPack(19), { fromTtDays: 0.0001, toTtDays: 5.9999, signal });
+  assert.equal(r.execution.status, 'cancelled');
+  assert.equal(r.execution.finished, false);
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.completeness.support, 'none');
+  assert.equal(r.eventCount.isExactTotal, false);
+  assert.equal(r.accounting.allIntervalsAccountedFor, false);
+  assert.equal(typeof r.execution.evaluations, 'number');
+  // Every event it did hand back is still a real bracketed root.
+  for (const e of r.events) {
+    assert.equal(e.bracketTtDays[0] <= e.ttDays && e.ttDays <= e.bracketTtDays[1], true);
+  }
 });
 
 test('an instant outside coverage is refused', () => {

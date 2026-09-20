@@ -710,17 +710,30 @@ function describe({ kind, body, other, targetDeg }) {
 }
 
 function failureReport(error, request, bounds, p, evaluations, stage) {
-  // Cancellation is the caller's own doing and propagates. A spent budget
-  // is an answer -- a refusal -- not an exception.
-  // Anything that is not a spent budget is a bug in this package, and a bug
-  // must not be laundered into a tidy "refused" result: the caller would
-  // read a contract-shaped object where there was an internal failure.
-  const budget = error instanceof PrecisionError && error.code === 'budget-exhausted';
-  if (!budget) throw error;
+  // A spent budget and a cancelled run are both ANSWERS, and the result
+  // contract names them: 'budget-exhausted' and 'cancelled' are two of its
+  // four execution states, and a state the contract advertises that nothing
+  // can produce is a lie about the contract. Both come back as results
+  // saying the run did not finish and established nothing.
+  //
+  // Anything else is a bug in this package, and a bug must not be laundered
+  // into a tidy result: the caller would read a contract-shaped object
+  // where there was an internal failure.
+  const known = error instanceof PrecisionError
+    && (error.code === 'budget-exhausted' || error.code === 'cancelled');
+  if (!known) throw error;
+  const budget = error.code === 'budget-exhausted';
   return emptyResult({
     request, bounds, p, evaluations,
-    status: budget ? 'budget-exhausted' : 'refused',
-    reason: budget ? 'the evaluation budget was spent' : `${stage}-failed`,
+    status: budget ? 'budget-exhausted' : 'cancelled',
+    reason: budget ? 'the evaluation budget was spent' : 'the caller cancelled the search',
+    unresolved: [{
+      fromTtDays: bounds.a / MS_PER_DAY, toTtDays: bounds.b / MS_PER_DAY,
+      why: budget
+        ? 'the run stopped on its evaluation budget before this interval was decided'
+        : 'the run was cancelled before this interval was decided',
+      turningPoint: null,
+    }],
     diagnostics: { stage },
   });
 }

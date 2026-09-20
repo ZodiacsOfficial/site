@@ -355,8 +355,11 @@ export function searchGeometricLongitude(eph, spec = {}) {
       }
     }
   } catch (error) {
-    if (error instanceof PrecisionError && error.code === 'budget-exhausted') {
-      status = 'budget-exhausted';
+    // Both are execution states the contract names, and both keep the
+    // events already isolated: a cancelled run that threw away what it had
+    // found would be answering a question nobody asked.
+    if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
+      status = error.code;
       reason = error.message;
     } else throw error;
   }

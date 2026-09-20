@@ -401,14 +401,23 @@ test('a budget that runs out during the robustness probe keeps the topology it e
   assert.equal(cut.diagnostics.robustness.why, 'budget-exhausted');
 });
 
-test('cancellation stops the search and reports how far it got', () => {
+test('cancellation comes back as a result in the cancelled state, not a throw', () => {
+  // It used to throw. `cancelled` is one of the four execution states the
+  // v2 contract names, and a state nothing can produce is a lie about the
+  // contract -- so it is now a result that says the run did not finish,
+  // established nothing, and left the interval undecided.
   let n = 0;
   const signal = {};
   Object.defineProperty(signal, 'aborted', { get() { n += 1; return n > 30; } });
-  assert.throws(
-    () => rt.search({ kind: 'longitude', body: 'Mars', targetDeg: 40, fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS, signal }),
-    (e) => e.code === 'cancelled' && typeof e.detail.evaluations === 'number',
-  );
+  const r = rt.search({ kind: 'longitude', body: 'Mars', targetDeg: 40, fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS, signal });
+  assert.equal(r.execution.status, 'cancelled');
+  assert.equal(r.execution.finished, false);
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.completeness.support, 'none');
+  assert.equal(r.eventCount.isExactTotal, false);
+  assert.equal(r.accounting.allIntervalsAccountedFor, false);
+  assert.equal(r.accounting.unresolved.length > 0, true, 'a cancelled run must say what it did not decide');
+  assert.equal(typeof r.execution.evaluations, 'number');
 });
 
 test('an unsupported event kind is refused', () => {

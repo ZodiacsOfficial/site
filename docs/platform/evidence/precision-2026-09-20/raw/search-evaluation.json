@@ -1,0 +1,3452 @@
+{
+  "plan": "EVALUATION-PLAN.md",
+  "pack": {
+    "path": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/D.v2.zeph",
+    "digest": "4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764",
+    "compiler": "1.0.0"
+  },
+  "rules": {
+    "refStepDays": 0.001953125,
+    "bisectToDays": 1e-9,
+    "matchToleranceSec": 1,
+    "unresolvedLimit": 0.25,
+    "epsilonDeg": 0.0002777777777777778
+  },
+  "node": "v22.22.2",
+  "regressions": [
+    {
+      "id": "A1",
+      "body": "Moon",
+      "targetDeg": 100,
+      "window": [
+        "2019-01-01T00:00:00Z",
+        "2020-01-01T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 13,
+        "boundaryRoots": 0,
+        "evaluations": 187154,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 13,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 13,
+        "reference": 13,
+        "unresolved": false,
+        "evaluations": 8643,
+        "ms": 92.4,
+        "peakHeapDeltaMiB": 1.363
+      },
+      "firstEventUtc": "2019-01-19T19:59:20.932Z",
+      "lastEventUtc": "2019-12-13T17:05:15.733Z"
+    },
+    {
+      "id": "A1",
+      "body": "Moon",
+      "targetDeg": 100,
+      "window": [
+        "2019-01-01T00:00:00Z",
+        "2020-01-01T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 13,
+        "boundaryRoots": 0,
+        "evaluations": 187154,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 13,
+        "reference": 13,
+        "unresolved": false,
+        "evaluations": 1511,
+        "ms": 6.3,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "2019-01-19T20:24:42.096Z",
+      "lastEventUtc": "2019-12-13T17:34:08.957Z"
+    },
+    {
+      "id": "A2",
+      "body": "Uranus",
+      "targetDeg": 30,
+      "window": [
+        "2010-01-01T00:00:00Z",
+        "2020-01-01T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 1869888,
+        "stepDays": 0.0019531249999999998
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 3,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 1464,
+        "ms": 16.4,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "2018-05-15T15:17:53.631Z",
+      "lastEventUtc": "2019-03-06T08:28:22.137Z"
+    },
+    {
+      "id": "A2",
+      "body": "Uranus",
+      "targetDeg": 30,
+      "window": [
+        "2010-01-01T00:00:00Z",
+        "2020-01-01T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 1869888,
+        "stepDays": 0.0019531249999999998
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 277,
+        "ms": 5.9,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "2018-05-20T07:48:28.292Z",
+      "lastEventUtc": "2019-03-11T23:23:11.221Z"
+    }
+  ],
+  "holdout": [
+    {
+      "id": "H1",
+      "body": "Sun",
+      "targetDeg": 13,
+      "window": [
+        "1960-01-01T00:00:00Z",
+        "1961-05-15T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 2,
+        "boundaryRoots": 0,
+        "evaluations": 256043,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 2,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 2,
+        "reference": 2,
+        "unresolved": false,
+        "evaluations": 1534,
+        "ms": 12.6,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1960-04-02T17:59:14.046Z",
+      "lastEventUtc": "1961-04-02T23:56:44.053Z"
+    },
+    {
+      "id": "H1",
+      "body": "Sun",
+      "targetDeg": 13,
+      "window": [
+        "1960-01-01T00:00:00Z",
+        "1961-05-15T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 2,
+        "boundaryRoots": 0,
+        "evaluations": 256043,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 2,
+        "reference": 2,
+        "unresolved": false,
+        "evaluations": 152,
+        "ms": 0.7,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1960-04-02T04:19:01.300Z",
+      "lastEventUtc": "1961-04-02T10:34:09.418Z"
+    },
+    {
+      "id": "H2",
+      "body": "Moon",
+      "targetDeg": 50,
+      "window": [
+        "1964-02-09T00:00:00Z",
+        "1965-06-23T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 18,
+        "boundaryRoots": 0,
+        "evaluations": 256379,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 18,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 18,
+        "reference": 18,
+        "unresolved": false,
+        "evaluations": 10926,
+        "ms": 106.2,
+        "peakHeapDeltaMiB": 1.333
+      },
+      "firstEventUtc": "1964-02-19T18:47:35.772Z",
+      "lastEventUtc": "1965-05-29T13:12:43.894Z"
+    },
+    {
+      "id": "H2",
+      "body": "Moon",
+      "targetDeg": 50,
+      "window": [
+        "1964-02-09T00:00:00Z",
+        "1965-06-23T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 18,
+        "boundaryRoots": 0,
+        "evaluations": 256379,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 18,
+        "reference": 18,
+        "unresolved": false,
+        "evaluations": 2183,
+        "ms": 1.6,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1964-02-19T17:56:00.088Z",
+      "lastEventUtc": "1965-05-29T12:23:13.863Z"
+    },
+    {
+      "id": "H3",
+      "body": "Mercury",
+      "targetDeg": 87,
+      "window": [
+        "1968-03-19T00:00:00Z",
+        "1969-08-01T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 4,
+        "boundaryRoots": 0,
+        "evaluations": 256085,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 4,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 4,
+        "reference": 4,
+        "unresolved": false,
+        "evaluations": 2048,
+        "ms": 24.8,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1968-05-25T16:58:29.056Z",
+      "lastEventUtc": "1969-07-06T11:21:37.557Z"
+    },
+    {
+      "id": "H3",
+      "body": "Mercury",
+      "targetDeg": 87,
+      "window": [
+        "1968-03-19T00:00:00Z",
+        "1969-08-01T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 4,
+        "boundaryRoots": 0,
+        "evaluations": 256085,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 4,
+        "reference": 4,
+        "unresolved": false,
+        "evaluations": 533,
+        "ms": 1.5,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1968-05-25T04:42:05.402Z",
+      "lastEventUtc": "1969-07-06T05:16:47.174Z"
+    },
+    {
+      "id": "H4",
+      "body": "Venus",
+      "targetDeg": 124,
+      "window": [
+        "1972-04-27T00:00:00Z",
+        "1973-09-09T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 2,
+        "boundaryRoots": 0,
+        "evaluations": 256043,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 2,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 2,
+        "reference": 2,
+        "unresolved": false,
+        "evaluations": 1575,
+        "ms": 12.3,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1972-09-11T19:10:27.658Z",
+      "lastEventUtc": "1973-07-03T15:45:04.735Z"
+    },
+    {
+      "id": "H4",
+      "body": "Venus",
+      "targetDeg": 124,
+      "window": [
+        "1972-04-27T00:00:00Z",
+        "1973-09-09T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 2,
+        "boundaryRoots": 0,
+        "evaluations": 256043,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 2,
+        "reference": 2,
+        "unresolved": false,
+        "evaluations": 319,
+        "ms": 0.8,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1972-09-11T10:29:08.970Z",
+      "lastEventUtc": "1973-07-03T08:20:07.301Z"
+    },
+    {
+      "id": "H5",
+      "body": "Mars",
+      "targetDeg": 161,
+      "window": [
+        "1976-06-05T00:00:00Z",
+        "1977-10-18T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 1,
+        "boundaryRoots": 0,
+        "evaluations": 256022,
+        "stepDays": 0.0019531249999999965
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 1,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 1,
+        "reference": 1,
+        "unresolved": false,
+        "evaluations": 1449,
+        "ms": 11.1,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1976-07-25T00:03:22.990Z",
+      "lastEventUtc": "1976-07-25T00:03:22.990Z"
+    },
+    {
+      "id": "H5",
+      "body": "Mars",
+      "targetDeg": 161,
+      "window": [
+        "1976-06-05T00:00:00Z",
+        "1977-10-18T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 1,
+        "boundaryRoots": 0,
+        "evaluations": 256022,
+        "stepDays": 0.0019531249999999965
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 1,
+        "reference": 1,
+        "unresolved": false,
+        "evaluations": 108,
+        "ms": 0.6,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1976-07-24T11:07:36.567Z",
+      "lastEventUtc": "1976-07-24T11:07:36.567Z"
+    },
+    {
+      "id": "H6",
+      "body": "Jupiter",
+      "targetDeg": 198,
+      "window": [
+        "1980-07-14T00:00:00Z",
+        "1981-11-26T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 1,
+        "boundaryRoots": 0,
+        "evaluations": 256022,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 1,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 1,
+        "reference": 1,
+        "unresolved": false,
+        "evaluations": 987,
+        "ms": 9.9,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1981-10-01T11:39:24.456Z",
+      "lastEventUtc": "1981-10-01T11:39:24.456Z"
+    },
+    {
+      "id": "H6",
+      "body": "Jupiter",
+      "targetDeg": 198,
+      "window": [
+        "1980-07-14T00:00:00Z",
+        "1981-11-26T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 1,
+        "boundaryRoots": 0,
+        "evaluations": 256022,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 1,
+        "reference": 1,
+        "unresolved": false,
+        "evaluations": 65,
+        "ms": 0.6,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1981-09-30T05:48:53.431Z",
+      "lastEventUtc": "1981-09-30T05:48:53.431Z"
+    },
+    {
+      "id": "H7",
+      "body": "Saturn",
+      "targetDeg": 235,
+      "window": [
+        "1984-08-22T00:00:00Z",
+        "1986-01-04T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 256064,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 3,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 1136,
+        "ms": 8.2,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1985-01-03T21:02:40.808Z",
+      "lastEventUtc": "1985-10-02T12:27:01.920Z"
+    },
+    {
+      "id": "H7",
+      "body": "Saturn",
+      "targetDeg": 235,
+      "window": [
+        "1984-08-22T00:00:00Z",
+        "1986-01-04T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 256064,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 173,
+        "ms": 0.7,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1985-01-01T12:46:33.494Z",
+      "lastEventUtc": "1985-09-30T06:59:51.848Z"
+    },
+    {
+      "id": "H8",
+      "body": "Uranus",
+      "targetDeg": 272,
+      "window": [
+        "1988-09-30T00:00:00Z",
+        "1990-02-12T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 256065,
+        "stepDays": 0.0019531173706352728
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 3,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 1398,
+        "ms": 13,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1989-01-05T03:03:24.330Z",
+      "lastEventUtc": "1989-10-19T19:04:57.479Z"
+    },
+    {
+      "id": "H8",
+      "body": "Uranus",
+      "targetDeg": 272,
+      "window": [
+        "1988-09-30T00:00:00Z",
+        "1990-02-12T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 3,
+        "boundaryRoots": 0,
+        "evaluations": 256065,
+        "stepDays": 0.0019531173706352728
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 3,
+        "reference": 3,
+        "unresolved": false,
+        "evaluations": 161,
+        "ms": 0.6,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": "1989-01-02T11:03:28.102Z",
+      "lastEventUtc": "1989-10-15T03:38:27.580Z"
+    },
+    {
+      "id": "H9",
+      "body": "Neptune",
+      "targetDeg": 309,
+      "window": [
+        "1992-11-08T00:00:00Z",
+        "1994-03-23T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 0,
+        "boundaryRoots": 0,
+        "evaluations": 256001,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 0,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 0,
+        "reference": 0,
+        "unresolved": false,
+        "evaluations": 909,
+        "ms": 7.5,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": null,
+      "lastEventUtc": null
+    },
+    {
+      "id": "H9",
+      "body": "Neptune",
+      "targetDeg": 309,
+      "window": [
+        "1992-11-08T00:00:00Z",
+        "1994-03-23T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 0,
+        "boundaryRoots": 0,
+        "evaluations": 256001,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 0,
+        "reference": 0,
+        "unresolved": false,
+        "evaluations": 18,
+        "ms": 0.5,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": null,
+      "lastEventUtc": null
+    },
+    {
+      "id": "H10",
+      "body": "Pluto",
+      "targetDeg": 346,
+      "window": [
+        "1996-12-17T00:00:00Z",
+        "1998-05-01T00:00:00Z"
+      ],
+      "mode": "empirical-apparent",
+      "reference": {
+        "roots": 0,
+        "boundaryRoots": 0,
+        "evaluations": 256001,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "conditional",
+        "established": false,
+        "exactTotal": false,
+        "conditionalTotal": 0,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 0,
+        "reference": 0,
+        "unresolved": false,
+        "evaluations": 882,
+        "ms": 6.2,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": null,
+      "lastEventUtc": null
+    },
+    {
+      "id": "H10",
+      "body": "Pluto",
+      "targetDeg": 346,
+      "window": [
+        "1996-12-17T00:00:00Z",
+        "1998-05-01T00:00:00Z"
+      ],
+      "mode": "validated-geometric",
+      "reference": {
+        "roots": 0,
+        "boundaryRoots": 0,
+        "evaluations": 256001,
+        "stepDays": 0.001953125
+      },
+      "result": {
+        "status": "finished",
+        "support": "proven",
+        "established": true,
+        "exactTotal": true,
+        "conditionalTotal": null,
+        "unresolvedIntervals": 0
+      },
+      "thrown": null,
+      "metrics": {
+        "missed": 0,
+        "extra": 0,
+        "found": 0,
+        "reference": 0,
+        "unresolved": false,
+        "evaluations": 19,
+        "ms": 0.4,
+        "peakHeapDeltaMiB": 0
+      },
+      "firstEventUtc": null,
+      "lastEventUtc": null
+    }
+  ],
+  "structural": [
+    {
+      "id": "H1",
+      "body": "Sun",
+      "mode": "empirical-apparent",
+      "baseEvents": 2,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2379,
+          "ms": 16
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 3267,
+          "ms": 21.2
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6815,
+          "ms": 44.5
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 1534,
+          "ms": 12.1,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 2877,
+          "ms": 23,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 5564,
+          "ms": 55.4,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 1534,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 767,
+          "baselineEvaluations": 1534,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 1534,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 767,
+          "baselinePolls": 1534,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H1",
+      "body": "Sun",
+      "mode": "validated-geometric",
+      "baseEvents": 2,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 150,
+          "ms": 1
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 154,
+          "ms": 0.9
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 154,
+          "ms": 1
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 142,
+          "ms": 0.8,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 152,
+          "ms": 0.9,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 163,
+          "ms": 2.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 152,
+          "notExercised": "the whole run costs 152 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 2
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 76,
+          "baselineEvaluations": 152,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 152,
+          "notExercised": "the whole run polls the signal 152 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 2
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 76,
+          "baselinePolls": 152,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H2",
+      "body": "Moon",
+      "mode": "empirical-apparent",
+      "baseEvents": 18,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 11794,
+          "ms": 118
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 12651,
+          "ms": 123.7
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 16160,
+          "ms": 161.4
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 10926,
+          "ms": 105.3,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 20412,
+          "ms": 193.3,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 39402,
+          "ms": 362.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 10926,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 5463,
+          "baselineEvaluations": 10926,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 10926,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 5463,
+          "baselinePolls": 10926,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H2",
+      "body": "Moon",
+      "mode": "validated-geometric",
+      "baseEvents": 18,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2175,
+          "ms": 0.7
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2183,
+          "ms": 1.2
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 2185,
+          "ms": 0.8
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 2075,
+          "ms": 0.6,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 2183,
+          "ms": 0.7,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 2326,
+          "ms": 0.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 2183,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 4
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 1091,
+          "baselineEvaluations": 2183,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 9
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 2183,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 2
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 1091,
+          "baselinePolls": 2183,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 9
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H3",
+      "body": "Mercury",
+      "mode": "empirical-apparent",
+      "baseEvents": 4,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2826,
+          "ms": 26.2
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 3581,
+          "ms": 32.5
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 7229,
+          "ms": 65.2
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 2048,
+          "ms": 18.7,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 3400,
+          "ms": 31.4,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 6087,
+          "ms": 55.4,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 2048,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 1024,
+          "baselineEvaluations": 2048,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 2048,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 1024,
+          "baselinePolls": 2048,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H3",
+      "body": "Mercury",
+      "mode": "validated-geometric",
+      "baseEvents": 4,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 534,
+          "ms": 0.8
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 532,
+          "ms": 1.1
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 528,
+          "ms": 1.5
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 518,
+          "ms": 0.6,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 533,
+          "ms": 0.6,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 553,
+          "ms": 0.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 533,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 3
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 266,
+          "baselineEvaluations": 533,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 2
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 533,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 2
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 266,
+          "baselinePolls": 533,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 2
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H4",
+      "body": "Venus",
+      "mode": "empirical-apparent",
+      "baseEvents": 2,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2428,
+          "ms": 20.4
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 3311,
+          "ms": 25.1
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6853,
+          "ms": 51.1
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 1575,
+          "ms": 11.9,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 2918,
+          "ms": 22.4,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 5605,
+          "ms": 47.5,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 1575,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 787,
+          "baselineEvaluations": 1575,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 1575,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 787,
+          "baselinePolls": 1575,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H4",
+      "body": "Venus",
+      "mode": "validated-geometric",
+      "baseEvents": 2,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 320,
+          "ms": 0.4
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 321,
+          "ms": 0.5
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 316,
+          "ms": 0.3
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 310,
+          "ms": 0.4,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 319,
+          "ms": 0.5,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 331,
+          "ms": 0.4,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 319,
+          "notExercised": "the whole run costs 319 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 2
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 159,
+          "baselineEvaluations": 319,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 319,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 159,
+          "baselinePolls": 319,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H5",
+      "body": "Mars",
+      "mode": "empirical-apparent",
+      "baseEvents": 1,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2332,
+          "ms": 18.1
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 3213,
+          "ms": 24.3
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6768,
+          "ms": 51.9
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 1449,
+          "ms": 10.9,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 2792,
+          "ms": 20.7,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 5479,
+          "ms": 42.1,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 1449,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 724,
+          "baselineEvaluations": 1449,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 1449,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 724,
+          "baselinePolls": 1449,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H5",
+      "body": "Mars",
+      "mode": "validated-geometric",
+      "baseEvents": 1,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 109,
+          "ms": 0.3
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 110,
+          "ms": 0.5
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 114,
+          "ms": 0.3
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 102,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 108,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 116,
+          "ms": 1,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 108,
+          "notExercised": "the whole run costs 108 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 1
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 54,
+          "baselineEvaluations": 108,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 108,
+          "notExercised": "the whole run polls the signal 108 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 1
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 54,
+          "baselinePolls": 108,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H6",
+      "body": "Jupiter",
+      "mode": "empirical-apparent",
+      "baseEvents": 1,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 1860,
+          "ms": 16.3
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2752,
+          "ms": 20.8
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6273,
+          "ms": 46.5
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 987,
+          "ms": 11.4,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 1851,
+          "ms": 29.3,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 3579,
+          "ms": 47.9,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 987,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 493,
+          "baselineEvaluations": 987,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 987,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 493,
+          "baselinePolls": 987,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H6",
+      "body": "Jupiter",
+      "mode": "validated-geometric",
+      "baseEvents": 1,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 66,
+          "ms": 0.5
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 64,
+          "ms": 0.5
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 67,
+          "ms": 0.7
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 62,
+          "ms": 0.3,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 65,
+          "ms": 0.4,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 69,
+          "ms": 0.3,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 65,
+          "notExercised": "the whole run costs 65 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 1
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 32,
+          "baselineEvaluations": 65,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 65,
+          "notExercised": "the whole run polls the signal 65 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 1
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 32,
+          "baselinePolls": 65,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H7",
+      "body": "Saturn",
+      "mode": "empirical-apparent",
+      "baseEvents": 3,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2009,
+          "ms": 26.4
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2869,
+          "ms": 35.1
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6414,
+          "ms": 70.7
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 1136,
+          "ms": 11.6,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 2000,
+          "ms": 21.3,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 3728,
+          "ms": 34.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 1136,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 568,
+          "baselineEvaluations": 1136,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 1136,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 568,
+          "baselinePolls": 1136,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H7",
+      "body": "Saturn",
+      "mode": "validated-geometric",
+      "baseEvents": 3,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 171,
+          "ms": 0.4
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 172,
+          "ms": 0.3
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 170,
+          "ms": 0.3
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 164,
+          "ms": 0.3,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 173,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 184,
+          "ms": 0.3,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 173,
+          "notExercised": "the whole run costs 173 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 3
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 86,
+          "baselineEvaluations": 173,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 173,
+          "notExercised": "the whole run polls the signal 173 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 3
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 86,
+          "baselinePolls": 173,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H8",
+      "body": "Uranus",
+      "mode": "empirical-apparent",
+      "baseEvents": 3,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 2166,
+          "ms": 18.8
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2999,
+          "ms": 26.5
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6534,
+          "ms": 53.2
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 1398,
+          "ms": 12.1,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 2262,
+          "ms": 19.2,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 3990,
+          "ms": 34.2,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 1398,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 699,
+          "baselineEvaluations": 1398,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 1398,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 699,
+          "baselinePolls": 1398,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H8",
+      "body": "Uranus",
+      "mode": "validated-geometric",
+      "baseEvents": 3,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 162,
+          "ms": 0.5
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 163,
+          "ms": 0.4
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 167,
+          "ms": 0.3
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 152,
+          "ms": 0.3,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 161,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 173,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 161,
+          "notExercised": "the whole run costs 161 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 3
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 80,
+          "baselineEvaluations": 161,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 161,
+          "notExercised": "the whole run polls the signal 161 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 3
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 80,
+          "baselinePolls": 161,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 1
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H9",
+      "body": "Neptune",
+      "mode": "empirical-apparent",
+      "baseEvents": 0,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 1782,
+          "ms": 16.1
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2646,
+          "ms": 22.4
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6209,
+          "ms": 50.9
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 909,
+          "ms": 7.9,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 1773,
+          "ms": 15.2,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 3501,
+          "ms": 28.7,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 909,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 454,
+          "baselineEvaluations": 909,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 909,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 454,
+          "baselinePolls": 909,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H9",
+      "body": "Neptune",
+      "mode": "validated-geometric",
+      "baseEvents": 0,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 19,
+          "ms": 0.2
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 20,
+          "ms": 0.3
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 24,
+          "ms": 0
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 18,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 18,
+          "ms": 0.1,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 18,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 18,
+          "notExercised": "the whole run costs 18 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 9,
+          "baselineEvaluations": 18,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 18,
+          "notExercised": "the whole run polls the signal 18 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 9,
+          "baselinePolls": 18,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H10",
+      "body": "Pluto",
+      "mode": "empirical-apparent",
+      "baseEvents": 0,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 1764,
+          "ms": 15.6
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 2646,
+          "ms": 22.7
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 6209,
+          "ms": 56.8
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/97": {
+          "same": true,
+          "why": null,
+          "evaluations": 882,
+          "ms": 7.4,
+          "pass": true
+        },
+        "C6/193": {
+          "same": true,
+          "why": null,
+          "evaluations": 1746,
+          "ms": 14.9,
+          "pass": true
+        },
+        "C6/385": {
+          "same": true,
+          "why": null,
+          "evaluations": 3474,
+          "ms": 28,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": true,
+          "limit": 500,
+          "baselineEvaluations": 882,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 441,
+          "baselineEvaluations": 882,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 300,
+          "baselinePolls": 882,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 441,
+          "baselinePolls": 882,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    },
+    {
+      "id": "H10",
+      "body": "Pluto",
+      "mode": "validated-geometric",
+      "baseEvents": 0,
+      "checks": {
+        "C1/2": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 2,
+          "evaluations": 20,
+          "ms": 0.2
+        },
+        "C1/3": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 3,
+          "evaluations": 21,
+          "ms": 0.3
+        },
+        "C1/7": {
+          "same": true,
+          "why": null,
+          "pass": true,
+          "parts": 7,
+          "evaluations": 25,
+          "ms": 0.2
+        },
+        "C3/+360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C3/-360": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C4/+720": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C5/shift": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C6/1e-3": {
+          "same": true,
+          "why": null,
+          "evaluations": 19,
+          "ms": 0.4,
+          "pass": true
+        },
+        "C6/1e-4": {
+          "same": true,
+          "why": null,
+          "evaluations": 19,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C6/1e-5": {
+          "same": true,
+          "why": null,
+          "evaluations": 19,
+          "ms": 0.2,
+          "pass": true
+        },
+        "C7": {
+          "pass": true,
+          "exercised": false,
+          "limit": 500,
+          "baselineEvaluations": 19,
+          "notExercised": "the whole run costs 19 evaluations, under the 500 budget, so it cannot be exhausted",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 0
+        },
+        "C7b": {
+          "pass": true,
+          "exercised": true,
+          "limit": 9,
+          "baselineEvaluations": 19,
+          "notExercised": null,
+          "status": "budget-exhausted",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C8": {
+          "pass": true,
+          "exercised": false,
+          "abortAfterPolls": 300,
+          "baselinePolls": 19,
+          "notExercised": "the whole run polls the signal 19 times, under 300, so the abort never fires",
+          "status": "finished",
+          "thrown": null,
+          "established": true,
+          "events": 0
+        },
+        "C8b": {
+          "pass": true,
+          "exercised": true,
+          "abortAfterPolls": 9,
+          "baselinePolls": 19,
+          "notExercised": null,
+          "status": "cancelled",
+          "thrown": null,
+          "established": false,
+          "events": 0
+        },
+        "C9": {
+          "same": true,
+          "why": null,
+          "pass": true
+        },
+        "C10": {
+          "pass": true,
+          "problems": []
+        }
+      }
+    }
+  ],
+  "summary:empirical-apparent": {
+    "cases": 12,
+    "missed": 0,
+    "extra": 0,
+    "unresolved": 0,
+    "unresolvedFraction": 0,
+    "usefulnessFailure": false,
+    "medianMs": 12.6,
+    "totalEvaluations": 32951,
+    "peakHeapDeltaMiB": 1.363
+  },
+  "summary:validated-geometric": {
+    "cases": 12,
+    "missed": 0,
+    "extra": 0,
+    "unresolved": 0,
+    "unresolvedFraction": 0,
+    "usefulnessFailure": false,
+    "medianMs": 0.7,
+    "totalEvaluations": 5519,
+    "peakHeapDeltaMiB": 0
+  }
+}
