@@ -1,5 +1,12 @@
 /** UI only. Every calculation happens in the worker. */
 const worker = new Worker('./worker.mjs', { type: 'module' });
+/**
+ * Each panel keeps a generation. A reply that arrives after a newer request
+ * was started is DROPPED rather than painted: a stale answer landing in the
+ * interface after a fresher one is how a demonstration comes to show a
+ * number for an instant nobody asked about.
+ */
+const gen = { compare: 0, refusals: 0 };
 let seq = 0;
 const pending = new Map();
 worker.onmessage = (e) => {
@@ -27,8 +34,10 @@ $('pack').addEventListener('change', async (e) => {
 });
 
 $('run').addEventListener('click', async () => {
+  const mine = ++gen.compare;
   $('compare-state').className = ''; $('compare-state').textContent = 'working …';
   const r = await ask({ type: 'compare', iso: $('iso').value.trim() });
+  if (mine !== gen.compare) return;
   if (!r.ok) { $('compare-state').className = 'refused'; $('compare-state').textContent = `refused: ${r.refused} — ${r.detail}`; $('compare-out').innerHTML = ''; return; }
   $('compare-state').textContent = `lightweight ${r.lightweightMs.toFixed(3)} ms · precision ${r.precisionMs.toFixed(3)} ms`;
   const head = '<tr><th>body</th><th class="num">lightweight °</th><th class="num">precision °</th><th class="num">difference ″</th></tr>';
@@ -52,6 +61,7 @@ $('bench').addEventListener('click', async () => {
 $('cancel').addEventListener('click', () => { worker.postMessage({ type: 'cancel', id: ++seq }); });
 
 $('refusals').addEventListener('click', async () => {
+  const mine = ++gen.refusals;
   const cases = [
     ['instant before coverage', { type: 'compare', iso: '1600-01-01T00:00:00Z' }],
     ['instant after coverage', { type: 'compare', iso: '2400-01-01T00:00:00Z' }],
@@ -64,5 +74,13 @@ $('refusals').addEventListener('click', async () => {
     const r = await ask(msg);
     out.push(`<tr><td>${label}</td><td class="${r.ok ? 'refused' : 'ok'}">${r.ok ? 'ANSWERED — this is a defect' : `refused: ${r.refused}`}</td></tr>`);
   }
+  if (mine !== gen.refusals) return;
   $('refusal-out').innerHTML = `<table><tr><th>case</th><th>outcome</th></tr>${out.join('')}</table>`;
 });
+
+/**
+ * A seam for `drive-alpha.mjs`. It hands the driver the SAME worker channel
+ * the buttons use and adds no capability the page does not already have, so
+ * what the driver exercises is what a person clicking would exercise.
+ */
+window.__demo = { ask, worker, generations: gen };

@@ -12,9 +12,9 @@ import { parseContainer, verifyIntegrity, sha256Hex, LIMITS, MAGIC_V1, MAGIC_V2 
 import { memorySource } from './core/source.mjs';
 import { Ephemeris, BARYCENTRE_NOT_CENTRE } from './core/ephemeris.mjs';
 import { Reducer, CONTRACT, CORRECTED, PROTOTYPE, tdbMinusTt } from './core/reduce.mjs';
-import { searchLongitudeEvent, SEARCH_DEFAULTS } from './core/search.mjs';
+import { searchLongitudeEvent, SEARCH_DEFAULTS, SEARCH_CONTRACT } from './core/search.mjs';
 
-export { PrecisionError, CONTRACT, CORRECTED, PROTOTYPE, LIMITS, BARYCENTRE_NOT_CENTRE, tdbMinusTt, sha256Hex, SEARCH_DEFAULTS };
+export { PrecisionError, CONTRACT, CORRECTED, PROTOTYPE, LIMITS, BARYCENTRE_NOT_CENTRE, tdbMinusTt, sha256Hex, SEARCH_DEFAULTS, SEARCH_CONTRACT };
 export const CONTAINER_MAGIC = Object.freeze({ unsupported: MAGIC_V1, supported: MAGIC_V2 });
 
 const J2000_JD = 2451545.0;

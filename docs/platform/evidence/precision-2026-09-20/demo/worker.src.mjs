@@ -9,6 +9,10 @@
  * This worker never fetches anything. The precision pack arrives as an
  * ArrayBuffer the user chose from their own disk; there is no URL in this file
  * and no persistence of any kind.
+ *
+ * The precision backend is the real runtime from examples/precision-alpha,
+ * bundled by build.mjs. It verifies the pack before it will answer anything,
+ * and there is no way to ask it not to.
  */
 import * as A from 'astronomy-engine';
 
@@ -70,7 +74,7 @@ self.onmessage = async (event) => {
       const mod = await import('./precision-runtime.mjs').catch(() => null);
       if (!mod) { post({ id, type: 'result', payload: refuse('no-runtime', 'The precision runtime was not bundled into this demonstration.') }); return; }
       try {
-        precision = mod.open(buffer);
+        precision = await mod.open(buffer);
         packInfo = precision.info();
         post({ id, type: 'result', payload: { ok: true, packInfo } });
       } catch (error) {
@@ -119,6 +123,39 @@ self.onmessage = async (event) => {
       }
       const p50 = (a) => { a.sort((x, y) => x - y); return a.length ? a[Math.floor(a.length / 2)] : null; };
       post({ id, type: 'result', payload: { ok: true, lightweightP50Ms: p50(light), precisionP50Ms: p50(prec), n: reps } });
+      return;
+    }
+
+    if (type === 'at-tt-days') {
+      if (!precision) { post({ id, type: 'result', payload: refuse('no-pack', 'Load a precision pack first.') }); return; }
+      const { bodies, ttDays } = event.data;
+      try {
+        const rows = [];
+        for (const tt of ttDays) for (const b of bodies) {
+          const r = precision.apparentAtTtDays(b, tt);
+          rows.push({ body: b, ttDays: tt, lon: r.lon, lat: r.lat, distKm: r.distKm, isSystemBarycentre: r.isSystemBarycentre });
+        }
+        post({ id, type: 'result', payload: { ok: true, rows } });
+      } catch (error) {
+        post({ id, type: 'result', payload: refuse(error && error.code ? error.code : 'error', String(error && error.message ? error.message : error)) });
+      }
+      return;
+    }
+
+    if (type === 'search') {
+      if (!precision) { post({ id, type: 'result', payload: refuse('no-pack', 'Load a precision pack first.') }); return; }
+      try {
+        post({ id, type: 'result', payload: { ok: true, verdict: precision.search(event.data.spec) } });
+      } catch (error) {
+        post({ id, type: 'result', payload: refuse(error && error.code ? error.code : 'error', String(error && error.message ? error.message : error)) });
+      }
+      return;
+    }
+
+    if (type === 'unload-pack') {
+      if (precision) precision.dispose();
+      precision = null; packInfo = null;
+      post({ id, type: 'result', payload: { ok: true, unloaded: true } });
       return;
     }
 

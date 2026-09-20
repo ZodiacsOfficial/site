@@ -32,6 +32,16 @@ for (const f of files) {
   });
 }
 
+test('the core does not use Math.hypot, which engines round differently', () => {
+  // Measured, not assumed: with hypot, apparent latitude differed between
+  // V8 and SpiderMonkey by up to three ulps on the same pack and instant.
+  // sqrt is correctly rounded by IEEE-754 and agrees.
+  for (const f of files) {
+    const code = readFileSync(join(CORE, f), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
+    assert.equal(/Math\s*\.\s*hypot/.test(code), false, `core/${f} uses Math.hypot`);
+  }
+});
+
 test('the core reaches WebCrypto only through the one helper', () => {
   const users = files.filter((f) => /globalThis\.crypto/.test(readFileSync(join(CORE, f), 'utf8')));
   assert.deepEqual(users, ['source.mjs'], `expected only source.mjs, got ${users.join(', ')}`);

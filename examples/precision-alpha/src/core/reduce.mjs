@@ -71,7 +71,8 @@ export const CONTRACT = Object.freeze({
 
 const sub = (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const addv = (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
-const norm = (v) => Math.hypot(v[0], v[1], v[2]);
+// Not Math.hypot: see the note in frames.mjs on cross-engine reproducibility.
+const norm = (v) => Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 const scale = (v, k) => [v[0] * k, v[1] * k, v[2] * k];
 const unit = (v) => scale(v, 1 / norm(v));
 const dot = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];

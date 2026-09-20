@@ -1,4 +1,4 @@
-// node_modules/astronomy-engine/esm/astronomy.js
+// ../../../../../node_modules/astronomy-engine/esm/astronomy.js
 var C_AUDAY = 173.1446326846693;
 var KM_PER_AU = 14959787069098932e-8;
 var DEG2RAD = 0.017453292519943295;
@@ -2004,7 +2004,7 @@ var NodeEventKind;
   NodeEventKind2[NodeEventKind2["Descending"] = -1] = "Descending";
 })(NodeEventKind || (NodeEventKind = {}));
 
-// docs/platform/evidence/precision-2026-09-20/demo/worker.src.mjs
+// worker.src.mjs
 var BODIES = ["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"];
 var AEB = {
   Sun: Body.Sun,
@@ -2062,7 +2062,7 @@ self.onmessage = async (event) => {
         return;
       }
       try {
-        precision = mod.open(buffer);
+        precision = await mod.open(buffer);
         packInfo = precision.info();
         post({ id, type: "result", payload: { ok: true, packInfo } });
       } catch (error) {
@@ -2125,6 +2125,43 @@ self.onmessage = async (event) => {
         return a.length ? a[Math.floor(a.length / 2)] : null;
       };
       post({ id, type: "result", payload: { ok: true, lightweightP50Ms: p50(light), precisionP50Ms: p50(prec), n: reps } });
+      return;
+    }
+    if (type === "at-tt-days") {
+      if (!precision) {
+        post({ id, type: "result", payload: refuse("no-pack", "Load a precision pack first.") });
+        return;
+      }
+      const { bodies, ttDays } = event.data;
+      try {
+        const rows = [];
+        for (const tt of ttDays) for (const b of bodies) {
+          const r = precision.apparentAtTtDays(b, tt);
+          rows.push({ body: b, ttDays: tt, lon: r.lon, lat: r.lat, distKm: r.distKm, isSystemBarycentre: r.isSystemBarycentre });
+        }
+        post({ id, type: "result", payload: { ok: true, rows } });
+      } catch (error) {
+        post({ id, type: "result", payload: refuse(error && error.code ? error.code : "error", String(error && error.message ? error.message : error)) });
+      }
+      return;
+    }
+    if (type === "search") {
+      if (!precision) {
+        post({ id, type: "result", payload: refuse("no-pack", "Load a precision pack first.") });
+        return;
+      }
+      try {
+        post({ id, type: "result", payload: { ok: true, verdict: precision.search(event.data.spec) } });
+      } catch (error) {
+        post({ id, type: "result", payload: refuse(error && error.code ? error.code : "error", String(error && error.message ? error.message : error)) });
+      }
+      return;
+    }
+    if (type === "unload-pack") {
+      if (precision) precision.dispose();
+      precision = null;
+      packInfo = null;
+      post({ id, type: "result", payload: { ok: true, unloaded: true } });
       return;
     }
     post({ id, type: "result", payload: refuse("unknown-request", type) });

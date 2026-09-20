@@ -97,9 +97,27 @@ export function equToEcl(v, epsTrue) {
   return [v[0], v[1] * c + v[2] * s, -v[1] * s + v[2] * c];
 }
 
+/**
+ * `Math.hypot` is deliberately not used here, nor anywhere else in the core.
+ * IEEE-754 requires `sqrt` to be correctly rounded, and ECMAScript inherits
+ * that; it requires nothing of the kind for `hypot`, and V8 and SpiderMonkey
+ * genuinely differ in the last bits. Measured across Node and Firefox on the
+ * same pack, `hypot` was the whole reason apparent LATITUDE disagreed by up
+ * to three ulps while longitude and distance matched exactly. The overflow
+ * protection hypot buys is not needed at these magnitudes: components are
+ * kilometres, at most about 1e10, so the squares are about 1e20 against a
+ * double's 1.8e308.
+ *
+ * `atan2`, `sin` and `cos` remain implementation-defined in ECMAScript. They
+ * agreed bit for bit between the two engines on everything measured, but
+ * that is an observation about these engines, not a guarantee, and the
+ * cross-environment report says so rather than promising exactness.
+ */
+const len2 = (x, y) => Math.sqrt(x * x + y * y);
+
 export function eclipticLonLatDeg(v) {
   let lon = (Math.atan2(v[1], v[0]) * 180) / Math.PI;
   if (lon < 0) lon += 360;
-  const lat = (Math.atan2(v[2], Math.hypot(v[0], v[1])) * 180) / Math.PI;
+  const lat = (Math.atan2(v[2], len2(v[0], v[1])) * 180) / Math.PI;
   return { lon, lat };
 }
