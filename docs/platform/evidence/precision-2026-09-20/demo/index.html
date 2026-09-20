@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Zodiacs precision backend — research demonstration</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { color-scheme: dark; --bg:#0b0d12; --fg:#e7e9ee; --dim:#98a0b3; --hair:#232838; --warn:#e8b04b; --bad:#e86a5a; --ok:#6fcf97; }
+  body { margin:0; padding:28px; background:var(--bg); color:var(--fg);
+         font:15px/1.6 ui-sans-serif,system-ui,-apple-system,sans-serif; max-width:960px; }
+  h1 { font-size:22px; margin:0 0 4px; font-weight:600; }
+  h2 { font-size:15px; margin:30px 0 10px; font-weight:600; }
+  p, li { color:var(--dim); max-width:72ch; }
+  code, td.num, th.num { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; }
+  .panel { border:1px solid var(--hair); border-radius:8px; padding:14px 16px; margin:14px 0; }
+  button { font:inherit; padding:7px 14px; border-radius:6px; border:1px solid var(--hair);
+           background:#161a24; color:var(--fg); cursor:pointer; }
+  button:disabled { opacity:.45; cursor:not-allowed; }
+  input[type=text] { font:inherit; padding:7px 10px; border-radius:6px; border:1px solid var(--hair);
+                     background:#0f121a; color:var(--fg); width:26ch; }
+  table { border-collapse:collapse; width:100%; margin-top:10px; }
+  th, td { text-align:left; padding:5px 10px; border-bottom:1px solid var(--hair); font-size:13px; }
+  th.num, td.num { text-align:right; }
+  .refused { color:var(--bad); }
+  .ok { color:var(--ok); }
+  .note { color:var(--warn); }
+  dl { display:grid; grid-template-columns:max-content 1fr; gap:2px 18px; font-size:13px; }
+  dt { color:var(--dim); } dd { margin:0; font-family:ui-monospace,monospace; }
+</style>
+
+<h1>Precision backend — research demonstration</h1>
+<p>
+  A development tool, not a product surface and not a migration. The site's
+  default calculation is untouched by anything on this page. Nothing here is
+  fetched from a network and nothing is stored: the pack you choose is read
+  from your own disk into memory and discarded when you close the tab.
+</p>
+
+<h2>1 · Supply a precision pack</h2>
+<div class="panel">
+  <input type="file" id="pack" accept=".zeph,.bin,application/octet-stream">
+  <p id="pack-state">No pack loaded. Every precision result below will be refused until there is one.</p>
+  <dl id="pack-info"></dl>
+</div>
+
+<h2>2 · The same instant, both backends</h2>
+<div class="panel">
+  <label>Instant (UTC) <input type="text" id="iso" value="2020-06-15T12:00:00Z"></label>
+  <button id="run">Compare</button>
+  <p id="compare-state"></p>
+  <div id="compare-out"></div>
+</div>
+
+<h2>3 · What each run assumed</h2>
+<div class="panel"><dl id="assumptions"><dt>—</dt><dd>run a comparison first</dd></dl></div>
+
+<h2>4 · Cost, measured here</h2>
+<div class="panel">
+  <button id="bench">Measure 400 charts</button>
+  <button id="cancel" disabled>Cancel</button>
+  <p id="bench-state">The page stays responsive while this runs, and cancel stops it where it is.</p>
+  <div id="bench-out"></div>
+</div>
+
+<h2>5 · Refusals</h2>
+<div class="panel">
+  <p>Each of these must be refused with a reason, not answered with something plausible.</p>
+  <button id="refusals">Run the refusal cases</button>
+  <div id="refusal-out"></div>
+</div>
+
+<script type="module" src="./app.mjs"></script>
