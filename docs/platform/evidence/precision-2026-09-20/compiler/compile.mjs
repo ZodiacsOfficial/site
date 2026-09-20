@@ -36,7 +36,11 @@ import { chebNodes, chebFit, clenshaw, clenshawD } from './cheb.mjs';
 import { BODY_SEGS, BUDGET_KM, SPAN_DAYS, DAY } from './sources.mjs';
 import { MAGIC, ALIGN, align, widthForHalf, writeField, WIDTH_ORDER } from './format.mjs';
 
-export const COMPILER_VERSION = '1.0.0';
+// 1.1.0 is a METADATA-ONLY change: the licence field below was corrected
+// on 2026-09-20 and nothing that touches a coefficient moved. The payload
+// digest is unchanged, and that is demonstrated rather than asserted --
+// see METADATA-CORRECTION.md.
+export const COMPILER_VERSION = '1.1.0';
 const SQRT3 = Math.sqrt(3);
 const here = (f) => new URL(`./${f}`, import.meta.url);
 
@@ -586,7 +590,22 @@ function sourceHashes() {
 
 function dependencies(candidate) {
   const d = [
-    { what: 'JPL DE440s SPK kernel', role: 'the only source of position data', licence: 'US Government work, public domain (JPL/Caltech-NASA)', neededAtRuntime: false },
+    {
+      what: 'JPL DE440s SPK kernel',
+      role: 'the only source of position data',
+      // Corrected 2026-09-20 under compiler 1.1.0. This field previously
+      // said "US Government work, public domain (JPL/Caltech-NASA)". That
+      // was an inference, and RIGHTS.md shows it is wrong: SPICE and its
+      // kernels are produced by Caltech/JPL under contract to NASA, NAIF's
+      // rules page never says public domain, and what it grants is a
+      // permission with conditions. Packs compiled before this date carry
+      // the old string; RIGHTS.md governs either way.
+      licence: 'not public domain. Produced by Caltech/JPL under contract to NASA; NAIF grants permission to use and redistribute with conditions (see https://naif.jpl.nasa.gov/naif/rules.html). Whether that rule reaches a derived coefficient set is unsettled -- see docs/platform/evidence/precision-2026-09-20/RIGHTS.md',
+      licenceStatement: 'permission-with-conditions, not public domain',
+      licenceSource: 'https://naif.jpl.nasa.gov/naif/rules.html, read 2026-09-20',
+      derivedCoefficientStatus: 'unsettled; no pack is distributed while it is',
+      neededAtRuntime: false,
+    },
     { what: 'raw/sweep.json + raw/choice.json', role: 'per-body interval and degree choice', neededAtRuntime: false },
   ];
   if (candidate === 'C') {

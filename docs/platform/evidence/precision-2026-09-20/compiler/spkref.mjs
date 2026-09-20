@@ -10,8 +10,13 @@
  * differencing error into every velocity number and make the velocity target
  * unmeasurable.
  *
- * Nothing here is derived from Swiss Ephemeris. JPL development ephemerides
- * are US Government work in the public domain.
+ * Nothing here is derived from Swiss Ephemeris.
+ *
+ * Corrected 2026-09-20: this comment used to say JPL development ephemerides
+ * are US Government work in the public domain. They are not. SPICE and its
+ * kernels come from Caltech/JPL under contract to NASA, and NAIF grants a
+ * permission with conditions rather than placing anything in the public
+ * domain. See RIGHTS.md.
  */
 import { openSync, readSync, fstatSync, closeSync } from 'node:fs';
 
