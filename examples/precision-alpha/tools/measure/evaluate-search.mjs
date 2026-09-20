@@ -59,7 +59,15 @@ const HOLDOUT = CONTRACT_BODIES.map((body, i) => ({
 
 const REGRESSIONS = [
   { id: 'A1', body: 'Moon', targetDeg: 100, fromIso: '2019-01-01T00:00:00Z', toIso: '2020-01-01T00:00:00Z' },
-  { id: 'A2', body: 'Uranus', targetDeg: 30, fromIso: '2010-01-01T00:00:00Z', toIso: '2020-01-01T00:00:00Z' },
+  // A2 is the case the plan named: "Uranus, the original alpha contract
+  // case on pack D", pinned as `D-Uranus2020` in
+  // src/lib/engine/fixtures/transit-window-independent.json -- target
+  // 32.6940395 degrees over 2019-01-01 .. 2020-12-31. The first version of
+  // this harness ran Uranus 30 degrees over 2010..2020 instead, and the
+  // write-up said the original was preserved. It was not. Both run now,
+  // and the substitute is labelled as one.
+  { id: 'A2', body: 'Uranus', targetDeg: 32.6940395, fromIso: '2019-01-01T00:00:00Z', toIso: '2020-12-31T00:00:00Z' },
+  { id: 'A2b', body: 'Uranus', targetDeg: 30, fromIso: '2010-01-01T00:00:00Z', toIso: '2020-01-01T00:00:00Z' },
 ];
 
 // ------------------------------------------------------------ the functions
@@ -101,12 +109,17 @@ function referenceRoots(f, target, fromTt, toTt) {
   let evaluations = 0;
   const ev = (t) => { evaluations += 1; return at(t); };
 
-  // The grid is offset by phi of a step so it does not land ON a root of a
-  // periodic function, which is how an earlier scan undercounted by five.
-  const grid = (i) => (i === 0 ? fromTt : i === n ? toTt : fromTt + (i + PHI - 0.5) * step);
+  // The plan says "offset by phi = 0.381966... of a step". The first
+  // implementation wrote (i + PHI - 0.5), which is an offset of -0.118 of
+  // a step, not +0.382 -- close enough to avoid rational roots but not
+  // what was declared. This is the declared offset: the endpoints are
+  // exact, and interior point i sits phi of a step past grid line i-1.
+  // The tail gap that leaves is measured and reported rather than assumed
+  // away.
+  const grid = (i) => (i === 0 ? fromTt : i === n ? toTt : fromTt + (i - 1 + PHI) * step);
   let prevT = grid(0);
   let prev = ev(prevT);
-  if (Math.abs(prev) < 1e-12) boundary.push(prevT);
+  let widestGap = 0;
 
   for (let i = 1; i <= n; i += 1) {
     const t = grid(i);
@@ -121,10 +134,18 @@ function referenceRoots(f, target, fromTt, toTt) {
       }
       roots.push((lo + hi) / 2);
     }
+    widestGap = Math.max(widestGap, t - prevT);
     prevT = t; prev = v;
   }
-  if (Math.abs(prev) < 1e-12) boundary.push(prevT);
-  return { roots, boundary, evaluations, stepDays: step };
+  // The plan: "roots within 1 second of an interval endpoint are recorded
+  // as boundary roots and reported separately." The first implementation
+  // tested `Math.abs(f) < 1e-12` at the two outer grid points -- an exact
+  // zero test, not a proximity test -- and reported 0 in every row it ever
+  // produced. This is the declared rule.
+  for (const r of roots) {
+    if (Math.abs(r - fromTt) <= MATCH_TOL_DAYS || Math.abs(r - toTt) <= MATCH_TOL_DAYS) boundary.push(r);
+  }
+  return { roots, boundary, evaluations, stepDays: step, widestGapDays: widestGap };
 }
 
 // -------------------------------------------------------------- the metrics
@@ -135,6 +156,8 @@ function referenceRoots(f, target, fromTt, toTt) {
 function score(events, reference) {
   const used = new Set();
   let missed = 0;
+  let worstResidualSec = 0;
+  let neededWidening = 0;
   for (const r of reference) {
     let hit = -1;
     for (let i = 0; i < events.length; i += 1) {
@@ -144,11 +167,27 @@ function score(events, reference) {
       const [lo, hi] = e.bracketTtDays ?? [e.ttDays, e.ttDays];
       const w = Math.max(hi - lo, 0);
       if (r < lo - w || r > hi + w) continue;
-      hit = i; break;
+      hit = i;
+      worstResidualSec = Math.max(worstResidualSec, Math.abs(e.ttDays - r) * 86400);
+      // How many matched ONLY because the bracket was widened by one of
+      // its own widths. If that clause is load-bearing, the reported
+      // bracket is not the event's real uncertainty and saying so matters
+      // more than the pass.
+      if (r < lo || r > hi) neededWidening += 1;
+      break;
     }
     if (hit < 0) missed += 1; else used.add(hit);
   }
-  return { missed, extra: events.length - used.size, found: events.length, reference: reference.length };
+  const widths = events.map((e) => (e.bracketTtDays ? (e.bracketTtDays[1] - e.bracketTtDays[0]) * 86400 : 0));
+  return {
+    missed,
+    extra: events.length - used.size,
+    found: events.length,
+    reference: reference.length,
+    worstResidualSec: Number(worstResidualSec.toExponential(3)),
+    matchedOnlyByWidening: neededWidening,
+    worstBracketSec: widths.length ? Number(Math.max(...widths).toExponential(3)) : null,
+  };
 }
 
 /** Peak heap, sampled through the signal the search already polls. */
@@ -164,7 +203,19 @@ function probe(abortAfter = Infinity) {
         return polls >= abortAfter;
       },
     },
-    stats: () => ({ peakHeapDeltaMiB: Number(((peak - base) / 1048576).toFixed(3)), polls }),
+    // Sampled every 2000 polls AND once at the end, because a run of 18
+    // evaluations never reaches the first sample: every short run used to
+    // report exactly 0.000 MiB, which is not a measurement. Even with the
+    // final sample this is a heapUsed delta at two instants, not a peak,
+    // and it moves with GC timing between runs.
+    stats: () => {
+      const end = process.memoryUsage().heapUsed;
+      return {
+        peakHeapDeltaMiB: Number(((Math.max(peak, end) - base) / 1048576).toFixed(3)),
+        heapSamples: Math.floor(polls / 2000) + 1,
+        polls,
+      };
+    },
   };
 }
 
@@ -201,13 +252,22 @@ function evaluateCase(c, mode) {
   const v = run.verdict;
   const events = v?.events ?? [];
   const s = score(events, ref.roots);
+  // The plan verbatim: "the run left at least one interval undecided, or
+  // was refused, or finished with support 'none' while the reference found
+  // events". The first implementation added `&& events.length === 0`,
+  // which is not in the plan and removes the one clause aimed at the
+  // empirical mode's own worst case.
   const unresolved = !v
     || v.execution.status !== 'finished'
     || (v.accounting.unresolved.length > 0)
-    || (v.completeness.support === 'none' && ref.roots.length > 0 && events.length === 0);
+    || (v.completeness.support === 'none' && ref.roots.length > 0);
   return {
     id: c.id, body: c.body, targetDeg: c.targetDeg, window: [c.fromIso, c.toIso], mode,
-    reference: { roots: ref.roots.length, boundaryRoots: ref.boundary.length, evaluations: ref.evaluations, stepDays: ref.stepDays },
+    reference: {
+      roots: ref.roots.length, boundaryRoots: ref.boundary.length,
+      evaluations: ref.evaluations, stepDays: ref.stepDays,
+      widestGapDays: Number(ref.widestGapDays.toExponential(4)),
+    },
     result: v ? {
       status: v.execution.status,
       support: v.completeness.support,
@@ -217,7 +277,11 @@ function evaluateCase(c, mode) {
       unresolvedIntervals: v.accounting.unresolved.length,
     } : null,
     thrown: run.thrown,
-    metrics: { ...s, unresolved, evaluations: v?.execution.evaluations ?? null, ms: run.ms, peakHeapDeltaMiB: run.peakHeapDeltaMiB },
+    metrics: {
+      ...s, unresolved,
+      evaluations: v?.execution.evaluations ?? null,
+      ms: run.ms, peakHeapDeltaMiB: run.peakHeapDeltaMiB, heapSamples: run.heapSamples,
+    },
     firstEventUtc: events.length ? utcOf(events[0].ttDays) : null,
     lastEventUtc: events.length ? utcOf(events[events.length - 1].ttDays) : null,
   };
@@ -225,15 +289,20 @@ function evaluateCase(c, mode) {
 
 /** Set comparison under the declared 1-second tolerance. */
 function sameSet(a, b) {
-  if (a.length !== b.length) return { same: false, why: `${a.length} vs ${b.length}` };
+  // Two empty sets are "the same" and prove nothing. Twenty per cent of
+  // this harness's structural comparisons were empty-vs-empty -- the two
+  // holdout cases whose body never reaches its target -- and the write-up
+  // reported them as passes without saying so.
+  if (a.length === 0 && b.length === 0) return { same: true, why: null, vacuous: true };
+  if (a.length !== b.length) return { same: false, why: `${a.length} vs ${b.length}`, vacuous: false };
   const x = [...a].sort((u, v) => u - v);
   const y = [...b].sort((u, v) => u - v);
   for (let i = 0; i < x.length; i += 1) {
     if (Math.abs(x[i] - y[i]) > MATCH_TOL_DAYS) {
-      return { same: false, why: `event ${i + 1} differs by ${((x[i] - y[i]) * 86400).toExponential(2)} s` };
+      return { same: false, why: `event ${i + 1} differs by ${((x[i] - y[i]) * 86400).toExponential(2)} s`, vacuous: false };
     }
   }
-  return { same: true, why: null };
+  return { same: true, why: null, vacuous: false };
 }
 
 /** C2's convention: a part owns [from, to), so a boundary root is the later part's. */
@@ -317,6 +386,14 @@ function structural(c, mode) {
   // cost, so every case exercises the invariant. The declared C7 and C8
   // stay exactly as written and are reported beside them.
   const baselineEvaluations = whole.verdict.execution.evaluations;
+  // The plan's C7 has three clauses and the third was not implemented:
+  // "...and the events it did find are real". `truth` is the same dense
+  // reference the case was scored against, so a budget-limited run's
+  // events are checked against it rather than counted and ignored.
+  rt._body = c.body;
+  const truth = referenceRoots(F[mode], c.targetDeg, c.fromTt, c.toTt).roots;
+  const eventsAreReal = (v) => (v?.events ?? []).every((e) => truth.some((r) => Math.abs(e.ttDays - r) <= MATCH_TOL_DAYS));
+
   const budgetCheck = (limit, label) => {
     const run = runMode(rt, mode, c, { maxEvaluations: limit });
     const v = run.verdict;
@@ -325,7 +402,9 @@ function structural(c, mode) {
       [label]: {
         pass: !exercised
           ? true
-          : Boolean(v) && v.execution.status === 'budget-exhausted' && v.completeness.established === false,
+          : Boolean(v) && v.execution.status === 'budget-exhausted' && v.completeness.established === false
+            && eventsAreReal(v),
+        eventsAreReal: v ? eventsAreReal(v) : null,
         exercised,
         limit,
         baselineEvaluations,
@@ -367,16 +446,23 @@ function structural(c, mode) {
     out.checks.C9 = { ...got, pass: got.same && Boolean(again.verdict) };
   }
   {
+    // Each case names the code it must be refused with. Accepting any
+    // truthy `code` let `maxEvaluations: -1` pass on an `unknown-body`
+    // refusal -- a check that cannot tell which rule fired.
     const bad = [];
-    const expect = (label, fn) => {
-      try { fn(); bad.push(`${label}: answered`); } catch (error) {
-        if (!error?.code) bad.push(`${label}: threw without a code`);
+    const got = {};
+    const expect = (label, want, fn) => {
+      try { fn(); bad.push(`${label}: answered`); got[label] = 'answered'; } catch (error) {
+        got[label] = error?.code ?? 'no-code';
+        if (error?.code !== want) bad.push(`${label}: ${error?.code ?? 'no code'}, wanted ${want}`);
       }
     };
-    expect('unknown option', () => runModeStrict(mode, c, { notAnOption: 1 }));
-    expect('out-of-range value', () => runModeStrict(mode, c, { maxEvaluations: -1 }));
-    expect('reversed interval', () => runModeStrict(mode, { ...c, fromTt: c.toTt, toTt: c.fromTt }));
-    out.checks.C10 = { pass: bad.length === 0, problems: bad };
+    expect('unknown option', 'unsupported-option', () => runModeStrict(mode, c, { notAnOption: 1 }));
+    expect('out-of-range value', 'unsupported-option', () => runModeStrict(mode, c, { maxEvaluations: -1 }));
+    expect('reversed interval', 'unsupported-option', () => runModeStrict(mode, { ...c, fromTt: c.toTt, toTt: c.fromTt }));
+    expect('unknown body', 'unknown-body', () => runModeStrict(mode, { ...c, body: 'Ceres' }));
+    expect('outside coverage', 'out-of-coverage', () => runModeStrict(mode, { ...c, fromTt: -1e6, toTt: -1e6 + 10 }));
+    out.checks.C10 = { pass: bad.length === 0, problems: bad, codes: got };
   }
   return out;
 }
@@ -430,11 +516,75 @@ if (wanted('C')) {
   }
 }
 
+// ------------------------------------------------- supplementary, added
+//
+// ADDED AFTER SEEING THE RESULT, and labelled as such. The declared
+// reference bisects to 1e-9 day = 8.64e-5 s, which is the same order as
+// the validated mode's own bracket (~8e-5 s): the truth source is no more
+// precise than the thing it checks, so 15 of 53 reference roots matched
+// only because the rule widens the bracket by one of its own widths. That
+// says nothing about the mode and everything about the reference. This
+// re-refines each matched root by pure bisection to 1e-14 day and asks
+// again -- the declared scoring above is untouched.
+if (report.holdout.length) {
+  const FINE = 1e-14;
+  report.supplementary = { what: 'the declared reference re-bisected to 1e-14 day, to see whether the bracket reliance is the reference or the mode', byMode: {} };
+  for (const mode of MODES) {
+    let inside = 0;
+    let outside = 0;
+    let worst = 0;
+    for (const row of [...report.regressions, ...report.holdout].filter((r) => r.mode === mode)) {
+      const c = prepare({ id: row.id, body: row.body, targetDeg: row.targetDeg, fromIso: row.window[0], toIso: row.window[1] });
+      rt._body = c.body;
+      const f = F[mode];
+      const at = (t) => wrap180(f(t) - c.targetDeg);
+      const run = runMode(rt, mode, c);
+      for (const e of run.verdict?.events ?? []) {
+        const [lo, hi] = e.bracketTtDays;
+        // Widen once to find a sign change around the reported bracket,
+        // then bisect hard.
+        const w = Math.max(hi - lo, 1e-9);
+        let a2 = lo - 8 * w;
+        let b2 = hi + 8 * w;
+        let fa = at(a2);
+        if (Math.sign(fa) === Math.sign(at(b2))) continue;
+        while (b2 - a2 > FINE) {
+          const m = (a2 + b2) / 2;
+          if (!(m > a2 && m < b2)) break;
+          const fm = at(m);
+          if (fm === 0) { a2 = m; b2 = m; break; }
+          if (Math.sign(fm) === Math.sign(fa)) { a2 = m; fa = fm; } else b2 = m;
+        }
+        const r = (a2 + b2) / 2;
+        worst = Math.max(worst, Math.abs(e.ttDays - r) * 86400);
+        if (r >= lo && r <= hi) inside += 1; else outside += 1;
+      }
+    }
+    report.supplementary.byMode[mode] = {
+      rootsInsideTheReportedBracket: inside,
+      rootsOutsideIt: outside,
+      worstResidualSec: Number(worst.toExponential(3)),
+      bisectedToDays: FINE,
+    };
+    console.log(`supplementary ${mode}: inside ${inside}, outside ${outside}, worst residual ${worst.toExponential(3)} s`);
+  }
+}
+
 // Usefulness, as declared: the denominator includes refusals.
 for (const mode of MODES) {
   const cases = [...report.regressions, ...report.holdout].filter((r) => r.mode === mode);
   if (!cases.length) continue;
   const unresolved = cases.filter((r) => r.metrics.unresolved).length;
+  const structural = report.structural.filter((r) => r.mode === mode);
+  let comparisons = 0;
+  let vacuous = 0;
+  for (const r of structural) {
+    for (const v of Object.values(r.checks)) {
+      if (typeof v.vacuous !== 'boolean') continue;
+      comparisons += 1;
+      if (v.vacuous) vacuous += 1;
+    }
+  }
   report[`summary:${mode}`] = {
     cases: cases.length,
     missed: cases.reduce((n, r) => n + r.metrics.missed, 0),
@@ -442,9 +592,21 @@ for (const mode of MODES) {
     unresolved,
     unresolvedFraction: Number((unresolved / cases.length).toFixed(3)),
     usefulnessFailure: unresolved / cases.length > UNRESOLVED_LIMIT,
+    // The accuracy figure. Missed and extra say whether the right events
+    // were found; this says how close they landed, and it is the number
+    // the 1-second matching gate hides.
+    worstResidualSec: Math.max(...cases.map((r) => r.metrics.worstResidualSec ?? 0)),
+    worstBracketSec: Math.max(...cases.map((r) => r.metrics.worstBracketSec ?? 0)),
+    // How often the match needed the "widened by one bracket width"
+    // clause. If this is not zero the reported bracket is not the event's
+    // real uncertainty.
+    matchedOnlyByWidening: cases.reduce((n, r) => n + (r.metrics.matchedOnlyByWidening ?? 0), 0),
+    referenceRoots: cases.reduce((n, r) => n + r.reference.roots, 0),
     medianMs: [...cases.map((r) => r.metrics.ms)].sort((a, b) => a - b)[Math.floor(cases.length / 2)],
     totalEvaluations: cases.reduce((n, r) => n + (r.metrics.evaluations ?? 0), 0),
     peakHeapDeltaMiB: Math.max(...cases.map((r) => r.metrics.peakHeapDeltaMiB)),
+    structuralComparisons: comparisons,
+    vacuousComparisons: vacuous,
   };
   console.log(`\n${mode}:`, JSON.stringify(report[`summary:${mode}`]));
 }
