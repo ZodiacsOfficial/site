@@ -13,8 +13,14 @@ import { memorySource } from './core/source.mjs';
 import { Ephemeris, BARYCENTRE_NOT_CENTRE } from './core/ephemeris.mjs';
 import { Reducer, CONTRACT, CORRECTED, PROTOTYPE, tdbMinusTt } from './core/reduce.mjs';
 import { searchLongitudeEvent, SEARCH_DEFAULTS, SEARCH_CONTRACT } from './core/search.mjs';
+import { searchGeometricLongitude, GEOMETRIC_CONTRACT, VALIDATED_DEFAULTS } from './core/validated-search.mjs';
+import { CONTRACT as SEARCH_RESULT_CONTRACT, SUPPORT } from './core/result.mjs';
 
-export { PrecisionError, CONTRACT, CORRECTED, PROTOTYPE, LIMITS, BARYCENTRE_NOT_CENTRE, tdbMinusTt, sha256Hex, SEARCH_DEFAULTS, SEARCH_CONTRACT };
+export {
+  PrecisionError, CONTRACT, CORRECTED, PROTOTYPE, LIMITS, BARYCENTRE_NOT_CENTRE,
+  tdbMinusTt, sha256Hex, SEARCH_DEFAULTS, SEARCH_CONTRACT,
+  GEOMETRIC_CONTRACT, VALIDATED_DEFAULTS, SEARCH_RESULT_CONTRACT, SUPPORT,
+};
 export const CONTAINER_MAGIC = Object.freeze({ unsupported: MAGIC_V1, supported: MAGIC_V2 });
 
 const J2000_JD = 2451545.0;
@@ -60,10 +66,30 @@ export class PrecisionRuntime {
     return this.apparent(body, jdTt - J2000_JD, options);
   }
 
-  /** Bounded search for one longitude event. See `./core/search.mjs`. */
+  /**
+   * Bounded search for an APPARENT longitude event. Empirical: it never
+   * establishes completeness. See `./core/search.mjs`.
+   */
   search(spec) {
     this.#live();
     return searchLongitudeEvent(this.reducer, spec);
+  }
+
+  /**
+   * Search for a GEOMETRIC longitude event in the fixed J2000 ecliptic
+   * frame. A different quantity from `search` — no light-time, no
+   * aberration, no deflection, no precession or nutation — and the reason
+   * it is here is that this one CAN establish completeness, from bounds
+   * that are true of the pack's polynomial rather than sampled from it.
+   *
+   * Do not read one for the other. The two differ by hours: for the Sun in
+   * 2024 the apparent crossing of 0 degrees of date is about eight hours
+   * from the geometric crossing of 0 degrees of J2000, which is
+   * essentially the precession between the two frames.
+   */
+  searchGeometric(spec) {
+    this.#live();
+    return searchGeometricLongitude(this.ephemeris, spec);
   }
 
   /**

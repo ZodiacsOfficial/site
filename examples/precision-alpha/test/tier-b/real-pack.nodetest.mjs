@@ -135,6 +135,51 @@ if (!PACK || !existsSync(PACK)) {
     rt.dispose();
   });
 
+  test('the validated geometric mode establishes completeness on the real pack', async () => {
+    const rt = await openPackFile(PACK);
+    // The Moon crossing 100 degrees through 2019: the case the alpha's
+    // recorded harness answered "2" for. Here it is proven, and it is 13.
+    const moon = rt.searchGeometric({ body: 'Moon', targetDeg: 100, fromTtDays: 6939, toTtDays: 7304 });
+    assert.equal(moon.execution.status, 'finished');
+    assert.equal(moon.completeness.established, true);
+    assert.equal(moon.completeness.support, 'proven');
+    assert.equal(moon.eventCount.isExactTotal, true);
+    assert.equal(moon.eventCount.found, 13);
+    assert.equal(moon.accounting.unresolved.length, 0);
+    assert.deepEqual(moon.assumptions, []);
+    // The geocentric Moon collapses to one stored series, because the
+    // Earth-Moon barycentre term cancels exactly through EMRAT.
+    assert.deepEqual(moon.diagnostics.contributingSeries.map((c) => c.name), ['moon']);
+    rt.dispose();
+  });
+
+  test('the validated and empirical modes are different quantities, and say so', async () => {
+    const rt = await openPackFile(PACK);
+    const g = rt.searchGeometric({ body: 'Sun', targetDeg: 0, fromTtDays: 8766, toTtDays: 9131 });
+    const a = rt.search({ kind: 'longitude', body: 'Sun', targetDeg: 0, fromTtDays: 8766, toTtDays: 9131, epsilonDeg: 1 / 3600, options: CORRECTED });
+    assert.equal(g.eventCount.found, 1);
+    assert.equal(a.eventCount.found, 1);
+    assert.equal(g.completeness.established, true);
+    assert.equal(a.completeness.established, false);
+    // J2000 geometric against apparent of date: precession over 24 years is
+    // about a third of a degree, and the Sun covers that in about eight
+    // hours. If these ever agreed to the second, one of them would be wrong.
+    const hours = (g.events[0].ttDays - a.events[0].ttDays) * 24;
+    assert.ok(hours > 6 && hours < 10, `expected roughly eight hours between the two quantities, got ${hours}`);
+    rt.dispose();
+  });
+
+  test('the validated mode proves an empty interval empty', async () => {
+    const rt = await openPackFile(PACK);
+    // Jupiter takes about twelve years to come round; a two-month window
+    // well away from a crossing has none, and that is provable.
+    const r = rt.searchGeometric({ body: 'Jupiter', targetDeg: 120, fromTtDays: 8766, toTtDays: 8826 });
+    assert.equal(r.completeness.established, true);
+    assert.equal(r.eventCount.found, 0);
+    assert.equal(r.eventCount.isExactTotal, true);
+    rt.dispose();
+  });
+
   if (KERNEL && existsSync(KERNEL)) {
     test('the pack agrees with the uncompressed kernel to the compression budget', async () => {
       const { SpkBackend } = await import('../../tools/spk-backend.mjs');

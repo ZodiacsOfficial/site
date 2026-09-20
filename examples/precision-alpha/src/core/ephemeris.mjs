@@ -131,6 +131,37 @@ export class Ephemeris {
     return out;
   }
 
+  /**
+   * The active Chebyshev record for one stored body, with the geometry
+   * needed to reason about it as a polynomial: where it starts and ends,
+   * what tau maps to, and the coefficients themselves.
+   *
+   * The validated mode needs the COEFFICIENTS, not just values sampled
+   * from them, because a bound taken from the coefficients is true of the
+   * polynomial and a maximum taken from samples is not.
+   */
+  seriesAt(name, et) {
+    const b = this.bodies.get(name);
+    if (!b) fail('unknown-body', `this pack does not contain ${name}`);
+    let index = Math.floor((et - b.initEt) / b.intervalSec);
+    if (index < 0) index = 0;
+    if (index > b.nrec - 1) index = b.nrec - 1;
+    this.#decode(b, index);
+    const radius = b.intervalSec / 2;
+    const mid = b.initEt + (index + 0.5) * b.intervalSec;
+    return {
+      name,
+      frame: b.frame,
+      ncoef: b.ncoef,
+      coefficients: b.coefficients,
+      recordIndex: index,
+      recordStartEt: b.initEt + index * b.intervalSec,
+      recordStopEt: b.initEt + (index + 1) * b.intervalSec,
+      mid,
+      radius,
+    };
+  }
+
   /** Body relative to the solar-system barycentre, resolving a 'sun' frame. */
   #ssb(name, et, out) {
     const b = this.bodies.get(name);
