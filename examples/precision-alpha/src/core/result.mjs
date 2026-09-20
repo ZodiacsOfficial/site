@@ -121,6 +121,25 @@ export function buildResult(r) {
 }
 
 /** The assumption record every empirical mode carries. */
+/**
+ * Narrow a result to the branch where completeness was PROVED.
+ *
+ * The declarations split the result into two shapes, and only one of them
+ * has `isExactTotal: true`. TypeScript cannot discriminate a union on a
+ * NESTED property, so `if (r.completeness.established)` reads as a plain
+ * boolean and narrows nothing -- which was measured against a real
+ * consumer, not assumed. These guards are the narrowing, and they exist at
+ * runtime so a JavaScript caller gets the same question answered the same
+ * way.
+ */
+export const isProven = (r) => r?.completeness?.established === true;
+
+/** Narrow to the branch where it was not. A total here is not exact. */
+export const isUnproven = (r) => r?.completeness?.established === false;
+
+/** The run reached the end of its interval. Says nothing about proving. */
+export const isFinished = (r) => r?.execution?.status === 'finished';
+
 export function sampledBoundAssumption(id, what, basis, value) {
   return {
     id,

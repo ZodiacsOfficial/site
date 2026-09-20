@@ -118,6 +118,13 @@ const description = 'An experimental compact-ephemeris runtime, running in your 
         <button id="pp-search" class="btn" data-needs-pack disabled>Search</button>
         <button id="pp-cancel" class="btn btn--quiet">Cancel</button>
       </p>
+      <p class="pp-dim">
+        Cancel stops the worker, which is the only way to interrupt a
+        calculation already running here — a cancel message cannot be read
+        while the worker is inside one, and the mechanism that would work
+        across that needs cross-origin isolation this page does not have.
+        So cancelling drops whatever is loaded, and you load it again.
+      </p>
       <p id="pp-search-state" class="pp-state"></p>
       <div id="pp-search-out" class="pp-out"></div>
     </div>

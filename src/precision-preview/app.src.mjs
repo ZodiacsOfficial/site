@@ -7,16 +7,55 @@
  * landing after a fresher one is how a demonstration comes to show a
  * number nobody asked for.
  */
-const worker = new Worker(new URL('./worker.mjs', import.meta.url), { type: 'module' });
 let seq = 0;
-const pending = new Map();
+let pending = new Map();
+let inFlight = 0;
 const gen = { places: 0, search: 0 };
 
-worker.onmessage = (e) => {
-  const fn = pending.get(e.data.id);
-  if (fn) { pending.delete(e.data.id); fn(e.data.payload ?? e.data); }
+const spawn = () => {
+  const w = new Worker(new URL('./worker.mjs', import.meta.url), { type: 'module' });
+  w.onmessage = (e) => {
+    const fn = pending.get(e.data.id);
+    if (fn) { pending.delete(e.data.id); inFlight = Math.max(0, inFlight - 1); fn(e.data.payload ?? e.data); }
+  };
+  return w;
 };
-const ask = (msg) => new Promise((res) => { const id = ++seq; pending.set(id, res); worker.postMessage({ ...msg, id }); });
+let worker = spawn();
+
+const ask = (msg) => new Promise((res) => {
+  const id = ++seq;
+  pending.set(id, res);
+  inFlight += 1;
+  worker.postMessage({ ...msg, id });
+});
+
+/**
+ * Stop a calculation that is already running.
+ *
+ * The polite way does not work here, and it is worth writing down why. The
+ * search polls a signal on every evaluation, but that signal lives in the
+ * worker and only changes when the worker READS a cancel message -- and it
+ * cannot read one while it is inside a synchronous search. Measured: a
+ * cancel posted in the same task as the search came back `finished`, with
+ * the full event list, having ignored the cancel entirely. The one
+ * mechanism that would work across a blocked event loop is a
+ * SharedArrayBuffer flag, and that needs cross-origin isolation, which a
+ * static page served from this origin does not have.
+ *
+ * So the only real stop is `terminate()`, and it costs the loaded data.
+ * That cost is stated to the person rather than hidden: the alternative is
+ * a button that appears to cancel and does nothing, which is worse than
+ * no button.
+ */
+function hardStop() {
+  worker.terminate();
+  for (const [, res] of pending) res({ ok: false, refused: 'cancelled', detail: 'the worker was stopped' });
+  pending = new Map();
+  inFlight = 0;
+  gen.places += 1;
+  gen.search += 1;
+  worker = spawn();
+}
 
 const $ = (x) => document.getElementById(x);
 /**
@@ -178,8 +217,23 @@ $('pp-search').addEventListener('click', async () => {
     + (r.synthetic ? '<p class="pp-warn">Synthetic fixture. These instants describe a circle this page invented, not a planet.</p>' : '');
 });
 
-$('pp-cancel').addEventListener('click', () => { worker.postMessage({ type: 'cancel', id: ++seq }); text($('pp-search-state'), 'cancelled'); });
+$('pp-cancel').addEventListener('click', () => {
+  if (inFlight === 0) {
+    text($('pp-search-state'), 'nothing is running, so there is nothing to cancel.');
+    return;
+  }
+  hardStop();
+  text($('pp-search-state'), 'cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below.', 'pp-warn');
+  text($('pp-pack-state'), 'nothing loaded: the worker was stopped to cancel a calculation.');
+  $('pp-info').innerHTML = '';
+  $('pp-corrections').innerHTML = '';
+  $('pp-places-out').innerHTML = '';
+  $('pp-search-out').innerHTML = '';
+  $('pp-synthetic').hidden = true;
+  $('pp-file').value = '';
+  for (const el of document.querySelectorAll('[data-needs-pack]')) el.disabled = true;
+});
 
 // A seam for the scoped browser driver. It hands the driver the same
 // channel the buttons use, and adds nothing the page cannot already do.
-window.__precisionPreview = { ask, worker, generations: gen };
+window.__precisionPreview = { ask, generations: gen, get worker() { return worker; }, get inFlight() { return inFlight; } };

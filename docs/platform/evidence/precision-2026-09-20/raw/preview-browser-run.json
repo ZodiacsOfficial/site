@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:8807/developers/precision-preview/",
+  "url": "http://127.0.0.1:8810/developers/precision-preview/",
   "pack": {
     "bytes": 1737200
   },
@@ -118,8 +118,22 @@
         "superseded": {
           "domWrites": 1
         },
+        "cancelIdle": {
+          "state": "nothing is running, so there is nothing to cancel."
+        },
+        "cancelRace": {
+          "inFlightBeforeCancel": 1
+        },
         "cancel": {
-          "state": "cancelled"
+          "state": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below.",
+          "packState": "nothing loaded: the worker was stopped to cancel a calculation.",
+          "computeDisabled": true,
+          "outputCleared": true,
+          "lateReply": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below."
+        },
+        "recovered": {
+          "state": "synthetic fixture ready",
+          "computeEnabled": true
         },
         "dispose": {
           "state": "disposed. Nothing is loaded, and every calculation will be refused.",
@@ -292,8 +306,22 @@
         "superseded": {
           "domWrites": 1
         },
+        "cancelIdle": {
+          "state": "nothing is running, so there is nothing to cancel."
+        },
+        "cancelRace": {
+          "inFlightBeforeCancel": 1
+        },
         "cancel": {
-          "state": "cancelled"
+          "state": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below.",
+          "packState": "nothing loaded: the worker was stopped to cancel a calculation.",
+          "computeDisabled": true,
+          "outputCleared": true,
+          "lateReply": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below."
+        },
+        "recovered": {
+          "state": "synthetic fixture ready",
+          "computeEnabled": true
         },
         "dispose": {
           "state": "disposed. Nothing is loaded, and every calculation will be refused.",

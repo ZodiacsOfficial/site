@@ -49,6 +49,8 @@ now return every event.
 ## What a consumer should do
 
 ```js
+import { isProven } from '@zodiacs/precision-alpha';
+
 if (r.contract !== 'zodiacs-precision-search/2') throw new Error('unexpected contract');
 
 // Always usable, whatever else is true:
@@ -58,7 +60,7 @@ if (!r.execution.finished) {
   // budget-exhausted, cancelled or refused. r.events is what was found first.
 }
 
-if (r.completeness.established) {
+if (isProven(r)) {
   // Only the validated geometric mode reaches this, and only from bounds
   // that are true of the pack's polynomial by construction.
   const total = r.eventCount.found;         // exact
@@ -69,6 +71,55 @@ if (r.completeness.established) {
   // Nothing was established. r.accounting.unresolved says where.
 }
 ```
+
+### Use the guard, not the nested boolean
+
+`isProven(r)`, `isUnproven(r)` and `isFinished(r)` are exported, and in
+TypeScript they are the narrowing. `if (r.completeness.established)` is
+true at runtime and narrows **nothing** at compile time -- TypeScript
+discriminates a union on a direct property, not on a nested one, so
+`r.eventCount.isExactTotal` stays `boolean` inside that branch and the
+type-level guarantee the two result shapes are meant to give you is not
+there. This was measured against a consumer compiled from the archive, not
+assumed. In plain JavaScript either form works; the guard reads better in
+both.
+
+## A behaviour change, not just a field change: cancellation
+
+**In the alpha, cancelling a search threw.** `PrecisionError` with code
+`cancelled`, the evaluation count on `error.detail`, and every event the
+run had already isolated discarded with the stack.
+
+**In v2 it returns a result.** `cancelled` is one of the four execution
+states the contract names, and a state nothing can produce is a lie about
+the contract. So:
+
+```js
+// v1
+try {
+  r = rt.search({ ...spec, signal });
+} catch (error) {
+  if (error.code === 'cancelled') showPartial(error.detail.evaluations);
+  else throw error;
+}
+
+// v2 -- no catch. The cancel IS the result.
+const r = rt.search({ ...spec, signal });
+if (r.execution.status === 'cancelled') showPartial(r.events, r.accounting.unresolved);
+```
+
+A cancelled result always has `finished: false`, `established: false`,
+`support: 'none'` and `isExactTotal: false`: a run that stopped early
+cannot have accounted for what it did not reach. The **validated geometric**
+mode carries out the events it had already isolated; the **empirical** mode
+still reports zero on this path, because it reports through the
+empty-result shape, and that limitation is stated in
+`EVALUATION-RESULTS.md` rather than papered over.
+
+Code that catches `cancelled` still compiles and simply never fires. Code
+that relied on the throw to skip its result handling needs the branch
+above. A `budget-exhausted` run behaved this way in the alpha already and
+is unchanged.
 
 ## What did not change
 

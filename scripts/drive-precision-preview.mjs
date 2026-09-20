@@ -283,17 +283,52 @@ async function run(name, browser) {
   await page.waitForTimeout(2500);
   out.steps.superseded = { domWrites: await page.evaluate(() => window.__writes) };
 
-  // 8. Cancellation.
+  // 8. Cancellation, and what it costs.
+  //
+  // Checking the state text alone is not enough and used to pass on a
+  // label: the page wrote "cancelled" whether or not anything stopped,
+  // while the search ran to completion behind it. So this checks the
+  // consequences -- the data is gone and the controls are disabled --
+  // and then checks that cancelling nothing says nothing happened.
   await page.check('input[name="pp-mode"][value="empirical"]');
-  // The window stays as the page refitted it; overwriting it with 2024
-  // only bought an out-of-coverage refusal, which cancels nothing.
-  const started = page.click('#pp-search');
   await page.click('#pp-cancel');
-  await started.catch(() => {});
-  await page.waitForTimeout(800);
-  out.steps.cancel = { state: await page.textContent('#pp-search-state') };
+  out.steps.cancelIdle = { state: await page.textContent('#pp-search-state') };
 
-  // 9. Dispose, then everything refuses again.
+  // A search that is actually still running when the cancel lands. The
+  // first attempt used the page's own 365-day window on a real pack and
+  // it finished in about a tenth of a second -- long before the second
+  // click arrived -- so "nothing to cancel" was the honest answer and the
+  // interesting path was never taken. The Moon over the widest window
+  // this pack covers is not finished in a tenth of a second.
+  await page.selectOption('#pp-body', 'Moon').catch(() => {});
+  const cov = out.steps.realPack ? ['1860-01-01T00:00:00Z', '2140-01-01T00:00:00Z'] : [await valueOf('pp-from'), await valueOf('pp-to')];
+  await page.fill('#pp-from', cov[0]);
+  await page.fill('#pp-to', cov[1]);
+  await arm('pp-search-state');
+  await page.click('#pp-search');
+  await page.waitForFunction(() => window.__precisionPreview.inFlight > 0, null, { timeout: 5000 });
+  out.steps.cancelRace = { inFlightBeforeCancel: await page.evaluate(() => window.__precisionPreview.inFlight) };
+  await page.click('#pp-cancel');
+  await page.waitForTimeout(800);
+  out.steps.cancel = {
+    state: await page.textContent('#pp-search-state'),
+    packState: await stateOf(),
+    computeDisabled: await page.isDisabled('#pp-places'),
+    outputCleared: (await page.innerHTML('#pp-search-out')).trim() === '',
+    // A reply from the terminated worker must never arrive afterwards.
+    lateReply: await page.evaluate(async () => {
+      await new Promise((r) => setTimeout(r, 600));
+      return document.getElementById('pp-search-state').textContent;
+    }),
+  };
+
+  // 9. Recovery: the fixture loads again on the replacement worker.
+  await arm('pp-pack-state');
+  await page.click('#pp-synthetic-btn');
+  await settled('pp-pack-state');
+  out.steps.recovered = { state: await stateOf(), computeEnabled: !(await page.isDisabled('#pp-places')) };
+
+  // 10. Dispose, then everything refuses again.
   const lastInstant = await valueOf('pp-instant');
   await page.click('#pp-unload');
   await page.waitForFunction(() => /disposed/.test(document.getElementById('pp-pack-state').textContent), null, { timeout: 20000 });
@@ -305,7 +340,7 @@ async function run(name, browser) {
     computeDisabled: await page.isDisabled('#pp-places'),
   };
 
-  // 10. Keyboard: reach and operate the primary control without a mouse.
+  // 11. Keyboard: reach and operate the primary control without a mouse.
   await page.reload({ waitUntil: 'networkidle' });
   await page.waitForFunction(() => Boolean(window.__precisionPreview), null, { timeout: 20000 });
   let hops = 0;
@@ -322,7 +357,7 @@ async function run(name, browser) {
   }
   out.steps.keyboard = { reachedInTabs: reached ? hops + 1 : null, activatedByEnter: reached ? await stateOf() : null };
 
-  // 11. Mobile layout: no horizontal scroll at phone width.
+  // 12. Mobile layout: no horizontal scroll at phone width.
   await page.setViewportSize({ width: 390, height: 844 });
   await page.waitForTimeout(300);
   out.steps.mobile = await page.evaluate(() => ({
@@ -331,7 +366,7 @@ async function run(name, browser) {
     horizontalScroll: document.documentElement.scrollWidth > window.innerWidth + 1,
   }));
 
-  // 12. Everything the page asked the network for, and everything it kept.
+  // 13. Everything the page asked the network for, and everything it kept.
   out.steps.network = {
     all: [...new Set(requests)].map((u) => u.replace(BASE, '')),
     offOrigin: requests.filter((u) => !u.startsWith(BASE)),
@@ -402,7 +437,14 @@ function verdictOf(out, hadPack) {
     if (!s.realPack.stateSaysApparent) p.push('real places were not labelled apparent');
   }
   if (s.superseded.domWrites !== 1) p.push(`a superseded reply reached the interface (${s.superseded.domWrites} writes)`);
-  if (!/cancel/i.test(s.cancel.state)) p.push('cancel did not report');
+  if (!/nothing to cancel/i.test(s.cancelIdle.state)) p.push('cancelling nothing did not say so');
+  if (!(s.cancelRace.inFlightBeforeCancel > 0)) p.push('the cancel test did not actually catch a running calculation');
+  if (!/cancelled/i.test(s.cancel.state)) p.push('cancel did not report');
+  if (!s.cancel.computeDisabled) p.push('cancel left the compute control enabled, so nothing was actually stopped');
+  if (!s.cancel.outputCleared) p.push('cancel left a stale search result on the page');
+  if (s.cancel.lateReply !== s.cancel.state) p.push('a reply from the stopped worker reached the page afterwards');
+  if (!/ready/.test(s.recovered.state)) p.push('the fixture did not load again after a cancel');
+  if (!s.recovered.computeEnabled) p.push('the controls stayed disabled after recovering from a cancel');
   if (s.dispose.places !== 'no-pack') p.push('after dispose a calculation was not refused');
   if (!s.dispose.computeDisabled) p.push('after dispose the compute control was still enabled');
   if (s.keyboard.reachedInTabs === null) p.push('the primary control could not be reached by keyboard');

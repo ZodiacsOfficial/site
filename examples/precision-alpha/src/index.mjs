@@ -14,12 +14,15 @@ import { Ephemeris, BARYCENTRE_NOT_CENTRE } from './core/ephemeris.mjs';
 import { Reducer, CONTRACT, CORRECTED, PROTOTYPE, tdbMinusTt } from './core/reduce.mjs';
 import { searchLongitudeEvent, SEARCH_DEFAULTS, SEARCH_CONTRACT } from './core/search.mjs';
 import { searchGeometricLongitude, GEOMETRIC_CONTRACT, VALIDATED_DEFAULTS } from './core/validated-search.mjs';
-import { CONTRACT as SEARCH_RESULT_CONTRACT, SUPPORT } from './core/result.mjs';
+import {
+  CONTRACT as SEARCH_RESULT_CONTRACT, SUPPORT, isProven, isUnproven, isFinished,
+} from './core/result.mjs';
 
 export {
   PrecisionError, CONTRACT, CORRECTED, PROTOTYPE, LIMITS, BARYCENTRE_NOT_CENTRE,
   tdbMinusTt, sha256Hex, SEARCH_DEFAULTS, SEARCH_CONTRACT,
   GEOMETRIC_CONTRACT, VALIDATED_DEFAULTS, SEARCH_RESULT_CONTRACT, SUPPORT,
+  isProven, isUnproven, isFinished,
 };
 export const CONTAINER_MAGIC = Object.freeze({ unsupported: MAGIC_V1, supported: MAGIC_V2 });
 

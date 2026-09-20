@@ -1,22 +1,38 @@
 // Built by scripts/build-precision-preview.mjs from src/precision-preview/app.src.mjs. Do not edit.
 
 // src/precision-preview/app.src.mjs
-var worker = new Worker(new URL("./worker.mjs", import.meta.url), { type: "module" });
 var seq = 0;
 var pending = /* @__PURE__ */ new Map();
+var inFlight = 0;
 var gen = { places: 0, search: 0 };
-worker.onmessage = (e) => {
-  const fn = pending.get(e.data.id);
-  if (fn) {
-    pending.delete(e.data.id);
-    fn(e.data.payload ?? e.data);
-  }
+var spawn = () => {
+  const w = new Worker(new URL("./worker.mjs", import.meta.url), { type: "module" });
+  w.onmessage = (e) => {
+    const fn = pending.get(e.data.id);
+    if (fn) {
+      pending.delete(e.data.id);
+      inFlight = Math.max(0, inFlight - 1);
+      fn(e.data.payload ?? e.data);
+    }
+  };
+  return w;
 };
+var worker = spawn();
 var ask = (msg) => new Promise((res) => {
   const id = ++seq;
   pending.set(id, res);
+  inFlight += 1;
   worker.postMessage({ ...msg, id });
 });
+function hardStop() {
+  worker.terminate();
+  for (const [, res] of pending) res({ ok: false, refused: "cancelled", detail: "the worker was stopped" });
+  pending = /* @__PURE__ */ new Map();
+  inFlight = 0;
+  gen.places += 1;
+  gen.search += 1;
+  worker = spawn();
+}
 var $ = (x) => document.getElementById(x);
 var text = (el, s, cls, state = "settled") => {
   el.textContent = s;
@@ -156,7 +172,23 @@ $("pp-search").addEventListener("click", async () => {
   $("pp-search-out").innerHTML = `<dl class="pp-claim">${claim.map(([k, x]) => `<dt>${esc(k)}</dt><dd>${esc(x)}</dd>`).join("")}</dl><p class="pp-explain">${explain(v)}</p>` + (r.events.length ? `<table><tr><th>#</th><th>instant (UTC)</th><th class="num">bracket width s</th><th>direction</th></tr>${r.events.map((e, i) => `<tr><td>${i + 1}</td><td>${esc(e.utc)}</td><td class="num">${e.bracketWidthSec.toExponential(3)}</td><td class="pp-dim">${esc(e.direction ?? e.kind ?? "")}</td></tr>`).join("")}</table>` : '<p class="pp-dim">No events in this interval.</p>') + (r.synthetic ? '<p class="pp-warn">Synthetic fixture. These instants describe a circle this page invented, not a planet.</p>' : "");
 });
 $("pp-cancel").addEventListener("click", () => {
-  worker.postMessage({ type: "cancel", id: ++seq });
-  text($("pp-search-state"), "cancelled");
+  if (inFlight === 0) {
+    text($("pp-search-state"), "nothing is running, so there is nothing to cancel.");
+    return;
+  }
+  hardStop();
+  text($("pp-search-state"), "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data \u2014 load it again below.", "pp-warn");
+  text($("pp-pack-state"), "nothing loaded: the worker was stopped to cancel a calculation.");
+  $("pp-info").innerHTML = "";
+  $("pp-corrections").innerHTML = "";
+  $("pp-places-out").innerHTML = "";
+  $("pp-search-out").innerHTML = "";
+  $("pp-synthetic").hidden = true;
+  $("pp-file").value = "";
+  for (const el of document.querySelectorAll("[data-needs-pack]")) el.disabled = true;
 });
-window.__precisionPreview = { ask, worker, generations: gen };
+window.__precisionPreview = { ask, generations: gen, get worker() {
+  return worker;
+}, get inFlight() {
+  return inFlight;
+} };

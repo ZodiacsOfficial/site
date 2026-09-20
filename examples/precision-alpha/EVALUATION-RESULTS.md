@@ -166,6 +166,30 @@ empty-result shape. The events are not wrong, there are just none. Carrying
 partial segment verdicts out of that path is worth doing and is not done
 here.
 
+**The preview's cancel button did not cancel anything**, and the browser
+driver's own check was passing on a label rather than on a consequence.
+Measured: a cancel posted in the same task as a search came back
+`finished`, with the full event list. The reason is structural — the
+search polls a signal that lives in the worker, and the worker cannot read
+a cancel message while it is inside a synchronous search. The one
+mechanism that crosses a blocked event loop is a SharedArrayBuffer flag,
+and that needs cross-origin isolation a static page on this origin does
+not have. The button now calls `terminate()`, which really does stop the
+calculation, and says the cost out loud: the loaded data is dropped and
+has to be loaded again. The driver checks the consequences now — the
+controls disabled, the output cleared, no late reply from the stopped
+worker, and the fixture loading again afterwards — not the sentence.
+
+**The type declarations did not narrow.** The result union has two shapes
+and only one carries `isExactTotal: true`, but TypeScript discriminates a
+union on a direct property and not on a nested one, so
+`if (r.completeness.established)` narrowed nothing and
+`r.eventCount.isExactTotal` stayed `boolean` inside the true branch —
+found by compiling a real consumer against the installed archive, which is
+why `scripts/precision-alpha-types.test.mjs` now does exactly that on every
+run. `isProven`, `isUnproven` and `isFinished` are exported as guards and
+are the narrowing.
+
 ## What this does not measure
 
 Agreement with the sky, with Swiss Ephemeris, with any other ephemeris, or

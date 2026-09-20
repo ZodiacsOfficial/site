@@ -13,6 +13,9 @@ export type PrecisionErrorCode =
   | 'unknown-body' | 'out-of-coverage' | 'bad-instant' | 'unsupported-option'
   | 'budget-exhausted' | 'enclosure-too-weak' | 'unresolved' | 'cancelled'
   | 'disposed';
+// `cancelled` and `budget-exhausted` are listed because they exist as
+// codes, not because a search throws them: both end a search as a RESULT
+// carrying that execution status. See MIGRATION.md.
 
 export class PrecisionError extends Error {
   readonly name: 'PrecisionError';
@@ -165,6 +168,21 @@ export interface UnprovenSearchResult extends SearchResultBase {
 
 export type SearchResult = ProvenSearchResult | UnprovenSearchResult;
 
+/**
+ * Narrow a result to the proved branch.
+ *
+ * Use these rather than `if (r.completeness.established)`. TypeScript
+ * discriminates a union on a DIRECT property, not a nested one, so the
+ * plain check reads `established` as `boolean` and narrows nothing: a
+ * consumer compiled against this package found `r.eventCount.isExactTotal`
+ * still typed `boolean` inside the true branch. These guards narrow, and
+ * they are real functions, so a JavaScript caller gets the same answer.
+ */
+export function isProven(r: SearchResult): r is ProvenSearchResult;
+export function isUnproven(r: SearchResult): r is UnprovenSearchResult;
+/** The run reached the end of its interval. Says nothing about proving. */
+export function isFinished(r: SearchResult): boolean;
+
 export interface ApparentSearchSpec {
   kind: 'longitude' | 'aspect';
   body: Body;
@@ -175,6 +193,10 @@ export interface ApparentSearchSpec {
   /** Required. There is no default allowance, on purpose. */
   epsilonDeg: number;
   options?: ReductionOptions;
+  /**
+   * Polled on every evaluation. An abort ENDS the search and comes back as
+   * a result with `execution.status === 'cancelled'`; it does not throw.
+   */
   signal?: { aborted: boolean };
   robustness?: boolean;
   minWidthMs?: number;
@@ -194,6 +216,11 @@ export interface GeometricSearchSpec {
   targetDeg: number;
   fromTtDays: number;
   toTtDays: number;
+  /**
+   * Polled on every evaluation. An abort comes back as a result with
+   * `execution.status === 'cancelled'`, carrying the events already
+   * isolated; it does not throw.
+   */
   signal?: { aborted: boolean };
   minWidthSec?: number;
   maxEvaluations?: number;
