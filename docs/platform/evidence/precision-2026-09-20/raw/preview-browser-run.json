@@ -1,0 +1,342 @@
+{
+  "url": "http://127.0.0.1:8805/developers/precision-preview/",
+  "pack": {
+    "bytes": 1737200
+  },
+  "browsers": {
+    "chromium": {
+      "attempted": true,
+      "ran": true,
+      "version": "141.0.7390.37",
+      "steps": {
+        "beforeAnyData": {
+          "places": "no-pack",
+          "search": "no-pack",
+          "computeDisabled": true
+        },
+        "synthetic": {
+          "state": "synthetic fixture ready",
+          "labelVisible": true,
+          "infoRows": 11,
+          "bodyCount": 4,
+          "authenticityStated": true,
+          "instantRefitted": true
+        },
+        "syntheticPlaces": {
+          "rows": 4,
+          "expectedRows": 4,
+          "stateSaysSynthetic": true
+        },
+        "empiricalSearch": {
+          "state": "empirical-apparent · finished · 1 event",
+          "refused": false,
+          "claim": {
+            "events found": "1",
+            "run finished": "true",
+            "completeness established": "false",
+            "support": "conditional",
+            "exact total available": "false",
+            "total, IF the assumptions hold": "1",
+            "interval processed": "100.0000%",
+            "evaluations": "1452"
+          },
+          "explain": "The run finished and accounted for the whole interval — but only if the assumptions below hold. They were measured on a grid, not proved, so this is not a guarantee that nothing else is there. Unverified assumptions: sampled-derivative-bounds, branch-assignment-from-samples, declared-rate-ceiling.",
+          "events": 1
+        },
+        "geometricSearch": {
+          "state": "validated-geometric · finished · 1 event",
+          "refused": false,
+          "claim": {
+            "events found": "1",
+            "run finished": "true",
+            "completeness established": "true",
+            "support": "proven",
+            "exact total available": "true",
+            "interval processed": "100.0000%",
+            "evaluations": "204"
+          },
+          "explain": "Every part of the interval was accounted for by bounds that are true of the stored polynomial, so this list is complete for the function the pack defines. That is a statement about the pack, not about the sky.",
+          "events": 1
+        },
+        "refusals": {
+          "malformed instant": {
+            "how": "transport",
+            "refused": "bad-instant"
+          },
+          "before coverage": {
+            "how": "transport",
+            "refused": "out-of-coverage"
+          },
+          "after coverage": {
+            "how": "transport",
+            "refused": "out-of-coverage"
+          },
+          "unknown request": {
+            "how": "transport",
+            "refused": "unknown-request"
+          },
+          "rate past the ceiling": {
+            "how": "in-contract",
+            "refused": "refused",
+            "reason": "the sampled rate reaches 1.530 deg/day, past the declared maximum of 0.0001",
+            "established": false
+          }
+        },
+        "brokenPacks": {
+          "altered": {
+            "state": "corrupt — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "v1 container": {
+            "state": "unsupported-version — this is a ZODEPH01 pack: its digest covers only the payload, so its header is unprotected. Re-seal it with tools/seal.mjs",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "truncated": {
+            "state": "truncated — header declares 1737168 bytes of pack; only 1042288 precede the digest trailer",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "not a pack": {
+            "state": "not-a-pack — not a zodiacs ephemeris pack",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          }
+        },
+        "realPack": {
+          "state": "pack loaded and verified",
+          "syntheticLabelHidden": true,
+          "rows": 10,
+          "expectedRows": 10,
+          "stateSaysApparent": true
+        },
+        "superseded": {
+          "domWrites": 1
+        },
+        "cancel": {
+          "state": "cancelled"
+        },
+        "dispose": {
+          "state": "disposed. Nothing is loaded, and every calculation will be refused.",
+          "places": "no-pack",
+          "computeDisabled": true
+        },
+        "keyboard": {
+          "reachedInTabs": 12,
+          "activatedByEnter": "synthetic fixture ready"
+        },
+        "mobile": {
+          "documentWidth": 390,
+          "viewportWidth": 390,
+          "horizontalScroll": false
+        },
+        "network": {
+          "all": [
+            "/developers/precision-preview/",
+            "/fonts/instrument-sans-latin-wght-normal.woff2",
+            "/fonts/eb-garamond-latin-400-normal.woff2",
+            "/fonts/eb-garamond-latin-500-normal.woff2",
+            "/_astro/Base.Bryss0yT.css",
+            "/precision-preview/app.mjs",
+            "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+            "/fonts/eb-garamond-latin-400-italic.woff2",
+            "/precision-preview/worker.mjs",
+            "/assets/app-icons/v3/favicon.svg",
+            "/assets/site-footer.css",
+            "/assets/zodiac-icons/48/aries.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/taurus.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/gemini.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/cancer.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/leo.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/virgo.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/libra.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/scorpio.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/sagittarius.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/capricorn.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/aquarius.webp?surface=site-footer",
+            "/assets/zodiac-icons/48/pisces.webp?surface=site-footer"
+          ],
+          "offOrigin": [],
+          "beaconLike": [],
+          "assistant": [],
+          "assistantRuntime": [],
+          "serviceWorker": []
+        },
+        "persistence": {
+          "localStorage": 0,
+          "sessionStorage": 0,
+          "cookies": "",
+          "indexedDB": []
+        }
+      },
+      "errors": [],
+      "problems": [],
+      "verdict": "pass"
+    },
+    "firefox": {
+      "attempted": true,
+      "ran": true,
+      "version": "151.0",
+      "steps": {
+        "beforeAnyData": {
+          "places": "no-pack",
+          "search": "no-pack",
+          "computeDisabled": true
+        },
+        "synthetic": {
+          "state": "synthetic fixture ready",
+          "labelVisible": true,
+          "infoRows": 11,
+          "bodyCount": 4,
+          "authenticityStated": true,
+          "instantRefitted": true
+        },
+        "syntheticPlaces": {
+          "rows": 4,
+          "expectedRows": 4,
+          "stateSaysSynthetic": true
+        },
+        "empiricalSearch": {
+          "state": "empirical-apparent · finished · 1 event",
+          "refused": false,
+          "claim": {
+            "events found": "1",
+            "run finished": "true",
+            "completeness established": "false",
+            "support": "conditional",
+            "exact total available": "false",
+            "total, IF the assumptions hold": "1",
+            "interval processed": "100.0000%",
+            "evaluations": "1452"
+          },
+          "explain": "The run finished and accounted for the whole interval — but only if the assumptions below hold. They were measured on a grid, not proved, so this is not a guarantee that nothing else is there. Unverified assumptions: sampled-derivative-bounds, branch-assignment-from-samples, declared-rate-ceiling.",
+          "events": 1
+        },
+        "geometricSearch": {
+          "state": "validated-geometric · finished · 1 event",
+          "refused": false,
+          "claim": {
+            "events found": "1",
+            "run finished": "true",
+            "completeness established": "true",
+            "support": "proven",
+            "exact total available": "true",
+            "interval processed": "100.0000%",
+            "evaluations": "204"
+          },
+          "explain": "Every part of the interval was accounted for by bounds that are true of the stored polynomial, so this list is complete for the function the pack defines. That is a statement about the pack, not about the sky.",
+          "events": 1
+        },
+        "refusals": {
+          "malformed instant": {
+            "how": "transport",
+            "refused": "bad-instant"
+          },
+          "before coverage": {
+            "how": "transport",
+            "refused": "out-of-coverage"
+          },
+          "after coverage": {
+            "how": "transport",
+            "refused": "out-of-coverage"
+          },
+          "unknown request": {
+            "how": "transport",
+            "refused": "unknown-request"
+          },
+          "rate past the ceiling": {
+            "how": "in-contract",
+            "refused": "refused",
+            "reason": "the sampled rate reaches 1.530 deg/day, past the declared maximum of 0.0001",
+            "established": false
+          }
+        },
+        "brokenPacks": {
+          "altered": {
+            "state": "corrupt — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "v1 container": {
+            "state": "unsupported-version — this is a ZODEPH01 pack: its digest covers only the payload, so its header is unprotected. Re-seal it with tools/seal.mjs",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "truncated": {
+            "state": "truncated — header declares 1737168 bytes of pack; only 1042288 precede the digest trailer",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "not a pack": {
+            "state": "not-a-pack — not a zodiacs ephemeris pack",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          }
+        },
+        "realPack": {
+          "state": "pack loaded and verified",
+          "syntheticLabelHidden": true,
+          "rows": 10,
+          "expectedRows": 10,
+          "stateSaysApparent": true
+        },
+        "superseded": {
+          "domWrites": 1
+        },
+        "cancel": {
+          "state": "cancelled"
+        },
+        "dispose": {
+          "state": "disposed. Nothing is loaded, and every calculation will be refused.",
+          "places": "no-pack",
+          "computeDisabled": true
+        },
+        "keyboard": {
+          "reachedInTabs": 12,
+          "activatedByEnter": "synthetic fixture ready"
+        },
+        "mobile": {
+          "documentWidth": 390,
+          "viewportWidth": 390,
+          "horizontalScroll": false
+        },
+        "network": {
+          "all": [
+            "/developers/precision-preview/",
+            "/fonts/instrument-sans-latin-wght-normal.woff2",
+            "/fonts/eb-garamond-latin-400-normal.woff2",
+            "/fonts/eb-garamond-latin-500-normal.woff2",
+            "/_astro/Base.Bryss0yT.css",
+            "/precision-preview/app.mjs",
+            "/fonts/jetbrains-mono-latin-wght-normal.woff2",
+            "/fonts/eb-garamond-latin-400-italic.woff2",
+            "/assets/app-icons/v3/apple-touch-icon.png",
+            "/assets/app-icons/v3/favicon.svg",
+            "/precision-preview/worker.mjs",
+            "/assets/site-footer.css"
+          ],
+          "offOrigin": [],
+          "beaconLike": [],
+          "assistant": [],
+          "assistantRuntime": [],
+          "serviceWorker": []
+        },
+        "persistence": {
+          "localStorage": 0,
+          "sessionStorage": 0,
+          "cookies": "",
+          "indexedDB": []
+        }
+      },
+      "errors": [],
+      "problems": [],
+      "verdict": "pass"
+    },
+    "webkit": {
+      "attempted": true,
+      "ran": false,
+      "why": "no webkit build is installed in this environment"
+    }
+  }
+}

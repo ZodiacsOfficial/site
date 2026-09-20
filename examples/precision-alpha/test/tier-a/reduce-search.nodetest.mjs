@@ -128,6 +128,50 @@ test('IAU 2000A is not reachable, as the contract says', () => {
   assert.throws(() => rt.apparent('Mars', 0, { ...OPTS, nutation: '2000a' }), (e) => e.code === 'unsupported-option');
 });
 
+// ---- what the runtime advertises, and what a degenerate place does ----
+//
+// Both of these were found by driving the browser preview, not by reading
+// the code: the interface listed ten bodies for a four-body pack, and one
+// body sitting on the observer took down the whole places table with a
+// message about a non-finite value.
+
+test('the advertised body list contains only bodies this pack can answer for', () => {
+  // This fixture carries the Sun, the Earth-Moon pair and two planets.
+  // Six of the contract's ten have no segment here at all.
+  assert.deepEqual([...rt.bodies].sort(), ['Mars', 'Moon', 'Sun', 'Venus']);
+  // Advertised means the pack HAS this body, not that every instant of it
+  // is well posed. Two of the four here sit on the observer by construction
+  // and are refused for that -- a different answer from "no such body", and
+  // the list is about the pack, so both are correct.
+  for (const body of rt.bodies) {
+    try {
+      rt.apparent(body, 0, { ...OPTS, deflection: 'none' });
+    } catch (error) {
+      assert.equal(error.code, 'bad-geometry', `${body} is advertised but failed with ${error.code}`);
+    }
+  }
+  for (const absent of ['Mercury', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']) {
+    assert.equal(rt.bodies.includes(absent), false, `${absent} is advertised`);
+    assert.throws(() => rt.apparent(absent, 0, OPTS), (e) => e.code === 'unknown-body');
+  }
+});
+
+test('a body sitting on the observer is refused by code, not returned as NaN', () => {
+  // The Earth is at the barycentre and this fixture's Moon record is zero,
+  // so the geocentric Moon is exactly at the observer and has no direction.
+  assert.throws(() => rt.apparent('Moon', 0, { ...OPTS, deflection: 'none' }), (e) => {
+    assert.equal(e.code, 'bad-geometry');
+    assert.match(e.message, /no determinable direction/);
+    return true;
+  });
+});
+
+test('the Sun on the observer with deflection on is refused the same way', () => {
+  // Deflection divides by the Sun-observer distance. This fixture's Sun is
+  // at the barycentre, where the Earth is.
+  assert.throws(() => rt.apparent('Venus', 0, { ...OPTS, deflection: 'sun' }), (e) => e.code === 'bad-geometry');
+});
+
 test('every switch that can matter here does, and the ones that cannot are exactly zero', () => {
   const at = (o) => rt.apparent('Mars', 123.25, { ...OPTS, ...o }).lon;
   const base = at({});

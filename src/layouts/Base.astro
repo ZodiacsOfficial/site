@@ -66,6 +66,28 @@ interface Props {
   editionDate?: string;
   /** Suppress third-party runtime scripts on pages handling private account data. */
   privateSurface?: boolean;
+  /**
+   * Do not register the PWA worker on this route.
+   *
+   * For a surface that must be able to say it stores nothing: the worker's
+   * install precaches the app shell into Cache Storage, which is storage,
+   * and it fires a burst of same-origin requests the route never asked
+   * for. Set only where that claim is made and tested.
+   */
+  noServiceWorker?: boolean;
+  /**
+   * Do not load the Guide assistant on this route.
+   *
+   * The footer's inline loader fetches the assistant shell half a second
+   * after `load`, on every page, and the mounted widget can send typed
+   * text to the server. On a surface whose whole claim is that nothing
+   * entered there goes anywhere, an inherited same-origin component that
+   * CAN transmit is not made harmless by being off by default. This also
+   * drops the footer's Guide button, which without the loader would be a
+   * control that does nothing. Set only where that claim is made and
+   * tested; the footer itself stays.
+   */
+  noAssistant?: boolean;
   /** Render the Terminal-only market and venue boundary in the shared footer. */
   terminalMarketNotice?: boolean;
 }
@@ -99,6 +121,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
   dir={rtlDocumentDirection(LOCALE_META[locale].dir)}
   data-edition-date={props.editionDate || undefined}
   data-inline-critical-css={props.inlineCriticalCss ? '' : undefined}
+  data-no-service-worker={props.noServiceWorker ? '' : undefined}
   data-stable-typography={props.stableTypography ? '' : undefined}
   data-local-typography={props.localTypography ? '' : undefined}
   data-stable-chrome-typography={props.stableChromeTypography ? '' : undefined}
@@ -439,7 +462,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
 
     {(props.editorialLine ?? props.type === 'article') && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} locale={locale} />
-    <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />
+    <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} noAssistant={props.noAssistant} />
 
     <!-- The canonical footer sits below every route's primary content, so its
          sizeable shared stylesheet must not delay the first viewport. Keep the
@@ -516,7 +539,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
       // holds back a beat past load: install precaches fifteen routes, and
       // that burst must never share the window where the page is still
       // painting its largest content.
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && !document.documentElement.hasAttribute('data-no-service-worker')) {
         window.addEventListener('load', () => {
           window.setTimeout(() => {
             navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});

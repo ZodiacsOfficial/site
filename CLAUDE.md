@@ -135,6 +135,13 @@ owns that page.
   `scripts/trust-surface-consistency.test.mjs`; several other root docs
   (PLAN.md, SETUP.md, ZODIAC-GAMES.md) are also test-fixture-coupled, so
   never delete or rename a root doc without grepping the test suite first
+- `public/precision-preview/{app,worker}.mjs` ← `node
+  scripts/build-precision-preview.mjs` (sources `src/precision-preview/`,
+  bundling the experimental runtime from `examples/precision-alpha`). Plain
+  static files on purpose: nothing in the Astro graph imports them, so no
+  consumer page's chunks can move because the preview exists, and
+  `report-bundles.mjs` never sees them. `--check` for drift; the site-check
+  drift gate runs it
 - `i18n-additions.md` (repo root) ← `node scripts/build-i18n-additions.mjs`
 
 `public/sw.js` is a PWA worker — the owner approved superseding the old

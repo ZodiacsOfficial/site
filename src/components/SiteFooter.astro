@@ -20,7 +20,7 @@ import {
 } from '../lib/i18n';
 
 const year = new Date().getFullYear();
-interface Props { locale?: Locale; terminalMarketNotice?: boolean }
+interface Props { locale?: Locale; terminalMarketNotice?: boolean; noAssistant?: boolean }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const routeLanguageLinks = renderableAlternatePathEntries(Astro.url.pathname);
 // Preserve the established locale-home fallback on English-only routes while
@@ -75,17 +75,19 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
         </a>
         <p class="zfooter__tag">{t(locale, 'footerTag')}</p>
       </div>
-      <button
-        class="zfooter__guide"
-        type="button"
-        data-assistant-open
-        data-footer-guide
-        data-assistant-locale={locale}
-        aria-haspopup="dialog"
-      >
-        <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
-        <span>{FOOTER_COPY[locale].assistant}</span>
-      </button>
+      {!Astro.props.noAssistant && (
+        <button
+          class="zfooter__guide"
+          type="button"
+          data-assistant-open
+          data-footer-guide
+          data-assistant-locale={locale}
+          aria-haspopup="dialog"
+        >
+          <img src="/assets/guide-avatar.webp" width="32" height="32" alt="" loading="lazy" decoding="async" />
+          <span>{FOOTER_COPY[locale].assistant}</span>
+        </button>
+      )}
     </div>
 
     <div class="zfooter__directory">
@@ -187,5 +189,8 @@ const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 </footer>
 
 <!-- Guide stays outside Astro's module graph. Before its post-load mount, the
-     inline loader reacts only to a deliberate Guide CTA click. -->
-<script is:inline data-guide-loader={GUIDE_LOADER_MARKER} set:html={guideLoaderSource(locale)} />
+     inline loader reacts only to a deliberate Guide CTA click. `noAssistant`
+     omits it. -->
+{!Astro.props.noAssistant && (
+  <script is:inline data-guide-loader={GUIDE_LOADER_MARKER} set:html={guideLoaderSource(locale)} />
+)}

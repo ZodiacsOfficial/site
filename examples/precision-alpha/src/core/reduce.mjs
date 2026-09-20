@@ -272,6 +272,16 @@ export class Reducer {
       }
     }
 
+    // A place that is not finite is a geometry this reduction cannot
+    // describe -- the target on the observer, or the Sun on the observer
+    // with deflection on -- and it must say so with a code rather than
+    // hand back a NaN for something downstream to trip over.
+    if (!Number.isFinite(p[0]) || !Number.isFinite(p[1]) || !Number.isFinite(p[2]) || !Number.isFinite(distKm)) {
+      fail('bad-geometry',
+        `${body} has no determinable direction at this instant: the geometry is degenerate (a separation of zero, or the Sun on the observer with deflection enabled)`,
+        { distKm, deflection: o.deflection });
+    }
+
     const { matrix, epsTrue, dpsiArcsec, depsArcsec } = npbMatrix(t, { nutation: o.nutation, bias: o.bias });
     const ecl = equToEcl(apply(matrix, p), epsTrue);
     const { lon, lat } = eclipticLonLatDeg(ecl);

@@ -36,10 +36,21 @@ export class PrecisionRuntime {
       startEtSecTdb: parsed.header.coverage.startEtSecTdb,
       stopEtSecTdb: parsed.header.coverage.stopEtSecTdb,
     });
-    this.bodies = Object.freeze(CONTRACT.bodies.slice());
+
     this.ephemeris = new Ephemeris(source, parsed);
     this.reducer = new Reducer(this.ephemeris);
     this.disposed = false;
+    this.bodies = Object.freeze(CONTRACT.bodies.filter((b) => this.#canProduce(b)));
+  }
+
+  /** Can this pack give a barycentric state for `body` at all? */
+  #canProduce(body) {
+    try {
+      this.ephemeris.state(body, this.coverage.startEtSecTdb + 1, new Float64Array(6));
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   #assertVerified(integrity) {
