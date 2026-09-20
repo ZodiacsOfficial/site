@@ -2801,22 +2801,19 @@ function circle(days, radius, tilt, phase = 0) {
   ];
 }
 var ORBIT = circle(240, 32e7, 0.21);
+var SUNPATH = circle(365.25, 1496e5, 0, 2.4);
+var VENUSPATH = circle(224.7, 108e6, 0.06, 0.7);
 var MOON_SCALE = 1 / (1 + 1 / EMRAT);
 var MOON = circle(27.32, 384400 * MOON_SCALE, 0.09, 1.1);
 var zeros = () => new Array(NCOEF).fill(0);
-var fixed = (v) => {
-  const c = zeros();
-  c[0] = v;
-  return c;
-};
 function bodyCoefficients(name, record) {
   const lo = INIT + record * INTERVAL;
   const hi = lo + INTERVAL;
   const fitted = (o) => [...fit(o[0], lo, hi, NCOEF), ...fit(o[1], lo, hi, NCOEF), ...fit(o[2], lo, hi, NCOEF)];
   if (name === "marsBary") return fitted(ORBIT);
   if (name === "moon") return fitted(MOON);
-  if (name === "venusBary") return [...fixed(11e7), ...fixed(4e7), ...zeros()];
-  if (name === "sun") return [...fixed(-14e7), ...fixed(5e7), ...fixed(1e7)];
+  if (name === "venusBary") return fitted(VENUSPATH);
+  if (name === "sun") return fitted(SUNPATH);
   return [...zeros(), ...zeros(), ...zeros()];
 }
 var BODIES = [
@@ -2862,7 +2859,7 @@ async function buildSyntheticPack() {
       format: "zodiacs-ephemeris-pack",
       formatVersion: 1,
       synthetic: true,
-      syntheticWhat: "built in the browser from polynomials in src/precision-preview/synthetic.mjs. Two bodies on circles -- one slow and far, one fast and near -- with the Earth at the barycentre. NOT a planetary ephemeris and not derived from any kernel.",
+      syntheticWhat: "built in the browser from polynomials in src/precision-preview/synthetic.mjs. Four bodies on circles, with the EARTH-MOON BARYCENTRE at the origin, so the observer itself runs a 4671 km monthly circle. NOT a planetary ephemeris and not derived from any kernel.",
       coverage: { startEtSecTdb: INIT, stopEtSecTdb: INIT + NREC * INTERVAL },
       conventions: { chebyshev: "p(tau) = sum_k c_k T_k(tau), tau = (t - mid)/radius, c_0 NOT halved" },
       derived: { earth399: { emrat: EMRAT, from: "moon" } },
@@ -2891,7 +2888,7 @@ async function buildSyntheticPack() {
   out.set(new Uint8Array(digest), total - 32);
   return out;
 }
-var SYNTHETIC_NOTE = "Synthetic fixture: two bodies on circles -- 240 days at 3.2e8 km, and 27.32 days at 384400 km -- with the Earth pinned at the barycentre. The arithmetic is real and the sky is not.";
+var SYNTHETIC_NOTE = "Synthetic fixture: four bodies on circles -- 365.25 d at 1.496e8 km, 224.7 d at 1.08e8 km, 240 d at 3.2e8 km, and 27.32 d at 384400 km. The EARTH-MOON BARYCENTRE is pinned at the origin, so the observer runs a 4671 km monthly circle of its own. The arithmetic is real and the sky is not.";
 
 // src/precision-preview/worker.src.mjs
 var MS_PER_DAY2 = 864e5;

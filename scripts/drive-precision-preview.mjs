@@ -307,9 +307,29 @@ async function run(name, browser) {
   await arm('pp-search-state');
   await page.click('#pp-search');
   await page.waitForFunction(() => window.__precisionPreview.inFlight > 0, null, { timeout: 5000 });
+  // Watch the WORKER, not the page's own words about it. Every value the
+  // previous version of this step read -- the state line, the disabled
+  // controls, the cleared output -- is written synchronously by the
+  // cancel click handler whether or not terminate() did anything, so the
+  // step passed with a stub in place of terminate and the real worker
+  // still running. Two things the handler cannot fake: the worker object
+  // being a different one afterwards, and the old one going silent.
+  await page.evaluate(() => {
+    const w = window.__precisionPreview.worker;
+    window.__cancelWatch = { before: w, repliesAfterCancel: 0, cancelled: false };
+    w.addEventListener('message', () => {
+      if (window.__cancelWatch.cancelled) window.__cancelWatch.repliesAfterCancel += 1;
+    });
+  });
   out.steps.cancelRace = { inFlightBeforeCancel: await page.evaluate(() => window.__precisionPreview.inFlight) };
+  await page.evaluate(() => { window.__cancelWatch.cancelled = true; });
   await page.click('#pp-cancel');
   await page.waitForTimeout(800);
+  out.steps.cancelWorker = await page.evaluate(() => ({
+    workerReplaced: window.__precisionPreview.worker !== window.__cancelWatch.before,
+    repliesFromTheStoppedWorker: window.__cancelWatch.repliesAfterCancel,
+    inFlightAfter: window.__precisionPreview.inFlight,
+  }));
   out.steps.cancel = {
     state: await page.textContent('#pp-search-state'),
     packState: await stateOf(),
@@ -381,21 +401,98 @@ async function run(name, browser) {
     // the server, the avatar is an image beside a button.
     assistantRuntime: requests.filter((u) => /assistant-ui/i.test(u)),
     serviceWorker: requests.filter((u) => /\/sw\.js/i.test(u)),
+    // An allowlist, not four hand-written patterns. The docstring above
+    // makes a point of recording EVERY request and the verdict then
+    // checked only whether any matched `analytic|beacon|...`; a
+    // same-origin loader fetching more code scored a pass. Anything not
+    // on this list is a finding, whatever it is called.
+    unexpected: [...new Set(requests)]
+      .map((u) => u.replace(BASE, ''))
+      .filter((u) => !(
+        u === '/developers/precision-preview/'
+        || u === '/precision-preview/app.mjs'
+        || u === '/precision-preview/worker.mjs'
+        || /^\/_astro\/[^/]+\.css$/.test(u)
+        || /^\/fonts\/[^/]+\.woff2$/.test(u)
+        || /^\/assets\/app-icons\//.test(u)
+        || u === '/assets/site-footer.css'
+        || /^\/assets\/zodiac-icons\/48\/[a-z]+\.webp\?surface=site-footer$/.test(u)
+      )),
   };
+  // Cache Storage is the bucket this page actually lands in, and the
+  // first version of this probe never looked: it enumerated
+  // localStorage, sessionStorage, cookies and IndexedDB, all empty, in a
+  // context that had only ever visited this one route -- so no service
+  // worker could exist and nothing else could have written anything. It
+  // reported {0,0,"",[]} while `caches` held the page's own HTML.
   out.steps.persistence = await page.evaluate(async () => {
     const dbs = typeof indexedDB?.databases === 'function' ? await indexedDB.databases() : 'not-enumerable';
+    const cacheEntries = [];
+    if (typeof caches !== 'undefined') {
+      for (const key of await caches.keys()) {
+        const c = await caches.open(key);
+        for (const req of await c.keys()) cacheEntries.push(req.url);
+      }
+    }
     return {
       localStorage: localStorage.length,
       sessionStorage: sessionStorage.length,
       cookies: document.cookie,
       indexedDB: Array.isArray(dbs) ? dbs.map((d) => d.name) : dbs,
+      cacheStorageEntries: cacheEntries.length,
+      cacheStorageHoldingThisRoute: cacheEntries.filter((u) => /precision-preview/.test(u)),
     };
   });
   out.errors = errors;
   await context.close();
 
+  // A second pass in a context that visits another route FIRST, so the
+  // site's service worker is registered and active before the preview is
+  // opened. The pass above cannot see this: its context has only ever
+  // been to this one page, so no worker exists to cache anything, and the
+  // isolation it measures is the isolation of a visitor who arrived by
+  // typing the URL -- not the one who clicked through the site.
+  out.steps.warmedContext = await warmed(browser);
+
   out.verdict = verdictOf(out, Object.keys(fixtures).length > 0);
   return out;
+}
+
+async function warmed(browser) {
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
+  try {
+    await page.goto(`${BASE}/`, { waitUntil: 'networkidle' });
+    // The site's loader registers the worker three seconds after `load`,
+    // and activation takes a moment more. Polled rather than assumed: a
+    // warmed pass that never activated a worker proves nothing, and the
+    // verdict says so rather than passing quietly.
+    let serviceWorkerActive = false;
+    for (let i = 0; i < 40 && !serviceWorkerActive; i += 1) {
+      await page.waitForTimeout(500);
+      serviceWorkerActive = await page.evaluate(
+        async () => (await navigator.serviceWorker.getRegistrations()).some((r) => r.active),
+      );
+    }
+    await page.goto(URL_, { waitUntil: 'networkidle' });
+    await page.waitForTimeout(2500);
+    const seen = await page.evaluate(async () => {
+      const urls = [];
+      for (const key of await caches.keys()) {
+        const c = await caches.open(key);
+        for (const req of await c.keys()) urls.push(req.url);
+      }
+      return { controlled: Boolean(navigator.serviceWorker.controller), urls };
+    });
+    return {
+      serviceWorkerActive,
+      controlledByServiceWorker: seen.controlled,
+      cacheStorageEntries: seen.urls.length,
+      cacheStorageHoldingThisRoute: seen.urls.filter((u) => /precision-preview/.test(u)).map((u) => u.replace(BASE, '')),
+    };
+  } finally {
+    await context.close();
+  }
 }
 
 function verdictOf(out, hadPack) {
@@ -414,6 +511,10 @@ function verdictOf(out, hadPack) {
   for (const label of ['empirical', 'geometric']) {
     const step = s[`${label}Search`];
     if (step.refused) { p.push(`the ${label} search was refused: ${step.state}`); continue; }
+    // A demonstration that demonstrates nothing passes every flag check:
+    // a zero-event geometric run reports `established: true` quite
+    // happily. The fixture is built to produce crossings, so it must.
+    if (!(step.events > 0)) p.push(`the ${label} search returned no events, so the flags below prove nothing`);
     if (label === 'empirical') {
       if (step.claim['completeness established'] !== 'false') p.push('the empirical search claimed established completeness');
       if (step.claim['exact total available'] !== 'false') p.push('the empirical search offered an exact total');
@@ -439,6 +540,9 @@ function verdictOf(out, hadPack) {
   if (s.superseded.domWrites !== 1) p.push(`a superseded reply reached the interface (${s.superseded.domWrites} writes)`);
   if (!/nothing to cancel/i.test(s.cancelIdle.state)) p.push('cancelling nothing did not say so');
   if (!(s.cancelRace.inFlightBeforeCancel > 0)) p.push('the cancel test did not actually catch a running calculation');
+  if (!s.cancelWorker.workerReplaced) p.push('cancel did not replace the worker, so nothing was stopped');
+  if (s.cancelWorker.repliesFromTheStoppedWorker > 0) p.push(`the stopped worker delivered ${s.cancelWorker.repliesFromTheStoppedWorker} replies after the cancel`);
+  if (s.cancelWorker.inFlightAfter !== 0) p.push('requests were still outstanding after the cancel');
   if (!/cancelled/i.test(s.cancel.state)) p.push('cancel did not report');
   if (!s.cancel.computeDisabled) p.push('cancel left the compute control enabled, so nothing was actually stopped');
   if (!s.cancel.outputCleared) p.push('cancel left a stale search result on the page');
@@ -452,9 +556,19 @@ function verdictOf(out, hadPack) {
   if (s.network.offOrigin.length) p.push(`off-origin requests: ${s.network.offOrigin.join(', ')}`);
   if (s.network.beaconLike.length) p.push(`beacon-like requests: ${s.network.beaconLike.join(', ')}`);
   if (s.network.assistant.length) p.push(`the assistant loaded on an isolated route: ${s.network.assistant.join(', ')}`);
+  if (s.network.unexpected.length) p.push(`requests outside the allowlist: ${s.network.unexpected.join(', ')}`);
   if (s.network.serviceWorker.length) p.push(`the service worker was fetched: ${s.network.serviceWorker.join(', ')}`);
   if (s.persistence.localStorage || s.persistence.sessionStorage || s.persistence.cookies) p.push('the page persisted something');
   if (Array.isArray(s.persistence.indexedDB) && s.persistence.indexedDB.length) p.push('the page created an IndexedDB database');
+  if (s.persistence.cacheStorageHoldingThisRoute?.length) {
+    p.push(`this route is in Cache Storage: ${s.persistence.cacheStorageHoldingThisRoute.join(', ')}`);
+  }
+  if (s.warmedContext) {
+    if (!s.warmedContext.serviceWorkerActive) p.push('the warmed pass never activated a service worker, so it proved nothing');
+    if (s.warmedContext.cacheStorageHoldingThisRoute.length) {
+      p.push(`after visiting another page first, this route is cached: ${s.warmedContext.cacheStorageHoldingThisRoute.join(', ')}`);
+    }
+  }
   if (out.errors.length) p.push(`page errors: ${out.errors.join(' | ')}`);
   out.problems = p;
   return p.length === 0 ? 'pass' : 'FAIL';

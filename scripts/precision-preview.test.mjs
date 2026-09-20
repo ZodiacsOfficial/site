@@ -16,6 +16,17 @@ describe('the precision preview is isolated', () => {
     expect(page).toMatch(/privateSurface=\{true\}/);
   });
 
+  it('is excluded from the offline worker, not merely stopped from registering one', () => {
+    // A page that says it stores nothing cannot be cached by the site's
+    // worker. `noServiceWorker` only stops registration FROM this page;
+    // a worker already active at scope / controls it anyway.
+    const sw = readFileSync('public/sw.js', 'utf8');
+    expect(sw).toMatch(/function neverCached\(url\)/);
+    expect(sw).toContain("url.pathname.startsWith('/developers/precision-preview/')");
+    expect(sw).toContain("url.pathname.startsWith('/precision-preview/')");
+    expect(sw).toMatch(/registryVolatileSurface\(url\) \|\| neverCached\(url\)/);
+  });
+
   it('inherits neither the service worker nor the assistant', () => {
     // Both are same-origin, so "no off-origin traffic" says nothing about
     // them. The worker precaches into Cache Storage, which is storage; the

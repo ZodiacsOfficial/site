@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:8815/developers/precision-preview/",
+  "url": "http://127.0.0.1:8819/developers/precision-preview/",
   "pack": {
     "bytes": 1737200
   },
@@ -124,6 +124,11 @@
         "cancelRace": {
           "inFlightBeforeCancel": 1
         },
+        "cancelWorker": {
+          "workerReplaced": true,
+          "repliesFromTheStoppedWorker": 0,
+          "inFlightAfter": 0
+        },
         "cancel": {
           "state": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below.",
           "packState": "nothing loaded: the worker was stopped to cancel a calculation.",
@@ -179,13 +184,22 @@
           "beaconLike": [],
           "assistant": [],
           "assistantRuntime": [],
-          "serviceWorker": []
+          "serviceWorker": [],
+          "unexpected": []
         },
         "persistence": {
           "localStorage": 0,
           "sessionStorage": 0,
           "cookies": "",
-          "indexedDB": []
+          "indexedDB": [],
+          "cacheStorageEntries": 0,
+          "cacheStorageHoldingThisRoute": []
+        },
+        "warmedContext": {
+          "serviceWorkerActive": true,
+          "controlledByServiceWorker": true,
+          "cacheStorageEntries": 298,
+          "cacheStorageHoldingThisRoute": []
         }
       },
       "errors": [],
@@ -312,6 +326,11 @@
         "cancelRace": {
           "inFlightBeforeCancel": 1
         },
+        "cancelWorker": {
+          "workerReplaced": true,
+          "repliesFromTheStoppedWorker": 0,
+          "inFlightAfter": 0
+        },
         "cancel": {
           "state": "cancelled. Stopping a calculation means stopping the worker, which drops the loaded data — load it again below.",
           "packState": "nothing loaded: the worker was stopped to cancel a calculation.",
@@ -356,13 +375,22 @@
           "beaconLike": [],
           "assistant": [],
           "assistantRuntime": [],
-          "serviceWorker": []
+          "serviceWorker": [],
+          "unexpected": []
         },
         "persistence": {
           "localStorage": 0,
           "sessionStorage": 0,
           "cookies": "",
-          "indexedDB": []
+          "indexedDB": [],
+          "cacheStorageEntries": 0,
+          "cacheStorageHoldingThisRoute": []
+        },
+        "warmedContext": {
+          "serviceWorkerActive": true,
+          "controlledByServiceWorker": true,
+          "cacheStorageEntries": 298,
+          "cacheStorageHoldingThisRoute": []
         }
       },
       "errors": [],

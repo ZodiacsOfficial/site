@@ -6,12 +6,21 @@
  * openly fake. Every result derived from this carries `synthetic: true`,
  * and the interface says "not the sky" next to all of it.
  *
- * The geometry: the Earth sits at the barycentre, the Sun sits at a fixed
- * offset from it, and two bodies run circles at constant rates in tilted
- * planes -- a slow one at a Mars-like distance and a fast one at a
- * Moon-like distance. Those are not planets. They are
- * moving points whose crossings are arithmetic, which is exactly what is
- * wanted for demonstrating a search.
+ * The geometry: the EARTH-MOON BARYCENTRE sits at the origin, so the Earth
+ * itself runs a 4,671 km monthly circle around it -- that is where the
+ * observer is -- and four bodies run circles at constant rates in tilted
+ * planes. Those are not planets. They are moving points whose crossings
+ * are arithmetic, which is exactly what is wanted for demonstrating a
+ * search.
+ *
+ * Every visible body MOVES, and that is deliberate. An earlier version
+ * left Venus and the Sun at fixed points. Because the observer still
+ * wobbles, a body nailed to the sky then appears to swing by about 17
+ * arcseconds a month -- and the validated mode, asked about a longitude
+ * read straight off the page's own table, would prove a list of crossings
+ * of an object that never moved. Arithmetically right, and the worst
+ * possible advertisement for the mode whose whole claim is that it can
+ * prove things.
  */
 const DAY = 86400;
 const NCOEF = 14;
@@ -50,6 +59,10 @@ function circle(days, radius, tilt, phase = 0) {
 }
 
 const ORBIT = circle(240, 3.2e8, 0.21);
+/** A year-long circle, so "the Sun at 100 degrees" is a question with an answer. */
+const SUNPATH = circle(365.25, 1.496e8, 0, 2.4);
+/** Venus-like: fast enough to cross a target several times in the coverage. */
+const VENUSPATH = circle(224.7, 1.08e8, 0.06, 0.7);
 /**
  * The geocentric Moon, which must not be at the observer.
  *
@@ -75,12 +88,13 @@ function bodyCoefficients(name, record) {
   const fitted = (o) => [...fit(o[0], lo, hi, NCOEF), ...fit(o[1], lo, hi, NCOEF), ...fit(o[2], lo, hi, NCOEF)];
   if (name === 'marsBary') return fitted(ORBIT);
   if (name === 'moon') return fitted(MOON);
-  if (name === 'venusBary') return [...fixed(1.1e8), ...fixed(0.4e8), ...zeros()];
+  if (name === 'venusBary') return fitted(VENUSPATH);
   // The Sun must not sit on the observer. It did in the first version of
   // this fixture -- Sun at the barycentre, Earth at the barycentre -- and
   // the solar-deflection term then divided by a zero distance and produced
   // a non-finite place. A fixture may be fake; it may not be degenerate.
-  if (name === 'sun') return [...fixed(-1.4e8), ...fixed(0.5e8), ...fixed(0.1e8)];
+  // On this circle it stays 1.496e8 km away and sweeps a turn a year.
+  if (name === 'sun') return fitted(SUNPATH);
   return [...zeros(), ...zeros(), ...zeros()];
 }
 
@@ -125,7 +139,7 @@ export async function buildSyntheticPack() {
       format: 'zodiacs-ephemeris-pack',
       formatVersion: 1,
       synthetic: true,
-      syntheticWhat: 'built in the browser from polynomials in src/precision-preview/synthetic.mjs. Two bodies on circles -- one slow and far, one fast and near -- with the Earth at the barycentre. NOT a planetary ephemeris and not derived from any kernel.',
+      syntheticWhat: 'built in the browser from polynomials in src/precision-preview/synthetic.mjs. Four bodies on circles, with the EARTH-MOON BARYCENTRE at the origin, so the observer itself runs a 4671 km monthly circle. NOT a planetary ephemeris and not derived from any kernel.',
       coverage: { startEtSecTdb: INIT, stopEtSecTdb: INIT + NREC * INTERVAL },
       conventions: { chebyshev: 'p(tau) = sum_k c_k T_k(tau), tau = (t - mid)/radius, c_0 NOT halved' },
       derived: { earth399: { emrat: EMRAT, from: 'moon' } },
@@ -153,4 +167,4 @@ export async function buildSyntheticPack() {
   return out;
 }
 
-export const SYNTHETIC_NOTE = 'Synthetic fixture: two bodies on circles -- 240 days at 3.2e8 km, and 27.32 days at 384400 km -- with the Earth pinned at the barycentre. The arithmetic is real and the sky is not.';
+export const SYNTHETIC_NOTE = 'Synthetic fixture: four bodies on circles -- 365.25 d at 1.496e8 km, 224.7 d at 1.08e8 km, 240 d at 3.2e8 km, and 27.32 d at 384400 km. The EARTH-MOON BARYCENTRE is pinned at the origin, so the observer runs a 4671 km monthly circle of its own. The arithmetic is real and the sky is not.';
