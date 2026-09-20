@@ -1,0 +1,20 @@
+{
+  "name": "@zodiacs/precision-alpha",
+  "version": "0.0.0-alpha.1",
+  "private": true,
+  "description": "Experimental compact-ephemeris runtime: one numerical core, a browser loader and a low-memory Node loader, with a bounded longitude-event search.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.mjs",
+    "./browser": "./src/browser.mjs",
+    "./node": "./src/node.mjs"
+  },
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/tier-a/",
+    "test:data": "node --test test/tier-b/"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
