@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:8810/developers/precision-preview/",
+  "url": "http://127.0.0.1:8815/developers/precision-preview/",
   "pack": {
     "bytes": 1737200
   },
@@ -347,9 +347,9 @@
             "/precision-preview/app.mjs",
             "/fonts/jetbrains-mono-latin-wght-normal.woff2",
             "/fonts/eb-garamond-latin-400-italic.woff2",
-            "/precision-preview/worker.mjs",
             "/assets/app-icons/v3/apple-touch-icon.png",
             "/assets/app-icons/v3/favicon.svg",
+            "/precision-preview/worker.mjs",
             "/assets/site-footer.css"
           ],
           "offOrigin": [],

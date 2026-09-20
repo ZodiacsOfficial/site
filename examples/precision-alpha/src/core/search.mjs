@@ -296,15 +296,37 @@ export function searchLongitudeEvent(reducer, spec = {}) {
   }));
   const verdict = merged.summary;
 
+  // The robustness probe is a diagnostic, and it spends evaluations like
+  // everything else. Two ways out of it used to be wrong:
+  //
+  //   - a cancel RETHREW, straight past the caller, contradicting the
+  //     contract this package documents in MIGRATION.md and declares in
+  //     types/index.d.ts ("it does not throw"). A caller who followed the
+  //     migration and dropped the try/catch crashed on exactly the
+  //     long-running searches an abort is for;
+  //   - a spent budget was swallowed into `{ran: false}` and the run went
+  //     on to report `status: 'finished'` with `exhausted: true` and an
+  //     evaluation count ABOVE the declared cap.
+  //
+  // Both are execution states the contract names, so both now end the run
+  // as one, keeping every candidate already isolated.
   let robustnessReport = null;
+  let stoppedIn = null;
   if (robustness && candidates.length > 0) {
     try {
       robustnessReport = probeRobustness(f, candidates, p, epsilonDeg);
     } catch (error) {
-      if (error instanceof PrecisionError && error.code === 'cancelled') throw error;
-      robustnessReport = { ran: false, why: error?.code ?? 'probe-failed' };
+      const code = error instanceof PrecisionError ? error.code : null;
+      if (code === 'cancelled' || code === 'budget-exhausted') {
+        stoppedIn = code;
+        robustnessReport = { ran: false, why: code };
+      } else {
+        robustnessReport = { ran: false, why: error?.code ?? 'probe-failed' };
+      }
     }
   }
+  const status = stoppedIn ?? (exhausted ? 'budget-exhausted' : 'finished');
+  const finished = status === 'finished';
 
   // ---- the v2 result ----
   //
@@ -313,6 +335,12 @@ export function searchLongitudeEvent(reducer, spec = {}) {
   // can say is that completeness holds IF those estimates hold, and
   // `completeness.established` stays false. `result.mjs` enforces that; it
   // is not a convention this file could quietly drop.
+  // Deliberately NOT gated on `finished`. The only way to reach this point
+  // unfinished is a stop inside the robustness probe, which runs after the
+  // classifier has closed everything; reporting the topology as unresolved
+  // because an optional diagnostic was cut short would be a false
+  // negative. The execution status says the run stopped; the accounting
+  // says what the classifier established. Two different questions.
   const closedEverything = merged.summary.allClosed && merged.unresolved.length === 0;
   const aliasing = branches.aliasing ?? { detected: false };
   const conditional = closedEverything && !aliasing.detected;
@@ -350,8 +378,9 @@ export function searchLongitudeEvent(reducer, spec = {}) {
     events: candidates,
     interval: intervalOf({ a, b }, branches.segments, p),
     execution: {
-      status: 'finished', finished: true,
-      evaluations, maxEvaluations: p.maxEvaluations, exhausted, reason: null,
+      status, finished,
+      evaluations, maxEvaluations: p.maxEvaluations, exhausted,
+      reason: finished ? null : `the run stopped in the robustness probe: ${status}`,
     },
     accounting: {
       allIntervalsAccountedFor: conditional,

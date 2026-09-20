@@ -161,7 +161,7 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
   const gw = [cosL, sinL * COS_E, sinL * SIN_E];
 
   const parts = [];
-  let f1 = 0; let f2 = 0; let fr = 0;
+  let f1 = 0; let f2 = 0; let fr = 0; let frd = 0;
   let g1 = 0; let g2 = 0; let gr = 0;
   for (const [name, w] of weights) {
     const s = eph.seriesAt(name, et);
@@ -172,6 +172,9 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
       f1 += Math.abs(w * fw[comp]) * bnd.maxAbsFirst;
       f2 += Math.abs(w * fw[comp]) * bnd.maxAbsSecond;
       fr += Math.abs(w * fw[comp]) * bnd.roundoff;
+      // The SLOPE's own rounding allowance, in the slope's units. The
+      // monotone test compares a slope, so it needs this and not `fr`.
+      frd += Math.abs(w * fw[comp]) * bnd.roundoffFirst;
       g1 += Math.abs(w * gw[comp]) * bnd.maxAbsFirst;
       g2 += Math.abs(w * gw[comp]) * bnd.maxAbsSecond;
       gr += Math.abs(w * gw[comp]) * bnd.roundoff;
@@ -204,7 +207,7 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
   };
   return {
     value, slope,
-    boundsF: { first: f1, second: f2, roundoff: fr },
+    boundsF: { first: f1, second: f2, roundoff: fr, roundoffSlope: frd },
     boundsG: { first: g1, second: g2, roundoff: gr },
     recordStop: Math.min(...parts.map((x) => x.s.recordStopEt)),
   };
@@ -213,13 +216,33 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
 /**
  * Search one piece rigorously.
  *
- * Every cell leaves by one of three doors: excluded (no root, proven),
- * monotone (at most one root, proven, and the end values settle it), or
- * open at the subdivision floor. A single open cell anywhere is why the
- * whole run would not establish completeness.
+ * Every cell leaves by one of four doors: excluded (no root, proven),
+ * monotone (at most one root, proven, and the end values settle it), an
+ * exact zero at an endpoint (the root IS the endpoint), or open -- at the
+ * subdivision floor, or because an endpoint value was inside the rounding
+ * allowance and its sign could not be trusted. A single open cell anywhere
+ * is why the whole run would not establish completeness.
  */
-function searchPiece(poly, u, v, spend, p) {
-  const { first: M1, second: M2, roundoff: RHO } = poly.boundsF;
+/**
+ * `ownsRightEdge` decides who reports a root that sits exactly on a
+ * boundary.
+ *
+ * Cells and pieces are closed intervals, so an instant where f is exactly
+ * zero is the right endpoint of one and the left endpoint of the next, and
+ * before this both of them reported it. Measured: a single root at t = 3 d,
+ * on a record boundary, with target 0 degrees -- the one angle whose sine
+ * is exactly zero, and the most ordinary query there is, an Aries ingress
+ * -- came back as `found: 2`, `isExactTotal: true`, `established: true`.
+ * An exact total that is wrong is the exact failure this mode exists to
+ * rule out.
+ *
+ * The convention, the same one the partition test already states: a cell
+ * owns `[lo, hi)`. A root at `hi` belongs to the next cell, which sees it
+ * as its own `flo === 0`. The only exception is the right edge of the
+ * whole searched interval, where there is no next cell -- hence the flag.
+ */
+function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
+  const { first: M1, second: M2, roundoff: RHO, roundoffSlope: RHO1 } = poly.boundsF;
   const roots = [];
   const open = [];
   const stack = [[u, v]];
@@ -239,13 +262,45 @@ function searchPiece(poly, u, v, spend, p) {
     // 2. Monotone, from a true Lipschitz bound on f'.
     spend();
     const dm = poly.slope(m);
-    if (Math.abs(dm) > M2 * w + RHO) {
+    // RHO1, not RHO: this compares a slope, and the position allowance is
+    // in different units. It was accidentally conservative for day-length
+    // records and inverted for short ones.
+    const slopeFloor = Math.abs(dm) - M2 * w - RHO1;
+    if (slopeFloor > 0) {
       spend(); spend();
       const flo = poly.value(lo).f;
       const fhi = poly.value(hi).f;
+      // f is monotone across this cell, so a zero at an endpoint is the
+      // only root in it either way; the question is only who reports it.
       if (flo === 0) { roots.push({ lo, hi: lo, kind: 'endpoint' }); continue; }
-      if (fhi === 0) { roots.push({ lo: hi, hi, kind: 'endpoint' }); continue; }
-      if ((flo < 0) === (fhi < 0)) continue;         // no sign change, one sign of f' => no root
+      if (fhi === 0) {
+        if (ownsRightEdge && hi === v) roots.push({ lo: hi, hi, kind: 'endpoint' });
+        continue;
+      }
+      if ((flo < 0) === (fhi < 0)) {
+        // No sign change, and f' has one sign, so no root -- PROVIDED the
+        // two signs are trustworthy. An endpoint value smaller than the
+        // evaluation's own rounding allowance has a sign that is noise,
+        // and this comparison used to carry no allowance at all while the
+        // exclusion and half-plane tests both carry theirs.
+        //
+        // Open, not "no root". A root landing exactly on a cell boundary
+        // is then reported by the neighbour that sees a real sign change,
+        // and this cell says it could not rule out a second one -- which
+        // is true, and costs the run its exact total.
+        //
+        // An ownership rule could decide these cases instead of declining
+        // them, and a first attempt at one made the outcome depend on the
+        // SIGN of a 1e-8 residual: the open cell landed left or right of
+        // the root according to a quantity that is itself noise. A proof
+        // whose conclusion turns on noise is not a proof. Declining is
+        // uniform, and on real data it costs nothing -- ten of ten holdout
+        // cases and a ten-year Aries-ingress search still come back proven
+        // with no unresolved cell, because a root within 1e-8 s of a
+        // record boundary does not happen to eight-day records.
+        if (Math.abs(flo) <= RHO || Math.abs(fhi) <= RHO) { open.push([lo, hi]); continue; }
+        continue;
+      }
       // Exactly one root, bracketed. Bisect to the floor; the bracket is
       // real, not a tolerance: f is monotone across it.
       let a2 = lo; let b2 = hi; let fa = flo;
@@ -255,6 +310,19 @@ function searchPiece(poly, u, v, spend, p) {
         spend();
         const fmid = poly.value(mid).f;
         if (fmid === 0) { a2 = mid; b2 = mid; break; }
+        // Below the rounding allowance the midpoint's SIGN is noise, so
+        // bisection cannot go on -- following it could narrow to a bracket
+        // the root is not in. But the position is not unknown: |f'| is at
+        // least `slopeFloor` across this cell, so every point with
+        // |f| <= RHO lies within RHO/slopeFloor of the root. That is the
+        // honest bracket, and it is far tighter than stopping here would
+        // give: on the linear fixture, 2.3e-8 s rather than half a record.
+        if (Math.abs(fmid) <= RHO) {
+          const reach = RHO / slopeFloor;
+          a2 = Math.max(a2, mid - reach);
+          b2 = Math.min(b2, mid + reach);
+          break;
+        }
         if ((fmid < 0) === (fa < 0)) { a2 = mid; fa = fmid; } else b2 = mid;
       }
       roots.push({ lo: a2, hi: b2, kind: 'transversal', rising: (fhi - flo) > 0 });
@@ -301,6 +369,40 @@ export function searchGeometricLongitude(eph, spec = {}) {
   };
 
   const weights = contributions(eph, body);
+
+  // The proof is `sum|c_k|` over a Chebyshev series, and that bounds the
+  // series only for |tau| <= 1 -- inside the record. A pack may legally
+  // declare coverage that overhangs its own records by up to a second at
+  // each end (container.mjs's `cov.start + 1` tolerance), `seriesAt`
+  // CLAMPS the record index rather than refusing, and `pieceEdges` never
+  // emits the end of the last record, so the final piece used to run past
+  // the data with a bound that was not a bound there.
+  //
+  // Measured on a hostile pack with one-second records: the last record's
+  // series reached 1.76e22 at tau = 3 against a declared bound of 3.68e18,
+  // false by a factor of 4770, the cell was "excluded", and the result
+  // said `found: 0, isExactTotal: true, processedFraction: 1` over an
+  // interval in which the evaluated function changes sign.
+  //
+  // So the searched interval must lie inside the records of every
+  // contributing series. Not clamped -- refused. A completeness claim
+  // cannot be given over data that does not exist.
+  let recordStart = -Infinity;
+  let recordStop = Infinity;
+  for (const name of weights.keys()) {
+    const sb = eph.bodies.get(name);
+    if (!sb) fail('unknown-body', `this pack does not contain ${name}`);
+    recordStart = Math.max(recordStart, sb.initEt);
+    recordStop = Math.min(recordStop, sb.initEt + sb.nrec * sb.intervalSec);
+  }
+  if (a < recordStart || b > recordStop) {
+    fail('out-of-coverage',
+      `the validated search needs the interval to lie inside the stored records of every contributing series. `
+      + `Requested ${a} .. ${b} s TDB; the records cover ${recordStart} .. ${recordStop}. `
+      + 'A pack may declare coverage wider than its records; outside them the Chebyshev bound this proof rests on is not a bound.',
+      { requestedEtSec: [a, b], recordSpanEtSec: [recordStart, recordStop] });
+  }
+
   const edges = pieceEdges(eph, [...weights.keys()], a, b);
 
   const events = [];
@@ -322,7 +424,7 @@ export function searchGeometricLongitude(eph, spec = {}) {
       worstFirst = Math.max(worstFirst, poly.boundsF.first);
       worstSecond = Math.max(worstSecond, poly.boundsF.second);
       worstRoundoff = Math.max(worstRoundoff, poly.boundsF.roundoff);
-      const got = searchPiece(poly, u, v, spend, p);
+      const got = searchPiece(poly, u, v, spend, p, i === edges.length - 1);
       cells += got.cells;
       for (const [lo, hi] of got.open) unresolved.push({ fromTtDays: lo / DAY, toTtDays: hi / DAY, why: 'neither the exclusion nor the monotone test closed this cell at the subdivision floor' });
       for (const r of got.roots) {

@@ -64,14 +64,29 @@ export function absSum(c, n, offset = 0) {
 /**
  * A conservative allowance for the rounding in one Clenshaw evaluation.
  *
- * The standard backward-stable bound for Clenshaw is of order n * u *
- * sum|c_k| with u the unit roundoff. The factor of 8 is slack, stated
- * rather than tuned, and it is carried on the result as a quantity rather
- * than folded silently into a tolerance.
+ * This used to be `8 * n * u * sum|c_k|`, described as "of order n*u*
+ * sum|c_k|, the factor of 8 is slack". It is not slack: it is short of the
+ * worst case for roughly n > 4.
+ *
+ * The forward error of Clenshaw is sum_k eps_k T_k(tau), where eps_k is the
+ * rounding injected at step k and is of order u * |b_k| with b_k the
+ * partial sum. And b_k = sum_{j>=k} c_j U_{j-k}(tau), with |U_m(1)| = m+1,
+ * so max|b_k| grows with n rather than staying at sum|c_k|. Measured, all
+ * c_k = 1 at tau = 1 - 1e-12: max|b_k| / sum|c_k| is 3.50 at n = 8, 9.50 at
+ * n = 20, 15.50 at n = 32, 31.50 at n = 64 -- exactly (n-1)/2. A few
+ * roundings per step over n steps gives 4*n*u*max|b| = 2*n*(n-1)*u*sum|c|,
+ * which at n = 20 is 760 u*sum|c| against the 160 u*sum|c| that was
+ * declared.
+ *
+ * So: quadratic in n, with a factor of two over that derivation. Typical
+ * errors are far below the worst case, but this is the only thing standing
+ * between the exclusion test and a root just outside a cell, and the
+ * completeness claim is stated as a theorem.
  */
 export const UNIT_ROUNDOFF = Number.EPSILON / 2;
 export function clenshawRoundoff(n, sumAbs) {
-  return 8 * Math.max(1, n) * UNIT_ROUNDOFF * sumAbs;
+  const m = Math.max(1, n);
+  return 4 * m * m * UNIT_ROUNDOFF * sumAbs;
 }
 
 /**
@@ -82,13 +97,23 @@ export function seriesBounds(c, n, offset, radiusSec) {
   const d1 = derivative(c, n, offset);
   const d2 = derivative(d1, n, 0);
   const sum0 = absSum(c, n, offset);
+  const sum1 = absSum(d1, n, 0);
   return {
     n,
     maxAbs: sum0,
     // d/dt = (d/dtau) / radius
-    maxAbsFirst: absSum(d1, n, 0) / radiusSec,
+    maxAbsFirst: sum1 / radiusSec,
     maxAbsSecond: absSum(d2, n, 0) / (radiusSec * radiusSec),
     roundoff: clenshawRoundoff(n, sum0),
+    // The allowance on a SLOPE evaluation, in the slope's own units. The
+    // monotone test used to borrow `roundoff` -- a position allowance in
+    // km -- and compare it against a slope in km/s. Accidentally
+    // conservative for day-length records, and inverted for short ones:
+    // with the 1-second records LIMITS permits and 512 coefficients,
+    // sum|d1|/radius runs about 2000x sum|c|, so the allowance used was
+    // 2000x too small and a wrong monotone verdict could close a cell
+    // holding two roots.
+    roundoffFirst: clenshawRoundoff(n, sum1) / radiusSec,
     d1,
   };
 }

@@ -375,6 +375,31 @@ test('the budget bounds the WHOLE search, not just the classifier', () => {
   assert.equal(exact.execution.evaluations, cost, 'the cost should be deterministic');
 });
 
+test('a cancel during the robustness probe is a result, not a throw', () => {
+  // types/index.d.ts and MIGRATION.md both say an abort comes back as a
+  // result. The probe used to rethrow straight past the caller, so anyone
+  // who followed the migration and dropped the try/catch crashed on
+  // exactly the long searches an abort is for.
+  const bare = rt.search({
+    kind: 'longitude', body: 'Mars', targetDeg: 40,
+    fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS, robustness: false,
+  });
+  let n = 0;
+  const signal = {};
+  Object.defineProperty(signal, 'aborted', { get() { n += 1; return n > bare.execution.evaluations + 1; } });
+  const r = rt.search({
+    kind: 'longitude', body: 'Mars', targetDeg: 40,
+    fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS, signal,
+  });
+  assert.equal(r.execution.status, 'cancelled');
+  assert.equal(r.execution.finished, false);
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.diagnostics.robustness.ran, false);
+  assert.equal(r.diagnostics.robustness.why, 'cancelled');
+  // The candidates the classifier had already isolated are still there.
+  assert.ok(r.events.length > 0, 'a cancel in the probe threw away the events the run had found');
+});
+
 test('a budget that runs out during the robustness probe keeps the topology it established', () => {
   const full = rt.search({
     kind: 'longitude', body: 'Mars', targetDeg: 40,
@@ -398,6 +423,13 @@ test('a budget that runs out during the robustness probe keeps the topology it e
   assert.equal(cut.eventCount.conditionalTotal, full.eventCount.conditionalTotal);
   assert.equal(cut.execution.exhausted, true);
   assert.equal(cut.diagnostics.robustness.ran, false);
+  // And the execution status has to say so too. It used to read
+  // 'finished: true' here, with `evaluations` above the declared cap --
+  // a false state, and the one a caller branches on first.
+  assert.equal(cut.execution.status, 'budget-exhausted');
+  assert.equal(cut.execution.finished, false);
+  assert.equal(cut.completeness.established, false);
+  assert.ok(cut.execution.reason);
   assert.equal(cut.diagnostics.robustness.why, 'budget-exhausted');
 });
 

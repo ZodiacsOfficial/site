@@ -101,6 +101,16 @@ export class Ephemeris {
   raw(name, et, out) {
     const b = this.bodies.get(name);
     if (!b) fail('unknown-body', `this pack does not contain ${name}`);
+    // No clamp. Clamping hands back a record whose |tau| exceeds 1, where
+    // `sum|c_k|` stops being a bound on the series -- and the validated
+    // mode's whole completeness argument is that bound. A caller outside
+    // the records gets a refusal, not a silent extrapolation.
+    const span = b.nrec * b.intervalSec;
+    if (et < b.initEt || et > b.initEt + span) {
+      fail('out-of-coverage',
+        `${name} has records from ${b.initEt} to ${b.initEt + span} s TDB; ${et} is outside them`,
+        { et, recordSpanEtSec: [b.initEt, b.initEt + span] });
+    }
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
@@ -143,6 +153,16 @@ export class Ephemeris {
   seriesAt(name, et) {
     const b = this.bodies.get(name);
     if (!b) fail('unknown-body', `this pack does not contain ${name}`);
+    // No clamp. Clamping hands back a record whose |tau| exceeds 1, where
+    // `sum|c_k|` stops being a bound on the series -- and the validated
+    // mode's whole completeness argument is that bound. A caller outside
+    // the records gets a refusal, not a silent extrapolation.
+    const span = b.nrec * b.intervalSec;
+    if (et < b.initEt || et > b.initEt + span) {
+      fail('out-of-coverage',
+        `${name} has records from ${b.initEt} to ${b.initEt + span} s TDB; ${et} is outside them`,
+        { et, recordSpanEtSec: [b.initEt, b.initEt + span] });
+    }
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;

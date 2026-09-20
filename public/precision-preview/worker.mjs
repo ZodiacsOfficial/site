@@ -413,6 +413,14 @@ var Ephemeris = class {
   raw(name, et, out) {
     const b = this.bodies.get(name);
     if (!b) fail("unknown-body", `this pack does not contain ${name}`);
+    const span = b.nrec * b.intervalSec;
+    if (et < b.initEt || et > b.initEt + span) {
+      fail(
+        "out-of-coverage",
+        `${name} has records from ${b.initEt} to ${b.initEt + span} s TDB; ${et} is outside them`,
+        { et, recordSpanEtSec: [b.initEt, b.initEt + span] }
+      );
+    }
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
@@ -453,6 +461,14 @@ var Ephemeris = class {
   seriesAt(name, et) {
     const b = this.bodies.get(name);
     if (!b) fail("unknown-body", `this pack does not contain ${name}`);
+    const span = b.nrec * b.intervalSec;
+    if (et < b.initEt || et > b.initEt + span) {
+      fail(
+        "out-of-coverage",
+        `${name} has records from ${b.initEt} to ${b.initEt + span} s TDB; ${et} is outside them`,
+        { et, recordSpanEtSec: [b.initEt, b.initEt + span] }
+      );
+    }
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
@@ -1455,6 +1471,8 @@ function buildResult(r) {
   if (a.allIntervalsAccountedFor && a.unresolved.length > 0) {
     fail("unsupported-option", "a result cannot claim every interval was accounted for while reporting unresolved ones");
   }
+  if (!Array.isArray(c.conditionalOn)) fail("unsupported-option", "completeness.conditionalOn must be an array");
+  if (!Array.isArray(out.assumptions)) fail("unsupported-option", "assumptions must be an array");
   if (c.support === "conditional" && c.conditionalOn.length === 0) {
     fail("unsupported-option", "conditional completeness must name what it is conditional on");
   }
@@ -1474,8 +1492,14 @@ function buildResult(r) {
   if (n.isExactTotal && n.found !== n.lowerBound) {
     fail("unsupported-option", "an exact total must equal what was found");
   }
+  if (n.found !== out.events.length) {
+    fail("unsupported-option", `eventCount.found is ${n.found} but ${out.events.length} events were returned`);
+  }
   if (n.lowerBound > out.events.length) {
     fail("unsupported-option", "the lower bound cannot exceed the events actually returned");
+  }
+  if (n.isExactTotal && n.upperBound !== n.found) {
+    fail("unsupported-option", `an exact total of ${n.found} must have upperBound ${n.found}, not ${n.upperBound}`);
   }
   return Object.freeze(out);
 }
@@ -1733,14 +1757,22 @@ function searchLongitudeEvent(reducer, spec = {}) {
   }));
   const verdict = merged.summary;
   let robustnessReport = null;
+  let stoppedIn = null;
   if (robustness && candidates.length > 0) {
     try {
       robustnessReport = probeRobustness(f, candidates, p, epsilonDeg);
     } catch (error) {
-      if (error instanceof PrecisionError && error.code === "cancelled") throw error;
-      robustnessReport = { ran: false, why: error?.code ?? "probe-failed" };
+      const code = error instanceof PrecisionError ? error.code : null;
+      if (code === "cancelled" || code === "budget-exhausted") {
+        stoppedIn = code;
+        robustnessReport = { ran: false, why: code };
+      } else {
+        robustnessReport = { ran: false, why: error?.code ?? "probe-failed" };
+      }
     }
   }
+  const status = stoppedIn ?? (exhausted ? "budget-exhausted" : "finished");
+  const finished = status === "finished";
   const closedEverything = merged.summary.allClosed && merged.unresolved.length === 0;
   const aliasing = branches.aliasing ?? { detected: false };
   const conditional = closedEverything && !aliasing.detected;
@@ -1776,12 +1808,12 @@ function searchLongitudeEvent(reducer, spec = {}) {
     events: candidates,
     interval: intervalOf({ a, b }, branches.segments, p),
     execution: {
-      status: "finished",
-      finished: true,
+      status,
+      finished,
       evaluations,
       maxEvaluations: p.maxEvaluations,
       exhausted,
-      reason: null
+      reason: finished ? null : `the run stopped in the robustness probe: ${status}`
     },
     accounting: {
       allIntervalsAccountedFor: conditional,
@@ -2233,19 +2265,30 @@ function absSum(c, n, offset = 0) {
 }
 var UNIT_ROUNDOFF = Number.EPSILON / 2;
 function clenshawRoundoff(n, sumAbs) {
-  return 8 * Math.max(1, n) * UNIT_ROUNDOFF * sumAbs;
+  const m = Math.max(1, n);
+  return 4 * m * m * UNIT_ROUNDOFF * sumAbs;
 }
 function seriesBounds(c, n, offset, radiusSec) {
   const d1 = derivative(c, n, offset);
   const d2 = derivative(d1, n, 0);
   const sum0 = absSum(c, n, offset);
+  const sum1 = absSum(d1, n, 0);
   return {
     n,
     maxAbs: sum0,
     // d/dt = (d/dtau) / radius
-    maxAbsFirst: absSum(d1, n, 0) / radiusSec,
+    maxAbsFirst: sum1 / radiusSec,
     maxAbsSecond: absSum(d2, n, 0) / (radiusSec * radiusSec),
     roundoff: clenshawRoundoff(n, sum0),
+    // The allowance on a SLOPE evaluation, in the slope's own units. The
+    // monotone test used to borrow `roundoff` -- a position allowance in
+    // km -- and compare it against a slope in km/s. Accidentally
+    // conservative for day-length records, and inverted for short ones:
+    // with the 1-second records LIMITS permits and 512 coefficients,
+    // sum|d1|/radius runs about 2000x sum|c|, so the allowance used was
+    // 2000x too small and a wrong monotone verdict could close a cell
+    // holding two roots.
+    roundoffFirst: clenshawRoundoff(n, sum1) / radiusSec,
     d1
   };
 }
@@ -2325,6 +2368,7 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
   let f1 = 0;
   let f2 = 0;
   let fr = 0;
+  let frd = 0;
   let g1 = 0;
   let g2 = 0;
   let gr = 0;
@@ -2337,6 +2381,7 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
       f1 += Math.abs(w * fw[comp]) * bnd.maxAbsFirst;
       f2 += Math.abs(w * fw[comp]) * bnd.maxAbsSecond;
       fr += Math.abs(w * fw[comp]) * bnd.roundoff;
+      frd += Math.abs(w * fw[comp]) * bnd.roundoffFirst;
       g1 += Math.abs(w * gw[comp]) * bnd.maxAbsFirst;
       g2 += Math.abs(w * gw[comp]) * bnd.maxAbsSecond;
       gr += Math.abs(w * gw[comp]) * bnd.roundoff;
@@ -2369,13 +2414,13 @@ function piecePolynomial(eph, weights, lambdaDeg, et) {
   return {
     value,
     slope,
-    boundsF: { first: f1, second: f2, roundoff: fr },
+    boundsF: { first: f1, second: f2, roundoff: fr, roundoffSlope: frd },
     boundsG: { first: g1, second: g2, roundoff: gr },
     recordStop: Math.min(...parts.map((x) => x.s.recordStopEt))
   };
 }
-function searchPiece(poly, u, v, spend, p) {
-  const { first: M1, second: M2, roundoff: RHO } = poly.boundsF;
+function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
+  const { first: M1, second: M2, roundoff: RHO, roundoffSlope: RHO1 } = poly.boundsF;
   const roots = [];
   const open = [];
   const stack = [[u, v]];
@@ -2391,7 +2436,8 @@ function searchPiece(poly, u, v, spend, p) {
     if (Math.abs(fm) > M1 * w + RHO) continue;
     spend();
     const dm = poly.slope(m);
-    if (Math.abs(dm) > M2 * w + RHO) {
+    const slopeFloor = Math.abs(dm) - M2 * w - RHO1;
+    if (slopeFloor > 0) {
       spend();
       spend();
       const flo = poly.value(lo).f;
@@ -2401,10 +2447,16 @@ function searchPiece(poly, u, v, spend, p) {
         continue;
       }
       if (fhi === 0) {
-        roots.push({ lo: hi, hi, kind: "endpoint" });
+        if (ownsRightEdge && hi === v) roots.push({ lo: hi, hi, kind: "endpoint" });
         continue;
       }
-      if (flo < 0 === fhi < 0) continue;
+      if (flo < 0 === fhi < 0) {
+        if (Math.abs(flo) <= RHO || Math.abs(fhi) <= RHO) {
+          open.push([lo, hi]);
+          continue;
+        }
+        continue;
+      }
       let a2 = lo;
       let b2 = hi;
       let fa = flo;
@@ -2416,6 +2468,12 @@ function searchPiece(poly, u, v, spend, p) {
         if (fmid === 0) {
           a2 = mid;
           b2 = mid;
+          break;
+        }
+        if (Math.abs(fmid) <= RHO) {
+          const reach = RHO / slopeFloor;
+          a2 = Math.max(a2, mid - reach);
+          b2 = Math.min(b2, mid + reach);
           break;
         }
         if (fmid < 0 === fa < 0) {
@@ -2459,6 +2517,21 @@ function searchGeometricLongitude(eph, spec = {}) {
     if (evaluations > p.maxEvaluations) fail("budget-exhausted", `the evaluation budget of ${p.maxEvaluations} was spent`);
   };
   const weights = contributions(eph, body);
+  let recordStart = -Infinity;
+  let recordStop = Infinity;
+  for (const name of weights.keys()) {
+    const sb = eph.bodies.get(name);
+    if (!sb) fail("unknown-body", `this pack does not contain ${name}`);
+    recordStart = Math.max(recordStart, sb.initEt);
+    recordStop = Math.min(recordStop, sb.initEt + sb.nrec * sb.intervalSec);
+  }
+  if (a < recordStart || b > recordStop) {
+    fail(
+      "out-of-coverage",
+      `the validated search needs the interval to lie inside the stored records of every contributing series. Requested ${a} .. ${b} s TDB; the records cover ${recordStart} .. ${recordStop}. A pack may declare coverage wider than its records; outside them the Chebyshev bound this proof rests on is not a bound.`,
+      { requestedEtSec: [a, b], recordSpanEtSec: [recordStart, recordStop] }
+    );
+  }
   const edges = pieceEdges(eph, [...weights.keys()], a, b);
   const events = [];
   const unresolved = [];
@@ -2478,7 +2551,7 @@ function searchGeometricLongitude(eph, spec = {}) {
       worstFirst = Math.max(worstFirst, poly.boundsF.first);
       worstSecond = Math.max(worstSecond, poly.boundsF.second);
       worstRoundoff = Math.max(worstRoundoff, poly.boundsF.roundoff);
-      const got = searchPiece(poly, u, v, spend, p);
+      const got = searchPiece(poly, u, v, spend, p, i === edges.length - 1);
       cells += got.cells;
       for (const [lo, hi] of got.open) unresolved.push({ fromTtDays: lo / DAY2, toTtDays: hi / DAY2, why: "neither the exclusion nor the monotone test closed this cell at the subdivision floor" });
       for (const r of got.roots) {

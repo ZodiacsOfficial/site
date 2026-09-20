@@ -16,6 +16,7 @@ import { parseContainerBytes } from '../../src/core/container.mjs';
 import { memorySource } from '../../src/core/source.mjs';
 import { Ephemeris } from '../../src/core/ephemeris.mjs';
 import { searchGeometricLongitude } from '../../src/core/validated-search.mjs';
+import { buildResult, SUPPORT } from '../../src/core/result.mjs';
 
 const DAY = 86400;
 const NCOEF = 20;
@@ -94,6 +95,70 @@ function bracketed(events, tSec) {
   });
 }
 
+// ---- roots that land exactly on a boundary ----
+//
+// Cells and pieces are CLOSED intervals, so an instant where f is exactly
+// zero is the right end of one and the left end of the next. Before the
+// half-open convention both reported it, and a single root came back as
+// `found: 2` with `isExactTotal: true`. These pin the convention at all
+// three places a boundary can be: a record edge, the interval's right
+// edge, and its left edge.
+
+/**
+ * y ramps through zero at `t0`; x is a constant that fixes the half-plane.
+ * With target 0 degrees, sin(lambda) is EXACTLY zero, so f = -cosE*y and
+ * the computed f at t0 is exactly -0 from either adjacent record. That is
+ * the door in: 0 degrees is the one target angle whose trig weight
+ * vanishes exactly, and an Aries ingress is the most ordinary query there
+ * is.
+ */
+const rampPack = (t0) => packWith((r, mid, radius) => ({
+  x: quadratic(2e8, 0, 0, radius),
+  y: quadratic(V * (mid - t0), V, 0, radius),
+  z: zeros(),
+}));
+const searchZero = (eph, spec) => searchGeometricLongitude(eph, { body: 'Mars', targetDeg: 0, ...spec });
+
+test('a root exactly on a record boundary is reported once, not once per side', () => {
+  const t0 = 3 * DAY;                                  // INIT + 23 records: a record edge
+  const r = searchZero(rampPack(t0), WINDOW);
+  assert.equal(r.completeness.established, true);
+  assert.equal(r.eventCount.isExactTotal, true);
+  assert.equal(r.eventCount.found, 1, `one root, reported ${r.eventCount.found} times`);
+  assert.ok(bracketed(r.events, t0));
+});
+
+test('a root exactly at the right edge of the interval is still reported', () => {
+  // Nothing follows the last cell, so the half-open rule has to make an
+  // exception there or the root vanishes.
+  const t0 = 5 * DAY;
+  const r = searchZero(rampPack(t0), { fromTtDays: -10, toTtDays: 5 });
+  assert.equal(r.completeness.established, true);
+  assert.equal(r.eventCount.found, 1, 'the root at the right edge was dropped');
+  assert.ok(bracketed(r.events, t0));
+});
+
+test('a root exactly at the left edge of the interval is reported once', () => {
+  const t0 = -5 * DAY;
+  const r = searchZero(rampPack(t0), { fromTtDays: -5, toTtDays: 10 });
+  assert.equal(r.completeness.established, true);
+  assert.equal(r.eventCount.found, 1, `one root, reported ${r.eventCount.found} times`);
+  assert.ok(bracketed(r.events, t0));
+});
+
+test('every event the validated mode returns is at a distinct instant', () => {
+  // A cheap invariant that would have caught the duplicate directly.
+  for (const [label, eph, spec] of [
+    ['record edge', rampPack(3 * DAY), WINDOW],
+    ['right edge', rampPack(5 * DAY), { fromTtDays: -10, toTtDays: 5 }],
+    ['interior', rampPack(3.25 * DAY), WINDOW],
+  ]) {
+    const r = searchZero(eph, spec);
+    const seen = new Set(r.events.map((e) => e.ttDays));
+    assert.equal(seen.size, r.events.length, `${label}: two events share an instant`);
+  }
+});
+
 test('a linear crossing is found, bracketed, and the count is exact', () => {
   const t0 = 3.25 * DAY;
   const r = search(linearPack(t0), WINDOW);
@@ -135,14 +200,32 @@ test('a target given as 450 or -270 degrees is the same request as 90', () => {
 });
 
 test('two well-separated crossings are both found, with the exact instants inside the brackets', () => {
+  // The roots are at +/- 1.5 days, which are NOT record boundaries. Roots
+  // that sit exactly on one are their own case, below.
   const t0 = 0;
-  const d = (2 * DAY) ** 2;
+  const d = (1.5 * DAY) ** 2;
   const r = search(quadraticPack(t0, d), WINDOW);
   assert.equal(r.completeness.established, true);
   assert.equal(r.eventCount.found, 2);
   for (const root of [t0 - Math.sqrt(d), t0 + Math.sqrt(d)]) {
     assert.ok(bracketed(r.events, root), `the exact root at ${root / DAY} days is in no bracket`);
   }
+});
+
+test('roots sitting exactly on record boundaries are found, and completeness is declined', () => {
+  // +/- 2 days ARE record boundaries here. At the boundary the computed f
+  // is 1.1e-8 km against a rounding allowance of 5.3e-3 km -- its sign is
+  // noise -- so the cell on the far side cannot rule out a second root and
+  // says so. Both roots are still found and bracketed. Declining is the
+  // point: the alternative is an exact total decided by the sign of a
+  // quantity smaller than the arithmetic's own error.
+  const r = search(quadraticPack(0, (2 * DAY) ** 2), WINDOW);
+  assert.equal(r.eventCount.found, 2, 'the roots themselves must still be found');
+  for (const root of [-2 * DAY, 2 * DAY]) assert.ok(bracketed(r.events, root));
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.eventCount.isExactTotal, false);
+  assert.ok(r.accounting.unresolved.length > 0);
+  assert.ok(r.eventCount.lowerBound >= 2, 'what was found is still a lower bound');
 });
 
 test('a tangency is left unresolved rather than certified either way', () => {
@@ -199,7 +282,12 @@ for (const n of [5, 11, 19]) {
     // One record, strictly inside so the roots are interior.
     const r = search(eph, { fromTtDays: 0.0001, toTtDays: 0.9999 });
     assert.equal(r.execution.status, 'finished');
-    assert.equal(r.completeness.established, true);
+    // Odd n puts a root at tau = 0, the record midpoint -- which is also
+    // where the bisection splits, so a cell endpoint lands on the root and
+    // its computed value (1.1e-8 km) is inside the rounding allowance
+    // (1.8e-5 km). The neighbouring cell then declines rather than
+    // claiming there is no second root there. Every root is still found.
+    assert.equal(r.completeness.established, false, 'a root on a cell boundary is not provable to be the only one there');
     assert.equal(r.eventCount.found, n, `T_${n} has ${n} roots in the record`);
     // The exact roots, from the closed form.
     const radius = INTERVAL / 2;
@@ -215,9 +303,11 @@ for (const n of [5, 11, 19]) {
 test('the same body across many records: every record contributes its roots', () => {
   const n = 11;
   const r = search(chebPack(n), { fromTtDays: 0.0001, toTtDays: 5.9999 });
-  assert.equal(r.completeness.established, true);
   assert.equal(r.eventCount.found, 6 * n, 'six records, each an exact T_11');
   assert.ok(r.interval.pieces >= 6);
+  // Same reason as above: odd n puts a root on every record's midpoint.
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.eventCount.lowerBound, 6 * n);
 });
 
 // ---- V5: partitioning preserves the event set ----
@@ -225,15 +315,18 @@ test('partitioning the interval preserves the events, under the boundary convent
   const n = 11;
   const eph = chebPack(n);
   const whole = search(eph, { fromTtDays: 0.0001, toTtDays: 5.9999 });
-  assert.equal(whole.completeness.established, true);
 
   const cuts = [0.0001, 1.37, 2.5, 4.111, 5.9999];
   const parts = [];
   for (let i = 1; i < cuts.length; i += 1) {
-    const r = search(eph, { fromTtDays: cuts[i - 1], toTtDays: cuts[i] });
-    assert.equal(r.completeness.established, true, `part ${i} was not established`);
-    parts.push(r);
+    parts.push(search(eph, { fromTtDays: cuts[i - 1], toTtDays: cuts[i] }));
   }
+  // What V5 is about is the EVENT SET surviving partitioning, and it does.
+  // Whether completeness is established is a separate question, and for
+  // this fixture it is not, for the reason given above; the whole and the
+  // parts agree on that too.
+  assert.equal(whole.completeness.established, false);
+  for (const [i, r] of parts.entries()) assert.equal(r.execution.status, 'finished', `part ${i + 1} did not finish`);
   // Boundary convention: an event at a cut belongs to the part whose
   // half-open [from, to) contains it, so the union is deduplicated by
   // instant to within a bracket width.
@@ -291,6 +384,82 @@ test('cancellation comes back as a result, keeping the events already isolated',
   for (const e of r.events) {
     assert.equal(e.bracketTtDays[0] <= e.ttDays && e.ttDays <= e.bracketTtDays[1], true);
   }
+});
+
+test('a pack whose declared coverage overhangs its records cannot be proved over the overhang', () => {
+  // container.mjs tolerates a declared coverage up to a second wider than
+  // the records at each end, seriesAt used to CLAMP the record index, and
+  // pieceEdges never emits the end of the last record -- so the final
+  // piece ran past the data on a bound that is only a bound for |tau| <= 1.
+  // Measured on this fixture before the fix: the series reached 1.76e22 at
+  // tau = 3 against a declared bound of 3.68e18, false by 4770x, the cell
+  // was "excluded", and the answer was `found: 0, isExactTotal: true,
+  // processedFraction: 1` over an interval where the evaluated function
+  // changes sign.
+  const N = 100;
+  const t19at2 = (() => { let a = 1; let b = 2; for (let k = 2; k <= 19; k += 1) { const c = 4 * b - a; a = b; b = c; } return b; })();
+  const xFor = (r) => { const c = zeros(); if (r === N - 1) { c[0] = -1e8 * t19at2; c[19] = 1e8; } else { c[0] = 2e8; } return c; };
+  const yConst = () => { const c = zeros(); c[0] = 2e8; return c; };
+  const bytes = buildPack({
+    bodies: [
+      ...['sun', 'emb', 'moon'].map((name) => ({
+        name, frame: name === 'sun' ? 'native' : 'ssb', ncoef: NCOEF, nrec: N, initEt: 0, intervalSec: 1,
+        coeffs: () => [...zeros(), ...zeros(), ...zeros()],
+      })),
+      { name: 'marsBary', frame: 'ssb', ncoef: NCOEF, nrec: N, initEt: 0, intervalSec: 1, coeffs: (r) => [...xFor(r), ...yConst(), ...zeros()] },
+    ],
+    derived: { earth399: { emrat: EMRAT, from: 'moon' } },
+    coverage: { startEtSecTdb: -1, stopEtSecTdb: N + 1 },
+  });
+  const eph = new Ephemeris(memorySource(bytes), parseContainerBytes(bytes));
+  assert.throws(
+    () => searchGeometricLongitude(eph, { body: 'Mars', targetDeg: 90, fromTtDays: -0.9 / DAY, toTtDays: (N + 0.9) / DAY }),
+    (e) => e.code === 'out-of-coverage',
+    'the overhang was searched, and a bound that is not a bound there was used to prove a zero',
+  );
+  // Inside the records it still answers, so this is a refusal and not a ban.
+  const inside = searchGeometricLongitude(eph, { body: 'Mars', targetDeg: 90, fromTtDays: 0, toTtDays: N / DAY });
+  assert.equal(inside.completeness.established, true);
+});
+
+test('a result cannot say it found a different number of events than it returned', () => {
+  // Three invariant gaps found by an adversarial review, all reachable by
+  // hand-building a result: `found` disagreeing with the list, an exact
+  // total with a null upper bound, and a missing conditionalOn producing a
+  // raw TypeError instead of a coded refusal.
+  const base = {
+    mode: 'validated-geometric',
+    request: {},
+    events: [{ ttDays: 0 }, { ttDays: 1 }],
+    interval: {},
+    execution: { status: 'finished', finished: true, evaluations: 1, maxEvaluations: 2 },
+    accounting: { allIntervalsAccountedFor: true, unresolved: [], note: '' },
+    assumptions: [],
+    completeness: { established: true, support: SUPPORT.proven, statement: '', conditionalOn: [] },
+    eventCount: { found: 1, isExactTotal: true, lowerBound: 1, upperBound: 1, support: SUPPORT.proven, conditionalTotal: null, conditionalPossibleTotals: null },
+    uncertainty: {},
+    diagnostics: {},
+  };
+  assert.throws(() => buildResult(base), (e) => /found is 1 but 2 events/.test(e.message));
+  assert.throws(
+    () => buildResult({ ...base, eventCount: { ...base.eventCount, found: 2, lowerBound: 2, upperBound: null } }),
+    (e) => /upperBound/.test(e.message),
+  );
+  assert.throws(
+    () => buildResult({ ...base, eventCount: { ...base.eventCount, found: 2, lowerBound: 2, upperBound: 2 }, completeness: { established: true, support: SUPPORT.proven, statement: '' } }),
+    (e) => e.code === 'unsupported-option' && /conditionalOn must be an array/.test(e.message),
+  );
+  // The corrected version is accepted.
+  assert.ok(buildResult({ ...base, eventCount: { ...base.eventCount, found: 2, lowerBound: 2, upperBound: 2 } }));
+});
+
+test('seriesAt refuses to extrapolate rather than clamping the record index', () => {
+  const eph = linearPack(0);
+  const span = NREC * INTERVAL;
+  assert.doesNotThrow(() => eph.seriesAt('marsBary', INIT));
+  assert.doesNotThrow(() => eph.seriesAt('marsBary', INIT + span));
+  assert.throws(() => eph.seriesAt('marsBary', INIT - 0.5), (e) => e.code === 'out-of-coverage');
+  assert.throws(() => eph.seriesAt('marsBary', INIT + span + 0.5), (e) => e.code === 'out-of-coverage');
 });
 
 test('an instant outside coverage is refused', () => {

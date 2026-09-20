@@ -25,9 +25,19 @@
  *   assumptions   each unverified thing, by name, with what would settle it.
  *   uncertainty   numerical, model and physical, kept apart and not summed.
  *
- * The invariants below are enforced when the object is built, so a future
- * edit cannot quietly reintroduce the overstatement. `buildResult` throws
- * rather than returning a result that claims more than its support allows.
+ * The invariants below are enforced when the object is built: `buildResult`
+ * throws rather than returning a result whose FIELDS contradict each other.
+ *
+ * What they are and are not. They check that the labels on a result agree
+ * -- established only with proven support, an exact total only where
+ * completeness was established, no unresolved intervals under a claim that
+ * everything was accounted for, `found` matching the list actually
+ * returned. They cannot check the EVIDENCE behind a label: `support` and an
+ * assumption's `status` are strings the caller writes, so a caller inside
+ * this package that labelled a sampled bound `proven` would be believed.
+ * The guard against that is the two mode implementations and their tests,
+ * not this function, and an earlier version of this comment claimed more
+ * than the code does.
  */
 import { fail } from './errors.mjs';
 
@@ -95,6 +105,8 @@ export function buildResult(r) {
   if (a.allIntervalsAccountedFor && a.unresolved.length > 0) {
     fail('unsupported-option', 'a result cannot claim every interval was accounted for while reporting unresolved ones');
   }
+  if (!Array.isArray(c.conditionalOn)) fail('unsupported-option', 'completeness.conditionalOn must be an array');
+  if (!Array.isArray(out.assumptions)) fail('unsupported-option', 'assumptions must be an array');
   if (c.support === 'conditional' && c.conditionalOn.length === 0) {
     fail('unsupported-option', 'conditional completeness must name what it is conditional on');
   }
@@ -114,8 +126,18 @@ export function buildResult(r) {
   if (n.isExactTotal && n.found !== n.lowerBound) {
     fail('unsupported-option', 'an exact total must equal what was found');
   }
+  // `found` is the number of events in the list, so it has to BE that.
+  // Without this an "exact total" of 1 was accepted beside two events.
+  if (n.found !== out.events.length) {
+    fail('unsupported-option', `eventCount.found is ${n.found} but ${out.events.length} events were returned`);
+  }
   if (n.lowerBound > out.events.length) {
     fail('unsupported-option', 'the lower bound cannot exceed the events actually returned');
+  }
+  // An exact total bounds itself from both sides. `upperBound: null` on the
+  // proven branch passed, and contradicts what types/index.d.ts declares.
+  if (n.isExactTotal && n.upperBound !== n.found) {
+    fail('unsupported-option', `an exact total of ${n.found} must have upperBound ${n.found}, not ${n.upperBound}`);
   }
   return Object.freeze(out);
 }
