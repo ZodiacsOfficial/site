@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-19T11:37:56.788Z",
+  "generatedAt": "2026-09-20T00:07:25.502Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-20T00:00:00.000Z",
-    "endsBefore": "2026-09-27T00:00:00.000Z"
+    "startsAt": "2026-08-21T00:00:00.000Z",
+    "endsBefore": "2026-09-28T00:00:00.000Z"
   },
   "items": [
     {
@@ -118,6 +118,47 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-20",
+      "slug": "daily-market-brief-2026-09-20",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-20T12:00:00.000Z",
+      "visibleAt": "2026-09-20T12:00:00.000Z",
+      "title": "Saturn in Aries · daily market brief",
+      "summary": "Saturn in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-20/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-20",
+      "slug": "market-check-2026-09-20",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-20T00:07:25.502Z",
+      "visibleAt": "2026-09-20T00:07:25.502Z",
+      "title": "Aries market check · 2026-09-20",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-20/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-19",
       "slug": "daily-market-brief-2026-09-19",
       "kind": "daily-market-brief",
@@ -136,7 +177,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-12-observation-168h",
