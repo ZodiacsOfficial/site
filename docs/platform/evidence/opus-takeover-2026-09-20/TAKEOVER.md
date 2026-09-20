@@ -60,43 +60,80 @@ this session and dated 2026-09-20.
 ## Session handoff — state at the end of this working block
 
 Branch `claude/eager-ramanujan-razak3`, restarted from `main` `6f91f819`,
-head `97956dde`, pushed. Working tree clean. A detached worktree at
-`/home/user/research` was used to keep research off the launch branch; nothing
-depends on it.
+head `3080a18e` plus this commit, pushed. Working tree clean at each push. A
+detached worktree at `/home/user/research` was used to keep research off the
+launch branch; nothing depends on it.
 
-Done and verified:
+Done and verified, in the order it was done:
 
-- takeover table above, every row checked by running something;
-- three false release-state claims corrected on the live surface
-  (`/developers/support/` review hold, the `npm view` command, the hub card's
-  engine version), plus the stale `STATUS.md` rc.4;
-- `docs/platform/evidence/swiss-benchmark/` — pinned configuration, matched
-  conventions, baseline distribution, prototype, holdout, resource cost,
-  licensing posture, adoption gates;
-- `docs/platform/evidence/opus-takeover-2026-09-20/PUBLICATION.md` — the owner
-  action card, including the `publishConfig` hazard that would otherwise put a
-  release candidate on `latest`.
+1. **Takeover table above** — every row checked by running something.
+2. **Four false release-state claims corrected on live surfaces.** Three on
+   `/developers/support/` and the hub card, one more found later in
+   `public/llms-full.txt`, which told AI agents that publication was
+   authorized and only an authenticated publish remained. The candidate's own
+   README ("remains held for review and operator [authority]") and CHANGELOG
+   ("SDK #5's explicit merge/publication hold and required review remain")
+   say otherwise. Also the stale `rc.4` in `STATUS.md`.
+3. **`docs/platform/evidence/swiss-benchmark/`** — pinned configuration,
+   conventions matched by toggling rather than assumed, baseline distribution,
+   a DE440s prototype, a holdout set, resource cost, licensing posture and
+   adoption gates. The prototype is not adopted and production is unchanged.
+4. **`PUBLICATION.md`** — the owner action card, including the dist-tag hazard
+   that would otherwise put a release candidate on `latest`.
+5. **`/methodology/` accuracy claim corrected.** The page said Astronomy
+   Engine is "accurate to about one arcminute". That is the upstream library's
+   own design target against NOVAS, stated on the page as though it described
+   a chart here. It now quotes the measurement, and
+   `scripts/methodology-accuracy-claim.test.mjs` recomputes every figure from
+   `report-measure.json` so the page cannot drift from the data.
+6. **`/developers/engine/`** — the engine's own page, the largest gap in the
+   launch. Its install block was executed against the live GitHub archive in
+   an empty directory and installed rc.6; its worked example prints output
+   that a test produces by running it. Bundle figures come from
+   `scripts/measure-engine-bundle.mjs`. Evidence: `ENGINE-PAGE.md`.
+7. **`docs/engine-validation/README.md`** — one accuracy-and-support report
+   over positions, angles and houses, local time, event search and runtime
+   support, with measured residuals rather than gates, and the failing
+   transit-window contract stated in it. Linked from both developer pages.
+8. **Discoverability** — `llms.txt` and `llms-full.txt` now name the engine
+   and the MCP adapter; developer sitemap `lastmod` dates match the commits
+   that changed their pages.
+9. **`LAUNCH-COPY.md`** — the announcement, reply, long-form post and release
+   note, prepared and **not posted**, gated on four conditions including the
+   page being live.
+
+Dispositioned rather than done:
+
+- **The desktop header is left alone.** `/developers/` is absent from the
+  link row above 920px, but that row has a deliberately budgeted lockup
+  (`SiteNav.astro`: "a desktop row opens only when its complete reserved
+  shell fits"), and the footer carries the link on every page at every width.
+  Adding a seventh top-level item is a change to the approved design, not a
+  bug fix, so it was not made unilaterally.
+- **`/sdk/engine/` still holds the rc.1 TypeDoc** that the package's
+  `homepage` field points at. The HTML is generated output and the package
+  manifest lives in the SDK repository, which is outside this session's
+  repository scope. `llms-full.txt` now marks it superseded; repointing
+  `homepage` at `/developers/engine/` is an SDK-side edit.
 
 Not done, in the order worth doing:
 
-1. **No engine product page.** `@zodiacs/engine` still has no route of its own;
-   it is a section inside the support matrix, and `/sdk/engine/` is a `noindex`
-   rc.1 TypeDoc that the package's own `homepage` field points at. This is the
-   largest remaining launch gap.
-2. **One consolidated accuracy-and-support report** separating positions,
-   angles/houses, local time, event search and runtime support. The evidence
-   exists — `docs/engine-validation/` and the new benchmark — but is scattered
-   across two trees and the strongest part is invisible on the site.
-3. **Discoverability fixes**: `llms.txt` mentions neither the engine nor the
-   MCP adapter; developer `lastmod` dates lag their content; `/developers/` is
-   absent from desktop navigation above 920px.
-4. **Launch copy and a recorded demonstration** — drafted, never posted.
+1. **Publication.** `npm view @zodiacs/engine` still returns 404. The action
+   card is written and the archive is audited; it needs an authenticated
+   maintainer, and the review it is held behind is open.
+2. **A screen recording** of the install-and-run sequence, if one is wanted.
+   The terminal transcripts are real and committed; a video was not made, and
+   `LAUNCH-COPY.md` says to record the sequence live rather than reconstruct
+   it.
+3. **The failing transit-window contract.** Uranus D exact topology remains
+   `failed-incomplete` with a 0.044188° turning-point margin under the
+   original 0.05° budget. Now stated publicly; still not resolved.
 
 Unresolved and not this session's to settle: whether the nine held SDK PRs
 should merge so the engine source reaches a default branch, and the JPL
 redistribution question in the benchmark's `LICENSING.md`.
 
-Untouched on purpose: the shared-sky connector and its configuration, token and
-Registry identities, Astrofolio economics, production chart values, the default
-browser bundle, and every unrelated production feature. No outreach was sent,
-nothing was purchased, no post was published.
+Untouched on purpose: the shared-sky connector and its configuration, token
+and Registry identities, Astrofolio economics, production chart values, the
+default browser bundle, and every unrelated production feature. No outreach
+was sent, nothing was purchased, no post was published.
