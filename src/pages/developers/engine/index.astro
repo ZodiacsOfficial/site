@@ -1,0 +1,217 @@
+---
+import Base from '../../../layouts/Base.astro';
+import candidate from '../../../data/platform-engine-candidate.json';
+import bundle from '../../../data/engine-bundle.json';
+import { engineInstallBlock } from '../../../lib/engine-install-block';
+import { ENGINE_DEMO_SOURCE, ENGINE_DEMO_OUTPUT } from '../../../lib/engine-demo';
+
+const install = engineInstallBlock(candidate);
+const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
+
+const title = 'Zodiacs Engine — Local TypeScript Chart Engine | Zodiacs.org';
+// A plain literal, not a template: scripts/build-assistant-context.mjs reads
+// this constant out of the source to build the committed site guide, and it
+// only matches a quoted string. Keeping the measured figures out of it also
+// means the meta description cannot drift away from the table below.
+const description = '@zodiacs/engine is the MIT-licensed TypeScript chart engine behind zodiacs.org: natal charts, transits, synastry, Moon phase and Saturn returns, computed in your own browser or Node process with no network request. What it computes, what it costs to bundle, how close it is to Swiss Ephemeris, and an install that verifies the archive digest.';
+
+const kb = (n: number) => `${n} KB`;
+
+const api = [
+  ['positions(date)', 'Apparent geocentric tropical longitudes for an instant: Sun through Pluto plus the true nodes, with ecliptic latitude, daily speed, retrograde state and sign.'],
+  ['natalChart(birth)', 'A full chart from a resolved UTC instant and coordinates: bodies, angles, house cusps and major aspects, plus the flags that say what was assumed. Without a known time it returns positions and leaves angles and houses null.'],
+  ['transits(natal, date)', 'Current positions and their major aspects to a natal chart.'],
+  ['synastry(first, second)', 'Inter-chart aspects between two charts with element and modality balances.'],
+  ['moonPhase(date)', 'Phase angle, illumination and name, from the same positions a chart uses.'],
+  ['saturnReturn(birth)', 'Natal Saturn and every return season to roughly age 92, each with its exact crossings.'],
+];
+
+const jsonLd = [{
+  '@type': 'SoftwareSourceCode',
+  name: 'Zodiacs Engine',
+  description,
+  url: 'https://zodiacs.org/developers/engine/',
+  codeRepository: candidate.sourceRepository,
+  programmingLanguage: 'TypeScript',
+  license: 'https://opensource.org/licenses/MIT',
+  softwareVersion: candidate.version,
+  runtimePlatform: 'Node.js, browsers',
+}];
+---
+<Base title={title} description={description} path="/developers/engine/" jsonLd={jsonLd}>
+  <section class="section container container--narrow engine-page">
+    <em class="kicker">Zodiacs Engine</em>
+    <h1 class="display">Calculate charts in your own process.</h1>
+
+    <div class="prose">
+      <p>
+        <code>{candidate.name}</code> is the chart engine this site runs. It
+        takes an instant and a pair of coordinates and returns bodies, angles,
+        house cusps and aspects. The calculation is synchronous and makes no
+        network request: nothing about the birth details it is given leaves
+        the process it runs in.
+      </p>
+      <p>
+        MIT, ESM, TypeScript declarations included, Node.js 18 and newer or any
+        browser with a bundler. One runtime dependency —{' '}
+        <a href="https://github.com/cosinekitty/astronomy" rel="noopener noreferrer">Astronomy Engine</a>{' '}
+        by Don Cross, also MIT, which supplies the planetary and lunar series.
+        Zodiacs did not write those models; what is ours is the chart on top of
+        them — houses, angles, aspects, the record format and the limits.
+      </p>
+    </div>
+
+    <h2 id="demo">A worked example</h2>
+    <div class="prose">
+      <p>
+        This is the whole of it. The output below is what the program prints —
+        a test in this repository runs this exact source against the archive
+        below and fails if the two stop matching.
+      </p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Worked example"><code>{ENGINE_DEMO_SOURCE}</code></pre>
+    <pre tabindex="0" role="region" aria-label="Output of the worked example" class="engine-output"><code>{ENGINE_DEMO_OUTPUT}</code></pre>
+
+    <h2 id="install">Install it</h2>
+    <div class="prose">
+      <p>
+        {candidate.name} is not on npm yet — <code>{`npm view ${candidate.name}`}</code>{' '}
+        returns 404, and <a href="/developers/support/#engine-candidate">the support page says why</a>.
+        The published archive is the evaluation route, and it is the same bytes
+        a registry release would carry. Paste this into a POSIX shell; it
+        refuses to install anything whose digest does not match.
+      </p>
+    </div>
+    <pre tabindex="0" role="region" aria-label="Install commands"><code>{install}</code></pre>
+    <div class="prose">
+      <p class="engine-hash">SHA-256: <code>{candidate.sha256}</code></p>
+      <p>
+        Prefer a project that already runs? <a href="/developers/examples/">The starter</a>{' '}
+        has natal, transit and widget examples wired up, and{' '}
+        <a href="/developers/mcp/">the MCP adapter</a> puts the same engine
+        behind an assistant over stdio.
+      </p>
+    </div>
+
+    <h2 id="api">What it computes</h2>
+    <dl class="engine-api">
+      {api.map(([signature, what]) => (
+        <div>
+          <dt>{signature}</dt>
+          <dd>{what}</dd>
+        </div>
+      ))}
+    </dl>
+    <div class="prose">
+      <p>
+        Whole-sign and Placidus houses; the five major aspects with separate
+        luminary orbs. Two optional entry points ship beside the core:{' '}
+        <code>@zodiacs/engine/geo</code> resolves a local wall time and IANA
+        zone to an instant, and <code>@zodiacs/engine/receipt</code> validates
+        a portable chart record. Both are separate imports, so neither costs
+        anything if you do not use them.
+      </p>
+    </div>
+
+    <h2 id="cost">What it costs</h2>
+    <div class="prose">
+      <p>
+        Bundled for a browser with esbuild {bundle.esbuildVersion}, minified,
+        entry <code>{`import { natalChart } from '${candidate.name}'`}</code>{' '}
+        — its ephemeris included, because that is what actually ships:
+      </p>
+    </div>
+    <div class="engine-table-wrap" tabindex="0" role="region" aria-label="Bundle size">
+      <table>
+        <thead><tr><th scope="col">Entry</th><th scope="col">Minified</th><th scope="col">gzip</th><th scope="col">brotli</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Natal charts</th><td>{kb(bundle.natal.minKb)}</td><td>{kb(bundle.natal.gzipKb)}</td><td>{kb(bundle.natal.brotliKb)}</td></tr>
+          <tr><th scope="row">+ local-time resolution</th><td>{kb(bundle.geo.minKb)}</td><td>{kb(bundle.geo.gzipKb)}</td><td>{kb(bundle.geo.brotliKb)}</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="prose">
+      <p>
+        Most of that is the ephemeris series, and it is the price of not
+        calling a server. There are no data files to host or download at
+        runtime, no key, and no account. This site keeps the engine out of its
+        own homepage bundle and loads it only on pages that cast a chart; a
+        bundler will do the same for you if you import it behind a dynamic
+        import.
+      </p>
+    </div>
+
+    <h2 id="accuracy">How close it is</h2>
+    <div class="prose">
+      <p>
+        Every change has to pass a comparison against NASA JPL Horizons
+        reference data before it ships. Separately, on 20 September 2026 the
+        engine was measured against Swiss Ephemeris 2.10.03 over a stratified
+        set of dates written down beforehand: across the 160 measurements from
+        1801 to 2026 the median disagreement in ecliptic longitude is{' '}
+        <strong>1.6 arcseconds</strong> and the largest is 18.6.
+      </p>
+      <p>
+        Two caveats that matter more than the number.{' '}
+        <a href="/methodology/#swiss-comparison">Both programs descend from JPL
+        development ephemerides</a>, so that is two implementations agreeing
+        rather than a check against observation. And the engine accepts dates
+        from 1800 to 2199, which is wider than the span that was measured — far
+        in the future the two disagree by more, mostly because they extrapolate
+        the Earth's rotation differently, not because either ephemeris is
+        wrong.
+      </p>
+    </div>
+
+    <h2 id="limits">What it does not do</h2>
+    <div class="prose">
+      <ul>
+        <li>Tropical only. No sidereal mode, no ayanamsha, no topocentric parallax.</li>
+        <li>Sun through Pluto and the true nodes. No Chiron, no asteroids.</li>
+        <li>Placidus is undefined near the poles; above 66° absolute latitude it falls back to whole sign and flags it.</li>
+        <li>Event searches cap ephemeris evaluations, so they can miss an event between samples. That is a sampling bound, not a guarantee of complete discovery.</li>
+        <li>No interpretation. The engine returns geometry; what it means is your problem, and not an astronomical claim.</li>
+      </ul>
+      <p>
+        <a href="/developers/support/">The support matrix</a> states each of
+        these precisely, along with the runtimes actually tested, the input
+        rules, and the licensing obligations that come with the optional
+        GeoNames-derived place index.
+      </p>
+    </div>
+
+    <h2 id="source">Source and licence</h2>
+    <div class="prose">
+      <p>
+        MIT, in <a href={sourceRoot}>{candidate.sourcePackagePath}</a> of the
+        Zodiacs SDK repository at commit{' '}
+        <code>{candidate.sourceCommit.slice(0, 12)}</code>. Keep the packaged
+        <code>LICENSE</code> and <code>NOTICE</code> when you redistribute:
+        the NOTICE carries Astronomy Engine's MIT notice and the CC BY 4.0
+        attribution that GeoNames-derived place data requires.{' '}
+        <a href={`${candidate.sourceRepository}/issues`}>Report a problem</a>.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .engine-page h1 { margin: var(--s-1) 0 var(--s-4); }
+  .engine-page h2 { margin: var(--s-12) 0 var(--s-4); font-size: var(--text-lg); scroll-margin-top: 96px; }
+  .engine-page .prose { max-width: 68ch; }
+  .engine-page code { font-family: var(--font-mono); font-size: .9em; overflow-wrap: anywhere; }
+  pre { margin: var(--s-6) 0; padding: var(--s-4); border: 1px solid var(--hair-2); border-radius: var(--radius-sm); max-width: 100%; overflow-x: auto; font-size: var(--text-sm); line-height: 1.7; }
+  pre:focus-visible { outline: 2px solid var(--text-2); outline-offset: 4px; }
+  pre code { overflow-wrap: normal; }
+  .engine-output { color: var(--text-2); }
+  .engine-hash { overflow-wrap: anywhere; color: var(--text-2); font-size: var(--text-sm); }
+  .engine-api { margin: var(--s-6) 0 0; max-width: 68ch; display: grid; gap: var(--s-5); }
+  .engine-api dt { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--text-1); }
+  .engine-api dd { margin: var(--s-2) 0 0; color: var(--text-2); }
+  .engine-table-wrap { overflow-x: auto; margin: var(--s-6) 0; }
+  .engine-table-wrap table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  .engine-table-wrap th,
+  .engine-table-wrap td { padding: 10px 12px; border-bottom: 1px solid var(--hair-1); text-align: left; white-space: nowrap; }
+  .engine-table-wrap thead th { color: var(--faint); font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .engine-table-wrap tbody th { font-weight: 500; white-space: normal; }
+</style>

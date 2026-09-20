@@ -45,14 +45,19 @@ Licensing is coherent: `"license": "MIT"` matches the shipped `LICENSE`;
 
 ## The hazard to avoid
 
-`package.json` has **no `publishConfig`**. A bare `npm publish` therefore puts
-`0.1.1-rc.6` on the **`latest`** dist-tag, so `npm install @zodiacs/engine`
-would hand every future user a release candidate. Publish with an explicit
-prerelease tag:
+`package.json` carries `publishConfig: { "access": "public" }` and **no
+`publishConfig.tag`** (verified against the tarball's own manifest, not the
+source tree). npm does not infer a dist-tag from a prerelease version, so a
+bare `npm publish` puts `0.1.1-rc.6` on **`latest`** and `npm install
+@zodiacs/engine` would hand every future user a release candidate. Publish
+with an explicit prerelease tag:
 
 ```sh
 npm publish ./zodiacs-engine-0.1.1-rc.6.tgz --tag next --access public
 ```
+
+`--access public` in that command repeats what `publishConfig` already sets;
+it is harmless and makes the intent visible in shell history.
 
 Publishing the **tarball** matters. `npm publish <tarball>` streams those exact
 bytes; publishing a directory repacks and can produce different bytes than the
