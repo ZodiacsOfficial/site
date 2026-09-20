@@ -144,6 +144,15 @@ jobs:
       - name: Engine accuracy vectors
         run: npm test
 
+      # The precision alpha's own suite is node:test, not vitest, so the
+      # line above does not reach it -- and it is where the aliasing
+      # counterexamples, the proven-completeness cases and the result
+      # contract's invariants live. A test nothing runs is not a test.
+      # Environment-neutral: no pack, no kernel, no network.
+      - name: Precision alpha tier A
+        working-directory: examples/precision-alpha
+        run: npm test
+
       - name: Platform starter fresh consumer
         timeout-minutes: 6
         run: node scripts/verify-platform-starter.mjs --install
