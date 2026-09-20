@@ -118,9 +118,9 @@
         "marketCapUsd": 78466
       },
       "freshness": {
-        "asOf": "2026-09-20T00:12:33.973Z",
+        "asOf": "2026-09-20T04:40:13.505Z",
         "status": "current-for-horizon",
-        "ageHoursAtHorizonEnd": 23.8
+        "ageHoursAtHorizonEnd": 19.3
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -212,10 +212,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007575,
-          "change24hPct": -3.65,
+          "change24hPct": -2.6,
           "marketCapUsd": 75730,
           "liquidityUsd": 15633.31,
-          "volume24hUsd": 175.93,
+          "volume24hUsd": 94.13,
           "liquidityVsCollectionMedian": 0.98,
           "marketCapVsCollectionMedian": 0.97,
           "turnover24h": 0.01,
@@ -432,13 +432,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.0000816,
-          "change24hPct": -0.64,
+          "change24hPct": -0.32,
           "marketCapUsd": 81597,
           "liquidityUsd": 16637.57,
-          "volume24hUsd": 182.02,
+          "volume24hUsd": 26.8,
           "liquidityVsCollectionMedian": 1.04,
           "marketCapVsCollectionMedian": 1.04,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -496,13 +496,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007662,
-          "change24hPct": -3.22,
+          "change24hPct": null,
           "marketCapUsd": 76627,
           "liquidityUsd": 15263.15,
-          "volume24hUsd": 79.63,
+          "volume24hUsd": 38.58,
           "liquidityVsCollectionMedian": 0.95,
           "marketCapVsCollectionMedian": 0.98,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -560,10 +560,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.0000849,
-          "change24hPct": -2.1,
+          "change24hPct": -1.01,
           "marketCapUsd": 84905,
           "liquidityUsd": 20969.47,
-          "volume24hUsd": 53.39,
+          "volume24hUsd": 18.54,
           "liquidityVsCollectionMedian": 1.31,
           "marketCapVsCollectionMedian": 1.08,
           "turnover24h": 0,
@@ -652,10 +652,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007695,
-          "change24hPct": -0.7,
+          "change24hPct": 1.03,
           "marketCapUsd": 76926,
           "liquidityUsd": 16104.29,
-          "volume24hUsd": 306.08,
+          "volume24hUsd": 273.23,
           "liquidityVsCollectionMedian": 1,
           "marketCapVsCollectionMedian": 0.98,
           "turnover24h": 0.02,
@@ -680,13 +680,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007674,
-          "change24hPct": -4.45,
+          "change24hPct": -5.75,
           "marketCapUsd": 76742,
           "liquidityUsd": 15443.73,
-          "volume24hUsd": 713.63,
+          "volume24hUsd": 479.03,
           "liquidityVsCollectionMedian": 0.96,
           "marketCapVsCollectionMedian": 0.98,
-          "turnover24h": 0.05,
+          "turnover24h": 0.03,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -744,13 +744,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00008188,
-          "change24hPct": 0.16,
+          "change24hPct": -0.85,
           "marketCapUsd": 81883,
           "liquidityUsd": 16373.99,
-          "volume24hUsd": 606.51,
+          "volume24hUsd": 182.15,
           "liquidityVsCollectionMedian": 1.02,
           "marketCapVsCollectionMedian": 1.04,
-          "turnover24h": 0.04,
+          "turnover24h": 0.01,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -772,10 +772,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007994,
-          "change24hPct": -2.48,
+          "change24hPct": -1,
           "marketCapUsd": 79947,
           "liquidityUsd": 15335.02,
-          "volume24hUsd": 24.66,
+          "volume24hUsd": 5.76,
           "liquidityVsCollectionMedian": 0.96,
           "marketCapVsCollectionMedian": 1.02,
           "turnover24h": 0,
@@ -912,9 +912,9 @@
         "marketCapUsd": 78466
       },
       "freshness": {
-        "asOf": "2026-09-20T00:12:33.973Z",
+        "asOf": "2026-09-20T04:40:13.505Z",
         "status": "stale-for-horizon",
-        "ageHoursAtHorizonEnd": 167.8
+        "ageHoursAtHorizonEnd": 163.3
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -1064,10 +1064,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007575,
-          "change24hPct": -3.65,
+          "change24hPct": -2.6,
           "marketCapUsd": 75730,
           "liquidityUsd": 15633.31,
-          "volume24hUsd": 175.93,
+          "volume24hUsd": 94.13,
           "liquidityVsCollectionMedian": 0.98,
           "marketCapVsCollectionMedian": 0.97,
           "turnover24h": 0.01,
@@ -1318,13 +1318,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.0000816,
-          "change24hPct": -0.64,
+          "change24hPct": -0.32,
           "marketCapUsd": 81597,
           "liquidityUsd": 16637.57,
-          "volume24hUsd": 182.02,
+          "volume24hUsd": 26.8,
           "liquidityVsCollectionMedian": 1.04,
           "marketCapVsCollectionMedian": 1.04,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -1382,13 +1382,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007662,
-          "change24hPct": -3.22,
+          "change24hPct": null,
           "marketCapUsd": 76627,
           "liquidityUsd": 15263.15,
-          "volume24hUsd": 79.63,
+          "volume24hUsd": 38.58,
           "liquidityVsCollectionMedian": 0.95,
           "marketCapVsCollectionMedian": 0.98,
-          "turnover24h": 0.01,
+          "turnover24h": 0,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -1556,10 +1556,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.0000849,
-          "change24hPct": -2.1,
+          "change24hPct": -1.01,
           "marketCapUsd": 84905,
           "liquidityUsd": 20969.47,
-          "volume24hUsd": 53.39,
+          "volume24hUsd": 18.54,
           "liquidityVsCollectionMedian": 1.31,
           "marketCapVsCollectionMedian": 1.08,
           "turnover24h": 0,
@@ -1648,10 +1648,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007695,
-          "change24hPct": -0.7,
+          "change24hPct": 1.03,
           "marketCapUsd": 76926,
           "liquidityUsd": 16104.29,
-          "volume24hUsd": 306.08,
+          "volume24hUsd": 273.23,
           "liquidityVsCollectionMedian": 1,
           "marketCapVsCollectionMedian": 0.98,
           "turnover24h": 0.02,
@@ -1676,13 +1676,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007674,
-          "change24hPct": -4.45,
+          "change24hPct": -5.75,
           "marketCapUsd": 76742,
           "liquidityUsd": 15443.73,
-          "volume24hUsd": 713.63,
+          "volume24hUsd": 479.03,
           "liquidityVsCollectionMedian": 0.96,
           "marketCapVsCollectionMedian": 0.98,
-          "turnover24h": 0.05,
+          "turnover24h": 0.03,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -1774,13 +1774,13 @@
         "market": {
           "available": true,
           "priceUsd": 0.00008188,
-          "change24hPct": 0.16,
+          "change24hPct": -0.85,
           "marketCapUsd": 81883,
           "liquidityUsd": 16373.99,
-          "volume24hUsd": 606.51,
+          "volume24hUsd": 182.15,
           "liquidityVsCollectionMedian": 1.02,
           "marketCapVsCollectionMedian": 1.04,
-          "turnover24h": 0.04,
+          "turnover24h": 0.01,
           "liquidityBand": "near-median",
           "participationBand": "low",
           "note": "Descriptive snapshot only; these fields do not alter the symbolic sky score or predict the next period."
@@ -1802,10 +1802,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00007994,
-          "change24hPct": -2.48,
+          "change24hPct": -1,
           "marketCapUsd": 79947,
           "liquidityUsd": 15335.02,
-          "volume24hUsd": 24.66,
+          "volume24hUsd": 5.76,
           "liquidityVsCollectionMedian": 0.96,
           "marketCapVsCollectionMedian": 1.02,
           "turnover24h": 0,
