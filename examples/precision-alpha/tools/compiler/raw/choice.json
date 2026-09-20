@@ -1,0 +1,266 @@
+{
+ "mercuryBary": {
+  "budgetKm": 0.3,
+  "epsFit": 0.15,
+  "epsQ": 0.15,
+  "float64": {
+   "body": "mercuryBary",
+   "frame": "ssb",
+   "Ldays": 80,
+   "ncoef": 41,
+   "nrec": 1370,
+   "maxErrKm": 0.1100808381286172,
+   "bytes": 1348080
+  },
+  "quant": {
+   "body": "mercuryBary",
+   "frame": "sun",
+   "Ldays": 80,
+   "ncoef": 41,
+   "nrec": 1370,
+   "maxErrKm": 0.11008090760798843,
+   "bytes": 471280
+  },
+  "candidates": 156
+ },
+ "venusBary": {
+  "budgetKm": 0.3,
+  "epsFit": 0.15,
+  "epsQ": 0.15,
+  "float64": {
+   "body": "venusBary",
+   "frame": "ssb",
+   "Ldays": 200,
+   "ncoef": 21,
+   "nrec": 548,
+   "maxErrKm": 0.13293641819983062,
+   "bytes": 276192
+  },
+  "quant": {
+   "body": "venusBary",
+   "frame": "ssb",
+   "Ldays": 400,
+   "ncoef": 43,
+   "nrec": 274,
+   "maxErrKm": 0.14969117816729852,
+   "bytes": 90146
+  },
+  "candidates": 383
+ },
+ "emb": {
+  "budgetKm": 0.3,
+  "epsFit": 0.15,
+  "epsQ": 0.15,
+  "float64": {
+   "body": "emb",
+   "frame": "ssb",
+   "Ldays": 200,
+   "ncoef": 21,
+   "nrec": 548,
+   "maxErrKm": 0.14768169765604283,
+   "bytes": 276192
+  },
+  "quant": {
+   "body": "emb",
+   "frame": "ssb",
+   "Ldays": 274,
+   "ncoef": 31,
+   "nrec": 400,
+   "maxErrKm": 0.13519338217408497,
+   "bytes": 83600
+  },
+  "candidates": 441
+ },
+ "marsBary": {
+  "budgetKm": 0.5,
+  "epsFit": 0.25,
+  "epsQ": 0.25,
+  "float64": {
+   "body": "marsBary",
+   "frame": "ssb",
+   "Ldays": 685,
+   "ncoef": 39,
+   "nrec": 160,
+   "maxErrKm": 0.2324200689873256,
+   "bytes": 149760
+  },
+  "quant": {
+   "body": "marsBary",
+   "frame": "ssb",
+   "Ldays": 685,
+   "ncoef": 39,
+   "nrec": 160,
+   "maxErrKm": 0.2324200689873256,
+   "bytes": 48160
+  },
+  "candidates": 410
+ },
+ "jupiterBary": {
+  "budgetKm": 1,
+  "epsFit": 0.5,
+  "epsQ": 0.5,
+  "float64": {
+   "body": "jupiterBary",
+   "frame": "ssb",
+   "Ldays": 2192,
+   "ncoef": 34,
+   "nrec": 50,
+   "maxErrKm": 0.4786296337543341,
+   "bytes": 40800
+  },
+  "quant": {
+   "body": "jupiterBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 43,
+   "nrec": 40,
+   "maxErrKm": 0.4521599472853169,
+   "bytes": 10400
+  },
+  "candidates": 547
+ },
+ "saturnBary": {
+  "budgetKm": 1,
+  "epsFit": 0.5,
+  "epsQ": 0.5,
+  "float64": {
+   "body": "saturnBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 22,
+   "nrec": 40,
+   "maxErrKm": 0.44316339142208117,
+   "bytes": 21120
+  },
+  "quant": {
+   "body": "saturnBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 22,
+   "nrec": 40,
+   "maxErrKm": 0.44316339142208117,
+   "bytes": 6480
+  },
+  "candidates": 551
+ },
+ "uranusBary": {
+  "budgetKm": 1,
+  "epsFit": 0.5,
+  "epsQ": 0.5,
+  "float64": {
+   "body": "uranusBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 14,
+   "nrec": 40,
+   "maxErrKm": 0.40519849949431436,
+   "bytes": 13440
+  },
+  "quant": {
+   "body": "uranusBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 14,
+   "nrec": 40,
+   "maxErrKm": 0.40519849949431436,
+   "bytes": 4240
+  },
+  "candidates": 530
+ },
+ "neptuneBary": {
+  "budgetKm": 1,
+  "epsFit": 0.5,
+  "epsQ": 0.5,
+  "float64": {
+   "body": "neptuneBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 11,
+   "nrec": 40,
+   "maxErrKm": 0.44076577221013347,
+   "bytes": 10560
+  },
+  "quant": {
+   "body": "neptuneBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 11,
+   "nrec": 40,
+   "maxErrKm": 0.44076577221013347,
+   "bytes": 3440
+  },
+  "candidates": 514
+ },
+ "plutoBary": {
+  "budgetKm": 1,
+  "epsFit": 0.5,
+  "epsQ": 0.5,
+  "float64": {
+   "body": "plutoBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 10,
+   "nrec": 40,
+   "maxErrKm": 0.45426279361613925,
+   "bytes": 9600
+  },
+  "quant": {
+   "body": "plutoBary",
+   "frame": "ssb",
+   "Ldays": 2740,
+   "ncoef": 10,
+   "nrec": 40,
+   "maxErrKm": 0.45426279361613925,
+   "bytes": 3200
+  },
+  "candidates": 488
+ },
+ "sun": {
+  "budgetKm": 0.3,
+  "epsFit": 0.15,
+  "epsQ": 0.15,
+  "float64": {
+   "body": "sun",
+   "frame": "native",
+   "Ldays": 274,
+   "ncoef": 30,
+   "nrec": 400,
+   "maxErrKm": 0.1425651689785569,
+   "bytes": 288000
+  },
+  "quant": {
+   "body": "sun",
+   "frame": "native",
+   "Ldays": 400,
+   "ncoef": 44,
+   "nrec": 274,
+   "maxErrKm": 0.13024257251600502,
+   "bytes": 56170
+  },
+  "candidates": 251
+ },
+ "moon": {
+  "budgetKm": 0.01,
+  "epsFit": 0.005,
+  "epsQ": 0.005,
+  "float64": {
+   "body": "moon",
+   "frame": "native",
+   "Ldays": 32,
+   "ncoef": 31,
+   "nrec": 3425,
+   "maxErrKm": 0.004108044863501708,
+   "bytes": 2548200
+  },
+  "quant": {
+   "body": "moon",
+   "frame": "native",
+   "Ldays": 32,
+   "ncoef": 31,
+   "nrec": 3425,
+   "maxErrKm": 0.004108044863501708,
+   "bytes": 839125
+  },
+  "candidates": 72
+ }
+}

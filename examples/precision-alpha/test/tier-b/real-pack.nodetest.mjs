@@ -8,6 +8,11 @@
  * A missing input FAILS. It does not skip, and it does not fall back to a
  * path from an earlier session: a research gate that goes green because the
  * data was not there is the failure mode this tier exists to prevent.
+ *
+ * This file needs only a pack, so it runs from a packed archive as well as
+ * from the repository. The pack-against-kernel comparison needs the
+ * research SPK reader too and lives in `pack-versus-kernel.nodetest.mjs`,
+ * which ships only in the repository.
  */
 
 /**
@@ -19,12 +24,10 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { openPackFile, openPackFileStream, CORRECTED, PROTOTYPE } from '../../src/node.mjs';
-import { Reducer } from '../../src/core/reduce.mjs';
 
 const PACK = process.env.PRECISION_PACK;
-const KERNEL = process.env.PRECISION_KERNEL;
 
 test('the pack path is supplied and exists', () => {
   assert.ok(PACK, 'PRECISION_PACK is not set. This tier needs a real pack; it will not guess where one is, and it will not pass without one.');
@@ -180,30 +183,4 @@ if (!PACK || !existsSync(PACK)) {
     rt.dispose();
   });
 
-  if (KERNEL && existsSync(KERNEL)) {
-    test('the pack agrees with the uncompressed kernel to the compression budget', async () => {
-      const { SpkBackend } = await import('../../tools/spk-backend.mjs');
-      const rt = await openPackFile(PACK);
-      const kernel = new Reducer(new SpkBackend(KERNEL));
-      let worst = 0;
-      for (const tt of INSTANTS) {
-        for (const body of BODIES) {
-          const a = rt.apparent(body, tt, CORRECTED).lon;
-          const b = kernel.apparent(body, tt, CORRECTED).lon;
-          let d = a - b;
-          if (d > 180) d -= 360;
-          if (d < -180) d += 360;
-          worst = Math.max(worst, Math.abs(d) * 3600);
-        }
-      }
-      // 0.05 arcsec is the declared incremental-compression target; the
-      // measurement over the whole coverage reached 0.0049.
-      assert.ok(worst < 0.05, `compression cost ${worst} arcsec, past the declared 0.05`);
-      rt.dispose();
-    });
-  } else {
-    test('the kernel comparison was not run, and says so', () => {
-      assert.fail(`PRECISION_KERNEL is ${KERNEL ? 'set to a path that does not exist' : 'not set'}, so the pack was never compared against the uncompressed kernel. That comparison is part of this tier; this is a failure, not a skip.`);
-    });
-  }
 }
