@@ -88,20 +88,27 @@ target crossings plus the antipode ones, and through the same library it
 returns **`multiple-crossings` / `certified`, count 27** —
 13 target crossings plus 14 antipode crossings, which is right.
 
-## What the alpha does on the same question
+## What this package does on the same question
 
-`examples/precision-alpha` splits the interval at every antipode crossing
-and shows each split gap to be root-free before passing over it, then merges
-the per-branch verdicts, certifying the whole only if every part is certified
-and every gap was shown root-free. On this case it returns
-**`multiple-crossings` / `certified`, count 13**, matching the truth: true.
-It split at 14 antipode gaps, all shown root-free, with 0 unresolved
-intervals, in 8675 evaluations.
+The preview runtime splits the interval at every antipode crossing, shows
+each split gap to be event-free before passing over it, and refines the scan
+until the sampled slopes say the angle cannot have moved more than a quarter
+turn between adjacent samples. On this case it returns **`finished`,
+13 events**, matching the truth: yes. It split at
+14 antipode gaps, all shown event-free, with 0 unresolved
+intervals, in 8518 evaluations.
 
-The backend and clock differ from the recorded harness — the alpha reads the
+**And it does not claim to have proved it.** `completeness.established` is
+`false` and the support is `conditional`: the bounds behind that
+count are sampled maxima, so the strongest honest statement is that no
+further event exists IF those estimates hold. Under the v1 contract this same
+run would have reported `certified: true`, which is exactly the
+overstatement the v2 contract removes — see
+`examples/precision-alpha/MIGRATION.md`.
+
+The backend and clock differ from the recorded harness — this reads the
 compact pack and takes TT directly — so the instants are not expected to
-agree to the millisecond. The COUNT is the comparison, and empirical is the
-support it claims for it.
+agree to the millisecond. The COUNT is the comparison.
 
 ## Standing
 

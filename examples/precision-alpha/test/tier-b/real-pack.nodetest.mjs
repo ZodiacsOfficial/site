@@ -99,19 +99,19 @@ if (!PACK || !existsSync(PACK)) {
   test('the search finds the March 2024 equinox and all thirteen 2024 new moons', async () => {
     const rt = await openPackFile(PACK);
     const eq = rt.search({ kind: 'longitude', body: 'Sun', targetDeg: 0, fromTtDays: 8800, toTtDays: 8860, epsilonDeg: 1 / 3600, options: CORRECTED });
-    assert.equal(eq.isolation.certified, true);
-    assert.equal(eq.isolation.rootCount, 1);
+    assert.equal(eq.accounting.allIntervalsAccountedFor, true);
+    assert.equal(eq.eventCount.conditionalTotal, 1);
     // 2024-03-20T03:06 UTC, to within the bracket.
-    const jdUtc = eq.candidates[0].ttDays - 69.184 / 86400;
+    const jdUtc = eq.events[0].ttDays - 69.184 / 86400;
     const iso = new Date((jdUtc + 10957.5) * 86400000).toISOString();
     assert.match(iso, /^2024-03-20T03:0/, `equinox came out at ${iso}`);
 
     const moons = rt.search({ kind: 'aspect', body: 'Moon', other: 'Sun', targetDeg: 0, fromTtDays: 8766, toTtDays: 9131, epsilonDeg: 1 / 3600, options: CORRECTED, maxEvaluations: 200000 });
-    assert.equal(moons.isolation.certified, true);
-    assert.equal(moons.isolation.rootCount, 13, '2024 had thirteen new moons');
-    assert.ok(moons.isolation.branches.antipodeGaps.length >= 12);
-    assert.ok(moons.isolation.branches.antipodeGaps.every((g) => g.excluded));
-    assert.equal(moons.unresolved.length, 0);
+    assert.equal(moons.accounting.allIntervalsAccountedFor, true);
+    assert.equal(moons.eventCount.conditionalTotal, 13, '2024 had thirteen new moons');
+    assert.ok(moons.diagnostics.branches.antipodeGaps.length >= 12);
+    assert.ok(moons.diagnostics.branches.antipodeGaps.every((g) => g.excluded));
+    assert.equal(moons.accounting.unresolved.length, 0);
     rt.dispose();
   });
 

@@ -7,7 +7,7 @@
   "backend": "@zodiacs/engine/internal bodyLongitude, engine-native Delta-T",
   "source": "docs/platform/evidence/precision-2026-09-20/README.md line 78, and search/verify/moon-mechanism.mjs"
  },
- "when": "2026-09-20T14:10:15.592Z",
+ "when": "2026-09-20T16:19:20.563Z",
  "node": "v22.22.2",
  "truth": {
   "method": "dense scan of the wrapped difference at two step sizes, then bisection; a sign change with both ends beyond 90 degrees is the wrap and is not counted",
@@ -312,15 +312,17 @@
  },
  "alphaSearch": {
   "what": "examples/precision-alpha, which splits the interval at every antipode crossing and shows each split gap to be root-free before passing over it. Different backend (the compact pack) and a slightly different clock, so the instants are not expected to match to the millisecond; the COUNT is the comparison.",
-  "verdict": "multiple-crossings",
-  "outcome": "certified",
-  "certified": true,
-  "rootCount": 13,
-  "support": "empirical",
+  "contract": "zodiacs-precision-search/2",
+  "status": "finished",
+  "established": false,
+  "support": "conditional",
+  "allIntervalsAccountedFor": true,
+  "eventsFound": 13,
+  "conditionalTotal": 13,
   "antipodeGaps": 14,
   "allGapsShownRootFree": true,
   "unresolved": 0,
-  "evaluations": 8675,
+  "evaluations": 8518,
   "matchesTruth": true,
   "firstFew": [
    "2019-01-19T20:00:30.116Z",

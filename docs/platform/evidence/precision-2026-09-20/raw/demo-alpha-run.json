@@ -2,7 +2,7 @@
   "url": "http://127.0.0.1:8791/",
   "pack": {
     "bytes": 1737200,
-    "digest": "c9ebc641ad7ba844dedd59313132ef4410864339199872c50b7700791443335e"
+    "digest": "4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764"
   },
   "node": {
     "ttDays": [
@@ -40,7 +40,7 @@
           "state": "loaded valid.zeph",
           "info": {
             "coverage": "{\"startUtc\":\"1849-12-25T23:58:50.816Z\",\"stopUtc\":\"2150-01-21T23:58:50.816Z\",\"startEtSecTdb\":-4734072000,\"stopEtSecTdb\":4735368000,\"marginHours\":7}",
-            "integrity": "{\"digest\":\"c9ebc641ad7ba844dedd59313132ef4410864339199872c50b7700791443335e\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
+            "integrity": "{\"digest\":\"4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
             "source": "memory",
             "bodies": "[\"Sun\",\"Moon\",\"Mercury\",\"Venus\",\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
             "systemBarycentresNotCentres": "[\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
@@ -50,7 +50,7 @@
           "authenticityStated": true
         },
         "calculate": {
-          "state": "lightweight 24.500 ms · precision 4.300 ms",
+          "state": "lightweight 40.400 ms · precision 4.600 ms",
           "rows": [
             [
               "Sun",
@@ -120,10 +120,13 @@
           "mismatches": []
         },
         "search": {
-          "verdict": "crossing",
-          "certified": true,
-          "rootCount": 1,
-          "support": "empirical",
+          "contract": "zodiacs-precision-search/2",
+          "status": "finished",
+          "established": false,
+          "support": "conditional",
+          "eventsFound": 1,
+          "conditionalTotal": 1,
+          "allIntervalsAccountedFor": true,
           "matchesNode": true
         },
         "refusals": {
@@ -171,7 +174,7 @@
           "showsTheLatestRequest": true
         },
         "cancel": {
-          "clickAcceptedMs": 37,
+          "clickAcceptedMs": 41,
           "state": "cancelled: stopped after 200 of 400"
         },
         "dispose": {
@@ -209,7 +212,7 @@
           "state": "loaded valid.zeph",
           "info": {
             "coverage": "{\"startUtc\":\"1849-12-25T23:58:50.816Z\",\"stopUtc\":\"2150-01-21T23:58:50.816Z\",\"startEtSecTdb\":-4734072000,\"stopEtSecTdb\":4735368000,\"marginHours\":7}",
-            "integrity": "{\"digest\":\"c9ebc641ad7ba844dedd59313132ef4410864339199872c50b7700791443335e\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
+            "integrity": "{\"digest\":\"4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
             "source": "memory",
             "bodies": "[\"Sun\",\"Moon\",\"Mercury\",\"Venus\",\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
             "systemBarycentresNotCentres": "[\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
@@ -219,7 +222,7 @@
           "authenticityStated": true
         },
         "calculate": {
-          "state": "lightweight 24.000 ms · precision 3.000 ms",
+          "state": "lightweight 34.000 ms · precision 4.000 ms",
           "rows": [
             [
               "Sun",
@@ -289,10 +292,13 @@
           "mismatches": []
         },
         "search": {
-          "verdict": "crossing",
-          "certified": true,
-          "rootCount": 1,
-          "support": "empirical",
+          "contract": "zodiacs-precision-search/2",
+          "status": "finished",
+          "established": false,
+          "support": "conditional",
+          "eventsFound": 1,
+          "conditionalTotal": 1,
+          "allIntervalsAccountedFor": true,
           "matchesNode": true
         },
         "refusals": {
@@ -340,8 +346,8 @@
           "showsTheLatestRequest": true
         },
         "cancel": {
-          "clickAcceptedMs": 66,
-          "state": "cancelled: stopped after 200 of 400"
+          "clickAcceptedMs": 62,
+          "state": "cancelled: stopped after 150 of 400"
         },
         "dispose": {
           "ok": true,

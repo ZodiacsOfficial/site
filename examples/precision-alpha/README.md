@@ -128,26 +128,49 @@ cannot verify a pack; the failure says exactly that rather than degrading.
 
 ## What a search result means
 
-It reports six things separately, because they answer different questions:
+Results carry `contract: 'zodiacs-precision-search/2'`. Branch on it.
 
-- `candidates` — what was found, each with a bracket, not a bare instant.
-- `interval` — what was actually processed, with the subdivision floor.
-- `isolation` — the verdict, and `meaning`, which states what the verdict is
-  relative to. `support` is `'empirical'` for anything ephemeris-backed:
-  ordinary floating-point evaluation of a Chebyshev sum is not interval
-  arithmetic, so the completeness claim holds *given* the declared derivative
-  bounds, which were sampled and inflated, not proven. Those bounds and the
-  inflation factor are on the result.
-- `robustness` — how far each crossing moves under a one-epsilon displacement.
-  A local estimate, and labelled as one.
-- `unresolved` — intervals that stayed open. A certified count with a
-  non-empty `unresolved` is a contradiction and cannot be produced.
-- `externalUncertainty` — how far this reduction sits from the sky, from
-  another ephemeris, or from the true dynamics. **Not bounded here**, not
-  folded into epsilon, and it says so.
+Nine parts, kept apart because they answer different questions:
 
-`exactArithmetic` is never set, which permanently closes tangency
-certification to ephemeris-backed functions.
+- `events` — what was found, each with a bracket, not a bare instant. Always
+  returned, whatever else the run concluded.
+- `interval` — what was requested against what was actually decided.
+- `execution` — whether the run **finished**. `finished`, `budget-exhausted`,
+  `cancelled` or `refused`. Finishing is not the same as proving anything.
+- `accounting` — whether every part of the interval was accounted for, and
+  which parts were not.
+- `completeness` — `established` (a Boolean), `support` (`none`,
+  `conditional` or `proven`), and `conditionalOn`.
+- `assumptions` — every unverified thing by name, with what would settle it.
+- `eventCount` — `found`, and `isExactTotal`, which is true only when
+  completeness is established. Otherwise there is a `conditionalTotal`,
+  labelled as conditional.
+- `uncertainty` — numerical, model and physical, never summed.
+- `diagnostics` — declared bounds, branch splits, the aliasing measure.
+
+**The empirical apparent mode never establishes completeness.** Its
+derivative bounds are maxima sampled on a grid and multiplied by a factor,
+and `src/core/result.mjs` refuses to build a result that claims more than
+its support allows — the invariant is enforced when the object is
+constructed, not written down in prose and hoped for.
+
+That matters because the alpha's v1 contract did claim more. An angle making
+96 turns across the 96 default sampling intervals returned `no-crossing,
+certified, count 0` where the truth is 96: every sample read the same phase.
+`MIGRATION.md` has the field map and the measurements; the case is a test.
+
+### What the search assumes, and cannot check
+
+One assumption cannot be verified by sampling and is stated rather than
+hidden: **`maxRateDegPerDay`**, the fastest the searched angle can move. The
+method unwraps differences of a wrapped angle, which is valid only while the
+angle moves less than a half turn across a step — and no grid can detect a
+violation, because an angle turning a whole number of times between every
+pair of samples reads exactly like one that does not move. The default is 20
+degrees a day, which covers this contract's ten bodies. A rate above the
+declared ceiling is refused; a step too long for it is refused up front. A
+caller who declares a ceiling the quantity exceeds gets a wrong answer, and
+that is why the ceiling is on every result as an unverified assumption.
 
 ## Licences
 

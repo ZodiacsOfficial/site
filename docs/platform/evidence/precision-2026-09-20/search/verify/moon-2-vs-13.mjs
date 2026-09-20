@@ -206,19 +206,24 @@ if (PACK) {
   const r = rt.search({
     kind: 'longitude', body: CASE.body,
     targetDeg: CASE.targetDegrees,
+    maxRateDegPerDay: 20,
     fromTtDays: ttDays(aMs), toTtDays: ttDays(bMs),
     epsilonDeg: 1e-5, options: CORRECTED, maxEvaluations: 2_000_000,
   });
   report.alphaSearch = {
     what: 'examples/precision-alpha, which splits the interval at every antipode crossing and shows each split gap to be root-free before passing over it. Different backend (the compact pack) and a slightly different clock, so the instants are not expected to match to the millisecond; the COUNT is the comparison.',
-    verdict: r.isolation.verdict, outcome: r.isolation.outcome, certified: r.isolation.certified,
-    rootCount: r.isolation.rootCount, support: r.isolation.support,
-    antipodeGaps: r.isolation.branches.antipodeGaps.length,
-    allGapsShownRootFree: r.isolation.branches.antipodeGaps.every((g) => g.excluded),
-    unresolved: r.unresolved.length,
-    evaluations: r.budget.evaluations,
-    matchesTruth: r.isolation.rootCount === truth10m.length,
-    firstFew: r.candidates.slice(0, 4).map((c) => new Date((c.ttDays + 10957.5) * DAY_MS).toISOString()),
+    contract: r.contract,
+    status: r.execution.status,
+    established: r.completeness.established,
+    support: r.completeness.support,
+    allIntervalsAccountedFor: r.accounting.allIntervalsAccountedFor,
+    eventsFound: r.eventCount.found, conditionalTotal: r.eventCount.conditionalTotal,
+    antipodeGaps: r.diagnostics.branches.antipodeGaps.length,
+    allGapsShownRootFree: r.diagnostics.branches.antipodeGaps.every((g) => g.excluded),
+    unresolved: r.accounting.unresolved.length,
+    evaluations: r.execution.evaluations,
+    matchesTruth: r.eventCount.found === truth10m.length,
+    firstFew: r.events.slice(0, 4).map((c) => new Date((c.ttDays + 10957.5) * DAY_MS).toISOString()),
   };
   rt.dispose();
 } else {
@@ -244,6 +249,6 @@ console.log(`\nmechanism: ${report.mechanism.cells} cells, ${JSON.stringify(repo
 console.log(`  ${report.mechanism.crossingsInsideCellsClosedByExclusion} of ${report.mechanism.trueCrossings} crossings sit inside cells closed by the EXCLUSION test`);
 console.log(`  ${report.mechanism.crossingsInsideMonotoneCellsWhoseEndsAgree} sit inside monotone cells whose end values agree`);
 if (report.alphaSearch.skipped) console.log(`alpha search: ${report.alphaSearch.skipped}`);
-else console.log(`alpha search: ${report.alphaSearch.verdict} / ${report.alphaSearch.outcome}, count ${report.alphaSearch.rootCount}, matches truth: ${report.alphaSearch.matchesTruth}`);
+else console.log(`preview search: ${report.alphaSearch.status}, ${report.alphaSearch.eventsFound} events, established ${report.alphaSearch.established}, support ${report.alphaSearch.support}, matches truth: ${report.alphaSearch.matchesTruth}`);
 console.log(`\n${report.verdict}`);
 console.log(`wrote ${OUT}`);

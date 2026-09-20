@@ -184,14 +184,20 @@ async function run(name, browser) {
   // 3. The search, in the browser, against the Node verdict.
   const bs = (await ask({ type: 'search', spec: { kind: 'longitude', body: 'Sun', targetDeg: 0, fromTtDays: 8800, toTtDays: 8860, epsilonDeg: 1 / 3600 } })).verdict;
   out.steps.search = {
-    verdict: bs.isolation.verdict,
-    certified: bs.isolation.certified,
-    rootCount: bs.isolation.rootCount,
-    support: bs.isolation.support,
-    matchesNode: bs.isolation.verdict === nodeSearch.isolation.verdict
-      && bs.isolation.rootCount === nodeSearch.isolation.rootCount
-      && bs.candidates.length === nodeSearch.candidates.length
-      && bs.candidates.every((c, i) => c.ttDays === nodeSearch.candidates[i].ttDays),
+    contract: bs.contract,
+    status: bs.execution.status,
+    established: bs.completeness.established,
+    support: bs.completeness.support,
+    eventsFound: bs.eventCount.found,
+    conditionalTotal: bs.eventCount.conditionalTotal,
+    allIntervalsAccountedFor: bs.accounting.allIntervalsAccountedFor,
+    matchesNode: bs.contract === nodeSearch.contract
+      && bs.execution.status === nodeSearch.execution.status
+      && bs.completeness.support === nodeSearch.completeness.support
+      && bs.completeness.established === nodeSearch.completeness.established
+      && bs.eventCount.found === nodeSearch.eventCount.found
+      && bs.events.length === nodeSearch.events.length
+      && bs.events.every((c, i) => c.ttDays === nodeSearch.events[i].ttDays),
   };
 
   // 4. Each failure for its OWN reason, with the valid pack still loaded.

@@ -93,9 +93,9 @@ try {
       type: 'search',
       spec: { kind: 'longitude', body: 'Sun', targetDeg: 0, fromTtDays: 8800, toTtDays: 8860, epsilonDeg: 1 / 3600 },
     }));
-    const v = r.verdict.isolation;
-    const when = new Date((r.verdict.candidates[0].ttDays + 10957.5) * 86400000).toISOString();
-    await say(`4 · ${v.verdict}, ${v.outcome}, count ${v.rootCount}, support "${v.support}" → ${when}`);
+    const v = r.verdict;
+    const when = new Date((v.events[0].ttDays + 10957.5) * 86400000).toISOString();
+    await say(`4 · ${v.execution.status}; ${v.eventCount.found} event; completeness established: ${v.completeness.established}; support "${v.completeness.support}" → ${when}`);
     await beat(2600);
   });
 

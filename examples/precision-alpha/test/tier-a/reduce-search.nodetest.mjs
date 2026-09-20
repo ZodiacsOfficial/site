@@ -206,16 +206,21 @@ test('the bounded search finds exactly the crossings a dense scan finds', () => 
     options: OPTS, maxEvaluations: 400000,
   });
   const reference = denseRoots((t) => rt.apparent('Mars', t, OPTS).lon - target, from, to, 0.25);
-  assert.equal(r.isolation.certified, true, `verdict ${r.isolation.verdict}: ${JSON.stringify(r.isolation.reason ?? '')}`);
-  assert.equal(r.isolation.rootCount, reference.length, `search found ${r.isolation.rootCount}, dense scan found ${reference.length}`);
+  assert.equal(r.execution.status, 'finished');
+  assert.equal(r.accounting.allIntervalsAccountedFor, true, JSON.stringify(r.execution.reason ?? r.completeness.statement));
+  assert.equal(r.eventCount.found, reference.length, `search found ${r.eventCount.found}, dense scan found ${reference.length}`);
+  assert.equal(r.eventCount.conditionalTotal, reference.length);
+  // The count agrees with a dense scan, and that is still not a proof: a
+  // denser reference is corroboration, never completeness.
+  assert.equal(r.completeness.established, false);
   assert.ok(reference.length >= 2, 'the window should contain more than one crossing');
   for (const t of reference) {
-    const hit = r.candidates.find((c) => t >= c.bracketTtDays[0] && t <= c.bracketTtDays[1]);
+    const hit = r.events.find((c) => t >= c.bracketTtDays[0] && t <= c.bracketTtDays[1]);
     assert.ok(hit, `dense-scan root at ${t} is in no returned bracket`);
   }
-  assert.equal(r.unresolved.length, 0);
-  assert.ok(r.isolation.branches.antipodeGaps.length >= 1, 'a 600-day window must have crossed the antipode');
-  assert.ok(r.isolation.branches.antipodeGaps.every((g) => g.excluded));
+  assert.equal(r.accounting.unresolved.length, 0);
+  assert.ok(r.diagnostics.branches.antipodeGaps.length >= 1, 'a 600-day window must have crossed the antipode');
+  assert.ok(r.diagnostics.branches.antipodeGaps.every((g) => g.excluded));
 });
 
 test('an aspect search agrees with a dense scan of the same difference', () => {
@@ -228,8 +233,9 @@ test('an aspect search agrees with a dense scan of the same difference', () => {
   const reference = denseRoots(
     (t) => rt.apparent('Mars', t, OPTS).lon - rt.apparent('Venus', t, OPTS).lon - 90, from, to, 0.25,
   );
-  assert.equal(r.isolation.certified, true);
-  assert.equal(r.isolation.rootCount, reference.length);
+  assert.equal(r.accounting.allIntervalsAccountedFor, true);
+  assert.equal(r.eventCount.found, reference.length);
+  assert.equal(r.completeness.established, false);
 });
 
 test('a certified result never carries an unresolved interval, and vice versa', () => {
@@ -237,7 +243,7 @@ test('a certified result never carries an unresolved interval, and vice versa', 
     kind: 'longitude', body: 'Mars', targetDeg: 40,
     fromTtDays: 0, toTtDays: 200, epsilonDeg: 1 / 3600, options: OPTS,
   });
-  assert.equal(r.isolation.certified === true, r.unresolved.length === 0);
+  assert.equal(r.accounting.allIntervalsAccountedFor === true, r.accounting.unresolved.length === 0);
 });
 
 test('the bracket is the epsilon set: its width scales with epsilon, linearly', () => {
@@ -246,9 +252,9 @@ test('the bracket is the epsilon set: its width scales with epsilon, linearly', 
       kind: 'longitude', body: 'Mars', targetDeg: 40,
       fromTtDays: 0, toTtDays: 200, epsilonDeg: eps, options: OPTS, maxEvaluations: 400000,
     });
-    assert.equal(r.isolation.certified, true, `eps ${eps} should stay certified: this crossing is transversal`);
-    assert.equal(r.candidates.length, 1);
-    return r.candidates[0].bracketWidthSec;
+    assert.equal(r.accounting.allIntervalsAccountedFor, true, `eps ${eps} should stay certified: this crossing is transversal`);
+    assert.equal(r.events.length, 1);
+    return r.events[0].bracketWidthSec;
   };
   const w1 = width(1 / 3600);
   const w2 = width(1);
@@ -265,15 +271,25 @@ test('the six result parts are always present and never merged', () => {
     kind: 'longitude', body: 'Mars', targetDeg: 40,
     fromTtDays: 0, toTtDays: 200, epsilonDeg: 1 / 3600, options: OPTS,
   });
-  for (const k of ['candidates', 'interval', 'isolation', 'robustness', 'unresolved', 'externalUncertainty']) {
+  for (const k of ['events', 'interval', 'execution', 'accounting', 'completeness', 'assumptions', 'eventCount', 'uncertainty', 'diagnostics']) {
     assert.ok(k in r, `missing ${k}`);
   }
-  assert.equal(r.isolation.support, 'empirical');
-  assert.equal(r.isolation.exactArithmetic, false);
-  assert.equal(r.externalUncertainty.bounded, false);
-  assert.equal(r.externalUncertainty.includedInEpsilon, false);
-  assert.equal(r.isolation.declaredBounds[0].proven, false);
-  assert.ok(r.isolation.declaredBounds[0].inflation >= 1);
+  assert.equal(r.contract, 'zodiacs-precision-search/2');
+  // The v1 names must be GONE, not deprecated. A consumer branching on
+  // `certified` would otherwise read undefined; one branching on
+  // `isolation` fails loudly, which is the point of versioning.
+  for (const gone of ['certified', 'complete', 'isolation', 'candidates', 'budget', 'externalUncertainty']) {
+    assert.equal(gone in r, false, `${gone} should not survive into v2`);
+  }
+  assert.equal(r.completeness.support, 'conditional');
+  assert.equal(r.completeness.established, false);
+  assert.ok(r.completeness.conditionalOn.length >= 1);
+  assert.equal(r.eventCount.isExactTotal, false);
+  assert.equal(r.uncertainty.model.bounded, false);
+  assert.equal(r.uncertainty.physical.bounded, false);
+  assert.equal(r.diagnostics.declaredBounds[0].proven, false);
+  assert.ok(r.assumptions.every((x) => x.status === 'unverified'));
+  assert.ok(r.diagnostics.declaredBounds[0].inflation >= 1);
 });
 
 test('epsilon has no default: the allowance must be declared', () => {
@@ -291,8 +307,9 @@ test('the budget bounds the WHOLE search, not just the classifier', () => {
   // What it costs to establish the topology, with the extra robustness
   // probe turned off so the two costs are not confused.
   const bare = run(400000, false);
-  assert.equal(bare.isolation.certified, true);
-  const cost = bare.budget.evaluations;
+  assert.equal(bare.execution.status, 'finished');
+  assert.equal(bare.accounting.allIntervalsAccountedFor, true);
+  const cost = bare.execution.evaluations;
   assert.ok(cost > 1000, `this window should cost a four-figure number of evaluations, cost ${cost}`);
 
   // One short of that refuses, and never spends more than it was allowed.
@@ -301,16 +318,17 @@ test('the budget bounds the WHOLE search, not just the classifier', () => {
   // used to reach only the classifier, and a search could cost six times
   // what the caller allowed while reporting a number inside it.
   const tight = run(cost - 1, false);
-  assert.equal(tight.isolation.certified, false);
-  assert.equal(tight.isolation.rootCount, null);
-  assert.equal(tight.budget.exhausted, true);
-  assert.equal(tight.isolation.reason, 'evaluation-budget-exhausted');
-  assert.ok(tight.budget.evaluations <= cost, `spent ${tight.budget.evaluations} of an allowance of ${cost - 1}`);
+  assert.equal(tight.accounting.allIntervalsAccountedFor, false);
+  assert.equal(tight.eventCount.conditionalTotal, null);
+  assert.equal(tight.execution.status, 'budget-exhausted');
+  assert.equal(tight.execution.finished, false);
+  assert.match(tight.execution.reason, /budget/);
+  assert.ok(tight.execution.evaluations <= cost, `spent ${tight.execution.evaluations} of an allowance of ${cost - 1}`);
 
   const exact = run(cost, false);
-  assert.equal(exact.isolation.certified, true);
-  assert.equal(exact.budget.exhausted, false);
-  assert.equal(exact.budget.evaluations, cost, 'the cost should be deterministic');
+  assert.equal(exact.execution.status, 'finished');
+  assert.equal(exact.accounting.allIntervalsAccountedFor, true);
+  assert.equal(exact.execution.evaluations, cost, 'the cost should be deterministic');
 });
 
 test('a budget that runs out during the robustness probe keeps the topology it established', () => {
@@ -322,21 +340,21 @@ test('a budget that runs out during the robustness probe keeps the topology it e
     kind: 'longitude', body: 'Mars', targetDeg: 40,
     fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS, maxEvaluations: 400000, robustness: false,
   });
-  assert.ok(full.budget.evaluations > bare.budget.evaluations, 'the robustness probe should cost something');
+  assert.ok(full.execution.evaluations > bare.execution.evaluations, 'the robustness probe should cost something');
 
   const cut = rt.search({
     kind: 'longitude', body: 'Mars', targetDeg: 40,
     fromTtDays: 0, toTtDays: 600, epsilonDeg: 1 / 3600, options: OPTS,
-    maxEvaluations: bare.budget.evaluations,
+    maxEvaluations: bare.execution.evaluations,
   });
   // Isolation was established inside the allowance; only the extra probe was
   // cut off. Reporting that as an unresolved topology would be a false
   // negative, and hiding the exhaustion would be worse, so both are said.
-  assert.equal(cut.isolation.certified, true);
-  assert.equal(cut.isolation.rootCount, full.isolation.rootCount);
-  assert.equal(cut.budget.exhausted, true);
-  assert.equal(cut.robustness.ran, false);
-  assert.equal(cut.robustness.why, 'budget-exhausted');
+  assert.equal(cut.accounting.allIntervalsAccountedFor, true);
+  assert.equal(cut.eventCount.conditionalTotal, full.eventCount.conditionalTotal);
+  assert.equal(cut.execution.exhausted, true);
+  assert.equal(cut.diagnostics.robustness.ran, false);
+  assert.equal(cut.diagnostics.robustness.why, 'budget-exhausted');
 });
 
 test('cancellation stops the search and reports how far it got', () => {

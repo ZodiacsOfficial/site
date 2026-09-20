@@ -83,10 +83,11 @@ test('A5: the two loaders agree on a whole search, not just a point', async () =
   const spec = { kind: 'longitude', body: 'Mars', targetDeg: 45, fromTtDays: -15, toTtDays: 15, epsilonDeg: 1 / 3600, options: CORRECTED, maxEvaluations: 200000 };
   const a = resident.search(spec);
   const b = backed.search(spec);
-  assert.equal(a.isolation.verdict, b.isolation.verdict);
-  assert.equal(a.isolation.rootCount, b.isolation.rootCount);
-  assert.equal(a.budget.evaluations, b.budget.evaluations);
-  assert.deepEqual(a.candidates.map((c) => c.ttDays), b.candidates.map((c) => c.ttDays));
+  assert.equal(a.execution.status, b.execution.status);
+  assert.equal(a.completeness.support, b.completeness.support);
+  assert.equal(a.eventCount.found, b.eventCount.found);
+  assert.equal(a.execution.evaluations, b.execution.evaluations);
+  assert.deepEqual(a.events.map((c) => c.ttDays), b.events.map((c) => c.ttDays));
   resident.dispose();
   backed.dispose();
 });
