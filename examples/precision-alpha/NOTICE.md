@@ -42,6 +42,19 @@ they are.
 here is fitted to Swiss output. Swiss appears in the research track only as a
 measuring instrument, and its results are never redistributed.
 
+## A correction a pack header may contradict
+
+Pack headers written by the 2026-09-20 compiler carry
+`dependencies[].licence` = "US Government work, public domain
+(JPL/Caltech-NASA)" for the DE kernel. That claim is wrong, and
+`docs/platform/evidence/precision-2026-09-20/RIGHTS.md` corrects it against
+NAIF's own rules page: SPICE and its kernels are produced by Caltech/JPL
+under contract to NASA, NAIF never says public domain, and what it grants is
+a permission with conditions. **RIGHTS.md governs; the string in a pack
+header does not.** The generator has not been re-run to change it, because
+that would move every recorded pack digest in the frozen evidence; the
+correction is recorded here and in the alpha's report instead.
+
 ## This package
 
 MIT, the same as `@zodiacs/engine`. It is an alpha: it does not replace the

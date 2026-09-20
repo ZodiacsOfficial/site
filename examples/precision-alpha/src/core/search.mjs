@@ -130,7 +130,14 @@ export function searchLongitudeEvent(reducer, spec = {}) {
   const b = Math.round(toTtDays * MS_PER_DAY);
   if (!(b - a > 2 * p.minWidthMs)) fail('unsupported-option', 'the interval is not wider than the subdivision floor');
 
+  // One evaluation of f is one instant, whether that costs one reduction or
+  // two: the budget is a bound on the work the CALLER asked for, and it
+  // covers everything -- the branch scan, the derivative probes and the
+  // classification alike. Passing only the classifier a budget would let a
+  // search cost several times what was allowed and still report a number
+  // inside it, which is how a bound becomes decoration.
   let evaluations = 0;
+  let exhausted = false;
   const checkSignal = () => {
     if (signal && signal.aborted) {
       throw new PrecisionError('cancelled', 'the search was cancelled', { evaluations });
@@ -141,10 +148,16 @@ export function searchLongitudeEvent(reducer, spec = {}) {
   const f = (tMs) => {
     checkSignal();
     evaluations += 1;
+    if (evaluations > p.maxEvaluations) {
+      exhausted = true;
+      throw new PrecisionError('budget-exhausted', `the evaluation budget of ${p.maxEvaluations} was spent`, { evaluations });
+    }
     const primary = lonOf(body, tMs);
     const raw = kind === 'aspect' ? primary - lonOf(other, tMs) - targetDeg : primary - targetDeg;
     return wrap180(raw);
   };
+  /** What is left for the classifier, so its own accounting cannot overrun. */
+  const remaining = () => p.maxEvaluations - evaluations;
 
   // ---- branch splitting ----
   //
@@ -213,7 +226,7 @@ export function searchLongitudeEvent(reducer, spec = {}) {
           maxSamples: p.maxSlopeSamples,
         }),
         a: u, b: v, epsilon: epsilonDeg, minWidth: p.minWidthMs,
-        maxEvaluations: p.maxEvaluations,
+        maxEvaluations: Math.max(16, remaining()),
         boundKind: 'empirical',
         // Never true for an ephemeris-backed function: a Chebyshev sum in
         // double precision is not exact, so a tangency can never be certified.
@@ -227,7 +240,14 @@ export function searchLongitudeEvent(reducer, spec = {}) {
   }
 
   // Each split gap must be SHOWN to hold no root before it is passed over.
-  const gapFindings = branches.gaps.map((g) => checkGapExcluded(f, g, epsilonDeg, p));
+  // This costs evaluations too, so it is inside the budget and inside the
+  // same refusal path as everything else.
+  let gapFindings;
+  try {
+    gapFindings = branches.gaps.map((g) => checkGapExcluded(f, g, epsilonDeg, p));
+  } catch (error) {
+    return failureReport(error, request, { a, b }, p, evaluations, 'gap-exclusion');
+  }
   const merged = mergeVerdicts(verdicts, gapFindings);
 
   const candidates = merged.crossings.map((c) => ({
@@ -252,8 +272,10 @@ export function searchLongitudeEvent(reducer, spec = {}) {
     }
   }
 
+  const base = shell(request, { a, b }, p, evaluations);
   return {
-    ...shell(request, { a, b }, p, evaluations),
+    ...base,
+    budget: { ...base.budget, exhausted },
     candidates,
     isolation: {
       verdict: verdict.verdict,
@@ -478,15 +500,22 @@ function shell(request, { a, b }, p, evaluations) {
 }
 
 function failureReport(error, request, bounds, p, evaluations, stage) {
-  if (error instanceof PrecisionError) throw error;
+  // Cancellation is the caller's own doing and propagates. A spent budget is
+  // an answer -- a refusal -- not an exception, because the caller asked for
+  // a bounded search and got the bound.
+  const budget = error instanceof PrecisionError && error.code === 'budget-exhausted';
+  if (error instanceof PrecisionError && !budget) throw error;
+  const base = shell(request, bounds, p, evaluations);
   return {
-    ...shell(request, bounds, p, evaluations),
+    ...base,
+    budget: { ...base.budget, exhausted: budget },
     isolation: {
       verdict: 'unresolved-interval', outcome: 'refused', certified: false, complete: false,
       rootCount: null, possibleRootCounts: null, boundKind: 'empirical',
       support: 'unknown', exactArithmetic: false,
-      meaning: 'refused',
-      reason: `${stage}-failed`,
+      meaning: 'refused: nothing was established, and nothing below should be read as a count',
+      reason: budget ? 'evaluation-budget-exhausted' : `${stage}-failed`,
+      stage,
     },
   };
 }
