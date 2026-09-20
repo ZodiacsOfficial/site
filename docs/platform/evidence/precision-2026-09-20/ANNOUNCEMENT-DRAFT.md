@@ -1,0 +1,160 @@
+# Announcement draft — NOT POSTED
+
+Written 2026-09-20. **Nothing here has been published, sent, submitted to a
+directory, or posted to any account.** It is a draft for the owner to accept,
+edit or discard. Every number in it is traceable to a file in this evidence
+tree, and the limits are in the announcement rather than in a footnote,
+because the limits are most of what is interesting.
+
+---
+
+## Short version
+
+> **Zodiacs Precision — experimental preview**
+>
+> A second, experimental calculation path, running entirely in your browser
+> on a compact ephemeris pack you compile yourself. It is not what
+> zodiacs.org uses for birth charts, and it does not change them.
+>
+> The part worth looking at is what its event search will and will not
+> claim. Ask it when a body reaches a degree of longitude and it answers in
+> two modes. One searches the apparent place and tells you it accounted for
+> the whole interval **only if three assumptions hold**, and names them. The
+> other searches a geometric quantity and can *prove* it found every
+> crossing, because the bound it uses is true of the stored polynomial
+> rather than measured off a grid.
+>
+> The earlier version of this search would say "certified, 0 events" about
+> an angle that crossed the target 96 times. That is fixed, the
+> counterexample is in the test suite, and the result object can no longer
+> express the claim that was wrong.
+>
+> /developers/precision-preview/ — experimental, noindex, nothing stored,
+> nothing uploaded.
+
+## Longer version
+
+### What it is
+
+An experimental compact-ephemeris runtime that runs in a browser. You give
+it a pack you compiled from a kernel you already have, or you press one
+button and it builds a synthetic fixture in the page so there is something
+to look at. It computes apparent geocentric places for ten bodies, and it
+searches for longitude events.
+
+It is **not** the engine behind zodiacs.org's charts. It does not load on
+any other page. Nothing you enter leaves the tab: no upload, no analytics,
+no storage of any kind, and the worker that does the arithmetic has no way
+to reach the network — which is asserted by a test over the built bundle,
+not just intended.
+
+### What changed, and why it is the point
+
+The alpha's search could return `certified: true` and `complete: true` on
+evidence that was a grid measurement multiplied by a safety factor. Both
+booleans are gone. A result now reports these as separate things:
+
+- how many events were found;
+- whether the run **finished**;
+- whether every part of the interval was **accounted for**;
+- whether completeness was **established**, and on what support —
+  `none`, `conditional`, or `proven`;
+- every **unverified assumption**, by name, with what would settle it;
+- which stretches of the interval were **not decided**.
+
+An exact total exists only where the support is `proven`. That is enforced
+by the shape of the object, not by a sentence in the documentation: build a
+result claiming otherwise and the builder throws.
+
+### The counterexample
+
+An angle that makes a whole number of turns between every pair of samples
+looks, to any grid that aliases the same way, exactly like an angle that
+did not move. A finer grid that aliases the same way agrees with it.
+
+Given an angle completing 96 turns across the 96 intervals of the default
+sampling grid, the alpha answered **no crossing, certified, 0**. At 95
+turns it answered **crossing, certified, 1**. Both are wrong, both were
+reproduced before anything was changed, and both are now permanent tests.
+
+No amount of sampling can detect this. So the fast-rate assumption is now
+declared by the caller, checked against the step, and reported on the
+result as unverified — and the second mode avoids the problem entirely by
+not sampling for its bounds.
+
+### The proven mode
+
+For one narrowly defined operation — geometric ecliptic longitude in the
+fixed J2000 frame reaching a given value — completeness can be established
+rather than assumed. The pack stores Chebyshev series; `Σ|c_k|` is a true
+bound on a Chebyshev sum because every `|T_k| ≤ 1`; the same recurrence
+gives true bounds on the derivatives; and those give an exclusion test and
+a monotonicity test that are statements about the stored polynomial, not
+about a grid.
+
+What that buys, and what it does not:
+
+- It proves the list is complete **for the function the pack defines**. It
+  says nothing about how close that function is to the sky.
+- It is a **different quantity** from the apparent place: no light-time, no
+  aberration, no deflection, no precession or nutation. For the Sun the two
+  crossings differ by about eight hours. Read one for the other and you
+  will be wrong by that much.
+
+### What was measured
+
+Scoring rules, cases and thresholds were written down and committed
+*before* the measurement harness existed. On two development regressions
+and ten holdout cases generated by an arithmetic rule rather than chosen:
+zero missed events, zero extra events, zero unresolved cases, both modes.
+Twenty structural runs — interval partitioning, target shifts of a whole
+and two whole turns, a window shift, three sampling settings each, budget
+exhaustion, cancellation, recovery, bad input — all pass.
+
+The reference is a dense independent scan. That is corroboration between
+two methods, not a proof, and it stays corroboration however many cases
+agree. Where the validated mode says it proved something, the proof is its
+own.
+
+Median latency on one machine, one run, on a 500-day window: 12.6 ms
+apparent, 0.7 ms geometric. Different quantities, so not a like-for-like
+speedup.
+
+### What is not claimed
+
+- **No comparison with any other ephemeris library is offered here**, and
+  no claim that this is more accurate than one.
+- **No independent certification.** The reviews of this work were done by
+  AI, and they were AI reviews. No third party has audited it.
+- **No external adoption.** Nobody is using this.
+- **No Safari or iOS coverage.** Chromium 141 and Firefox 151 pass a scoped
+  browser test; no WebKit build was available and none was run. An exact
+  test handoff exists for whoever has a Mac.
+- **No data is distributed.** The redistribution terms for a coefficient
+  pack derived from the kernel are unresolved, so no pack is shipped and
+  none is committed. You compile your own, from a kernel you fetch
+  yourself, with a compiler included in the package.
+- It is an **experiment**, version `0.1.0-preview.1`, and the interfaces
+  will change.
+
+### Where it is
+
+- The preview: `/developers/precision-preview/`
+- The package: `@zodiacs/precision-alpha` `0.1.0-preview.1`, in this
+  repository under `examples/precision-alpha/`, not published to a
+  registry.
+
+---
+
+## Notes for the owner, not part of the announcement
+
+- Nothing above has been posted. There is no scheduled post and no draft
+  in any external tool.
+- If the Safari handoff comes back, the browser paragraph should be
+  updated before this goes anywhere; as written it is accurate today.
+- The "96 turns" example is the strongest thing here and it is an
+  admission. That is deliberate. An announcement that leads with a fixed
+  defect is more credible than one that leads with a proof, and the proof
+  is the second thing a reader meets either way.
+- If a shorter form is wanted for a single post, the short version above
+  stands alone and contains no claim the long version does not support.
