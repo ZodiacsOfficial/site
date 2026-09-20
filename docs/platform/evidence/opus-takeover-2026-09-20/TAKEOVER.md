@@ -56,3 +56,47 @@ The locale-catalogue correction and the historical-report repair are Astra's
 (Codex) work in #531, carrying its own evidence and its own scoped AI review.
 Nothing in that work was redone here. Work from this session is attributed to
 this session and dated 2026-09-20.
+
+## Session handoff — state at the end of this working block
+
+Branch `claude/eager-ramanujan-razak3`, restarted from `main` `6f91f819`,
+head `97956dde`, pushed. Working tree clean. A detached worktree at
+`/home/user/research` was used to keep research off the launch branch; nothing
+depends on it.
+
+Done and verified:
+
+- takeover table above, every row checked by running something;
+- three false release-state claims corrected on the live surface
+  (`/developers/support/` review hold, the `npm view` command, the hub card's
+  engine version), plus the stale `STATUS.md` rc.4;
+- `docs/platform/evidence/swiss-benchmark/` — pinned configuration, matched
+  conventions, baseline distribution, prototype, holdout, resource cost,
+  licensing posture, adoption gates;
+- `docs/platform/evidence/opus-takeover-2026-09-20/PUBLICATION.md` — the owner
+  action card, including the `publishConfig` hazard that would otherwise put a
+  release candidate on `latest`.
+
+Not done, in the order worth doing:
+
+1. **No engine product page.** `@zodiacs/engine` still has no route of its own;
+   it is a section inside the support matrix, and `/sdk/engine/` is a `noindex`
+   rc.1 TypeDoc that the package's own `homepage` field points at. This is the
+   largest remaining launch gap.
+2. **One consolidated accuracy-and-support report** separating positions,
+   angles/houses, local time, event search and runtime support. The evidence
+   exists — `docs/engine-validation/` and the new benchmark — but is scattered
+   across two trees and the strongest part is invisible on the site.
+3. **Discoverability fixes**: `llms.txt` mentions neither the engine nor the
+   MCP adapter; developer `lastmod` dates lag their content; `/developers/` is
+   absent from desktop navigation above 920px.
+4. **Launch copy and a recorded demonstration** — drafted, never posted.
+
+Unresolved and not this session's to settle: whether the nine held SDK PRs
+should merge so the engine source reaches a default branch, and the JPL
+redistribution question in the benchmark's `LICENSING.md`.
+
+Untouched on purpose: the shared-sky connector and its configuration, token and
+Registry identities, Astrofolio economics, production chart values, the default
+browser bundle, and every unrelated production feature. No outreach was sent,
+nothing was purchased, no post was published.
