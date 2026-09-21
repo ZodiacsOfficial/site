@@ -1,6 +1,6 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-21T00:08:45.187Z",
+  "generatedAt": "2026-09-21T00:14:07.219Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
@@ -204,6 +204,26 @@
         "astrology"
       ],
       "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-14-observation-168h",
+      "slug": "market-check-2026-09-14-observation-168h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T00:14:07.219Z",
+      "visibleAt": "2026-09-21T00:14:07.219Z",
+      "title": "Gemini 7-day observation update",
+      "summary": "7-day follow-up using the first qualifying archived snapshot (168.08 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-14-observation-168h/",
+      "signs": [
+        "gemini"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-20-observation-24h",
