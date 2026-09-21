@@ -114,7 +114,7 @@ export const OF_DATE_CONTRACT = Object.freeze({
   origin: 'geocentric',
   timeScale: 'TDB seconds past J2000 in and out. The FRAME needs TT, and the conversion is a stated model: see timeModel. The two existing modes need no conversion because their frame is fixed.',
   timeModel: TIME_MODEL,
-  models: 'IAU 2006 precession with frame bias (Fukushima-Williams, eraPfw06 angles); IAU 2000B nutation (77 luni-solar terms, McCarthy & Luzum 2003) with the fixed planetary-bias offsets, adjusted to P03 per Wallace & Capitaine 2006. A reference used to check this must use the SAME pair: 2000B against a 2000A reference differs by a model, not by a defect.',
+  models: 'IAU 2006 precession with frame bias (Fukushima-Williams, the eraPfw06 angles); IAU 2000B nutation (77 luni-solar terms, McCarthy & Luzum 2003, carrying the Luzum 2001 "rigorous" planetary-bias pair -0.000135"/+0.000388"), adjusted to P03 per Wallace & Capitaine 2006. THAT PAIRING IS NOT ONE ERFA OR SOFA SHIPS: their IAU 2006 chain is 2000A-based (eraNut06a, eraPnm06a) and there is no eraNut06b or eraPnm06b in the library at all. It is this repository\'s own released choice, reproduced here so the experimental chain and the released reducer are the same model rather than two. The P03 adjustment is applied for the same reason, and on 2000B it is formal rather than material: measured at most 16.5 microarcsec in dpsi and 11.9 in deps over 1995-2050, against the 0.0027" by which 2000B itself differs from 2000A. A reference used to check this must use the SAME pair: a 2000A reference differs from it by a MODEL, not by a defect.',
   evaluation: 'Trigonometry from src/core/trig.mjs, a Cody-Waite reduction and Taylor polynomial using only +, - and *, with a proven absolute error bound of 4e-15 measured at 1.5e-16 against a 60-digit reference. Math.sin is not used: ECMAScript does not bound its error, so an enclosure built on it would not be a bound, and it does not promise the same bits in two engines.',
   c: C_KM_S,
   applied: Object.freeze([
@@ -127,9 +127,11 @@ export const OF_DATE_CONTRACT = Object.freeze({
     'the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond',
     'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
     'topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre',
-    'the difference between IAU 2000B and IAU 2000A nutation: at most about 0.001 arcsec on this interval',
+    'the difference between IAU 2000B and IAU 2000A nutation. Measured on this repository\'s own corpus that is at most 0.0027" of ecliptic longitude (n = 15,010 body-epochs, 1850-2150) and 0.0035" in the nutation in longitude itself (n = 1,964 epochs, same span): docs/platform/evidence/precision-2026-09-20/numerics/RESULTS.md, sections 1 and 2. ERFA nut00b.c quotes 1 milliarcsec, but that is a POLE accuracy over 1900-2100, not a longitude-component difference, and the two numbers are not interchangeable',
     'any correction beyond the three applied: this is NOT an apparent place and must not be read as one',
   ]),
+  sources: 'IAU SOFA Issue 2023-10-11 and its ERFA equivalent, liberfa v2.0.1 (tagged 2023-10-13). The 2000B series is from src/nut00b.c, the aberration expression from src/ab.c, and the test vectors in test/tier-a/frame-of-date.nodetest.mjs are copied from src/t_erfa_c.c at that tag, at the tolerances ERFA itself declares.',
+  relationToErfa: 'The MEAN rung of this frame IS eraEcm06\'s frame. eraEcm06 is R1(eraObl06) . eraPmat06, which by the obliquity cancellation equals R3(-psib) R1(phib) R3(gamb) -- this module\'s mean rung -- and the published t_ecm06 3x3 matrix is reproduced to 1e-14 and lies inside the interval enclosure everywhere. The TRUE-equinox rung, the one THIS mode uses, is NOT any ERFA routine: eraEcm06, eraEceq06 and eraEqec06 are all mean-equinox, and ERFA ships no true-equinox ecliptic matrix. That rung is checked by construction, by its 17-arcsec separation from the mean rung, and against the released reducer -- not against a published matrix, because none exists to check it against.',
   comparableTo: 'the frame of an apparent place, with the apparent place\'s other corrections still missing. Against an almanac the remaining difference is dominated by gravitational deflection (up to about 1.7 arcsec near the Sun, under 0.01 arcsec away from it) and by whatever the almanac does topocentrically. Against SPICE, no built-in aberration correction matches this profile.',
   bodies: RETARDED_CONTRACT.bodies,
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
@@ -165,7 +167,7 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
-function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false) {
+function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
@@ -359,10 +361,11 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         // dt/dtau belongs on the R' term and nowhere else. Rotating P'
         // alone would be the derivative of a different function, and
         // freezing R at the cell midpoint would not be an of-date search.
-        const clock = ttCenturiesInterval({ lo: t0, hi: t1 });
         let frame;
+        let clock;
         try {
-          frame = frameMatrixInterval(clock.t);
+          frame = frameProvider({ lo: t0, hi: t1 });
+          clock = frame.clock;
         } catch (error) {
           if (error instanceof PrecisionError) return { ok: false, retry: true, why: error.message };
           throw error;
@@ -385,7 +388,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
           ...common,
           observerSpeedOverC: ab.speed,
           frameAngles: frame.angles,
-          tdbMinusTtSec: clock.tdbMinusTtSec,
+          tdbMinusTtSec: clock ? clock.tdbMinusTtSec : null,
           f: proj(dF, Q),
           g: proj(dG, Q),
           fDotEnclosure: proj(dF, QDot),
@@ -447,7 +450,10 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
  * @param {{aberration: boolean, mode: string, contract: object, kind: string}} shape
  */
 function runSearch(eph, spec, shape) {
-  const { aberration, ofDate = false, mode, contract, kind } = shape;
+  const {
+    aberration, ofDate = false, mode, contract, kind,
+    frameProvider = iauFrameProvider,
+  } = shape;
   const { body, targetDeg, fromTdbSec, toTdbSec, signal = null, ...tuning } = spec;
   for (const k of Object.keys(tuning)) {
     if (!(k in RETARDED_DEFAULTS)) fail('unsupported-option', `unknown retarded-search option ${k}`);
@@ -504,7 +510,7 @@ function runSearch(eph, spec, shape) {
   };
 
   const at = (t) => {
-    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate);
+    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate, frameProvider);
     noteObserverSpeed(c);
     return c;
   };
@@ -551,7 +557,7 @@ function runSearch(eph, spec, shape) {
       // Taking the larger of the two actual distances is exact and free.
       const w = Math.max(hi - m, m - lo);
 
-      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate);
+      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate, frameProvider);
       if (!cell.ok) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
@@ -564,7 +570,7 @@ function runSearch(eph, spec, shape) {
       widestTauSec = Math.max(widestTauSec, cell.tauInterval.hi - cell.tauInterval.lo);
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
       noteObserverSpeed(cell);
-      if (cell.frameAngles) {
+      if (cell.frameAngles && cell.frameAngles.dpsi) {
         widestFrameSpan = Math.max(widestFrameSpan, cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo);
       }
 
@@ -627,7 +633,7 @@ function runSearch(eph, spec, shape) {
           if (s === sa) { a2 = mm; sa = s; } else b2 = mm;
         }
         // The half-plane, with its own enclosure over the bracket.
-        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate);
+        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider);
         noteObserverSpeed(br);
         if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
         if (br.g.lo <= 0) {
@@ -822,6 +828,44 @@ export function searchAberratedLongitude(eph, spec = {}) {
     mode: 'validated-retarded-aberrated',
     contract: ABERRATED_CONTRACT,
     kind: 'retarded-aberrated-longitude',
+  });
+}
+
+/**
+ * The frame this mode means: the IAU chain over the cell's own TDB
+ * interval, with the time-scale conversion it needs.
+ *
+ * A FUNCTION rather than a hard call, because seven of the cases
+ * `OF-DATE-PREREGISTRATION.md` section 6 declares are about what the
+ * search does with a frame whose behaviour is known in closed form -- an
+ * identity, a constant rotation, one turning at a fixed rate, one
+ * oscillating. Those cannot be written against the real IAU frame, whose
+ * truth is exactly as hard to establish as the thing under test.
+ */
+export function iauFrameProvider(tdbInterval) {
+  const clock = ttCenturiesInterval(tdbInterval);
+  const { R, Rdot, angles } = frameMatrixInterval(clock.t);
+  return { R, Rdot, angles, clock };
+}
+
+/**
+ * The of-date search with a frame supplied by the caller.
+ *
+ * Deliberately NOT re-exported from `experimental.mjs`: a consumer that
+ * could pass its own rotation could make the mode report a longitude in
+ * a frame the result object then misdescribes. This exists for the
+ * synthetic cases and for tests, and it is the same code path the real
+ * mode takes -- injecting the frame is the only difference.
+ */
+export function searchOfDateLongitudeWithFrame(eph, spec, frameProvider) {
+  if (typeof frameProvider !== 'function') fail('unsupported-option', 'a frame provider must be a function');
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    frameProvider,
+    mode: 'validated-retarded-aberrated-of-date',
+    contract: OF_DATE_CONTRACT,
+    kind: 'retarded-aberrated-of-date-longitude',
   });
 }
 
