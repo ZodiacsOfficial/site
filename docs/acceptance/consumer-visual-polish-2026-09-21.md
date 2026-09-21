@@ -31,6 +31,11 @@ top, clear of navigation. Compatibility fields align across both columns at
 navigating to `/ask/`. Optional chart settings expand and update normally.
 At 320 pixels, the horoscope sign picker uses two columns; every label fits
 inside its button. Wider layouts retain three or six columns.
+The compatibility suggestion also retains a zero-minimum grid track, so long
+saved-chart names truncate within the form instead of widening the page. The
+hostile-length browser fixture was reproduced at 565 pixels on a 320-pixel
+viewport; the corrected form stays inside the viewport and its tablet columns
+remain aligned.
 
 ## Durable evidence
 
@@ -40,10 +45,10 @@ visual baselines cover five routes at 390 and 1440 pixels and reduced motion.
 Only reviewed captures are committed. Pixel tolerances and acceptance rules
 remain unchanged.
 
-- Final source reviewed: `4e03bcf96a3812d751fd6ddca9ce46e7662fcc4c`.
+- Final source reviewed: `0815172195fa1f0f5778b84f3aaa70b91dabc06e`.
 - Comparison: https://github.com/ZodiacsOfficial/site/actions/runs/35588947480
 - Final comparison, all 15 cases pass:
-  https://github.com/ZodiacsOfficial/site/actions/runs/35591532359
+  https://github.com/ZodiacsOfficial/site/actions/runs/35594290554
 - Pull request: https://github.com/ZodiacsOfficial/site/pull/547
 
 - Reviewed candidates: https://github.com/ZodiacsOfficial/site/actions/runs/35589647454
@@ -53,3 +58,7 @@ remain unchanged.
 - Production build, bundle budgets, and type checks pass. The full 5,549-test
   suite is covered by the 5,548 passing source tests and the refreshed
   screenshot-receipt validation.
+
+The capture runs above were stopped after successful receipt and visual
+comparison collection. The separate Site Check runs the complete browser and
+performance gates before release; capture-only completion is not a substitute.
