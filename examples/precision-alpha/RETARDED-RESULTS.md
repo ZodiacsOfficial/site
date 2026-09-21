@@ -190,15 +190,27 @@ whole second of light-time error hides under a microarcsecond.
 | relative, max | **1.44 × 10⁻⁸** |
 | relative, median | 3.13 × 10⁻⁹ |
 
-Swiss's τ falls inside the operation's proven τ interval on 27 of 43
-events, and **that is the expected result, not a failure.** The interval
-is a proven enclosure of the light-time *for the function this pack
-defines* — for Pluto it is 2 × 10⁻⁶ s wide, eighteen times tighter than
-the pack-versus-Swiss source difference. It is not an uncertainty budget
-covering two different source ephemerides, and widening it until it
-swallowed Swiss would make it a weaker statement, not a truer one. The
-result object already separates the two: `uncertainty.numerical` versus
-`EXTERNAL_UNCERTAINTY`.
+Swiss's τ falls inside the operation's proven τ interval on **27 of 43**
+events. That is the expected result rather than a failure, but "expected"
+is an excuse unless it is measured, so it was: for every event, take the
+ratio of the pack-versus-Swiss difference to the interval's half-width.
+If the interval simply being tighter than the source difference is the
+*whole* explanation, that ratio should exceed 1 exactly when Swiss is
+outside.
+
+| | count | ratio \|τ_mid − τ_Swiss\| / half-width |
+| --- | --- | --- |
+| Swiss inside the interval | 27 | at most **0.661** |
+| Swiss outside | 16 | at least **1.17**, up to 34.3 |
+| unexplained by that ratio | **0** | — |
+
+Clean separation with nothing left over. The interval is a proven
+enclosure of the light-time *for the function this pack defines* — for
+Pluto 2 × 10⁻⁶ s wide, eighteen times tighter than the pack-versus-Swiss
+source difference. It is not an uncertainty budget covering two different
+source ephemerides, and widening it until it swallowed Swiss would make
+it a weaker statement, not a truer one. The result object already
+separates the two: `uncertainty.numerical` versus `EXTERNAL_UNCERTAINTY`.
 
 ### 4b · Where the residual longitude gap comes from
 
