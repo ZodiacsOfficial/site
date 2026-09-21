@@ -1,14 +1,21 @@
 /**
- * Drive the developer preview in real browsers, against the built site.
+ * Drive the developer preview in real browsers.
  *
  *   node scripts/drive-precision-preview.mjs [--pack /path/to/pack.zeph]
  *                                            [--port 8799] [--out <file>]
  *                                            [--browsers chromium,firefox,webkit]
+ *                                            [--base https://example.org]
  *
- * Serves `dist/` locally and exercises the route. `--pack` is optional: the
- * synthetic fixture path is the one a person with no data actually gets,
- * and it is driven either way. When a pack is given, the broken-pack cases
- * are derived from it into a temporary directory and deleted afterwards.
+ * By default it serves `dist/` locally and exercises the route there.
+ * `--base` points the same run at an already-deployed origin instead, so
+ * the release check and the pre-merge check are the same script rather
+ * than a committed one and an improvised one. Nothing is served locally
+ * in that mode, and the route is whatever that origin returns.
+ *
+ * `--pack` is optional: the synthetic fixture path is the one a person
+ * with no data actually gets, and it is driven either way. When a pack is
+ * given, the broken-pack cases are derived from it into a temporary
+ * directory and deleted afterwards.
  *
  * EVERY request the page makes is recorded, same-origin included. "No
  * off-origin traffic" is not the same as "nothing leaked": an analytics
@@ -30,7 +37,9 @@ const PORT = Number(args.get('port') ?? 8799);
 const OUT = args.get('out') ?? 'docs/platform/evidence/precision-2026-09-20/raw/preview-browser-run.json';
 const WANT = (args.get('browsers') ?? 'chromium,firefox,webkit').split(',');
 const ROOT = new URL('../dist/', import.meta.url).pathname;
-const BASE = `http://127.0.0.1:${PORT}`;
+/** An already-deployed origin to drive instead of the local `dist/`. */
+const REMOTE = args.get('base') ? args.get('base').replace(/\/$/, '') : null;
+const BASE = REMOTE ?? `http://127.0.0.1:${PORT}`;
 const URL_ = `${BASE}/developers/precision-preview/`;
 
 /**
@@ -62,7 +71,10 @@ function resolveExecutable(name) {
 }
 const TYPES = { '.html': 'text/html', '.mjs': 'text/javascript', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.webp': 'image/webp', '.png': 'image/png', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.xml': 'application/xml', '.txt': 'text/plain' };
 
-const server = createServer(async (req, res) => {
+// Only when serving locally. Against a deployed origin there is nothing to
+// serve, and standing up a server that answers nothing would make the
+// request log ambiguous about where a response came from.
+const server = REMOTE ? null : createServer(async (req, res) => {
   const rel = normalize(decodeURIComponent(req.url.split('?')[0])).replace(/^(\.\.[/\\])+/, '');
   let file = join(ROOT, rel);
   if (rel.endsWith('/')) file = join(file, 'index.html');
@@ -73,7 +85,8 @@ const server = createServer(async (req, res) => {
     res.writeHead(404).end('not found');
   }
 });
-await new Promise((r) => server.listen(PORT, '127.0.0.1', r));
+if (server) await new Promise((r) => server.listen(PORT, '127.0.0.1', r));
+else console.log(`driving the deployed origin ${REMOTE}; nothing is served locally`);
 
 // ---------------------------------------------------------------- fixtures
 const dir = mkdtempSync(join(tmpdir(), 'preview-fixtures-'));
@@ -89,7 +102,7 @@ if (PACK && existsSync(PACK)) {
   put('not-a-pack.zeph', new TextEncoder().encode('this is a text file and not an ephemeris pack, long enough to be read'));
 }
 
-const report = { url: URL_, pack: PACK ? { bytes: readFileSync(PACK).length } : null, browsers: {} };
+const report = { url: URL_, target: REMOTE ? 'deployed' : 'local dist/', pack: PACK ? { bytes: readFileSync(PACK).length } : null, browsers: {} };
 
 for (const name of WANT) {
   const launcher = LAUNCHERS[name];
@@ -112,7 +125,7 @@ for (const name of WANT) {
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, `${JSON.stringify(report, null, 2)}\n`);
 rmSync(dir, { recursive: true, force: true });
-server.close();
+server?.close();
 console.log(`\nwrote ${OUT}`);
 const ok = Object.values(report.browsers).some((b) => b.ran) && Object.values(report.browsers).every((b) => !b.ran || b.verdict === 'pass');
 process.exit(ok ? 0 : 1);

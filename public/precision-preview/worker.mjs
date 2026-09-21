@@ -424,6 +424,8 @@ var Ephemeris = class {
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
+    while (index > 0 && b.initEt + index * b.intervalSec > et) index -= 1;
+    while (index < b.nrec - 1 && b.initEt + (index + 1) * b.intervalSec <= et) index += 1;
     this.#decode(b, index);
     const mid = b.initEt + (index + 0.5) * b.intervalSec;
     const radius = b.intervalSec / 2;
@@ -472,6 +474,8 @@ var Ephemeris = class {
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
+    while (index > 0 && b.initEt + index * b.intervalSec > et) index -= 1;
+    while (index < b.nrec - 1 && b.initEt + (index + 1) * b.intervalSec <= et) index += 1;
     this.#decode(b, index);
     const radius = b.intervalSec / 2;
     const mid = b.initEt + (index + 0.5) * b.intervalSec;
@@ -2302,7 +2306,8 @@ var COS_E = Math.cos(EPS0_ARCSEC / 3600 * DEG);
 var SIN_E = Math.sin(EPS0_ARCSEC / 3600 * DEG);
 var GEOMETRIC_CONTRACT = Object.freeze({
   operation: "geometric ecliptic longitude of one body, in the fixed J2000 mean ecliptic frame, reaching a given value",
-  frame: "j2000-mean-ecliptic",
+  frame: "ecliptic-of-the-icrs-equator",
+  frameNote: "The ICRS equator rotated by the IAU 2006 mean obliquity at J2000 (84381.406 arcsec). This is NOT the J2000 mean equinox: the IAU 2006 ICRS frame bias, a fixed rotation of 23.1 mas, is not applied. Measured against Swiss Ephemeris in J2000, the difference is a rotation of |omega| = 23.111 mas fitted at 99.9 per cent of variance, matching the published bias (xi0 -16.617, eta0 -6.819, dalpha0 -14.6 mas) to 0.16 per cent. It projects onto ecliptic longitude as about 7.7 mas on average. The label used to read j2000-mean-ecliptic, which overstated it.",
   geometric: true,
   origin: "geocentric",
   notApplied: Object.freeze([
@@ -2349,8 +2354,10 @@ function pieceEdges(eph, names, a, b) {
   const edges = /* @__PURE__ */ new Set([a, b]);
   for (const name of names) {
     const s = eph.bodies.get(name);
-    const first = Math.floor((a - s.initEt) / s.intervalSec);
-    const last = Math.floor((b - s.initEt) / s.intervalSec);
+    let first = Math.floor((a - s.initEt) / s.intervalSec);
+    while (first > 0 && s.initEt + first * s.intervalSec > a) first -= 1;
+    let last = Math.floor((b - s.initEt) / s.intervalSec);
+    while (last < s.nrec - 1 && s.initEt + (last + 1) * s.intervalSec <= b) last += 1;
     for (let i = Math.max(0, first); i <= Math.min(s.nrec - 1, last + 1); i += 1) {
       const e = s.initEt + i * s.intervalSec;
       if (e > a && e < b) edges.add(e);
@@ -2429,8 +2436,8 @@ function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
     const [lo, hi] = stack.pop();
     cells += 1;
     if (cells > p.maxCells) fail("budget-exhausted", `the validated search passed ${p.maxCells} cells`);
-    const w = (hi - lo) / 2;
     const m = (lo + hi) / 2;
+    const w = Math.max(hi - m, m - lo);
     spend();
     const fm = poly.value(m).f;
     if (Math.abs(fm) > M1 * w + RHO) continue;
@@ -2547,7 +2554,8 @@ function searchGeometricLongitude(eph, spec = {}) {
       const u = edges[i - 1];
       const v = edges[i];
       if (!(v > u)) continue;
-      const poly = piecePolynomial(eph, weights, lambda, (u + v) / 2);
+      const pieceMid = (u + v) / 2;
+      const poly = piecePolynomial(eph, weights, lambda, pieceMid > u && pieceMid < v ? pieceMid : u);
       worstFirst = Math.max(worstFirst, poly.boundsF.first);
       worstSecond = Math.max(worstSecond, poly.boundsF.second);
       worstRoundoff = Math.max(worstRoundoff, poly.boundsF.roundoff);
@@ -2556,7 +2564,7 @@ function searchGeometricLongitude(eph, spec = {}) {
       for (const [lo, hi] of got.open) unresolved.push({ fromTtDays: lo / DAY2, toTtDays: hi / DAY2, why: "neither the exclusion nor the monotone test closed this cell at the subdivision floor" });
       for (const r of got.roots) {
         const m = (r.lo + r.hi) / 2;
-        const w = Math.max((r.hi - r.lo) / 2, 0);
+        const w = Math.max(r.hi - m, m - r.lo, 0);
         spend();
         const { g } = poly.value(m);
         const gFloor = Math.abs(g) - poly.boundsG.first * w - poly.boundsG.roundoff;

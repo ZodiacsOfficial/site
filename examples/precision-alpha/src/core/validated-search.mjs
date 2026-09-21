@@ -139,8 +139,13 @@ function pieceEdges(eph, names, a, b) {
   const edges = new Set([a, b]);
   for (const name of names) {
     const s = eph.bodies.get(name);
-    const first = Math.floor((a - s.initEt) / s.intervalSec);
-    const last = Math.floor((b - s.initEt) / s.intervalSec);
+    // Rounded subtraction again: an endpoint a hair below a record
+    // boundary floors to the next record, leaving the sliver below the
+    // boundary walked by nothing. Step back onto the record that holds it.
+    let first = Math.floor((a - s.initEt) / s.intervalSec);
+    while (first > 0 && s.initEt + first * s.intervalSec > a) first -= 1;
+    let last = Math.floor((b - s.initEt) / s.intervalSec);
+    while (last < s.nrec - 1 && s.initEt + (last + 1) * s.intervalSec <= b) last += 1;
     for (let i = Math.max(0, first); i <= Math.min(s.nrec - 1, last + 1); i += 1) {
       const e = s.initEt + i * s.intervalSec;
       if (e > a && e < b) edges.add(e);
@@ -252,8 +257,19 @@ function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
     const [lo, hi] = stack.pop();
     cells += 1;
     if (cells > p.maxCells) fail('budget-exhausted', `the validated search passed ${p.maxCells} cells`);
-    const w = (hi - lo) / 2;
     const m = (lo + hi) / 2;
+    // NOT (hi - lo) / 2. `hi - lo` is exact by Sterbenz but `lo + hi`
+    // rounds, so the computed midpoint sits off-centre by up to ulp(m)/2
+    // and the true lever arm max|x - m| over [lo, hi] exceeds (hi - lo)/2
+    // by that much -- a third of the half-width on a three-ulp cell. The
+    // exclusion test below would then reason over a shorter interval than
+    // the cell and exclude a root that exists. Exhibited in the sibling
+    // retarded mode, which had the identical expression: a cell returning
+    // `proven, isExactTotal, 0 events` over an interval whose crossing the
+    // same solver brackets when the window moves a millisecond. Taking the
+    // larger of the two actual distances is exact, free, and equal to the
+    // old expression whenever the midpoint is centred.
+    const w = Math.max(hi - m, m - lo);
     spend();
     const fm = poly.value(m).f;
 
@@ -421,7 +437,15 @@ export function searchGeometricLongitude(eph, spec = {}) {
       const u = edges[i - 1];
       const v = edges[i];
       if (!(v > u)) continue;
-      const poly = piecePolynomial(eph, weights, lambda, (u + v) / 2);
+      // A piece only an ulp wide has no representable interior point, and
+      // `(u + v) / 2` then rounds onto one of the ends. Landing on `v` --
+      // which is a record boundary whenever the extra edge came from an
+      // endpoint sitting just below one -- resolves the series to the
+      // NEXT record, whose polynomial disagrees with this piece's at the
+      // shared boundary by far more than any allowance here. `u` always
+      // belongs to this piece's own record.
+      const pieceMid = (u + v) / 2;
+      const poly = piecePolynomial(eph, weights, lambda, pieceMid > u && pieceMid < v ? pieceMid : u);
       worstFirst = Math.max(worstFirst, poly.boundsF.first);
       worstSecond = Math.max(worstSecond, poly.boundsF.second);
       worstRoundoff = Math.max(worstRoundoff, poly.boundsF.roundoff);
@@ -432,7 +456,7 @@ export function searchGeometricLongitude(eph, spec = {}) {
         // The half-plane condition, checked with its OWN true bound so the
         // opposite direction is excluded rather than assumed away.
         const m = (r.lo + r.hi) / 2;
-        const w = Math.max((r.hi - r.lo) / 2, 0);
+        const w = Math.max(r.hi - m, m - r.lo, 0);   // see the note on the cell lever arm above
         spend();
         const { g } = poly.value(m);
         const gFloor = Math.abs(g) - poly.boundsG.first * w - poly.boundsG.roundoff;
