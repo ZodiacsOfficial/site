@@ -45,10 +45,10 @@ visual baselines cover five routes at 390 and 1440 pixels and reduced motion.
 Only reviewed captures are committed. Pixel tolerances and acceptance rules
 remain unchanged.
 
-- Final source reviewed: `0815172195fa1f0f5778b84f3aaa70b91dabc06e`.
+- Final source reviewed: `b22770467a9b4d4845fda190e8b735e3e1971359`.
 - Comparison: https://github.com/ZodiacsOfficial/site/actions/runs/35588947480
 - Final comparison, all 15 cases pass:
-  https://github.com/ZodiacsOfficial/site/actions/runs/35594290554
+  https://github.com/ZodiacsOfficial/site/actions/runs/35603464670
 - Pull request: https://github.com/ZodiacsOfficial/site/pull/547
 
 - Reviewed candidates: https://github.com/ZodiacsOfficial/site/actions/runs/35589647454
@@ -67,8 +67,9 @@ performance gates before release; capture-only completion is not a substitute.
 
 Main advanced to `35532f17dd5b286484c041844590bc95e7d030a6` while the
 release checks ran. Its developer preview and documentation changes are
-preserved. Conflicts were limited to screenshot evidence; fresh captures of
-the combined source are required before release.
+preserved. Conflicts were limited to screenshot evidence. Fresh captures of the
+combined source pass receipt validation and all 15 visual comparisons; the
+complete Site Check remains the release gate.
 
 The compact sign picker now uses the existing WebP derivatives (18,844 bytes
 in total, versus 61,126 bytes for AVIF) at low fetch priority. Layout and icon
