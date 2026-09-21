@@ -119,6 +119,47 @@ for (const c of CASES) {
    * checked against what the two REFERENCES predict for the same pair.
    */
   let ladder = null;
+  /**
+   * When the rungs disagree about HOW MANY crossings exist, the ladder is
+   * undefined and the disagreement has to be attributed instead.
+   *
+   * It is attributed by the two INDEPENDENT references: if the of-date
+   * reference and the fixed-frame reference show the same count
+   * difference as their solvers do, the difference is the frame moving a
+   * crossing across the window edge, not a solver losing one. Recorded
+   * per case, with the longitude ranges that make it checkable by hand.
+   */
+  const frameSeparated = ofDate.events.length !== aberrated.events.length
+    ? {
+      ofDateRoots: ofDate.events.length,
+      aberratedRoots: aberrated.events.length,
+      ofDateReferenceRoots: refOfd.roots.length,
+      aberratedReferenceRoots: refAb.roots.length,
+      corroborated: refOfd.roots.length === ofDate.events.length
+        && refAb.roots.length === aberrated.events.length,
+      ofDateLongitudeRange: null,
+      aberratedLongitudeRange: null,
+    }
+    : null;
+  if (frameSeparated) {
+    // The ranges the two frames sweep over the window, at the reference's
+    // own step: the target sits inside one and outside the other, or the
+    // window edge falls between them, and either way it is visible.
+    const step = STEP[c.body];
+    const n = Math.ceil((b - a) / step);
+    let o0 = Infinity; let o1 = -Infinity; let f0 = Infinity; let f1 = -Infinity;
+    for (let i = 0; i <= n; i += 1) {
+      const t = i === n ? b : a + i * step;
+      const x = refOfDate.lonDeg(c.body, t);
+      const y = refFixed.lonDeg(c.body, t, true);
+      o0 = Math.min(o0, x); o1 = Math.max(o1, x);
+      f0 = Math.min(f0, y); f1 = Math.max(f1, y);
+    }
+    frameSeparated.ofDateLongitudeRange = [o0, o1];
+    frameSeparated.aberratedLongitudeRange = [f0, f1];
+    frameSeparated.targetInsideOfDateRange = c.targetDeg > o0 && c.targetDeg < o1;
+    frameSeparated.targetInsideAberratedRange = c.targetDeg > f0 && c.targetDeg < f1;
+  }
   if (geometric && !geometric.refused
     && geometric.events.length === retarded.events.length
     && retarded.events.length === aberrated.events.length
@@ -182,6 +223,7 @@ for (const c of CASES) {
       ? { refused: geometric.refused }
       : { established: geometric.completeness.established, found: geometric.events.length },
     ladder,
+    frameSeparated,
   });
   process.stderr.write(`${c.id} ${c.body} ${c.targetDeg} -> ${ofDate.events.length}/${refOfd.roots.length}`
     + ` est=${ofDate.completeness.established} ${ofdMs}ms\n`);
@@ -207,7 +249,33 @@ for (const r of rows) {
       problems.push(`${r.id}: crossing ${i} shifted ${l.frameSec} s between rungs 3 and 4, the reference predicts ${l.referenceFrameSec} s`);
     }
   }
-  if (r.found > 0 && !r.ladder) problems.push(`${r.id}: found ${r.found} crossings but no rung comparison was made`);
+  /**
+   * A case with crossings and no ladder needs the disagreement ATTRIBUTED,
+   * not excused.
+   *
+   * The aberrated tool's rule was "crossings but no ladder is a failure",
+   * and for rungs 1 to 3 that is right: they search the same frame, so a
+   * count disagreement between them is a defect. Rung 4 does not search
+   * the same frame. It looks for the same NUMERIC longitude measured from
+   * a different origin, so a target a body reaches twice of-date can be
+   * one it reaches once, or never, in the fixed frame -- a crossing pushed
+   * across the window edge by the frame offset, which is the thing section
+   * 4 forbids reading as either improved accuracy or a defect.
+   *
+   * So the clause is not dropped, it is replaced by a stronger one: the
+   * two INDEPENDENT references must show the same count difference their
+   * solvers do. If they do not, the difference is not the frame and the
+   * case fails.
+   */
+  if (r.found > 0 && !r.ladder) {
+    if (!r.frameSeparated) {
+      problems.push(`${r.id}: found ${r.found} crossings but no rung comparison and no frame attribution`);
+    } else if (!r.frameSeparated.corroborated) {
+      problems.push(`${r.id}: the rungs disagree (${r.frameSeparated.aberratedRoots} against ${r.frameSeparated.ofDateRoots})`
+        + ` and the independent references do not show the same difference`
+        + ` (${r.frameSeparated.aberratedReferenceRoots} against ${r.frameSeparated.ofDateReferenceRoots})`);
+    }
+  }
 }
 const establishedCount = rows.filter((r) => r.established).length;
 const usefulness = { established: establishedCount, of: rows.length, passes: establishedCount * 2 >= rows.length };
@@ -250,6 +318,16 @@ const record = {
       const all = rows.flatMap((r) => (r.ladder ?? []).map((l) => l.frameSec));
       return all.length ? [Math.min(...all), Math.max(...all)] : null;
     })(),
+    // Cases where the frame moved a crossing across the window edge, so
+    // rung 3 and rung 4 have genuinely different event sets. Reported,
+    // never averaged away.
+    frameSeparatedCases: rows.filter((r) => r.frameSeparated).map((r) => ({
+      id: r.id,
+      body: r.body,
+      ofDateRoots: r.frameSeparated.ofDateRoots,
+      aberratedRoots: r.frameSeparated.aberratedRoots,
+      corroborated: r.frameSeparated.corroborated,
+    })),
     worstFrameLadderResidualSec: (() => {
       const all = rows.flatMap((r) => (r.ladder ?? [])
         .filter((l) => l.referenceFrameSec !== null)
