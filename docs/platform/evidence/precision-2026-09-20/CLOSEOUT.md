@@ -152,6 +152,17 @@ node node_modules/@zodiacs/precision-alpha/examples/03-cancel-and-recover.mjs  .
 cd node_modules/@zodiacs/precision-alpha && npm test     # 186 of 186
 ```
 
+Re-run against the archive built from this head: the install resolves all
+three entry points (`.`, `/node`, `/browser`) with `dependencies: {}`, the
+186 tier-A tests pass from inside the clean install, both modes run on a
+real pack — `validated-geometric` returning `proven` with an exact total,
+`empirical-apparent` returning `conditional` with three named assumptions
+and `isProven()` false — and `dispose()` makes a later search fail with
+code `disposed` rather than quietly answering.
+
+**This is `npm pack` and a local install. It is not npm publication**, and
+nothing here should be read as saying the package is on a registry.
+
 No dependencies, so the install is offline. No repository checkout, no
 `/tmp` path, no network, no credential. To make a pack, follow
 `examples/00-prepare-a-pack.md`, which uses the vendored compiler against
@@ -163,28 +174,39 @@ install — and compiling a real consumer against the shipped `.d.ts` is
 what found that `if (r.completeness.established)` narrowed nothing.
 `scripts/precision-alpha-types.test.mjs` does that on every run.
 
-## 6 · The preview, and the one gate still open
+## 6 · The preview, and the gate that is now closed
 
-Route: **`/developers/precision-preview/`**, built and passing locally.
-`noindex`, absent from the sitemap, no inbound link, no Astro JS chunk,
-one static module and a worker.
+Route: **`/developers/precision-preview/`**. `noindex`, absent from the
+sitemap, no inbound link, no Astro JS chunk, one static module and a
+worker. Verified against the build rather than asserted: the `robots`
+meta is `noindex, follow`, `sitemap.xml` contains zero occurrences of the
+path, and no HTML file anywhere in `dist/` links to it.
 
-**The remaining gate, exactly**: the Phase 1 pixel receipt. Editing
-`src/layouts` or `src/components` — which `noServiceWorker` and
-`noAssistant` required — changes `templateSourceSha256` from
-`a495772c…` to `8ab4c843…`, so
-`scripts/phase1-acceptance-evidence.test.mjs` fails. It can only be
-cleared by re-driving the captures on the pinned **Chromium
-149.0.7827.55**; this environment has 141. The whole rendered difference
-on the nine captured routes is one HTML comment and one attribute check
-in the service-worker registration, measured by building the same tree
-both ways. Path: the `Browser Evidence` workflow behind the reviewer's
-`<!-- browser-evidence-candidates head=… -->` marker. Detail:
-`PHASE1-RECEIPT-GATE.md`.
+**The gate that was open is closed.** Editing `src/layouts` or
+`src/components` — which `noServiceWorker` and `noAssistant` required —
+moved `templateSourceSha256` from `a495772c…` to `8ab4c843…`, and
+`scripts/phase1-acceptance-evidence.test.mjs` failed on every head until
+the captures were re-driven. They were, by `Browser Evidence` run
+[35573682441](https://github.com/ZodiacsOfficial/site/actions/runs/35573682441)
+on the pinned Chromium 149.0.7827.55, and committed from that workflow's
+own artifact. The 390/1440 visual comparison came back with no pixel
+regression, which is the evidence that the two chrome props move nothing;
+`monthly` and `yearly` are pixel-identical across the Chromium major, and
+every other capture differs only because the daily edition rolled a day.
+`PHASE1-RECEIPT-GATE.md` has the per-capture numbers and corrects a claim
+the earlier version of it got wrong.
+
+One step of that job is still red and is **not** this change's:
+`Navigation and chart explorer browser drive` asserts that an
+unknown-birth-time chart names two candidate Moon signs, which `main`
+deliberately stopped doing in `9d180c9f`. The files involved are
+byte-identical between this branch and `main`. Diagnosis and a proposed
+patch are on the pull request; it is left for a separate change rather
+than widening this one.
 
 Everything else is green: `npm run build`, `npm run check` (0 errors, 0
-warnings), `npm test` (5621 of 5622), `check-dist`, `footer:check`, and
-the alpha's own 186 — now run by CI, which it was not.
+warnings), `npm test`, `check-dist`, `footer:check`, and the alpha's own
+186 — now run by CI, which it was not.
 
 ## 7 · Redistribution, and the corrected metadata
 
