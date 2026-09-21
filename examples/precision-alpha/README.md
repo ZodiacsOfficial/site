@@ -69,9 +69,13 @@ src/core/     environment-neutral: no node:*, no Buffer, no require, no clock
   reduce.mjs            the apparent-place reduction — one copy, every caller
   interval-search.mjs   the bounded typed-verdict search
   search.mjs            longitude events over the reduction
-src/index.mjs   open, run, dispose — everything except how bytes arrive
-src/browser.mjs fetch / Response / Blob. No shims, no polyfills.
-src/node.mjs    whole-file load, or a file-backed low-memory load.
+  retarded.mjs          Newtonian reception light-time, as a verified contraction
+  aberration.mjs        stellar aberration, pointwise and over intervals
+  retarded-search.mjs   the two experimental modes, on one subdivision loop
+src/index.mjs        open, run, dispose — everything except how bytes arrive
+src/browser.mjs      fetch / Response / Blob. No shims, no polyfills.
+src/node.mjs         whole-file load, or a file-backed low-memory load.
+src/experimental.mjs  modes being validated, behind their own import
 ```
 
 The browser and Node entry points differ only in which byte source they
@@ -125,6 +129,46 @@ In a browser, `openPackFromUrl`, `openPackFromResponse` or `openPackFromBlob`
 from `@zodiacs/precision-alpha/browser`. `crypto.subtle` is exposed only on a
 secure context, so a page served over plain http on a non-localhost origin
 cannot verify a pack; the failure says exactly that rather than degrading.
+
+## The experimental modes
+
+Behind a separate import, because they have not finished the
+preregistration-and-holdout route the released modes went through, and
+mixing them into `PrecisionRuntime` would make the difference a matter of
+reading documentation.
+
+```js
+import { openPackFile } from '@zodiacs/precision-alpha/node';
+import { experimental } from '@zodiacs/precision-alpha/experimental';
+
+const rt = await openPackFile('/path/to/pack.zeph');
+const x = experimental(rt);
+
+// Reception light-time only.
+x.searchRetarded({ body: 'Mars', targetDeg: 95, fromTdbSec: -3.2e6, toTdbSec: 3.2e6 });
+// Light-time AND the observer's own motion.
+x.searchRetardedAberrated({ body: 'Mars', targetDeg: 95, fromTdbSec: -3.2e6, toTdbSec: 3.2e6 });
+
+x.dispose();      // detaches the handle; the runtime still owns the buffers
+rt.dispose();
+```
+
+`fromTdbSec`/`toTdbSec`, not `ttDays`: these operations do no time-scale
+conversion, because SPK coefficients are indexed by TDB and folding an
+unbounded TT conversion into an operation whose point is a bound would make
+the bound about something else. Converting is your decision, made where its
+error can be stated.
+
+Both return the same v2 result contract the released modes do, so `isProven`
+narrows them the same way. Neither is an apparent place: deflection, the
+Shapiro delay, precession, nutation, the IAU 2006 frame bias and everything
+topocentric are absent, and `diagnostics.notApplied` lists them by name on
+every result.
+
+No coefficient pack to hand? `examples/04-experimental-aberrated.mjs` runs
+on a synthetic fixture that ships with the package — real arithmetic, an
+openly fake sky. `docs/platform/evidence/precision-aberration/browser/` is
+the same thing in a browser, on these ES modules with no bundler.
 
 ## What a search result means
 

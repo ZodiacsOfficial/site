@@ -1,0 +1,288 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>validated-retarded-aberrated — isolated browser example</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root { color-scheme: dark; --bg:#0b0d12; --fg:#e7e9ee; --dim:#98a0b3; --hair:#232838; --bad:#e86a5a; --ok:#6fcf97; }
+  body { margin:0; padding:28px; background:var(--bg); color:var(--fg);
+         font:15px/1.6 ui-sans-serif,system-ui,-apple-system,sans-serif; max-width:920px; }
+  h1 { font-size:21px; margin:0 0 4px; font-weight:600; }
+  h2 { font-size:14px; margin:28px 0 8px; font-weight:600; }
+  p, li { color:var(--dim); max-width:74ch; }
+  code, td.num, th.num { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13px; }
+  .panel { border:1px solid var(--hair); border-radius:8px; padding:14px 16px; margin:12px 0; }
+  table { border-collapse:collapse; width:100%; }
+  th, td { text-align:left; padding:5px 10px; border-bottom:1px solid var(--hair); font-size:13px; }
+  th.num, td.num { text-align:right; font-family:ui-monospace,monospace; }
+  .bad { color:var(--bad); } .ok { color:var(--ok); }
+  ul { margin:6px 0; padding-left:20px; }
+</style>
+
+<h1>validated-retarded-aberrated — isolated browser example</h1>
+<p>
+  The package's own ES modules, loaded straight from <code>/pkg/src/</code> with no
+  bundler and no build step. The pack is built in this page from polynomials that
+  ship with the package: nothing is fetched from a network, nothing is read from
+  your disk and nothing is stored. The arithmetic is real and the sky is not.
+</p>
+
+<h2>1 · Runtime</h2>
+<div class="panel"><dl id="env"><dt>—</dt><dd>loading</dd></dl></div>
+
+<h2>2 · The control ladder, on one longitude</h2>
+<p>
+  Three rungs on identical instants, the same observer and target, the same frame
+  and the same data. Each row adds exactly one correction to the row above it, so
+  the difference between rows is that correction and not "error".
+</p>
+<div class="panel"><div id="ladder">running…</div></div>
+
+<h2>3 · What the aberrated mode still does not apply</h2>
+<div class="panel"><ul id="omitted"><li>running…</li></ul></div>
+
+<h2>4 · Interrupting a running search</h2>
+<p>
+  A search that cannot be stopped is not usable in a page. This one runs off the
+  main thread and reads its <code>signal</code> from a shared flag, so the flag
+  is visible from <em>inside</em> the synchronous call — a message would not be
+  delivered until the search had already finished, which would measure its
+  runtime and call that a cancellation.
+</p>
+<div class="panel">
+  <button id="run-long">Run the long search</button>
+  <button id="cancel" disabled>Cancel</button>
+  <p id="cancel-state">Not started.</p>
+  <div id="cancel-out"></div>
+</div>
+
+<h2>5 · Refusals</h2>
+<p>Each of these must come back as a typed refusal rather than an answer.</p>
+<div class="panel"><div id="refusals">running…</div></div>
+
+<script type="module">
+import { openPackFromBytes } from '/pkg/src/browser.mjs';
+import { experimental, EXPERIMENTAL } from '/pkg/src/experimental.mjs';
+import { buildSyntheticPack, SYNTHETIC } from '/pkg/examples/synthetic-pack.mjs';
+
+const $ = (id) => document.getElementById(id);
+const dl = (el, pairs) => {
+  el.innerHTML = '';
+  for (const [k, v] of pairs) {
+    const dt = document.createElement('dt'); dt.textContent = k;
+    const dd = document.createElement('dd'); dd.textContent = v;
+    el.append(dt, dd);
+  }
+};
+const num = (x, d = 6) => (x === null || x === undefined ? '—' : Number(x).toFixed(d));
+
+// Everything the driver reads, in one place, so the page's own rendering
+// cannot be mistaken for the measurement.
+const RESULT = { ok: false, rungs: [], omitted: [], refusals: [], error: null };
+window.ABERRATED_EXAMPLE = RESULT;
+
+try {
+  const bytes = await buildSyntheticPack();
+  const rt = await openPackFromBytes(bytes);
+  const x = experimental(rt);
+
+  dl($('env'), [
+    ['modes', EXPERIMENTAL.modes.join(', ')],
+    ['time scale', EXPERIMENTAL.timeScale],
+    ['stability', EXPERIMENTAL.stability],
+    ['pack bytes', String(bytes.byteLength)],
+    ['pack digest (self-consistent)', String(rt.integrity.selfConsistent)],
+    ['coverage, TDB s', `${rt.coverage.startEtSecTdb} … ${rt.coverage.stopEtSecTdb}`],
+    ['fixture', SYNTHETIC.note],
+  ]);
+
+  const spec = {
+    body: 'Mars', targetDeg: SYNTHETIC.targetDeg,
+    fromTdbSec: SYNTHETIC.windowTdbSec[0], toTdbSec: SYNTHETIC.windowTdbSec[1],
+  };
+  const lightTime = x.searchRetarded(spec);
+  const aberrated = x.searchRetardedAberrated(spec);
+
+  RESULT.rungs = [
+    { label: 'light-time only', r: lightTime },
+    { label: 'light-time + aberration', r: aberrated },
+  ].map(({ label, r }) => ({
+    label,
+    mode: r.mode,
+    established: r.completeness.established,
+    isExactTotal: r.eventCount.isExactTotal,
+    found: r.eventCount.found,
+    evaluations: r.execution.evaluations,
+    rootTdbSec: r.events[0] ? r.events[0].tdbSec : null,
+    bracketWidthSec: r.events[0] ? r.events[0].bracketWidthSec : null,
+  }));
+  RESULT.shiftSec = (aberrated.events[0] && lightTime.events[0])
+    ? aberrated.events[0].tdbSec - lightTime.events[0].tdbSec : null;
+  RESULT.worstObserverSpeedOverC = aberrated.diagnostics.aberration.worstObserverSpeedOverC;
+  RESULT.omitted = [...aberrated.diagnostics.notApplied];
+
+  const rows = RESULT.rungs.map((g) => `<tr><td>${g.label}</td><td><code>${g.mode}</code></td>`
+    + `<td class="num">${g.found}</td><td class="${g.established ? 'ok' : 'bad'}">${g.established}</td>`
+    + `<td class="num">${num(g.rootTdbSec, 6)}</td><td class="num">${g.bracketWidthSec.toExponential(2)}</td>`
+    + `<td class="num">${g.evaluations}</td></tr>`).join('');
+  $('ladder').innerHTML = '<table><tr><th>rung</th><th>mode</th><th class="num">roots</th>'
+    + '<th>completeness proved</th><th class="num">crossing, TDB s</th><th class="num">bracket s</th>'
+    + `<th class="num">evaluations</th></tr>${rows}</table>`
+    + `<p>The observer's motion moved the crossing by <code>${num(RESULT.shiftSec, 3)}</code> s, `
+    + `at a worst <code>|v|/c</code> of <code>${RESULT.worstObserverSpeedOverC.toExponential(3)}</code>.</p>`;
+
+  $('omitted').innerHTML = RESULT.omitted.map((o) => `<li>${o}</li>`).join('');
+
+  // Refusals, each with the code it must produce.
+  const cases = [
+    ['a body outside the contract', () => x.searchRetardedAberrated({ ...spec, body: 'Ceres' }), 'unknown-body'],
+    ['an unknown tuning option', () => x.searchRetardedAberrated({ ...spec, safetyFactor: 4 }), 'unsupported-option'],
+    ['a window outside coverage', () => x.searchRetardedAberrated({ ...spec, fromTdbSec: 9e9, toTdbSec: 9.1e9 }), 'out-of-coverage'],
+    ['a reversed window', () => x.searchRetardedAberrated({ ...spec, fromTdbSec: 10, toTdbSec: 0 }), 'unsupported-option'],
+  ];
+  for (const [what, run, want] of cases) {
+    let got = 'no refusal: it answered';
+    try {
+      const r = run();
+      // out-of-coverage arrives as unresolved intervals, not a throw.
+      if (r && r.accounting && r.accounting.unresolved.length && !r.completeness.established) got = 'out-of-coverage';
+    } catch (error) { got = error.code ?? String(error); }
+    RESULT.refusals.push({ what, want, got, pass: got === want });
+  }
+  // And after dispose.
+  x.dispose(); rt.dispose();
+  let after = 'no refusal: it answered';
+  try { x.searchRetardedAberrated(spec); } catch (error) { after = error.code ?? String(error); }
+  RESULT.refusals.push({ what: 'a search after dispose', want: 'disposed', got: after, pass: after === 'disposed' });
+
+  $('refusals').innerHTML = '<table><tr><th>case</th><th>expected code</th><th>got</th></tr>'
+    + RESULT.refusals.map((c) => `<tr><td>${c.what}</td><td><code>${c.want}</code></td>`
+      + `<td class="${c.pass ? 'ok' : 'bad'}"><code>${c.got}</code></td></tr>`).join('') + '</table>';
+
+  RESULT.ok = RESULT.rungs.every((g) => g.established && g.isExactTotal)
+    && RESULT.refusals.every((c) => c.pass)
+    && Math.abs(RESULT.shiftSec) > 1;
+} catch (error) {
+  RESULT.error = `${error.code ?? error.name}: ${error.message}`;
+  $('ladder').innerHTML = `<span class="bad">${RESULT.error}</span>`;
+}
+document.body.dataset.done = '1';
+</script>
+
+<script type="module">
+/**
+ * The interruption measurement, in its own module so a failure here cannot
+ * take the ladder's measurement down with it.
+ */
+const $ = (id) => document.getElementById(id);
+const OUT = { supported: false, complete: null, cancelled: null, error: null, ok: false };
+window.ABERRATED_INTERRUPTION = OUT;
+
+const done = () => { document.body.dataset.cancelDone = '1'; };
+
+if (typeof SharedArrayBuffer !== 'function' || !self.crossOriginIsolated) {
+  OUT.error = `cross-origin isolation is off (crossOriginIsolated=${self.crossOriginIsolated}), so the flag cannot be shared`;
+  $('cancel-state').textContent = OUT.error;
+  $('cancel-state').className = 'bad';
+  done();
+} else {
+  OUT.supported = true;
+  const worker = new Worker('/search-worker.mjs', { type: 'module' });
+  const flag = new SharedArrayBuffer(4);
+  const view = new Int32Array(flag);
+
+  // A frame counter, so "the page stayed responsive" is a measurement and
+  // not an impression: if the main thread were doing the search, this
+  // would stop.
+  let frames = 0;
+  let counting = false;
+  const tick = () => { if (counting) { frames += 1; requestAnimationFrame(tick); } };
+
+  let phase = 'idle';
+  let clickedAt = null;
+  const pending = [];
+  const next = () => new Promise((resolve) => pending.push(resolve));
+  worker.onmessage = (e) => { const r = pending.shift(); if (r) r(e.data); };
+  worker.onerror = (e) => { OUT.error = `worker error: ${e.message}`; $('cancel-state').textContent = OUT.error; done(); };
+
+  const row = (label, v) => `<tr><td>${label}</td><td class="num">${v}</td></tr>`;
+
+  $('run-long').addEventListener('click', async () => {
+    $('run-long').disabled = true;
+    $('cancel').disabled = false;
+    $('cancel-state').textContent = 'opening the pack…';
+    const opened = await (worker.postMessage({ type: 'open' }), next());
+    if (opened.type !== 'opened') { OUT.error = JSON.stringify(opened); $('cancel-state').textContent = OUT.error; done(); return; }
+    OUT.packDigest = opened.packDigest;
+    OUT.packBytes = opened.packBytes;
+
+    // First, uninterrupted, so the cancelled run has something to be
+    // measured against. A cancellation that stopped at the same cost as a
+    // complete run would not be a cancellation.
+    $('cancel-state').textContent = 'running it once to completion, for the comparison…';
+    Atomics.store(view, 0, 0);
+    worker.postMessage({ type: 'search', long: true, flag });
+    OUT.complete = await next();
+    // Again, so the evaluation count can be shown stable WITHIN this
+    // engine before it is compared with another one's.
+    Atomics.store(view, 0, 0);
+    worker.postMessage({ type: 'search', long: true, flag });
+    OUT.completeAgain = await next();
+
+    // Then again, and cancel it mid-flight.
+    $('cancel-state').textContent = `complete run: ${Math.round(OUT.complete.elapsedMs)} ms, `
+      + `${OUT.complete.evaluations.toLocaleString()} evaluations. Now running it again — press Cancel…`;
+    Atomics.store(view, 0, 0);
+    frames = 0; counting = true; requestAnimationFrame(tick);
+    phase = 'running';
+    worker.postMessage({ type: 'search', long: true, flag });
+    const cancelled = await next();
+    const returnedAt = performance.now();
+    counting = false;
+    phase = 'done';
+    OUT.cancelled = cancelled;
+    OUT.framesWhileRunning = frames;
+    // Both ends on the PAGE's clock. The worker has its own
+    // `performance.timeOrigin`, so subtracting its `performance.now()`
+    // from the page's is not a duration -- measured, it came out at
+    // -259 ms, which is how the mistake was caught.
+    OUT.clickToStopMs = clickedAt === null ? null : returnedAt - clickedAt;
+    OUT.workerElapsedMs = cancelled.elapsedMs;
+    $('cancel').disabled = true;
+
+    OUT.ok = OUT.complete.status === 'finished'
+      && OUT.complete.established === true
+      && cancelled.status === 'cancelled'
+      && cancelled.established === false
+      && cancelled.isExactTotal === false
+      && cancelled.evaluations < OUT.complete.evaluations
+      && frames > 0;
+
+    $('cancel-state').textContent = OUT.ok
+      ? 'The running search stopped where it was, and did not claim anything.'
+      : 'Something about the interruption did not hold; see the table.';
+    $('cancel-state').className = OUT.ok ? 'ok' : 'bad';
+    $('cancel-out').innerHTML = '<table>'
+      + row('complete run', `${Math.round(OUT.complete.elapsedMs)} ms, ${OUT.complete.evaluations.toLocaleString()} evaluations, ${OUT.complete.found} crossings`)
+      + row('cancelled run', `${Math.round(cancelled.elapsedMs)} ms, ${cancelled.evaluations.toLocaleString()} evaluations`)
+      + row('fraction of the work done before it stopped', `${((cancelled.evaluations / OUT.complete.evaluations) * 100).toFixed(1)}%`)
+      + row('click to the result reaching the page', OUT.clickToStopMs === null ? 'not clicked' : `${OUT.clickToStopMs.toFixed(1)} ms`)
+      + row('animation frames while it ran', String(frames))
+      + row('status', `<code>${cancelled.status}</code>`)
+      + row('completeness established', `<span class="${cancelled.established ? 'bad' : 'ok'}">${cancelled.established}</span>`)
+      + row('exact total claimed', `<span class="${cancelled.isExactTotal ? 'bad' : 'ok'}">${cancelled.isExactTotal}</span>`)
+      + row('crossings kept as a lower bound', String(cancelled.lowerBound))
+      + '</table>';
+
+    worker.postMessage({ type: 'dispose' });
+    await next();
+    done();
+  });
+
+  $('cancel').addEventListener('click', () => {
+    if (phase !== 'running') return;
+    clickedAt = performance.now();
+    Atomics.store(view, 0, 1);
+    $('cancel-state').textContent = 'cancel requested…';
+  });
+}
+</script>

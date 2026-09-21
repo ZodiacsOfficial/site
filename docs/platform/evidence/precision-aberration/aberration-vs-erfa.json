@@ -1,0 +1,116 @@
+{
+ "what": "this package aberrate() vs ERFA eraAb, same inputs",
+ "erfaBinding": "pyerfa 2.0.1.5",
+ "erfaSource": "liberfa/erfa src/ab.c, revision 2021-02-24",
+ "cases": 208,
+ "worstWithPotentialArcsec": 2.5602971306067412e-11,
+ "worstWithoutPotentialArcsec": 0.001763195950181836,
+ "matchesErfaWhenPotentialIncluded": true,
+ "earthlikeAt1AuArcsec": 4.046222335145465e-7,
+ "erfaStatedEarthlikeFigureArcsec": 4e-7,
+ "measurableFloorArcsec": 1e-9,
+ "measurableCases": 58,
+ "worstRelativeDeviationWhereMeasurable": 0.0028284428193675604,
+ "differenceIsExactlyThePotentialTerm": true,
+ "rows": [
+  {
+   "id": "transverse-earthlike",
+   "sunAu": 1,
+   "speedOverC": 0.0000993687439595295,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 4.046222335145465e-7,
+   "predictedPotentialArcsec": 4.0462223567394546e-7,
+   "ratioObservedOverPredicted": 0.9999999946631728
+  },
+  {
+   "id": "parallel-earthlike",
+   "sunAu": 1,
+   "speedOverC": 0.0000993687439595295,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0,
+   "predictedPotentialArcsec": 0,
+   "ratioObservedOverPredicted": null
+  },
+  {
+   "id": "antiparallel-earthlike",
+   "sunAu": 1,
+   "speedOverC": 0.0000993687439595295,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0,
+   "predictedPotentialArcsec": 0,
+   "ratioObservedOverPredicted": null
+  },
+  {
+   "id": "zero-velocity",
+   "sunAu": 1,
+   "speedOverC": 0,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0,
+   "predictedPotentialArcsec": 0,
+   "ratioObservedOverPredicted": null
+  },
+  {
+   "id": "near-sun-small-s",
+   "sunAu": 0.3,
+   "speedOverC": 0.0000993687439595295,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0.0000013420369561763394,
+   "predictedPotentialArcsec": 0.0000013420472416049556,
+   "ratioObservedOverPredicted": 0.9999923360159781
+  },
+  {
+   "id": "far-sun-large-s",
+   "sunAu": 30,
+   "speedOverC": 0.0000993687439595295,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 1.3419396312030867e-8,
+   "predictedPotentialArcsec": 1.3420472416049554e-8,
+   "ratioObservedOverPredicted": 0.9999198162340842
+  },
+  {
+   "id": "fast-0.5c-transverse",
+   "sunAu": 1,
+   "speedOverC": 0.5,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0.001763195950181836,
+   "predictedPotentialArcsec": 0.0020359633198077775,
+   "ratioObservedOverPredicted": 0.8660254008644446
+  },
+  {
+   "id": "fast-0.9c-oblique",
+   "sunAu": 1,
+   "speedOverC": 0.812403840463596,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 0.00018343136822443896,
+   "predictedPotentialArcsec": 0.00033247141790346247,
+   "ratioObservedOverPredicted": 0.5517207144636437
+  },
+  {
+   "id": "sweep-0",
+   "sunAu": 23.569286261857155,
+   "speedOverC": 0.0000013786013130464594,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 2.346551080516725e-10,
+   "predictedPotentialArcsec": 2.3697774438929465e-10,
+   "ratioObservedOverPredicted": 0.9901989263016757
+  },
+  {
+   "id": "sweep-1",
+   "sunAu": 15.677150876483486,
+   "speedOverC": 0.00013759475950505344,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 3.0191408501869886e-8,
+   "predictedPotentialArcsec": 3.017566262980649e-8,
+   "ratioObservedOverPredicted": 1.0005218070024366
+  },
+  {
+   "id": "sweep-2",
+   "sunAu": 11.604102044554475,
+   "speedOverC": 0.0013193252090454688,
+   "withPotentialArcsec": 0,
+   "withoutPotentialArcsec": 4.540610368478196e-7,
+   "predictedPotentialArcsec": 4.5394299610544683e-7,
+   "ratioObservedOverPredicted": 1.0002600342848893
+  }
+ ]
+}

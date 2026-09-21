@@ -2489,7 +2489,7 @@ function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
           fa = fmid;
         } else b2 = mid;
       }
-      roots.push({ lo: a2, hi: b2, kind: "transversal", rising: fhi - flo > 0 });
+      roots.push({ lo: a2, hi: b2, kind: "transversal", longitudeRising: fhi - flo < 0 });
       continue;
     }
     if (hi - lo <= p.minWidthSec) {
@@ -2585,7 +2585,7 @@ function searchGeometricLongitude(eph, spec = {}) {
           bracketTtDays: [r.lo / DAY2, r.hi / DAY2],
           bracketWidthSec: r.hi - r.lo,
           kind: r.kind,
-          direction: r.rising === void 0 ? null : r.rising ? "increasing" : "decreasing",
+          direction: r.longitudeRising === void 0 ? null : r.longitudeRising ? "increasing" : "decreasing",
           halfPlaneMarginKm: gFloor
         });
       }

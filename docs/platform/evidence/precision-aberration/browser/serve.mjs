@@ -1,0 +1,41 @@
+/**
+ * Serve this page at `/` and the PACKAGE ITSELF at `/pkg/`, localhost only.
+ *
+ * No bundler, deliberately. The page imports `/pkg/src/browser.mjs` and
+ * `/pkg/src/experimental.mjs` as ES modules, so the bytes the browser runs
+ * are the bytes the package ships. A bundle would be a fourth artifact to
+ * keep honest, and the thing being demonstrated is that the shipped source
+ * is environment-neutral -- which a build step could hide rather than show.
+ */
+import { createServer } from 'node:http';
+import { readFile } from 'node:fs/promises';
+import { extname, join, normalize, resolve } from 'node:path';
+
+const HERE = new URL('.', import.meta.url).pathname;
+const PKG = resolve(HERE, '../../../../../examples/precision-alpha');
+const TYPES = { '.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript', '.js': 'text/javascript', '.json': 'application/json' };
+const port = Number(process.argv[2] ?? 8793);
+
+createServer(async (req, res) => {
+  const rel = normalize(decodeURIComponent(req.url.split('?')[0])).replace(/^(\.\.[/\\])+/, '');
+  if (rel === '/favicon.ico') { res.writeHead(204).end(); return; }
+  const underPkg = rel.startsWith('/pkg/');
+  const root = underPkg ? PKG : HERE;
+  const file = join(root, underPkg ? rel.slice(4) : (rel === '/' ? 'index.html' : rel));
+  if (!file.startsWith(root)) { res.writeHead(403).end('no'); return; }
+  try {
+    const body = await readFile(file);
+    res.writeHead(200, {
+      'content-type': TYPES[extname(file)] ?? 'application/octet-stream',
+      // Cross-origin isolation, for SharedArrayBuffer. The cancellation
+      // section needs a flag the worker can read from INSIDE a synchronous
+      // search; a postMessage cannot be delivered until the search has
+      // already finished, which would measure its runtime and call that a
+      // cancellation. Everything here is same-origin, so `require-corp`
+      // costs a header and nothing else.
+      'cross-origin-opener-policy': 'same-origin',
+      'cross-origin-embedder-policy': 'require-corp',
+      'cross-origin-resource-policy': 'same-origin',
+    }).end(body);
+  } catch { res.writeHead(404).end('not found'); }
+}).listen(port, '127.0.0.1', () => console.log(`http://127.0.0.1:${port}/`));

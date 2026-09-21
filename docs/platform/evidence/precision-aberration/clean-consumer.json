@@ -1,0 +1,25 @@
+{
+  "archive": "zodiacs-precision-alpha-0.1.0-preview.1.tgz",
+  "archiveBytes": 215015,
+  "installedFrom": "the packed archive only, --offline, no dependencies",
+  "consumer": {
+    "modes": [
+      "validated-retarded-geometric",
+      "validated-retarded-aberrated"
+    ],
+    "resultContract": "zodiacs-precision-search/2",
+    "mode": "validated-retarded-aberrated",
+    "established": true,
+    "isProvenNarrows": true,
+    "found": 1,
+    "isExactTotal": true,
+    "rootTdbSec": -1317628.0340060592,
+    "bracketWidthSec": 0.00008046627044677734,
+    "aberrationShiftSec": 1702.908244729042,
+    "appliedCount": 2,
+    "notAppliedCount": 6,
+    "afterDispose": "disposed"
+  },
+  "passed": true,
+  "problems": []
+}

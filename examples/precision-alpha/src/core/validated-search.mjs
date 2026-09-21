@@ -347,7 +347,14 @@ function searchPiece(poly, u, v, spend, p, ownsRightEdge) {
         }
         if ((fmid < 0) === (fa < 0)) { a2 = mid; fa = fmid; } else b2 = mid;
       }
-      roots.push({ lo: a2, hi: b2, kind: 'transversal', rising: (fhi - flo) > 0 });
+      // `longitudeRising`, not `rising`. The field used to carry the sign
+      // of f's own change and was read as the longitude's, which labelled
+      // every event backwards: f = R sin(L - lambda) falls as the
+      // longitude rises. Measured on a Mars-like fixture before the fix,
+      // the crossing whose longitude runs 94.99825 -> 95.00175 came back
+      // `decreasing`. Naming the field for the thing the caller wants
+      // leaves nowhere for the inversion to hide.
+      roots.push({ lo: a2, hi: b2, kind: 'transversal', longitudeRising: (fhi - flo) < 0 });
       continue;
     }
 
@@ -481,7 +488,7 @@ export function searchGeometricLongitude(eph, spec = {}) {
           bracketTtDays: [r.lo / DAY, r.hi / DAY],
           bracketWidthSec: r.hi - r.lo,
           kind: r.kind,
-          direction: r.rising === undefined ? null : (r.rising ? 'increasing' : 'decreasing'),
+          direction: r.longitudeRising === undefined ? null : (r.longitudeRising ? 'increasing' : 'decreasing'),
           halfPlaneMarginKm: gFloor,
         });
       }
