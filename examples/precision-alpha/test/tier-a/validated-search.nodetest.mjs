@@ -495,3 +495,46 @@ test('the proven mode carries no assumptions, because that is what proven means'
   assert.deepEqual(r.assumptions, []);
   assert.deepEqual(r.completeness.conditionalOn, []);
 });
+
+/**
+ * The completeness argument reasons over a cell [lo, hi] using a lever
+ * arm around the computed midpoint. `hi - lo` is exact by Sterbenz, but
+ * `lo + hi` rounds, so the midpoint can sit off-centre and the cheap
+ * expression `(hi - lo) / 2` is then SHORTER than the cell it is meant
+ * to cover.
+ *
+ * This is a property test, not a counterexample. An adversarial review
+ * exhibited a false `proven` from exactly this expression in the sibling
+ * retarded mode; 289 crafted off-centre cells failed to exhibit one here,
+ * so what is asserted is the property the proof needs rather than a
+ * behaviour nobody has managed to break.
+ */
+test('the cell lever arm covers the whole cell, whatever the midpoint rounds to', () => {
+  const leverArm = (lo, hi) => { const m = (lo + hi) / 2; return Math.max(hi - m, m - lo); };
+  const cheap = (lo, hi) => (hi - lo) / 2;
+  const dv = new DataView(new ArrayBuffer(8));
+  const step = (x, n) => {
+    dv.setFloat64(0, x);
+    dv.setBigInt64(0, dv.getBigInt64(0) + BigInt(x >= 0 ? n : -n));
+    return dv.getFloat64(0);
+  };
+
+  let sawUnderstatement = false;
+  for (const base of [1, 86400, 6.126e8, 5e11, -2.13e9, 4.7e9]) {
+    for (let i = 1; i <= 8; i += 1) {
+      for (let j = 1; j <= 8; j += 1) {
+        const lo = step(base, -i);
+        const hi = step(base, j);
+        const m = (lo + hi) / 2;
+        // The property the exclusion and monotone tests actually need.
+        assert.ok(m - leverArm(lo, hi) <= lo && m + leverArm(lo, hi) >= hi,
+          `[${lo}, ${hi}] is not covered by its own lever arm`);
+        if (cheap(lo, hi) < leverArm(lo, hi)) sawUnderstatement = true;
+      }
+    }
+  }
+  // If this stops being true the test has stopped testing anything: it
+  // would mean the cheap expression is always safe after all.
+  assert.ok(sawUnderstatement,
+    'no cell in this grid had an off-centre midpoint, so nothing was tested');
+});

@@ -114,6 +114,16 @@ export class Ephemeris {
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
+    // `et - b.initEt` is a rounded subtraction, so for an `et` a hair
+    // below a record boundary the quotient can round UP to the boundary
+    // and the floor hands back the NEXT record -- which does not contain
+    // `et`, and whose series is then evaluated at |tau| slightly above 1,
+    // exactly where `sum |c_k|` stops bounding it. Measured on a real
+    // pack: tau = 1.0000000000000202, and a value 22.5 m outside the
+    // enclosure built from it. The promise three lines above is no clamp
+    // and no silent extrapolation; keep it.
+    while (index > 0 && b.initEt + index * b.intervalSec > et) index -= 1;
+    while (index < b.nrec - 1 && b.initEt + (index + 1) * b.intervalSec <= et) index += 1;
     this.#decode(b, index);
 
     const mid = b.initEt + (index + 0.5) * b.intervalSec;
@@ -166,6 +176,16 @@ export class Ephemeris {
     let index = Math.floor((et - b.initEt) / b.intervalSec);
     if (index < 0) index = 0;
     if (index > b.nrec - 1) index = b.nrec - 1;
+    // `et - b.initEt` is a rounded subtraction, so for an `et` a hair
+    // below a record boundary the quotient can round UP to the boundary
+    // and the floor hands back the NEXT record -- which does not contain
+    // `et`, and whose series is then evaluated at |tau| slightly above 1,
+    // exactly where `sum |c_k|` stops bounding it. Measured on a real
+    // pack: tau = 1.0000000000000202, and a value 22.5 m outside the
+    // enclosure built from it. The promise three lines above is no clamp
+    // and no silent extrapolation; keep it.
+    while (index > 0 && b.initEt + index * b.intervalSec > et) index -= 1;
+    while (index < b.nrec - 1 && b.initEt + (index + 1) * b.intervalSec <= et) index += 1;
     this.#decode(b, index);
     const radius = b.intervalSec / 2;
     const mid = b.initEt + (index + 0.5) * b.intervalSec;
