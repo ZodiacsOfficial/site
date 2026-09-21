@@ -35,6 +35,7 @@ import { BARYCENTRE_NOT_CENTRE } from './ephemeris.mjs';
 import { buildResult, SUPPORT, EXTERNAL_UNCERTAINTY as OUTSIDE } from './result.mjs';
 import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau, coverage } from './retarded.mjs';
 import { aberrateInterval } from './aberration.mjs';
+import { frameMatrixInterval, matApplyI, ttCenturiesInterval, FRAMES, TIME_MODEL } from './frame-of-date.mjs';
 import * as I from './interval.mjs';
 
 const DAY = 86400;
@@ -98,6 +99,42 @@ export const ABERRATED_CONTRACT = Object.freeze({
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
 });
 
+/**
+ * `validated-retarded-aberrated-of-date`: the same corrected direction,
+ * expressed in the frame a chart actually uses.
+ *
+ * NOT an apparent place, and the name says so. An apparent place needs
+ * gravitational deflection and the rest of the list below; this adds a
+ * frame rotation and nothing else.
+ */
+export const OF_DATE_CONTRACT = Object.freeze({
+  operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME AND STELLAR ABERRATION, in the ECLIPTIC OF DATE with its origin at the TRUE EQUINOX OF DATE (see frame and frameNote), reaching a given value',
+  frame: FRAMES.trueEquinoxOfDate,
+  frameNote: 'Input axes ICRS/GCRS equatorial. Output plane the ecliptic of date -- the MEAN ecliptic of date, because nutation is a motion of the equator and not of the ecliptic; "true ecliptic" is not a thing this construction produces and the phrase is not used. Longitude origin the TRUE equinox of date, because the nutation in longitude is applied; drop it and the origin is the mean equinox of date, which is the other rung and about 17 arcsec away. Chain: R3(-(psib + dpsi)) R1(phib) R3(gamb), the IAU 2006 Fukushima-Williams angles with frame bias included, plus IAU 2000B nutation adjusted to P03. The obliquity cancels out of the ecliptic projection exactly, so the nutation in OBLIQUITY does not enter this frame at all. This is the same frame, from the same constants, that the released apparent reducer projects into.',
+  origin: 'geocentric',
+  timeScale: 'TDB seconds past J2000 in and out. The FRAME needs TT, and the conversion is a stated model: see timeModel. The two existing modes need no conversion because their frame is fixed.',
+  timeModel: TIME_MODEL,
+  models: 'IAU 2006 precession with frame bias (Fukushima-Williams, eraPfw06 angles); IAU 2000B nutation (77 luni-solar terms, McCarthy & Luzum 2003) with the fixed planetary-bias offsets, adjusted to P03 per Wallace & Capitaine 2006. A reference used to check this must use the SAME pair: 2000B against a 2000A reference differs by a model, not by a defect.',
+  evaluation: 'Trigonometry from src/core/trig.mjs, a Cody-Waite reduction and Taylor polynomial using only +, - and *, with a proven absolute error bound of 4e-15 measured at 1.5e-16 against a 60-digit reference. Math.sin is not used: ECMAScript does not bound its error, so an enclosure built on it would not be a bound, and it does not promise the same bits in two engines.',
+  c: C_KM_S,
+  applied: Object.freeze([
+    'reception light-time (Newtonian, one-way, target retarded, observer not)',
+    'stellar (annual) aberration (special-relativistic, observer velocity at reception, geocentric)',
+    'IAU 2006 frame bias and precession, and IAU 2000B nutation in longitude, into the ecliptic of date with the true equinox of date as origin',
+  ]),
+  notApplied: Object.freeze([
+    'gravitational light deflection, by the Sun and by the planets',
+    'the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond',
+    'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
+    'topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre',
+    'the difference between IAU 2000B and IAU 2000A nutation: at most about 0.001 arcsec on this interval',
+    'any correction beyond the three applied: this is NOT an apparent place and must not be read as one',
+  ]),
+  comparableTo: 'the frame of an apparent place, with the apparent place\'s other corrections still missing. Against an almanac the remaining difference is dominated by gravitational deflection (up to about 1.7 arcsec near the Sun, under 0.01 arcsec away from it) and by whatever the almanac does topocentrically. Against SPICE, no built-in aberration correction matches this profile.',
+  bodies: RETARDED_CONTRACT.bodies,
+  barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
+});
+
 export const RETARDED_DEFAULTS = Object.freeze({
   /** Subdivision floor, seconds of TDB. Below this a cell stays open. */
   minWidthSec: 1e-4,
@@ -128,7 +165,7 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
-function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false) {
+function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
@@ -314,6 +351,49 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
       // is what keeps the hopeless case to one refusal instead of two
       // hundred thousand.
       if (!ab.ok) return { ok: false, retry: ab.retry === true, why: ab.why };
+
+      if (ofDate) {
+        // Q(t) = R(t) P(t), and Q' = R' P dt/dtau + R P'. Three things
+        // the chain rule needs and one of them is easy to drop: R' is
+        // per TT CENTURY while the search's variable is TDB seconds, so
+        // dt/dtau belongs on the R' term and nowhere else. Rotating P'
+        // alone would be the derivative of a different function, and
+        // freezing R at the cell midpoint would not be an of-date search.
+        const clock = ttCenturiesInterval({ lo: t0, hi: t1 });
+        let frame;
+        try {
+          frame = frameMatrixInterval(clock.t);
+        } catch (error) {
+          if (error instanceof PrecisionError) return { ok: false, retry: true, why: error.message };
+          throw error;
+        }
+        const Q = matApplyI(frame.R, ab.P);
+        const QDot = [0, 1, 2].map((i) => I.add(
+          I.mul(I.add(I.add(I.mul(frame.Rdot[i][0], ab.P[0]), I.mul(frame.Rdot[i][1], ab.P[1])), I.mul(frame.Rdot[i][2], ab.P[2])), clock.dtdTdb),
+          I.add(I.add(I.mul(frame.R[i][0], ab.PDot[0]), I.mul(frame.R[i][1], ab.PDot[1])), I.mul(frame.R[i][2], ab.PDot[2])),
+        ));
+        // In the rotated frame the projection weights carry no obliquity:
+        // the frame has already done that rotation, and doing it twice is
+        // the mistake this separation exists to prevent.
+        const dF = [Math.sin(L), -Math.cos(L), 0];
+        const dG = [Math.cos(L), Math.sin(L), 0];
+        const qNorm = I.norm(Q);
+        if (!(qNorm.lo > 0)) {
+          return { ok: false, retry: true, why: 'the rotated direction cannot be bounded away from zero length over this cell' };
+        }
+        return {
+          ...common,
+          observerSpeedOverC: ab.speed,
+          frameAngles: frame.angles,
+          tdbMinusTtSec: clock.tdbMinusTtSec,
+          f: proj(dF, Q),
+          g: proj(dG, Q),
+          fDotEnclosure: proj(dF, QDot),
+          M1: I.mag(proj(dF, QDot)),
+          M2: null,
+        };
+      }
+
       return {
         ...common,
         observerSpeedOverC: ab.speed,
@@ -367,7 +447,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
  * @param {{aberration: boolean, mode: string, contract: object, kind: string}} shape
  */
 function runSearch(eph, spec, shape) {
-  const { aberration, mode, contract, kind } = shape;
+  const { aberration, ofDate = false, mode, contract, kind } = shape;
   const { body, targetDeg, fromTdbSec, toTdbSec, signal = null, ...tuning } = spec;
   for (const k of Object.keys(tuning)) {
     if (!(k in RETARDED_DEFAULTS)) fail('unsupported-option', `unknown retarded-search option ${k}`);
@@ -403,6 +483,14 @@ function runSearch(eph, spec, shape) {
   let widestEmissionSec = 0;
   let worstObserverSpeedOverC = 0;
   /**
+   * The widest the frame's own nutation-in-longitude enclosure grew on
+   * any accepted cell, arcseconds. A frame enclosure is only useful while
+   * it is narrow relative to the longitude the search is resolving, and a
+   * result that does not report it is hiding the one number that says
+   * whether the of-date rung cost anything.
+   */
+  let widestFrameSpan = 0;
+  /**
    * Every cell whose enclosures were established feeds this, not only the
    * subdivision cells: the midpoint and endpoint evaluations and the
    * bracket cell are accepted cells too, and a figure that skipped them
@@ -416,7 +504,7 @@ function runSearch(eph, spec, shape) {
   };
 
   const at = (t) => {
-    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration);
+    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate);
     noteObserverSpeed(c);
     return c;
   };
@@ -463,7 +551,7 @@ function runSearch(eph, spec, shape) {
       // Taking the larger of the two actual distances is exact and free.
       const w = Math.max(hi - m, m - lo);
 
-      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration);
+      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate);
       if (!cell.ok) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
@@ -476,6 +564,9 @@ function runSearch(eph, spec, shape) {
       widestTauSec = Math.max(widestTauSec, cell.tauInterval.hi - cell.tauInterval.lo);
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
       noteObserverSpeed(cell);
+      if (cell.frameAngles) {
+        widestFrameSpan = Math.max(widestFrameSpan, cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo);
+      }
 
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
@@ -536,7 +627,7 @@ function runSearch(eph, spec, shape) {
           if (s === sa) { a2 = mm; sa = s; } else b2 = mm;
         }
         // The half-plane, with its own enclosure over the bracket.
-        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration);
+        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate);
         noteObserverSpeed(br);
         if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
         if (br.g.lo <= 0) {
@@ -588,9 +679,11 @@ function runSearch(eph, spec, shape) {
   // below can say "light-time-corrected" while the aberrated mode is
   // running. The earlier contract defect in this package was exactly that:
   // a description left behind when the quantity moved.
-  const corrected = aberration
-    ? 'light-time- and aberration-corrected'
-    : 'light-time-corrected';
+  const corrected = ofDate
+    ? 'light-time- and aberration-corrected, in the ecliptic of date with the true equinox of date as origin,'
+    : aberration
+      ? 'light-time- and aberration-corrected'
+      : 'light-time-corrected';
 
   return buildResult({
     mode,
@@ -673,6 +766,18 @@ function runSearch(eph, spec, shape) {
         cKmPerSec: C_KM_S,
         worstContractionFactor: worstContraction,
       },
+      ...(ofDate
+        ? {
+          frameOfDate: {
+            frame: contract.frame,
+            models: contract.models,
+            evaluation: contract.evaluation,
+            timeModel: contract.timeModel,
+            obliquityEntersTheProjection: false,
+            widestFrameAngleSpanArcsec: widestFrameSpan,
+          },
+        }
+        : {}),
       ...(aberration
         ? {
           aberration: {
@@ -717,5 +822,27 @@ export function searchAberratedLongitude(eph, spec = {}) {
     mode: 'validated-retarded-aberrated',
     contract: ABERRATED_CONTRACT,
     kind: 'retarded-aberrated-longitude',
+  });
+}
+
+/**
+ * `validated-retarded-aberrated-of-date`. Light-time, the observer's
+ * motion, AND the date-dependent frame.
+ *
+ * Still not an apparent place: gravitational deflection, the Shapiro
+ * delay and everything topocentric are absent, and `notApplied` on every
+ * result says so. What this adds over the aberrated mode is the FRAME --
+ * the same one the released reducer projects into, from the same
+ * constants -- so the longitude it reports is measured from the true
+ * equinox of date rather than from a fixed direction 2000 years of
+ * precession away.
+ */
+export function searchOfDateLongitude(eph, spec = {}) {
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    mode: 'validated-retarded-aberrated-of-date',
+    contract: OF_DATE_CONTRACT,
+    kind: 'retarded-aberrated-of-date-longitude',
   });
 }

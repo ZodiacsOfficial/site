@@ -47,6 +47,26 @@ const arcsecArg = (a) => fmod(a, TURNAS) * DAS2R;
  * Delaunay arguments: linear (Simon et al. 1994), exactly as the published
  * 2000B model specifies — the higher-order terms belong to 2000A.
  */
+/**
+ * The 2000B Delaunay arguments, arcseconds: [constant, rate per century].
+ * Linear, exactly as the published 2000B model specifies. Exported so the
+ * interval evaluation reads the same numbers and so their RATES are
+ * available to a derivative without being re-derived by hand.
+ */
+export const DELAUNAY_2000B = Object.freeze({
+  el: Object.freeze([485868.249036, 1717915923.2178]),
+  elp: Object.freeze([1287104.79305, 129596581.0481]),
+  f: Object.freeze([335779.526232, 1739527262.8478]),
+  d: Object.freeze([1072260.70369, 1602961601.2090]),
+  om: Object.freeze([450160.398036, -6962890.5431]),
+});
+
+/** The fixed planetary-bias offsets 2000B carries, arcseconds. */
+export const PLANETARY_BIAS_2000B = Object.freeze({ dpsi: DPPLAN_B, deps: DEPLAN_B });
+
+/** Units of the 2000B amplitude table: 0.1 microarcsecond. */
+export const TABLE_UNITS_ARCSEC = U2A;
+
 export function nut00b(t) {
   const el = arcsecArg(485868.249036 + 1717915923.2178 * t);
   const elp = arcsecArg(1287104.79305 + 129596581.0481 * t);
@@ -105,6 +125,12 @@ export function nutAstronomyEngine(t) {
   de += (73871.0 - 184.0 * t) * carg - 1924.0 * sarg;
   return { dpsi: DPPLAN_B + dp * U2A, deps: DEPLAN_B + de * U2A };
 }
+
+/**
+ * IAU 2006 (P03) mean obliquity, arcseconds, ascending powers of t.
+ * Exported for the same reason as PFW06_COEFFICIENTS: one transcription.
+ */
+export const OBL06_COEFFICIENTS = Object.freeze([84381.406, -46.836769, -0.0001831, 0.00200340, -0.000000576, -0.0000000434]);
 
 /** IAU 2006 (P03) mean obliquity of the ecliptic, arcseconds. */
 export function meanObliquityArcsec(t) {
