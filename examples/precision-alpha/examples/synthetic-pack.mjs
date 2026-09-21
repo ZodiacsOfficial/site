@@ -69,14 +69,42 @@ const TARGET = circle(2.2794e8, 686.98 * DAY, Math.PI / 2);
 /** Off the observer, so nothing that needs a Sun distance divides by zero. */
 const SUN = circle(1.0e8, 500 * DAY, 0);
 
+/**
+ * A close companion riding with the observer, lapping every 0.7 days.
+ *
+ * `Venus` in the contract's naming; a moving point in fact. It exists so
+ * there is a case long enough to INTERRUPT: the geocentric direction turns
+ * a hundred and eight times inside the example window, which costs about
+ * 149,000 evaluations and two and a bit seconds, against twenty
+ * milliseconds for the Mars-like target. Cancelling a twenty-millisecond
+ * search demonstrates nothing.
+ *
+ * Aberration is undiminished on it — the transformation depends on the
+ * OBSERVER's velocity alone, so a companion 400,000 km away is aberrated
+ * by the same twenty-odd arcseconds as a body at 2 au, while its
+ * light-time is a second and a third rather than eleven minutes.
+ *
+ * 0.7 days is the fastest this pack's twenty Chebyshev coefficients per
+ * one-day record can carry honestly: measured, the stored path stays
+ * 3.7e-6 km from the intended one. Faster and the fixture would be
+ * testing its own fit.
+ */
+const COMPANION_OFFSET = circle(4.0e5, 0.7 * DAY, 0);
+const COMPANION = [0, 1, 2].map((i) => (t) => OBSERVER[i](t) + COMPANION_OFFSET[i](t));
+
 export const SYNTHETIC = Object.freeze({
   note: 'Synthetic fixture: an Earth-like observer (1.495978707e8 km, 365.25 d, 29.785 km/s) and a Mars-like target (2.2794e8 km, 686.98 d), phased to share a heliocentric longitude at t = 0. The arithmetic is real and the sky is not.',
   observerSpeedKmS: (1.495978707e8 * 2 * Math.PI) / (365.25 * DAY),
   coverageTdbSec: Object.freeze([INIT, INIT + NREC * INTERVAL]),
   /** A window well inside coverage, with room for the light-time reach-back. */
   windowTdbSec: Object.freeze([-38 * DAY, 38 * DAY]),
-  /** A longitude this geometry crosses exactly once inside that window. */
+  /** A longitude the Mars-like target crosses exactly once inside that window. */
   targetDeg: 95,
+  /**
+   * The long case, for demonstrating cancellation: `Venus` is the fast
+   * companion, and this longitude is crossed 108 times inside the window.
+   */
+  longCase: Object.freeze({ body: 'Venus', targetDeg: 137 }),
 });
 
 const zeros = () => new Array(NCOEF).fill(0);
@@ -86,6 +114,7 @@ const BODIES = [
   { name: 'emb', frame: 'ssb', path: OBSERVER },
   { name: 'moon', frame: 'ssb', path: null },
   { name: 'marsBary', frame: 'ssb', path: TARGET },
+  { name: 'venusBary', frame: 'ssb', path: COMPANION },
 ];
 
 /** Build and seal a ZODEPH02 pack. Returns the bytes. */

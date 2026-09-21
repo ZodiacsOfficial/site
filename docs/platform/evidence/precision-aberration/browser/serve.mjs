@@ -25,6 +25,17 @@ createServer(async (req, res) => {
   if (!file.startsWith(root)) { res.writeHead(403).end('no'); return; }
   try {
     const body = await readFile(file);
-    res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' }).end(body);
+    res.writeHead(200, {
+      'content-type': TYPES[extname(file)] ?? 'application/octet-stream',
+      // Cross-origin isolation, for SharedArrayBuffer. The cancellation
+      // section needs a flag the worker can read from INSIDE a synchronous
+      // search; a postMessage cannot be delivered until the search has
+      // already finished, which would measure its runtime and call that a
+      // cancellation. Everything here is same-origin, so `require-corp`
+      // costs a header and nothing else.
+      'cross-origin-opener-policy': 'same-origin',
+      'cross-origin-embedder-policy': 'require-corp',
+      'cross-origin-resource-policy': 'same-origin',
+    }).end(body);
   } catch { res.writeHead(404).end('not found'); }
 }).listen(port, '127.0.0.1', () => console.log(`http://127.0.0.1:${port}/`));

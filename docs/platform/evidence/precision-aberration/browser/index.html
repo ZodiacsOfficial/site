@@ -40,7 +40,22 @@
 <h2>3 · What the aberrated mode still does not apply</h2>
 <div class="panel"><ul id="omitted"><li>running…</li></ul></div>
 
-<h2>4 · Refusals</h2>
+<h2>4 · Interrupting a running search</h2>
+<p>
+  A search that cannot be stopped is not usable in a page. This one runs off the
+  main thread and reads its <code>signal</code> from a shared flag, so the flag
+  is visible from <em>inside</em> the synchronous call — a message would not be
+  delivered until the search had already finished, which would measure its
+  runtime and call that a cancellation.
+</p>
+<div class="panel">
+  <button id="run-long">Run the long search</button>
+  <button id="cancel" disabled>Cancel</button>
+  <p id="cancel-state">Not started.</p>
+  <div id="cancel-out"></div>
+</div>
+
+<h2>5 · Refusals</h2>
 <p>Each of these must come back as a typed refusal rather than an answer.</p>
 <div class="panel"><div id="refusals">running…</div></div>
 
@@ -151,4 +166,123 @@ try {
   $('ladder').innerHTML = `<span class="bad">${RESULT.error}</span>`;
 }
 document.body.dataset.done = '1';
+</script>
+
+<script type="module">
+/**
+ * The interruption measurement, in its own module so a failure here cannot
+ * take the ladder's measurement down with it.
+ */
+const $ = (id) => document.getElementById(id);
+const OUT = { supported: false, complete: null, cancelled: null, error: null, ok: false };
+window.ABERRATED_INTERRUPTION = OUT;
+
+const done = () => { document.body.dataset.cancelDone = '1'; };
+
+if (typeof SharedArrayBuffer !== 'function' || !self.crossOriginIsolated) {
+  OUT.error = `cross-origin isolation is off (crossOriginIsolated=${self.crossOriginIsolated}), so the flag cannot be shared`;
+  $('cancel-state').textContent = OUT.error;
+  $('cancel-state').className = 'bad';
+  done();
+} else {
+  OUT.supported = true;
+  const worker = new Worker('/search-worker.mjs', { type: 'module' });
+  const flag = new SharedArrayBuffer(4);
+  const view = new Int32Array(flag);
+
+  // A frame counter, so "the page stayed responsive" is a measurement and
+  // not an impression: if the main thread were doing the search, this
+  // would stop.
+  let frames = 0;
+  let counting = false;
+  const tick = () => { if (counting) { frames += 1; requestAnimationFrame(tick); } };
+
+  let phase = 'idle';
+  let clickedAt = null;
+  const pending = [];
+  const next = () => new Promise((resolve) => pending.push(resolve));
+  worker.onmessage = (e) => { const r = pending.shift(); if (r) r(e.data); };
+  worker.onerror = (e) => { OUT.error = `worker error: ${e.message}`; $('cancel-state').textContent = OUT.error; done(); };
+
+  const row = (label, v) => `<tr><td>${label}</td><td class="num">${v}</td></tr>`;
+
+  $('run-long').addEventListener('click', async () => {
+    $('run-long').disabled = true;
+    $('cancel').disabled = false;
+    $('cancel-state').textContent = 'opening the pack…';
+    const opened = await (worker.postMessage({ type: 'open' }), next());
+    if (opened.type !== 'opened') { OUT.error = JSON.stringify(opened); $('cancel-state').textContent = OUT.error; done(); return; }
+    OUT.packDigest = opened.packDigest;
+    OUT.packBytes = opened.packBytes;
+
+    // First, uninterrupted, so the cancelled run has something to be
+    // measured against. A cancellation that stopped at the same cost as a
+    // complete run would not be a cancellation.
+    $('cancel-state').textContent = 'running it once to completion, for the comparison…';
+    Atomics.store(view, 0, 0);
+    worker.postMessage({ type: 'search', long: true, flag });
+    OUT.complete = await next();
+    // Again, so the evaluation count can be shown stable WITHIN this
+    // engine before it is compared with another one's.
+    Atomics.store(view, 0, 0);
+    worker.postMessage({ type: 'search', long: true, flag });
+    OUT.completeAgain = await next();
+
+    // Then again, and cancel it mid-flight.
+    $('cancel-state').textContent = `complete run: ${Math.round(OUT.complete.elapsedMs)} ms, `
+      + `${OUT.complete.evaluations.toLocaleString()} evaluations. Now running it again — press Cancel…`;
+    Atomics.store(view, 0, 0);
+    frames = 0; counting = true; requestAnimationFrame(tick);
+    phase = 'running';
+    worker.postMessage({ type: 'search', long: true, flag });
+    const cancelled = await next();
+    const returnedAt = performance.now();
+    counting = false;
+    phase = 'done';
+    OUT.cancelled = cancelled;
+    OUT.framesWhileRunning = frames;
+    // Both ends on the PAGE's clock. The worker has its own
+    // `performance.timeOrigin`, so subtracting its `performance.now()`
+    // from the page's is not a duration -- measured, it came out at
+    // -259 ms, which is how the mistake was caught.
+    OUT.clickToStopMs = clickedAt === null ? null : returnedAt - clickedAt;
+    OUT.workerElapsedMs = cancelled.elapsedMs;
+    $('cancel').disabled = true;
+
+    OUT.ok = OUT.complete.status === 'finished'
+      && OUT.complete.established === true
+      && cancelled.status === 'cancelled'
+      && cancelled.established === false
+      && cancelled.isExactTotal === false
+      && cancelled.evaluations < OUT.complete.evaluations
+      && frames > 0;
+
+    $('cancel-state').textContent = OUT.ok
+      ? 'The running search stopped where it was, and did not claim anything.'
+      : 'Something about the interruption did not hold; see the table.';
+    $('cancel-state').className = OUT.ok ? 'ok' : 'bad';
+    $('cancel-out').innerHTML = '<table>'
+      + row('complete run', `${Math.round(OUT.complete.elapsedMs)} ms, ${OUT.complete.evaluations.toLocaleString()} evaluations, ${OUT.complete.found} crossings`)
+      + row('cancelled run', `${Math.round(cancelled.elapsedMs)} ms, ${cancelled.evaluations.toLocaleString()} evaluations`)
+      + row('fraction of the work done before it stopped', `${((cancelled.evaluations / OUT.complete.evaluations) * 100).toFixed(1)}%`)
+      + row('click to the result reaching the page', OUT.clickToStopMs === null ? 'not clicked' : `${OUT.clickToStopMs.toFixed(1)} ms`)
+      + row('animation frames while it ran', String(frames))
+      + row('status', `<code>${cancelled.status}</code>`)
+      + row('completeness established', `<span class="${cancelled.established ? 'bad' : 'ok'}">${cancelled.established}</span>`)
+      + row('exact total claimed', `<span class="${cancelled.isExactTotal ? 'bad' : 'ok'}">${cancelled.isExactTotal}</span>`)
+      + row('crossings kept as a lower bound', String(cancelled.lowerBound))
+      + '</table>';
+
+    worker.postMessage({ type: 'dispose' });
+    await next();
+    done();
+  });
+
+  $('cancel').addEventListener('click', () => {
+    if (phase !== 'running') return;
+    clickedAt = performance.now();
+    Atomics.store(view, 0, 1);
+    $('cancel-state').textContent = 'cancel requested…';
+  });
+}
 </script>

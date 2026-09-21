@@ -278,8 +278,9 @@ more methods on `PrecisionRuntime`: these modes have not been through the
 route the released ones went through, and mixing them in would make the
 difference a matter of reading documentation.
 
-Verified from the packed archive (`docs/platform/evidence/precision-aberration/clean-consumer.json`)
-and in two browser engines on the shipped ES modules with no bundler
+Verified from the packed archive
+(`docs/platform/evidence/precision-aberration/clean-consumer.json`) and in
+two browser engines on the shipped ES modules with no bundler
 (`docs/platform/evidence/precision-aberration/browser/`):
 
 | | Node 22 | Chromium 141 | Firefox 151 |
@@ -288,9 +289,50 @@ and in two browser engines on the shipped ES modules with no bundler
 | bracket, s | 8.046627044677734e−05 | same | same |
 | observer-motion shift, s | 1702.908244729042 | same | same |
 
-Bit-identical across V8 and SpiderMonkey. That is the `Math.sqrt`-not-
-`Math.hypot` rule in `src/core` paying for itself: a bound that moves with
-the engine is not a bound.
+Bit-identical across V8 and SpiderMonkey — but the three engines are not
+searching identical bytes, and the honest version of that claim is worth
+the extra sentence. Each engine BUILDS the synthetic fixture, and the
+Chebyshev fit reaches `Math.cos` and `Math.acos`, which IEEE-754 does not
+require to be correctly rounded. Measured, the pack digests differ:
+`d11e17e1…` in Node, `0d64d6ee…` in Chromium, `9cb21bac…` in Firefox, all
+198 055 bytes. On the 108-crossing case the evaluation counts differ with
+them — 149 276, 149 334, 149 309, a spread of 0.04 % — and each engine is
+stable with itself to the unit.
+
+So the agreement above is a statement about the SEARCH: three engines
+given three slightly different polynomials report the same transversal
+crossing to the last bit. Soundness is untouched — each establishes
+completeness about the polynomial it actually holds — and the arithmetic
+inside `src/core` is still held to `Math.sqrt` rather than `Math.hypot`
+for the same reason, that a bound moving with the engine is not a bound.
+The fixture is a fixture; the released modes read a pack from bytes and
+never build one.
+
+### Interruption, in a real browser
+
+Measured separately from the Node cancellation tests, because a search is
+one synchronous call: a worker inside one never reaches its own event
+loop, so a `postMessage` saying "cancel" arrives only after the search has
+finished, and timing that would measure its runtime and call it a
+cancellation. The page shares a flag through `SharedArrayBuffer`, which
+the search's own `signal` reads on every evaluation, and Playwright clicks
+Cancel through the real input path so a blocked main thread would swallow
+it.
+
+| | Chromium 141 | Firefox 151 |
+| --- | --- | --- |
+| complete run, twice | 149 334 evaluations both times | 149 309 both times |
+| cancelled mid-run | 7 953 evaluations, 5.3 % | 27 701, 18.6 % |
+| click to the result reaching the page | 10.9 ms | 0.9 ms |
+| animation frames while it ran | 4 | 5 |
+| status / established / exact total | `cancelled` / false / false | `cancelled` / false / false |
+
+The cancelled run keeps what it had isolated as a lower bound and claims
+nothing else.
+
+The first version of that latency was **−259 ms**, because it subtracted
+the worker's `performance.now()` from the page's and those have different
+time origins. Both ends are on one clock now.
 
 ## 10 · What this does not establish
 
