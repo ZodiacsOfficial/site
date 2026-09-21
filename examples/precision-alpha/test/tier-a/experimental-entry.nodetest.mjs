@@ -67,8 +67,12 @@ test('experimental() refuses anything that is not an open runtime', () => {
   }
 });
 
-test('the surface says it is experimental, and names both modes', () => {
-  assert.deepEqual([...EXPERIMENTAL.modes], ['validated-retarded-geometric', 'validated-retarded-aberrated']);
+test('the surface says it is experimental, and names all three modes', () => {
+  assert.deepEqual([...EXPERIMENTAL.modes], [
+    'validated-retarded-geometric',
+    'validated-retarded-aberrated',
+    'validated-retarded-aberrated-of-date',
+  ]);
   assert.match(EXPERIMENTAL.stability, /experimental/);
   assert.match(EXPERIMENTAL.timeScale, /TDB seconds/);
   assert.equal(EXPERIMENTAL.resultContract, 'zodiacs-precision-search/2');
@@ -103,4 +107,53 @@ test('the synthetic fixture is the geometry it says it is', async () => {
   const r = experimental(rt).searchRetardedAberrated({ body: 'Mars', targetDeg: SYNTHETIC.targetDeg, fromTdbSec: from, toTdbSec: to });
   assert.equal(r.eventCount.found, 1, 'the declared targetDeg must be crossed exactly once in the declared window');
   rt.dispose();
+});
+
+// ============================== the of-date mode on the consumer path
+test('the of-date mode is reachable through the handle and says what frame it is in', async () => {
+  const rt = await openPackFromBytes(await buildSyntheticPack());
+  const x = experimental(rt);
+  try {
+    assert.equal(x.contracts.ofDate.frame, 'ecliptic-of-date-true-equinox-of-date');
+    assert.notEqual(x.contracts.ofDate.frame, x.contracts.aberrated.frame,
+      'the of-date mode must not claim the fixed frame the other two use');
+
+    const spec = {
+      body: 'Mars',
+      targetDeg: 90,
+      fromTdbSec: SYNTHETIC.windowTdbSec[0],
+      toTdbSec: SYNTHETIC.windowTdbSec[1],
+    };
+    const r = x.searchRetardedAberratedOfDate(spec);
+    assert.equal(r.mode, 'validated-retarded-aberrated-of-date');
+    assert.equal(r.request.frame, 'ecliptic-of-date-true-equinox-of-date');
+    // Every mode keeps naming what it omits, and this one is still not an
+    // apparent place.
+    for (const re of [/deflection/, /Shapiro/, /topocentric/]) {
+      assert.ok(r.diagnostics.notApplied.some((s) => re.test(s)), `nothing in notApplied matches ${re}`);
+    }
+    assert.ok(!r.diagnostics.notApplied.some((s) => /^precession and nutation/.test(s)),
+      'the of-date mode must not still list precession and nutation as omitted');
+    // The time-scale breakdown only exists on this mode.
+    assert.ok(r.uncertainty.timeScale);
+    assert.equal(x.searchRetardedAberrated(spec).uncertainty.timeScale, undefined);
+  } finally {
+    x.dispose();
+    rt.dispose();
+  }
+});
+
+test('the of-date mode is disposed with the handle and with the runtime', async () => {
+  const rt = await openPackFromBytes(await buildSyntheticPack());
+  const spec = {
+    body: 'Mars', targetDeg: 90,
+    fromTdbSec: SYNTHETIC.windowTdbSec[0], toTdbSec: SYNTHETIC.windowTdbSec[1],
+  };
+  const a = experimental(rt);
+  a.dispose();
+  assert.throws(() => a.searchRetardedAberratedOfDate(spec), (e) => e.code === 'disposed');
+
+  const b = experimental(rt);
+  rt.dispose();
+  assert.throws(() => b.searchRetardedAberratedOfDate(spec), (e) => e.code === 'disposed');
 });

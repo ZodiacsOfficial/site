@@ -14,7 +14,7 @@
  */
 import { nut00b, nutAstronomyEngine, meanObliquityArcsec, adjustToP03 } from './nutation.mjs';
 
-const DAS2R = Math.PI / (180 * 3600);
+export const DAS2R = Math.PI / (180 * 3600);
 
 export const mul = (a, b) => {
   const o = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
@@ -33,6 +33,25 @@ export const transpose = (m) => [[m[0][0], m[1][0], m[2][0]], [m[0][1], m[1][1],
 const R1 = (a) => { const s = Math.sin(a); const c = Math.cos(a); return [[1, 0, 0], [0, c, s], [0, -s, c]]; };
 const R2 = (a) => { const s = Math.sin(a); const c = Math.cos(a); return [[c, 0, -s], [0, 1, 0], [s, 0, c]]; };
 const R3 = (a) => { const s = Math.sin(a); const c = Math.cos(a); return [[c, s, 0], [-s, c, 0], [0, 0, 1]]; };
+
+/**
+ * The published IAU 2006 Fukushima-Williams coefficients, arcseconds,
+ * ascending powers of t (Julian centuries of TT since J2000).
+ *
+ * Exported so a second evaluation of the SAME model -- the interval
+ * arithmetic in `frame-of-date.mjs` -- reads these numbers instead of
+ * carrying its own copy. Two transcriptions of a coefficient table is one
+ * transcription too many.
+ *
+ * `pfw06` below still evaluates them with the Horner nesting it always
+ * had, and `frames.nodetest.mjs` pins its output against the original
+ * expression bit for bit.
+ */
+export const PFW06_COEFFICIENTS = Object.freeze({
+  gamb: Object.freeze([-0.052928, 10.556378, 0.4932044, -0.00031238, -0.000002788, 0.0000000260]),
+  phib: Object.freeze([84381.412819, -46.811016, 0.0511268, 0.00053289, -0.000000440, -0.0000000176]),
+  psib: Object.freeze([-0.041775, 5038.481484, 1.5584175, -0.00018522, -0.000026452, -0.0000000148]),
+});
 
 /** Fukushima-Williams precession angles, IAU 2006 (bias included). Radians. */
 export function pfw06(t) {

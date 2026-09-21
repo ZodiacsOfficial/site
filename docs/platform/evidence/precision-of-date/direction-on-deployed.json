@@ -1,0 +1,725 @@
+{
+  "base": "https://zodiacs.org",
+  "ranAt": "2026-09-21T19:09:35.477Z",
+  "what": "the deployed preview's direction labels, against the worker's own apparent reducer",
+  "chromium": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome",
+  "offOrigin": [],
+  "errors": [],
+  "retrogradePackDigest": "e665cf8ac4ab77ac922a479023ab9697ef5e8f581ad9612f7d4ac2a91a7910d3",
+  "retrogradePackBytes": 198055,
+  "fixtures": [
+    {
+      "fixture": "preview-synthetic",
+      "ok": true,
+      "synthetic": true,
+      "digest": "59327ba7820eeecf9d729a74122f0d9cfb6a0410487744540fd32a03976b12d5",
+      "selfConsistent": true,
+      "declaredSynthetic": true,
+      "bodies": [
+        "Sun",
+        "Moon",
+        "Venus",
+        "Mars"
+      ],
+      "coverage": {
+        "startEtSecTdb": -17280000,
+        "stopEtSecTdb": 51840000,
+        "startUtcApprox": "1999-06-15T11:58:50.816Z",
+        "stopUtcApprox": "2001-08-23T11:58:50.816Z",
+        "usableMarginHours": 7
+      },
+      "refused": null
+    },
+    {
+      "fixture": "retrograde-pack",
+      "ok": true,
+      "synthetic": false,
+      "digest": "356bc1729387ec9cfb621f9c6eb8eb3814aab8c112e9609ff8cd5c4d3dc7b0e9",
+      "selfConsistent": true,
+      "declaredSynthetic": true,
+      "bodies": [
+        "Sun",
+        "Moon",
+        "Venus",
+        "Mars"
+      ],
+      "coverage": {
+        "startEtSecTdb": -3542400,
+        "stopEtSecTdb": 3542400,
+        "startUtcApprox": "1999-11-21T11:58:50.816Z",
+        "stopUtcApprox": "2000-02-11T11:58:50.816Z",
+        "usableMarginHours": 7
+      },
+      "refused": null
+    }
+  ],
+  "inPageDigest": "e665cf8ac4ab77ac922a479023ab9697ef5e8f581ad9612f7d4ac2a91a7910d3",
+  "packDigest": "e665cf8ac4ab77ac922a479023ab9697ef5e8f581ad9612f7d4ac2a91a7910d3",
+  "digestsMatch": true,
+  "unloaded": true,
+  "picks": [
+    {
+      "body": "Sun",
+      "targetDeg": 110.347731,
+      "expect": "increasing",
+      "fixture": "preview-synthetic"
+    },
+    {
+      "body": "Sun",
+      "targetDeg": 274.066412,
+      "expect": "increasing",
+      "fixture": "retrograde-pack"
+    },
+    {
+      "body": "Venus",
+      "targetDeg": 56.817766,
+      "expect": "decreasing",
+      "fixture": "retrograde-pack"
+    }
+  ],
+  "placesRefusals": [],
+  "diagnostics": [
+    {
+      "fixture": "preview-synthetic",
+      "window": [
+        -30,
+        30
+      ],
+      "stepDays": 0.25,
+      "samples": 241,
+      "bodies": [
+        "Sun",
+        "Moon",
+        "Venus",
+        "Mars"
+      ],
+      "motion": {
+        "Sun": {
+          "minStepDeg": 0.22795572081795967,
+          "maxStepDeg": 0.26382784252379565,
+          "backwardSteps": 0,
+          "samples": 241
+        },
+        "Moon": {
+          "minStepDeg": 3.128089688019003,
+          "maxStepDeg": 3.4693349785535474,
+          "backwardSteps": 0,
+          "samples": 241
+        },
+        "Venus": {
+          "minStepDeg": 0.3763801061002129,
+          "maxStepDeg": 0.42631641284371824,
+          "backwardSteps": 0,
+          "samples": 241
+        },
+        "Mars": {
+          "minStepDeg": 0.3676202749930233,
+          "maxStepDeg": 0.3749113092950367,
+          "backwardSteps": 0,
+          "samples": 241
+        }
+      },
+      "picked": 1
+    },
+    {
+      "fixture": "retrograde-pack",
+      "window": [
+        -34,
+        34
+      ],
+      "stepDays": 0.25,
+      "samples": 273,
+      "bodies": [
+        "Sun",
+        "Moon",
+        "Venus",
+        "Mars"
+      ],
+      "motion": {
+        "Sun": {
+          "minStepDeg": 0.2239146891100745,
+          "maxStepDeg": 0.22768860023717252,
+          "backwardSteps": 0,
+          "samples": 273
+        },
+        "Moon": {
+          "minStepDeg": 0.23866514125516858,
+          "maxStepDeg": 0.25413569373968414,
+          "backwardSteps": 0,
+          "samples": 273
+        },
+        "Venus": {
+          "minStepDeg": -24.13028884268539,
+          "maxStepDeg": 20.500285082579538,
+          "backwardSteps": 129,
+          "samples": 273
+        },
+        "Mars": {
+          "minStepDeg": -0.08146101753476387,
+          "maxStepDeg": -0.006046335566423977,
+          "backwardSteps": 272,
+          "samples": 273
+        }
+      },
+      "picked": 2
+    }
+  ],
+  "rows": [
+    {
+      "body": "Sun",
+      "targetDeg": 110.347731,
+      "expect": "increasing",
+      "requestedMode": "geometric",
+      "mode": "validated-geometric",
+      "synthetic": true,
+      "contract": "zodiacs-precision-search/2",
+      "established": true,
+      "support": "proven",
+      "isExactTotal": true,
+      "assumptions": [],
+      "found": 1,
+      "events": [
+        {
+          "ttDays": -29.135783589661866,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 110.0728481315995,
+          "lonAfter": 110.59979407996393,
+          "referenceDelta": 0.5269459483644283,
+          "referenceDirection": "increasing",
+          "agrees": true
+        }
+      ],
+      "fixture": "preview-synthetic",
+      "window": [
+        -30,
+        30
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 241
+    },
+    {
+      "body": "Sun",
+      "targetDeg": 110.347731,
+      "expect": "increasing",
+      "requestedMode": "empirical",
+      "mode": "empirical-apparent",
+      "synthetic": true,
+      "contract": "zodiacs-precision-search/2",
+      "established": false,
+      "support": "conditional",
+      "isExactTotal": false,
+      "assumptions": [
+        "sampled-derivative-bounds",
+        "branch-assignment-from-samples",
+        "declared-rate-ceiling"
+      ],
+      "found": 1,
+      "events": [
+        {
+          "ttDays": -29.12501347222222,
+          "reportedDirection": "rising",
+          "normalisedDirection": "increasing",
+          "lonBefore": 110.08420380364898,
+          "lonAfter": 110.61113924260815,
+          "referenceDelta": 0.5269354389591712,
+          "referenceDirection": "increasing",
+          "agrees": true
+        }
+      ],
+      "fixture": "preview-synthetic",
+      "window": [
+        -30,
+        30
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 241
+    },
+    {
+      "body": "Sun",
+      "targetDeg": 274.066412,
+      "expect": "increasing",
+      "requestedMode": "geometric",
+      "mode": "validated-geometric",
+      "synthetic": false,
+      "contract": "zodiacs-precision-search/2",
+      "established": true,
+      "support": "proven",
+      "isExactTotal": true,
+      "assumptions": [],
+      "found": 1,
+      "events": [
+        {
+          "ttDays": -33.13727263498533,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 273.82760920948147,
+          "lonAfter": 274.28285008845853,
+          "referenceDelta": 0.4552408789770652,
+          "referenceDirection": "increasing",
+          "agrees": true
+        }
+      ],
+      "fixture": "retrograde-pack",
+      "window": [
+        -34,
+        34
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 273
+    },
+    {
+      "body": "Sun",
+      "targetDeg": 274.066412,
+      "expect": "increasing",
+      "requestedMode": "empirical",
+      "mode": "empirical-apparent",
+      "synthetic": false,
+      "contract": "zodiacs-precision-search/2",
+      "established": false,
+      "support": "conditional",
+      "isExactTotal": false,
+      "assumptions": [
+        "sampled-derivative-bounds",
+        "branch-assignment-from-samples",
+        "declared-rate-ceiling"
+      ],
+      "found": 1,
+      "events": [
+        {
+          "ttDays": -33.12500244212963,
+          "reportedDirection": "rising",
+          "normalisedDirection": "increasing",
+          "lonBefore": 273.83878210528707,
+          "lonAfter": 274.2940207187784,
+          "referenceDelta": 0.4552386134913604,
+          "referenceDirection": "increasing",
+          "agrees": true
+        }
+      ],
+      "fixture": "retrograde-pack",
+      "window": [
+        -34,
+        34
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 273
+    },
+    {
+      "body": "Venus",
+      "targetDeg": 56.817766,
+      "expect": "decreasing",
+      "requestedMode": "geometric",
+      "mode": "validated-geometric",
+      "synthetic": false,
+      "contract": "zodiacs-precision-search/2",
+      "established": true,
+      "support": "proven",
+      "isExactTotal": true,
+      "assumptions": [],
+      "found": 36,
+      "events": [
+        {
+          "ttDays": -33.84235491627089,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 64.62768772161765,
+          "lonAfter": 48.039200441956766,
+          "referenceDelta": -16.58848727966088,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -33.48981839917532,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 45.47761498827,
+          "lonAfter": 68.2597076333539,
+          "referenceDelta": 22.7820926450839,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -33.13607310364559,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 65.67482263860154,
+          "lonAfter": 49.094235053484915,
+          "referenceDelta": -16.580587585116625,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -32.79600767092779,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 46.64669756284124,
+          "lonAfter": 69.34421749749177,
+          "referenceDelta": 22.69751993465053,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -32.42974820220843,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 66.71671417607783,
+          "lonAfter": 50.16481306252632,
+          "referenceDelta": -16.55190111355151,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -32.10224591428414,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 47.892620117478664,
+          "lonAfter": 70.36426820351323,
+          "referenceDelta": 22.47164808603457,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -31.72336227959022,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 67.75359504754087,
+          "lonAfter": 51.251713589349976,
+          "referenceDelta": -16.501881458190894,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -31.408550011459738,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 49.21725618635284,
+          "lonAfter": 71.32004616117328,
+          "referenceDelta": 22.10278997482044,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -31.01689671771601,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 68.7854562958196,
+          "lonAfter": 52.35585242099086,
+          "referenceDelta": -16.429603874828743,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -30.714937721844763,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 50.622233073994366,
+          "lonAfter": 72.21158376058212,
+          "referenceDelta": 21.58935068658775,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -30.310331504326314,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 69.81204868758468,
+          "lonAfter": 53.47833497453811,
+          "referenceDelta": -16.33371371304657,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -30.021428362932056,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 52.10884141244225,
+          "lonAfter": 73.03870904673187,
+          "referenceDelta": 20.929867634289614,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -29.603644359391183,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 70.83286849670678,
+          "lonAfter": 54.620521690047475,
+          "referenceDelta": -16.212346806659305,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -29.328043657820672,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 53.67796120412696,
+          "lonAfter": 73.80097970712977,
+          "referenceDelta": 20.12301850300281,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -28.89680960541591,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 71.84713958214132,
+          "lonAfter": 55.784133556587015,
+          "referenceDelta": -16.06300602555431,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -28.634808854665607,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 55.329985978739444,
+          "lonAfter": 74.49758809370418,
+          "referenceDelta": 19.167602114964737,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -28.189796624239534,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 72.8537657501192,
+          "lonAfter": 56.97138590977454,
+          "referenceDelta": -15.882379840344655,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -27.941754241939634,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 57.064784408006396,
+          "lonAfter": 75.12722923471928,
+          "referenceDelta": 18.062444826712884,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -27.482567670289427,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 73.85125878109451,
+          "lonAfter": 58.185195485890056,
+          "referenceDelta": -15.66606329520446,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -27.248917327728122,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 58.88169935930273,
+          "lonAfter": 75.68790603436742,
+          "referenceDelta": 16.806206675064686,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -26.775074616540223,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 74.83760518713444,
+          "lonAfter": 59.429475248755466,
+          "referenceDelta": -15.408129938378977,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -26.556346082594246,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 60.77960845722925,
+          "lonAfter": 76.17663631764849,
+          "referenceDelta": 15.397027860419236,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -26.067253832239658,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 75.8100462697166,
+          "lonAfter": 60.70961038341649,
+          "referenceDelta": -15.100435886300104,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -25.864104045089334,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 62.757116647658044,
+          "lonAfter": 76.588987114855,
+          "referenceDelta": 13.831870467196957,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -25.359017674345523,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 76.76468198696699,
+          "lonAfter": 62.03324211386134,
+          "referenceDelta": -14.73143987310565,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -25.172278824727982,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 64.81293540834834,
+          "lonAfter": 76.91830059348436,
+          "referenceDelta": 12.105365185136023,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -24.65023921756074,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 77.69572279094612,
+          "lonAfter": 63.41165859157004,
+          "referenceDelta": -14.284064199376083,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -24.480997357983142,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 66.94665795050875,
+          "lonAfter": 77.1543056943956,
+          "referenceDelta": 10.207647743886852,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -23.940722170751542,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 78.59396294188572,
+          "lonAfter": 64.86252981478225,
+          "referenceDelta": -13.731433127103472,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -23.79045598814264,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 69.16035380617954,
+          "lonAfter": 77.2803897511628,
+          "referenceDelta": 8.120035944983258,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -23.23013316700235,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 79.44324021351844,
+          "lonAfter": 66.41602503879177,
+          "referenceDelta": -13.027215174726663,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -23.10098815849051,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 71.46221065687202,
+          "lonAfter": 77.26749026141407,
+          "referenceDelta": 5.805279604542051,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -22.517815391998738,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 80.21043961435596,
+          "lonAfter": 68.13155133401301,
+          "referenceDelta": -12.078888280342952,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -22.413250784855336,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 73.87668686387087,
+          "lonAfter": 77.05735596199082,
+          "referenceDelta": 3.1806690981199495,
+          "referenceDirection": "increasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -21.802047573495656,
+          "reportedDirection": "decreasing",
+          "normalisedDirection": "decreasing",
+          "lonBefore": 80.8048182841632,
+          "lonAfter": 70.16389472723237,
+          "referenceDelta": -10.64092355693083,
+          "referenceDirection": "decreasing",
+          "agrees": true
+        },
+        {
+          "ttDays": -21.728965252172202,
+          "reportedDirection": "increasing",
+          "normalisedDirection": "increasing",
+          "lonBefore": 76.48536104510387,
+          "lonAfter": 76.49641129710537,
+          "referenceDelta": 0.01105025200149612,
+          "referenceDirection": "increasing",
+          "agrees": true
+        }
+      ],
+      "fixture": "retrograde-pack",
+      "window": [
+        -34,
+        34
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 273
+    },
+    {
+      "body": "Venus",
+      "targetDeg": 56.817766,
+      "expect": "decreasing",
+      "requestedMode": "empirical",
+      "mode": "empirical-apparent",
+      "synthetic": false,
+      "contract": "zodiacs-precision-search/2",
+      "established": false,
+      "support": "none",
+      "isExactTotal": false,
+      "assumptions": [],
+      "found": 0,
+      "events": [],
+      "fixture": "retrograde-pack",
+      "window": [
+        -34,
+        34
+      ],
+      "referenceStepDays": 0.25,
+      "referenceSamples": 273
+    }
+  ],
+  "labelsChecked": 40,
+  "labelsAgreeing": 40,
+  "directionsSeen": [
+    "decreasing",
+    "increasing"
+  ],
+  "declined": [
+    "empirical-apparent Venus 56.817766: support none"
+  ],
+  "problems": [],
+  "passed": true
+}
