@@ -99,10 +99,8 @@ export default function LearningPath() {
       <div class="core learning-path__core">
         <header class="learning-path__head">
           <div>
-            <span class="mono--label">A guided reading</span>
-            <h2 id="learning-path-title">Understand your chart, one step at a time.</h2>
-            <p>Start with your personality, then explore repeating patterns, timing, and your horoscope. Follow the path or jump ahead — everything stays in plain English.</p>
-            <p class="learning-path__note">Check off each step yourself after reading and reflecting. {progress.pageOnly ? PAGE_ONLY_COPY : 'Your progress stays on this device.'}</p>
+            <h2 id="learning-path-title">Your reading path</h2>
+            <p class="learning-path__note">Check off each step as you go. {progress.pageOnly ? PAGE_ONLY_COPY : 'Your progress stays on this device.'}</p>
           </div>
           <div class="learning-path__progress" aria-live="polite">
             <span>{ready ? `${count} of ${STEPS.length} complete${inProgressCount ? ` · ${inProgressCount} started` : ''}` : `${STEPS.length} steps to explore`}</span>
@@ -120,6 +118,8 @@ export default function LearningPath() {
           </div>
         </header>
 
+        <details class="learning-path__practice">
+          <summary>Practice with a saved chart</summary>
         {ready && (SavedEntry ? <SavedEntry /> : <div class="learning-practice learning-practice--entry">
           <h3>Learn with your chart</h3>
           <p>Practice a placement, a house and an aspect with a chart saved on this device.</p>
@@ -144,6 +144,7 @@ export default function LearningPath() {
           {entryError && <div role="alert"><p>Saved charts could not load. Reload this page to try again.</p>
             <button type="button" class="btn btn--ghost" onClick={() => window.location.reload()}>Reload page</button></div>}
         </div>)}
+        </details>
 
         {ready && allDone && (
           <div class="learning-path__complete" role="status">

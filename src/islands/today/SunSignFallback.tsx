@@ -8,6 +8,7 @@ type NextAction = 'choose-sun-sign' | 'open-horoscope' | 'get-birth-chart';
 
 interface Props {
   noChartConfirmed?: boolean;
+  selfChartUnselected?: boolean;
   comparisonUnavailable?: boolean;
   sunSignLines: Record<string, string>;
   editionDate: string;
@@ -68,6 +69,7 @@ function saveSign(slug: string): void {
 
 export default function SunSignFallback({
   noChartConfirmed = false,
+  selfChartUnselected = false,
   comparisonUnavailable = false,
   sunSignLines,
   editionDate,
@@ -111,12 +113,14 @@ export default function SunSignFallback({
         {/* Keep this line in the server layout. Revealing it after local profile
             lookup must not push the sign picker down after first paint. */}
         <p
-          class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}
-          aria-hidden={noChartConfirmed || comparisonUnavailable ? undefined : 'true'}
+          class={`today-fallback__status${noChartConfirmed || selfChartUnselected || comparisonUnavailable ? ' is-visible' : ''}`}
+          aria-hidden={noChartConfirmed || selfChartUnselected || comparisonUnavailable ? undefined : 'true'}
         >
           {comparisonUnavailable
             ? 'Your saved-chart comparison is temporarily unavailable. Your Sun sign still gives you a useful starting point.'
-            : 'No saved chart on this device. Your Sun sign still gives you a useful starting point.'}
+            : selfChartUnselected
+              ? 'No chart selected as yours. You can also start with your Sun sign.'
+              : 'No saved chart on this device. Your Sun sign still gives you a useful starting point.'}
         </p>
       </div>
 

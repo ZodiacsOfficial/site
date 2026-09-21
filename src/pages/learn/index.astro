@@ -44,9 +44,7 @@ const jsonLd = [
     <div class="section-head reveal">
       <h1 class="display learn-lede">What does your chart say about you?</h1>
       <p>
-        Start with the parts that explain your personality and repeating patterns.
-        Then see what horoscopes can tell you about timing — without treating
-        your future like a fixed script.
+        Learn the basics, then read your own chart — one clear step at a time.
       </p>
     </div>
   </section>
@@ -180,6 +178,10 @@ const jsonLd = [
 </Base>
 
 <style is:global>
+  .learning-path__practice { margin-block: 12px 20px; }
+  .learning-path__practice > summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; color: var(--text-2); font-size: 14px; gap: 8px; }
+  .learning-path__practice > summary::before { content: "+"; }
+  .learning-path__practice[open] > summary::before { content: "−"; }
   .learn-lede {
     margin: 0;
     font-size: var(--text-xl);

@@ -66,6 +66,15 @@ const jsonLd = [
       <span class="horo-hero__stamp mono">Updated daily · {dateLabel}</span>
     </div>
 
+    <nav class="horo-picker" aria-label="Choose your horoscope sign">
+      {cards.map(({ sign }) => (
+        <a href={`/horoscopes/${sign.slug}/`} style={`--sign:${sign.hue}`}>
+          <SignIcon sign={sign.slug} size={24} webpOnly fetchPriority="low" />
+          <span>{sign.name}</span>
+        </a>
+      ))}
+    </nav>
+
     <div class="horo-grid">
       {cards.map(({ sign, reading, teaser }) => (
         <a class="tile horo-card" href={`/horoscopes/${sign.slug}/`} style={`--sign:${sign.hue}`}>
@@ -124,6 +133,12 @@ const jsonLd = [
     text-transform: uppercase;
   }
 
+  .horo-picker { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 28px; }
+  .horo-picker a { display: flex; align-items: center; justify-content: center; gap: 7px; min-height: 48px; border: 1px solid var(--hair-2); border-radius: var(--r-md); color: var(--text-2); font-size: 13px; text-decoration: none; }
+  .horo-picker a:hover { border-color: var(--sign); background: var(--void-2); }
+  .horo-picker a:focus-visible { outline: 2px solid var(--sign); outline-offset: 3px; }
+  @media (max-width: 359px) { .horo-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 700px) { .horo-picker { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
   .horo-grid {
     display: grid;
     gap: 10px;

@@ -347,18 +347,20 @@ export default function TodayBrief({
                 </div>
               </details>
             </div>
-            <SunSignFallback
-              noChartConfirmed={ready && !chart}
-              comparisonUnavailable={comparisonUnavailable}
-              sunSignLines={editionSunSignLines}
-              editionDate={editionDate}
-            />
             {livingChartEnabled && !ready && <LivingSelfChartPlaceholder />}
             {livingChartEnabled && ready && !chart && profile.charts.length > 0 && (
               LivingSelfChartChooser
                 ? <LivingSelfChartChooser charts={profile.charts} />
                 : <LivingSelfChartPlaceholder />
             )}
+            <SunSignFallback
+              noChartConfirmed={ready && !chart && profile.charts.length === 0}
+              selfChartUnselected={ready && !chart && profile.charts.length > 0}
+              comparisonUnavailable={comparisonUnavailable}
+              sunSignLines={editionSunSignLines}
+              editionDate={editionDate}
+            />
+
           </>
         ) : (
           <div

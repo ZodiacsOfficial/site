@@ -233,6 +233,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
 
   return (
     <section class="pfd" aria-label={t(locale, 'pfdToday')}>
+      <a class="btn btn--ghost pf-saved-shortcut" href="#saved-charts">{t(locale, 'navSavedCharts')} <span aria-hidden="true">↓</span></a>
       <div class="shell">
         <div class="core pfd__core">
           <div class="pfd__head">

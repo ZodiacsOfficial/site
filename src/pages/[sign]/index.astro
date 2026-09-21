@@ -100,17 +100,17 @@ const jsonLd = [
 
     <div class="container guide-grid">
       <div class="guide-main">
-        <div class="guide-band reveal">
-          <CollectBand signName={sign.name} slug={sign.slug} />
-          <RaceRamp signName={sign.name} gap="10px" />
-        </div>
-
         <div class="reveal">
           <GuideHoroscopeBand signName={sign.name} slug={sign.slug} />
         </div>
 
         <div class="prose reveal">
           <Content />
+        </div>
+
+        <div class="guide-band reveal">
+          <CollectBand signName={sign.name} slug={sign.slug} />
+          <RaceRamp signName={sign.name} gap="10px" />
         </div>
 
         <section class="guide-heritage reveal">

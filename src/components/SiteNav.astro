@@ -181,20 +181,18 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   <nav aria-label={locale === 'ru' ? 'Мобильная навигация' : 'Mobile'}>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
+      {visibleNavTools.filter((tool) => tool.href === '/birth-chart/' || tool.href === '/compatibility/').map((tool) => (
+        <a class="mobile-menu__link" href={localizePath(locale, tool.href)} hreflang={englishOnlyHref(tool.href) ? 'en' : undefined} title={englishOnlyHref(tool.href) ? englishOnlyAria : undefined}>{t(locale, tool.label)}{toolNeedsEnglishCue(tool) ? englishOnly?.suffix : ''}</a>
+      ))}
       {hasDailyReading && <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/today/')}>{todayLabel}</a>}
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={englishOnlyHref('/learn/') ? 'en' : undefined} title={englishOnlyHref('/learn/') ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{englishOnlyHref('/learn/') ? englishOnly?.suffix : ''}</a>
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishOnly?.suffix : ''}</a>
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 3 : 2}`} href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 4 : 3}`} href="/developers/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>{developersLabel[locale]}{englishOnly?.suffix ?? ''}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${hasDailyReading ? 5 : 4}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
-        <span>{t(locale, 'navCollect')}</span>
-        <small>{astrofolioLabel[locale]}</small>
-      </a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
       <div class="mobile-menu__tools">
-        {visibleNavTools.map((tool, i) => (
+        {visibleNavTools.filter((tool) => tool.href !== '/birth-chart/' && tool.href !== '/compatibility/').map((tool, i) => (
           <a
             class="mobile-menu__tool"
             style={`--i:${i}`}
@@ -210,6 +208,13 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
           {ALL_TOOLS_LABEL[locale]} <span aria-hidden="true">→</span>
         </a>
       </div>
+    </div>
+    <div class="mobile-menu__group">
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 4 : 3}`} href="/developers/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>{developersLabel[locale]}{englishOnly?.suffix ?? ''}</a>
+      <a class="mobile-menu__link mobile-menu__registry" style={`--i:${hasDailyReading ? 5 : 4}`} href="/astrofolio/" hreflang={englishOnly ? 'en' : undefined} title={englishOnlyAria}>
+        <span>{t(locale, 'navCollect')}</span>
+        <small>{astrofolioLabel[locale]}</small>
+      </a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTwelve')}</span>
@@ -524,6 +529,7 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
     box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.8);
     padding: 10px;
     opacity: 0;
+    transform-origin: top center;
     transform: translateY(-6px) scale(0.99);
     transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
   }

@@ -249,6 +249,9 @@ function wireOpeners(): void {
       ? event.target.closest<HTMLElement>('[data-assistant-open]')
       : null;
     if (!target || target === launcher) return;
+    if (target instanceof HTMLAnchorElement
+      && (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return;
+    event.preventDefault();
     void openAssistant(target.dataset.assistantLocale, target);
   });
 }
