@@ -67,7 +67,42 @@ describe('offline service worker posture', () => {
   it('never stale-serves Registry authority JSON', async () => {
     const source = await readFile(resolve(ROOT, 'public/sw.js'), 'utf8');
     expect(source).toContain("url.pathname === '/registry/zodiacs.registry.json'");
-    expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
+    expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\) \|\| neverCached\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
+  });
+
+  it('never caches the developer preview, which says it stores nothing', async () => {
+    // `noServiceWorker` stops that PAGE registering a worker. It cannot
+    // stop an already-active worker at scope `/` from controlling it, and
+    // the navigate branch then put the page's own HTML in Cache Storage.
+    // Measured in Chromium before this: visit `/`, wait for activation,
+    // open the preview, and `caches` held
+    // `/developers/precision-preview/`.
+    const worker = runWorker(await builtWorker(false));
+    const handler = worker.handlers.get('fetch');
+    const paths = [
+      '/developers/precision-preview', '/developers/precision-preview/',
+      '/developers/precision-preview/index.html',
+      '/precision-preview/app.mjs', '/precision-preview/worker.mjs',
+    ];
+    for (const path of paths) {
+      let completion;
+      handler({
+        request: { method: 'GET', mode: path.endsWith('.mjs') ? 'cors' : 'navigate', url: `https://zodiacs.org${path}` },
+        respondWith: (promise) => { completion = Promise.resolve(promise); },
+      });
+      await completion;
+    }
+    expect(worker.networkFetch).toHaveBeenCalledTimes(paths.length);
+    expect(worker.caches.open).not.toHaveBeenCalled();
+    // And offline is an honest failure, not a stale copy of the page.
+    worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
+    let offline;
+    handler({
+      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/developers/precision-preview/' },
+      respondWith: (promise) => { offline = Promise.resolve(promise); },
+    });
+    await expect(offline).rejects.toThrow('offline');
+    expect(worker.caches.open).not.toHaveBeenCalled();
   });
 
   it('never caches or stale-serves Registry authority or any build-time Terminal flag surface', async () => {

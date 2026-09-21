@@ -1,0 +1,1023 @@
+{
+ "what": "omitted gravitational deflection at the tightest solar conjunctions in 1850-2150",
+ "sunSemiDiameterDeg": 0.2666,
+ "bodies": {
+  "Mercury": {
+   "nCandidateMinima": 1891,
+   "tightestOutsideDiscDeg": 0.26749730110443504,
+   "maxDeflectionOutsideDiscArcsec": 0.10450316692640627,
+   "nEventsBehindDisc": 124,
+   "tightestElongDeg": 0.007332035675022642,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 19.8006791813242,
+   "nEventsUnder5deg": 1891,
+   "nEventsWithDeflectionOver0p05": 126,
+   "tightestTen": [
+    {
+     "ttDays": -9548.060437356853,
+     "year": 1973.8588352159977,
+     "elongDeg": 0.007332035675022642,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 8.257075023720972e-8,
+     "deflectionLatArcsec": 5.597674511415018e-7,
+     "totalDeflectionArcsec": 5.658246442516688e-7
+    },
+    {
+     "ttDays": -16673.544019475303,
+     "year": 1954.3503243819978,
+     "elongDeg": 0.011040624015998616,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 19.8006791813242,
+     "deflectionLatArcsec": 1.7001409209632152,
+     "totalDeflectionArcsec": 19.873534538924208
+    },
+    {
+     "ttDays": -3703.716706812367,
+     "year": 1989.8597762989396,
+     "elongDeg": 0.012812131487006254,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 12.837243896524342,
+     "deflectionLatArcsec": 19.15524823999017,
+     "totalDeflectionArcsec": 23.059019066941826
+    },
+    {
+     "ttDays": 45784.534188042846,
+     "year": 2125.3512229652097,
+     "elongDeg": 0.013393911465842857,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -1.520194894894189,
+     "deflectionLatArcsec": 10.372702819327639,
+     "totalDeflectionArcsec": 10.483508771865056
+    },
+    {
+     "ttDays": -33475.73712565539,
+     "year": 1908.348426760697,
+     "elongDeg": 0.015956504024058894,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -1.157334770149987,
+     "deflectionLatArcsec": 7.904785668243692,
+     "totalDeflectionArcsec": 7.9890587763370995
+    },
+    {
+     "ttDays": 128.65827268579275,
+     "year": 2000.352247153144,
+     "elongDeg": 0.016714744463588806,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 1.0839018635977027,
+     "deflectionLatArcsec": -7.414463132864106,
+     "totalDeflectionArcsec": 7.493270761260623
+    },
+    {
+     "ttDays": -20505.997285804864,
+     "year": 1943.8576391901304,
+     "elongDeg": 0.01910102701602738,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -1.6325238609397275,
+     "deflectionLatArcsec": -8.722747554045814,
+     "totalDeflectionArcsec": 8.874201866338291
+    },
+    {
+     "ttDays": 7254.139552075554,
+     "year": 2019.8607516826162,
+     "elongDeg": 0.021093103979650543,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -2.3737811716273427e-7,
+     "deflectionLatArcsec": -0.0000016115642695324617,
+     "totalDeflectionArcsec": 0.0000016289529637140273
+    },
+    {
+     "ttDays": -27631.42961415417,
+     "year": 1924.3492686813026,
+     "elongDeg": 0.023498272943812865,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 1.8430057480145479e-7,
+     "deflectionLatArcsec": -0.0000010036838984928131,
+     "totalDeflectionArcsec": 0.0000010204646316595949
+    },
+    {
+     "ttDays": 28982.33670921642,
+     "year": 2079.349313372256,
+     "elongDeg": 0.025879838849467963,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.6472876941643335,
+     "deflectionLatArcsec": 4.414547285173483,
+     "totalDeflectionArcsec": 4.461749545875913
+    }
+   ]
+  },
+  "Venus": {
+   "nCandidateMinima": 283,
+   "tightestOutsideDiscDeg": 0.26939798699167805,
+   "maxDeflectionOutsideDiscArcsec": 0.12045369435327302,
+   "nEventsBehindDisc": 31,
+   "tightestElongDeg": 0.014563161206463412,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 20.13060043702808,
+   "nEventsUnder5deg": 262,
+   "nEventsWithDeflectionOver0p05": 45,
+   "tightestTen": [
+    {
+     "ttDays": 6001.43069664348,
+     "year": 2016.431021756724,
+     "elongDeg": 0.014563161206463412,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -20.13060043702808,
+     "deflectionLatArcsec": 16.788353491587685,
+     "totalDeflectionArcsec": 26.212399277250707
+    },
+    {
+     "ttDays": 41615.774673763575,
+     "year": 2113.9377814476757,
+     "elongDeg": 0.015480470420747204,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 3.350091537913613,
+     "deflectionLatArcsec": 20.318697196110364,
+     "totalDeflectionArcsec": 20.59302231967803
+    },
+    {
+     "ttDays": -47140.17880402712,
+     "year": 1870.9372243558464,
+     "elongDeg": 0.018140957538698734,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 2.303991320673049,
+     "deflectionLatArcsec": 13.967259746037197,
+     "totalDeflectionArcsec": 14.15601357370544
+    },
+    {
+     "ttDays": 3081.6549064499964,
+     "year": 2008.4371113112936,
+     "elongDeg": 0.04881448535510795,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.5766852640476827,
+     "deflectionLatArcsec": -3.9573414723155427,
+     "totalDeflectionArcsec": 3.999139555681848
+    },
+    {
+     "ttDays": -44220.7026881208,
+     "year": 1878.9303143377938,
+     "elongDeg": 0.0519181825639308,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.6417410907829435,
+     "deflectionLatArcsec": -3.9028028441067537,
+     "totalDeflectionArcsec": 3.955211920573151
+    },
+    {
+     "ttDays": 44535.26044123118,
+     "year": 2121.930897854158,
+     "elongDeg": 0.05614931216615436,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.590803792601946,
+     "deflectionLatArcsec": -3.5941911995075153,
+     "totalDeflectionArcsec": 3.6424249032086653
+    },
+    {
+     "ttDays": 8921.180166106507,
+     "year": 2024.424860139922,
+     "elongDeg": 0.059321596699353864,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.4729131672888798,
+     "deflectionLatArcsec": 3.235551309874238,
+     "totalDeflectionArcsec": 3.2699294959190297
+    },
+    {
+     "ttDays": 38696.291109814265,
+     "year": 2105.944671074098,
+     "elongDeg": 0.07551047842800038,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.43779771631307085,
+     "deflectionLatArcsec": 2.654146988710954,
+     "totalDeflectionArcsec": 2.690011664626427
+    },
+    {
+     "ttDays": -50059.6505036935,
+     "year": 1862.9441464649049,
+     "elongDeg": 0.08018171624164869,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.4122405453927058,
+     "deflectionLatArcsec": 2.498498288985701,
+     "totalDeflectionArcsec": 2.5322787450172126
+    },
+    {
+     "ttDays": 161.8858145739498,
+     "year": 2000.4432192048569,
+     "elongDeg": 0.10093038159810379,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.27272462007772447,
+     "deflectionLatArcsec": -1.8795412037698689,
+     "totalDeflectionArcsec": 1.8992244808217937
+    }
+   ]
+  },
+  "Mars": {
+   "nCandidateMinima": 141,
+   "tightestOutsideDiscDeg": 0.2691961359597158,
+   "maxDeflectionOutsideDiscArcsec": 0.04676697894865356,
+   "nEventsBehindDisc": 21,
+   "tightestElongDeg": 0.01807844535924514,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 0.9044235982855753,
+   "nEventsUnder5deg": 141,
+   "nEventsWithDeflectionOver0p05": 17,
+   "tightestTen": [
+    {
+     "ttDays": -48993.09548876404,
+     "year": 1865.8642149520492,
+     "elongDeg": 0.01807844535924514,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.9044235982855753,
+     "deflectionLatArcsec": 27.67757779333569,
+     "totalDeflectionArcsec": 27.692350829581653
+    },
+    {
+     "ttDays": -29456.737509341852,
+     "year": 1919.3518480237046,
+     "elongDeg": 0.02131662932499606,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.723173913738151,
+     "deflectionLatArcsec": 16.316376477386978,
+     "totalDeflectionArcsec": 16.332394857715293
+    },
+    {
+     "ttDays": 54738.61246601418,
+     "year": 2149.866153226596,
+     "elongDeg": 0.02686126558886972,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.39561694295571215,
+     "deflectionLatArcsec": 12.267200659297668,
+     "totalDeflectionArcsec": 12.27357831873976
+    },
+    {
+     "ttDays": 25881.27179215479,
+     "year": 2070.8590603481307,
+     "elongDeg": 0.030390192095246352,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.3339189318012359,
+     "deflectionLatArcsec": -10.473826365298681,
+     "totalDeflectionArcsec": 10.479147892445758
+    },
+    {
+     "ttDays": -598.683481922078,
+     "year": 1998.3608939577766,
+     "elongDeg": 0.04641998878193991,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.26800423875670276,
+     "deflectionLatArcsec": -6.127018509439427,
+     "totalDeflectionArcsec": 6.132877142059818
+    },
+    {
+     "ttDays": -20135.736882317586,
+     "year": 1944.871356927262,
+     "elongDeg": 0.06350708365588277,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.1515697897048085,
+     "deflectionLatArcsec": 4.616998258089755,
+     "totalDeflectionArcsec": 4.619485500391272
+    },
+    {
+     "ttDays": 45416.158929895115,
+     "year": 2124.34266647473,
+     "elongDeg": 0.07939073531248661,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.1590281828271145,
+     "deflectionLatArcsec": 3.485137910382763,
+     "totalDeflectionArcsec": 3.4887642753508663
+    },
+    {
+     "ttDays": -2976.105269156603,
+     "year": 1991.8518678462517,
+     "elongDeg": 0.08038718429040666,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.1147156738625199,
+     "deflectionLatArcsec": -3.627700373212406,
+     "totalDeflectionArcsec": 3.6295136943914192
+    },
+    {
+     "ttDays": 28259.340497770056,
+     "year": 2077.369857625654,
+     "elongDeg": 0.10631457558475936,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.1116898371805064,
+     "deflectionLatArcsec": -2.596211224561662,
+     "totalDeflectionArcsec": 2.598612572034037
+    },
+    {
+     "ttDays": 8721.72542657096,
+     "year": 2023.8787828242873,
+     "elongDeg": 0.11586550843132828,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.08242298215463961,
+     "deflectionLatArcsec": 2.4927539870153117,
+     "totalDeflectionArcsec": 2.4941162683385367
+    }
+   ]
+  },
+  "Jupiter": {
+   "nCandidateMinima": 275,
+   "tightestOutsideDiscDeg": 0.27259960344810213,
+   "maxDeflectionOutsideDiscArcsec": 0.002859308847291686,
+   "nEventsBehindDisc": 44,
+   "tightestElongDeg": 0.021059155647478855,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 28.062736332344684,
+   "nEventsUnder5deg": 275,
+   "nEventsWithDeflectionOver0p05": 3,
+   "tightestTen": [
+    {
+     "ttDays": -18627.358602292945,
+     "year": 1949.0010715885203,
+     "elongDeg": 0.021059155647478855,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -21.851190188726832,
+     "deflectionLatArcsec": 30.976057600581946,
+     "totalDeflectionArcsec": 37.907659028257584
+    },
+    {
+     "ttDays": 11687.830595346819,
+     "year": 2031.999536195337,
+     "elongDeg": 0.021061000593029178,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 28.062736332344684,
+     "deflectionLatArcsec": -25.488390438953687,
+     "totalDeflectionArcsec": 37.910093258564125
+    },
+    {
+     "ttDays": -46935.822796201304,
+     "year": 1871.4967206127274,
+     "elongDeg": 0.02188857390691381,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.05741361045465965,
+     "deflectionLatArcsec": 26.296178543852854,
+     "totalDeflectionArcsec": 26.296241220607463
+    },
+    {
+     "ttDays": 48396.99785966,
+     "year": 2132.5037586849007,
+     "elongDeg": 0.025386301878531317,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.041920065473277646,
+     "deflectionLatArcsec": -19.105263860026863,
+     "totalDeflectionArcsec": 19.105309849693626
+    },
+    {
+     "ttDays": 42002.85236090582,
+     "year": 2114.9975423980995,
+     "elongDeg": 0.030365529995457715,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.03050683924357145,
+     "deflectionLatArcsec": -15.287296674285454,
+     "totalDeflectionArcsec": 15.28732711348193
+    },
+    {
+     "ttDays": -48942.43554652392,
+     "year": 1866.0029143147874,
+     "elongDeg": 0.030916357845476427,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.03033797029274865,
+     "deflectionLatArcsec": 14.907781960618632,
+     "totalDeflectionArcsec": 14.907812830107495
+    },
+    {
+     "ttDays": -16620.764397077983,
+     "year": 1954.4948271127228,
+     "elongDeg": 0.034471233463340856,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.02773019333517368,
+     "deflectionLatArcsec": 12.355143169717524,
+     "totalDeflectionArcsec": 12.355174288837903
+    },
+    {
+     "ttDays": 18081.907446734047,
+     "year": 2049.5055645358907,
+     "elongDeg": 0.0386573595350696,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.023632833494957595,
+     "deflectionLatArcsec": -10.754391025562537,
+     "totalDeflectionArcsec": 10.754416992160364
+    },
+    {
+     "ttDays": 13694.07270213994,
+     "year": 2037.492327726598,
+     "elongDeg": 0.052798585864948164,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.016984235713835005,
+     "deflectionLatArcsec": 7.564029291502841,
+     "totalDeflectionArcsec": 7.56404835962401
+    },
+    {
+     "ttDays": -12232.912666871991,
+     "year": 1966.5081104260862,
+     "elongDeg": 0.058928008412109496,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.014761003376406734,
+     "deflectionLatArcsec": -6.725703045075898,
+     "totalDeflectionArcsec": 6.725719243139316
+    }
+   ]
+  },
+  "Saturn": {
+   "nCandidateMinima": 290,
+   "tightestOutsideDiscDeg": 0.2827395568928418,
+   "maxDeflectionOutsideDiscArcsec": 0.002494816385478771,
+   "nEventsBehindDisc": 21,
+   "tightestElongDeg": 0.031066425599391517,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 0.02208691321357037,
+   "nEventsUnder5deg": 290,
+   "nEventsWithDeflectionOver0p05": 0,
+   "tightestTen": [
+    {
+     "ttDays": 28868.512491436362,
+     "year": 2079.037679648012,
+     "elongDeg": 0.031066425599391517,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.02208691321357037,
+     "deflectionLatArcsec": 16.275742153497788,
+     "totalDeflectionArcsec": 16.2757571399532
+    },
+    {
+     "ttDays": 7317.136780781946,
+     "year": 2020.0332286948171,
+     "elongDeg": 0.039724163885666866,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.016121086878229107,
+     "deflectionLatArcsec": -11.861372939798384,
+     "totalDeflectionArcsec": 11.861383895073015
+    },
+    {
+     "ttDays": 12615.909772141229,
+     "year": 2034.5404785000444,
+     "elongDeg": 0.040410946266797955,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.019124242925272483,
+     "deflectionLatArcsec": -11.053257048469503,
+     "totalDeflectionArcsec": 11.053273592742858
+    },
+    {
+     "ttDays": -8935.88403214962,
+     "year": 1975.534882868858,
+     "elongDeg": 0.0408071809005599,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.018934655111024767,
+     "deflectionLatArcsec": 10.925345437472131,
+     "totalDeflectionArcsec": 10.92536184522396
+    },
+    {
+     "ttDays": -46372.824110564296,
+     "year": 1873.038127007353,
+     "elongDeg": 0.04458244660276806,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.014037327946425648,
+     "deflectionLatArcsec": 10.356866642437538,
+     "totalDeflectionArcsec": 10.356876155274454
+    },
+    {
+     "ttDays": 50419.84831103457,
+     "year": 2138.0420213854472,
+     "elongDeg": 0.08901588310229012,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.006674524229310919,
+     "deflectionLatArcsec": 4.928598154116997,
+     "totalDeflectionArcsec": 4.928602673571069
+    },
+    {
+     "ttDays": -14234.242816726215,
+     "year": 1961.0287670999967,
+     "elongDeg": 0.10104892127828057,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.005822718230774626,
+     "deflectionLatArcsec": -4.327957153789097,
+     "totalDeflectionArcsec": 4.3279610706401
+    },
+    {
+     "ttDays": -24821.527784699007,
+     "year": 1932.0423606168406,
+     "elongDeg": 0.1026989658972082,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.005793691798317013,
+     "deflectionLatArcsec": 4.253862045221091,
+     "totalDeflectionArcsec": 4.253865990664206
+    },
+    {
+     "ttDays": 34167.67899591298,
+     "year": 2093.5460068334373,
+     "elongDeg": 0.11217074668920528,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.00640410497112498,
+     "deflectionLatArcsec": -3.7143228830646358,
+     "totalDeflectionArcsec": 3.7143284039057662
+    },
+    {
+     "ttDays": -30487.64250756386,
+     "year": 1916.5293839628641,
+     "elongDeg": 0.11270763447364168,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.006393250498604175,
+     "deflectionLatArcsec": 3.694544000975336,
+     "totalDeflectionArcsec": 3.694549532573139
+    }
+   ]
+  },
+  "Uranus": {
+   "nCandidateMinima": 297,
+   "tightestOutsideDiscDeg": 0.2682034821384253,
+   "maxDeflectionOutsideDiscArcsec": 0.00029371940399869345,
+   "nEventsBehindDisc": 70,
+   "tightestElongDeg": 0.022032157888625042,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 39.28850353368034,
+   "nEventsUnder5deg": 297,
+   "nEventsWithDeflectionOver0p05": 5,
+   "tightestTen": [
+    {
+     "ttDays": -19934.27152333445,
+     "year": 1945.4229390189337,
+     "elongDeg": 0.022032157888625042,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -31.96303100123714,
+     "deflectionLatArcsec": 23.47767855836913,
+     "totalDeflectionArcsec": 39.659005110305564
+    },
+    {
+     "ttDays": 10747.171625070045,
+     "year": 2029.4241522931418,
+     "elongDeg": 0.02203297231323092,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -38.83602163998603,
+     "deflectionLatArcsec": -8.037062012067244,
+     "totalDeflectionArcsec": 39.6589325731144
+    },
+    {
+     "ttDays": 41428.70883961681,
+     "year": 2113.4256231064114,
+     "elongDeg": 0.022260554486859464,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.004283676031491268,
+     "deflectionLatArcsec": -34.36642126403929,
+     "totalDeflectionArcsec": 34.36642153101322
+    },
+    {
+     "ttDays": 25176.750527930897,
+     "year": 2068.9301862503244,
+     "elongDeg": 0.022366670755259437,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -28.759725819168125,
+     "deflectionLatArcsec": 28.17627383959922,
+     "totalDeflectionArcsec": 40.26194450168351
+    },
+    {
+     "ttDays": -5504.762953960377,
+     "year": 1984.928780413524,
+     "elongDeg": 0.022368319873097862,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -39.28850353368034,
+     "deflectionLatArcsec": -8.815588839101588,
+     "totalDeflectionArcsec": 40.26538346587859
+    },
+    {
+     "ttDays": -36186.21791730389,
+     "year": 1900.9275347917758,
+     "elongDeg": 0.022369540756264492,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -6.1843522316507915,
+     "deflectionLatArcsec": -39.786931539319724,
+     "totalDeflectionArcsec": 40.264700770844726
+    },
+    {
+     "ttDays": -50615.73172807114,
+     "year": 1861.4216790470332,
+     "elongDeg": 0.02334452550099509,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.004549527142216903,
+     "deflectionLatArcsec": 28.122667625460952,
+     "totalDeflectionArcsec": 28.12266799345936
+    },
+    {
+     "ttDays": -50245.96341960359,
+     "year": 1862.4340495014276,
+     "elongDeg": 0.04345599364487196,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0015749231806694297,
+     "deflectionLatArcsec": -10.788791823990382,
+     "totalDeflectionArcsec": 10.78879193894216
+    },
+    {
+     "ttDays": 41058.98269815142,
+     "year": 2112.413368098977,
+     "elongDeg": 0.045472809379600534,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0013916653301748738,
+     "deflectionLatArcsec": 10.25980995765341,
+     "totalDeflectionArcsec": 10.25981005203777
+    },
+    {
+     "ttDays": -35816.63661747992,
+     "year": 1901.9393932444082,
+     "elongDeg": 0.04810455979054909,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0018829724467650522,
+     "deflectionLatArcsec": 9.938795142282325,
+     "totalDeflectionArcsec": 9.938795320653176
+    }
+   ]
+  },
+  "Neptune": {
+   "nCandidateMinima": 299,
+   "tightestOutsideDiscDeg": 0.2742928956074869,
+   "maxDeflectionOutsideDiscArcsec": 0.0003744898663171625,
+   "nEventsBehindDisc": 24,
+   "tightestElongDeg": 0.022234847499415664,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 8.44741509740743,
+   "nEventsUnder5deg": 299,
+   "nEventsWithDeflectionOver0p05": 1,
+   "tightestTen": [
+    {
+     "ttDays": -29004.516983259462,
+     "year": 1920.5899603469966,
+     "elongDeg": 0.022234847499415664,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 8.44741509740743,
+     "deflectionLatArcsec": -39.119074366530874,
+     "totalDeflectionArcsec": 40.02075449943534
+    },
+    {
+     "ttDays": 30895.67646033715,
+     "year": 2084.5877521159127,
+     "elongDeg": 0.03122027635192246,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0039298317688007955,
+     "deflectionLatArcsec": 16.740885811785102,
+     "totalDeflectionArcsec": 16.74088627303826
+    },
+    {
+     "ttDays": 1492.8957347290363,
+     "year": 2004.0873257624341,
+     "elongDeg": 0.03548006990661511,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0030323329383463715,
+     "deflectionLatArcsec": 14.588892891635725,
+     "totalDeflectionArcsec": 14.588893206774081
+    },
+    {
+     "ttDays": 1125.4829811207442,
+     "year": 2003.0814044657652,
+     "elongDeg": 0.038073057433346706,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0020399340201038285,
+     "deflectionLatArcsec": -13.345079614498939,
+     "totalDeflectionArcsec": 13.34507977041142
+    },
+    {
+     "ttDays": 31263.235841319387,
+     "year": 2085.5940748564526,
+     "elongDeg": 0.04197330193632249,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0018100820170730003,
+     "deflectionLatArcsec": -11.47284184294347,
+     "totalDeflectionArcsec": 11.472841985732641
+    },
+    {
+     "ttDays": -29372.087170428807,
+     "year": 1919.583608020729,
+     "elongDeg": 0.05744732486982472,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0013429980072032777,
+     "deflectionLatArcsec": 8.056467358482609,
+     "totalDeflectionArcsec": 8.05646747042012
+    },
+    {
+     "ttDays": -28636.96549058119,
+     "year": 1921.5962614905375,
+     "elongDeg": 0.07881983883715994,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0009311538292422483,
+     "deflectionLatArcsec": -5.7641154434541875,
+     "totalDeflectionArcsec": 5.764115518664843
+    },
+    {
+     "ttDays": 30528.118898275286,
+     "year": 2083.581434355305,
+     "elongDeg": 0.09375286478698616,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0007850580345802882,
+     "deflectionLatArcsec": 4.811635231693639,
+     "totalDeflectionArcsec": 4.811635295737819
+    },
+    {
+     "ttDays": 1860.3125281052828,
+     "year": 2005.0932581193847,
+     "elongDeg": 0.09819316707717639,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0007334826250371407,
+     "deflectionLatArcsec": 4.7307045759580895,
+     "totalDeflectionArcsec": 4.730704632820145
+    },
+    {
+     "ttDays": 758.0738222372447,
+     "year": 2002.0754930109165,
+     "elongDeg": 0.1009800464141155,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0009835977152761188,
+     "deflectionLatArcsec": -4.60140931059983,
+     "totalDeflectionArcsec": 4.601409415726474
+    }
+   ]
+  },
+  "Pluto": {
+   "nCandidateMinima": 55,
+   "tightestOutsideDiscDeg": 0.3150699985535925,
+   "maxDeflectionOutsideDiscArcsec": 0.0016505907296959776,
+   "nEventsBehindDisc": 2,
+   "tightestElongDeg": 0.06216558054592642,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 0.008165237062485176,
+   "nEventsUnder5deg": 45,
+   "nEventsWithDeflectionOver0p05": 0,
+   "tightestTen": [
+    {
+     "ttDays": -25375.24723332037,
+     "year": 1930.5263593885823,
+     "elongDeg": 0.06216558054592642,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.008165237062485176,
+     "deflectionLatArcsec": 7.45443999260742,
+     "totalDeflectionArcsec": 7.454444464505866
+    },
+    {
+     "ttDays": 6949.985473911758,
+     "year": 2019.028023200306,
+     "elongDeg": 0.12081786844320991,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.005828868984281144,
+     "deflectionLatArcsec": 3.8499124339210544,
+     "totalDeflectionArcsec": 3.849916846429604
+    },
+    {
+     "ttDays": -25008.68468674334,
+     "year": 1931.5299529452611,
+     "elongDeg": 0.3150699985535925,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0015727947072718962,
+     "deflectionLatArcsec": -1.4233534908385304,
+     "totalDeflectionArcsec": 1.423354359775022
+    },
+    {
+     "ttDays": -25741.800535809365,
+     "year": 1929.5227911408367,
+     "elongDeg": 0.4315187608840447,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0011391172677122086,
+     "deflectionLatArcsec": 1.038846687817263,
+     "totalDeflectionArcsec": 1.0388473123146864
+    },
+    {
+     "ttDays": 6582.899123408031,
+     "year": 2018.0229955466339,
+     "elongDeg": 0.4394329755998855,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0016505907296959776,
+     "deflectionLatArcsec": -1.0496454319705473,
+     "totalDeflectionArcsec": 1.0496467296886074
+    },
+    {
+     "ttDays": 7317.055629576089,
+     "year": 2020.0330065149242,
+     "elongDeg": 0.6714595320583869,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0010556829010965885,
+     "deflectionLatArcsec": 0.6869084532890923,
+     "totalDeflectionArcsec": 0.686909264396271
+    },
+    {
+     "ttDays": -24642.10247985251,
+     "year": 1932.5336003289458,
+     "elongDeg": 0.6943109612561342,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.0007300733329884679,
+     "deflectionLatArcsec": -0.6452220657616081,
+     "totalDeflectionArcsec": 0.6452224787424128
+    },
+    {
+     "ttDays": -26108.333299926104,
+     "year": 1928.51927912409,
+     "elongDeg": 0.7978531099199564,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0005938823449014308,
+     "deflectionLatArcsec": 0.5616326829648965,
+     "totalDeflectionArcsec": 0.5616329968958088
+    },
+    {
+     "ttDays": 6215.783432428267,
+     "year": 2017.0178875631163,
+     "elongDeg": 1.0060289201428076,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0.0007153129672587966,
+     "deflectionLatArcsec": -0.4581720364528863,
+     "totalDeflectionArcsec": 0.4581725946653316
+    },
+    {
+     "ttDays": -24275.501452742537,
+     "year": 1933.5372992395824,
+     "elongDeg": 1.0772537041547325,
+     "behindSolarDisc": false,
+     "limiterBound": false,
+     "deflectionLonArcsec": -0.00046525062202817935,
+     "deflectionLatArcsec": -0.41574650635585186,
+     "totalDeflectionArcsec": 0.4157467665883835
+    }
+   ]
+  },
+  "Moon": {
+   "nCandidateMinima": 2845,
+   "tightestOutsideDiscDeg": 0.2671136564140082,
+   "maxDeflectionOutsideDiscArcsec": 2.517026587156579e-8,
+   "nEventsBehindDisc": 102,
+   "tightestElongDeg": 0.004197205476154682,
+   "tightestIsInsideSolarDisc": true,
+   "maxDeflectionLonArcsec": 2.517026587156579e-8,
+   "nEventsUnder5deg": 2801,
+   "nEventsWithDeflectionOver0p05": 0,
+   "tightestTen": [
+    {
+     "ttDays": -3095.70346331318,
+     "year": 1991.5244258362404,
+     "elongDeg": 0.004197205476154682,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 0,
+     "deflectionLatArcsec": 3.4349398325694835e-10,
+     "totalDeflectionArcsec": 3.4349398325694835e-10
+    },
+    {
+     "ttDays": -30824.546937925676,
+     "year": 1915.60698990301,
+     "elongDeg": 0.011546721737935682,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -1.0231815394945443e-10,
+     "deflectionLatArcsec": -1.0419415330531479e-9,
+     "totalDeflectionArcsec": 1.04695327618156e-9
+    },
+    {
+     "ttDays": 48376.1988867249,
+     "year": 2132.446814200479,
+     "elongDeg": 0.018968630452839363,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -1.5347723092418164e-10,
+     "deflectionLatArcsec": 1.5572168554633947e-9,
+     "totalDeflectionArcsec": 1.5647618326019177e-9
+    },
+    {
+     "ttDays": -54567.60145876059,
+     "year": 1850.6020493942215,
+     "elongDeg": 0.021927193267866206,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 1.0231815394945443e-10,
+     "deflectionLatArcsec": -1.8090903775025424e-9,
+     "totalDeflectionArcsec": 1.811981511241091e-9
+    },
+    {
+     "ttDays": -20253.261657996198,
+     "year": 1944.5495916276627,
+     "elongDeg": 0.02875391707893759,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -2.0463630789890885e-10,
+     "deflectionLatArcsec": 2.622040085054067e-9,
+     "totalDeflectionArcsec": 2.630013348962705e-9
+    },
+    {
+     "ttDays": 24633.362805775272,
+     "year": 2067.4424717475026,
+     "elongDeg": 0.035370173118609016,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 2.5579538487363607e-10,
+     "deflectionLatArcsec": 3.228917133668574e-9,
+     "totalDeflectionArcsec": 3.2390333604745504e-9
+    },
+    {
+     "ttDays": 14062.064525501726,
+     "year": 2038.4998344298474,
+     "elongDeg": 0.03722461344430685,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": 3.069544618483633e-10,
+     "deflectionLatArcsec": -3.3319846881596504e-9,
+     "totalDeflectionArcsec": 3.346093687316073e-9
+    },
+    {
+     "ttDays": 20647.34860317973,
+     "year": 2056.5293596254064,
+     "elongDeg": 0.039773826497706194,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -3.069544618483633e-10,
+     "deflectionLatArcsec": 3.5495106853744574e-9,
+     "totalDeflectionArcsec": 3.5627583558969484e-9
+    },
+    {
+     "ttDays": 31218.639767064094,
+     "year": 2085.47197745945,
+     "elongDeg": 0.041522897266892456,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -4.092726157978177e-10,
+     "deflectionLatArcsec": -3.767061662607318e-9,
+     "totalDeflectionArcsec": 3.7892291507399895e-9
+    },
+    {
+     "ttDays": -47982.28322113963,
+     "year": 1868.6316681146075,
+     "elongDeg": 0.04521764654551108,
+     "behindSolarDisc": true,
+     "limiterBound": false,
+     "deflectionLonArcsec": -3.069544618483633e-10,
+     "deflectionLatArcsec": 3.744080045997578e-9,
+     "totalDeflectionArcsec": 3.756641635102726e-9
+    }
+   ]
+  }
+ }
+}

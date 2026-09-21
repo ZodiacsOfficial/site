@@ -1,0 +1,65 @@
+{
+ "what": "apparent ecliptic longitude: planetary-system barycentre minus body centre",
+ "bodies": {
+  "Jupiter": {
+   "kernel": "/tmp/claude-0/satkernels/jup348.bsp",
+   "segment": "599<-5",
+   "coverage": {
+    "startEt": -93355200,
+    "stopEt": 6309921600
+   },
+   "n": 1500,
+   "maxOffsetKm": 220.045300566189,
+   "maxAbsDLonArcsec": 0.06649854790339305,
+   "p50AbsDLonArcsec": 0.01806356521001362,
+   "maxAbsDLatArcsec": 0.003932922108784709,
+   "minDistAu": 3.954525392597866,
+   "maxDistAu": 6.452509212273939
+  },
+  "Saturn": {
+   "kernel": "/tmp/claude-0/satkernels/sat480.bsp",
+   "segment": "699<-6",
+   "coverage": {
+    "startEt": 465134400,
+    "stopEt": 1577880000
+   },
+   "n": 1500,
+   "maxOffsetKm": 310.54020741133417,
+   "maxAbsDLonArcsec": 0.04969112287085409,
+   "p50AbsDLonArcsec": 0.027555409883461834,
+   "maxAbsDLatArcsec": 0.023258637709400176,
+   "minDistAu": 8.034270084707472,
+   "maxDistAu": 11.046875678011677
+  },
+  "Neptune": {
+   "kernel": "/tmp/claude-0/satkernels/nep097.bsp",
+   "segment": "899<-8",
+   "coverage": {
+    "startEt": -12622046400,
+    "stopEt": -320932800
+   },
+   "n": 1500,
+   "maxOffsetKm": 74.34435019401381,
+   "maxAbsDLonArcsec": 0.0035220578070038755,
+   "p50AbsDLonArcsec": 0.0020330616166575055,
+   "maxAbsDLatArcsec": 0.002660897293704778,
+   "minDistAu": 28.823895579335318,
+   "maxDistAu": 31.323863992162114
+  },
+  "Pluto": {
+   "kernel": "/tmp/claude-0/satkernels/plu060.bsp",
+   "segment": "999<-9",
+   "coverage": {
+    "startEt": 410270400,
+    "stopEt": 6311217600
+   },
+   "n": 1500,
+   "maxOffsetKm": 2132.049600662995,
+   "maxAbsDLonArcsec": 0.08327489579187386,
+   "p50AbsDLonArcsec": 0.025766911471691856,
+   "maxAbsDLatArcsec": 0.08359817255882973,
+   "minDistAu": 31.457183956864952,
+   "maxDistAu": 50.282856405856634
+  }
+ }
+}

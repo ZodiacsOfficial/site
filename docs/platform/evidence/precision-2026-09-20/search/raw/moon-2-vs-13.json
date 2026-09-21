@@ -1,0 +1,335 @@
+{
+ "case": {
+  "body": "Moon",
+  "targetDegrees": 100,
+  "fromUtc": "2019-01-01T00:00:00Z",
+  "toUtc": "2020-01-01T00:00:00Z",
+  "backend": "@zodiacs/engine/internal bodyLongitude, engine-native Delta-T",
+  "source": "docs/platform/evidence/precision-2026-09-20/README.md line 78, and search/verify/moon-mechanism.mjs"
+ },
+ "when": "2026-09-20T16:19:20.563Z",
+ "node": "v22.22.2",
+ "truth": {
+  "method": "dense scan of the wrapped difference at two step sizes, then bisection; a sign change with both ends beyond 90 degrees is the wrap and is not counted",
+  "crossingsAtOneHourStep": 13,
+  "crossingsAtTenMinuteStep": 13,
+  "agree": true,
+  "instants": [
+   "2019-01-19T19:59:17.068Z",
+   "2019-02-16T06:47:13.267Z",
+   "2019-03-15T15:10:33.866Z",
+   "2019-04-11T21:10:55.466Z",
+   "2019-05-09T02:36:24.189Z",
+   "2019-06-05T09:23:15.516Z",
+   "2019-07-02T18:13:23.956Z",
+   "2019-07-30T04:24:34.926Z",
+   "2019-08-26T14:24:37.597Z",
+   "2019-09-22T22:43:17.385Z",
+   "2019-10-20T04:55:54.163Z",
+   "2019-11-16T10:20:43.047Z",
+   "2019-12-13T17:05:13.360Z"
+  ]
+ },
+ "harness": {
+  "settings": {
+   "hMs": 600000,
+   "safetyFactor": 10,
+   "samples": 400,
+   "slopeGridSpacingMs": 86400000,
+   "slopeGridMaxSamples": 5,
+   "curvatureGridSpacingMs": 86400000,
+   "curvatureGridMaxSamples": 64
+  },
+  "measuredBounds": {
+   "grid": {
+    "samples": 400,
+    "stepMs": 78840000,
+    "hMs": 600000
+   },
+   "safetyFactor": 10,
+   "measured": {
+    "maxAbsSecondDerivative": 6.752080518405515e-17,
+    "maxAbsThirdDerivative": 2.9262570967182032e-25,
+    "maxAbsFourthDerivative": 2.1939103483160626e-33
+   },
+   "measuredPerDay": {
+    "secondDegPerDay2": 0.5040401098667644,
+    "thirdDegPerDay3": 0.18873554840683937,
+    "fourthDegPerDay4": 0.12225703150033951
+   },
+   "bounds": {
+    "secondDerivativeBound": 6.752080518405516e-16,
+    "thirdDerivativeBound": 2.9262570967182032e-24,
+    "fourthDerivativeBound": 2.1939103483160624e-32
+   },
+   "provenance": "measured on the declared grid, then multiplied by the declared safety factor. NOT a proven bound on the underlying function."
+  }
+ },
+ "withRecordedDefaults": [
+  {
+   "epsilon": 1e-9,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 213,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 1e-7,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 67,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.000001,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 70,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.00001,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 72,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.0001,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 85,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.001,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 105,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.01,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 112,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.05,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 121,
+   "openRegions": 0,
+   "overcountedBy": -11
+  },
+  {
+   "epsilon": 0.5,
+   "verdict": "multiple-crossings",
+   "outcome": "certified",
+   "certified": true,
+   "complete": true,
+   "rootCount": 2,
+   "possibleRootCounts": [
+    2
+   ],
+   "evaluations": 134,
+   "openRegions": 0,
+   "overcountedBy": -11
+  }
+ ],
+ "sinFormulation": {
+  "what": "sin(lon - target), which is continuous and has the target crossings plus the antipode crossings as its zero set",
+  "expected": "13 crossings of the target plus the antipode crossings",
+  "verdict": "multiple-crossings",
+  "outcome": "certified",
+  "certified": true,
+  "rootCount": 27,
+  "possibleRootCounts": [
+   27
+  ],
+  "openRegions": 0,
+  "evaluations": 2815
+ },
+ "mechanism": {
+  "what": "The value enclosure is a MEAN-VALUE enclosure: it assumes f is differentiable across the cell with a derivative inside the declared range. The wrapped circular difference is not -- it jumps by 360 degrees at the antipode, thirteen times in this window. The derivative enclosure is sampled with a 600 s central difference at up to five points in a cell, so it almost never lands on a jump and reports a plausible finite range; the mean-value enclosure built from that range then proves the level is missed over a three-week window that contains a crossing.",
+  "epsilon": 0.00001,
+  "minWidth": 100,
+  "cells": 18,
+  "cellsByStatus": {
+   "excluded": 16,
+   "monotone": 2
+  },
+  "trueCrossings": 13,
+  "crossingsInsideCellsClosedByExclusion": 11,
+  "crossingsInsideMonotoneCellsWhoseEndsAgree": 0,
+  "examples": [
+   {
+    "closedAs": "excluded",
+    "from": "2019-01-01T00:00:00.000Z",
+    "to": "2019-01-23T19:30:00.000Z",
+    "widthDays": 22.8125,
+    "valueEnclosure": [
+     66.89179055918427,
+     115.56129893915741
+    ],
+    "derivativeEnclosureDegPerDay": [
+     -2.431939511830252,
+     29.286650648577275
+    ],
+    "endValues": [
+     122.37041067281189,
+     60.0826788255298
+    ],
+    "wrapJumpsInside": 1,
+    "trueCrossingsInside": [
+     "2019-01-19T19:59:17.068Z"
+    ]
+   },
+   {
+    "closedAs": "excluded",
+    "from": "2019-02-15T15:00:00.000Z",
+    "to": "2019-03-10T10:30:00.000Z",
+    "widthDays": 22.8125,
+    "valueEnclosure": [
+     -68.21910229395752,
+     -9.480673745789659
+    ],
+    "derivativeEnclosureDegPerDay": [
+     -2.5768492906611296,
+     29.38107495826739
+    ],
+    "endValues": [
+     -9.434727850750505,
+     -68.26504818899667
+    ],
+    "wrapJumpsInside": 1,
+    "trueCrossingsInside": [
+     "2019-02-16T06:47:13.267Z"
+    ]
+   },
+   {
+    "closedAs": "excluded",
+    "from": "2019-03-10T10:30:00.000Z",
+    "to": "2019-04-02T06:00:00.000Z",
+    "widthDays": 22.8125,
+    "valueEnclosure": [
+     -125.0126544496683,
+     -65.745741909759
+    ],
+    "derivativeEnclosureDegPerDay": [
+     -2.4875663018376604,
+     29.218599253306138
+    ],
+    "endValues": [
+     -68.26504818899667,
+     -122.49334817043064
+    ],
+    "wrapJumpsInside": 1,
+    "trueCrossingsInside": [
+     "2019-03-15T15:10:33.866Z"
+    ]
+   },
+   {
+    "closedAs": "excluded",
+    "from": "2019-04-02T06:00:00.000Z",
+    "to": "2019-04-25T01:30:00.000Z",
+    "widthDays": 22.8125,
+    "valueEnclosure": [
+     -179.24095443110227,
+     -119.39575583550996
+    ],
+    "derivativeEnclosureDegPerDay": [
+     -2.4875663018376604,
+     28.818798749466847
+    ],
+    "endValues": [
+     -122.49334817043064,
+     -176.1433620961816
+    ],
+    "wrapJumpsInside": 1,
+    "trueCrossingsInside": [
+     "2019-04-11T21:10:55.466Z"
+    ]
+   }
+  ],
+  "whoseDefect": "Not classifyInterval. Its header states plainly that an empirical enclosure \"holds only if the declared bounds hold\"; given a real enclosure it is correct, which the sin() row above shows by getting 27. The defect is in the harness: buildLevelProblem hands it a discontinuous function together with a derivative bound measured as if the function were smooth, and nothing in between checks that."
+ },
+ "alphaSearch": {
+  "what": "examples/precision-alpha, which splits the interval at every antipode crossing and shows each split gap to be root-free before passing over it. Different backend (the compact pack) and a slightly different clock, so the instants are not expected to match to the millisecond; the COUNT is the comparison.",
+  "contract": "zodiacs-precision-search/2",
+  "status": "finished",
+  "established": false,
+  "support": "conditional",
+  "allIntervalsAccountedFor": true,
+  "eventsFound": 13,
+  "conditionalTotal": 13,
+  "antipodeGaps": 14,
+  "allGapsShownRootFree": true,
+  "unresolved": 0,
+  "evaluations": 8518,
+  "matchesTruth": true,
+  "firstFew": [
+   "2019-01-19T20:00:30.116Z",
+   "2019-02-16T06:48:24.903Z",
+   "2019-03-15T15:11:45.911Z",
+   "2019-04-11T21:12:05.102Z"
+  ]
+ },
+ "verdict": "REPRODUCED. With the recorded case and the harness's own default parameters, the search returns a CERTIFIED, COMPLETE count of 2 where the truth is 13, at 9 of the 9 allowances tried. This is an established defect of the harness, not of classifyInterval: the enclosure it supplies is not an enclosure of the function it supplies."
+}

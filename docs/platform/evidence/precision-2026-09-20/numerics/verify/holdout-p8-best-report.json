@@ -1,0 +1,537 @@
+{
+ "what": "Zodiacs @zodiacs/engine vs Swiss Ephemeris, apparent geocentric ecliptic longitude of date, tropical",
+ "interpretation": "Agreement between two implementations that both descend from JPL development ephemerides. This measures consistency with Swiss, NOT independent observational accuracy.",
+ "zodiacsEngine": "holdout-p8-best",
+ "swissBinding": "2.10.03",
+ "swissBackendsObserved": [
+  "SWIEPH"
+ ],
+ "isFullSwissConfiguration": true,
+ "set": "holdout",
+ "overall": {
+  "n": 40,
+  "maxAbsArcsec": 0.0017475444451520161,
+  "p50ArcsecAbs": 0.00028417618977982784,
+  "p95ArcsecAbs": 0.0007256667254296179,
+  "worstCase": null
+ },
+ "byBody": {
+  "Jupiter": {
+   "n": 4,
+   "maxAbsArcsec": 0.0004894450285064522,
+   "p50ArcsecAbs": 0.0003424634655857517,
+   "p95ArcsecAbs": 0.00046899056542315515,
+   "worstCase": null
+  },
+  "Mars": {
+   "n": 4,
+   "maxAbsArcsec": 0.0005024307370149472,
+   "p50ArcsecAbs": 0.00037008194908594305,
+   "p95ArcsecAbs": 0.0004888882898512747,
+   "worstCase": null
+  },
+  "Mercury": {
+   "n": 4,
+   "maxAbsArcsec": 0.0005581708023782994,
+   "p50ArcsecAbs": 0.00030634275276497647,
+   "p95ArcsecAbs": 0.0005448864885693183,
+   "worstCase": null
+  },
+  "Moon": {
+   "n": 4,
+   "maxAbsArcsec": 0.0010708976105888723,
+   "p50ArcsecAbs": 0.000628049701845157,
+   "p95ArcsecAbs": 0.001016387470826885,
+   "worstCase": null
+  },
+  "Neptune": {
+   "n": 4,
+   "maxAbsArcsec": 0.0004157426019446575,
+   "p50ArcsecAbs": 0.00007052278760966146,
+   "p95ArcsecAbs": 0.0003654540989828091,
+   "worstCase": null
+  },
+  "Pluto": {
+   "n": 4,
+   "maxAbsArcsec": 0.00028109436698287027,
+   "p50ArcsecAbs": 0.00023346700572801637,
+   "p95ArcsecAbs": 0.000274205142432038,
+   "worstCase": null
+  },
+  "Saturn": {
+   "n": 4,
+   "maxAbsArcsec": 0.0006391576675923716,
+   "p50ArcsecAbs": 0.00023485403062295518,
+   "p95ArcsecAbs": 0.0005952481234317019,
+   "worstCase": null
+  },
+  "Sun": {
+   "n": 4,
+   "maxAbsArcsec": 0.0006517469444133894,
+   "p50ArcsecAbs": 0.0003965931966831704,
+   "p95ArcsecAbs": 0.0006304654462496728,
+   "worstCase": null
+  },
+  "Uranus": {
+   "n": 4,
+   "maxAbsArcsec": 0.00028503627618192695,
+   "p50ArcsecAbs": 0.00019096133314633335,
+   "p95ArcsecAbs": 0.0002711963594492772,
+   "worstCase": null
+  },
+  "Venus": {
+   "n": 4,
+   "maxAbsArcsec": 0.0017475444451520161,
+   "p50ArcsecAbs": 0.00008140534646372544,
+   "p95ArcsecAbs": 0.001499205899904154,
+   "worstCase": null
+  }
+ },
+ "byStratum": {
+  "boundary": {
+   "n": 10,
+   "maxAbsArcsec": 0.0007074966788422898,
+   "p50ArcsecAbs": 0.00015802542634446581,
+   "p95ArcsecAbs": 0.0006093734361911627,
+   "worstCase": null
+  },
+  "ordinary": {
+   "n": 20,
+   "maxAbsArcsec": 0.0017475444451520161,
+   "p50ArcsecAbs": 0.0003497546572361898,
+   "p95ArcsecAbs": 0.00110472995231703,
+   "worstCase": null
+  },
+  "polar": {
+   "n": 10,
+   "maxAbsArcsec": 0.0006391576675923716,
+   "p50ArcsecAbs": 0.00028417618977982784,
+   "p95ArcsecAbs": 0.0005984079433574151,
+   "worstCase": null
+  }
+ },
+ "excluded": [
+  {
+   "id": "hold-03",
+   "body": "Sun",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Moon",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Mercury",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Venus",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Mars",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Jupiter",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Saturn",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Uranus",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Neptune",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-03",
+   "body": "Pluto",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Sun",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Moon",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Mercury",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Venus",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Mars",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Jupiter",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Saturn",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Uranus",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Neptune",
+   "why": "body absent from Zodiacs result"
+  },
+  {
+   "id": "hold-04",
+   "body": "Pluto",
+   "why": "body absent from Zodiacs result"
+  }
+ ],
+ "rows": [
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Sun",
+   "dLonArcsec": -0.0006517469444133894,
+   "dLatArcsec": 0.00013986744782700043,
+   "dSpeedArcsecPerDay": -3436.747210100232
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Moon",
+   "dLonArcsec": 0.00047899844730636687,
+   "dLatArcsec": 0.00017074188702892457,
+   "dSpeedArcsecPerDay": -45818.962400769575
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Mercury",
+   "dLonArcsec": -0.0005581708023782994,
+   "dLatArcsec": -0.000010446256659690789,
+   "dSpeedArcsecPerDay": -7685.1735760849715
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Venus",
+   "dLonArcsec": -0.0017475444451520161,
+   "dLatArcsec": 0.00039499563619926903,
+   "dSpeedArcsecPerDay": -3963.2612623436016
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Mars",
+   "dLonArcsec": 0.0005024307370149472,
+   "dLatArcsec": 0.0006522711474943321,
+   "dSpeedArcsecPerDay": -602.5747351318198
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Jupiter",
+   "dLonArcsec": 0.0003530819412844721,
+   "dLatArcsec": 0.00020062619325855735,
+   "dSpeedArcsecPerDay": -525.9707930254566
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Saturn",
+   "dLonArcsec": 0.0003464273731879075,
+   "dLatArcsec": -0.00026735140181699535,
+   "dSpeedArcsecPerDay": -190.32010523094806
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Uranus",
+   "dLonArcsec": 0.00008493603900205926,
+   "dLatArcsec": 0.000008383907568187965,
+   "dSpeedArcsecPerDay": -131.06389887052933
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Neptune",
+   "dLonArcsec": 0.000036134986203251174,
+   "dLatArcsec": -0.0001369521080540892,
+   "dSpeedArcsecPerDay": 33.35910143666837
+  },
+  {
+   "id": "hold-01",
+   "stratum": "ordinary",
+   "body": "Pluto",
+   "dLonArcsec": -0.00017502563878224464,
+   "dLatArcsec": 0.00008854371955635543,
+   "dSpeedArcsecPerDay": -85.91313128659904
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Sun",
+   "dLonArcsec": -0.0005098702899886121,
+   "dLatArcsec": 0.00004824723241430944,
+   "dSpeedArcsecPerDay": -3559.0007388786717
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Moon",
+   "dLonArcsec": -0.0010708976105888723,
+   "dLatArcsec": 0.00006816238933282648,
+   "dSpeedArcsecPerDay": -50678.347159746605
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Mercury",
+   "dLonArcsec": -0.00046960871031842544,
+   "dLatArcsec": -0.0000019729298195159117,
+   "dSpeedArcsecPerDay": -6349.39352037783
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Venus",
+   "dLonArcsec": -0.00007085654942784458,
+   "dLatArcsec": -0.00019138064253354514,
+   "dSpeedArcsecPerDay": 302.71602007655866
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Mars",
+   "dLonArcsec": 0.0003280161422480887,
+   "dLatArcsec": 0.00018519592179799815,
+   "dSpeedArcsecPerDay": -2508.8065578123874
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Jupiter",
+   "dLonArcsec": -0.00033184498988703126,
+   "dLatArcsec": -0.0001912717656260554,
+   "dSpeedArcsecPerDay": 416.3012417526352
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Saturn",
+   "dLonArcsec": 0.00008769228543314966,
+   "dLatArcsec": -0.00011111061350987939,
+   "dSpeedArcsecPerDay": -441.6357538557796
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Uranus",
+   "dLonArcsec": 0.00018915250166173792,
+   "dLatArcsec": -0.00007417346257199142,
+   "dSpeedArcsecPerDay": 133.86226576761348
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Neptune",
+   "dLonArcsec": -0.0004157426019446575,
+   "dLatArcsec": 0.00007665846857296543,
+   "dSpeedArcsecPerDay": 52.758448635677425
+  },
+  {
+   "id": "hold-02",
+   "stratum": "ordinary",
+   "body": "Pluto",
+   "dLonArcsec": -0.00023176780814537778,
+   "dLatArcsec": -0.00014174657927412682,
+   "dSpeedArcsecPerDay": -48.94600143276487
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Sun",
+   "dLonArcsec": -0.000023642655833100434,
+   "dLatArcsec": -0.000300068534644487,
+   "dSpeedArcsecPerDay": -3667.2534303856196
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Moon",
+   "dLonArcsec": -0.0007074966788422898,
+   "dLatArcsec": -0.00011687490015788171,
+   "dSpeedArcsecPerDay": -44011.699524460935
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Mercury",
+   "dLonArcsec": -0.00007720784651610302,
+   "dLatArcsec": -0.00001798337239122816,
+   "dSpeedArcsecPerDay": -5210.954218923594
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Venus",
+   "dLonArcsec": 0.000044803073251387104,
+   "dLatArcsec": -0.0003959447787138526,
+   "dSpeedArcsecPerDay": -4531.907236389179
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Mars",
+   "dLonArcsec": 0.00028085494250262855,
+   "dLatArcsec": -0.000038460649465221763,
+   "dSpeedArcsecPerDay": -2732.8201425993257
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Jupiter",
+   "dLonArcsec": -0.0004894450285064522,
+   "dLatArcsec": -0.0001251960776049721,
+   "dSpeedArcsecPerDay": 417.69315496575445
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Saturn",
+   "dLonArcsec": -0.00012328068805800285,
+   "dLatArcsec": 0.00015997210915941196,
+   "dSpeedArcsecPerDay": -149.3117529419401
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Uranus",
+   "dLonArcsec": 0.00019277016463092878,
+   "dLatArcsec": 0.00007885605238788784,
+   "dSpeedArcsecPerDay": 121.29458592018523
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Neptune",
+   "dLonArcsec": -0.00008048591553233564,
+   "dLatArcsec": 0.0000348359980861801,
+   "dSpeedArcsecPerDay": -23.430954978948318
+  },
+  {
+   "id": "hold-05",
+   "stratum": "boundary",
+   "body": "Pluto",
+   "dLonArcsec": -0.00028109436698287027,
+   "dLatArcsec": -0.000059325534884635545,
+   "dSpeedArcsecPerDay": -100.69002572027908
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Sun",
+   "dLonArcsec": 0.0002833161033777287,
+   "dLatArcsec": -0.00006092497836815251,
+   "dSpeedArcsecPerDay": -3670.0208393695066
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Moon",
+   "dLonArcsec": -0.0005486027248480241,
+   "dLatArcsec": -0.00005213008904547678,
+   "dSpeedArcsecPerDay": -55377.8768599289
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Mercury",
+   "dLonArcsec": 0.0001430767952115275,
+   "dLatArcsec": -0.0000169085987211659,
+   "dSpeedArcsecPerDay": -4956.400001896095
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Venus",
+   "dLonArcsec": 0.00009195414349960629,
+   "dLatArcsec": -0.00008154761346190753,
+   "dSpeedArcsecPerDay": -4509.833099903769
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Mars",
+   "dLonArcsec": -0.0004121477559237974,
+   "dLatArcsec": 0.00020872236783930909,
+   "dSpeedArcsecPerDay": -2496.6399590400306
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Jupiter",
+   "dLonArcsec": -0.00029919424378022086,
+   "dLatArcsec": 0.000023979544749863635,
+   "dSpeedArcsecPerDay": -248.67345497737008
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Saturn",
+   "dLonArcsec": -0.0006391576675923716,
+   "dLatArcsec": 0.0002806502336792985,
+   "dSpeedArcsecPerDay": 295.76931650947927
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Uranus",
+   "dLonArcsec": -0.00028503627618192695,
+   "dLatArcsec": -0.00006470987305995379,
+   "dSpeedArcsecPerDay": -162.24898090034904
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Neptune",
+   "dLonArcsec": -0.00006055965968698729,
+   "dLatArcsec": -0.0001592179953380235,
+   "dSpeedArcsecPerDay": -127.58532532943792
+  },
+  {
+   "id": "hold-06",
+   "stratum": "polar",
+   "body": "Pluto",
+   "dLonArcsec": -0.00023516620331065496,
+   "dLatArcsec": 0.00015664950936411515,
+   "dSpeedArcsecPerDay": -124.04210452827583
+  }
+ ]
+}

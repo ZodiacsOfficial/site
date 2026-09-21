@@ -1,0 +1,9 @@
+{
+ "what": "the in-memory reference against the committed prototype",
+ "rows": 4000,
+ "instants": 400,
+ "bodies": 10,
+ "refBackendFd60_vs_prototype_maxArcsec": 0,
+ "refBackendAnalyticObserverVelocity_vs_prototype_maxArcsec": 8.185452315956354e-10,
+ "reading": "the first number is the reference reproducing the prototype and must be ~0; the second is the size of the one reduction difference (observer velocity), which is what the pack comparison also carries"
+}

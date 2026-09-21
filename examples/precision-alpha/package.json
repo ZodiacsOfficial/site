@@ -1,0 +1,59 @@
+{
+  "name": "@zodiacs/precision-alpha",
+  "version": "0.1.0-preview.1",
+  "private": true,
+  "description": "Experimental preview: a compact-ephemeris runtime with an apparent-place reduction, an empirical apparent-longitude search, and a validated geometric-longitude search that establishes completeness. Not a production engine.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.mjs"
+    },
+    "./browser": {
+      "types": "./types/browser.d.ts",
+      "default": "./src/browser.mjs"
+    },
+    "./node": {
+      "types": "./types/node.d.ts",
+      "default": "./src/node.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"test/tier-a/*.nodetest.mjs\"",
+    "test:data": "node --test \"test/tier-b/*.nodetest.mjs\""
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "ephemeris",
+    "astronomy",
+    "chebyshev",
+    "experimental"
+  ],
+  "types": "./types/index.d.ts",
+  "files": [
+    "ACCEPTANCE-PREVIEW.md",
+    "ACCEPTANCE.md",
+    "EVALUATION-PLAN.md",
+    "EVALUATION-RESULTS.md",
+    "LICENSE-erfa",
+    "MIGRATION.md",
+    "NOTICE.md",
+    "README.md",
+    "REPORT.md",
+    "examples/",
+    "src/",
+    "test/tier-a/",
+    "test/tier-b/README.md",
+    "test/tier-b/real-pack.nodetest.mjs",
+    "tools/compiler/",
+    "tools/compiler/raw/choice.json",
+    "tools/seal.mjs",
+    "types/"
+  ]
+}

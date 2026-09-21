@@ -412,6 +412,7 @@ const HASHING_IMPORT_BLOCKS = new Set([
   // same way regardless: only the complete `from 'node:crypto'` specifier is
   // excluded, so any other crypto-market vocabulary in the file still fails.
   'src/lib/mcp-install-block.ts\u0000',
+  'src/lib/engine-install-block.ts\u0000',
 ]);
 
 function vocabularyText(fragment) {

@@ -81,9 +81,19 @@ export async function runChartContextChecks({browser,baseURL,check,outDir}){
         const shape=unknown.locator('[data-context-section="shape"]');await shape.locator(':scope > summary').click();
         check(`context unknown/${width}: reference scope remains explicit`,(await shape.textContent()).includes('Reference positions only; birth time unknown'));
         await shape.locator('[data-context-create]').click();await shape.locator('[data-context-image]').waitFor({timeout:20_000});
+        // Capture the panel while it is still mounted. The form edit below
+        // cancels the image and recomputes the chart, which takes
+        // `[data-chart-context]` itself away -- screenshotting after it spends
+        // the full 30s locator timeout waiting for an element that is
+        // deliberately gone, which is how this step failed once the Moon
+        // checks stopped aborting the drive before reaching it.
+        if(outDir)await unknown.screenshot({path:`${outDir}/unknown-${width}.png`,animations:'disabled'});
         const old=await shape.locator('[data-context-image]').getAttribute('src');await page.locator('#birth-date').fill('1999-08-12');
         check(`context unknown/${width}: form edit cancels image before recomputation`,await shape.locator('[data-context-image]').count()===0&&await page.evaluate(url=>window.__contextProbe.revoked.includes(url),old));
-        if(outDir)await unknown.screenshot({path:`${outDir}/unknown-${width}.png`,animations:'disabled'});
+        // The panel is expected to be gone now; assert that rather than leave
+        // it implicit, so a future regression that keeps a stale panel mounted
+        // is caught instead of silently changing what the screenshot shows.
+        check(`context unknown/${width}: recomputation removes the context panel rather than leaving it stale`,await unknown.count()===0);
       }
       check(`context ${locale}/${width}: no unexpected browser failures`,!errors.length&&!requests.length,JSON.stringify({errors,requests}));
     }finally{await context.close();}

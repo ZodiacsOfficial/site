@@ -1,0 +1,296 @@
+{
+ "P0 prototype as shipped": {
+  "slug": "p0-prototype-as-shipped",
+  "options": {
+   "nutation": "ae",
+   "bias": false,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tt",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P1 + IAU2000B nutation": {
+  "slug": "p1-iau2000b-nutation",
+  "options": {
+   "nutation": "2000b",
+   "bias": false,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tt",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P1a + IAU2000A nutation": {
+  "slug": "p1a-iau2000a-nutation",
+  "options": {
+   "nutation": "2000a",
+   "bias": false,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tt",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P2 + frame bias only": {
+  "slug": "p2-frame-bias-only",
+  "options": {
+   "nutation": "ae",
+   "bias": true,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tt",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P3 + 2000B + frame bias": {
+  "slug": "p3-2000b-frame-bias",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tt",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P4 + 2000B + bias + TDB": {
+  "slug": "p4-2000b-bias-tdb",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "first",
+   "deflection": "none",
+   "timescale": "tdb",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P5 + 2000B + bias + TDB + deflection": {
+  "slug": "p5-2000b-bias-tdb-deflection",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "first",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P6 + full aberration too": {
+  "slug": "p6-full-aberration-too",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "central60",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P7 + analytic observer velocity": {
+  "slug": "p7-analytic-observer-velocity",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 5,
+   "lightTimeTolSec": 1e-9,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P8 best, light-time to 1e-11": {
+  "slug": "p8-best-light-time-to-1e-11",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "P8a best with IAU2000A": {
+  "slug": "p8a-best-with-iau2000a",
+  "options": {
+   "nutation": "2000a",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-nutation back to AE": {
+  "slug": "a-nutation-back-to-ae",
+  "options": {
+   "nutation": "ae",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-bias off": {
+  "slug": "a-bias-off",
+  "options": {
+   "nutation": "2000b",
+   "bias": false,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-TDB off (TT as TDB)": {
+  "slug": "a-tdb-off-tt-as-tdb-",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tt",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-deflection off": {
+  "slug": "a-deflection-off",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "none",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-aberration first order": {
+  "slug": "a-aberration-first-order",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "first",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-aberration off": {
+  "slug": "a-aberration-off",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "none",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-observer velocity h=60s": {
+  "slug": "a-observer-velocity-h-60s",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "central60",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-observer velocity h=600s": {
+  "slug": "a-observer-velocity-h-600s",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "central600",
+   "lightTimeIters": 12,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-light-time 1 iteration": {
+  "slug": "a-light-time-1-iteration",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 1,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ },
+ "A-light-time 2 iterations": {
+  "slug": "a-light-time-2-iterations",
+  "options": {
+   "nutation": "2000b",
+   "bias": true,
+   "aberration": "full",
+   "deflection": "sun",
+   "timescale": "tdb",
+   "observerVelocity": "analytic",
+   "lightTimeIters": 2,
+   "lightTimeTolSec": 1e-11,
+   "deflectionLimit": 1e-14
+  }
+ }
+}

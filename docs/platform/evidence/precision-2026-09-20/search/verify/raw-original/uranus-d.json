@@ -1,0 +1,863 @@
+{
+  "what": "The real Uranus D case, attempted with the DE prototype backend under an explicitly new contract.",
+  "generatedBy": "node uranus-d.mjs",
+  "generatedAtUtc": "2026-09-20T10:40:49.125Z",
+  "originalContractRestated": {
+    "status": "failed-incomplete",
+    "marginDegrees": 0.04418806505509565,
+    "budgetDegrees": 0.05,
+    "verdict": "failed-incomplete, unchanged by anything in this file"
+  },
+  "contract": {
+    "id": "transit-window-search-s1",
+    "version": 1,
+    "declaredOnUtc": "2026-09-20",
+    "status": "declared-and-exercised-in-this-track-only",
+    "relationshipToTheOriginal": {
+      "originalPackStatus": "failed-incomplete",
+      "statement": "This contract neither supersedes nor reopens the v2/v3 original pack or the v6 qualified acquisition. The original Uranus D exact-topology contract remains failed-incomplete at its own 0.05-degree budget, with its recorded 0.044188-degree witness intact. Nothing here may be cited as clearing it.",
+      "whatIsDifferent": [
+        "A different position backend: DE440s read directly through the repository prototype, rather than astronomy-engine's series.",
+        "A budget that covers model DISAGREEMENT only, measured, instead of inheriting the acceptance tolerance.",
+        "A different method: interval reasoning with derivative enclosures, which can certify the absence of a root, rather than a sampling grid, which cannot."
+      ]
+    },
+    "backend": {
+      "positions": "docs/platform/evidence/swiss-benchmark/prototype/apparent.mjs over DE440s",
+      "kernel": "/tmp/claude-0/swisslab/de440s.bsp",
+      "kernelSha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+      "reduction": "light-time iteration, first-order annual aberration, astronomy-engine Rotation_EQJ_ECT into the true ecliptic of date",
+      "statedOmission": "gravitational light deflection is not applied. At Uranus's January 2020 elongation the deflection is about 0.008 arcsec, which is inside the measured DE-versus-Swiss disagreement rather than additional to it, because Swiss does apply it.",
+      "clock": "UTC -> TT pinned at 69.184 s, matching the v6 policy recipe exactly"
+    },
+    "budget": {
+      "epsilonDegrees": 0.001,
+      "epsilonArcsec": 3.6,
+      "appliesTo": "topology conditioning only: the allowance within which a turning-point value or an interval-endpoint value is treated as undecided",
+      "doesNotApplyTo": "acceptance of product timings against source bands, which is a separate question this contract does not ask",
+      "derivation": {
+        "order": "The terms below were measured first, summed, and then rounded UP to one milli-degree. The margin they would have to beat was not consulted while choosing the number.",
+        "measuredTerms": [
+          {
+            "term": "implementation disagreement on the decision variable g*",
+            "degrees": 0.000013331914864522787,
+            "denominator": "one station, located independently by each of the DE prototype and Swiss with the clock held at TT = UTC + 69.184 s",
+            "source": "raw/decomposition.json sources.ephemerisModel.marginDisagreement.deVersusSwissArcsec"
+          },
+          {
+            "term": "implementation disagreement, worst case over the undecided region",
+            "degrees": 0.00003024085209091254,
+            "denominator": "n = 913, hourly grid over 2019-12-23..2020-01-30",
+            "source": "raw/decomposition.json sources.ephemerisModel.overOpenRegion.deMinusSwissArcsec.maxAbs"
+          },
+          {
+            "term": "implementation disagreement, worst case over the whole component",
+            "degrees": 0.0000656967070753467,
+            "denominator": "n = 774, 6-hourly grid over the 193-day component",
+            "source": "raw/decomposition.json sources.ephemerisModel.overComponent.deMinusSwissArcsec.maxAbs"
+          },
+          {
+            "term": "target literal rounding",
+            "degrees": 5e-8,
+            "denominator": "the frozen Horizons literal is given as 32.6940395, so its last place is 1e-7 degrees",
+            "source": "fixture D.targetLongitudeDegrees"
+          },
+          {
+            "term": "clock, at a full second of error (10^4 times the policy guard)",
+            "degrees": 6e-14,
+            "denominator": "pinned-TT perturbation, measured",
+            "source": "raw/decomposition.json sources.timeModel.sensitivityOfTheDecisionVariable"
+          },
+          {
+            "term": "root-finding and floating point",
+            "degrees": 1.5e-14,
+            "denominator": "1 ms bisection residual and the double-precision ULP of a longitude near 32 degrees",
+            "source": "raw/decomposition.json sources.rootFinding"
+          }
+        ],
+        "largestMeasuredTermDegrees": 0.0000656967070753467,
+        "sumOfMeasuredTermsDegrees": 0.00010931947410578203,
+        "marginOverLargestTerm": 15.221463061354248,
+        "marginOverSum": 9.147501011872402
+      },
+      "honestLimits": [
+        "Swiss and DE440s both descend from JPL development ephemerides. Their agreement is CONSISTENCY between two implementations, not independent observational accuracy, and a common-mode error in DE itself is not bounded by any of this.",
+        "Every term is a SAMPLED maximum over a declared finite grid for this one case. None of them is a proven bound, and none generalises to another body, epoch or geometry without being re-measured.",
+        "The derivative enclosures that make the completeness claim possible are themselves empirical: they hold if the declared curvature bounds hold, which was measured on a 401-point grid and inflated tenfold.",
+        "Swiss is used only as an instrument. No budget, bound or verdict here is fitted to make Swiss and the prototype agree; the budget is set well above their measured disagreement, which is the opposite operation."
+      ]
+    },
+    "certifies": [
+      "the number of exact passes of the moving longitude through the target level, over a declared closed interval",
+      "an epsilon bracket for each certified root, being the set of instants at which the modelled longitude is within epsilon of the level",
+      "the explicit refusal cases: an undecided turning point, an undecided interval endpoint, or an exhausted evaluation budget"
+    ],
+    "doesNotCertify": [
+      "a point timestamp for any pass: only the epsilon bracket is meaningful",
+      "anything about the original pack, its receipts, or its failed witness",
+      "any count in a cropped view whose boundary falls inside an epsilon bracket -- see the crop results below"
+    ]
+  },
+  "results": {
+    "fullWindowExactLevel": {
+      "label": "de:full-window:exact-level",
+      "levelDegrees": 32.6940395,
+      "fromUtc": "2019-01-01T00:00:00.000Z",
+      "toUtc": "2020-12-31T00:00:00.000Z",
+      "epsilonDegrees": 0.001,
+      "verdict": "multiple-crossings",
+      "outcome": "certified",
+      "reason": "multiple-certified-transversal-roots",
+      "rootCount": 3,
+      "possibleRootCounts": [
+        3
+      ],
+      "crossings": [
+        {
+          "bracketFromUtc": "2019-04-25T20:04:39.325Z",
+          "bracketToUtc": "2019-04-25T20:54:48.594Z",
+          "bracketWidthDays": 0.03482950231481481,
+          "centreUtc": "2019-04-25T20:29:43.958Z",
+          "direction": "rising",
+          "transversal": true,
+          "atIntervalEdge": false
+        },
+        {
+          "bracketFromUtc": "2019-12-31T21:16:09.209Z",
+          "bracketToUtc": "2020-01-01T02:45:45.272Z",
+          "bracketWidthDays": 0.22888961805555555,
+          "centreUtc": "2020-01-01T00:00:02.612Z",
+          "direction": "falling",
+          "transversal": true,
+          "atIntervalEdge": false
+        },
+        {
+          "bracketFromUtc": "2020-01-21T01:45:48.585Z",
+          "bracketToUtc": "2020-01-21T07:12:28.253Z",
+          "bracketWidthDays": 0.22684800925925927,
+          "centreUtc": "2020-01-21T04:30:03.988Z",
+          "direction": "rising",
+          "transversal": true,
+          "atIntervalEdge": false
+        }
+      ],
+      "openRegions": [],
+      "endpointValueDegrees": {
+        "a": -4.0790998069664255,
+        "b": 4.117138755503973
+      },
+      "evaluations": 437,
+      "backendCalls": 2391,
+      "cellStatusCounts": {
+        "excluded": 25,
+        "monotone": 4
+      },
+      "assumptions": [],
+      "notes": [
+        "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+      ]
+    },
+    "perComponentExactLevel": [
+      {
+        "sourceId": "D-component-1",
+        "recordedSourceExactCount": 1,
+        "recordedExactTopology": "resolved",
+        "label": "de:D-component-1:exact-level",
+        "levelDegrees": 32.6940395,
+        "fromUtc": "2019-02-27T03:30:13.194Z",
+        "toUtc": "2019-06-24T20:44:23.508Z",
+        "epsilonDegrees": 0.001,
+        "verdict": "crossing",
+        "outcome": "certified",
+        "reason": "single-certified-transversal-root",
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "crossings": [
+          {
+            "bracketFromUtc": "2019-04-25T20:04:39.318Z",
+            "bracketToUtc": "2019-04-25T20:54:48.642Z",
+            "bracketWidthDays": 0.03483013888888889,
+            "centreUtc": "2019-04-25T20:29:43.980Z",
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "openRegions": [],
+        "endpointValueDegrees": {
+          "a": -3.0000206599988566,
+          "b": 2.9999885598538043
+        },
+        "evaluations": 108,
+        "backendCalls": 2067,
+        "cellStatusCounts": {
+          "excluded": 3,
+          "monotone": 1
+        },
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      },
+      {
+        "sourceId": "D-component-2",
+        "recordedSourceExactCount": 2,
+        "recordedExactTopology": "uncertain",
+        "label": "de:D-component-2:exact-level",
+        "levelDegrees": 32.6940395,
+        "fromUtc": "2019-09-30T09:06:55.823Z",
+        "toUtc": "2020-04-10T15:17:01.450Z",
+        "epsilonDegrees": 0.001,
+        "verdict": "multiple-crossings",
+        "outcome": "certified",
+        "reason": "multiple-certified-transversal-roots",
+        "rootCount": 2,
+        "possibleRootCounts": [
+          2
+        ],
+        "crossings": [
+          {
+            "bracketFromUtc": "2019-12-31T21:16:09.270Z",
+            "bracketToUtc": "2020-01-01T02:45:45.307Z",
+            "bracketWidthDays": 0.22888931712962962,
+            "centreUtc": "2020-01-01T00:00:02.644Z",
+            "direction": "falling",
+            "transversal": true,
+            "atIntervalEdge": false
+          },
+          {
+            "bracketFromUtc": "2020-01-21T01:45:48.555Z",
+            "bracketToUtc": "2020-01-21T07:12:28.247Z",
+            "bracketWidthDays": 0.22684828703703705,
+            "centreUtc": "2020-01-21T04:30:03.947Z",
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "openRegions": [],
+        "endpointValueDegrees": {
+          "a": 2.9999716122347735,
+          "b": 2.9999979069854064
+        },
+        "evaluations": 319,
+        "backendCalls": 2259,
+        "cellStatusCounts": {
+          "excluded": 15,
+          "monotone": 2
+        },
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      }
+    ],
+    "membershipThresholds": [
+      {
+        "label": "de:full-window:threshold-minus3",
+        "levelDegrees": 29.694039500000002,
+        "fromUtc": "2019-01-01T00:00:00.000Z",
+        "toUtc": "2020-12-31T00:00:00.000Z",
+        "epsilonDegrees": 0.001,
+        "verdict": "crossing",
+        "outcome": "certified",
+        "reason": "single-certified-transversal-root",
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "crossings": [
+          {
+            "bracketFromUtc": "2019-02-27T02:55:15.640Z",
+            "bracketToUtc": "2019-02-27T04:06:38.517Z",
+            "bracketWidthDays": 0.049570335648148146,
+            "centreUtc": "2019-02-27T03:30:57.489Z",
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "openRegions": [],
+        "endpointValueDegrees": {
+          "a": -1.0790998069664255,
+          "b": 7.117138755503973
+        },
+        "evaluations": 221,
+        "backendCalls": 2175,
+        "cellStatusCounts": {
+          "excluded": 17,
+          "monotone": 1
+        },
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      },
+      {
+        "label": "de:full-window:threshold-plus3",
+        "levelDegrees": 35.6940395,
+        "fromUtc": "2019-01-01T00:00:00.000Z",
+        "toUtc": "2020-12-31T00:00:00.000Z",
+        "epsilonDegrees": 0.001,
+        "verdict": "multiple-crossings",
+        "outcome": "certified",
+        "reason": "multiple-certified-transversal-roots",
+        "rootCount": 3,
+        "possibleRootCounts": [
+          3
+        ],
+        "crossings": [
+          {
+            "bracketFromUtc": "2019-06-24T20:05:28.276Z",
+            "bracketToUtc": "2019-06-24T21:24:13.938Z",
+            "bracketWidthDays": 0.05469516203703704,
+            "centreUtc": "2019-06-24T20:44:50.578Z",
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          },
+          {
+            "bracketFromUtc": "2019-09-30T08:23:54.646Z",
+            "bracketToUtc": "2019-09-30T09:47:33.541Z",
+            "bracketWidthDays": 0.0580890625,
+            "centreUtc": "2019-09-30T09:05:44.563Z",
+            "direction": "falling",
+            "transversal": true,
+            "atIntervalEdge": false
+          },
+          {
+            "bracketFromUtc": "2020-04-10T14:51:24.692Z",
+            "bracketToUtc": "2020-04-10T15:42:44.625Z",
+            "bracketWidthDays": 0.03564737268518518,
+            "centreUtc": "2020-04-10T15:17:04.687Z",
+            "direction": "rising",
+            "transversal": true,
+            "atIntervalEdge": false
+          }
+        ],
+        "openRegions": [],
+        "endpointValueDegrees": {
+          "a": -7.0790998069664255,
+          "b": 1.117138755503973
+        },
+        "evaluations": 396,
+        "backendCalls": 2350,
+        "cellStatusCounts": {
+          "excluded": 22,
+          "monotone": 3
+        },
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      }
+    ],
+    "crops": {
+      "halves": [
+        {
+          "label": "de:crop-first-half:exact-level",
+          "recordedBoundaryOrbDegrees": [
+            4.0790711173083025,
+            0.000012636136148103105
+          ],
+          "recordedExactCountAmbiguous": [
+            false,
+            true
+          ],
+          "levelDegrees": 32.6940395,
+          "fromUtc": "2019-01-01T00:00:00.000Z",
+          "toUtc": "2020-01-01T00:00:00.000Z",
+          "epsilonDegrees": 0.001,
+          "verdict": "boundary-event",
+          "outcome": "certified",
+          "reason": "root-on-an-interval-endpoint",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "crossings": [
+            {
+              "bracketFromUtc": "2019-04-25T20:04:39.325Z",
+              "bracketToUtc": "2019-04-25T20:54:48.594Z",
+              "bracketWidthDays": 0.03482950231481481,
+              "centreUtc": "2019-04-25T20:29:43.958Z",
+              "direction": "rising",
+              "transversal": true,
+              "atIntervalEdge": false
+            },
+            {
+              "bracketFromUtc": "2019-12-31T21:16:09.297Z",
+              "bracketToUtc": "2020-01-01T00:00:00.000Z",
+              "bracketWidthDays": 0.11378128472222222,
+              "centreUtc": "2020-01-01T00:00:00.000Z",
+              "direction": "falling",
+              "transversal": true,
+              "atIntervalEdge": true
+            }
+          ],
+          "openRegions": [],
+          "endpointValueDegrees": {
+            "a": -4.0790998069664255,
+            "b": 2.7286576198548573e-7
+          },
+          "evaluations": 183,
+          "backendCalls": 2143,
+          "cellStatusCounts": {
+            "excluded": 9,
+            "monotone": 2
+          },
+          "assumptions": [],
+          "notes": [
+            "A root sits on an endpoint of the query interval. Half-open ownership between adjacent intervals is the caller's decision, not the search's: reporting it once in each closed view and deduplicating by identity is the only consistent choice.",
+            "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+          ]
+        },
+        {
+          "label": "de:crop-second-half:exact-level",
+          "recordedBoundaryOrbDegrees": [
+            0.000012636136148103105,
+            4.117117256207564
+          ],
+          "recordedExactCountAmbiguous": [
+            true,
+            false
+          ],
+          "levelDegrees": 32.6940395,
+          "fromUtc": "2020-01-01T00:00:00.000Z",
+          "toUtc": "2020-12-31T00:00:00.000Z",
+          "epsilonDegrees": 0.001,
+          "verdict": "boundary-event",
+          "outcome": "certified",
+          "reason": "root-on-an-interval-endpoint",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "crossings": [
+            {
+              "bracketFromUtc": "2020-01-01T00:00:00.000Z",
+              "bracketToUtc": "2020-01-01T02:45:45.301Z",
+              "bracketWidthDays": 0.11510765046296297,
+              "centreUtc": "2020-01-01T00:00:00.000Z",
+              "direction": "falling",
+              "transversal": true,
+              "atIntervalEdge": true
+            },
+            {
+              "bracketFromUtc": "2020-01-21T01:45:48.585Z",
+              "bracketToUtc": "2020-01-21T07:12:28.253Z",
+              "bracketWidthDays": 0.22684800925925927,
+              "centreUtc": "2020-01-21T04:30:03.988Z",
+              "direction": "rising",
+              "transversal": true,
+              "atIntervalEdge": false
+            }
+          ],
+          "openRegions": [],
+          "endpointValueDegrees": {
+            "a": 2.7286576198548573e-7,
+            "b": 4.117138755503973
+          },
+          "evaluations": 244,
+          "backendCalls": 2204,
+          "cellStatusCounts": {
+            "monotone": 2,
+            "excluded": 16
+          },
+          "assumptions": [],
+          "notes": [
+            "A root sits on an endpoint of the query interval. Half-open ownership between adjacent intervals is the caller's decision, not the search's: reporting it once in each closed view and deduplicating by identity is the only consistent choice.",
+            "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+          ]
+        }
+      ],
+      "theBoundaryEvent": {
+        "boundaryUtc": "2020-01-01T00:00:00.000Z",
+        "deOffsetFromLevelDegrees": 2.7286576198548573e-7,
+        "deOffsetFromLevelArcsec": 0.0009823167431477486,
+        "swissOffsetFromLevelDegrees": 0.000012636136140997678,
+        "swissOffsetFromLevelArcsec": 0.04549009010759164,
+        "recordedCropBoundaryOrbDegrees": 0.000012636136148103105,
+        "deMinusSwissAtTheBoundaryArcsec": -0.04450777336444389,
+        "slopeAtTheBoundaryDegPerDay": 0.008738431636913901,
+        "rootOffsetFromBoundarySecondsDe": 2.6979214137185856,
+        "rootOffsetFromBoundarySecondsSwiss": 124.93799893910601,
+        "epsilonBracketHalfWidthDays": 0.11443701130254123,
+        "epsilonNeededToDecideWhichSideDegrees": 2.7286576198548573e-7,
+        "measuredInterModelDisagreementOverTheRegionDegrees": 0.00003024085209091254,
+        "sideIsDecidableAtThisEpsilon": false,
+        "finding": [
+          "An exact pass sits essentially on the crop boundary. The DE prototype puts Uranus 0.00098 arcsec from the target at 2020-01-01T00:00:00Z, which is 2.7 seconds of Uranus motion; Swiss puts it 0.0455 arcsec away, which is 125 seconds. Both agree the pass falls just AFTER the boundary, and the fixture records the same Swiss value as the crop boundary orb, 1.2636e-5 degrees.",
+          "The two instruments disagree about that offset by 0.0446 arcsec, which is the ordinary scale of their disagreement over this region (max 0.109 arcsec, n = 913). Deciding which SIDE of the boundary the pass falls on therefore needs an epsilon below the disagreement between the two best instruments available. No budget anyone can justify today is that small.",
+          "So the search returns boundary-event for both closed halves. Each closed half legitimately owns the pass, which is why both report a count of 2 and why the two counts must be deduplicated by root identity to the full-window count of 3 rather than summed to 4. That is the v6 policy's own queryDomain rule, arrived at independently.",
+          "What is NOT certified is the exclusive, half-open assignment of the pass to one half. The recorded exactCountAmbiguousWithinBudget flags on both halves therefore survive the stronger backend -- but the reason can now be stated in arcseconds instead of left inside an allowance.",
+          "This is the boundary-event verdict appearing in real data rather than in a test function."
+        ]
+      }
+    },
+    "robustness": {
+      "what": "The second component's exact-pass count as a function of the declared budget, on both backends.",
+      "sweep": [
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.00001,
+          "epsilonArcsec": 0.036000000000000004,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 292
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.00001,
+          "epsilonArcsec": 0.036000000000000004,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 295
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.00005,
+          "epsilonArcsec": 0.18000000000000002,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 306
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.00005,
+          "epsilonArcsec": 0.18000000000000002,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 304
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.0001,
+          "epsilonArcsec": 0.36000000000000004,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 308
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.0001,
+          "epsilonArcsec": 0.36000000000000004,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 308
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.0005,
+          "epsilonArcsec": 1.8,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 319
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.0005,
+          "epsilonArcsec": 1.8,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 318
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.001,
+          "epsilonArcsec": 3.6,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 319
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.001,
+          "epsilonArcsec": 3.6,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 318
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.005,
+          "epsilonArcsec": 18,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 330
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.005,
+          "epsilonArcsec": 18,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 328
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.01,
+          "epsilonArcsec": 36,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 334
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.01,
+          "epsilonArcsec": 36,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 334
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.02,
+          "epsilonArcsec": 72,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 338
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.02,
+          "epsilonArcsec": 72,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 336
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.04,
+          "epsilonArcsec": 144,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 396
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.04,
+          "epsilonArcsec": 144,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 402
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.0441,
+          "epsilonArcsec": 158.76,
+          "verdict": "multiple-crossings",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 495
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.0441,
+          "epsilonArcsec": 158.76,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1074
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.0442,
+          "epsilonArcsec": 159.12,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1047
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.0442,
+          "epsilonArcsec": 159.12,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1074
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.045,
+          "epsilonArcsec": 162,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1047
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.045,
+          "epsilonArcsec": 162,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1074
+        },
+        {
+          "backend": "de",
+          "epsilonDegrees": 0.05,
+          "epsilonArcsec": 180,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1047
+        },
+        {
+          "backend": "core",
+          "epsilonDegrees": 0.05,
+          "epsilonArcsec": 180,
+          "verdict": "unresolved-interval",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1074
+        }
+      ],
+      "perBackend": {
+        "de": {
+          "smallestCertifyingTwo": 0.00001,
+          "largestCertifyingTwo": 0.0441,
+          "ratio": 4410
+        },
+        "core": {
+          "smallestCertifyingTwo": 0.00001,
+          "largestCertifyingTwo": 0.04,
+          "ratio": 3999.9999999999995
+        }
+      },
+      "bothBackendsAgreeOnTwo": {
+        "smallestDegrees": 0.00001,
+        "largestDegrees": 0.04,
+        "ratio": 3999.9999999999995
+      },
+      "reading": [
+        "Both backends certify the same count of 2 for every budget from 1e-5 to 0.04 degrees, a 4000-fold range. The chosen 0.001 sits in the middle of it, so the verdict is not an artefact of the number picked.",
+        "The two backends part company only in the narrow band between their own turning-point margins: 0.043326 degrees for the shipped core engine and 0.044175 for the DE prototype. At epsilon = 0.0441 the DE backend still certifies 2 while the core backend already refuses. That 0.00085-degree band IS the inter-model disagreement, displayed as a disagreement about decidability rather than about a position.",
+        "At and above 0.0442 -- which includes the original 0.05 -- both backends return unresolved-interval with possible counts {0,1,2}, exactly as the original contract recorded."
+      ]
+    },
+    "secondComponentPeak": {
+      "recordedGlobalMinimumKind": "unresolved-cross-model-count",
+      "recordedGlobalMinimum": null,
+      "underThisContract": {
+        "kind": "exact",
+        "why": "With two certified transversal crossings the minimum of the circular distance is zero and is attained twice, at the two passes. There is no positive closest-approach peak in this component, and the January turning point is a local MAXIMUM of the circular distance between the two passes, not a minimum of it.",
+        "turningPointUtc": "2020-01-11T02:10:34.210Z",
+        "turningPointSignedOffsetDegrees": -0.044174733140231126,
+        "localMaximumOfCircularDistanceDegrees": 0.044174733140231126
+      },
+      "stillNotCertified": "A single peak instant. Two passes means two exact instants, each known only to its epsilon bracket; collapsing them into one peak would be the fabrication the original policy forbids."
+    }
+  },
+  "answer": {
+    "question": "Is Uranus D resolvable under a justified new contract, or still genuinely uncertain?",
+    "resolvable": "partly",
+    "resolved": [
+      "the exact-pass COUNT of the second component: 2",
+      "the exact-pass COUNT over the full declared query window: 3",
+      "the exact-pass COUNT of the first component: 1, which the original contract had already decided",
+      "the four ordered physical threshold roots: one crossing of target-3 and three of target+3, matching the v6 policy's own membership count",
+      "that the second component has no positive closest-approach peak at all: the January turning point is a local MAXIMUM of the circular distance, sitting between the two passes"
+    ],
+    "stillNotResolved": [
+      "which side of the 2020-01-01T00:00:00Z crop boundary the second pass falls on. Both instruments place it just after the boundary, but they disagree about the offset by 0.045 arcsec -- the ordinary scale of their disagreement -- while the offset itself is 0.001 arcsec (DE) to 0.045 arcsec (Swiss). Deciding the side needs an epsilon below the disagreement between the two best instruments available.",
+      "therefore the EXCLUSIVE, half-open exact-pass counts of the two crop halves. Each closed half owns the pass, so both report 2, and the two must be deduplicated by root identity to the full-window 3 rather than summed to 4.",
+      "a point timestamp for any pass. Only the epsilon brackets are meaningful: 50 minutes wide for the April 2019 pass, and 5.5 hours wide for each of the two January 2020 passes, which are slow because they happen near a station."
+    ],
+    "statement": [
+      "Under transit-window-search-s1 -- DE440s positions, a 0.001-degree topology budget argued from measured disagreement, and interval reasoning with derivative enclosures -- the second component has exactly two exact passes and the whole query window has exactly three.",
+      "The verdict is stable across a 4000-fold range of budgets on BOTH backends, so it does not depend on the budget chosen. The two backends part company only inside the 0.00085-degree band between their own turning-point margins, which is the inter-model disagreement showing itself as a disagreement about decidability.",
+      "It remains conditional on an empirical derivative bound and on two implementations that share a JPL ancestry. It is a certified count under a declared model allowance, not a proven statement about the sky.",
+      "The original v2/v3 contract is still failed-incomplete at its own budget. Its 0.044188-degree witness is reproduced here to 0.048 arcsec by a completely independent position source, which strengthens the original record rather than overturning it."
+    ],
+    "elapsedSeconds": 2.286
+  }
+}

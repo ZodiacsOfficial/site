@@ -2,6 +2,12 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 
 const TIMEOUT = 30_000;
+/** Any sign name on a Moon surface of an unknown-time chart is an unverified claim. */
+const SIGN_NAMES = [
+  'Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
+  'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces',
+];
+const namesIn = (text) => SIGN_NAMES.filter((name) => new RegExp(`\\b${name}\\b`).test(text));
 const [demo, people] = await Promise.all([
   readFile(new URL('../src/data/demo-chart-frida.json', import.meta.url), 'utf8').then(JSON.parse),
   readFile(new URL('../src/data/people.json', import.meta.url), 'utf8').then(JSON.parse),
@@ -235,13 +241,27 @@ export async function runExplorerCrowdedWheelChecks({ browser, baseURL, check, o
       if (!fixture.known) {
         await chooseWithKeys(page, 'body:Moon');
         const text = await page.locator('.calc__wheel .sr-only[role="status"]').innerText();
-        const expectedSigns = [fixture.moon.signAtCivilDayStart, fixture.moon.signAtCivilDayEnd].map((name) => name[0].toUpperCase() + name.slice(1));
         const uncertain = page.locator('.calc__three [data-moon-uncertain]');
+        // `fixture.moon.signAtCivilDayStart/End` and `.uncertain` are the People
+        // pilot's own endpoint analysis of the birth date. They are NOT the
+        // calculator's expectation: since `9d180c9f` an unknown birth time
+        // yields no candidates at all, because two endpoint samples do not
+        // establish coverage of a civil date. Every unknown-time chart is
+        // unresolved here, including `edgar-allan-poe`, whose endpoints agree.
+        const uncertainCount = await uncertain.count();
+        const uncertainText = uncertainCount ? await uncertain.innerText() : '';
+        const degreeCount = uncertainCount ? await uncertain.locator('.three-card__deg').count() : -1;
         check(`${label}: reference Moon never invents a known birth time or definite boundary identity`,
-          await page.locator('#birth-time').inputValue() === '' && expectedSigns.every((name) => text.includes(name))
-          && (fixture.moon.uncertain
-            ? await uncertain.count() === 1 && (await uncertain.innerText()).includes('Needs a birth time') && await uncertain.locator('.three-card__deg').count() === 0
-            : await uncertain.count() === 0), text);
+          await page.locator('#birth-time').inputValue() === ''
+          // No sign may be named for the Moon -- not the endpoint pair, not a
+          // single sign, not the noon reference's.
+          && namesIn(text).length === 0
+          && text.includes('Needs a birth time')
+          && uncertainCount === 1
+          && uncertainText.includes('Needs a birth time')
+          && namesIn(uncertainText).length === 0
+          && degreeCount === 0,
+          JSON.stringify({ text, uncertainText, uncertainCount, degreeCount, names: namesIn(text) }));
       }
       await chooseWithKeys(page, '');
       if (output) await page.locator('.calc__wheel').screenshot({ path: `${output}/${fixture.slug}-${width}.png`, animations: 'disabled' });

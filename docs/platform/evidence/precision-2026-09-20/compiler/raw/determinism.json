@@ -1,0 +1,36 @@
+{
+ "what": "compile twice, hash twice",
+ "platform": "linux",
+ "node": "v22.22.2",
+ "runs": [
+  {
+   "candidate": "A",
+   "sha256Run1": "1569cf123cf5a2aa28f76d75b3c3406615f1cae9616a8c0b1cdb5002a36a2f7b",
+   "sha256Run2": "1569cf123cf5a2aa28f76d75b3c3406615f1cae9616a8c0b1cdb5002a36a2f7b",
+   "identical": true,
+   "bytes": 5012656
+  },
+  {
+   "candidate": "B",
+   "sha256Run1": "b41932b81231892aa10b20fa3ccd3ec655ac83578dbd4071a499f0140d74df6f",
+   "sha256Run2": "b41932b81231892aa10b20fa3ccd3ec655ac83578dbd4071a499f0140d74df6f",
+   "identical": true,
+   "bytes": 4990960
+  },
+  {
+   "candidate": "D",
+   "sha256Run1": "b52dd02cce22bbf610150f8222b7969cc25bcfe6cc571714d2625fa2e931d476",
+   "sha256Run2": "b52dd02cce22bbf610150f8222b7969cc25bcfe6cc571714d2625fa2e931d476",
+   "identical": true,
+   "bytes": 1737168
+  },
+  {
+   "candidate": "C",
+   "sha256Run1": "a2470e13c5143a2ee0ba227012e481dbb8fb79a036be07c86fdd4af8eec50cd0",
+   "sha256Run2": "a2470e13c5143a2ee0ba227012e481dbb8fb79a036be07c86fdd4af8eec50cd0",
+   "identical": true,
+   "bytes": 1868432
+  }
+ ],
+ "allIdentical": true
+}

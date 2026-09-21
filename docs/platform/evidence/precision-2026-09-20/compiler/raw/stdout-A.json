@@ -1,0 +1,73 @@
+{
+ "candidate": "A",
+ "mib": 4.7804,
+ "maxPosKm": {
+  "Sun": 0.0974,
+  "Moon": 0.127,
+  "Mercury": 0.0912,
+  "Venus": 0.0655,
+  "Mars": 0.117,
+  "Jupiter": 0.281,
+  "Saturn": 0.355,
+  "Uranus": 0.29,
+  "Neptune": 0.3,
+  "Pluto": 0.313,
+  "Earth": 0.127
+ },
+ "maxVelKmS": {
+  "Sun": 0.00000106,
+  "Moon": 0.00000445,
+  "Mercury": 0.0000125,
+  "Venus": 0.00000235,
+  "Mars": 0.00000186,
+  "Jupiter": 0.00000147,
+  "Saturn": 0.00000173,
+  "Uranus": 0.000001,
+  "Neptune": 9.58e-7,
+  "Pluto": 9.62e-7,
+  "Earth": 0.00000453
+ },
+ "geoMaxPosKm": {
+  "Sun": 0.172,
+  "Moon": 0.00209,
+  "Mercury": 0.151,
+  "Venus": 0.146,
+  "Mars": 0.174,
+  "Jupiter": 0.304,
+  "Saturn": 0.384,
+  "Uranus": 0.31,
+  "Neptune": 0.342,
+  "Pluto": 0.346
+ },
+ "provenApiPosKm": {
+  "Sun": 0.192,
+  "Mercury": 0.217,
+  "Venus": 0.169,
+  "Mars": 0.28,
+  "Jupiter": 0.507,
+  "Saturn": 0.613,
+  "Uranus": 0.503,
+  "Neptune": 0.5,
+  "Pluto": 0.5,
+  "Moon": 0.256,
+  "Earth": 0.25,
+  "MoonGeocentric": 0.00619
+ },
+ "provenApiVelKmS": {
+  "Sun": 0.00000167,
+  "Mercury": 0.0000244,
+  "Venus": 0.00000416,
+  "Mars": 0.00000339,
+  "Jupiter": 0.0000023,
+  "Saturn": 0.00000258,
+  "Uranus": 0.00000131,
+  "Neptune": 0.00000127,
+  "Pluto": 0.00000127,
+  "Moon": 0.00000826,
+  "Earth": 0.00000713,
+  "MoonGeocentric": 0.00000116
+ },
+ "lonMaxArcsec": 0.0009115,
+ "lonP95Arcsec": 0.0001668,
+ "wrapMaxArcsec": 0.0006094
+}

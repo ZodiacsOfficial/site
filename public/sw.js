@@ -58,6 +58,24 @@ self.addEventListener('activate', (event) => {
   })());
 });
 
+/**
+ * Routes that are never cached, because they claim not to be stored.
+ *
+ * The developer preview says on its face that it stores nothing and that
+ * nothing entered there goes anywhere. `noServiceWorker` stops the page
+ * REGISTERING a worker; it cannot stop an already-active worker at scope
+ * `/` from controlling it, and the navigate branch below then put the
+ * page's own HTML in Cache Storage. Measured: visit `/`, wait for the
+ * worker, then open the preview -- `caches` held
+ * `/developers/precision-preview/`. Storage is storage, so the route is
+ * excluded here rather than the claim being softened.
+ */
+function neverCached(url) {
+  return url.pathname === '/developers/precision-preview'
+    || url.pathname.startsWith('/developers/precision-preview/')
+    || url.pathname.startsWith('/precision-preview/');
+}
+
 function registryAuthority(url) {
   return url.pathname === '/registry/zodiacs.registry.json'
     || (url.pathname.startsWith('/registry/') && url.pathname.endsWith('.json'));
@@ -180,7 +198,9 @@ self.addEventListener('fetch', (event) => {
 
   // Registry identity and flag-stamped Terminal bytes are live authority.
   // Offline must fail honestly, never preserve an old mint or flag state.
-  if (registryAuthority(url) || registryVolatileSurface(url)) {
+  // The developer preview is here for a different reason: it claims to
+  // store nothing, and a cached copy of it is stored.
+  if (registryAuthority(url) || registryVolatileSurface(url) || neverCached(url)) {
     event.respondWith(fetch(request));
     return;
   }

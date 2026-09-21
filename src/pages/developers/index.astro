@@ -6,6 +6,11 @@ import { completeTransitYears } from '../../lib/sky-api/build';
 import { PLANET_SLUGS } from '../../lib/sky-api/meta';
 import skyQuickStart from '../../lib/sky-api/examples/today.mjs?raw';
 import candidate from '../../data/platform-engine-candidate.json';
+// The starter carries its own, separately reviewed engine pin. Labelling the
+// card that opens it with the SITE's engine version told readers they would get
+// rc.6 and then handed them rc.3, so the card is labelled from the starter's
+// own manifest instead.
+import starterEngine from '../../../examples/platform/candidate.json';
 import mcp from '../../../public/examples/mcp-server.json';
 
 // The same month snapshots the generator reads decide which year files exist,
@@ -65,9 +70,9 @@ const jsonLd = [{
     <nav aria-label="Developer integration paths">
       <ul class="dev-paths">
         <li>
-          <p class="dev-status">{candidate.releaseLabel} · {candidate.version}</p>
-          <h2><a href="/developers/examples/">Calculate a chart</a></h2>
-          <p>Run the starter and get a real natal chart out of it in a few commands; transits and a publisher widget are in there too. TypeScript or JavaScript, in your own browser or Node.js app; the core calculations make no network request.</p>
+          <p class="dev-status">{candidate.releaseLabel} · engine {candidate.version}</p>
+          <h2><a href="/developers/engine/">Calculate a chart</a></h2>
+          <p>{candidate.name} takes an instant and coordinates and returns bodies, angles, cusps and aspects, in your own browser or Node.js process, with no network request. What it computes, what it costs to bundle, how close it is to Swiss Ephemeris, and a verified install are on its page. <a href="/developers/examples/">The starter</a> is the same job as a running project; it pins engine {starterEngine.version}, while the site runs {candidate.version}.</p>
         </li>
         <li>
           <p class="dev-status">Available · hosted embeds</p>
