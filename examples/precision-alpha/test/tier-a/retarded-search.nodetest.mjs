@@ -47,7 +47,7 @@ function fit(g, lo, hi, n) {
  * series IS the observer path. `moon` is zero, so Earth = emb exactly and
  * the observer is whatever `observerFn` says.
  */
-function packOf(targetFn, observerFn, { ncoef = 20, nrec = 40, intervalSec = DAY, initEt = -20 * DAY } = {}) {
+function packOf(targetFn, observerFn, { ncoef = 20, nrec = 40, intervalSec = DAY, initEt = -20 * DAY, targetRecords = null } = {}) {
   const zeros = () => new Array(ncoef).fill(0);
   const series = (fn) => (r) => {
     const lo = initEt + r * intervalSec;
@@ -59,7 +59,9 @@ function packOf(targetFn, observerFn, { ncoef = 20, nrec = 40, intervalSec = DAY
       { name: 'sun', frame: 'native', ncoef, nrec, initEt, intervalSec, coeffs: () => [...zeros(), ...zeros(), ...zeros()] },
       { name: 'emb', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: series(observerFn) },
       { name: 'moon', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: () => [...zeros(), ...zeros(), ...zeros()] },
-      { name: 'marsBary', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: series(targetFn) },
+      // `targetRecords` gives the target FEWER records than the observer,
+      // so a reception time can sit past the target's coverage.
+      { name: 'marsBary', frame: 'ssb', ncoef, nrec: targetRecords ?? nrec, initEt, intervalSec, coeffs: series(targetFn) },
     ],
     derived: { earth399: { emrat: EMRAT, from: 'moon' } },
   });
@@ -258,6 +260,24 @@ const CIRCLE = (() => {
   const Wt = (2 * Math.PI) / (400 * DAY);
   return { R, Wt, fn: (t) => [R * Math.cos(Wt * t), R * Math.sin(Wt * t), 0] };
 })();
+
+test('L7b: a reception window past the target\'s last record is refused, not raised', () => {
+  // The observer has records the target does not. The light-time
+  // iteration then leaves coverage on its very first step, with tau still
+  // zero, and the window the classifier wants to probe comes out
+  // inverted. The first version of that classifier called stateEnclosure
+  // with hi < lo and raised `unsupported-option` out of a path whose
+  // whole job is to return a typed refusal -- the same escape L7 is
+  // about, one branch over.
+  const P = [2e8, 0, 0];
+  const eph = packOf(() => P, ORIGIN, { nrec: 40, targetRecords: 5 });
+  const r = search(eph, { targetDeg: 0, fromTdbSec: 10 * DAY, toTdbSec: 12 * DAY });
+  assert.equal(r.execution.status, 'finished');
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.eventCount.isExactTotal, false);
+  const why = r.accounting.unresolved.map((u) => u.why).join(' | ');
+  assert.match(why, /outside the stored records/i, `expected a coverage refusal, got ${why.slice(0, 200)}`);
+});
 
 test('L8: roots at the interval ends are reported once each, not twice and not never', () => {
   const eph = packOf(CIRCLE.fn, ORIGIN);

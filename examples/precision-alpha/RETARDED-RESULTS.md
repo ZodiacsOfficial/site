@@ -33,13 +33,14 @@ harness does the conversion, never the operation.
 > *"Every one must pass. A single analytic failure fails the whole
 > exercise."*
 
-`test/tier-a/retarded-search.nodetest.mjs`, 15 tests covering L1–L12 (L11
-splits into a true tangency and a provable near miss), all passing in
-1.06 s. Every expected value is a closed form or a reference derived in
-the test file; none calls the solver to produce its own answer.
+`test/tier-a/retarded-search.nodetest.mjs`, 16 tests covering L1–L12 (L11
+splits into a true tangency and a provable near miss; L7 gained a sibling,
+below), all passing in about a second. Every expected value is a closed
+form or a reference derived in the test file; none calls the solver to
+produce its own answer.
 
-Three of them only became real tests after they were wrong first, and the
-reasons are in the file rather than smoothed away:
+Four of them only became real tests after something was wrong first, and
+the reasons are in the file rather than smoothed away:
 
 - **L9** first passed against a reference that forgot `f` vanishes on the
   **antipode** as well as the requested longitude. The reference now
@@ -47,6 +48,14 @@ reasons are in the file rather than smoothed away:
 - **L11** set an *equatorial* azimuth where the operation reads an
   *ecliptic* longitude, so `f` sat at 5.8 × 10⁵ km throughout and the case
   tested nothing. Rotating properly turned it into a tangency.
+- **L7b** is a bug this document's own author found while re-reading the
+  L7 fix. When the observer has records the target does not, the
+  iteration leaves coverage on its first step with τ still zero, and the
+  window the classifier wanted to probe came out inverted — so
+  `stateEnclosure` raised `unsupported-option` out of a path whose whole
+  job is to return a typed refusal. Exactly the escape L7 was about, one
+  branch over. The intersection is now checked for emptiness before it is
+  probed, and an all-outside cell says so.
 - **L6** took two rewrites to produce the near-zero separation it claims.
   A 10⁻³ km/s crawl left the cells failing the *root* tests, not the
   separation test; running along the requested longitude's own line made
@@ -140,9 +149,27 @@ one the holdout's windows never asked for. Light-times land where physics
 puts them: 506 s to the Sun, 1.2 s to the Moon, 4.1 hours to Pluto.
 
 Across holdout and supplement: worst contraction factor **7.18 × 10⁻⁴**,
-so Banach is nowhere near marginal; widest proven light-time interval
-**2.4 × 10³ s** (that is the *interval over a whole cell*, not the
-uncertainty in any one τ — see §4); widest emission window 2.8 × 10⁶ s.
+so Banach is nowhere near marginal; widest emission window 2.8 × 10⁶ s.
+
+Two light-time interval widths get reported and they are not the same
+number, so both are given here rather than the flattering one:
+
+| | widest | median |
+| --- | --- | --- |
+| over any **cell** (`uncertainty.numerical.widestLightTimeIntervalSec`) | 2.43 × 10³ s | — |
+| over a reported **event** (`event.lightTimeSec`) | 5.19 × 10⁻⁵ s (3.8 × 10⁻⁵ relative, Moon) | 2.25 × 10⁻⁶ s (1.7 × 10⁻⁶ relative) |
+
+The per-cell figure is large and it is **loose, not physical**: on
+Mercury it reaches 3.8 times τ itself, which is far more than τ actually
+varies over one record. It is the derived pad over a seed cell spanning a
+whole record, plus any hull inflation the self-mapping check needed — a
+true enclosure, verified, and conservative. Wide cells get subdivided or
+excluded, so it never reaches an answer. The number a reader should use
+is the per-event one, which is six to nine orders of magnitude tighter.
+`uncertainty.numerical.widestLightTimeIntervalSec` is a diagnostic of how
+hard the enclosures had to work, and reading it as the accuracy of a
+reported light-time would overstate the error by about eight orders of
+magnitude.
 
 ## 4 · Against Swiss Ephemeris — four corrections, kept apart
 
@@ -285,14 +312,19 @@ numbers is exactly what the preregistration exists to prevent.
 
 The preregistration requires the abort to land **during enclosure
 construction and during the light-time iteration**, not only between root
-evaluations. Fired from inside the spend counter at ten chosen evaluation
-indices, so the landing site is controlled and the stack records it:
+evaluations. Fired from inside the spend counter at twelve chosen
+evaluation indices, from the first to the hundred-thousandth, so the
+landing site is controlled and the stack records where it landed:
 
-- 8 of 10 landed inside `stateEnclosure`, 2 inside `solveTau`.
-- All 10 returned `execution.status: 'cancelled'` with the events found so
+- 9 of 12 landed inside `stateEnclosure`, 3 inside `solveTau`.
+- All 12 returned `execution.status: 'cancelled'` with the events found so
   far, never an exception.
 - **0 evaluations were spent after the abort was raised**, in every case:
   the search returns on the very next `spend()`.
+- Abort to return: **median 105 µs, worst 494 µs** — measured by stamping
+  the clock inside the getter that raises the abort and again when the
+  call returns. An earlier pass reported "47.58 ms", which was the whole
+  search up to the abort rather than the responsiveness being asked for.
 
 ## 6 · No silent degradation
 

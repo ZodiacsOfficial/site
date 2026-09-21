@@ -117,13 +117,22 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
     // cell inside that record cannot lower it -- and only the second is
     // worth subdividing.
     const [covLo, covHi] = coverage(eph, targets);
+    // The intersection of what the iteration visited with what the pack
+    // stores. It can be EMPTY -- a reception window past the target's last
+    // record while the observer still has one puts every emission time
+    // outside -- and probing an inverted window used to raise
+    // `unsupported-option` from inside a path whose whole job is to return
+    // a typed refusal. That is the same escape L7 was about.
     const probeLo = Math.max(covLo, Math.min(t0 - rough.tau, t0));
-    const probeHi = Math.min(covHi, Math.max(t1, probeLo));
+    const probeHi = Math.min(covHi, t1);
+    if (!(probeHi >= probeLo)) {
+      return { ok: false, retry: false, why: `every emission time for this cell lies outside the stored records ${covLo} .. ${covHi} s TDB` };
+    }
     const vProbe = I.vMag(stateEnclosure(eph, targets, probeLo, probeHi, spend).vel);
     if (!(vProbe < C_KM_S)) {
       return { ok: false, retry: false, why: `the target's speed bound over ${probeLo} .. ${probeHi} s TDB is ${vProbe.toFixed(3)} km/s, which is not below c, so the light-time iteration is not a contraction and its iterates leave the stored records` };
     }
-    return { ok: false, retry: true, why: `the light-time iteration from this cell reaches back past ${covLo} s TDB, outside the stored records` };
+    return { ok: false, retry: true, why: `the light-time iteration from this cell reaches outside the stored records ${covLo} .. ${covHi} s TDB` };
   }
 
   // The first candidate is DERIVED, not guessed. tau varies across the
