@@ -108,6 +108,7 @@ for (const c of CASES) {
     && retarded.events.length === aberrated.events.length
     && aberrated.events.length > 0) {
     ladder = aberrated.events.map((e, i) => ({
+      crossing: i,
       lightTimeSec: retarded.events[i].tdbSec - geometric.events[i].ttDays * DAY,
       aberrationSec: e.tdbSec - retarded.events[i].tdbSec,
       referenceAberrationSec: refAb.roots[i] !== undefined && refLt.roots[i] !== undefined
@@ -125,7 +126,10 @@ for (const c of CASES) {
     missed: m.missed.length,
     extra: m.extra.length,
     worstDeltaSec: worst,
+    // `.every()` on an empty array is true, so on a zero-root case this
+    // flag says nothing. `matchedRoots` is what makes it meaningful.
     everyReferenceRootBracketed: allBracketed,
+    matchedRoots: m.matched.length,
     widestBracketSec: aberrated.events.length ? Math.max(...aberrated.events.map((e) => e.bracketWidthSec)) : null,
     unresolved: aberrated.accounting.unresolved.length,
     unresolvedWhy: aberrated.accounting.unresolved.slice(0, 2).map((u) => u.why),
@@ -164,6 +168,17 @@ for (const r of rows) {
     problems.push(`${r.id}: worst root separation ${r.worstDeltaSec} s exceeds ${ROOT_TOLERANCE_SEC} s`);
   }
   if (!r.everyReferenceRootBracketed) problems.push(`${r.id}: a reference root lies outside its reported bracket`);
+  // The ladder, in the pass rule rather than only in the record. It was
+  // recorded and not checked, so `passed: true` rested on no ladder test
+  // at all while the results document said the harness asserted one.
+  for (const [i, l] of (r.ladder ?? []).entries()) {
+    if (l.referenceAberrationSec === null) {
+      problems.push(`${r.id}: crossing ${i} has no reference shift to compare the ladder against`);
+    } else if (Math.abs(l.aberrationSec - l.referenceAberrationSec) > 2 * ROOT_TOLERANCE_SEC) {
+      problems.push(`${r.id}: crossing ${i} shifted ${l.aberrationSec} s between rungs, the reference predicts ${l.referenceAberrationSec} s`);
+    }
+  }
+  if (r.found > 0 && !r.ladder) problems.push(`${r.id}: found ${r.found} crossings but no rung comparison was made`);
 }
 const establishedCount = rows.filter((r) => r.established).length;
 // Section 9's usefulness gate: fewer than half establishing completeness
@@ -198,6 +213,16 @@ const record = {
     totalCells: rows.reduce((n, r) => n + r.cells, 0),
     totalMs: rows.reduce((n, r) => n + r.ms, 0),
     worstObserverSpeedOverC: Math.max(...rows.map((r) => r.worstObserverSpeedOverC)),
+    aberrationShiftRangeSec: (() => {
+      const all = rows.flatMap((r) => (r.ladder ?? []).map((l) => l.aberrationSec));
+      return all.length ? [Math.min(...all), Math.max(...all)] : null;
+    })(),
+    worstLadderResidualSec: (() => {
+      const all = rows.flatMap((r) => (r.ladder ?? [])
+        .filter((l) => l.referenceAberrationSec !== null)
+        .map((l) => Math.abs(l.aberrationSec - l.referenceAberrationSec)));
+      return all.length ? Math.max(...all) : null;
+    })(),
   },
   usefulness,
   passed: problems.length === 0 && usefulness.passes,

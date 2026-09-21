@@ -138,9 +138,12 @@ export function aberrationAngleArcsec(pnat, v, opts = {}) {
  * and an interval division is the operation that most readily loses a
  * bound: `div` refuses outright when the denominator straddles zero.
  *
- * Setting `v = 0` gives bm1 = 1, S = |d| and P = d exactly -- the
- * light-time-only vector, not an approximation of it. That reduction is
- * asserted in the tests, not left to this paragraph.
+ * Setting `v = 0` gives bm1 = 1, S = |d| and P = d -- exactly, in the
+ * algebra. In interval arithmetic it gives P CONTAINING d, widened by a
+ * couple of PAD, because `iv(1)` is already an interval; that is what
+ * `AB-R1` asserts, with `contains`, and the difference is worth the
+ * sentence. Either way it is the light-time-only vector rather than an
+ * approximation of it.
  *
  * ## The derivative is derived, not differenced
  *

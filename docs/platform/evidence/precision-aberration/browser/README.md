@@ -49,13 +49,13 @@ are not searching identical bytes:
 
 | | pack digest | bytes | evaluations, 108-crossing case |
 | --- | --- | --- | --- |
-| Node 22 | `d11e17e1…` | 198 055 | 149 276 |
-| Chromium 141 | `0d64d6ee…` | 198 055 | 149 334 |
-| Firefox 151 | `9cb21bac…` | 198 055 | 149 309 |
+| Node 22 | `d11e17e1…` | 198 055 | 126 126 |
+| Chromium 141 | `0d64d6ee…` | 198 055 | 126 184 |
+| Firefox 151 | `9cb21bac…` | 198 055 | 126 159 |
 
 Each engine is stable with itself — the long search run twice returns the
-same count to the unit — and the spread between engines is 58 in 149 276,
-or 0.04 %.
+same count to the unit — and the spread between engines is 58 in 126 126,
+or 0.05 %.
 
 So the agreement in the first table is a statement about the SEARCH, not
 about the data: three engines given three slightly different polynomials
@@ -85,10 +85,10 @@ thread would swallow the click.
 
 | | Chromium 141 | Firefox 151 |
 | --- | --- | --- |
-| complete run | 149 334 evaluations, 108 crossings | 149 309 evaluations, 108 crossings |
-| same run again | 149 334 | 149 309 |
-| cancelled run | 7 953 evaluations (5.3 %) | 27 701 evaluations (18.6 %) |
-| click to the result reaching the page | 10.9 ms | 0.9 ms |
+| complete run | 126 184 evaluations, 108 crossings | 126 159 evaluations, 108 crossings |
+| same run again | 126 184 | 126 159 |
+| cancelled run | 4 480 evaluations (3.6 %) | 32 875 evaluations (26.1 %) |
+| click to the result reaching the page | 12.3 ms | 0.9 ms |
 | animation frames while it ran | 4 | 5 |
 | status | `cancelled` | `cancelled` |
 | completeness established | false | false |

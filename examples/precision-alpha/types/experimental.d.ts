@@ -62,8 +62,20 @@ export interface ExperimentalSearches {
    * `validated-retarded-geometric`: reception light-time only. The
    * observer's own motion does not enter the direction.
    *
-   * Throws a `disposed` PrecisionError once the handle or its runtime is
-   * gone; every other failure comes back inside the result.
+   * ## What throws and what does not
+   *
+   * A malformed REQUEST throws a `PrecisionError`: `disposed` once the
+   * handle or its runtime is gone, `unknown-body` for a body outside the
+   * contract, `unsupported-option` for an unknown tuning key or a window
+   * that runs backwards, and `out-of-coverage` for a window the pack has
+   * no records for at all. Write the call inside a `try`.
+   *
+   * Everything the SEARCH then runs into comes back inside the result and
+   * never throws: a budget spent or a cancelled signal is
+   * `execution.status`, and a cell that could not be closed is an entry in
+   * `accounting.unresolved` with a reason. That is the distinction -- a
+   * request the operation cannot accept, against an answer the operation
+   * declines to give.
    */
   searchRetarded(spec: RetardedSearchSpec): SearchResult;
 

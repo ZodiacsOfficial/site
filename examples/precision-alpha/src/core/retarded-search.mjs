@@ -56,9 +56,9 @@ export const RETARDED_CONTRACT = Object.freeze({
   applied: Object.freeze(['reception light-time (Newtonian, one-way, target retarded, observer not)']),
   notApplied: Object.freeze([
     'stellar (annual) aberration: the observer\'s velocity does not enter the direction',
-    'gravitational light deflection by the Sun',
+    'gravitational light deflection, by the Sun and by the planets',
     'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
-    'precession and nutation: the frame is J2000, not of date',
+    'precession and nutation: the frame is fixed, not of date',
     'the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)',
     'topocentric parallax and atmospheric refraction: the observer is the geocentre',
   ]),
@@ -89,7 +89,7 @@ export const ABERRATED_CONTRACT = Object.freeze({
     'gravitational light deflection by the Sun',
     'the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond',
     'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
-    'precession and nutation: the frame is J2000, not of date',
+    'precession and nutation: the frame is fixed, not of date',
     'the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)',
     'topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre',
   ]),
@@ -133,12 +133,32 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
 
-  const O = stateEnclosure(eph, observer, t0, t1, spend);
-
-  // A first light-time, solved at the cell's ends, to centre the candidate
-  // interval. This is a STARTING POINT and nothing is proved from it.
+  // The OBSERVER's enclosures, behind the same guard the target's already
+  // had. They did not have it, and the asymmetry cost the whole search: a
+  // window one second outside the observer's records -- 99.99% of it
+  // inside coverage -- raised `out-of-coverage` out of
+  // `searchAberratedLongitude` entirely, so every cell already decided was
+  // discarded and the caller got an exception instead of a result with
+  // one edge cell unresolved. The loop's own catch handles only
+  // `budget-exhausted` and `cancelled`, by design, so nothing downstream
+  // was going to catch this. Exactly the escape the target side carries a
+  // note about, and exactly the one `aberrateInterval`'s header argues
+  // against, on the other body.
+  let O;
+  let oPoint;
   const mid = (t0 + t1) / 2;
-  const oPoint = stateEnclosure(eph, observer, mid, mid, spend).pos.map((x) => (x.lo + x.hi) / 2);
+  try {
+    O = stateEnclosure(eph, observer, t0, t1, spend);
+    // A first light-time, solved at the cell's ends, to centre the
+    // candidate interval. This is a STARTING POINT and nothing is proved
+    // from it.
+    oPoint = stateEnclosure(eph, observer, mid, mid, spend).pos.map((x) => (x.lo + x.hi) / 2);
+  } catch (error) {
+    if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
+      return { ok: false, retry: true, why: `the observer's records do not cover ${t0} .. ${t1} s TDB` };
+    }
+    throw error;
+  }
   const rough = solveTau(eph, targets, mid, oPoint, 0.5, spend);
   if (rough.leftCoverage) {
     // The point iteration walked off the stored records. Two very
@@ -200,7 +220,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     throw error;
   }
   const vT = I.vMag(crude.vel);
-  const vO = I.vMag(stateEnclosure(eph, observer, t0, t1, spend).vel);
+  const vO = I.vMag(O.vel);
   if (!(vT < C_KM_S)) {
     // Not worth subdividing: the speed bound comes from sum|c_k| of the
     // record's differentiated series, so it is a property of the record
@@ -265,6 +285,52 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     const oneMinus = I.sub(I.iv(1), tauDot);
     const dDot = I.vSub(I.vMulI(R.vel, oneMinus), O.vel);
 
+    const proj = (w, v) => I.add(I.add(I.scale(v[0], w[0]), I.scale(v[1], w[1])), I.scale(v[2], w[2]));
+    const common = {
+      ok: true,
+      tauInterval: T,
+      contraction: k,
+      emission: [emitLo, emitHi],
+      distanceKm: dist,
+      widenings: attempt,
+    };
+
+    if (aberration) {
+      // The observer's velocity and acceleration in units of c, at
+      // RECEPTION time -- O, not R, and not retarded. Dividing by c is a
+      // rounded multiply that `vScale`'s widening covers.
+      //
+      // Returning here rather than below is not only tidiness: the
+      // second-derivative block the light-time mode needs costs an
+      // interval division, two multiplies and six vector operations per
+      // cell, and the aberrated mode discards every one of them.
+      const vc = I.vScale(O.vel, 1 / C_KM_S);
+      const vcDot = I.vScale(O.acc, 1 / C_KM_S);
+      const ab = aberrateInterval(D, dDot, dist, vc, vcDot);
+      // `ab.retry` is the transformation's own verdict on whether a
+      // narrower cell could help: an enclosure that merely straddles the
+      // domain edge can be tightened, an observer above c at every instant
+      // of the cell cannot. Passing it through rather than assuming `true`
+      // is what keeps the hopeless case to one refusal instead of two
+      // hundred thousand.
+      if (!ab.ok) return { ok: false, retry: ab.retry === true, why: ab.why };
+      return {
+        ...common,
+        observerSpeedOverC: ab.speed,
+        f: proj(wF, ab.P),
+        g: proj(wG, ab.P),
+        // The interval-wide derivative of the projection, over the WHOLE
+        // cell. The retarded mode pairs a midpoint value with a
+        // second-derivative Lipschitz constant; that route needs |F''|,
+        // which needs the observer's JERK, which the stored series are not
+        // differentiated to. `0 not in [F']` establishes strict
+        // monotonicity over the cell directly and needs nothing further.
+        fDotEnclosure: proj(wF, ab.PDot),
+        M1: I.mag(proj(wF, ab.PDot)),
+        M2: null,
+      };
+    }
+
     // Second derivative, through the same implicit equation.
     const dDotMag = I.vMag(dDot);
     const uDotBound = (2 * dDotMag) / dist.lo;
@@ -278,58 +344,13 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
       O.acc,
     );
 
-    const proj = (w, v) => I.add(I.add(I.scale(v[0], w[0]), I.scale(v[1], w[1])), I.scale(v[2], w[2]));
-    const common = {
-      ok: true,
-      tauInterval: T,
-      contraction: k,
-      emission: [emitLo, emitHi],
-      distanceKm: dist,
-      widenings: attempt,
-    };
-    if (!aberration) {
-      return {
-        ...common,
-        f: proj(wF, D),
-        g: proj(wG, D),
-        fDot: proj(wF, dDot),
-        fDotDot: proj(wF, dDotDot),
-        gDot: proj(wG, dDot),
-        M1: I.mag(proj(wF, dDot)),
-        M2: I.mag(proj(wF, dDotDot)),
-        gM1: I.mag(proj(wG, dDot)),
-      };
-    }
-
-    // The observer's velocity and acceleration in units of c, at RECEPTION
-    // time -- O, not R, and not retarded. Dividing by c is a rounded
-    // multiply that `vScale`'s widening covers.
-    const vc = I.vScale(O.vel, 1 / C_KM_S);
-    const vcDot = I.vScale(O.acc, 1 / C_KM_S);
-    const ab = aberrateInterval(D, dDot, dist, vc, vcDot);
-    // `ab.retry` is the transformation's own verdict on whether a narrower
-    // cell could help: an enclosure that merely straddles the domain edge
-    // can be tightened, an observer above c at every instant of the cell
-    // cannot. Passing it through rather than assuming `true` is what keeps
-    // the hopeless case to one refusal instead of two hundred thousand.
-    if (!ab.ok) return { ok: false, retry: ab.retry === true, why: ab.why };
     return {
       ...common,
-      observerSpeedOverC: ab.speed,
-      f: proj(wF, ab.P),
-      g: proj(wG, ab.P),
-      // The interval-wide derivative of the projection, over the WHOLE
-      // cell. The retarded mode pairs a midpoint value with a
-      // second-derivative Lipschitz constant; that route needs |F''|, which
-      // needs the observer's JERK, which the stored series are not
-      // differentiated to. `0 not in [F']` establishes strict monotonicity
-      // over the cell directly and needs nothing further.
-      fDot: proj(wF, ab.PDot),
-      fDotEnclosure: proj(wF, ab.PDot),
-      gDot: proj(wG, ab.PDot),
-      M1: I.mag(proj(wF, ab.PDot)),
-      M2: null,
-      gM1: I.mag(proj(wG, ab.PDot)),
+      f: proj(wF, D),
+      g: proj(wG, D),
+      fDot: proj(wF, dDot),
+      M1: I.mag(proj(wF, dDot)),
+      M2: I.mag(proj(wF, dDotDot)),
     };
   }
   return { ok: false, retry: true, why: `the light-time interval could not be shown to map into itself after ${p.maxTauWidenings + 1} attempts` };
@@ -381,8 +402,24 @@ function runSearch(eph, spec, shape) {
   let widestTauSec = 0;
   let widestEmissionSec = 0;
   let worstObserverSpeedOverC = 0;
+  /**
+   * Every cell whose enclosures were established feeds this, not only the
+   * subdivision cells: the midpoint and endpoint evaluations and the
+   * bracket cell are accepted cells too, and a figure that skipped them
+   * would be an upper bound over less of the interval than its own note
+   * claims.
+   */
+  const noteObserverSpeed = (c) => {
+    if (c && c.ok && c.observerSpeedOverC) {
+      worstObserverSpeedOverC = Math.max(worstObserverSpeedOverC, c.observerSpeedOverC.hi);
+    }
+  };
 
-  const at = (t) => retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration);
+  const at = (t) => {
+    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration);
+    noteObserverSpeed(c);
+    return c;
+  };
 
   // Seed at the record boundaries of every contributing series, the way
   // the geometric mode does. One cell spanning a year is hopeless: the
@@ -438,7 +475,7 @@ function runSearch(eph, spec, shape) {
       worstContraction = Math.max(worstContraction, cell.contraction);
       widestTauSec = Math.max(widestTauSec, cell.tauInterval.hi - cell.tauInterval.lo);
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
-      if (cell.observerSpeedOverC) worstObserverSpeedOverC = Math.max(worstObserverSpeedOverC, cell.observerSpeedOverC.hi);
+      noteObserverSpeed(cell);
 
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
@@ -458,7 +495,19 @@ function runSearch(eph, spec, shape) {
       // so it establishes monotonicity the direct way instead: an
       // interval-wide enclosure of F' that excludes zero. Both are sound;
       // neither is a relaxation of the other.
-      const monotone = cell.fDotEnclosure
+      //
+      // Keyed off `aberration`, NOT off whether `fDotEnclosure` happens to
+      // be set. The aberrated branch sets `M2: null` beside it, and
+      // `null * w` is 0, so an edit that ever left `fDotEnclosure` out of
+      // an aberrated cell would silently fall through to
+      // `I.mig(fm.fDot) > 0` -- a condition on ONE POINT, which does not
+      // establish monotonicity over a cell and would close a cell holding
+      // two roots. The flag cannot be absent, and the assertion below
+      // means the Lipschitz route can never run without its constant.
+      if (!aberration && !Number.isFinite(cell.M2)) {
+        fail('enclosure-too-weak', 'the monotone test needs a finite second-derivative bound', { cell: [lo, hi] });
+      }
+      const monotone = aberration
         ? I.mig(cell.fDotEnclosure) > 0
         : I.mig(fm.fDot) > cell.M2 * w;
       if (monotone) {
@@ -488,6 +537,7 @@ function runSearch(eph, spec, shape) {
         }
         // The half-plane, with its own enclosure over the bracket.
         const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration);
+        noteObserverSpeed(br);
         if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
         if (br.g.lo <= 0) {
           if (br.g.hi < 0) continue;                     // the antipode, not the requested direction
@@ -502,7 +552,14 @@ function runSearch(eph, spec, shape) {
           bracketTdbSec: [a2, b2],
           bracketWidthSec: b2 - a2,
           kind: 'transversal',
-          direction: sHi > sLo ? 'increasing' : 'decreasing',
+      // NOT `f increasing`. f = sin(L) x - cos(L) (cos(e) y + sin(e) z) is
+      // R sin(L - lambda), so df/dlambda = -R cos(L - lambda), which is
+      // -R at the crossing: f FALLS as the longitude rises. Reporting the
+      // sign of f's own change labelled every event backwards. Measured on
+      // the retrograde fixture before the fix: the crossing at day -58.53,
+      // where the aberrated longitude runs 94.99825 -> 95.00175 over ten
+      // minutes, came back `decreasing`.
+          direction: sHi > sLo ? 'decreasing' : 'increasing',
           lightTimeSec: br.tauInterval,
           halfPlaneMarginKm: br.g.lo,
           distanceKm: [br.distanceKm.lo, br.distanceKm.hi],
@@ -606,7 +663,7 @@ function runSearch(eph, spec, shape) {
         widestLightTimeIntervalSec: widestTauSec,
         widestEmissionWindowSec: widestEmissionSec,
         ...(aberration ? { worstObserverSpeedOverC } : {}),
-        note: `The contraction factor is max|v_target|/c over the emission window, taken from sum|c_k| of the differentiated stored series. Below 1 it gives existence, uniqueness and an a-posteriori error bound by Banach.${aberration ? ' worstObserverSpeedOverC is the largest |v_observer|/c any accepted cell allowed; the transformation needs it below 1, and a cell where it could not be shown below 1 is refused, not approximated.' : ''}`,
+        note: `The contraction factor is max|v_target|/c over the emission window, taken from sum|c_k| of the differentiated stored series. Below 1 it gives existence, uniqueness and an a-posteriori error bound by Banach.${aberration ? ' worstObserverSpeedOverC is the largest |v_observer|/c the enclosure of ANY cell this run established admitted -- subdivision cells, the midpoint and endpoint evaluations and the bracket cells alike, including cells the exclusion test then discarded, so it is an upper bound over more of the interval than the reported events; the transformation needs it below 1, and a cell where it could not be shown below 1 is refused, not approximated.' : ''}`,
       },
       ...OUTSIDE,
     },

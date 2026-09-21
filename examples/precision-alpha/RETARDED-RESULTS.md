@@ -127,6 +127,23 @@ holdout was left undecided.**
 Usefulness gate (§6: *fewer than half proven ⇒ not practical yet*):
 **12/12 — passes.**
 
+### The evaluation counts above were measured before 2026-09-21
+
+Left as they were, because they are the record of a run that happened.
+What changed after it: a review of the aberrated work found that
+`retardedCell` computed the OBSERVER's state enclosure twice per cell —
+once as `O` and again, identically, for the speed bound. Removing the
+second call removes the `spend()` calls it made.
+
+Roots, brackets, cells and every completeness verdict are unchanged; only
+the evaluation counts fall, by 12 to 16 per cent. Measured on the
+development pair: **R1 891 → 747** and **R2 32 399 → 28 939**, with the
+same 13 and 1 116 cells and the same single root each. The tier-B holdout
+suite asserts roots and completeness, not counts, and still passes.
+
+So the table's cells, roots, tolerances and verdicts reproduce today; its
+`evals` column does not, and this is why.
+
 ### The seven cases that found nothing found nothing for a reason
 
 Seven of the twelve — more than half — report zero crossings. That is

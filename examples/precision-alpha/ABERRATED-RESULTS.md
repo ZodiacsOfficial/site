@@ -92,34 +92,42 @@ preregistration DEFINES the quantity that way, and `aberrate` is settled
 against ERFA and closed forms in `test/tier-a/aberration.nodetest.mjs`.
 What the reference independently measures is the SEARCH.
 
-| # | body | target | found | ref | missed | extra | max Δt | widest bracket | cells | evals | ms | rung 3 − rung 2 |
+| # | body | target | found | ref | missed | extra | max Δt | widest bracket | cells | evals | ms | rung 3 − rung 2, first … last |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| H1 | Sun | 69.284365° | 1 | 1 | 0 | 0 | 4.8e-07 s | 8.0e-05 s | 12 | 770 | 21 | +506.03 s |
-| A1 | Sun | 249.284365° | 0 | 0 | 0 | 0 | — | — | 12 | 770 | 10 | — |
-| H2 | Moon | 299.121263° | 11 | 11 | 0 | 0 | 3.0e-04 s | 1.0e-02 s | 10130 | 296,004 | 5334 | -31.31 s |
-| A2 | Moon | 119.121263° | 11 | 11 | 0 | 0 | 3.1e-04 s | 4.1e-02 s | 10130 | 296,004 | 5317 | +33.99 s |
-| H3 | Mercury | 33.313017° | 1 | 1 | 0 | 0 | 1.1e-05 s | 8.0e-05 s | 47 | 2,574 | 23 | +241.85 s |
-| A3 | Mercury | 213.313017° | 0 | 0 | 0 | 0 | — | — | 47 | 2,574 | 26 | — |
-| H4 | Venus | 203.912806° | 1 | 1 | 0 | 0 | 9.5e-07 s | 7.0e-05 s | 18 | 1,977 | 19 | +393.61 s |
-| A4 | Venus | 23.912806° | 2 | 2 | 0 | 0 | 1.3e-05 s | 5.8e-05 s | 18 | 1,977 | 19 | +325.34 s |
-| H5 | Mars | 47.294828° | 1 | 1 | 0 | 0 | 1.2e-05 s | 8.0e-05 s | 11 | 840 | 7 | +599.84 s |
-| A5 | Mars | 227.294828° | 0 | 0 | 0 | 0 | — | — | 11 | 840 | 8 | — |
-| H6 | Jupiter | 27.824767° | 2 | 2 | 0 | 0 | 5.9e-05 s | 6.4e-04 s | 17 | 1,438 | 12 | +456.86 s |
-| A6 | Jupiter | 207.824767° | 0 | 0 | 0 | 0 | — | — | 17 | 1,438 | 9 | — |
-| H7 | Saturn | 293.276007° | 2 | 2 | 0 | 0 | 1.9e-05 s | 1.6e-04 s | 12 | 1,294 | 11 | +3319.11 s |
-| A7 | Saturn | 113.276007° | 0 | 0 | 0 | 0 | — | — | 12 | 1,294 | 9 | — |
-| H8 | Uranus | 284.396447° | 2 | 2 | 0 | 0 | 2.1e-05 s | 3.2e-04 s | 20 | 1,497 | 11 | +14948.03 s |
-| A8 | Uranus | 104.396447° | 0 | 0 | 0 | 0 | — | — | 20 | 1,497 | 9 | — |
-| H9 | Neptune | 294.289267° | 2 | 2 | 0 | 0 | 2.6e-05 s | 1.0e-04 s | 13 | 1,261 | 11 | +12786.23 s |
-| A9 | Neptune | 114.289267° | 0 | 0 | 0 | 0 | — | — | 13 | 1,261 | 9 | — |
-| H10 | Pluto | 242.891737° | 2 | 2 | 0 | 0 | 6.7e-05 s | 6.4e-04 s | 21 | 1,484 | 6 | +32044.91 s |
-| A10 | Pluto | 62.891737° | 0 | 0 | 0 | 0 | — | — | 21 | 1,484 | 10 | — |
+| H1 | Sun | 69.284365° | 1 | 1 | 0 | 0 | 4.8e-07 s | 8.0e-05 s | 12 | 635 | 18 | +506.03 s |
+| A1 | Sun | 249.284365° | 0 | 0 | 0 | 0 | — | — | 12 | 635 | 8 | — |
+| H2 | Moon | 299.121263° | 11 | 11 | 0 | 0 | 3.0e-04 s | 1.0e-02 s | 10130 | 264,398 | 3489 | -31.31 … +10.75 s (11) |
+| A2 | Moon | 119.121263° | 11 | 11 | 0 | 0 | 3.1e-04 s | 4.1e-02 s | 10130 | 264,398 | 3805 | +33.99 … -21.30 s (11) |
+| H3 | Mercury | 33.313017° | 1 | 1 | 0 | 0 | 1.1e-05 s | 8.0e-05 s | 47 | 2,307 | 18 | +241.85 s |
+| A3 | Mercury | 213.313017° | 0 | 0 | 0 | 0 | — | — | 47 | 2,307 | 18 | — |
+| H4 | Venus | 203.912806° | 1 | 1 | 0 | 0 | 9.5e-07 s | 7.0e-05 s | 18 | 1,664 | 17 | +393.61 s |
+| A4 | Venus | 23.912806° | 2 | 2 | 0 | 0 | 1.3e-05 s | 5.8e-05 s | 18 | 1,664 | 16 | +325.34 … +346.22 s (2) |
+| H5 | Mars | 47.294828° | 1 | 1 | 0 | 0 | 1.2e-05 s | 8.0e-05 s | 11 | 706 | 4 | +599.84 s |
+| A5 | Mars | 227.294828° | 0 | 0 | 0 | 0 | — | — | 11 | 706 | 6 | — |
+| H6 | Jupiter | 27.824767° | 2 | 2 | 0 | 0 | 5.9e-05 s | 6.4e-04 s | 17 | 1,205 | 12 | +456.86 … +4091.98 s (2) |
+| A6 | Jupiter | 207.824767° | 0 | 0 | 0 | 0 | — | — | 17 | 1,205 | 9 | — |
+| H7 | Saturn | 293.276007° | 2 | 2 | 0 | 0 | 1.9e-05 s | 1.6e-04 s | 12 | 1,075 | 8 | +3319.11 … +6681.73 s (2) |
+| A7 | Saturn | 113.276007° | 0 | 0 | 0 | 0 | — | — | 12 | 1,075 | 7 | — |
+| H8 | Uranus | 284.396447° | 2 | 2 | 0 | 0 | 2.1e-05 s | 3.2e-04 s | 20 | 1,242 | 9 | +14948.03 … +4538.01 s (2) |
+| A8 | Uranus | 104.396447° | 0 | 0 | 0 | 0 | — | — | 20 | 1,242 | 8 | — |
+| H9 | Neptune | 294.289267° | 2 | 2 | 0 | 0 | 2.6e-05 s | 1.0e-04 s | 13 | 1,045 | 6 | +12786.23 … +17855.38 s (2) |
+| A9 | Neptune | 114.289267° | 0 | 0 | 0 | 0 | — | — | 13 | 1,045 | 6 | — |
+| H10 | Pluto | 242.891737° | 2 | 2 | 0 | 0 | 6.7e-05 s | 6.4e-04 s | 21 | 1,232 | 8 | +32044.91 … -2113.79 s (2) |
+| A10 | Pluto | 62.891737° | 0 | 0 | 0 | 0 | — | — | 21 | 1,232 | 8 | — |
 
 Worst root separation **3.1 × 10⁻⁴ s** against the preregistered tolerance
 of 10⁻³ s — the same figure the light-time holdout reached. **Every
 reference root lies inside its reported bracket. No cell anywhere in the
-holdout was left undecided.** 618 278 evaluations and 20 602 cells over
-all twenty cases, 10.9 s of wall time.
+holdout was left undecided.** 551 018 evaluations and 20 602 cells over all
+twenty cases, 7.5 s — the aberrated rung only; the run also executed a
+light-time and a geometric rung per case, and the two Moon light-time
+rungs alone are another 7.4 s.
+
+One caveat on "every reference root lies inside its bracket": the flag
+that says so is `.every()` over the matched roots, and on the eight
+zero-root antipode cases that is an empty array, where it is vacuously
+true. `matchedRoots` in the record is what makes it mean something, and it
+is 38.
 
 Usefulness gate (section 9: *fewer than half proven ⇒ not practical yet*):
 **20/20 — passes.** Twelve of the twenty cases contain crossings, against
@@ -161,21 +169,28 @@ harness asserts agreement to 2 × 10⁻³ s, and the tier-B suite repeats the
 assertion.
 
 The size of the shift is set by how fast the body's geocentric longitude
-moves, not by the aberration angle, which is about twenty arcseconds for
-all of them:
+is moving AT THAT CROSSING, not by the aberration angle, which is about
+twenty arcseconds throughout. So a body with two crossings in one window
+has two different shifts, and the table above gives the first and the
+last rather than one number per body:
 
-| body | rung 3 − rung 2 |
+| body | rung 3 − rung 2, over every crossing in the window |
 | --- | --- |
-| Moon | −31 s |
-| Mercury | +242 s |
-| Venus | +326 … +394 s |
-| Sun | +506 s |
-| Mars | +600 s |
-| Jupiter | +457 s |
-| Saturn | +3 319 s |
-| Uranus | +14 948 s |
-| Neptune | +12 786 s |
-| Pluto | +32 045 s ≈ 8.9 h |
+| Moon (H2) | −32.9 … +10.8 s, eleven crossings |
+| Mercury | +241.9 s |
+| Venus | +325.3 … +393.6 s |
+| Sun | +506.0 s |
+| Mars | +599.8 s |
+| Jupiter | +456.9 s and +4 092.0 s |
+| Saturn | +3 319.1 s and +6 681.7 s |
+| Uranus | +14 948.0 s and +4 538.0 s |
+| Neptune | +12 786.2 s and +17 855.4 s |
+| Pluto | +32 045 s ≈ 8.9 h, and **−2 113.8 s** |
+
+Pluto's two crossings shift by nine hours in one direction and
+thirty-five minutes in the other. Quoting one of them as the body's
+characteristic shift would be a selection, which is why the table gives
+both, and why §3's last column names how many crossings it is summarising.
 
 Pluto's nine hours and the Moon's half-minute are the same correction. A
 consumer reading either number as an accuracy improvement would be wrong:
@@ -184,23 +199,39 @@ still missing from both.
 
 ## 5 · Cost
 
-The direct monotonicity test costs nothing measurable. On the synthetic
-Earth-like/Mars-like geometry, aberrated against light-time: 2 082 against
-2 082 at one longitude and 2 082 against 2 081 at another. On the holdout's
-Moon case, 296 004 against the light-time holdout's 296 182.
-With the observer at rest the aberrated mode returns the light-time mode's
-root, bracket and evaluation count exactly.
+The direct monotonicity test costs nothing measurable. Aberrated against
+light-time, on the two fixtures that ship with this work:
 
-Worst observer speed any accepted cell admitted: **1.67 × 10⁻⁴** in units
-of c. That is above Earth's 9.9 × 10⁻⁵ because the figure is the top of a
-mean-value enclosure over a whole cell, not an instantaneous value.
+| | aberrated | light-time |
+| --- | --- | --- |
+| `examples/synthetic-pack.mjs`, L = 95 | 2 399 | 2 399 |
+| the same, L = 90 | 2 358 | 2 350 |
+| `test/tier-a/_geometry.mjs` retrograde, L = 85 | 4 490 | 4 490 |
+| the same, L = 95 | 4 491 | 4 490 |
+| holdout H2, the Moon over 300 days | 264 398 | 264 446 |
+
+Equal, or a handful of evaluations apart in either direction — never the
+order-of-magnitude an extra correction might have cost. With the observer
+at rest the aberrated mode returns the light-time mode's root, bracket and
+evaluation count exactly.
+
+Worst observer speed the enclosure of any cell this run established
+admitted: **1.67 × 10⁻⁴** in units of c. That is above Earth's 9.9 × 10⁻⁵
+because the figure is the top of a mean-value enclosure over a whole cell,
+not an instantaneous value, and it covers subdivision cells, endpoint
+evaluations and bracket cells alike — including cells the exclusion test
+then discarded.
 
 ## 6 · Where the reported midpoint is not inside 10⁻³ s
 
 Near a turning point the operation reports a bracket wider than the
-tolerance, and the midpoint of that bracket can sit outside it. This is
-not a holdout failure — no holdout case does it — but it is real and it is
-reachable, so it is stated here rather than left to be discovered.
+tolerance, and the midpoint of that bracket can sit outside it. **No
+holdout case's midpoint does** — the worst there is 3.1 × 10⁻⁴ s. Wide
+brackets certainly did occur in the holdout, H2 at 1.0 × 10⁻² s and A2 at
+4.1 × 10⁻² s, both in §3's own table; what no holdout case did was let the
+midpoint fall outside the tolerance. The synthetic case below does, and it
+is real and reachable, so it is stated here rather than left to be
+discovered.
 
 At a stationary point f' goes to zero, the sign of f stops being separable
 from its own enclosure while the bracket is still wide, and the bisection
@@ -242,9 +273,9 @@ domain, coefficient-record boundaries, a degenerate direction, and the
 aliasing counterexample — 27 roots inside eight-day seed cells that lap
 every 1.5 days, all found, completeness established.
 
-42 tier-A cases, 24 tier-B cases, 268 in the tier-A suite overall.
+47 tier-A cases, 24 tier-B cases, 273 in the tier-A suite overall.
 
-## 8 · Two defects the cases found
+## 8 · What the cases and the reviews found
 
 **A superluminal observer spent the whole budget reaching a refusal it
 could reach at once.** 199 883 cells and 4 000 001 evaluations to say what
@@ -267,9 +298,75 @@ which resolves nothing the way a consumer does.
 empty project and runs a consumer that imports by specifier only.
 
 Two fixture defects of my own are recorded in the commit that fixed them:
-an aliasing case that fitted 5.3 cycles into 20 Chebyshev terms (30 930 km
-of fit error, so it tested the fit and not the search), and a test that
+an aliasing case that fitted 5.3 cycles into 20 Chebyshev terms (about
+3.1 × 10⁴ km of fit error, so it tested the fit and not the search), and a test that
 expected exactly c to be classified hopeless.
+
+### Two bounded reviews, after all of the above passed
+
+One on the soundness of the enclosure, one on prose against evidence.
+The soundness review's verdict was that **the completeness claim holds** —
+it audited 4 169 real search cells against independently computed truth
+(no violation of the midpoint enclosure, the M1 bound or the F′
+enclosure; no excluded cell containing a sign change) and compared 78
+proven searches against 400 000-to-2 000 000-sample scans across five
+geometries with 0 missed and 0 extra. It found **no wrong "proven"**. What
+both reviews did find:
+
+**The reported `direction` was inverted, in all three modes.**
+`f = sin(L)x − cos(L)(cos ε y + sin ε z)` is `R sin(L − λ)`, so
+`df/dλ = −R cos(L − λ)`, which is `−R` at a crossing: **f falls as the
+longitude rises.** Every mode reported the sign of f's own change and
+labelled it the longitude's. Measured on the retrograde fixture, the
+crossing at day −58.53, where the aberrated longitude runs 94.99825° →
+95.00175° over ten minutes, came back `decreasing`. This was wrong in the
+light-time mode, in the aberrated mode, **and in `validated-geometric`,
+which shipped in #546** — the same one-line form in all three. Fixed in
+all three; `AB-DIR` now checks every event of every mode against the
+reference longitude either side, so it cannot come back.
+
+**An `out-of-coverage` throw escaped the whole search.** The target's two
+`stateEnclosure` calls were wrapped and turned into typed refusals; the
+observer's three were not. A window one second outside the observer's
+records — 99.99 % of it inside coverage — raised out of
+`searchAberratedLongitude` entirely and discarded every cell already
+decided, because the loop's catch handles only `budget-exhausted` and
+`cancelled` by design. Pre-existing in the light-time mode too. `AB-F7f`
+covers it.
+
+**A latent route to a wrong "proven".** The monotone test chose its route
+by `cell.fDotEnclosure ? … : …`, next to a field the aberrated branch
+deliberately sets to `null`. Had an edit ever left `fDotEnclosure` out of
+an aberrated cell, `null * w` is 0 and the test would have quietly become
+`|F′(m)| > 0` — a condition at ONE POINT, which does not establish
+monotonicity over a cell and would close a cell holding two roots. Not
+reachable as written. The route is now keyed off the mode flag, and the
+Lipschitz branch refuses outright without a finite constant.
+
+**Three claims that overstated what a test checked.** The antipode table
+was said to be pinned by the suite, which only asserted an inequality;
+the ladder was said to be asserted by the harness, which only recorded
+it, and by a tier-B check that was inside an `if` and so skipped exactly
+the case worth catching. All three are now what the prose says they are:
+the antipode counts are `deepEqual` against the published table, the
+ladder is in the harness's pass rule, and the tier-B ladder check asserts
+its own preconditions instead of skipping on them.
+
+**Two required coverage items were missing** from
+`ABERRATED-PREREGISTRATION.md` §6's pointwise list: numerical
+cancellation, and the off-centre-midpoint counterexample. `AB-E8` now
+drives the projection into an eleven-digit cancellation — two terms of
+3 494.471 km summing to 1.3 × 10⁻⁸ km — and shows the enclosure still
+contains the truth in a width of 2.1 × 10⁻⁶ km rather than blowing up to
+the size of the terms; `AB-E8b` shows the potential term's own
+cancellation is exact; `AB-E9` reproduces the off-centre-midpoint cell on
+this mode with a moving observer, where the true lever arm exceeds
+`(hi − lo)/2` by 11.1 %.
+
+**And a dead cost.** Every aberrated cell computed the light-time mode's
+second derivative — an interval division, two multiplies and six vector
+operations — only to discard it, and `retardedCell` returned four fields
+nothing read. Both gone.
 
 ## 9 · Consumer path
 
@@ -278,10 +375,13 @@ more methods on `PrecisionRuntime`: these modes have not been through the
 route the released ones went through, and mixing them in would make the
 difference a matter of reading documentation.
 
-Verified from the packed archive
-(`docs/platform/evidence/precision-aberration/clean-consumer.json`) and in
-two browser engines on the shipped ES modules with no bundler
-(`docs/platform/evidence/precision-aberration/browser/`):
+Two different things are verified, and they are not interchangeable.
+`docs/platform/evidence/precision-aberration/clean-consumer.json` is the
+archive path: packed, installed offline into an empty project, imported by
+specifier, so it exercises `files` and the `exports` map. The browser
+evidence in `docs/platform/evidence/precision-aberration/browser/` serves
+the working tree's `src/` over HTTP and imports by path, so it exercises
+the modules in a browser but says nothing about packaging. Both:
 
 | | Node 22 | Chromium 141 | Firefox 151 |
 | --- | --- | --- | --- |
@@ -296,7 +396,7 @@ Chebyshev fit reaches `Math.cos` and `Math.acos`, which IEEE-754 does not
 require to be correctly rounded. Measured, the pack digests differ:
 `d11e17e1…` in Node, `0d64d6ee…` in Chromium, `9cb21bac…` in Firefox, all
 198 055 bytes. On the 108-crossing case the evaluation counts differ with
-them — 149 276, 149 334, 149 309, a spread of 0.04 % — and each engine is
+them — 126 126, 126 184, 126 159, a spread of 0.05 % — and each engine is
 stable with itself to the unit.
 
 So the agreement above is a statement about the SEARCH: three engines
@@ -321,9 +421,9 @@ it.
 
 | | Chromium 141 | Firefox 151 |
 | --- | --- | --- |
-| complete run, twice | 149 334 evaluations both times | 149 309 both times |
-| cancelled mid-run | 7 953 evaluations, 5.3 % | 27 701, 18.6 % |
-| click to the result reaching the page | 10.9 ms | 0.9 ms |
+| complete run, twice | 126 184 evaluations both times | 126 159 both times |
+| cancelled mid-run | 4 480 evaluations, 3.6 % | 32 875, 26.1 % |
+| click to the result reaching the page | 12.3 ms | 0.9 ms |
 | animation frames while it ran | 4 | 5 |
 | status / established / exact total | `cancelled` / false / false | `cancelled` / false / false |
 

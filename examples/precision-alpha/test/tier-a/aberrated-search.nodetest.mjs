@@ -23,7 +23,13 @@ import {
   searchAberratedLongitude, searchRetardedLongitude, ABERRATED_CONTRACT, RETARDED_DEFAULTS,
 } from '../../src/core/retarded-search.mjs';
 import { searchGeometricLongitude } from '../../src/core/validated-search.mjs';
-import { statePoint, targetWeights } from '../../src/core/retarded.mjs';
+import { statePoint, solveTau, targetWeights, observerWeights, C_KM_S } from '../../src/core/retarded.mjs';
+import { aberrate, aberrateInterval as abInterval, aberrationAngleArcsec } from '../../src/core/aberration.mjs';
+import { buildPack } from './_pack.mjs';
+import { parseContainerBytes } from '../../src/core/container.mjs';
+import { memorySource } from '../../src/core/source.mjs';
+import { Ephemeris } from '../../src/core/ephemeris.mjs';
+import { searchGeometricLongitude as searchGeo } from '../../src/core/validated-search.mjs';
 import { aberrateInterval } from '../../src/core/aberration.mjs';
 import * as I from '../../src/core/interval.mjs';
 
@@ -532,6 +538,179 @@ test('AB-E7: many turns inside one seed cell are all found, not aliased away', (
   const r = searchAberratedLongitude(eph, { body: 'Mars', targetDeg: 200, fromTdbSec: win[0], toTdbSec: win[1] });
   assert.equal(r.completeness.established, true);
   assertBracketsContain(r, ref, 'E7 aliasing');
+});
+
+test('AB-E8: catastrophic cancellation does not widen the enclosure to the cancelled terms', () => {
+  // The projection is where an aberrated direction loses its digits. Put
+  // the target so the two terms of w.P are equal and opposite: shift d
+  // along w_F until bm1(w_F.d) = -S(w_F.v). Measured on the geometry
+  // below, two terms of 3 494.471 km cancel to 1.3e-8 km -- eleven
+  // decimal digits gone -- and the question is whether the enclosure then
+  // reports the tiny truth or a width the size of the terms.
+  const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+  const Ldeg = 137;
+  const w = G.wF(Ldeg);
+  const R = 2e8;
+  const d0 = G.atEclipticLongitude((Ldeg * Math.PI) / 180, R);
+  const speed = 29.78 / C_KM_S;
+  const v = [-speed * 0.6, speed * 0.8 * G.CE, speed * 0.8 * G.SE];
+  const bm1 = Math.sqrt(1 - dot3(v, v));
+
+  let alpha = 0;
+  for (let k = 0; k < 50; k += 1) {
+    const dk = [0, 1, 2].map((i) => d0[i] + alpha * w[i]);
+    const nd = Math.sqrt(dot3(dk, dk));
+    alpha = -((nd + dot3(dk, v) / (1 + bm1)) * dot3(w, v)) / bm1;
+  }
+  const d = [0, 1, 2].map((i) => d0[i] + alpha * w[i]);
+  const nd = Math.sqrt(dot3(d, d));
+  const S = nd + dot3(d, v) / (1 + bm1);
+  const P = [0, 1, 2].map((i) => bm1 * d[i] + S * v[i]);
+  const termA = bm1 * dot3(w, d);
+  const exact = dot3(w, P);
+  assert.ok(Math.abs(termA) > 1e3, `the terms are only ${termA} km, so nothing cancels here`);
+  assert.ok(Math.abs(exact) < 1e-6, `the cancellation left ${exact} km, so this case is not catastrophic`);
+
+  const zero = [I.iv(0), I.iv(0), I.iv(0)];
+  const ab = abInterval(d.map((x) => I.iv(x)), zero, I.norm(d.map((x) => I.iv(x))), v.map((x) => I.iv(x)), zero);
+  assert.equal(ab.ok, true);
+  const F = I.add(I.add(I.scale(ab.P[0], w[0]), I.scale(ab.P[1], w[1])), I.scale(ab.P[2], w[2]));
+  assert.ok(F.lo <= exact && exact <= F.hi,
+    `the enclosure [${F.lo}, ${F.hi}] does not contain the cancelled value ${exact}`);
+  // The width must be set by roundoff on |d|, not by the magnitude the
+  // cancellation destroyed. Measured: 2.1e-6 km, which is 1.0e-14 of |d|.
+  assert.ok(I.width(F) < 1e-5,
+    `the enclosure is ${I.width(F)} km wide, so the cancellation widened it rather than being absorbed`);
+  assert.ok(I.width(F) < Math.abs(termA) * 1e-6, 'the width is of the order of the cancelled terms');
+});
+
+test('AB-E8b: the correction\'s own cancelling term cancels exactly', () => {
+  // ERFA's potential term is w2 * (v - pdv * p0). With v parallel to the
+  // direction, pdv = |v| and pdv * p0 IS v, so the whole term is zero by
+  // exact cancellation rather than by being small. The proper direction
+  // must come back on the axis, not merely near it.
+  const pnat = [2e8, 0, 0];
+  for (const beta of [1e-4, 0.5]) {
+    for (const sign of [1, -1]) {
+      const v = [sign * beta, 0, 0];
+      const out = aberrate(pnat, v, { withPotential: true, sunDistanceAu: 1 });
+      assert.deepEqual(out, [1, 0, 0], `beta=${sign * beta}: the potential term did not cancel exactly`);
+      assert.equal(aberrationAngleArcsec(pnat, v, { withPotential: true, sunDistanceAu: 1 }), 0);
+    }
+  }
+});
+
+test('AB-E9: the exclusion lever arm reaches the whole cell in the aberrated mode too', () => {
+  // The counterexample the light-time suite keeps as L13, on this mode
+  // and with a MOVING observer so the aberrated path is the one under
+  // test. `hi - lo` is exact by Sterbenz but `lo + hi` rounds, so the
+  // computed midpoint sits off-centre and max|x - m| over [lo, hi]
+  // exceeds (hi - lo)/2. A lever arm shorter than the cell excludes a
+  // root that exists -- and the exclusion test is shared by both modes,
+  // with M1 now coming from the aberrated P' rather than from dDot.
+  const ncoef = 20;
+  const initEt = 500000000000;                    // about year 5840; ulp here is 1.1e-4 s
+  const zeros = () => new Array(ncoef).fill(0);
+  const xs = () => { const c = zeros(); c[ncoef - 1] = 1e6; c[0] = -328.1732681184036; return c; };
+  const ys = () => { const c = zeros(); c[0] = 2e8; return c; };
+  const z3 = () => [...zeros(), ...zeros(), ...zeros()];
+  const V = 29.78;
+  const obs = (r) => {
+    const lo = initEt + r * D;
+    return [0, 1, 2].flatMap((comp) => G.fit((t) => (comp === 1 ? V * (t - initEt) : 0), lo, lo + D, ncoef));
+  };
+  const bytes = buildPack({
+    bodies: [
+      { name: 'sun', frame: 'native', ncoef, nrec: 6, initEt, intervalSec: D, coeffs: z3 },
+      { name: 'emb', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: D, coeffs: obs },
+      { name: 'moon', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: D, coeffs: z3 },
+      { name: 'marsBary', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: D, coeffs: () => [...xs(), ...ys(), ...zeros()] },
+    ],
+    derived: { earth399: { emrat: G.EMRAT, from: 'moon' } },
+  });
+  const eph = new Ephemeris(memorySource(bytes), parseContainerBytes(bytes));
+
+  const tw = targetWeights(eph, 'Mars');
+  const ow = observerWeights(eph);
+  const wf = G.wF(90);
+  const f = (t) => {
+    const o = statePoint(eph, ow, t, null);
+    const { tau } = solveTau(eph, tw, t, o.pos, 0.5, null);
+    const q = statePoint(eph, tw, t - tau, null).pos;
+    const u = aberrate(G.sub3(q, o.pos), o.vel.map((x) => x / C_KM_S));
+    return wf[0] * u[0] + wf[1] * u[1] + wf[2] * u[2];
+  };
+
+  // Found by searching decimal literal pairs: ulp-symmetric endpoints
+  // almost never give a midpoint that rounds off-centre.
+  const lo = 500000001988.6556;
+  const hi = 500000001988.6561;
+  const m = (lo + hi) / 2;
+  // Assert the arithmetic, not just the outcome: if a future engine
+  // centres this midpoint, the case silently stops testing anything.
+  const excess = Math.max(hi - m, m - lo) - (hi - lo) / 2;
+  assert.ok(excess > 0, 'this cell no longer has an off-centre midpoint, so it tests nothing');
+  assert.ok(excess > 0.05 * ((hi - lo) / 2), `the excess is only ${excess} s, too small to bite`);
+  assert.notEqual(Math.sign(f(lo)), Math.sign(f(hi)), 'the cell must straddle a root');
+  const speedOverC = G.norm3(statePoint(eph, ow, m, null).vel) / C_KM_S;
+  assert.ok(speedOverC > 9e-5, `the observer is at |v|/c = ${speedOverC}, so this is not the aberrated path`);
+
+  const r = searchAberratedLongitude(eph, { body: 'Mars', targetDeg: 90, fromTdbSec: lo, toTdbSec: hi });
+  assert.ok(!(r.completeness.established && r.events.length === 0),
+    'a proven exact total of zero over an interval containing a transversal crossing');
+  assert.equal(r.events.length, 1, 'the crossing inside this cell should be found');
+});
+
+test('AB-F7f: a cell the OBSERVER has no records for is refused, not raised', () => {
+  // The target's enclosure calls were guarded and the observer's were
+  // not, so a window one second outside the observer's records raised
+  // `out-of-coverage` out of the whole search and discarded every cell
+  // already decided. The loop's catch handles only budget and
+  // cancellation, by design, so nothing downstream caught it.
+  const eph = G.packOf(RETRO.target, RETRO.observer, { nrec: 20, initEt: -10 * D });
+  const [covLo] = [-10 * D];
+  let r;
+  assert.doesNotThrow(() => {
+    r = searchAberratedLongitude(eph, { body: 'Mars', targetDeg: 90, fromTdbSec: covLo - 1, toTdbSec: 5 * D });
+  }, 'the search raised instead of refusing');
+  assert.equal(r.execution.status, 'finished');
+  assert.equal(r.completeness.established, false);
+  assert.equal(r.eventCount.isExactTotal, false);
+  assert.ok(r.accounting.unresolved.length >= 1);
+  assert.match(r.accounting.unresolved.map((u) => u.why).join(' | '), /records do not cover|outside the stored records/i);
+  covered('unresolved / invalid domain');
+});
+
+test('AB-DIR: the reported direction is the LONGITUDE\'s, in all three modes', () => {
+  // f = sin(L) x - cos(L) (cos(e) y + sin(e) z) is R sin(L - lambda), so
+  // df/dlambda = -R cos(L - lambda), which is -R at a crossing: f FALLS
+  // as the longitude RISES. Reporting the sign of f's own change labelled
+  // every event backwards, in the aberrated mode, the light-time mode and
+  // the released geometric one alike.
+  const lonGeometric = (t) => {
+    const d = G.sub3(RETRO.target(t), RETRO.observer(t));
+    return ((((Math.atan2(G.CE * d[1] + G.SE * d[2], d[0]) * 180) / Math.PI) % 360) + 360) % 360;
+  };
+  const cases = [
+    ['aberrated', (L) => searchAb(RETRO_EPH, L, RETRO_WIN).events.map((e) => [e.tdbSec, e.direction]), (t) => G.lonExact(RETRO, t, true)],
+    ['light-time', (L) => searchLt(RETRO_EPH, L, RETRO_WIN).events.map((e) => [e.tdbSec, e.direction]), (t) => G.lonExact(RETRO, t, false)],
+    ['geometric', (L) => searchGeo(RETRO_EPH, { body: 'Mars', targetDeg: L, fromTtDays: RETRO_WIN[0] / D, toTtDays: RETRO_WIN[1] / D })
+      .events.map((e) => [e.ttDays * D, e.direction]), lonGeometric],
+  ];
+  let checked = 0;
+  for (const [mode, run, lon] of cases) {
+    for (const L of [85, 90, 95]) {
+      for (const [t, direction] of run(L)) {
+        // Ten minutes either side: far enough to clear the bracket, short
+        // enough that no turning point hides inside.
+        const truth = lon(t + 600) > lon(t - 600) ? 'increasing' : 'decreasing';
+        assert.equal(direction, truth,
+          `${mode} L=${L} at ${t}: reported ${direction}, the longitude runs ${lon(t - 600)} -> ${lon(t + 600)}`);
+        checked += 1;
+      }
+    }
+  }
+  assert.ok(checked >= 12, `only ${checked} events were checked, so this case is thin`);
 });
 
 // ====================================================== the coverage ledger

@@ -101,18 +101,49 @@ for (const c of CASES) {
     });
 
     // Section 4: the aberration is the whole of what rung 3 added.
+    //
+    // NOT inside an `if`. An earlier version guarded this on the two rungs
+    // agreeing about how many roots they found, which meant the one case
+    // that most needed checking -- the rungs disagreeing -- was the one
+    // case that skipped the check and passed. A precondition that fails is
+    // a failure, so it is asserted.
     const lt = searchRetardedLongitude(eph, { body: c.body, targetDeg: c.targetDeg, fromTdbSec: a, toTdbSec: b });
     const truthLt = ref.crossings(c.body, c.targetDeg, a, b, STEP[c.body], false).roots;
-    if (lt.completeness.established && lt.events.length === r.events.length && truthLt.length === truth.length) {
-      r.events.forEach((e, i) => {
-        const measured = e.tdbSec - lt.events[i].tdbSec;
-        const predicted = truth[i] - truthLt[i];
-        assert.ok(Math.abs(measured - predicted) <= 2 * ROOT_TOLERANCE_SEC,
-          `${c.id}: the shift between rungs is ${measured} s, the reference predicts ${predicted} s`);
-      });
-    }
+    assert.equal(lt.completeness.established, true, `${c.id}: the light-time rung did not establish completeness`);
+    assert.equal(lt.events.length, r.events.length,
+      `${c.id}: the two rungs disagree about how many crossings there are (${lt.events.length} against ${r.events.length})`);
+    assert.equal(truthLt.length, truth.length,
+      `${c.id}: the two references disagree about how many crossings there are`);
+    r.events.forEach((e, i) => {
+      const measured = e.tdbSec - lt.events[i].tdbSec;
+      const predicted = truth[i] - truthLt[i];
+      assert.ok(Math.abs(measured - predicted) <= 2 * ROOT_TOLERANCE_SEC,
+        `${c.id}: the shift between rungs is ${measured} s, the reference predicts ${predicted} s`);
+    });
   });
 }
+
+/**
+ * The antipode table in ABERRATED-RESULTS.md section 3, pinned.
+ *
+ * An inequality is not enough here. `signChanges > kept` would still pass
+ * if every count in that table changed, and the table is the whole
+ * argument that eight cases reporting zero events did work rather than
+ * skipping it. These are the measured values; a change to any of them
+ * should fail and be looked at, not be absorbed.
+ */
+const ANTIPODE_TABLE = {
+  A1: { signChanges: 1, kept: 0 },
+  A2: { signChanges: 22, kept: 11 },
+  A3: { signChanges: 1, kept: 0 },
+  A4: { signChanges: 3, kept: 2 },
+  A5: { signChanges: 1, kept: 0 },
+  A6: { signChanges: 2, kept: 0 },
+  A7: { signChanges: 2, kept: 0 },
+  A8: { signChanges: 2, kept: 0 },
+  A9: { signChanges: 2, kept: 0 },
+  A10: { signChanges: 2, kept: 0 },
+};
 
 test('the antipode series really does have roots for the half-plane to reject', () => {
   // Otherwise "0 events, completeness established" would be a case that
@@ -136,9 +167,11 @@ test('the antipode series really does have roots for the half-plane to reject', 
     const kept = ref.crossings(c.body, c.targetDeg, a, b, step, true).roots.length;
     assert.ok(signChanges > kept,
       `${c.id}: every f-root survives the half-plane, so this case does not exercise the rejection`);
+    assert.deepEqual({ signChanges, kept }, ANTIPODE_TABLE[c.id],
+      `${c.id}: the published antipode table no longer matches the reference`);
     rejected += signChanges - kept;
   }
-  assert.ok(rejected >= 10, `only ${rejected} roots were rejected across the antipode series`);
+  assert.equal(rejected, 25, 'the published total of rejected roots no longer matches the reference');
 });
 
 test('section 9 usefulness gate: at least half the holdout establishes completeness', () => {

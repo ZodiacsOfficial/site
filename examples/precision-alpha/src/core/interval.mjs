@@ -60,7 +60,7 @@ export function div(a, b) {
  *
  * `Math.sqrt` is the one transcendental-looking operation IEEE-754 requires
  * to be correctly rounded, so each endpoint is within half an ulp before
- * PAD's eight units widen it. The same reason `norm` above uses it.
+ * PAD's eight units widen it. The same reason `norm` below uses it.
  */
 export function sqrt(a) {
   if (!(a.lo >= 0)) {
