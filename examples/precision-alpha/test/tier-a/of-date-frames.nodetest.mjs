@@ -582,3 +582,64 @@ test('S12: a cell wide enough to hide an extremum of sine is still enclosed', ()
   assert.ok(interior < hullLo - 1e-6 || Math.PI / w > cell.hi,
     'the case must span an extremum the endpoints miss, or it is testing nothing');
 });
+
+// ============================ reporting: the three sources, kept apart
+/**
+ * Not one of the twelve. §5 of the preregistration requires the three error
+ * sources to be reported separately and never summed, and §8 requires the
+ * supported range on every result; both are properties of the RESULT, so
+ * they are checked here rather than being taken on trust from the prose.
+ */
+test('reporting: the of-date result separates three error sources and never sums them', () => {
+  const targetDeg = G.lonExact(PAIR, PROBE, true);
+  const r = searchOfDateLongitude(EPH, {
+    body: BODY, targetDeg, fromTdbSec: WIN[0], toTdbSec: WIN[1],
+  });
+  assert.equal(r.completeness.established, true);
+  const ts = r.uncertainty.timeScale;
+  assert.ok(ts, 'the of-date mode must report the time-scale breakdown');
+  assert.equal(ts.implementationNumerical.bounded, true);
+  assert.equal(ts.conversionApproximation.bounded, true);
+  assert.equal(ts.externalTimeModel.bounded, false);
+
+  // The conversion figure must be DERIVED from the frame's own rate, not
+  // asserted: rate times the stated model error, to the bit.
+  assert.equal(
+    ts.conversionApproximation.inducedLongitudeArcsec,
+    ts.conversionApproximation.frameRateArcsecPerSec * ts.conversionApproximation.statedModelErrorSec,
+  );
+  assert.ok(ts.conversionApproximation.frameRateArcsecPerSec > 0, 'the frame must have a rate for this to mean anything');
+  assert.equal(ts.conversionApproximation.statedModelErrorSec, 3e-5);
+  const [lo, hi] = ts.conversionApproximation.tdbMinusTtUsedSec;
+  assert.ok(lo < 0 && hi > 0 && Math.abs(lo) < 0.01 && Math.abs(hi) < 0.01,
+    `TDB-TT over this window should be a couple of milliseconds either way, got [${lo}, ${hi}]`);
+
+  // No field anywhere combines them.
+  const combined = JSON.stringify(ts).match(/total|combined|sum/i);
+  assert.equal(combined, null, 'the three sources must not be summed into one figure');
+
+  // The two fixed-frame modes have no time-scale block: there is no
+  // conversion in them to report.
+  const plain = searchAberratedLongitude(EPH, {
+    body: BODY, targetDeg, fromTdbSec: WIN[0], toTdbSec: WIN[1],
+  });
+  assert.equal(plain.uncertainty.timeScale, undefined);
+});
+
+test('reporting: the supported range is 1900-2100 and the result says which side it is on', () => {
+  const targetDeg = G.lonExact(PAIR, PROBE, true);
+  const r = searchOfDateLongitude(EPH, {
+    body: BODY, targetDeg, fromTdbSec: WIN[0], toTdbSec: WIN[1],
+  });
+  const f = r.diagnostics.frameOfDate;
+  // Derived here independently of the module: JD 2415020.5 and 2488069.5
+  // against J2000's 2451545.0, in seconds.
+  assert.deepEqual(f.modelRangeTdbSec, [
+    (2415020.5 - 2451545.0) * 86400,
+    (2488069.5 - 2451545.0) * 86400,
+  ]);
+  assert.equal(f.requestWithinModelRange, true);
+  assert.equal(f.obliquityEntersTheProjection, false);
+  assert.ok(f.widestFrameAngleSpanArcsec > 0, 'the frame enclosure width must be reported, not assumed zero');
+  assert.match(f.outsideModelRangeMeans, /model as implemented/);
+});

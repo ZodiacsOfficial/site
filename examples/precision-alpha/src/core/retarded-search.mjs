@@ -38,6 +38,10 @@ import { aberrateInterval } from './aberration.mjs';
 import { frameMatrixInterval, matApplyI, ttCenturiesInterval, FRAMES, TIME_MODEL } from './frame-of-date.mjs';
 import * as I from './interval.mjs';
 
+/** Arcseconds to radians, and seconds in a Julian century -- the frame's units. */
+const DAS2R = Math.PI / (180 * 3600);
+const CENTURY_SEC = 36525 * 86400;
+
 const DAY = 86400;
 const J2000_JD = 2451545.0;
 const DEG = Math.PI / 180;
@@ -107,6 +111,19 @@ export const ABERRATED_CONTRACT = Object.freeze({
  * gravitational deflection and the rest of the list below; this adds a
  * frame rotation and nothing else.
  */
+/**
+ * The range over which the frame MODELS claim to represent the sky:
+ * 1900-01-01 to 2100-01-01, TDB seconds past J2000.
+ *
+ * It is ERFA `nut00b.c`'s own span -- the one over which it bounds the
+ * pole at a milliarcsecond. Outside it the search still runs and still
+ * returns proven enclosures ABOUT THE MODEL AS IMPLEMENTED; what lapses
+ * is the claim that the model is the sky. The result says which, rather
+ * than refusing, because refusing would make the two of-date rungs
+ * disagree about what a window means.
+ */
+export const OF_DATE_MODEL_RANGE_TDB_SEC = Object.freeze([-3155716800, 3155716800]);
+
 export const OF_DATE_CONTRACT = Object.freeze({
   operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME AND STELLAR ABERRATION, in the ECLIPTIC OF DATE with its origin at the TRUE EQUINOX OF DATE (see frame and frameNote), reaching a given value',
   frame: FRAMES.trueEquinoxOfDate,
@@ -114,6 +131,7 @@ export const OF_DATE_CONTRACT = Object.freeze({
   origin: 'geocentric',
   timeScale: 'TDB seconds past J2000 in and out. The FRAME needs TT, and the conversion is a stated model: see timeModel. The two existing modes need no conversion because their frame is fixed.',
   timeModel: TIME_MODEL,
+  supportedRange: 'TDB seconds past J2000 in [-3155716800, +3155716800], i.e. 1900-01-01 to 2100-01-01, intersected with the pack\'s own coverage. That is IAU 2000B\'s own span. Outside it the search still returns proven enclosures about the model as implemented; what lapses is the claim that the model represents the sky, and every result says which side of the line it is on.',
   models: 'IAU 2006 precession with frame bias (Fukushima-Williams, the eraPfw06 angles); IAU 2000B nutation (77 luni-solar terms, McCarthy & Luzum 2003, carrying the Luzum 2001 "rigorous" planetary-bias pair -0.000135"/+0.000388"), adjusted to P03 per Wallace & Capitaine 2006. THAT PAIRING IS NOT ONE ERFA OR SOFA SHIPS: their IAU 2006 chain is 2000A-based (eraNut06a, eraPnm06a) and there is no eraNut06b or eraPnm06b in the library at all. It is this repository\'s own released choice, reproduced here so the experimental chain and the released reducer are the same model rather than two. The P03 adjustment is applied for the same reason, and on 2000B it is formal rather than material: measured at most 16.5 microarcsec in dpsi and 11.9 in deps over 1995-2050, against the 0.0027" by which 2000B itself differs from 2000A. A reference used to check this must use the SAME pair: a 2000A reference differs from it by a MODEL, not by a defect.',
   evaluation: 'Trigonometry from src/core/trig.mjs, a Cody-Waite reduction and Taylor polynomial using only +, - and *, with a proven absolute error bound of 4e-15 measured at 1.5e-16 against a 60-digit reference. Math.sin is not used: ECMAScript does not bound its error, so an enclosure built on it would not be a bound, and it does not promise the same bits in two engines.',
   c: C_KM_S,
@@ -497,6 +515,19 @@ function runSearch(eph, spec, shape) {
    */
   let widestFrameSpan = 0;
   /**
+   * The frame's own rate in ecliptic longitude, arcsec per TDB second, and
+   * the TDB-TT values the run actually used.
+   *
+   * The rate is what turns the time model's 3e-5 s into an angle. Without
+   * it the conversion approximation cannot be reported in the same units
+   * as the thing it perturbs, and a reader is left to guess whether it
+   * matters. Taken from |d(psib + dpsi)/dt| over the accepted cells, which
+   * is the derivative the frame chain already computed.
+   */
+  let worstPsiRateArcsecPerSec = 0;
+  let tdbMinusTtLo = Infinity;
+  let tdbMinusTtHi = -Infinity;
+  /**
    * Every cell whose enclosures were established feeds this, not only the
    * subdivision cells: the midpoint and endpoint evaluations and the
    * bracket cell are accepted cells too, and a figure that skipped them
@@ -572,6 +603,16 @@ function runSearch(eph, spec, shape) {
       noteObserverSpeed(cell);
       if (cell.frameAngles && cell.frameAngles.dpsi) {
         widestFrameSpan = Math.max(widestFrameSpan, cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo);
+        // psiDot is radians per TT CENTURY, the variable the polynomial and
+        // the nutation series are both written in.
+        worstPsiRateArcsecPerSec = Math.max(
+          worstPsiRateArcsecPerSec,
+          I.mag(cell.frameAngles.psiDot) / DAS2R / CENTURY_SEC,
+        );
+      }
+      if (cell.tdbMinusTtSec) {
+        tdbMinusTtLo = Math.min(tdbMinusTtLo, cell.tdbMinusTtSec.lo);
+        tdbMinusTtHi = Math.max(tdbMinusTtHi, cell.tdbMinusTtSec.hi);
       }
 
       // 1. Exclusion. The midpoint enclosure already carries every error.
@@ -764,6 +805,38 @@ function runSearch(eph, spec, shape) {
         ...(aberration ? { worstObserverSpeedOverC } : {}),
         note: `The contraction factor is max|v_target|/c over the emission window, taken from sum|c_k| of the differentiated stored series. Below 1 it gives existence, uniqueness and an a-posteriori error bound by Banach.${aberration ? ' worstObserverSpeedOverC is the largest |v_observer|/c the enclosure of ANY cell this run established admitted -- subdivision cells, the midpoint and endpoint evaluations and the bracket cells alike, including cells the exclusion test then discarded, so it is an upper bound over more of the interval than the reported events; the transformation needs it below 1, and a cell where it could not be shown below 1 is refused, not approximated.' : ''}`,
       },
+      ...(ofDate
+        ? {
+          /**
+           * The three sources `OF-DATE-PREREGISTRATION.md` section 5 keeps
+           * apart. They are NOT summed: a reader can shrink the first by
+           * spending more, cannot shrink the second at all without changing
+           * the declared model, and cannot bound the third from inside this
+           * package. One combined number would hide which is which.
+           */
+          timeScale: {
+            implementationNumerical: {
+              bounded: true,
+              widestFrameAngleSpanArcsec: widestFrameSpan,
+              what: 'the proven width of the frame\'s own enclosure over a cell, arcsec of nutation in longitude',
+            },
+            conversionApproximation: {
+              bounded: true,
+              model: TIME_MODEL.name,
+              statedModelErrorSec: TIME_MODEL.statedModelErrorSec,
+              tdbMinusTtUsedSec: Number.isFinite(tdbMinusTtLo) ? [tdbMinusTtLo, tdbMinusTtHi] : null,
+              frameRateArcsecPerSec: worstPsiRateArcsecPerSec,
+              inducedLongitudeArcsec: worstPsiRateArcsecPerSec * TIME_MODEL.statedModelErrorSec,
+              what: 'the declared TDB-TT model error carried into longitude through the frame\'s own rate. A property of the model, not of this code: tightening the intervals cannot tighten it.',
+            },
+            externalTimeModel: {
+              bounded: false,
+              what: 'that the pack\'s time argument is whatever its producer meant by it, and that the TDB-TT series is itself an approximation to a relation defined by a solar-system model',
+              note: 'outside this package entirely; stated, never bounded here',
+            },
+          },
+        }
+        : {}),
       ...OUTSIDE,
     },
     diagnostics: {
@@ -781,6 +854,10 @@ function runSearch(eph, spec, shape) {
             timeModel: contract.timeModel,
             obliquityEntersTheProjection: false,
             widestFrameAngleSpanArcsec: widestFrameSpan,
+            supportedRange: contract.supportedRange,
+            modelRangeTdbSec: OF_DATE_MODEL_RANGE_TDB_SEC,
+            requestWithinModelRange: a >= OF_DATE_MODEL_RANGE_TDB_SEC[0] && b <= OF_DATE_MODEL_RANGE_TDB_SEC[1],
+            outsideModelRangeMeans: 'the enclosures still hold about the model as implemented; the claim that the model represents the sky does not',
           },
         }
         : {}),
