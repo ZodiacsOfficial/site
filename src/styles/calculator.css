@@ -2629,6 +2629,6 @@
 .calc__options .field { margin-top: 8px; max-width: 56ch; }
 .calc__guide { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
 .calc__guide a { color: var(--text-2); text-underline-offset: 3px; }
-@media (max-width: 560px) {
+@media (max-width: 900px) {
   body:has(.calc__guide) .zguide-launcher { display: none; }
 }
