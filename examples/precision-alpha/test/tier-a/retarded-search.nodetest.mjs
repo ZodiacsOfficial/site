@@ -14,7 +14,7 @@ import { buildPack } from './_pack.mjs';
 import { parseContainerBytes } from '../../src/core/container.mjs';
 import { memorySource } from '../../src/core/source.mjs';
 import { Ephemeris } from '../../src/core/ephemeris.mjs';
-import { searchRetardedLongitude, RETARDED_CONTRACT } from '../../src/core/retarded-search.mjs';
+import { searchRetardedLongitude, RETARDED_CONTRACT, RETARDED_DEFAULTS } from '../../src/core/retarded-search.mjs';
 import { statePoint, solveTau, targetWeights, observerWeights, C_KM_S } from '../../src/core/retarded.mjs';
 
 const DAY = 86400;
@@ -337,7 +337,95 @@ test('L13: the exclusion test\'s lever arm reaches the whole cell, not (hi-lo)/2
   assert.equal(r.events.length, 1, 'the crossing inside this cell should be found');
 });
 
-test('L8: roots at the interval ends are reported once each, not twice and not never', () => {
+/**
+ * The CIRCLE root in closed form, independent of the solver AND of the pack.
+ *
+ * The observer sits at the origin and |r_target| = R for all time, so the
+ * reception light-time is exactly R/c -- no iteration, no fixed point. The
+ * crossing condition f = 0 is
+ *
+ *     sin(L) R cos(th) = cos(L) cos(eps) R sin(th)   =>   tan(th) = tan(L)/cos(eps)
+ *
+ * and the branch with g > 0 is th = atan2(sin L / cos eps, cos L). The target
+ * reaches that angle at emission time th/Wt, which is received R/c later.
+ */
+function circleRootExact(Ldeg) {
+  const L = (Ldeg * Math.PI) / 180;
+  const theta = Math.atan2(Math.sin(L) / CE, Math.cos(L));
+  return theta / CIRCLE.Wt + CIRCLE.R / C_KM_S;
+}
+
+test('L8: the reported bracket and light-time contain their closed-form values', () => {
+  // The independent half of L8. RETARDED-RESULTS.md recorded that this case
+  // compared against the solver's own first call, which tests consistency and
+  // not correctness. `circleRootExact` owes the solver nothing: it is the
+  // analytic root of the ideal circle, and R/c is the exact light-time.
+  const eph = packOf(CIRCLE.fn, ORIGIN);
+  const exact = circleRootExact(3);
+  const tauExactSec = CIRCLE.R / C_KM_S;
+  const r = search(eph, { targetDeg: 3, fromTdbSec: -14 * DAY, toTdbSec: 14 * DAY });
+  assert.equal(r.completeness.established, true);
+  assert.equal(r.events.length, 1, 'the reference geometry must have exactly one crossing here');
+  const [lo, hi] = r.events[0].bracketTdbSec;
+  // Containment, not a tolerance: the bracket is a claim about where the root
+  // is, and the closed form says where it is.
+  assert.ok(lo <= exact && exact <= hi,
+    `bracket [${lo}, ${hi}] does not contain the closed-form root ${exact}`);
+  const lt = r.events[0].lightTimeSec;
+  assert.ok(lt.lo <= tauExactSec && tauExactSec <= lt.hi,
+    `light-time enclosure [${lt.lo}, ${lt.hi}] does not contain R/c = ${tauExactSec}`);
+  // The pack is a Chebyshev fit of the circle, so the stored polynomial's root
+  // is not identically the ideal one. Measured, that difference is ~6e-8 s --
+  // three orders below the solver's own minWidthSec floor -- so containment
+  // above is a statement about the solver, not about the fit.
+  assert.ok(Math.abs(r.events[0].tdbSec - exact) <= RETARDED_DEFAULTS.minWidthSec,
+    `reported root ${r.events[0].tdbSec} is further than the subdivision floor from ${exact}`);
+});
+
+test('L8: adjacent half-open windows report the root exactly once, and admit it when they cannot', () => {
+  const eph = packOf(CIRCLE.fn, ORIGIN);
+  const exact = circleRootExact(3);
+
+  // Displaced splits: the root belongs to exactly one side. The displacement
+  // is larger than a bracket, so which side is unambiguous.
+  for (const off of [-1, -2e-4, 2e-4, 1]) {
+    const m = exact + off;
+    const left = search(eph, { targetDeg: 3, fromTdbSec: exact - 6 * DAY, toTdbSec: m });
+    const right = search(eph, { targetDeg: 3, fromTdbSec: m, toTdbSec: exact + 6 * DAY });
+    const total = left.events.length + right.events.length;
+    assert.equal(total, 1, `split at root${off >= 0 ? '+' : ''}${off}: reported ${total} times, not once`);
+    assert.equal(left.completeness.established, true, `split at root${off}: left not established`);
+    assert.equal(right.completeness.established, true, `split at root${off}: right not established`);
+    // and it is on the side the half-open rule requires
+    const onLeft = left.events.length === 1;
+    assert.equal(onLeft, off > 0, `split at root${off}: the root landed on the wrong side`);
+  }
+
+  // A split exactly on the root. The solver may fail to report it -- the
+  // endpoint value cannot be separated from zero -- but it must then NOT claim
+  // completeness. The previous assertion here was `n <= 1`, which permitted a
+  // silent loss even though the case's own name forbids one.
+  for (const [label, spec] of [
+    ['left', { fromTdbSec: exact - 6 * DAY, toTdbSec: exact }],
+    ['right', { fromTdbSec: exact, toTdbSec: exact + 6 * DAY }],
+  ]) {
+    const r = search(eph, { targetDeg: 3, ...spec });
+    if (r.events.length === 0) {
+      assert.equal(r.completeness.established, false,
+        `${label}: lost the boundary root while still claiming completeness`);
+      assert.equal(r.eventCount.isExactTotal, false,
+        `${label}: lost the boundary root while still claiming an exact total`);
+      assert.ok(r.accounting.unresolved.length >= 1,
+        `${label}: lost the boundary root without recording an unresolved region`);
+    } else {
+      assert.equal(r.events.length, 1, `${label}: the boundary root was reported twice`);
+    }
+  }
+});
+
+test('L8: the solver agrees with itself across boundary windows (consistency, retained)', () => {
+  // The original L8, kept as-is. It compares against the solver's own first
+  // call, so it is a consistency check; the correctness half is above.
   const eph = packOf(CIRCLE.fn, ORIGIN);
   const inner = search(eph, { targetDeg: 3, fromTdbSec: -14 * DAY, toTdbSec: 14 * DAY });
   assert.equal(inner.completeness.established, true);
@@ -365,6 +453,75 @@ test('L9: a window with no crossing is a proven zero', () => {
   const antipode = rootExact(CIRCLE.fn, ORIGIN, 180, -5 * DAY, 5 * DAY);
   assert.ok(antipode !== null, 'this case is only interesting because f does vanish here');
   assert.ok(gExact(CIRCLE.fn, ORIGIN, antipode, 180) < 0, 'and it vanishes on the wrong side of the half-plane');
+});
+
+test('L10b: a close pair BELOW a tenth of the window, established analytically first', () => {
+  // The preregistration's L10 asks for "two roots closer than a tenth of the
+  // window". The case above gives 0.1505 of it and says so. This one is
+  // constructed to meet the declared condition exactly, and the construction
+  // -- not the solver -- is what fixes where the roots are.
+  //
+  // |r| is held at R, so the reception light-time is exactly R/c and the
+  // emission angle is a parabola through the crossing angle:
+  //
+  //     th(s) = TH + k ((s + R/c)^2 - (DELTA/2)^2)
+  //
+  // which equals TH exactly at s + R/c = +-DELTA/2, i.e. at reception times
+  // +-DELTA/2. The separation is DELTA by construction, for any k.
+  const R = 2e8;
+  const WINDOW = 2 * DAY;
+  const DELTA = 0.05 * WINDOW;          // 0.05 of the window; the condition is < 0.1
+  const k = 4e-11;                      // angular curvature; does not move the roots
+  const Ldeg = 3;
+  const L = (Ldeg * Math.PI) / 180;
+  const TH = Math.atan2(Math.sin(L) / CE, Math.cos(L));
+  const TAU = R / C_KM_S;
+  const half = DELTA / 2;
+  const fn = (s) => {
+    const th = TH + k * ((s + TAU) * (s + TAU) - half * half);
+    return [R * Math.cos(th), R * Math.sin(th), 0];
+  };
+  const eph = packOf(fn, ORIGIN, { ncoef: 32, intervalSec: DAY / 4, nrec: 400, initEt: -50 * DAY });
+
+  // The fixture is checked BEFORE the solver is asked anything, by the same
+  // independent scan-and-bisect the other cases use. If the geometry is ever
+  // retuned and stops meeting the condition, this fails here rather than
+  // silently becoming another L10.
+  const roots = [];
+  const step = DAY / 2000;
+  let prev = fExact(fn, ORIGIN, -DAY, Ldeg);
+  for (let t = -DAY + step; t <= DAY; t += step) {
+    const cur = fExact(fn, ORIGIN, t, Ldeg);
+    if (Math.sign(cur) !== Math.sign(prev) && prev !== 0) {
+      const r = rootExact(fn, ORIGIN, Ldeg, t - step, t);
+      if (r !== null) roots.push(r);
+    }
+    prev = cur;
+  }
+  assert.equal(roots.length, 2, `the fixture must have exactly two analytic roots, it has ${roots.length}`);
+  for (const [i, want] of [[0, -half], [1, half]]) {
+    assert.ok(Math.abs(roots[i] - want) < 1e-3,
+      `analytic root ${i} is at ${roots[i]}, not the constructed ${want}`);
+  }
+  const separation = roots[1] - roots[0];
+  const fraction = separation / WINDOW;
+  assert.ok(fraction < 0.1,
+    `this case exists to meet the preregistered condition; its pair is ${fraction.toFixed(5)} of the window`);
+
+  // Only now the solver.
+  const r = search(eph, { targetDeg: Ldeg, fromTdbSec: -DAY, toTdbSec: DAY });
+  assert.equal(r.execution.status, 'finished');
+  assert.equal(r.completeness.established, true, 'completeness was not established on the close pair');
+  assert.equal(r.eventCount.isExactTotal, true, 'the total was not exact on the close pair');
+  assert.equal(r.events.length, 2, `expected both roots, got ${r.events.length}`);
+  assert.equal(r.accounting.unresolved.length, 0, 'a region was left unresolved');
+  for (const [i, want] of [[0, roots[0]], [1, roots[1]]]) {
+    assert.ok(Math.abs(r.events[i].tdbSec - want) <= RETARDED_DEFAULTS.minWidthSec,
+      `event ${i} at ${r.events[i].tdbSec} is further than the subdivision floor from the analytic ${want}`);
+    const [lo, hi] = r.events[i].bracketTdbSec;
+    assert.ok(lo <= want && want <= hi,
+      `bracket ${i} [${lo}, ${hi}] does not contain the analytic root ${want}`);
+  }
 });
 
 test('L10: two closely spaced roots are both found, or refused — never one', () => {
