@@ -1,14 +1,57 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-20T11:52:12.646Z",
+  "generatedAt": "2026-09-21T00:08:45.187Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-21T00:00:00.000Z",
-    "endsBefore": "2026-09-28T00:00:00.000Z"
+    "startsAt": "2026-08-22T00:00:00.000Z",
+    "endsBefore": "2026-09-29T00:00:00.000Z"
   },
   "items": [
+    {
+      "id": "zrx-event-brief-aspect-2026-09-28t16-21-52-452z-sun-trine-uranus",
+      "slug": "event-brief-aspect-2026-09-28t16-21-52-452z-sun-trine-uranus",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T12:00:00.000Z",
+      "visibleAt": "2026-09-28T16:21:52.452Z",
+      "title": "Sun Trine Uranus · event brief",
+      "summary": "Sun Trine Uranus becomes exact at 2026-09-28T16:21:52.452Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-09-28t16-21-52-452z-sun-trine-uranus/",
+      "signs": [
+        "gemini",
+        "libra"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-ingress-2026-09-28t02-49-00-999z-mars-leo",
+      "slug": "event-brief-ingress-2026-09-28t02-49-00-999z-mars-leo",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T12:00:00.000Z",
+      "visibleAt": "2026-09-28T02:49:00.999Z",
+      "title": "Mars enters Leo · event brief",
+      "summary": "Mars enters Leo becomes exact at 2026-09-28T02:49:00.999Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-ingress-2026-09-28t02-49-00-999z-mars-leo/",
+      "signs": [
+        "leo"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "ingress"
+      ],
+      "status": "scheduled"
+    },
     {
       "id": "zrx-event-brief-lunation-2026-09-26t16-48-53-293z-full-moon-aries",
       "slug": "event-brief-lunation-2026-09-26t16-48-53-293z-full-moon-aries",
@@ -118,6 +161,91 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-21",
+      "slug": "daily-market-brief-2026-09-21",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T12:00:00.000Z",
+      "visibleAt": "2026-09-21T12:00:00.000Z",
+      "title": "Mercury sextile Jupiter · daily market brief",
+      "summary": "Mercury sextile Jupiter leads the disclosed symbolic index; Leo market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-21/",
+      "signs": [
+        "libra",
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-weekly-outlook-2026-09-21",
+      "slug": "weekly-outlook-2026-09-21",
+      "kind": "weekly-outlook",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T12:00:00.000Z",
+      "visibleAt": "2026-09-21T12:00:00.000Z",
+      "title": "Weekly symbolic outlook · 2026-09-21",
+      "summary": "Libra, Aries, Leo hold the three highest disclosed attention ranks for the next seven UTC days.",
+      "url": "/terminal/research/weekly-outlook-2026-09-21/",
+      "signs": [
+        "libra",
+        "aries",
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "weekly-outlook",
+        "astrology"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-20-observation-24h",
+      "slug": "market-check-2026-09-20-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T00:08:45.187Z",
+      "visibleAt": "2026-09-21T00:08:45.187Z",
+      "title": "Aries 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.02 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-20-observation-24h/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-21",
+      "slug": "market-check-2026-09-21",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-21T00:08:45.187Z",
+      "visibleAt": "2026-09-21T00:08:45.187Z",
+      "title": "Leo market check · 2026-09-21",
+      "summary": "Leo price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-21/",
+      "signs": [
+        "leo"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-20",
       "slug": "daily-market-brief-2026-09-20",
       "kind": "daily-market-brief",
@@ -136,7 +264,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-13-observation-168h",
