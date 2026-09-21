@@ -347,12 +347,30 @@ dα₀ = −14.6 mas, |bias| = 23.147 mas — agreeing in magnitude to 0.16 %
 and component by component, with ω = (−η₀, ξ₀, dα₀).
 
 The consequence is about this operation's own contract, not the pack.
-`RETARDED_CONTRACT.frame` says `j2000-mean-ecliptic`. What is computed is
+`RETARDED_CONTRACT.frame` said `j2000-mean-ecliptic`. What is computed is
 the ICRS equator rotated by ε₀ — the ecliptic *of the ICRS equator*, with
 no frame bias applied — which differs from the J2000 mean equinox by
 those 23 mas. **That is the largest systematic anywhere in this document,
 and it is a mislabel in the declared quantity rather than an error in the
-data.**
+data.** The contract now reads `ecliptic-of-the-icrs-equator` and carries
+a `frameNote` with this measurement.
+
+Removing the fitted rotation from the pack's own geocentric directions
+settles what is left underneath:
+
+| pack geometric longitude − Swiss | mean | median | max \|·\| |
+| --- | --- | --- | --- |
+| as shipped | −0.00767″ | −0.00775″ | 0.01119″ |
+| with the rotation removed | **+0.00002″** | −0.00003″ | **0.00505″** |
+
+92 % of the mean gap is that one rotation. (Applied with the wrong sign
+it doubles the gap to −0.01536″ exactly, which is how the direction was
+settled rather than assumed.) **What remains between this pack and
+Swiss's source, once the frame convention is accounted for, is about
+0.6 mas on average and 5 mas at worst** — three and a half thousand
+times smaller than the stellar aberration this operation omits on
+purpose. The pack is not the accuracy ceiling here; the correction set
+is.
 
 Two facts worth recording from the same measurement. The two
 ephemerides' barycentric Earth agree to **11.8 km** (−4.9 km along-track,
