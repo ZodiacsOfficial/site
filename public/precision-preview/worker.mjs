@@ -2305,7 +2305,7 @@ var EPS0_ARCSEC = 84381.406;
 var COS_E = Math.cos(EPS0_ARCSEC / 3600 * DEG);
 var SIN_E = Math.sin(EPS0_ARCSEC / 3600 * DEG);
 var GEOMETRIC_CONTRACT = Object.freeze({
-  operation: "geometric ecliptic longitude of one body, in the fixed J2000 mean ecliptic frame, reaching a given value",
+  operation: "geometric ecliptic longitude of one body, in the fixed ecliptic of the ICRS equator (see frame and frameNote), reaching a given value",
   frame: "ecliptic-of-the-icrs-equator",
   frameNote: "The ICRS equator rotated by the IAU 2006 mean obliquity at J2000 (84381.406 arcsec). This is NOT the J2000 mean equinox: the IAU 2006 ICRS frame bias, a fixed rotation of 23.1 mas, is not applied. Measured against Swiss Ephemeris in J2000, the difference is a rotation of |omega| = 23.111 mas fitted at 99.9 per cent of variance, matching the published bias (xi0 -16.617, eta0 -6.819, dalpha0 -14.6 mas) to 0.16 per cent. It projects onto ecliptic longitude as about 7.7 mas on average. The label used to read j2000-mean-ecliptic, which overstated it.",
   geometric: true,
@@ -2314,7 +2314,8 @@ var GEOMETRIC_CONTRACT = Object.freeze({
     "light-time: the position is where the body is, not where it is seen from Earth",
     "annual aberration",
     "gravitational deflection by the Sun",
-    "precession and nutation: the frame is J2000, not of date"
+    "precession and nutation: the frame is J2000, not of date",
+    "the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)"
   ]),
   whyThoseAreOmitted: "each of them makes the searched quantity something other than a polynomial in time, and the completeness proof is a statement about a polynomial",
   bodies: Object.freeze(["Sun", "Moon", "Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Pluto"]),
