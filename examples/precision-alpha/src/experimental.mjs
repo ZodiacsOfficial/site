@@ -15,16 +15,28 @@
  *
  * ## What is in here now
  *
- *   validated-retarded-geometric   light-time only
- *   validated-retarded-aberrated   light-time and the observer's motion
+ *   validated-retarded-geometric         light-time only
+ *   validated-retarded-aberrated         light-time and the observer's motion
+ *   validated-retarded-aberrated-of-date the same, in the frame of date
  *
- * Both establish completeness about the stored polynomial model with those
- * corrections applied. Neither is an apparent place: deflection, the
- * Shapiro delay, precession, nutation, the IAU 2006 frame bias and
- * everything topocentric are absent, and every result lists them by name
- * under `notApplied`. Do not read either against an almanac and call a
- * difference an error -- they answer a different question, and
+ * All three establish completeness about the stored polynomial model with
+ * those corrections applied. NONE is an apparent place: gravitational
+ * deflection, the Shapiro delay and everything topocentric are absent from
+ * all three, and precession, nutation and the IAU 2006 frame bias are
+ * absent from the first two. Every result lists what it omits by name
+ * under `notApplied`. Do not read any of them against an almanac and call
+ * a difference an error -- they answer different questions, and
  * `request.operation` on the result says which.
+ *
+ * ## The frames are not the same frame
+ *
+ * The first two report a longitude in the ecliptic of the ICRS equator, a
+ * FIXED direction. The third reports one measured from the true equinox
+ * OF DATE. Those differ by precession since J2000 -- about a quarter of a
+ * degree over a couple of decades -- so a crossing a body reaches in one
+ * frame may sit outside the requested window in the other. That is a
+ * frame difference, not an accuracy difference, and `result.request.frame`
+ * names which frame the answer is in.
  *
  * ## Units
  *
@@ -39,16 +51,26 @@ import { CONTRACT as SEARCH_RESULT_CONTRACT } from './core/result.mjs';
 import {
   searchRetardedLongitude,
   searchAberratedLongitude,
+  searchOfDateLongitude,
   RETARDED_CONTRACT,
   ABERRATED_CONTRACT,
+  OF_DATE_CONTRACT,
+  OF_DATE_MODEL_RANGE_TDB_SEC,
   RETARDED_DEFAULTS,
 } from './core/retarded-search.mjs';
 
-export { RETARDED_CONTRACT, ABERRATED_CONTRACT, RETARDED_DEFAULTS };
+export {
+  RETARDED_CONTRACT, ABERRATED_CONTRACT, OF_DATE_CONTRACT,
+  OF_DATE_MODEL_RANGE_TDB_SEC, RETARDED_DEFAULTS,
+};
 
 /** What this subpath promises, which is deliberately not much. */
 export const EXPERIMENTAL = Object.freeze({
-  modes: Object.freeze(['validated-retarded-geometric', 'validated-retarded-aberrated']),
+  modes: Object.freeze([
+    'validated-retarded-geometric',
+    'validated-retarded-aberrated',
+    'validated-retarded-aberrated-of-date',
+  ]),
   stability: 'experimental: names, options and result fields may change in any release, including a patch one',
   timeScale: 'TDB seconds past J2000, in and out',
   /**
@@ -89,7 +111,11 @@ export function experimental(runtime) {
 
   return {
     get disposed() { return detached || runtime.disposed; },
-    contracts: Object.freeze({ retarded: RETARDED_CONTRACT, aberrated: ABERRATED_CONTRACT }),
+    contracts: Object.freeze({
+      retarded: RETARDED_CONTRACT,
+      aberrated: ABERRATED_CONTRACT,
+      ofDate: OF_DATE_CONTRACT,
+    }),
     defaults: RETARDED_DEFAULTS,
 
     /** Light-time only. `{body, targetDeg, fromTdbSec, toTdbSec, signal?}`. */
@@ -100,6 +126,26 @@ export function experimental(runtime) {
     /** Light-time and the observer's motion. Same spec. */
     searchRetardedAberrated(spec) {
       return searchAberratedLongitude(live(), spec);
+    },
+
+    /**
+     * Light-time, the observer's motion, AND the frame of date.
+     *
+     * Same spec, and the same TDB seconds -- the TT the frame needs is
+     * derived inside, by the declared model, and reported on the result as
+     * `uncertainty.timeScale.conversionApproximation`.
+     *
+     * `targetDeg` here is measured from the TRUE EQUINOX OF DATE, which is
+     * not the origin the other two use. Passing the same number to two of
+     * these methods asks two different questions.
+     *
+     * The frame MODELS claim 1900-2100 (`OF_DATE_MODEL_RANGE_TDB_SEC`).
+     * Outside that the search still returns proven enclosures about the
+     * model as implemented, and `diagnostics.frameOfDate` says which side
+     * of the line the window is on.
+     */
+    searchRetardedAberratedOfDate(spec) {
+      return searchOfDateLongitude(live(), spec);
     },
 
     /**
