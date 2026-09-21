@@ -43,8 +43,8 @@ const COPY: Record<AssistantLocale, ShellCopy> = {
   },
 };
 
-const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-3';
-const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';
+const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-4';
+const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js?v=ask-guide-4';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 
 let stylesheetPromise: Promise<void> | null = null;

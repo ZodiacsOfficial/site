@@ -13,6 +13,7 @@ import {
 } from './open-assistant';
 import { GUIDE_CLOUD_DISCLOSURE_POLICY_VERSION } from '../guide-server/policy';
 import { GUIDE_KNOWLEDGE_ENTRIES } from '../guide-knowledge/catalog';
+import { GUIDE_SHELL_URL, guideLoaderSource } from './guide-loader.mjs';
 
 const ACCOUNT_ID = '11111111-1111-4111-8111-111111111111';
 const OLDER_ID = '22222222-2222-4222-8222-222222222222';
@@ -596,6 +597,27 @@ describe('assistant profile-access privacy fence', () => {
     expect(pageBoundary).toContain("if (!id) return null;");
   });
 
+  it('refreshes previously cached Guide entrypoints and revalidates future updates', async () => {
+    const config = JSON.parse(await readFile(new URL('../../../vercel.json', import.meta.url), 'utf8'));
+    const shellUrl = new URL(GUIDE_SHELL_URL, 'https://zodiacs.org');
+    expect(shellUrl.searchParams.get('v')).toBe('ask-guide-4');
+    expect(guideLoaderSource('en')).toContain(`import('${GUIDE_SHELL_URL}')`);
+
+    for (const path of [
+      shellUrl.pathname,
+      '/assets/assistant-ui.css',
+      '/assets/assistant-drawer.js',
+      '/assets/assistant-drawer.css',
+    ]) {
+      const rules = config.headers.filter((rule: { source: string }) => rule.source === path);
+      expect(rules, path).toHaveLength(1);
+      expect(rules[0].headers).toContainEqual({
+        key: 'Cache-Control',
+        value: 'public, max-age=0, must-revalidate',
+      });
+    }
+  });
+
   it('bootstraps a quiet launcher without reading a chart or calling Guide', async () => {
     const [shell, loader, drawer, buildScript] = await Promise.all([
       readFile(new URL('./guide-bootstrap.ts', import.meta.url), 'utf8'),
@@ -606,7 +628,7 @@ describe('assistant profile-access privacy fence', () => {
     const bootstrapStart = shell.indexOf('export async function bootstrapGuide(');
     const bootstrap = shell.slice(bootstrapStart);
 
-    expect(shell).toContain("const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js';");
+    expect(shell).toContain("const DRAWER_MODULE_HREF = '/assets/assistant-drawer.js?v=ask-guide-4';");
     expect(shell).not.toContain('INVITE_DELAY_MS');
     expect(shell).not.toContain('INVITE_KEY');
     expect(shell).not.toContain('showInvite');
@@ -616,9 +638,9 @@ describe('assistant profile-access privacy fence', () => {
     expect(shell).toContain("canvas.setAttribute('aria-hidden', 'true');");
     expect(shell).toContain('drawerModulePromise ??= import(DRAWER_MODULE_HREF)');
     expect(loader).toContain('export const GUIDE_POST_LOAD_DELAY_MS = 500;');
-    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=ask-guide-3';");
+    expect(loader).toContain("export const GUIDE_SHELL_URL = '/assets/assistant-ui.js?v=ask-guide-4';");
     expect(loader).toContain("modulePromise = import('${GUIDE_SHELL_URL}')");
-    expect(shell).toContain("const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-3';");
+    expect(shell).toContain("const STYLESHEET_HREF = '/assets/assistant-ui.css?v=ask-guide-4';");
     expect(loader).toContain("window.addEventListener('load', scheduleGuide, { once: true });");
     expect(loader).toContain("document.addEventListener('click', onGuideIntent, true);");
     expect(loader).toContain('event.stopImmediatePropagation();');
@@ -629,7 +651,7 @@ describe('assistant profile-access privacy fence', () => {
     expect(bootstrap).not.toContain('.focus()');
     expect(shell).not.toContain('/v1/guide/turn');
     expect(shell).not.toContain('zodiacs.guide.daily-session.v1');
-    expect(drawer).toContain("const STYLESHEET_HREF = '/assets/assistant-drawer.css';");
+    expect(drawer).toContain("const STYLESHEET_HREF = '/assets/assistant-drawer.css?v=ask-guide-4';");
     expect(drawer).toContain("document.querySelector<HTMLButtonElement>('[data-guide-launcher]')");
     expect(drawer).not.toContain('function wireOpeners(');
     expect(buildScript).toContain("'assistant-ui': resolve(repo, 'src/lib/assistant/guide-bootstrap.ts')");
