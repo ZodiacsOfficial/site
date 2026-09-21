@@ -1,0 +1,640 @@
+# validated-retarded-geometric — results
+
+Everything below was produced against
+[`RETARDED-PREREGISTRATION.md`](./RETARDED-PREREGISTRATION.md), which was
+committed (`ebb5786a`) before a single case ran. The cases, tolerances,
+resource limits and pass/fail rule are that document's, unchanged. Where
+something was added afterwards it is labelled **supplementary** and kept
+out of the pass/fail arithmetic.
+
+## What the operation computes, and what it does not
+
+One correction on top of `validated-geometric`: Newtonian reception
+light-time, with the **target** at emission time and the **observer** at
+reception time.
+
+    tau  = |r_target(t - tau) - r_observer(t)| / c
+    d(t) =  r_target(t - tau) - r_observer(t)
+
+It does **not** apply stellar aberration, gravitational deflection, the
+Shapiro delay, precession or nutation, topocentric parallax or refraction.
+It is therefore **not** a more accurate answer to the question
+`empirical-apparent` answers; it is a proven answer to a different one.
+§4 below measures how different, so that nobody has to take that on trust.
+
+Time in and out is **TDB seconds past J2000**, which is what SPK
+coefficients are indexed by. The two established modes take `fromTtDays` /
+`toTtDays`; this one deliberately does not, because a proof whose input
+silently conflates TT with TDB is a proof about something else. The
+harness does the conversion, never the operation.
+
+## 1 · Analytic cases — the twelve preregistered ones all pass
+
+> *"Every one must pass. A single analytic failure fails the whole
+> exercise."*
+
+`test/tier-a/retarded-search.nodetest.mjs`: **L1–L12 as declared, all
+passing**, in 16 tests taking about a second. Sixteen rather than twelve
+because two cases grew siblings — L11 splits into a true tangency and a
+provable near miss, and L7 gained L7b below. Those two are additions
+made after the fact and, by this document's own rule, are named as such;
+they are excluded from the gate above, and in any case they only add
+strictness, so they cannot flatter it.
+
+Every expected value is a closed form or a reference derived in the test
+file, with **one exception now named rather than papered over**: L8 takes
+the root it compares against from the solver's own first call, where the
+file's `rootExact` was available. The two agree to 3.1 × 10⁻⁵ s, so
+nothing it asserts is wrong, but the case checks boundary *consistency*
+rather than boundary correctness and the blanket claim that used to sit
+here was false.
+
+Four of them only became real tests after something was wrong first, and
+the reasons are in the file rather than smoothed away:
+
+- **L9** first passed against a reference that forgot `f` vanishes on the
+  **antipode** as well as the requested longitude. The reference now
+  computes the half-plane too.
+- **L11** set an *equatorial* azimuth where the operation reads an
+  *ecliptic* longitude, so `f` sat at 5.8 × 10⁵ km throughout and the case
+  tested nothing. Rotating properly turned it into a tangency.
+- **L7b** is a bug this document's own author found while re-reading the
+  L7 fix. When the observer has records the target does not, the
+  iteration leaves coverage on its first step with τ still zero, and the
+  window the classifier wanted to probe came out inverted — so
+  `stateEnclosure` raised `unsupported-option` out of a path whose whole
+  job is to return a typed refusal. Exactly the escape L7 was about, one
+  branch over. The intersection is now checked for emptiness before it is
+  probed, and an all-outside cell says so.
+- **L6** took two rewrites to produce the near-zero separation it claims.
+  A 10⁻³ km/s crawl left the cells failing the *root* tests, not the
+  separation test; running along the requested longitude's own line made
+  `f` vanish identically, which is a degenerate root function and again
+  not a separation failure. A 30° offset between the motion and the
+  request gives `f = s·sin 30°` and `g = s·cos 30°`, each vanishing only
+  where the separation does. The refusal is now local: the undecided
+  region is **2 s wide** around the singular instant, and the case runs in
+  under a tenth of a second instead of 64.
+
+## 2 · Astronomical holdout — 12 of 12 proven, 0 missed, 0 extra
+
+Pack under test: **`c9ebc641…`** (DE440s-derived, 1849-12-25 …
+2150-01-21), the one preregistration §3 pins so the numbers stay
+comparable with the earlier evaluation.
+
+That digest covers the sealed header as well as the coefficients, so the
+same coefficients exist under more than one of them: `c9ebc641…` and
+`4cc6f85a…` (compiler 1.0.0) and `d2178346…` (compiler 1.1.0, the
+corrected licence metadata) all carry payload `0a218764…`, byte for byte.
+The table below was produced against `c9ebc641…` itself, re-verified
+after the contract strings changed; `4cc6f85a…` returns the same 12 of
+12. **A digest match is the stronger check and it is the one quoted** —
+but a reader comparing digests against another copy should compare
+`payloadSha256` before concluding the coefficients differ.
+
+The preregistration makes the holdout conditional on the development
+pair passing first. It did: **R1** (Mars 100°, 2019) returned one event,
+proven, 13 cells / 891 evaluations; **R2** (Moon 100°, January 2019)
+returned one event, proven, 1 116 cells / 32 399 evaluations. Both were
+run and inspected before the holdout was opened.
+
+The holdout itself is generated by the preregistered rule and not
+touched. Matching is against an **independent reference** written for
+this run (`reference.mjs`): the
+public `Ephemeris.state`, a bare fixed-point light-time, a uniform scan
+and bisection. No interval arithmetic, no Chebyshev bounds, nothing from
+`retarded.mjs`.
+
+| # | body | target | status | proven | found | ref | missed | extra | max Δt | cells | evals | ms |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| K1 | Sun | 29° | finished | yes | 1 | 1 | 0 | 0 | 3.5e-6 s | 12 | 1 180 | 26 |
+| K2 | Moon | 82° | finished | yes | 11 | 11 | 0 | 0 | 3.1e-4 s | 10 130 | 296 182 | 4 210 |
+| K3 | Mercury | 135° | finished | yes | 1 | 1 | 0 | 0 | 3.4e-5 s | 51 | 3 421 | 49 |
+| K4 | Venus | 188° | finished | yes | 1 | 1 | 0 | 0 | 9.5e-6 s | 16 | 1 479 | 14 |
+| K5 | Mars | 241° | finished | yes | 0 | 0 | 0 | 0 | — | 11 | 814 | 6 |
+| K6 | Jupiter | 294° | finished | yes | 0 | 0 | 0 | 0 | — | 11 | 313 | 2 |
+| K7 | Saturn | 347° | finished | yes | 0 | 0 | 0 | 0 | — | 12 | 326 | 2 |
+| K8 | Uranus | 40° | finished | yes | 0 | 0 | 0 | 0 | — | 12 | 331 | 2 |
+| K9 | Neptune | 93° | finished | yes | 0 | 0 | 0 | 0 | — | 13 | 349 | 2 |
+| K10 | Pluto | 146° | finished | yes | 0 | 0 | 0 | 0 | — | 11 | 299 | 2 |
+| S1 | Mars | 120° | finished | yes | 0 | 0 | 0 | 0 | — | 59 | 2 796 | 36 |
+| S2 | Mercury | 300° | finished | yes | 1 | 1 | 0 | 0 | 6.2e-6 s | 17 | 1 411 | 16 |
+
+Worst root error **3.1 × 10⁻⁴ s** against a tolerance of 10⁻³ s. Every
+reference root lies inside its reported bracket. **No cell anywhere in the
+holdout was left undecided.**
+
+Usefulness gate (§6: *fewer than half proven ⇒ not practical yet*):
+**12/12 — passes.**
+
+### The seven cases that found nothing found nothing for a reason
+
+Seven of the twelve — more than half — report zero crossings. That is
+correct, and the reference agrees, but it is also a **weakness of the
+generation rule, not a strength of the solver**: the rule picks a
+longitude the body never reaches.
+
+| # | body | target | longitude actually travelled | arc |
+| --- | --- | --- | --- | --- |
+| K5 | Mars | 241° | 295.18° .. 506.99° | 211.8° |
+| K6 | Jupiter | 294° | 13.63° .. 29.90° | 16.3° |
+| K7 | Saturn | 347° | 278.31° .. 295.47° | 17.2° |
+| K8 | Uranus | 40° | 284.14° .. 289.24° | 5.1° |
+| K9 | Neptune | 93° | 290.64° .. 295.61° | 5.0° |
+| K10 | Pluto | 146° | 242.86° .. 246.76° | 3.9° |
+| S1 | Mars | 120° | 277.79° .. 308.96° | 31.2° |
+
+A 300-day window moves Uranus 5°, so a longitude drawn by
+`(53i + 29) mod 360` was never going to be in it. Those seven cases are a
+real test of the **proven-zero** path and nothing is withdrawn from them —
+but they leave the root path untested on most of the contract, and **S1,
+which was supposed to be the near-station shape case, tested nothing of
+the kind.** That is the preregistration's fault and it is recorded rather
+than quietly patched.
+
+## 3 · Supplementary cases — the root path, on every body
+
+Built **after** the holdout ran, and labelled so. For M1–M10 the target
+is not chosen: it is **read off the body's own retarded longitude at the
+midpoint of the same preregistered window**, rounded to 10⁻⁶ °. Two of
+those degrees of freedom were then tested and are inert — perturbing
+every target by ±10⁻⁵ ° and ±10⁻⁴ ° leaves all eleven event counts
+unchanged, and for T1 every read-off date from 2018-07-05 to 2018-08-20
+gives three crossings.
+
+**T1 does not follow that rule, and the earlier text saying it did was
+doing rhetorical work.** Its window is 2018-05-01 … 2018-11-01, a month
+later than S1's preregistered 2018-04-01 … 2018-10-01, and its target is
+read at 2018-07-27 rather than at its window midpoint. The read-off date
+does not matter; **the window does.** Applying the stated rule to S1's
+own preregistered window gives target 308.824370° and **two crossings,
+not three** — so the headline below, and the `expectEvents: 3` assertion
+in the test, rest on the one parameter that was in fact chosen after the
+holdout was seen.
+
+| # | body | target | proven | found | ref | missed | extra | max Δt | cells | evals | τ (s) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| M1 | Sun | 69.2900° | yes | 1 | 1 | 0 | 0 | 2.5e-5 s | 12 | 770 | 505.9 |
+| M2 | Moon | 299.1237° | yes | 11 | 11 | 0 | 0 | 3.0e-4 s | 10 130 | 296 106 | 1.2 |
+| M3 | Mercury | 33.3186° | yes | 1 | 1 | 0 | 0 | 2.4e-5 s | 47 | 2 574 | 643.8 |
+| M4 | Venus | 203.9185° | yes | 1 | 1 | 0 | 0 | 4.1e-6 s | 18 | 1 946 | 854.2 |
+| M5 | Mars | 47.2998° | yes | 1 | 1 | 0 | 0 | 2.2e-5 s | 11 | 840 | 1 151.0 |
+| M6 | Jupiter | 27.8196° | yes | 2 | 2 | 0 | 0 | 1.2e-4 s | 17 | 1 427 | 2 473.3 |
+| M7 | Saturn | 293.2790° | yes | 2 | 2 | 0 | 0 | 1.9e-5 s | 12 | 1 293 | 5 238.1 |
+| M8 | Uranus | 284.3930° | yes | 2 | 2 | 0 | 0 | 2.6e-5 s | 20 | 1 509 | 9 435.1 |
+| M9 | Neptune | 294.2942° | yes | 2 | 2 | 0 | 0 | 1.1e-5 s | 13 | 1 261 | 15 473.8 |
+| M10 | Pluto | 242.8896° | yes | 2 | 2 | 0 | 0 | 2.8e-5 s | 21 | 1 433 | 14 773.5 |
+| T1 | Mars | 303.9441° | yes | **3** | 3 | 0 | 0 | 8.0e-5 s | 54 | 2 689 | 318.7 |
+
+**28 roots, all ten bodies, 0 missed and 0 extra.** T1 returns exactly the
+three crossings a retrograde loop produces. The outer planets return two
+each — direct and retrograde return — which is the right answer and the
+one the holdout's windows never asked for. Light-times land where physics
+puts them: 506 s to the Sun, 1.2 s to the Moon, 4.1 hours to Pluto.
+
+Across holdout and supplement: worst contraction factor **7.18 × 10⁻⁴**,
+so Banach is nowhere near marginal; widest emission window 2.8 × 10⁶ s.
+
+Two light-time interval widths get reported and they are not the same
+number, so both are given here rather than the flattering one:
+
+| | widest | median |
+| --- | --- | --- |
+| over any **cell** (`uncertainty.numerical.widestLightTimeIntervalSec`) | 2.43 × 10³ s | — |
+| over a reported **event** (`event.lightTimeSec`) | 5.19 × 10⁻⁵ s (3.8 × 10⁻⁵ relative, Moon) | 2.25 × 10⁻⁶ s (1.7 × 10⁻⁶ relative) |
+
+The per-cell figure is large and it is **loose, not physical**: on
+Mercury it reaches 3.8 times τ itself, which is far more than τ actually
+varies over one record. It is the derived pad over a seed cell spanning a
+whole record, plus any hull inflation the self-mapping check needed — a
+true enclosure, verified, and conservative. Wide cells get subdivided or
+excluded, so it never reaches an answer. The number a reader should use
+is the per-event one, which is five to nine orders of magnitude tighter
+(10^4.8 on the Moon, 10^9.1 on Mercury).
+`uncertainty.numerical.widestLightTimeIntervalSec` is a diagnostic of how
+hard the enclosures had to work, and reading it as the accuracy of a
+reported light-time would overstate the error by about eight orders of
+magnitude.
+
+## 4 · Against Swiss Ephemeris — four corrections, kept apart
+
+pyswisseph 2.10.03, `sepl_18.se1` / `semo_18.se1`, at the 43 instants the
+operation reported, in J2000. Swiss is a measuring instrument; no Swiss
+output is redistributed.
+
+**Swiss is called with TDB seconds where its ET is TT.** That is stated
+here rather than only in a script comment, since this document's own
+preamble makes a point of not conflating the two. TDB − TT is periodic
+and under 1.7 ms, and the effect was measured rather than waved at:
+negligible for §4a (max |Δτ| moves 3.6914 × 10⁻⁵ → 3.7034 × 10⁻⁵ s) and
+for §4b's attribution *difference* (unchanged to six decimals, because
+the shift cancels between the geometric and retarded columns), but up to
+**0.97 mas** on §4b's Moon gap columns — about 9 % of the 0.0110″ worst
+figure quoted there, and the same order as the 1.3 mas residual §4b is
+trying to explain.
+
+### 4a · The light-time itself
+
+Swiss with `NOABERR | NOGDEFL` returns the light-time-corrected distance,
+so its own τ is that distance over the same defined `c`. Comparing τ
+directly rather than through a longitude avoids the trap that for Pluto a
+whole second of light-time error hides under a microarcsecond.
+
+| | |
+| --- | --- |
+| \|τ_pack − τ_Swiss\|, max | **3.69 × 10⁻⁵ s** (Pluto, on τ = 14 940 s) |
+| relative, max | **1.44 × 10⁻⁸** |
+| relative, median | 3.13 × 10⁻⁹ |
+
+Swiss's τ falls inside the operation's proven τ interval on **27 of 43**
+events. That is the expected result rather than a failure.
+
+An earlier draft tried to *prove* that, by checking that the ratio
+|τ_mid − τ_Swiss| / half-width exceeds 1 exactly when Swiss falls
+outside, and reporting "0 unexplained". **That check is a tautology**:
+"inside" means lo ≤ τ_Swiss ≤ hi, which *is* that ratio being ≤ 1. It
+could not have failed, and it is withdrawn.
+
+What the same numbers do say is that no event is marginal:
+
+| | count | ratio \|τ_mid − τ_Swiss\| / half-width |
+| --- | --- | --- |
+| Swiss inside the interval | 27 | at most **0.661** |
+| Swiss outside | 16 | at least **1.17**, up to 34.3 |
+
+A clear gap either side of 1 rather than a cluster around it. And the
+preregistration never predicted where Swiss's τ should fall, so
+"expected" is a reading made after seeing 27/43, not a call made in
+advance. The interval is a proven
+enclosure of the light-time *for the function this pack defines* — for
+Pluto 2.2–2.3 × 10⁻⁶ s wide, sixteen to seventeen times tighter than the
+pack-versus-Swiss source difference. It is not an uncertainty budget covering two different
+source ephemerides, and widening it until it swallowed Swiss would make
+it a weaker statement, not a truer one. The result object already
+separates the two: `uncertainty.numerical` versus `EXTERNAL_UNCERTAINTY`.
+
+### 4b · Where the residual longitude gap comes from
+
+The pack-versus-Swiss longitude gap is systematic: **−0.0077″ mean,
+−0.0110″ worst**, the same sign on every body. §4 of the preregistration
+says to report it and not bound it, because it is a property of the
+comparison rather than of the solver. Reporting is not the same
+as shrugging, so it was attributed: the **geometric** longitude, with no
+light-time anywhere in the calculation, was compared against Swiss's
+`TRUEPOS | NOABERR | NOGDEFL` at the same instants.
+
+| | mean | median | max \|·\| |
+| --- | --- | --- | --- |
+| geometric, pack − Swiss | −0.00767″ | −0.00775″ | 0.01119″ |
+| retarded, pack − Swiss | −0.00774″ | −0.00759″ | 0.01102″ |
+| **difference — the residual once the geometric offset is removed** | **+0.000068″** | — | **0.00129″** |
+
+The offset is there in full before any light-time is applied. What this
+operation adds agrees with Swiss's own light-time to **1.3
+milliarcseconds at worst**, and for every body but the Moon the two gaps
+are identical to five decimal places. (The metric is only *sensitive*
+where the body moves quickly, so for slow bodies it constrains nothing —
+which is why §4a measures τ directly. An earlier draft called 1.3 mas on
+the Moon "a τ difference of about 2.4 ms": 2.4 ms is what comes of
+dividing by the Moon's *apparent longitude rate*, which converts a
+longitude residual into an **event-time** difference, not a light-time
+one. Through the rate at which the correction itself moves with τ,
+~11–17 ″/s here, 1.3 mas is about **0.1 ms**. Either way the Moon's
+1.3 mas residual is **not explained** by §4a, which puts the Moon's τ
+agreement at ≤ 1.7 × 10⁻⁸ s. It is the one outlier here and it stays
+open.)
+
+That answers "is it the solver" — no — but leaves "then what is it". The
+preregistration says this gap is reported, not bounded, and reporting is
+not the same as shrugging, so it was pursued one step further. Two
+candidates make opposite predictions, and the events already span a
+distance ratio of **12 914 : 1**.
+
+*A position error* — the observer's or the target's — shifts a direction
+by (error ⁄ distance), so it must fall off with distance.
+*A frame rotation* shifts every longitude by the same angle at every
+distance.
+
+| body | mean geocentric distance | mean offset | predicted by a 4.9 km observer error |
+| --- | --- | --- | --- |
+| Moon | 0.0026 AU | −0.00868″ | 2.62251″ |
+| Mars | 0.97 AU | −0.00601″ | 0.00694″ |
+| Sun | 1.01 AU | −0.00609″ | 0.00670″ |
+| Venus | 1.71 AU | −0.00653″ | 0.00396″ |
+| Jupiter | 4.50 AU | −0.00695″ | 0.00150″ |
+| Saturn | 9.76 AU | −0.00692″ | 0.00069″ |
+| Uranus | 19.31 AU | −0.00649″ | 0.00035″ |
+| Neptune | 30.08 AU | −0.00699″ | 0.00022″ |
+
+Distance moves by a factor of 12 914; the offset moves by a factor of 4.1
+and shows no trend at all. Position error is ruled out at both ends: at
+Neptune it would have to be some 150 000 km of target position to produce
+0.007″, and the 4.9 km observer offset it *would* explain at 1 AU
+predicts 0.0002″ there, thirty times too small. The Moon is a second,
+independent check on the observer half: this pack forms the geocentric
+Moon as (1 + 1/EMRAT) × the stored lunar series, so a barycentre error
+cancels out of it exactly — and it shows the same −0.0087″ anyway.
+
+**So the systematic pack-versus-Swiss longitude offset is a fixed
+rotation, not an ephemeris position error and not this operation.**
+7.7 mas is its mean *projection onto ecliptic longitude*; the rotation
+itself is larger.
+
+An earlier draft stopped there and said the convention behind it "is not
+established here and should not be guessed at". That was too modest —
+the artifacts already in hand determine it. Fitting Δr = ω × r by least
+squares over the 43 barycentric-Earth pairs:
+
+| | |
+| --- | --- |
+| fitted ω | (+6.755, −16.618, −14.572) mas |
+| \|ω\| | **23.111 mas** |
+| residual | 0.343 km rms against a 12.537 km signal — **99.9 % explained** |
+
+A single fixed rotation accounts for essentially all of it, and that
+vector is the **IAU 2006 ICRS frame bias**: ξ₀ = −16.617, η₀ = −6.819,
+dα₀ = −14.6 mas, |bias| = 23.147 mas — agreeing in magnitude to 0.16 %
+and component by component, with ω = (−η₀, ξ₀, dα₀).
+
+The consequence is about this operation's own contract, not the pack.
+`RETARDED_CONTRACT.frame` said `j2000-mean-ecliptic`. What is computed is
+the ICRS equator rotated by ε₀ — the ecliptic *of the ICRS equator*, with
+no frame bias applied — which differs from the J2000 mean equinox by
+those 23 mas. **That is the largest systematic anywhere in this document,
+and it is a mislabel in the declared quantity rather than an error in the
+data.** The contract now reads `ecliptic-of-the-icrs-equator` and carries
+a `frameNote` with this measurement.
+
+Removing the fitted rotation from the pack's own geocentric directions
+settles what is left underneath:
+
+| pack geometric longitude − Swiss | mean | median | max \|·\| |
+| --- | --- | --- | --- |
+| as shipped | −0.00767″ | −0.00775″ | 0.01119″ |
+| with the rotation removed | **+0.00002″** | −0.00003″ | **0.00505″** |
+
+92 % of the mean gap is that one rotation. (Applied with the wrong sign
+it doubles the gap to −0.01536″ exactly, which is how the direction was
+settled rather than assumed.) **What remains between this pack and
+Swiss's source, once the frame convention is accounted for, is about
+0.6 mas on average and 5 mas at worst** — three and a half thousand
+times smaller than the stellar aberration this operation omits on
+purpose. The pack is not the accuracy ceiling here; the correction set
+is.
+
+Two facts worth recording from the same measurement. The two
+ephemerides' barycentric Earth agree to **11.8 km** (−4.9 km along-track,
+almost constant; ±16 km cross-track; radial under 1 km). And Swiss's
+`FLG_BARYCTR` Earth is itself light-time corrected — the first comparison
+came out 14 846 km adrift, purely along-track, which is 498.4 s at
+Earth's orbital speed, one solar light-time. `FLG_TRUEPOS` removes it.
+Neither is an error in anything; both are the kind of thing that turns
+into a false accuracy claim if it goes unnoticed.
+
+### 4c · The correction applied, beside the corrections not applied
+
+This is the comparison the mandate insists on: never put a light-time-only
+result beside an aberration-corrected one and call the gap an error.
+
+| difference | max | median | what it is |
+| --- | --- | --- | --- |
+| `NONE` − `LT/CN` | **33.27″** | 10.65″ | the correction this operation **adds** |
+| `CN+S` − `LT/CN` | **20.80″** | 16.64″ | stellar aberration — **not applied** |
+| `CN+S+deflection` − `CN+S` | 0.05″ | 0.00″ | gravitational deflection — **not applied** |
+
+**The thing left out is the same size as the thing put in.** Adding
+light-time moves the answer by up to 33 arcseconds; the aberration term
+this operation omits moves it by up to 21 in the other direction. Anyone
+reading `validated-retarded-geometric` as "the accurate one" would be
+wrong by about as much as they were before. That is why the contract
+carries `notApplied` by name and `comparableTo` says SPICE **LT/CN**, not
+CN+S and not an apparent place of date.
+
+The Sun is the instructive case: τ is 501 s (K1), yet `NONE − LT/CN` is
+only −0.0081″. The correction retards the **Sun**, whose barycentric
+speed is about 0.01 km/s — it does not retard the Earth, whose motion is
+what makes the Sun appear to move a degree a day. Software that "adds
+light-time" by shifting the observer instead gets **−20.4″** here, which
+is the mistake `retarded.mjs` exists to avoid and L3/L4 exist to catch.
+
+And that number deserves its own line, because it is not simply "wrong".
+Retarding the observer instead of the target changes the vector by
+τ(v_T + v_O) rather than τ·v_T, so the difference from the correct
+answer is the light-time correction *undone* plus an aberration-like
+term in the observer's velocity. **For the Sun the first part vanishes**
+— v_T ≈ 0.01 km/s — leaving only the second, and it lands within
+**5.4 mas of Swiss's stellar-aberration term** (−20.2180″ against
+−20.2127″ at M1). So for the Sun the "mistake" reproduces the apparent
+place, the thing a chart actually wants, while this operation's correct
+answer sits 20″ away from it.
+
+That coincidence is the Sun's alone and does not generalise: measured
+across all 43 events, the observer-shift answer differs from Swiss's
+aberration term by a **median of 10.6″ and up to 33.3″** — 12.0″ against
+−19.9″ on Mercury, 3.5″ against −20.5″ on Venus. It matches only where
+the target barely moves, which is the same fact that makes the Sun's
+light-time correction almost nil.
+
+### 4d · How far the correction moves the event
+
+| body | shift, geometric → retarded | τ |
+| --- | --- | --- |
+| Sun | −0.13 s | 505.9 s |
+| Moon | −31.5 .. +34.1 s | 1.2 s |
+| Mercury | +402.0 s | 643.8 s |
+| Venus | +460.6 s | 854.2 s |
+| Mars | +551.1 s | 1 151.0 s |
+| Jupiter | −2 076 .. +2 013 s | 2 473.3 s |
+| Saturn | −2 175 .. +1 917 s | 5 238.1 s |
+| Uranus | −5 566 .. +5 355 s | 9 435.1 s |
+| Neptune | −3 307 .. +2 679 s | 15 473.8 s |
+| Pluto | −18 016 .. +17 814 s | 14 773.5 s |
+| Mars (retrograde) | −1 592 .. +1 142 s | 318.7 s |
+
+The shift is not τ. It is roughly the longitude change divided by the
+*apparent* rate, so it is largest where that rate is smallest: Pluto's
+five-hour shift is a 4″ angular change on a body whose apparent longitude
+barely moves near its station. Read the arcseconds in §4c for the size of
+the physical effect and this table for what it does to an event time.
+
+## 5 · Resources
+
+Initialization (open and parse the pack): **19.3 ms**, once.
+No case came near `maxEvaluations` 4 000 000 or `maxCells` 400 000.
+
+Latency for *unresolved* searches, which §9 also asks for, has nothing to
+report on the astronomical cases: none of them came back unresolved. The
+analytic refusals are the only measurements of that path, and L6 runs in
+21.8 ms.
+
+Heap: the **allocation delta stayed within 3.6 MB on all twelve holdout
+cases**. That is deliberately not called a peak-heap bound. It is
+`heapUsed` sampled on a 5 ms interval, which for the six cases that
+finish in under 6 ms samples at most once, and the numbers are not
+monotone in work — 814 evaluations reported 0.27 MB while 296 182
+reported 2.50 MB. It is allocation-plus-GC-timing, not a measured peak,
+and the eleven supplementary cases were not instrumented for it at
+all.
+
+### Cost of the correction, measured on identical windows
+
+Not a race. The two modes answer different questions, and the cheaper one
+is cheaper because it omits the thing being measured. The first pass timed
+the geometric mode at "1 ms" and divided by it, producing a 3512× ratio
+that was mostly timer noise; these are medians over repeated passes.
+
+| | geometric | retarded | ratio of the per-case ratios |
+| --- | --- | --- | --- |
+| evaluations, median | 128 | 1 433 | **×12** (range ×6 .. ×225) |
+| latency, median | 0.44 ms | 25.9 ms | **×74** (range ×24 .. ×9408) |
+
+Both modes returned `proven` and the **same event count** on all eleven
+cases.
+
+An earlier draft added a "µs per evaluation" row (2.4 against 15.8) and
+read the latency ratio as its product with the evaluation ratio. **The
+two `spend()` counters do not count the same work**, so that row is
+withdrawn: in the geometric mode `spend()` counts evaluations of an
+already-built scalar polynomial and never counts the per-record
+construction that dominates a short window, while in the retarded mode
+it fires once per series per record inside `stateEnclosure` and again
+per iteration inside `statePoint`. The tell is in the data — the
+geometric mode's µs-per-evaluation ranges 0.36 to 12.1 across cases for
+the same kind of work, which is uncounted setup amortised over a small
+denominator. The cell decomposition below is the meaningful split.
+
+### Where the cost actually goes
+
+The preregistration asks for light-time iterations and subdivisions
+separately from the evaluation counter, so they were counted separately,
+by wrapping `solveTau` rather than editing it. (Strictly: the harness
+imports a textual copy of `retarded-search.mjs` with its import line
+redirected, so the shipped module is unmodified but is not itself the
+module measured. The evaluation total matches the shipped module's
+exactly — 296 106 — so nothing is distorted.)
+
+| | |
+| --- | --- |
+| fixed-point steps per `solveTau` call | **3.9 to 5.0**, against a cap of 32 |
+| `solveTau` calls per cell | 1.6 |
+| Moon: evaluations spent in the τ iteration | 127 768 of 296 106, **43 %** |
+| Moon: evaluations spent building enclosures | 168 338, **57 %** |
+
+This **corrects a guess made earlier in this document's own drafting**.
+The cost was attributed to the τ iteration running "up to 32 point
+iterations"; it does not. The contraction factor is ~10⁻⁴, so the fixed
+point is reached in four or five steps every time and the cap is never
+approached. The iteration is not the expense.
+
+**The Moon is the practicality boundary.** 296 106 evaluations, 10 130
+cells, 4.5 s for a 300-day window with 11 crossings — ×225 the geometric
+evaluations where every other body is ×6 to ×20. Split properly, the
+driver is the **cell count**: 10 130 against the geometric mode's 290, a
+factor of 35. Per-cell work accounts for the rest — 29.2 evaluations per
+cell against 4.5 — and 35 × 6.4 is the ×225. (That 6.4 is a coincidence
+of arithmetic with the µs-per-evaluation figure above, not the same
+quantity.) More cells
+because the retarded enclosures are looser by construction — the target
+is enclosed over the *emission* window, widened by the τ interval, so the
+Lipschitz constants `M1` and `M2` are larger and the exclusion test
+closes fewer cells before subdividing.
+
+That points the next experiment at the enclosure, not the iteration:
+tighten the emission window per cell, or reuse a cell's verified
+enclosures for its own midpoint and endpoint evaluations instead of
+rebuilding them. Neither is attempted here — tuning after seeing the
+numbers is what the preregistration exists to prevent — and neither is
+promised to work.
+
+### Cancellation
+
+The preregistration requires the abort to land **during enclosure
+construction and during the light-time iteration**, not only between root
+evaluations. Fired from inside the spend counter at twelve chosen
+evaluation indices, from the first to the hundred-thousandth, so the
+landing site is controlled and the stack records where it landed:
+
+- 9 of 12 landed inside `stateEnclosure`, 3 inside `solveTau`.
+- All 12 returned `execution.status: 'cancelled'` with the events found so
+  far, never an exception.
+- **0 evaluations were spent after the abort was raised**, in every case:
+  the search returns on the very next `spend()`.
+- Abort to return: **median 95 µs, worst 494 µs** — measured by stamping
+  the clock inside the getter that raises the abort and again when the
+  call returns. An earlier pass reported "47.58 ms", which was the whole
+  search up to the abort rather than the responsiveness being asked for.
+
+## 6 · No silent degradation
+
+`validated-geometric` and `empirical-apparent` must return exactly what
+`EVALUATION-RESULTS.md` recorded. All thirteen A and H cases match in
+both modes. To be precise about what that means: the comparison is over
+**event counts and the `proven` flag**, transcribed from that document,
+not over event instants — which is a weaker check than "exactly what it
+recorded" suggests.
+
+## 7 · What this does not establish
+
+- **Not an apparent place.** §4c measures the omitted aberration at up to
+  21″. This is not a better `empirical-apparent`; it is a proven answer to
+  a different question.
+- **Proven means proven of the pack.** Completeness is established for the
+  function the stored Chebyshev polynomial defines. Everything the
+  comparison against another source ephemeris shows is outside every
+  bound in this document, by design and by the contract's own
+  `EXTERNAL_UNCERTAINTY` field.
+- **The frame is offset by 23 mas, and now says so.** What is computed is
+  the ICRS equator rotated by ε₀, with no frame bias, which is **23 mas**
+  from the J2000 mean equinox (§4b). That is the largest systematic in
+  this document, and it belongs to the operation's own contract, not to
+  the data. The label read `j2000-mean-ecliptic` while this document was
+  being written, which overstated it; it now reads
+  `ecliptic-of-the-icrs-equator`, the `operation` string and docstring
+  were brought into line with it, and the bias is listed in `notApplied`
+  so that a consumer enumerating that array learns about it. **Naming it
+  does not remove it** — every number in §4 was measured with the offset
+  present and none of them changes.
+- **The offset in seconds, not arcseconds.** This document's currency is
+  event times, and §2 reports a worst root error of 3.1 × 10⁻⁴ s. The
+  pack-versus-Swiss offset, converted through each body's own longitude
+  rate, runs from 0.004 s (Moon) to **44.7 s (Pluto)**, median 0.022 s —
+  Sun 0.14–0.16 s, Mars 0.24–0.50 s, Jupiter 1.53 s, Saturn 2.1–2.4 s,
+  Neptune 5.0–6.3 s, Uranus 7.6–7.8 s. A
+  reader who takes the 3.1 × 10⁻⁴ s and stops is off by five orders of
+  magnitude on Pluto. The two numbers answer different questions and
+  both are needed.
+- **What the reference cannot catch.** It is independent in
+  implementation, not in specification: it shares the frame convention
+  (including the missing bias above), the obliquity constant, `c`, the
+  f/g projection, the half-plane rule and the definition of the quantity
+  with the solver under test. Agreement to 3.1 × 10⁻⁴ s establishes that
+  the two implementations compute the same thing — and both sit 23 mas
+  from the frame they claim. A shared wrong assumption is invisible to
+  it by construction.
+- **Not a production engine, and not proposed as one.** Nothing here
+  changes the default engine behind any chart on zodiacs.org.
+- **The reference is a measuring stick, not a proof.** Its completeness is
+  bounded by its scan step (300 s Moon, 900 s Mercury, 1 800–3 600 s
+  otherwise). Two roots closer than one step could be missed *by the
+  reference*; the operation's own completeness does not depend on it.
+- **The Moon's 1.3 mas residual in §4b is unexplained.** §4a puts the
+  Moon's τ agreement at ≤ 1.7 × 10⁻⁸ s, which does not account for it,
+  and the conversion an earlier draft offered was wrong (§4b). It is the
+  one open number here.
+- **L10 is weaker than preregistered.** §7 of the preregistration asks
+  for "two roots closer than a tenth of the window". As implemented the
+  case has **five** analytic roots over a 172 800 s window with the
+  closest pair 26 006 s apart — **0.1505 of the window**, against the
+  17 280 s the condition calls for. It still tests close-pair
+  resolution, and the operation returns all five; it does not test what
+  was declared.
+- **The soundness of the proof rests on fixes made after these results
+  were first written.** An adversarial review found a false `proven` —
+  the exclusion test's lever arm was `(hi − lo) / 2`, which is shorter
+  than the cell whenever the computed midpoint is off-centre. Every
+  number in this document was re-run after the fix and none of them
+  moved, but the earlier drafts of it were describing an unsound
+  operation.
+- **The supplementary cases are supplementary.** They were built after the
+  holdout and are excluded from the preregistered pass/fail, whatever they
+  show.
