@@ -54,7 +54,7 @@ const ref = makeReference(eph);
 /**
  * Supplementary, and not counted toward the preregistered pass rule.
  *
- * Six holdout cases find nothing because the generation rule picks a
+ * Seven holdout cases find nothing because the generation rule picks a
  * longitude the body never reaches, which leaves the ROOT path untested on
  * most of the contract. These read the target off the body's own position
  * at the window midpoint, so there is no free parameter to tune, and they

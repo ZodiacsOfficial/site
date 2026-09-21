@@ -28,16 +28,21 @@ coefficients are indexed by. The two established modes take `fromTtDays` /
 silently conflates TT with TDB is a proof about something else. The
 harness does the conversion, never the operation.
 
-## 1 · Analytic cases — 12 of 12, and the preregistration's own gate
+## 1 · Analytic cases — the twelve preregistered ones all pass
 
 > *"Every one must pass. A single analytic failure fails the whole
 > exercise."*
 
-`test/tier-a/retarded-search.nodetest.mjs`, 16 tests covering L1–L12 (L11
-splits into a true tangency and a provable near miss; L7 gained a sibling,
-below), all passing in about a second. Every expected value is a closed
-form or a reference derived in the test file; none calls the solver to
-produce its own answer.
+`test/tier-a/retarded-search.nodetest.mjs`: **L1–L12 as declared, all
+passing**, in 16 tests taking about a second. Sixteen rather than twelve
+because two cases grew siblings — L11 splits into a true tangency and a
+provable near miss, and L7 gained L7b below. Those two are additions
+made after the fact and, by this document's own rule, are named as such;
+they are excluded from the gate above, and in any case they only add
+strictness, so they cannot flatter it.
+
+Every expected value is a closed form or a reference derived in the test
+file; none calls the solver to produce its own answer.
 
 Four of them only became real tests after something was wrong first, and
 the reasons are in the file rather than smoothed away:
@@ -96,11 +101,12 @@ holdout was left undecided.**
 Usefulness gate (§6: *fewer than half proven ⇒ not practical yet*):
 **12/12 — passes.**
 
-### The half of the holdout that found nothing found nothing for a reason
+### The seven cases that found nothing found nothing for a reason
 
-Six cases report zero crossings. That is correct and the reference agrees,
-but it is also a **weakness of the generation rule, not a strength of the
-solver**: the rule picks a longitude the body never reaches.
+Seven of the twelve — more than half — report zero crossings. That is
+correct, and the reference agrees, but it is also a **weakness of the
+generation rule, not a strength of the solver**: the rule picks a
+longitude the body never reaches.
 
 | # | body | target | longitude actually travelled | arc |
 | --- | --- | --- | --- | --- |
@@ -345,15 +351,15 @@ is cheaper because it omits the thing being measured. The first pass timed
 the geometric mode at "1 ms" and divided by it, producing a 3512× ratio
 that was mostly timer noise; these are medians over repeated passes.
 
-| | geometric | retarded | ratio |
+| | geometric | retarded | ratio of the per-case ratios |
 | --- | --- | --- | --- |
-| evaluations, median | — | — | **×12** (range ×6 .. ×225) |
-| latency, median | — | — | **×74** (range ×24 .. ×9408) |
+| evaluations, median | 128 | 1 433 | **×12** (range ×6 .. ×225) |
+| latency, median | 0.44 ms | 25.9 ms | **×74** (range ×24 .. ×9408) |
 | µs per evaluation, median | 2.4 | 15.8 | ×6.4 |
 
-The latency ratio is the product of the two: about twelve times as many
-evaluations, each about six times dearer. Both modes returned `proven` and
-the **same event count** on all eleven cases.
+The latency ratio is the product of the other two: about twelve times as
+many evaluations, each about six times dearer. Both modes returned
+`proven` and the **same event count** on all eleven cases.
 
 ### Where the cost actually goes
 
@@ -378,7 +384,10 @@ approached. The iteration is not the expense.
 cells, 4.5 s for a 300-day window with 11 crossings — ×225 the geometric
 evaluations where every other body is ×6 to ×20. Split properly, the
 driver is the **cell count**: 10 130 against the geometric mode's 290, a
-factor of 35, with only ×6.5 more evaluations per cell on top. More cells
+factor of 35. Per-cell work accounts for the rest — 29.2 evaluations per
+cell against 4.5 — and 35 × 6.4 is the ×225. (That 6.4 is a coincidence
+of arithmetic with the µs-per-evaluation figure above, not the same
+quantity.) More cells
 because the retarded enclosures are looser by construction — the target
 is enclosed over the *emission* window, widened by the τ interval, so the
 Lipschitz constants `M1` and `M2` are larger and the exclusion test
