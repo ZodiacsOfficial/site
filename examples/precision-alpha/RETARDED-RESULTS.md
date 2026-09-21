@@ -573,6 +573,61 @@ both modes. To be precise about what that means: the comparison is over
 not over event instants — which is a weaker check than "exactly what it
 recorded" suggests.
 
+## 6a · Repairs made on 2026-09-21, and what they affect
+
+This section is additive. **No measurement above was recomputed, and no
+original pass/fail condition was changed retrospectively.** The dated
+numbers stand as the record of what was run when.
+
+**L8 is no longer only a consistency check.** §1 of this document recorded
+that the case took its comparison root from the solver's own first call. An
+independent root was available: with the observer at the origin and |r| = R
+constant, the light-time is exactly R/c and f = 0 reduces to
+tan(th) = tan(L)/cos(e0), so
+
+    t = atan2(sin L / cos e0, cos L) / Wt + R/c
+
+The new cases assert containment rather than a tolerance -- the reported
+bracket must contain that root, and the reported light-time enclosure must
+contain R/c -- and both hold. The original consistency case is retained
+beside them. **Affects:** the caveat in §1 is discharged; the 3.1e-5 s
+agreement quoted there is now attributed, being the solver's own
+minWidthSec floor of 1e-4 s and not the Chebyshev fit, whose contribution
+is 6.1e-8 s.
+
+**L8 also had a hole this document did not name.** Its assertion was
+`n <= 1`, which permits n = 0 -- a silent loss -- while the case's title
+says "not never". Driving it shows the root IS unreported when a window
+boundary lands exactly on it. That behaviour turns out to be sound and is
+now asserted as such: the solver reports `established: false`,
+`isExactTotal: false` and an unresolved region reading "an endpoint value
+could not be separated from zero". **Affects:** nothing measured; it closes
+a gap through which a real regression could have passed unnoticed.
+
+**L10's shortfall is now covered by a second case, not edited away.** §7
+below records that L10's closest pair is 0.1505 of the window against a
+preregistered "closer than a tenth". L10 is unchanged, guard included.
+L10b is a new fixture constructed to meet the declared condition: |r| held
+at R so the light-time is exactly R/c, and the emission angle a parabola
+through the crossing angle, which puts the roots at exactly +-DELTA/2 in
+reception time. At 0.05 of the window the independent scan finds them at
+-4320.000 and +4320.000 s and the solver returns both, complete and exact.
+The separation is asserted **before** the solver is called. **Affects:**
+the §7 bullet stands as the record for L10; the preregistered condition is
+now met by L10b.
+
+**The TDB/TT conflation is not repaired here, by choice.** §4's preamble
+records that Swiss was called with TDB seconds where its ET is TT, and
+measures the effect: negligible for §4a, cancelling in §4b's attribution
+difference, and up to 0.97 mas on §4b's Moon gap columns. Those numbers
+stay as they are. `ABERRATED-PREREGISTRATION.md` §5 requires new
+comparisons to convert explicitly, so the successor measurements will not
+carry it. **Affects:** §4b's unexplained 1.3 mas Moon residual, which is
+the same order as the 0.97 mas the conflation can contribute -- a lead,
+not a resolution, and not claimed as one.
+
+---
+
 ## 7 · What this does not establish
 
 - **Not an apparent place.** §4c measures the omitted aberration at up to
