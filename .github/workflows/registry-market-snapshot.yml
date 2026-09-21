@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: registry-market-snapshot-${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
+  group: daily-publication-${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
   cancel-in-progress: false
 
 jobs:
@@ -53,8 +53,11 @@ jobs:
           }
           NODE
 
-      - name: Read and archive the public market snapshot
-        run: node scripts/build-registry-market-snapshot.mjs
+      # Daily Sky normally commits the paired observation in its one publish.
+      # Repair missing/stale observations, but never refresh a valid one merely
+      # because workflow_run or the scheduled backstop fired again today.
+      - name: Ensure today's public market snapshot
+        run: node scripts/daily-market-snapshot.mjs
 
       - name: Publish the paired daily and weekly outlook
         run: node scripts/build-registry-outlook.mjs
