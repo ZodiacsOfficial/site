@@ -573,12 +573,17 @@ recorded" suggests.
   comparison against another source ephemeris shows is outside every
   bound in this document, by design and by the contract's own
   `EXTERNAL_UNCERTAINTY` field.
-- **The declared frame is mislabelled.** `RETARDED_CONTRACT.frame` says
-  `j2000-mean-ecliptic`; what is computed is the ICRS equator rotated by
-  ε₀, with no frame bias, which is **23 mas** from the J2000 mean
-  equinox (§4b). That is the largest systematic in this document and it
-  belongs to the operation's own contract, not to the data. It arguably
-  belongs in `notApplied` too.
+- **The frame is offset by 23 mas, and now says so.** What is computed is
+  the ICRS equator rotated by ε₀, with no frame bias, which is **23 mas**
+  from the J2000 mean equinox (§4b). That is the largest systematic in
+  this document, and it belongs to the operation's own contract, not to
+  the data. The label read `j2000-mean-ecliptic` while this document was
+  being written, which overstated it; it now reads
+  `ecliptic-of-the-icrs-equator`, the `operation` string and docstring
+  were brought into line with it, and the bias is listed in `notApplied`
+  so that a consumer enumerating that array learns about it. **Naming it
+  does not remove it** — every number in §4 was measured with the offset
+  present and none of them changes.
 - **The offset in seconds, not arcseconds.** This document's currency is
   event times, and §2 reports a worst root error of 3.1 × 10⁻⁴ s. The
   pack-versus-Swiss offset, converted through each body's own longitude

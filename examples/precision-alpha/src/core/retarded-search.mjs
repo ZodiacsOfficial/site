@@ -1,15 +1,17 @@
 /**
  * validated-retarded-geometric: a fixed-longitude crossing of the
- * light-time-corrected direction to a body, in the fixed J2000 mean
- * ecliptic frame, with completeness established rather than assumed.
+ * light-time-corrected direction to a body, in a fixed ecliptic frame --
+ * the ICRS equator rotated by the J2000 mean obliquity, which is 23.1 mas
+ * from the J2000 mean equinox; see `frame` and `frameNote` -- with
+ * completeness established rather than assumed.
  *
  * This is NOT apparent-of-date astrology and must not be read as a more
  * accurate answer to the same question `empirical-apparent` answers. It
  * adds exactly one correction to `validated-geometric` -- Newtonian
  * reception light-time -- and still omits stellar aberration,
  * gravitational deflection, Shapiro delay, precession and nutation into
- * the frame of date, topocentric parallax and refraction. Those omissions
- * are on the result object, by name.
+ * the frame of date, the IAU 2006 ICRS frame bias, topocentric parallax
+ * and refraction. Those omissions are on the result object, by name.
  *
  * The scalar that is searched is a projection, not an angle:
  *
@@ -43,7 +45,7 @@ const COS_E = Math.cos((EPS0_ARCSEC / 3600) * DEG);
 const SIN_E = Math.sin((EPS0_ARCSEC / 3600) * DEG);
 
 export const RETARDED_CONTRACT = Object.freeze({
-  operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME, in the fixed J2000 mean ecliptic frame, reaching a given value',
+  operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME, in the fixed ecliptic of the ICRS equator (see frame and frameNote), reaching a given value',
   frame: 'ecliptic-of-the-icrs-equator',
   frameNote: 'The ICRS equator rotated by the IAU 2006 mean obliquity at J2000 (84381.406 arcsec). This is NOT the J2000 mean equinox: the IAU 2006 ICRS frame bias, a fixed rotation of 23.1 mas, is not applied. Measured against Swiss Ephemeris in J2000, the difference is a rotation of |omega| = 23.111 mas fitted at 99.9 per cent of variance, matching the published bias (xi0 -16.617, eta0 -6.819, dalpha0 -14.6 mas) to 0.16 per cent. It projects onto ecliptic longitude as about 7.7 mas on average. The label used to read j2000-mean-ecliptic, which overstated it.',
   origin: 'geocentric',
@@ -56,9 +58,10 @@ export const RETARDED_CONTRACT = Object.freeze({
     'gravitational light deflection by the Sun',
     'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
     'precession and nutation: the frame is J2000, not of date',
+    'the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)',
     'topocentric parallax and atmospheric refraction: the observer is the geocentre',
   ]),
-  comparableTo: 'SPICE aberration correction "LT" (converged, so closer to "CN" than to a single iteration) in frame ECLIPJ2000, observer 399, with no stellar-aberration term. NOT comparable with "CN+S" or with an apparent place of date.',
+  comparableTo: 'SPICE aberration correction "LT" (converged, so closer to "CN" than to a single iteration), observer 399, with no stellar-aberration term. NOT comparable with "CN+S" or with an apparent place of date. On the frame: this operation rotates the ICRS equator by the IAU 2006 obliquity 84381.406 arcsec and applies no frame bias. SPICE ECLIPJ2000 is the nearest built-in frame but is not asserted here to use the same obliquity constant -- check the value your toolkit rotates by before treating a residual at the tens-of-mas level as a disagreement about positions.',
   bodies: Object.freeze(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
 });
