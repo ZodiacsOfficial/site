@@ -268,7 +268,7 @@ const MAX_CHART_CONTEXT = 3_500;
 const SESSION_KEY = 'zodiacs.guide.daily-session.v1';
 const AUTH_BOUNDARY_KEY = 'zodiacs.guide.auth-boundary.v1';
 const CONSENT_POLICY_VERSION = 'guide-cloud-processing-2026-08-14.2';
-const STYLESHEET_HREF = '/assets/assistant-drawer.css';
+const STYLESHEET_HREF = '/assets/assistant-drawer.css?v=ask-guide-4';
 const GUIDE_AVATAR_SRC = '/assets/guide-avatar.webp';
 const STREAM_SCHEMA = 'zodiacs.guide.stream-event.draft.v1';
 const GUIDE_LINK_PATHS = new Set([
