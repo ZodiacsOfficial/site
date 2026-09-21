@@ -118,9 +118,9 @@
         "marketCapUsd": 77910.5
       },
       "freshness": {
-        "asOf": "2026-09-21T04:38:44.384Z",
+        "asOf": "2026-09-21T04:39:48.338Z",
         "status": "current-for-horizon",
-        "ageHoursAtHorizonEnd": 19.4
+        "ageHoursAtHorizonEnd": 19.3
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -980,9 +980,9 @@
         "marketCapUsd": 77910.5
       },
       "freshness": {
-        "asOf": "2026-09-21T04:38:44.384Z",
+        "asOf": "2026-09-21T04:39:48.338Z",
         "status": "stale-for-horizon",
-        "ageHoursAtHorizonEnd": 163.4
+        "ageHoursAtHorizonEnd": 163.3
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
