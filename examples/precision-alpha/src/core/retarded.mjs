@@ -106,8 +106,19 @@ export function stateEnclosure(eph, weights, a, b, spend) {
         `${name} has records from ${s.initEt} to ${s.initEt + span} s TDB; the window ${a} .. ${b} reaches outside them`,
         { name, window: [a, b], recordSpanEtSec: [s.initEt, s.initEt + span] });
     }
-    const first = Math.min(s.nrec - 1, Math.max(0, Math.floor((a - s.initEt) / s.intervalSec)));
-    const last = Math.min(s.nrec - 1, Math.max(0, Math.floor((b - s.initEt) / s.intervalSec)));
+    // `a - s.initEt` is a rounded subtraction and can land exactly on a
+    // record boundary when `a` is strictly below it, so the floor picks
+    // the NEXT record and the sliver of [a, b] below the boundary is
+    // walked by nothing -- while seriesAt, asked for a time its record
+    // does not hold, evaluates at |tau| slightly above 1, exactly where
+    // `sum |c_k|` stops bounding the series. Measured on the shipped
+    // pack: 22.5 m outside the returned enclosure, at essentially every
+    // record boundary of every body. Step back onto the record that
+    // really contains the endpoint.
+    let first = Math.min(s.nrec - 1, Math.max(0, Math.floor((a - s.initEt) / s.intervalSec)));
+    while (first > 0 && s.initEt + first * s.intervalSec > a) first -= 1;
+    let last = Math.min(s.nrec - 1, Math.max(0, Math.floor((b - s.initEt) / s.intervalSec)));
+    while (last < s.nrec - 1 && s.initEt + (last + 1) * s.intervalSec <= b) last += 1;
     let p = null;
     let v = null;
     let ac = null;
@@ -116,9 +127,24 @@ export function stateEnclosure(eph, weights, a, b, spend) {
       const hi = Math.min(b, s.initEt + (index + 1) * s.intervalSec);
       if (!(hi >= lo)) continue;
       if (spend) spend();
-      const ser = eph.seriesAt(name, (lo + hi) / 2);
-      const half = (hi - lo) / 2;
       const mid = (lo + hi) / 2;
+      // Address the record by INDEX, not by re-deriving it from `mid`.
+      // The loop already knows which record this sub-window belongs to;
+      // asking `seriesAt` for the record at `mid` re-runs the same
+      // rounded division, and when the sub-window is an ulp wide against
+      // a record boundary `mid` rounds ONTO the boundary and comes back
+      // with the neighbouring record. The two records disagree at their
+      // shared boundary by far more than the mean-value allowance -- 0.07
+      // km measured -- so the "enclosure" then excluded the very value it
+      // was built to contain. A record's own centre is unambiguously
+      // inside it.
+      const ser = eph.seriesAt(name, s.initEt + (index + 0.5) * s.intervalSec);
+      // The mean-value enclosure below is centred on `mid`, so its
+      // half-width must be the true distance from `mid` to the far end,
+      // not (hi - lo) / 2: `lo + hi` rounds, so the computed midpoint is
+      // off-centre and the cheaper expression understates the reach.
+      // Same defect as the search's lever arm, same fix.
+      const half = Math.max(hi - mid, mid - lo);
       const tau = (mid - ser.mid) / ser.radius;
       const pp = [];
       const vv = [];

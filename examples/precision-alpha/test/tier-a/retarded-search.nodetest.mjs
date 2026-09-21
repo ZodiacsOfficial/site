@@ -15,7 +15,7 @@ import { parseContainerBytes } from '../../src/core/container.mjs';
 import { memorySource } from '../../src/core/source.mjs';
 import { Ephemeris } from '../../src/core/ephemeris.mjs';
 import { searchRetardedLongitude, RETARDED_CONTRACT } from '../../src/core/retarded-search.mjs';
-import { solveTau, targetWeights, observerWeights, C_KM_S } from '../../src/core/retarded.mjs';
+import { statePoint, solveTau, targetWeights, observerWeights, C_KM_S } from '../../src/core/retarded.mjs';
 
 const DAY = 86400;
 const EMRAT = 81.30056822149722;
@@ -277,6 +277,64 @@ test('L7b: a reception window past the target\'s last record is refused, not rai
   assert.equal(r.eventCount.isExactTotal, false);
   const why = r.accounting.unresolved.map((u) => u.why).join(' | ');
   assert.match(why, /outside the stored records/i, `expected a coverage refusal, got ${why.slice(0, 200)}`);
+});
+
+test('L13: the exclusion test\'s lever arm reaches the whole cell, not (hi-lo)/2', () => {
+  // A false theorem, found by an adversarial reviewer and reproduced
+  // here before it was fixed.
+  //
+  // `hi - lo` is exact by Sterbenz, but `lo + hi` rounds, so the computed
+  // midpoint m sits off-centre by up to ulp(m)/2 and
+  //     max |x - m| over [lo, hi]  >  (hi - lo) / 2.
+  // On a cell three ulps wide the excess is a THIRD of the half-width.
+  // The exclusion test `mig(f(m)) > M1 * w` then uses a lever arm shorter
+  // than the cell it is reasoning about, and excludes a root that exists.
+  //
+  // Pre-fix, on exactly the cell below, the operation answered
+  //     established: true, isExactTotal: true, found: 0
+  // for an interval on which f(lo) = +3.01e-1 and f(hi) = -2.67e-2 --
+  // a transversal crossing on the g > 0 side, which the same solver
+  // brackets if the window moves by a millisecond.
+  const ncoef = 20;
+  const initEt = 500000000000;              // ~year 5840; ulp here is 6.1e-5 s
+  const zeros = () => new Array(ncoef).fill(0);
+  const xs = () => { const c = zeros(); c[ncoef - 1] = 1e6; c[0] = -328.1732681184036; return c; };
+  const ys = () => { const c = zeros(); c[0] = 2e8; return c; };
+  const z3 = () => [...zeros(), ...zeros(), ...zeros()];
+  const bytes = buildPack({
+    bodies: [
+      { name: 'sun', frame: 'native', ncoef, nrec: 6, initEt, intervalSec: DAY, coeffs: z3 },
+      { name: 'emb', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: DAY, coeffs: z3 },
+      { name: 'moon', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: DAY, coeffs: z3 },
+      { name: 'marsBary', frame: 'ssb', ncoef, nrec: 6, initEt, intervalSec: DAY,
+        coeffs: () => [...xs(), ...ys(), ...zeros()] },
+    ],
+    derived: { earth399: { emrat: EMRAT, from: 'moon' } },
+  });
+  const eph = new Ephemeris(memorySource(bytes), parseContainerBytes(bytes));
+
+  const lo = 500000085745.0363;
+  const hi = 500000085745.0365;
+  // The defect is in the arithmetic, so assert the arithmetic too: if a
+  // future refactor picks endpoints where the midpoint happens to be
+  // centred, this case silently stops testing anything.
+  const m = (lo + hi) / 2;
+  assert.ok(Math.max(hi - m, m - lo) > (hi - lo) / 2,
+    'this cell no longer has an off-centre midpoint, so it tests nothing');
+
+  const f = (t) => {
+    const o = statePoint(eph, observerWeights(eph), t, null).pos;
+    const { tau } = solveTau(eph, targetWeights(eph, 'Mars'), t, o, 0.5, null);
+    const q = statePoint(eph, targetWeights(eph, 'Mars'), t - tau, null).pos;
+    const d = sub3(q, o);
+    return Math.sin(90 * (Math.PI / 180)) * d[0] - Math.cos(90 * (Math.PI / 180)) * (CE * d[1] + SE * d[2]);
+  };
+  assert.ok(Math.sign(f(lo)) !== Math.sign(f(hi)), 'the cell must straddle a root for this to test anything');
+
+  const r = search(eph, { targetDeg: 90, fromTdbSec: lo, toTdbSec: hi });
+  assert.ok(!(r.completeness.established && r.events.length === 0),
+    'a proven exact total of zero over an interval containing a transversal crossing');
+  assert.equal(r.events.length, 1, 'the crossing inside this cell should be found');
 });
 
 test('L8: roots at the interval ends are reported once each, not twice and not never', () => {

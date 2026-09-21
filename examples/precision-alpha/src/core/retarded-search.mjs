@@ -148,7 +148,21 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
   // window, which loosens the target enclosure, which forces more
   // subdivision; it is the first thing worth tightening.
   const half = (t1 - t0) / 2;
-  const crude = stateEnclosure(eph, targets, t0 - rough.tau - 1.2 * half - 1, t1 - rough.tau + 1.2 * half + 1, spend);
+  let crude;
+  try {
+    crude = stateEnclosure(eph, targets, t0 - rough.tau - 1.2 * half - 1, t1 - rough.tau + 1.2 * half + 1, spend);
+  } catch (error) {
+    // The same condition the emission-window call below already handles.
+    // Left unhandled, this threw out of the whole search for any window
+    // within about 1.2 seed half-widths of the pack's edge -- up to
+    // nineteen days on a record-seeded pack -- so a window 99% inside
+    // coverage returned nothing at all instead of a result with the edge
+    // cells unresolved.
+    if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
+      return { ok: false, retry: true, why: `the speed-bound window for this cell reaches outside the stored records` };
+    }
+    throw error;
+  }
   const vT = I.vMag(crude.vel);
   const vO = I.vMag(stateEnclosure(eph, observer, t0, t1, spend).vel);
   if (!(vT < C_KM_S)) {
@@ -320,8 +334,17 @@ export function searchRetardedLongitude(eph, spec = {}) {
       const [lo, hi] = stack.pop();
       cells += 1;
       if (cells > p.maxCells) fail('budget-exhausted', `the retarded search passed ${p.maxCells} cells`, { cells });
-      const w = (hi - lo) / 2;
       const m = (lo + hi) / 2;
+      // NOT (hi - lo) / 2. `hi - lo` is exact by Sterbenz but `lo + hi`
+      // rounds, so the computed midpoint sits off-centre by up to
+      // ulp(m)/2 and the true lever arm max|x - m| over [lo, hi] exceeds
+      // (hi - lo) / 2 by that much. On a two-ulp cell that is a third of
+      // the half-width, and the exclusion test below then excludes a
+      // real root: measured, a crafted cell at t = 5e11 s returned
+      // `proven, isExactTotal, 0 events` over an interval whose crossing
+      // the same solver brackets when the window moves by a millisecond.
+      // Taking the larger of the two actual distances is exact and free.
+      const w = Math.max(hi - m, m - lo);
 
       const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p);
       if (!cell.ok) {
