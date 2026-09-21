@@ -883,12 +883,16 @@
 /* ── Synastry ─────────────────────────────────────────────────────── */
 /* minmax(0,1fr) columns (the .syn__slots trick): a nowrap chip must not
    set the min-content of the whole form — long names ellipsize in place. */
+.syn__quick-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  margin-bottom: 14px;
+}
 .syn__quick-fill {
   display: inline-flex;
   align-items: stretch;
   width: fit-content;
   max-width: 100%;
-  margin-bottom: 14px;
   overflow: hidden;
   border: 1px solid var(--hair-2);
   border-radius: var(--r-full);

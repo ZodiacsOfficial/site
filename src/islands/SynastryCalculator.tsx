@@ -1396,12 +1396,14 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
           )}
           {prefilledPairMod && <prefilledPairMod.PrefilledPairNotice locale={locale} />}
           {showQuickFill && (
-            <div class="syn__quick-fill">
-              <button type="button" class="syn__quick-use" onClick={() => {
-                setQuickFillDismissed(true);
-                setSlotA((s) => ({ ...s, source: 'saved', savedId: latestChart.id }));
-              }}>{pcf(locale, 'useMyChart', { handle: handleOf(latestChart.name) })}</button>
-              <button type="button" class="syn__quick-dismiss" aria-label={pc(locale, 'dismissMyChart')} onClick={() => setQuickFillDismissed(true)}>×</button>
+            <div class="syn__quick-row">
+              <div class="syn__quick-fill">
+                <button type="button" class="syn__quick-use" onClick={() => {
+                  setQuickFillDismissed(true);
+                  setSlotA((s) => ({ ...s, source: 'saved', savedId: latestChart.id }));
+                }}>{pcf(locale, 'useMyChart', { handle: handleOf(latestChart.name) })}</button>
+                <button type="button" class="syn__quick-dismiss" aria-label={pc(locale, 'dismissMyChart')} onClick={() => setQuickFillDismissed(true)}>×</button>
+              </div>
             </div>
           )}
           <div class="syn__slots">
