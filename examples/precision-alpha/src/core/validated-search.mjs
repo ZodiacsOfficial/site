@@ -4,13 +4,17 @@
  * ## What it is, and what it deliberately is not
  *
  * It finds the instants at which a body's **geometric** ecliptic longitude,
- * in the **fixed J2000 mean ecliptic frame**, equals a given value. That is
- * not the same quantity as the apparent longitude the empirical mode
- * searches, and the two are never presented as if they were:
+ * in a **fixed ecliptic frame** -- the ICRS equator rotated by the J2000 mean
+ * obliquity, which is 23.1 mas from the J2000 mean equinox; see `frame` and
+ * `frameNote` -- equals a given value. That is not the same quantity as the
+ * apparent longitude the empirical mode searches, and the two are never
+ * presented as if they were:
  *
  *   - no light-time. The position is where the body IS, not where it is seen.
  *   - no aberration, no gravitational deflection.
  *   - no precession and no nutation: the frame is J2000, not of date.
+ *   - no IAU 2006 ICRS frame bias, so the frame is the ecliptic of the ICRS
+ *     equator rather than the J2000 mean equinox.
  *
  * Those omissions are what make the claim possible. With them, the searched
  * quantity is an explicit POLYNOMIAL of time inside each record of the
@@ -80,7 +84,7 @@ const COS_E = Math.cos((EPS0_ARCSEC / 3600) * DEG);
 const SIN_E = Math.sin((EPS0_ARCSEC / 3600) * DEG);
 
 export const GEOMETRIC_CONTRACT = Object.freeze({
-  operation: 'geometric ecliptic longitude of one body, in the fixed J2000 mean ecliptic frame, reaching a given value',
+  operation: 'geometric ecliptic longitude of one body, in the fixed ecliptic of the ICRS equator (see frame and frameNote), reaching a given value',
   frame: 'ecliptic-of-the-icrs-equator',
   frameNote: 'The ICRS equator rotated by the IAU 2006 mean obliquity at J2000 (84381.406 arcsec). This is NOT the J2000 mean equinox: the IAU 2006 ICRS frame bias, a fixed rotation of 23.1 mas, is not applied. Measured against Swiss Ephemeris in J2000, the difference is a rotation of |omega| = 23.111 mas fitted at 99.9 per cent of variance, matching the published bias (xi0 -16.617, eta0 -6.819, dalpha0 -14.6 mas) to 0.16 per cent. It projects onto ecliptic longitude as about 7.7 mas on average. The label used to read j2000-mean-ecliptic, which overstated it.',
   geometric: true,
@@ -90,6 +94,7 @@ export const GEOMETRIC_CONTRACT = Object.freeze({
     'annual aberration',
     'gravitational deflection by the Sun',
     'precession and nutation: the frame is J2000, not of date',
+    'the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)',
   ]),
   whyThoseAreOmitted: 'each of them makes the searched quantity something other than a polynomial in time, and the completeness proof is a statement about a polynomial',
   bodies: Object.freeze(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
