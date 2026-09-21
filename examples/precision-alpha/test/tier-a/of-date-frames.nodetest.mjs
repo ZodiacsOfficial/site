@@ -24,8 +24,9 @@ import assert from 'node:assert/strict';
 import * as G from './_geometry.mjs';
 import * as I from '../../src/core/interval.mjs';
 import { sinCosInterval } from '../../src/core/trig.mjs';
+import * as FD from '../../src/core/frame-of-date.mjs';
 import {
-  searchAberratedLongitude, searchOfDateLongitude, searchOfDateLongitudeWithFrame,
+  searchAberratedLongitude, searchOfDateLongitude, searchOfDateLongitudeWithFrame, iauFrameProvider,
 } from '../../src/core/retarded-search.mjs';
 
 const D = G.DAY;
@@ -557,6 +558,86 @@ test('S11: an invalid or uncovered time refuses with a typed code and nothing es
   assert.equal(bad && bad.code, 'unknown-body');
 });
 
+/**
+ * S11c: a cell wider than half a turn of the TDB-TT series.
+ *
+ * §6a S11 declares "typed refusal, no throw escaping the search". The
+ * case it tested was an invalid or uncovered TIME; this is the other way
+ * in, and the search failed it: `reducedRadians` returns null for an
+ * interval spanning half a turn, `nut00bInterval` reads that as the full
+ * range, and `tdbMinusTtInterval` passed it straight into
+ * `sinCosInterval`, which dereferenced it. The result was a raw
+ * `TypeError` out of the whole search -- every decided cell lost, no
+ * typed code, nothing an `instanceof PrecisionError` could catch.
+ *
+ * The threshold is a cell half-width of 91.3 days, where the `2g` term
+ * first spans half a turn. A DE-derived pack cannot reach it, because its
+ * granules are at most 32 days and the seed tiling never makes a cell that
+ * wide -- but the format admits longer records and this package's own
+ * fixtures use them, so it is reachable through the public API.
+ */
+test('S11c: a cell wider than half a turn is handled, not thrown out of', () => {
+  const D250 = 250 * D;
+  // Records long enough that the seed tiling hands the provider a cell
+  // past the threshold, on a geometry whose other enclosures still hold.
+  const slow = {
+    target: G.circle(2.2794e8, 40000 * D, 0).at,
+    observer: G.circle(2000, 500 * D, 0).at,
+    observerVel: G.circle(2000, 500 * D, 0).vel,
+  };
+  const eph = G.packOf(slow.target, slow.observer, { nrec: 6, initEt: -900 * D, intervalSec: 300 * D });
+  const spec = { body: BODY, targetDeg: 90, fromTdbSec: -D250, toTdbSec: D250 };
+
+  // The unit that broke, first: the whole range is a valid enclosure of a
+  // sine, and it is what a span of half a turn or more has to produce.
+  for (const w of [182.7 * D, 400 * D, 3650 * D]) {
+    const got = FD.tdbMinusTtInterval(I.iv(0, w));
+    assert.ok(Number.isFinite(got.value.lo) && Number.isFinite(got.value.hi), `width ${w / D} d gave a non-finite enclosure`);
+    assert.ok(got.value.lo <= got.value.hi);
+  }
+  // and it still CONTAINS the pointwise value everywhere inside the cell
+  const wide = FD.tdbMinusTtInterval(I.iv(0, 400 * D));
+  let escapes = 0;
+  for (let i = 0; i <= 500; i += 1) {
+    const t = (400 * D * i) / 500;
+    const p = FD.tdbMinusTtInterval(I.iv(t));
+    if (!(p.value.lo >= wide.value.lo && p.value.hi <= wide.value.hi)) escapes += 1;
+  }
+  assert.equal(escapes, 0, `${escapes} pointwise TDB-TT values escaped the wide-cell enclosure`);
+
+  // And the search itself: a result or a typed refusal, never a bare throw.
+  //
+  // The provider is spied on rather than taken on trust. The first draft
+  // of this case built its pack with `interval` where the helper wants
+  // `intervalSec`, so the records were one day, the window fell outside
+  // coverage, the search declined before the provider was ever called --
+  // and the case passed while testing nothing. A regression test for a
+  // wide-cell bug has to prove it saw a wide cell.
+  let widestCellSec = 0;
+  let providerCalls = 0;
+  const spy = (cell) => {
+    providerCalls += 1;
+    widestCellSec = Math.max(widestCellSec, cell.hi - cell.lo);
+    return iauFrameProvider(cell);
+  };
+  let threw = null;
+  let r = null;
+  try { r = searchOfDateLongitudeWithFrame(eph, spec, spy); } catch (error) { threw = error; }
+
+  assert.ok(providerCalls > 0, 'the frame provider was never called, so this case exercises nothing');
+  assert.ok(widestCellSec > 182.6 * D,
+    `the widest cell reaching the provider was ${(widestCellSec / D).toFixed(1)} days, under the 182.6-day threshold`);
+
+  if (threw) {
+    assert.equal(threw.name, 'PrecisionError',
+      `a ${threw.constructor.name} escaped the search: ${threw.message}`);
+    assert.ok(typeof threw.code === 'string' && threw.code.length > 0, 'an escaping error must carry a code');
+  } else {
+    assert.ok(r.completeness.established === true || r.eventCount.isExactTotal === false,
+      'a search that could not decide must not claim an exact total');
+  }
+});
+
 // =================================== S12 · an interior extremum of sine
 test('S12: a cell wide enough to hide an extremum of sine is still enclosed', () => {
   // The provider's own enclosure is the thing under test here: over a cell
@@ -611,17 +692,32 @@ test('reporting: the of-date result separates three error sources and never sums
   // asserted: rate times the stated model error, to the bit.
   assert.equal(
     ts.conversionApproximation.inducedLongitudeArcsec,
-    ts.conversionApproximation.frameRateArcsecPerSec * ts.conversionApproximation.statedModelErrorSec,
+    ts.conversionApproximation.frameRateBoundArcsecPerSec * ts.conversionApproximation.statedModelErrorSec,
   );
-  assert.ok(ts.conversionApproximation.frameRateArcsecPerSec > 0, 'the frame must have a rate for this to mean anything');
+  assert.ok(ts.conversionApproximation.frameRateBoundArcsecPerSec > 0, 'the frame must have a rate for this to mean anything');
+  // The field is a BOUND, not a rate, and it says so where a reader looks.
+  assert.match(ts.conversionApproximation.rateNote, /interval ENCLOSURE/);
+  assert.match(ts.conversionApproximation.rateNote, /not the instantaneous rate/);
   assert.equal(ts.conversionApproximation.statedModelErrorSec, 3e-5);
   const [lo, hi] = ts.conversionApproximation.tdbMinusTtUsedSec;
   assert.ok(lo < 0 && hi > 0 && Math.abs(lo) < 0.01 && Math.abs(hi) < 0.01,
     `TDB-TT over this window should be a couple of milliseconds either way, got [${lo}, ${hi}]`);
 
   // No field anywhere combines them.
-  const combined = JSON.stringify(ts).match(/total|combined|sum/i);
-  assert.equal(combined, null, 'the three sources must not be summed into one figure');
+  //
+  // Checked on the KEYS, not by grepping the serialised block for the word
+  // "sum" -- the first version of this did that, and then failed when a
+  // note explaining that a bound "is the sum of 77 term-derivative bounds"
+  // was added. A word in prose is not a combined figure; a key is.
+  assert.deepEqual(Object.keys(ts).sort(),
+    ['conversionApproximation', 'externalTimeModel', 'implementationNumerical'],
+    'the time-scale block must hold exactly the three sources and nothing beside them');
+  for (const [name, src] of Object.entries(ts)) {
+    for (const key of Object.keys(src)) {
+      assert.ok(!/^(total|combined|sum|overall)/i.test(key),
+        `${name}.${key} reads like a figure that combines the sources`);
+    }
+  }
 
   // The two fixed-frame modes have no time-scale block: there is no
   // conversion in them to report.

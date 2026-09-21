@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-21T19:45:19.996Z",
+  "ranAt": "2026-09-21T20:01:43.834Z",
   "rule": "OF-DATE-PREREGISTRATION.md section 9a",
   "pack": {
     "path": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/D.v2.zeph",
@@ -53,7 +53,7 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 635,
-      "ms": 43,
+      "ms": 34,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.7169049379997645,
         "widestFrameAngleCellSec": 2764800,
@@ -62,7 +62,6 @@
           -0.0016675999377849218,
           0.0016739407899610038
         ],
-        "frameRateArcsecPerSec": 0.000004345304516165697,
         "conversionInducedLongitudeArcsec": 1.303591354849709e-10
       },
       "referenceStepSec": 1800,
@@ -73,14 +72,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 635,
-        "ms": 11
+        "ms": 10
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 635,
-        "ms": 19
+        "ms": 7
       },
       "geometricRung": {
         "established": true,
@@ -120,7 +119,7 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 635,
-      "ms": 21,
+      "ms": 34,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.7169049379997645,
         "widestFrameAngleCellSec": 2764800,
@@ -129,7 +128,6 @@
           -0.0016675999377849218,
           0.0016739407899610038
         ],
-        "frameRateArcsecPerSec": 0.000004345304516165697,
         "conversionInducedLongitudeArcsec": 1.303591354849709e-10
       },
       "referenceStepSec": 1800,
@@ -140,7 +138,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 635,
-        "ms": 22
+        "ms": 6
       },
       "lightTimeRung": {
         "status": "finished",
@@ -191,7 +189,7 @@
       "unresolvedWhy": [],
       "cells": 10320,
       "evaluations": 269422,
-      "ms": 2833,
+      "ms": 2843,
       "frame": {
         "widestFrameAngleSpanArcsec": 0.01869217967288428,
         "widestFrameAngleCellSec": 6412.229750037193,
@@ -200,7 +198,6 @@
           -0.0016379096163148426,
           0.0016360540248048917
         ],
-        "frameRateArcsecPerSec": 0.0000034674686024908442,
         "conversionInducedLongitudeArcsec": 1.0402405807472533e-10
       },
       "referenceStepSec": 300,
@@ -211,14 +208,14 @@
         "found": 11,
         "referenceRoots": 11,
         "evaluations": 264328,
-        "ms": 3907
+        "ms": 4025
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 11,
         "evaluations": 264348,
-        "ms": 3816
+        "ms": 4786
       },
       "geometricRung": {
         "established": true,
@@ -340,7 +337,7 @@
       "unresolvedWhy": [],
       "cells": 10320,
       "evaluations": 269422,
-      "ms": 4731,
+      "ms": 2878,
       "frame": {
         "widestFrameAngleSpanArcsec": 0.01869217967288428,
         "widestFrameAngleCellSec": 6412.229750037193,
@@ -349,7 +346,6 @@
           -0.0016379096163148426,
           0.0016360540248048917
         ],
-        "frameRateArcsecPerSec": 0.0000034674686024908442,
         "conversionInducedLongitudeArcsec": 1.0402405807472533e-10
       },
       "referenceStepSec": 300,
@@ -360,14 +356,14 @@
         "found": 11,
         "referenceRoots": 11,
         "evaluations": 264328,
-        "ms": 5493
+        "ms": 5108
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 11,
         "evaluations": 264348,
-        "ms": 4674
+        "ms": 4654
       },
       "geometricRung": {
         "established": true,
@@ -479,7 +475,7 @@
       "unresolvedWhy": [],
       "cells": 47,
       "evaluations": 2307,
-      "ms": 24,
+      "ms": 39,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.6409141171658685,
         "widestFrameAngleCellSec": 2332730.8159999847,
@@ -488,7 +484,6 @@
           -0.0016508910162489517,
           0.0016543369931064787
         ],
-        "frameRateArcsecPerSec": 0.0000042976008734451305,
         "conversionInducedLongitudeArcsec": 1.2892802620335393e-10
       },
       "referenceStepSec": 900,
@@ -499,14 +494,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 2253,
-        "ms": 16
+        "ms": 19
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 2307,
-        "ms": 19
+        "ms": 17
       },
       "geometricRung": {
         "established": true,
@@ -546,7 +541,7 @@
       "unresolvedWhy": [],
       "cells": 47,
       "evaluations": 2307,
-      "ms": 25,
+      "ms": 32,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.6409141171658685,
         "widestFrameAngleCellSec": 2332730.8159999847,
@@ -555,7 +550,6 @@
           -0.0016508910162489517,
           0.0016543369931064787
         ],
-        "frameRateArcsecPerSec": 0.0000042976008734451305,
         "conversionInducedLongitudeArcsec": 1.2892802620335393e-10
       },
       "referenceStepSec": 900,
@@ -566,14 +560,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 2253,
-        "ms": 15
+        "ms": 18
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 2307,
-        "ms": 13
+        "ms": 21
       },
       "geometricRung": {
         "established": true,
@@ -607,7 +601,7 @@
       "unresolvedWhy": [],
       "cells": 18,
       "evaluations": 1663,
-      "ms": 39,
+      "ms": 32,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.3741180007395073,
         "widestFrameAngleCellSec": 2764800,
@@ -616,7 +610,6 @@
           -0.0016772045938292489,
           0.0016320510691920117
         ],
-        "frameRateArcsecPerSec": 0.000004453463049193399,
         "conversionInducedLongitudeArcsec": 1.3360389147580195e-10
       },
       "referenceStepSec": 1800,
@@ -627,14 +620,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 1626,
-        "ms": 14
+        "ms": 12
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 1614,
-        "ms": 8
+        "ms": 22
       },
       "geometricRung": {
         "established": true,
@@ -677,7 +670,7 @@
       "unresolvedWhy": [],
       "cells": 18,
       "evaluations": 1663,
-      "ms": 24,
+      "ms": 27,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.3741180007395073,
         "widestFrameAngleCellSec": 2764800,
@@ -686,7 +679,6 @@
           -0.0016772045938292489,
           0.0016320510691920117
         ],
-        "frameRateArcsecPerSec": 0.000004453463049193399,
         "conversionInducedLongitudeArcsec": 1.3360389147580195e-10
       },
       "referenceStepSec": 1800,
@@ -697,14 +689,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1626,
-        "ms": 12
+        "ms": 11
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1614,
-        "ms": 10
+        "ms": 16
       },
       "geometricRung": {
         "established": true,
@@ -762,7 +754,6 @@
           -0.0014527231780671734,
           0.0016908977997694503
         ],
-        "frameRateArcsecPerSec": 0.000004564904337781253,
         "conversionInducedLongitudeArcsec": 1.369471301334376e-10
       },
       "referenceStepSec": 1800,
@@ -773,14 +764,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 706,
-        "ms": 5
+        "ms": 3
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 706,
-        "ms": 5
+        "ms": 3
       },
       "geometricRung": {
         "established": true,
@@ -820,7 +811,7 @@
       "unresolvedWhy": [],
       "cells": 11,
       "evaluations": 706,
-      "ms": 11,
+      "ms": 13,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.834499313938112,
         "widestFrameAngleCellSec": 2764800,
@@ -829,7 +820,6 @@
           -0.0014527231780671734,
           0.0016908977997694503
         ],
-        "frameRateArcsecPerSec": 0.000004564904337781253,
         "conversionInducedLongitudeArcsec": 1.369471301334376e-10
       },
       "referenceStepSec": 1800,
@@ -840,14 +830,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 706,
-        "ms": 3
+        "ms": 4
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 706,
-        "ms": 6
+        "ms": 7
       },
       "geometricRung": {
         "established": true,
@@ -882,7 +872,7 @@
       "unresolvedWhy": [],
       "cells": 17,
       "evaluations": 1220,
-      "ms": 20,
+      "ms": 21,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.961497935371663,
         "widestFrameAngleCellSec": 2764800,
@@ -891,7 +881,6 @@
           -0.0016666631381779082,
           0.0015336240788917555
         ],
-        "frameRateArcsecPerSec": 0.000004634617931547574,
         "conversionInducedLongitudeArcsec": 1.3903853794642722e-10
       },
       "referenceStepSec": 3600,
@@ -902,7 +891,7 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1220,
-        "ms": 16
+        "ms": 10
       },
       "lightTimeRung": {
         "status": "finished",
@@ -956,7 +945,7 @@
       "unresolvedWhy": [],
       "cells": 17,
       "evaluations": 1220,
-      "ms": 29,
+      "ms": 24,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.961497935371663,
         "widestFrameAngleCellSec": 2764800,
@@ -965,7 +954,6 @@
           -0.0016666631381779082,
           0.0015336240788917555
         ],
-        "frameRateArcsecPerSec": 0.000004634617931547574,
         "conversionInducedLongitudeArcsec": 1.3903853794642722e-10
       },
       "referenceStepSec": 3600,
@@ -976,7 +964,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1220,
-        "ms": 8
+        "ms": 10
       },
       "lightTimeRung": {
         "status": "finished",
@@ -1018,7 +1006,7 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 1063,
-      "ms": 21,
+      "ms": 17,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.8049277408205224,
         "widestFrameAngleCellSec": 2764800,
@@ -1027,7 +1015,6 @@
           -0.001625629116881292,
           0.001650006005355809
         ],
-        "frameRateArcsecPerSec": 0.000004597199776665215,
         "conversionInducedLongitudeArcsec": 1.3791599329995645e-10
       },
       "referenceStepSec": 3600,
@@ -1038,14 +1025,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1075,
-        "ms": 5
+        "ms": 12
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1076,
-        "ms": 12
+        "ms": 5
       },
       "geometricRung": {
         "established": true,
@@ -1092,7 +1079,7 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 1063,
-      "ms": 19,
+      "ms": 15,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.8049277408205224,
         "widestFrameAngleCellSec": 2764800,
@@ -1101,7 +1088,6 @@
           -0.001625629116881292,
           0.001650006005355809
         ],
-        "frameRateArcsecPerSec": 0.000004597199776665215,
         "conversionInducedLongitudeArcsec": 1.3791599329995645e-10
       },
       "referenceStepSec": 3600,
@@ -1112,14 +1098,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1075,
-        "ms": 5
+        "ms": 9
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 1076,
-        "ms": 7
+        "ms": 4
       },
       "geometricRung": {
         "established": true,
@@ -1154,7 +1140,7 @@
       "unresolvedWhy": [],
       "cells": 20,
       "evaluations": 1242,
-      "ms": 20,
+      "ms": 18,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.395337930817181,
         "widestFrameAngleCellSec": 2764800,
@@ -1163,7 +1149,6 @@
           -0.0016635814715444182,
           0.0016481458099893976
         ],
-        "frameRateArcsecPerSec": 0.000004439380881792084,
         "conversionInducedLongitudeArcsec": 1.3318142645376252e-10
       },
       "referenceStepSec": 3600,
@@ -1174,14 +1159,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1177,
-        "ms": 6
+        "ms": 7
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1188,
-        "ms": 10
+        "ms": 8
       },
       "geometricRung": {
         "established": true,
@@ -1228,7 +1213,7 @@
       "unresolvedWhy": [],
       "cells": 20,
       "evaluations": 1242,
-      "ms": 21,
+      "ms": 18,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.395337930817181,
         "widestFrameAngleCellSec": 2764800,
@@ -1237,7 +1222,6 @@
           -0.0016635814715444182,
           0.0016481458099893976
         ],
-        "frameRateArcsecPerSec": 0.000004439380881792084,
         "conversionInducedLongitudeArcsec": 1.3318142645376252e-10
       },
       "referenceStepSec": 3600,
@@ -1248,7 +1232,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1177,
-        "ms": 7
+        "ms": 5
       },
       "lightTimeRung": {
         "status": "finished",
@@ -1290,7 +1274,7 @@
       "unresolvedWhy": [],
       "cells": 13,
       "evaluations": 1025,
-      "ms": 18,
+      "ms": 16,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.910355373040166,
         "widestFrameAngleCellSec": 2764800,
@@ -1299,7 +1283,6 @@
           -0.001678422193024048,
           0.0016896696122114545
         ],
-        "frameRateArcsecPerSec": 0.000004330379000313651,
         "conversionInducedLongitudeArcsec": 1.2991137000940954e-10
       },
       "referenceStepSec": 3600,
@@ -1368,7 +1351,7 @@
       "unresolvedWhy": [],
       "cells": 13,
       "evaluations": 1025,
-      "ms": 17,
+      "ms": 16,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.910355373040166,
         "widestFrameAngleCellSec": 2764800,
@@ -1377,7 +1360,6 @@
           -0.001678422193024048,
           0.0016896696122114545
         ],
-        "frameRateArcsecPerSec": 0.000004330379000313651,
         "conversionInducedLongitudeArcsec": 1.2991137000940954e-10
       },
       "referenceStepSec": 3600,
@@ -1395,7 +1377,7 @@
         "established": true,
         "found": 0,
         "evaluations": 685,
-        "ms": 8
+        "ms": 9
       },
       "geometricRung": {
         "established": true,
@@ -1439,7 +1421,6 @@
           -0.0016777251116770495,
           0.0016898860756923025
         ],
-        "frameRateArcsecPerSec": 0.000004274701926863874,
         "conversionInducedLongitudeArcsec": 1.2824105780591623e-10
       },
       "referenceStepSec": 3600,
@@ -1450,7 +1431,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 728,
-        "ms": 6
+        "ms": 5
       },
       "lightTimeRung": {
         "status": "finished",
@@ -1508,7 +1489,7 @@
       "unresolvedWhy": [],
       "cells": 23,
       "evaluations": 1267,
-      "ms": 17,
+      "ms": 19,
       "frame": {
         "widestFrameAngleSpanArcsec": 3.0005032150018027,
         "widestFrameAngleCellSec": 2764800,
@@ -1517,7 +1498,6 @@
           -0.0016777251116770495,
           0.0016898860756923025
         ],
-        "frameRateArcsecPerSec": 0.000004274701926863874,
         "conversionInducedLongitudeArcsec": 1.2824105780591623e-10
       },
       "referenceStepSec": 3600,
@@ -1528,7 +1508,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 728,
-        "ms": 2
+        "ms": 4
       },
       "lightTimeRung": {
         "status": "finished",
@@ -1558,9 +1538,9 @@
     "unresolvedIntervals": 0,
     "totalEvaluations": 561100,
     "totalCells": 20986,
-    "totalMs": 7965,
+    "totalMs": 6128,
     "aberratedRungEvaluations": 548866,
-    "aberratedRungMs": 9559,
+    "aberratedRungMs": 9284,
     "widestFrameAngleSpanArcsec": 3.0005032150018027,
     "widestFrameAngleCell": {
       "id": "F10",

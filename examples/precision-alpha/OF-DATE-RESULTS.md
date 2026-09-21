@@ -342,6 +342,100 @@ than assuming monotonicity over a cell: a cell spanning a quarter turn gets
 ±1, not the hull of its endpoints. S12 checks that on 400 sample points of
 an 8-day cell — zero escapes.
 
+## 6a · What the soundness review broke, and what it did not
+
+A bounded adversarial review ran against this chain with one question:
+can the mode report `established: true` with `isExactTotal: true` while
+missing or inventing a crossing? It could not, over 445 proven searches
+against an independent reference across three geometries and three epochs,
+near-tangency sweeps walking a double root through its merge from both
+sides, and direct containment checks of every layer — 2.4 M pointwise trig
+arguments, 64 k interval enclosures, an exact BigInt predicate for the
+extremum test, 38 k reduction intervals built to cancel, and the frame
+matrix and its derivative against a 60-digit reference at zero escapes.
+
+**That is strong evidence, not a proof**, and the review said so in those
+words. The enclosures are not machine-verified and `ABS_ERR = 4e-15`
+remains a hand analysis corroborated by sampling.
+
+What it did break was the failure mode.
+
+### A raw `TypeError` escaped the entire search on any cell wider than 182.6 days
+
+`reducedRadians` returns `null` for an interval spanning half a turn or
+more, meaning "the whole range". `nut00bInterval` reads it that way. The
+three calls in `tdbMinusTtInterval` did not, and passed the `null` into
+`sinCosInterval`, which dereferenced it.
+
+The consequence was not a wide enclosure or an unresolved cell. It was an
+untyped `TypeError` out of the whole search — `retarded-search.mjs`
+rethrows anything that is not a `PrecisionError`, and the subdivision loop
+catches only `budget-exhausted` and `cancelled` — so **every cell already
+decided was lost**, on inputs where `searchAberratedLongitude` returns an
+established result. The threshold is a cell half-width of 91.3 days, where
+the `2g` term first spans half a turn.
+
+It fails closed: it cannot manufacture a wrong "proven". And it is
+unreachable with a DE-derived pack, whose granules are at most 32 days, so
+the seed tiling never makes a cell that wide. It is reachable through the
+documented public API with any pack whose record interval is longer, which
+the format admits and this package's own fixtures use.
+
+Fixed, and **S11c** covers it. §6a S11 declared "typed refusal, no throw
+escaping the search"; the case it tested was a different way in, so this
+was a gap in S11 rather than a failure of it. The regression test spies on
+the provider and asserts it saw a cell past the threshold — the first
+draft of it built its pack with `interval` where the helper wants
+`intervalSec`, so the window fell outside coverage, the provider was never
+called, and the case passed while testing nothing. It fails with the fix
+reverted and passes with it.
+
+### `Math.sin` defined the of-date projection weights
+
+`OF_DATE_CONTRACT.evaluation` said "Math.sin is not used". The frame chain
+does not use it — that was verified — but `dF` and `dG`, the two weights
+that define `f` and `g`, were `Math.sin(L)` and `Math.cos(L)`.
+
+Not a containment defect: the two doubles are exact inputs, so the
+enclosure correctly encloses the function those doubles define. The
+consequence is narrower and still real — on a host whose `Math.sin(L)`
+differs by an ulp, the "exact total" is exact about a function differing
+in the last ulp of its defining constants, so the bit-identity claim would
+have covered the frame chain rather than `f`.
+
+**The fix is the code, not the sentence.** The of-date weights now come
+from `sinCos`. The two earlier modes keep `Math.sin`: they are released,
+and a last-ulp change to a shipped mode's roots is not worth making.
+
+### Three smaller ones
+
+- **The reduction's stated justification was wrong where it matters.** The
+  comment said `PAD` covers the rounding in `cr ± hr`. It does not:
+  `I.iv`'s widening is relative, so when `cr ≈ hr` the lower endpoint sits
+  near zero and is widened by almost nothing. What covers it is
+  `sinCosInterval`'s own ±`ABS_ERR` on the value, with |sin′| ≤ 1. The
+  enclosure held — 38 000 intervals built so that `cr ≈ hr`, zero
+  violations, minimum slack 3.78e-15, essentially the whole `ABS_ERR` pad
+  and none of `PAD`, which is the point. The comment now says the true
+  reason.
+- **A frame angle too large to reduce was retried instead of refused.**
+  Too *wide* shrinks when the cell does; too *large in magnitude* is set
+  by the epoch and does not, so bisecting to the floor spent the budget to
+  reach a verdict available on the first cell. The two now carry different
+  codes and different dispositions, the same way the superluminal observer
+  does. Cost, not soundness.
+- **`frameRateArcsecPerSec` was an interval bound wearing a rate's name.**
+  On a wide cell it is the sum of 77 term-derivative bounds — about
+  137 arcsec/yr against an actual order of 1. It errs conservative, so the
+  induced figure stays an upper bound; it is now
+  `frameRateBoundArcsecPerSec` and carries a note saying which it is.
+
+One finding was reported and not acted on: the exclusion lever arm
+`w = max(hi − m, m − lo)` is not rounded up, and a cell straddling zero
+could round it down by ≤ ½ ulp. `PAD`'s eight units widen `f` by eight
+times that, and the reviewer could not construct a counterexample. Recorded
+here rather than patched on a suspicion.
+
 ## 7 · What this does not establish
 
 Completeness here is completeness **about the stored polynomial model,

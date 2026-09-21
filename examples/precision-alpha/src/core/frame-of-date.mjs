@@ -158,9 +158,19 @@ function reducedRadians(arcsec) {
   const cr = c * DAS2R;
   const hr = half * DAS2R;
   if (!(hr < Math.PI)) return null;
-  // The two scalings above each round, at a relative 2^-53 on quantities
-  // no larger than pi and half a turn in radians; PAD's eight units cover
-  // both several times over.
+  // The two scalings above each round, and so does `centre`, at a relative
+  // 2^-53 on quantities no larger than pi and half a turn in radians --
+  // about 7e-16 rad in the worst case.
+  //
+  // `PAD` does NOT cover that, and an earlier version of this comment said
+  // it did. `I.iv`'s widening is RELATIVE to each endpoint, so when
+  // `cr ~= hr` the lower endpoint sits near zero and is widened by almost
+  // nothing. What covers it is `sinCosInterval`'s own `+-ABS_ERR` on the
+  // VALUE, with |sin'| <= 1 carrying an angle error of 7e-16 into a value
+  // error below the 4e-15 allowance. Measured by review over 38,000
+  // intervals built so that `cr ~= hr` to a relative 1e-12: no containment
+  // violation, and the minimum slack was 3.78e-15 -- essentially the whole
+  // ABS_ERR pad and none of PAD, which is the point.
   return I.iv(cr - hr, cr + hr);
 }
 
@@ -361,8 +371,20 @@ export function frameMatrixInterval(t, { nutation = true } = {}) {
 function reducedRadiansFromRadians(x) {
   const centre = (x.lo + x.hi) / 2;
   const half = Math.max(x.hi - centre, centre - x.lo);
-  if (!(half < Math.PI) || !(Math.abs(centre) + half <= 7)) {
-    fail('enclosure-too-weak', `a frame angle interval [${x.lo}, ${x.hi}] is too wide or too large for a bounded sine`);
+  // Two different failures, and the search dispositions them differently.
+  //
+  // Too WIDE shrinks when the cell does, so it is worth another split.
+  // Too LARGE in magnitude is set by the epoch and not by the width, so
+  // bisecting toward the enclosure floor spends the budget to reach a
+  // verdict already available on the first cell. They used to share one
+  // code and therefore one disposition; review pointed out the second is
+  // the same class as the superluminal-observer refusal, which is
+  // reported once rather than subdivided into.
+  if (!(half < Math.PI)) {
+    fail('enclosure-too-weak', `a frame angle interval [${x.lo}, ${x.hi}] spans half a turn or more, so its sine is not bounded away from the full range`);
+  }
+  if (!(Math.abs(centre) + half <= 7)) {
+    fail('out-of-coverage', `a frame angle of about ${centre.toFixed(3)} radians is outside the ${7} radians this reduction supports; the epoch, not the cell width, puts it there`);
   }
   return x;
 }
@@ -405,9 +427,30 @@ export function tdbMinusTtInterval(tdbSec) {
   const days = I.scale(tdbSec, 1 / DAY);
   const g = I.add(I.iv(G0), I.scale(days, G1));
   const l = I.add(I.iv(L0), I.scale(days, L1));
-  const sg = sinCosInterval(reducedRadians(I.scale(g, 1 / DAS2R)));
-  const s2g = sinCosInterval(reducedRadians(I.scale(I.scale(g, 2), 1 / DAS2R)));
-  const sl = sinCosInterval(reducedRadians(I.scale(l, 1 / DAS2R)));
+  // `reducedRadians` returns null for an interval spanning half a turn or
+  // more, which means "the whole range". `nut00bInterval` reads it that
+  // way; these three did not, and passed the null straight into
+  // `sinCosInterval`, which dereferenced it.
+  //
+  // The result was a raw TypeError out of the WHOLE search -- not a typed
+  // refusal, not an unresolved cell: `retarded-search.mjs` rethrows
+  // anything that is not a `PrecisionError`, and the subdivision loop
+  // catches only `budget-exhausted` and `cancelled`, so every cell already
+  // decided was lost. The threshold is a cell half-width of 91.3 days,
+  // where the 2g term first spans half a turn.
+  //
+  // Unreachable with a DE-derived pack, whose granules are at most 32 days
+  // so the seed tiling never makes a cell that wide -- and reachable
+  // through the documented public API with any pack whose record interval
+  // is longer, which the format admits and this package's own fixtures
+  // use. Found by review; `of-date-frames.nodetest.mjs` S11c now covers it.
+  const cosSin = (arcsec) => {
+    const red = reducedRadians(arcsec);
+    return red === null ? { s: FULL_RANGE, c: FULL_RANGE } : sinCosInterval(red);
+  };
+  const sg = cosSin(I.scale(g, 1 / DAS2R));
+  const s2g = cosSin(I.scale(I.scale(g, 2), 1 / DAS2R));
+  const sl = cosSin(I.scale(l, 1 / DAS2R));
   const value = I.add(I.add(I.scale(sg.s, 0.001658), I.scale(s2g.s, 0.000014)), I.scale(sl.s, 0.0000224));
   const perSec = I.add(I.add(
     I.scale(sg.c, 0.001658 * G1 / DAY),

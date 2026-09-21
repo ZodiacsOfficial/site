@@ -36,6 +36,7 @@ import { buildResult, SUPPORT, EXTERNAL_UNCERTAINTY as OUTSIDE } from './result.
 import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau, coverage } from './retarded.mjs';
 import { aberrateInterval } from './aberration.mjs';
 import { frameMatrixInterval, matApplyI, ttCenturiesInterval, FRAMES, TIME_MODEL } from './frame-of-date.mjs';
+import { sinCos } from './trig.mjs';
 import * as I from './interval.mjs';
 
 /** Arcseconds to radians, and seconds in a Julian century -- the frame's units. */
@@ -385,7 +386,17 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
           frame = frameProvider({ lo: t0, hi: t1 });
           clock = frame.clock;
         } catch (error) {
-          if (error instanceof PrecisionError) return { ok: false, retry: true, why: error.message };
+          if (error instanceof PrecisionError) {
+            // An angle too large for the argument reduction does not
+            // shrink when the cell does: it is set by the epoch, not the
+            // width, so bisecting toward the enclosure floor spends the
+            // budget to reach a verdict already available on the first
+            // cell. Same reasoning as the superluminal speed bound below,
+            // and the same disposition. Everything else the provider can
+            // raise is about the cell and is worth another split.
+            const hopeless = error.code === 'out-of-coverage';
+            return { ok: false, retry: !hopeless, why: error.message };
+          }
           throw error;
         }
         const Q = matApplyI(frame.R, ab.P);
@@ -396,8 +407,18 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         // In the rotated frame the projection weights carry no obliquity:
         // the frame has already done that rotation, and doing it twice is
         // the mistake this separation exists to prevent.
-        const dF = [Math.sin(L), -Math.cos(L), 0];
-        const dG = [Math.cos(L), Math.sin(L), 0];
+        //
+        // And they come from the VALIDATED trigonometry, not from
+        // `Math.sin`. The two earlier modes use `Math.sin` for their
+        // weights (above) and keep doing so -- they are released, and a
+        // last-ulp change to a shipped mode's roots is not worth making --
+        // but this mode's whole claim is that no unspecified host
+        // function enters it. Review found the contract saying "Math.sin
+        // is not used" while these two lines used it; the fix is the code,
+        // not the sentence. `L` is at most 2*pi, inside MAX_ARG.
+        const wL = sinCos(L);
+        const dF = [wL.s, -wL.c, 0];
+        const dG = [wL.c, wL.s, 0];
         const qNorm = I.norm(Q);
         if (!(qNorm.lo > 0)) {
           return { ok: false, retry: true, why: 'the rotated direction cannot be bounded away from zero length over this cell' };
@@ -838,9 +859,10 @@ function runSearch(eph, spec, shape) {
               model: TIME_MODEL.name,
               statedModelErrorSec: TIME_MODEL.statedModelErrorSec,
               tdbMinusTtUsedSec: Number.isFinite(tdbMinusTtLo) ? [tdbMinusTtLo, tdbMinusTtHi] : null,
-              frameRateArcsecPerSec: worstPsiRateArcsecPerSec,
+              frameRateBoundArcsecPerSec: worstPsiRateArcsecPerSec,
               inducedLongitudeArcsec: worstPsiRateArcsecPerSec * TIME_MODEL.statedModelErrorSec,
-              what: 'the declared TDB-TT model error carried into longitude through the frame\'s own rate. A property of the model, not of this code: tightening the intervals cannot tighten it.',
+              what: 'the declared TDB-TT model error carried into longitude through a BOUND on the frame\'s rate. A property of the model, not of this code: tightening the intervals cannot tighten it.',
+              rateNote: 'frameRateBoundArcsecPerSec is the interval ENCLOSURE of d(psib + dpsi)/dt over the widest cell, not the instantaneous rate. On a wide cell it is the sum of 77 term-derivative bounds and runs well above the real rate -- around 137 arcsec/yr against an actual order of 1. It errs conservative, so the induced figure above is an upper bound; it is named as a bound because an earlier name read like a physical rate.',
             },
             externalTimeModel: {
               bounded: false,
