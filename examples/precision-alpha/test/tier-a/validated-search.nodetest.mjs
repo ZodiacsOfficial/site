@@ -477,7 +477,7 @@ test('the validated result names a different quantity from the apparent one', ()
   const r = search(linearPack(3.25 * DAY), WINDOW);
   assert.equal(r.mode, 'validated-geometric');
   assert.equal(r.request.geometric, true);
-  assert.equal(r.request.frame, 'j2000-mean-ecliptic');
+  assert.equal(r.request.frame, 'ecliptic-of-the-icrs-equator');
   assert.equal(r.request.kind, 'geometric-longitude');
   assert.ok(r.request.notApplied.some((x) => /light-time/.test(x)));
   assert.ok(r.request.notApplied.some((x) => /precession and nutation/.test(x)));
