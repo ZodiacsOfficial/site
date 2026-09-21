@@ -48,6 +48,27 @@ export function div(a, b) {
   return mul(a, widen(1 / b.hi, 1 / b.lo));
 }
 
+/**
+ * The square root of an interval, for the reciprocal Lorentz factor.
+ *
+ * REFUSES a negative lower end rather than clamping it to zero. A clamp
+ * would turn "the enclosure says |v| may exceed c" into a quiet answer, and
+ * the whole point of the subluminal check upstream is that such a cell is
+ * reported, not smoothed over. A lower end of exactly zero is fine: the
+ * square root is still defined there, it is only the derivative that is not,
+ * and the callers that divide by this check `lo > 0` themselves.
+ *
+ * `Math.sqrt` is the one transcendental-looking operation IEEE-754 requires
+ * to be correctly rounded, so each endpoint is within half an ulp before
+ * PAD's eight units widen it. The same reason `norm` above uses it.
+ */
+export function sqrt(a) {
+  if (!(a.lo >= 0)) {
+    fail('enclosure-too-weak', `an interval [${a.lo}, ${a.hi}] reaching below zero has no real square root`, { operand: a });
+  }
+  return widen(Math.sqrt(a.lo), Math.sqrt(a.hi));
+}
+
 /** The largest |x| over the interval. */
 export const mag = (a) => Math.max(Math.abs(a.lo), Math.abs(a.hi));
 /** The smallest |x| over the interval; zero when it straddles. */

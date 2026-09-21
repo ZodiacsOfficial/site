@@ -34,6 +34,7 @@ import { fail, PrecisionError } from './errors.mjs';
 import { BARYCENTRE_NOT_CENTRE } from './ephemeris.mjs';
 import { buildResult, SUPPORT, EXTERNAL_UNCERTAINTY as OUTSIDE } from './result.mjs';
 import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau, coverage } from './retarded.mjs';
+import { aberrateInterval } from './aberration.mjs';
 import * as I from './interval.mjs';
 
 const DAY = 86400;
@@ -63,6 +64,37 @@ export const RETARDED_CONTRACT = Object.freeze({
   ]),
   comparableTo: 'SPICE aberration correction "LT" (converged, so closer to "CN" than to a single iteration), observer 399, with no stellar-aberration term. NOT comparable with "CN+S" or with an apparent place of date. On the frame: this operation rotates the ICRS equator by the IAU 2006 obliquity 84381.406 arcsec and applies no frame bias. SPICE ECLIPJ2000 is the nearest built-in frame but is not asserted here to use the same obliquity constant -- check the value your toolkit rotates by before treating a residual at the tens-of-mas level as a disagreement about positions.',
   bodies: Object.freeze(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']),
+  barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
+});
+
+/**
+ * `validated-retarded-aberrated`: the same quantity with the observer's own
+ * motion applied on top. One more correction, named, and nothing else
+ * changed -- same frame, same time scale, same bodies, same data.
+ */
+export const ABERRATED_CONTRACT = Object.freeze({
+  operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME AND STELLAR ABERRATION, in the fixed ecliptic of the ICRS equator (see frame and frameNote), reaching a given value',
+  frame: RETARDED_CONTRACT.frame,
+  frameNote: RETARDED_CONTRACT.frameNote,
+  origin: RETARDED_CONTRACT.origin,
+  timeScale: RETARDED_CONTRACT.timeScale,
+  lightTime: RETARDED_CONTRACT.lightTime,
+  aberration: 'Stellar (annual) aberration, special-relativistic: Expr. (7.40) of the Explanatory Supplement, the same expression ERFA eraAb implements. The observer velocity is taken at RECEPTION time t and is NOT retarded. The Klioner solar-potential term eraAb also carries is NOT applied; measured at 4.046e-7 arcsec for an Earth-like observer at 1 au.',
+  c: C_KM_S,
+  applied: Object.freeze([
+    'reception light-time (Newtonian, one-way, target retarded, observer not)',
+    'stellar (annual) aberration (special-relativistic, observer velocity at reception, geocentric)',
+  ]),
+  notApplied: Object.freeze([
+    'gravitational light deflection by the Sun',
+    'the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond',
+    'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
+    'precession and nutation: the frame is J2000, not of date',
+    'the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)',
+    'topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre',
+  ]),
+  comparableTo: 'SPICE aberration correction "CN+S", observer 399, as a documented model rather than an asserted identity: SPICE\'s stellar-aberration term is not asserted here to be this expression. NOT an apparent place of date -- deflection, precession, nutation and the frame bias are all still absent. On the frame, the same caution as the light-time mode: check the obliquity constant your toolkit rotates by before reading a tens-of-mas residual as a disagreement about positions.',
+  bodies: RETARDED_CONTRACT.bodies,
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
 });
 
@@ -96,7 +128,7 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
-function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
+function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
@@ -247,37 +279,82 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
     );
 
     const proj = (w, v) => I.add(I.add(I.scale(v[0], w[0]), I.scale(v[1], w[1])), I.scale(v[2], w[2]));
-    return {
+    const common = {
       ok: true,
       tauInterval: T,
       contraction: k,
       emission: [emitLo, emitHi],
       distanceKm: dist,
-      f: proj(wF, D),
-      g: proj(wG, D),
-      fDot: proj(wF, dDot),
-      fDotDot: proj(wF, dDotDot),
-      gDot: proj(wG, dDot),
-      M1: I.mag(proj(wF, dDot)),
-      M2: I.mag(proj(wF, dDotDot)),
-      gM1: I.mag(proj(wG, dDot)),
       widenings: attempt,
+    };
+    if (!aberration) {
+      return {
+        ...common,
+        f: proj(wF, D),
+        g: proj(wG, D),
+        fDot: proj(wF, dDot),
+        fDotDot: proj(wF, dDotDot),
+        gDot: proj(wG, dDot),
+        M1: I.mag(proj(wF, dDot)),
+        M2: I.mag(proj(wF, dDotDot)),
+        gM1: I.mag(proj(wG, dDot)),
+      };
+    }
+
+    // The observer's velocity and acceleration in units of c, at RECEPTION
+    // time -- O, not R, and not retarded. Dividing by c is a rounded
+    // multiply that `vScale`'s widening covers.
+    const vc = I.vScale(O.vel, 1 / C_KM_S);
+    const vcDot = I.vScale(O.acc, 1 / C_KM_S);
+    const ab = aberrateInterval(D, dDot, dist, vc, vcDot);
+    if (!ab.ok) {
+      // Worth subdividing: every one of these refusals comes from an
+      // enclosure that is a MEAN-VALUE enclosure over the cell, so halving
+      // the cell halves its half-width and can establish what a wider cell
+      // could not. The enclosure floor stops that from running away, and a
+      // cell still refusing at the floor is recorded with this reason.
+      return { ok: false, retry: true, why: ab.why };
+    }
+    return {
+      ...common,
+      observerSpeedOverC: ab.speed,
+      f: proj(wF, ab.P),
+      g: proj(wG, ab.P),
+      // The interval-wide derivative of the projection, over the WHOLE
+      // cell. The retarded mode pairs a midpoint value with a
+      // second-derivative Lipschitz constant; that route needs |F''|, which
+      // needs the observer's JERK, which the stored series are not
+      // differentiated to. `0 not in [F']` establishes strict monotonicity
+      // over the cell directly and needs nothing further.
+      fDot: proj(wF, ab.PDot),
+      fDotEnclosure: proj(wF, ab.PDot),
+      gDot: proj(wG, ab.PDot),
+      M1: I.mag(proj(wF, ab.PDot)),
+      M2: null,
+      gM1: I.mag(proj(wG, ab.PDot)),
     };
   }
   return { ok: false, retry: true, why: `the light-time interval could not be shown to map into itself after ${p.maxTauWidenings + 1} attempts` };
 }
 
 /**
+ * The one search loop. Both modes run it; they differ only in which
+ * enclosures the cell builder hands back, which is the point -- a second
+ * copy of a subdivision loop is a second place for the exclusion test to
+ * drift away from the monotone test.
+ *
  * @param {import('./ephemeris.mjs').Ephemeris} eph
  * @param {object} spec {body, targetDeg, fromTdbSec, toTdbSec, signal?, ...tuning}
+ * @param {{aberration: boolean, mode: string, contract: object, kind: string}} shape
  */
-export function searchRetardedLongitude(eph, spec = {}) {
+function runSearch(eph, spec, shape) {
+  const { aberration, mode, contract, kind } = shape;
   const { body, targetDeg, fromTdbSec, toTdbSec, signal = null, ...tuning } = spec;
   for (const k of Object.keys(tuning)) {
     if (!(k in RETARDED_DEFAULTS)) fail('unsupported-option', `unknown retarded-search option ${k}`);
   }
   const p = { ...RETARDED_DEFAULTS, ...tuning };
-  if (!RETARDED_CONTRACT.bodies.includes(body)) fail('unknown-body', `${body} is not in the retarded contract`);
+  if (!contract.bodies.includes(body)) fail('unknown-body', `${body} is not in the ${aberration ? 'aberrated' : 'retarded'} contract`);
   for (const [k, v] of [['targetDeg', targetDeg], ['fromTdbSec', fromTdbSec], ['toTdbSec', toTdbSec]]) {
     if (!Number.isFinite(v)) fail('unsupported-option', `${k} must be a finite number`);
   }
@@ -305,8 +382,9 @@ export function searchRetardedLongitude(eph, spec = {}) {
   let worstContraction = 0;
   let widestTauSec = 0;
   let widestEmissionSec = 0;
+  let worstObserverSpeedOverC = 0;
 
-  const at = (t) => retardedCell(eph, targets, observer, lambda, t, t, spend, p);
+  const at = (t) => retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration);
 
   // Seed at the record boundaries of every contributing series, the way
   // the geometric mode does. One cell spanning a year is hopeless: the
@@ -350,7 +428,7 @@ export function searchRetardedLongitude(eph, spec = {}) {
       // Taking the larger of the two actual distances is exact and free.
       const w = Math.max(hi - m, m - lo);
 
-      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p);
+      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration);
       if (!cell.ok) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
@@ -362,6 +440,7 @@ export function searchRetardedLongitude(eph, spec = {}) {
       worstContraction = Math.max(worstContraction, cell.contraction);
       widestTauSec = Math.max(widestTauSec, cell.tauInterval.hi - cell.tauInterval.lo);
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
+      if (cell.observerSpeedOverC) worstObserverSpeedOverC = Math.max(worstObserverSpeedOverC, cell.observerSpeedOverC.hi);
 
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
@@ -372,8 +451,19 @@ export function searchRetardedLongitude(eph, spec = {}) {
       }
       if (I.mig(fm.f) > cell.M1 * w) continue;
 
-      // 2. Monotone.
-      if (I.mig(fm.fDot) > cell.M2 * w) {
+      // 2. Monotone. Two routes to the same conclusion, and which one is
+      // available depends on how far the stored series can be
+      // differentiated. The light-time mode pairs the midpoint derivative
+      // with a Lipschitz constant for it, which needs |f''| and so the
+      // target's acceleration. The aberrated mode's F'' would need the
+      // OBSERVER's jerk as well, which the pack is not differentiated to,
+      // so it establishes monotonicity the direct way instead: an
+      // interval-wide enclosure of F' that excludes zero. Both are sound;
+      // neither is a relaxation of the other.
+      const monotone = cell.fDotEnclosure
+        ? I.mig(cell.fDotEnclosure) > 0
+        : I.mig(fm.fDot) > cell.M2 * w;
+      if (monotone) {
         const flo = at(lo);
         const fhi = at(hi);
         if (!flo.ok || !fhi.ok) { unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: (flo.ok ? fhi : flo).why }); continue; }
@@ -399,7 +489,7 @@ export function searchRetardedLongitude(eph, spec = {}) {
           if (s === sa) { a2 = mm; sa = s; } else b2 = mm;
         }
         // The half-plane, with its own enclosure over the bracket.
-        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p);
+        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration);
         if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
         if (br.g.lo <= 0) {
           if (br.g.hi < 0) continue;                     // the antipode, not the requested direction
@@ -439,15 +529,23 @@ export function searchRetardedLongitude(eph, spec = {}) {
   events.sort((x, y) => x.tdbSec - y.tdbSec);
   const accounted = status === 'finished' && unresolved.length === 0;
 
+  // One noun for the thing the search is complete ABOUT, so no sentence
+  // below can say "light-time-corrected" while the aberrated mode is
+  // running. The earlier contract defect in this package was exactly that:
+  // a description left behind when the quantity moved.
+  const corrected = aberration
+    ? 'light-time- and aberration-corrected'
+    : 'light-time-corrected';
+
   return buildResult({
-    mode: 'validated-retarded-geometric',
+    mode,
     request: {
-      kind: 'retarded-geometric-longitude',
+      kind,
       body,
       targetDeg,
       normalisedTargetDeg: lambda,
       isSystemBarycentre: BARYCENTRE_NOT_CENTRE.includes(body),
-      ...RETARDED_CONTRACT,
+      ...contract,
     },
     events,
     interval: {
@@ -479,14 +577,14 @@ export function searchRetardedLongitude(eph, spec = {}) {
         why: u.why,
       })),
       note: accounted
-        ? 'every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction'
+        ? `every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction${aberration ? ', with the observer-motion transformation applied over the whole cell rather than at sampled instants' : ''}`
         : 'at least one cell could not be closed, or its light-time interval could not be established',
     },
     completeness: {
       established: accounted,
       support: accounted ? SUPPORT.proven : SUPPORT.none,
       statement: accounted
-        ? 'Every crossing of the requested longitude by the light-time-corrected direction, for the function this pack defines, over the requested interval. The light-time is a verified contraction, not an iteration that stopped changing.'
+        ? `Every crossing of the requested longitude by the ${corrected} direction, for the function this pack defines, over the requested interval. The light-time is a verified contraction, not an iteration that stopped changing.${aberration ? ' The aberration is applied to an enclosure of the direction over each whole cell, so no crossing can hide between samples of it.' : ''}`
         : 'Nothing about completeness was established.',
       conditionalOn: [],
     },
@@ -500,7 +598,7 @@ export function searchRetardedLongitude(eph, spec = {}) {
       conditionalTotal: null,
       conditionalPossibleTotals: null,
       note: accounted
-        ? 'exact for the retarded function this pack defines'
+        ? `exact for the ${aberration ? 'retarded and aberrated' : 'retarded'} function this pack defines`
         : 'a lower bound: what was isolated, with at least one region undecided',
     },
     uncertainty: {
@@ -509,17 +607,60 @@ export function searchRetardedLongitude(eph, spec = {}) {
         worstContractionFactor: worstContraction,
         widestLightTimeIntervalSec: widestTauSec,
         widestEmissionWindowSec: widestEmissionSec,
-        note: 'The contraction factor is max|v_target|/c over the emission window, taken from sum|c_k| of the differentiated stored series. Below 1 it gives existence, uniqueness and an a-posteriori error bound by Banach.',
+        ...(aberration ? { worstObserverSpeedOverC } : {}),
+        note: `The contraction factor is max|v_target|/c over the emission window, taken from sum|c_k| of the differentiated stored series. Below 1 it gives existence, uniqueness and an a-posteriori error bound by Banach.${aberration ? ' worstObserverSpeedOverC is the largest |v_observer|/c any accepted cell allowed; the transformation needs it below 1, and a cell where it could not be shown below 1 is refused, not approximated.' : ''}`,
       },
       ...OUTSIDE,
     },
     diagnostics: {
       lightTime: {
-        model: RETARDED_CONTRACT.lightTime,
+        model: contract.lightTime,
         cKmPerSec: C_KM_S,
         worstContractionFactor: worstContraction,
       },
-      notApplied: RETARDED_CONTRACT.notApplied,
+      ...(aberration
+        ? {
+          aberration: {
+            model: contract.aberration,
+            potentialTermApplied: false,
+            observerRetarded: false,
+            monotonicity: 'an interval enclosure of F\' over the whole cell that excludes zero, not a midpoint derivative against a second-derivative bound',
+            worstObserverSpeedOverC,
+          },
+        }
+        : {}),
+      notApplied: contract.notApplied,
     },
+  });
+}
+
+/**
+ * `validated-retarded-geometric`. Light-time only; the observer's own motion
+ * does not enter the direction. Unchanged by the aberrated mode's arrival.
+ */
+export function searchRetardedLongitude(eph, spec = {}) {
+  return runSearch(eph, spec, {
+    aberration: false,
+    mode: 'validated-retarded-geometric',
+    contract: RETARDED_CONTRACT,
+    kind: 'retarded-geometric-longitude',
+  });
+}
+
+/**
+ * `validated-retarded-aberrated`. Light-time AND the observer's motion.
+ *
+ * Not an apparent place: deflection, the Shapiro delay, precession,
+ * nutation, the frame bias and everything topocentric are all still absent,
+ * and `notApplied` on every result lists them by name. The name says what
+ * it computes, which is the whole reason it is not called
+ * `validated-apparent-of-date`.
+ */
+export function searchAberratedLongitude(eph, spec = {}) {
+  return runSearch(eph, spec, {
+    aberration: true,
+    mode: 'validated-retarded-aberrated',
+    contract: ABERRATED_CONTRACT,
+    kind: 'retarded-aberrated-longitude',
   });
 }

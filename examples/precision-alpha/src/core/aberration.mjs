@@ -48,6 +48,10 @@
  * assumed: it is the denominator of the normalization.
  */
 import { fail } from './errors.mjs';
+import * as I from './interval.mjs';
+
+/** IAU 1976 speed of light, km/s. Only used to phrase a refusal in km/s. */
+const C_KM_S = 299792.458;
 
 /** Schwarzschild radius of the Sun divided by the au. ERFA_SRS. */
 export const SRS = 1.97412574336e-8;
@@ -111,4 +115,98 @@ export function aberrationAngleArcsec(pnat, v, opts = {}) {
   const s = Math.sqrt(cx * cx + cy * cy + cz * cz);
   const c = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
   return (Math.atan2(s, c) * 180 * 3600) / Math.PI;
+}
+
+// --------------------------------------------------------------- intervals
+
+/**
+ * The same transformation over an INTERVAL of reception times, with both
+ * normalizations removed, together with its first derivative.
+ *
+ * ## Why the normalizations go away
+ *
+ * `aberrate` above divides twice: once to make `pnat` a unit vector, once
+ * to make the answer one. The search never needs a unit vector. It needs
+ * the sign of two projections, and both are LINEAR in the direction, so any
+ * strictly positive rescaling leaves every root and every half-plane
+ * verdict exactly where it was. Multiplying `p` through by |d| > 0:
+ *
+ *     P = bm1 d + S v,        S = |d| + (d . v) / (1 + bm1)
+ *
+ * and `u = P/|P|` with |P| > 0. So `w . u = 0` iff `w . P = 0`, and
+ * `sign(w . u) = sign(w . P)`. Two interval divisions disappear with them,
+ * and an interval division is the operation that most readily loses a
+ * bound: `div` refuses outright when the denominator straddles zero.
+ *
+ * Setting `v = 0` gives bm1 = 1, S = |d| and P = d exactly -- the
+ * light-time-only vector, not an approximation of it. That reduction is
+ * asserted in the tests, not left to this paragraph.
+ *
+ * ## The derivative is derived, not differenced
+ *
+ *     |d|'   = (d . d') / |d|
+ *     bm1'   = -(v . v') / bm1
+ *     S'     = |d|' + [ (d'.v + d.v')(1 + bm1) - (d.v) bm1' ] / (1 + bm1)^2
+ *     P'     = bm1' d + bm1 d' + S' v + S v'
+ *
+ * Note what P' is NOT: it is not f' |P|, and it is not the derivative of
+ * the unit vector scaled by anything. Rescaling a function by a quantity
+ * that itself varies does not rescale its derivative, so the positive
+ * factor that was free to drop above is not free here. P' is the derivative
+ * of P as written, and it is used to bound the derivative of the
+ * PROJECTIONS of P, which is the only thing the search asks of it.
+ *
+ * ## Refusing rather than throwing
+ *
+ * Every domain failure comes back as `{ok: false, why}`. This runs inside a
+ * cell evaluator whose whole contract is to hand the search a typed refusal
+ * it can subdivide or record; an exception raised from in here would escape
+ * the search loop entirely and lose every cell already decided.
+ *
+ * @param {{lo:number,hi:number}[]} d     light-time-corrected geocentric vector, km
+ * @param {{lo:number,hi:number}[]} dDot  its time derivative, km/s
+ * @param {{lo:number,hi:number}} dist    an enclosure of |d|, km, with lo > 0
+ * @param {{lo:number,hi:number}[]} v     observer velocity over c, dimensionless
+ * @param {{lo:number,hi:number}[]} vDot  observer acceleration over c, 1/s
+ */
+export function aberrateInterval(d, dDot, dist, v, vDot) {
+  if (!(dist.lo > 0)) {
+    return { ok: false, why: 'the target and the observer cannot be shown to be separated over this cell, so the natural direction is undefined' };
+  }
+  const speed = I.norm(v);
+  if (!(speed.hi < 1)) {
+    return { ok: false, why: `the observer's speed bound over this cell is ${(speed.hi * C_KM_S).toFixed(3)} km/s, which is not below c, so the aberration transformation is outside its domain` };
+  }
+  const oneMinusV2 = I.sub(I.iv(1), I.mul(speed, speed));
+  if (!(oneMinusV2.lo > 0)) {
+    return { ok: false, why: `1 - |v/c|^2 encloses ${oneMinusV2.lo}, which is not bounded above zero, so the Lorentz factor has no enclosure here` };
+  }
+  const bm1 = I.sqrt(oneMinusV2);
+  if (!(bm1.lo > 0)) {
+    return { ok: false, why: 'the reciprocal Lorentz factor cannot be bounded away from zero over this cell' };
+  }
+  const onePlus = I.add(I.iv(1), bm1);
+
+  const dv = I.dot(d, v);
+  const S = I.add(dist, I.div(dv, onePlus));
+  const P = I.vAdd(I.vMulI(d, bm1), I.vMulI(v, S));
+
+  const pNorm = I.norm(P);
+  if (!(pNorm.lo > 0)) {
+    return { ok: false, why: 'the aberrated direction cannot be bounded away from zero length over this cell, so its normalization is undefined' };
+  }
+
+  const bm1Dot = I.neg(I.div(I.dot(v, vDot), bm1));
+  const distDot = I.div(I.dot(d, dDot), dist);
+  const dvDot = I.add(I.dot(dDot, v), I.dot(d, vDot));
+  const SDot = I.add(
+    distDot,
+    I.div(I.sub(I.mul(dvDot, onePlus), I.mul(dv, bm1Dot)), I.mul(onePlus, onePlus)),
+  );
+  const PDot = I.vAdd(
+    I.vAdd(I.vMulI(d, bm1Dot), I.vMulI(dDot, bm1)),
+    I.vAdd(I.vMulI(v, SDot), I.vMulI(vDot, S)),
+  );
+
+  return { ok: true, P, PDot, bm1, speed, pNorm };
 }
