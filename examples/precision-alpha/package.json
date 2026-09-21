@@ -10,6 +10,11 @@
       "types": "./types/index.d.ts",
       "default": "./src/index.mjs"
     },
+    "./experimental": {
+      "types": "./types/experimental.d.ts",
+      "default": "./src/experimental.mjs"
+    },
+    "./examples/synthetic-pack.mjs": "./examples/synthetic-pack.mjs",
     "./browser": {
       "types": "./types/browser.d.ts",
       "default": "./src/browser.mjs"

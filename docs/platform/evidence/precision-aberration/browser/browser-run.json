@@ -1,0 +1,161 @@
+{
+  "base": "http://127.0.0.1:8793/",
+  "runs": [
+    {
+      "browser": "chromium",
+      "version": "141.0.7390.37",
+      "title": "validated-retarded-aberrated — isolated browser example",
+      "wallMs": 409,
+      "offOriginRequests": [],
+      "failedRequests": [],
+      "pageErrors": [],
+      "result": {
+        "ok": true,
+        "rungs": [
+          {
+            "label": "light-time only",
+            "mode": "validated-retarded-geometric",
+            "established": true,
+            "isExactTotal": true,
+            "found": 1,
+            "evaluations": 2921,
+            "rootTdbSec": -1319330.9422507882,
+            "bracketWidthSec": 0.00008046627044677734
+          },
+          {
+            "label": "light-time + aberration",
+            "mode": "validated-retarded-aberrated",
+            "established": true,
+            "isExactTotal": true,
+            "found": 1,
+            "evaluations": 2921,
+            "rootTdbSec": -1317628.0340060592,
+            "bracketWidthSec": 0.00008046627044677734
+          }
+        ],
+        "omitted": [
+          "gravitational light deflection by the Sun",
+          "the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond",
+          "Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one",
+          "precession and nutation: the frame is J2000, not of date",
+          "the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)",
+          "topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre"
+        ],
+        "refusals": [
+          {
+            "what": "a body outside the contract",
+            "want": "unknown-body",
+            "got": "unknown-body",
+            "pass": true
+          },
+          {
+            "what": "an unknown tuning option",
+            "want": "unsupported-option",
+            "got": "unsupported-option",
+            "pass": true
+          },
+          {
+            "what": "a window outside coverage",
+            "want": "out-of-coverage",
+            "got": "out-of-coverage",
+            "pass": true
+          },
+          {
+            "what": "a reversed window",
+            "want": "unsupported-option",
+            "got": "unsupported-option",
+            "pass": true
+          },
+          {
+            "what": "a search after dispose",
+            "want": "disposed",
+            "got": "disposed",
+            "pass": true
+          }
+        ],
+        "error": null,
+        "shiftSec": 1702.908244729042,
+        "worstObserverSpeedOverC": 0.0001001816758761273
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "151.0",
+      "title": "validated-retarded-aberrated — isolated browser example",
+      "wallMs": 828,
+      "offOriginRequests": [],
+      "failedRequests": [],
+      "pageErrors": [],
+      "result": {
+        "ok": true,
+        "rungs": [
+          {
+            "label": "light-time only",
+            "mode": "validated-retarded-geometric",
+            "established": true,
+            "isExactTotal": true,
+            "found": 1,
+            "evaluations": 2921,
+            "rootTdbSec": -1319330.9422507882,
+            "bracketWidthSec": 0.00008046627044677734
+          },
+          {
+            "label": "light-time + aberration",
+            "mode": "validated-retarded-aberrated",
+            "established": true,
+            "isExactTotal": true,
+            "found": 1,
+            "evaluations": 2921,
+            "rootTdbSec": -1317628.0340060592,
+            "bracketWidthSec": 0.00008046627044677734
+          }
+        ],
+        "omitted": [
+          "gravitational light deflection by the Sun",
+          "the Klioner solar-potential term inside the aberration itself: about 0.4 microarcsecond",
+          "Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one",
+          "precession and nutation: the frame is J2000, not of date",
+          "the IAU 2006 ICRS frame bias: the frame is the ecliptic of the ICRS equator, a fixed 23.1 mas from the J2000 mean equinox (see frameNote)",
+          "topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre"
+        ],
+        "refusals": [
+          {
+            "what": "a body outside the contract",
+            "want": "unknown-body",
+            "got": "unknown-body",
+            "pass": true
+          },
+          {
+            "what": "an unknown tuning option",
+            "want": "unsupported-option",
+            "got": "unsupported-option",
+            "pass": true
+          },
+          {
+            "what": "a window outside coverage",
+            "want": "out-of-coverage",
+            "got": "out-of-coverage",
+            "pass": true
+          },
+          {
+            "what": "a reversed window",
+            "want": "unsupported-option",
+            "got": "unsupported-option",
+            "pass": true
+          },
+          {
+            "what": "a search after dispose",
+            "want": "disposed",
+            "got": "disposed",
+            "pass": true
+          }
+        ],
+        "error": null,
+        "shiftSec": 1702.908244729042,
+        "worstObserverSpeedOverC": 0.00010018167587816903
+      }
+    }
+  ],
+  "passed": true,
+  "problems": []
+}
