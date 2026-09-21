@@ -65,13 +65,23 @@ export const vMulI = (a, s) => [mul(a[0], s), mul(a[1], s), mul(a[2], s)];
 export const vHull = (a, b) => (a === null ? b : [hull(a[0], b[0]), hull(a[1], b[1]), hull(a[2], b[2])]);
 export const dot = (a, b) => add(add(mul(a[0], b[0]), mul(a[1], b[1])), mul(a[2], b[2]));
 
-/** [min |v|, max |v|] over the vector interval. Both ends are true. */
+/**
+ * [min |v|, max |v|] over the vector interval. Both ends are true.
+ *
+ * `sqrt` of the sum of squares, not `Math.hypot`: see the note in
+ * frames.mjs. `sqrt` is correctly rounded and agrees between engines;
+ * `hypot` is neither, and a bound that moves with the engine is not a
+ * bound. Each square carries at most one ulp of relative error and the
+ * two sums one each, which `sqrt` then halves, so PAD's eight units
+ * covers the whole chain with room to spare. Overflow is not a concern
+ * at these magnitudes -- kilometres, so the squares reach about 1e20
+ * against a double's 1.8e308.
+ */
 export function norm(v) {
-  const hi = Math.hypot(mag(v[0]), mag(v[1]), mag(v[2]));
-  const lo = Math.hypot(mig(v[0]), mig(v[1]), mig(v[2]));
-  // Math.hypot is not correctly rounded and differs between engines, so the
-  // result is widened outward by a whole part in 1e-12 rather than by PAD.
-  return { lo: lo * (1 - 1e-12), hi: hi * (1 + 1e-12) };
+  const sq = (x) => x * x;
+  const hi = Math.sqrt(sq(mag(v[0])) + sq(mag(v[1])) + sq(mag(v[2])));
+  const lo = Math.sqrt(sq(mig(v[0])) + sq(mig(v[1])) + sq(mig(v[2])));
+  return widen(lo, hi);
 }
 
 /** The largest |v| a vector interval allows, as a plain number. */

@@ -207,13 +207,39 @@ test('L5: the emission time crosses record boundaries the reception time does no
 });
 
 test('L6: a near-zero separation is refused, not answered', () => {
-  const targetFn = (t) => [t * 1e-3, 0, 0];      // passes through the observer at t = 0
+  // The target runs at 30 km/s along the ECLIPTIC longitude 45 line and
+  // passes exactly through the observer at t = 0, so |d| -> 0 there and
+  // the direction is undefined at one interior point.
+  //
+  // Getting this case to test what it claims took three tries. Crawling
+  // at 1e-3 km/s over two days barely moved the target, so the cells
+  // near the origin failed the ROOT tests, not the separation test, and
+  // the case spent seventy seconds bisecting to the floor to say
+  // something else. Running along the x axis instead put the whole path
+  // on the requested longitude's own line: f vanished identically, which
+  // is a degenerate root function and again not a separation failure.
+  //
+  // A 30 degree offset between the motion and the request fixes both. On
+  // the line d = s * uhat(45deg), so f = s sin(30deg) and
+  // g = s cos(30deg): each vanishes only at s = 0, exactly where the
+  // separation does. Away from the origin |f| grows at 15 km/s and the
+  // cells exclude cleanly; the cells that straddle it cannot, and the
+  // reason has to be the separation.
+  const MOVE = 45 * (Math.PI / 180);
+  const dir = atEclipticLongitude(MOVE, 1);
+  const targetFn = (t) => [30 * t * dir[0], 30 * t * dir[1], 30 * t * dir[2]];
   const eph = packOf(targetFn, ORIGIN);
-  const r = search(eph, { targetDeg: 0, fromTdbSec: -DAY, toTdbSec: DAY });
+  const r = search(eph, { targetDeg: 75, fromTdbSec: -1000, toTdbSec: 1000 });
   assert.equal(r.completeness.established, false);
+  assert.equal(r.eventCount.isExactTotal, false);
   assert.ok(r.accounting.unresolved.length > 0);
-  assert.ok(r.accounting.unresolved.some((u) => /separat|direction|zero/i.test(u.why)),
-    `expected a separation refusal, got ${JSON.stringify(r.accounting.unresolved[0])}`);
+  const why = r.accounting.unresolved.map((u) => u.why).join(' | ');
+  assert.ok(/cannot be shown to be separated/i.test(why), `expected a separation refusal somewhere, got ${why.slice(0, 300)}`);
+  // And the refusal is LOCAL: the singular point is the only thing left
+  // open, not the whole window.
+  const open = r.accounting.unresolved.reduce((sum, u) => sum + (u.toTdbSec - u.fromTdbSec), 0);
+  assert.ok(open <= 4, `the undecided region is ${open} s wide, so the refusal is not local to the singularity`);
+  assert.ok(r.accounting.unresolved.every((u) => u.fromTdbSec <= 2 && u.toTdbSec >= -2), 'an undecided cell sits away from the singularity');
 });
 
 test('L7: a target faster than light does not get a contraction, and the result says so', () => {
@@ -222,8 +248,8 @@ test('L7: a target faster than light does not get a contraction, and the result 
   const r = search(eph, { targetDeg: 0, fromTdbSec: -DAY, toTdbSec: DAY });
   assert.equal(r.completeness.established, false);
   assert.equal(r.eventCount.isExactTotal, false);
-  assert.ok(r.accounting.unresolved.some((u) => /not below c|contraction/i.test(u.why)),
-    `expected a contraction refusal, got ${JSON.stringify(r.accounting.unresolved[0])}`);
+  const why7 = r.accounting.unresolved.map((u) => u.why).join(' | ');
+  assert.ok(/not below c|contraction/i.test(why7), `expected a contraction refusal somewhere, got ${why7.slice(0, 300)}`);
 });
 
 // ------------------------------------------------------------ L8 .. L11

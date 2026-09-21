@@ -166,6 +166,24 @@ export function statePoint(eph, weights, t, spend) {
 }
 
 /**
+ * The TDB interval over which every series in `weights` has records.
+ *
+ * The intersection, not the union: a weighted sum is only defined where
+ * all of its terms are.
+ */
+export function coverage(eph, weights) {
+  let lo = -Infinity;
+  let hi = Infinity;
+  for (const name of weights.keys()) {
+    const s = eph.bodies.get(name);
+    if (!s) fail('unknown-body', `this pack does not contain ${name}`);
+    lo = Math.max(lo, s.initEt);
+    hi = Math.min(hi, s.initEt + s.nrec * s.intervalSec);
+  }
+  return [lo, hi];
+}
+
+/**
  * Solve tau at ONE reception time, and say how far the answer can be from
  * the fixed point.
  *
@@ -173,18 +191,31 @@ export function statePoint(eph, weights, t, spend) {
  * Banach's a-posteriori bound, k/(1-k) times the last step, with k the
  * contraction factor the caller verified from the pack's own derivative
  * bound.
+ *
+ * When the map is NOT a contraction the iterates run away, and an iterate
+ * that has run away asks the pack for a time it does not store. That is
+ * reported as `leftCoverage`, not raised: a divergent iteration is a fact
+ * about the geometry that the caller has to classify, and an exception
+ * thrown from inside a starting-point heuristic would escape the search
+ * entirely. `tau` is then the last iterate that stayed inside the
+ * records, and `errorSec` means nothing.
  */
 export function solveTau(eph, targets, t, observerPos, k, spend, maxIterations = 32) {
+  const [covLo, covHi] = coverage(eph, targets);
   let tau = 0;
   let step = Infinity;
+  let leftCoverage = false;
   for (let i = 0; i < maxIterations; i += 1) {
     const emit = t - tau;
+    if (!(emit >= covLo && emit <= covHi)) { leftCoverage = true; break; }
     const { pos } = statePoint(eph, targets, emit, spend);
     const d = [pos[0] - observerPos[0], pos[1] - observerPos[1], pos[2] - observerPos[2]];
-    const next = Math.hypot(d[0], d[1], d[2]) / C_KM_S;
+    // Not Math.hypot: see the note in frames.mjs on cross-engine rounding.
+    const next = Math.sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]) / C_KM_S;
     step = Math.abs(next - tau);
     tau = next;
     if (step === 0) break;
   }
-  return { tau, errorSec: step === 0 ? 0 : (k / (1 - k)) * step, lastStepSec: step };
+  if (leftCoverage) return { tau, errorSec: Infinity, lastStepSec: step, leftCoverage: true };
+  return { tau, errorSec: step === 0 ? 0 : (k / (1 - k)) * step, lastStepSec: step, leftCoverage: false };
 }

@@ -31,7 +31,7 @@
 import { fail, PrecisionError } from './errors.mjs';
 import { BARYCENTRE_NOT_CENTRE } from './ephemeris.mjs';
 import { buildResult, SUPPORT, EXTERNAL_UNCERTAINTY as OUTSIDE } from './result.mjs';
-import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau } from './retarded.mjs';
+import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau, coverage } from './retarded.mjs';
 import * as I from './interval.mjs';
 
 const DAY = 86400;
@@ -69,6 +69,18 @@ export const RETARDED_DEFAULTS = Object.freeze({
   maxCells: 400_000,
   /** How many times the candidate light-time interval may be widened before giving up on a cell. */
   maxTauWidenings: 6,
+  /**
+   * Below this width, a cell whose ENCLOSURES could not be established is
+   * reported unresolved instead of being split again.
+   *
+   * Root isolation has its own, much finer floor. These are different
+   * questions: a cell that cannot be excluded needs bisecting, but a cell
+   * where the target passes through the observer is telling you about the
+   * geometry and no amount of halving changes that. Without this the
+   * degenerate case took 65 seconds to subdivide two days down to a
+   * ten-thousandth of a second and then say the obvious.
+   */
+  enclosureFloorSec: 1,
   /** First half-width of the candidate light-time interval, as a multiple of the solver's own error bound, plus a floor in seconds. */
   tauPadFactor: 64,
   tauPadFloorSec: 1e-6,
@@ -90,16 +102,60 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
   // A first light-time, solved at the cell's ends, to centre the candidate
   // interval. This is a STARTING POINT and nothing is proved from it.
   const mid = (t0 + t1) / 2;
-  const oMid = [I.mid ? 0 : 0]; // placeholder removed below
-  void oMid;
   const oPoint = stateEnclosure(eph, observer, mid, mid, spend).pos.map((x) => (x.lo + x.hi) / 2);
   const rough = solveTau(eph, targets, mid, oPoint, 0.5, spend);
-  let pad = Math.max(p.tauPadFactor * Math.max(rough.errorSec, rough.lastStepSec), p.tauPadFloorSec);
-  // The light-time also varies across the cell; allow for that up front.
-  pad += ((t1 - t0) / 2) * 1e-3;
+  if (rough.leftCoverage) {
+    // The point iteration walked off the stored records. Two very
+    // different things do that, and the cell has to say which: a target
+    // whose speed bound is at or above c, where the map is not a
+    // contraction and the iterates run away; or a genuine edge of the
+    // pack, where the light-time reaches back past the first record.
+    //
+    // Bound the speed over the records the iteration actually reached
+    // and let that decide. Only the first is hopeless -- the speed bound
+    // is `sum |c_k|` of a record's differentiated series, so halving a
+    // cell inside that record cannot lower it -- and only the second is
+    // worth subdividing.
+    const [covLo, covHi] = coverage(eph, targets);
+    const probeLo = Math.max(covLo, Math.min(t0 - rough.tau, t0));
+    const probeHi = Math.min(covHi, Math.max(t1, probeLo));
+    const vProbe = I.vMag(stateEnclosure(eph, targets, probeLo, probeHi, spend).vel);
+    if (!(vProbe < C_KM_S)) {
+      return { ok: false, retry: false, why: `the target's speed bound over ${probeLo} .. ${probeHi} s TDB is ${vProbe.toFixed(3)} km/s, which is not below c, so the light-time iteration is not a contraction and its iterates leave the stored records` };
+    }
+    return { ok: false, retry: true, why: `the light-time iteration from this cell reaches back past ${covLo} s TDB, outside the stored records` };
+  }
+
+  // The first candidate is DERIVED, not guessed. tau varies across the
+  // cell at |tau'| <= (|v_T| + |v_O|)/(c - |v_T|), so over a half-width
+  // `half` it can move by that much; the solver's own error at the
+  // midpoint adds a little more.
+  //
+  // The first version used a flat 1e-3 of the cell width instead. On an
+  // eight-day record that is 345 s against a true variation near 69 s,
+  // and when the check failed anyway it quadrupled the pad -- the event
+  // on Mars came back with a light-time interval of [0, 2563] s for a
+  // quantity near 700 s. A loose tau interval widens the emission
+  // window, which loosens the target enclosure, which forces more
+  // subdivision; it is the first thing worth tightening.
+  const half = (t1 - t0) / 2;
+  const crude = stateEnclosure(eph, targets, t0 - rough.tau - 1.2 * half - 1, t1 - rough.tau + 1.2 * half + 1, spend);
+  const vT = I.vMag(crude.vel);
+  const vO = I.vMag(stateEnclosure(eph, observer, t0, t1, spend).vel);
+  if (!(vT < C_KM_S)) {
+    // Not worth subdividing: the speed bound comes from sum|c_k| of the
+    // record's differentiated series, so it is a property of the record
+    // and halving a cell inside one does not lower it. Splitting anyway
+    // turned a one-line answer into 130,000 cells.
+    return { ok: false, retry: false, why: `the target's speed bound over the emission window is ${vT.toFixed(3)} km/s, which is not below c, so the light-time iteration is not a contraction here` };
+  }
+  const tauSlope = (vT + vO) / (C_KM_S - vT);
+  let T = {
+    lo: Math.max(0, rough.tau - tauSlope * half - rough.errorSec - p.tauPadFloorSec),
+    hi: rough.tau + tauSlope * half + rough.errorSec + p.tauPadFloorSec,
+  };
 
   for (let attempt = 0; attempt <= p.maxTauWidenings; attempt += 1) {
-    const T = { lo: Math.max(0, rough.tau - pad), hi: rough.tau + pad };
     const emitLo = t0 - T.hi;
     const emitHi = t1 - T.lo;
     let R;
@@ -107,7 +163,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
       R = stateEnclosure(eph, targets, emitLo, emitHi, spend);
     } catch (error) {
       if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
-        return { ok: false, why: `the emission window ${emitLo} .. ${emitHi} s TDB reaches outside the stored records` };
+        return { ok: false, retry: true, why: `the emission window ${emitLo} .. ${emitHi} s TDB reaches outside the stored records` };
       }
       throw error;
     }
@@ -117,17 +173,23 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
     const vMax = I.vMag(R.vel);
     const k = vMax / C_KM_S;
     if (!(k < 1)) {
-      return { ok: false, why: `the target's speed bound over the emission window is ${vMax.toFixed(3)} km/s, which is not below c, so the light-time iteration is not a contraction here` };
+      return { ok: false, retry: false, why: `the target's speed bound over the emission window is ${vMax.toFixed(3)} km/s, which is not below c, so the light-time iteration is not a contraction here` };
     }
 
     const D = I.vSub(R.pos, O.pos);
     const dist = I.norm(D);
     if (!(dist.lo > 0)) {
-      return { ok: false, why: 'the target and the observer cannot be shown to be separated over this cell, so the direction is undefined' };
+      return { ok: false, retry: true, why: 'the target and the observer cannot be shown to be separated over this cell, so the direction is undefined' };
     }
     const phi = { lo: dist.lo / C_KM_S, hi: dist.hi / C_KM_S };
     if (!I.contains(T, phi)) {
-      pad = Math.max(pad * 4, (phi.hi - phi.lo) * 2 + Math.abs(phi.lo - T.lo) + Math.abs(phi.hi - T.hi));
+      // Inflate to the hull of the candidate and its image, plus a
+      // quarter. Phi is a strong contraction in tau, so this converges in
+      // a step or two; multiplying a blind pad by four did not.
+      const lo = Math.min(T.lo, phi.lo);
+      const hi = Math.max(T.hi, phi.hi);
+      const grow = 0.25 * (hi - lo) + p.tauPadFloorSec;
+      T = { lo: Math.max(0, lo - grow), hi: hi + grow };
       continue;
     }
 
@@ -138,7 +200,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
     const vRel = I.vSub(R.vel, O.vel);
     const num = I.dot(u, vRel);
     const den = I.add(I.iv(C_KM_S), I.dot(u, R.vel));
-    if (den.lo <= 0) return { ok: false, why: 'the light-time derivative denominator cannot be bounded away from zero' };
+    if (den.lo <= 0) return { ok: false, retry: true, why: 'the light-time derivative denominator cannot be bounded away from zero' };
     const tauDot = I.div(num, den);
 
     const oneMinus = I.sub(I.iv(1), tauDot);
@@ -175,7 +237,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p) {
       widenings: attempt,
     };
   }
-  return { ok: false, why: `the light-time interval could not be shown to map into itself after ${p.maxTauWidenings + 1} attempts` };
+  return { ok: false, retry: true, why: `the light-time interval could not be shown to map into itself after ${p.maxTauWidenings + 1} attempts` };
 }
 
 /**
@@ -219,8 +281,32 @@ export function searchRetardedLongitude(eph, spec = {}) {
 
   const at = (t) => retardedCell(eph, targets, observer, lambda, t, t, spend, p);
 
+  // Seed at the record boundaries of every contributing series, the way
+  // the geometric mode does. One cell spanning a year is hopeless: the
+  // mean-value position enclosure over it covers the whole orbit, the
+  // difference straddles zero in every component, and the very first
+  // thing that fails is "the target and the observer cannot be shown to
+  // be separated". Measured on Mars over 2019: one cell, 22 evaluations,
+  // nothing established. Record-length seeds start where the enclosures
+  // are already tight enough to mean something.
+  const seeds = [];
+  {
+    const edges = new Set([a, b]);
+    for (const name of new Set([...targets.keys(), ...observer.keys()])) {
+      const sb = eph.bodies.get(name);
+      const first = Math.floor((a - sb.initEt) / sb.intervalSec);
+      const last = Math.floor((b - sb.initEt) / sb.intervalSec);
+      for (let i = Math.max(0, first); i <= Math.min(sb.nrec - 1, last + 1); i += 1) {
+        const e = sb.initEt + i * sb.intervalSec;
+        if (e > a && e < b) edges.add(e);
+      }
+    }
+    const sorted = [...edges].sort((x, y) => x - y);
+    for (let i = sorted.length - 1; i >= 1; i -= 1) seeds.push([sorted[i - 1], sorted[i]]);
+  }
+
   try {
-    const stack = [[a, b]];
+    const stack = seeds;
     while (stack.length) {
       const [lo, hi] = stack.pop();
       cells += 1;
@@ -230,6 +316,10 @@ export function searchRetardedLongitude(eph, spec = {}) {
 
       const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p);
       if (!cell.ok) {
+        // A cell too wide for its own enclosures is a cell to split, not
+        // a cell to give up on -- down to the enclosure floor, past which
+        // the failure is about the geometry rather than the width.
+        if (cell.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
         unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
         continue;
       }
@@ -239,7 +329,11 @@ export function searchRetardedLongitude(eph, spec = {}) {
 
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
-      if (!fm.ok) { unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: fm.why }); continue; }
+      if (!fm.ok) {
+        if (fm.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
+        unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: fm.why });
+        continue;
+      }
       if (I.mig(fm.f) > cell.M1 * w) continue;
 
       // 2. Monotone.
@@ -285,7 +379,7 @@ export function searchRetardedLongitude(eph, spec = {}) {
           bracketWidthSec: b2 - a2,
           kind: 'transversal',
           direction: sHi > sLo ? 'increasing' : 'decreasing',
-          lightTimeSec: cell.tauInterval,
+          lightTimeSec: br.tauInterval,
           halfPlaneMarginKm: br.g.lo,
           distanceKm: [br.distanceKm.lo, br.distanceKm.hi],
         });
