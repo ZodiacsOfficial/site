@@ -307,14 +307,12 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     const vc = I.vScale(O.vel, 1 / C_KM_S);
     const vcDot = I.vScale(O.acc, 1 / C_KM_S);
     const ab = aberrateInterval(D, dDot, dist, vc, vcDot);
-    if (!ab.ok) {
-      // Worth subdividing: every one of these refusals comes from an
-      // enclosure that is a MEAN-VALUE enclosure over the cell, so halving
-      // the cell halves its half-width and can establish what a wider cell
-      // could not. The enclosure floor stops that from running away, and a
-      // cell still refusing at the floor is recorded with this reason.
-      return { ok: false, retry: true, why: ab.why };
-    }
+    // `ab.retry` is the transformation's own verdict on whether a narrower
+    // cell could help: an enclosure that merely straddles the domain edge
+    // can be tightened, an observer above c at every instant of the cell
+    // cannot. Passing it through rather than assuming `true` is what keeps
+    // the hopeless case to one refusal instead of two hundred thousand.
+    if (!ab.ok) return { ok: false, retry: ab.retry === true, why: ab.why };
     return {
       ...common,
       observerSpeedOverC: ab.speed,

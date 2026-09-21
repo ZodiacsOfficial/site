@@ -158,10 +158,13 @@ export function aberrationAngleArcsec(pnat, v, opts = {}) {
  *
  * ## Refusing rather than throwing
  *
- * Every domain failure comes back as `{ok: false, why}`. This runs inside a
- * cell evaluator whose whole contract is to hand the search a typed refusal
- * it can subdivide or record; an exception raised from in here would escape
- * the search loop entirely and lose every cell already decided.
+ * Every domain failure comes back as `{ok: false, retry, why}`. This runs
+ * inside a cell evaluator whose whole contract is to hand the search a typed
+ * refusal it can subdivide or record; an exception raised from in here would
+ * escape the search loop entirely and lose every cell already decided.
+ * `retry` says whether a narrower cell could establish what this one could
+ * not -- false means the geometry itself is the answer and subdividing only
+ * spends budget.
  *
  * @param {{lo:number,hi:number}[]} d     light-time-corrected geocentric vector, km
  * @param {{lo:number,hi:number}[]} dDot  its time derivative, km/s
@@ -171,19 +174,36 @@ export function aberrationAngleArcsec(pnat, v, opts = {}) {
  */
 export function aberrateInterval(d, dDot, dist, v, vDot) {
   if (!(dist.lo > 0)) {
-    return { ok: false, why: 'the target and the observer cannot be shown to be separated over this cell, so the natural direction is undefined' };
+    return { ok: false, retry: true, why: 'the target and the observer cannot be shown to be separated over this cell, so the natural direction is undefined' };
   }
   const speed = I.norm(v);
   if (!(speed.hi < 1)) {
-    return { ok: false, why: `the observer's speed bound over this cell is ${(speed.hi * C_KM_S).toFixed(3)} km/s, which is not below c, so the aberration transformation is outside its domain` };
+    // Two different failures wear the same message, and only one of them
+    // is worth subdividing. `speed.lo >= 1` says the observer is above c
+    // at EVERY instant the enclosure admits: halving the cell tightens the
+    // enclosure around a value that is still above c, so the answer never
+    // changes. `speed.lo < 1 <= speed.hi` says only that the enclosure
+    // straddles c, which a narrower cell can resolve.
+    //
+    // Measured before this split existed: a 1.4c observer over four days
+    // subdivided 199,883 cells and spent the whole 4,000,000-evaluation
+    // budget to reach the refusal it can reach on the first cell. Exactly
+    // the defect the light-time mode already carries a note about, one
+    // body over.
+    const hopeless = speed.lo >= 1;
+    return {
+      ok: false,
+      retry: !hopeless,
+      why: `the observer's speed ${hopeless ? 'is' : 'bound over this cell is'} ${(hopeless ? speed.lo * C_KM_S : speed.hi * C_KM_S).toFixed(3)} km/s, which is not below c, so the aberration transformation is outside its domain${hopeless ? ' at every instant this cell contains, and no subdivision changes that' : ''}`,
+    };
   }
   const oneMinusV2 = I.sub(I.iv(1), I.mul(speed, speed));
   if (!(oneMinusV2.lo > 0)) {
-    return { ok: false, why: `1 - |v/c|^2 encloses ${oneMinusV2.lo}, which is not bounded above zero, so the Lorentz factor has no enclosure here` };
+    return { ok: false, retry: true, why: `1 - |v/c|^2 encloses ${oneMinusV2.lo}, which is not bounded above zero, so the Lorentz factor has no enclosure here` };
   }
   const bm1 = I.sqrt(oneMinusV2);
   if (!(bm1.lo > 0)) {
-    return { ok: false, why: 'the reciprocal Lorentz factor cannot be bounded away from zero over this cell' };
+    return { ok: false, retry: true, why: 'the reciprocal Lorentz factor cannot be bounded away from zero over this cell' };
   }
   const onePlus = I.add(I.iv(1), bm1);
 
@@ -193,7 +213,7 @@ export function aberrateInterval(d, dDot, dist, v, vDot) {
 
   const pNorm = I.norm(P);
   if (!(pNorm.lo > 0)) {
-    return { ok: false, why: 'the aberrated direction cannot be bounded away from zero length over this cell, so its normalization is undefined' };
+    return { ok: false, retry: true, why: 'the aberrated direction cannot be bounded away from zero length over this cell, so its normalization is undefined' };
   }
 
   const bm1Dot = I.neg(I.div(I.dot(v, vDot), bm1));
