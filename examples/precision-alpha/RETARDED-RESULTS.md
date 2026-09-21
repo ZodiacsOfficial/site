@@ -82,6 +82,16 @@ Pack under test: **`c9ebc641…`** (DE440s-derived, 1849-12-25 …
 2150-01-21), the one preregistration §3 pins so the numbers stay
 comparable with the earlier evaluation.
 
+That digest covers the sealed header as well as the coefficients, so the
+same coefficients exist under more than one of them: `c9ebc641…` and
+`4cc6f85a…` (compiler 1.0.0) and `d2178346…` (compiler 1.1.0, the
+corrected licence metadata) all carry payload `0a218764…`, byte for byte.
+The table below was produced against `c9ebc641…` itself, re-verified
+after the contract strings changed; `4cc6f85a…` returns the same 12 of
+12. **A digest match is the stronger check and it is the one quoted** —
+but a reader comparing digests against another copy should compare
+`payloadSha256` before concluding the coefficients differ.
+
 The preregistration makes the holdout conditional on the development
 pair passing first. It did: **R1** (Mars 100°, 2019) returned one event,
 proven, 13 cells / 891 evaluations; **R2** (Moon 100°, January 2019)
