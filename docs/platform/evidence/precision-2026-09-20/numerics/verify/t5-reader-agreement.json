@@ -1,0 +1,101 @@
+{
+ "what": "independent Python/numpy SPK reader vs the existing JavaScript reader",
+ "kernel": "/tmp/claude-0/swisslab/de440s.bsp",
+ "n": 13188,
+ "maxAbsDifferenceKm": 9.5367431640625e-07,
+ "maxRelativeDifference": 3.8607175329526883e-16,
+ "rowsIdenticalToTheLastBit": 6302,
+ "perSegment": {
+  "1<-0": {
+   "n": 942,
+   "maxAbsKm": 7.450580596923828e-09,
+   "maxRelative": 1.6609720458683249e-16,
+   "exactRows": 407
+  },
+  "2<-0": {
+   "n": 942,
+   "maxAbsKm": 1.4901161193847656e-08,
+   "maxRelative": 1.400479985363114e-16,
+   "exactRows": 337
+  },
+  "3<-0": {
+   "n": 942,
+   "maxAbsKm": 2.9802322387695312e-08,
+   "maxRelative": 2.023352672992673e-16,
+   "exactRows": 372
+  },
+  "4<-0": {
+   "n": 942,
+   "maxAbsKm": 2.9802322387695312e-08,
+   "maxRelative": 1.4454098457478168e-16,
+   "exactRows": 354
+  },
+  "5<-0": {
+   "n": 942,
+   "maxAbsKm": 1.1920928955078125e-07,
+   "maxRelative": 1.6119955620400033e-16,
+   "exactRows": 397
+  },
+  "6<-0": {
+   "n": 942,
+   "maxAbsKm": 2.384185791015625e-07,
+   "maxRelative": 1.768903642489337e-16,
+   "exactRows": 404
+  },
+  "7<-0": {
+   "n": 942,
+   "maxAbsKm": 4.76837158203125e-07,
+   "maxRelative": 1.7436885491401763e-16,
+   "exactRows": 402
+  },
+  "8<-0": {
+   "n": 942,
+   "maxAbsKm": 9.5367431640625e-07,
+   "maxRelative": 2.135912263277431e-16,
+   "exactRows": 406
+  },
+  "9<-0": {
+   "n": 942,
+   "maxAbsKm": 9.5367431640625e-07,
+   "maxRelative": 2.087792045150181e-16,
+   "exactRows": 370
+  },
+  "10<-0": {
+   "n": 942,
+   "maxAbsKm": 2.3283064365386963e-10,
+   "maxRelative": 2.180125132393507e-16,
+   "exactRows": 404
+  },
+  "301<-3": {
+   "n": 942,
+   "maxAbsKm": 1.1641532182693481e-10,
+   "maxRelative": 3.1188901010892306e-16,
+   "exactRows": 272
+  },
+  "399<-3": {
+   "n": 942,
+   "maxAbsKm": 1.8189894035458565e-12,
+   "maxRelative": 3.8607175329526883e-16,
+   "exactRows": 293
+  },
+  "199<-1": {
+   "n": 942,
+   "maxAbsKm": 0.0,
+   "maxRelative": 0.0,
+   "exactRows": 942
+  },
+  "299<-2": {
+   "n": 942,
+   "maxAbsKm": 0.0,
+   "maxRelative": 0.0,
+   "exactRows": 942
+  }
+ },
+ "ssbMassBalance": {
+  "what": "norm of sum(GM_i * r_i)/sum(GM_i) over the ten DE440 point masses",
+  "n": 23,
+  "maxKm": 136.7114344957193,
+  "meanKm": 121.02477797521242,
+  "interpretation": "Not zero, and not reader error: it is ~1e-7 of the Sun's own barycentric excursion, it varies smoothly over centuries rather than with any planetary period, and BOTH readers reproduce it identically. DE440 integrates bodies that de440s carries no segment for (343 asteroids and 30 massive trans-Neptunian objects); the size and the century-scale variation are consistent with the TNOs, but that attribution is inferred, not proven here. What this check DOES establish is that the ten segments are mutually consistent to 1 part in 1e7 of the barycentric scale, which no reader bug would survive."
+ }
+}

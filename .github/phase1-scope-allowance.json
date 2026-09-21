@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "approved-consumer-visual-polish-2026-09-21",
-  "baseCommit": "d4828d8052da41609dc3b833d546707f4c41fedf",
+  "baseCommit": "35532f17dd5b286484c041844590bc95e7d030a6",
   "protectedPaths": [
     "public/assets/app.js",
     "src/app.jsx",

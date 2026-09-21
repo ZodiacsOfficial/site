@@ -1,0 +1,85 @@
+{
+ "coverageEt": {
+  "start": -4734072000,
+  "stop": 4735368000
+ },
+ "bodies": {
+  "Sun": {
+   "maxBarycentricSpeedKmS": 0.016092966229001807,
+   "maxSpeedOverC": 5.368035719231405e-8,
+   "maxApparentLonRateArcsecPerSec": 0.042490078438959245,
+   "maxLightTimeSec": 507.38143045149195,
+   "minGeocentricDistAu": 0.9832357166649324
+  },
+  "Moon": {
+   "maxBarycentricSpeedKmS": 31.373121302102835,
+   "maxSpeedOverC": 0.00010464946820677803,
+   "maxApparentLonRateArcsecPerSec": 0.6410883708585402,
+   "maxLightTimeSec": 1.3563906861105268,
+   "minGeocentricDistAu": 0.0023829745721424002
+  },
+  "Mercury": {
+   "maxBarycentricSpeedKmS": 58.99008280923636,
+   "maxSpeedOverC": 0.00019676973597926992,
+   "maxApparentLonRateArcsecPerSec": 0.09178507402737068,
+   "maxLightTimeSec": 724.2614157728719,
+   "minGeocentricDistAu": 0.5491066751484832
+  },
+  "Venus": {
+   "maxBarycentricSpeedKmS": 35.27592926839182,
+   "maxSpeedOverC": 0.00011766783428685128,
+   "maxApparentLonRateArcsecPerSec": 0.05244501805123036,
+   "maxLightTimeSec": 866.2338259353917,
+   "minGeocentricDistAu": 0.2643468304719612
+  },
+  "Mars": {
+   "maxBarycentricSpeedKmS": 26.517487366016656,
+   "maxSpeedOverC": 0.00008845281680173775,
+   "maxApparentLonRateArcsecPerSec": 0.032974067138411556,
+   "maxLightTimeSec": 1335.4444138736014,
+   "minGeocentricDistAu": 0.37302892628990025
+  },
+  "Jupiter": {
+   "maxBarycentricSpeedKmS": 13.710639687577576,
+   "maxSpeedOverC": 0.00004573377121974688,
+   "maxApparentLonRateArcsecPerSec": 0.01010194144537735,
+   "maxLightTimeSec": 3221.0381818781834,
+   "minGeocentricDistAu": 3.9502057689415047
+  },
+  "Saturn": {
+   "maxBarycentricSpeedKmS": 10.198904668811048,
+   "maxSpeedOverC": 0.00003401988407864166,
+   "maxApparentLonRateArcsecPerSec": 0.005427373679651737,
+   "maxLightTimeSec": 5515.729365796799,
+   "minGeocentricDistAu": 8.028400812373219
+  },
+  "Uranus": {
+   "maxBarycentricSpeedKmS": 7.13393698343283,
+   "maxSpeedOverC": 0.000023796252350794063,
+   "maxApparentLonRateArcsecPerSec": 0.0026343906972670084,
+   "maxLightTimeSec": 10525.389242979885,
+   "minGeocentricDistAu": 17.29110805850286
+  },
+  "Neptune": {
+   "maxBarycentricSpeedKmS": 5.482253779566591,
+   "maxSpeedOverC": 0.000018286830216277792,
+   "maxApparentLonRateArcsecPerSec": 0.001590997464973043,
+   "maxLightTimeSec": 15633.767274799373,
+   "minGeocentricDistAu": 28.819662011559284
+  },
+  "Pluto": {
+   "maxBarycentricSpeedKmS": 6.116467083501438,
+   "maxSpeedOverC": 0.00002040233808517437,
+   "maxApparentLonRateArcsecPerSec": 0.0016873202423539624,
+   "maxLightTimeSec": 25091.081742538783,
+   "minGeocentricDistAu": 28.687138923924625
+  }
+ },
+ "maxOverAllBodies": {
+  "speedKmS": 58.99008280923636,
+  "speedOverC": 0.00019676973597926992,
+  "lonRateArcsecPerSec": 0.6410883708585402,
+  "lightTimeSec": 25091.081742538783
+ },
+ "samples": 6000
+}

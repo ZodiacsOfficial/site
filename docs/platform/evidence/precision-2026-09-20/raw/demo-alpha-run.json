@@ -1,0 +1,381 @@
+{
+  "url": "http://127.0.0.1:8791/",
+  "pack": {
+    "bytes": 1737200,
+    "digest": "4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764"
+  },
+  "node": {
+    "ttDays": [
+      -18262,
+      -5000.25,
+      0.5,
+      1234.75,
+      8765.5,
+      9000.125,
+      12345.875
+    ],
+    "bodies": [
+      "Sun",
+      "Moon",
+      "Mercury",
+      "Venus",
+      "Mars",
+      "Jupiter",
+      "Saturn",
+      "Uranus",
+      "Neptune",
+      "Pluto"
+    ]
+  },
+  "browsers": {
+    "chromium": {
+      "attempted": true,
+      "ran": true,
+      "version": "141.0.7390.37",
+      "steps": {
+        "beforeAnyPack": {
+          "refusal": "no-pack"
+        },
+        "load": {
+          "state": "loaded valid.zeph",
+          "info": {
+            "coverage": "{\"startUtc\":\"1849-12-25T23:58:50.816Z\",\"stopUtc\":\"2150-01-21T23:58:50.816Z\",\"startEtSecTdb\":-4734072000,\"stopEtSecTdb\":4735368000,\"marginHours\":7}",
+            "integrity": "{\"digest\":\"4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
+            "source": "memory",
+            "bodies": "[\"Sun\",\"Moon\",\"Mercury\",\"Venus\",\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
+            "systemBarycentresNotCentres": "[\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
+            "pack": "{\"format\":\"zodiacs-ephemeris-pack\",\"formatVersion\":1,\"candidate\":\"D\",\"inputFile\":\"de440s.bsp\",\"inputSha256\":\"c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2\"}"
+          },
+          "digestMatchesNode": true,
+          "authenticityStated": true
+        },
+        "calculate": {
+          "state": "lightweight 40.400 ms · precision 4.600 ms",
+          "rows": [
+            [
+              "Sun",
+              "84.838345",
+              "84.837729",
+              "-2.218"
+            ],
+            [
+              "Moon",
+              "19.286473",
+              "19.276632",
+              "-35.429"
+            ],
+            [
+              "Mercury",
+              "104.486461",
+              "104.486061",
+              "-1.438"
+            ],
+            [
+              "Venus",
+              "67.217109",
+              "67.217762",
+              "2.350"
+            ],
+            [
+              "Mars",
+              "352.157661",
+              "352.157724",
+              "0.228"
+            ],
+            [
+              "Jupiter",
+              "295.693335",
+              "295.692868",
+              "-1.681"
+            ],
+            [
+              "Saturn",
+              "300.992465",
+              "300.993076",
+              "2.197"
+            ],
+            [
+              "Uranus",
+              "39.249358",
+              "39.248337",
+              "-3.675"
+            ],
+            [
+              "Neptune",
+              "350.948152",
+              "350.944075",
+              "-14.676"
+            ],
+            [
+              "Pluto",
+              "294.430095",
+              "294.430401",
+              "1.100"
+            ]
+          ]
+        },
+        "crossEnvironment": {
+          "compared": 70,
+          "identical": 70,
+          "mismatches": []
+        },
+        "search": {
+          "contract": "zodiacs-precision-search/2",
+          "status": "finished",
+          "established": false,
+          "support": "conditional",
+          "eventsFound": 1,
+          "conditionalTotal": 1,
+          "allIntervalsAccountedFor": true,
+          "matchesNode": true
+        },
+        "refusals": {
+          "malformed instant": "bad-instant",
+          "before coverage": "out-of-coverage",
+          "after coverage": "out-of-coverage",
+          "inside coverage, inside the light-time margin": "out-of-coverage",
+          "unknown request": "unknown-request",
+          "unknown body": "unknown-body",
+          "search with no declared allowance": "unsupported-option"
+        },
+        "brokenPacks": {
+          "payload bit flipped": {
+            "state": "bad-pack — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "header number edited": {
+            "state": "bad-pack — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "v1 container": {
+            "state": "bad-pack — this is a ZODEPH01 pack: its digest covers only the payload, so its header is unprotected. Re-seal it with tools/seal.mjs",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "truncated": {
+            "state": "bad-pack — header declares 1737168 bytes of pack; only 1042288 precede the digest trailer",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "not a pack at all": {
+            "state": "bad-pack — not a zodiacs ephemeris pack",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          }
+        },
+        "recovery": {
+          "state": "loaded valid.zeph",
+          "answersAgain": true
+        },
+        "superseded": {
+          "domWrites": 1,
+          "showsTheLatestRequest": true
+        },
+        "cancel": {
+          "clickAcceptedMs": 41,
+          "state": "cancelled: stopped after 200 of 400"
+        },
+        "dispose": {
+          "ok": true,
+          "unloaded": true
+        },
+        "disposeThenRefuses": "no-pack",
+        "afterReload": {
+          "state": "loaded valid.zeph"
+        },
+        "persistence": {
+          "localStorage": 0,
+          "sessionStorage": 0,
+          "cookies": "",
+          "indexedDB": []
+        },
+        "network": {
+          "offOrigin": [],
+          "failedRequests": []
+        }
+      },
+      "errors": [],
+      "problems": [],
+      "verdict": "pass"
+    },
+    "firefox": {
+      "attempted": true,
+      "ran": true,
+      "version": "151.0",
+      "steps": {
+        "beforeAnyPack": {
+          "refusal": "no-pack"
+        },
+        "load": {
+          "state": "loaded valid.zeph",
+          "info": {
+            "coverage": "{\"startUtc\":\"1849-12-25T23:58:50.816Z\",\"stopUtc\":\"2150-01-21T23:58:50.816Z\",\"startEtSecTdb\":-4734072000,\"stopEtSecTdb\":4735368000,\"marginHours\":7}",
+            "integrity": "{\"digest\":\"4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764\",\"selfConsistent\":true,\"matchesExpectedDigest\":null,\"authenticity\":\"not established: a digest stored in the artifact cannot attest to its source\"}",
+            "source": "memory",
+            "bodies": "[\"Sun\",\"Moon\",\"Mercury\",\"Venus\",\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
+            "systemBarycentresNotCentres": "[\"Mars\",\"Jupiter\",\"Saturn\",\"Uranus\",\"Neptune\",\"Pluto\"]",
+            "pack": "{\"format\":\"zodiacs-ephemeris-pack\",\"formatVersion\":1,\"candidate\":\"D\",\"inputFile\":\"de440s.bsp\",\"inputSha256\":\"c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2\"}"
+          },
+          "digestMatchesNode": true,
+          "authenticityStated": true
+        },
+        "calculate": {
+          "state": "lightweight 34.000 ms · precision 4.000 ms",
+          "rows": [
+            [
+              "Sun",
+              "84.838345",
+              "84.837729",
+              "-2.218"
+            ],
+            [
+              "Moon",
+              "19.286473",
+              "19.276632",
+              "-35.429"
+            ],
+            [
+              "Mercury",
+              "104.486461",
+              "104.486061",
+              "-1.438"
+            ],
+            [
+              "Venus",
+              "67.217109",
+              "67.217762",
+              "2.350"
+            ],
+            [
+              "Mars",
+              "352.157661",
+              "352.157724",
+              "0.228"
+            ],
+            [
+              "Jupiter",
+              "295.693335",
+              "295.692868",
+              "-1.681"
+            ],
+            [
+              "Saturn",
+              "300.992465",
+              "300.993076",
+              "2.197"
+            ],
+            [
+              "Uranus",
+              "39.249358",
+              "39.248337",
+              "-3.675"
+            ],
+            [
+              "Neptune",
+              "350.948152",
+              "350.944075",
+              "-14.676"
+            ],
+            [
+              "Pluto",
+              "294.430095",
+              "294.430401",
+              "1.100"
+            ]
+          ]
+        },
+        "crossEnvironment": {
+          "compared": 70,
+          "identical": 70,
+          "mismatches": []
+        },
+        "search": {
+          "contract": "zodiacs-precision-search/2",
+          "status": "finished",
+          "established": false,
+          "support": "conditional",
+          "eventsFound": 1,
+          "conditionalTotal": 1,
+          "allIntervalsAccountedFor": true,
+          "matchesNode": true
+        },
+        "refusals": {
+          "malformed instant": "bad-instant",
+          "before coverage": "out-of-coverage",
+          "after coverage": "out-of-coverage",
+          "inside coverage, inside the light-time margin": "out-of-coverage",
+          "unknown request": "unknown-request",
+          "unknown body": "unknown-body",
+          "search with no declared allowance": "unsupported-option"
+        },
+        "brokenPacks": {
+          "payload bit flipped": {
+            "state": "bad-pack — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "header number edited": {
+            "state": "bad-pack — the pack does not match the digest it carries",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "v1 container": {
+            "state": "bad-pack — this is a ZODEPH01 pack: its digest covers only the payload, so its header is unprotected. Re-seal it with tools/seal.mjs",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "truncated": {
+            "state": "bad-pack — header declares 1737168 bytes of pack; only 1042288 precede the digest trailer",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          },
+          "not a pack at all": {
+            "state": "bad-pack — not a zodiacs ephemeris pack",
+            "stillAnswering": false,
+            "thenRefused": "no-pack"
+          }
+        },
+        "recovery": {
+          "state": "loaded valid.zeph",
+          "answersAgain": true
+        },
+        "superseded": {
+          "domWrites": 1,
+          "showsTheLatestRequest": true
+        },
+        "cancel": {
+          "clickAcceptedMs": 62,
+          "state": "cancelled: stopped after 150 of 400"
+        },
+        "dispose": {
+          "ok": true,
+          "unloaded": true
+        },
+        "disposeThenRefuses": "no-pack",
+        "afterReload": {
+          "state": "loaded valid.zeph"
+        },
+        "persistence": {
+          "localStorage": 0,
+          "sessionStorage": 0,
+          "cookies": "",
+          "indexedDB": []
+        },
+        "network": {
+          "offOrigin": [],
+          "failedRequests": []
+        }
+      },
+      "errors": [],
+      "problems": [],
+      "verdict": "pass"
+    },
+    "webkit": {
+      "attempted": true,
+      "ran": false,
+      "why": "no webkit build is installed in this environment"
+    }
+  }
+}

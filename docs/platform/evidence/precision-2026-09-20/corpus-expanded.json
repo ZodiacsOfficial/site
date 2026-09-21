@@ -1,0 +1,6730 @@
+{
+ "what": "expanded verification corpus for the precision backend",
+ "seed": 539363616,
+ "generator": "make-corpus.mjs",
+ "coverage": {
+  "startUtc": "1849-12-26T00:00:00Z",
+  "stopUtc": "2150-01-22T00:00:00Z",
+  "note": "de440s.bsp segment bounds, TDB, identical for all 14 segments"
+ },
+ "bodies": [
+  "Sun",
+  "Moon",
+  "Mercury",
+  "Venus",
+  "Mars",
+  "Jupiter",
+  "Saturn",
+  "Uranus",
+  "Neptune",
+  "Pluto"
+ ],
+ "note": "Synthetic instants and round public coordinates. No real birth data.",
+ "sets": {
+  "dev": [
+   {
+    "id": "dev-spread-001",
+    "kind": "spread",
+    "utc": "1851-07-04T17:22:29Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-002",
+    "kind": "spread",
+    "utc": "1853-10-06T08:35:39Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-003",
+    "kind": "spread",
+    "utc": "1857-03-23T23:45:54Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-004",
+    "kind": "spread",
+    "utc": "1858-02-26T10:50:31Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-005",
+    "kind": "spread",
+    "utc": "1861-12-03T10:23:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-006",
+    "kind": "spread",
+    "utc": "1863-03-06T17:54:40Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-007",
+    "kind": "spread",
+    "utc": "1865-04-18T12:55:43Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-008",
+    "kind": "spread",
+    "utc": "1867-08-17T07:57:02Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-009",
+    "kind": "spread",
+    "utc": "1870-08-16T06:45:40Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-010",
+    "kind": "spread",
+    "utc": "1873-11-28T19:53:40Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-011",
+    "kind": "spread",
+    "utc": "1876-05-30T18:44:07Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-012",
+    "kind": "spread",
+    "utc": "1879-07-23T00:09:33Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-013",
+    "kind": "spread",
+    "utc": "1881-08-13T16:10:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-014",
+    "kind": "spread",
+    "utc": "1884-09-21T01:03:57Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-015",
+    "kind": "spread",
+    "utc": "1885-12-26T02:35:20Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-016",
+    "kind": "spread",
+    "utc": "1888-01-09T02:14:07Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-017",
+    "kind": "spread",
+    "utc": "1892-05-30T18:26:42Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-018",
+    "kind": "spread",
+    "utc": "1893-03-22T09:29:36Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-019",
+    "kind": "spread",
+    "utc": "1896-01-15T11:54:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-020",
+    "kind": "spread",
+    "utc": "1898-11-12T01:14:33Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-021",
+    "kind": "spread",
+    "utc": "1902-03-08T05:14:51Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-022",
+    "kind": "spread",
+    "utc": "1904-02-24T17:09:57Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-023",
+    "kind": "spread",
+    "utc": "1907-04-20T23:38:50Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-024",
+    "kind": "spread",
+    "utc": "1909-07-03T17:37:16Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-025",
+    "kind": "spread",
+    "utc": "1910-05-22T14:05:38Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-026",
+    "kind": "spread",
+    "utc": "1914-05-04T23:16:26Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-027",
+    "kind": "spread",
+    "utc": "1915-12-24T04:35:26Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-028",
+    "kind": "spread",
+    "utc": "1917-12-01T22:36:05Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-029",
+    "kind": "spread",
+    "utc": "1921-04-29T20:37:21Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-030",
+    "kind": "spread",
+    "utc": "1922-09-02T14:44:25Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-031",
+    "kind": "spread",
+    "utc": "1925-01-11T00:39:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-032",
+    "kind": "spread",
+    "utc": "1928-01-15T16:59:23Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-033",
+    "kind": "spread",
+    "utc": "1931-08-07T07:16:25Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-034",
+    "kind": "spread",
+    "utc": "1932-07-30T00:30:02Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-035",
+    "kind": "spread",
+    "utc": "1937-02-04T22:05:16Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-036",
+    "kind": "spread",
+    "utc": "1938-04-23T04:20:10Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-037",
+    "kind": "spread",
+    "utc": "1940-09-12T19:50:51Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-038",
+    "kind": "spread",
+    "utc": "1943-07-17T08:13:31Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-039",
+    "kind": "spread",
+    "utc": "1947-06-08T11:18:21Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-040",
+    "kind": "spread",
+    "utc": "1947-09-11T06:21:39Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-041",
+    "kind": "spread",
+    "utc": "1950-01-31T02:19:45Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-042",
+    "kind": "spread",
+    "utc": "1953-06-09T20:32:50Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-043",
+    "kind": "spread",
+    "utc": "1957-03-16T21:21:35Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-044",
+    "kind": "spread",
+    "utc": "1957-09-08T10:51:44Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-045",
+    "kind": "spread",
+    "utc": "1960-09-03T18:40:36Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-046",
+    "kind": "spread",
+    "utc": "1964-12-31T02:46:36Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-047",
+    "kind": "spread",
+    "utc": "1966-02-25T13:09:45Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-048",
+    "kind": "spread",
+    "utc": "1969-04-24T05:35:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-049",
+    "kind": "spread",
+    "utc": "1970-02-25T18:47:25Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-050",
+    "kind": "spread",
+    "utc": "1973-09-01T04:44:48Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-051",
+    "kind": "spread",
+    "utc": "1976-05-20T15:42:12Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-052",
+    "kind": "spread",
+    "utc": "1978-03-25T04:06:01Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-053",
+    "kind": "spread",
+    "utc": "1981-04-30T02:30:23Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-054",
+    "kind": "spread",
+    "utc": "1983-06-26T22:51:13Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-055",
+    "kind": "spread",
+    "utc": "1987-05-06T07:15:27Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-056",
+    "kind": "spread",
+    "utc": "1989-03-03T07:27:02Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-057",
+    "kind": "spread",
+    "utc": "1991-12-07T16:15:45Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-058",
+    "kind": "spread",
+    "utc": "1994-04-03T12:26:50Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-059",
+    "kind": "spread",
+    "utc": "1997-06-03T14:09:43Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-060",
+    "kind": "spread",
+    "utc": "1997-10-28T08:41:47Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-061",
+    "kind": "spread",
+    "utc": "2002-02-23T19:03:22Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-062",
+    "kind": "spread",
+    "utc": "2004-06-27T17:22:44Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-063",
+    "kind": "spread",
+    "utc": "2006-03-24T05:14:36Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-064",
+    "kind": "spread",
+    "utc": "2008-05-07T18:00:23Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-065",
+    "kind": "spread",
+    "utc": "2010-11-27T00:23:16Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-066",
+    "kind": "spread",
+    "utc": "2012-11-07T10:46:33Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-067",
+    "kind": "spread",
+    "utc": "2015-06-10T14:00:10Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-068",
+    "kind": "spread",
+    "utc": "2018-04-19T12:30:51Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-069",
+    "kind": "spread",
+    "utc": "2020-01-30T07:28:50Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-070",
+    "kind": "spread",
+    "utc": "2022-09-02T06:29:18Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-071",
+    "kind": "spread",
+    "utc": "2026-07-26T10:53:13Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-072",
+    "kind": "spread",
+    "utc": "2028-05-30T03:01:27Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-073",
+    "kind": "spread",
+    "utc": "2032-03-14T13:07:44Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-074",
+    "kind": "spread",
+    "utc": "2032-10-23T11:25:10Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-075",
+    "kind": "spread",
+    "utc": "2035-03-11T09:19:35Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-076",
+    "kind": "spread",
+    "utc": "2038-05-17T13:03:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-077",
+    "kind": "spread",
+    "utc": "2040-04-09T20:30:40Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-078",
+    "kind": "spread",
+    "utc": "2044-06-02T16:52:23Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-079",
+    "kind": "spread",
+    "utc": "2046-07-15T23:55:04Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-080",
+    "kind": "spread",
+    "utc": "2047-11-27T00:14:30Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-081",
+    "kind": "spread",
+    "utc": "2051-01-25T04:32:12Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-082",
+    "kind": "spread",
+    "utc": "2052-10-13T04:21:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-083",
+    "kind": "spread",
+    "utc": "2057-01-15T12:47:25Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-084",
+    "kind": "spread",
+    "utc": "2058-12-01T18:06:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-085",
+    "kind": "spread",
+    "utc": "2060-06-29T09:48:46Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-086",
+    "kind": "spread",
+    "utc": "2062-11-05T18:06:24Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-087",
+    "kind": "spread",
+    "utc": "2067-02-13T20:57:24Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-088",
+    "kind": "spread",
+    "utc": "2068-06-12T15:53:50Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-089",
+    "kind": "spread",
+    "utc": "2071-08-05T16:07:29Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-090",
+    "kind": "spread",
+    "utc": "2072-08-11T14:07:52Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-091",
+    "kind": "spread",
+    "utc": "2075-09-20T20:59:55Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-092",
+    "kind": "spread",
+    "utc": "2079-03-16T12:58:48Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-093",
+    "kind": "spread",
+    "utc": "2081-05-31T04:38:17Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-094",
+    "kind": "spread",
+    "utc": "2083-12-16T02:00:13Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-095",
+    "kind": "spread",
+    "utc": "2086-08-23T16:46:46Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-096",
+    "kind": "spread",
+    "utc": "2087-12-01T07:12:30Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-097",
+    "kind": "spread",
+    "utc": "2090-09-06T01:39:10Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-098",
+    "kind": "spread",
+    "utc": "2094-02-22T05:04:34Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-099",
+    "kind": "spread",
+    "utc": "2095-10-19T15:24:34Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-100",
+    "kind": "spread",
+    "utc": "2099-10-04T11:20:46Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-101",
+    "kind": "spread",
+    "utc": "2101-08-26T22:01:21Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-102",
+    "kind": "spread",
+    "utc": "2103-09-03T20:56:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "dev-spread-103",
+    "kind": "spread",
+    "utc": "2105-06-05T08:23:04Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-104",
+    "kind": "spread",
+    "utc": "2108-04-20T22:32:57Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-105",
+    "kind": "spread",
+    "utc": "2111-03-12T14:45:56Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-106",
+    "kind": "spread",
+    "utc": "2113-09-16T05:54:53Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "dev-spread-107",
+    "kind": "spread",
+    "utc": "2116-03-17T16:26:26Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-108",
+    "kind": "spread",
+    "utc": "2117-09-26T23:26:43Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-109",
+    "kind": "spread",
+    "utc": "2120-11-27T22:20:24Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-110",
+    "kind": "spread",
+    "utc": "2123-10-30T12:03:18Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-111",
+    "kind": "spread",
+    "utc": "2125-02-05T18:38:16Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-112",
+    "kind": "spread",
+    "utc": "2129-02-16T23:22:39Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-spread-113",
+    "kind": "spread",
+    "utc": "2131-06-28T02:41:22Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-114",
+    "kind": "spread",
+    "utc": "2133-03-25T21:21:39Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-115",
+    "kind": "spread",
+    "utc": "2135-04-13T05:45:28Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "dev-spread-116",
+    "kind": "spread",
+    "utc": "2138-07-29T14:50:41Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "dev-spread-117",
+    "kind": "spread",
+    "utc": "2141-03-08T20:39:02Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "dev-spread-118",
+    "kind": "spread",
+    "utc": "2145-01-16T16:29:26Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "dev-spread-119",
+    "kind": "spread",
+    "utc": "2146-11-23T16:53:50Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "dev-spread-120",
+    "kind": "spread",
+    "utc": "2148-01-30T20:57:41Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "dev-bound-001",
+    "kind": "segment-boundary",
+    "utc": "1900-12-31T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-002",
+    "kind": "segment-boundary",
+    "utc": "1900-12-30T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-003",
+    "kind": "segment-boundary",
+    "utc": "1900-12-31T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-004",
+    "kind": "segment-boundary",
+    "utc": "2009-01-09T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-005",
+    "kind": "segment-boundary",
+    "utc": "2009-01-08T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-006",
+    "kind": "segment-boundary",
+    "utc": "2009-01-09T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-007",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-008",
+    "kind": "segment-boundary",
+    "utc": "2108-01-18T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-009",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:01Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "dev-bound-010",
+    "kind": "segment-boundary",
+    "utc": "1900-12-31T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-011",
+    "kind": "segment-boundary",
+    "utc": "1900-12-30T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-012",
+    "kind": "segment-boundary",
+    "utc": "1900-12-31T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-013",
+    "kind": "segment-boundary",
+    "utc": "2009-01-09T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-014",
+    "kind": "segment-boundary",
+    "utc": "2009-01-08T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-015",
+    "kind": "segment-boundary",
+    "utc": "2009-01-09T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-016",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-017",
+    "kind": "segment-boundary",
+    "utc": "2108-01-18T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-018",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "dev-bound-019",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-020",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-021",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-022",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-023",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-024",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-025",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-026",
+    "kind": "segment-boundary",
+    "utc": "2108-01-18T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-027",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-028",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-029",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-030",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-031",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-032",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-033",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-034",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-035",
+    "kind": "segment-boundary",
+    "utc": "2108-01-18T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-036",
+    "kind": "segment-boundary",
+    "utc": "2108-01-19T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "dev-bound-037",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-038",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-039",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-040",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-041",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-042",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-043",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-044",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-045",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-046",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-047",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-048",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-049",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-050",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-051",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-052",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-053",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-054",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-055",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-056",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-057",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-058",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-059",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-060",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-061",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-062",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-063",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-064",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-065",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-066",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-067",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-068",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-069",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-070",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-071",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-072",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-073",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-074",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-075",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-076",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-077",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-078",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-079",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-080",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-081",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-082",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-083",
+    "kind": "segment-boundary",
+    "utc": "1900-12-22T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-084",
+    "kind": "segment-boundary",
+    "utc": "1900-12-23T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-085",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-086",
+    "kind": "segment-boundary",
+    "utc": "2008-12-31T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-087",
+    "kind": "segment-boundary",
+    "utc": "2009-01-01T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-088",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-089",
+    "kind": "segment-boundary",
+    "utc": "2108-01-02T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-bound-090",
+    "kind": "segment-boundary",
+    "utc": "2108-01-03T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "dev-geom-001",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-30T02:50:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 309.9064
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-002",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-02-26T21:35:02Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 18.0803,
+     "longitudeDeg": 356.0721
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-003",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-08-14T06:07:58Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 141.19
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-004",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-01-06T06:23:24Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -46.8591,
+     "longitudeDeg": 238.7675
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-005",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-09-02T10:42:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 159.6863
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-006",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2020-10-13T23:28:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 180,
+     "longitudeDeg": 21.0797
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-007",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-12-27T18:27:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 275.6961
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-008",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-06-10T15:30:03Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 259.4811
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-009",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-02T05:48:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 281.5232
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-010",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-09T17:06:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 287.2153
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-011",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-04-22T23:07:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 32.5287
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-012",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-10-28T08:16:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 34.6095
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-013",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-03-07T01:05:27Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 346.166
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-014",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-09-10T07:29:40Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 347.3145
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-015",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-11T11:37:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 290.9464
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-016",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-14T14:50:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 291.8924
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-017",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-03-05T18:19:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0.000114
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-018",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-05-13T06:42:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000022
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-019",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-09-09T22:26:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000003
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-020",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-10T17:04:55Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-021",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-30T00:48:18Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-022",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-01-06T20:17:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-023",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-06-21T14:44:17Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-024",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-24T19:00:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-025",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Sun",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-03-20T21:58:16Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-026",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Moon",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-12T08:17:47Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 68.1758,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-027",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-17T05:59:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -26.95,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-028",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-20T16:10:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -30.2955,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-029",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-01T02:19:14Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 79.6445,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-030",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2022-05-10T23:29:46Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -50.2845,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-031",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-05-25T04:16:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -64.2221,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-032",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2094-04-28T18:38:39Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -39.0161,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-033",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-03-30T09:57:13Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -9.9487,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "dev-geom-034",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2066-06-18T00:53:31Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -87.1597,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   }
+  ],
+  "adversarial": [
+   {
+    "id": "adv-bound-001",
+    "kind": "segment-boundary",
+    "utc": "1876-12-28T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-002",
+    "kind": "segment-boundary",
+    "utc": "1876-12-27T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-003",
+    "kind": "segment-boundary",
+    "utc": "1876-12-28T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-004",
+    "kind": "segment-boundary",
+    "utc": "1973-01-06T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-005",
+    "kind": "segment-boundary",
+    "utc": "1973-01-05T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-006",
+    "kind": "segment-boundary",
+    "utc": "1973-01-06T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-007",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-008",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-009",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "adv-bound-010",
+    "kind": "segment-boundary",
+    "utc": "1876-12-28T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-011",
+    "kind": "segment-boundary",
+    "utc": "1876-12-27T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-012",
+    "kind": "segment-boundary",
+    "utc": "1876-12-28T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-013",
+    "kind": "segment-boundary",
+    "utc": "1973-01-06T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-014",
+    "kind": "segment-boundary",
+    "utc": "1973-01-05T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-015",
+    "kind": "segment-boundary",
+    "utc": "1973-01-06T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-016",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-017",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-018",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "adv-bound-019",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-020",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-021",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-022",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-023",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-024",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-025",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-026",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-027",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-028",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-029",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-030",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-031",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-032",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-033",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-034",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-035",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-036",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "adv-bound-037",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-038",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-039",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-040",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-041",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-042",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-043",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-044",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-045",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-046",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-047",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-048",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-049",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-050",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-051",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-052",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-053",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-054",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-055",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-056",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-057",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-058",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-059",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-060",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-061",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-062",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-063",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-064",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-065",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-066",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-067",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-068",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-069",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-070",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-071",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-072",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-073",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-074",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-075",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-076",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-077",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-078",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-079",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-080",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-081",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-082",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-083",
+    "kind": "segment-boundary",
+    "utc": "1876-12-19T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-084",
+    "kind": "segment-boundary",
+    "utc": "1876-12-20T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-085",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-086",
+    "kind": "segment-boundary",
+    "utc": "1972-12-28T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-087",
+    "kind": "segment-boundary",
+    "utc": "1972-12-29T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-088",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-089",
+    "kind": "segment-boundary",
+    "utc": "2066-01-13T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-bound-090",
+    "kind": "segment-boundary",
+    "utc": "2066-01-14T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "adv-edge-001",
+    "kind": "coverage-edge",
+    "utc": "1849-12-26T07:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "supported",
+    "note": "first instant inside the light-time margin"
+   },
+   {
+    "id": "adv-edge-002",
+    "kind": "coverage-edge",
+    "utc": "2150-01-21T17:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "supported",
+    "note": "last instant inside the light-time margin"
+   },
+   {
+    "id": "adv-edge-003",
+    "kind": "coverage-edge",
+    "utc": "1849-12-26T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "inside the segment but not enough lookback for light-time"
+   },
+   {
+    "id": "adv-edge-004",
+    "kind": "coverage-edge",
+    "utc": "2150-01-21T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "same at the far end"
+   },
+   {
+    "id": "adv-edge-005",
+    "kind": "coverage-edge",
+    "utc": "1849-12-25T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "one day before coverage"
+   },
+   {
+    "id": "adv-edge-006",
+    "kind": "coverage-edge",
+    "utc": "2150-01-23T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "one day after coverage"
+   },
+   {
+    "id": "adv-edge-007",
+    "kind": "coverage-edge",
+    "utc": "1500-01-01T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "far outside; the shipped core answers here, the backend must not pretend to"
+   },
+   {
+    "id": "adv-edge-008",
+    "kind": "coverage-edge",
+    "utc": "3500-01-01T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "expect": "refuse",
+    "note": "far outside the other way"
+   },
+   {
+    "id": "adv-refuse-001",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "sidereal",
+    "expect": "refuse",
+    "note": "no ayanamsha is implemented"
+   },
+   {
+    "id": "adv-refuse-002",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "topocentric",
+    "expect": "refuse",
+    "note": "no parallax is implemented"
+   },
+   {
+    "id": "adv-refuse-003",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "j2000-frame",
+    "expect": "refuse",
+    "note": "only true ecliptic of date is produced"
+   },
+   {
+    "id": "adv-refuse-004",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "body:Chiron",
+    "expect": "refuse",
+    "note": "not in the kernel"
+   },
+   {
+    "id": "adv-refuse-005",
+    "kind": "refusal",
+    "utc": "not-a-date",
+    "option": null,
+    "expect": "refuse",
+    "note": "malformed instant"
+   },
+   {
+    "id": "adv-refuse-006",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "pack:truncated",
+    "expect": "refuse",
+    "note": "pack cut short mid-record"
+   },
+   {
+    "id": "adv-refuse-007",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "pack:corrupt-header",
+    "expect": "refuse",
+    "note": "header magic damaged"
+   },
+   {
+    "id": "adv-refuse-008",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "pack:corrupt-coefficients",
+    "expect": "refuse",
+    "note": "body bytes flipped, checksum must catch it"
+   },
+   {
+    "id": "adv-refuse-009",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "pack:wrong-coverage",
+    "expect": "refuse",
+    "note": "pack does not cover the requested instant"
+   },
+   {
+    "id": "adv-refuse-010",
+    "kind": "refusal",
+    "utc": "2020-06-15T12:00:00Z",
+    "option": "pack:missing-body",
+    "expect": "refuse",
+    "note": "pack omits a requested body"
+   },
+   {
+    "id": "adv-spread-001",
+    "kind": "spread",
+    "utc": "1852-05-19T00:35:41Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-002",
+    "kind": "spread",
+    "utc": "1857-09-27T20:53:39Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "adv-spread-003",
+    "kind": "spread",
+    "utc": "1869-11-27T14:44:44Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-004",
+    "kind": "spread",
+    "utc": "1877-07-20T08:02:58Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-005",
+    "kind": "spread",
+    "utc": "1886-02-14T09:13:36Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-006",
+    "kind": "spread",
+    "utc": "1894-11-20T13:06:54Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-007",
+    "kind": "spread",
+    "utc": "1901-07-30T13:14:05Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-008",
+    "kind": "spread",
+    "utc": "1908-02-22T12:09:30Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-009",
+    "kind": "spread",
+    "utc": "1916-06-30T07:03:15Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-010",
+    "kind": "spread",
+    "utc": "1924-11-30T20:41:41Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-011",
+    "kind": "spread",
+    "utc": "1927-01-03T04:30:33Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-012",
+    "kind": "spread",
+    "utc": "1936-08-25T05:05:42Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "adv-spread-013",
+    "kind": "spread",
+    "utc": "1941-01-03T00:49:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "adv-spread-014",
+    "kind": "spread",
+    "utc": "1948-10-24T15:39:39Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-015",
+    "kind": "spread",
+    "utc": "1961-02-11T05:22:20Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-016",
+    "kind": "spread",
+    "utc": "1964-08-29T19:32:56Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-017",
+    "kind": "spread",
+    "utc": "1977-05-19T19:12:04Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-018",
+    "kind": "spread",
+    "utc": "1983-08-24T16:29:48Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-019",
+    "kind": "spread",
+    "utc": "1988-09-11T07:43:05Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "adv-spread-020",
+    "kind": "spread",
+    "utc": "1999-01-15T05:05:04Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-021",
+    "kind": "spread",
+    "utc": "2000-09-17T13:37:43Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-022",
+    "kind": "spread",
+    "utc": "2014-05-30T15:53:57Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-023",
+    "kind": "spread",
+    "utc": "2020-10-25T15:39:45Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-024",
+    "kind": "spread",
+    "utc": "2027-05-11T02:22:33Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-025",
+    "kind": "spread",
+    "utc": "2032-03-09T01:38:54Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-026",
+    "kind": "spread",
+    "utc": "2042-06-24T05:22:27Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-027",
+    "kind": "spread",
+    "utc": "2050-12-02T09:08:20Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-028",
+    "kind": "spread",
+    "utc": "2053-08-23T16:53:13Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "adv-spread-029",
+    "kind": "spread",
+    "utc": "2064-01-21T09:24:29Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "adv-spread-030",
+    "kind": "spread",
+    "utc": "2071-08-20T03:30:53Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-031",
+    "kind": "spread",
+    "utc": "2082-07-04T05:53:24Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "adv-spread-032",
+    "kind": "spread",
+    "utc": "2087-06-19T01:23:17Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-spread-033",
+    "kind": "spread",
+    "utc": "2093-05-03T04:52:05Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "adv-spread-034",
+    "kind": "spread",
+    "utc": "2104-01-19T11:10:24Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-035",
+    "kind": "spread",
+    "utc": "2107-03-06T08:17:55Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "adv-spread-036",
+    "kind": "spread",
+    "utc": "2113-10-05T11:32:14Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "adv-spread-037",
+    "kind": "spread",
+    "utc": "2122-11-10T04:56:24Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "adv-spread-038",
+    "kind": "spread",
+    "utc": "2134-08-30T01:48:39Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "adv-spread-039",
+    "kind": "spread",
+    "utc": "2140-03-16T15:18:29Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "adv-spread-040",
+    "kind": "spread",
+    "utc": "2149-09-26T16:15:58Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "adv-geom-001",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-30T02:50:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 309.9064
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-002",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-02-26T21:35:02Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 18.0803,
+     "longitudeDeg": 356.0721
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-003",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-08-14T06:07:58Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 141.19
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-004",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-01-06T06:23:24Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -46.8591,
+     "longitudeDeg": 238.7675
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-005",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-09-02T10:42:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 159.6863
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-006",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2020-10-13T23:28:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 180,
+     "longitudeDeg": 21.0797
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-007",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-12-27T18:27:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 275.6961
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-008",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-06-10T15:30:03Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 259.4811
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-009",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-02T05:48:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 281.5232
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-010",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-09T17:06:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 287.2153
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-011",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-04-22T23:07:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 32.5287
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-012",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-10-28T08:16:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 34.6095
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-013",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-03-07T01:05:27Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 346.166
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-014",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-09-10T07:29:40Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 347.3145
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-015",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-11T11:37:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 290.9464
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-016",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-14T14:50:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 291.8924
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-017",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-03-05T18:19:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0.000114
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-018",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-05-13T06:42:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000022
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-019",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-09-09T22:26:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000003
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-020",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-10T17:04:55Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-021",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-30T00:48:18Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-022",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-01-06T20:17:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-023",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-06-21T14:44:17Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-024",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-24T19:00:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-025",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Sun",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-03-20T21:58:16Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-026",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Moon",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-12T08:17:47Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 68.1758,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-027",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-17T05:59:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -26.95,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-028",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-20T16:10:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -30.2955,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-029",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-01T02:19:14Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 79.6445,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-030",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2022-05-10T23:29:46Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -50.2845,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-031",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-05-25T04:16:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -64.2221,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-032",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2094-04-28T18:38:39Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -39.0161,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-033",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-03-30T09:57:13Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -9.9487,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "adv-geom-034",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2066-06-18T00:53:31Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -87.1597,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   }
+  ],
+  "holdout": [
+   {
+    "id": "hold-spread-001",
+    "kind": "spread",
+    "utc": "1852-07-29T18:17:23Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-002",
+    "kind": "spread",
+    "utc": "1856-03-01T07:49:20Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-003",
+    "kind": "spread",
+    "utc": "1858-08-23T06:25:06Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-004",
+    "kind": "spread",
+    "utc": "1863-12-06T04:19:53Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-005",
+    "kind": "spread",
+    "utc": "1867-07-21T07:31:36Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-006",
+    "kind": "spread",
+    "utc": "1870-05-31T17:44:48Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-007",
+    "kind": "spread",
+    "utc": "1875-08-25T21:57:35Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-008",
+    "kind": "spread",
+    "utc": "1878-02-05T11:39:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-009",
+    "kind": "spread",
+    "utc": "1882-07-04T01:50:36Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-010",
+    "kind": "spread",
+    "utc": "1887-02-20T03:17:53Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-011",
+    "kind": "spread",
+    "utc": "1890-07-29T22:25:28Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-012",
+    "kind": "spread",
+    "utc": "1893-07-21T08:55:14Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-013",
+    "kind": "spread",
+    "utc": "1896-06-18T02:14:49Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-014",
+    "kind": "spread",
+    "utc": "1900-06-14T10:04:26Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-015",
+    "kind": "spread",
+    "utc": "1903-09-18T20:28:51Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-016",
+    "kind": "spread",
+    "utc": "1908-09-08T03:45:48Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-017",
+    "kind": "spread",
+    "utc": "1913-01-08T04:58:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-018",
+    "kind": "spread",
+    "utc": "1913-10-15T10:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-019",
+    "kind": "spread",
+    "utc": "1920-12-12T18:34:36Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-020",
+    "kind": "spread",
+    "utc": "1922-07-01T23:05:42Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-021",
+    "kind": "spread",
+    "utc": "1925-05-22T20:43:56Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-022",
+    "kind": "spread",
+    "utc": "1932-05-15T04:28:45Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-023",
+    "kind": "spread",
+    "utc": "1934-08-30T15:57:34Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-024",
+    "kind": "spread",
+    "utc": "1936-04-13T05:02:54Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-025",
+    "kind": "spread",
+    "utc": "1940-03-14T08:35:51Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-026",
+    "kind": "spread",
+    "utc": "1947-05-23T03:01:40Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-027",
+    "kind": "spread",
+    "utc": "1948-05-22T09:31:44Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-028",
+    "kind": "spread",
+    "utc": "1953-04-16T08:34:45Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-029",
+    "kind": "spread",
+    "utc": "1955-06-11T01:14:36Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-030",
+    "kind": "spread",
+    "utc": "1959-10-01T17:23:37Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-031",
+    "kind": "spread",
+    "utc": "1965-04-10T03:51:32Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-032",
+    "kind": "spread",
+    "utc": "1968-05-30T05:26:14Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-033",
+    "kind": "spread",
+    "utc": "1972-04-06T15:56:03Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-034",
+    "kind": "spread",
+    "utc": "1974-10-22T20:45:16Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-035",
+    "kind": "spread",
+    "utc": "1980-03-29T11:25:34Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-036",
+    "kind": "spread",
+    "utc": "1984-05-08T14:07:40Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-037",
+    "kind": "spread",
+    "utc": "1985-07-16T22:05:10Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-038",
+    "kind": "spread",
+    "utc": "1990-06-29T09:44:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-039",
+    "kind": "spread",
+    "utc": "1994-11-27T19:07:44Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-040",
+    "kind": "spread",
+    "utc": "1999-02-16T05:22:17Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-041",
+    "kind": "spread",
+    "utc": "2002-02-24T21:05:04Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-042",
+    "kind": "spread",
+    "utc": "2005-05-08T22:22:32Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-043",
+    "kind": "spread",
+    "utc": "2009-06-24T19:13:20Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-044",
+    "kind": "spread",
+    "utc": "2011-06-26T08:53:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-045",
+    "kind": "spread",
+    "utc": "2017-07-26T14:28:29Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-046",
+    "kind": "spread",
+    "utc": "2022-01-23T04:30:26Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-047",
+    "kind": "spread",
+    "utc": "2026-01-14T02:44:16Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-048",
+    "kind": "spread",
+    "utc": "2028-08-25T21:31:57Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-049",
+    "kind": "spread",
+    "utc": "2031-10-15T11:40:47Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-050",
+    "kind": "spread",
+    "utc": "2033-11-26T06:33:51Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-051",
+    "kind": "spread",
+    "utc": "2040-09-17T06:42:11Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-052",
+    "kind": "spread",
+    "utc": "2044-01-05T09:42:53Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-053",
+    "kind": "spread",
+    "utc": "2047-10-16T12:53:28Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-054",
+    "kind": "spread",
+    "utc": "2050-04-20T02:20:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-055",
+    "kind": "spread",
+    "utc": "2053-01-17T13:13:17Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-056",
+    "kind": "spread",
+    "utc": "2059-12-28T22:03:54Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-057",
+    "kind": "spread",
+    "utc": "2061-09-26T11:03:33Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-058",
+    "kind": "spread",
+    "utc": "2067-07-01T04:14:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-059",
+    "kind": "spread",
+    "utc": "2068-04-17T23:11:18Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-spread-060",
+    "kind": "spread",
+    "utc": "2074-03-20T06:32:09Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-061",
+    "kind": "spread",
+    "utc": "2075-12-30T17:45:51Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-062",
+    "kind": "spread",
+    "utc": "2079-02-18T09:04:18Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-063",
+    "kind": "spread",
+    "utc": "2084-11-25T22:27:27Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-064",
+    "kind": "spread",
+    "utc": "2087-01-16T23:54:04Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london"
+   },
+   {
+    "id": "hold-spread-065",
+    "kind": "spread",
+    "utc": "2092-08-28T06:20:45Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-066",
+    "kind": "spread",
+    "utc": "2095-04-12T08:50:29Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-067",
+    "kind": "spread",
+    "utc": "2100-09-24T04:26:41Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-068",
+    "kind": "spread",
+    "utc": "2102-11-21T22:33:10Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-069",
+    "kind": "spread",
+    "utc": "2108-01-14T08:32:19Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-070",
+    "kind": "spread",
+    "utc": "2112-03-24T16:03:10Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney"
+   },
+   {
+    "id": "hold-spread-071",
+    "kind": "spread",
+    "utc": "2116-04-12T02:48:52Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-072",
+    "kind": "spread",
+    "utc": "2118-05-20T20:59:57Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-073",
+    "kind": "spread",
+    "utc": "2123-01-16T02:13:08Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-074",
+    "kind": "spread",
+    "utc": "2123-11-15T17:39:27Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen"
+   },
+   {
+    "id": "hold-spread-075",
+    "kind": "spread",
+    "utc": "2130-11-26T05:00:50Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-076",
+    "kind": "spread",
+    "utc": "2132-12-08T08:55:32Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito"
+   },
+   {
+    "id": "hold-spread-077",
+    "kind": "spread",
+    "utc": "2137-12-13T15:15:15Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi"
+   },
+   {
+    "id": "hold-spread-078",
+    "kind": "spread",
+    "utc": "2140-06-14T00:07:43Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago"
+   },
+   {
+    "id": "hold-spread-079",
+    "kind": "spread",
+    "utc": "2144-05-12T00:04:06Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik"
+   },
+   {
+    "id": "hold-spread-080",
+    "kind": "spread",
+    "utc": "2146-06-16T22:58:43Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork"
+   },
+   {
+    "id": "hold-bound-001",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-002",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-003",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-004",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-005",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-006",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-007",
+    "kind": "segment-boundary",
+    "utc": "2135-01-21T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Moon",
+    "boundary": "at",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-008",
+    "kind": "segment-boundary",
+    "utc": "2135-01-20T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Moon",
+    "boundary": "before",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-009",
+    "kind": "segment-boundary",
+    "utc": "2135-01-21T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Moon",
+    "boundary": "after",
+    "intervalDays": 4
+   },
+   {
+    "id": "hold-bound-010",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-011",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-012",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-013",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-014",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-015",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-016",
+    "kind": "segment-boundary",
+    "utc": "2135-01-21T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mercury",
+    "boundary": "at",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-017",
+    "kind": "segment-boundary",
+    "utc": "2135-01-20T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Mercury",
+    "boundary": "before",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-018",
+    "kind": "segment-boundary",
+    "utc": "2135-01-21T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Mercury",
+    "boundary": "after",
+    "intervalDays": 8
+   },
+   {
+    "id": "hold-bound-019",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-020",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-021",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-022",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-023",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-024",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-025",
+    "kind": "segment-boundary",
+    "utc": "2135-01-13T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Venus",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-026",
+    "kind": "segment-boundary",
+    "utc": "2135-01-12T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Venus",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-027",
+    "kind": "segment-boundary",
+    "utc": "2135-01-13T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Venus",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-028",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-029",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-030",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-031",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-032",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-033",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-034",
+    "kind": "segment-boundary",
+    "utc": "2135-01-13T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Sun",
+    "boundary": "at",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-035",
+    "kind": "segment-boundary",
+    "utc": "2135-01-12T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Sun",
+    "boundary": "before",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-036",
+    "kind": "segment-boundary",
+    "utc": "2135-01-13T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Sun",
+    "boundary": "after",
+    "intervalDays": 16
+   },
+   {
+    "id": "hold-bound-037",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-038",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-039",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-040",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-041",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-042",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-043",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mars",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-044",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mars",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-045",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Mars",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-046",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-047",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-048",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-049",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-050",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-051",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-052",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Jupiter",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-053",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Jupiter",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-054",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Jupiter",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-055",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-056",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-057",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-058",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-059",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-060",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-061",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Saturn",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-062",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Saturn",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-063",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Saturn",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-064",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-065",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-066",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-067",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-068",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-069",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-070",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Uranus",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-071",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Uranus",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-072",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Uranus",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-073",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-074",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-075",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-076",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": -1.2921,
+    "longitude": 36.8219,
+    "place": "nairobi",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-077",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": 40.7128,
+    "longitude": -74.006,
+    "place": "newYork",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-078",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-079",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-080",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": -0.1807,
+    "longitude": -78.4678,
+    "place": "quito",
+    "forBody": "Neptune",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-081",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Neptune",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-082",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-083",
+    "kind": "segment-boundary",
+    "utc": "1934-01-02T23:59:59Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-084",
+    "kind": "segment-boundary",
+    "utc": "1934-01-03T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-085",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:00Z",
+    "latitude": -33.4489,
+    "longitude": -70.6693,
+    "place": "santiago",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-086",
+    "kind": "segment-boundary",
+    "utc": "2042-01-11T23:59:59Z",
+    "latitude": 78.2232,
+    "longitude": 15.6267,
+    "place": "longyearbyen",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-087",
+    "kind": "segment-boundary",
+    "utc": "2042-01-12T00:00:01Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-088",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:00Z",
+    "latitude": 64.1466,
+    "longitude": -21.9426,
+    "place": "reykjavik",
+    "forBody": "Pluto",
+    "boundary": "at",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-089",
+    "kind": "segment-boundary",
+    "utc": "2134-12-27T23:59:59Z",
+    "latitude": 51.5074,
+    "longitude": -0.1278,
+    "place": "london",
+    "forBody": "Pluto",
+    "boundary": "before",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-bound-090",
+    "kind": "segment-boundary",
+    "utc": "2134-12-28T00:00:01Z",
+    "latitude": -33.8688,
+    "longitude": 151.2093,
+    "place": "sydney",
+    "forBody": "Pluto",
+    "boundary": "after",
+    "intervalDays": 32
+   },
+   {
+    "id": "hold-geom-001",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-30T02:50:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 309.9064
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-002",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-02-26T21:35:02Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 18.0803,
+     "longitudeDeg": 356.0721
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-003",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-08-14T06:07:58Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 141.19
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-004",
+    "kind": "geometry-spec",
+    "event": "greatest-elongation",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "the furthest an inferior planet gets from the Sun",
+    "utc": "2019-01-06T06:23:24Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -46.8591,
+     "longitudeDeg": 238.7675
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-005",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-09-02T10:42:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 159.6863
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-006",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2020-10-13T23:28:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 180,
+     "longitudeDeg": 21.0797
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-007",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-12-27T18:27:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 275.6961
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-008",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-06-10T15:30:03Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 259.4811
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-009",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-02T05:48:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 281.5232
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-010",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-09T17:06:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 287.2153
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-011",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-04-22T23:07:33Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 32.5287
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-012",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-10-28T08:16:29Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 34.6095
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-013",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-03-07T01:05:27Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 346.166
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-014",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-09-10T07:29:40Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 347.3145
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-015",
+    "kind": "geometry-spec",
+    "event": "conjunction-with-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "deflection and light-time are largest here",
+    "utc": "2019-01-11T11:37:25Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 290.9464
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-016",
+    "kind": "geometry-spec",
+    "event": "opposition-to-sun",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "closest approach, fastest apparent motion",
+    "utc": "2019-07-14T14:50:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -180,
+     "longitudeDeg": 291.8924
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-017",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-03-05T18:19:34Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0.000114
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-018",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-05-13T06:42:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000022
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-019",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2020-09-09T22:26:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": -0.000003
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-020",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-10T17:04:55Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-021",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-30T00:48:18Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-022",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-01-06T20:17:45Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-023",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-06-21T14:44:17Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-024",
+    "kind": "geometry-spec",
+    "event": "station",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "longitude velocity through zero; the case that breaks timing-from-velocity",
+    "utc": "2019-04-24T19:00:10Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": null,
+     "lonVelDegPerDay": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-025",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Sun",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-03-20T21:58:16Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 0,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-026",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Moon",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-12T08:17:47Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 68.1758,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-027",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mercury",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-17T05:59:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -26.95,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-028",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Venus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-04-20T16:10:54Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -30.2955,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-029",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Mars",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2019-01-01T02:19:14Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": 79.6445,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-030",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Jupiter",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2022-05-10T23:29:46Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -50.2845,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-031",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Saturn",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-05-25T04:16:37Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -64.2221,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-032",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Uranus",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2094-04-28T18:38:39Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -39.0161,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-033",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Neptune",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2025-03-30T09:57:13Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -9.9487,
+     "longitudeDeg": 360
+    },
+    "geometryVerified": true
+   },
+   {
+    "id": "hold-geom-034",
+    "kind": "geometry-spec",
+    "event": "zero-longitude-crossing",
+    "body": "Pluto",
+    "searchFromUtc": "2019-01-01T00:00:00Z",
+    "note": "0/360 seam",
+    "utc": "2066-06-18T00:53:31Z",
+    "resolved": true,
+    "resolvedBy": "astronomy-engine search; the instant selects a sample point, not a reference value",
+    "achieved": {
+     "elongationDeg": -87.1597,
+     "longitudeDeg": 0
+    },
+    "geometryVerified": true
+   }
+  ]
+ },
+ "counts": {
+  "dev": 244,
+  "adversarial": 182,
+  "holdout": 204
+ },
+ "rowCounts": {
+  "dev": 2100,
+  "adversarial": 1380,
+  "holdout": 1700
+ },
+ "geometryResolution": {
+  "resolved": 102,
+  "unresolved": 0,
+  "resolver": "resolve-geometry.mjs",
+  "verifiedAgainstTheGeometryAsked": 102,
+  "failedVerification": []
+ }
+}

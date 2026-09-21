@@ -1,0 +1,196 @@
+---
+import Base from '../../../layouts/Base.astro';
+
+const title = 'Precision preview — experimental | Zodiacs.org';
+const description = 'An experimental compact-ephemeris runtime, running in your browser on a pack you supply or on a synthetic fixture built in the page. Not the engine behind zodiacs.org charts, and not a product.';
+---
+<Base
+  title={title}
+  description={description}
+  path="/developers/precision-preview/"
+  noindex={true}
+  privateSurface={true}
+  noServiceWorker={true}
+  noAssistant={true}
+>
+  <section class="section container container--narrow pp">
+    <em class="kicker">Experimental</em>
+    <h1 class="display">Zodiacs Precision — experimental preview</h1>
+
+    <p class="pp-lede">
+      A second, experimental calculation path. It is not what
+      <a href="/birth-chart/">/birth-chart/</a> uses, it does not load on any
+      other page, and nothing here changes a chart anywhere on this site.
+      Treat every number on this page as a research output.
+    </p>
+
+    <div class="shell pp-warn-box">
+      <p><strong>No ephemeris data ships with this.</strong> A real calculation
+      needs a coefficient pack you prepare yourself from a kernel you already
+      have — the redistribution question for derived coefficients is open and
+      unresolved, so nothing derived from a kernel is published here. The
+      preparation route is in the package under
+      <code>examples/00-prepare-a-pack.md</code>, and it is tested from a
+      clean install.</p>
+      <p>Without a pack, the button below builds a <strong>synthetic
+      fixture</strong> in this tab: four bodies on circles, with the
+      Earth–Moon barycentre pinned at the origin, so the observer runs a
+      4,671 km monthly circle of its own. The arithmetic is real and the
+      sky is not. Every result
+      from it is labelled.</p>
+    </div>
+
+    <h2 class="section-head">What differs from the ordinary engine</h2>
+    <div class="pp-grid">
+      <div class="tile">
+        <h3>Where the numbers come from</h3>
+        <p>The ordinary engine evaluates analytic series in the browser. This
+        reads Chebyshev coefficients fitted to a JPL development ephemeris and
+        evaluates the polynomial, with the velocity taken as that polynomial's
+        analytic derivative rather than a finite difference of it.</p>
+      </div>
+      <div class="tile">
+        <h3>The reduction</h3>
+        <p>Light-time iteration, solar deflection, relativistic aberration,
+        IAU 2000 frame bias, IAU 2006 precession, and all 77 published terms
+        of IAU 2000B nutation — where the shipped engine's library keeps five
+        of them.</p>
+      </div>
+      <div class="tile">
+        <h3>Two searches, two claims</h3>
+        <p>An <strong>empirical</strong> search over apparent longitude of
+        date, which finds events and never claims to have found them all; and
+        a <strong>validated</strong> search over geometric J2000 longitude,
+        which can prove it. They are different quantities and differ by hours.</p>
+      </div>
+      <div class="tile">
+        <h3>What it does not do</h3>
+        <p>No houses, no aspects, no chart. No Δ T: it takes TT. No
+        topocentric parallax, no refraction. For Mars outward the kernel has
+        no body centre, so what comes back is the planetary-system barycentre
+        and says so.</p>
+      </div>
+    </div>
+
+    <h2 class="section-head">1 · Supply data</h2>
+    <div class="shell">
+      <p class="pp-row">
+        <button id="pp-synthetic-btn" class="btn">Build the synthetic fixture</button>
+        <label class="pp-file-label">or choose a pack from your disk
+          <input type="file" id="pp-file" accept=".zeph,.bin,application/octet-stream">
+        </label>
+        <button id="pp-unload" class="btn btn--quiet">Dispose</button>
+      </p>
+      <p id="pp-pack-state" class="pp-state">Nothing loaded. Every calculation below will be refused until there is.</p>
+      <p id="pp-synthetic" class="pp-warn" hidden>Synthetic fixture. Not planetary positions.</p>
+      <dl id="pp-info" class="pp-dl"></dl>
+      <div id="pp-corrections" class="pp-corrections"></div>
+    </div>
+
+    <h2 class="section-head">2 · Places</h2>
+    <div class="shell">
+      <p class="pp-row">
+        <label>Instant (UTC) <input type="text" id="pp-instant" value="2024-06-15T12:00:00Z" spellcheck="false"></label>
+        <button id="pp-places" class="btn" data-needs-pack disabled>Compute</button>
+      </p>
+      <p id="pp-places-state" class="pp-state"></p>
+      <div id="pp-places-out" class="pp-out"></div>
+    </div>
+
+    <h2 class="section-head">3 · Search, and what the answer claims</h2>
+    <div class="shell">
+      <p class="pp-row">
+        <label><input type="radio" name="pp-mode" value="empirical" checked> empirical, apparent of date</label>
+        <label><input type="radio" name="pp-mode" value="geometric"> validated, geometric J2000</label>
+      </p>
+      <p class="pp-row">
+        <label>Body
+          <select id="pp-body">
+            <option>Sun</option><option>Moon</option><option>Mercury</option><option>Venus</option>
+            <option selected>Mars</option><option>Jupiter</option><option>Saturn</option>
+            <option>Uranus</option><option>Neptune</option><option>Pluto</option>
+          </select>
+        </label>
+        <label>Longitude ° <input type="text" id="pp-target" value="100" spellcheck="false"></label>
+        <label>Max rate °/day <input type="text" id="pp-rate" value="20" spellcheck="false"></label>
+      </p>
+      <p class="pp-row">
+        <label>From (UTC) <input type="text" id="pp-from" value="2024-01-01T00:00:00Z" spellcheck="false"></label>
+        <label>To (UTC) <input type="text" id="pp-to" value="2024-12-31T00:00:00Z" spellcheck="false"></label>
+        <button id="pp-search" class="btn" data-needs-pack disabled>Search</button>
+        <button id="pp-cancel" class="btn btn--quiet">Cancel</button>
+      </p>
+      <p class="pp-dim">
+        Cancel stops the worker, which is the only way to interrupt a
+        calculation already running here — a cancel message cannot be read
+        while the worker is inside one, and the mechanism that would work
+        across that needs cross-origin isolation this page does not have.
+        So cancelling drops whatever is loaded, and you load it again.
+      </p>
+      <p id="pp-search-state" class="pp-state"></p>
+      <div id="pp-search-out" class="pp-out"></div>
+    </div>
+
+    <h2 class="section-head">What the page does not do</h2>
+    <ul class="pp-list">
+      <li>It never downloads a pack. A pack arrives only from the file you choose, and is read in this tab.</li>
+      <li>It stores nothing: no cookies, no local storage, no session
+      storage, no database, and the site's offline worker is told not to
+      cache this route either.</li>
+      <li>It sends nothing anywhere. There is no analytics on this route,
+      no third-party script, no assistant and no browser-agent tool
+      registration. The worker that does the arithmetic has no way to
+      reach the network at all, which a test over the built bundle
+      checks.</li>
+      <li>The one inherited thing that still loads code here is the site's
+      own search, and only if you open it: pressing <kbd>Ctrl</kbd>+<kbd>K</kbd>
+      fetches a static index from this origin. It reads nothing from this
+      page and writes nothing.</li>
+      <li>It needs no account, and there is nothing to buy.</li>
+      <li>Dispose releases the pack, and every later calculation is refused until you load one again.</li>
+    </ul>
+  </section>
+
+  <script type="module" src="/precision-preview/app.mjs"></script>
+</Base>
+
+<style>
+  .pp-lede { font-size: 1.05rem; max-width: 62ch; }
+  .pp-warn-box { margin: 1.4rem 0; }
+  .pp-warn-box p { margin: 0 0 .7rem; }
+  .pp-warn-box p:last-child { margin-bottom: 0; }
+  .pp-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+  .pp-grid h3 { font-size: .95rem; margin: 0 0 .4rem; }
+  .pp-grid p { margin: 0; font-size: .9rem; }
+  .pp-row { display: flex; flex-wrap: wrap; gap: .8rem; align-items: center; margin: 0 0 .8rem; }
+  .pp-row label { display: inline-flex; align-items: center; gap: .45rem; font-size: .88rem; }
+  .pp-row input[type=text] { font: inherit; font-family: var(--font-mono); font-size: .82rem; padding: .4rem .55rem; width: 19ch; }
+  .pp-row select { font: inherit; font-size: .85rem; padding: .35rem .5rem; }
+  .pp-file-label input { font-size: .8rem; }
+  .pp-state { font-size: .85rem; margin: .3rem 0; }
+  .pp-ok { color: var(--ok, #6fcf97); }
+  .pp-bad { color: var(--bad, #e86a5a); }
+  .pp-warn { color: var(--warn, #e8b04b); font-size: .85rem; }
+  .pp-dim { opacity: .68; }
+  .pp-dl, .pp-claim { display: grid; grid-template-columns: max-content 1fr; gap: .15rem 1.1rem; font-size: .82rem; margin: .6rem 0; }
+  .pp-dl dt, .pp-claim dt { opacity: .68; }
+  .pp-dl dd, .pp-claim dd { margin: 0; font-family: var(--font-mono); overflow-wrap: anywhere; min-width: 0; }
+  .pp { overflow-x: clip; }
+  .pp-corrections ul { margin: .4rem 0; padding-left: 1.1rem; font-size: .82rem; }
+  .pp-explain { font-size: .88rem; max-width: 66ch; margin: .6rem 0; }
+  /* A wide table scrolls inside its own panel. Letting it widen the
+     document instead is what made the whole page scroll sideways on a
+     390px viewport. */
+  .pp-out { overflow-x: auto; }
+  .pp-out table { border-collapse: collapse; width: 100%; min-width: 30rem; margin-top: .6rem; font-size: .8rem; }
+  .pp-out th, .pp-out td { text-align: left; padding: .3rem .55rem; border-bottom: 1px solid var(--hairline, #232838); }
+  .pp-out .num, .pp-out th.num { text-align: right; font-family: var(--font-mono); }
+  .pp-list { font-size: .88rem; max-width: 66ch; }
+  @media (max-width: 40rem) {
+    .pp-row { flex-direction: column; align-items: stretch; }
+    .pp-row input[type=text] { width: 100%; }
+    .pp-dl, .pp-claim { grid-template-columns: minmax(0, 1fr); gap: .05rem; }
+    .pp-out table { min-width: 26rem; }
+    .pp-dl dt, .pp-claim dt { margin-top: .4rem; }
+  }
+</style>

@@ -1,0 +1,35 @@
+{
+ "target": "core",
+ "label": "shipped astronomy-engine core",
+ "note": "ten bodies per iteration; data acquisition excluded from every timed kernel",
+ "node": "v22.22.2",
+ "dataMiB": 0,
+ "coldStartMsTenBodies": {
+  "n": 5,
+  "min": 0.3399040000000042,
+  "p50": 0.5958750000000066,
+  "p95": 22.818719799999993,
+  "p99": 27.24172236,
+  "max": 28.347473
+ },
+ "firstColdRunMs": 28.347473,
+ "warmMsTenBodies": {
+  "n": 400,
+  "min": 0.1067950000000053,
+  "p50": 0.15054800000000057,
+  "p95": 0.37852035000000295,
+  "p99": 1.0678456099999984,
+  "max": 4.973844000000014
+ },
+ "warmMsTenBodiesSpreadOfDates": {
+  "n": 200,
+  "min": 0.14130599999998594,
+  "p50": 0.18630700000001355,
+  "p95": 0.4041670000000022,
+  "p99": 0.6302981999999434,
+  "max": 10.190819000000005
+ },
+ "peakRssMiB": 68.57,
+ "rssAtEndMiB": 68.25,
+ "heapUsedMiB": 9.07
+}

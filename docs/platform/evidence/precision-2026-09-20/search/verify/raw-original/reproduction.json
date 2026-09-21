@@ -1,0 +1,342 @@
+{
+  "what": "Reproduction of the recorded v2/v3 Uranus D exact-topology failure, before any change.",
+  "generatedBy": "node reproduce.mjs",
+  "generatedAtUtc": "2026-09-20T10:40:46.094Z",
+  "readOnlyInputs": {
+    "fixture": "/home/user/site/src/lib/engine/fixtures/transit-window-independent.json",
+    "fixtureSha256": "db4ddce1d2761ad0ada1ab7aaf456d74d2f79b6b6a3434b1b8f6b9895ad66c3a",
+    "policy": "/home/user/site/docs/engine-validation/transit-windows/wave24-d-qualified-policy.v6.json",
+    "fixtureOriginalPackStatus": "failed-incomplete"
+  },
+  "recordedContract": {
+    "caseId": "D-Uranus2020",
+    "targetLongitudeDegrees": 32.6940395,
+    "targetProvenance": "eight-case-oracle.raw.json#/cases/P2020/expected/Uranus",
+    "angularBudgetDegrees": 0.05,
+    "geometricResolutionDegrees": 1e-9,
+    "clock": "UTC -> TT",
+    "window": [
+      "2019-01-01T00:00:00.000Z",
+      "2020-12-31T00:00:00.000Z"
+    ],
+    "failedWitness": {
+      "point": "Uranus|TT|2019-01-01T00:00:00.000Z|2020-01-01T00:00:00.000Z|2020-12-31T00:00:00.000Z:turn:2:resolution-left",
+      "clockJD": 2458859.5743775074,
+      "evaluationId": 12659,
+      "role": "exact",
+      "circularMarginDegrees": 0.04418806505509565,
+      "requiredGreaterThanDegrees": 0.050000001
+    },
+    "gate": "At every full-query endpoint and both sides/best sample of each geometric-resolution cell, require circular distance to every applicable exact/threshold level > B + geometric numerical resolution. This also checks no-root near misses. Root timing bands must remain within their isolated monotonic branch, outside resolution cells, and disjoint after padding within the same aspect geometry. Conditioning failure blocks the vector and preserves all evidence; no alternate cases, tolerance increases, gap merging or dropped geometries.",
+    "components": [
+      {
+        "sourceId": "D-component-1",
+        "startUtc": "2019-02-27T03:30:13.194Z",
+        "endUtc": "2019-06-24T20:44:23.508Z",
+        "sourceExactCount": 1,
+        "exactTopology": "resolved",
+        "globalMinimumKind": "exact",
+        "possibleExactRegionUtc": null,
+        "possibleMinimumRegionUtc": null
+      },
+      {
+        "sourceId": "D-component-2",
+        "startUtc": "2019-09-30T09:06:55.823Z",
+        "endUtc": "2020-04-10T15:17:01.450Z",
+        "sourceExactCount": 2,
+        "exactTopology": "uncertain",
+        "globalMinimumKind": "unresolved-cross-model-count",
+        "possibleExactRegionUtc": [
+          "2019-12-27T07:43:29.465Z",
+          "2020-01-25T19:18:24.834Z"
+        ],
+        "possibleMinimumRegionUtc": [
+          "2019-12-23T18:26:26.720Z",
+          "2020-01-29T07:16:24.451Z"
+        ]
+      }
+    ]
+  },
+  "arithmeticOfTheFailure": {
+    "recordedMarginDegrees": 0.04418806505509565,
+    "requiredGreaterThanDegrees": 0.050000001,
+    "shortfallDegrees": 0.005811935944904353,
+    "shortfallArcsec": 20.92296940165567,
+    "marginAsFractionOfBudget": 0.883761301101913,
+    "statement": [
+      "The second component's turning point sits 0.044188 degrees from the exact level.",
+      "The conditioning gate requires every turning point to clear the level by more than B + the geometric resolution, i.e. more than 0.050000001 degrees.",
+      "Because 0.044188 < 0.050000001, a function displaced anywhere inside its own +/-0.05 degree allowance can put that turning point on either side of the level.",
+      "Root counts of 2 (dip through), 1 (tangency) and 0 (near miss) are all consistent with the allowance, so the exact-pass count of the second component is not decidable under this contract."
+    ]
+  },
+  "independentReproduction": {
+    "core": {
+      "what": "@zodiacs/engine/internal bodyLongitude (astronomy-engine series), engine-native Delta-T",
+      "stationUtc": "2020-01-11T02:10:47.833Z",
+      "stationLongitudeDegrees": 32.65071315842687,
+      "signedStationMinusTargetDegrees": -0.04332634157313464,
+      "marginDegrees": 0.04332634157313464,
+      "marginVersusRecorded": -0.0008617234819610076,
+      "marginVersusRecordedArcsec": -3.1022045350596272,
+      "clearsOriginalGate": false,
+      "turningPointLocation": {
+        "residualMs": 1,
+        "valueErrorFromTimingDegrees": 5.946532155576279e-19,
+        "note": "second order: |f''|*dt^2/2 at a turning point, never |f'|*dt"
+      },
+      "derivativeBounds": {
+        "grid": {
+          "samples": 400,
+          "stepMs": 41743514.0675,
+          "hMs": 600000
+        },
+        "safetyFactor": 10,
+        "measured": {
+          "maxAbsSecondDerivative": 1.1893064311152558e-19,
+          "maxAbsThirdDerivative": 9.723908920865074e-29,
+          "maxAbsFourthDerivative": 2.1443477994636605e-33
+        },
+        "measuredPerDay": {
+          "secondDegPerDay2": 0.000887812493601814,
+          "thirdDegPerDay3": 0.00006271654274314642,
+          "fourthDegPerDay4": 0.11949512735009193
+        },
+        "bounds": {
+          "secondDerivativeBound": 1.1893064311152558e-18,
+          "thirdDerivativeBound": 9.723908920865073e-28,
+          "fourthDerivativeBound": 2.1443477994636604e-32
+        },
+        "provenance": "measured on the declared grid, then multiplied by the declared safety factor. NOT a proven bound on the underlying function."
+      },
+      "backendCalls": 2076
+    },
+    "de": {
+      "what": "DE440s via the repository prototype, TT pinned to UTC + 69.184 s",
+      "stationUtc": "2020-01-11T02:10:34.210Z",
+      "stationLongitudeDegrees": 32.64986476685977,
+      "signedStationMinusTargetDegrees": -0.044174733140231126,
+      "marginDegrees": 0.044174733140231126,
+      "marginVersusRecorded": -0.000013331914864522787,
+      "marginVersusRecordedArcsec": -0.04799489351228203,
+      "clearsOriginalGate": false,
+      "turningPointLocation": {
+        "residualMs": 1,
+        "valueErrorFromTimingDegrees": 5.946495641574579e-19,
+        "note": "second order: |f''|*dt^2/2 at a turning point, never |f'|*dt"
+      },
+      "derivativeBounds": {
+        "grid": {
+          "samples": 400,
+          "stepMs": 41743514.0675,
+          "hMs": 600000
+        },
+        "safetyFactor": 10,
+        "measured": {
+          "maxAbsSecondDerivative": 1.1892991283149158e-19,
+          "maxAbsThirdDerivative": 3.911274596383144e-29,
+          "maxAbsFourthDerivative": 3.892633814735117e-36
+        },
+        "measuredPerDay": {
+          "secondDegPerDay2": 0.0008878070420905714,
+          "thirdDegPerDay3": 0.000025226647267118096,
+          "fourthDegPerDay4": 0.00021691946312785146
+        },
+        "bounds": {
+          "secondDerivativeBound": 1.1892991283149158e-18,
+          "thirdDerivativeBound": 3.911274596383144e-28,
+          "fourthDerivativeBound": 3.892633814735117e-35
+        },
+        "provenance": "measured on the declared grid, then multiplied by the declared safety factor. NOT a proven bound on the underlying function."
+      },
+      "backendCalls": 2078
+    },
+    "swiss": {
+      "what": "pyswisseph 2.10.03, flags 258, v6 clock recipe (TT = UTC + 69.184 s)",
+      "method": "one-hour grid over +/-60 h around the DE station, then a one-second grid over +/-1 h around the coarse minimum; 7321 SWIEPH evaluations",
+      "evaluations": 7322,
+      "stationUtc": "2020-01-11T01:48:09.210Z",
+      "stationLongitudeDegrees": 32.64985143394183,
+      "stationSpeedDegPerDay": 1.382900305238471e-7,
+      "signedStationMinusTargetDegrees": -0.04418806605816883,
+      "marginDegrees": 0.04418806605816883,
+      "marginVersusRecorded": 1.0030731800725334e-9,
+      "marginVersusRecordedArcsec": 0.0000036110634482611204,
+      "clearsOriginalGate": false,
+      "ttMinusUtcSeconds": 69.18401420116425,
+      "retflag": 258
+    }
+  },
+  "whatTheOriginalContractDecides": {
+    "decided": [
+      "Component membership: the 3-degree threshold margins clear B, so both components and the real gap between them are certified (policy qualifiedAcceptance.membership: 28 threshold margins > B + 1e-9, four ordered physical threshold roots, five witness cells).",
+      "The first component's single exact pass, with its original conditioned timing band.",
+      "The two-component topology of the geometry as a whole, and the preserved out-of-orb gap.",
+      "Crop membership at both closed halves: membershipAmbiguousWithinBudget is false at every crop boundary."
+    ],
+    "notDecided": [
+      "The exact-pass COUNT inside the second component (recorded source count 2, labelled unresolved-cross-model-count).",
+      "Whether the second component has a peak at all, and if so whether it is an exact pass or a positive closest approach: globalMinimumKind is unresolved-cross-model-count and globalMinimum is null.",
+      "The crop exact-count at the 2020-01-01 boundary: exactCountAmbiguousWithinBudget is true on both halves, so neither half may publish an exact count.",
+      "Any local-minimum count inside the second component, which the same ambiguity can create or destroy."
+    ],
+    "whyLoweringTheToleranceIsNotAvailable": "B is the case's declared angular acceptance budget and it is also what the conditioning gate compares against. Shrinking it to fit 0.044188 would be choosing the tolerance after seeing the margin, which is the one move the policy's limitsPolicy and failure clauses forbid outright."
+  },
+  "boundedSearchAtOriginalBudget": {
+    "core": {
+      "D-component-1": {
+        "sourceExactCount": 1,
+        "sourceExactTopology": "resolved",
+        "verdict": "crossing",
+        "outcome": "certified",
+        "reason": "single-certified-transversal-root",
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "evaluations": 117,
+        "cellStatusCounts": {
+          "excluded": 3,
+          "monotone": 1
+        },
+        "crossingsUtc": [
+          {
+            "fromUtc": "2019-04-24T23:17:15.383Z",
+            "toUtc": "2019-04-26T17:05:00.363Z",
+            "widthDays": 1.7414928240740741,
+            "direction": "rising"
+          }
+        ],
+        "openRegionsUtc": [],
+        "partialUncertifiedFindings": null,
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      },
+      "D-component-2": {
+        "sourceExactCount": 2,
+        "sourceExactTopology": "uncertain",
+        "verdict": "unresolved-interval",
+        "outcome": "incomplete",
+        "reason": "turning-region-within-epsilon-of-level",
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ],
+        "evaluations": 1074,
+        "cellStatusCounts": {
+          "excluded": 7,
+          "monotone": 234,
+          "floor": 28
+        },
+        "crossingsUtc": null,
+        "openRegionsUtc": [
+          {
+            "fromUtc": "2019-12-23T22:18:50.784Z",
+            "toUtc": "2020-01-29T03:58:14.339Z",
+            "widthDays": 36.23568929398148,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "atMostOneTurningPoint": true,
+            "turningPointUtc": "2020-01-11T02:10:47.830Z",
+            "turningPointValueDegrees": -0.0433263415730778
+          }
+        ],
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. These roots were certified while other cells stayed open; the true count is in possibleRootCounts, which is null when even that is unbounded.",
+          "certifiedCount": 0
+        },
+        "assumptions": [
+          "open region holds at most one turning point (certified by the second-derivative enclosure over the whole region)"
+        ],
+        "notes": [
+          "1 region(s) could not be closed at epsilon=0.05.",
+          "The root COUNT is not decidable at this epsilon.",
+          "The certified roots below are NOT an exhaustive list and must not be published as one."
+        ]
+      }
+    },
+    "de": {
+      "D-component-1": {
+        "sourceExactCount": 1,
+        "sourceExactTopology": "resolved",
+        "verdict": "crossing",
+        "outcome": "certified",
+        "reason": "single-certified-transversal-root",
+        "rootCount": 1,
+        "possibleRootCounts": [
+          1
+        ],
+        "evaluations": 117,
+        "cellStatusCounts": {
+          "excluded": 3,
+          "monotone": 1
+        },
+        "crossingsUtc": [
+          {
+            "fromUtc": "2019-04-24T23:36:10.018Z",
+            "toUtc": "2019-04-26T17:23:58.862Z",
+            "widthDays": 1.7415375462962963,
+            "direction": "rising"
+          }
+        ],
+        "openRegionsUtc": [],
+        "partialUncertifiedFindings": null,
+        "assumptions": [],
+        "notes": [
+          "Completeness is conditional on the declared derivative enclosure, which is empirical here: it holds if the declared curvature bound holds. That is not a theorem about the underlying function."
+        ]
+      },
+      "D-component-2": {
+        "sourceExactCount": 2,
+        "sourceExactTopology": "uncertain",
+        "verdict": "unresolved-interval",
+        "outcome": "incomplete",
+        "reason": "turning-region-within-epsilon-of-level",
+        "rootCount": null,
+        "possibleRootCounts": [
+          0,
+          1,
+          2
+        ],
+        "evaluations": 1047,
+        "cellStatusCounts": {
+          "excluded": 7,
+          "monotone": 235,
+          "floor": 18
+        },
+        "crossingsUtc": null,
+        "openRegionsUtc": [
+          {
+            "fromUtc": "2019-12-23T22:18:50.784Z",
+            "toUtc": "2020-01-29T03:58:14.339Z",
+            "widthDays": 36.23568929398148,
+            "why": "monotone-run-end-within-epsilon+value-enclosure-straddles-epsilon-at-the-subdivision-floor+monotone-run-end-within-epsilon",
+            "atMostOneTurningPoint": true,
+            "turningPointUtc": "2020-01-11T02:10:34.207Z",
+            "turningPointValueDegrees": -0.04417473314020981
+          }
+        ],
+        "partialUncertifiedFindings": {
+          "warning": "NOT EXHAUSTIVE. These roots were certified while other cells stayed open; the true count is in possibleRootCounts, which is null when even that is unbounded.",
+          "certifiedCount": 0
+        },
+        "assumptions": [
+          "open region holds at most one turning point (certified by the second-derivative enclosure over the whole region)"
+        ],
+        "notes": [
+          "1 region(s) could not be closed at epsilon=0.05.",
+          "The root COUNT is not decidable at this epsilon.",
+          "The certified roots below are NOT an exhaustive list and must not be published as one."
+        ]
+      }
+    }
+  },
+  "conclusion": [
+    "The failure reproduces independently. All three position sources put the second component's turning point between 0.0432 and 0.0442 degrees below the target, and none of them clears the 0.050000001-degree conditioning threshold.",
+    "The bounded search, given the original 0.05-degree budget, returns unresolved-interval for the second component with possible root counts {0,1,2}, and a certified single crossing for the first. That is the recorded contract exactly: first component resolved, second component uncertain.",
+    "Nothing here changes the original contract. It remains failed-incomplete."
+  ]
+}

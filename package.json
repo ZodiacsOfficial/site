@@ -26,6 +26,8 @@
     "legacy:registry-token-chart": "node scripts/build-registry-token-chart.mjs",
     "registry:hub:build": "node scripts/build-registry-hub.mjs",
     "registry:hub:check": "node scripts/build-registry-hub.mjs --check",
+    "engine:bundle": "node scripts/measure-engine-bundle.mjs",
+    "engine:bundle:check": "node scripts/measure-engine-bundle.mjs --check",
     "mcp:build": "node scripts/build-mcp-server.mjs",
     "mcp:build:check": "node scripts/build-mcp-server.mjs --check",
     "mcp:pack": "node scripts/pack-mcp-server.mjs",

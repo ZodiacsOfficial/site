@@ -1,0 +1,17 @@
+title: Zodiacs precision backend — research demonstration
+browser: 141.0.7390.37
+
+refusal cases:
+  instant before coverage -> refused: no-pack
+  instant after coverage -> refused: no-pack
+  inside coverage but inside the light-time margin -> refused: no-pack
+  malformed instant -> refused: no-pack
+  unknown request -> refused: unknown-request
+
+compare with no pack: refused: no-pack — Load a precision pack before asking for precision output.
+
+mid-run cancel accepted in 39 ms -> cancelled: stopped after 200 of 400
+
+off-origin network requests: none
+page errors: none
+failed requests: none

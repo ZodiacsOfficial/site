@@ -1,0 +1,69 @@
+{
+ "what": "peak resident set, one backend, 6000 ten-body charts per process, three processes each",
+ "targets": {
+  "core": {
+   "runs": [
+    71.41,
+    71.34,
+    70.91
+   ],
+   "medianMiB": 71.34
+  },
+  "prototype": {
+   "runs": [
+    63.6,
+    64.08,
+    65.1
+   ],
+   "medianMiB": 64.08
+  },
+  "packs/A.zeph": {
+   "runs": [
+    67.31,
+    68.15,
+    68.02
+   ],
+   "medianMiB": 68.02
+  },
+  "packs/B.zeph": {
+   "runs": [
+    68.23,
+    67.57,
+    68.27
+   ],
+   "medianMiB": 68.23
+  },
+  "packs/D.zeph": {
+   "runs": [
+    64.27,
+    64.43,
+    65.48
+   ],
+   "medianMiB": 64.43
+  },
+  "packs/A.zeph (lowmem)": {
+   "runs": [
+    63.84,
+    64.23,
+    63.66
+   ],
+   "medianMiB": 63.84
+  },
+  "packs/B.zeph (lowmem)": {
+   "runs": [
+    62.46,
+    63.67,
+    62.39
+   ],
+   "medianMiB": 62.46
+  },
+  "packs/D.zeph (lowmem)": {
+   "runs": [
+    63.13,
+    63.36,
+    63.61
+   ],
+   "medianMiB": 63.36
+  }
+ }
+}

@@ -1,0 +1,587 @@
+{
+  "what": "Four-way decomposition of the Uranus D exact-topology uncertainty, plus the stationary-geometry audit.",
+  "generatedBy": "node decompose.mjs",
+  "generatedAtUtc": "2026-09-20T10:43:53.952Z",
+  "decisionVariable": {
+    "definition": "g* = longitude(t*) - target at the January 2020 turning point. Its SIGN decides the exact-pass count of the second component: negative gives 2 crossings, zero gives a tangency, positive gives none.",
+    "targetDegrees": 32.6940395,
+    "recordedSwissMarginDegrees": 0.04418806505509565,
+    "deSignedValueDegrees": -0.044174733140231126,
+    "coreSignedValueDegrees": -0.04332634157313464,
+    "deStationUtc": "2020-01-11T02:10:34.210Z",
+    "coreStationUtc": "2020-01-11T02:10:47.833Z",
+    "curvatureAtStationDegPerDay2": 0.0008576457457820653,
+    "maxCurvatureOverComponentDegPerDay2": 0.0008878070420905714
+  },
+  "sources": {
+    "rootFinding": {
+      "what": "Numerical error in locating the turning point and the crossings, with the function held fixed.",
+      "turningPointLocation": {
+        "bisectionResidualMs": 1,
+        "valueErrorDegrees": 5.946495641574579e-19,
+        "valueErrorArcsec": 2.1407384309668485e-15,
+        "formula": "|f''| * dt^2 / 2 -- second order, because the first derivative vanishes at a turning point",
+        "wrongFormulaWouldBe": "|f'| * dt, which is zero here and would understate nothing but is the wrong shape; the danger is the INVERSE of this, see stationaryGeometryAudit"
+      },
+      "crossingLocation": {
+        "bracketFloorMs": 100,
+        "slopeAtFirstCrossingDegPerDay": 0.008738431636913901,
+        "slopeAtSecondCrossingDegPerDay": 0.008798651426900506,
+        "positionErrorAtFirstCrossingDegrees": 1.0113925505687386e-8,
+        "positionErrorAtSecondCrossingDegrees": 1.01836243366904e-8,
+        "note": "Away from a turning point the slope is bounded away from zero, so the linear conversion position = slope * time is valid there. The policy's own 0.1-second root bracket is 1000x coarser than this floor and still contributes under 1e-7 degrees."
+      },
+      "floatingPoint": {
+        "longitudeUlpDegrees": 1.4210854715202004e-14,
+        "note": "Double-precision resolution of a longitude near 32 degrees."
+      },
+      "totalContributionToDecisionVariableDegrees": 1.421144936476616e-14,
+      "verdict": "Negligible. About 6e-19 degrees on g*, which is 17 orders of magnitude below the 0.0442-degree margin. Root-finding is not why this contract failed."
+    },
+    "ephemerisModel": {
+      "what": "Disagreement between independent implementations of the same apparent geocentric longitude, with the clock held fixed at the v6 recipe (TT = UTC + 69.184 s) for Swiss and the DE prototype.",
+      "caution": "Swiss and DE440s both descend from JPL development ephemerides. Agreement between them is CONSISTENCY, not independent observational accuracy, and nothing here is fitted to Swiss.",
+      "overComponent": {
+        "what": "second component, 6-hourly grid",
+        "fromUtc": "2019-09-30T09:06:55.823Z",
+        "toUtc": "2020-04-10T15:06:55.823Z",
+        "allSwissFlagsWere258": true,
+        "swissVersion": "2.10.03",
+        "deMinusSwissArcsec": {
+          "n": 774,
+          "maxAbs": 0.2365081454712481,
+          "p50Abs": 0.05024316642732174,
+          "p95Abs": 0.16189325721413172,
+          "meanSigned": 0.008642265679039283
+        },
+        "coreMinusSwissArcsec": {
+          "n": 774,
+          "maxAbs": 3.451914801948419,
+          "p50Abs": 3.170251529735424,
+          "p95Abs": 3.3751786153696623,
+          "meanSigned": 3.167940753858507
+        },
+        "deMinusCoreArcsec": {
+          "n": 774,
+          "maxAbs": 3.3956875525831265,
+          "p50Abs": 3.1250756207953145,
+          "p95Abs": 3.3451970899140804,
+          "meanSigned": -3.159298488179467
+        }
+      },
+      "overOpenRegion": {
+        "what": "the region the original contract could not close, hourly grid",
+        "fromUtc": "2019-12-23T00:00:00.000Z",
+        "toUtc": "2020-01-30T00:00:00.000Z",
+        "allSwissFlagsWere258": true,
+        "swissVersion": "2.10.03",
+        "deMinusSwissArcsec": {
+          "n": 913,
+          "maxAbs": 0.10886706752728514,
+          "p50Abs": 0.06189725450269634,
+          "p95Abs": 0.09652227637445775,
+          "meanSigned": -0.0386336766105623
+        },
+        "coreMinusSwissArcsec": {
+          "n": 913,
+          "maxAbs": 3.164508887687134,
+          "p50Abs": 3.0119532812420857,
+          "p95Abs": 3.1522341446066093,
+          "meanSigned": 3.0211862183773146
+        },
+        "deMinusCoreArcsec": {
+          "n": 913,
+          "maxAbs": 3.0753162032425507,
+          "p50Abs": 3.056725460064058,
+          "p95Abs": 3.0750972058962134,
+          "meanSigned": -3.0598198949878723
+        }
+      },
+      "atTheTurningPointItself": {
+        "swissLongitude": 32.649851538274184,
+        "deLongitude": 32.64986476685977,
+        "coreLongitude": 32.650713158437554,
+        "deMinusSwissArcsec": 0.04762290811299863,
+        "coreMinusSwissArcsec": 3.1018325881319697
+      },
+      "marginDisagreement": {
+        "what": "The quantity that actually decides the count: each source's own g*.",
+        "swissMarginDegrees": 0.04418806505509565,
+        "deMarginDegrees": 0.044174733140231126,
+        "coreMarginDegrees": 0.04332634157313464,
+        "deVersusSwissArcsec": -0.04799489351228203,
+        "coreVersusSwissArcsec": -3.1022045350596272
+      },
+      "verdict": "This is the only source with a size comparable to a plausible budget, and it is still far below the margin. The DE prototype and Swiss agree on g* to 0.048 arcsec (1.3e-5 degrees), which is 3300x smaller than the 0.0442-degree margin. The shipped core engine differs from Swiss by 3.1 arcsec (8.6e-4 degrees) on g*, still 51x smaller than the margin. The known ceiling on the DE prototype is its reuse of astronomy-engine's truncated nutation series, a reduction-model choice, not the position series."
+    },
+    "timeModel": {
+      "what": "Uncertainty in the UTC -> TT map, and in what a \"UTC label\" means for this window.",
+      "thisWindowIsHistorical": {
+        "ttMinusUtcSeconds": 69.184,
+        "composition": "37 leap seconds + 32.184 s. No leap second falls inside 2019-01-01..2020-12-31, so the offset is constant and exactly known; no Delta-T extrapolation enters.",
+        "swissReturnedTtMinusUtcSeconds": 69.18401420116425,
+        "residualSeconds": 0.00001420116424810658,
+        "residualNote": "Swiss's own Julian-day rounding, not a model disagreement. The policy guard allows 0.001 s.",
+        "astronomyEngineDeltaTSeconds": 71.59251104167197,
+        "astronomyEngineIsTtMinusUt1Note": "The shipped core engine applies TT - UT1, not TT - UTC. The two differ by the current DUT1, which is why the core backend cannot be clock-matched without the pinning hook the DE prototype has.",
+        "astronomyEngineVersusPolicyClockSeconds": 2.4085110416719715
+      },
+      "sensitivityOfTheDecisionVariable": [
+        {
+          "shiftSeconds": 0.001,
+          "stationUtc": "2020-01-11T02:10:34.209Z",
+          "gStar": -0.044174733140216915,
+          "deltaGStarDegrees": 1.4210854715202004e-14,
+          "stationShiftSeconds": -0.001
+        },
+        {
+          "shiftSeconds": 0.1,
+          "stationUtc": "2020-01-11T02:10:34.110Z",
+          "gStar": -0.044174733140231126,
+          "deltaGStarDegrees": 0,
+          "stationShiftSeconds": -0.1
+        },
+        {
+          "shiftSeconds": 1,
+          "stationUtc": "2020-01-11T02:10:33.210Z",
+          "gStar": -0.044174733140231126,
+          "deltaGStarDegrees": 0,
+          "stationShiftSeconds": -1
+        },
+        {
+          "shiftSeconds": 10,
+          "stationUtc": "2020-01-11T02:10:24.210Z",
+          "gStar": -0.044174733140216915,
+          "deltaGStarDegrees": 1.4210854715202004e-14,
+          "stationShiftSeconds": -10
+        }
+      ],
+      "analyticExplanation": {
+        "onTheTurningPointValue": "A uniform clock shift dt moves the turning point in time by exactly dt and changes its VALUE by |f''| * dt^2 / 2, because the first derivative vanishes there. At 1 second that is 5.9e-14 degrees.",
+        "onTheCrossingTimes": "A uniform clock shift dt moves each crossing time by exactly dt. That is a real effect on published timestamps and it is first order -- but it does not touch the count.",
+        "why": "The clock enters the count only through the turning point value, where it is second order. This is the same structure as source 1 and the reason both are negligible."
+      },
+      "verdict": "Negligible for the count. A full second of clock error -- ten thousand times the policy's own 0.001-second guard, and impossible for a historical UTC label -- moves g* by 6e-14 degrees. It moves the crossing TIMES by a full second, which matters for published timestamps and not at all for the topology."
+    },
+    "rootCountAmbiguity": {
+      "what": "Not an error at all: a decision about which allowance the contract applies. Given g*, the count is decidable exactly when the declared allowance is smaller than |g*|.",
+      "rule": "epsilon < |g*| certifies the count; epsilon >= |g*| leaves {0, 1, 2} all consistent.",
+      "criticalEpsilonDegrees": {
+        "swiss": 0.04418806505509565,
+        "de": 0.044174733140231126,
+        "core": 0.04332634157313464
+      },
+      "originalBudgetDegrees": 0.05,
+      "originalBudgetExceedsCriticalBy": 0.005825266859768877,
+      "ladder": [
+        {
+          "epsilonDegrees": 0.05,
+          "epsilonArcsec": 180,
+          "verdict": "unresolved-interval",
+          "outcome": "incomplete",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 1047,
+          "crossingsUtc": null
+        },
+        {
+          "epsilonDegrees": 0.0442,
+          "epsilonArcsec": 159.12,
+          "verdict": "unresolved-interval",
+          "outcome": "incomplete",
+          "rootCount": null,
+          "possibleRootCounts": [
+            0,
+            1,
+            2
+          ],
+          "evaluations": 261,
+          "crossingsUtc": null
+        },
+        {
+          "epsilonDegrees": 0.044,
+          "epsilonArcsec": 158.39999999999998,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 199,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-27T19:17:44.682Z",
+              "toUtc": "2020-01-10T10:51:42.192Z",
+              "widthDays": 13.648582291666667
+            },
+            {
+              "fromUtc": "2020-01-11T17:30:01.415Z",
+              "toUtc": "2020-01-25T07:55:07.929Z",
+              "widthDays": 13.600769837962963
+            }
+          ]
+        },
+        {
+          "epsilonDegrees": 0.02,
+          "epsilonArcsec": 72,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 152,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-29T22:03:07.439Z",
+              "toUtc": "2020-01-03T14:58:53.539Z",
+              "widthDays": 4.705394675925926
+            },
+            {
+              "fromUtc": "2020-01-18T13:51:12.508Z",
+              "toUtc": "2020-01-23T05:53:18.812Z",
+              "widthDays": 4.668128518518518
+            }
+          ]
+        },
+        {
+          "epsilonDegrees": 0.01,
+          "epsilonArcsec": 36,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 148,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-30T21:54:00.640Z",
+              "toUtc": "2020-01-02T05:11:08.388Z",
+              "widthDays": 2.303561898148148
+            },
+            {
+              "fromUtc": "2020-01-19T23:31:43.981Z",
+              "toUtc": "2020-01-22T06:20:05.606Z",
+              "widthDays": 2.2835836226851853
+            }
+          ]
+        },
+        {
+          "epsilonDegrees": 0.005,
+          "epsilonArcsec": 18,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 144,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-31T10:37:37.643Z",
+              "toUtc": "2020-01-01T14:08:08.669Z",
+              "widthDays": 1.1461924305555555
+            },
+            {
+              "fromUtc": "2020-01-20T14:28:52.567Z",
+              "toUtc": "2020-01-21T17:44:46.348Z",
+              "widthDays": 1.1360391319444445
+            }
+          ]
+        },
+        {
+          "epsilonDegrees": 0.001,
+          "epsilonArcsec": 3.6,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 133,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-31T21:16:09.270Z",
+              "toUtc": "2020-01-01T02:45:45.307Z",
+              "widthDays": 0.22888931712962962
+            },
+            {
+              "fromUtc": "2020-01-21T01:45:48.555Z",
+              "toUtc": "2020-01-21T07:12:28.247Z",
+              "widthDays": 0.22684828703703705
+            }
+          ]
+        },
+        {
+          "epsilonDegrees": 0.0001,
+          "epsilonArcsec": 0.36000000000000004,
+          "verdict": "multiple-crossings",
+          "outcome": "certified",
+          "rootCount": 2,
+          "possibleRootCounts": [
+            2
+          ],
+          "evaluations": 122,
+          "crossingsUtc": [
+            {
+              "fromUtc": "2019-12-31T23:43:34.493Z",
+              "toUtc": "2020-01-01T00:16:31.977Z",
+              "widthDays": 0.022887546296296295
+            },
+            {
+              "fromUtc": "2020-01-21T04:13:43.509Z",
+              "toUtc": "2020-01-21T04:46:23.330Z",
+              "widthDays": 0.022683113425925924
+            }
+          ]
+        }
+      ],
+      "verdict": "The original contract is ambiguous by 0.0058 degrees of budget, not by 0.0058 degrees of measured error. Sources 1 to 3 together contribute under 1e-3 degrees; the remaining 0.049 degrees of the 0.05 budget is unexercised headroom that the contract nevertheless spends."
+    }
+  },
+  "stationaryGeometryAudit": {
+    "what": "TASK 5. Position uncertainty must NOT be converted into timing uncertainty by dividing by a near-zero velocity at a turning point.",
+    "theWrongConversion": {
+      "formula": "dt = epsilon / |dLongitude/dt| near the station",
+      "speedProfileDegPerDay": [
+        {
+          "daysBeforeStation": 30,
+          "speed": 0.024251829239858576,
+          "naiveHalfWidthDays": 2.0617001507590844
+        },
+        {
+          "daysBeforeStation": 10,
+          "speed": 0.008661934992630904,
+          "naiveHalfWidthDays": 5.772382272845183
+        },
+        {
+          "daysBeforeStation": 1,
+          "speed": 0.0008592992736566883,
+          "naiveHalfWidthDays": 58.18694549481984
+        },
+        {
+          "daysBeforeStation": 0.1,
+          "speed": 0.00008577781403573681,
+          "naiveHalfWidthDays": 582.9013080138527
+        },
+        {
+          "daysBeforeStation": 0,
+          "speed": 7.673861546209082e-12,
+          "naiveHalfWidthDays": 6515624460.894815
+        }
+      ],
+      "whyItIsWrong": "The velocity vanishes at the station by definition, so the quotient diverges: there is no value of it to pick. Even a full day before the station it already returns 58 days, four times the correct half-width, and the answer keeps growing the closer the sample is taken to the event it is meant to describe. The shape is wrong as well -- near a turning point the function is quadratic, not linear -- so no choice of sampling point rescues the formula.",
+      "comparisonAtOneDayBefore": {
+        "naiveHalfWidthDays": 58.18694549481984,
+        "correctHalfWidthDays": 14.819318363832451,
+        "ratio": 3.9264252286278576
+      }
+    },
+    "theRightTreatment": {
+      "formula": "half-width = sqrt(2 * (B - g*) / |d2Longitude/dt2|), and in practice solve the level set on the real function rather than the quadratic",
+      "curvatureAtStationDegPerDay2": 0.0008576457457820653,
+      "riseFromStationToLevelDegrees": 0.09417473314023113,
+      "quadraticHalfWidthDays": 14.819318363832451,
+      "quadraticFullWidthDays": 29.638636727664903,
+      "levelSetSolvedOnTheRealFunction": {
+        "fromUtc": "2019-12-27T07:41:55.637Z",
+        "toUtc": "2020-01-25T19:20:25.509Z",
+        "widthDays": 29.48506796296296
+      },
+      "recordedPossibleExactRegionUtc": [
+        "2019-12-27T07:43:29.465Z",
+        "2020-01-25T19:18:24.834Z"
+      ],
+      "recordedPossibleExactRegionWidthDays": 29.482585289351853,
+      "quadraticMinusRecordedDays": 0.15605143831304957,
+      "levelSetMinusRecordedDays": 0.0024826736111087655,
+      "reading": "The v6 policy solves this envelope as a level set (gates.closestApproachTimeEnvelope: \"solve the connected source set e(t) <= e_min + 2B\"). Solving the same level set here on the DE function reproduces the recorded 29.48-day envelope to 0.0025 days -- about two minutes at each endpoint -- and the quadratic scale agrees with both to 0.156 days. The recorded envelope was built the right way."
+    },
+    "auditOfTheRepository": {
+      "searched": [
+        "src/lib/engine/**/*.ts",
+        "scripts/**",
+        "api/**",
+        "docs/engine-validation/**"
+      ],
+      "pattern": "any division by a longitude speed, daily motion, slope or derivative used to turn an angular tolerance into a time tolerance",
+      "found": "none",
+      "detail": [
+        "src/lib/engine/transit-window-core.ts builds its timing evidence from level sets: certainty.exactPossibleRanges comes from track.regions(target, budget + resolution), and the uncertain peak envelope from track.regions(target, minimum + 2 * budget). No velocity appears in either.",
+        "src/lib/engine/transit-scan-core.ts locates stations by a sign change in longitudeSpeed and then refines by a direct extremum search (refineLongitudeExtremum); it never divides by the speed it just found to be zero.",
+        "src/lib/engine/longitude-crossings.ts is pure bisection on the value, with no Newton step and so no division by the derivative.",
+        "docs/engine-validation/transit-windows/wave24-d-qualified-policy.v6.json states the level-set rule explicitly and rejects the alternative: gates.minimumEnvelopeFailure forbids replacing the envelope with an observed residual."
+      ],
+      "conclusion": "The mistake is not present. Reporting that is the finding, and the quadratic check above is the evidence that the existing envelope is right rather than merely absent of the wrong formula."
+    },
+    "separateObservationNotADivisionBug": {
+      "where": "src/lib/engine/longitude-crossings.ts findLongitudeCrossingsWith, as called by src/lib/engine/returns.ts saturnReturns and src/lib/engine/year-scan.ts with the default stepDays = 5",
+      "what": "A fixed-step sign-change scan with no station splitting. Two crossings that straddle a station inside one coarse step cancel into equal-sign endpoints and BOTH are dropped silently. The doc comment on returns.ts argues \"a triple pass spans months, never 5 days\", which is true of a well-separated triple pass and false of a grazing one -- exactly the Uranus D geometry.",
+      "notAffected": "src/lib/engine/transit-scan-core.ts splits every body scan at its stations before calling the same solver, and src/lib/engine/transit-window-core.ts builds monotone branches between turning points. Sun and Moon targets never station in longitude.",
+      "demonstration": "see coarseScanCompletenessDemonstration below"
+    }
+  },
+  "coarseScanCompletenessDemonstration": {
+    "what": "The real Uranus trajectory with the target moved so the January 2020 station misses it by a chosen amount. Everything else is unchanged: same body, same window, same DE backend.",
+    "rows": [
+      {
+        "syntheticTargetDegrees": 32.69986476685977,
+        "dipBelowTargetDegrees": 0.05,
+        "predictedSeparationDays": 21.59613466070033,
+        "coarseScanStepDays": 5,
+        "coarseScanCrossingsFound": 2,
+        "coarseScanStepHalfDay": 0.5,
+        "coarseScanCrossingsFoundAtHalfDay": 2,
+        "intervalSearch": [
+          {
+            "epsilonDegrees": 0.001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 318
+          },
+          {
+            "epsilonDegrees": 0.0001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 119
+          }
+        ]
+      },
+      {
+        "syntheticTargetDegrees": 32.65986476685977,
+        "dipBelowTargetDegrees": 0.01,
+        "predictedSeparationDays": 9.658085030513059,
+        "coarseScanStepDays": 5,
+        "coarseScanCrossingsFound": 2,
+        "coarseScanStepHalfDay": 0.5,
+        "coarseScanCrossingsFoundAtHalfDay": 2,
+        "intervalSearch": [
+          {
+            "epsilonDegrees": 0.001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 351
+          },
+          {
+            "epsilonDegrees": 0.0001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 127
+          }
+        ]
+      },
+      {
+        "syntheticTargetDegrees": 32.651864766859774,
+        "dipBelowTargetDegrees": 0.002,
+        "predictedSeparationDays": 4.319226932140066,
+        "coarseScanStepDays": 5,
+        "coarseScanCrossingsFound": 0,
+        "coarseScanStepHalfDay": 0.5,
+        "coarseScanCrossingsFoundAtHalfDay": 2,
+        "intervalSearch": [
+          {
+            "epsilonDegrees": 0.001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 379
+          },
+          {
+            "epsilonDegrees": 0.0001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 137
+          }
+        ]
+      },
+      {
+        "syntheticTargetDegrees": 32.650364766859774,
+        "dipBelowTargetDegrees": 0.0005,
+        "predictedSeparationDays": 2.159613466070033,
+        "coarseScanStepDays": 5,
+        "coarseScanCrossingsFound": 0,
+        "coarseScanStepHalfDay": 0.5,
+        "coarseScanCrossingsFoundAtHalfDay": 2,
+        "intervalSearch": [
+          {
+            "epsilonDegrees": 0.001,
+            "verdict": "unresolved-interval",
+            "rootCount": null,
+            "possibleRootCounts": [
+              0,
+              1,
+              2
+            ],
+            "evaluations": 908
+          },
+          {
+            "epsilonDegrees": 0.0001,
+            "verdict": "multiple-crossings",
+            "rootCount": 2,
+            "possibleRootCounts": [
+              2
+            ],
+            "evaluations": 144
+          }
+        ]
+      }
+    ],
+    "reading": [
+      "A five-day sign-change scan silently reports ZERO crossings once the pair closes to within one step, while the bounded search still certifies two at the same epsilon. That is the completeness gap an interval method exists to remove.",
+      "Halving the step to half a day recovers the 4.3-day pair and still misses nothing about WHY: a denser scan moves the threshold at which it goes blind, it never tells you where that threshold is. A derivative enclosure does.",
+      "At a 0.0005-degree dip and a declared epsilon of 0.001 degrees the search refuses instead of guessing, and certifies two roots only once the epsilon is smaller than the dip. That refusal is the behaviour under test, not a shortfall."
+    ]
+  },
+  "summary": {
+    "headline": "Only one of the four sources is large enough to matter, and it is a factor of 3300 smaller than the margin it would have to cover. The fourth source is not an error term at all.",
+    "table": [
+      {
+        "source": "root-finding",
+        "contributionToGStarDegrees": 5.9e-19,
+        "howMeasured": "1 ms bisection residual times the measured curvature, second order"
+      },
+      {
+        "source": "ephemeris/model (DE prototype vs Swiss)",
+        "contributionToGStarDegrees": 0.0000133,
+        "howMeasured": "difference of the two independently located station values, clocks matched"
+      },
+      {
+        "source": "ephemeris/model (shipped core vs Swiss)",
+        "contributionToGStarDegrees": 0.000862,
+        "howMeasured": "same, with the core engine's own Delta-T"
+      },
+      {
+        "source": "time-model",
+        "contributionToGStarDegrees": 6e-14,
+        "howMeasured": "pinned-TT perturbation of 1 second, ten thousand times the policy guard"
+      },
+      {
+        "source": "root-count ambiguity",
+        "contributionToGStarDegrees": null,
+        "howMeasured": "not an error: the declared allowance, 0.05 degrees, against |g*| = 0.0442 degrees"
+      }
+    ]
+  }
+}

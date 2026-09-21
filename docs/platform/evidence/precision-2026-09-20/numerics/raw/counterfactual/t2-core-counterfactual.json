@@ -1,0 +1,103 @@
+{
+ "what": "effect of replacing the astronomy-engine nutation with published IAU2000B, on each 2x2 cell",
+ "method": "exact common-mode longitude shift; validated against the independently computed sweep variant",
+ "comparator": "/home/user/site/docs/platform/evidence/swiss-benchmark/tools/compare.mjs",
+ "table": {
+  "A core, engine time": {
+   "before": {
+    "n": 160,
+    "max": 64.76822812365981,
+    "p50": 1.6650899310107548,
+    "p95": 12.081680322221365,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 64.76822812365981
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 64.78192591331435,
+    "p50": 1.7568392945605638,
+    "p95": 12.047785257859081,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 64.78192591331435
+    }
+   }
+  },
+  "B core, matched time": {
+   "before": {
+    "n": 160,
+    "max": 17.40362103073494,
+    "p50": 1.446054119391249,
+    "p95": 11.816808215484643,
+    "worst": {
+     "id": "modern-04",
+     "body": "Neptune",
+     "d": 17.40362103073494
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 17.427798398580308,
+    "p50": 1.417766057770109,
+    "p95": 11.748063965468981,
+    "worst": {
+     "id": "modern-04",
+     "body": "Neptune",
+     "d": 17.427798398580308
+    }
+   }
+  },
+  "C prototype, engine time": {
+   "before": {
+    "n": 160,
+    "max": 63.88727429913388,
+    "p50": 0.0823272739580716,
+    "p95": 1.863554850225729,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 63.88727429913388
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 63.90097208878842,
+    "p50": 0.013520390541543748,
+    "p95": 1.8759581752123369,
+    "worst": {
+     "id": "future-01",
+     "body": "Moon",
+     "d": 63.90097208878842
+    }
+   }
+  },
+  "D prototype, matched time": {
+   "before": {
+    "n": 160,
+    "max": 0.13444391481698403,
+    "p50": 0.03826031334313029,
+    "p95": 0.11743267930171442,
+    "worst": {
+     "id": "geo-01",
+     "body": "Neptune",
+     "d": -0.13444391481698403
+    }
+   },
+   "after": {
+    "n": 160,
+    "max": 0.13845167065937858,
+    "p50": 0.0072121416678783135,
+    "p95": 0.02670758549356833,
+    "worst": {
+     "id": "ingress-01",
+     "body": "Neptune",
+     "d": 0.13845167065937858
+    }
+   }
+  }
+ }
+}

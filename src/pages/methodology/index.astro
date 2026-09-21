@@ -9,7 +9,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-09-07T00:00:00Z',
+    dateModified: '2026-09-20T00:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -38,21 +38,77 @@ const jsonLd = [
       <h2>The ephemeris</h2>
       <p>
         Planetary positions come from <a href="https://github.com/cosinekitty/astronomy" rel="noopener noreferrer">Astronomy Engine</a>,
-        an open-source astronomical library accurate to about one arcminute
-        (a sixtieth of a degree). We compute <strong>apparent geocentric
-        tropical longitudes of date</strong> — the standard frame of Western
-        astrology — including light-time, aberration, and nutation. The Moon
-        uses a dedicated high-accuracy lunar model; the lunar node is the{' '}
-        <em>true node</em>, derived from the Moon's instantaneous orbit.
+        an open-source library built on the VSOP87 planetary series and the
+        NOVAS reduction, with a custom integrator for Pluto, which VSOP87 does
+        not cover. Its Moon comes from the Nautical Almanac Office's{' '}
+        <em>Improved Lunar Ephemeris</em>, which descends from E. W. Brown's
+        theory. It is designed to stay within one arcminute of NOVAS — that
+        is the library's own target, not a measurement of this site, and what
+        we measured is in the next section.
+      </p>
+      <p>
+        We compute <strong>apparent geocentric tropical longitudes of
+        date</strong>, the standard frame of Western astrology. For the
+        planets that means light-time and aberration are both applied, and
+        nutation is applied to everything. The Moon is the exception, and it
+        is worth naming rather than glossing: its position comes through the
+        lunar theory's own path, which applies nutation and the rotation into
+        the true ecliptic of date but neither light-time nor aberration. The
+        whole of the Moon's disagreement with Swiss Ephemeris, which does
+        apply both, has a median of 1.1 arcseconds over the span measured
+        below — so that is the ceiling on what the omission costs, not a
+        separate error on top of it. The lunar node is the <em>true node</em>,
+        derived from the Moon's instantaneous orbit.
       </p>
       <p>
         Every change to the engine must pass an automated accuracy gate
         before it ships: positions are compared against{' '}
         <strong>NASA JPL Horizons</strong> reference data at multiple epochs
         (including a 1907 chart), with tolerances of a few hundredths of a
-        degree for planets. The test suite also checks the sky against itself:
-        at sunrise the computed ascendant must match the Sun's position; at
-        solar noon the midheaven must.
+        degree for planets. The test suite also checks the sky against itself,
+        with the tolerance each check actually deserves: at solar culmination
+        the computed midheaven sits within 0.2° of the Sun's longitude, and at
+        sunrise the ascendant within 2.5° — looser because sunrise is when the
+        Sun's upper limb clears a refracted horizon, which is a different
+        instant from the one the ecliptic ascendant marks.
+      </p>
+
+      <h2 id="swiss-comparison">Agreement with Swiss Ephemeris</h2>
+      <p>
+        On 20 September 2026 we measured this engine against{' '}
+        <strong>Swiss Ephemeris 2.10.03</strong> reading its own JPL-derived
+        data files: 18 charts × 10 bodies, on dates written down before any
+        number was taken and picked to include the awkward ones — 1801, the
+        poles, sign boundaries, an unknown birth time. Both sides were put in
+        the same frame, checked by switching each effect off and watching the
+        difference move rather than by assuming it matched.
+      </p>
+      <p>
+        Across the 160 measurements from 1801 to 2026, the median
+        disagreement in longitude is <strong>1.6 arcseconds</strong>, the
+        95th percentile is <strong>12.1 arcseconds</strong>, and the largest
+        is <strong>18.6 arcseconds</strong> — Pluto in 1801. A zodiac sign is
+        30 degrees, which is 108,000 arcseconds, so none of that is visible
+        in a reading.
+      </p>
+      <p>
+        The other 20 measurements are the far-future cases, and two of them
+        exceed one arcminute — both the Moon: <strong>64.8
+        arcseconds</strong> at 2100 and <strong>159.4 arcseconds</strong> at
+        2190. That is a disagreement about the clock rather than the
+        ephemeris. Past the observed record the two programs extrapolate the
+        Earth's slowing rotation differently: Swiss reads ΔT at 2100 as 93.2
+        seconds where this engine reads 202.7, a gap of 109.5 seconds, and
+        the Moon moves about half an arcsecond per second of time — which
+        accounts for about 60 of those 64.8 arcseconds. Neither extrapolation
+        is wrong; the number isn't known yet.
+      </p>
+      <p>
+        Both programs descend from JPL development ephemerides, so this is two
+        implementations agreeing, not a check against observation. The date
+        list, the pinned versions, which Swiss data answered each call, and
+        every raw row are in the{' '}
+        <a href="https://github.com/ZodiacsOfficial/site/tree/main/docs/platform/evidence/swiss-benchmark" rel="noopener noreferrer">benchmark record</a>.
       </p>
 
       <h2>Angles and houses</h2>

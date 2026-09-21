@@ -1,0 +1,456 @@
+{
+  "what": "whether the all-ten-body maximum against Swiss is centre-versus-barycentre, and what it is instead",
+  "pack": {
+    "path": "/tmp/claude-0/D.v2.zeph",
+    "digest": "c9ebc641ad7ba844dedd59313132ef4410864339199872c50b7700791443335e"
+  },
+  "swiss": {
+    "binding": "2.10.03",
+    "backends": [
+      "SWIEPH"
+    ],
+    "ephe": "/tmp/claude-0/swisslab/ephe"
+  },
+  "solarRadiusDeg": 0.26593,
+  "bodyEpochs": 160,
+  "byGroup": {
+    "all body-epochs": {
+      "deflectionOn": {
+        "max": 0.01066618092409044,
+        "p50": 0.0002855883849406382,
+        "p95": 0.001805997681003646,
+        "n": 160
+      },
+      "deflectionOffBothSides": {
+        "max": 0.010661602800610126,
+        "p50": 0.0002855883849406382,
+        "p95": 0.0018005850506597199,
+        "n": 160
+      },
+      "systemBarycentresOnly": {
+        "max": 0.0015378025636891834,
+        "p50": 0.00015996870388335083,
+        "p95": 0.0008870775218383642,
+        "n": 96
+      },
+      "bodyCentresOnly": {
+        "max": 0.01066618092409044,
+        "p50": 0.00048330839490517974,
+        "p95": 0.0026282902126695262,
+        "n": 64
+      }
+    },
+    "outside the solar disc (elongation > 0.266 deg)": {
+      "deflectionOn": {
+        "max": 0.01066618092409044,
+        "p50": 0.0002855883849406382,
+        "p95": 0.001805997681003646,
+        "n": 160
+      },
+      "deflectionOffBothSides": {
+        "max": 0.010661602800610126,
+        "p50": 0.0002855883849406382,
+        "p95": 0.0018005850506597199,
+        "n": 160
+      },
+      "systemBarycentresOnly": {
+        "max": 0.0015378025636891834,
+        "p50": 0.00015996870388335083,
+        "p95": 0.0008870775218383642,
+        "n": 96
+      },
+      "bodyCentresOnly": {
+        "max": 0.01066618092409044,
+        "p50": 0.00048330839490517974,
+        "p95": 0.0026282902126695262,
+        "n": 64
+      }
+    },
+    "outside 1 degree": {
+      "deflectionOn": {
+        "max": 0.01066618092409044,
+        "p50": 0.0002855883849406382,
+        "p95": 0.001805997681003646,
+        "n": 160
+      },
+      "deflectionOffBothSides": {
+        "max": 0.010661602800610126,
+        "p50": 0.0002855883849406382,
+        "p95": 0.0018005850506597199,
+        "n": 160
+      },
+      "systemBarycentresOnly": {
+        "max": 0.0015378025636891834,
+        "p50": 0.00015996870388335083,
+        "p95": 0.0008870775218383642,
+        "n": 96
+      },
+      "bodyCentresOnly": {
+        "max": 0.01066618092409044,
+        "p50": 0.00048330839490517974,
+        "p95": 0.0026282902126695262,
+        "n": 64
+      }
+    },
+    "outside 3 degrees": {
+      "deflectionOn": {
+        "max": 0.01066618092409044,
+        "p50": 0.0002896643309213687,
+        "p95": 0.0016345529729733244,
+        "n": 156
+      },
+      "deflectionOffBothSides": {
+        "max": 0.010661602800610126,
+        "p50": 0.0002896639216487529,
+        "p95": 0.0016345529729733244,
+        "n": 156
+      },
+      "systemBarycentresOnly": {
+        "max": 0.0015378025636891834,
+        "p50": 0.00015996870388335083,
+        "p95": 0.0008870775218383642,
+        "n": 94
+      },
+      "bodyCentresOnly": {
+        "max": 0.01066618092409044,
+        "p50": 0.00048330839490517974,
+        "p95": 0.0025579055545676965,
+        "n": 62
+      }
+    }
+  },
+  "byBody": {
+    "Sun": {
+      "isSystemBarycentre": false,
+      "all": {
+        "max": 0.0011966893907811027,
+        "p50": 0.0004437824827618897,
+        "p95": 0.0011966893907811027,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0011966893907811027,
+        "p50": 0.0004437824827618897,
+        "p95": 0.0011966893907811027,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0011966893907811027,
+        "p50": 0.0004437824827618897,
+        "p95": 0.0011966893907811027,
+        "n": 16
+      }
+    },
+    "Moon": {
+      "isSystemBarycentre": false,
+      "all": {
+        "max": 0.01066618092409044,
+        "p50": 0.0012996853001823183,
+        "p95": 0.01066618092409044,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.01066618092409044,
+        "p50": 0.0012996853001823183,
+        "p95": 0.01066618092409044,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.010661602800610126,
+        "p50": 0.0012946500191901578,
+        "p95": 0.010661602800610126,
+        "n": 16
+      }
+    },
+    "Mercury": {
+      "isSystemBarycentre": false,
+      "all": {
+        "max": 0.0010111120900546666,
+        "p50": 0.0004769401130033657,
+        "p95": 0.0010111120900546666,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0010111120900546666,
+        "p50": 0.0004769401130033657,
+        "p95": 0.0010111120900546666,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0010111120900546666,
+        "p50": 0.0004769401130033657,
+        "p95": 0.0010111120900546666,
+        "n": 16
+      }
+    },
+    "Venus": {
+      "isSystemBarycentre": false,
+      "all": {
+        "max": 0.003157185437885346,
+        "p50": 0.0004405610980029451,
+        "p95": 0.003157185437885346,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.003157185437885346,
+        "p50": 0.0004405610980029451,
+        "p95": 0.003157185437885346,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.003157185437885346,
+        "p50": 0.0004405610980029451,
+        "p95": 0.003157185437885346,
+        "n": 16
+      }
+    },
+    "Mars": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0013652822872245451,
+        "p50": 0.0004188524599157972,
+        "p95": 0.0013652822872245451,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0013652822872245451,
+        "p50": 0.0004188524599157972,
+        "p95": 0.0013652822872245451,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0013652822872245451,
+        "p50": 0.000418852869188413,
+        "p95": 0.0013652822872245451,
+        "n": 16
+      }
+    },
+    "Jupiter": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0003946108336094767,
+        "p50": 0.00016768717614468187,
+        "p95": 0.0003946108336094767,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0003946108336094767,
+        "p50": 0.00016768717614468187,
+        "p95": 0.0003946108336094767,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0003946112428820925,
+        "p50": 0.00016768717614468187,
+        "p95": 0.0003946112428820925,
+        "n": 16
+      }
+    },
+    "Saturn": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0015378025636891834,
+        "p50": 0.000266273173110676,
+        "p95": 0.0015378025636891834,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0015378025636891834,
+        "p50": 0.000266273173110676,
+        "p95": 0.0015378025636891834,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0015378025636891834,
+        "p50": 0.000266273173110676,
+        "p95": 0.0015378025636891834,
+        "n": 16
+      }
+    },
+    "Uranus": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0007668123544135597,
+        "p50": 0.00016507929103681818,
+        "p95": 0.0007668123544135597,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0007668123544135597,
+        "p50": 0.00016507929103681818,
+        "p95": 0.0007668123544135597,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0007668123544135597,
+        "p50": 0.00016507929103681818,
+        "p95": 0.0007668123544135597,
+        "n": 16
+      }
+    },
+    "Neptune": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0005499158760358114,
+        "p50": 0.0001286941369471606,
+        "p95": 0.0005499158760358114,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0005499158760358114,
+        "p50": 0.0001286941369471606,
+        "p95": 0.0005499158760358114,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0005499158760358114,
+        "p50": 0.00012869454621977638,
+        "p95": 0.0005499158760358114,
+        "n": 16
+      }
+    },
+    "Pluto": {
+      "isSystemBarycentre": true,
+      "all": {
+        "max": 0.0008541560418962035,
+        "p50": 0.00008887436706572771,
+        "p95": 0.0008541560418962035,
+        "n": 16
+      },
+      "outsideTheSolarDisc": {
+        "max": 0.0008541560418962035,
+        "p50": 0.00008887436706572771,
+        "p95": 0.0008541560418962035,
+        "n": 16
+      },
+      "deflectionOffBothSides": {
+        "max": 0.0008541560418962035,
+        "p50": 0.00008887436706572771,
+        "p95": 0.0008541560418962035,
+        "n": 16
+      }
+    }
+  },
+  "worstTwelve": [
+    {
+      "utc": "1850-07-04T18:00:00Z",
+      "body": "Moon",
+      "elongDeg": 65.8721,
+      "deflectionOn": -0.010666,
+      "deflectionOff": -0.010662,
+      "ourDeflection": -0.000005,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2100-01-01T00:00:00Z",
+      "body": "Moon",
+      "elongDeg": 123.1822,
+      "deflectionOn": -0.003972,
+      "deflectionOff": -0.003968,
+      "ourDeflection": -0.000004,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2020-06-21T00:00:00Z",
+      "body": "Venus",
+      "elongDeg": 24.5724,
+      "deflectionOn": -0.003157,
+      "deflectionOff": -0.003157,
+      "ourDeflection": -0.000382,
+      "swissDeflection": -0.000382,
+      "behindTheSun": false
+    },
+    {
+      "utc": "1900-01-01T12:00:00Z",
+      "body": "Moon",
+      "elongDeg": 2.0342,
+      "deflectionOn": -0.002628,
+      "deflectionOff": -0.002628,
+      "ourDeflection": 0,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2026-09-20T08:00:00Z",
+      "body": "Moon",
+      "elongDeg": 105.9747,
+      "deflectionOn": -0.002558,
+      "deflectionOff": -0.002563,
+      "ourDeflection": 0.000005,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2026-09-20T08:00:00Z",
+      "body": "Venus",
+      "elongDeg": 38.5104,
+      "deflectionOn": -0.002132,
+      "deflectionOff": -0.002132,
+      "ourDeflection": 0.000739,
+      "swissDeflection": 0.000739,
+      "behindTheSun": false
+    },
+    {
+      "utc": "1988-03-21T06:45:00Z",
+      "body": "Moon",
+      "elongDeg": 43.1243,
+      "deflectionOn": 0.00191,
+      "deflectionOff": 0.001907,
+      "ourDeflection": 0.000004,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2015-11-02T23:59:00Z",
+      "body": "Moon",
+      "elongDeg": 95.9145,
+      "deflectionOn": -0.001806,
+      "deflectionOff": -0.001801,
+      "ourDeflection": -0.000005,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "1988-03-21T06:45:00Z",
+      "body": "Venus",
+      "elongDeg": 45.4266,
+      "deflectionOn": 0.001635,
+      "deflectionOff": 0.001635,
+      "ourDeflection": 0.002062,
+      "swissDeflection": 0.002062,
+      "behindTheSun": false
+    },
+    {
+      "utc": "1850-07-04T18:00:00Z",
+      "body": "Saturn",
+      "elongDeg": 82.0351,
+      "deflectionOn": -0.001538,
+      "deflectionOff": -0.001538,
+      "ourDeflection": -0.004136,
+      "swissDeflection": -0.004136,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2020-06-21T00:00:00Z",
+      "body": "Moon",
+      "elongDeg": 3.335,
+      "deflectionOn": -0.001387,
+      "deflectionOff": -0.001387,
+      "ourDeflection": 0,
+      "swissDeflection": 0,
+      "behindTheSun": false
+    },
+    {
+      "utc": "2001-09-11T12:00:00Z",
+      "body": "Mars",
+      "elongDeg": 102.5891,
+      "deflectionOn": 0.001365,
+      "deflectionOff": 0.001365,
+      "ourDeflection": 0.001176,
+      "swissDeflection": 0.001176,
+      "behindTheSun": false
+    }
+  ]
+}

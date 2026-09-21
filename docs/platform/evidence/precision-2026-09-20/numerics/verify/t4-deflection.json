@@ -1,0 +1,837 @@
+{
+ "what": "omitted solar gravitational deflection in apparent ecliptic longitude, 1850-2150",
+ "sunSemiDiameterDeg": 0.2666,
+ "coverageEt": {
+  "start": -4734072000,
+  "stop": 4735368000
+ },
+ "bodies": {
+  "Moon": {
+   "daysScanned": 109591,
+   "nPeaks": 0,
+   "maxAbsDLonArcsec": 0,
+   "maxAbsDLonOutsideDiscArcsec": 0,
+   "elongAtMaxDeg": null,
+   "daysWithDLonOver0p05": 0,
+   "daysWithDLonOver0p01": 0,
+   "fractionOfDaysOver0p05": 0,
+   "worstTen": []
+  },
+  "Mercury": {
+   "daysScanned": 109591,
+   "nPeaks": 1715,
+   "maxAbsDLonArcsec": 190.87731212658525,
+   "maxAbsDLonOutsideDiscArcsec": 0.39884377666794535,
+   "elongAtMaxDeg": 0.07053055771246525,
+   "daysWithDLonOver0p05": 2070,
+   "daysWithDLonOver0p01": 26228,
+   "fractionOfDaysOver0p05": 0.018888412369628894,
+   "worstTen": [
+    {
+     "ttDays": -16673.539719440196,
+     "year": 1954.3503361548524,
+     "dLonArcsec": -190.87731212658525,
+     "dLatArcsec": 165.0570905152376,
+     "elongDeg": 0.07053055771246525,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -3703.7205855339553,
+     "year": 1989.8597656795785,
+     "dLonArcsec": -14.856801789755991,
+     "dLatArcsec": -12.329332384335965,
+     "elongDeg": 0.01301490913788206,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -33475.72735127228,
+     "year": 1908.3484535214996,
+     "dLonArcsec": 4.572771154730049,
+     "dLatArcsec": -3.952431072997103,
+     "elongDeg": 0.01983535923489939,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 45784.52418466112,
+     "year": 2125.3511955774434,
+     "dLonArcsec": -4.4821115206389095,
+     "dLatArcsec": -5.186399359126508,
+     "elongDeg": 0.017935898531549564,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 128.64787101659635,
+     "year": 2000.3522186749256,
+     "dLonArcsec": -4.2889596589532175,
+     "dLatArcsec": 3.7070857756794267,
+     "elongDeg": 0.02091836825786057,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -20506.030113579283,
+     "year": 1943.8575493125825,
+     "dLonArcsec": -3.6202435632844754,
+     "dLatArcsec": 4.361145077197361,
+     "elongDeg": 0.0276169620401352,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 13098.53394644289,
+     "year": 2035.8618314755452,
+     "dLonArcsec": -3.0731531713513505,
+     "dLatArcsec": -2.550094923880937,
+     "elongDeg": 0.03812467248231767,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 28982.354274688732,
+     "year": 2079.349361463898,
+     "dLonArcsec": 2.5541588702225226,
+     "dLatArcsec": -2.207335873829619,
+     "elongDeg": 0.033500357763035254,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -50277.914958407404,
+     "year": 1862.3465709557634,
+     "dLonArcsec": 2.25573523960918,
+     "dLatArcsec": -1.9497417299460917,
+     "elongDeg": 0.03764892569500831,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -37308.22834627915,
+     "year": 1897.8556376556355,
+     "dLonArcsec": 2.243440937252217,
+     "dLatArcsec": 1.8624573413177747,
+     "elongDeg": 0.05142020630331406,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Venus": {
+   "daysScanned": 109591,
+   "nPeaks": 360,
+   "maxAbsDLonArcsec": 20.14173343757193,
+   "maxAbsDLonOutsideDiscArcsec": 0.5709300820399221,
+   "elongAtMaxDeg": 0.01456493049062649,
+   "daysWithDLonOver0p05": 4837,
+   "daysWithDLonOver0p01": 26870,
+   "fractionOfDaysOver0p05": 0.04413683605405554,
+   "worstTen": [
+    {
+     "ttDays": 6001.430074360784,
+     "year": 2016.431020053007,
+     "dLonArcsec": 20.14173343757193,
+     "dLatArcsec": -17.41320837224736,
+     "elongDeg": 0.01456493049062649,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 41615.74094933712,
+     "year": 2113.9376891152283,
+     "dLonArcsec": -11.970961473116404,
+     "dLatArcsec": -10.158961723021926,
+     "elongDeg": 0.01716268770293492,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -47140.227923627535,
+     "year": 1870.9370898737097,
+     "dLonArcsec": -8.229723717272464,
+     "dLatArcsec": -6.983756776018934,
+     "elongDeg": 0.0216330285955879,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -44220.527216778006,
+     "year": 1878.930794752148,
+     "dLonArcsec": 2.2986534841834327,
+     "dLatArcsec": 1.9513253960592392,
+     "elongDeg": 0.06750389362289126,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 3081.5049708071674,
+     "year": 2008.436700809876,
+     "dLonArcsec": -2.2880429400856883,
+     "dLatArcsec": 1.9785951276970164,
+     "elongDeg": 0.06391055337149791,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 44535.450623115314,
+     "year": 2121.9314185437793,
+     "dLonArcsec": 2.1168015488683523,
+     "dLatArcsec": 1.7969948642465094,
+     "elongDeg": 0.07310410494698853,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 8921.36430544511,
+     "year": 2024.425364285955,
+     "dLonArcsec": 1.8713182184114885,
+     "dLatArcsec": -1.6177807598959122,
+     "elongDeg": 0.07789881195466478,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 38696.03243414605,
+     "year": 2105.943962858716,
+     "dLonArcsec": -1.5638049102562945,
+     "dLatArcsec": -1.327087100645996,
+     "elongDeg": 0.09861851357203524,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -50059.92586489506,
+     "year": 1862.9433925670223,
+     "dLonArcsec": -1.4721659392080255,
+     "dLatArcsec": -1.2492794175510358,
+     "elongDeg": 0.10476652948636953,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 161.5705620487829,
+     "year": 2000.4423560904827,
+     "dLonArcsec": -1.0861153104315235,
+     "dLatArcsec": 0.9396996045851203,
+     "elongDeg": 0.1331810972167415,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Mars": {
+   "daysScanned": 109591,
+   "nPeaks": 268,
+   "maxAbsDLonArcsec": 13.393622518162829,
+   "maxAbsDLonOutsideDiscArcsec": 0.7095308210409712,
+   "elongAtMaxDeg": 0.020283623417513292,
+   "daysWithDLonOver0p05": 5459,
+   "daysWithDLonOver0p01": 27024,
+   "fractionOfDaysOver0p05": 0.04981248460183774,
+   "worstTen": [
+    {
+     "ttDays": -48993.06036445929,
+     "year": 1865.8643111171546,
+     "dLonArcsec": -13.393622518162829,
+     "dLatArcsec": -13.839672731026683,
+     "elongDeg": 0.020283623417513292,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -29456.671118223603,
+     "year": 1919.35202979268,
+     "dLonArcsec": -8.527569127738843,
+     "dLatArcsec": -8.158573242543147,
+     "elongDeg": 0.026499852184155043,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 54738.53857429774,
+     "year": 2149.865950922102,
+     "dLonArcsec": 6.334509293424162,
+     "dLatArcsec": -6.133620373119686,
+     "elongDeg": 0.035093554443712364,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 25881.35794795362,
+     "year": 2070.8592962298526,
+     "dLonArcsec": -5.406623780538666,
+     "dLatArcsec": 5.236784385735693,
+     "elongDeg": 0.040347928446119584,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -598.8591824553213,
+     "year": 1998.3604129159335,
+     "dLonArcsec": 3.2004576902522786,
+     "dLatArcsec": 3.0634760708584925,
+     "elongDeg": 0.06313093606998506,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -20135.52542734638,
+     "year": 1944.8719358594212,
+     "dLonArcsec": -2.23394202188274,
+     "dLatArcsec": -2.3084812048655867,
+     "elongDeg": 0.09037072424345019,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -2975.8577239881056,
+     "year": 1991.852545587986,
+     "dLonArcsec": -1.8721517573453639,
+     "dLatArcsec": 1.813823415475091,
+     "elongDeg": 0.11125052020766497,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 45416.474953945704,
+     "year": 2124.3435317014255,
+     "dLonArcsec": -1.823866917743544,
+     "dLatArcsec": -1.7425909060409694,
+     "elongDeg": 0.10916112896660521,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 28258.928785181393,
+     "year": 2077.368730418019,
+     "dLonArcsec": 1.3551834125280493,
+     "dLatArcsec": 1.2980452047509028,
+     "elongDeg": 0.14674171857888474,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 8721.356835259005,
+     "year": 2023.8777736762738,
+     "dLonArcsec": 1.288263069545792,
+     "dLatArcsec": -1.2463983891297548,
+     "elongDeg": 0.1607505574950475,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Jupiter": {
+   "daysScanned": 109591,
+   "nPeaks": 481,
+   "maxAbsDLonArcsec": 28.18708425481873,
+   "maxAbsDLonOutsideDiscArcsec": 1.0179827833553645,
+   "elongAtMaxDeg": 0.021086473522906556,
+   "daysWithDLonOver0p05": 5563,
+   "daysWithDLonOver0p01": 26966,
+   "fractionOfDaysOver0p05": 0.050761467638765954,
+   "worstTen": [
+    {
+     "ttDays": 11687.82970811216,
+     "year": 2031.9995337662208,
+     "dLonArcsec": -28.18708425481873,
+     "dLatArcsec": 28.12789830908976,
+     "elongDeg": 0.021086473522906556,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -18627.3618349728,
+     "year": 1949.0010627379252,
+     "dLonArcsec": 23.208999708458578,
+     "dLatArcsec": -23.16116386239972,
+     "elongDeg": 0.021281047743457696,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -46935.8429255426,
+     "year": 1871.4966655015946,
+     "dLonArcsec": 13.118422926203266,
+     "dLatArcsec": -13.148753497939166,
+     "elongDeg": 0.025807151586325076,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 48397.025548400525,
+     "year": 2132.5038344925406,
+     "dLonArcsec": -9.531796981508478,
+     "dLatArcsec": 9.552879774103845,
+     "elongDeg": 0.03217564042777283,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 42002.885424315515,
+     "year": 2114.9976329207816,
+     "dLonArcsec": -7.658936732491384,
+     "dLatArcsec": 7.6434605038506005,
+     "elongDeg": 0.03990722219948651,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -48942.401466639494,
+     "year": 1866.0030076204257,
+     "dLonArcsec": -7.438838651137303,
+     "dLatArcsec": -7.453766215949166,
+     "elongDeg": 0.04082981068776961,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -16620.721783864778,
+     "year": 1954.494943781342,
+     "dLonArcsec": -6.191481475661931,
+     "dLatArcsec": -6.177750096307067,
+     "elongDeg": 0.04627572998649429,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 18081.858493246167,
+     "year": 2049.5054305085455,
+     "dLonArcsec": 5.389009982962989,
+     "dLatArcsec": 5.377064542137538,
+     "elongDeg": 0.05250501308661965,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 13694.142381019017,
+     "year": 2037.492518496972,
+     "dLonArcsec": -3.790516249500797,
+     "dLatArcsec": -3.7820633792728016,
+     "elongDeg": 0.07310350749626943,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 46390.18848271435,
+     "year": 2127.009414052606,
+     "dLonArcsec": 3.4108899451439356,
+     "dLatArcsec": -3.4039414931726353,
+     "elongDeg": 0.08414608384075935,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Saturn": {
+   "daysScanned": 109591,
+   "nPeaks": 541,
+   "maxAbsDLonArcsec": 8.126817236598072,
+   "maxAbsDLonOutsideDiscArcsec": 1.0898050590469666,
+   "elongAtMaxDeg": 0.040760827238632835,
+   "daysWithDLonOver0p05": 5246,
+   "daysWithDLonOver0p01": 26906,
+   "fractionOfDaysOver0p05": 0.04786889434351361,
+   "worstTen": [
+    {
+     "ttDays": 28868.54203196083,
+     "year": 2079.0377605255603,
+     "dLonArcsec": -8.126817236598072,
+     "dLatArcsec": -8.137954176020708,
+     "elongDeg": 0.040760827238632835,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 7317.09625267602,
+     "year": 2020.0331177349103,
+     "dLonArcsec": 5.922676100135504,
+     "dLatArcsec": 5.930798814799587,
+     "elongDeg": 0.053881597164580276,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 12615.864571031505,
+     "year": 2034.5403547461506,
+     "dLonArcsec": 5.536158178875894,
+     "dLatArcsec": 5.52654532134666,
+     "elongDeg": 0.05493531545570198,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -8935.929946747387,
+     "year": 1975.5347571615403,
+     "dLonArcsec": 5.453220509139101,
+     "dLatArcsec": -5.462614682341538,
+     "elongDeg": 0.0556087126579627,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -46372.7776814956,
+     "year": 1873.0382541232152,
+     "dLonArcsec": -5.171396077980717,
+     "dLatArcsec": -5.178393553317484,
+     "elongDeg": 0.06105359864162174,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 50419.94583039942,
+     "year": 2138.042288378917,
+     "dLonArcsec": -2.4609520539797813,
+     "dLatArcsec": -2.4643035038033445,
+     "elongDeg": 0.1250022640076282,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -14234.132104281125,
+     "year": 1961.0290702141517,
+     "dLonArcsec": -2.1668813514452268,
+     "dLatArcsec": 2.1639472768586856,
+     "elongDeg": 0.14196087036470204,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -24821.64049956597,
+     "year": 1932.0420520203534,
+     "dLonArcsec": 2.129852849452618,
+     "dLatArcsec": -2.126942786861669,
+     "elongDeg": 0.14430572292857868,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 34167.54448833601,
+     "year": 2093.5456385717616,
+     "dLonArcsec": 1.860357865888318,
+     "dLatArcsec": 1.8571806464185991,
+     "elongDeg": 0.1577674658165085,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -30487.77836739355,
+     "year": 1916.5290119989224,
+     "dLonArcsec": 1.8440689962687884,
+     "dLatArcsec": -1.8472710874753773,
+     "elongDeg": 0.1588026743193675,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Uranus": {
+   "daysScanned": 109591,
+   "nPeaks": 433,
+   "maxAbsDLonArcsec": 97.75910735922366,
+   "maxAbsDLonOutsideDiscArcsec": 1.0792249311947444,
+   "elongAtMaxDeg": 0.0415723602896289,
+   "daysWithDLonOver0p05": 5648,
+   "daysWithDLonOver0p01": 27051,
+   "fractionOfDaysOver0p05": 0.0515370787747169,
+   "worstTen": [
+    {
+     "ttDays": 10747.18611745299,
+     "year": 2029.424191971124,
+     "dLonArcsec": -97.75910735922366,
+     "dLatArcsec": 97.80764461830003,
+     "elongDeg": 0.0415723602896289,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -5504.754076215515,
+     "year": 1984.9288047194648,
+     "dLonArcsec": 92.01891694358437,
+     "dLatArcsec": 92.0398736886565,
+     "elongDeg": 0.03961249796226606,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -19934.26889703091,
+     "year": 1945.422946209361,
+     "dLonArcsec": 33.498553414074195,
+     "dLatArcsec": -33.50977521540233,
+     "elongDeg": 0.022381926883795384,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 25176.75069630202,
+     "year": 2068.930186711299,
+     "dLonArcsec": 28.765695210984177,
+     "dLatArcsec": -28.760117019617734,
+     "elongDeg": 0.02236785803731348,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -36186.22770450206,
+     "year": 1900.9275079958875,
+     "dLonArcsec": 20.37199940409664,
+     "dLatArcsec": 20.373876130771457,
+     "elongDeg": 0.023634267873305647,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 41428.722990787646,
+     "year": 2113.425661850206,
+     "dLonArcsec": -17.18006844273532,
+     "dLatArcsec": 17.182822184025028,
+     "elongDeg": 0.024732090213812532,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -50615.714438679905,
+     "year": 1861.4217263828066,
+     "dLonArcsec": -14.063566263160965,
+     "dLatArcsec": -14.060941816211002,
+     "elongDeg": 0.027489198157511226,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -50245.918294376745,
+     "year": 1862.4341730475653,
+     "dLonArcsec": -5.393551612269221,
+     "dLatArcsec": 5.39440208900733,
+     "elongDeg": 0.05934091788379135,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 41058.9353380003,
+     "year": 2112.41323843395,
+     "dLonArcsec": 5.129252623635239,
+     "dLatArcsec": -5.129834129317196,
+     "elongDeg": 0.06229762105482866,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -35816.58916578636,
+     "year": 1901.9395231600647,
+     "dLonArcsec": -4.96847132401399,
+     "dLatArcsec": -4.969373031458776,
+     "elongDeg": 0.06608428525510766,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Neptune": {
+   "daysScanned": 109591,
+   "nPeaks": 548,
+   "maxAbsDLonArcsec": 20.46806228378273,
+   "maxAbsDLonOutsideDiscArcsec": 1.0666119664165308,
+   "elongAtMaxDeg": 0.02341143050558177,
+   "daysWithDLonOver0p05": 5474,
+   "daysWithDLonOver0p01": 27032,
+   "fractionOfDaysOver0p05": 0.04994935715524085,
+   "worstTen": [
+    {
+     "ttDays": -29004.507724846277,
+     "year": 1920.5899856951505,
+     "dLonArcsec": -20.46806228378273,
+     "dLatArcsec": 20.472554818835423,
+     "elongDeg": 0.02341143050558177,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 30895.647585414874,
+     "year": 2084.587673060684,
+     "dLonArcsec": 8.368550560362564,
+     "dLatArcsec": -8.370703609961646,
+     "elongDeg": 0.04086711670699245,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 1492.8635602004679,
+     "year": 2004.0872376733757,
+     "dLonArcsec": 7.2960020250775415,
+     "dLatArcsec": -7.294299431089845,
+     "elongDeg": 0.047307067012012385,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 1125.4478296059483,
+     "year": 2003.0813082261627,
+     "dLonArcsec": 6.671534570409676,
+     "dLatArcsec": 6.672305778755685,
+     "elongDeg": 0.05122673408033497,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 31263.277994368982,
+     "year": 2085.594190265213,
+     "dLonArcsec": -5.735511548118666,
+     "dLatArcsec": 5.7364347158390085,
+     "elongDeg": 0.05711017330462664,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -29372.147187193303,
+     "year": 1919.583443703783,
+     "dLonArcsec": 4.027522651972504,
+     "dLatArcsec": -4.028282258963461,
+     "elongDeg": 0.07966600256550053,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -28637.049271127376,
+     "year": 1921.5960321119032,
+     "dLonArcsec": 2.8824856690334855,
+     "dLatArcsec": 2.8820901486701747,
+     "elongDeg": 0.11032587641549374,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 30528.219429899553,
+     "year": 2083.581709595892,
+     "dLonArcsec": -2.4062454272439027,
+     "dLatArcsec": -2.405805811412365,
+     "elongDeg": 0.13163186725240886,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 1860.2133094719993,
+     "year": 2005.0929864735715,
+     "dLonArcsec": 2.3657619664618323,
+     "dLatArcsec": -2.3653588770233047,
+     "elongDeg": 0.13792730704480116,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 758.1757893592002,
+     "year": 2002.0757721816815,
+     "dLonArcsec": -2.3011689630038745,
+     "dLatArcsec": 2.3006767221939617,
+     "elongDeg": 0.14188844636761988,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    }
+   ]
+  },
+  "Pluto": {
+   "daysScanned": 109591,
+   "nPeaks": 253,
+   "maxAbsDLonArcsec": 3.7231346144324107,
+   "maxAbsDLonOutsideDiscArcsec": 0.7109150493249672,
+   "elongAtMaxDeg": 0.08649724580682565,
+   "daysWithDLonOver0p05": 613,
+   "daysWithDLonOver0p01": 23785,
+   "fractionOfDaysOver0p05": 0.005593525015740343,
+   "worstTen": [
+    {
+     "ttDays": -25375.312128636608,
+     "year": 1930.5261817148894,
+     "dLonArcsec": 3.7231346144324107,
+     "dLatArcsec": -3.7271883042941183,
+     "elongDeg": 0.08649724580682565,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 6950.1071858821615,
+     "year": 2019.02835642952,
+     "dLonArcsec": -1.9220415439576755,
+     "dLatArcsec": -1.9249394381480878,
+     "elongDeg": 0.1702340665440977,
+     "insideSolarDisc": true,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -25008.345076979378,
+     "year": 1931.5308827461208,
+     "dLonArcsec": -0.7109150493249672,
+     "dLatArcsec": 0.7116627622089755,
+     "elongDeg": 0.4455479095352514,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 6582.452584711873,
+     "year": 2018.0217729903131,
+     "dLonArcsec": 0.5240290366373301,
+     "dLatArcsec": 0.5248297534703683,
+     "elongDeg": 0.6217296741733426,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -25742.265880446328,
+     "year": 1929.5215170966562,
+     "dLonArcsec": 0.518869177204806,
+     "dLatArcsec": -0.5194202441836548,
+     "elongDeg": 0.6103804463943886,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": 7316.37519835124,
+     "year": 2020.0311435957597,
+     "dLonArcsec": 0.3440305100639307,
+     "dLatArcsec": -0.3434466647326495,
+     "elongDeg": 0.9487270287780062,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -24642.850464881005,
+     "year": 1932.531552457547,
+     "dLonArcsec": 0.3229997428434217,
+     "dLatArcsec": 0.32260510484674043,
+     "elongDeg": 0.9811849143553912,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -24641.352740862974,
+     "year": 1932.5356530024285,
+     "dLonArcsec": -0.3222954627403851,
+     "dLatArcsec": 0.3225972383081199,
+     "elongDeg": 0.9823460291880824,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -26107.474039143883,
+     "year": 1928.521631651899,
+     "dLonArcsec": -0.28115666615349255,
+     "dLatArcsec": -0.2808007939182122,
+     "elongDeg": 1.1276306092132184,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    },
+    {
+     "ttDays": -26109.194432874443,
+     "year": 1928.5169214705697,
+     "dLonArcsec": 0.28055546447944835,
+     "dLatArcsec": -0.2808075190926296,
+     "elongDeg": 1.1287946872732992,
+     "insideSolarDisc": false,
+     "limiterBound": false
+    }
+   ]
+  }
+ }
+}

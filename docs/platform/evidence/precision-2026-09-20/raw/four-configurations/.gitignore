@@ -1,0 +1,15 @@
+# Per-instant Swiss Ephemeris longitudes, and the per-row tables that carry a
+# Swiss column beside ours.
+#
+# RIGHTS.md's standing position is that Swiss output is used here as a
+# MEASUREMENT and is not redistributed, which sidesteps the unsettled
+# question of whether the AGPL reaches a program's numerical output. Bulk
+# per-instant Swiss values are therefore not committed. What is committed is
+# report.json, which carries only differences and summary statistics, and the
+# instant lists, which are ours.
+#
+# Re-create these by re-running the harness against a local Swiss ephemeris:
+#   node examples/precision-alpha/tools/measure/four-configurations.mjs \
+#     --pack <pack> --kernel <kernel> --ephe <swiss-ephe-dir>
+swiss-*.json
+rows-*.json

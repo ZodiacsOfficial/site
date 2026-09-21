@@ -78,11 +78,15 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       ? '2026-07-19'
       : ['/', '/learn/zodiac-dates/', '/learn/glossary/'].includes(loc) ? '2026-07-11' : '2026-07-10',
   ] as const),
-  ['/developers/', '2026-09-07'] as const,
-  ['/developers/support/', '2026-09-07'] as const,
-  ['/developers/examples/', '2026-09-07'] as const,
-  ['/developers/compare/', '2026-09-17'] as const,
-  ['/developers/mcp/', '2026-09-17'] as const,
+  // Developer pages date from the last commit that changed their content, not
+  // from the review cycle that first shipped the section; these had drifted a
+  // fortnight behind edits that were live.
+  ['/developers/', '2026-09-20'] as const,
+  ['/developers/support/', '2026-09-20'] as const,
+  ['/developers/engine/', '2026-09-20'] as const,
+  ['/developers/examples/', '2026-09-17'] as const,
+  ['/developers/compare/', '2026-09-18'] as const,
+  ['/developers/mcp/', '2026-09-18'] as const,
   ['/lunar-return/', '2026-09-06'] as const,
   ['/tools/', '2026-09-06'] as const,
   // Astrofolio on the Fomo app: the consumer landing page for the twelve.
@@ -161,6 +165,10 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ...['/numerology/', '/tools/', '/methodology/'].map((loc) => [loc, NUMEROLOGY_LASTMOD] as const),
   ...LIFE_PATH_PAGES.map((page) => [`/numerology/life-path/${page.number}/`, page.updated] as const),
   ['/void-of-course-moon/', VOID_OF_COURSE_LASTMOD] as const,
+  // The ephemeris section now carries a measured comparison against Swiss
+  // Ephemeris in place of the upstream library's own arcminute target. Last,
+  // so it wins over the numerology cycle's date for the same page.
+  ['/methodology/', '2026-09-20'] as const,
 ]);
 
 function getLastmod(loc: string): string {
@@ -246,6 +254,7 @@ export const GET: APIRoute = async () => {
     { loc: '/widgets/', priority: 0.6 },
     { loc: '/developers/', priority: 0.6 },
     { loc: '/developers/support/', priority: 0.6 },
+    { loc: '/developers/engine/', priority: 0.6 },
     { loc: '/developers/examples/', priority: 0.6 },
     { loc: '/developers/compare/', priority: 0.6 },
     { loc: '/developers/mcp/', priority: 0.6 },

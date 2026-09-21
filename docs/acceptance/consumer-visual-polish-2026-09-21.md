@@ -62,3 +62,14 @@ remain unchanged.
 The capture runs above were stopped after successful receipt and visual
 comparison collection. The separate Site Check runs the complete browser and
 performance gates before release; capture-only completion is not a substitute.
+
+## Integration follow-up
+
+Main advanced to `35532f17dd5b286484c041844590bc95e7d030a6` while the
+release checks ran. Its developer preview and documentation changes are
+preserved. Conflicts were limited to screenshot evidence; fresh captures of
+the combined source are required before release.
+
+The compact sign picker now uses the existing WebP derivatives (18,844 bytes
+in total, versus 61,126 bytes for AVIF) at low fetch priority. Layout and icon
+dimensions are unchanged. No performance threshold or visual tolerance changes.

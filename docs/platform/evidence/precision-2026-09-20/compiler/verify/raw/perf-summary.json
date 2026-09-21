@@ -1,0 +1,150 @@
+{
+ "reps": 3,
+ "note": "median of three processes; ten bodies per iteration; data acquisition excluded",
+ "targets": {
+  "core": {
+   "dataMiB": 0,
+   "warmP50Ms": 0.1544005000000226,
+   "warmP95Ms": 0.3233505999999955,
+   "warmP99Ms": 0.45882888000000627,
+   "spreadP50Ms": 0.15236699999999814,
+   "spreadP95Ms": 0.32044384999999087,
+   "coldP50Ms": 0.6016329999999925,
+   "firstColdMs": 28.422860000000007,
+   "peakRssMiB": 70.89,
+   "peakRssRuns": [
+    70.89,
+    71.44,
+    70.7
+   ]
+  },
+  "prototype": {
+   "dataMiB": 31.21,
+   "warmP50Ms": 0.3328924999999927,
+   "warmP95Ms": 1.0600445999999926,
+   "warmP99Ms": 1.2844605799999924,
+   "spreadP50Ms": 0.2977610000000084,
+   "spreadP95Ms": 1.106586649999997,
+   "coldP50Ms": 1.952967000000001,
+   "firstColdMs": 5.728507999999998,
+   "peakRssMiB": 64.14,
+   "peakRssRuns": [
+    64.14,
+    63.89,
+    64.81
+   ]
+  },
+  "A resident": {
+   "dataMiB": 4.78,
+   "warmP50Ms": 0.042087500000000944,
+   "warmP95Ms": 0.11662209999999983,
+   "warmP99Ms": 0.26827059999999253,
+   "spreadP50Ms": 0.021899500000003513,
+   "spreadP95Ms": 0.05897329999999951,
+   "coldP50Ms": 3.0969300000000004,
+   "firstColdMs": 6.043984999999999,
+   "peakRssMiB": 68.54,
+   "peakRssRuns": [
+    68.35,
+    68.54,
+    68.73
+   ]
+  },
+  "A low-memory": {
+   "dataMiB": 4.78,
+   "warmP50Ms": 0.03988300000000322,
+   "warmP95Ms": 0.11887315000000546,
+   "warmP99Ms": 0.2513337500000044,
+   "spreadP50Ms": 0.043210999999999444,
+   "spreadP95Ms": 0.07581640000000574,
+   "coldP50Ms": 0.562227,
+   "firstColdMs": 3.761465000000001,
+   "peakRssMiB": 62.95,
+   "peakRssRuns": [
+    62.47,
+    64.09,
+    62.95
+   ]
+  },
+  "B resident": {
+   "dataMiB": 4.76,
+   "warmP50Ms": 0.05469099999999827,
+   "warmP95Ms": 0.1190910000000121,
+   "warmP99Ms": 0.2589582399999913,
+   "spreadP50Ms": 0.0324175000000011,
+   "spreadP95Ms": 0.053235249999999464,
+   "coldP50Ms": 3.490086000000005,
+   "firstColdMs": 6.667106999999994,
+   "peakRssMiB": 67.91,
+   "peakRssRuns": [
+    68.08,
+    67.73,
+    67.91
+   ]
+  },
+  "B low-memory": {
+   "dataMiB": 4.76,
+   "warmP50Ms": 0.05027800000000582,
+   "warmP95Ms": 0.12063285000000189,
+   "warmP99Ms": 0.26168324000000065,
+   "spreadP50Ms": 0.0398814999999999,
+   "spreadP95Ms": 0.09808644999999451,
+   "coldP50Ms": 1.0049050000000008,
+   "firstColdMs": 4.422927000000001,
+   "peakRssMiB": 62.61,
+   "peakRssRuns": [
+    61.94,
+    63.11,
+    62.61
+   ]
+  },
+  "C resident": {
+   "dataMiB": 1.78,
+   "warmP50Ms": 1.2105690000000209,
+   "warmP95Ms": 1.6257499500000046,
+   "warmP99Ms": 2.417954980000051,
+   "spreadP50Ms": 1.1980030000000284,
+   "spreadP95Ms": 1.3635638000000538,
+   "coldP50Ms": 5.1521199999999965,
+   "firstColdMs": 36.56698299999999,
+   "peakRssMiB": 80.81,
+   "peakRssRuns": [
+    79.75,
+    80.83,
+    80.81
+   ]
+  },
+  "D resident": {
+   "dataMiB": 1.66,
+   "warmP50Ms": 0.05141900000000277,
+   "warmP95Ms": 0.12381574999999483,
+   "warmP99Ms": 0.23600082000000153,
+   "spreadP50Ms": 0.04062100000000157,
+   "spreadP95Ms": 0.05853974999999492,
+   "coldP50Ms": 2.384560999999998,
+   "firstColdMs": 5.8259279999999976,
+   "peakRssMiB": 65.01,
+   "peakRssRuns": [
+    64.61,
+    65.16,
+    65.01
+   ]
+  },
+  "D low-memory": {
+   "dataMiB": 1.66,
+   "warmP50Ms": 0.05523799999999568,
+   "warmP95Ms": 0.13277109999999637,
+   "warmP99Ms": 0.2652152900000092,
+   "spreadP50Ms": 0.052535499999997626,
+   "spreadP95Ms": 0.10330169999999865,
+   "coldP50Ms": 1.2396990000000017,
+   "firstColdMs": 4.644305000000003,
+   "peakRssMiB": 62.72,
+   "peakRssRuns": [
+    62.72,
+    62.83,
+    62.71
+   ]
+  }
+ }
+}
