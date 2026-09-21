@@ -551,6 +551,14 @@ var DPPLAN_B = -135e-6;
 var DEPLAN_B = 388e-6;
 var fmod = (x, y) => x % y;
 var arcsecArg = (a) => fmod(a, TURNAS) * DAS2R;
+var DELAUNAY_2000B = Object.freeze({
+  el: Object.freeze([485868.249036, 17179159232178e-4]),
+  elp: Object.freeze([128710479305e-5, 1295965810481e-4]),
+  f: Object.freeze([335779.526232, 17395272628478e-4]),
+  d: Object.freeze([107226070369e-5, 1602961601209e-3]),
+  om: Object.freeze([450160.398036, -69628905431e-4])
+});
+var PLANETARY_BIAS_2000B = Object.freeze({ dpsi: DPPLAN_B, deps: DEPLAN_B });
 function nut00b(t) {
   const el = arcsecArg(485868.249036 + 17179159232178e-4 * t);
   const elp = arcsecArg(128710479305e-5 + 1295965810481e-4 * t);
@@ -600,6 +608,7 @@ function nutAstronomyEngine(t) {
   de += (73871 - 184 * t) * carg - 1924 * sarg;
   return { dpsi: DPPLAN_B + dp * U2A, deps: DEPLAN_B + de * U2A };
 }
+var OBL06_COEFFICIENTS = Object.freeze([84381.406, -46.836769, -1831e-7, 20034e-7, -576e-9, -434e-10]);
 function meanObliquityArcsec(t) {
   return ((((-434e-10 * t - 576e-9) * t + 20034e-7) * t - 1831e-7) * t - 46.836769) * t + 84381.406;
 }
@@ -641,6 +650,11 @@ var R3 = (a) => {
   const c = Math.cos(a);
   return [[c, s, 0], [-s, c, 0], [0, 0, 1]];
 };
+var PFW06_COEFFICIENTS = Object.freeze({
+  gamb: Object.freeze([-0.052928, 10.556378, 0.4932044, -31238e-8, -2788e-9, 26e-9]),
+  phib: Object.freeze([84381.412819, -46.811016, 0.0511268, 53289e-8, -44e-8, -176e-10]),
+  psib: Object.freeze([-0.041775, 5038.481484, 1.5584175, -18522e-8, -26452e-9, -148e-10])
+});
 function pfw06(t) {
   const gamb = (-0.052928 + (10.556378 + (0.4932044 + (-31238e-8 + (-2788e-9 + 26e-9 * t) * t) * t) * t) * t) * DAS2R2;
   const phib = (84381.412819 + (-46.811016 + (0.0511268 + (53289e-8 + (-44e-8 + -176e-10 * t) * t) * t) * t) * t) * DAS2R2;
