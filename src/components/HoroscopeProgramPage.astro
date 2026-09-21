@@ -281,33 +281,6 @@ const skyMarkers = reading.skyStrip.markers;
       ))}
     </nav>
 
-    {skyMarkers.length > 0 && (
-      <aside class="program__sky" aria-label={displayText(reading.skyStrip.label)}>
-        <div class="program__sky-heading">
-          <span class="program__sky-dot" aria-hidden="true"></span>
-          <span class="mono">
-            {editionDate
-              ? <EditionText current={reading.skyStrip.label} editionDate={editionDate} />
-              : reading.skyStrip.label}
-          </span>
-        </div>
-        <div class="program__sky-markers">
-          {skyMarkers.map((marker) => (
-            <p class="program__sky-marker">
-              <span class="mono">{marker.label}</span>
-              {marker.datetime
-                ? <time datetime={marker.datetime}>{marker.value}</time>
-                : <strong>{marker.value}</strong>}
-            </p>
-          ))}
-        </div>
-      </aside>
-    )}
-
-    {surface === 'today' && (
-      <UpcomingEventLinks date={reading.datePublished.slice(0, 10)} compact />
-    )}
-
     <section class="program__reading" aria-labelledby="reading-heading">
       <div class="program__reading-head">
         <span class="mono">The reading</span>
@@ -343,6 +316,33 @@ const skyMarkers = reading.skyStrip.markers;
       <GuideQuickPrompts prompts={QUICK_PROMPTS[surface]} />
 
     </section>
+
+    {skyMarkers.length > 0 && (
+      <aside class="program__sky" aria-label={displayText(reading.skyStrip.label)}>
+        <div class="program__sky-heading">
+          <span class="program__sky-dot" aria-hidden="true"></span>
+          <span class="mono">
+            {editionDate
+              ? <EditionText current={reading.skyStrip.label} editionDate={editionDate} />
+              : reading.skyStrip.label}
+          </span>
+        </div>
+        <div class="program__sky-markers">
+          {skyMarkers.map((marker) => (
+            <p class="program__sky-marker">
+              <span class="mono">{marker.label}</span>
+              {marker.datetime
+                ? <time datetime={marker.datetime}>{marker.value}</time>
+                : <strong>{marker.value}</strong>}
+            </p>
+          ))}
+        </div>
+      </aside>
+    )}
+
+    {surface === 'today' && (
+      <UpcomingEventLinks date={reading.datePublished.slice(0, 10)} compact />
+    )}
 
     <details class="program__basis">
       <summary>

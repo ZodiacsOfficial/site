@@ -39,7 +39,7 @@ describe('learning path progress', () => {
       expect(markup).toContain(`href="${href}"`);
     }
     expect(markup).toContain('5 steps to explore');
-    expect(markup).toContain('Check off each step yourself after reading and reflecting.');
+    expect(markup).toContain('Check off each step as you go.');
     expect(markup).not.toContain('Opening your saved path');
     expect(markup).not.toContain('Loading');
     expect(markup).not.toContain('Mark Meet the three sides of you complete');

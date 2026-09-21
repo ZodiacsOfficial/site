@@ -343,7 +343,7 @@ function resolvePositions(
 }
 
 function SlotForm({
-  slot, setSlot, charts, idPrefix, fallbackLabel, locale, loadEngine, quickFill,
+  slot, setSlot, charts, idPrefix, fallbackLabel, locale, loadEngine,
 }: {
   slot: SlotState;
   setSlot: (updater: (s: SlotState) => SlotState) => void;
@@ -352,12 +352,6 @@ function SlotForm({
   fallbackLabel: string;
   locale: Locale;
   loadEngine: EngineLoader;
-  quickFill?: {
-    label: string;
-    dismissLabel: string;
-    onUse: () => void;
-    onDismiss: () => void;
-  };
 }) {
   if (slot.source === 'positions' && slot.positions) {
     return (
@@ -411,19 +405,6 @@ function SlotForm({
 
   return (
     <div class="syn__slot">
-      {quickFill && (
-        <div class="syn__quick-fill">
-          <button type="button" class="syn__quick-use" onClick={quickFill.onUse}>
-            {quickFill.label}
-          </button>
-          <button
-            type="button"
-            class="syn__quick-dismiss"
-            aria-label={quickFill.dismissLabel}
-            onClick={quickFill.onDismiss}
-          >×</button>
-        </div>
-      )}
       <span class="mono--label">{fallbackLabel}</span>
 
       {charts.length > 0 && (
@@ -1414,6 +1395,15 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             </div>
           )}
           {prefilledPairMod && <prefilledPairMod.PrefilledPairNotice locale={locale} />}
+          {showQuickFill && (
+            <div class="syn__quick-fill">
+              <button type="button" class="syn__quick-use" onClick={() => {
+                setQuickFillDismissed(true);
+                setSlotA((s) => ({ ...s, source: 'saved', savedId: latestChart.id }));
+              }}>{pcf(locale, 'useMyChart', { handle: handleOf(latestChart.name) })}</button>
+              <button type="button" class="syn__quick-dismiss" aria-label={pc(locale, 'dismissMyChart')} onClick={() => setQuickFillDismissed(true)}>×</button>
+            </div>
+          )}
           <div class="syn__slots">
             <SlotForm
               slot={slotA}
@@ -1423,15 +1413,6 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               fallbackLabel={t(locale, 'personA')}
               locale={locale}
               loadEngine={loadEngine}
-              quickFill={showQuickFill ? {
-                label: pcf(locale, 'useMyChart', { handle: handleOf(latestChart.name) }),
-                dismissLabel: pc(locale, 'dismissMyChart'),
-                onUse: () => {
-                  setQuickFillDismissed(true);
-                  setSlotA((s) => ({ ...s, source: 'saved', savedId: latestChart.id }));
-                },
-                onDismiss: () => setQuickFillDismissed(true),
-              } : undefined}
             />
             <SlotForm slot={slotB} setSlot={(u) => setSlotB(u)} charts={charts} idPrefix="syn-b" fallbackLabel={t(locale, 'personB')} locale={locale} loadEngine={loadEngine} />
           </div>
@@ -1441,6 +1422,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
             <span class="orb">↗</span>
           </button>
           <p class="calc__privacy">{t(locale, 'privacyDevice')}</p>
+          {locale === 'en' && <p class="calc__guide">Questions about these charts? <a href="/ask/" data-assistant-open>Ask Guide</a></p>}
           {sameSaved && (
             <p class="field__help">{t(locale, 'sameChart')}</p>
           )}

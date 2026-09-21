@@ -22,14 +22,15 @@
    calculator card past the viewport edge. */
 .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .field__label {
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: 0;
   color: var(--muted);
 }
 .field__toggle {
@@ -37,7 +38,8 @@
   align-items: center;
   gap: 6px;
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
+  min-height: 32px;
   letter-spacing: 0;
   text-transform: none;
   color: var(--faint);
@@ -51,7 +53,7 @@
   border: 1px solid var(--hair-2);
   background: var(--void-1);
   color: var(--text);
-  font-size: 15px;
+  font-size: 16px;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
   width: 100%;
   min-width: 0;
@@ -79,8 +81,8 @@
 }
 .field__input[aria-invalid='true'] { border-color: var(--sign-aries); }
 .field__input:disabled { opacity: 0.45; }
-.field__help { margin: 0; font-size: 12.5px; color: var(--faint); }
-.field__error { margin: 0; font-size: 12.5px; color: var(--sign-aries); }
+.field__help { margin: 0; font-size: 13px; color: var(--faint); }
+.field__error { margin: 0; font-size: 13px; color: var(--sign-aries); }
 .calc__context-cue { font-size: 11px; line-height: 1.5; }
 
 .calc__submit { width: 100%; justify-content: space-between; }
@@ -395,7 +397,7 @@
   color: var(--faint);
   letter-spacing: 0.05em;
 }
-.wheel--animate { animation: wheel-in 900ms var(--ease) both; }
+.wheel--animate { animation: wheel-in 260ms var(--ease) both; }
 @keyframes wheel-in {
   from { opacity: 0; transform: scale(0.965); }
   to { opacity: 1; transform: none; }
@@ -886,7 +888,7 @@
   align-items: stretch;
   width: fit-content;
   max-width: 100%;
-  margin-bottom: 2px;
+  margin-bottom: 14px;
   overflow: hidden;
   border: 1px solid var(--hair-2);
   border-radius: var(--r-full);
@@ -2617,3 +2619,16 @@
 }
 .pf-records__item .pf-chart__action--danger { margin-left: 8px; }
 .calc__record-keep { display: grid; gap: 8px; margin-top: 10px; }
+
+/* Optional form detail stays available without delaying the first chart. */
+.calc__options { grid-column: 1 / -1; min-width: 0; }
+.calc__options summary { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; color: var(--text-2); font-size: 14px; }
+.calc__options summary::before { content: '+'; color: var(--muted); }
+.calc__options[open] summary::before { content: '−'; }
+.calc__options summary span { color: var(--muted); font-size: 13px; }
+.calc__options .field { margin-top: 8px; max-width: 56ch; }
+.calc__guide { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+.calc__guide a { color: var(--text-2); text-underline-offset: 3px; }
+@media (max-width: 560px) {
+  body:has(.calc__guide) .zguide-launcher { display: none; }
+}

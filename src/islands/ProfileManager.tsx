@@ -958,7 +958,7 @@ export default function ProfileManager({
 
   if (profile.charts.length === 0) {
     return (
-      <div class="pf">
+      <div class="pf" id="saved-charts" tabIndex={-1}>
         <p class="sr-only" role="status">{pairAnnounce}</p>
         {/* Inline-side pairs need no saved charts — still show them. */}
         {pairsBlock}
@@ -969,7 +969,7 @@ export default function ProfileManager({
   }
 
   return (
-    <div class="pf">
+    <div class="pf" id="saved-charts" tabIndex={-1}>
       <p class="sr-only" role="status">{pairAnnounce}</p>
       <p class="pf-count mono">
         {PF_BOOK_COPY[locale].count(profile.charts.length)}

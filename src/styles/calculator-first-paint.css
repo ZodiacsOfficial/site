@@ -21,15 +21,16 @@
 
 .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .field__label {
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   color: var(--muted);
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: 0;
 }
 .field__labelrow {
   display: flex;
@@ -44,7 +45,8 @@
   gap: 6px;
   color: var(--faint);
   font-family: var(--font-sans);
-  font-size: 12px;
+  font-size: 13px;
+  min-height: 32px;
   letter-spacing: 0;
   text-transform: none;
   cursor: pointer;
@@ -61,7 +63,7 @@
   color: var(--text);
   background: var(--void-1);
   color-scheme: dark;
-  font-size: 15px;
+  font-size: 16px;
   transition: border-color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
 }
 .field__input[type='date'],
@@ -80,8 +82,8 @@
 }
 .field__input[aria-invalid='true'] { border-color: var(--sign-aries); }
 .field__input:disabled { opacity: 0.45; }
-.field__help { margin: 0; color: var(--faint); font-size: 12.5px; }
-.field__error { margin: 0; color: var(--sign-aries); font-size: 12.5px; }
+.field__help { margin: 0; color: var(--faint); font-size: 13px; }
+.field__error { margin: 0; color: var(--sign-aries); font-size: 13px; }
 
 .calc__submit { width: 100%; justify-content: space-between; }
 @media (min-width: 720px) {
@@ -171,4 +173,17 @@
   outline: 2px solid color-mix(in oklab, var(--accent) 75%, white);
   outline-offset: 3px;
   border-radius: var(--r-xs);
+}
+
+/* Optional form detail stays available without delaying the first chart. */
+.calc__options { grid-column: 1 / -1; min-width: 0; }
+.calc__options summary { display: flex; align-items: center; gap: 8px; min-height: 44px; cursor: pointer; color: var(--text-2); font-size: 14px; }
+.calc__options summary::before { content: '+'; color: var(--muted); }
+.calc__options[open] summary::before { content: '−'; }
+.calc__options summary span { color: var(--muted); font-size: 13px; }
+.calc__options .field { margin-top: 8px; max-width: 56ch; }
+.calc__guide { margin: 14px 0 0; font-size: 13px; color: var(--muted); }
+.calc__guide a { color: var(--text-2); text-underline-offset: 3px; }
+@media (max-width: 560px) {
+  body:has(.calc__guide) .zguide-launcher { display: none; }
 }

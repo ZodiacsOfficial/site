@@ -4673,7 +4673,7 @@
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>Meet the official Zodiac for your sign&mdash;its design, story, and public record.</p>
+          <p>The Zodiac token collection. Explore your sign’s design, story, and verified public record.</p>
         </header>
       );
     }

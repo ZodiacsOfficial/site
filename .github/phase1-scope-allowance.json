@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "id": "widgets-privacy-closeout-2026-09-19",
-  "baseCommit": "43f1024359bdbca7320bf807f1890541763e83ad",
+  "id": "approved-consumer-visual-polish-2026-09-21",
+  "baseCommit": "d4828d8052da41609dc3b833d546707f4c41fedf",
   "protectedPaths": [
-    "src/strings/additions.es.mjs",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "public/assets/app.js",
+    "src/app.jsx",
+    "src/pages/[sign]/index.astro",
+    "src/pages/learn/how-to-read-a-birth-chart.astro",
+    "src/pages/learn/index.astro"
   ],
-  "authorization": "The owner expressly authorizes a one-time edit of widgets.privacyNote in exactly these four Phase 1-frozen catalogs in the 2026-09-19 ZODIACS release-closeout request, section 3A. Translate the current English browser-calculation, city-list request and embed-request privacy meaning; preserve all other entries and the freeze. This allowance is pinned to the tested current main base."
+  "authorization": "The owner approved the visual front-end audit proposals on 2026-09-21: \"approved. go change and then move forward to next\". This one-time allowance covers clearer Astrofolio token-collection labeling and regenerated application output, placing sign-guide reading before promotions, shorter Learn onboarding, and the confirmed missing-space defects. Preserve the existing design, content, calculation behavior, and protected-scope guard."
 }

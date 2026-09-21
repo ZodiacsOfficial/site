@@ -84,7 +84,7 @@ describe('Phase 1 layout and motion contract', () => {
       source('pages/today/index.astro'),
     ]);
 
-    expect(fallback).toContain("class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}");
+    expect(fallback).toContain("class={`today-fallback__status${noChartConfirmed || selfChartUnselected || comparisonUnavailable ? ' is-visible' : ''}`}");
     expect(fallback).toContain('const introCopy = `This is usually the zodiac sign');
     expect(fallback).toContain('<p>{introCopy}</p>');
     expect(fallback).not.toContain('clear note for the {editionLabel} edition');
