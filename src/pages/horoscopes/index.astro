@@ -69,7 +69,7 @@ const jsonLd = [
     <nav class="horo-picker" aria-label="Choose your horoscope sign">
       {cards.map(({ sign }) => (
         <a href={`/horoscopes/${sign.slug}/`} style={`--sign:${sign.hue}`}>
-          <SignIcon sign={sign.slug} size={24} />
+          <SignIcon sign={sign.slug} size={24} webpOnly fetchPriority="low" />
           <span>{sign.name}</span>
         </a>
       ))}
