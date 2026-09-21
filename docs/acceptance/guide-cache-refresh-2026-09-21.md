@@ -19,6 +19,13 @@ the shared Guide asset references was changed.
 
 The Guide unit suite passes, including a new contract that checks the generated
 loader URL and revalidation headers for all four stable assets. A production
-build and bundle budgets pass. Fresh browser receipts and complete Site Check
-remain required before release. Final live verification must use the same
+build and bundle budgets pass. Fresh browser receipts and all 15 visual comparisons pass on source
+`0977a152ba0b902c9368df18bf32d58794d6020d`; the 18 captured page images are
+byte-identical to the already-reviewed polish captures. Complete Site Check
+remains required before release. Final live verification must use the same
 returning browser that reproduced the defect, without clearing its cache.
+
+Capture: https://github.com/ZodiacsOfficial/site/actions/runs/35613860413
+
+The capture job was stopped after successful receipt and visual comparison
+collection. The complete Site Check is the independent release gate.
