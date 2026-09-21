@@ -17,6 +17,11 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: site-check-${{ github.event.pull_request.number || github.ref }}
+  # Superseded PR checks can stop; production checks finish normally.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build-check:
     name: Build & Check
@@ -77,12 +82,8 @@ jobs:
         run: |
           ! grep -RInE 'Rowan Vale|about/#editor([^i]|$)|"@type"[[:space:]]*:[[:space:]]*"Person"' src
 
-      - name: Verify daily editorial package
-        run: npm run editorial:daily:verify
-
-      - name: Replay 30 daily editions
-        run: npm run editorial:daily:replay
-
+      # npm's prebuild already verifies the package and replays 30 editions.
+      # Keep that release gate, without running it twice in this same job.
       - name: Build
         run: npm run build
 
