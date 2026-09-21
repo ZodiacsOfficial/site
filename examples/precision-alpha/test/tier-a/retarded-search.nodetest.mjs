@@ -465,7 +465,7 @@ test('the result names what it does not apply, and does not claim to be apparent
     assert.ok(missing.includes(term), `${term} must be named as not applied`);
   }
   assert.equal(RETARDED_CONTRACT.applied.length, 1);
-  assert.equal(r.request.frame, 'j2000-mean-ecliptic');
+  assert.equal(r.request.frame, 'ecliptic-of-the-icrs-equator');
 });
 
 test('light-time actually moves the event, and by about the light travel time', () => {

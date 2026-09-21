@@ -66,8 +66,16 @@ const SUPPLEMENT = BODIES.map((body, i) => {
   return { id: `M${i + 1}`, body, from, to,
     targetDeg: Number(ref.lonDeg(body, (tdb(from) + tdb(to)) / 2).toFixed(6)) };
 });
+// T1 is the one case that does NOT follow the midpoint rule, and saying
+// so is the point: its window is a month later than S1's preregistered
+// one and its target is read at the retrograde arc's middle, not the
+// window's. The read-off date is inert (every date from 2018-07-05 to
+// 2018-08-20 gives three crossings); the WINDOW is not -- the stated
+// rule on S1's own window gives two. Named here so the disclosure
+// travels with the case.
 SUPPLEMENT.push({ id: 'T1', body: 'Mars', from: '2018-05-01T00:00:00Z', to: '2018-11-01T00:00:00Z',
-  targetDeg: Number(ref.lonDeg('Mars', tdb('2018-07-27T00:00:00Z')).toFixed(6)), expectEvents: 3 });
+  targetDeg: Number(ref.lonDeg('Mars', tdb('2018-07-27T00:00:00Z')).toFixed(6)), expectEvents: 3,
+  why: 'a window and read-off date both chosen after the holdout, unlike M1-M10' });
 
 function runCase(c) {
   const a = tdb(c.from);
@@ -119,7 +127,7 @@ for (const c of HOLDOUT) {
 }
 
 for (const c of SUPPLEMENT) {
-  test(`supplementary ${c.id}: ${c.body} at its own midpoint longitude`, () => {
+  test(`supplementary ${c.id}: ${c.body} at ${c.why ?? 'its own midpoint longitude'}`, () => {
     const { r, reference } = runCase(c);
     assert.equal(r.events.length, reference.roots.length);
     // The supplement exists to exercise the root path, so a case that

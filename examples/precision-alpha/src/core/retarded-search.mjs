@@ -44,7 +44,8 @@ const SIN_E = Math.sin((EPS0_ARCSEC / 3600) * DEG);
 
 export const RETARDED_CONTRACT = Object.freeze({
   operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME, in the fixed J2000 mean ecliptic frame, reaching a given value',
-  frame: 'j2000-mean-ecliptic',
+  frame: 'ecliptic-of-the-icrs-equator',
+  frameNote: 'The ICRS equator rotated by the IAU 2006 mean obliquity at J2000 (84381.406 arcsec). This is NOT the J2000 mean equinox: the IAU 2006 ICRS frame bias, a fixed rotation of 23.1 mas, is not applied. Measured against Swiss Ephemeris in J2000, the difference is a rotation of |omega| = 23.111 mas fitted at 99.9 per cent of variance, matching the published bias (xi0 -16.617, eta0 -6.819, dalpha0 -14.6 mas) to 0.16 per cent. It projects onto ecliptic longitude as about 7.7 mas on average. The label used to read j2000-mean-ecliptic, which overstated it.',
   origin: 'geocentric',
   timeScale: 'TDB seconds past J2000, in and out. No TT or UTC conversion happens inside this operation.',
   lightTime: 'Newtonian reception: tau = |r_target(t - tau) - r_observer(t)| / c, with the OBSERVER at reception time t and the target at emission time t - tau. Solved as a verified contraction, not by iterating until two values agree.',
