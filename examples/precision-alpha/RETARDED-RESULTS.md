@@ -236,6 +236,53 @@ where the body moves quickly: 1.3 mas on the Moon is a τ difference of
 about 2.4 ms. For slow bodies it constrains nothing, which is why §4a
 measures τ directly.)
 
+That answers "is it the solver" — no — but leaves "then what is it". The
+preregistration says this gap is reported, not bounded, and reporting is
+not the same as shrugging, so it was pursued one step further. Two
+candidates make opposite predictions, and the events already span a
+distance ratio of **12 914 : 1**.
+
+*A position error* — the observer's or the target's — shifts a direction
+by (error ⁄ distance), so it must fall off with distance.
+*A frame rotation* shifts every longitude by the same angle at every
+distance.
+
+| body | mean geocentric distance | mean offset | predicted by a 4.9 km observer error |
+| --- | --- | --- | --- |
+| Moon | 0.0026 AU | −0.00868″ | 2.62251″ |
+| Mars | 0.97 AU | −0.00601″ | 0.00694″ |
+| Sun | 1.01 AU | −0.00609″ | 0.00670″ |
+| Venus | 1.71 AU | −0.00653″ | 0.00396″ |
+| Jupiter | 4.50 AU | −0.00695″ | 0.00150″ |
+| Saturn | 9.76 AU | −0.00692″ | 0.00069″ |
+| Uranus | 19.31 AU | −0.00649″ | 0.00035″ |
+| Neptune | 30.08 AU | −0.00699″ | 0.00022″ |
+
+Distance moves by a factor of 12 914; the offset moves by a factor of 4.1
+and shows no trend at all. Position error is ruled out at both ends: at
+Neptune it would have to be some 150 000 km of target position to produce
+0.007″, and the 4.9 km observer offset it *would* explain at 1 AU
+predicts 0.0002″ there, thirty times too small. The Moon is a second,
+independent check on the observer half: this pack forms the geocentric
+Moon as (1 + 1/EMRAT) × the stored lunar series, so a barycentre error
+cancels out of it exactly — and it shows the same −0.0087″ anyway.
+
+**So the systematic pack-versus-Swiss longitude offset is a rotation of
+roughly 7 milliarcseconds, not an ephemeris position error and not this
+operation.** Which convention difference produces that rotation —
+equinox definition, frame bias, or the obliquity constant used to form
+the J2000 ecliptic — is *not* established here and should not be guessed
+at; identifying it is a separate piece of work.
+
+Two facts worth recording from the same measurement. The two
+ephemerides' barycentric Earth agree to **11.8 km** (−4.9 km along-track,
+almost constant; ±16 km cross-track; radial under 1 km). And Swiss's
+`FLG_BARYCTR` Earth is itself light-time corrected — the first comparison
+came out 14 846 km adrift, purely along-track, which is 498.4 s at
+Earth's orbital speed, one solar light-time. `FLG_TRUEPOS` removes it.
+Neither is an error in anything; both are the kind of thing that turns
+into a false accuracy claim if it goes unnoticed.
+
 ### 4c · The correction applied, beside the corrections not applied
 
 This is the comparison the mandate insists on: never put a light-time-only
