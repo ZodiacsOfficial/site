@@ -1,17 +1,25 @@
 # Precision preview — closeout
 
-2026-09-20. Branch `claude/eager-ramanujan-razak3`, 17 commits from
-`542c0e72`, 96 files, +18,104 / −490.
+2026-09-20, last revised 2026-09-21. Branch
+`claude/eager-ramanujan-razak3`, 51 commits against `main` at `d4828d80`,
+526 files, +145,809 / −112. (This document's first revision counted 17
+commits and 96 files from `542c0e72`; the base has moved and the branch
+has grown, so the counts are restated against the base the pull request
+actually merges into.)
 
-One integrator and three bounded specialists: an adversarial review of the
+One integrator and five bounded specialists: an adversarial review of the
 result contract, one of the preview's isolation, one of the evaluation's
-integrity. **All three were AI reviews.** No human has reviewed this work,
-no third party has audited it, and nothing here is certified by anyone.
+integrity, one of the completeness argument's floating-point soundness,
+and one of the research write-up's claims. **All five were AI reviews.**
+No human has reviewed this work, no third party has audited it, and
+nothing here is certified by anyone.
 
-The three reviews found nine real defects, including two false exact
-totals and a regression case that had been silently substituted. Every one
-is fixed with a test, and the sections below say which. That is the most
-useful thing in this document.
+Between them they found **twelve real defects** — including three false
+exact totals, a regression case that had been silently substituted, and a
+**false theorem at the centre of the completeness proof**. Every one is
+fixed with a test, and the sections below say which. That is the most
+useful thing in this document. One reviewer claim was itself wrong and was
+corrected rather than acted on; §4 names it.
 
 ---
 
@@ -46,14 +54,15 @@ metadata, and the four-configuration benchmark's interpretation.
 
 | | `empirical-apparent` | `validated-geometric` |
 | --- | --- | --- |
-| quantity | apparent geocentric ecliptic longitude **of date** | geometric ecliptic longitude in the **fixed J2000** frame |
+| quantity | apparent geocentric ecliptic longitude **of date** | geometric ecliptic longitude in a **fixed ecliptic frame** — the ICRS equator rotated by ε₀, which is 23.1 mas from the J2000 mean equinox |
 | corrections | light-time, aberration, solar deflection, frame bias, IAU 2006 precession, IAU 2000B nutation | **none** — that is what makes it a polynomial |
 | strongest claim | `conditional`, on three named assumptions | `proven` |
 | what the proof is | — | `Σ\|c_k\|` bounds a Chebyshev sum because every `\|T_k\| ≤ 1`; the same recurrence bounds the derivatives; those give an exclusion test and a monotonicity test that are statements about the stored polynomial |
 | what it is about | — | **the pack**, not the sky |
 
-They are **incomparable, not ordered**. A proof about geometric J2000 and
-a conditional statement about apparent-of-date answer different questions,
+They are **incomparable, not ordered**. A proof about a geometric
+longitude in a fixed frame and a conditional statement about
+apparent-of-date answer different questions,
 and for the Sun the two crossings differ by about eight hours. An earlier
 draft of the results called the proven mode "strictly stronger"; it is
 not, and that is corrected.
@@ -119,7 +128,7 @@ What the numbers do not say, and now do:
   tangency, close pair or boundary root. Those live only in the synthetic
   suite.
 
-### What the three reviews found
+### What the five reviews found
 
 | # | found | fixed by |
 | --- | --- | --- |
@@ -133,8 +142,31 @@ What the numbers do not say, and now do:
 | 8 | **The preview's page was written to Cache Storage** on any ordinary visit | excluded in `sw.js`; two tests |
 | 9 | **The cancel button's test passed with the worker never stopped** — every value it read was written by the click handler | it watches the worker |
 
+| 10 | **A false theorem at the centre of the completeness proof** — the exclusion test used `(hi − lo) / 2` as its Lipschitz lever arm about the computed midpoint. `hi − lo` is exact by Sterbenz but `lo + hi` rounds, so the midpoint sits off-centre and the true `max\|x − m\|` over the cell exceeds that half-width, by a third of it on a three-ulp cell. The test was reasoning over a shorter interval than the cell it was about | `max(hi − m, m − lo)`, which is exact, free, and identical whenever the midpoint is centred; a test that asserts the property the proof needs |
+| 11 | **The declared frame was 23.1 mas from the frame it named** — both contracts said `j2000-mean-ecliptic`; what is computed is the ICRS equator rotated by ε₀, with no IAU 2006 frame bias | `frame: 'ecliptic-of-the-icrs-equator'` and a `frameNote` carrying the measurement |
+| 12 | **Nine overstatements in the research write-up**, among them a per-cell τ width quoted beside event results (overstating the error by eight orders of magnitude), a cancellation "latency" that was total runtime, and a cost attributed to iteration count that measurement put on cell count | each number remeasured and the claim rewritten to what the measurement supports |
+
 Plus nine rules of the evaluation plan that were implemented loosely, and
 four checks in the browser driver that could not fail. All corrected.
+
+**One reviewer claim was wrong, and was corrected instead of acted on.**
+Review 5 held that evaluating the observer at the retarded time reproduces
+stellar aberration. It does for the Sun — 5.4 mas — and nowhere else:
+across all events the median disagreement with the aberration term is
+10.6″. The write-up says so rather than repeating it.
+
+**Two defects were found by the integrator, not by a review**, while
+verifying #10 and #11, and are recorded here so the review count is not
+read as the defect count. Both are record-addressing faults in the same
+family as #10, both exhibited on a real pack: `seriesAt` could return a
+record not containing the requested instant and evaluate at
+\|τ\| = 1.0000000000000202, exactly where `Σ\|c_k\|` stops bounding the
+series; and the enclosure walk discarded the record index it already held,
+re-deriving it from a midpoint that rounds onto a boundary, so the
+enclosure excluded the value it was built to contain (22.5 m, then
+0.07 km). A third: after #11 renamed `frame`, the same object's
+`operation` string and `notApplied` array still carried the old claim, so
+the contract contradicted itself; fixed in `07a40b73`.
 
 ## 5 · Installing from a clean directory
 
@@ -304,6 +336,7 @@ Not the best anything. No superior physical astronomy — agreement with
 Swiss Ephemeris is consistency between two descendants of the same JPL
 development ephemerides, and the one place they disagree by an arcsecond
 turns out to be two implementations of solar deflection for a body behind
-the Sun, where nothing is observable. No independent certification: three
-AI reviews, named as such. No external adoption: nobody is using this. The
+the Sun, where nothing is observable. No independent certification: five
+AI reviews, named as such, and a proof that had a false theorem in it
+until the fourth of them. No external adoption: nobody is using this. The
 interfaces will change.
