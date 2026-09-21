@@ -7451,7 +7451,7 @@
       max-width: 60ch;
       margin: 27px 0 0;
       color: var(--ink-2);
-      font: 400 clamp(16px, 1.7vw, 20px)/1.55 var(--sans);
+      font: 400 18px/1.55 var(--sans);
       text-wrap: pretty;
     }
 
@@ -7474,27 +7474,24 @@
       cursor: pointer;
     }
     .static-vitrine__rail {
-      display: flex;
-      gap: 9px;
-      overflow-x: auto;
-      padding: 3px 2px 16px;
-      scroll-padding-inline: 2px;
-      scroll-snap-type: x mandatory;
-      scrollbar-color: var(--hair-2) transparent;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 7px 6px;
+      overflow: visible;
+      padding: 4px 0 0;
     }
     .static-vitrine__rail label {
       position: relative;
-      flex: 0 0 68px;
+      min-width: 0;
       min-height: 72px;
       display: grid;
       place-items: center;
-      gap: 7px;
-      padding: 8px 4px;
+      gap: 8px;
+      padding: 9px 0 7px;
       border: 0;
-      border-radius: 0;
+      border-radius: 13px;
       color: var(--ink-dim);
-      font: 500 11px/1 var(--sans);
-      scroll-snap-align: center;
+      font: 500 9px/1.3 var(--sans);
       cursor: pointer;
       transition: none;
     }
@@ -7502,8 +7499,8 @@
       position: relative;
       display: grid;
       box-sizing: border-box;
-      width: 50px;
-      height: 50px;
+      width: 34px;
+      height: 34px;
       aspect-ratio: 1;
       place-items: center;
       border-radius: 50%;
@@ -7530,8 +7527,8 @@
       position: relative;
       z-index: 1;
       display: block;
-      width: 42px;
-      height: 42px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       opacity: .86;
       filter: none;
@@ -7550,7 +7547,8 @@
     .static-vitrine__rail label[for="astrofolio-pisces"] { --disc: #A9D4C4; }
 
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) {
-      background: transparent;
+      background: color-mix(in srgb, var(--disc) 7%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--disc) 17%, transparent);
       color: var(--ink);
     }
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {
@@ -7628,7 +7626,7 @@
     .consumer-static .static-vitrine__placard h2 {
       max-width: none;
       margin: 0;
-      font: 400 clamp(58px, 7.5vw, 94px)/.86 var(--serif);
+      font: 400 62px/1 var(--serif);
       letter-spacing: -.04em;
     }
     .static-vitrine__dates {
@@ -8065,10 +8063,11 @@
       .static-astrofolio-opening { padding-top: 8px; }
       .static-astrofolio-header h1 { font-size: clamp(56px, 17vw, 78px); }
       .static-vitrine { margin-top: 10px; }
-      .static-vitrine__rail { margin-inline: -2px; padding-bottom: 8px; }
-      .static-vitrine__rail label { flex-basis: 64px; min-height: 62px; }
-      .static-vitrine__disc { width: 46px; height: 46px; }
-      .static-vitrine__rail img { width: 38px; height: 38px; }
+      .static-astrofolio-header > p:last-child { font-size: 16px; }
+      .static-vitrine__rail { gap: 5px 2px; }
+      .static-vitrine__rail label { min-height: 64px; padding: 7px 1px; font-size: 8px; }
+      .static-vitrine__disc,
+      .static-vitrine__rail img { width: 29px; height: 29px; }
       .static-vitrine__panel {
         grid-template-columns: minmax(0, 1fr);
         grid-template-areas: "stage";
@@ -8085,7 +8084,7 @@
         padding-top: 68px;
         background: linear-gradient(180deg, transparent, rgba(6, 7, 9, .82) 30%, var(--bg) 59%);
       }
-      .consumer-static .static-vitrine__placard h2 { font-size: clamp(58px, 19vw, 82px); }
+      .consumer-static .static-vitrine__placard h2 { font-size: 50px; }
       .static-vitrine__dates { margin-top: 9px; }
       .static-vitrine__price { margin-top: 15px; }
       .static-vitrine__actions { margin-top: 17px; }
@@ -8126,7 +8125,9 @@
       .static-astrofolio-header > p:last-child { margin-top: 18px; line-height: 1.42; }
       .static-vitrine { margin-top: 5px; }
       .static-vitrine__rail { padding-bottom: 4px; }
-      .static-vitrine__rail label { min-height: 58px; padding-block: 4px; }
+    }
+    @media (max-width: 359px) {
+      .static-vitrine__rail { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .consumer-static *,
@@ -8644,39 +8645,33 @@
       max-width: 39ch;
       margin: clamp(20px, 2.4vw, 30px) 0 0;
       color: var(--ink-2);
-      font: 400 clamp(16px, 1.3vw, 19px)/1.55 var(--sans);
+      font: 400 18px/1.55 var(--sans);
       letter-spacing: 0;
       text-wrap: pretty;
     }
 
     .consumer-registry .vitrine-disc-rail {
       grid-area: selector;
-      display: flex;
-      gap: 9px;
+      --vitrine-selector-columns: 6;
+      display: grid;
+      grid-template-columns: repeat(var(--vitrine-selector-columns), minmax(0, 1fr));
+      gap: 7px 6px;
       width: 100%;
-      padding: 5px 4px 10px;
-      overflow-x: auto;
-      overscroll-behavior-inline: contain;
-      scroll-behavior: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      /* The rail always holds more discs than the column shows; the fade
-         turns the hard mid-disc crop at the trailing edge into a scroll cue. */
-      -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
-      mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent);
+      padding: 4px 0 0;
+      overflow: visible;
     }
-    .consumer-registry .vitrine-disc-rail::-webkit-scrollbar { display: none; }
     .consumer-registry .vitrine-disc {
-      flex: 0 0 62px;
       display: grid;
       justify-items: center;
       gap: 8px;
       min-width: 0;
-      padding: 4px 2px 2px;
+      width: 100%;
+      min-height: 72px;
+      padding: 9px 0 7px;
+      border-radius: 13px;
       color: var(--ink-mute);
-      font: 500 11px/1.15 var(--sans);
+      font: 500 9px/1.3 var(--sans);
       letter-spacing: 0;
-      scroll-snap-align: center;
       text-transform: none;
     }
     .consumer-registry .vitrine-disc:focus-visible {
@@ -8687,8 +8682,8 @@
       position: relative;
       display: block;
       box-sizing: border-box;
-      width: 50px;
-      height: 50px;
+      width: 34px;
+      height: 34px;
       aspect-ratio: 1;
       border: 0;
       border-radius: 50%;
@@ -8716,15 +8711,19 @@
     .consumer-registry .vitrine-disc img {
       position: relative;
       z-index: 1;
-      width: 42px;
-      height: 42px;
-      margin: 4px auto;
+      width: 34px;
+      height: 34px;
+      margin: 0;
       border-radius: 50%;
       opacity: .86;
       filter: none;
       transition: none;
     }
-    .consumer-registry .vitrine-disc.is-active { color: var(--ink); }
+    .consumer-registry .vitrine-disc.is-active {
+      color: var(--ink);
+      background: color-mix(in srgb, var(--sign) 7%, transparent);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sign) 17%, transparent);
+    }
     .consumer-registry .vitrine-disc.is-active picture {
       box-shadow:
         0 0 0 2px var(--bg),
@@ -8828,7 +8827,7 @@
     .consumer-registry .vitrine-placard__identity h2 {
       margin: 0;
       color: var(--ink);
-      font: 500 clamp(50px, 5vw, 76px)/.86 var(--serif);
+      font: 500 62px/1 var(--serif);
       letter-spacing: -.045em;
     }
     .consumer-registry .vitrine-price {
@@ -10234,8 +10233,11 @@
         padding: 92px 0 44px;
       }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(54px, 16vw, 76px); }
-      .consumer-registry .terminal-consumer-hero p { max-width: 36ch; margin-top: 18px; }
-      .consumer-registry .vitrine-disc-rail { margin-top: 2px; }
+      .consumer-registry .terminal-consumer-hero p { max-width: 36ch; margin-top: 18px; font-size: 16px; }
+      .consumer-registry .vitrine-disc-rail { margin-top: 2px; gap: 5px 2px; }
+      .consumer-registry .vitrine-disc { min-height: 64px; padding: 7px 1px; font-size: 8px; }
+      .consumer-registry .vitrine-disc picture,
+      .consumer-registry .vitrine-disc img { width: 29px; height: 29px; }
       .consumer-registry .vitrine-stage {
         justify-self: center;
         width: min(100%, 416px);
@@ -10261,7 +10263,7 @@
         padding-top: 68px;
         background: linear-gradient(180deg, transparent, rgba(6, 7, 9, .82) 30%, var(--bg) 59%);
       }
-      .consumer-registry .vitrine-placard__identity h2 { font-size: clamp(50px, 15vw, 68px); }
+      .consumer-registry .vitrine-placard__identity h2 { font-size: 50px; }
       .consumer-registry .vitrine-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-registry > .consumer-buy,
       .consumer-registry > .consumer-intro,
@@ -10341,10 +10343,7 @@
       .consumer-registry .astrofolio-lockup__avatar { width: 52px; height: 52px; flex-basis: 52px; }
       .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
       .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(51px, 15vw, 64px); }
-      .consumer-registry .terminal-consumer-hero p { font-size: 15px; line-height: 1.5; }
-      .consumer-registry .vitrine-disc { flex-basis: 58px; }
-      .consumer-registry .vitrine-disc picture { width: 46px; height: 46px; }
-      .consumer-registry .vitrine-disc img { width: 38px; height: 38px; }
+      .consumer-registry .terminal-consumer-hero p { font-size: 16px; line-height: 1.5; }
       .consumer-registry .vitrine-placard__actions {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 9px;
@@ -10409,6 +10408,10 @@
       .consumer-market-gateway__action { width: 100%; }
       .consumer-registry .vrf { grid-template-columns: minmax(0, 1fr); }
       .consumer-registry .vrf__submit { width: 100%; }
+    }
+
+    @media (max-width: 359px) {
+      .consumer-registry .vitrine-disc-rail { --vitrine-selector-columns: 4; }
     }
 
     @media (prefers-reduced-motion: reduce) {

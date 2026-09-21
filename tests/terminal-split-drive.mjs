@@ -223,11 +223,28 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.equal(filters.length, 12);
   assert.ok(filters.every((filter) => filter === 'none'), `all twelve selector discs stay pastel at ${width}x${height}`);
 
+  const grid = await page.locator(staticView ? '.static-vitrine__rail' : '.vitrine-disc-rail').evaluate((node) => {
+    const bounds = node.getBoundingClientRect();
+    return {
+      columns: getComputedStyle(node).gridTemplateColumns.split(' ').length,
+      width: node.clientWidth,
+      scrollWidth: node.scrollWidth,
+      choices: [...node.children].map((choice) => {
+        const rect = choice.getBoundingClientRect();
+        return { width: rect.width, height: rect.height, left: rect.left - bounds.left, right: rect.right - bounds.left };
+      }),
+    };
+  });
+  assert.equal(grid.columns, width < 360 ? 4 : 6);
+  assert.equal(grid.choices.length, 12);
+  assert.ok(grid.scrollWidth <= grid.width, 'all signs fit without horizontal scrolling');
+  assert.ok(grid.choices.every((choice) => choice.width >= 44 && choice.height >= 44), 'every sign remains touch-safe');
+  assert.ok(grid.choices.every((choice) => choice.left >= -1 && choice.right <= grid.width + 1), 'every sign is fully exposed');
   const wrapper = await page.locator(wrapperSelector).boundingBox();
   const image = await page.locator(activeImageSelector).boundingBox();
   assert.ok(wrapper && image);
-  const expectedWrapper = width <= 480 ? 46 : 50;
-  const expectedImage = width <= 480 ? 38 : 42;
+  const expectedWrapper = width <= (staticView ? 720 : 899) ? 29 : 34;
+  const expectedImage = expectedWrapper;
   assert.ok(Math.abs(wrapper.width - expectedWrapper) <= .01 && Math.abs(wrapper.height - expectedWrapper) <= .01);
   assert.ok(Math.abs(image.width - expectedImage) <= .01 && Math.abs(image.height - expectedImage) <= .01);
   const deltaX = (image.x + image.width / 2) - (wrapper.x + wrapper.width / 2);
@@ -476,6 +493,15 @@ try {
     await page.keyboard.press('Home');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('tabindex'), '0');
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await page.locator('[data-consumer-sign="libra"]').getAttribute('aria-pressed'), 'true');
+    await page.keyboard.press('ArrowUp');
+    assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
+    await page.setViewportSize({ width: 320, height: 844 });
+    await assertPastelSelectorGeometry(page, { width: 320, height: 844 });
+    await page.keyboard.press('ArrowDown');
+    assert.equal(await page.locator('[data-consumer-sign="leo"]').getAttribute('aria-pressed'), 'true');
+    await page.setViewportSize({ width: 390, height: 844 });
     await page.keyboard.press('End');
     assert.equal(await page.locator('[data-consumer-sign="pisces"]').getAttribute('aria-pressed'), 'true');
 

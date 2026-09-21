@@ -50,9 +50,9 @@ describe('registry pastel polish', () => {
     expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
     expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
     const hydratedDisc = cssRule(lit, '.consumer-registry .vitrine-disc img {');
-    expect(hydratedDisc).toContain('width: 42px;');
-    expect(hydratedDisc).toContain('height: 42px;');
-    expect(hydratedDisc).toContain('margin: 4px auto;');
+    expect(hydratedDisc).toContain('width: 34px;');
+    expect(hydratedDisc).toContain('height: 34px;');
+    expect(hydratedDisc).toContain('margin: 0;');
     expect(hydratedDisc).toContain('opacity: .86;');
     expect(hydratedDisc).toContain('filter: none;');
     expect(hydratedDisc).not.toContain('grayscale');
@@ -81,7 +81,7 @@ describe('registry pastel polish', () => {
     expect(lit).not.toContain('var(--gold-deep)');
   });
 
-  it('keeps the compact swipe rail and gives the final Astrofolio market gateway touch-safe chrome', async () => {
+  it('keeps all twelve signs visible and gives the final Astrofolio market gateway touch-safe chrome', async () => {
     const css = await read('src/terminal/split-styles.css');
     const rail = cssRule(css, '.consumer-registry .vitrine-disc-rail {');
     const gateway = cssRule(css, '.consumer-market-gateway__action {');
@@ -89,8 +89,8 @@ describe('registry pastel polish', () => {
     const staticShopAsset = cssRule(css, '.consumer-static .static-shop__image img {');
 
     expect(rail).toContain('grid-area: selector;');
-    expect(rail).toContain('overflow-x: auto;');
-    expect(rail).toContain('scroll-snap-type: x mandatory;');
+    expect(rail).toContain('overflow: visible;');
+    expect(rail).toContain('grid-template-columns: repeat(var(--vitrine-selector-columns), minmax(0, 1fr));');
     expect(css).not.toContain('.consumer-registry .vitrine-disc-picker');
 
     expect(gateway).toContain('min-height: 52px;');
@@ -183,7 +183,7 @@ describe('registry pastel polish', () => {
     expect(stage).toContain('height: auto;');
     expect(stage).toContain('aspect-ratio: 6 / 5;');
     expect(lit).toContain('aspect-ratio: 4 / 5;');
-    expect(lit).toContain('scroll-snap-type: x mandatory;');
+    expect(lit).toContain('--vitrine-selector-columns: 4;');
     expect(lit).toContain('transition: none;');
   });
 

@@ -5864,9 +5864,13 @@
       };
       const onKeyDown = (event) => {
         if (event.altKey || event.ctrlKey || event.metaKey) return;
+        const columns = Number.parseInt(window.getComputedStyle(railRef.current)
+          .getPropertyValue('--vitrine-selector-columns'), 10) || 6;
         const moves = {
           ArrowRight: Math.min(SIGNS.length - 1, activeIndex + 1),
           ArrowLeft: Math.max(0, activeIndex - 1),
+          ArrowDown: activeIndex + columns < SIGNS.length ? activeIndex + columns : activeIndex,
+          ArrowUp: activeIndex >= columns ? activeIndex - columns : activeIndex,
           Home: 0,
           End: SIGNS.length - 1,
         };
@@ -5874,13 +5878,6 @@
         event.preventDefault();
         choose(moves[event.key], true);
       };
-      useEffect(() => {
-        railRef.current?.querySelector('[aria-pressed="true"]')?.scrollIntoView({
-          inline: 'center',
-          block: 'nearest',
-          behavior: 'instant',
-        });
-      }, [active]);
       return (
         <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
           {SIGNS.map((item, index) => {
