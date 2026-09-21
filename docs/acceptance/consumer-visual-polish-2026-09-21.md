@@ -23,12 +23,14 @@ behavior.
 
 ## Browser verification
 
-The production build was checked at 390, 768, and 1440 pixels. Synthetic local
+The production build was checked at 320, 360, 390, 768, and 1440 pixels. Synthetic local
 charts exercised calculation, saving, self versus other-person selection, and
 the saved-chart shortcut. The shortcut settles 110 pixels below the viewport
 top, clear of navigation. Compatibility fields align across both columns at
 768 pixels. Guide opens in place, including keyboard activation, without
 navigating to `/ask/`. Optional chart settings expand and update normally.
+At 320 pixels, the horoscope sign picker uses two columns; every label fits
+inside its button. Wider layouts retain three or six columns.
 
 ## Durable evidence
 
@@ -38,8 +40,10 @@ visual baselines cover five routes at 390 and 1440 pixels and reduced motion.
 Only reviewed captures are committed. Pixel tolerances and acceptance rules
 remain unchanged.
 
-- Source reviewed: `9875981be019e4eafa63f83b343242038c18b75e`.
+- Final source reviewed: `4e03bcf96a3812d751fd6ddca9ce46e7662fcc4c`.
 - Comparison: https://github.com/ZodiacsOfficial/site/actions/runs/35588947480
+- Final comparison, all 15 cases pass:
+  https://github.com/ZodiacsOfficial/site/actions/runs/35591532359
 - Pull request: https://github.com/ZodiacsOfficial/site/pull/547
 
 - Reviewed candidates: https://github.com/ZodiacsOfficial/site/actions/runs/35589647454
