@@ -565,7 +565,8 @@ recorded" suggests.
   event times, and §2 reports a worst root error of 3.1 × 10⁻⁴ s. The
   pack-versus-Swiss offset, converted through each body's own longitude
   rate, runs from 0.004 s (Moon) to **44.7 s (Pluto)**, median 0.022 s —
-  Sun 0.14 s, Mars 0.24–0.50 s, Jupiter 1.53 s, Neptune 5.0–6.3 s. A
+  Sun 0.14–0.16 s, Mars 0.24–0.50 s, Jupiter 1.53 s, Saturn 2.1–2.4 s,
+  Neptune 5.0–6.3 s, Uranus 7.6–7.8 s. A
   reader who takes the 3.1 × 10⁻⁴ s and stops is off by five orders of
   magnitude on Pluto. The two numbers answer different questions and
   both are needed.
@@ -588,10 +589,12 @@ recorded" suggests.
   and the conversion an earlier draft offered was wrong (§4b). It is the
   one open number here.
 - **L10 is weaker than preregistered.** §7 of the preregistration asks
-  for two roots closer than a tenth of the window. As implemented the
-  case has five roots with the closest pair 0.148 of the window apart.
-  It still tests close-pair resolution; it does not test what was
-  declared.
+  for "two roots closer than a tenth of the window". As implemented the
+  case has **five** analytic roots over a 172 800 s window with the
+  closest pair 26 006 s apart — **0.1505 of the window**, against the
+  17 280 s the condition calls for. It still tests close-pair
+  resolution, and the operation returns all five; it does not test what
+  was declared.
 - **The soundness of the proof rests on fixes made after these results
   were first written.** An adversarial review found a false `proven` —
   the exclusion test's lever arm was `(hi − lo) / 2`, which is shorter

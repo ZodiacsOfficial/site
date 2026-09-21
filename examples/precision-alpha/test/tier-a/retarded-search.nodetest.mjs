@@ -388,6 +388,19 @@ test('L10: two closely spaced roots are both found, or refused — never one', (
     prev = cur;
   }
   assert.ok(roots.length >= 2, `this case needs at least two analytic roots, it has ${roots.length}`);
+  // The preregistration asked for "two roots closer than a tenth of the
+  // window". Measured, this geometry gives five roots with the closest
+  // pair 26,006 s apart in a 172,800 s window -- 0.1505, not under 0.1.
+  // The case still exercises close-pair resolution and the shortfall is
+  // recorded in RETARDED-RESULTS.md section 7, but asserting it here
+  // stops the gap being quietly forgotten if the geometry is retuned.
+  {
+    let closest = Infinity;
+    for (let i = 1; i < roots.length; i += 1) closest = Math.min(closest, roots[i] - roots[i - 1]);
+    const fraction = closest / (2 * DAY);
+    assert.ok(fraction > 0.1,
+      `this case now MEETS the preregistered tenth-of-a-window condition (${fraction.toFixed(4)}); update section 7, which records that it does not`);
+  }
   const r = search(eph, { targetDeg: L, fromTdbSec: -DAY, toTdbSec: DAY });
   if (r.completeness.established) {
     assert.equal(r.events.length, roots.length, `proven, so the count must be exact: ${r.events.length} against ${roots.length}`);
