@@ -27,15 +27,19 @@ by hand because their frame is fixed.
 
 Verified rather than asserted: the released chain and the interval chain
 agree to **2.2e-16** per matrix element, and the published ERFA `t_ecm06`
-matrix is reproduced to **1e-14** and lies inside the interval enclosure
-everywhere.
+matrix is reproduced to **1e-14** in every one of its nine elements at
+ERFA's own test epoch, each inside the interval enclosure.
 
 **It is the mean ecliptic, true equinox.** Nutation is a motion of the
 equator, not of the ecliptic. "True ecliptic of date" is not a frame this
 construction produces and the phrase appears nowhere. Dropping `dpsi`
-gives the **mean** equinox, about 17 arcsec away — a different rung, not a
-tolerance, and `frame-of-date.nodetest.mjs` asserts the size of that gap so
-the two cannot be quietly confused.
+gives the **mean** equinox. The two rungs are separated by the nutation in
+longitude, which over 1950–2100 runs from −18.96″ to +18.89″ **and passes
+through zero** — so it is not a fixed 17 arcsec, and it is a different
+rung rather than a tolerance. `frame-of-date.nodetest.mjs` asserts that at
+the ERFA test epoch the gap lies between 1 and 20 arcsec (measured
+16.09″), which is three orders from the 23 mas frame bias it must not be
+confused with.
 
 ### The model pairing is this repository's, not ERFA's
 
@@ -64,8 +68,9 @@ Pinned sources: **IAU SOFA Issue 2023-10-11** and its ERFA equivalent
 | mean ecliptic, **mean** equinox | IS `eraEcm06`'s frame. Published 3x3 `t_ecm06` reproduced to 1e-14, inside the enclosure |
 | mean ecliptic, **true** equinox — **the one this mode uses** | **no published matrix exists.** `eraEcm06`, `eraEceq06` and `eraEqec06` are all mean-equinox; ERFA ships none |
 
-The true-equinox rung is checked by construction, by its 17-arcsec
-separation from the mean rung, and against the released reducer. That is a
+The true-equinox rung is checked by construction, by its separation from
+the mean rung (the nutation in longitude, up to about 19 arcsec and
+periodically near zero), and against the released reducer. That is a
 weaker external check than the mean rung has, and nothing below describes
 the two as equally checked.
 
@@ -88,7 +93,7 @@ never summed:
 
 | source | bounded | measured on the holdout |
 | --- | --- | --- |
-| implementation, numerical | yes, proven | frame enclosure up to **3.00 arcsec** on the widest accepted cell |
+| implementation, numerical | yes, proven | frame enclosure **3.00 arcsec** on the widest accepted cell, which is **32 days** wide |
 | conversion approximation | yes | **1.4e-10 arcsec**: the model's stated 3e-5 s carried into longitude through the frame's own rate |
 | external time model | **no** | stated, never bounded here |
 
@@ -98,13 +103,23 @@ longitude; carried through the frame's own rate it is a tenth of a
 nanoarcsecond, and no amount of tightening the intervals would shrink it,
 because it is a property of the model and not of this code.
 
-The first row is the honest cost. On a day-wide cell the interval
-evaluation of a 77-term nutation series overestimates badly — three
-arcseconds against a true daily variation of hundredths — because each
-term's argument sweeps far enough for its interval sine to span most of
-its amplitude. It does not matter here: the cells that decide roots are
-narrow, and every holdout case still closed. It would matter to anyone
-trying to use a day-wide cell's frame enclosure for something else.
+The first row is the honest cost, and the cell it belongs to is part of
+it. The widest accepted cell on this holdout is **32 days** (F10, Pluto,
+2 764 800 s), and the result now reports that width beside the span,
+because a span without its cell means nothing — the interval evaluation
+grows with the cell, and an earlier draft of this paragraph said "three
+arcseconds on a day-wide cell", wrong by a factor of thirty in the width.
+
+Measured over F10's own window:
+
+| cell | enclosure span | true variation over the same cell | ratio |
+| --- | --- | --- | --- |
+| 32 days | 3.007″ | 0.924″ | 3.3× |
+| 1 day | 0.258″ | 0.049″ | 5.2× |
+
+So the interval evaluation of the 77-term series overestimates by a factor
+of three to five, not by orders. It costs nothing here: the cells that
+decide roots are narrow, and every holdout case still closed.
 
 **Supported range**: 1900-01-01 to 2100-01-01, IAU 2000B's own span,
 intersected with the pack's coverage. The search does not refuse outside it
@@ -130,18 +145,32 @@ and not redistributed: payload `0a218764…`.
 | worst frame-ladder residual | 6.2e-4 s (tolerance 2e-3 s) |
 | cost | 561 100 evaluations, 20 986 cells, 6.9 s |
 
-**The frame is nearly free.** Rung 3 on the same twenty cases costs 548 866
-evaluations; rung 4 costs 561 100. **2.2 % more** for a date-dependent
-rotation, its derivative, a time-scale conversion and its derivative, all
-in interval arithmetic with validated trigonometry.
+**The frame costs 2.2 % more search work.** Rung 3 on the same twenty cases
+costs 548 866 evaluations; rung 4 costs 561 100 — for a date-dependent
+rotation, its derivative, a time-scale conversion and its derivative, all in
+interval arithmetic with validated trigonometry.
+
+Two caveats, because this is the figure a reader would take furthest.
+`evaluations` counts EPHEMERIS evaluations, and the frame chain runs per
+cell rather than per evaluation, so this is the metric the frame least
+affects — it is a statement about subdivision, not about compute. And wall
+time is no substitute: the two rungs run in the same process and rung 3
+measured *slower* (7 873 ms against 6 889 ms), which is an artefact, not a
+result.
 
 Twelve of twenty cases contain crossings. The eight antipode cases
 reporting zero events did work rather than skipping it: `f` vanishes on the
 whole line through a longitude, so each has roots at the same instants as
-its partner and the half-plane `g > 0` is the only thing separating them.
-**25 f-roots found and rejected** as the wrong direction, with completeness
-still established. The tier-B suite `deepEqual`s the per-case counts, so
-that cannot rot into a vacuous pass.
+its partner, and the half-plane `g > 0` is the only thing separating them.
+B1 costs the same 12 cells and 635 evaluations as F1, and so on down the
+series — the work is done and then thrown away.
+
+Across **all ten** antipode cases the independent reference finds **25**
+`f`-roots that `g > 0` rejects as the wrong direction; **13** of those fall
+in the eight zero-event cases, the other 12 in B2 (11) and B4 (1), which do
+report events. The table below is the reference's own count, not the
+solver's bookkeeping. The tier-B suite `deepEqual`s it per case and pins the
+total, so it cannot rot into a vacuous pass.
 
 | case | signChanges | kept | rejected |
 | --- | --- | --- | --- |
@@ -163,9 +192,16 @@ s**. Both signs, because rung 4 moves a crossing forward or back depending
 on which way the body's longitude is running at it. One "characteristic"
 figure would be a selection.
 
-The size scales with how slowly the body moves. The Moon's shifts are about
-1 800–2 200 s; Uranus's are ±450 000 s. Same frame rotation of roughly a
-quarter of a degree, divided by wildly different rates.
+The size scales with two things: how slowly the body moves, and how far the
+case's epoch is from J2000. The Moon's 22 shifts run 1 743–2 222 s at a
+frame offset of 0.31°; Uranus's two are −470 641 s and +449 313 s at 0.10°.
+**The frame offset is not one number** — it is the precession accumulated
+between J2000 and each case's own window, which §9a spaces 900 days apart:
+0.34° for the Sun's 1975 window down to 0.034° for Pluto's 1997 one, a
+factor of ten across the holdout.
+
+The range above is over the eighteen crossings that have a ladder entry; F9
+and F10 have none, for the reason in the next section.
 
 **This is a frame difference. It is not improved physical accuracy, and it
 is not a defect in the fixed-frame modes**, which are correct about the
@@ -193,16 +229,48 @@ The two rungs look for the **same numeric longitude measured from
 different origins**. A crossing sitting inside one window and outside the
 other is what that means in practice, not a solver losing one.
 
-**The pass rule was changed after seeing this, and the change is a
-strengthening.** The aberrated tool's clause was "crossings but no ladder
-is a failure", which is right for rungs 1 to 3 because they share a frame.
-Rung 4 does not. The clause is now: when the rungs disagree about a count,
-the **two independent references must show the same difference their
-solvers do**, or the case fails. Both cases are corroborated — the of-date
-reference finds 2 and 2, the fixed-frame reference finds 1 and 0, matching
-their solvers exactly. The harness pins the set `{F9, F10}`, so if it ever
-grows this section is about a different set of cases and should be re-read
-rather than assumed.
+### The pass rule changed after the run, and it was RELAXED
+
+Calling it anything else would be wrong, and an earlier draft of this
+section called it a strengthening.
+
+The aberrated tool's clause was "crossings but no ladder is a failure",
+which is right for rungs 1 to 3 because they share a frame. Rung 4 does
+not, and under that clause F9 and F10 failed for exactly the reason above.
+Replaying the old predicate over the recorded rows reports those two and
+nothing else.
+
+The clause was therefore narrowed. The new predicate is the old one
+conjoined with further conditions, so it fails a **strict subset** of what
+the old one failed: two failures became passes and nothing new fails. That
+is a relaxation, whatever was put in its place.
+
+What *was* put in its place is genuinely new — no earlier rule compared the
+fixed-frame reference's count against the aberrated solver's — and a frame
+separation now has to clear two conditions, not one:
+
+1. **the two independent references show the same count difference their
+   solvers do**, so the difference is the frame and not a solver losing a
+   root. Both cases clear it: of-date reference 2 and 2, fixed-frame
+   reference 1 and 0, matching their solvers exactly;
+2. **rungs 1 to 3 still agree with each other.** They share a frame, so a
+   disagreement among them is a defect, not a separation. This condition
+   was added after review pointed out what the narrowing cost: the branch
+   is entered on the of-date count alone, so without it a light-time or
+   geometric defect in the same case would have gone unreported. Nothing
+   was masked in this run — F9 reads 1/1/1/2 across the four rungs and F10
+   reads 0/0/0/2 — but the rule was not looking.
+
+The harness pins the set `{F9, F10}`, so if it ever grows this section is
+about a different set of cases and should be re-read rather than assumed.
+
+One thing a reader cannot check from the repository: the failing run.
+`holdout-run.json` was committed alongside the rule change, so the only
+committed record was produced under the new rule. That the old rule failed
+these two is verifiable by replaying its predicate over the recorded rows,
+which is how it was confirmed — but it is not an artifact here, and "opened
+once, not tuned against" in §3 should be read against this section, not
+apart from it.
 
 ## 5 · The twelve synthetic frame cases
 
@@ -246,8 +314,21 @@ guards and are recorded as such.
 ## 6 · Evaluation: no `Math.sin` anywhere in the frame
 
 The frame chain uses `src/core/trig.mjs` — Cody-Waite argument reduction
-and a Taylor polynomial in `+`, `-` and `*` only, with a **proven absolute
-error bound of 4e-15**, measured at 1.5e-16 against a 60-digit reference.
+and a Taylor polynomial in `+`, `-` and `*` only, with a declared absolute
+error bound of **4e-15**.
+
+That bound is an **analysis**, derived term by term in the module's header,
+not a machine-checked proof. `test/tier-a/trig.nodetest.mjs` measures the
+realised error against a 70-digit BigInt reference — exact decomposition of
+the double under test, π to 80 digits, Taylor to exhaustion, sharing
+nothing with the implementation — over **40 656 arguments**, including
+every quadrant boundary of the reduction and the two doubles either side of
+each: **worst 1.484e-16 on sin, 1.330e-16 on cos**.
+
+That harness did not exist when the figure was first published here. The
+number was right; the artifact was missing, which made it a claim about a
+probe nobody could re-run — and it was being shipped inside
+`OF_DATE_CONTRACT.evaluation`, where a consumer reads it.
 
 Two reasons, and the first is the binding one. ECMAScript does not bound
 `Math.sin`'s error, so an enclosure built on it would not be a bound —
@@ -274,8 +355,12 @@ missed between two samples**, and no sentence here says otherwise.
 
 Near a stationary point a position error divided by a near-zero rate is not
 an uncertainty bound and is not reported as one. Where the rate enclosure
-straddles zero the bracket is the answer, and it is given as a bracket —
-the widest on this holdout is 1.0e-2 s, on the Moon.
+straddles zero the bracket is the answer, and it is given as a bracket.
+
+**No holdout case reaches that regime.** The widest bracket here is 1.0e-2
+s, on the Moon — the fastest body in the set, whose rate never approaches
+zero. It is width from subdivision, not from a vanishing rate, and the two
+should not be read as the same thing.
 
 The new mode is **not exposed in the public preview**. Its source is in the
 package behind the experimental import; the preview's two public modes are

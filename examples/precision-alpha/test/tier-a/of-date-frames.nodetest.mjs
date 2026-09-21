@@ -441,6 +441,11 @@ test('S7: a near-tangency under rotation keeps containment, and may report a wid
     EPH, { body: BODY, targetDeg, fromTdbSec: win[0], toTdbSec: win[1] }, rotatingFrame(OMEGA, win[0]),
   );
   const want = rootsOfDate(PAIR, mof, targetDeg, win[0], win[1], 400000);
+  // Non-vacuity, like every other case in this file. A `for (const w of
+  // want)` over an empty list asserts nothing, and section 10 requires the
+  // coverage to be met non-vacuously.
+  assert.ok(want.length >= 2,
+    `a near-tangency case needs the close pair either side of the extremum; the reference found ${want.length}`);
   // Containment is the claim; the bracket may be wide and the midpoint may
   // miss 1e-3 s, which is reported rather than tuned away.
   for (const w of want) {

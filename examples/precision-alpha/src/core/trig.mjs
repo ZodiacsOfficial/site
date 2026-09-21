@@ -49,11 +49,20 @@
  *
  * The last line dominates and is deliberately loose: it assumes every
  * rounding is worst-case and in the same direction, which they are not.
- * `ABS_ERR` below is set from it with room to spare, and
+ * `ABS_ERR` below is set from it with room to spare.
+ *
+ * The bound above is an ANALYSIS, not a machine-checked proof.
  * `test/tier-a/trig.nodetest.mjs` measures the actual worst error against
- * a 50-digit reference over the whole range to check that the ANALYSIS is
- * not wrong -- the measurement validates the bound, it does not replace
- * it.
+ * a 70-digit BigInt reference over the whole range, to catch the analysis
+ * being wrong: 1.484e-16 on sin and 1.330e-16 on cos over 40,656
+ * arguments, including every Cody-Waite quadrant boundary and the two
+ * doubles either side of it. The measurement validates the bound; it does
+ * not replace it.
+ *
+ * That file was named here before it existed, and the figures it now
+ * reports were quoted in the results and in `OF_DATE_CONTRACT` while no
+ * harness in this repository produced them. A measurement nobody can
+ * re-run is not a measurement.
  */
 import { fail } from './errors.mjs';
 import * as I from './interval.mjs';

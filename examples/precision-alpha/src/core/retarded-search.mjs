@@ -127,13 +127,13 @@ export const OF_DATE_MODEL_RANGE_TDB_SEC = Object.freeze([-3155716800, 315571680
 export const OF_DATE_CONTRACT = Object.freeze({
   operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME AND STELLAR ABERRATION, in the ECLIPTIC OF DATE with its origin at the TRUE EQUINOX OF DATE (see frame and frameNote), reaching a given value',
   frame: FRAMES.trueEquinoxOfDate,
-  frameNote: 'Input axes ICRS/GCRS equatorial. Output plane the ecliptic of date -- the MEAN ecliptic of date, because nutation is a motion of the equator and not of the ecliptic; "true ecliptic" is not a thing this construction produces and the phrase is not used. Longitude origin the TRUE equinox of date, because the nutation in longitude is applied; drop it and the origin is the mean equinox of date, which is the other rung and about 17 arcsec away. Chain: R3(-(psib + dpsi)) R1(phib) R3(gamb), the IAU 2006 Fukushima-Williams angles with frame bias included, plus IAU 2000B nutation adjusted to P03. The obliquity cancels out of the ecliptic projection exactly, so the nutation in OBLIQUITY does not enter this frame at all. This is the same frame, from the same constants, that the released apparent reducer projects into.',
+  frameNote: 'Input axes ICRS/GCRS equatorial. Output plane the ecliptic of date -- the MEAN ecliptic of date, because nutation is a motion of the equator and not of the ecliptic; "true ecliptic" is not a thing this construction produces and the phrase is not used. Longitude origin the TRUE equinox of date, because the nutation in longitude is applied; drop it and the origin is the mean equinox of date, which is the other rung, separated by the nutation in longitude -- up to about 19 arcsec, and periodically near zero. Chain: R3(-(psib + dpsi)) R1(phib) R3(gamb), the IAU 2006 Fukushima-Williams angles with frame bias included, plus IAU 2000B nutation adjusted to P03. The obliquity cancels out of the ecliptic projection exactly, so the nutation in OBLIQUITY does not enter this frame at all. This is the same frame, from the same constants, that the released apparent reducer projects into.',
   origin: 'geocentric',
   timeScale: 'TDB seconds past J2000 in and out. The FRAME needs TT, and the conversion is a stated model: see timeModel. The two existing modes need no conversion because their frame is fixed.',
   timeModel: TIME_MODEL,
   supportedRange: 'TDB seconds past J2000 in [-3155716800, +3155716800], i.e. 1900-01-01 to 2100-01-01, intersected with the pack\'s own coverage. That is IAU 2000B\'s own span. Outside it the search still returns proven enclosures about the model as implemented; what lapses is the claim that the model represents the sky, and every result says which side of the line it is on.',
   models: 'IAU 2006 precession with frame bias (Fukushima-Williams, the eraPfw06 angles); IAU 2000B nutation (77 luni-solar terms, McCarthy & Luzum 2003, carrying the Luzum 2001 "rigorous" planetary-bias pair -0.000135"/+0.000388"), adjusted to P03 per Wallace & Capitaine 2006. THAT PAIRING IS NOT ONE ERFA OR SOFA SHIPS: their IAU 2006 chain is 2000A-based (eraNut06a, eraPnm06a) and there is no eraNut06b or eraPnm06b in the library at all. It is this repository\'s own released choice, reproduced here so the experimental chain and the released reducer are the same model rather than two. The P03 adjustment is applied for the same reason, and on 2000B it is formal rather than material: measured at most 16.5 microarcsec in dpsi and 11.9 in deps over 1995-2050, against the 0.0027" by which 2000B itself differs from 2000A. A reference used to check this must use the SAME pair: a 2000A reference differs from it by a MODEL, not by a defect.',
-  evaluation: 'Trigonometry from src/core/trig.mjs, a Cody-Waite reduction and Taylor polynomial using only +, - and *, with a proven absolute error bound of 4e-15 measured at 1.5e-16 against a 60-digit reference. Math.sin is not used: ECMAScript does not bound its error, so an enclosure built on it would not be a bound, and it does not promise the same bits in two engines.',
+  evaluation: 'Trigonometry from src/core/trig.mjs, a Cody-Waite reduction and Taylor polynomial using only +, - and *. Declared absolute error bound 4e-15, derived term by term in that module\'s header -- an ANALYSIS, not a machine-checked proof. test/tier-a/trig.nodetest.mjs measures the realised error against a 70-digit BigInt reference over 40,656 arguments, including every quadrant boundary of the reduction and the two doubles either side: worst 1.484e-16 on sin and 1.330e-16 on cos. Math.sin is not used: ECMAScript does not bound its error, so an enclosure built on it would not be a bound, and it does not promise the same bits in two engines.',
   c: C_KM_S,
   applied: Object.freeze([
     'reception light-time (Newtonian, one-way, target retarded, observer not)',
@@ -149,7 +149,7 @@ export const OF_DATE_CONTRACT = Object.freeze({
     'any correction beyond the three applied: this is NOT an apparent place and must not be read as one',
   ]),
   sources: 'IAU SOFA Issue 2023-10-11 and its ERFA equivalent, liberfa v2.0.1 (tagged 2023-10-13). The 2000B series is from src/nut00b.c, the aberration expression from src/ab.c, and the test vectors in test/tier-a/frame-of-date.nodetest.mjs are copied from src/t_erfa_c.c at that tag, at the tolerances ERFA itself declares.',
-  relationToErfa: 'The MEAN rung of this frame IS eraEcm06\'s frame. eraEcm06 is R1(eraObl06) . eraPmat06, which by the obliquity cancellation equals R3(-psib) R1(phib) R3(gamb) -- this module\'s mean rung -- and the published t_ecm06 3x3 matrix is reproduced to 1e-14 and lies inside the interval enclosure everywhere. The TRUE-equinox rung, the one THIS mode uses, is NOT any ERFA routine: eraEcm06, eraEceq06 and eraEqec06 are all mean-equinox, and ERFA ships no true-equinox ecliptic matrix. That rung is checked by construction, by its 17-arcsec separation from the mean rung, and against the released reducer -- not against a published matrix, because none exists to check it against.',
+  relationToErfa: 'The MEAN rung of this frame IS eraEcm06\'s frame. eraEcm06 is R1(eraObl06) . eraPmat06, which by the obliquity cancellation equals R3(-psib) R1(phib) R3(gamb) -- this module\'s mean rung -- and the published t_ecm06 3x3 matrix is reproduced to 1e-14 and lies inside the interval enclosure everywhere. The TRUE-equinox rung, the one THIS mode uses, is NOT any ERFA routine: eraEcm06, eraEceq06 and eraEqec06 are all mean-equinox, and ERFA ships no true-equinox ecliptic matrix. That rung is checked by construction, by its separation from the mean rung -- the nutation in longitude, up to about 19 arcsec and periodically near zero, three orders from the 23 mas frame bias it must not be confused with -- and against the released reducer -- not against a published matrix, because none exists to check it against.',
   comparableTo: 'the frame of an apparent place, with the apparent place\'s other corrections still missing. Against an almanac the remaining difference is dominated by gravitational deflection (up to about 1.7 arcsec near the Sun, under 0.01 arcsec away from it) and by whatever the almanac does topocentrically. Against SPICE, no built-in aberration correction matches this profile.',
   bodies: RETARDED_CONTRACT.bodies,
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
@@ -515,6 +515,17 @@ function runSearch(eph, spec, shape) {
    */
   let widestFrameSpan = 0;
   /**
+   * The WIDTH of the cell that produced `widestFrameSpan`, seconds.
+   *
+   * Reporting the span without it invites the reading that the interval
+   * nutation is loose on any cell. It is not: the span grows with the
+   * cell, and the widest accepted cell on a 300-day window is tens of
+   * days, not one. A results document written from the span alone said
+   * "three arcseconds on a day-wide cell", which was wrong by a factor of
+   * about thirty in the width. The number now travels with its cell.
+   */
+  let widestFrameSpanCellSec = 0;
+  /**
    * The frame's own rate in ecliptic longitude, arcsec per TDB second, and
    * the TDB-TT values the run actually used.
    *
@@ -602,7 +613,8 @@ function runSearch(eph, spec, shape) {
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
       noteObserverSpeed(cell);
       if (cell.frameAngles && cell.frameAngles.dpsi) {
-        widestFrameSpan = Math.max(widestFrameSpan, cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo);
+        const span = cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo;
+        if (span > widestFrameSpan) { widestFrameSpan = span; widestFrameSpanCellSec = hi - lo; }
         // psiDot is radians per TT CENTURY, the variable the polynomial and
         // the nutation series are both written in.
         worstPsiRateArcsecPerSec = Math.max(
@@ -818,7 +830,8 @@ function runSearch(eph, spec, shape) {
             implementationNumerical: {
               bounded: true,
               widestFrameAngleSpanArcsec: widestFrameSpan,
-              what: 'the proven width of the frame\'s own enclosure over a cell, arcsec of nutation in longitude',
+              widestFrameAngleCellSec: widestFrameSpanCellSec,
+              what: 'the proven width of the frame\'s own enclosure over a cell, arcsec of nutation in longitude, with the width of the cell that produced it -- the span grows with the cell and means nothing without it',
             },
             conversionApproximation: {
               bounded: true,
@@ -854,6 +867,7 @@ function runSearch(eph, spec, shape) {
             timeModel: contract.timeModel,
             obliquityEntersTheProjection: false,
             widestFrameAngleSpanArcsec: widestFrameSpan,
+            widestFrameAngleCellSec: widestFrameSpanCellSec,
             supportedRange: contract.supportedRange,
             modelRangeTdbSec: OF_DATE_MODEL_RANGE_TDB_SEC,
             requestWithinModelRange: a >= OF_DATE_MODEL_RANGE_TDB_SEC[0] && b <= OF_DATE_MODEL_RANGE_TDB_SEC[1],

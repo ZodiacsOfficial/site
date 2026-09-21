@@ -22,12 +22,13 @@ public file changed when one did.
 ## The served worker carries the reviewed correction
 
 Checked against the bytes the site serves, not against the repository's
-intent:
+intent. **At the merged head `fdc5d7b1`**, which is the state this section
+is about:
 
 ```
 $ curl -s https://zodiacs.org/precision-preview/worker.mjs | sha256sum
 0a7f23b08166fa2e8f15b687655f565dbb51563ba45e8218473c79ad515a8a1e
-$ sha256sum public/precision-preview/worker.mjs
+$ git show fdc5d7b1:public/precision-preview/worker.mjs | sha256sum
 0a7f23b08166fa2e8f15b687655f565dbb51563ba45e8218473c79ad515a8a1e
 ```
 
@@ -132,16 +133,35 @@ Chromium 141, verdict **pass**, no problems and no errors, in
 
 ## Ordinary birth charts
 
-The live `/birth-chart/` route makes **no request to
-`/precision-preview/*`** — 134 requests, 82 Astro chunks, zero preview. The
-engine isolation gate (`report-bundles.mjs`) and the engine accuracy
-vectors both passed in Site Check on the merged head, as did the birth-chart
-ownership and export drives against `dist/`.
+`chart-route-requests.mjs`, recorded in `chart-route-requests.json`. Every
+request the live `/birth-chart/` route makes is in that file, same-origin
+included:
 
-To be exact about what was and was not done here: this check establishes
-that the preview's code does not reach the chart route on production. The
-full chart computation was driven by Site Check against the built site, not
-by hand through the production form in this session.
+| | |
+| --- | --- |
+| total requests | 55 |
+| Astro chunks | 44 |
+| requests to `/precision-preview/*` | **0** |
+| page errors | none |
+
+One off-origin request, `plausible.io/js/…` — the site's existing analytics
+on a consumer route. It is pre-existing site behaviour and outside this
+work; it is named here rather than left as an unexplained count. The
+**preview** route, by contrast, made no off-origin request at all, which is
+the boundary the section above is about.
+
+An earlier draft of this section quoted "134 requests, 82 Astro chunks"
+from an ad-hoc run that was never committed, and those numbers do not
+reproduce — the figures above come from the harness that is now in this
+directory.
+
+The engine isolation gate (`report-bundles.mjs`) and the engine accuracy
+vectors both passed in Site Check on the merged head, as did the
+birth-chart ownership and export drives against `dist/`.
+
+To be exact about scope: this establishes which code the **route** loads.
+It does not drive a full chart through the place lookup; Site Check does
+that against the built site.
 
 ## Package availability
 

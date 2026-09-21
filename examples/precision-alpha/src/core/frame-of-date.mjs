@@ -12,8 +12,11 @@
  *                  used here.
  * Longitude origin: the TRUE EQUINOX OF DATE, because nutation in
  *                  longitude is applied. Drop it and the origin is the
- *                  mean equinox of date -- that is the other rung, and
- *                  the two differ by about 17 arcseconds.
+ *                  mean equinox of date -- that is the other rung. The
+ *                  two are separated by the nutation in longitude, which
+ *                  over 1950-2100 runs from -18.96 to +18.89 arcsec and
+ *                  passes through zero, so it is a rung rather than a
+ *                  fixed offset.
  * Epoch:           the date itself. Not J2000.
  * Time scale:      TT, from TDB through a stated model (see `timeOfDate`).
  * Models:          IAU 2006 precession with frame bias, in the

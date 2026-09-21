@@ -151,7 +151,14 @@ test('the frame matrix reproduces the released reducer chain', () => {
   // Two independent evaluations of one model: this module's validated
   // trigonometry, and the released module's Math.sin. Agreement at this
   // level is a cross-check, not a tautology.
-  assert.ok(worst < ABS_ERR, `worst element difference ${worst} exceeds the trig allowance ${ABS_ERR}`);
+  // OF-DATE-PREREGISTRATION.md section 7 declares 1e-15 for this, and
+  // section 7's whole premise is that its figures are inherited rather
+  // than re-chosen. The assertion used to be `< ABS_ERR` (4e-15), which
+  // is four times looser than what was declared -- nothing turned on it,
+  // the measured worst is 2.2e-16, but the declared number is the one to
+  // enforce.
+  assert.ok(worst < 1e-15,
+    `worst element difference ${worst} exceeds the 1e-15 section 7 declares (the trig allowance alone is ${ABS_ERR})`);
 });
 
 test('the obliquity cancels out of the ecliptic projection, and deps never enters it', () => {
@@ -233,15 +240,23 @@ test('Rdot is the derivative of R, checked at a step that resolves the fastest t
 
 test('the interval frame encloses the frame across the whole cell', () => {
   let widest = 0;
-  for (const widthDays of [0.01, 1, 8]) {
+  // Four widths, 25 centres, 41 samples each: 4,100 pointwise matrices,
+  // 36,900 element checks. The widths span three orders so the interval
+  // sine's extremum handling is exercised at the wide end and its
+  // roundoff at the narrow one. An earlier commit message quoted "4 cell
+  // widths, 10,400 samples" for a probe that was never committed; these
+  // are the numbers of the test that is here.
+  let samples = 0;
+  for (const widthDays of [0.01, 1, 8, 64]) {
     const w = widthDays / 36525;
-    for (let k = 0; k < 12; k += 1) {
-      const c = -1.2 + (2.4 * k) / 12;
+    for (let k = 0; k < 25; k += 1) {
+      const c = -1.2 + (2.4 * k) / 25;
       const cell = { lo: c - w / 2, hi: c + w / 2 };
       const { R } = FD.frameMatrixInterval(cell);
       for (let i = 0; i < 3; i += 1) for (let j = 0; j < 3; j += 1) widest = Math.max(widest, R[i][j].hi - R[i][j].lo);
-      for (let s = 0; s <= 20; s += 1) {
-        const t = cell.lo + ((cell.hi - cell.lo) * s) / 20;
+      for (let s = 0; s <= 40; s += 1) {
+        const t = cell.lo + ((cell.hi - cell.lo) * s) / 40;
+        samples += 1;
         const M = FD.frameMatrixInterval(pt(t)).R.map((r) => r.map(mid));
         for (let i = 0; i < 3; i += 1) {
           for (let j = 0; j < 3; j += 1) {
@@ -253,6 +268,34 @@ test('the interval frame encloses the frame across the whole cell', () => {
     }
   }
   assert.ok(widest > 1e-9, 'the enclosures are suspiciously tight; this case may not be exercising width at all');
+  assert.equal(samples, 4 * 25 * 41, 'the sample count the header quotes must be the sample count it runs');
+});
+
+test('pfw06 and the mean obliquity read the exported tables and are unchanged by it', () => {
+  // The interval chain reads PFW06_COEFFICIENTS and OBL06_COEFFICIENTS so
+  // that it evaluates the same numbers the released reducer's polynomials
+  // are written from, rather than a transcribed copy. That is only worth
+  // anything if the two really are the same numbers, so the tables are
+  // evaluated by plain Horner here and compared with the released
+  // functions BIT FOR BIT, over the whole supported range.
+  //
+  // A commit message once claimed this at 20,001 points for a probe that
+  // was never committed. This is that check, committed.
+  const horner = (c, t) => { let v = 0; for (let i = c.length - 1; i >= 0; i -= 1) v = v * t + c[i]; return v; };
+  // Not `N`: that is the nutation module in this file's imports, and
+  // shadowing it here made `N.OBL06_COEFFICIENTS` undefined.
+  const POINTS = 20000;
+  let checked = 0;
+  for (let i = 0; i <= POINTS; i += 1) {
+    const t = -2 + (4 * i) / POINTS;                  // 1800 to 2200
+    const a = F.pfw06(t);
+    assert.equal(horner(F.PFW06_COEFFICIENTS.gamb, t) * DAS2R, a.gamb, `gamb at t=${t}`);
+    assert.equal(horner(F.PFW06_COEFFICIENTS.phib, t) * DAS2R, a.phib, `phib at t=${t}`);
+    assert.equal(horner(F.PFW06_COEFFICIENTS.psib, t) * DAS2R, a.psib, `psib at t=${t}`);
+    assert.equal(horner(N.OBL06_COEFFICIENTS, t), N.meanObliquityArcsec(t), `obl06 at t=${t}`);
+    checked += 1;
+  }
+  assert.equal(checked, POINTS + 1);
 });
 
 // =============================================================== time scale

@@ -1,5 +1,5 @@
 {
-  "ranAt": "2026-09-21T18:50:53.828Z",
+  "ranAt": "2026-09-21T19:45:19.996Z",
   "rule": "OF-DATE-PREREGISTRATION.md section 9a",
   "pack": {
     "path": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/D.v2.zeph",
@@ -53,9 +53,10 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 635,
-      "ms": 40,
+      "ms": 43,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.7169049379997645,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016675999377849218,
@@ -72,14 +73,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 635,
-        "ms": 9
+        "ms": 11
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 635,
-        "ms": 9
+        "ms": 19
       },
       "geometricRung": {
         "established": true,
@@ -119,9 +120,10 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 635,
-      "ms": 15,
+      "ms": 21,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.7169049379997645,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016675999377849218,
@@ -138,14 +140,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 635,
-        "ms": 8
+        "ms": 22
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 635,
-        "ms": 12
+        "ms": 7
       },
       "geometricRung": {
         "established": true,
@@ -189,9 +191,10 @@
       "unresolvedWhy": [],
       "cells": 10320,
       "evaluations": 269422,
-      "ms": 3649,
+      "ms": 2833,
       "frame": {
         "widestFrameAngleSpanArcsec": 0.01869217967288428,
+        "widestFrameAngleCellSec": 6412.229750037193,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016379096163148426,
@@ -208,14 +211,14 @@
         "found": 11,
         "referenceRoots": 11,
         "evaluations": 264328,
-        "ms": 3861
+        "ms": 3907
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 11,
         "evaluations": 264348,
-        "ms": 4049
+        "ms": 3816
       },
       "geometricRung": {
         "established": true,
@@ -337,9 +340,10 @@
       "unresolvedWhy": [],
       "cells": 10320,
       "evaluations": 269422,
-      "ms": 2885,
+      "ms": 4731,
       "frame": {
         "widestFrameAngleSpanArcsec": 0.01869217967288428,
+        "widestFrameAngleCellSec": 6412.229750037193,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016379096163148426,
@@ -356,14 +360,14 @@
         "found": 11,
         "referenceRoots": 11,
         "evaluations": 264328,
-        "ms": 3868
+        "ms": 5493
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 11,
         "evaluations": 264348,
-        "ms": 5317
+        "ms": 4674
       },
       "geometricRung": {
         "established": true,
@@ -475,9 +479,10 @@
       "unresolvedWhy": [],
       "cells": 47,
       "evaluations": 2307,
-      "ms": 28,
+      "ms": 24,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.6409141171658685,
+        "widestFrameAngleCellSec": 2332730.8159999847,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016508910162489517,
@@ -494,14 +499,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 2253,
-        "ms": 19
+        "ms": 16
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 2307,
-        "ms": 21
+        "ms": 19
       },
       "geometricRung": {
         "established": true,
@@ -541,9 +546,10 @@
       "unresolvedWhy": [],
       "cells": 47,
       "evaluations": 2307,
-      "ms": 28,
+      "ms": 25,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.6409141171658685,
+        "widestFrameAngleCellSec": 2332730.8159999847,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016508910162489517,
@@ -560,14 +566,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 2253,
-        "ms": 17
+        "ms": 15
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 2307,
-        "ms": 24
+        "ms": 13
       },
       "geometricRung": {
         "established": true,
@@ -601,9 +607,10 @@
       "unresolvedWhy": [],
       "cells": 18,
       "evaluations": 1663,
-      "ms": 27,
+      "ms": 39,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.3741180007395073,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016772045938292489,
@@ -620,14 +627,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 1626,
-        "ms": 8
+        "ms": 14
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 1614,
-        "ms": 15
+        "ms": 8
       },
       "geometricRung": {
         "established": true,
@@ -673,6 +680,7 @@
       "ms": 24,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.3741180007395073,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016772045938292489,
@@ -696,7 +704,7 @@
         "established": true,
         "found": 2,
         "evaluations": 1614,
-        "ms": 12
+        "ms": 10
       },
       "geometricRung": {
         "established": true,
@@ -745,9 +753,10 @@
       "unresolvedWhy": [],
       "cells": 11,
       "evaluations": 706,
-      "ms": 11,
+      "ms": 12,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.834499313938112,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0014527231780671734,
@@ -764,14 +773,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 706,
-        "ms": 7
+        "ms": 5
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 706,
-        "ms": 3
+        "ms": 5
       },
       "geometricRung": {
         "established": true,
@@ -814,6 +823,7 @@
       "ms": 11,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.834499313938112,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0014527231780671734,
@@ -837,7 +847,7 @@
         "established": true,
         "found": 0,
         "evaluations": 706,
-        "ms": 3
+        "ms": 6
       },
       "geometricRung": {
         "established": true,
@@ -872,9 +882,10 @@
       "unresolvedWhy": [],
       "cells": 17,
       "evaluations": 1220,
-      "ms": 19,
+      "ms": 20,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.961497935371663,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016666631381779082,
@@ -891,14 +902,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1220,
-        "ms": 10
+        "ms": 16
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1210,
-        "ms": 6
+        "ms": 9
       },
       "geometricRung": {
         "established": true,
@@ -945,9 +956,10 @@
       "unresolvedWhy": [],
       "cells": 17,
       "evaluations": 1220,
-      "ms": 20,
+      "ms": 29,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.961497935371663,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016666631381779082,
@@ -964,14 +976,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1220,
-        "ms": 6
+        "ms": 8
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 1210,
-        "ms": 10
+        "ms": 9
       },
       "geometricRung": {
         "established": true,
@@ -1006,9 +1018,10 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 1063,
-      "ms": 16,
+      "ms": 21,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.8049277408205224,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.001625629116881292,
@@ -1025,14 +1038,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1075,
-        "ms": 9
+        "ms": 5
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1076,
-        "ms": 4
+        "ms": 12
       },
       "geometricRung": {
         "established": true,
@@ -1079,9 +1092,10 @@
       "unresolvedWhy": [],
       "cells": 12,
       "evaluations": 1063,
-      "ms": 15,
+      "ms": 19,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.8049277408205224,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.001625629116881292,
@@ -1098,14 +1112,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1075,
-        "ms": 8
+        "ms": 5
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 1076,
-        "ms": 4
+        "ms": 7
       },
       "geometricRung": {
         "established": true,
@@ -1140,9 +1154,10 @@
       "unresolvedWhy": [],
       "cells": 20,
       "evaluations": 1242,
-      "ms": 18,
+      "ms": 20,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.395337930817181,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016635814715444182,
@@ -1159,14 +1174,14 @@
         "found": 2,
         "referenceRoots": 2,
         "evaluations": 1177,
-        "ms": 8
+        "ms": 6
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 2,
         "evaluations": 1188,
-        "ms": 4
+        "ms": 10
       },
       "geometricRung": {
         "established": true,
@@ -1213,9 +1228,10 @@
       "unresolvedWhy": [],
       "cells": 20,
       "evaluations": 1242,
-      "ms": 18,
+      "ms": 21,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.395337930817181,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016635814715444182,
@@ -1232,14 +1248,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 1177,
-        "ms": 6
+        "ms": 7
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 1188,
-        "ms": 5
+        "ms": 11
       },
       "geometricRung": {
         "established": true,
@@ -1274,9 +1290,10 @@
       "unresolvedWhy": [],
       "cells": 13,
       "evaluations": 1025,
-      "ms": 15,
+      "ms": 18,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.910355373040166,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.001678422193024048,
@@ -1293,14 +1310,14 @@
         "found": 1,
         "referenceRoots": 1,
         "evaluations": 685,
-        "ms": 4
+        "ms": 3
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 1,
         "evaluations": 685,
-        "ms": 3
+        "ms": 4
       },
       "geometricRung": {
         "established": true,
@@ -1313,6 +1330,9 @@
         "ofDateReferenceRoots": 2,
         "aberratedReferenceRoots": 1,
         "corroborated": true,
+        "geometricRoots": 1,
+        "retardedRoots": 1,
+        "lowerRungsAgree": true,
         "ofDateLongitudeRange": [
           290.5737642881031,
           295.5503386307929
@@ -1348,9 +1368,10 @@
       "unresolvedWhy": [],
       "cells": 13,
       "evaluations": 1025,
-      "ms": 15,
+      "ms": 17,
       "frame": {
         "widestFrameAngleSpanArcsec": 2.910355373040166,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.001678422193024048,
@@ -1374,7 +1395,7 @@
         "established": true,
         "found": 0,
         "evaluations": 685,
-        "ms": 2
+        "ms": 8
       },
       "geometricRung": {
         "established": true,
@@ -1409,9 +1430,10 @@
       "unresolvedWhy": [],
       "cells": 23,
       "evaluations": 1267,
-      "ms": 18,
+      "ms": 20,
       "frame": {
         "widestFrameAngleSpanArcsec": 3.0005032150018027,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016777251116770495,
@@ -1428,14 +1450,14 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 728,
-        "ms": 3
+        "ms": 6
       },
       "lightTimeRung": {
         "status": "finished",
         "established": true,
         "found": 0,
         "evaluations": 686,
-        "ms": 7
+        "ms": 3
       },
       "geometricRung": {
         "established": true,
@@ -1448,6 +1470,9 @@
         "ofDateReferenceRoots": 2,
         "aberratedReferenceRoots": 0,
         "corroborated": true,
+        "geometricRoots": 0,
+        "retardedRoots": 0,
+        "lowerRungsAgree": true,
         "ofDateLongitudeRange": [
           242.82787694538962,
           246.72964192427276
@@ -1486,6 +1511,7 @@
       "ms": 17,
       "frame": {
         "widestFrameAngleSpanArcsec": 3.0005032150018027,
+        "widestFrameAngleCellSec": 2764800,
         "requestWithinModelRange": true,
         "tdbMinusTtUsedSec": [
           -0.0016777251116770495,
@@ -1502,7 +1528,7 @@
         "found": 0,
         "referenceRoots": 0,
         "evaluations": 728,
-        "ms": 4
+        "ms": 2
       },
       "lightTimeRung": {
         "status": "finished",
@@ -1532,10 +1558,17 @@
     "unresolvedIntervals": 0,
     "totalEvaluations": 561100,
     "totalCells": 20986,
-    "totalMs": 6889,
+    "totalMs": 7965,
     "aberratedRungEvaluations": 548866,
-    "aberratedRungMs": 7873,
+    "aberratedRungMs": 9559,
     "widestFrameAngleSpanArcsec": 3.0005032150018027,
+    "widestFrameAngleCell": {
+      "id": "F10",
+      "body": "Pluto",
+      "spanArcsec": 3.0005032150018027,
+      "cellSec": 2764800,
+      "cellDays": 32
+    },
     "conversionInducedLongitudeArcsec": 1.3903853794642722e-10,
     "frameShiftRangeSec": [
       -470640.58107733727,
@@ -1547,14 +1580,16 @@
         "body": "Neptune",
         "ofDateRoots": 2,
         "aberratedRoots": 1,
-        "corroborated": true
+        "corroborated": true,
+        "lowerRungsAgree": true
       },
       {
         "id": "F10",
         "body": "Pluto",
         "ofDateRoots": 2,
         "aberratedRoots": 0,
-        "corroborated": true
+        "corroborated": true,
+        "lowerRungsAgree": true
       }
     ],
     "worstFrameLadderResidualSec": 0.0006208419799804688

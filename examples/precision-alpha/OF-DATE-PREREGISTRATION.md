@@ -53,7 +53,8 @@ Two things about that chain are load-bearing and are asserted, not assumed:
 * **It is the mean ecliptic, true equinox.** Nutation is a motion of the
   equator, not of the ecliptic. "True ecliptic of date" is not a frame this
   construction produces and the phrase is not used. Dropping `dpsi` gives
-  the **mean** equinox of date, about 17 arcsec away; that is a different
+  the **mean** equinox of date, separated by the nutation in longitude --
+  up to about 19 arcsec, and periodically near zero; that is a different
   rung, not a tolerance.
 
 ## 2 · Name
@@ -310,6 +311,7 @@ which is untouched and stays untouched.
 The frame is validated pointwise against a published matrix for its **mean**
 rung. Its **true-equinox** rung — the one this mode actually uses — has no
 published matrix anywhere in ERFA or SOFA to check against, because neither
-ships one. It is checked by construction, by its 17-arcsec separation from
-the mean rung, and against the released reducer. That is a weaker external
+ships one. It is checked by construction, by its separation from the mean rung -- the
+nutation in longitude, up to about 19 arcsec and periodically near zero --
+and against the released reducer. That is a weaker external
 check than the mean rung has, and no result will describe it as an equal one.

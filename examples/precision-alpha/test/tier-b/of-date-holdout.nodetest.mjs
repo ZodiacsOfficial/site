@@ -19,7 +19,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
 import { openPackFile } from '../../src/node.mjs';
-import { searchAberratedLongitude, searchOfDateLongitude } from '../../src/core/retarded-search.mjs';
+import { searchAberratedLongitude, searchOfDateLongitude, searchRetardedLongitude } from '../../src/core/retarded-search.mjs';
 import { makeOfDateReference } from './_of-date-reference.mjs';
 import { makeAberratedReference } from './_aberrated-reference.mjs';
 
@@ -115,6 +115,16 @@ for (const c of CASES) {
         `${c.id}: the rungs disagree and the fixed-frame reference does not corroborate the aberrated count`);
       assert.equal(truth.length, r.events.length,
         `${c.id}: the rungs disagree and the of-date reference does not corroborate the of-date count`);
+      // And rungs 1 to 3, which DO share a frame, must still agree with
+      // each other. Without this the branch would let a light-time defect
+      // ride along behind a legitimate frame separation: it is entered on
+      // the of-date count alone, and everything else in the case stops
+      // being checked.
+      const lt = searchRetardedLongitude(eph, spec);
+      assert.equal(lt.completeness.established, true, `${c.id}: the light-time rung did not establish completeness`);
+      assert.equal(lt.events.length, ab.events.length,
+        `${c.id}: the light-time and aberrated rungs disagree (${lt.events.length} against ${ab.events.length});`
+        + ' they share a frame, so that is a defect, not a separation');
       return;
     }
 

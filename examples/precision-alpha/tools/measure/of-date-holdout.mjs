@@ -137,6 +137,16 @@ for (const c of CASES) {
       aberratedReferenceRoots: refAb.roots.length,
       corroborated: refOfd.roots.length === ofDate.events.length
         && refAb.roots.length === aberrated.events.length,
+      // Rungs 1 to 3 share a frame, so THEY must still agree. Without
+      // this the narrowing below would let a real light-time or
+      // geometric defect ride along behind a legitimate frame
+      // separation: the branch is entered on the of-date count alone,
+      // and everything else in the case would stop being checked.
+      geometricRoots: geometric && !geometric.refused ? geometric.events.length : null,
+      retardedRoots: retarded.events.length,
+      lowerRungsAgree: Boolean(geometric && !geometric.refused
+        && geometric.events.length === retarded.events.length
+        && retarded.events.length === aberrated.events.length),
       ofDateLongitudeRange: null,
       aberratedLongitudeRange: null,
     }
@@ -197,6 +207,7 @@ for (const c of CASES) {
     ms: ofdMs,
     frame: {
       widestFrameAngleSpanArcsec: ofDate.diagnostics.frameOfDate.widestFrameAngleSpanArcsec,
+      widestFrameAngleCellSec: ofDate.diagnostics.frameOfDate.widestFrameAngleCellSec,
       requestWithinModelRange: ofDate.diagnostics.frameOfDate.requestWithinModelRange,
       tdbMinusTtUsedSec: ts.conversionApproximation.tdbMinusTtUsedSec,
       frameRateArcsecPerSec: ts.conversionApproximation.frameRateArcsecPerSec,
@@ -250,22 +261,37 @@ for (const r of rows) {
     }
   }
   /**
-   * A case with crossings and no ladder needs the disagreement ATTRIBUTED,
-   * not excused.
+   * A case with crossings and no ladder.
    *
-   * The aberrated tool's rule was "crossings but no ladder is a failure",
-   * and for rungs 1 to 3 that is right: they search the same frame, so a
-   * count disagreement between them is a defect. Rung 4 does not search
-   * the same frame. It looks for the same NUMERIC longitude measured from
-   * a different origin, so a target a body reaches twice of-date can be
-   * one it reaches once, or never, in the fixed frame -- a crossing pushed
-   * across the window edge by the frame offset, which is the thing section
-   * 4 forbids reading as either improved accuracy or a defect.
+   * THIS CLAUSE WAS RELAXED AFTER THE FIRST RUN, and calling it anything
+   * else would be wrong. The aberrated tool's rule was "crossings but no
+   * ladder is a failure", and for rungs 1 to 3 that is right: they search
+   * the same frame, so a count disagreement between them is a defect.
+   * Rung 4 does not search the same frame. It looks for the same NUMERIC
+   * longitude measured from a different origin, so a target a body
+   * reaches twice of-date can be one it reaches once, or never, in the
+   * fixed frame -- a crossing pushed across the window edge by the frame
+   * offset, which section 4 forbids reading as either improved accuracy
+   * or a defect. Under the old clause F9 and F10 failed for exactly that.
    *
-   * So the clause is not dropped, it is replaced by a stronger one: the
-   * two INDEPENDENT references must show the same count difference their
-   * solvers do. If they do not, the difference is not the frame and the
-   * case fails.
+   * The new predicate is the old one conjoined with further conditions,
+   * so it fails a strict SUBSET of what the old one failed: two failures
+   * became passes and nothing new fails. That is a relaxation. What is
+   * genuinely new is the attribution requirement -- no earlier rule
+   * compared the fixed-frame reference's count against the aberrated
+   * solver's -- but a new requirement inside a narrower clause does not
+   * make the clause stronger.
+   *
+   * Two things are therefore required before a frame separation excuses
+   * a missing ladder, not one:
+   *
+   *   1. the two INDEPENDENT references show the same count difference
+   *      their solvers do, so the difference is the frame and not a
+   *      solver losing a root;
+   *   2. rungs 1 to 3, which DO share a frame, still agree with each
+   *      other -- otherwise a light-time or geometric defect in the same
+   *      case would now go unreported, which is the coverage the
+   *      narrowing would otherwise have cost.
    */
   if (r.found > 0 && !r.ladder) {
     if (!r.frameSeparated) {
@@ -274,6 +300,10 @@ for (const r of rows) {
       problems.push(`${r.id}: the rungs disagree (${r.frameSeparated.aberratedRoots} against ${r.frameSeparated.ofDateRoots})`
         + ` and the independent references do not show the same difference`
         + ` (${r.frameSeparated.aberratedReferenceRoots} against ${r.frameSeparated.ofDateReferenceRoots})`);
+    } else if (!r.frameSeparated.lowerRungsAgree) {
+      problems.push(`${r.id}: the frame separation is corroborated, but rungs 1 to 3 do not agree with each other`
+        + ` (geometric ${r.frameSeparated.geometricRoots}, retarded ${r.frameSeparated.retardedRoots},`
+        + ` aberrated ${r.frameSeparated.aberratedRoots}) -- they share a frame, so that is a defect, not a separation`);
     }
   }
 }
@@ -310,6 +340,19 @@ const record = {
     aberratedRungEvaluations: rows.reduce((n, r) => n + r.aberratedRung.evaluations, 0),
     aberratedRungMs: rows.reduce((n, r) => n + r.aberratedRung.ms, 0),
     widestFrameAngleSpanArcsec: Math.max(...rows.map((r) => r.frame.widestFrameAngleSpanArcsec)),
+    // The span travels with the cell that produced it, and with what the
+    // nutation ACTUALLY does over that same cell, so the enclosure's
+    // looseness is a ratio a reader can see rather than a number to guess at.
+    widestFrameAngleCell: (() => {
+      const worst = rows.reduce((a, b) => (b.frame.widestFrameAngleSpanArcsec > a.frame.widestFrameAngleSpanArcsec ? b : a));
+      return {
+        id: worst.id,
+        body: worst.body,
+        spanArcsec: worst.frame.widestFrameAngleSpanArcsec,
+        cellSec: worst.frame.widestFrameAngleCellSec,
+        cellDays: worst.frame.widestFrameAngleCellSec / DAY,
+      };
+    })(),
     conversionInducedLongitudeArcsec: Math.max(...rows.map((r) => r.frame.conversionInducedLongitudeArcsec)),
     // The frame shift, BOTH signs. A single "characteristic" figure would
     // be a selection: rung 4 moves a crossing forward or back depending on
@@ -327,6 +370,7 @@ const record = {
       ofDateRoots: r.frameSeparated.ofDateRoots,
       aberratedRoots: r.frameSeparated.aberratedRoots,
       corroborated: r.frameSeparated.corroborated,
+      lowerRungsAgree: r.frameSeparated.lowerRungsAgree,
     })),
     worstFrameLadderResidualSec: (() => {
       const all = rows.flatMap((r) => (r.ladder ?? [])
