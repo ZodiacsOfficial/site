@@ -308,17 +308,41 @@ The latency ratio is the product of the two: about twelve times as many
 evaluations, each about six times dearer. Both modes returned `proven` and
 the **same event count** on all eleven cases.
 
-**The Moon is the practicality boundary, and it is the identified next
-piece of work.** 296 106 evaluations, 10 130 cells, 4.5 s for a 300-day
-window with 11 crossings — ×225 the geometric evaluations where every
-other body is ×6 to ×20. The mechanism is nameable, not mysterious: each
-cell calls `retardedCell`, and the exclusion and monotone tests then call
-it again at the midpoint and both ends. Every one of those re-solves τ
-from scratch, up to 32 point iterations over each contributing series,
-having already built the enclosures that bound it. Caching the cell's
-verified τ interval for its own point evaluations is the obvious next
-experiment; it is not attempted here, because tuning after seeing the
-numbers is exactly what the preregistration exists to prevent.
+### Where the cost actually goes
+
+The preregistration asks for light-time iterations and subdivisions
+separately from the evaluation counter, so they were counted separately,
+by wrapping `solveTau` rather than editing it:
+
+| | |
+| --- | --- |
+| fixed-point steps per `solveTau` call | **3.9 to 5.0**, against a cap of 32 |
+| `solveTau` calls per cell | 1.6 |
+| Moon: evaluations spent in the τ iteration | 127 768 of 296 106, **43 %** |
+| Moon: evaluations spent building enclosures | 168 338, **57 %** |
+
+This **corrects a guess made earlier in this document's own drafting**.
+The cost was attributed to the τ iteration running "up to 32 point
+iterations"; it does not. The contraction factor is ~10⁻⁴, so the fixed
+point is reached in four or five steps every time and the cap is never
+approached. The iteration is not the expense.
+
+**The Moon is the practicality boundary.** 296 106 evaluations, 10 130
+cells, 4.5 s for a 300-day window with 11 crossings — ×225 the geometric
+evaluations where every other body is ×6 to ×20. Split properly, the
+driver is the **cell count**: 10 130 against the geometric mode's 290, a
+factor of 35, with only ×6.5 more evaluations per cell on top. More cells
+because the retarded enclosures are looser by construction — the target
+is enclosed over the *emission* window, widened by the τ interval, so the
+Lipschitz constants `M1` and `M2` are larger and the exclusion test
+closes fewer cells before subdividing.
+
+That points the next experiment at the enclosure, not the iteration:
+tighten the emission window per cell, or reuse a cell's verified
+enclosures for its own midpoint and endpoint evaluations instead of
+rebuilding them. Neither is attempted here — tuning after seeing the
+numbers is what the preregistration exists to prevent — and neither is
+promised to work.
 
 ### Cancellation
 
