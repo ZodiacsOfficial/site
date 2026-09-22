@@ -214,13 +214,62 @@ price, and `CHART-ADAPTER-CONTRACT.md` says what a full-chart integration
 would need from it — including that on 32.9 per cent of days between 1900
 and 2100 at least one charted body sits inside the floor.
 
-No coefficient pack to hand? `examples/04-experimental-aberrated.mjs` and
-`examples/05-experimental-deflected.mjs` run on a synthetic fixture that
-ships with the package — real arithmetic, an openly fake sky.
+### Where it can answer, asked separately from what it answers
+
+Most of what the deflected mode costs is finding out *where* the floor
+lies, and that question has no target longitude in it. So it can be asked
+once and reused:
+
+```js
+const plan = x.planDeflectedDomain({ body, fromTdbSec, toTdbSec, packDigest });
+for (const targetDeg of longitudes) {
+  const r = x.searchRetardedAberratedDeflectedOfDateOverPlan({
+    body, targetDeg, fromTdbSec, toTdbSec, plan, packDigest,
+  });
+}
+```
+
+`planDeflectedDomain` never receives a longitude — that is how its
+independence from one is established rather than asserted. The plan
+returns four span lists that tile the request exactly and mean four
+different things: **admissible** (proved at or above the floor at every
+instant), **excluded** (proved below it), **boundary** (proved neither —
+the transition is in here, and the span's width is the whole of what is
+known about it), and **unprocessed** (never examined; not excluded, and
+not searched-and-empty).
+
+A plan carries a `key` naming the pack, observer, body, profile, window,
+tolerance and numerical policy it is a proof about; handed to a request it
+is not about, it is **refused**, not silently recomputed. Pass
+`packDigest` — without one the plan records
+`identityStrength: 'structure-only'`, which cannot tell two packs of the
+same shape apart.
+
+The result is a **different contract** —
+`zodiacs-partitioned-search/1`, not the released search result — because
+it states completeness over the spans it names rather than over the
+request, and its events carry an `eligibility` and a `positionFrom` the
+released contract has no place for. A crossing found in a boundary span
+was located *without* the solar term and says so.
+`EXPERIMENTAL.partitioned.migration` names every field that moves.
+
+Measured on twenty 300-day windows: the two Moon cases go from spending
+the whole four-million-evaluation budget without finishing to finishing
+inside it; Mercury costs 9.2× less; the conjunction-free controls cost
+about 3 per cent more. One repeated longitude query already pays for the
+plan on every conjunction case. `PARTITION-RESULTS.md` has the numbers,
+including the two targets it did not meet.
+
+No coefficient pack to hand? `examples/04-experimental-aberrated.mjs`,
+`examples/05-experimental-deflected.mjs` and
+`examples/06-plan-once-many-longitudes.mjs` run on a synthetic fixture
+that ships with the package — real arithmetic, an openly fake sky.
 `docs/platform/evidence/precision-aberration/browser/` is the same thing in
-a browser, on these ES modules with no bundler, and
+a browser, on these ES modules with no bundler;
 `docs/platform/evidence/precision-deflection/cross-runtime/` runs all four
-modes on one file in Node, Chromium and Firefox.
+modes on one file in Node, Chromium and Firefox; and
+`docs/platform/evidence/precision-partition/cross-runtime/` does the same
+for the plan itself.
 
 ## What a search result means
 

@@ -66,13 +66,29 @@ const P7_ORIGINAL_SCORE = 6;
 const NAMED_CONJUNCTION_HEAVY = ['F2', 'A2', 'F3', 'F7'];
 const NAMED_NO_CONJUNCTION = ['F6', 'F1', 'F10'];
 /**
- * The derived rule, stated before the run: a case is conjunction-heavy
- * when the partition PROVES some of its window excluded, and has no
- * conjunction when it proves none. It is checked against the named lists
- * on the regression corpus, and any disagreement is reported rather than
- * resolved in favour of either.
+ * The derived rule, for a corpus whose case ids section 6 could not name.
+ *
+ * A case has NO conjunction only when the partition proved the whole
+ * window admissible: nothing excluded, nothing boundary, nothing left
+ * unprocessed. Anything else is conjunction-heavy.
+ *
+ * An earlier version keyed only on `excludedSec > 0`, which put the MOON
+ * in the conjunction-free bucket -- the partition proves nothing excluded
+ * on a Moon window, because at sixty seconds the elongation enclosure is
+ * wider than the gap between a 0.38-degree closest approach and the floor,
+ * so the whole conjunction comes back as boundary. Filing the hardest
+ * conjunction case in the corpus as conjunction-free, and then scoring it
+ * against the no-regression target instead of the reduction target, would
+ * have been a bucketing that flattered the result. Boundary width is
+ * evidence of a conjunction, not evidence of its absence.
+ *
+ * It is checked against the ids section 6 names, and any disagreement is
+ * reported rather than resolved in favour of either.
  */
-const derivedClass = (row) => (row.partition.excludedSec > 0 ? 'conjunction-heavy' : 'no-conjunction');
+const derivedClass = (row) => (
+  row.partition.excludedSec > 0 || row.partition.boundarySec > 0 || row.partition.unprocessedSec > 0
+    ? 'conjunction-heavy'
+    : 'no-conjunction');
 
 const rt = await openPackFile(PACK);
 const eph = rt.ephemeris;
@@ -387,6 +403,25 @@ const p3 = {
   failures: live.filter((r) => !r.p3.pass).map((r) => ({ id: r.id, fraction: r.p3.boundaryFraction })),
   pass: live.every((r) => r.p3.pass),
 };
+/**
+ * Section 6 names case ids; the derived rule above is what a corpus with
+ * different windows has to use instead. Where both apply they must agree,
+ * and a disagreement is printed rather than settled silently.
+ */
+const derivedAgreesWithNames = {
+  checked: useNames,
+  conjunctionHeavy: NAMED_CONJUNCTION_HEAVY.map((id) => {
+    const r = live.find((x) => x.id === id);
+    return { id, named: 'conjunction-heavy', derived: r ? r.derivedClass : null, agrees: r ? r.derivedClass === 'conjunction-heavy' : null };
+  }),
+  noConjunction: NAMED_NO_CONJUNCTION.map((id) => {
+    const r = live.find((x) => x.id === id);
+    return { id, named: 'no-conjunction', derived: r ? r.derivedClass : null, agrees: r ? r.derivedClass === 'no-conjunction' : null };
+  }),
+};
+derivedAgreesWithNames.allAgree = !useNames ? null
+  : [...derivedAgreesWithNames.conjunctionHeavy, ...derivedAgreesWithNames.noConjunction].every((x) => x.agrees === true);
+
 const p4 = {
   target: `cold end-to-end evaluations at most 1/${P4_FACTOR} of the baseline on every conjunction-heavy case`,
   basis: useNames ? `the case ids section 6 names: ${NAMED_CONJUNCTION_HEAVY.join(', ')}` : 'derived: the partition proves some of the window excluded',
@@ -453,6 +488,7 @@ const report = {
   cases: rows,
   repeated,
   targets: { P1: p1, P2: p2, P3: p3, P4: p4, P5: p5, P6: p6, P7: p7 },
+  derivedAgreesWithNames,
   verdict: {
     /**
      * Section 6: failing P-1 or P-6 fails the whole thing. A target that
