@@ -46,7 +46,9 @@
  */
 import { fail, PrecisionError } from './errors.mjs';
 import { DEFLECTION_PROFILE } from './deflection.mjs';
-import { partitionDomain, PARTITION_DEFAULTS, partitionKey } from './domain-partition.mjs';
+import {
+  partitionDomain, PARTITION_DEFAULTS, partitionKey, packFingerprint, PARTITION_CONTRACT_ID,
+} from './domain-partition.mjs';
 import {
   searchDeflectedLongitude, searchDeflectedLongitudeOnProvedDomain, searchOfDateLongitude,
   DEFLECTED_CONTRACT, OF_DATE_CONTRACT,
@@ -57,6 +59,18 @@ const DAY = 86400;
 
 /** Total length of a span list. */
 const total = (spans) => spans.reduce((n, [lo, hi]) => n + (hi - lo), 0);
+
+/** Sort and merge touching spans. Reporting, not arithmetic. */
+const mergeSpanList = (spans) => {
+  const sorted = [...spans].sort((x, y) => x[0] - y[0]);
+  const out = [];
+  for (const [lo, hi] of sorted) {
+    const last = out[out.length - 1];
+    if (last && lo <= last[1]) last[1] = Math.max(last[1], hi);
+    else out.push([lo, hi]);
+  }
+  return out;
+};
 
 /** Does [lo, hi) meet any span in the list? */
 const meets = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
@@ -73,21 +87,55 @@ const meets = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
  * Note what is NOT in the key: the target longitude. The partition does
  * not depend on one, which is why the same plan answers many.
  */
-export function assertPartitionUsable(plan, { packDigest, body, fromTdbSec, toTdbSec }) {
-  if (!plan || plan.contract !== 'zodiacs-domain-partition/1') {
-    fail('unsupported-option', 'a plan must be a zodiacs-domain-partition/1 produced by this runtime');
+export function assertPartitionUsable(plan, {
+  eph, packDigest, body, fromTdbSec, toTdbSec,
+  boundaryToleranceSec, relightWidthRatio, maxTauWidenings, tauPadFloorSec,
+}) {
+  if (!plan || plan.contract !== PARTITION_CONTRACT_ID) {
+    fail('unsupported-option', `a plan must be a ${PARTITION_CONTRACT_ID} produced by this runtime`);
   }
+  if (!plan.request || typeof plan.request !== 'object') {
+    fail('unsupported-option', 'a plan must carry the request it was built for');
+  }
+  /**
+   * The key is rebuilt from what THIS CALL asks for, never from the
+   * plan's own statement of it.
+   *
+   * The first version of this function took the boundary tolerance out of
+   * `plan.request` and then checked that the key matched -- which it
+   * always did, because the plan had supplied the very field being
+   * compared. A caller asking for a 5-second tolerance and handed a
+   * 60-second plan was told nothing. Every field the identity names is
+   * now taken from the caller's side, and the pack's own numerical
+   * metadata is read from the live runtime rather than believed from the
+   * plan: a serialized partition that merely CONTAINS a plausible key is
+   * not evidence that the key is its own.
+   */
   const want = partitionKey({
     packDigest,
+    packStructure: eph ? packFingerprint(eph) : null,
+    observer: eph ? (eph.observer ?? 'unknown') : null,
     body,
     fromTdbSec,
     toTdbSec,
-    boundaryToleranceSec: plan.request.boundaryToleranceSec,
+    boundaryToleranceSec,
+    relightWidthRatio,
+    maxTauWidenings,
+    tauPadFloorSec,
     profile: DEFLECTION_PROFILE.id,
   });
   if (plan.key !== want) {
     fail('unsupported-option',
-      `this plan is for a different request: it carries ${plan.key} and this call needs ${want}. A partition is a proof about one pack, body, profile, window and tolerance; it is not reused across any of them.`);
+      `this plan is for a different request: it carries ${plan.key} and this call needs ${want}. A partition is a proof about one pack, observer, body, profile, window, tolerance and numerical policy; it is not reused across any of them.`);
+  }
+  /**
+   * A plan whose spans do not match its own key is not a plan this
+   * runtime produced, whatever key it carries. Cheap, and it catches a
+   * hand-edited or truncated import that kept the header.
+   */
+  const [lo, hi] = plan.request.windowTdbSec ?? [NaN, NaN];
+  if (!(lo === fromTdbSec && hi === toTdbSec)) {
+    fail('unsupported-option', 'the plan\'s stated window does not match the window its key claims');
   }
   return plan;
 }
@@ -111,6 +159,8 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
     signal = null,
     boundaryToleranceSec = PARTITION_DEFAULTS.boundaryToleranceSec,
     relightWidthRatio = PARTITION_DEFAULTS.relightWidthRatio,
+    maxTauWidenings = PARTITION_DEFAULTS.maxTauWidenings,
+    tauPadFloorSec = PARTITION_DEFAULTS.tauPadFloorSec,
     maxEvaluations = 4_000_000,
     maxCells = 400_000,
     ...rest
@@ -132,7 +182,17 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
   let partitionEvaluations = 0;
   let partitionReused = false;
   if (given) {
-    plan = assertPartitionUsable(given, { packDigest, body, fromTdbSec: a, toTdbSec: b });
+    plan = assertPartitionUsable(given, {
+      eph,
+      packDigest,
+      body,
+      fromTdbSec: a,
+      toTdbSec: b,
+      boundaryToleranceSec,
+      relightWidthRatio,
+      maxTauWidenings,
+      tauPadFloorSec,
+    });
     partitionReused = true;
   } else {
     setLabel('partition');
@@ -142,6 +202,8 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       toTdbSec: b,
       boundaryToleranceSec,
       relightWidthRatio,
+      maxTauWidenings,
+      tauPadFloorSec,
       packDigest,
       signal,
       maxEvaluations,
@@ -167,6 +229,8 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
   const events = [];
   const unresolved = [];
   const spanResults = [];
+  /** Proved admissible, started, and not finished. The second axis. */
+  const notFullyExamined = [];
   let unprocessed = [...plan.unprocessed];
   let searchEvaluations = 0;
 
@@ -291,6 +355,20 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
     if (r.execution.status !== 'finished') {
       status = r.execution.status;
       reason = r.execution.reason;
+      /**
+       * The span is still ADMISSIBLE -- domain membership is a fact about
+       * the geometry and a subsearch running out of budget does not
+       * unprove it. What stopped is the EXAMINATION, and that is a
+       * different axis, recorded separately.
+       *
+       * It is not moved to `unprocessed`: part of it WAS examined, and an
+       * unfinished run reports no decided spans, so nothing here can say
+       * which part. Reporting the whole span as never-examined would be
+       * false in one direction and double-counted against the four
+       * classes that tile the request in the other. The span stays where
+       * it belongs and the incompleteness is stated beside it.
+       */
+      notFullyExamined.push([lo, hi]);
     }
   };
 
@@ -334,6 +412,26 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
     && everyAdmissibleSearched
     && !spanResults.some((s) => s.contradiction);
 
+  /**
+   * Complete over the REQUEST -- the original rule's claim, and the larger
+   * one. It holds only in the case where there is nothing else to hold it
+   * back: the profile declined nothing, the tolerance left nothing
+   * unclassified, the budget left nothing unexamined, and the admissible
+   * spans that were searched exhaustively therefore ARE the request.
+   *
+   * This is not a blanket "complete within the supported domain". It is
+   * refused the moment a single second of the request is excluded,
+   * boundary or unprocessed, which for any window containing a conjunction
+   * is always. Written this way so the partitioned path can be scored by
+   * the original rule rather than being weaker than the search it
+   * replaces on the cases where the whole window is admissible.
+   */
+  const completeOverRequest = exhaustiveOverAdmissible
+    && excludedTotal === 0
+    && boundaryTotal === 0
+    && unprocessedTotal === 0
+    && Math.abs(total(plan.admissible) - requestSpan) <= 1e-6;
+
   return {
     contract: 'zodiacs-partitioned-search/1',
     mode: 'validated-retarded-aberrated-deflected-of-date-over-partition',
@@ -366,7 +464,7 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
        * unclassified. An exact total is a statement about the request, and
        * an excluded span is part of the request.
        */
-      isExactTotalOverRequest: false,
+      isExactTotalOverRequest: completeOverRequest,
       isExactTotalOverAdmissible: exhaustiveOverAdmissible,
     },
     completeness: {
@@ -375,8 +473,10 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
        * it -- which, for a window containing a conjunction, is always. The
        * original rule scores this and it is reported unchanged.
        */
-      overRequest: false,
-      overRequestWhyNot: excludedTotal > 0
+      overRequest: completeOverRequest,
+      overRequestWhyNot: completeOverRequest
+        ? null
+        : excludedTotal > 0
         ? 'the profile excludes part of this request, so no run can be complete over it'
         : (boundaryTotal > 0 || unprocessedTotal > 0
           ? 'part of this request was neither admitted nor excluded'
@@ -384,7 +484,18 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       /** The SMALLER claim, scoped to the spans it names. */
       exhaustiveOverAdmissible,
       admissibleSpans: plan.admissible,
-      mayHoldUnfoundSupportedEvents: boundaryTotal > 0 || unprocessedTotal > 0,
+      /**
+       * Every way a supported crossing could still be sitting unfound:
+       * a boundary span nobody classified, a span nobody examined, an
+       * admissible span whose search stopped early, and a sliver the
+       * search itself could not settle. The first version listed only
+       * the first two, which would have read as "nothing else can be
+       * hiding" on a run whose subsearch ran out of budget.
+       */
+      mayHoldUnfoundSupportedEvents: boundaryTotal > 0
+        || unprocessedTotal > 0
+        || notFullyExamined.length > 0
+        || unresolved.length > 0,
       statement: exhaustiveOverAdmissible
         ? 'Every crossing of the requested longitude by the light-time-, solar-deflection- and aberration-corrected direction, in the ecliptic of date with the true equinox of date as origin, over the spans listed in admissibleSpans and NOT over the rest of the request.'
         : 'No exhaustiveness is claimed: at least one admissible span was not searched to completion.',
@@ -411,6 +522,15 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       excludedNote: 'Spans this profile DECLINES to answer for. Not empty spans: a crossing inside one is neither found nor ruled out.',
       boundaryNote: 'Spans whose admissibility was not established at the declared tolerance. The transition lies in here. Events found in them are reported with eligibility not established.',
       unprocessedNote: 'Spans never examined, because the budget ran out or the caller cancelled. NOT excluded and NOT searched-and-empty.',
+      /**
+       * A SECOND axis, deliberately not one of the four classes above.
+       * Those tile the request and answer "what is the domain here"; this
+       * one answers "how far did the examination get", and an interval
+       * can be admissible and under-examined at once.
+       */
+      admissibleNotFullyExamined: mergeSpanList(notFullyExamined),
+      admissibleNotFullyExaminedSec: total(notFullyExamined),
+      admissibleNotFullyExaminedNote: 'Proved admissible, searched, and the search did not finish. Still admissible; not exhaustively searched. Not part of the four-class tiling of the request.',
     },
     execution: {
       status,

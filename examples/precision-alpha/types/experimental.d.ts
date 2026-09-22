@@ -62,7 +62,193 @@ export const EXPERIMENTAL: Readonly<{
   /** The bare contract string, comparable with `===`. */
   resultContract: 'zodiacs-precision-search/2';
   resultContractNote: string;
+  /**
+   * The partitioned path. A DIFFERENT result contract, not a faster
+   * version of the same one: see `PartitionedSearchResult`.
+   */
+  partitioned: Readonly<{
+    planContract: 'zodiacs-domain-partition/1';
+    searchContract: 'zodiacs-partitioned-search/1';
+    whatItIsFor: string;
+    independentOfTargetLongitude: string;
+    migration: Readonly<{
+      from: 'searchRetardedAberratedDeflectedOfDate';
+      fieldsThatMove: readonly string[];
+      newPerEventFields: readonly string[];
+      whatDoesNotChange: string;
+    }>;
+  }>;
 }>;
+
+/** A closed interval of TDB seconds past J2000, `[from, to]`. */
+export type TdbSpan = readonly [number, number];
+
+/** What a plan may be tuned with. Every field has a default. */
+export interface DomainPlanSpec {
+  body: Body;
+  fromTdbSec: number;
+  toTdbSec: number;
+  /**
+   * The pack's verified container digest. Strongly recommended: without
+   * it the plan's identity falls back to the pack's structure and proven
+   * bounds, which cannot separate two packs of the same shape.
+   */
+  packDigest?: string | null;
+  signal?: { aborted: boolean };
+  /**
+   * How narrow a span straddling the elongation floor must get before it
+   * is reported as boundary instead of being split further. NOT an
+   * accuracy claim about the transition instant: the crossing lies
+   * somewhere inside the reported span and its width is all that is known.
+   */
+  boundaryToleranceSec?: number;
+  /** How far a span may shrink before its light-time interval is re-derived. */
+  relightWidthRatio?: number;
+  maxTauWidenings?: number;
+  tauPadFloorSec?: number;
+  maxEvaluations?: number;
+  maxCells?: number;
+}
+
+/**
+ * Where the deflection profile can and cannot answer, over one window,
+ * for one body -- computed WITHOUT a target longitude.
+ *
+ * The four span lists tile the request exactly and in order. They are not
+ * four ways of saying the same thing:
+ *
+ *   admissible   PROVED at or above the floor at every instant
+ *   excluded     PROVED below it at every instant: no answer at any resolution
+ *   boundary     proved NEITHER. The transition is in here.
+ *   unprocessed  never examined, because the budget ran out or the caller
+ *                cancelled. Not excluded, and not searched-and-empty.
+ */
+export interface DomainPlan {
+  readonly contract: 'zodiacs-domain-partition/1';
+  /**
+   * The identity this plan is a proof about: pack, observer, body,
+   * profile, window, tolerance and numerical policy. A plan whose key does
+   * not match the call it is handed to is refused, not recomputed.
+   */
+  readonly key: string;
+  readonly request: Readonly<Record<string, unknown>> & {
+    readonly identityStrength: 'digest' | 'structure-only';
+  };
+  readonly admissible: readonly TdbSpan[];
+  readonly excluded: readonly TdbSpan[];
+  readonly boundary: readonly TdbSpan[];
+  readonly unprocessed: readonly TdbSpan[];
+  readonly boundaryReasons: readonly Readonly<{ fromTdbSec: number; toTdbSec: number; why: string }>[];
+  readonly execution: Readonly<{
+    status: 'finished' | 'budget-exhausted' | 'cancelled';
+    finished: boolean;
+    reason: string | null;
+    evaluations: number;
+    cells: number;
+    maxEvaluations: number;
+    maxCells: number;
+  }>;
+  readonly diagnostics: Readonly<Record<string, unknown>>;
+}
+
+/** A crossing found over a plan, carrying which span class it came from. */
+export interface PartitionedEvent {
+  readonly tdbSec: number;
+  readonly bracketTdbSec: readonly [number, number];
+  /** Which class of span this crossing was found in. */
+  readonly domain: 'admissible' | 'boundary';
+  /**
+   * `established` only inside a proved-admissible span. A crossing found
+   * in a boundary span has NOT been shown to lie in the supported domain.
+   */
+  readonly eligibility: 'established' | 'not-established';
+  /**
+   * Which rung located it. A boundary-span crossing is located with the
+   * of-date rung and carries NO solar deflection, so its time is not the
+   * deflected crossing time.
+   */
+  readonly positionFrom:
+    | 'validated-retarded-aberrated-deflected-of-date'
+    | 'validated-retarded-aberrated-of-date';
+  readonly positionNote?: string;
+  readonly [key: string]: unknown;
+}
+
+/**
+ * The result of searching over a plan. NOT `SearchResult`: its
+ * completeness is stated over the spans it names rather than over the
+ * request, and its events carry fields `SearchResult` has no place for.
+ */
+export interface PartitionedSearchResult {
+  readonly contract: 'zodiacs-partitioned-search/1';
+  readonly mode: 'validated-retarded-aberrated-deflected-of-date-over-partition';
+  readonly request: Readonly<Record<string, unknown>>;
+  readonly plan: Readonly<Record<string, unknown>>;
+  readonly events: readonly PartitionedEvent[];
+  readonly eventCount: Readonly<{
+    found: number;
+    eligibilityEstablished: number;
+    eligibilityAmbiguous: number;
+    /** True only where nothing was excluded, boundary or unprocessed. */
+    isExactTotalOverRequest: boolean;
+    isExactTotalOverAdmissible: boolean;
+  }>;
+  readonly completeness: Readonly<{
+    /** Over the whole request. False wherever the profile declined any of it. */
+    overRequest: boolean;
+    overRequestWhyNot: string | null;
+    /** The SMALLER claim, scoped to `admissibleSpans` and no further. */
+    exhaustiveOverAdmissible: boolean;
+    admissibleSpans: readonly TdbSpan[];
+    /**
+     * True while any boundary, unprocessed, under-examined or unresolved
+     * region remains. Read it before treating `events` as a total.
+     */
+    mayHoldUnfoundSupportedEvents: boolean;
+    statement: string;
+  }>;
+  readonly accounting: Readonly<{
+    admissibleSec: number;
+    excludedSec: number;
+    boundarySec: number;
+    unprocessedSec: number;
+    requestSec: number;
+    /** The four classes tile the request. Checked, not assumed. */
+    coversRequestExactly: boolean;
+    excluded: readonly TdbSpan[];
+    boundary: readonly TdbSpan[];
+    unprocessed: readonly TdbSpan[];
+    unresolved: readonly Readonly<Record<string, unknown>>[];
+    /**
+     * A SECOND axis, not one of the four classes: proved admissible,
+     * searched, and the search did not finish.
+     */
+    admissibleNotFullyExamined: readonly TdbSpan[];
+    admissibleNotFullyExaminedSec: number;
+  }> & Readonly<Record<string, unknown>>;
+  readonly execution: Readonly<{
+    status: 'finished' | 'budget-exhausted' | 'cancelled';
+    finished: boolean;
+    reason: string | null;
+    /** One allowance for the whole request: partition plus every subsearch. */
+    evaluations: number;
+    cells: number;
+    maxEvaluations: number;
+    partitionEvaluations: number;
+    searchEvaluations: number;
+    partitionReused: boolean;
+  }>;
+  readonly spanResults: readonly Readonly<Record<string, unknown>>[];
+  readonly diagnostics: Readonly<Record<string, unknown>>;
+}
+
+/** A search over a plan. `plan` optional; without one, one is built. */
+export interface PartitionedSearchSpec extends RetardedSearchSpec {
+  plan?: DomainPlan;
+  packDigest?: string | null;
+  boundaryToleranceSec?: number;
+  relightWidthRatio?: number;
+}
 
 export interface ExperimentalSearches {
   /** True once this handle, or the runtime behind it, has been disposed. */
@@ -182,6 +368,37 @@ export interface ExperimentalSearches {
   searchRetardedAberratedDeflectedOfDate(spec: RetardedSearchSpec): SearchResult;
 
   /**
+   * WHERE the deflection profile can answer over a window, without asking
+   * WHAT it answers there.
+   *
+   * It takes no target longitude — that is how its independence from one
+   * is established rather than asserted — so one plan answers many
+   * longitudes over the same window.
+   */
+  planDeflectedDomain(spec: DomainPlanSpec): DomainPlan;
+
+  /**
+   * The deflected search, run over a domain plan instead of rediscovering
+   * the domain on every cell.
+   *
+   * ```ts
+   * const plan = x.planDeflectedDomain({ body, fromTdbSec, toTdbSec, packDigest });
+   * for (const targetDeg of longitudes) {
+   *   const r = x.searchRetardedAberratedDeflectedOfDateOverPlan({
+   *     body, targetDeg, fromTdbSec, toTdbSec, plan, packDigest,
+   *   });
+   * }
+   * ```
+   *
+   * A plan built for a different pack, observer, body, window, profile or
+   * tolerance is REFUSED, not silently recomputed.
+   *
+   * The result is NOT `SearchResult`. See `PartitionedSearchResult` and
+   * `EXPERIMENTAL.partitioned.migration`.
+   */
+  searchRetardedAberratedDeflectedOfDateOverPlan(spec: PartitionedSearchSpec): PartitionedSearchResult;
+
+  /**
    * Detach this handle. Idempotent, and it does NOT dispose the runtime --
    * the caller opened that and may still be using the released modes on it.
    */
@@ -196,6 +413,27 @@ export const ABERRATED_CONTRACT: Readonly<Record<string, unknown>>;
 export const OF_DATE_CONTRACT: Readonly<Record<string, unknown>>;
 export const DEFLECTED_CONTRACT: Readonly<Record<string, unknown>>;
 export const RETARDED_DEFAULTS: Readonly<Record<string, number>>;
+export const PARTITION_CONTRACT: Readonly<Record<string, unknown>>;
+export const PARTITION_CONTRACT_ID: 'zodiacs-domain-partition/1';
+export const PARTITION_DEFAULTS: Readonly<Record<string, number>>;
+
+/**
+ * The identity a cached plan must match before it may be reused. Exported
+ * so a consumer keying its own cache keys it the same way.
+ */
+export function partitionKey(parts: {
+  packDigest?: string | null;
+  packStructure?: string | null;
+  observer?: string | null;
+  body: Body;
+  fromTdbSec: number;
+  toTdbSec: number;
+  boundaryToleranceSec: number;
+  relightWidthRatio: number;
+  maxTauWidenings: number;
+  tauPadFloorSec: number;
+  profile?: string;
+}): string;
 
 /**
  * The range over which the of-date frame MODELS claim to represent the

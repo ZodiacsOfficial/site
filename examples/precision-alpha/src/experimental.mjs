@@ -79,10 +79,15 @@ import {
   RETARDED_DEFAULTS,
 } from './core/retarded-search.mjs';
 import { MIN_ELONGATION_RAD } from './core/deflection.mjs';
+import {
+  partitionDomain, partitionKey, PARTITION_CONTRACT, PARTITION_CONTRACT_ID, PARTITION_DEFAULTS,
+} from './core/domain-partition.mjs';
+import { searchDeflectedOverPartition } from './core/partitioned-search.mjs';
 
 export {
   RETARDED_CONTRACT, ABERRATED_CONTRACT, OF_DATE_CONTRACT, DEFLECTED_CONTRACT,
   OF_DATE_MODEL_RANGE_TDB_SEC, RETARDED_DEFAULTS,
+  PARTITION_CONTRACT, PARTITION_CONTRACT_ID, PARTITION_DEFAULTS, partitionKey,
 };
 
 /** What this subpath promises, which is deliberately not much. */
@@ -114,6 +119,38 @@ export const EXPERIMENTAL = Object.freeze({
    */
   resultContract: SEARCH_RESULT_CONTRACT,
   resultContractNote: 'the same result contract the released modes return, so a consumer already narrowing with isProven narrows these the same way',
+  /**
+   * The partitioned path, and what makes it a DIFFERENT contract rather
+   * than a faster version of the same one.
+   *
+   * `searchRetardedAberratedDeflectedOfDate` returns the search result
+   * contract above. `...OverPlan` does not: it returns
+   * `zodiacs-partitioned-search/1`, whose completeness is stated over the
+   * spans it names rather than over the request, and whose events carry
+   * an `eligibility` and a `positionFrom` the other has no field for. A
+   * consumer cannot swap one for the other and read the same fields, and
+   * that is deliberate -- the two answer questions of different size.
+   */
+  partitioned: Object.freeze({
+    planContract: PARTITION_CONTRACT_ID,
+    searchContract: 'zodiacs-partitioned-search/1',
+    whatItIsFor: 'separating WHERE the profile can answer from WHAT it answers there, so the first can be computed once and reused across target longitudes',
+    independentOfTargetLongitude: 'structurally: planDeflectedDomain never receives one',
+    migration: Object.freeze({
+      from: 'searchRetardedAberratedDeflectedOfDate',
+      fieldsThatMove: Object.freeze([
+        'completeness.established -> completeness.overRequest (same meaning, and false wherever the profile declined any part of the request)',
+        'eventCount.isExactTotal -> eventCount.isExactTotalOverRequest, with isExactTotalOverAdmissible as the smaller, separate claim',
+        'accounting.excluded -> accounting.excluded, unchanged in meaning; accounting.boundary and accounting.unprocessed are NEW and are neither excluded nor searched-and-empty',
+        'interval.decidedTdbSec -> completeness.admissibleSpans for the proved-admissible part; a boundary span is not decided and is not excluded',
+      ]),
+      newPerEventFields: Object.freeze([
+        'eligibility: established | not-established',
+        'positionFrom: which rung located this crossing. A boundary-span event was located WITHOUT the solar term.',
+      ]),
+      whatDoesNotChange: 'the profile, its five-degree floor, the deflection model, the budgets and the tolerances. This is the same question asked in a different order, not a different question.',
+    }),
+  }),
 });
 
 /**
@@ -149,6 +186,7 @@ export function experimental(runtime) {
       aberrated: ABERRATED_CONTRACT,
       ofDate: OF_DATE_CONTRACT,
       deflected: DEFLECTED_CONTRACT,
+      partition: PARTITION_CONTRACT,
     }),
     defaults: RETARDED_DEFAULTS,
 
@@ -220,6 +258,51 @@ export function experimental(runtime) {
      */
     searchRetardedAberratedDeflectedOfDate(spec) {
       return searchDeflectedLongitude(live(), spec);
+    },
+
+    /**
+     * WHERE the deflection profile can answer over a window, without
+     * asking WHAT it answers there.
+     *
+     * `{body, fromTdbSec, toTdbSec, packDigest?, signal?}` plus the
+     * tuning in `PARTITION_DEFAULTS`. It never takes a target longitude,
+     * which is why one plan answers many of them.
+     *
+     * The result carries `admissible`, `excluded`, `boundary` and
+     * `unprocessed` span lists that tile the request exactly, and a `key`
+     * identifying the pack, observer, body, profile, window and numerical
+     * policy it is a proof about. Pass `packDigest` -- without one the
+     * plan records `identityStrength: 'structure-only'`, which cannot tell
+     * two packs of the same shape apart.
+     */
+    planDeflectedDomain(spec) {
+      return partitionDomain(live(), spec);
+    },
+
+    /**
+     * The deflected search, run over a domain plan instead of
+     * rediscovering the domain.
+     *
+     * Same spec as `searchRetardedAberratedDeflectedOfDate` plus an
+     * optional `plan` and `packDigest`. Without a plan one is built for
+     * this request and charged to this request's budget.
+     *
+     *   const plan = x.planDeflectedDomain({body, fromTdbSec, toTdbSec, packDigest});
+     *   for (const targetDeg of longitudes) {
+     *     const r = x.searchRetardedAberratedDeflectedOfDateOverPlan({
+     *       body, targetDeg, fromTdbSec, toTdbSec, plan, packDigest,
+     *     });
+     *   }
+     *
+     * A plan built for a different pack, observer, body, window, profile
+     * or tolerance is REFUSED rather than silently recomputed: it is a
+     * proof about a different statement.
+     *
+     * The result is NOT the search result contract. Read
+     * `EXPERIMENTAL.partitioned.migration` before treating it as one.
+     */
+    searchRetardedAberratedDeflectedOfDateOverPlan(spec) {
+      return searchDeflectedOverPartition(live(), spec);
     },
 
     /**

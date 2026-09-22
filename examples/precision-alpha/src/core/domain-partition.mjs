@@ -80,6 +80,9 @@ import {
 } from './retarded.mjs';
 import { enter, leave, charge, setLabel } from './instrument.mjs';
 
+/** The one version number: the operation's contract and its cache keys. */
+export const PARTITION_CONTRACT_ID = 'zodiacs-domain-partition/1';
+
 /** What this operation promises, for the result's metadata. */
 export const PARTITION_CONTRACT = Object.freeze({
   operation: 'the subintervals of a requested interval over which one body is PROVED inside, and PROVED outside, the solar-elongation floor of a deflection profile -- with the residue between them reported rather than assigned',
@@ -137,17 +140,74 @@ export const PARTITION_DEFAULTS = Object.freeze({
  * The pack's digest is in here, not its path: two files at one path over
  * time are two packs, and a path is not an identity.
  */
-export function partitionKey({ packDigest, body, fromTdbSec, toTdbSec, boundaryToleranceSec, profile }) {
+export function partitionKey({
+  packDigest, packStructure, observer, body, fromTdbSec, toTdbSec,
+  boundaryToleranceSec, relightWidthRatio, maxTauWidenings, tauPadFloorSec, profile,
+}) {
   return [
-    'zodiacs-domain-partition/1',
+    PARTITION_CONTRACT_ID,
     profile ?? DEFLECTION_PROFILE.id,
     packDigest ?? 'no-digest',
+    packStructure ?? 'no-structure',
+    observer ?? 'no-observer',
     body,
     'tdb',
     fromTdbSec,
     toTdbSec,
     boundaryToleranceSec,
+    relightWidthRatio,
+    maxTauWidenings,
+    tauPadFloorSec,
   ].join('|');
+}
+
+/**
+ * A pack's numerical identity, read from the pack itself.
+ *
+ * The digest identifies the BYTES and is the strong form. This is the
+ * weaker companion for a runtime that was handed no digest: the segment
+ * layout and the proven error bounds of every body the partition reads.
+ * Those are what the enclosures are built from, so a pack that differs in
+ * any of them gives a different partition for the same request.
+ *
+ * Its limit, stated rather than left to be discovered: two packs with the
+ * same layout and the same proven bounds but DIFFERENT COEFFICIENTS have
+ * the same fingerprint. Only the digest separates those, which is why a
+ * partition built without one records that its identity is weaker.
+ */
+export function packFingerprint(eph) {
+  const parts = [`observer=${eph.observer ?? 'unknown'}`, `emrat=${eph.emrat ?? 'unknown'}`];
+  const names = [...eph.bodies.keys()].sort();
+  for (const name of names) {
+    const sb = eph.bodies.get(name);
+    parts.push([
+      name, sb.initEt, sb.intervalSec, sb.nrec, sb.ncoef,
+      sb.provenPosKm, sb.provenVelKmS,
+    ].join(':'));
+  }
+  return fingerprint(parts.join(';'));
+}
+
+/**
+ * A short, stable label for a long string. Two 32-bit FNV-1a passes with
+ * different offset bases, printed as one 16-character hex string.
+ *
+ * What it is for: telling two DIFFERENT packs apart by accident -- a
+ * mismatched cache, a stale file, the wrong runtime. What it is NOT: a
+ * security boundary. It is not cryptographic and a determined forger can
+ * collide it in seconds. The trust anchor for an imported partition is
+ * the pack DIGEST, and a partition built without one records its identity
+ * as `structure-only` for exactly that reason.
+ */
+function fingerprint(text) {
+  let a = 0x811c9dc5;
+  let b = 0x01000193;
+  for (let i = 0; i < text.length; i += 1) {
+    const c = text.charCodeAt(i);
+    a = Math.imul(a ^ c, 0x01000193) >>> 0;
+    b = Math.imul(b ^ c, 0x85ebca6b) >>> 0;
+  }
+  return `${a.toString(16).padStart(8, '0')}${b.toString(16).padStart(8, '0')}`;
 }
 
 /** Merge touching or overlapping spans of one class. Sorted, disjoint out. */
@@ -349,6 +409,93 @@ export function partitionDomain(eph, spec = {}) {
   }
   if (!(p.boundaryToleranceSec > 0)) fail('unsupported-option', 'boundaryToleranceSec must be positive');
 
+  /**
+   * The identity this partition will be cached and reused under, built
+   * once. It names everything that changes the answer, so a plan carrying
+   * it is a proof about exactly this question and no other.
+   */
+  const identity = {
+    packDigest: packDigest ?? null,
+    packStructure: packFingerprint(eph),
+    observer: eph.observer ?? 'unknown',
+    body,
+    fromTdbSec: a,
+    toTdbSec: b,
+    boundaryToleranceSec: p.boundaryToleranceSec,
+    relightWidthRatio: p.relightWidthRatio,
+    maxTauWidenings: p.maxTauWidenings,
+    tauPadFloorSec: p.tauPadFloorSec,
+    profile: DEFLECTION_PROFILE.id,
+  };
+  /**
+   * Weaker without a digest, and it says so rather than reading as an
+   * identity it is not. A caller reusing a `structure-only` plan is
+   * trusting that two packs of identical layout and identical proven
+   * bounds hold identical coefficients, which nothing here checks.
+   */
+  const identityStrength = packDigest ? 'digest' : 'structure-only';
+  const key = partitionKey(identity);
+
+  /**
+   * The deflector as the target -- the profile's own exception, mirrored
+   * here rather than rediscovered.
+   *
+   * `searchDeflectedLongitude` applies NO deflection when the body being
+   * searched for is the deflector itself: a body does not bend its own
+   * light, and the elongation of the Sun from the Sun is zero, which is a
+   * degeneracy rather than a near-conjunction. So the profile answers a
+   * Sun-target request over the WHOLE window, and the elongation floor
+   * that restricts every other body restricts nothing here.
+   *
+   * Without this the partition computes cos(elongation) of the Sun from
+   * the Sun, gets the +1 that geometry demands, and declares the entire
+   * request EXCLUDED -- a span the profile in fact answers for, reported
+   * as one it declines. Measured on F1/A1 of the regression corpus, that
+   * cost 72,108 evaluations against the search's 635 and returned an
+   * excluded window where the search returns two events. It is a
+   * correctness failure first and a cost failure second.
+   *
+   * The shortcut is about the DOMAIN only. Whether the pack covers the
+   * window is a different question, and one the subsearch answers for
+   * every body including this one.
+   */
+  if (DEFLECTION_PROFILE.deflectors.includes(body)) {
+    return {
+      contract: PARTITION_CONTRACT_ID,
+      key,
+      request: {
+        body,
+        windowTdbSec: [a, b],
+        boundaryToleranceSec: p.boundaryToleranceSec,
+        profile: DEFLECTION_PROFILE.id,
+        minElongationDeg: DEFLECTION_PROFILE.minElongationDeg,
+        identity,
+        identityStrength,
+        ...PARTITION_CONTRACT,
+      },
+      admissible: [[a, b]],
+      excluded: [],
+      boundary: [],
+      unprocessed: [],
+      boundaryReasons: [],
+      execution: {
+        status: 'finished', finished: true, reason: null,
+        evaluations: 0, cells: 0, maxEvaluations: p.maxEvaluations, maxCells: p.maxCells,
+      },
+      diagnostics: {
+        seeds: 0,
+        widestTauWidenings: 0,
+        lightTimeDerivations: 0,
+        narrowestBoundarySec: null,
+        widestBoundarySec: null,
+        closestAdmissibleCos: null,
+        closestAdmissibleCosIsALowerBoundOnElongation: true,
+        deflectorIsTarget: true,
+        deflectorIsTargetWhy: `${body} is a deflector of ${DEFLECTION_PROFILE.id}; no deflection is applied to it, so the elongation floor restricts nothing and the whole window is inside the supported domain`,
+      },
+    };
+  }
+
   const targets = targetWeights(eph, body);
   const observer = observerWeights(eph);
   // Resolved ONCE, before any cell, so a pack with no Sun costs one
@@ -398,6 +545,15 @@ export function partitionDomain(eph, spec = {}) {
   }
 
   const stack = [];
+  /**
+   * The cell that has been popped and is being worked on. It belongs to
+   * neither the stack nor any output list while that is true, so an
+   * exception thrown mid-classification would drop it: measured on a
+   * Saturn window starved during partitioning, 0.02 days of a 300-day
+   * request went into no class at all and the four classes stopped tiling
+   * the request. Tracked here so the catch can put it back.
+   */
+  let inFlight = null;
   try {
     // A seed carries no light-time yet. Deriving one costs an iteration
     // and several enclosures, and on a wide span it can fail for reasons
@@ -408,6 +564,7 @@ export function partitionDomain(eph, spec = {}) {
     const ctx = { eph, targets, observer, sun, spend, p };
     while (stack.length) {
       const cell = stack.pop();
+      inFlight = cell;
       setLabel(cell.T === null ? 'partition-light-time-pending' : 'partition-cell');
       cells += 1;
       charge('cells');
@@ -430,6 +587,7 @@ export function partitionDomain(eph, spec = {}) {
             const m0 = (lo + hi) / 2;
             if (m0 > lo && m0 < hi) {
               stack.push({ lo: m0, hi, T: null, tw: Infinity }, { lo, hi: m0, T: null, tw: Infinity });
+              inFlight = null;
               continue;
             }
           }
@@ -437,6 +595,7 @@ export function partitionDomain(eph, spec = {}) {
           reasons.push({ fromTdbSec: lo, toTdbSec: hi, why: lt.why });
           narrowestBoundarySec = Math.min(narrowestBoundarySec, hi - lo);
           widestBoundarySec = Math.max(widestBoundarySec, hi - lo);
+          inFlight = null;
           continue;
         }
         T = lt.T;
@@ -447,9 +606,10 @@ export function partitionDomain(eph, spec = {}) {
       if (out.verdict === 'admissible') {
         admissible.push([lo, hi]);
         closestAdmissibleCos = Math.max(closestAdmissibleCos, out.cosElongation.hi);
+        inFlight = null;
         continue;
       }
-      if (out.verdict === 'excluded') { excluded.push([lo, hi]); continue; }
+      if (out.verdict === 'excluded') { excluded.push([lo, hi]); inFlight = null; continue; }
       // Boundary or indeterminate: bisect while it is worth it.
       if (hi - lo > p.boundaryToleranceSec) {
         const m = (lo + hi) / 2;
@@ -471,6 +631,7 @@ export function partitionDomain(eph, spec = {}) {
           // an interval that is not in fact stale.
           const twc = out.T ? hi - lo : tw;
           stack.push({ lo: m, hi, T: Tc, tw: twc }, { lo, hi: m, T: Tc, tw: twc });
+          inFlight = null;
           continue;
         }
       }
@@ -478,6 +639,7 @@ export function partitionDomain(eph, spec = {}) {
       if (out.why) reasons.push({ fromTdbSec: lo, toTdbSec: hi, why: out.why });
       narrowestBoundarySec = Math.min(narrowestBoundarySec, hi - lo);
       widestBoundarySec = Math.max(widestBoundarySec, hi - lo);
+      inFlight = null;
     }
   } catch (error) {
     if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
@@ -486,7 +648,7 @@ export function partitionDomain(eph, spec = {}) {
       // Everything still on the stack was never examined. It is
       // UNPROCESSED -- not excluded, not boundary, not admissible. Marking
       // it any of those would be claiming a verdict the run never reached.
-      unprocessed = coalesce(stack.map((c) => [c.lo, c.hi]));
+      unprocessed = coalesce([...stack, ...(inFlight ? [inFlight] : [])].map((c) => [c.lo, c.hi]));
     } else {
       throw error;
     }
@@ -498,14 +660,16 @@ export function partitionDomain(eph, spec = {}) {
   const unp = coalesce(unprocessed);
 
   return {
-    contract: 'zodiacs-domain-partition/1',
-    key: partitionKey({ packDigest, body, fromTdbSec: a, toTdbSec: b, boundaryToleranceSec: p.boundaryToleranceSec, profile: DEFLECTION_PROFILE.id }),
+    contract: PARTITION_CONTRACT_ID,
+    key,
     request: {
       body,
       windowTdbSec: [a, b],
       boundaryToleranceSec: p.boundaryToleranceSec,
       profile: DEFLECTION_PROFILE.id,
       minElongationDeg: DEFLECTION_PROFILE.minElongationDeg,
+      identity,
+      identityStrength,
       ...PARTITION_CONTRACT,
     },
     admissible: adm,
@@ -536,6 +700,8 @@ export function partitionDomain(eph, spec = {}) {
        */
       closestAdmissibleCos: Number.isFinite(closestAdmissibleCos) ? closestAdmissibleCos : null,
       closestAdmissibleCosIsALowerBoundOnElongation: true,
+      deflectorIsTarget: false,
+      deflectorIsTargetWhy: null,
     },
   };
 }
