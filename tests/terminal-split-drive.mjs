@@ -386,7 +386,8 @@ try {
     assert.equal(await activePlacard.locator('.vitrine-official-note').count(), 0);
     assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
     const [exploreBox, fomoBox] = await Promise.all([exploreCta.boundingBox(), fomoCta.boundingBox()]);
-    assert.ok(exploreBox && fomoBox && Math.abs(exploreBox.width - fomoBox.width) <= 1, 'Explore and Fomo use equal-width action tracks');
+    assert.ok(exploreBox && fomoBox && fomoBox.width >= exploreBox.width && exploreBox.height === 48 && fomoBox.height === 48, 'both actions retain 48px targets and Fomo has room for its original branding');
+    assert.ok(await fomoCta.locator('strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), 'the complete Buy with Fomo label fits without clipping');
     const movementStyle = await activePlacard.locator('.vitrine-price__movement').evaluate((node) => ({
       className: node.className,
       color: getComputedStyle(node).color,
@@ -718,6 +719,7 @@ try {
       duration: getComputedStyle(node).transitionDuration,
     }));
     assert.equal(motionState.animation, 'none');
+    assert.equal(await reducedPage.locator('.vitrine-gold-light').evaluate((node) => getComputedStyle(node).display), 'none', 'decorative shine respects reduced motion');
     assert.match(motionState.duration, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
     const reducedRingMotion = await reducedPage.locator('.vitrine-disc.is-active picture').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
     assert.match(reducedRingMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
@@ -808,7 +810,8 @@ try {
         logoWidth: logo?.width,
       };
     });
-    assert.ok(Math.abs(staticActionGeometry.exploreWidth - staticActionGeometry.fomoWidth) <= 1, 'no-JavaScript actions use equal widths');
+    assert.ok(staticActionGeometry.fomoWidth >= staticActionGeometry.exploreWidth, 'no-JavaScript Fomo action has room for its original branding');
+    assert.ok(await staticActions.locator('.btn--fomo strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), 'the no-JavaScript Buy with Fomo label fits without clipping');
     assert.ok(staticActionGeometry.actionsBottom <= staticActionGeometry.dateTop, 'no-JavaScript date sits below the action row');
     assert.equal(staticActionGeometry.logoWidth, 34);
     await noJsPage.locator('#shop').scrollIntoViewIfNeeded();
