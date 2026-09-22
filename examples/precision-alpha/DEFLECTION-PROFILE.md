@@ -389,3 +389,202 @@ Agreement with `eraLd` is agreement with a first-order model whose own
 second-order omission is measured in §0. Near conjunction that omission is
 larger than every implementation difference this package can measure, which
 is the honest reason the supported domain is set where it is.
+
+---
+
+## 11 · Addendum: what the pointwise verification established
+
+**Everything above §11 is the specification as written before any of
+`src/core/deflection.mjs` existed, and is left as it was.** This section
+was added afterwards and records what implementing and verifying the
+pointwise transformation actually established — including two places where
+the work corrected the sections above, and one place where the test suite
+was passing while covering nothing.
+
+### 11.1 Against the compiled reference: bit for bit, 1020 of 1020
+
+`test/tier-a/_erfa-ld-vectors.json` is the output of the pinned `ld.c`, its
+body extracted verbatim, compiled with gcc and run — not a transliteration.
+Over 358 geometries, every one of the 1074 output components from
+`deflect` is **bit-identical** to the compiled `eraLd`.
+
+Getting there turned up something worth stating, because it is a fact about
+this module's contract rather than the reference's: **ERFA leaves
+normalization to its caller**, so the choice of norm routine is ours. The
+fixture generator originally normalized with `Math.hypot` while the module
+uses `sqrt` of the sum of squares — the core-wide rule, for the reason in
+`src/core/frames.mjs`: `sqrt` is correctly rounded and agrees between
+engines, `hypot` is neither. That single difference put 14 of 792
+components up to **4 ulp** apart, on the 264-case fixture as it then
+stood. The generator now uses `sqrt` too, so the
+comparison tests the transformation instead of two normalizers.
+
+This establishes that this is the same first-order model, computed the same
+way. It establishes nothing about the model's accuracy; §0 and §10 stand.
+
+### 11.2 Linearity in `d`, and the sign condition on it
+
+`D = d + w(d × (e × q))` is linear in `d`, because `w`, `e`, `q`, `em` and
+`dlim` do not involve `d`. Three separate claims, asserted separately
+rather than as one tolerance:
+
+| claim | strength | measured |
+| --- | --- | --- |
+| `k` a power of two | exact, bit for bit | holds over 2⁻¹⁰⁰ … 2¹⁰⁰ |
+| `k` general positive | ≤ 4 eps, derived from two roundings | worst 0.97 eps |
+| direction under `k > 0` | unchanged | ≤ 2.8 × 10⁻¹⁷ rad |
+| direction under `k < 0` | **reversed** | exactly π |
+
+The last row is the domain condition and it is not cosmetic: a negative
+rescaling moves a longitude by half a turn and flips every projection. The
+search's vector is positive by construction; the tests pin both halves so
+that stays a checked fact rather than an assumption.
+
+The property is the reference's own, not this transliteration's: the
+fixture runs the compiled `eraLd` on the raw `d` and on `unit(d)`
+separately, and ERFA's own output is linear to **2.75 × 10⁻¹⁶** (about one
+ulp) across all cases.
+
+### 11.3 `q` and `e` are not scale-free, and by exactly how much
+
+§5 asks for any rescaling to be derived rather than assumed. With
+`c = q̂ · ê`, and `em` held correct:
+
+- `|q| × λ` multiplies the deflection by `(1 + c)/(λ + c)`
+- `|e| × μ` multiplies it by `μ(1 + c)/(1 + μc)`
+
+These are different functions of their argument, and both are matched to
+**9.10 × 10⁻¹²** and **1.02 × 10⁻¹¹** relative over 940 and 892
+perturbations — so what is checked is the structure, not merely that some
+sensitivity exists. Because `1 + c = 1 − cos χ ≈ χ²/2`, a fixed relative
+error in `|q|` is amplified by roughly `2/χ²`:
+
+| elongation | deflection | cost of rescaling q by 1.0001 |
+| --- | --- | --- |
+| 0.3° | 1.304493″ | −83.69 % (1.092″) |
+| 1° | 0.391338″ | −31.59 % |
+| 5° | 0.078215″ | −1.8162 % (1.42 mas) |
+| 90° | 0.003351″ | −0.0084 % |
+
+**The laws have a domain, and it is the limiter that enforces it.** 288 of
+the 2120 perturbations fall outside them, and every single one for the same
+reason: shrinking `|q|` near conjunction drives `q·(q + e)` **negative**.
+ERFA's `max(q·(q+e), dlim)` is what stops the unlimited form deflecting the
+wrong way. That is a second job the limiter does, distinct from the one §6
+describes, and it was not in the specification above.
+
+### 11.4 The closed form is an exact identity, not an approximation
+
+`tan(δ) = (SRS/em) tan(χ/2)` shares no code with `deflect` — it never forms
+`d × (e × q)` and never touches `d`. It follows from
+`|d × (e × q)| = |d| sin χ`, which requires `d` to lie in the plane of `e`
+and `q` — and that is **satisfied identically for real geometry**, since
+`d = |q| q̂ − |e| ê` is a linear combination of the two. So the identity
+holds at finite source distance exactly as for a distant star. It is not a
+far-field approximation, and it is not an independent model: it is the same
+`eraLd` reached by a different algebraic route, so it checks the arithmetic
+and the vector algebra and nothing about the physics.
+
+The comparison tolerance is **derived per case**, not fitted:
+`16 eps/(1 + cos χ) + 16 eps`, because both routes reach `1 + cos χ` — one
+as `q·(q+e)`, the other through `atan2` and a half-angle — and that
+cancellation sets the conditioning of each. It bounds every case with
+11× to spare. An earlier flat tolerance had to be abandoned: adding the
+cases that sit against the limiter threshold broke it, not because anything
+got less accurate but because those cases have `1 + cos χ ≈ 10⁻⁶`. A number
+that must be raised whenever a harder case is added is not a bound.
+
+### 11.5 The angle must be read from the perturbation
+
+A 5.9 × 10⁻⁸ "disagreement" between the vector path and the closed form was
+**an artefact of the measuring instrument, not a difference between two
+models.** That was the figure that started this; across the fixture as it
+now stands the noisy route reaches 1.98 × 10⁻⁷. `D = d + u` with `|u|/|d|` around 10⁻¹⁰, so forming `d × D`
+subtracts two nearly equal products and discards what the answer is made
+of. The relative error of that route is bounded by `eps |d|/|u|`, which at the
+worst case (5° elongation, source at 9.5 au, near branch) is 2.96 × 10⁻⁶
+against a measured 1.98 × 10⁻⁷ — a fifteenth of the bound. The bound holds
+at every case; nowhere does it come close to being tight.
+
+`deflect` therefore returns `u` and `deflectionAngleOf` uses it directly:
+`u ⊥ d` by construction, so `tan δ = |u|/|d|` with no angle-between routine
+at all. At the case where the other showed 5.9 × 10⁻⁸, that route agrees with the
+independent closed form to **0.69 eps** — under one ulp. Recovering `u` by subtracting
+`d` from `D` instead is caught by the tests.
+
+### 11.6 The limiter: two corrections to §6, and a coverage hole
+
+§6 says `dlim` is φ²/2 and not an error cap, and that the supported domain
+excludes it. Both hold. Three things are added:
+
+1. **It also prevents a division by zero and a sign error.** With `q = −e`
+   exactly, `q·(q+e)` is `0`, and the unlimited form is `Infinity × 0 =
+   NaN`. See 11.3 for the sign case.
+2. **Inside it the model is replaced by a linear ramp that runs the wrong
+   way.** With `w` clamped and `|e × q| = sin ξ`, the limited deflection is
+   *proportional to ξ* — falling to zero on the axis, where the model it
+   replaces diverges. Measured: 0.004072″, 0.040719″, 0.407193″ at
+   ξ = 10⁻⁶, 10⁻⁵, 10⁻⁴, exactly linear to five digits.
+3. **The peak of 5.7586″ is reproduced from the reference's own geometry.**
+   The threshold family sweeps ξ/ξ_lim ∈ {0.25, 0.5, 0.99, 1, 1.01, 2, 4}
+   and gives 1.4396″, 2.8793″, 5.7010″, **5.7586″**, 5.7016″, 2.8793″,
+   1.4396″ — unimodal, peaking at the threshold. §6 derived that number
+   analytically; this measures it through `deflect` on geometry the
+   compiled `eraLd` also ran.
+
+**The coverage hole.** A mutation that deleted `max(q·(q+e), dlim)` from
+`deflect` outright **passed every test in the suite.** Every limiter test
+reimplemented the clamp in a local closure and checked the arithmetic;
+none went through the module, and the fixture's smallest elongation was
+0.3° against a 0.08103° threshold, so the branch was never taken. `em` was
+also pinned at 1 au, so `dlim = 10⁻⁶/max(em², 1)` never left one side of
+its `max`. The fixture now carries limiter-active cases, observers at 0.39
+and 5.2 au, and on-axis cases written down rather than reached through
+trig — `geometry(180°, R)` cannot produce a true antipode, because
+`Math.sin(Math.PI)` is 1.2246 × 10⁻¹⁶ and not 0. That lands it 1.2246 ×
+10⁻¹⁶ rad — about 25 picoarcsec — off the axis, on a denominator of
+1.5 × 10⁻³² instead of 0.
+
+### 11.7 On axis: exactly zero from both sides, for two different reasons
+
+At **χ = 0** (source beyond the observer on the same ray) `e × q` is the
+zero vector, the denominator is a healthy 2, and the deflection is zero
+because there is no transverse direction to bend into. The closed form
+agrees at exactly 0.
+
+At **χ = π** the deflection is also exactly zero and `D === d` bit for bit
+— and here that is *not* the model's answer. The model diverges. Zero comes
+out only because `sin π` cancels exactly before the clamped denominator can
+be applied, and the closed form is a quarter turn away from agreeing (and
+is finite there only because `Math.tan(Math.PI/2)` is 1.633 × 10¹⁶ rather
+than infinite). Moving off axis by 10⁻³ rad — 206 arcsec — takes the
+answer from 0 to 4.0719″, and by 2 × 10⁻⁴ rad (41 arcsec) to 0.8144″.
+
+This is the §5 distinction, met head on: **a finite number here is not an
+observable direction.** The supported domain excludes all of it, and the
+transition is a discontinuity rather than something to differentiate
+through.
+
+Every figure in this section is regenerated by
+`tools/measure/erfa-deflection/measure-claims.mjs`, which recomputes each
+one from the committed fixture and the module. Prose drifts from the
+fixture it describes; several numbers here were stale on first writing,
+because they had been measured before the fixture grew the limiter and
+on-axis families.
+
+### 11.8 What is still not established
+
+This section covers the **pointwise** transformation only, under matched
+inputs and conventions, and at double precision. It does not establish:
+
+- interval enclosures through the deflection chain, or through the search
+- anything about the model's own accuracy beyond §0's ray integration
+- that a correction-induced shift in an event time is an improvement
+- agreement with any independent *apparent place*, as opposed to agreement
+  with `eraLd`
+
+The mutation battery behind these claims is 16 mutations — 13 to the
+module, 3 to the tests — and all 16 are caught. That is coverage evidence,
+not a proof: a passing suite is not a theorem, and §6's separation of
+model-relative support, floating-point enclosure, empirical validation and
+physical uncertainty still applies in full.

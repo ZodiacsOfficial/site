@@ -1,0 +1,150 @@
+{
+ "fixture": {
+  "cases": 358,
+  "components": 1074
+ },
+ "bitIdentical": {
+  "exact": 1074,
+  "of": 1074
+ },
+ "linearity": {
+  "pow2Exact": true,
+  "worstGeneralKEps": 0.9730157897553061,
+  "worstAngleRadPositiveK": 2.7742082420688627e-17,
+  "worstAngleDeviationFromPiNegativeK": 0,
+  "erfaOwnLinearityRel": 2.745121553894456e-16,
+  "erfaOwnLinearityEps": 1.2362928407205789
+ },
+ "scaleLaws": {
+  "qCases": 940,
+  "eCases": 892,
+  "worstQRel": 9.101830400481958e-12,
+  "worstERel": 1.0164091790443308e-11,
+  "perturbationsTotal": 2120,
+  "diverted": 288,
+  "divertedWithNegativeDenominator": 288,
+  "onAxisSkipped": 4,
+  "cost": {
+   "0.3deg": {
+    "deflectionArcsec": 1.3044933523564588,
+    "percent": -83.69120937027193,
+    "arcsec": 1.0917462627419232
+   },
+   "1deg": {
+    "deflectionArcsec": 0.3913379625038674,
+    "percent": -31.594531115460054,
+    "arcsec": 0.12364139432989177
+   },
+   "5deg": {
+    "deflectionArcsec": 0.07821461765002262,
+    "percent": -1.816190255356457,
+    "arcsec": 0.0014205262640240223
+   },
+   "90deg": {
+    "deflectionArcsec": 0.00335141913959535,
+    "percent": -0.008386393399214565,
+    "arcsec": 2.81063193503038e-7
+   }
+  }
+ },
+ "routes": {
+  "closedFormWorstRel": 3.94587292192964e-9,
+  "closedFormWorstRatioToBound": 0.08736465527555737,
+  "closedFormHeadroom": 11.446276493003884,
+  "closedFormWorstRelInDomain": 5.794911281059502e-13,
+  "noisyRouteWorstRel": 1.9770570911539565e-7,
+  "noisyRouteBoundAtWorst": 0.000002957896761255623,
+  "noisyRouteWorstAt": {
+   "elongationDeg": 5,
+   "sourceAu": 9.5,
+   "near": true
+  }
+ },
+ "limiter": {
+  "activeCases": 22,
+  "dlimBranches": {
+   "at0_39au": 0.000001,
+   "at1au": 0.000001,
+   "at5_2au": 3.6982248520710056e-8
+  },
+  "ramp": {
+   "xi=0.000001": {
+    "arcsec": 0.004071926639614876,
+    "limited": true
+   },
+   "xi=0.00001": {
+    "arcsec": 0.040719266395476364,
+    "limited": true
+   },
+   "xi=0.0001": {
+    "arcsec": 0.40719266328237214,
+    "limited": true
+   }
+  },
+  "threshold": [
+   {
+    "factor": 0.25,
+    "arcsec": 1.439643559637514,
+    "limited": true
+   },
+   {
+    "factor": 0.5,
+    "arcsec": 2.879286939179291,
+    "limited": true
+   },
+   {
+    "factor": 0.99,
+    "arcsec": 5.700986751062931,
+    "limited": true
+   },
+   {
+    "factor": 1,
+    "arcsec": 5.758572437592828,
+    "limited": true
+   },
+   {
+    "factor": 1.01,
+    "arcsec": 5.701556849224228,
+    "limited": false
+   },
+   {
+    "factor": 2,
+    "arcsec": 2.879284779668449,
+    "limited": false
+   },
+   {
+    "factor": 4,
+    "arcsec": 1.4396395106461033,
+    "limited": false
+   }
+  ]
+ },
+ "onAxis": {
+  "aligned": {
+   "qdqpe": 2,
+   "limiterActive": false,
+   "uIsZero": true,
+   "dUnchanged": true,
+   "closedFormRad": 0
+  },
+  "antipodal": {
+   "qdqpe": 0,
+   "limiterActive": true,
+   "uIsZero": true,
+   "dUnchanged": true,
+   "closedFormRad": 1.570796323693152
+  },
+  "tanPiOverTwo": 16331239353195370,
+  "sinPi": 1.2246467991473532e-16,
+  "offAxis": {
+   "xi=0.001": {
+    "arcsec": 4.071925960432182,
+    "supported": false
+   },
+   "xi=0.0002": {
+    "arcsec": 0.8143853224896439,
+    "supported": false
+   }
+  }
+ }
+}
