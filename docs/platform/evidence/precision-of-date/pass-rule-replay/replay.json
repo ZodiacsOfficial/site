@@ -1,0 +1,51 @@
+{
+  "replayedFrom": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/deflection-release/docs/platform/evidence/precision-of-date/holdout-run.json",
+  "recordRanAt": "2026-09-21T20:01:43.834Z",
+  "recordRule": "OF-DATE-PREREGISTRATION.md section 9a",
+  "cases": 20,
+  "oldRule": {
+    "clause": "crossings but no ladder is a failure",
+    "failures": [
+      "F9: found 2 crossings but no rung-by-rung comparison",
+      "F10: found 2 crossings but no rung-by-rung comparison"
+    ]
+  },
+  "newRule": {
+    "clause": "crossings, no ladder, and either no frame attribution, or an uncorroborated one, or disagreeing lower rungs",
+    "failures": []
+  },
+  "becamePasses": [
+    "F9",
+    "F10"
+  ],
+  "newlyFailing": [],
+  "committedProblemsUnrelatedToThisClause": [],
+  "claims": [
+    {
+      "id": "subset",
+      "says": "the new rule fails a subset of what the old one failed, which is what makes it a relaxation",
+      "holds": true,
+      "detail": "nothing new fails"
+    },
+    {
+      "id": "difference-is-f9-f10",
+      "says": "the cases the relaxation turned from failures into passes are exactly F9 and F10",
+      "holds": true,
+      "detail": "became passes: F9, F10"
+    },
+    {
+      "id": "old-rule-failed-the-run",
+      "says": "under the old rule this recorded run did NOT pass, so the amendment was not cosmetic",
+      "holds": true,
+      "detail": "old rule failures: 2"
+    },
+    {
+      "id": "new-rule-clean",
+      "says": "under the new rule this clause reports nothing on this run",
+      "holds": true,
+      "detail": "new rule failures: 0"
+    }
+  ],
+  "passed": true,
+  "note": "A relaxation, replayed. This artifact exists because the failing run itself is not in the repository; see the header."
+}

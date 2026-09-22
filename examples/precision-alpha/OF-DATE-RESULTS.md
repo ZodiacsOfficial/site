@@ -74,6 +74,53 @@ periodically near zero), and against the released reducer. That is a
 weaker external check than the mean rung has, and nothing below describes
 the two as equally checked.
 
+#### The construction now has an exact identity, not an order of magnitude
+
+The separation test only said the two rungs differ by *between 1 and 20
+arcsec*. A construction that leaked the obliquity, tilted the ecliptic
+pole, or turned about the equatorial pole instead would still land in that
+window. There is an exact relation available, and it is now asserted:
+
+    Frame_true(t) = R3(-dpsi(t)) . Frame_mean(t)
+
+The true equinox is the mean equinox displaced **along the mean ecliptic**
+by the nutation in longitude — that is what the nutation in longitude
+*is* — so the two frames share the ecliptic pole and one is the other
+turned about it. The implementation does not do that: it folds `dpsi` into
+the Fukushima-Williams `psi` angle and builds one matrix from three
+rotations. Measured over nine epochs spanning 1850 to 2150:
+
+| | |
+| --- | --- |
+| off-pole residual (is it a rotation about the ecliptic pole at all?) | **≤ 1.1e-16** |
+| turn angle against −`dpsi` | **≤ 1.3e-12 arcsec**, which is 0.03 of an eps radian |
+| at ERFA's `t_ecm06` epoch, against the **published** matrix turned by −`dpsi` | every element within **1e-14**, and inside the interval enclosure |
+
+The last row is the only one that touches something external, and it is
+why this is worth having: at that epoch the true-equinox matrix follows
+from nine published literals plus one scalar and one elementary rotation,
+by a route that shares no code with the chain under test.
+
+Three mutations were run to check the identity bites, and each is caught
+by the test written for it: flipping the sign of `dpsi` in the `psi` angle
+(the turn-angle and published-anchor tests), prepending an `R1(deps)` to
+the matrix (the off-pole test), and removing the P03 adjustment — caught
+by neither, which is the next paragraph.
+
+**What it does not establish, and this is the part that matters.** `dpsi`
+is this repository's 2000B-with-P03 value on **both sides** of the
+identity, so a consistently wrong `dpsi` is invisible to it. That is not a
+conjecture: removing the P03 adjustment from the implementation leaves the
+identity passing, and is caught only by a separate test that reads the
+adjusted and raw values apart. The mean rung has no such blind spot —
+one published matrix pins its model and its assembly at once. Here they
+are pinned by two different tests, `t_nut00b` for the raw series and the
+identity for the assembly, and two tests covering two things is not the
+same as one test covering both.
+
+**The distinction therefore stands.** The true-equinox rung is better
+checked than it was and is still not checked the way the mean rung is.
+
 ## 2 · Time scale, and the three error sources kept apart
 
 TDB in and out, as the other three rungs. Unlike them, **the frame needs
@@ -264,13 +311,35 @@ separation now has to clear two conditions, not one:
 The harness pins the set `{F9, F10}`, so if it ever grows this section is
 about a different set of cases and should be re-read rather than assumed.
 
-One thing a reader cannot check from the repository: the failing run.
-`holdout-run.json` was committed alongside the rule change, so the only
-committed record was produced under the new rule. That the old rule failed
-these two is verifiable by replaying its predicate over the recorded rows,
-which is how it was confirmed — but it is not an artifact here, and "opened
-once, not tuned against" in §3 should be read against this section, not
-apart from it.
+The failing run itself is not in the repository. `holdout-run.json` was
+committed alongside the rule change, so the only committed record was
+produced under the new rule, and "opened once, not tuned against" in §3
+should be read against this section rather than apart from it.
+
+What *is* in the repository now is the replay. An earlier version of this
+paragraph said the old rule's failure was verifiable by replaying its
+predicate over the recorded rows "but it is not an artifact here". It is
+one now: `tools/measure/replay-of-date-pass-rule.mjs` applies **both**
+predicates to the committed rows — every field either one reads is in
+them — and asserts four things rather than announcing one verdict:
+
+| | replayed result |
+| --- | --- |
+| the new rule fails a subset of what the old one failed | holds: nothing new fails |
+| which cases turned from failures into passes | exactly **F9 and F10** |
+| the old rule did not pass this run, so the amendment was not cosmetic | holds: 2 failures |
+| the new rule reports nothing on this run through this clause | holds: 0 failures |
+
+The committed record carries no other problem, so those two are the whole
+difference. Run it with `--check`; the output is at
+`docs/platform/evidence/precision-of-date/pass-rule-replay/replay.json`.
+
+What the replay still cannot establish: that the recorded rows are what
+the solver would produce today, or that the quoted old clause is what was
+in the file before the change. For the second, `git log` on
+`tools/measure/of-date-holdout.mjs` is the record, and the old clause is
+quoted verbatim in the replay tool so the two can be read side by side. A
+replay is a replay.
 
 ## 5 · The twelve synthetic frame cases
 
