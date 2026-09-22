@@ -374,6 +374,24 @@ function deriveLightTime(ctx, lo, hi) {
       T = { lo: Math.max(0, lo2 - grow), hi: hi2 + grow };
     }
     return { ok: false, retry: true, why: `the light-time interval for ${lo} .. ${hi} s TDB did not close after ${p.maxTauWidenings} widenings` };
+  } catch (error) {
+    /**
+     * Missing coverage is an ANSWER here, not an exception, and it has to
+     * be the same answer whichever enclosure notices first.
+     *
+     * The widening loop below already converted an out-of-coverage
+     * emission window into a typed refusal, but the OBSERVER's enclosures
+     * and `solveTau` sit above it and threw straight past
+     * `partitionDomain`'s handler, which takes only `budget-exhausted` and
+     * `cancelled`. So a window the target's records covered and the
+     * observer's did not came back as a thrown error while the mirror-image
+     * window came back as a boundary span with a reason. One shape of the
+     * same gap, reported two ways.
+     */
+    if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
+      return { ok: false, retry: true, why: `the records do not cover ${lo} .. ${hi} s TDB, or the light-time window it implies: ${error.message}` };
+    }
+    throw error;
   } finally {
     leave(token);
   }

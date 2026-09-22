@@ -15,6 +15,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { experimental, EXPERIMENTAL, ABERRATED_CONTRACT, RETARDED_CONTRACT } from '../../src/experimental.mjs';
 import { openPackFromBytes } from '../../src/index.mjs';
+import { CONTRACT as SEARCH_RESULT_CONTRACT } from '../../src/core/result.mjs';
 import { buildSyntheticPack, SYNTHETIC } from '../../examples/synthetic-pack.mjs';
 
 const pkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8'));
@@ -95,12 +96,35 @@ test('the declared modes are exactly the modes the handle actually returns', asy
     body: 'Mars', targetDeg: SYNTHETIC.targetDeg,
     fromTdbSec: SYNTHETIC.windowTdbSec[0], toTdbSec: SYNTHETIC.windowTdbSec[1],
   };
+  /**
+   * `EXPERIMENTAL.modes` is the list of methods that answer with the
+   * RELEASED search result contract. The partitioned method is a search
+   * too, and it is deliberately not one of them: it returns a different
+   * contract whose completeness is scoped to the spans it names, so a
+   * consumer cannot read it with the same fields. Counting it here would
+   * be claiming the two are interchangeable.
+   *
+   * It is therefore excluded by CONTRACT rather than by name, and then
+   * checked on its own below -- a method that quietly started returning
+   * the released contract would be caught by the first check, and one
+   * that disappeared by the second.
+   */
   const methods = Object.keys(x).filter((k) => k.startsWith('search') && typeof x[k] === 'function');
-  assert.equal(methods.length, EXPERIMENTAL.modes.length,
-    `the handle exposes ${methods.length} search methods and the surface declares ${EXPERIMENTAL.modes.length} modes`);
-  const returned = methods.map((m) => x[m](spec).mode).sort();
+  const byContract = new Map(methods.map((m) => [m, x[m](spec)]));
+  const released = methods.filter((m) => byContract.get(m).contract === SEARCH_RESULT_CONTRACT);
+  assert.equal(released.length, EXPERIMENTAL.modes.length,
+    `the handle exposes ${released.length} methods returning the released contract and the surface declares ${EXPERIMENTAL.modes.length} modes`);
+  const returned = released.map((m) => byContract.get(m).mode).sort();
   assert.deepEqual(returned, [...EXPERIMENTAL.modes].sort(),
     'a mode the handle returns is missing from EXPERIMENTAL.modes, or the other way round');
+
+  const partitioned = methods.filter((m) => !released.includes(m));
+  assert.deepEqual(partitioned, ['searchRetardedAberratedDeflectedOfDateOverPlan'],
+    'exactly one search method answers with something other than the released contract');
+  const p = byContract.get(partitioned[0]);
+  assert.equal(p.contract, EXPERIMENTAL.partitioned.searchContract);
+  assert.equal(p.mode, `${EXPERIMENTAL.modes[EXPERIMENTAL.modes.length - 1]}-over-partition`,
+    'the partitioned mode names the rung it runs, so a reader can tell which question was answered');
   x.dispose();
   rt.dispose();
 });
