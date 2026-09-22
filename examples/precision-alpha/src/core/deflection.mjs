@@ -78,6 +78,7 @@
 import { fail } from './errors.mjs';
 import * as I from './interval.mjs';
 import { sinCos, ABS_ERR } from './trig.mjs';
+import { enter, leave } from './instrument.mjs';
 
 /** Schwarzschild radius of the Sun divided by the au, radians. ERFA_SRS. */
 export const SRS = 1.97412574336e-8;
@@ -147,6 +148,52 @@ export const COS_MIN_ELONGATION_GUARD = sinCos(5 * (Math.PI / 180)).c - ABS_ERR;
  * it is the argument the two bounds exist to make.
  */
 export const COS_MIN_ELONGATION_EXCLUDE = sinCos(5 * (Math.PI / 180)).c + ABS_ERR;
+
+/**
+ * The cosine of the solar elongation, over an interval. ONE definition.
+ *
+ * The observer sees the Sun along `-e`, so `cos(elongation) = -(e . d)/|d|`
+ * with `e` the UNIT Sun-to-observer vector and `d` the light-time-corrected
+ * observer-to-source vector. No inverse trigonometry: `cos` is decreasing
+ * on [0, pi], so every comparison the domain needs is a comparison of
+ * cosines, and `Math.acos` is implementation-defined anyway.
+ *
+ * This is exported, and `deflectInterval` calls it rather than inlining
+ * it, because a second consumer now exists: `domain-partition.mjs`
+ * classifies admissibility WITHOUT running the deflection. Two expressions
+ * of one definition, kept in step by review, is exactly the drift this
+ * profile cannot afford -- an admissibility pass that computed a slightly
+ * different elongation would certify spans the deflection would then
+ * refuse, and the refusal would arrive after the completeness claim.
+ *
+ * So the sharing is the guarantee. `deflection.nodetest.mjs` asserts that
+ * the partition and the deflection agree BIT FOR BIT on the same geometry,
+ * which is a check that this function is the only definition, not that two
+ * definitions happen to agree today.
+ *
+ * @param {{lo:number,hi:number}[]} e     UNIT Sun -> observer, per component
+ * @param {{lo:number,hi:number}[]} d     observer -> source, light-time corrected
+ * @param {{lo:number,hi:number}}   dist  an enclosure of |d|
+ */
+export function elongationCosInterval(e, d, dist) {
+  return I.neg(I.div(I.dot(e, d), dist));
+}
+
+/**
+ * The verdict the floor gives on an elongation-cosine enclosure.
+ *
+ * Three answers, and the two bounds that decide them are DIFFERENT
+ * constants pointing in opposite directions -- admitting needs a lower
+ * bound on cos(5 degrees) and excluding needs an upper one. Sharing one
+ * constant between them was a real defect, caught in review, and putting
+ * the pair in one function is how it stays fixed: a caller cannot pick the
+ * wrong bound because a caller does not pick.
+ */
+export function classifyElongationCos(cosPhi) {
+  if (cosPhi.hi <= COS_MIN_ELONGATION_GUARD) return 'admissible';
+  if (cosPhi.lo > COS_MIN_ELONGATION_EXCLUDE) return 'excluded';
+  return 'boundary';
+}
 
 /** What the profile declares about itself, for the result's metadata. */
 export const DEFLECTION_PROFILE = Object.freeze({
@@ -526,7 +573,9 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, con
   // cos(elongation) = -(e . d)/|d|, and cos is decreasing on [0, pi]:
   // elongation >= floor everywhere is exactly cos(elongation) <= cos(floor)
   // everywhere.
-  const cosPhi = I.neg(I.div(I.dot(e, d), dist));
+  const domainToken = enter('domain-test');
+  const cosPhi = elongationCosInterval(e, d, dist);
+  leave(domainToken);
   if (!(cosPhi.hi <= COS_MIN_ELONGATION_GUARD)) {
     // Excluded and unresolved are different answers. If the enclosure lies
     // WHOLLY inside the floor, every instant of the cell is outside the
@@ -538,6 +587,12 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, con
       ok: false,
       retry: !wholly,
       excluded: wholly,
+      // Named, not inferred from the message. The subdivision loop needs
+      // to know that THIS retry is a domain boundary rather than a loose
+      // enclosure, so the work spent bisecting toward the floor can be
+      // attributed to the floor -- which is the measurement the whole
+      // partition rests on.
+      domainStraddle: !wholly,
       cosElongation: cosPhi,
       why: wholly
         ? `the solar elongation is inside this profile's ${MIN_ELONGATION_RAD / DEG} degree floor at every instant of this cell, so the deflection is outside the supported domain and no subdivision changes that`

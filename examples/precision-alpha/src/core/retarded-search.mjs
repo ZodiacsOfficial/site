@@ -39,6 +39,7 @@ import { deflectInterval, DEFLECTION_PROFILE, MIN_ELONGATION_RAD } from './defle
 import { frameMatrixInterval, matApplyI, ttCenturiesInterval, FRAMES, TIME_MODEL } from './frame-of-date.mjs';
 import { sinCos } from './trig.mjs';
 import * as I from './interval.mjs';
+import { enter, leave, charge, setLabel } from './instrument.mjs';
 
 /** Arcseconds to radians, and seconds in a Julian century -- the frame's units. */
 const DAS2R = Math.PI / (180 * 3600);
@@ -290,6 +291,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
   let O;
   let oPoint;
   const mid = (t0 + t1) / 2;
+  const observerToken = enter('observer-enclosure');
   try {
     O = stateEnclosure(eph, observer, t0, t1, spend);
     // A first light-time, solved at the cell's ends, to centre the
@@ -297,11 +299,14 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     // from it.
     oPoint = stateEnclosure(eph, observer, mid, mid, spend).pos.map((x) => (x.lo + x.hi) / 2);
   } catch (error) {
+    leave(observerToken);
     if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
       return { ok: false, retry: true, why: `the observer's records do not cover ${t0} .. ${t1} s TDB` };
     }
     throw error;
   }
+  leave(observerToken);
+  const lightTimeToken = enter('light-time');
   const rough = solveTau(eph, targets, mid, oPoint, 0.5, spend);
   if (rough.leftCoverage) {
     // The point iteration walked off the stored records. Two very
@@ -377,18 +382,23 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     hi: rough.tau + tauSlope * half + rough.errorSec + p.tauPadFloorSec,
   };
 
+  leave(lightTimeToken);
+
   for (let attempt = 0; attempt <= p.maxTauWidenings; attempt += 1) {
     const emitLo = t0 - T.hi;
     const emitHi = t1 - T.lo;
     let R;
+    const targetToken = enter('target-enclosure');
     try {
       R = stateEnclosure(eph, targets, emitLo, emitHi, spend);
     } catch (error) {
+      leave(targetToken);
       if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
         return { ok: false, retry: true, why: `the emission window ${emitLo} .. ${emitHi} s TDB reaches outside the stored records` };
       }
       throw error;
     }
+    leave(targetToken);
 
     // The contraction factor, from the pack's own differentiated series.
     // Not an assumed universal speed ceiling.
@@ -439,6 +449,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     if (deflection) {
       let sunRec;
       let sunEm;
+      const sunToken = enter('sun-enclosure');
       try {
         // The Sun at RECEPTION for e and em, and at EMISSION for q. Two
         // different epochs on purpose -- the profile's section 2 measures
@@ -448,18 +459,30 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         sunRec = stateEnclosure(eph, sunWeights, t0, t1, spend);
         sunEm = stateEnclosure(eph, sunWeights, emitLo, emitHi, spend);
       } catch (error) {
+        leave(sunToken);
         if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
           return { ok: false, retry: true, why: `the Sun's records do not cover this cell's reception or emission window: ${error.message}` };
         }
         throw error;
       }
+      leave(sunToken);
+      const deflectToken = enter('deflection');
       const { eRaw, eRawDot, qRaw, qRawDot } = deflectorGeometry(O, R, sunRec, sunEm, oneMinus);
       const df = deflectInterval(D, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control);
+      leave(deflectToken);
       if (!df.ok) {
         return {
           ok: false,
           retry: df.retry === true,
           excluded: df.excluded === true,
+          // Carried, not re-derived. Without this the subdivision loop
+          // cannot tell a cell bisecting toward the domain floor from one
+          // bisecting because its enclosures are loose, and the first
+          // measurement made with it said 98.9% `loose-enclosure` and no
+          // `domain-boundary` at all on a window that contains a
+          // conjunction -- which was the flag going missing, not the
+          // geometry.
+          domainStraddle: df.domainStraddle === true,
           cosElongation: df.cosElongation ?? null,
           why: df.why,
         };
@@ -500,7 +523,9 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
       // cell, and the aberrated mode discards every one of them.
       const vc = I.vScale(O.vel, 1 / C_KM_S);
       const vcDot = I.vScale(O.acc, 1 / C_KM_S);
+      const abToken = enter('aberration');
       const ab = aberrateInterval(dIn, dInDot, distIn, vc, vcDot);
+      leave(abToken);
       // `ab.retry` is the transformation's own verdict on whether a
       // narrower cell could help: an enclosure that merely straddles the
       // domain edge can be tightened, an observer above c at every instant
@@ -518,10 +543,12 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         // freezing R at the cell midpoint would not be an of-date search.
         let frame;
         let clock;
+        const frameToken = enter('frame');
         try {
           frame = frameProvider({ lo: t0, hi: t1 });
           clock = frame.clock;
         } catch (error) {
+          leave(frameToken);
           if (error instanceof PrecisionError) {
             // An angle too large for the argument reduction does not
             // shrink when the cell does: it is set by the epoch, not the
@@ -535,6 +562,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
           }
           throw error;
         }
+        leave(frameToken);
         const Q = matApplyI(frame.R, ab.P);
         const QDot = [0, 1, 2].map((i) => I.add(
           I.mul(I.add(I.add(I.mul(frame.Rdot[i][0], ab.P[0]), I.mul(frame.Rdot[i][1], ab.P[1])), I.mul(frame.Rdot[i][2], ab.P[2])), clock.dtdTdb),
@@ -770,6 +798,9 @@ function runSearch(eph, spec, shape) {
   const spend = () => {
     if (signal && signal.aborted) throw new PrecisionError('cancelled', 'the search was cancelled', { evaluations });
     evaluations += 1;
+    // The same unit the budget counts, attributed to the phase in force.
+    // One null check when no sink is installed.
+    charge('evaluations');
     if (evaluations > p.maxEvaluations) fail('budget-exhausted', `the evaluation budget of ${p.maxEvaluations} was spent`, { evaluations });
   };
 
@@ -924,8 +955,10 @@ function runSearch(eph, spec, shape) {
   try {
     const stack = seeds;
     while (stack.length) {
-      const [lo, hi] = stack.pop();
+      const [lo, hi, why] = stack.pop();
+      setLabel(why ?? 'seed');
       cells += 1;
+      charge('cells');
       if (cells > p.maxCells) fail('budget-exhausted', `the retarded search passed ${p.maxCells} cells`, { cells });
       const m = (lo + hi) / 2;
       // NOT (hi - lo) / 2. `hi - lo` is exact by Sterbenz but `lo + hi`
@@ -944,7 +977,17 @@ function runSearch(eph, spec, shape) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
         // the failure is about the geometry rather than the width.
-        if (cell.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
+        if (cell.retry && hi - lo > p.enclosureFloorSec) {
+          // The one split whose reason the partition work is about: a cell
+          // whose elongation enclosure straddles the floor is bisecting
+          // toward a DOMAIN boundary, and a cell whose enclosures are
+          // merely loose is bisecting toward resolution. They cost the
+          // same and they are not the same problem, so the stack carries
+          // which it is.
+          const tag = cell.domainStraddle === true ? 'domain-boundary' : 'loose-enclosure';
+          stack.push([m, hi, tag], [lo, m, tag]);
+          continue;
+        }
         file(cell, lo, hi);
         continue;
       }
@@ -975,7 +1018,11 @@ function runSearch(eph, spec, shape) {
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
       if (!fm.ok) {
-        if (fm.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
+        if (fm.retry && hi - lo > p.enclosureFloorSec) {
+          const tag = fm.domainStraddle === true ? 'domain-boundary' : 'loose-enclosure';
+          stack.push([m, hi, tag], [lo, m, tag]);
+          continue;
+        }
         file(fm, lo, hi);
         continue;
       }
@@ -1067,7 +1114,8 @@ function runSearch(eph, spec, shape) {
         unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: 'neither the exclusion nor the monotone test closed this cell at the subdivision floor' });
         continue;
       }
-      stack.push([m, hi], [lo, m]);
+      // Neither test closed it: a resolution question, not a domain one.
+      stack.push([m, hi, 'not-yet-monotone'], [lo, m, 'not-yet-monotone']);
     }
   } catch (error) {
     if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
