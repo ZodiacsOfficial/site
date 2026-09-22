@@ -184,7 +184,7 @@ async function assertFirstScreen(page, { width, height }) {
   const openingBox = await opening.boundingBox();
   const actionBox = await opening.locator('.vitrine-placard__layer.is-active .btn--fomo').boundingBox();
   assert.ok(openingBox && openingBox.y < height, 'opening starts in the first screen');
-  assert.ok(actionBox && actionBox.y < height, `primary action stays in the first ${width}x${height} screen`);
+  assert.ok(actionBox && actionBox.y + actionBox.height <= height, `complete primary action stays in the first ${width}x${height} screen`);
 }
 
 async function assertStaticFirstScreen(page, { width, height, slug = 'aries' }) {
@@ -243,7 +243,7 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   const wrapper = await page.locator(wrapperSelector).boundingBox();
   const image = await page.locator(activeImageSelector).boundingBox();
   assert.ok(wrapper && image);
-  const expectedWrapper = width <= (staticView ? 720 : 899) ? 29 : 34;
+  const expectedWrapper = width <= 899 ? 28 : 34;
   const expectedImage = expectedWrapper;
   assert.ok(Math.abs(wrapper.width - expectedWrapper) <= .01 && Math.abs(wrapper.height - expectedWrapper) <= .01);
   assert.ok(Math.abs(image.width - expectedImage) <= .01 && Math.abs(image.height - expectedImage) <= .01);
@@ -305,7 +305,7 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
-    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
+    assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
     assert.match(await page.locator('.astrofolio-lockup__avatar').evaluate((node) => getComputedStyle(node).backgroundImage), /#010204|rgb\(1, 2, 4\)/u);
@@ -392,7 +392,7 @@ try {
       color: getComputedStyle(node).color,
     }));
     assert.match(movementStyle.className, /\bis-down\b/u);
-    assert.equal(movementStyle.color, 'rgb(212, 96, 63)');
+    assert.equal(movementStyle.color, 'rgb(242, 142, 135)');
     const placardOrder = await activePlacard.evaluate((node) => {
       const actions = node.querySelector('.vitrine-placard__actions')?.getBoundingClientRect();
       const meta = node.querySelector('.vitrine-market-meta')?.getBoundingClientRect();
@@ -529,6 +529,12 @@ try {
     });
     await assertFirstScreen(page, { width: 390, height: 844 });
     if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-390x844.png`, fullPage: false });
+    await page.setViewportSize({ width: 375, height: 600 });
+    await assertFirstScreen(page, { width: 375, height: 600 });
+    await page.locator('.vitrine-placard__layer.is-active h2').click();
+    assert.equal(await page.locator('.vitrine-stage__layer.is-active .vitrine-gold-light').getAttribute('aria-hidden'), 'true');
+    assert.equal(await page.locator('.vitrine-stage__layer.is-active .vitrine-gold-light').evaluate((node) => getComputedStyle(node, '::after').animationDuration), '10s');
+    await page.setViewportSize({ width: 390, height: 844 });
     const stageBefore = await page.locator('.vitrine-stage').boundingBox();
     await page.setViewportSize({ width: 390, height: 760 });
     const stageAfter = await page.locator('.vitrine-stage').boundingBox();
@@ -663,7 +669,7 @@ try {
     assert.equal(await frenchPlacard.locator('.vitrine-price__figure').innerText(), '$1,234.50');
     assert.equal(await frenchPlacard.locator('.vitrine-price__movement').innerText(), 'up 0.50% today');
     assert.match(await frenchPlacard.locator('.vitrine-price__movement').getAttribute('class'), /\bis-up\b/u);
-    assert.equal(await frenchPlacard.locator('.vitrine-price__movement').evaluate((node) => getComputedStyle(node).color), 'rgb(169, 212, 196)');
+    assert.equal(await frenchPlacard.locator('.vitrine-price__movement').evaluate((node) => getComputedStyle(node).color), 'rgb(141, 217, 173)');
     await frenchLocale.close();
 
     const failedArtwork = await browser.newContext({ viewport: { width: 390, height: 844 } });
@@ -758,7 +764,7 @@ try {
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
-    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season · The Twelve`);
+    assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
     assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
