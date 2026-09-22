@@ -1,0 +1,438 @@
+/**
+ * The deflected longitude search, run over a proved domain partition
+ * instead of rediscovering the domain on every request.
+ *
+ * ## What changes, and what does not
+ *
+ * The event mathematics is untouched: the same `searchDeflectedLongitude`
+ * runs on each admissible subinterval, with the same correction profile,
+ * the same continuous vector event equations, the same half-plane test,
+ * the same corrected lever arms, the same record ownership and the same
+ * root metadata. What changes is that it is handed intervals it can
+ * answer, instead of discovering the hard way which ones those are.
+ *
+ * ## Why that is worth doing
+ *
+ * Measured on the live runtime, the share of a deflected search's
+ * evaluations spent on cells that exist only because some ancestor's
+ * elongation enclosure straddled the floor: 98.9 per cent on the Moon,
+ * 99.9 on Mercury, 98.9 on Saturn -- and 66.3 on a control window with no
+ * conjunction in it at all. The deflection arithmetic itself is 1 to 2 per
+ * cent of wall time and the domain test it gates is 0.
+ *
+ * ## The budget is ONE budget
+ *
+ * Partitioning, every subsearch and the final accounting draw on a single
+ * allowance for the request. A subsearch is given what is left, not a
+ * fresh copy: `maxEvaluations: remaining`. When it runs out, the spans not
+ * yet reached are UNPROCESSED -- not excluded, not searched-and-empty.
+ *
+ * ## Five states, kept apart
+ *
+ * The result distinguishes, and never merges:
+ *
+ *   finished              the run reached its end rather than stopping
+ *   complete over request  every instant of the request was accounted for
+ *   exhaustive over the proved-admissible spans, which is a SMALLER claim
+ *   excluded by profile    no answer at any resolution
+ *   unresolved numerically  this run did not settle it
+ *   unprocessed            never examined; budget or cancellation
+ *
+ * A request containing an excluded span is never complete over the
+ * request, whatever else is true of it. And `exhaustiveOverAdmissible` is
+ * deliberately scoped to the spans it names: boundary spans may hold
+ * supported events, so a blanket "complete within the supported domain"
+ * would be a claim about instants nobody classified.
+ */
+import { fail, PrecisionError } from './errors.mjs';
+import { DEFLECTION_PROFILE } from './deflection.mjs';
+import { partitionDomain, PARTITION_DEFAULTS, partitionKey } from './domain-partition.mjs';
+import {
+  searchDeflectedLongitude, searchDeflectedLongitudeOnProvedDomain, searchOfDateLongitude,
+  DEFLECTED_CONTRACT, OF_DATE_CONTRACT,
+} from './retarded-search.mjs';
+import { setLabel } from './instrument.mjs';
+
+const DAY = 86400;
+
+/** Total length of a span list. */
+const total = (spans) => spans.reduce((n, [lo, hi]) => n + (hi - lo), 0);
+
+/** Does [lo, hi) meet any span in the list? */
+const meets = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
+
+/**
+ * A partition, checked against the request it is about to be used for.
+ *
+ * A cached partition is a PROOF about a particular pack, body, profile,
+ * window and tolerance. Reusing it for anything else reuses a proof of a
+ * different statement, so the key is compared in full and a mismatch is a
+ * refusal rather than a recomputation -- a silent recomputation would hide
+ * from the caller that their cache is not working.
+ *
+ * Note what is NOT in the key: the target longitude. The partition does
+ * not depend on one, which is why the same plan answers many.
+ */
+export function assertPartitionUsable(plan, { packDigest, body, fromTdbSec, toTdbSec }) {
+  if (!plan || plan.contract !== 'zodiacs-domain-partition/1') {
+    fail('unsupported-option', 'a plan must be a zodiacs-domain-partition/1 produced by this runtime');
+  }
+  const want = partitionKey({
+    packDigest,
+    body,
+    fromTdbSec,
+    toTdbSec,
+    boundaryToleranceSec: plan.request.boundaryToleranceSec,
+    profile: DEFLECTION_PROFILE.id,
+  });
+  if (plan.key !== want) {
+    fail('unsupported-option',
+      `this plan is for a different request: it carries ${plan.key} and this call needs ${want}. A partition is a proof about one pack, body, profile, window and tolerance; it is not reused across any of them.`);
+  }
+  return plan;
+}
+
+/**
+ * Search one body's longitude over a requested interval, using a domain
+ * partition.
+ *
+ * `spec.plan` is optional. Without one a partition is built for this
+ * request and its cost is charged to this request's budget -- the cold
+ * path, and the one the evaluation measures first.
+ */
+export function searchDeflectedOverPartition(eph, spec = {}) {
+  const {
+    body,
+    targetDeg,
+    fromTdbSec,
+    toTdbSec,
+    plan: given = null,
+    packDigest = null,
+    signal = null,
+    boundaryToleranceSec = PARTITION_DEFAULTS.boundaryToleranceSec,
+    relightWidthRatio = PARTITION_DEFAULTS.relightWidthRatio,
+    maxEvaluations = 4_000_000,
+    maxCells = 400_000,
+    ...rest
+  } = spec;
+  const a = Number(fromTdbSec);
+  const b = Number(toTdbSec);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || !(b > a)) {
+    fail('unsupported-option', 'the window must be finite with toTdbSec after fromTdbSec');
+  }
+
+  let evaluationsUsed = 0;
+  let cellsUsed = 0;
+  let status = 'finished';
+  let reason = null;
+  const remaining = () => Math.max(0, maxEvaluations - evaluationsUsed);
+
+  // ------------------------------------------------------------- partition
+  let plan;
+  let partitionEvaluations = 0;
+  let partitionReused = false;
+  if (given) {
+    plan = assertPartitionUsable(given, { packDigest, body, fromTdbSec: a, toTdbSec: b });
+    partitionReused = true;
+  } else {
+    setLabel('partition');
+    plan = partitionDomain(eph, {
+      body,
+      fromTdbSec: a,
+      toTdbSec: b,
+      boundaryToleranceSec,
+      relightWidthRatio,
+      packDigest,
+      signal,
+      maxEvaluations,
+      maxCells,
+    });
+    partitionEvaluations = plan.execution.evaluations;
+    evaluationsUsed += partitionEvaluations;
+    cellsUsed += plan.execution.cells;
+    if (!plan.execution.finished) {
+      status = plan.execution.status;
+      reason = `partitioning stopped: ${plan.execution.reason}`;
+    }
+  }
+
+  // ------------------------------------------------------------ subsearches
+  /**
+   * Admissible spans first, then boundary spans. Order matters when the
+   * budget runs out: spending what is left on spans where an answer is
+   * PROVED eligible beats spending it where the answer would be
+   * ambiguous anyway.
+   */
+  const searched = [];
+  const events = [];
+  const unresolved = [];
+  const spanResults = [];
+  let unprocessed = [...plan.unprocessed];
+  let searchEvaluations = 0;
+
+  const runOn = (lo, hi, domain) => {
+    if (status !== 'finished') { unprocessed.push([lo, hi]); return; }
+    if (remaining() <= 0) {
+      status = 'budget-exhausted';
+      reason = `the request's evaluation budget of ${maxEvaluations} was spent`;
+      unprocessed.push([lo, hi]);
+      return;
+    }
+    setLabel(`subsearch-${domain}`);
+    let r;
+    /**
+     * On an ADMISSIBLE span the partition has proved the elongation floor
+     * at every instant, so the search does not re-decide it. That is the
+     * whole point of partitioning: domain membership is a property of
+     * instants, a sub-span inherits it, and re-testing it is what the
+     * 98.9 per cent was.
+     *
+     * On a BOUNDARY span nothing was proved, so the ordinary gated search
+     * runs and may exclude or refuse inside it -- which is the honest
+     * behaviour there.
+     */
+    /**
+     * A BOUNDARY span is searched with rung 4 -- the of-date direction,
+     * no solar term -- and not with the deflected rung.
+     *
+     * Two reasons, and the second is the one that matters. First,
+     * `DEFLECTION-PROFILE.md` section 7 already prescribes exactly this
+     * where the profile declines: "the caller should use rung 4, which
+     * has no solar term and no near-Sun degeneracy", as a downgrade the
+     * caller chooses and records. Second, running the GATED deflected rung
+     * here reintroduces the cascade the partition exists to remove, inside
+     * the one region where it can never terminate: measured on Saturn, two
+     * boundary spans totalling 0.06 days cost 26,621 evaluations -- four
+     * and a half times what the 288.9 admissible days cost -- because the
+     * gate bisects to the one-second enclosure floor and the tolerance
+     * that stopped the partition does not apply to it.
+     *
+     * What this costs in honesty is stated rather than hidden: a crossing
+     * found here has its POSITION from rung 4, not rung 5, and its
+     * eligibility is not established. Both travel with the event.
+     */
+    const run = domain === 'admissible'
+      ? searchDeflectedLongitudeOnProvedDomain
+      : searchOfDateLongitude;
+    try {
+      r = run(eph, {
+        body,
+        targetDeg,
+        fromTdbSec: lo,
+        toTdbSec: hi,
+        signal,
+        maxEvaluations: remaining(),
+        maxCells: Math.max(1, maxCells - cellsUsed),
+        ...rest,
+      });
+    } catch (error) {
+      if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
+        status = error.code;
+        reason = error.message;
+        unprocessed.push([lo, hi]);
+        return;
+      }
+      throw error;
+    }
+    evaluationsUsed += r.execution.evaluations;
+    searchEvaluations += r.execution.evaluations;
+    cellsUsed += r.execution.cells;
+    searched.push([lo, hi]);
+    spanResults.push({
+      spanTdbSec: [lo, hi],
+      domain,
+      status: r.execution.status,
+      established: r.completeness.established,
+      found: r.events.length,
+      evaluations: r.execution.evaluations,
+      cells: r.execution.cells,
+    });
+    for (const e of r.events) {
+      events.push({
+        ...e,
+        /**
+         * Which kind of span this event was found in. An event inside a
+         * proved-admissible span has established eligibility AND a
+         * deflected position; one found in a boundary span has neither,
+         * and saying so is the difference between a partial answer and a
+         * wrong one.
+         */
+        domain,
+        eligibility: domain === 'admissible' ? 'established' : 'not-established',
+        positionFrom: domain === 'admissible'
+          ? 'validated-retarded-aberrated-deflected-of-date'
+          : 'validated-retarded-aberrated-of-date',
+        ...(domain === 'admissible' ? {} : {
+          positionNote: 'This crossing was located with rung 4, the of-date direction with NO solar deflection, because the profile does not support this span. Its time is not the deflected crossing time and its eligibility is not established.',
+        }),
+      });
+    }
+    for (const u of r.accounting.unresolved) unresolved.push({ ...u, domain });
+    /**
+     * A span the profile declines INSIDE a span the partition PROVED
+     * admissible is a contradiction between two implementations of one
+     * definition, and it is surfaced rather than absorbed.
+     *
+     * Only for admissible spans. A boundary span is expected to contain
+     * declined parts -- that is what makes it a boundary -- and the first
+     * version of this flagged those as contradictions, which would have
+     * had every conjunction case reporting a disagreement that was not
+     * one. Rung 4 produces no excluded spans at all now, so this is about
+     * the admissible path.
+     */
+    for (const x of r.accounting.excluded) {
+      if (domain === 'admissible') {
+        spanResults[spanResults.length - 1].contradiction = true;
+        unresolved.push({ ...x, domain, why: `the search excluded a span inside a PROVED-ADMISSIBLE span, so the partition and the deflection disagree here: ${x.why}` });
+      } else {
+        unresolved.push({ ...x, domain });
+      }
+    }
+    if (r.execution.status !== 'finished') {
+      status = r.execution.status;
+      reason = r.execution.reason;
+    }
+  };
+
+  for (const [lo, hi] of plan.admissible) runOn(lo, hi, 'admissible');
+  for (const [lo, hi] of plan.boundary) runOn(lo, hi, 'boundary');
+
+  // ------------------------------------------------------------- accounting
+  /**
+   * An event whose BRACKET meets a boundary span cannot have its
+   * eligibility settled by its midpoint. The midpoint is not the event;
+   * the bracket is what was proved, and half of a bracket lying in
+   * unclassified territory is an ambiguity, not a rounding question.
+   */
+  for (const e of events) {
+    const [blo, bhi] = e.bracketTdbSec ?? [e.tdbSec, e.tdbSec];
+    if (e.eligibility === 'established' && meets(plan.boundary, blo, bhi)) {
+      e.eligibility = 'boundary-ambiguous';
+      e.eligibilityNote = 'the reported bracket meets a span whose admissibility was not established, so this event\'s eligibility is not settled by the partition. Its POSITION is unaffected.';
+    }
+  }
+  events.sort((x, y) => x.tdbSec - y.tdbSec);
+
+  const established = events.filter((e) => e.eligibility === 'established');
+  const ambiguous = events.filter((e) => e.eligibility !== 'established');
+
+  const unprocessedTotal = total(unprocessed);
+  const excludedTotal = total(plan.excluded);
+  const boundaryTotal = total(plan.boundary);
+  const requestSpan = b - a;
+
+  /**
+   * Exhaustive over the spans NAMED in `admissible`, and no further. Every
+   * such span must have been searched and must have established its own
+   * completeness. Boundary spans are deliberately not part of this claim:
+   * they may hold supported events, and a flag that covered them would be
+   * a claim about instants nobody classified.
+   */
+  const everyAdmissibleSearched = plan.admissible.length === spanResults
+    .filter((s) => s.domain === 'admissible' && s.established && s.status === 'finished').length;
+  const exhaustiveOverAdmissible = status === 'finished'
+    && everyAdmissibleSearched
+    && !spanResults.some((s) => s.contradiction);
+
+  return {
+    contract: 'zodiacs-partitioned-search/1',
+    mode: 'validated-retarded-aberrated-deflected-of-date-over-partition',
+    request: {
+      body,
+      targetDeg,
+      windowTdbSec: [a, b],
+      profile: DEFLECTION_PROFILE.id,
+      operation: DEFLECTED_CONTRACT.operation,
+      frame: DEFLECTED_CONTRACT.frame,
+      boundaryToleranceSec: plan.request.boundaryToleranceSec,
+    },
+    plan: {
+      key: plan.key,
+      reused: partitionReused,
+      admissible: plan.admissible,
+      excluded: plan.excluded,
+      boundary: plan.boundary,
+      unprocessed: plan.unprocessed,
+      execution: plan.execution,
+      diagnostics: plan.diagnostics,
+    },
+    events,
+    eventCount: {
+      found: events.length,
+      eligibilityEstablished: established.length,
+      eligibilityAmbiguous: ambiguous.length,
+      /**
+       * NEVER true while any part of the request went unexamined or
+       * unclassified. An exact total is a statement about the request, and
+       * an excluded span is part of the request.
+       */
+      isExactTotalOverRequest: false,
+      isExactTotalOverAdmissible: exhaustiveOverAdmissible,
+    },
+    completeness: {
+      /**
+       * Over the REQUEST. False whenever the profile declined any part of
+       * it -- which, for a window containing a conjunction, is always. The
+       * original rule scores this and it is reported unchanged.
+       */
+      overRequest: false,
+      overRequestWhyNot: excludedTotal > 0
+        ? 'the profile excludes part of this request, so no run can be complete over it'
+        : (boundaryTotal > 0 || unprocessedTotal > 0
+          ? 'part of this request was neither admitted nor excluded'
+          : 'not claimed'),
+      /** The SMALLER claim, scoped to the spans it names. */
+      exhaustiveOverAdmissible,
+      admissibleSpans: plan.admissible,
+      mayHoldUnfoundSupportedEvents: boundaryTotal > 0 || unprocessedTotal > 0,
+      statement: exhaustiveOverAdmissible
+        ? 'Every crossing of the requested longitude by the light-time-, solar-deflection- and aberration-corrected direction, in the ecliptic of date with the true equinox of date as origin, over the spans listed in admissibleSpans and NOT over the rest of the request.'
+        : 'No exhaustiveness is claimed: at least one admissible span was not searched to completion.',
+    },
+    accounting: {
+      /**
+       * The four classes tile the request exactly. Checked here rather
+       * than trusted: a gap or an overlap would mean some instant was
+       * counted twice or not at all, and either makes every span figure
+       * below meaningless.
+       */
+      admissibleSec: total(plan.admissible),
+      excludedSec: excludedTotal,
+      boundarySec: boundaryTotal,
+      unprocessedSec: unprocessedTotal,
+      requestSec: requestSpan,
+      coversRequestExactly: Math.abs(
+        total(plan.admissible) + excludedTotal + boundaryTotal + total(plan.unprocessed) - requestSpan,
+      ) <= 1e-6,
+      excluded: plan.excluded,
+      boundary: plan.boundary,
+      unprocessed,
+      unresolved,
+      excludedNote: 'Spans this profile DECLINES to answer for. Not empty spans: a crossing inside one is neither found nor ruled out.',
+      boundaryNote: 'Spans whose admissibility was not established at the declared tolerance. The transition lies in here. Events found in them are reported with eligibility not established.',
+      unprocessedNote: 'Spans never examined, because the budget ran out or the caller cancelled. NOT excluded and NOT searched-and-empty.',
+    },
+    execution: {
+      status,
+      finished: status === 'finished',
+      reason,
+      evaluations: evaluationsUsed,
+      cells: cellsUsed,
+      maxEvaluations,
+      partitionEvaluations,
+      searchEvaluations,
+      partitionReused,
+      budgetNote: 'One allowance for the whole request: partitioning plus every subsearch. A subsearch is given what is left, never a fresh copy.',
+    },
+    spanResults,
+    diagnostics: {
+      profile: DEFLECTION_PROFILE,
+      partitionIndependentOfLongitude: true,
+      partitionIndependentOfLongitudeBecause: 'partitionDomain never receives a target longitude; the independence is structural, not asserted',
+      admissibleFraction: requestSpan > 0 ? total(plan.admissible) / requestSpan : null,
+      excludedFraction: requestSpan > 0 ? excludedTotal / requestSpan : null,
+      boundaryFraction: requestSpan > 0 ? boundaryTotal / requestSpan : null,
+      requestSpanDays: requestSpan / DAY,
+    },
+  };
+}

@@ -542,7 +542,7 @@ export function deflectionAngleClosedForm(eVec, qVec) {
  *        experimental entry point.
  */
 export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control = {}) {
-  const { srs = SRS, distantSource = false } = control;
+  const { srs = SRS, distantSource = false, domainProvedByCaller = false } = control;
   if (!(dist.lo > 0)) {
     return { ok: false, retry: true, why: 'the target and the observer cannot be shown to be separated over this cell, so the direction to deflect is undefined' };
   }
@@ -576,7 +576,40 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, con
   const domainToken = enter('domain-test');
   const cosPhi = elongationCosInterval(e, d, dist);
   leave(domainToken);
-  if (!(cosPhi.hi <= COS_MIN_ELONGATION_GUARD)) {
+  /**
+   * `domainProvedByCaller` skips the GATE, not the computation.
+   *
+   * ## What it is for
+   *
+   * Domain membership is a property of INSTANTS. A partition that has
+   * proved `elongation >= floor` at every instant of a span has proved it
+   * for every instant of every sub-span, so a search running inside that
+   * span is re-deciding a settled question -- and paying for it. Measured:
+   * on a 300-day Saturn window the deflected search spends 98.9 per cent
+   * of its evaluations bisecting toward the floor, and 66.3 per cent even
+   * on a control window with no conjunction in it, because the elongation
+   * ENCLOSURE over a wide cell straddles the floor while the elongation
+   * itself is nowhere near it.
+   *
+   * ## What it does NOT skip
+   *
+   * Every other guard. The limiter threshold below, the `q . (q + e)`
+   * positivity, the observer-at-the-Sun and target-on-the-observer
+   * refusals all still fire. This flag says one thing -- "the elongation
+   * floor is already established here" -- and nothing else.
+   *
+   * ## Why it is named like a liability
+   *
+   * Because it is one. Passing it without a proof applies the deflection
+   * outside the supported domain and returns a number where the profile
+   * would have declined, and the result would look ordinary. It is not
+   * reachable from any public entry point: `searchDeflectedLongitude` does
+   * not accept it, `searchDeflectedLongitudeWithControl` rejects it by
+   * name, and `partitioned-search.mjs` is the only caller in the package
+   * that sets it -- immediately after proving what it asserts.
+   * `deflected-search.nodetest.mjs` pins all three of those.
+   */
+  if (!domainProvedByCaller && !(cosPhi.hi <= COS_MIN_ELONGATION_GUARD)) {
     // Excluded and unresolved are different answers. If the enclosure lies
     // WHOLLY inside the floor, every instant of the cell is outside the
     // supported domain and no subdivision changes that -- the profile has

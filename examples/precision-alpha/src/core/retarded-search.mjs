@@ -1547,11 +1547,36 @@ export function searchDeflectedLongitude(eph, spec = {}) {
  * Every result says what it was given, in
  * `diagnostics.deflection.control`.
  */
+/**
+ * The deflected search over a span whose supported-domain membership the
+ * CALLER has already proved.
+ *
+ * Internal. Not exported from `experimental.mjs`, not reachable from any
+ * public entry point, and sound only when the caller really has the proof
+ * -- see `domainProvedByCaller` in `deflection.mjs` for what it skips and
+ * what it does not.
+ */
+export function searchDeflectedLongitudeOnProvedDomain(eph, spec) {
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    deflection: true,
+    control: { domainProvedByCaller: true },
+    mode: 'validated-retarded-aberrated-deflected-of-date',
+    contract: DEFLECTED_CONTRACT,
+    kind: 'retarded-aberrated-deflected-of-date-longitude',
+  });
+}
+
 export function searchDeflectedLongitudeWithControl(eph, spec, control) {
   if (control === null || typeof control !== 'object') {
     fail('unsupported-option', 'a deflection control must be an object');
   }
   for (const k of Object.keys(control)) {
+    // `domainProvedByCaller` is deliberately NOT here. It disables the
+    // supported-domain gate, which is only sound with a proof in hand,
+    // and this entry point cannot check for one. The partitioned search
+    // sets it internally, having just produced that proof.
     if (!['srs', 'distantSource'].includes(k)) {
       fail('unsupported-option', `unknown deflection control ${k}`);
     }
