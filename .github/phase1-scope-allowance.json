@@ -1,10 +1,21 @@
 {
   "version": 1,
-  "id": "approved-astrofolio-selection-polish-2026-09-22",
-  "baseCommit": "5adf2507c74a2ad5a76a97be2f09f9827e79526e",
+  "id": "owner-requested-mobile-zodiac-artwork-2026-09-22",
+  "baseCommit": "335975f72bff4a43dded86ba47c2a07a8a476eb3",
   "protectedPaths": [
-    "public/registry/technical/index.html",
-    "scripts/registry-pastel-polish.test.mjs"
+    "public/registry/aquarius/index.html",
+    "public/registry/aries/index.html",
+    "public/registry/cancer/index.html",
+    "public/registry/capricorn/index.html",
+    "public/registry/gemini/index.html",
+    "public/registry/leo/index.html",
+    "public/registry/libra/index.html",
+    "public/registry/pisces/index.html",
+    "public/registry/sagittarius/index.html",
+    "public/registry/scorpio/index.html",
+    "public/registry/taurus/index.html",
+    "public/registry/virgo/index.html",
+    "scripts/build-sign-pages.mjs"
   ],
-  "authorization": "The owner requested a more elegant zodiac selection treatment after the approved live option C release: \"i don\u2019t like the box around the zodiac when you select it, looks sloppy. there must be a more elegant animation or design.\" This follow-up replaces the selected box with a fine circular ring and restrained motion, retains immediate keyboard/reduced-motion feedback, updates existing visual checks, and synchronizes generated shared wing styles. Selection logic, data, artwork and transaction behavior are unchanged."
+  "authorization": "The owner reported that the Taurus image does not fully load on mobile. This focused fix presents the complete artwork before the facts panel, bounds its stage on mobile, and uses existing responsive WebP sculpture assets. Apply the shared template fix to all twelve sign records and retain the original artwork sources, public record data, and transaction behavior."
 }
