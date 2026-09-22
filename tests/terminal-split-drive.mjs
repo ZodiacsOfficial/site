@@ -252,10 +252,22 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.ok(Math.abs(deltaX) <= .01 && Math.abs(deltaY) <= .01, `the active pastel ring is concentric at ${width}x${height}: ${deltaX}, ${deltaY}`);
   const style = await page.locator(wrapperSelector).evaluate((node) => ({
     radius: getComputedStyle(node).borderRadius,
-    shadow: getComputedStyle(node).boxShadow,
+    ring: {
+      opacity: getComputedStyle(node, '::after').opacity,
+      border: getComputedStyle(node, '::after').borderTopWidth,
+      radius: getComputedStyle(node, '::after').borderRadius,
+    },
+    choice: {
+      background: getComputedStyle(node.parentElement).backgroundColor,
+      shadow: getComputedStyle(node.parentElement).boxShadow,
+    },
   }));
   assert.equal(style.radius, '50%');
-  assert.notEqual(style.shadow, 'none');
+  assert.equal(style.ring.opacity, '1');
+  assert.equal(style.ring.border, '1px');
+  assert.equal(style.ring.radius, '50%');
+  assert.equal(style.choice.background, 'rgba(0, 0, 0, 0)', 'selection has no rectangular fill');
+  assert.equal(style.choice.shadow, 'none', 'selection has no rectangular border or shadow');
   assert.equal(await page.locator(activeImageSelector).evaluate((node) => getComputedStyle(node).opacity), '1');
   const glowHosts = staticView ? '.static-vitrine__disc' : '.vitrine-disc picture';
   const activeGlow = await page.locator(wrapperSelector).evaluate((node) => {
@@ -270,7 +282,7 @@ async function assertPastelSelectorGeometry(page, { width, height, staticView = 
   assert.ok(glows.every(({ background }) => background.includes('radial-gradient')), 'all twelve discs have a pastel ambient shadow');
   assert.ok(glows.every(({ opacity }) => Number.parseFloat(opacity) >= .4), 'every disc keeps a low matching glow');
   assert.equal(activeGlow.opacity, '1');
-  assert.match(activeGlow.transition, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+  assert.ok(activeGlow.transition.split(',').every((duration) => Number.parseFloat(duration) <= .18), 'the selection settles within 180ms');
 }
 
 if (OUT) await mkdir(OUT, { recursive: true });
@@ -497,6 +509,8 @@ try {
     assert.equal(await page.locator('[data-consumer-sign="libra"]').getAttribute('aria-pressed'), 'true');
     await page.keyboard.press('ArrowUp');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
+    const keyboardRingMotion = await page.locator('.vitrine-disc picture').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node, '::after').transitionDuration));
+    assert.ok(keyboardRingMotion.every((duration) => /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u.test(duration)), 'keyboard selection is immediate for incoming and outgoing rings');
     await page.setViewportSize({ width: 320, height: 844 });
     await assertPastelSelectorGeometry(page, { width: 320, height: 844 });
     await page.keyboard.press('ArrowDown');
@@ -699,6 +713,8 @@ try {
     }));
     assert.equal(motionState.animation, 'none');
     assert.match(motionState.duration, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+    const reducedRingMotion = await reducedPage.locator('.vitrine-disc.is-active picture').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
+    assert.match(reducedRingMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
     if (OUT) await reducedPage.screenshot({ path: `${OUT}/astrofolio-390x844-reduced-motion.png`, fullPage: false });
     assert.deepEqual(reducedErrors, []);
     await reduced.close();
@@ -862,6 +878,8 @@ try {
     await noJsPage.emulateMedia({ reducedMotion: 'reduce' });
     const staticMotion = await noJsPage.locator('#astrofolio-pisces-label').evaluate((node) => getComputedStyle(node).transitionDuration);
     assert.match(staticMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+    const staticRingMotion = await noJsPage.locator('#astrofolio-pisces-label .static-vitrine__disc').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
+    assert.match(staticRingMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
 
     const noJsCollection = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     await installCollectionFlag(noJsCollection);

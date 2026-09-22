@@ -7489,7 +7489,9 @@
       gap: 8px;
       padding: 9px 0 7px;
       border: 0;
-      border-radius: 13px;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
       color: var(--ink-dim);
       font: 500 9px/1.3 var(--sans);
       cursor: pointer;
@@ -7505,7 +7507,7 @@
       place-items: center;
       border-radius: 50%;
       background: transparent;
-      box-shadow: 0 0 0 0 transparent;
+      box-shadow: none;
       isolation: isolate;
     }
     .static-vitrine__disc::before {
@@ -7522,6 +7524,18 @@
       content: "";
       opacity: .45;
       pointer-events: none;
+      transition: opacity 160ms cubic-bezier(.23,1,.32,1);
+    }
+    .static-vitrine__disc::after {
+      position: absolute;
+      inset: -5px;
+      border: 1px solid color-mix(in srgb, var(--disc) 72%, transparent);
+      border-radius: 50%;
+      content: "";
+      opacity: 0;
+      transform: scale(.94);
+      pointer-events: none;
+      transition: opacity 120ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1);
     }
     .static-vitrine__rail img {
       position: relative;
@@ -7546,15 +7560,11 @@
     .static-vitrine__rail label[for="astrofolio-aquarius"] { --disc: #AE8FC9; }
     .static-vitrine__rail label[for="astrofolio-pisces"] { --disc: #A9D4C4; }
 
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) {
-      background: color-mix(in srgb, var(--disc) 7%, transparent);
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--disc) 17%, transparent);
-      color: var(--ink);
-    }
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {
-      box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--disc);
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) { color: var(--ink); }
+    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::after {
+      opacity: 1;
+      transform: scale(1);
+      transition-duration: 180ms;
     }
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::before { opacity: 1; }
     .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
@@ -7564,10 +7574,12 @@
       box-shadow: none;
     }
     .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc {
-      box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--disc),
-        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
+      outline: 2px solid var(--ink-2);
+      outline-offset: 6px;
+    }
+    .static-vitrine__rail:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc::before,
+    .static-vitrine__rail:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc::after {
+      transition: none;
     }
 
     .static-vitrine__panel { display: none; }
@@ -8668,16 +8680,21 @@
       width: 100%;
       min-height: 72px;
       padding: 9px 0 7px;
-      border-radius: 13px;
+      border-radius: 0;
       color: var(--ink-mute);
       font: 500 9px/1.3 var(--sans);
       letter-spacing: 0;
       text-transform: none;
     }
+    .consumer-registry .vitrine-disc,
+    .consumer-registry .vitrine-disc:hover,
+    .consumer-registry .vitrine-disc:active,
     .consumer-registry .vitrine-disc:focus-visible {
-      outline: 0;
+      border: 0;
+      background: transparent;
       box-shadow: none;
     }
+    .consumer-registry .vitrine-disc:focus-visible { outline: 0; }
     .consumer-registry .vitrine-disc picture {
       position: relative;
       display: block;
@@ -8688,9 +8705,8 @@
       border: 0;
       border-radius: 50%;
       background: transparent;
-      box-shadow: 0 0 0 0 transparent;
+      box-shadow: none;
       isolation: isolate;
-      transition: none;
     }
     .consumer-registry .vitrine-disc picture::before {
       position: absolute;
@@ -8706,6 +8722,18 @@
       content: "";
       opacity: .45;
       pointer-events: none;
+      transition: opacity 160ms cubic-bezier(.23,1,.32,1);
+    }
+    .consumer-registry .vitrine-disc picture::after {
+      position: absolute;
+      inset: -5px;
+      border: 1px solid color-mix(in srgb, var(--sign) 72%, transparent);
+      border-radius: 50%;
+      content: "";
+      opacity: 0;
+      transform: scale(.94);
+      pointer-events: none;
+      transition: opacity 120ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1);
     }
     .consumer-registry .vitrine-disc picture > source { display: none; }
     .consumer-registry .vitrine-disc img {
@@ -8719,25 +8747,24 @@
       filter: none;
       transition: none;
     }
-    .consumer-registry .vitrine-disc.is-active {
-      color: var(--ink);
-      background: color-mix(in srgb, var(--sign) 7%, transparent);
-      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sign) 17%, transparent);
-    }
-    .consumer-registry .vitrine-disc.is-active picture {
-      box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--sign);
+    .consumer-registry .vitrine-disc.is-active { color: var(--ink); }
+    .consumer-registry .vitrine-disc.is-active picture::after {
+      opacity: 1;
+      transform: scale(1);
+      transition-duration: 180ms;
     }
     .consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }
     .consumer-registry .vitrine-disc:focus-visible picture {
-      box-shadow:
-        0 0 0 2px var(--bg),
-        0 0 0 4px var(--sign),
-        0 0 0 7px color-mix(in srgb, var(--ink) 24%, transparent);
+      outline: 2px solid var(--ink-2);
+      outline-offset: 6px;
+    }
+    /* Arrow-key browsing changes selection immediately, including the old ring. */
+    .consumer-registry .vitrine-disc-rail:has(:focus-visible) .vitrine-disc picture::before,
+    .consumer-registry .vitrine-disc-rail:has(:focus-visible) .vitrine-disc picture::after {
+      transition: none;
     }
     .consumer-registry .vitrine-disc.is-active img { opacity: 1; }
-    @media (hover: hover) {
+    @media (hover: hover) and (pointer: fine) {
       .consumer-registry .vitrine-disc:hover img { opacity: 1; }
     }
 
