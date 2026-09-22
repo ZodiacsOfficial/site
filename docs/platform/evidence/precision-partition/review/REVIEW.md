@@ -184,11 +184,51 @@ conditions a midpoint and an interval agree, and a wrong light-time
 interval still contains the right constant.
 
 Two test files were written against that gap, in separate worktrees, each
-verified by a second agent that re-applied every mutation in a third:
+verified by a second agent that wrote the file into a third worktree and
+re-applied every mutation there:
 `test/tier-a/partition-enclosure-intervals.nodetest.mjs` and
-`test/tier-a/partition-enclosure-lighttime.nodetest.mjs`. What they do and
-do not establish is in their own headers, and any mutation that still
-survives is named there rather than here.
+`test/tier-a/partition-enclosure-lighttime.nodetest.mjs`, eleven families
+between them.
+
+They close **seven of the eight**. The fixtures had to break the two
+conditions that hid them: one file sweeps a moving observer, and separately
+a moving Sun, through a conjunction so that a midpoint reading of the
+opening cell says fifteen degrees while the same cell reaches zero 18,000
+seconds away; the other runs a target at 0.9 c so the light-time interval a
+200-second cell admits is about 1,800 seconds — nine times the cell — and
+its two ends name stretches of trajectory 14.87 degrees of apparent place
+apart. Both mutations that read a body at a midpoint now admit a whole
+window that reaches conjunction, and the tests name the instant: *an
+ADMITTED span reaches an elongation of 0 deg at 0 s TDB*.
+
+The eighth, `dist.lo > 0` weakened to `dist.hi > 0` in `classifyCell`, is
+**not caught, and appears to be unreachable**. An instrumented probe placed
+immediately before the guard, over all 423 tests and both new fixtures,
+never found the two predicates disagreeing; inverting the probe's own
+condition made it fire three times, so the no-fire result is a measurement
+and not dead code. `deriveLightTime` carries its own `dist.lo > 0` and
+fires first on a freshly derived cell, and an inherited cell's enclosures
+are subsets of its parent's, so `dist.lo` cannot fall below it. The guard
+is pinned indirectly — by the ordering it depends on, and by the enclosure
+monotonicity that ordering rests on — and neither pin would fail on that
+mutation alone. It is a redundant backstop, recorded as one.
+
+Both files were checked adversarially by an agent that had not written
+them, which confirmed every claimed catch independently and found nine
+comment inaccuracies between them: a parallax figure wrong by 11.5×, a
+clearance stated as fifteen degrees that is ten, a cosine-to-degrees
+conversion wrong by 5×, an assertion whose comment claimed a tightness the
+number (3.22, outside the range of a cosine) does not have, a cell count
+of two where the geometry gives one, a peak speed computed from the
+construction rather than measured from the fixture, reception time called
+emission time, and two margins quoted tighter than measured. All nine are
+corrected, every figure re-measured against the geometry. Two families
+were also strengthened: the plunge case now states that it decides nothing
+and asserts that shape, so its ownership checks cannot pass silently while
+inert, and the LURCH case now checks its verdicts against the reference
+instead of working only on message text — it has a real below-floor
+passage at 1165.72 to 1368.09 seconds and admits two spans whose minimum
+elongations are 6.488 and 5.646 degrees.
 
 ## What was not done
 
