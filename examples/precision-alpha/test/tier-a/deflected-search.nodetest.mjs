@@ -26,7 +26,8 @@ import assert from 'node:assert/strict';
 import * as G from './_geometry.mjs';
 import { deflect, deflectionDomain, MIN_ELONGATION_RAD } from '../../src/core/deflection.mjs';
 import {
-  searchDeflectedLongitude, searchOfDateLongitude, DEFLECTED_CONTRACT, mergeSpans,
+  searchDeflectedLongitude, searchDeflectedLongitudeWithControl, searchOfDateLongitude,
+  DEFLECTED_CONTRACT, mergeSpans,
 } from '../../src/core/retarded-search.mjs';
 import { buildResult, SUPPORT } from '../../src/core/result.mjs';
 
@@ -509,4 +510,290 @@ test('the search runs against a moving Sun, not only a barycentric one', () => {
   const a = MOVING.sun(-60 * D);
   const b = MOVING.sun(60 * D);
   assert.ok(norm(sub(b, a)) > 1e8, 'the fixture Sun must actually move over the window');
+});
+
+// ================================ the families of DEFLECTION-EVALUATION.md
+//
+// Declared in section 5 of that document before these cases were written.
+// A family whose case cannot be constructed is reported as not covered;
+// none of them is quietly dropped or replaced by an easier one.
+
+test('T1: zero deflecting mass reduces to the of-date rung, exactly', () => {
+  // `srs = 0` gives w = 0 and D = d, so the whole rung collapses to the one
+  // below it. The preregistration fixes this as EXACT -- identical doubles,
+  // not a tolerance -- because the algebra leaves no room for a difference.
+  const targetDeg = G.lonExact(OPEN, 17.37 * D, true);
+  const spec = { body: BODY, targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1] };
+  const base = searchOfDateLongitude(OPEN_EPH, spec);
+  const zero = searchDeflectedLongitudeWithControl(OPEN_EPH, spec, { srs: 0 });
+  const full = searchDeflectedLongitude(OPEN_EPH, spec);
+  assert.equal(zero.completeness.established, true, zero.completeness.statement);
+  assert.equal(zero.events.length, base.events.length);
+  assert.ok(base.events.length > 0, 'a reduction case with no events establishes nothing');
+  for (let i = 0; i < base.events.length; i += 1) {
+    assert.equal(zero.events[i].tdbSec, base.events[i].tdbSec,
+      `event ${i}: ${zero.events[i].tdbSec} is not exactly ${base.events[i].tdbSec}`);
+    assert.deepEqual(zero.events[i].bracketTdbSec, base.events[i].bracketTdbSec);
+    assert.equal(zero.events[i].direction, base.events[i].direction);
+  }
+  // Non-vacuity: the same comparison against the REAL mass must differ, or
+  // the exactness above is about a deflection that never happened.
+  assert.notEqual(full.events[0].tdbSec, base.events[0].tdbSec,
+    'with the real mass the events must move, or T1 proves nothing');
+  assert.equal(zero.diagnostics.deflection.control.srs, 0, 'the result must say what it was given');
+  assert.equal(full.diagnostics.deflection.control, null);
+});
+
+test('T3: the distant-source approximation costs something at search level', () => {
+  // eraLdsun substitutes the observed direction for the Sun-to-source one.
+  // Pointwise that is worth up to 1.5554 arcsec near the Sun; this measures
+  // what it does to an event time, which is the quantity this rung reports.
+  const targetDeg = G.lonExact(OPEN, 17.37 * D, true);
+  const spec = { body: BODY, targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1] };
+  const finite = searchDeflectedLongitude(OPEN_EPH, spec);
+  const distant = searchDeflectedLongitudeWithControl(OPEN_EPH, spec, { distantSource: true });
+  assert.equal(distant.completeness.established, true);
+  assert.equal(distant.events.length, finite.events.length);
+  let worst = 0;
+  for (let i = 0; i < finite.events.length; i += 1) {
+    worst = Math.max(worst, Math.abs(distant.events[i].tdbSec - finite.events[i].tdbSec));
+  }
+  assert.ok(worst > 0, 'the approximation must change the answer, or it is not an approximation');
+  // It is smaller than the deflection itself, because at this elongation the
+  // two geometries nearly agree. Reported rather than asserted tightly: the
+  // family requires the gap be MEASURED, not that it take a given value.
+  assert.ok(worst < finite.diagnostics.deflection.widestDeflectionArcsec * 1e6,
+    `the distant-source gap of ${worst} s is implausibly large`);
+  assert.equal(distant.diagnostics.deflection.control.distantSource, true);
+});
+
+test('T6: an obstructed line of sight is excluded, by the floor', () => {
+  // Inside the solar disc, which is inside the floor by a factor of 18.7.
+  // The domain guard is the elongation floor and not the disc, so the
+  // reason names the floor -- the two are different boundaries and the
+  // profile is explicit that they must not be conflated.
+  const win = [-2 * D, 2 * D];
+  let minEl = Infinity;
+  for (let t = win[0]; t <= win[1]; t += 600) minEl = Math.min(minEl, elongationAt(CONJ, t));
+  assert.ok(minEl < 959.23 / 3600, `the window must be obstructed; its minimum elongation is ${minEl} deg`);
+  const r = searchDeflectedLongitude(CONJ_EPH, {
+    body: BODY, targetDeg: G.lonExact(CONJ, 40 * D, true), fromTdbSec: win[0], toTdbSec: win[1],
+  });
+  assert.equal(r.accounting.excluded.length, 1);
+  assert.match(r.accounting.excluded[0].why, /floor/);
+  assert.equal(r.completeness.established, false);
+});
+
+test('T7: the Sun as target is not deflected, and says so', () => {
+  // A body does not deflect its own light. The profile has always said so;
+  // the search did not, and the cost of that was 153,842 cells in 76
+  // seconds returning nothing. This is the case that would have caught it.
+  const targetDeg = G.lonExact(OPEN, 17.37 * D, true);
+  const spec = { body: 'Sun', targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1] };
+  const t0 = Date.now();
+  const r = searchDeflectedLongitude(OPEN_EPH, spec);
+  const ms = Date.now() - t0;
+  const base = searchOfDateLongitude(OPEN_EPH, spec);
+  assert.equal(r.completeness.established, true, r.completeness.statement);
+  assert.equal(r.diagnostics.deflection.appliedToThisBody, false);
+  assert.match(r.diagnostics.deflection.notAppliedBecause, /does not deflect its own light/);
+  assert.equal(r.diagnostics.deflection.deflectedCellEvaluations, 0);
+  // It IS the of-date answer, which is the point -- and the result says so
+  // rather than leaving a reader to infer it from the mode name.
+  assert.equal(r.events.length, base.events.length);
+  for (let i = 0; i < base.events.length; i += 1) {
+    assert.equal(r.events[i].tdbSec, base.events[i].tdbSec);
+  }
+  // and it is fast. 30x the of-date cost would still be 30x too slow.
+  assert.ok(ms < 5000, `the Sun took ${ms} ms; the failure this case exists for took 76,000`);
+  assert.ok(r.execution.cells < 10000, `${r.execution.cells} cells`);
+});
+
+test('T9: multiple crossings, all found', () => {
+  // Multiple crossings WITHOUT passing conjunction, which is not free: any
+  // body whose geocentric direction sweeps every longitude in the ecliptic
+  // must pass the Sun once a turn. The first version of this case used
+  // `companionPair` and found exactly that -- five excluded spans in a
+  // 140-day window, so the rung could not establish completeness and the
+  // case was measuring the domain instead of the crossings.
+  //
+  // A companion on a cone at 20 degrees of ecliptic latitude sweeps all
+  // longitudes while staying four times the floor away from the Sun. The
+  // geometry is established below before any count is read off the solver.
+  const BETA = 20 * (Math.PI / 180);
+  const PERIOD = 12 * D;
+  const obs = G.circle(1.495978707e8, 365.25 * D, Math.PI / 2);
+  const offset = (t) => {
+    const a = (2 * Math.PI * t) / PERIOD;
+    return [4.0e5 * Math.cos(a) * Math.cos(BETA), 4.0e5 * Math.sin(a) * Math.cos(BETA), 4.0e5 * Math.sin(BETA)];
+  };
+  const observer = obs.at;
+  const target = (t) => { const o = obs.at(t); const f = offset(t); return [o[0] + f[0], o[1] + f[1], o[2] + f[2]]; };
+  const pair = { observer, target, observerVel: obs.vel };
+  const win = [-30 * D, 30 * D];
+
+  // The fixture, independently: it never approaches the floor, and it
+  // really does sweep every longitude more than once.
+  let minEl = Infinity;
+  const lons = [];
+  for (let t = win[0]; t <= win[1]; t += 600) {
+    minEl = Math.min(minEl, deflectionDomain(sub(target(t), observer(t)), observer(t)).elongationDeg);
+    lons.push(G.lonExact(pair, t, true));
+  }
+  assert.ok(minEl > 15, `the cone should stay well outside the floor; it reached ${minEl} deg`);
+  assert.ok(win[1] - win[0] > 4 * PERIOD, 'the window must contain several turns');
+
+  const eph = G.packOf(target, observer, { nrec: 70, initEt: -31 * D });
+  const targetDeg = G.lonExact(pair, -7 * D, true);
+  const r = searchDeflectedLongitude(eph, {
+    body: BODY, targetDeg, fromTdbSec: win[0], toTdbSec: win[1],
+  });
+  assert.equal(r.completeness.established, true, r.completeness.statement);
+  assert.equal(r.accounting.excluded.length, 0, 'the cone geometry must never leave the domain');
+  assert.equal(r.eventCount.isExactTotal, true);
+
+  // The count from the geometry, not the solver: five turns in 60 days, and
+  // one crossing of a given longitude per turn in the requested direction.
+  const turns = (win[1] - win[0]) / PERIOD;
+  assert.ok(r.events.length >= Math.floor(turns) - 1 && r.events.length <= Math.ceil(turns),
+    `${r.events.length} crossings over ${turns} turns`);
+  assert.ok(r.events.length >= 2, 'a multiple-crossings case needs more than one');
+  const times = r.events.map((e) => e.tdbSec);
+  for (let i = 1; i < times.length; i += 1) {
+    assert.ok(times[i] > times[i - 1], 'events must be strictly ordered');
+  }
+  // Where the crossings ARE is checked against the of-date rung, not
+  // against `rootsExact`. That reference computes the ABERRATED longitude
+  // in a fixed frame, which is a different quantity from this one: its
+  // roots are elsewhere, and an earlier version of this case compared the
+  // two and failed on a root 19 days out. The of-date rung is the right
+  // neighbour -- it is the same quantity minus one correction, and it has
+  // its own independent validation in `of-date-frames.nodetest.mjs`.
+  //
+  // The independent check on WHERE the deflected roots are belongs to the
+  // tier-B holdout, which has a deflected reference. This is a tier-A
+  // consistency case and says so.
+  const base = searchOfDateLongitude(eph, {
+    body: BODY, targetDeg, fromTdbSec: win[0], toTdbSec: win[1],
+  });
+  assert.equal(base.completeness.established, true);
+  assert.equal(base.events.length, r.events.length,
+    'the deflection must not create or destroy a crossing at 20 degrees of latitude');
+  // And they must agree with it to within what the deflection can do here,
+  // which for a companion this close is almost nothing. That is the
+  // profile's own Moon finding arriving from the other direction: a body
+  // 4e5 km away is at nearly the same Sun-centred angle as the observer,
+  // so chi is tiny and (SRS/em) tan(chi/2) with it. The profile measures
+  // the geocentric Moon at no more than 5.69 microarcsec; this fixture
+  // should be the same order.
+  // The POINTWISE deflection, computed independently at sampled instants.
+  // A 4e5 km offset at 1 au subtends 2.67e-3 rad at the Sun, so
+  // chi <= 2.67e-3 and (SRS/em) tan(chi/2) is about 5.4 microarcsec --
+  // which is the order the profile measures for the geocentric Moon.
+  let pointwise = 0;
+  for (let t = win[0]; t <= win[1]; t += 3600) {
+    const O = observer(t);
+    const dv = sub(target(t), O);
+    const g = deflect(dv, O, target(t), { enforceDomain: false });
+    pointwise = Math.max(pointwise, (Math.atan(norm(g.u) / norm(dv)) * 180 * 3600) / Math.PI);
+  }
+  assert.ok(pointwise < 1e-5 && pointwise > 1e-6,
+    `the pointwise deflection should be microarcseconds; it reached ${pointwise} arcsec`);
+
+  // The ENCLOSURE is much looser here, and that is a property worth
+  // stating rather than a tolerance to widen. `e x q` is a cross product of
+  // two nearly parallel unit vectors when the target sits at the observer's
+  // own heliocentric distance, so its components are differences of nearly
+  // equal products and the interval result is wide in RELATIVE terms. The
+  // enclosure still contains the truth; it is simply not tight in the one
+  // regime where the deflection does not matter.
+  const deflArcsec = r.diagnostics.deflection.widestDeflectionArcsec;
+  assert.ok(deflArcsec > 10 * pointwise,
+    `the enclosure should be visibly looser than the pointwise value here; ${deflArcsec} against ${pointwise}`);
+  assert.ok(deflArcsec < 1e-2,
+    `loose is not unbounded: the enclosure reached ${deflArcsec} arcsec`);
+  const rateDegPerSec = (G.lonExact(pair, 30, true) - G.lonExact(pair, -30, true)) / 60;
+  const boundSec = (deflArcsec / 3600) / Math.abs(rateDegPerSec);
+  for (let i = 0; i < base.events.length; i += 1) {
+    const shift = Math.abs(r.events[i].tdbSec - base.events[i].tdbSec);
+    assert.ok(shift <= Math.max(boundSec, base.events[i].bracketWidthSec) * 1.5,
+      `crossing ${i} moved ${shift} s, above the ${boundSec} s a ${deflArcsec} arcsec deflection allows`);
+  }
+  // An earlier version of this case required the crossings to MOVE. They do
+  // not, and that is the right answer rather than a missing deflection --
+  // the shift here is about 5e-9 s against a bracket three orders wider.
+  // A case that demands a visible shift needs a geometry where there is
+  // one, which is what the heliocentric fixture above is for.
+});
+
+test('T10: a genuinely empty interval, with completeness established', () => {
+  // Zero events is only meaningful WITH completeness. A longitude the body
+  // never reaches, established from the reference sweep and not from the
+  // solver.
+  let lo = Infinity; let hi = -Infinity;
+  for (let t = OPEN_WIN[0]; t <= OPEN_WIN[1]; t += 3600) {
+    const v = G.lonExact(OPEN, t, true);
+    lo = Math.min(lo, v); hi = Math.max(hi, v);
+  }
+  assert.ok(hi - lo < 300, `the sweep wrapped: ${lo} .. ${hi}`);
+  const targetDeg = ((hi + lo) / 2 + 180) % 360;
+  assert.ok(targetDeg < lo || targetDeg > hi, `${targetDeg} is inside the swept range ${lo} .. ${hi}`);
+  const r = searchDeflectedLongitude(OPEN_EPH, {
+    body: BODY, targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1],
+  });
+  assert.equal(r.events.length, 0);
+  assert.equal(r.completeness.established, true, r.completeness.statement);
+  assert.equal(r.eventCount.isExactTotal, true);
+  assert.equal(r.eventCount.upperBound, 0, 'an established empty interval bounds the count at zero');
+  assert.equal(r.accounting.excluded.length, 0);
+});
+
+test('T11: refusals are typed, and none of them escapes', () => {
+  const targetDeg = G.lonExact(OPEN, 17.37 * D, true);
+  const ok = { body: BODY, targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1] };
+  const throws = (spec, code, extra) => assert.throws(
+    () => (extra ? searchDeflectedLongitudeWithControl(OPEN_EPH, spec, extra)
+      : searchDeflectedLongitude(OPEN_EPH, spec)),
+    (e) => { assert.equal(e.code, code, `${e.code} !== ${code}: ${e.message}`); return true; },
+  );
+  throws({ ...ok, body: 'Ceres' }, 'unknown-body');
+  throws({ ...ok, toTdbSec: ok.fromTdbSec }, 'unsupported-option');
+  throws({ ...ok, targetDeg: NaN }, 'unsupported-option');
+  throws({ ...ok, nonsense: 1 }, 'unsupported-option');
+  throws(ok, 'unsupported-option', { srs: -1 });
+  throws(ok, 'unsupported-option', { nonsense: 1 });
+  // Coverage boundary. NOT a throw, by design: an exception raised from
+  // inside the loop would discard every cell already decided, which is the
+  // escape three notes in `retarded-search.mjs` are about. The window comes
+  // back as a result whose spans are all unresolved and which establishes
+  // nothing.
+  const far = { ...ok, fromTdbSec: 1e12, toTdbSec: 1e12 + D };
+  const outside = searchDeflectedLongitude(OPEN_EPH, far);
+  assert.equal(outside.execution.status, 'finished');
+  assert.equal(outside.completeness.established, false);
+  assert.equal(outside.events.length, 0);
+  assert.ok(outside.accounting.unresolved.length > 0);
+  assert.equal(outside.accounting.excluded.length, 0,
+    'outside coverage is not outside the DOMAIN; the two must not be conflated');
+  assert.deepEqual(outside.interval.decidedTdbSec, [],
+    'a finished run that decided nothing lists no decided spans');
+  // It costs 131,072 unresolved cells to say so, because a window outside
+  // the records is hopeless at every width and the refusal is marked
+  // retryable. That is PRE-EXISTING and identical on all four released
+  // rungs -- measured at 262,143 cells and about 2.2 s each -- so it is
+  // pinned here rather than changed under a deflection heading.
+  assert.ok(outside.accounting.unresolvedCells > 1000,
+    'if this has become cheap, the pre-existing note above is stale');
+  // Budget exhaustion returns a RESULT that says so, not a throw.
+  const broke = searchDeflectedLongitude(OPEN_EPH, { ...ok, maxEvaluations: 200 });
+  assert.equal(broke.execution.status, 'budget-exhausted');
+  assert.equal(broke.completeness.established, false);
+  assert.equal(broke.interval.decidedTdbSec, null,
+    'an unfinished run cannot list decided spans: the unvisited cells are recorded nowhere');
+  // Cancellation likewise.
+  const ac = new AbortController();
+  ac.abort();
+  const stopped = searchDeflectedLongitude(OPEN_EPH, { ...ok, signal: ac.signal });
+  assert.equal(stopped.execution.status, 'cancelled');
+  assert.equal(stopped.completeness.established, false);
 });

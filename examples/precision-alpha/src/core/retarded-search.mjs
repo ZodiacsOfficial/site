@@ -235,7 +235,7 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
-function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null, deflection = false, sunWeights = null) {
+function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null, deflection = false, sunWeights = null, control = {}) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
@@ -425,7 +425,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
       // the same one the light-time block already established; forming it
       // again would be a second place for it to drift.
       const qRawDot = I.vMulI(I.vSub(R.vel, sunEm.vel), oneMinus);
-      const df = deflectInterval(D, dDot, dist, eRaw, eRawDot, qRaw, qRawDot);
+      const df = deflectInterval(D, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control);
       if (!df.ok) {
         return {
           ok: false,
@@ -693,7 +693,7 @@ function decidedSpans(a, b, gaps) {
 function runSearch(eph, spec, shape) {
   const {
     aberration, ofDate = false, deflection = false, mode, contract, kind,
-    frameProvider = iauFrameProvider,
+    frameProvider = iauFrameProvider, control = {},
   } = shape;
   const { body, targetDeg, fromTdbSec, toTdbSec, signal = null, ...tuning } = spec;
   for (const k of Object.keys(tuning)) {
@@ -716,6 +716,26 @@ function runSearch(eph, spec, shape) {
   // at all, and finding that out on the first cell rather than per cell is
   // the difference between one typed refusal and one per subdivision.
   const sunWeights = deflection ? targetWeights(eph, 'Sun') : null;
+  /**
+   * The Sun does not deflect its own light.
+   *
+   * `DEFLECTION-PROFILE.md` section 2 says so and `reduce.mjs` already
+   * skips it; this is where the search does. It has to be decided from the
+   * BODY rather than per cell, because a cell cannot tell the two cases
+   * apart: when the target is the Sun, `q = R - S` is a difference of the
+   * same enclosure with itself, which interval arithmetic gives as
+   * `[-w, +w]` and not as zero. Its lower bound on |q| is exactly 0 at
+   * every width, so `deflectInterval` refuses and asks to be subdivided,
+   * and the subdivision never converges. Measured before this skip
+   * existed: the Sun over a 300-day window opened 153,842 cells in 76
+   * seconds and returned nothing, where the of-date mode answers in 75 ms.
+   *
+   * A narrower cell CAN resolve a different body passing near the Sun's
+   * centre, so the per-cell refusal stays retryable. Only the structural
+   * case is decided here.
+   */
+  const deflectorIsTarget = deflection && body === 'Sun';
+  const applyDeflection = deflection && !deflectorIsTarget;
 
   let evaluations = 0;
   const spend = () => {
@@ -824,7 +844,7 @@ function runSearch(eph, spec, shape) {
   // The reason it was invisible: the events looked exactly right, because
   // they were exactly the events of a mode that works.
   const at = (t) => {
-    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate, frameProvider, deflection, sunWeights);
+    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
     noteObserverSpeed(c);
     return c;
   };
@@ -871,7 +891,7 @@ function runSearch(eph, spec, shape) {
       // Taking the larger of the two actual distances is exact and free.
       const w = Math.max(hi - m, m - lo);
 
-      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate, frameProvider, deflection, sunWeights);
+      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
       if (!cell.ok) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
@@ -967,7 +987,7 @@ function runSearch(eph, spec, shape) {
           if (s === sa) { a2 = mm; sa = s; } else b2 = mm;
         }
         // The half-plane, with its own enclosure over the bracket.
-        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider, deflection, sunWeights);
+        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
         noteObserverSpeed(br);
         if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
         if (br.g.lo <= 0) {
@@ -1027,7 +1047,7 @@ function runSearch(eph, spec, shape) {
   // below can say "light-time-corrected" while the aberrated mode is
   // running. The earlier contract defect in this package was exactly that:
   // a description left behind when the quantity moved.
-  const corrected = deflection
+  const corrected = applyDeflection
     ? 'light-time-, solar-deflection- and aberration-corrected, in the ecliptic of date with the true equinox of date as origin,'
     : ofDate
     ? 'light-time- and aberration-corrected, in the ecliptic of date with the true equinox of date as origin,'
@@ -1084,7 +1104,7 @@ function runSearch(eph, spec, shape) {
         ? `Spans this profile DECLINES to answer for, not spans it failed to decide. ${DEFLECTION_PROFILE.id} supports solar elongations of at least ${MIN_ELONGATION_RAD / DEG} degrees; inside that floor the first-order deflection model's own omitted second-order term grows past what the correction is worth, the limiter threshold and the solar disc are both nearby, and a finite answer there is not an observable direction. No subdivision and no budget reaches them. Any crossing inside an excluded span is neither found nor ruled out, so the event list is NOT exhaustive over the requested window -- only over the decided spans.`
         : 'this mode has no restricted domain, so nothing is ever excluded',
       note: accounted
-        ? `every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction${aberration ? ', with the observer-motion transformation applied over the whole cell rather than at sampled instants' : ''}${deflection ? ', and the solar deflection applied over the whole cell with the limiter proved inactive on each' : ''}`
+        ? `every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction${aberration ? ', with the observer-motion transformation applied over the whole cell rather than at sampled instants' : ''}${applyDeflection ? ', and the solar deflection applied over the whole cell with the limiter proved inactive on each' : ''}`
         : `at least one cell could not be closed, its light-time interval could not be established${excluded.length > 0 ? `, or it fell inside this profile's supported-domain floor (${excludedRuns.length} span${excludedRuns.length === 1 ? '' : 's'})` : ''}`,
     },
     completeness: {
@@ -1243,6 +1263,11 @@ function runSearch(eph, spec, shape) {
               : null,
             closestElongationIsAReport: true,
             tightestLimiterMarginRatio: Number.isFinite(tightestLimiterMargin) ? tightestLimiterMargin : null,
+            appliedToThisBody: applyDeflection,
+            control: Object.keys(control).length === 0 ? null : { ...control },
+            notAppliedBecause: deflectorIsTarget
+              ? 'the target IS the deflector: the Sun does not deflect its own light, and the formula is degenerate there. DEFLECTION-PROFILE.md section 2. This result is the of-date one; the mode name is kept so the ladder stays comparable, and this field is how a reader tells.'
+              : null,
             lengthRecomputedAfterDeflection: true,
             cellEvaluations,
             deflectedCellEvaluations,
@@ -1367,6 +1392,42 @@ export function searchDeflectedLongitude(eph, spec = {}) {
     aberration: true,
     ofDate: true,
     deflection: true,
+    mode: 'validated-retarded-aberrated-deflected-of-date',
+    contract: DEFLECTED_CONTRACT,
+    kind: 'retarded-aberrated-deflected-of-date-longitude',
+  });
+}
+
+/**
+ * The deflected search with the profile's two constants overridden.
+ *
+ * Deliberately NOT re-exported from `experimental.mjs`, for the same
+ * reason `searchOfDateLongitudeWithFrame` is not: a consumer that could
+ * set `srs` could make the mode report a deflection it did not apply while
+ * the result still carried the deflected mode's name. It exists for the
+ * CONTROL cases of `DEFLECTION-EVALUATION.md` section 5 -- zero deflecting
+ * mass, and the distant-source approximation -- and it is the same code
+ * path the real mode takes, with the override as the only difference.
+ * Every result says what it was given, in
+ * `diagnostics.deflection.control`.
+ */
+export function searchDeflectedLongitudeWithControl(eph, spec, control) {
+  if (control === null || typeof control !== 'object') {
+    fail('unsupported-option', 'a deflection control must be an object');
+  }
+  for (const k of Object.keys(control)) {
+    if (!['srs', 'distantSource'].includes(k)) {
+      fail('unsupported-option', `unknown deflection control ${k}`);
+    }
+  }
+  if ('srs' in control && !(Number.isFinite(control.srs) && control.srs >= 0)) {
+    fail('unsupported-option', 'srs must be a finite number at or above zero');
+  }
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    deflection: true,
+    control,
     mode: 'validated-retarded-aberrated-deflected-of-date',
     contract: DEFLECTED_CONTRACT,
     kind: 'retarded-aberrated-deflected-of-date-longitude',

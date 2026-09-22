@@ -450,8 +450,19 @@ export function deflectionAngleClosedForm(eVec, qVec) {
  * @param {{lo:number,hi:number}[]} eRawDot  its derivative, km/s
  * @param {{lo:number,hi:number}[]} qRaw   Sun -> target at EMISSION, km
  * @param {{lo:number,hi:number}[]} qRawDot  d/dt(reception) of that, km/s
+ * @param {{srs?: number, distantSource?: boolean}} [control]
+ *        Two knobs the CONTROL cases need and nothing else may use.
+ *        `srs: 0` makes `w` zero, so `D` is `d` and the whole rung reduces
+ *        to the one below it -- the reduction control
+ *        `DEFLECTION-EVALUATION.md` section 5 requires. `distantSource`
+ *        substitutes the observed direction for the Sun-to-source one,
+ *        which is `eraLdsun`'s approximation, so the cost of not making it
+ *        can be measured at search level rather than only pointwise.
+ *        Both default to the profile and neither is reachable from the
+ *        experimental entry point.
  */
-export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot) {
+export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control = {}) {
+  const { srs = SRS, distantSource = false } = control;
   if (!(dist.lo > 0)) {
     return { ok: false, retry: true, why: 'the target and the observer cannot be shown to be separated over this cell, so the direction to deflect is undefined' };
   }
@@ -459,7 +470,12 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot) {
   if (!(en.lo > 0)) {
     return { ok: false, retry: true, why: 'the observer cannot be bounded away from the centre of the Sun over this cell, so the deflector geometry is undefined' };
   }
-  const qn = I.norm(qRaw);
+  // eraLdsun's approximation: the Sun-to-source direction replaced by the
+  // observed one. Applied to the RAW vector, before normalisation, so the
+  // only thing that changes is the direction `q` ends up pointing.
+  const qSrc = distantSource ? d : qRaw;
+  const qSrcDot = distantSource ? dDot : qRawDot;
+  const qn = I.norm(qSrc);
   if (!(qn.lo > 0)) {
     return { ok: false, retry: true, why: 'the target cannot be bounded away from the centre of the Sun over this cell, so the deflector geometry is undefined' };
   }
@@ -468,9 +484,9 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot) {
   const e = [I.div(eRaw[0], en), I.div(eRaw[1], en), I.div(eRaw[2], en)];
   const eDot = [0, 1, 2].map((i) => I.div(I.sub(eRawDot[i], I.mul(e[i], enDot)), en));
 
-  const qnDot = I.div(I.dot(qRaw, qRawDot), qn);
-  const q = [I.div(qRaw[0], qn), I.div(qRaw[1], qn), I.div(qRaw[2], qn)];
-  const qDot = [0, 1, 2].map((i) => I.div(I.sub(qRawDot[i], I.mul(q[i], qnDot)), qn));
+  const qnDot = I.div(I.dot(qSrc, qSrcDot), qn);
+  const q = [I.div(qSrc[0], qn), I.div(qSrc[1], qn), I.div(qSrc[2], qn)];
+  const qDot = [0, 1, 2].map((i) => I.div(I.sub(qSrcDot[i], I.mul(q[i], qnDot)), qn));
 
   // The supported domain, over the WHOLE cell and without an inverse
   // trigonometric function. The observer sees the Sun along -e, so
@@ -519,8 +535,8 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot) {
     return { ok: false, retry: true, why: 'the deflection denominator cannot be bounded away from zero over this cell' };
   }
   const denDot = I.add(I.mul(emDot, g), I.mul(em, gDot));
-  const w = I.div(I.iv(SRS), den);
-  const wDot = I.neg(I.div(I.mul(I.iv(SRS), denDot), I.mul(den, den)));
+  const w = I.div(I.iv(srs), den);
+  const wDot = I.neg(I.div(I.mul(I.iv(srs), denDot), I.mul(den, den)));
 
   const eq = I.cross(e, q);
   const eqDot = I.vAdd(I.cross(eDot, q), I.cross(e, qDot));
