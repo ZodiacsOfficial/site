@@ -73,6 +73,7 @@ export const EXPERIMENTAL: Readonly<{
     independentOfTargetLongitude: string;
     migration: Readonly<{
       from: 'searchRetardedAberratedDeflectedOfDate';
+      whatIsRefused: string;
       fieldsThatMove: readonly string[];
       newPerEventFields: readonly string[];
       whatDoesNotChange: string;
@@ -160,8 +161,16 @@ export interface PartitionedEvent {
   /**
    * `established` only inside a proved-admissible span. A crossing found
    * in a boundary span has NOT been shown to lie in the supported domain.
+   *
+   * `boundary-ambiguous` is a safety net: a crossing found in an
+   * admissible span whose BRACKET reaches into a boundary span, so the
+   * instant itself may lie on the unproved side. For a plan this runtime
+   * derived it cannot fire — admissible and boundary spans are disjoint
+   * and a subsearch's brackets stay inside the span it was given, which
+   * was checked over 1,029 crossings without one occurrence. Handle it;
+   * do not rely on it.
    */
-  readonly eligibility: 'established' | 'not-established';
+  readonly eligibility: 'established' | 'not-established' | 'boundary-ambiguous';
   /**
    * Which rung located it. A boundary-span crossing is located with the
    * of-date rung and carries NO solar deflection, so its time is not the
@@ -205,6 +214,13 @@ export interface PartitionedSearchResult {
      * region remains. Read it before treating `events` as a total.
      */
     mayHoldUnfoundSupportedEvents: boolean;
+    /**
+     * True when the domain came from a plan this runtime did not derive,
+     * accepted on the caller's authority with `acceptImportedPlan`. Every
+     * other field here is then conditional on that plan being what it
+     * says it is, which only its shape was checked against.
+     */
+    restsOnImportedPlan: boolean;
     statement: string;
   }>;
   readonly accounting: Readonly<{
@@ -225,19 +241,37 @@ export interface PartitionedSearchResult {
      */
     admissibleNotFullyExamined: readonly TdbSpan[];
     admissibleNotFullyExaminedSec: number;
+    /**
+     * Also the second axis: classified, so the domain here is known, and
+     * then never searched because the budget ran out or the caller
+     * cancelled before this span's turn. Not part of the tiling.
+     */
+    notSearched: readonly TdbSpan[];
+    notSearchedSec: number;
   }> & Readonly<Record<string, unknown>>;
   readonly execution: Readonly<{
     status: 'finished' | 'budget-exhausted' | 'cancelled';
+    /**
+     * False when the PLAN did not finish, too, not only when a subsearch
+     * ran out: a run over a partial plan has not finished the request.
+     */
     finished: boolean;
     reason: string | null;
-    /** One allowance for the whole request: partition plus every subsearch. */
+    /**
+     * One allowance for the whole request: partition plus every
+     * subsearch. It is checked AFTER incrementing, so an exhausted run
+     * reports one more than its limit — `4,000,001` against a 4,000,000
+     * allowance — and `status` is what says it stopped.
+     */
     evaluations: number;
     cells: number;
     maxEvaluations: number;
     partitionEvaluations: number;
     searchEvaluations: number;
     partitionReused: boolean;
-  }>;
+    /** True when the plan came from outside this runtime. See `restsOnImportedPlan`. */
+    planImported: boolean;
+  }> & Readonly<Record<string, unknown>>;
   readonly spanResults: readonly Readonly<Record<string, unknown>>[];
   readonly diagnostics: Readonly<Record<string, unknown>>;
 }
@@ -248,6 +282,25 @@ export interface PartitionedSearchSpec extends RetardedSearchSpec {
   packDigest?: string | null;
   boundaryToleranceSec?: number;
   relightWidthRatio?: number;
+  maxTauWidenings?: number;
+  tauPadFloorSec?: number;
+  /**
+   * Accept a plan this runtime did not derive — one that came back from a
+   * cache, a file or a worker message. Without it such a plan is REFUSED:
+   * a matching key is a fingerprint, not a signature. With it the plan's
+   * spans are checked for shape (well formed, inside the request,
+   * disjoint, tiling it exactly) and its verdicts are taken on your
+   * authority; the result then carries
+   * `completeness.restsOnImportedPlan`.
+   */
+  acceptImportedPlan?: boolean;
+  /**
+   * Accept a plan that stopped before classifying its whole window.
+   * Without it such a plan is refused, because reusing one answers the
+   * request over a fraction of itself. With it the run inherits the
+   * plan's status and reports `execution.finished: false`.
+   */
+  acceptPartialPlan?: boolean;
 }
 
 export interface ExperimentalSearches {

@@ -48,6 +48,7 @@ import { fail, PrecisionError } from './errors.mjs';
 import { DEFLECTION_PROFILE } from './deflection.mjs';
 import {
   partitionDomain, PARTITION_DEFAULTS, partitionKey, packFingerprint, PARTITION_CONTRACT_ID,
+  isNativePlan, validatePlanSpans,
 } from './domain-partition.mjs';
 import {
   searchDeflectedLongitude, searchDeflectedLongitudeOnProvedDomain, searchOfDateLongitude,
@@ -72,8 +73,17 @@ const mergeSpanList = (spans) => {
   return out;
 };
 
-/** Does [lo, hi) meet any span in the list? */
-const meets = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
+/**
+ * Does `[lo, hi)` STRICTLY overlap any span in the list?
+ *
+ * Strictly: touching at an endpoint is not overlapping, which is what
+ * makes adjacent classes of one partition disjoint rather than in
+ * conflict. Exported so the predicate can be tested on its own -- the
+ * one place it is used cannot be driven by any well-formed plan, so a
+ * test that only ran the search would not see it break.
+ */
+export const spansMeet = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
+const meets = spansMeet;
 
 /**
  * A partition, checked against the request it is about to be used for.
@@ -90,6 +100,7 @@ const meets = (spans, lo, hi) => spans.some(([a, b]) => a < hi && b > lo);
 export function assertPartitionUsable(plan, {
   eph, packDigest, body, fromTdbSec, toTdbSec,
   boundaryToleranceSec, relightWidthRatio, maxTauWidenings, tauPadFloorSec,
+  acceptImportedPlan = false, acceptPartialPlan = false,
 }) {
   if (!plan || plan.contract !== PARTITION_CONTRACT_ID) {
     fail('unsupported-option', `a plan must be a ${PARTITION_CONTRACT_ID} produced by this runtime`);
@@ -128,16 +139,71 @@ export function assertPartitionUsable(plan, {
     fail('unsupported-option',
       `this plan is for a different request: it carries ${plan.key} and this call needs ${want}. A partition is a proof about one pack, observer, body, profile, window, tolerance and numerical policy; it is not reused across any of them.`);
   }
-  /**
-   * A plan whose spans do not match its own key is not a plan this
-   * runtime produced, whatever key it carries. Cheap, and it catches a
-   * hand-edited or truncated import that kept the header.
-   */
   const [lo, hi] = plan.request.windowTdbSec ?? [NaN, NaN];
   if (!(lo === fromTdbSec && hi === toTdbSec)) {
     fail('unsupported-option', 'the plan\'s stated window does not match the window its key claims');
   }
-  return plan;
+
+  /**
+   * Where a proof stops being a proof.
+   *
+   * A matching key is not evidence that this runtime derived the plan. It
+   * is a non-cryptographic fingerprint, recomputed here from the live
+   * pack, so anything that can call `partitionKey` can produce one -- and
+   * a partial write, a compaction that keeps only `admissible`, or a hand
+   * edit leaves the header untouched. An earlier version of this function
+   * carried a comment claiming it caught exactly that. It did not: the
+   * only thing under that comment was the window comparison above, and a
+   * plan whose span lists had been replaced with `admissible: [whole
+   * window]` was accepted and turned every hedge in the contract off at
+   * once -- `overRequest: true`, `mayHoldUnfoundSupportedEvents: false`,
+   * every crossing labelled `established`, and the deflected rung run with
+   * its domain gate disabled on spans nothing had proved.
+   *
+   * So: a plan this process built is trusted by identity, not by shape.
+   * Anything else is an IMPORT. Its spans are checked for structure --
+   * well formed, inside the request, pairwise disjoint, tiling it exactly
+   * -- and the caller has to say `acceptImportedPlan: true`, because
+   * structure is all that can be checked. Nothing here can tell a true
+   * verdict from a false one; only recomputing can.
+   */
+  const imported = !isNativePlan(plan);
+  if (imported) {
+    if (!acceptImportedPlan) {
+      fail('unsupported-option',
+        'this plan was not produced by this runtime in this running process; it is an import. A matching key is a fingerprint, not a signature: it says the plan is ABOUT this request, not that anyone proved it. Recompute it with planDeflectedDomain, or pass acceptImportedPlan: true to accept a structurally checked import on the authority of wherever it came from.');
+    }
+    const why = validatePlanSpans(plan, fromTdbSec, toTdbSec);
+    if (why !== null) {
+      fail('unsupported-option', `this imported plan is not well formed: ${why}`);
+    }
+  }
+
+  /**
+   * A plan that did not finish classified only part of its window, and
+   * the rest is `unprocessed` -- not excluded, not admissible, not
+   * anything. Reusing it for a request with a larger budget silently
+   * answers that request over a fraction of itself: measured, a plan
+   * built at a hundred evaluations classified 3 per cent of a two-day
+   * window, carried a key identical to the full plan's, and returned
+   * zero crossings where the full plan returns three.
+   *
+   * The budget is deliberately NOT in the key -- two FINISHED plans built
+   * at different budgets are the same plan, and keying on the budget would
+   * make a cache miss on every allowance. What matters is whether the plan
+   * is complete, which is a property of the plan and is checked here.
+   */
+  if (!acceptPartialPlan) {
+    if (plan.execution.status !== 'finished') {
+      fail('unsupported-option',
+        `this plan stopped with ${plan.execution.status} and classified only part of its window. Rebuild it, or pass acceptPartialPlan: true to search the part it did classify.`);
+    }
+    if (plan.unprocessed.length > 0) {
+      fail('unsupported-option',
+        `this plan left ${plan.unprocessed.length} span(s) unclassified. Rebuild it, or pass acceptPartialPlan: true.`);
+    }
+  }
+  return { plan, imported };
 }
 
 /**
@@ -161,6 +227,13 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
     relightWidthRatio = PARTITION_DEFAULTS.relightWidthRatio,
     maxTauWidenings = PARTITION_DEFAULTS.maxTauWidenings,
     tauPadFloorSec = PARTITION_DEFAULTS.tauPadFloorSec,
+    /**
+     * A plan that did not come from this runtime in this process, and a
+     * plan that did not finish, are each accepted only when the caller
+     * says so by name. See `assertPartitionUsable`.
+     */
+    acceptImportedPlan = false,
+    acceptPartialPlan = false,
     maxEvaluations = 4_000_000,
     maxCells = 400_000,
     ...rest
@@ -181,8 +254,9 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
   let plan;
   let partitionEvaluations = 0;
   let partitionReused = false;
+  let planImported = false;
   if (given) {
-    plan = assertPartitionUsable(given, {
+    const checked = assertPartitionUsable(given, {
       eph,
       packDigest,
       body,
@@ -192,8 +266,22 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       relightWidthRatio,
       maxTauWidenings,
       tauPadFloorSec,
+      acceptImportedPlan,
+      acceptPartialPlan,
     });
+    plan = checked.plan;
+    planImported = checked.imported;
     partitionReused = true;
+    /**
+     * The plan's own incompleteness is the REQUEST's incompleteness. A
+     * run over a plan that never classified part of its window has not
+     * finished that window, whatever its own subsearches did, and the
+     * top-level status is the field a consumer branches on.
+     */
+    if (plan.execution.status !== 'finished') {
+      status = plan.execution.status;
+      reason = `the supplied plan stopped with ${plan.execution.status}: ${plan.execution.reason}`;
+    }
   } else {
     setLabel('partition');
     plan = partitionDomain(eph, {
@@ -229,17 +317,31 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
   const events = [];
   const unresolved = [];
   const spanResults = [];
-  /** Proved admissible, started, and not finished. The second axis. */
+  /**
+   * The SECOND axis, and the reason there are two.
+   *
+   * The four classes answer "what is the domain here" and tile the
+   * request. Whether a span was then SEARCHED is a different question
+   * about the same instants, and a span can be admissible and unsearched
+   * at once. The first version of this pushed unsearched admissible spans
+   * into `unprocessed` alongside the plan's own, which meant the same
+   * second was reported in `admissibleSec` and in `unprocessedSec` both:
+   * on a starved 2-day request the four figures summed to 4 days while
+   * `coversRequestExactly`, computed from `plan.unprocessed` rather than
+   * from the list it was reporting, still said true. Two axes, kept
+   * apart, and the tiling check now reads the same list it prints.
+   */
+  const notSearched = [];
+  /** Proved admissible, started, and not finished. Also the second axis. */
   const notFullyExamined = [];
-  let unprocessed = [...plan.unprocessed];
   let searchEvaluations = 0;
 
   const runOn = (lo, hi, domain) => {
-    if (status !== 'finished') { unprocessed.push([lo, hi]); return; }
+    if (status !== 'finished') { notSearched.push([lo, hi]); return; }
     if (remaining() <= 0) {
       status = 'budget-exhausted';
       reason = `the request's evaluation budget of ${maxEvaluations} was spent`;
-      unprocessed.push([lo, hi]);
+      notSearched.push([lo, hi]);
       return;
     }
     setLabel(`subsearch-${domain}`);
@@ -293,7 +395,7 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
         status = error.code;
         reason = error.message;
-        unprocessed.push([lo, hi]);
+        notSearched.push([lo, hi]);
         return;
       }
       throw error;
@@ -394,7 +496,14 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
   const established = events.filter((e) => e.eligibility === 'established');
   const ambiguous = events.filter((e) => e.eligibility !== 'established');
 
+  /**
+   * The DOMAIN axis only: spans the partition never classified. Spans the
+   * SEARCH never reached are `notSearched`, which is not one of the four
+   * classes and is reported separately.
+   */
+  const unprocessed = plan.unprocessed;
   const unprocessedTotal = total(unprocessed);
+  const notSearchedTotal = total(notSearched);
   const excludedTotal = total(plan.excluded);
   const boundaryTotal = total(plan.boundary);
   const requestSpan = b - a;
@@ -430,6 +539,8 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
     && excludedTotal === 0
     && boundaryTotal === 0
     && unprocessedTotal === 0
+    && notSearchedTotal === 0
+    && notFullyExamined.length === 0
     && Math.abs(total(plan.admissible) - requestSpan) <= 1e-6;
 
   return {
@@ -442,7 +553,13 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       profile: DEFLECTION_PROFILE.id,
       operation: DEFLECTED_CONTRACT.operation,
       frame: DEFLECTED_CONTRACT.frame,
-      boundaryToleranceSec: plan.request.boundaryToleranceSec,
+      /**
+       * The caller's, not the plan's. The key check already proves the
+       * two agree; taking it from the plan would leave the one value a
+       * supplied object could still put into the result's statement of
+       * what was asked.
+       */
+      boundaryToleranceSec,
     },
     plan: {
       key: plan.key,
@@ -494,11 +611,22 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
        */
       mayHoldUnfoundSupportedEvents: boundaryTotal > 0
         || unprocessedTotal > 0
+        || notSearchedTotal > 0
         || notFullyExamined.length > 0
         || unresolved.length > 0,
-      statement: exhaustiveOverAdmissible
+      /**
+       * Whose word the domain rests on. False -- the ordinary case --
+       * means this runtime proved it. True means the caller supplied a
+       * plan from elsewhere and said `acceptImportedPlan`, so every
+       * claim below is conditional on that plan being what it says it
+       * is, which nothing here checked beyond its shape.
+       */
+      restsOnImportedPlan: planImported,
+      statement: `${exhaustiveOverAdmissible
         ? 'Every crossing of the requested longitude by the light-time-, solar-deflection- and aberration-corrected direction, in the ecliptic of date with the true equinox of date as origin, over the spans listed in admissibleSpans and NOT over the rest of the request.'
-        : 'No exhaustiveness is claimed: at least one admissible span was not searched to completion.',
+        : 'No exhaustiveness is claimed: at least one admissible span was not searched to completion.'}${planImported
+        ? ' CONDITIONAL: the domain came from an imported plan this runtime did not derive. Its spans were checked for shape and not for truth.'
+        : ''}`,
     },
     accounting: {
       /**
@@ -512,8 +640,15 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       boundarySec: boundaryTotal,
       unprocessedSec: unprocessedTotal,
       requestSec: requestSpan,
+      /**
+       * The four classes tile the request. Computed from the SAME lists
+       * this object publishes -- an earlier version summed
+       * `plan.unprocessed` while printing an `unprocessed` that also held
+       * unsearched admissible spans, so it could not see the overlap it
+       * existed to catch.
+       */
       coversRequestExactly: Math.abs(
-        total(plan.admissible) + excludedTotal + boundaryTotal + total(plan.unprocessed) - requestSpan,
+        total(plan.admissible) + excludedTotal + boundaryTotal + unprocessedTotal - requestSpan,
       ) <= 1e-6,
       excluded: plan.excluded,
       boundary: plan.boundary,
@@ -521,7 +656,16 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       unresolved,
       excludedNote: 'Spans this profile DECLINES to answer for. Not empty spans: a crossing inside one is neither found nor ruled out.',
       boundaryNote: 'Spans whose admissibility was not established at the declared tolerance. The transition lies in here. Events found in them are reported with eligibility not established.',
-      unprocessedNote: 'Spans never examined, because the budget ran out or the caller cancelled. NOT excluded and NOT searched-and-empty.',
+      unprocessedNote: 'Spans the PARTITION never classified, because its budget ran out or the caller cancelled. NOT excluded and NOT searched-and-empty. One of the four classes that tile the request.',
+      /**
+       * A SECOND axis, deliberately not one of the four classes.
+       * Classified -- so the domain is known here -- and then never
+       * searched, because the budget ran out or the caller cancelled
+       * before this span's turn.
+       */
+      notSearched: mergeSpanList(notSearched),
+      notSearchedSec: notSearchedTotal,
+      notSearchedNote: 'Spans whose DOMAIN is known and whose crossings were never looked for. They still belong to their class above; this is not a fifth class and is not part of the tiling.',
       /**
        * A SECOND axis, deliberately not one of the four classes above.
        * Those tile the request and answer "what is the domain here"; this
@@ -542,6 +686,13 @@ export function searchDeflectedOverPartition(eph, spec = {}) {
       partitionEvaluations,
       searchEvaluations,
       partitionReused,
+      /**
+       * True when the plan did not come from this runtime in this
+       * process: its verdicts were taken on the caller's authority after
+       * a structural check, not proved here.
+       */
+      planImported,
+      partitionEvaluationsNote: 'A reused plan costs nothing here; it was charged to the request that built it.',
       budgetNote: 'One allowance for the whole request: partitioning plus every subsearch. A subsearch is given what is left, never a fresh copy.',
     },
     spanResults,

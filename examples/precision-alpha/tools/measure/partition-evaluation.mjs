@@ -82,11 +82,18 @@ const NAMED_NO_CONJUNCTION = ['F6', 'F1', 'F10'];
  * have been a bucketing that flattered the result. Boundary width is
  * evidence of a conjunction, not evidence of its absence.
  *
+ * It reads the DOMAIN axis only. An earlier version also keyed on
+ * `unprocessedSec`, which at the time held unsearched admissible spans as
+ * well as unclassified ones, so a case whose SUBSEARCH was starved would
+ * have been filed as conjunction-heavy on the strength of a budget
+ * failure. Whether a window holds a conjunction is a fact about the sky,
+ * not about the allowance.
+ *
  * It is checked against the ids section 6 names, and any disagreement is
  * reported rather than resolved in favour of either.
  */
 const derivedClass = (row) => (
-  row.partition.excludedSec > 0 || row.partition.boundarySec > 0 || row.partition.unprocessedSec > 0
+  row.partition.excludedSec > 0 || row.partition.boundarySec > 0
     ? 'conjunction-heavy'
     : 'no-conjunction');
 
@@ -254,6 +261,9 @@ for (const c of CASES) {
       excludedSec: part.accounting.excludedSec,
       boundarySec: part.accounting.boundarySec,
       unprocessedSec: part.accounting.unprocessedSec,
+      notSearchedSec: part.accounting.notSearchedSec,
+      admissibleNotFullyExaminedSec: part.accounting.admissibleNotFullyExaminedSec,
+      planImported: part.execution.planImported,
       coversRequestExactly: part.accounting.coversRequestExactly,
       admissibleSpans: adm.length,
       excludedSpans: part.plan.excluded.length,
@@ -290,7 +300,23 @@ for (const c of CASES) {
       lost: lost.length,
       lostAt: lost.map((e) => e.tdbSec),
       claimsNoCompletenessOverExcludedRequest: !(part.completeness.overRequest && part.accounting.excludedSec > 0),
-      claimsNoExhaustivenessWithLiveBoundary: !(part.completeness.exhaustiveOverAdmissible && part.completeness.mayHoldUnfoundSupportedEvents === undefined),
+      /**
+       * The first version of this compared `mayHoldUnfoundSupportedEvents`
+       * with `undefined`, which the runtime never returns, so the whole
+       * expression was always true and the field could not detect
+       * anything. It shipped in the evidence under a name that reads as a
+       * criterion. This is the per-case form of the aggregate below: an
+       * exhaustiveness claim standing beside unsearched or unclassified
+       * time must also carry the warning that something may be hiding
+       * there.
+       */
+      claimsNoExhaustivenessWithLiveBoundary: !(
+        part.completeness.exhaustiveOverAdmissible
+        && (part.accounting.boundarySec > 0
+          || part.accounting.unprocessedSec > 0
+          || (part.accounting.notSearchedSec ?? 0) > 0)
+        && part.completeness.mayHoldUnfoundSupportedEvents !== true
+      ),
     },
     ratio: base.execution.evaluations / Math.max(1, part.execution.evaluations),
     /**
@@ -451,7 +477,7 @@ const p6 = {
   worstDeltaSec: live.reduce((a, r) => Math.max(a, r.correspondence.worstDeltaSec), 0),
   withinRootTolerance: live.every((r) => r.correspondence.worstDeltaSec <= ROOT_TOLERANCE_SEC),
   noCompletenessOverExcludedRequest: live.every((r) => r.p6.claimsNoCompletenessOverExcludedRequest),
-  noExhaustivenessWithLiveBoundary: live.every((r) => !(r.partition.exhaustiveOverAdmissible && r.partition.boundarySec > 0 && r.partition.mayHoldUnfoundSupportedEvents !== true)),
+  noExhaustivenessWithLiveBoundary: live.every((r) => r.p6.claimsNoExhaustivenessWithLiveBoundary),
   pass: null,
 };
 p6.pass = p6.lost === 0
@@ -471,7 +497,22 @@ const p7 = {
   disagreements: live.filter((r) => r.baseline.established !== r.partition.overRequest).map((r) => ({ id: r.id, baseline: r.baseline.established, partitioned: r.partition.overRequest })),
   newMetricExhaustiveOverAdmissible: live.filter((r) => r.partition.exhaustiveOverAdmissible).length,
   newMetricNote: 'a DIFFERENT claim with its own denominator: exhaustive over the spans the partition proves admissible, not over the request',
-  pass: LABEL === 'regression' && !ONE ? originalScore === P7_ORIGINAL_SCORE : null,
+  /**
+   * Both halves. The first version scored only `originalScore`, which is
+   * a property of the UNPARTITIONED rung -- so the partitioned path could
+   * have scored five of twenty, populated `disagreements`, and P-7 would
+   * still have passed. The regression P-7 exists to catch is the
+   * partitioned path being weaker by the original rule, so the agreement
+   * is part of the gate.
+   *
+   * This is a strictly harder condition than the preregistration's
+   * sentence, added after seeing the run: it can only turn a pass into a
+   * failure, never the other way, and on both corpora `agree` is true, so
+   * no verdict moved when it was added.
+   */
+  pass: LABEL === 'regression' && !ONE
+    ? originalScore === P7_ORIGINAL_SCORE && originalScore === partitionScore
+    : null,
   passNote: LABEL === 'regression' && !ONE ? null : 'the 6-of-20 figure is a property of the regression corpus; on any other corpus the score is reported, not scored',
 };
 

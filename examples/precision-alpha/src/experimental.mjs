@@ -138,6 +138,7 @@ export const EXPERIMENTAL = Object.freeze({
     independentOfTargetLongitude: 'structurally: planDeflectedDomain never receives one',
     migration: Object.freeze({
       from: 'searchRetardedAberratedDeflectedOfDate',
+      whatIsRefused: 'a plan for a different pack, observer, body, window, profile, tolerance or numerical policy; a plan that did not finish; and a plan this runtime did not derive. The last two are accepted with acceptPartialPlan and acceptImportedPlan, and the result then records it.',
       fieldsThatMove: Object.freeze([
         'completeness.established -> completeness.overRequest (same meaning, and false wherever the profile declined any part of the request)',
         'eventCount.isExactTotal -> eventCount.isExactTotalOverRequest, with isExactTotalOverAdmissible as the smaller, separate claim',
@@ -145,7 +146,7 @@ export const EXPERIMENTAL = Object.freeze({
         'interval.decidedTdbSec -> completeness.admissibleSpans for the proved-admissible part; a boundary span is not decided and is not excluded',
       ]),
       newPerEventFields: Object.freeze([
-        'eligibility: established | not-established',
+        'eligibility: established | not-established | boundary-ambiguous. The third is a safety net for a crossing whose BRACKET reaches into a boundary span; it cannot fire for a plan this runtime derived, and is declared so a consumer handles it rather than relying on it.',
         'positionFrom: which rung located this crossing. A boundary-span event was located WITHOUT the solar term.',
       ]),
       whatDoesNotChange: 'the profile, its five-degree floor, the deflection model, the budgets and the tolerances. This is the same question asked in a different order, not a different question.',
@@ -296,7 +297,11 @@ export function experimental(runtime) {
      *
      * A plan built for a different pack, observer, body, window, profile
      * or tolerance is REFUSED rather than silently recomputed: it is a
-     * proof about a different statement.
+     * proof about a different statement. So is a plan that did not
+     * finish, and so is a plan this runtime did not derive -- a matching
+     * key is a fingerprint, not a signature. `acceptPartialPlan` and
+     * `acceptImportedPlan` take those on your authority instead, and the
+     * result says which of them it rests on.
      *
      * The result is NOT the search result contract. Read
      * `EXPERIMENTAL.partitioned.migration` before treating it as one.

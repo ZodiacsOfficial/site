@@ -210,6 +210,79 @@ function fingerprint(text) {
   return `${a.toString(16).padStart(8, '0')}${b.toString(16).padStart(8, '0')}`;
 }
 
+/**
+ * Plans this runtime built, in this process, in this heap.
+ *
+ * A plan is a PROOF, and a JSON object shaped like one is not. The key
+ * cannot tell them apart: it is a non-cryptographic fingerprint recomputed
+ * locally from the live pack, so anything that can call `partitionKey` can
+ * produce a matching one, and a partial write or a schema change that drops
+ * a span list leaves the header intact.
+ *
+ * Membership of this set is the only evidence a plan can carry that this
+ * runtime derived it. It does not survive serialization -- which is the
+ * point: a plan that came back from a cache, a file or a worker message is
+ * an IMPORT, and `assertPartitionUsable` treats it as one.
+ */
+const NATIVE_PLANS = new WeakSet();
+
+/** True if this exact object was produced by `partitionDomain` here. */
+export function isNativePlan(plan) {
+  return typeof plan === 'object' && plan !== null && NATIVE_PLANS.has(plan);
+}
+
+/**
+ * Is this span list one this operation could have produced -- sorted,
+ * non-empty, strictly increasing, and inside `[a, b]`?
+ *
+ * Structure only. It cannot tell a true verdict from a false one; nothing
+ * short of recomputing can. What it catches is corruption: a truncated
+ * write, a reordered array, a span that leaked outside the request.
+ */
+function wellFormedSpans(spans, a, b) {
+  if (!Array.isArray(spans)) return 'is not an array';
+  let prev = -Infinity;
+  for (const span of spans) {
+    if (!Array.isArray(span) || span.length !== 2) return 'holds something that is not a [from, to] pair';
+    const [lo, hi] = span;
+    if (!Number.isFinite(lo) || !Number.isFinite(hi)) return 'holds a non-finite endpoint';
+    if (!(hi > lo)) return 'holds a span that does not run forwards';
+    if (lo < a - 1e-6 || hi > b + 1e-6) return `holds ${lo} .. ${hi}, which is outside the requested ${a} .. ${b}`;
+    if (lo < prev - 1e-6) return 'is not sorted';
+    prev = hi;
+  }
+  return null;
+}
+
+/**
+ * Check a plan's four span lists against each other and against the
+ * request: each well formed, pairwise disjoint, and tiling `[a, b]`
+ * exactly.
+ *
+ * Returns null when they hold, or a sentence saying what does not.
+ */
+export function validatePlanSpans(plan, a, b) {
+  const lists = [['admissible', plan.admissible], ['excluded', plan.excluded],
+    ['boundary', plan.boundary], ['unprocessed', plan.unprocessed]];
+  for (const [name, spans] of lists) {
+    const why = wellFormedSpans(spans, a, b);
+    if (why !== null) return `its ${name} list ${why}`;
+  }
+  const all = [];
+  for (const [name, spans] of lists) for (const [lo, hi] of spans) all.push({ lo, hi, name });
+  all.sort((x, y) => x.lo - y.lo);
+  for (let i = 1; i < all.length; i += 1) {
+    if (all[i].lo < all[i - 1].hi - 1e-6) {
+      return `its ${all[i - 1].name} and ${all[i].name} spans overlap at ${all[i].lo}, so some instant carries two verdicts`;
+    }
+  }
+  const covered = all.reduce((n, x) => n + (x.hi - x.lo), 0);
+  if (Math.abs(covered - (b - a)) > 1e-6) {
+    return `its four classes cover ${covered} seconds of a ${b - a}-second request, so they do not tile it`;
+  }
+  return null;
+}
+
 /** Merge touching or overlapping spans of one class. Sorted, disjoint out. */
 function coalesce(spans) {
   const sorted = [...spans].sort((x, y) => x[0] - y[0]);
@@ -287,8 +360,27 @@ function classifyCell(ctx, lo, hi) {
     lo: Math.max(T.lo, dist.lo / C_KM_S),
     hi: Math.min(T.hi, dist.hi / C_KM_S),
   };
-  const usable = tightened.hi >= tightened.lo ? tightened : T;
-  return { verdict: classifyElongationCos(cosElongation), cosElongation, T: usable };
+  const tightenedIsUsable = tightened.hi >= tightened.lo;
+  const usable = tightenedIsUsable ? tightened : T;
+  return {
+    verdict: classifyElongationCos(cosElongation),
+    cosElongation,
+    T: usable,
+    /**
+     * Whether `T` above was derived on THIS span or inherited unchanged.
+     *
+     * The caller uses it to decide what width to record the interval
+     * against, and an earlier version tested `out.T` for truthiness --
+     * which is always true here, including in the fallback branch where
+     * `usable === T` is the inherited interval. That recorded an
+     * inherited interval as freshly derived and suppressed the next three
+     * relights. The fallback is only reachable if an enclosure is already
+     * unsound (both intervals contain tau(t), so their intersection is
+     * non-empty), but the flag should say what happened rather than what
+     * is usually true.
+     */
+    tightened: tightenedIsUsable,
+  };
 }
 
 /**
@@ -478,7 +570,19 @@ export function partitionDomain(eph, spec = {}) {
    * every body including this one.
    */
   if (DEFLECTION_PROFILE.deflectors.includes(body)) {
-    return {
+    /**
+     * Resolved before the shortcut, and thrown away. The docstring above
+     * promises that a pack with no Sun is REFUSED here rather than
+     * answered, and the shortcut used to return before anything looked --
+     * so a Sun-target request on a Sun-less pack came back "the whole
+     * window is admissible" and the refusal arrived a layer later, out of
+     * the subsearch, as an exception `searchDeflectedOverPartition` does
+     * not catch. The elongation this operation is about is measured from
+     * the Sun; a pack without one cannot answer for any body, this one
+     * included.
+     */
+    targetWeights(eph, 'Sun');
+    return native({
       contract: PARTITION_CONTRACT_ID,
       key,
       request: {
@@ -490,6 +594,19 @@ export function partitionDomain(eph, spec = {}) {
         identity,
         identityStrength,
         ...PARTITION_CONTRACT,
+        /**
+         * The shared contract's `classes.admissible` reads "the
+         * elongation is at or above the floor at every instant", and for
+         * the deflector itself the elongation is identically ZERO. The
+         * span is admissible for a different reason -- the floor does not
+         * apply -- so the class description is replaced rather than left
+         * to assert something false of this very result.
+         */
+        classes: Object.freeze({
+          ...PARTITION_CONTRACT.classes,
+          admissible: `${body} is a deflector of this profile, so no deflection is applied to it and the elongation floor does not apply. The whole window is inside the supported domain, and NOT because the elongation is above the floor -- it is identically zero.`,
+        }),
+        coverageNote: 'This is a claim about the DOMAIN only. Whether the pack covers the window is a separate question, and the subsearch answers it for this body as for any other.',
       },
       admissible: [[a, b]],
       excluded: [],
@@ -511,7 +628,7 @@ export function partitionDomain(eph, spec = {}) {
         deflectorIsTarget: true,
         deflectorIsTargetWhy: `${body} is a deflector of ${DEFLECTION_PROFILE.id}; no deflection is applied to it, so the elongation floor restricts nothing and the whole window is inside the supported domain`,
       },
-    };
+    });
   }
 
   const targets = targetWeights(eph, body);
@@ -542,6 +659,71 @@ export function partitionDomain(eph, spec = {}) {
   let closestAdmissibleCos = -Infinity;
   let widestTauWidenings = 0;
   let relights = 0;
+
+  /**
+   * A request that lies WHOLLY outside the records is answered once.
+   *
+   * `deriveLightTime` reports an out-of-coverage window as retryable,
+   * which is right where a window partly overlaps the records: narrowing
+   * finds the part that is covered. Where nothing is covered there is
+   * nothing to find, and the retry is unconditional -- measured on a
+   * pack covering 8,000 seconds asked about a 10^12-second window, the
+   * bisection ran 34 levels toward the 60-second tolerance and spent the
+   * whole 400,000-cell budget before stopping, having evaluated nothing
+   * (the enclosures throw before they reach `spend`).
+   *
+   * The answer was conservative either way -- boundary and unprocessed,
+   * never a verdict -- so this is about cost, and about a status that
+   * said `budget-exhausted` where the honest word is "not covered".
+   */
+  {
+    const [covLo, covHi] = coverage(eph, new Map([...targets, ...observer, ...sun]));
+    if (b <= covLo || a >= covHi) {
+      const why = `the request ${a} .. ${b} s TDB lies wholly outside the stored records ${covLo} .. ${covHi} s TDB, so no part of it can be classified`;
+      return native({
+        contract: PARTITION_CONTRACT_ID,
+        key,
+        request: {
+          body,
+          windowTdbSec: [a, b],
+          boundaryToleranceSec: p.boundaryToleranceSec,
+          profile: DEFLECTION_PROFILE.id,
+          minElongationDeg: DEFLECTION_PROFILE.minElongationDeg,
+          identity,
+          identityStrength,
+          ...PARTITION_CONTRACT,
+        },
+        admissible: [],
+        excluded: [],
+        boundary: [[a, b]],
+        unprocessed: [],
+        boundaryReasons: [{ fromTdbSec: a, toTdbSec: b, why }],
+        execution: {
+          status: 'finished', finished: true, reason: null,
+          evaluations: 0, cells: 0, maxEvaluations: p.maxEvaluations, maxCells: p.maxCells,
+        },
+        diagnostics: {
+          seeds: 0,
+          widestTauWidenings: 0,
+          lightTimeDerivations: 0,
+          narrowestBoundarySec: b - a,
+          widestBoundarySec: b - a,
+          closestAdmissibleCos: null,
+          closestAdmissibleCosIsALowerBoundOnElongation: true,
+          deflectorIsTarget: false,
+          deflectorIsTargetWhy: null,
+          /**
+           * BOUNDARY, not excluded: outside the records is outside what
+           * this pack can answer, which is a different thing from outside
+           * the profile's supported domain. Conflating them would report
+           * a missing file as a physical exclusion.
+           */
+          whollyOutsideCoverage: true,
+          coverageTdbSec: [covLo, covHi],
+        },
+      });
+    }
+  }
 
   // Seeds at record boundaries, as the search does: one cell spanning a
   // year has an enclosure covering the whole orbit and decides nothing.
@@ -647,7 +829,7 @@ export function partitionDomain(eph, spec = {}) {
           // the relight knob exists to catch is no longer manufactured,
           // and the knob keeps its declared meaning rather than firing on
           // an interval that is not in fact stale.
-          const twc = out.T ? hi - lo : tw;
+          const twc = out.tightened ? hi - lo : tw;
           stack.push({ lo: m, hi, T: Tc, tw: twc }, { lo, hi: m, T: Tc, tw: twc });
           inFlight = null;
           continue;
@@ -677,7 +859,7 @@ export function partitionDomain(eph, spec = {}) {
   const bnd = coalesce(boundary);
   const unp = coalesce(unprocessed);
 
-  return {
+  return native({
     contract: PARTITION_CONTRACT_ID,
     key,
     request: {
@@ -721,5 +903,11 @@ export function partitionDomain(eph, spec = {}) {
       deflectorIsTarget: false,
       deflectorIsTargetWhy: null,
     },
-  };
+  });
+}
+
+/** Record that this runtime built this plan, and hand it back. */
+function native(plan) {
+  NATIVE_PLANS.add(plan);
+  return plan;
 }

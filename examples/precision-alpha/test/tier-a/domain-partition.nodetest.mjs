@@ -881,6 +881,57 @@ test('a window the records do not cover is an answer, not an exception', () => {
   assert.match(q.boundaryReasons[0].why, /do not cover|outside/);
 });
 
+/**
+ * A request wholly outside the records is answered ONCE, not bisected.
+ *
+ * `deriveLightTime` reports out-of-coverage as retryable, which is right
+ * where a window partly overlaps the records -- narrowing finds the
+ * covered part. Where nothing is covered the retry is unconditional, and
+ * the bisection used to run to the boundary tolerance and spend the whole
+ * cell budget having evaluated nothing, because the enclosures throw
+ * before they reach `spend`. The answer was conservative either way; what
+ * was wrong was the cost, and a status that said `budget-exhausted` where
+ * the honest word is "not covered".
+ */
+test('a request wholly outside the records costs nothing and says which it is', () => {
+  const pack = G.packOf(LINEAR.target, LINEAR.observer, {
+    intervalSec: 3600, initEt: 0, nrec: 4,
+  });
+  const far = [1e12, 2e12];
+  const r = partitionDomain(pack, { body: BODY, fromTdbSec: far[0], toTdbSec: far[1] });
+
+  assert.equal(r.execution.status, 'finished',
+    'a request this operation can answer is finished, even when the answer is "not here"');
+  assert.equal(r.execution.cells, 0, 'nothing is worth subdividing when nothing is covered');
+  assert.equal(r.execution.evaluations, 0);
+  assert.equal(r.diagnostics.whollyOutsideCoverage, true);
+  assert.deepEqual(r.diagnostics.coverageTdbSec, [0, 4 * 3600]);
+
+  // BOUNDARY, never excluded: outside the records is outside what this
+  // pack can answer, which is not the same as outside the domain.
+  assert.deepEqual(r.excluded, []);
+  assert.deepEqual(r.admissible, []);
+  assert.deepEqual(r.boundary, [far]);
+  assert.equal(r.boundaryReasons.length, 1);
+  assert.match(r.boundaryReasons[0].why, /wholly outside the stored records/);
+  assertTilesRequest(r, far[0], far[1], 'WHOLLY-UNCOVERED');
+
+  /**
+   * And the shortcut must not swallow a window that PARTLY overlaps: that
+   * one still has something to find, and finding it is the retry's job.
+   */
+  const straddling = partitionDomain(pack, { body: BODY, fromTdbSec: 2 * 3600, toTdbSec: 6 * 3600 });
+  assert.notEqual(straddling.diagnostics.whollyOutsideCoverage, true);
+  assert.ok(straddling.execution.cells > 0,
+    'a window overlapping coverage must still be subdivided');
+  assertTilesRequest(straddling, 2 * 3600, 6 * 3600, 'STRADDLING');
+
+  // Touching the edge from outside is outside.
+  const abutting = partitionDomain(pack, { body: BODY, fromTdbSec: 4 * 3600, toTdbSec: 8 * 3600 });
+  assert.equal(abutting.diagnostics.whollyOutsideCoverage, true);
+  assert.equal(abutting.execution.cells, 0);
+});
+
 // ============================================================ 10. no Sun
 test('a pack with no Sun is refused once, before any cell', () => {
   // The elongation needs the Sun at reception, so a pack without one
@@ -1278,16 +1329,30 @@ test('the deflector as target is admitted whole, and only by that rule', () => {
   assert.notDeepEqual(mars.admissible, [win]);
   assert.notEqual(mars.key, r.key);
 
-  // And the exception is about the DOMAIN, not about the pack: it is
-  // reached before the Sun's weights are resolved, so it answers even on
-  // a pack that has no Sun series at all -- which is exactly the ordering
-  // claim, from the other side.
+  // The exception is about the DOMAIN, and it is not an exemption from
+  // the pack. An earlier version returned before anything looked at the
+  // Sun, so a Sun-target request on a Sun-less pack came back "the whole
+  // window is admissible" -- contradicting this file's own header, which
+  // says such a pack is refused here rather than answered, and deferring
+  // the refusal to a subsearch whose caller does not catch it. A malformed
+  // request is still a malformed request when the answer would have been
+  // easy.
   const noSun = G.packOf(LINEAR.target, LINEAR.observer, {
     intervalSec: 3600, initEt: -12 * 3600, nrec: 24, omitSun: true,
   });
-  const onSunless = partitionDomain(noSun, { body: 'Sun', fromTdbSec: -3600, toTdbSec: 3600 });
-  assert.deepEqual(onSunless.admissible, [[-3600, 3600]]);
-  assert.equal(onSunless.execution.evaluations, 0);
+  assert.throws(
+    () => partitionDomain(noSun, { body: 'Sun', fromTdbSec: -3600, toTdbSec: 3600 }),
+    (e) => e.code === 'unknown-body' && /sun/i.test(e.message),
+    'a pack with no Sun must be refused for the Sun as for any other body',
+  );
+
+  // And what the shortcut DOES return says why it is admissible, rather
+  // than borrowing the shared contract's sentence about an elongation
+  // above the floor -- which for the deflector itself is identically zero.
+  assert.match(r.request.classes.admissible, /deflector of this profile/);
+  assert.match(r.request.classes.admissible, /identically zero/);
+  assert.equal(r.request.classes.excluded, PARTITION_CONTRACT.classes.excluded,
+    'only the one class whose description would be false is replaced');
 });
 
 // ================================= the Sun is read, and read at reception
