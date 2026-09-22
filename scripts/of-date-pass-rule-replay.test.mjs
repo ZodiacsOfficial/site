@@ -51,9 +51,17 @@ describe('the of-date pass-rule amendment is still a relaxation', () => {
   it('the committed replay matches what the tool produces now', () => {
     // The evidence file is the artifact a reader opens. If it drifts from
     // the tool, the reader is reading a different run from the one CI
-    // checks. `ranAt` is not in the replay output, so this is a real
-    // comparison and not a timestamp mismatch.
+    // checks.
+    //
+    // A whole-object comparison needs the object to contain nothing that
+    // varies by machine. The first version of this failed that: the tool
+    // recorded the record's ABSOLUTE path, which is different on every
+    // checkout, so the committed evidence only matched on the worktree
+    // that produced it -- and this comment congratulated itself for
+    // having no timestamp while the path sat two lines above. It is
+    // repo-relative now.
     const fresh = replay();
+    expect(fresh.replayedFrom.startsWith('/'), 'the replay records a machine-specific absolute path').toBe(false);
     const stored = JSON.parse(readFileSync(committed, 'utf8'));
     expect(fresh).toEqual(stored);
   });

@@ -1,13 +1,13 @@
 {
-  "replayedFrom": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/deflection-release/docs/platform/evidence/precision-of-date/holdout-run.json",
+  "replayedFrom": "docs/platform/evidence/precision-of-date/holdout-run.json",
   "recordRanAt": "2026-09-21T20:01:43.834Z",
   "recordRule": "OF-DATE-PREREGISTRATION.md section 9a",
   "cases": 20,
   "oldRule": {
     "clause": "crossings but no ladder is a failure",
     "failures": [
-      "F9: found 2 crossings but no rung-by-rung comparison",
-      "F10: found 2 crossings but no rung-by-rung comparison"
+      "F9: found 2 crossings but no rung comparison was made",
+      "F10: found 2 crossings but no rung comparison was made"
     ]
   },
   "newRule": {
@@ -23,6 +23,7 @@
   "claims": [
     {
       "id": "subset",
+      "trueByConstructionToday": true,
       "says": "the new rule fails a subset of what the old one failed, which is what makes it a relaxation",
       "holds": true,
       "detail": "nothing new fails"

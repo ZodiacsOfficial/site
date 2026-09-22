@@ -81,7 +81,7 @@ distinction the accounting exists to keep.
 | roots, brackets, directions, verdicts, excluded spans identical | **yes** |
 | **evaluation-count spread** | **0 on every case** |
 | off-origin requests | none, in either browser |
-| wall time | 6 081 ms Node, 2 786 ms Chromium, 1 574 ms Firefox |
+| wall time | 5 793 ms Node, 2 725 ms Chromium, 1 888 ms Firefox |
 
 The three deflected cases, as all three engines published them:
 
@@ -136,7 +136,7 @@ Neither is a measurement of the sky, and both are easy to misread:
   `widestDeflectionIsAnEnclosureUpperBound: true` beside it.
 * **`closestElongationDeg`** is likewise taken from enclosures, so it is a
   rigorous **lower** bound on the true closest elongation, not the closest
-  elongation. C7 reports 102.2033 degrees; sampling the pack directly puts
+  elongation. C7 reports 102.2035 degrees; sampling the pack directly puts
   the true minimum over that window at 104.0935. The result carries
   `closestElongationIsAReport: true`.
 

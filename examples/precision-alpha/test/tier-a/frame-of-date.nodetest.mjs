@@ -155,26 +155,36 @@ test('ERFA ships no TRUE-equinox ecliptic matrix, so the third rung is not eraEc
  *     Frame_true(t) = R3(-dpsi(t)) . Frame_mean(t)
  *
  * The implementation does not do that. It folds `dpsi` into the
- * Fukushima-Williams `psi` angle and builds one matrix from four
- * rotations, so if the identity holds, it holds because the construction
- * is right and not because anything here arranged it.
+ * Fukushima-Williams `psi` angle and builds one matrix from three
+ * rotations, `R3(-psi) R1(phib) R3(gamb)`.
  *
  * ## What this establishes, and what it does not
  *
- * Establishes: the CONSTRUCTION. Every way the true-equinox rung could be
- * wrong in kind -- an obliquity leak, a tilted pole, a rotation about the
- * wrong axis, a sign, a missing P03 factor -- moves one of the two
- * residuals below. And at ERFA's own test epoch the mean side of the
- * identity is the PUBLISHED `t_ecm06` matrix, so the true-equinox matrix
- * there is pinned to nine published literals plus one scalar and one
- * elementary rotation.
+ * Establishes, precisely: that **`dpsi` enters `psi` additively and enters
+ * nothing else**. An obliquity leak, a tilted pole, a rotation about the
+ * wrong axis, a sign, or `dpsi` reaching `gamb` instead all move one of
+ * the two residuals below. And at ERFA's own test epoch the mean side of
+ * the identity is the PUBLISHED `t_ecm06` matrix, so the true-equinox
+ * matrix there follows from nine published literals, one scalar and one
+ * elementary rotation -- an assembly that shares no code with the
+ * Fukushima-Williams chain, though it does share that chain's `dpsi`.
+ *
+ * It is NOT an independent route in the strong sense. `meanToTrue` builds
+ * both of its matrices with `frameMatrixInterval`, so `true . mean^T =
+ * R3(-dpsi)` is an algebraic identity of the one line `psi = psib +
+ * dpsi`. That line is worth pinning -- it is where every structural way of
+ * getting this rung wrong would show -- but a reader should not take
+ * "identity" for "second implementation".
  *
  * Does NOT establish: the nutation MODEL. `dpsi` is this repository's
  * 2000B-with-P03 value on both sides of the identity, so a wrong `dpsi`
  * is invisible here -- it would move the frame and the reference by the
  * same amount. Measured rather than assumed: removing the P03 adjustment
- * from the implementation leaves the identity test passing, and is caught
- * only by the separate test below that reads the adjustment directly.
+ * from the implementation leaves BOTH identity tests passing, and is
+ * caught only by the separate test below that reads the adjusted and raw
+ * values apart. An earlier version of this comment listed "a missing P03
+ * factor" among the things the residuals catch, twelve lines above the
+ * sentence saying they do not.
  *
  * The mean rung has no such blind spot: one published matrix pins its
  * model and its assembly together. Here they are pinned by two different
@@ -228,7 +238,7 @@ test('and it turns by exactly the nutation in longitude, P03 adjustment included
   assert.ok(worst <= 1e-11, `the mean-to-true turn differs from -dpsi by ${worst} arcsec`);
 });
 
-test('that identity is sensitive to the P03 factor, so it is not a tautology', () => {
+test('the P03 factor is checked separately, because the identity cannot see it', () => {
   // The identity above is blind to a dpsi that is consistently wrong, and
   // the P03 factor is exactly such a thing: removing it from the
   // implementation leaves that test passing. So the factor is checked
@@ -251,9 +261,13 @@ test('that identity is sensitive to the P03 factor, so it is not a tautology', (
 });
 
 test('so at ERFA\'s test epoch the TRUE-equinox matrix follows from the PUBLISHED one', () => {
-  // The one place the identity reaches something external. The mean side
-  // is `t_ecm06`, copied from ERFA's regression suite above; turning it
-  // by -dpsi about the ecliptic pole must give the matrix this mode uses.
+  // The one place this reaches something external. The mean side is
+  // `t_ecm06`, copied from ERFA's regression suite above; turning it by
+  // -dpsi about the ecliptic pole must give the matrix this mode uses.
+  // The ASSEMBLY here is independent -- nine literals, one scalar, one
+  // hand-written rotation, no `frameMatrixInterval` on the reference side
+  // -- but `dpsi` is still the implementation's, so this inherits the
+  // blindness described in the block comment above.
   //
   // The published literals carry ~19 significant figures and the identity
   // holds to 1e-12 arcsec, so the tolerance here is the published

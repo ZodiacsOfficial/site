@@ -200,7 +200,7 @@ export const DEFLECTED_CONTRACT = Object.freeze({
   ]),
   sources: OF_DATE_CONTRACT.sources,
   relationToErfa: 'The deflection is eraLd\'s arithmetic exactly -- 1074 of 1074 output components bit-identical to the pinned source compiled and run -- but NOT eraLdsun\'s geometry, which substitutes the observed direction for the Sun-to-source one. The frame rung is as the of-date contract describes it. No ERFA routine computes this combination end to end, and none is claimed to.',
-  comparableTo: 'the frame AND the deflection of an apparent place, with the Shapiro delay, planetary deflection and everything topocentric still missing. Against an almanac away from the Sun the remaining difference should be well under 0.01 arcsec; near the Sun this mode declines to answer rather than closing that gap.',
+  comparableTo: 'the frame AND the deflection of an apparent place, with the Shapiro delay, planetary deflection and everything topocentric still missing. NOTHING HERE HAS BEEN COMPARED WITH AN ALMANAC, so no bound on that difference is offered: an earlier version of this field said it "should be well under 0.01 arcsec", which was an expectation dressed as a result, and is false for the Moon in any case -- the topocentric parallax this mode omits reaches about a degree there. What can be said is what is still absent, and the dominant remaining term away from the Sun is whatever the almanac does topocentrically. Near the Sun this mode declines to answer rather than closing any gap.',
   bodies: RETARDED_CONTRACT.bodies,
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
 });
@@ -235,6 +235,42 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
+/**
+ * The deflector geometry a cell hands `deflectInterval`, as one rule in
+ * one place.
+ *
+ * Two things here are easy to get wrong and were, for a while, checkable
+ * nowhere:
+ *
+ * 1. **The epochs differ on purpose.** `e` and `em` come from the Sun at
+ *    RECEPTION, `q` from the Sun at EMISSION. `DEFLECTION-PROFILE.md`
+ *    section 2 measures the simpler reception-for-both at 1.96e-5 arcsec
+ *    against 3.13e-10 for this split, and the split is nearly free once
+ *    the emission window exists.
+ * 2. **`q` is differentiated with respect to RECEPTION time**, so it
+ *    carries the `(1 - dtau/dt)` factor and `e` does not. `deflection.mjs`
+ *    makes that the caller's contract precisely so the chain rule is not
+ *    hidden inside a routine that cannot see the light-time.
+ *
+ * Both were invisible to every search-level test: the enclosure is two
+ * orders of magnitude wider than either error, so a result cannot expose
+ * the difference. Extracting the rule is what makes it testable at all --
+ * `deflected-search.nodetest.mjs` checks it against a finite-difference
+ * reference on an analytic moving-Sun geometry, where both ARE separable.
+ *
+ * `oneMinus` is the `1 - dtau/dt` the light-time block already
+ * established; recomputing it here would be a second place for it to
+ * drift.
+ */
+export function deflectorGeometry(O, R, sunRec, sunEm, oneMinus) {
+  return {
+    eRaw: I.vSub(O.pos, sunRec.pos),
+    eRawDot: I.vSub(O.vel, sunRec.vel),
+    qRaw: I.vSub(R.pos, sunEm.pos),
+    qRawDot: I.vMulI(I.vSub(R.vel, sunEm.vel), oneMinus),
+  };
+}
+
 function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null, deflection = false, sunWeights = null, control = {}) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
@@ -417,14 +453,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         }
         throw error;
       }
-      const eRaw = I.vSub(O.pos, sunRec.pos);
-      const eRawDot = I.vSub(O.vel, sunRec.vel);
-      const qRaw = I.vSub(R.pos, sunEm.pos);
-      // Differentiated with respect to RECEPTION time, so the
-      // (1 - dtau/dt) factor belongs here and nowhere else. `oneMinus` is
-      // the same one the light-time block already established; forming it
-      // again would be a second place for it to drift.
-      const qRawDot = I.vMulI(I.vSub(R.vel, sunEm.vel), oneMinus);
+      const { eRaw, eRawDot, qRaw, qRawDot } = deflectorGeometry(O, R, sunRec, sunEm, oneMinus);
       const df = deflectInterval(D, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control);
       if (!df.ok) {
         return {
@@ -757,6 +786,25 @@ function runSearch(eph, spec, shape) {
    * shortfall.
    */
   const excluded = [];
+  /**
+   * File a cell the enclosures could not close, into the RIGHT list.
+   *
+   * One helper because there are four places that do this and the
+   * distinction is the one the deflected contract rests on: an excluded
+   * span is a span this profile has no answer for at any resolution, an
+   * unresolved one is a span this run did not settle. Three of the four
+   * sites used to push straight into `unresolved` without looking at
+   * `excluded`, so a domain refusal arriving through the bracket or the
+   * endpoint evaluations would have been filed as a numerical shortfall,
+   * carrying "no subdivision changes that" inside `accounting.unresolved`.
+   *
+   * Not reachable on any fixture here -- the enclosing cell has already
+   * passed the domain test over a superset of the bracket -- which is
+   * exactly why it is worth closing rather than leaving to a comment.
+   */
+  const file = (cell, lo, hi) => {
+    (cell.excluded === true ? excluded : unresolved).push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
+  };
   let cells = 0;
   let status = 'finished';
   let reason = null;
@@ -897,11 +945,7 @@ function runSearch(eph, spec, shape) {
         // a cell to give up on -- down to the enclosure floor, past which
         // the failure is about the geometry rather than the width.
         if (cell.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
-        if (cell.excluded === true) {
-          excluded.push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
-          continue;
-        }
-        unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
+        file(cell, lo, hi);
         continue;
       }
       worstContraction = Math.max(worstContraction, cell.contraction);
@@ -932,7 +976,7 @@ function runSearch(eph, spec, shape) {
       const fm = at(m);
       if (!fm.ok) {
         if (fm.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
-        unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: fm.why });
+        file(fm, lo, hi);
         continue;
       }
       if (I.mig(fm.f) > cell.M1 * w) continue;
@@ -964,7 +1008,7 @@ function runSearch(eph, spec, shape) {
       if (monotone) {
         const flo = at(lo);
         const fhi = at(hi);
-        if (!flo.ok || !fhi.ok) { unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: (flo.ok ? fhi : flo).why }); continue; }
+        if (!flo.ok || !fhi.ok) { file(flo.ok ? fhi : flo, lo, hi); continue; }
         const sgn = (x) => (x.lo > 0 ? 1 : x.hi < 0 ? -1 : 0);
         const sLo = sgn(flo.f);
         const sHi = sgn(fhi.f);
@@ -989,7 +1033,7 @@ function runSearch(eph, spec, shape) {
         // The half-plane, with its own enclosure over the bracket.
         const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
         noteObserverSpeed(br);
-        if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
+        if (!br.ok) { file(br, a2, b2); continue; }
         if (br.g.lo <= 0) {
           if (br.g.hi < 0) continue;                     // the antipode, not the requested direction
           unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: 'the half-plane projection could not be shown non-zero over this bracket, so the direction is not determined here' });
@@ -1055,6 +1099,36 @@ function runSearch(eph, spec, shape) {
       ? 'light-time- and aberration-corrected'
       : 'light-time-corrected';
 
+  /**
+   * The same rule applied to the CONTRACT, which `request` spreads.
+   *
+   * `corrected` above keeps `completeness.statement` honest on the
+   * deflector-as-target path, and for one release `request` did not
+   * follow: a Sun result carried `operation: '... CORRECTED FOR RECEPTION
+   * LIGHT-TIME, SOLAR GRAVITATIONAL LIGHT DEFLECTION AND STELLAR
+   * ABERRATION ...'` and `applied[1]: 'solar gravitational light
+   * deflection'` beside `diagnostics.deflection.appliedToThisBody: false`
+   * and a widest deflection of exactly zero. Two sentences about one
+   * quantity, and the wrong one is the sentence `experimental.mjs` tells
+   * consumers to read before comparing anything with an almanac.
+   *
+   * What the Sun path actually computes IS the of-date rung, so it
+   * carries the of-date rung's description. The deflection metadata
+   * stays: a caller needs to know which mode answered, and
+   * `deflectionNotApplied` says in one field why the description is the
+   * rung below the mode's name.
+   */
+  const effectiveContract = deflectorIsTarget
+    ? {
+      ...contract,
+      operation: OF_DATE_CONTRACT.operation,
+      applied: OF_DATE_CONTRACT.applied,
+      notApplied: OF_DATE_CONTRACT.notApplied,
+      comparableTo: OF_DATE_CONTRACT.comparableTo,
+      deflectionNotApplied: 'the target IS the deflector, so no deflection was applied and this contract describes the of-date rung. diagnostics.deflection.notAppliedBecause has the reason.',
+    }
+    : contract;
+
   return buildResult({
     mode,
     request: {
@@ -1063,7 +1137,7 @@ function runSearch(eph, spec, shape) {
       targetDeg,
       normalisedTargetDeg: lambda,
       isSystemBarycentre: BARYCENTRE_NOT_CENTRE.includes(body),
-      ...contract,
+      ...effectiveContract,
     },
     events,
     interval: {
@@ -1291,7 +1365,7 @@ function runSearch(eph, spec, shape) {
           },
         }
         : {}),
-      notApplied: contract.notApplied,
+      notApplied: effectiveContract.notApplied,
     },
   });
 }

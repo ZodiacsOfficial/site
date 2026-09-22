@@ -99,13 +99,23 @@ rotations. Measured over nine epochs spanning 1850 to 2150:
 The last row is the only one that touches something external, and it is
 why this is worth having: at that epoch the true-equinox matrix follows
 from nine published literals plus one scalar and one elementary rotation,
-by a route that shares no code with the chain under test.
+assembled without any of the Fukushima-Williams chain's code — though
+`dpsi` is still that chain's, which is the blind spot two paragraphs down.
 
-Three mutations were run to check the identity bites, and each is caught
-by the test written for it: flipping the sign of `dpsi` in the `psi` angle
-(the turn-angle and published-anchor tests), prepending an `R1(deps)` to
-the matrix (the off-pole test), and removing the P03 adjustment — caught
-by neither, which is the next paragraph.
+What the first two rows pin, stated precisely, is that **`dpsi` enters
+`psi` additively and enters nothing else**. Both sides of that identity
+come from `frameMatrixInterval`, so it is an algebraic consequence of one
+line of the implementation rather than a second implementation of the
+frame. That line is where every structural way of getting this rung wrong
+would show, which is why it is worth an assertion — but "identity" should
+not be read as "independent route".
+
+Four mutations were run to check the identity bites: flipping the sign of
+`dpsi` in the `psi` angle (caught by the turn-angle and published-anchor
+tests), prepending an `R1(deps)` to the matrix (the off-pole test), moving
+`dpsi` onto `gamb` instead of `psi` (eight failures), and removing the P03
+adjustment — caught by neither identity test, which is the next
+paragraph.
 
 **What it does not establish, and this is the part that matters.** `dpsi`
 is this repository's 2000B-with-P03 value on **both sides** of the

@@ -27,8 +27,10 @@ import * as G from './_geometry.mjs';
 import { deflect, deflectionDomain, MIN_ELONGATION_RAD } from '../../src/core/deflection.mjs';
 import {
   searchDeflectedLongitude, searchDeflectedLongitudeWithControl, searchOfDateLongitude,
-  DEFLECTED_CONTRACT, mergeSpans,
+  DEFLECTED_CONTRACT, mergeSpans, deflectorGeometry,
 } from '../../src/core/retarded-search.mjs';
+import { C_KM_S } from '../../src/core/retarded.mjs';
+import * as I from '../../src/core/interval.mjs';
 import { buildResult, SUPPORT } from '../../src/core/result.mjs';
 
 const D = 86400;
@@ -283,16 +285,200 @@ test('a result cannot claim coverage over a span it excluded', () => {
   }));
 });
 
-test('the deflected mode needs a Sun in the pack, and says so once', () => {
-  const noSun = G.packOf(OPEN.target, OPEN.observer, { nrec: 20, initEt: -10 * D });
-  // The synthetic pack does carry a Sun, so this checks the reverse: the
-  // mode resolves it up front rather than per cell, which is what keeps a
-  // missing Sun to one refusal instead of one per subdivision.
-  const r = searchDeflectedLongitude(noSun, {
+test('the deflected mode needs a Sun in the pack, and refuses before any cell opens', () => {
+  // This test used to build a pack that DID contain a Sun -- `packOf`
+  // always emitted one -- and then assert `r.contract` and the request
+  // kind, which hold for any successful result of this mode. It checked
+  // neither of the two things its name claims. `omitSun` exists so it can.
+  const noSun = G.packOf(OPEN.target, OPEN.observer, { nrec: 20, initEt: -10 * D, omitSun: true });
+  const spec = {
     body: BODY, targetDeg: G.lonExact(OPEN, 0, true), fromTdbSec: -5 * D, toTdbSec: 5 * D,
+  };
+  assert.throws(
+    () => searchDeflectedLongitude(noSun, spec),
+    (e) => e.code === 'unknown-body' && /sun/i.test(e.message),
+    'a pack with no Sun must refuse the deflected mode',
+  );
+  // ONCE, not once per cell. The refusal is resolved before the
+  // subdivision loop opens anything, so a Sun-less pack costs one error
+  // and not one per subdivision. `searchOfDateLongitude` on the same pack
+  // is the control: it needs no Sun and must still answer.
+  const ofDate = searchOfDateLongitude(noSun, spec);
+  assert.equal(ofDate.completeness.established, true);
+  assert.ok(ofDate.execution.cells > 1, 'the control must actually have subdivided');
+  // And the deflected mode on a pack that HAS a Sun is unaffected.
+  const withSun = G.packOf(OPEN.target, OPEN.observer, { nrec: 20, initEt: -10 * D });
+  assert.ok(searchDeflectedLongitude(withSun, spec).contract);
+});
+
+test('the Sun as target does not describe itself as deflected, anywhere a reader looks', () => {
+  // T7 checks `diagnostics`. This checks `request`, which is the field
+  // `experimental.mjs` tells consumers to read before comparing anything
+  // with an almanac -- and which for one release spread the DEFLECTED
+  // contract unconditionally, so a Sun result said "CORRECTED FOR ...
+  // SOLAR GRAVITATIONAL LIGHT DEFLECTION" and listed it under `applied`
+  // beside `appliedToThisBody: false` and a widest deflection of zero.
+  const targetDeg = G.lonExact(OPEN, 17.37 * D, true);
+  const r = searchDeflectedLongitude(OPEN_EPH, {
+    body: 'Sun', targetDeg, fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1],
   });
-  assert.ok(r.contract);
-  assert.equal(r.request.kind, 'retarded-aberrated-deflected-of-date-longitude');
+  assert.equal(r.diagnostics.deflection.appliedToThisBody, false);
+  assert.ok(!/DEFLECTION/i.test(r.request.operation),
+    `the Sun's operation claims a deflection: ${r.request.operation}`);
+  for (const line of r.request.applied) {
+    assert.ok(!/deflection/i.test(line), `the Sun's applied list claims: ${line}`);
+  }
+  for (const line of r.diagnostics.notApplied) {
+    assert.ok(!/^solar gravitational light deflection/i.test(line),
+      'the Sun must not list the deflection as applied OR as an omission it made; it is not in this rung at all');
+  }
+  assert.match(r.request.deflectionNotApplied, /the target IS the deflector/);
+  // The mode is still named, and the profile still travels: a reader has
+  // to be able to tell WHICH call produced this.
+  assert.equal(r.mode, 'validated-retarded-aberrated-deflected-of-date');
+  assert.ok(r.request.deflectionProfile, 'the profile must still be on the result');
+  // A body that is NOT the deflector still describes itself as deflected.
+  const mars = searchDeflectedLongitude(OPEN_EPH, {
+    body: BODY, targetDeg: G.lonExact(OPEN, 0, true), fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1],
+  });
+  assert.match(mars.request.operation, /SOLAR GRAVITATIONAL LIGHT DEFLECTION/);
+});
+
+test('the deflector geometry splits the epochs and carries the chain rule on q', () => {
+  // Both of these are invisible to every other test in this file, and
+  // measurably so: swapping the emission epoch for the reception one moves
+  // the search's widest deflection by 6e-5 RELATIVE, against an enclosure
+  // two orders wider than the quantity, and dropping the (1 - dtau/dt)
+  // factor leaves the published event times bit-identical. A search-level
+  // assertion cannot see either. This one does not try: it checks the
+  // RULE, against a finite-difference reference on an analytic geometry
+  // where both terms are large enough to separate.
+  const SUN_R = 1.0e8;
+  const SUN_PERIOD = 500 * D;
+  const sunAt = (t) => {
+    const w = (2 * Math.PI) / SUN_PERIOD;
+    return [SUN_R * Math.cos(w * t), SUN_R * Math.sin(w * t), 0];
+  };
+  const sunVel = (t) => {
+    const w = (2 * Math.PI) / SUN_PERIOD;
+    return [-SUN_R * w * Math.sin(w * t), SUN_R * w * Math.cos(w * t), 0];
+  };
+  // A target far enough away that the light-time, and so dtau/dt, is not
+  // a rounding detail: 2.28e8 km is about 12.7 light-minutes.
+  const TGT_R = 2.2794e8;
+  const TGT_PERIOD = 686.98 * D;
+  const targetAt = (t) => {
+    const w = (2 * Math.PI) / TGT_PERIOD;
+    return [TGT_R * Math.cos(w * t), TGT_R * Math.sin(w * t), 0];
+  };
+  const targetVel = (t) => {
+    const w = (2 * Math.PI) / TGT_PERIOD;
+    return [-TGT_R * w * Math.sin(w * t), TGT_R * w * Math.cos(w * t), 0];
+  };
+  const obsAt = (t) => OPEN.observer(t);
+
+  // Light-time as a function of RECEPTION time, solved to convergence.
+  const tauAt = (t) => {
+    let tau = 0;
+    for (let i = 0; i < 80; i += 1) {
+      const dv = sub(targetAt(t - tau), obsAt(t));
+      const next = Math.sqrt(dv[0] * dv[0] + dv[1] * dv[1] + dv[2] * dv[2]) / C_KM_S;
+      if (next === tau) break;
+      tau = next;
+    }
+    return tau;
+  };
+
+  const t = 3.5 * D;
+  const tau = tauAt(t);
+  // dtau/dt by central difference, at a step that resolves it.
+  const h = 60;
+  const dTauDt = (tauAt(t + h) - tauAt(t - h)) / (2 * h);
+  assert.ok(Math.abs(dTauDt) > 1e-9, `dtau/dt is ${dTauDt}; this fixture cannot show the chain rule`);
+
+  const pt = (v) => v.map((c) => I.iv(c));
+  const O = { pos: pt(obsAt(t)), vel: pt(OPEN.observerVel(t)) };
+  const R = { pos: pt(targetAt(t - tau)), vel: pt(targetVel(t - tau)) };
+  const sunRec = { pos: pt(sunAt(t)), vel: pt(sunVel(t)) };
+  const sunEm = { pos: pt(sunAt(t - tau)), vel: pt(sunVel(t - tau)) };
+  const g = deflectorGeometry(O, R, sunRec, sunEm, I.iv(1 - dTauDt));
+  const mid = (iv) => (iv.lo + iv.hi) / 2;
+
+  // 1. THE EPOCHS. `q` is the Sun-to-source vector at EMISSION. The Sun
+  //    moves 2.1e5 km in the 12.7 minutes of light-time here, so the two
+  //    epochs are nowhere near each other.
+  const qEmission = sub(targetAt(t - tau), sunAt(t - tau));
+  const qReception = sub(targetAt(t - tau), sunAt(t));
+  const epochGapKm = norm(sub(qEmission, qReception));
+  assert.ok(epochGapKm > 1e4,
+    `the fixture's Sun moves only ${epochGapKm} km during the light-time; it cannot separate the epochs`);
+  for (let i = 0; i < 3; i += 1) {
+    assert.ok(Math.abs(mid(g.qRaw[i]) - qEmission[i]) < 1e-6,
+      `q[${i}] is not the EMISSION-epoch vector: ${mid(g.qRaw[i])} against ${qEmission[i]}`);
+    assert.ok(Math.abs(mid(g.qRaw[i]) - qReception[i]) > 1e-3 || Math.abs(qEmission[i] - qReception[i]) < 1e-3,
+      `q[${i}] matches the RECEPTION epoch, which is the approximation this profile declines to make`);
+  }
+  // And `e` is the other way round: the observer and the Sun at RECEPTION.
+  const eReception = sub(obsAt(t), sunAt(t));
+  for (let i = 0; i < 3; i += 1) {
+    assert.ok(Math.abs(mid(g.eRaw[i]) - eReception[i]) < 1e-6, `e[${i}] is not at the reception epoch`);
+  }
+
+  // 2. THE CHAIN RULE. `q` is a function of RECEPTION time through
+  //    `t - tau(t)`, so d q/dt = (R' - S')(1 - dtau/dt). Checked against a
+  //    central difference of the whole composite, which knows nothing
+  //    about how the search forms it.
+  const qOf = (tt) => { const s2 = tauAt(tt); return sub(targetAt(tt - s2), sunAt(tt - s2)); };
+  const fd = [0, 1, 2].map((i) => (qOf(t + h)[i] - qOf(t - h)[i]) / (2 * h));
+  for (let i = 0; i < 3; i += 1) {
+    const rel = Math.abs(mid(g.qRawDot[i]) - fd[i]) / Math.max(1e-30, Math.abs(fd[i]));
+    assert.ok(rel < 1e-6,
+      `dq/dt[${i}] is ${mid(g.qRawDot[i])}, the finite difference says ${fd[i]} (relative ${rel})`);
+  }
+  // Without the factor it would be wrong by exactly dtau/dt in relative
+  // terms, which is far above the tolerance above -- so the assertion has
+  // a side.
+  const withoutFactor = [0, 1, 2].map((i) => mid(g.qRawDot[i]) / (1 - dTauDt));
+  const worstIfDropped = Math.max(...[0, 1, 2].map(
+    (i) => Math.abs(withoutFactor[i] - fd[i]) / Math.max(1e-30, Math.abs(fd[i])),
+  ));
+  assert.ok(worstIfDropped > 1e-5,
+    `dropping (1 - dtau/dt) would move dq/dt by only ${worstIfDropped} relative; this fixture cannot pin it`);
+});
+
+test('closestElongationCos is the CLOSEST approach, not the furthest', () => {
+  // `cos` decreases on [0, pi], so the closest elongation is the LARGEST
+  // cosine, and the accumulator must take `cosElongation.hi`. Taking
+  // `.lo` publishes a number that is wrong in the safe-looking direction
+  // -- it reports the geometry as further from the Sun than it was -- and
+  // every other assertion in this file passed with it, including the
+  // cross-runtime comparison, because an inverted bound inverts
+  // identically in every engine.
+  //
+  // The check that has a side: the reported cosine must be at least the
+  // largest cosine at any SAMPLED instant of the decided window. An
+  // enclosure's upper bound cannot be below a value the function actually
+  // takes, and `.lo` is.
+  const r = searchDeflectedLongitude(OPEN_EPH, {
+    body: BODY, targetDeg: G.lonExact(OPEN, 0, true), fromTdbSec: OPEN_WIN[0], toTdbSec: OPEN_WIN[1],
+  });
+  const d = r.diagnostics.deflection;
+  assert.equal(r.accounting.excluded.length, 0, 'this fixture must decide the whole window');
+  let sampledMaxCos = -Infinity;
+  for (let t = OPEN_WIN[0]; t <= OPEN_WIN[1]; t += 3600) {
+    const o = OPEN.observer(t);
+    const dv = sub(OPEN.target(t), o);
+    const dom = deflectionDomain(dv, o);
+    sampledMaxCos = Math.max(sampledMaxCos, Math.cos((dom.elongationDeg * Math.PI) / 180));
+  }
+  assert.ok(d.closestElongationCos >= sampledMaxCos,
+    `the reported closest cosine ${d.closestElongationCos} is below a sampled ${sampledMaxCos};`
+    + ' an enclosure upper bound cannot be under a value the function takes');
+  // And the degrees follow the cosine, not the other way round.
+  const fromCos = (Math.acos(d.closestElongationCos) * 180) / Math.PI;
+  assert.ok(Math.abs(fromCos - d.closestElongationDeg) < 1e-9,
+    'the reported degrees must be acos of the reported cosine');
+  assert.equal(d.closestElongationIsAReport, true);
 });
 
 test('merged runs sample their reasons instead of collecting every one', () => {

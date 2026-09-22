@@ -39,24 +39,32 @@
  * replay.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { relative } from 'node:path';
 
 const argv = process.argv.slice(2);
 const check = argv.includes('--check');
 const outAt = argv.indexOf('--out');
 const outPath = outAt >= 0 ? argv[outAt + 1] : null;
-const recordPath = argv.find((a) => a.endsWith('.json') && a !== argv[outAt + 1])
-  ?? new URL('../../../../docs/platform/evidence/precision-of-date/holdout-run.json', import.meta.url).pathname;
+const REPO = new URL('../../../../', import.meta.url).pathname;
+const DEFAULT_RECORD = `${REPO}docs/platform/evidence/precision-of-date/holdout-run.json`;
+const recordPath = argv.find((a) => a.endsWith('.json') && a !== argv[outAt + 1]) ?? DEFAULT_RECORD;
 
 const record = JSON.parse(readFileSync(recordPath, 'utf8'));
 
 /**
  * THE OLD CLAUSE, as the aberrated tool had it and as the of-date tool
  * inherited it before the change: crossings but no ladder is a failure.
- * Quoted rather than reconstructed, so what is replayed is what was there.
+ *
+ * Copied from `tools/measure/of-date-holdout.mjs` at 37c90b8f line 210,
+ * predicate and message both, so the eye-comparison the header offers
+ * actually succeeds:
+ *
+ *   if (r.found > 0 && !r.ladder) problems.push(
+ *     `${'$'}{r.id}: found ${'$'}{r.found} crossings but no rung comparison was made`);
  */
 function oldClause(r) {
   if (r.found > 0 && !r.ladder) {
-    return `${r.id}: found ${r.found} crossings but no rung-by-rung comparison`;
+    return `${r.id}: found ${r.found} crossings but no rung comparison was made`;
   }
   return null;
 }
@@ -73,10 +81,13 @@ function newClause(r) {
     }
     if (!r.frameSeparated.corroborated) {
       return `${r.id}: the rungs disagree (${r.frameSeparated.aberratedRoots} against ${r.frameSeparated.ofDateRoots})`
-        + ` and the independent references do not show the same difference`;
+        + ` and the independent references do not show the same difference`
+        + ` (${r.frameSeparated.aberratedReferenceRoots} against ${r.frameSeparated.ofDateReferenceRoots})`;
     }
     if (!r.frameSeparated.lowerRungsAgree) {
-      return `${r.id}: the frame separation is corroborated, but rungs 1 to 3 do not agree with each other`;
+      return `${r.id}: the frame separation is corroborated, but rungs 1 to 3 do not agree with each other`
+        + ` (geometric ${r.frameSeparated.geometricRoots}, retarded ${r.frameSeparated.retardedRoots},`
+        + ` aberrated ${r.frameSeparated.aberratedRoots}) -- they share a frame, so that is a defect, not a separation`;
     }
   }
   return null;
@@ -98,6 +109,14 @@ const newlyFailing = newIds.filter((id) => !oldIds.includes(id));
 const claims = [
   {
     id: 'subset',
+    // True by construction WHILE the new clause's branches all sit inside
+    // the old clause's own condition, which they do today -- so this one
+    // is a guard against a future edit moving a branch outside that
+    // guard, not a discovery about the recorded run. Kept, and labelled,
+    // rather than dropped: it is the condition the word "relaxation"
+    // depends on, and a claim nobody checks is a claim that quietly stops
+    // being true.
+    trueByConstructionToday: true,
     says: 'the new rule fails a subset of what the old one failed, which is what makes it a relaxation',
     holds: newlyFailing.length === 0,
     detail: newlyFailing.length === 0 ? 'nothing new fails' : `newly failing: ${newlyFailing.join(', ')}`,
@@ -131,7 +150,11 @@ const claims = [
 const otherProblems = (record.problems ?? []).filter((p) => !oldIds.some((id) => p.startsWith(`${id}:`)));
 
 const result = {
-  replayedFrom: recordPath,
+  // Repo-RELATIVE. An absolute path here is different on every checkout,
+  // and this object is committed as evidence and compared field for field
+  // by `scripts/of-date-pass-rule-replay.test.mjs`, so an absolute path
+  // made that guard fail everywhere except the machine that wrote it.
+  replayedFrom: relative(REPO, recordPath) || recordPath,
   recordRanAt: record.ranAt ?? null,
   recordRule: record.rule ?? null,
   cases: rows.length,

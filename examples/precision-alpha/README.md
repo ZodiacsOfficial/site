@@ -71,7 +71,8 @@ src/core/     environment-neutral: no node:*, no Buffer, no require, no clock
   search.mjs            longitude events over the reduction
   retarded.mjs          Newtonian reception light-time, as a verified contraction
   aberration.mjs        stellar aberration, pointwise and over intervals
-  retarded-search.mjs   the two experimental modes, on one subdivision loop
+  retarded-search.mjs   the four experimental modes, on one subdivision loop
+  deflection.mjs        solar light bending, pointwise and over intervals
 src/index.mjs        open, run, dispose — everything except how bytes arrive
 src/browser.mjs      fetch / Response / Blob. No shims, no polyfills.
 src/node.mjs         whole-file load, or a file-backed low-memory load.

@@ -1,7 +1,19 @@
 # validated-retarded-aberrated-deflected-of-date — the holdout, run
 
 The rule is `DEFLECTION-EVALUATION.md`, committed and pushed before any of
-this ran. Nothing below amends it.
+this ran. Its thresholds and tolerances are untouched. One thing below
+does amend it — §4 had no clause for an unfinished run, and the harness
+grew one — and that amendment is stated where it happens rather than
+denied here; it lives in the harness, not in the preregistration, and it
+moved reported counts. An earlier version of this line said "nothing below
+amends it", which was the wrong sentence to open a results document with.
+
+Two bounded AI reviews were run over the whole branch after it was
+written, and they corrected several things in this document — including
+how the Moon result is explained. What they found, what was done, and what
+was declined is recorded at
+`docs/platform/evidence/precision-deflection/review/REVIEW.md`. The verdict
+below is unchanged by any of it.
 
 ## The verdict
 
@@ -20,7 +32,7 @@ working underneath it, because "fail" is a verdict and not an explanation.
 The holdout was invoked three times. The first threw on all twenty cases
 before computing anything — rung 1 takes TT days where rungs 2 to 5 take
 TDB seconds — and produced no case outcomes; it is preserved as
-`holdout-attempt1-harness-fault.json`.
+`holdout/attempt0-harness-fault.json`.
 
 **Run 1** is the holdout as preregistered. It reported six problems.
 **Run 2** is the same run with three defects in the APPARATUS fixed. It
@@ -116,29 +128,62 @@ completeness" as "14 cases lost events".
 | --- | --- |
 | windows with no conjunction (Sun, Jupiter, Pluto) | 1.0x to 4.0x |
 | windows containing one (Saturn, Uranus, Neptune) | 47x to 61x |
-| Mars, Venus | 318x, 418x |
+| Venus, Mars | 318x, 418x |
 | **Mercury** | **831x** |
 | whole holdout | **24.6x** (13,807,404 against 560,968) |
 
 The deflection arithmetic is nearly free. **Isolating the domain boundary
 is not.** Mercury has five conjunctions in 300 days and therefore ten
-boundaries to bisect, and it is the most expensive case by a factor of
-eight over the next.
+boundaries to bisect. It is the most expensive case that finished, by
+**3.7x** over the next in evaluations (1,917,153 against Venus's 515,262)
+and **2.0x** over the next as a multiple of the of-date rung (831x against
+418x). Only the Moon cost more, and the Moon did not finish.
 
-### The Moon: a geometry that grazes the floor
+### The Moon: ten conjunctions, and a number this document misread
 
-The two Moon cases spent the whole 4,000,001-evaluation budget over 157,818
-cells in 74 seconds and returned three of eleven roots. Their closest
-elongation is **5.000010 degrees**.
+The two Moon cases each spent the whole 4,000,001-evaluation budget over
+157,818 cells — 74.4 s for F2 and 76.5 s for A2 — and returned **2 and 3**
+of their eleven reference roots. Five matched and seventeen went unfound
+across the pair. Both ended `budget-exhausted`, so both are marked
+`runUnfinished` and their correspondence counts as indicative.
 
-The geometry skims the floor without crossing it. The cosine enclosure
-therefore straddles the boundary over a long stretch of the window, every
-straddling cell asks to be subdivided, and no width resolves it because
-there is nothing on the other side to find. A hard floor is cheap when the
-geometry crosses it briskly and pathological when the geometry grazes it.
+**An earlier version of this section explained that wrongly, and the
+correction is worth more than the original was.** It read
+`closestElongationDeg: 5.000010` off the row and concluded that the
+geometry "skims the floor without crossing it". It does not. That field is
+the largest `cosElongation.hi` over the cells the search **accepted** — a
+rigorous lower bound on the closest elongation over the decided region,
+and not a property of the geometry. This repository says so in three other
+places, including on the result itself
+(`closestElongationIsAReport: true`), and the section read it as a
+measurement anyway.
 
-This is a property of a hard floor, not of this floor's value. Moving it
-would move the pathology, not remove it.
+The geometry, measured independently — `astronomy-engine`, 10-minute steps
+over F2's window, `holdout/moon-window-elongation.mjs`:
+
+| | |
+| --- | --- |
+| passages below 5 degrees | **10** |
+| total time below the floor | 118.7 hours, 4.94 days |
+| closest approach | **0.381 degrees**, 1977-10-12T20:30Z |
+
+The run's own row agrees that the floor is crossed: `excludedRuns: 1`,
+`excludedCells: 1536`. A cell is excluded only when the whole of it is
+*proved* inside the floor, so those 1,536 cells are a demonstration that
+the geometry goes there.
+
+The right reading is the opposite of the old one, and it is Mercury's
+mechanism rather than a new one. **The Moon is the most expensive geometry
+in the holdout because it has ten conjunctions in 300 days, not five, on
+the fastest-moving body in the contract.** It ran out of budget with one
+span excluded (0.0117 d) and two unresolved runs over 30,380 cells — it
+never reached the other nine passages. Mercury's five conjunctions cost
+831x and finished; the Moon's ten did not.
+
+That is still a statement about a hard floor rather than about this
+floor's value: twenty boundaries to isolate is twenty wherever the floor
+sits. What it is *not* is a pathology peculiar to grazing, and this
+document should not have said it was.
 
 ## The controls
 

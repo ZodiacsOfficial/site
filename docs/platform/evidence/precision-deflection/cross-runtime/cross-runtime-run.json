@@ -12,21 +12,21 @@
       "engine": "node",
       "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
-      "ms": 6081
+      "ms": 5793
     },
     {
       "runtime": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
       "engine": "chromium",
       "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
-      "ms": 2786
+      "ms": 2725
     },
     {
       "runtime": "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0",
       "engine": "firefox",
       "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
-      "ms": 1574
+      "ms": 1888
     }
   ],
   "eventsCompared": 224,
@@ -147,7 +147,7 @@
       "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
       "bytes": 198055,
-      "ms": 6081,
+      "ms": 5793,
       "rows": [
         {
           "id": "C1",
@@ -1808,7 +1808,7 @@
       "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
       "bytes": 198055,
-      "ms": 2786,
+      "ms": 2725,
       "rows": [
         {
           "id": "C1",
@@ -3472,7 +3472,7 @@
       "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
       "digestMatches": true,
       "bytes": 198055,
-      "ms": 1574,
+      "ms": 1888,
       "rows": [
         {
           "id": "C1",

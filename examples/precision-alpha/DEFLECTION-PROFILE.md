@@ -306,8 +306,11 @@ outside the disc, and the domain test uses the *computed* apparent radius.
 **Initial supported domain: solar elongation >= 5 degrees (18 000
 arcsec).** Justification, in order of which binds:
 
-1. It is 18.7× the largest apparent solar radius, so the line of sight is
-   never obstructed and never near-obstructed.
+1. It is **18.45×** the largest apparent solar radius — 975.53″, the
+   perihelion value — so the line of sight is never obstructed and never
+   near-obstructed. An earlier version of this line said 18.7×, which is
+   the ratio against the 1 au radius; the binding comparison is the
+   largest radius, not the mean one.
 2. It is 61.7× the widest limiter threshold, so the limiter never fires.
 3. `eraLd`'s own omitted second-order term is **measured** there, not
    extrapolated: the independent ray integration puts it at **4.23e-7
@@ -401,7 +404,7 @@ pointwise transformation actually established — including two places where
 the work corrected the sections above, and one place where the test suite
 was passing while covering nothing.
 
-### 11.1 Against the compiled reference: bit for bit, 1020 of 1020
+### 11.1 Against the compiled reference: bit for bit, 1074 of 1074
 
 `test/tier-a/_erfa-ld-vectors.json` is the output of the pinned `ld.c`, its
 body extracted verbatim, compiled with gcc and run — not a transliteration.

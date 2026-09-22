@@ -201,13 +201,15 @@ finite-distance geometry, and *different behaviour inside the floor*:
 | inside the floor | returns a deflected place, with `deflectionLimiterBound` | **declines**: `accounting.excluded` |
 
 So for a chart with Mercury at one degree of elongation, the released
-pointwise path returns a direction moved by about 0.46 arcsec and does not
-flag it — `deflectionLimiterBound` is false, because at `q·(q+e) = 1.57e-4`
-the clamp is eight orders of magnitude away from firing — while the new
-search would decline the span entirely. How much of that 0.46 arcsec lands
-in *longitude* depends on where the body sits relative to the ecliptic; the
-deflection is radially away from the Sun, and the adapter is the thing that
-would have to project it. Both are
+pointwise path returns a direction moved by **0.110 to 0.148 arcsec**
+(heliocentric 0.3075 to 0.4667 au, superior conjunction, observer at 1 au)
+and does not flag it: `deflectionLimiterBound` is false, because at
+`q·(q+e) = 1.5e-3 … 2.8e-3` the clamp is **eleven orders of magnitude** from
+firing. The new search declines that span entirely.
+
+How much of that lands in *longitude* depends on where the body sits
+relative to the ecliptic — the deflection is radially away from the Sun,
+and projecting it is the adapter's job. Both are
 defensible; they are answers to different questions, and the difference is
 a deliberate consequence of where each sets its limiter. What is *not*
 defensible is an integration that takes one path's numbers and the other
@@ -280,6 +282,12 @@ is smaller by the source's own parallax.
 With the observer at perihelion (em = 0.98329 au) the five-degree value
 rises to **0.094847 arcsec**, which is the largest deflection the supported
 domain admits.
+
+How far above a real planet those numbers sit is worth seeing once. Mercury
+at the floor, at superior conjunction, gets **0.021 to 0.029 arcsec** — a
+third of the table's 0.093 — because a body inside the Earth's orbit
+subtends a much smaller angle at the Sun than a distant one does. The table
+is an upper bound on the correction, not an estimate of it.
 
 Charts display longitudes to about an arcminute. **0.0948 arcsec is 1/633
 of that.** Inside the supported domain this correction cannot move anything
@@ -408,8 +416,8 @@ The chart's own contract, which the package cannot enforce:
    Swapping rungs silently behind one API would reintroduce exactly the
    conflation the profile refuses to make.
 2. **Carry the fallback into the output**, per body, not as a chart-level
-   footnote — on 4.98 per cent of days two bodies are inside the floor and
-   on 27.9 per cent exactly one is, so a chart-level flag would be
+   footnote — on 27.9 per cent of days exactly one body is inside the floor
+   and on 4.98 per cent two or more are, so a chart-level flag would be
    describing the wrong scope. The site's `ChartFlag` union is the existing
    place for this and would need a new member.
 3. **Do not describe the result as an accuracy improvement** (§4.1), and do
@@ -466,9 +474,14 @@ good intentions:
   long search blocks places entirely. At 47 to 831 times the of-date cost
   on a window containing a conjunction, this mode would make one request
   able to freeze the page with terminate-and-reload as the only exit.
-  Confirmed for this change: `node scripts/build-precision-preview.mjs
-  --check` reports both bundles unchanged, and the built worker still
-  exposes exactly one mode string, `validated-geometric`.
+  Confirmed for this change, and stated precisely because the obvious
+  phrasing is wrong: `node scripts/build-precision-preview.mjs --check`
+  reports no DRIFT between the committed bundles and what the generator
+  produces — which is not the same as "this work did not change them". It
+  did: `git diff bc84c102..HEAD -- public/precision-preview/worker.mjs`
+  is +3 lines, the `excluded`-span guard bundled in from
+  `src/core/result.mjs`. What is unchanged is the surface: the only mode
+  string in the built worker is still `validated-geometric`.
 * Nothing here assumes the preview's headers support `SharedArrayBuffer`,
   and nothing here proposes changing global security headers.
 * **The production engine is not replaced**, and nothing here claims Swiss

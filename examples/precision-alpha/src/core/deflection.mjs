@@ -38,7 +38,7 @@
  * stronger one everywhere. The property is ERFA's own, not an artefact of
  * this transliteration: the fixture carries `eraLd` run on the raw `d` and
  * on `unit(d)` separately, and the compiled reference is itself linear to
- * 2.75e-16 relative across all 264 cases.
+ * 2.75e-16 relative across all 358 cases.
  *
  * **`q` and `e` are normalised and must be.** They are not scale-free.
  * Rescaling `q` by a factor `lam` while leaving its direction alone
@@ -102,7 +102,8 @@ const ARCSEC = Math.PI / (180 * 3600);
  *
  * Five degrees. `DEFLECTION-PROFILE.md` section 7 justifies it against four
  * boundaries that are NOT the same boundary; the binding ones are that it
- * is 18.7x the largest apparent solar radius and 61.7x the widest limiter
+ * is 18.45x the LARGEST apparent solar radius (975.53" at perihelion,
+ * not the 959.23" at 1 au) and 61.7x the widest limiter
  * threshold, and that `eraLd`'s own omitted second-order term is a measured
  * 4.23e-7 arcsec there against 2.08e-3 arcsec at 0.3 degrees.
  */
@@ -122,6 +123,30 @@ export const MIN_ELONGATION_RAD = 5 * DEG;
  * 4.6e-14 radians -- about 1e-8 arcsec of elongation.
  */
 export const COS_MIN_ELONGATION_GUARD = sinCos(5 * (Math.PI / 180)).c - ABS_ERR;
+
+/**
+ * A rigorous UPPER bound on cos(MIN_ELONGATION_RAD), for the EXCLUSION
+ * verdict -- which is a different test needing the opposite rounding.
+ *
+ * Admitting a cell asks "is the elongation at least five degrees at every
+ * instant?", and errs safely by using a cosine that may be too small.
+ * Excluding one asks the opposite: "is it below five degrees at every
+ * instant, so that no subdivision will ever help?" That needs
+ * `cos(elongation).lo > cos(5 degrees)`, and a bound that may be too SMALL
+ * makes it too easy to satisfy -- a cell whose minimum elongation sits in
+ * the 4e-15 window just above five degrees could be reported as outside
+ * the domain "at every instant" with `retry: false`, when part of it was
+ * inside.
+ *
+ * For one release both tests shared `COS_MIN_ELONGATION_GUARD`. The
+ * top-level verdict was safe either way -- the mode declined marginally
+ * more than it had to -- but the excluded/unresolved classification and
+ * the sentence attached to it were wrong at that margin, and those two are
+ * the distinction this whole profile rests on. The window is far below any
+ * test's resolution, so this is an argument rather than a measurement, and
+ * it is the argument the two bounds exist to make.
+ */
+export const COS_MIN_ELONGATION_EXCLUDE = sinCos(5 * (Math.PI / 180)).c + ABS_ERR;
 
 /** What the profile declares about itself, for the result's metadata. */
 export const DEFLECTION_PROFILE = Object.freeze({
@@ -299,13 +324,21 @@ export function deflectionAngle(a, b) {
  * Because `D = d + u` with `|u| / |d|` around 1e-10 to 1e-15 in this
  * regime, so forming `d x D` subtracts two nearly equal products and
  * throws away everything the answer is made of. The relative error of that
- * route is bounded by about `eps |d| / |u|`, which is 6.6e-7 at the
- * fixture's worst case; measured, it runs at about a tenth of that bound,
- * and it put an earlier closed-form comparison 5.9e-8 out and looked like
- * a disagreement between two models when it was an artefact of the
- * measuring instrument. This route agrees with the independent closed form
- * to 3.64e-12 relative over all 264 fixture cases, and to 1.5e-16 -- one
- * ulp -- at the case where the other route showed 5.9e-8.
+ * route is bounded by about `eps |d| / |u|`, which is 2.96e-6 at the
+ * fixture's worst case; measured, it runs at about a fifteenth of that
+ * bound (1.98e-7), and it put an earlier closed-form comparison 5.9e-8 out
+ * and looked like a disagreement between two models when it was an
+ * artefact of the measuring instrument. This route agrees with the
+ * independent closed form to 3.95e-9 relative over all 358 fixture cases
+ * -- 5.79e-13 over the ones inside the supported domain -- and to 1.5e-16,
+ * one ulp, at the case where the other route showed 5.9e-8.
+ *
+ * Those five figures come from
+ * `docs/platform/evidence/precision-deflection/pointwise/claims.json`,
+ * which `tools/measure/erfa-deflection/measure-claims.mjs` regenerates.
+ * They were stale here for one round -- the fixture grew from 264 cases to
+ * 358 and nobody re-read this comment -- so read them against that file
+ * rather than against this sentence.
  *
  * @param {number[]} d   the vector handed to `deflect`
  * @param {{u: number[]}} result  what `deflect` returned
@@ -500,7 +533,7 @@ export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, con
     // supported domain and no subdivision changes that -- the profile has
     // no answer here, and says so. If it merely straddles the floor, a
     // narrower cell can still land on one side.
-    const wholly = cosPhi.lo > COS_MIN_ELONGATION_GUARD;
+    const wholly = cosPhi.lo > COS_MIN_ELONGATION_EXCLUDE;
     return {
       ok: false,
       retry: !wholly,

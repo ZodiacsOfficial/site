@@ -78,6 +78,11 @@ export function packOf(targetFn, observerFn, opts = {}) {
     // Sun however carefully the rest is tested. Pass `sunFn` to make it
     // move.
     sunFn = null,
+    // Drop the Sun body entirely. The deflected mode resolves the Sun's
+    // weights once, before any cell opens, and refuses `unknown-body` if
+    // there is none -- which nothing could check while this helper always
+    // emitted one.
+    omitSun = false,
   } = opts;
   const zeros = () => new Array(ncoef).fill(0);
   const series = (fn) => (r) => {
@@ -87,7 +92,7 @@ export function packOf(targetFn, observerFn, opts = {}) {
   };
   const bytes = buildPack({
     bodies: [
-      {
+      ...(omitSun ? [] : [{
         name: 'sun',
         frame: 'native',
         ncoef,
@@ -95,7 +100,7 @@ export function packOf(targetFn, observerFn, opts = {}) {
         initEt,
         intervalSec,
         coeffs: sunFn ? series(sunFn) : () => [...zeros(), ...zeros(), ...zeros()],
-      },
+      }]),
       { name: 'emb', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: series(observerFn) },
       { name: 'moon', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: () => [...zeros(), ...zeros(), ...zeros()] },
       { name: 'marsBary', frame: 'ssb', ncoef, nrec: targetRecords ?? nrec, initEt, intervalSec, coeffs: series(targetFn) },
