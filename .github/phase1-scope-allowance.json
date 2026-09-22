@@ -1,12 +1,10 @@
 {
   "version": 1,
-  "id": "approved-astrofolio-option-c-2026-09-22",
-  "baseCommit": "808975e5444c5957bc9716110e4848fb4c84213f",
+  "id": "approved-astrofolio-selection-polish-2026-09-22",
+  "baseCommit": "5adf2507c74a2ad5a76a97be2f09f9827e79526e",
   "protectedPaths": [
-    "public/assets/app.js",
     "public/registry/technical/index.html",
-    "scripts/registry-pastel-polish.test.mjs",
-    "src/app.jsx"
+    "scripts/registry-pastel-polish.test.mjs"
   ],
-  "authorization": "The owner selected Astrofolio design option C and explicitly authorized production: \"Okay go with C. Push it live\". This allowance covers the twelve-sign grid, quieter selected treatment, smaller sign title, responsive keyboard navigation, updated selector checks, and mechanically regenerated shared wing styles. Preserve market data, artwork, account and transaction behavior."
+  "authorization": "The owner requested a more elegant zodiac selection treatment after the approved live option C release: \"i don\u2019t like the box around the zodiac when you select it, looks sloppy. there must be a more elegant animation or design.\" This follow-up replaces the selected box with a fine circular ring and restrained motion, retains immediate keyboard/reduced-motion feedback, updates existing visual checks, and synchronizes generated shared wing styles. Selection logic, data, artwork and transaction behavior are unchanged."
 }
