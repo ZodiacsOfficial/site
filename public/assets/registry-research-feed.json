@@ -1,12 +1,12 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-21T04:39:48.338Z",
+  "generatedAt": "2026-09-22T00:07:53.706Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-22T00:00:00.000Z",
-    "endsBefore": "2026-09-29T00:00:00.000Z"
+    "startsAt": "2026-08-23T00:00:00.000Z",
+    "endsBefore": "2026-09-30T00:00:00.000Z"
   },
   "items": [
     {
@@ -139,6 +139,47 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-22",
+      "slug": "daily-market-brief-2026-09-22",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-22T12:00:00.000Z",
+      "visibleAt": "2026-09-22T12:00:00.000Z",
+      "title": "Saturn in Aries · daily market brief",
+      "summary": "Saturn in Aries leads the disclosed symbolic index; Aries market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-22/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-22",
+      "slug": "market-check-2026-09-22",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-22T00:07:53.706Z",
+      "visibleAt": "2026-09-22T00:07:53.706Z",
+      "title": "Aries market check · 2026-09-22",
+      "summary": "Aries price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-22/",
+      "signs": [
+        "aries"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-event-brief-aspect-2026-09-21t22-51-01-669z-mercury-sextile-jupiter",
       "slug": "event-brief-aspect-2026-09-21t22-51-01-669z-mercury-sextile-jupiter",
       "kind": "event-brief",
@@ -158,7 +199,7 @@
         "astrology",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-daily-market-brief-2026-09-21",
@@ -180,7 +221,7 @@
         "daily-sky",
         "aspect"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-weekly-outlook-2026-09-21",
@@ -203,7 +244,7 @@
         "weekly-outlook",
         "astrology"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-14-observation-168h",
