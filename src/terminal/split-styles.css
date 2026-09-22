@@ -2283,10 +2283,125 @@
       .consumer-registry .vitrine-disc-rail { --vitrine-selector-columns: 4; }
     }
 
+    /* Compact collection opening. Keep the sculpture and primary action in
+       the first phone viewport without shrinking the existing Fomo control. */
+    .consumer-registry .astrofolio-lockup__copy,
+    .static-astrofolio-lockup > span { display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 12px; }
+    .consumer-registry .astrofolio-lockup__copy small,
+    .static-astrofolio-lockup small { white-space: nowrap; }
+    .consumer-registry .vitrine-price__movement,
+    .static-vitrine__movement { font-weight: 600; }
+    .consumer-registry .vitrine-price__movement.is-up,
+    .static-vitrine__movement.is-up { color: #8dd9ad; }
+    .consumer-registry .vitrine-price__movement.is-down,
+    .static-vitrine__movement.is-down { color: #f28e87; }
+    @media (min-width: 900px) {
+      .consumer-registry .vitrine-stage__layer { grid-template-rows: minmax(0,1fr); grid-template-columns: minmax(0,1fr); }
+    }
+    .consumer-registry .vitrine-stage__art {
+      position: relative;
+      width: min(100%, 720px);
+      height: min(100%, 720px);
+      transform: translateY(var(--art-y)) scale(var(--art-scale));
+      transform-origin: 50% 55%;
+    }
+    .consumer-registry .vitrine-stage__art img { width: 100%; height: 100%; transform: none; }
+    .consumer-registry .vitrine-stage__layer.is-fallback .vitrine-stage__art { display: none; }
+    .vitrine-gold-light {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      -webkit-mask: var(--art-mask) center / contain no-repeat;
+      mask: var(--art-mask) center / contain no-repeat;
+      mix-blend-mode: screen;
+    }
+    .vitrine-gold-light::after {
+      content: "";
+      position: absolute;
+      inset: -30% -65%;
+      background: linear-gradient(110deg, transparent 40%, #fff5ce00 44%, #fff5ce33 47%, #fffbe78c 50%, #fff5ce33 53%, #fff5ce00 56%, transparent 60%);
+      transform: translateX(-55%);
+      opacity: 0;
+    }
+    .vitrine-stage__layer.is-active .vitrine-gold-light::after { animation: vitrine-gold-glint 10s cubic-bezier(.4,0,.2,1) 650ms infinite; }
+    @keyframes vitrine-gold-glint {
+      0% { transform: translateX(-55%); opacity: 0; }
+      3%, 19% { opacity: .38; }
+      24%, 100% { transform: translateX(55%); opacity: 0; }
+    }
+    .vitrine-stage[data-motion-paused="true"] .vitrine-gold-light::after { animation-play-state: paused; }
+    .astrofolio-vitrine:has(.vitrine-disc:focus-visible) .vitrine-gold-light::after { animation: none; }
+    @media (max-width: 899px) {
+      .consumer-registry .astrofolio-vitrine {
+        --vitrine-column: min(100% - 40px, 620px);
+        grid-template-areas: "intro" "selector" "stage" "placard";
+        grid-template-rows: auto;
+        gap: 0;
+        padding: 84px 0 36px;
+      }
+      .consumer-registry .astrofolio-lockup { gap: 8px; height: 28px; margin-bottom: 14px; animation: none; }
+      .consumer-registry .astrofolio-lockup__avatar { width: 24px; height: 24px; flex-basis: 24px; }
+      .consumer-registry .terminal-consumer-hero__kicker { font-size: 19px; }
+      .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
+      .consumer-registry .terminal-consumer-hero h1 { font-size: 38px; line-height: .95; letter-spacing: -.035em; }
+      .consumer-registry .terminal-consumer-hero p { margin-top: 8px; font-size: 12px; line-height: 1.5; max-width: none; }
+      .consumer-registry .vitrine-disc-rail { margin: 14px -7px 0; gap: 4px 0; }
+      .consumer-registry .vitrine-disc { min-height: 52px; padding: 4px 0; gap: 4px; }
+      .consumer-registry .vitrine-disc picture,
+      .consumer-registry .vitrine-disc img { width: 28px; height: 28px; }
+      .consumer-registry .vitrine-stage { width: 100%; height: clamp(255px,70vw,300px); aspect-ratio: auto; overflow: visible; margin-top: 2px; }
+      .consumer-registry .vitrine-stage__art { width: min(92vw,360px); height: min(92vw,360px); transform: translateY(-38px) scale(var(--mobile-art-scale)); transform-origin: center; }
+      .consumer-registry .vitrine-placard { grid-area: placard; width: 100%; max-width: 416px; min-height: 0; margin-top: -62px; }
+      .consumer-registry .vitrine-placard__layer { padding-top: 0; background: none; justify-content: flex-start; }
+      .consumer-registry .vitrine-placard__layer.is-active { position: relative; }
+      .consumer-registry .vitrine-placard__identity h2 { font-size: 43px; line-height: 1; text-shadow: 0 2px 15px #090c0e, 0 2px 4px #090c0e99; }
+      .consumer-registry .vitrine-price { margin-top: 10px; gap: 6px; font-size: 13px; }
+      .consumer-registry .vitrine-price__figure { font-size: 16px; }
+      .consumer-registry .vitrine-price.is-pending .vitrine-price__figure { font-size: 12px; }
+      .consumer-registry .vitrine-price.is-pending .vitrine-price__movement { font-size: 11px; }
+      .consumer-registry .vitrine-placard__actions { grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); margin-top: 15px; }
+      .consumer-registry .vitrine-market-meta { margin-top: 12px; }
+      .static-astrofolio-lockup { height: 28px; gap: 8px; margin-bottom: 14px; }
+      .static-astrofolio-lockup > img { width: 24px; height: 24px; }
+      .static-astrofolio-lockup small { font-size: 10px; }
+      .static-astrofolio-header h1 { max-width: none; font-size: 38px; line-height: .95; }
+      .static-astrofolio-header > p:last-child { margin-top: 8px; font-size: 12px; }
+      .static-vitrine { margin-top: 14px; }
+      .static-vitrine__rail { gap: 4px 0; }
+      .static-vitrine__rail label { min-height: 52px; padding: 4px 0; }
+      .static-vitrine__disc, .static-vitrine__rail img { width: 28px; height: 28px; }
+      .static-vitrine__panel { grid-template-areas: "stage" "placard"; grid-template-columns: minmax(0,1fr); gap: 0; margin-top: 2px; }
+      .static-vitrine__stage { width: 100%; height: clamp(255px,70vw,300px); aspect-ratio: auto; overflow: visible; }
+      .static-vitrine__stage img { width: min(92vw,360px); height: min(92vw,360px); transform: translateY(-38px) scale(.76); }
+      [data-static-sign="cancer"] .static-vitrine__stage img,
+      [data-static-sign="taurus"] .static-vitrine__stage img { transform: translateY(-38px); }
+      [data-static-sign="leo"] .static-vitrine__stage img { transform: translateY(-38px) scale(.96); }
+      [data-static-sign="pisces"] .static-vitrine__stage img { transform: translateY(-38px) scale(.78); }
+      .static-vitrine__placard { grid-area: placard; align-self: start; min-height: 0; position: relative; z-index: 2; width: 100%; margin-top: -62px; padding-top: 0; background: none; }
+      .consumer-static .static-vitrine__placard h2 { font-size: 43px; }
+      .static-vitrine__price { margin-top: 10px; }
+      .static-vitrine__actions { grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); margin-top: 15px; }
+    }
+    @media (max-width: 899px) and (max-height: 680px) {
+      .consumer-registry .astrofolio-vitrine { padding-top: 78px; }
+      .consumer-registry .astrofolio-lockup { margin-bottom: 9px; }
+      .consumer-registry .terminal-consumer-hero h1, .static-astrofolio-header h1 { font-size: 32px; }
+      .consumer-registry .terminal-consumer-hero p { margin-top: 7px; }
+      .consumer-registry .vitrine-disc-rail { margin-top: 11px; }
+      .consumer-registry .vitrine-stage, .static-vitrine__stage { height: 239px; }
+      .consumer-registry .vitrine-stage__art { width: min(94vw,320px); height: min(94vw,320px); transform: translateY(-44px) scale(var(--mobile-art-scale)); }
+      .consumer-registry .vitrine-placard, .static-vitrine__placard { margin-top: -72px; }
+      .consumer-registry .vitrine-placard__identity h2, .consumer-static .static-vitrine__placard h2 { font-size: 40px; }
+      .consumer-registry .vitrine-price { margin-top: 8px; }
+      .consumer-registry .vitrine-placard__actions, .static-vitrine__actions { margin-top: 12px; }
+      .static-vitrine__stage img { width: min(94vw,320px); height: min(94vw,320px); }
+    }
     @media (prefers-reduced-motion: reduce) {
       .wnav-tools,
       .wnav-signs,
       .wnav__dropdown-btn svg { transition: none !important; }
+      .vitrine-gold-light { display: none; }
       .consumer-registry *,
       .consumer-registry *::before,
       .consumer-registry *::after {

@@ -1,21 +1,11 @@
 {
   "version": 1,
-  "id": "owner-requested-mobile-zodiac-artwork-2026-09-22",
-  "baseCommit": "335975f72bff4a43dded86ba47c2a07a8a476eb3",
+  "id": "owner-requested-astrofolio-mobile-collection-2026-09-22",
+  "baseCommit": "4e9d2dcd41d4f2ccd66e6c73b69ffc2c148169ae",
   "protectedPaths": [
-    "public/registry/aquarius/index.html",
-    "public/registry/aries/index.html",
-    "public/registry/cancer/index.html",
-    "public/registry/capricorn/index.html",
-    "public/registry/gemini/index.html",
-    "public/registry/leo/index.html",
-    "public/registry/libra/index.html",
-    "public/registry/pisces/index.html",
-    "public/registry/sagittarius/index.html",
-    "public/registry/scorpio/index.html",
-    "public/registry/taurus/index.html",
-    "public/registry/virgo/index.html",
-    "scripts/build-sign-pages.mjs"
+    "public/assets/app.js",
+    "scripts/registry-consumer-contract.test.mjs",
+    "src/app.jsx"
   ],
-  "authorization": "The owner reported that the Taurus image does not fully load on mobile. This focused fix presents the complete artwork before the facts panel, bounds its stage on mobile, and uses existing responsive WebP sculpture assets. Apply the shared template fix to all twelve sign records and retain the original artwork sources, public record data, and transaction behavior."
+  "authorization": "The owner selected mobile Option A and explicitly requested production publication: compact header with official collection copy and current season, larger overlapping artwork, slower subtle gold glint, clearer positive/negative movement, and the existing live Fomo button. Preserve market data, addresses, and transaction behavior."
 }
