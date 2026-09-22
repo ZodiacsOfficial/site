@@ -134,6 +134,16 @@ export function runCases(x, packDigest) {
       excludedSec: r.accounting.excludedSec.toString(),
       boundarySec: r.accounting.boundarySec.toString(),
       unprocessedSec: r.accounting.unprocessedSec.toString(),
+      // The SECOND axis, which is not one of the four classes: an engine
+      // that searched a different amount of the request answered a
+      // different question even if its domain verdicts matched.
+      notSearchedSec: r.accounting.notSearchedSec.toString(),
+      admissibleNotFullyExaminedSec: r.accounting.admissibleNotFullyExaminedSec.toString(),
+      // Whose word the domain rests on. Every case here builds its own
+      // plan in its own engine, so all three must say `false`; an engine
+      // reporting `true` took someone else's plan.
+      planImported: r.execution.planImported,
+      restsOnImportedPlan: r.completeness.restsOnImportedPlan,
       planReused: r.execution.partitionReused,
       // ---- reported, never compared: cost is allowed to differ by engine
       planEvaluations: plan.execution.evaluations,

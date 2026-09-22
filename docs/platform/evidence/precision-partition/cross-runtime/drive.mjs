@@ -90,6 +90,9 @@ const answerOf = (row) => JSON.stringify({
   coversRequestExactly: row.coversRequestExactly,
   admissibleSec: row.admissibleSec, excludedSec: row.excludedSec,
   boundarySec: row.boundarySec, unprocessedSec: row.unprocessedSec,
+  notSearchedSec: row.notSearchedSec,
+  admissibleNotFullyExaminedSec: row.admissibleNotFullyExaminedSec,
+  planImported: row.planImported, restsOnImportedPlan: row.restsOnImportedPlan,
   planReused: row.planReused,
 });
 
@@ -164,6 +167,12 @@ if (ref) {
     if (!r.planReused) problems.push(`${r.id}: the plan was rebuilt rather than reused, so nothing about reuse was measured`);
     if (r.overRequest && (r.excludedSec !== '0' || r.boundarySec !== '0')) {
       problems.push(`${r.id}: claims completeness over a request part of which it did not admit`);
+    }
+    if (r.planImported || r.restsOnImportedPlan) {
+      problems.push(`${r.id}: took a plan it did not derive, so this run compares trust rather than arithmetic`);
+    }
+    if (r.notSearchedSec !== '0') {
+      problems.push(`${r.id}: left ${r.notSearchedSec} s unsearched, so the comparison is between partial answers`);
     }
   }
 }

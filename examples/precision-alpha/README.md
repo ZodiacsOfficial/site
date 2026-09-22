@@ -245,6 +245,20 @@ is not about, it is **refused**, not silently recomputed. Pass
 `identityStrength: 'structure-only'`, which cannot tell two packs of the
 same shape apart.
 
+Two other things are refused, and both are refusals about trust rather
+than about the request. A plan that did not finish classified only part of
+its window, so reusing it answers the request over a fraction of itself;
+`acceptPartialPlan` takes it anyway, and the run then reports
+`finished: false`. And a plan this runtime did not derive — one that came
+back from a cache, a file or a worker message — is refused outright,
+because a matching key is a fingerprint and not a signature: it says the
+plan is *about* this request, not that anyone proved it.
+`acceptImportedPlan` takes it on your authority after a check that its
+spans are well formed, inside the request, disjoint and tiling it exactly.
+Shape is all that can be checked; a structurally perfect plan with false
+verdicts still passes, so a result over an import carries
+`completeness.restsOnImportedPlan` and says CONDITIONAL in its statement.
+
 The result is a **different contract** —
 `zodiacs-partitioned-search/1`, not the released search result — because
 it states completeness over the spans it names rather than over the
