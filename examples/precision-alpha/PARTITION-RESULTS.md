@@ -321,14 +321,24 @@ as one, not a disagreement.
 is a claim about every instant of a span and a test is a claim about the
 instants it sampled. The soundness argument is in
 `src/core/domain-partition.mjs` and rests on the same Banach contraction
-and mean-value enclosures the search already uses. The nineteen test
-families in `test/tier-a/domain-partition.nodetest.mjs` corroborate it —
-their expectations come from geometries whose elongation is an explicit
-function of time, solved in closed form or bisected out of an independent
-reference, never from the operation under test — and each was confirmed by
-a mutation that made it fail. Corroboration is not proof, and two
-conservative implementations can agree and both be wrong in the same
-direction.
+and mean-value enclosures the search already uses. Forty-two test families
+across four files corroborate it — twenty on what the partition claims,
+eleven on the search built over it, and eleven on the construction of the
+enclosures those claims are computed from. Their expectations come from
+geometries whose elongation is an explicit function of time, solved in
+closed form or bisected out of an independent reference, never from the
+operation under test, and each was confirmed by a mutation that made it
+fail. Corroboration is not proof, and two conservative implementations can
+agree and both be wrong in the same direction.
+
+One mutation is known not to be caught and is not claimed as covered:
+weakening `classifyCell`'s separation guard from `dist.lo > 0` to
+`dist.hi > 0`. An instrumented probe over the whole suite never found the
+two predicates disagreeing, because `deriveLightTime` carries the same
+guard and fires first, so the guard is a redundant backstop rather than a
+live check. It is pinned indirectly, through the ordering it depends on.
+`docs/platform/evidence/precision-partition/review/REVIEW.md` records that
+and the rest of what the two bounded reviews found.
 
 **That a faster search is a better one.** Nothing here measures accuracy.
 `DEFLECTION-RESULTS.md` records **FAIL** at six of twenty, and that verdict
@@ -336,5 +346,5 @@ is unchanged: this work reduces what the layer costs, it does not make the
 layer useful.
 
 **That the Moon's window is now cheap.** It is 1.26 million evaluations
-and 18 seconds. What changed is that it terminates with an answer instead
+and 19 seconds. What changed is that it terminates with an answer instead
 of a budget message.
