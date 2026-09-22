@@ -67,15 +67,70 @@ test('experimental() refuses anything that is not an open runtime', () => {
   }
 });
 
-test('the surface says it is experimental, and names all three modes', () => {
+test('the surface says it is experimental, and names every mode', () => {
   assert.deepEqual([...EXPERIMENTAL.modes], [
     'validated-retarded-geometric',
     'validated-retarded-aberrated',
     'validated-retarded-aberrated-of-date',
+    'validated-retarded-aberrated-deflected-of-date',
   ]);
   assert.match(EXPERIMENTAL.stability, /experimental/);
   assert.match(EXPERIMENTAL.timeScale, /TDB seconds/);
   assert.equal(EXPERIMENTAL.resultContract, 'zodiacs-precision-search/2');
+});
+
+/**
+ * The list above is a hand-written literal, and the of-date rung shipped
+ * with it already one mode behind -- the declaration is easy to forget
+ * and nothing failed when it was. This is the guard that would have: run
+ * every search method the handle exposes and require the set of modes
+ * they RETURN to be exactly the set the surface DECLARES.
+ */
+test('the declared modes are exactly the modes the handle actually returns', async () => {
+  const rt = await openPackFromBytes(await buildSyntheticPack());
+  const x = experimental(rt);
+  // A window with no solar conjunction in it, so the deflected rung
+  // answers rather than declining -- this test is about the mode name.
+  const spec = {
+    body: 'Mars', targetDeg: SYNTHETIC.targetDeg,
+    fromTdbSec: SYNTHETIC.windowTdbSec[0], toTdbSec: SYNTHETIC.windowTdbSec[1],
+  };
+  const methods = Object.keys(x).filter((k) => k.startsWith('search') && typeof x[k] === 'function');
+  assert.equal(methods.length, EXPERIMENTAL.modes.length,
+    `the handle exposes ${methods.length} search methods and the surface declares ${EXPERIMENTAL.modes.length} modes`);
+  const returned = methods.map((m) => x[m](spec).mode).sort();
+  assert.deepEqual(returned, [...EXPERIMENTAL.modes].sort(),
+    'a mode the handle returns is missing from EXPERIMENTAL.modes, or the other way round');
+  x.dispose();
+  rt.dispose();
+});
+
+/**
+ * The deflected rung is the first that can decline part of a request, and
+ * a consumer that does not know that reads a lower bound as a total. The
+ * declaration is therefore part of the surface, not only of the prose.
+ */
+test('the surface declares which modes can decline, and names the right one', () => {
+  const rd = EXPERIMENTAL.restrictedDomain;
+  assert.deepEqual([...rd.modes], ['validated-retarded-aberrated-deflected-of-date']);
+  for (const mode of rd.modes) {
+    assert.ok(EXPERIMENTAL.modes.includes(mode), `${mode} can decline but is not a declared mode`);
+  }
+  assert.match(rd.floor, /5 degrees/);
+  // The three fields a caller must read when one does decline.
+  for (const re of [/accounting\.excluded/, /completeness\.established/, /interval\.decidedTdbSec/]) {
+    assert.match(rd.behaviour, re);
+  }
+});
+
+test('the deflection floor is reachable from the handle, before asking', async () => {
+  const rt = await openPackFromBytes(await buildSyntheticPack());
+  const x = experimental(rt);
+  assert.equal(x.deflectionMinElongationRad, (5 * Math.PI) / 180);
+  assert.ok(x.contracts.deflected, 'the deflected contract is not reachable through the handle');
+  assert.match(String(x.contracts.deflected.supportedDomain), /5 degrees/);
+  x.dispose();
+  rt.dispose();
 });
 
 test('the aberrated contract names what it adds and keeps naming what it omits', () => {

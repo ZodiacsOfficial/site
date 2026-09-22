@@ -820,6 +820,24 @@ physical uncertainty — is kept in the result's own
 ### 12.8 Still not established
 
 The evaluation. Nothing here measures the deflected mode against anything
-external, and §12.5's shift is explicitly not an accuracy claim. The
-consumer path, the cross-runtime check on identical pack bytes, and the
-full-chart adapter contract are also still open.
+external, and §12.5's shift is explicitly not an accuracy claim.
+
+The other three items this section listed as open have since been done, and
+are recorded where they belong rather than here:
+
+* the **evaluation** ran and **failed** its own preregistered usefulness
+  rule — `DEFLECTION-EVALUATION.md` for the rule, `DEFLECTION-RESULTS.md`
+  for the verdict and its decomposition;
+* the **consumer path** is `searchRetardedAberratedDeflectedOfDate` on the
+  experimental handle, with `examples/05-experimental-deflected.mjs` as a
+  runnable demonstration and `tools/consumer/clean-consumer.mjs` checking
+  it through the installed archive;
+* the **cross-runtime check on identical pack bytes** is
+  `docs/platform/evidence/precision-deflection/cross-runtime/` — nine
+  cases, four modes, 224 events, identical in Node, Chromium and Firefox;
+* the **full-chart adapter contract** is `CHART-ADAPTER-CONTRACT.md`, which
+  is a contract and explicitly not an integration.
+
+§7's prescription is the one an adapter inherits: inside the excluded
+region the caller uses rung 4, as a downgrade it chooses and records, never
+as a substitution this profile makes.

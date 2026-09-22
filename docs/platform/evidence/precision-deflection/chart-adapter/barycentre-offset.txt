@@ -1,0 +1,9 @@
+system    max offset  rms offset   at min geocentric distance:  max      rms
+Mars            0.0 km       0.0 km    0.52 au            0.0000"  0.0000"
+Jupiter       227.1 km     138.0 km     4.2 au            0.0745"  0.0453"
+Saturn        302.6 km     289.4 km       8 au            0.0522"  0.0499"
+Uranus         44.4 km      27.2 km    17.3 au            0.0035"  0.0022"
+Neptune        74.1 km      74.1 km    28.8 au            0.0035"  0.0035"
+Pluto        2126.4 km    2126.4 km    28.7 au            0.1022"  0.1022"
+
+for comparison, the largest deflection the supported domain admits: 0.094847"

@@ -1,0 +1,84 @@
+{
+  "archive": "zodiacs-precision-alpha-0.1.0-preview.1.tgz",
+  "archiveBytes": 331515,
+  "installedFrom": "the packed archive only, --offline, no dependencies",
+  "consumer": {
+    "modes": [
+      "validated-retarded-geometric",
+      "validated-retarded-aberrated",
+      "validated-retarded-aberrated-of-date",
+      "validated-retarded-aberrated-deflected-of-date"
+    ],
+    "resultContract": "zodiacs-precision-search/2",
+    "mode": "validated-retarded-aberrated",
+    "established": true,
+    "isProvenNarrows": true,
+    "found": 1,
+    "isExactTotal": true,
+    "rootTdbSec": -1317628.0340060592,
+    "bracketWidthSec": 0.00008046627044677734,
+    "aberrationShiftSec": 1702.908244729042,
+    "appliedCount": 2,
+    "notAppliedCount": 6,
+    "afterDispose": "disposed",
+    "ofDate": {
+      "mode": "validated-retarded-aberrated-of-date",
+      "frame": "ecliptic-of-date-true-equinox-of-date",
+      "aberratedFrame": "ecliptic-of-the-icrs-equator",
+      "contractFrame": "ecliptic-of-date-true-equinox-of-date",
+      "modelRangeTdbSec": [
+        -3155716800,
+        3155716800
+      ],
+      "established": true,
+      "isProvenNarrows": true,
+      "found": 1,
+      "isExactTotal": true,
+      "rootTdbSec": -1319099.2615923285,
+      "frameShiftSec": -1471.2275862693787,
+      "requestWithinModelRange": true,
+      "obliquityEntersTheProjection": false,
+      "timeScaleKeys": [
+        "conversionApproximation",
+        "externalTimeModel",
+        "implementationNumerical"
+      ],
+      "conversionInducedLongitudeArcsec": 1.153922709978004e-10,
+      "externalTimeModelBounded": false,
+      "notAppliedCount": 6,
+      "afterDispose": "disposed"
+    },
+    "deflected": {
+      "mode": "validated-retarded-aberrated-deflected-of-date",
+      "frame": "ecliptic-of-date-true-equinox-of-date",
+      "contractFrame": "ecliptic-of-date-true-equinox-of-date",
+      "declaredFloorDeg": "solar elongation below 5 degrees",
+      "floorRad": 0.08726646259971647,
+      "established": true,
+      "isProvenNarrows": true,
+      "found": 1,
+      "isExactTotal": true,
+      "excluded": 0,
+      "appliedToThisBody": true,
+      "everyCellEvaluationDeflected": true,
+      "widestDeflectionArcsec": 0.0007415115378147238,
+      "widestIsAnEnclosureUpperBound": true,
+      "deflectionShiftSec": 0.012874603271484375,
+      "notAppliedCount": 6,
+      "afterDispose": "disposed",
+      "declining": {
+        "established": false,
+        "isProvenNarrows": false,
+        "found": 3,
+        "isExactTotal": false,
+        "excluded": 3,
+        "unresolved": 6,
+        "decidedSpans": 4,
+        "decidedFraction": 0.9698944091796875,
+        "allIntervalsAccountedFor": false
+      }
+    }
+  },
+  "passed": true,
+  "problems": []
+}

@@ -45,9 +45,20 @@ export const EXPERIMENTAL: Readonly<{
     'validated-retarded-geometric',
     'validated-retarded-aberrated',
     'validated-retarded-aberrated-of-date',
+    'validated-retarded-aberrated-deflected-of-date',
   ];
   stability: string;
   timeScale: string;
+  /**
+   * Which modes can decline part of a request. A caller that ignores this
+   * gets a wrong answer rather than an error, so it is declared on the
+   * subpath rather than only in the method documentation.
+   */
+  restrictedDomain: Readonly<{
+    modes: readonly ['validated-retarded-aberrated-deflected-of-date'];
+    floor: string;
+    behaviour: string;
+  }>;
   /** The bare contract string, comparable with `===`. */
   resultContract: 'zodiacs-precision-search/2';
   resultContractNote: string;
@@ -60,8 +71,15 @@ export interface ExperimentalSearches {
     retarded: Readonly<Record<string, unknown>>;
     aberrated: Readonly<Record<string, unknown>>;
     ofDate: Readonly<Record<string, unknown>>;
+    deflected: Readonly<Record<string, unknown>>;
   }>;
   readonly defaults: Readonly<Record<string, number>>;
+  /**
+   * The supported-domain floor of the deflected mode, in radians of solar
+   * elongation, so a caller can decide whether to ask before asking rather
+   * than reading a refusal afterwards.
+   */
+  readonly deflectionMinElongationRad: number;
 
   /**
    * `validated-retarded-geometric`: reception light-time only. The
@@ -119,6 +137,51 @@ export interface ExperimentalSearches {
   searchRetardedAberratedOfDate(spec: RetardedSearchSpec): SearchResult;
 
   /**
+   * `validated-retarded-aberrated-deflected-of-date`: the of-date mode
+   * with solar gravitational light bending added, in the same frame and
+   * with the same origin.
+   *
+   * ## The one mode here that can decline
+   *
+   * Every other method answers the whole window or throws. This one has a
+   * **restricted domain**: inside five degrees of the Sun it declines to
+   * answer rather than guessing, and a window crossing a solar conjunction
+   * comes back with `accounting.excluded` non-empty,
+   * `completeness.established` false and `eventCount.isExactTotal` false.
+   *
+   * `events` is then a **lower bound over the request**, exhaustive only
+   * over `interval.decidedTdbSec`. Reading it without reading
+   * `accounting.excluded` silently turns "we did not look there" into
+   * "there is nothing there", which is a wrong answer and not an error:
+   *
+   * ```ts
+   * const r = x.searchRetardedAberratedDeflectedOfDate(spec);
+   * if (r.accounting.excluded.length > 0) {
+   *   // r.events is a lower bound; r.interval.decidedTdbSec is the part
+   *   // it is exhaustive over.
+   * }
+   * ```
+   *
+   * `accounting.excluded` and `accounting.unresolved` are different
+   * answers and are kept apart: an excluded span is one the profile has no
+   * answer for at any resolution, an unresolved one is a span the run
+   * could not settle at the cell size it reached.
+   *
+   * The **Sun as target** is answered and NOT deflected — a body does not
+   * deflect its own light. `diagnostics.deflection.appliedToThisBody` is
+   * false there and `notAppliedBecause` says why; the mode name is kept so
+   * the ladder stays comparable.
+   *
+   * Requires a pack containing the Sun, and throws `unknown-body` on the
+   * first cell if there is none.
+   *
+   * Still NOT an apparent place: the Shapiro delay, deflection by bodies
+   * other than the Sun, and everything topocentric remain absent, and
+   * `diagnostics.notApplied` lists them.
+   */
+  searchRetardedAberratedDeflectedOfDate(spec: RetardedSearchSpec): SearchResult;
+
+  /**
    * Detach this handle. Idempotent, and it does NOT dispose the runtime --
    * the caller opened that and may still be using the released modes on it.
    */
@@ -131,6 +194,7 @@ export function experimental(runtime: unknown): ExperimentalSearches;
 export const RETARDED_CONTRACT: Readonly<Record<string, unknown>>;
 export const ABERRATED_CONTRACT: Readonly<Record<string, unknown>>;
 export const OF_DATE_CONTRACT: Readonly<Record<string, unknown>>;
+export const DEFLECTED_CONTRACT: Readonly<Record<string, unknown>>;
 export const RETARDED_DEFAULTS: Readonly<Record<string, number>>;
 
 /**

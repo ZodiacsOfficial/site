@@ -1254,10 +1254,24 @@ function runSearch(eph, spec, shape) {
             order: contract.order,
             supportedDomain: contract.supportedDomain,
             minElongationDeg: MIN_ELONGATION_RAD / DEG,
+            // An ENCLOSURE's upper bound over the cells of this run, not a
+            // value at an instant, and it can exceed the largest deflection
+            // the domain actually admits: 0.094847 arcsec from the closed
+            // form against 0.161 reported on a case whose cells reach the
+            // floor, where `e x q` is closest to cancelling and the
+            // enclosure is therefore loosest. Named here because the field
+            // reads like a measurement and is not one.
             widestDeflectionArcsec,
-            // Reporting only. The DOMAIN test is the cosine comparison,
-            // which needs no inverse trigonometry; this is the same number
-            // in the unit a reader thinks in.
+            widestDeflectionIsAnEnclosureUpperBound: true,
+            // The domain verdict as the code actually takes it: a cosine,
+            // from `sinCos` and four arithmetic operations. Comparable
+            // between engines, which the degrees below are not.
+            closestElongationCos: Number.isFinite(maxCosElongation) ? maxCosElongation : null,
+            // Reporting only, and NOT comparable across engines:
+            // `Math.acos` is implementation-defined in ECMAScript. The
+            // DOMAIN test is the cosine above, which needs no inverse
+            // trigonometry; this is the same number in the unit a reader
+            // thinks in.
             closestElongationDeg: Number.isFinite(maxCosElongation)
               ? (Math.acos(Math.min(1, Math.max(-1, maxCosElongation))) * 180) / Math.PI
               : null,

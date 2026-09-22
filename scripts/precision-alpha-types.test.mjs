@@ -21,7 +21,15 @@ const root = resolve(import.meta.dirname, '..');
 const types = resolve(root, 'examples/precision-alpha/types');
 const fixtures = resolve(root, 'scripts/fixtures/precision-alpha-types');
 
+const TSC = resolve(root, 'node_modules/.bin/tsc');
+
 function compile(files) {
+  // Without this, a missing compiler is an empty `error.stdout` and every
+  // assertion below passes on nothing. The header says a compiler can find
+  // what a grep cannot -- which is only true when there is a compiler.
+  if (!existsSync(TSC)) {
+    throw new Error(`no TypeScript compiler at ${TSC}: this suite checks declarations by compiling them, and cannot pass without one`);
+  }
   const dir = mkdtempSync(join(tmpdir(), 'alpha-types-'));
   try {
     writeFileSync(join(dir, 'tsconfig.json'), JSON.stringify({
@@ -34,12 +42,13 @@ function compile(files) {
           '@zodiacs/precision-alpha': [`${types}/index.d.ts`],
           '@zodiacs/precision-alpha/node': [`${types}/node.d.ts`],
           '@zodiacs/precision-alpha/browser': [`${types}/browser.d.ts`],
+          '@zodiacs/precision-alpha/experimental': [`${types}/experimental.d.ts`],
         },
       },
       files: files.map((f) => resolve(fixtures, f)),
     }));
     try {
-      execFileSync(resolve(root, 'node_modules/.bin/tsc'), ['-p', dir], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+      execFileSync(TSC, ['-p', dir], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
       return '';
     } catch (error) {
       return `${error.stdout ?? ''}${error.stderr ?? ''}`.trim();
@@ -50,8 +59,8 @@ function compile(files) {
 }
 
 describe('the alpha ships declarations a consumer can actually use', () => {
-  it('has the three declaration files the exports map points at', () => {
-    for (const f of ['index.d.ts', 'node.d.ts', 'browser.d.ts']) {
+  it('has the four declaration files the exports map points at', () => {
+    for (const f of ['index.d.ts', 'node.d.ts', 'browser.d.ts', 'experimental.d.ts']) {
       expect(existsSync(resolve(types, f)), f).toBe(true);
     }
   });
@@ -64,5 +73,9 @@ describe('the alpha ships declarations a consumer can actually use', () => {
     // Each @ts-expect-error in the fixture IS the assertion: tsc fails on
     // an unused suppression, so a declaration that got looser fails here.
     expect(compile(['rejects.ts'])).toBe('');
+  });
+
+  it('compiles a consumer of the experimental subpath, deflected rung included', () => {
+    expect(compile(['experimental-consumer.ts'])).toBe('');
   });
 });
