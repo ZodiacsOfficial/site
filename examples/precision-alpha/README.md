@@ -207,7 +207,7 @@ answered and *not* deflected — a body does not deflect its own light — and
 mode name alone would not. And it **costs**: measured, one to four times
 the of-date mode where the window holds no conjunction, and 47 to 831 times
 where it does. The deflection arithmetic is nearly free; isolating the
-domain boundary is not. Two research records in the repository, not in the
+domain boundary is not. Research records in the repository, not in the
 published archive, say what came of that: `DEFLECTION-RESULTS.md` records
 that the layer **failed** its own preregistered usefulness rule at that
 price, and `CHART-ADAPTER-CONTRACT.md` says what a full-chart integration
