@@ -76,6 +76,8 @@
  * outside the domain and says so.
  */
 import { fail } from './errors.mjs';
+import * as I from './interval.mjs';
+import { sinCos, ABS_ERR } from './trig.mjs';
 
 /** Schwarzschild radius of the Sun divided by the au, radians. ERFA_SRS. */
 export const SRS = 1.97412574336e-8;
@@ -105,6 +107,21 @@ const ARCSEC = Math.PI / (180 * 3600);
  * 4.23e-7 arcsec there against 2.08e-3 arcsec at 0.3 degrees.
  */
 export const MIN_ELONGATION_RAD = 5 * DEG;
+
+/**
+ * A rigorous LOWER bound on cos(MIN_ELONGATION_RAD), for the domain guard.
+ *
+ * The guard admits a cell only when `cos(elongation).hi <= this`. Using a
+ * value below the true cosine makes that test stricter, so the error can
+ * only reject a cell that was inside the domain and never admit one that
+ * was outside. `sinCos` is the package's own validated cosine rather than
+ * `Math.cos`, which ECMAScript leaves implementation-defined, and `ABS_ERR`
+ * is its stated absolute bound.
+ *
+ * The cost of the conservatism is 4e-15 of cosine, which at five degrees is
+ * 4.6e-14 radians -- about 1e-8 arcsec of elongation.
+ */
+export const COS_MIN_ELONGATION_GUARD = sinCos(5 * (Math.PI / 180)).c - ABS_ERR;
 
 /** What the profile declares about itself, for the result's metadata. */
 export const DEFLECTION_PROFILE = Object.freeze({
@@ -349,4 +366,202 @@ export function deflectionAngleClosedForm(eVec, qVec) {
   const q = [qVec[0] / qn, qVec[1] / qn, qVec[2] / qn];
   const chi = Math.atan2(norm(cross(q, e)), dot(q, e));
   return Math.atan((SRS / (en / AU_KM)) * Math.tan(chi / 2));
+}
+
+// --------------------------------------------------------------- intervals
+
+/**
+ * The same transformation over an INTERVAL of reception times, together
+ * with its first derivative, for the validated search.
+ *
+ * ## What the linearity buys, and what it does not
+ *
+ * `deflect` is linear in `d` (proved and measured in
+ * `DEFLECTION-PROFILE.md` section 11.2), so the search's deliberately
+ * unnormalised vector goes in as it stands: no rescaling, and no interval
+ * division to make it a unit vector.
+ *
+ * **That licence does not extend to `q` and `e`.** They are not
+ * scale-free -- section 11.3 gives the two laws and measures what getting
+ * them wrong costs -- so both are normalised here, with the interval
+ * division that implies, and both denominators are checked away from zero
+ * rather than assumed positive.
+ *
+ * **Nor does it extend to `|d|` downstream.** The map from `d` to `D` is
+ * linear but it is NOT a positive scalar multiple: it is
+ * `(I - w[e x q]_x)`, a genuine linear map, so an enclosure of `|d|`
+ * is not an enclosure of `|D|` and cannot be passed on as one. Aberration
+ * takes the length as a separate argument and uses it inside
+ * `S = |d| + (d.v)/(1 + bm1)`, so handing it the old length beside the new
+ * vector would evaluate a function that is neither transformation. This
+ * returns `dist` and `distDot` for `D`, recomputed.
+ *
+ * The size of that difference is not the reason to recompute, but it is
+ * worth knowing: `u` is perpendicular to `d`, so `|D| = |d| sec(delta)`.
+ * The largest deflection the supported domain allows is 0.094847 arcsec
+ * -- five degrees of elongation, a distant source, the observer at
+ * perihelion -- which puts `sec(delta) - 1` at 1.057e-13 and below.
+ * Small enough to vanish into the same double at many geometries, and
+ * still not the same number. The reason to recompute is structural.
+ *
+ * ## The derivatives, derived rather than differenced
+ *
+ *     en' = (E . E')/en          e' = (E' - e en')/en
+ *     qn' = (Q . Q')/qn          q' = (Q' - q qn')/qn
+ *     g   = q.(q + e)            g' = q'.(q + e) + q.(q' + e')
+ *     den = em g                 den' = em' g + em g'
+ *     w   = SRS/den              w'  = -SRS den'/den^2
+ *     eq  = e x q                eq' = e' x q + e x q'
+ *     x   = d x eq               x'  = d' x eq + d x eq'
+ *     D   = d + w x              D'  = d' + w' x + w x'
+ *
+ * `Q` is the Sun-to-target vector at EMISSION and `Q'` is differentiated
+ * with respect to RECEPTION time, so the caller supplies the
+ * `(1 - dtau/dt)` factor; doing it here would hide a chain rule in a
+ * routine that cannot see the light-time.
+ *
+ * ## The limiter is not differentiated -- it is excluded
+ *
+ * `w` above has no `max` in it, and that is a claim about this cell, not a
+ * simplification. `dlim` is a clamp, so `w` is piecewise and its
+ * derivative jumps across the threshold (measured in the tests). Rather
+ * than differentiate through it, this REFUSES any cell whose `g` enclosure
+ * is not provably above the largest `dlim` the cell admits. Inside the
+ * supported domain that is never close -- five degrees of elongation puts
+ * `g` about 3.8e-3 against a `dlim` of 1e-6 -- but it is checked on every
+ * cell rather than inferred from the domain guard.
+ *
+ * ## Refusing rather than throwing, and excluded rather than unresolved
+ *
+ * Like `aberrateInterval`, every failure comes back as
+ * `{ok: false, retry, why}` so the search can subdivide or record it. One
+ * addition: `excluded: true` marks a cell the PROFILE declines to answer
+ * for -- the geometry is inside the elongation floor -- as opposed to one
+ * the arithmetic could not decide. The two must not be merged: a narrower
+ * cell resolves the second and never the first, and a result that counted
+ * an excluded span as covered would be claiming completeness over a region
+ * where this profile has no answer at all.
+ *
+ * @param {{lo:number,hi:number}[]} d      observer -> target, light-time
+ *                                         corrected, km. NOT normalised.
+ * @param {{lo:number,hi:number}[]} dDot   its derivative, km/s
+ * @param {{lo:number,hi:number}} dist     an enclosure of |d|, lo > 0
+ * @param {{lo:number,hi:number}[]} eRaw   Sun -> observer at reception, km
+ * @param {{lo:number,hi:number}[]} eRawDot  its derivative, km/s
+ * @param {{lo:number,hi:number}[]} qRaw   Sun -> target at EMISSION, km
+ * @param {{lo:number,hi:number}[]} qRawDot  d/dt(reception) of that, km/s
+ */
+export function deflectInterval(d, dDot, dist, eRaw, eRawDot, qRaw, qRawDot) {
+  if (!(dist.lo > 0)) {
+    return { ok: false, retry: true, why: 'the target and the observer cannot be shown to be separated over this cell, so the direction to deflect is undefined' };
+  }
+  const en = I.norm(eRaw);
+  if (!(en.lo > 0)) {
+    return { ok: false, retry: true, why: 'the observer cannot be bounded away from the centre of the Sun over this cell, so the deflector geometry is undefined' };
+  }
+  const qn = I.norm(qRaw);
+  if (!(qn.lo > 0)) {
+    return { ok: false, retry: true, why: 'the target cannot be bounded away from the centre of the Sun over this cell, so the deflector geometry is undefined' };
+  }
+
+  const enDot = I.div(I.dot(eRaw, eRawDot), en);
+  const e = [I.div(eRaw[0], en), I.div(eRaw[1], en), I.div(eRaw[2], en)];
+  const eDot = [0, 1, 2].map((i) => I.div(I.sub(eRawDot[i], I.mul(e[i], enDot)), en));
+
+  const qnDot = I.div(I.dot(qRaw, qRawDot), qn);
+  const q = [I.div(qRaw[0], qn), I.div(qRaw[1], qn), I.div(qRaw[2], qn)];
+  const qDot = [0, 1, 2].map((i) => I.div(I.sub(qRawDot[i], I.mul(q[i], qnDot)), qn));
+
+  // The supported domain, over the WHOLE cell and without an inverse
+  // trigonometric function. The observer sees the Sun along -e, so
+  // cos(elongation) = -(e . d)/|d|, and cos is decreasing on [0, pi]:
+  // elongation >= floor everywhere is exactly cos(elongation) <= cos(floor)
+  // everywhere.
+  const cosPhi = I.neg(I.div(I.dot(e, d), dist));
+  if (!(cosPhi.hi <= COS_MIN_ELONGATION_GUARD)) {
+    // Excluded and unresolved are different answers. If the enclosure lies
+    // WHOLLY inside the floor, every instant of the cell is outside the
+    // supported domain and no subdivision changes that -- the profile has
+    // no answer here, and says so. If it merely straddles the floor, a
+    // narrower cell can still land on one side.
+    const wholly = cosPhi.lo > COS_MIN_ELONGATION_GUARD;
+    return {
+      ok: false,
+      retry: !wholly,
+      excluded: wholly,
+      cosElongation: cosPhi,
+      why: wholly
+        ? `the solar elongation is inside this profile's ${MIN_ELONGATION_RAD / DEG} degree floor at every instant of this cell, so the deflection is outside the supported domain and no subdivision changes that`
+        : `the solar elongation enclosure straddles this profile's ${MIN_ELONGATION_RAD / DEG} degree floor over this cell`,
+    };
+  }
+
+  const em = I.scale(en, 1 / AU_KM);
+  const emDot = I.scale(enDot, 1 / AU_KM);
+
+  const g = I.dot(q, I.vAdd(q, e));
+  const gDot = I.add(I.dot(qDot, I.vAdd(q, e)), I.dot(q, I.vAdd(qDot, eDot)));
+
+  // The largest dlim this cell admits: dlim = 1e-6/max(em^2, 1) is
+  // decreasing in em, so the smallest em gives the largest dlim. Taking
+  // the largest makes the test below the strict one.
+  const dlimHi = 1e-6 / Math.max(em.lo * em.lo, 1);
+  if (!(g.lo > dlimHi)) {
+    return {
+      ok: false,
+      retry: true,
+      why: `q.(q+e) encloses ${g.lo} over this cell, which is not provably above the limiter threshold ${dlimHi}, so the clamp cannot be shown inactive and this profile will not differentiate through it`,
+    };
+  }
+
+  const den = I.mul(em, g);
+  if (!(den.lo > 0)) {
+    return { ok: false, retry: true, why: 'the deflection denominator cannot be bounded away from zero over this cell' };
+  }
+  const denDot = I.add(I.mul(emDot, g), I.mul(em, gDot));
+  const w = I.div(I.iv(SRS), den);
+  const wDot = I.neg(I.div(I.mul(I.iv(SRS), denDot), I.mul(den, den)));
+
+  const eq = I.cross(e, q);
+  const eqDot = I.vAdd(I.cross(eDot, q), I.cross(e, qDot));
+  const x = I.cross(d, eq);
+  const xDot = I.vAdd(I.cross(dDot, eq), I.cross(d, eqDot));
+
+  const u = I.vMulI(x, w);
+  const uDot = I.vAdd(I.vMulI(x, wDot), I.vMulI(xDot, w));
+  const D = I.vAdd(d, u);
+  const DDot = I.vAdd(dDot, uDot);
+
+  // Recomputed, not inherited. See the header: `d -> D` is a linear map,
+  // not a positive rescaling, so `dist` does not carry over.
+  const distOut = I.norm(D);
+  if (!(distOut.lo > 0)) {
+    return { ok: false, retry: true, why: 'the deflected direction cannot be bounded away from zero length over this cell' };
+  }
+  const distOutDot = I.div(I.dot(D, DDot), distOut);
+
+  return {
+    ok: true,
+    D,
+    DDot,
+    // The perturbation and ITS derivative, returned for the same reason
+    // the pointwise form returns `u`: recovering either by subtracting is
+    // a catastrophic cancellation, `|u|/|d|` being around 1e-10 here. It
+    // is also the only place the chain rule on `q` is visible -- `DDot` is
+    // dominated by `dDot`, so an error in `qRawDot` moves it by about
+    // 1e-12 relative and moves `uDot` by 1e-4.
+    u,
+    uDot,
+    dist: distOut,
+    distDot: distOutDot,
+    // `u` is perpendicular to `d`, so this is the TANGENT of the deflection
+    // angle and not the angle. At these magnitudes the two agree to about
+    // 1e-13 relative, but the name says which one it is.
+    tanDeflection: I.div(I.norm(u), dist),
+    cosElongation: cosPhi,
+    qdqpe: g,
+    limiterThreshold: dlimHi,
+    emAu: em,
+    w,
+  };
 }

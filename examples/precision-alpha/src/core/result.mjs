@@ -76,6 +76,9 @@ export const EXECUTION = Object.freeze(['finished', 'budget-exhausted', 'cancell
  *  6. `conditionalOn` is non-empty for `conditional` and empty for `proven`.
  *  7. A result with unresolved intervals cannot say they were all accounted
  *     for.
+ *  8. Nor can one with EXCLUDED intervals -- spans a restricted-domain mode
+ *     declined to answer for. They are not unresolved: no subdivision or
+ *     budget reaches them. They still leave the request partly uncovered.
  */
 export function buildResult(r) {
   const out = {
@@ -104,6 +107,18 @@ export function buildResult(r) {
 
   if (a.allIntervalsAccountedFor && a.unresolved.length > 0) {
     fail('unsupported-option', 'a result cannot claim every interval was accounted for while reporting unresolved ones');
+  }
+  // EXCLUDED spans are not unresolved ones. A mode with a restricted
+  // domain -- solar deflection is the first -- refuses whole regions
+  // outright rather than failing to decide them, and no subdivision or
+  // budget changes that. They still leave the requested interval only
+  // partly covered, so a result carrying any of them cannot claim
+  // everything was accounted for, and through invariant 3 cannot claim
+  // completeness either. Without this a mode could return
+  // `established, isExactTotal, 0 events` over a window it declined to
+  // look at, which is the failure mode version 2 exists to prevent.
+  if (a.allIntervalsAccountedFor && (a.excluded?.length ?? 0) > 0) {
+    fail('unsupported-option', `a result cannot claim every interval was accounted for while excluding ${a.excluded.length} of them as outside the supported domain`);
   }
   if (!Array.isArray(c.conditionalOn)) fail('unsupported-option', 'completeness.conditionalOn must be an array');
   if (!Array.isArray(out.assumptions)) fail('unsupported-option', 'assumptions must be an array');

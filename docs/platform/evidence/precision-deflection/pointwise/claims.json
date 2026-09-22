@@ -146,5 +146,51 @@
     "supported": false
    }
   }
+ },
+ "search": {
+  "insideDomain": {
+   "established": true,
+   "events": 2,
+   "cells": 140,
+   "evaluations": 5462,
+   "ofDateEvaluations": 4458,
+   "cellEvaluations": 346,
+   "deflectedCellEvaluations": 346,
+   "tightestLimiterMarginRatio": 1808585.8373016552,
+   "widestDeflectionArcsec": 0.0012883530951003186,
+   "closestElongationDeg": 107.98394129410676,
+   "shifts": [
+    {
+     "ofDateTdbSec": 1499709.7035169601,
+     "deflectedTdbSec": 1499709.7310766578,
+     "shiftSec": 0.02755969762802124,
+     "deflectionArcsec": 0.00028517342416445963,
+     "boundSec": 0.02753137437541739,
+     "bracketWidthSec": 0.0012874603271484375
+    },
+    {
+     "ofDateTdbSec": 4861512.785920501,
+     "deflectedTdbSec": 4861512.688234448,
+     "shiftSec": -0.0976860523223877,
+     "deflectionArcsec": 0.0009390573460672151,
+     "boundSec": 0.09769125514604103,
+     "bracketWidthSec": 0.0001609325408935547
+    }
+   ]
+  },
+  "throughConjunction": {
+   "status": "finished",
+   "established": false,
+   "events": 1,
+   "excludedRuns": 1,
+   "excludedCells": 1093,
+   "excludedSpanDays": 35.8714599609375,
+   "unresolvedRuns": 2,
+   "unresolvedCells": 145,
+   "unresolvedSpanSec": 95.5810546875,
+   "decidedSpans": 2,
+   "decidedFraction": 0.7437673841203962,
+   "evaluations": 81361
+  }
  }
 }

@@ -10,6 +10,8 @@
  * covers the rest, including the ones that are only illustrative.
  */
 import { readFileSync } from 'node:fs';
+import * as G from '../../../test/tier-a/_geometry.mjs';
+import { searchDeflectedLongitude, searchOfDateLongitude } from '../../../src/core/retarded-search.mjs';
 import {
   deflect, deflectionAngle, deflectionAngleOf, deflectionAngleClosedForm,
   deflectionLimit, deflectionDomain, SRS, AU_KM,
@@ -155,5 +157,66 @@ const offAxis = (xi) => {
 out.onAxis = { aligned: ax('aligned'), antipodal: ax('antipodal'),
   tanPiOverTwo: Math.tan(Math.PI / 2), sinPi: Math.sin(Math.PI),
   offAxis: Object.fromEntries([1e-3, 2e-4].map((x) => [`xi=${x}`, offAxis(x)])) };
+
+// ------------------------------------------------- section 12: the search
+const DAY = 86400;
+const OPEN = G.heliocentricPair();
+const OPEN_EPH = G.packOf(OPEN.target, OPEN.observer, { nrec: 142, initEt: -71 * DAY });
+const CONJ = G.heliocentricPair({ targetPhase: -Math.PI / 2 });
+const CONJ_EPH = G.packOf(CONJ.target, CONJ.observer, { nrec: 142, initEt: -71 * DAY });
+const WIN = [-70 * DAY, 70 * DAY];
+
+const openTarget = G.lonExact(OPEN, 17.37 * DAY, true);
+const openSpec = { body: 'Mars', targetDeg: openTarget, fromTdbSec: WIN[0], toTdbSec: WIN[1] };
+const openBase = searchOfDateLongitude(OPEN_EPH, openSpec);
+const openDef = searchDeflectedLongitude(OPEN_EPH, openSpec);
+const shifts = openBase.events.map((e, i) => {
+  const t = e.tdbSec;
+  const O = OPEN.observer(t);
+  const dv = sub(OPEN.target(t - norm(sub(OPEN.target(t), O)) / 299792.458), O);
+  const g = deflect(dv, O, OPEN.target(t));
+  const delta = Math.atan(norm(g.u) / norm(dv));
+  const rate = (G.lonExact(OPEN, t + 30, true) - G.lonExact(OPEN, t - 30, true)) / 60;
+  return {
+    ofDateTdbSec: t,
+    deflectedTdbSec: openDef.events[i].tdbSec,
+    shiftSec: openDef.events[i].tdbSec - t,
+    deflectionArcsec: delta * AS,
+    boundSec: (delta * (180 / Math.PI)) / Math.abs(rate),
+    bracketWidthSec: e.bracketWidthSec,
+  };
+});
+
+const conjTarget = G.lonExact(CONJ, 40 * DAY, true);
+const conjDef = searchDeflectedLongitude(CONJ_EPH, { body: 'Mars', targetDeg: conjTarget, fromTdbSec: WIN[0], toTdbSec: WIN[1] });
+out.search = {
+  insideDomain: {
+    established: openDef.completeness.established,
+    events: openDef.events.length,
+    cells: openDef.execution.cells,
+    evaluations: openDef.execution.evaluations,
+    ofDateEvaluations: openBase.execution.evaluations,
+    cellEvaluations: openDef.diagnostics.deflection.cellEvaluations,
+    deflectedCellEvaluations: openDef.diagnostics.deflection.deflectedCellEvaluations,
+    tightestLimiterMarginRatio: openDef.diagnostics.deflection.tightestLimiterMarginRatio,
+    widestDeflectionArcsec: openDef.diagnostics.deflection.widestDeflectionArcsec,
+    closestElongationDeg: openDef.diagnostics.deflection.closestElongationDeg,
+    shifts,
+  },
+  throughConjunction: {
+    status: conjDef.execution.status,
+    established: conjDef.completeness.established,
+    events: conjDef.events.length,
+    excludedRuns: conjDef.accounting.excluded.length,
+    excludedCells: conjDef.accounting.excludedCells,
+    excludedSpanDays: conjDef.accounting.excluded.reduce((a, x) => a + (x.toTdbSec - x.fromTdbSec), 0) / DAY,
+    unresolvedRuns: conjDef.accounting.unresolved.length,
+    unresolvedCells: conjDef.accounting.unresolvedCells,
+    unresolvedSpanSec: conjDef.accounting.unresolved.reduce((a, x) => a + (x.toTdbSec - x.fromTdbSec), 0),
+    decidedSpans: conjDef.interval.decidedTdbSec.length,
+    decidedFraction: conjDef.interval.decidedFraction,
+    evaluations: conjDef.execution.evaluations,
+  },
+};
 
 process.stdout.write(`${JSON.stringify(out, null, 1)}\n`);

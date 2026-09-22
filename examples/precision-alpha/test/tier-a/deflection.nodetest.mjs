@@ -20,8 +20,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import * as I from '../../src/core/interval.mjs';
 import {
-  deflect, deflectionDomain, deflectionAngle, deflectionAngleOf, deflectionAngleClosedForm,
+  deflect, deflectInterval, deflectionDomain, deflectionAngle, deflectionAngleOf,
+  deflectionAngleClosedForm,
   deflectionLimit, SRS, AU_KM, SOLAR_RADIUS_KM, MIN_ELONGATION_RAD, DEFLECTION_PROFILE,
 } from '../../src/core/deflection.mjs';
 
@@ -679,4 +681,452 @@ test('the profile declares what it omits, including the model\'s own second-orde
   assert.ok(DEFLECTION_PROFILE.notApplied.some((s) => /other than the Sun/.test(s)));
   // and the limiter description must not read as an error bound
   assert.match(DEFLECTION_PROFILE.limiter, /not an error cap/);
+});
+
+// ============================================================== intervals
+//
+// A local analytic geometry, deliberately not shared with `_geometry.mjs`.
+// That file serves the aberrated and of-date suites, which are released
+// results with published holdouts behind them; an edit made here for the
+// deflection must not be able to move what those suites measure. Thirty
+// lines of duplication buys the suites independence -- the same trade
+// `_geometry.mjs` itself records against the light-time suite.
+//
+// Every derivative below is differentiated BY HAND from the closed form, so
+// the truth the enclosures are tested against never comes out of the
+// enclosures.
+const AU = AU_KM;
+/**
+ * The toy geometry. The radii BREATHE on purpose.
+ *
+ * An earlier version put both bodies on exact circles about the Sun. That
+ * makes `d|e|/dt` and `d|q|/dt` identically zero, which makes the
+ * correction term in the unit-vector derivative
+ * `e' = (E' - e |E|')/|E|` identically zero too -- so two mutations that
+ * deleted that term outright passed every test. The fixture was the hole,
+ * not the assertions. `en'` and `qn'` are now non-zero and
+ * `the test geometry exercises what it claims to` asserts it.
+ */
+function toy(t, o = {}) {
+  const {
+    aT = 5.2, wO = 2e-7, wT = 5e-8, psi = 0.9, drift = 3.0, tilt = 0.05,
+    eO = 0.02, wRO = 7e-8, eT = 0.05, wRT = 3e-8,
+  } = o;
+  const S = [drift * t, 0.3 * drift * t, 0];
+  const Sd = [drift, 0.3 * drift, 0];
+
+  const rO = AU * (1 + eO * Math.cos(wRO * t));
+  const rOd = -AU * eO * wRO * Math.sin(wRO * t);
+  const aO = wO * t;
+  const uO = [Math.cos(aO), Math.sin(aO), 0];
+  const uOd = [-wO * Math.sin(aO), wO * Math.cos(aO), 0];
+  const O = [0, 1, 2].map((i) => S[i] + rO * uO[i]);
+  const Od = [0, 1, 2].map((i) => Sd[i] + rOd * uO[i] + rO * uOd[i]);
+
+  const rT = aT * AU * (1 + eT * Math.sin(wRT * t));
+  const rTd = aT * AU * eT * wRT * Math.cos(wRT * t);
+  const a = wT * t + psi;
+  const ct = Math.cos(tilt); const st = Math.sin(tilt);
+  const uT = [Math.cos(a), ct * Math.sin(a), st * Math.sin(a)];
+  const uTd = [-wT * Math.sin(a), ct * wT * Math.cos(a), st * wT * Math.cos(a)];
+  const T = [0, 1, 2].map((i) => S[i] + rT * uT[i]);
+  const Td = [0, 1, 2].map((i) => Sd[i] + rTd * uT[i] + rT * uTd[i]);
+
+  return {
+    eRaw: sub(O, S), eRawDot: sub(Od, Sd),
+    qRaw: sub(T, S), qRawDot: sub(Td, Sd),
+    d: sub(T, O), dDot: sub(Td, Od),
+  };
+}
+/** Close to the domain floor: 5.65 degrees of elongation, 0.0684 arcsec. */
+const NEAR_FLOOR = { psi: 4.88 };
+const T_REF = 1.234e7;
+const pointI = (v) => v.map((x) => I.iv(x));
+/**
+ * A VALID but crude input box over [t0, t1]: hull a dense sample and
+ * inflate. Crude on purpose -- the question these tests ask is whether
+ * `deflectInterval`'s OUTPUT contains the truth given a sound input box,
+ * not how tight anyone can make the input.
+ */
+function toyBox(t0, t1, o = {}, n = 400, inflate = 1e-6) {
+  const keys = ['eRaw', 'eRawDot', 'qRaw', 'qRawDot', 'd', 'dDot'];
+  const acc = {};
+  for (let i = 0; i <= n; i += 1) {
+    const g = toy(t0 + ((t1 - t0) * i) / n, o);
+    for (const k of keys) acc[k] = i === 0 ? pointI(g[k]) : I.vHull(acc[k], pointI(g[k]));
+  }
+  for (const k of keys) {
+    acc[k] = acc[k].map((x) => {
+      const w = Math.max(Math.abs(x.lo), Math.abs(x.hi)) * inflate;
+      return I.iv(x.lo - w, x.hi + w);
+    });
+  }
+  return acc;
+}
+const within = (x, box) => x >= box.lo && x <= box.hi;
+const callToy = (b) => deflectInterval(b.d, b.dDot, I.norm(b.d), b.eRaw, b.eRawDot, b.qRaw, b.qRawDot);
+
+test('degenerate intervals reproduce the pointwise transformation', () => {
+  // The interval form must be the SAME function, not a near relative. With
+  // zero-width inputs it cannot return the pointwise answer exactly --
+  // every operation widens by PAD -- so the claim is containment, and the
+  // width is reported so a regression that loosened it would show.
+  let checked = 0;
+  let worstWidth = 0;
+  for (let t = 0; t < 4e7; t += 3.7e5) {
+    const g = toy(t);
+    let pt;
+    try { pt = deflect(g.d, g.eRaw, g.qRaw); } catch { continue; }   // out of domain
+    const r = callToy({
+      d: pointI(g.d), dDot: pointI(g.dDot), eRaw: pointI(g.eRaw),
+      eRawDot: pointI(g.eRawDot), qRaw: pointI(g.qRaw), qRawDot: pointI(g.qRawDot),
+    });
+    assert.equal(r.ok, true, `the interval form refused a geometry the pointwise form accepted at t=${t}: ${r.why}`);
+    checked += 1;
+    for (let i = 0; i < 3; i += 1) {
+      assert.ok(within(pt.D[i], r.D[i]),
+        `t=${t} component ${i}: ${pt.D[i]} is outside [${r.D[i].lo}, ${r.D[i].hi}]`);
+      worstWidth = Math.max(worstWidth, I.width(r.D[i]) / Math.max(1, Math.abs(pt.D[i])));
+    }
+  }
+  assert.ok(checked > 50, `only ${checked} instants were inside the supported domain`);
+  assert.ok(worstWidth < 1e-13,
+    `a degenerate cell should be within a few PAD of a point; worst relative width ${worstWidth}`);
+});
+
+test('a cell encloses the transformation at every instant inside it', () => {
+  for (const span of [60, 3600, 86400, 10 * 86400]) {
+    const t0 = 1.234e7;
+    const r = callToy(toyBox(t0, t0 + span));
+    assert.equal(r.ok, true, `span ${span}s: ${r.why}`);
+    for (let k = 0; k <= 200; k += 1) {
+      const t = t0 + (span * k) / 200;
+      const g = toy(t);
+      const pt = deflect(g.d, g.eRaw, g.qRaw);
+      for (let i = 0; i < 3; i += 1) {
+        assert.ok(within(pt.D[i], r.D[i]),
+          `span ${span}s, t=${t}, component ${i}: ${pt.D[i]} outside [${r.D[i].lo}, ${r.D[i].hi}]`);
+      }
+    }
+  }
+});
+
+test('the derivative encloses every difference quotient the cell admits', () => {
+  // By the mean value theorem, (D(b) - D(a))/(b - a) EQUALS D' at some
+  // interior point, so it must lie in DDot. That is exact -- there is no
+  // truncation term to get wrong.
+  //
+  // This replaced a central-difference check, which reported 143 failures
+  // on a 60-second cell and none on a ten-day one. The direction gave it
+  // away: a narrower cell cannot make a correct enclosure worse. The step
+  // was 1e-3 s against components of 7e8 km, so the difference carried
+  // about five significant digits and the reference, not the enclosure,
+  // was wrong.
+  for (const span of [60, 3600, 86400, 10 * 86400]) {
+    const t0 = 1.234e7;
+    const r = callToy(toyBox(t0, t0 + span));
+    assert.equal(r.ok, true, `span ${span}s: ${r.why}`);
+    const Dat = (t) => { const g = toy(t); return deflect(g.d, g.eRaw, g.qRaw).D; };
+    const pairs = [[t0, t0 + span]];
+    for (let k = 0; k < 40; k += 1) {
+      pairs.push([t0 + (span * k) / 40, t0 + (span * (k + 1)) / 40]);
+    }
+    for (const [a, b] of pairs) {
+      const Da = Dat(a); const Db = Dat(b);
+      for (let i = 0; i < 3; i += 1) {
+        const quotient = (Db[i] - Da[i]) / (b - a);
+        assert.ok(within(quotient, r.DDot[i]),
+          `span ${span}s, [${a}, ${b}] component ${i}: ${quotient} outside [${r.DDot[i].lo}, ${r.DDot[i].hi}]`);
+      }
+    }
+  }
+});
+
+test('the length is recomputed, because d -> D is not a rescaling', () => {
+  // The linearity that lets `d` go in unnormalised does NOT make the map a
+  // positive scalar multiple -- it is (I - w[e x q]_x) -- so an enclosure
+  // of |d| is not one of |D|. Aberration takes the length as a separate
+  // argument and uses it inside S = |d| + (d.v)/(1 + bm1), so passing the
+  // old length beside the new vector would evaluate neither transformation.
+  const t0 = 1.234e7;
+  const b = toyBox(t0, t0 + 3600);
+  const r = callToy(b);
+  assert.equal(r.ok, true);
+  // It is returned at all, and it encloses the truth.
+  for (let k = 0; k <= 50; k += 1) {
+    const g = toy(t0 + (3600 * k) / 50);
+    const D = deflect(g.d, g.eRaw, g.qRaw).D;
+    assert.ok(within(norm(D), r.dist), 'the returned length must enclose |D|');
+  }
+  // |D| = |d| sec(delta), because u is perpendicular to d.
+  const g = toy(t0 + 1800);
+  const got = deflect(g.d, g.eRaw, g.qRaw);
+  const perp = Math.abs(dot(g.d, got.u)) / (norm(g.d) * norm(got.u));
+  assert.ok(perp < 1e-15, `u should be perpendicular to d; cos is ${perp}`);
+  const worst = 0.094847 / AS;
+  assert.ok(Math.abs(1 / Math.cos(worst) - 1 - 1.057e-13) < 1e-16,
+    `sec(delta) - 1 at the domain's largest deflection is ${1 / Math.cos(worst) - 1}`);
+
+  // At a geometry near the domain floor the difference is larger than the
+  // enclosures are wide, so the two are DISJOINT and inheriting `dist`
+  // would hand aberration a length the deflected vector does not have.
+  // Asserted here because containment alone cannot see the difference:
+  // where the deflection is small, |d|'s enclosure contains |D| too, and a
+  // mutation that inherited `dist` passed every other test in this file.
+  const near = toy(T_REF, NEAR_FLOOR);
+  const nearIn = I.iv(norm(near.d));
+  const nr = callToy({
+    d: pointI(near.d), dDot: pointI(near.dDot), eRaw: pointI(near.eRaw),
+    eRawDot: pointI(near.eRawDot), qRaw: pointI(near.qRaw), qRawDot: pointI(near.qRawDot),
+  });
+  assert.equal(nr.ok, true, nr.why);
+  assert.ok(deflectionDomain(near.d, near.eRaw).elongationDeg < 6,
+    'the near-floor geometry must actually be near the floor');
+  assert.ok(nr.dist.lo > nearIn.hi,
+    `|D| = [${nr.dist.lo}, ${nr.dist.hi}] must be disjoint from |d| = [${nearIn.lo}, ${nearIn.hi}]`);
+  assert.ok(within(norm(deflect(near.d, near.eRaw, near.qRaw).D), nr.dist));
+});
+
+test('outside the elongation floor it says EXCLUDED, not unresolved', () => {
+  // The two are different answers and the search must not merge them. A
+  // narrower cell resolves an unresolved one and never an excluded one,
+  // and a result that counted an excluded span as covered would claim
+  // completeness over a region this profile has no answer for.
+  //
+  // The toy geometry is swept until the target passes behind the Sun.
+  const o = { aT: 5.2, wO: 2e-7, wT: 5e-8, psi: 0.0 };
+  let excluded = null; let straddle = null; let supported = null;
+  for (let t = 0; t < 1.4e8 && (!excluded || !straddle || !supported); t += 2e4) {
+    const r = callToy(toyBox(t, t + 600, o, 60));
+    if (r.ok) { supported = supported ?? { t, r }; continue; }
+    if (r.excluded === true) excluded = excluded ?? { t, r };
+    else if (/straddles/.test(r.why)) straddle = straddle ?? { t, r };
+  }
+  assert.ok(supported, 'the sweep never found a supported cell');
+  assert.ok(excluded, 'the sweep never found a wholly excluded cell');
+  assert.ok(straddle, 'the sweep never found a cell straddling the floor');
+
+  // Excluded: not retryable, and it says so.
+  assert.equal(excluded.r.excluded, true);
+  assert.equal(excluded.r.retry, false, 'an excluded cell must not ask to be subdivided');
+  assert.match(excluded.r.why, /no subdivision changes that/);
+  // and the geometry really is inside the floor, checked independently
+  assert.ok(excluded.r.cosElongation.lo > Math.cos(MIN_ELONGATION_RAD) - 1e-14,
+    'the excluded cell should be inside the floor by the cosine test');
+  const g = toy(excluded.t + 300, o);
+  assert.ok(deflectionDomain(g.d, g.eRaw).elongationDeg < 5,
+    'the pointwise domain check must agree that the excluded cell is inside the floor');
+
+  // Straddling: retryable, and NOT marked excluded.
+  assert.equal(straddle.r.retry, true, 'a straddling cell must be subdividable');
+  assert.notEqual(straddle.r.excluded, true, 'a straddling cell is not excluded');
+
+  // And the pointwise transformation refuses the same geometry, by the
+  // same floor, so the two forms agree about the domain.
+  assert.throws(() => deflect(g.d, g.eRaw, g.qRaw), (e) => e.code === 'out-of-domain');
+});
+
+test('a cell that cannot rule the limiter out is refused, not differentiated', () => {
+  // The clamp makes w piecewise and its derivative jump. Rather than
+  // differentiate through it, the enclosure demands q.(q+e) be provably
+  // above the largest dlim the cell admits. Inside the supported domain
+  // that is never close, so this is exercised with the domain guard's own
+  // geometry removed -- the point is that the limiter check is a SEPARATE
+  // gate and not a consequence of the elongation floor.
+  const AUv = [AU, 0, 0];
+  const R = 30 * AU;
+  const near = (xi) => {
+    const q = [-R * Math.cos(xi), R * Math.sin(xi), 0];
+    return { q, d: sub(q, AUv) };
+  };
+  const g0 = near(1e-4);                           // deep inside the limiter
+  const z = [I.iv(0), I.iv(0), I.iv(0)];
+  const r = deflectInterval(pointI(g0.d), z, I.iv(norm(g0.d)), pointI(AUv), z, pointI(g0.q), z);
+  assert.equal(r.ok, false);
+  // The elongation floor catches it first, which is the designed order --
+  // so the limiter gate is reached by asking for a geometry the floor
+  // allows and the limiter does not. No such geometry exists at 1 au
+  // (the floor is 18000 arcsec and the threshold 291.7), and that is worth
+  // asserting rather than leaving implicit.
+  const floorArcsec = (MIN_ELONGATION_RAD * 180 * 3600) / Math.PI;
+  const thresholdArcsec = deflectionDomain([0, 1, 0], AUv).limiterThresholdArcsec;
+  assert.ok(floorArcsec > 60 * thresholdArcsec,
+    `the floor (${floorArcsec}) should be far outside the limiter threshold (${thresholdArcsec})`);
+  // The gate is still live code: it fires when handed a q.(q+e) that the
+  // floor never produces, which is what a future profile with a lower
+  // floor would hit.
+  const tiny = 1e-5;
+  const qt = [-R * Math.cos(tiny), R * Math.sin(tiny), 0];
+  const direct = deflectInterval(
+    [I.iv(1, 1), I.iv(0), I.iv(0)], z, I.iv(1),     // d along +x: elongation 180 deg
+    pointI(AUv), z, pointI(qt), z,
+  );
+  assert.equal(direct.ok, false);
+  assert.match(direct.why, /limiter threshold/);
+  assert.equal(direct.retry, true, 'a limiter refusal is about width, so it is retryable');
+  assert.notEqual(direct.excluded, true, 'a limiter refusal is not a domain exclusion');
+});
+
+test('degenerate geometries refuse over intervals too, with retry set', () => {
+  const z = [I.iv(0), I.iv(0), I.iv(0)];
+  const e = pointI([AU, 0, 0]);
+  const q = pointI([0, 5 * AU, 0]);
+  const d = pointI([-AU, 5 * AU, 0]);
+  // zero-length d
+  let r = deflectInterval(z, z, I.iv(0), e, z, q, z);
+  assert.equal(r.ok, false); assert.equal(r.retry, true);
+  // observer at the Sun's centre
+  r = deflectInterval(d, z, I.norm(d), z, z, q, z);
+  assert.equal(r.ok, false); assert.equal(r.retry, true);
+  assert.match(r.why, /centre of the Sun/);
+  // target at the Sun's centre
+  r = deflectInterval(d, z, I.norm(d), e, z, z, z);
+  assert.equal(r.ok, false); assert.equal(r.retry, true);
+  assert.match(r.why, /centre of the Sun/);
+  // a d enclosure straddling zero length is retryable, not excluded
+  const straddling = [I.iv(-1, 1), I.iv(-1, 1), I.iv(-1, 1)];
+  r = deflectInterval(straddling, z, I.norm(straddling), e, z, q, z);
+  assert.equal(r.ok, false); assert.equal(r.retry, true);
+  assert.notEqual(r.excluded, true);
+});
+
+test('the test geometry exercises what it claims to', () => {
+  // The fixture, checked independently of the thing it tests. A geometry
+  // that silently zeroes a term makes every assertion about that term
+  // vacuous, which is exactly what happened with the circular version.
+  const g = toy(T_REF);
+  const enDot = dot(g.eRaw, g.eRawDot) / norm(g.eRaw);
+  const qnDot = dot(g.qRaw, g.qRawDot) / norm(g.qRaw);
+  assert.ok(Math.abs(enDot) > 1e-3, `d|e|/dt is ${enDot} km/s, so the unit-vector correction is untested`);
+  assert.ok(Math.abs(qnDot) > 1e-3, `d|q|/dt is ${qnDot} km/s, so the unit-vector correction is untested`);
+  // The Sun moves, so e' is not the observer's velocity and q' is not the
+  // target's -- a static Sun would make two more terms vacuous.
+  assert.ok(norm(sub(toy(T_REF + 1000).eRaw, g.eRaw)) > 0, 'e must vary');
+  // The near-floor geometry is inside the domain but close to its edge.
+  const near = deflectionDomain(toy(T_REF, NEAR_FLOOR).d, toy(T_REF, NEAR_FLOOR).eRaw);
+  assert.equal(near.supported, true);
+  assert.ok(near.elongationDeg > 5 && near.elongationDeg < 6, `${near.elongationDeg} deg`);
+});
+
+test('the derivative matches an independent reference at a point', () => {
+  // The mean-value test above establishes that DDot is a VALID enclosure
+  // over a cell. It cannot establish that it is the right derivative: on a
+  // cell whose input box is wide, DDot is wide too, and six mutations that
+  // dropped whole terms still enclosed every difference quotient.
+  //
+  // With degenerate inputs DDot is a near-point -- 3.5e-15 relative width
+  // -- so comparing it against a reference that shares no derivative
+  // formula with it is sharp. The reference is a Richardson-extrapolated
+  // central difference of `deflect`, which is itself settled bit for bit
+  // against the compiled ERFA; the step is large on purpose, because at
+  // these magnitudes the error is roundoff rather than truncation
+  // (measured: 3.06e-11 at h = 800 s falling to 2.85e-12 at h = 6400 s,
+  // against an h^4 truncation term below 1e-15).
+  const H = 6400;
+  const Dat = (t, o) => { const g = toy(t, o); return deflect(g.d, g.eRaw, g.qRaw).D; };
+  const reference = (t, o) => {
+    const cd = (h) => {
+      const a = Dat(t - h, o); const b = Dat(t + h, o);
+      return [0, 1, 2].map((i) => (b[i] - a[i]) / (2 * h));
+    };
+    const c1 = cd(H); const c2 = cd(2 * H);
+    return [0, 1, 2].map((i) => (4 * c1[i] - c2[i]) / 3);
+  };
+  let worst = 0;
+  let checked = 0;
+  for (const o of [{}, NEAR_FLOOR, { psi: 2.1 }, { psi: 0.3, aT: 1.52 }, { psi: 3.4, aT: 30 }]) {
+    for (const t of [T_REF, T_REF + 4e6, T_REF + 9e6]) {
+      const g = toy(t, o);
+      const r = callToy({
+        d: pointI(g.d), dDot: pointI(g.dDot), eRaw: pointI(g.eRaw),
+        eRawDot: pointI(g.eRawDot), qRaw: pointI(g.qRaw), qRawDot: pointI(g.qRawDot),
+      });
+      if (!r.ok) continue;                          // outside the supported domain
+      checked += 1;
+      const ref = reference(t, o);
+      for (let i = 0; i < 3; i += 1) {
+        const centre = (r.DDot[i].lo + r.DDot[i].hi) / 2;
+        worst = Math.max(worst, Math.abs(ref[i] - centre) / Math.abs(ref[i]));
+      }
+    }
+  }
+  assert.ok(checked >= 8, `only ${checked} geometries were inside the supported domain`);
+  assert.ok(worst < 1e-9,
+    `the derivative differs from the independent reference by ${worst} relative`);
+});
+
+test('the caller owns the chain rule on q, and it is load-bearing', () => {
+  // `deflectInterval` differentiates with respect to whatever variable the
+  // caller's `qRawDot` is in. In the search that variable is RECEPTION
+  // time while `q` is evaluated at EMISSION, so the caller must carry the
+  // `(1 - dtau/dt)` factor. Doing it inside would hide a chain rule in a
+  // routine that cannot see the light-time.
+  //
+  // This pins the obligation by showing what dropping it costs. It runs on
+  // a retarded toy with a light-time that varies linearly, so `dtau/dt` is
+  // a constant chosen here rather than solved for -- the point is the
+  // factor, not the light-time.
+  const TAU0 = 275;
+  const TAU_RATE = 3e-4;
+  const tau = (t) => TAU0 + TAU_RATE * (t - T_REF);
+  const K = 1 - TAU_RATE;
+  /** Observer and Sun at reception, target and Sun at emission. Hand-differentiated. */
+  const retarded = (t, withChainRule = true) => {
+    const now = toy(t);
+    const em = toy(t - tau(t));
+    const k = withChainRule ? K : 1;
+    return {
+      eRaw: now.eRaw,
+      eRawDot: now.eRawDot,
+      qRaw: em.qRaw,
+      qRawDot: em.qRawDot.map((x) => x * k),
+      // `d` and its derivative always carry the factor: this test is about
+      // `q` alone, and letting two things move at once would prove nothing.
+      d: sub(em.qRaw, now.eRaw),
+      dDot: sub(em.qRawDot.map((x) => x * K), now.eRawDot),
+    };
+  };
+  const call = (g) => deflectInterval(
+    pointI(g.d), pointI(g.dDot), I.iv(norm(g.d)),
+    pointI(g.eRaw), pointI(g.eRawDot), pointI(g.qRaw), pointI(g.qRawDot),
+  );
+  // The reference: a Richardson-extrapolated difference of `u` itself,
+  // which `deflect` returns directly -- so no cancellation, and no
+  // derivative formula shared with the thing under test.
+  const H = 6400;
+  const uAt = (t) => { const g = retarded(t); return deflect(g.d, g.eRaw, g.qRaw).u; };
+  const cd = (h) => {
+    const a = uAt(T_REF - h); const b = uAt(T_REF + h);
+    return [0, 1, 2].map((i) => (b[i] - a[i]) / (2 * h));
+  };
+  const c1 = cd(H); const c2 = cd(2 * H);
+  const reference = [0, 1, 2].map((i) => (4 * c1[i] - c2[i]) / 3);
+
+  const right = call(retarded(T_REF, true));
+  const wrong = call(retarded(T_REF, false));
+  assert.equal(right.ok, true, right.why);
+  assert.equal(wrong.ok, true);
+  const gap = (r) => Math.max(...[0, 1, 2].map((i) => {
+    const centre = (r.uDot[i].lo + r.uDot[i].hi) / 2;
+    return Math.abs(reference[i] - centre) / Math.abs(reference[i]);
+  }));
+  assert.ok(gap(right) < 1e-8, `with the chain rule the gap is ${gap(right)}`);
+  assert.ok(gap(wrong) > 1e-6,
+    `without it the gap is only ${gap(wrong)}; if that is now negligible this obligation is not load-bearing`);
+
+  // And the reason it has to be tested on `uDot` rather than `DDot`:
+  // `DDot = dDot + uDot` with |uDot| a tiny fraction of |dDot|, so the
+  // same error is four orders smaller there and invisible.
+  const dRel = Math.max(...[0, 1, 2].map((i) => {
+    const a = (right.DDot[i].lo + right.DDot[i].hi) / 2;
+    const b = (wrong.DDot[i].lo + wrong.DDot[i].hi) / 2;
+    return Math.abs(a - b) / Math.abs(a);
+  }));
+  const uRel = Math.max(...[0, 1, 2].map((i) => {
+    const a = (right.uDot[i].lo + right.uDot[i].hi) / 2;
+    const b = (wrong.uDot[i].lo + wrong.uDot[i].hi) / 2;
+    return Math.abs(a - b) / Math.abs(a);
+  }));
+  assert.ok(uRel / dRel > 1e3,
+    `the error should be far more visible in uDot than in DDot; ratio ${uRel / dRel}`);
 });
