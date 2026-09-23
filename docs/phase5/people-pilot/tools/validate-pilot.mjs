@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { resolvePeopleIndexPolicy } from '../../../../scripts/people-index-policy.mjs';
 import { inspectCohortSpacing } from './cohort-integrity.mjs';
+import { completeCivilDay } from './civil-day-bounds.mjs';
 import { createHash } from 'node:crypto';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -246,8 +247,7 @@ for (const person of people) {
   ) / 3_600_000;
   check(
     `complete civil-day bounds ${person.slug}`,
-    daySpanHours >= 23 && daySpanHours <= 25
-      && !computed.computation.civilDayEndUtc.includes('23:59'),
+    completeCivilDay(computed.computation.civilDayStartUtc, computed.computation.civilDayEndUtc),
     `${computed.computation.civilDayStartUtc} → ${computed.computation.civilDayEndUtc} (${daySpanHours}h)`,
   );
 }
