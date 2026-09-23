@@ -1,5 +1,5 @@
 {
- "note": "Output of tools/divergence-list-check.ts. \"before 1970\" rows are the rule; \"excluded name\" and \"after 1970\" rows are left to the host by design (src/data/tz-history/2025c/excluded.json) and are expected to move 0.",
+ "note": "Output of tools/divergence-list-check.ts. \"before 1970\" rows are the rule; \"excluded name\", \"after 1970\" and \"no local time (-00)\" rows are left to the host by design and are expected to move 0.",
  "host": {
   "node": "v22.22.2",
   "icu": "78.2",
@@ -8,9 +8,10 @@
  "summary": {
   "zones": 98,
   "segments": 193,
-  "before1970": 193,
-  "before1970Agree": 187,
+  "before1970": 185,
+  "before1970Agree": 179,
   "excludedName": 0,
+  "noLocalTime": 8,
   "after1970": 0
  },
  "disagreements": [
@@ -156,27 +157,27 @@
    "date": "1900-01-01",
    "short": false,
    "listedMinutes": -294,
-   "movedMinutes": -294,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Antarctica/Syowa",
    "date": "1898-08-06",
    "short": false,
    "listedMinutes": -186.86666666666667,
-   "movedMinutes": -186.86666666666667,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Antarctica/Syowa",
    "date": "1952-02-20",
    "short": false,
    "listedMinutes": -180,
-   "movedMinutes": -180,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Africa/Dar_es_Salaam",
@@ -543,27 +544,27 @@
    "date": "1898-05-04",
    "short": false,
    "listedMinutes": -690,
-   "movedMinutes": -690,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Antarctica/McMurdo",
    "date": "1928-01-03",
    "short": false,
    "listedMinutes": -750,
-   "movedMinutes": -750,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Antarctica/McMurdo",
    "date": "1928-06-23",
    "short": false,
    "listedMinutes": -690,
-   "movedMinutes": -690,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Africa/Porto-Novo",
@@ -1020,18 +1021,18 @@
    "date": "1920-12-31",
    "short": false,
    "listedMinutes": -600,
-   "movedMinutes": -600,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Antarctica/DumontDUrville",
    "date": "1954-06-08",
    "short": false,
    "listedMinutes": -600,
-   "movedMinutes": -600,
-   "kind": "before 1970",
-   "agrees": true
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
   },
   {
    "zone": "Africa/Mogadishu",

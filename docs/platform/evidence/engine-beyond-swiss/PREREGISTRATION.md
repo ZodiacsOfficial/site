@@ -167,9 +167,13 @@ Each step names its rule's source. Baselines are the shipped engine,
   exactly: an AI reviewer's separate brute-force model agreed on 12.17
   million wall times with 0 failures (a review probe, not committed). The audit's list was built against a different
   reference, Debian's tzdata 2025b, so it is checked as well
-  (`corpora/tzdb-divergence-98-check.json`): 187 of its 193 segments
-  reproduce to the minute. The other six are differences in that reference,
-  not the resolver:
+  (`corpora/tzdb-divergence-98-check.json`). Eight of its 193 segments are
+  spans tzdb marks "-00", no local time yet (Kerguelen, Syowa, McMurdo,
+  Dumont d'Urville), which that reference reads as UTC; since the review of
+  step 1.12 the site reads the browser's offset there instead. Of the other
+  185, 179 reproduce to the minute (the first run of this check, before that
+  change, reproduced 187 of 193). The remaining six are differences in the
+  reference, not the resolver:
   - America/Tijuana, three segments (1953, 1961, 1962). Release 2025c
     changed this history: "Baja California agreed with California's DST
     rules in 1953 and in 1961 through 1975" (tzdb NEWS). The host and the
@@ -181,7 +185,7 @@ Each step names its rule's source. Baselines are the shipped engine,
     name (`scripts/build-tz-lmt.mjs`, `zoneNames`).
 
   Scored against the list as built rather than the pinned reference, the
-  verdict would be PARTIAL, 187 of 193.
+  verdict would be PARTIAL, 179 of 193.
 
 ### 1.13 Julian calendar input (version 1, M3; version 2)
 

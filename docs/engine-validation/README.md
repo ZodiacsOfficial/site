@@ -182,19 +182,23 @@ Since the same day, the legal offsets of a birthplace time before 1970 come
 from that pinned release too, backzone included (`src/data/tz-history/`, by
 `scripts/build-tz-history.mjs`, which compiles it with zic): the host's data
 is tzdb's default build, which gives a merged place another city's history
-before 1970. For 89 of the 356 zones in the birthplace index the two differ
-on some day from 1900 to 1969, 58 of them by an hour or more
-([`tz-history-2025c/`](../platform/evidence/tz-history-2025c/)); Stockholm on
-1 July 1947 resolves on Sweden's +1:00, not Berlin's +2:00, and Amsterdam in
-1900 on Amsterdam Mean Time's +0:19:32, not Brussels's +0:00. From 1970 on the
-host decides. Seventeen names whose pinned history also differs after 1970,
-none in the birthplace index, keep the host's history throughout.
+before 1970. For 85 of the 356 zones in the birthplace index the two differ
+at some point in the legal time from 1900 to 1970, 55 of them by an hour or
+more ([`tz-history-2025c/`](../platform/evidence/tz-history-2025c/));
+Stockholm on 1 July 1947 resolves on Sweden's +1:00, not Berlin's +2:00, and
+Amsterdam in 1900 on Amsterdam Mean Time's +0:19:32, not Brussels's +0:00.
+From 1970 on the host decides. Seventeen names keep the host's history
+throughout, none in the birthplace index: sixteen whose pinned history also
+differs after 1970, and Asia/Hanoi, which the host does not know.
 
 Not established: which IANA version any given visitor's runtime carries. From
 1970 on the history is the host's, so two machines can legitimately disagree
-on a birth there; before 1970, in the zones of the birthplace index, a
-birthplace time no longer depends on the host. Nor is backzone established as right: its maintainers call it less
-reliable than the main data. Signed fixed-offset receipt syntax and exact-pole
+on a birth there. Before 1970, in the zones of the birthplace index, the
+offsets no longer come from the host, but the host still decides whether it
+knows the zone name at all, whether an unknown-time noon falls on the birth
+date, and the offsets of wall times late on 31 December 1969 west of
+Greenwich, whose instants fall in 1970. Nor is backzone established as
+right: its maintainers call it less reliable than the main data. Signed fixed-offset receipt syntax and exact-pole
 coverage are declared limitations, and the separate local-date endpoint
 interval and policy defects are recorded as unresolved, not fixed.
 

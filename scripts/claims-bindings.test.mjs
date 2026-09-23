@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { eventsCatalog } from '../src/lib/events/catalog.ts';
 import { bodyLongitude } from '../src/lib/engine/full.ts';
 import { solarReturnInstant } from '../src/lib/engine/solar-return.ts';
-import { resolveLocalToUtc } from '../src/lib/time/localToUtc.ts';
+import { prepareLocalTime, resolveLocalToUtc } from '../src/lib/time/localToUtc.ts';
 
 /*
  * Sentences that state a measured accuracy, held to the measurement behind
@@ -112,5 +112,14 @@ describe('the pinned zone history on the methodology page', () => {
     expect(page).toContain(`for ${measured.divergentZones} of the ${measured.indexZones} time zones in our city index`);
     expect(page).toContain(`${measured.divergentByAnHourOrMore} of them by an hour or more`);
     expect(measured.divergent['Europe/Stockholm']).toBeDefined();
+  });
+
+  it('gives the Stockholm example as the resolver reads it', async () => {
+    await prepareLocalTime('1947-07-01', 'Europe/Stockholm');
+    expect(resolveLocalToUtc('1947-07-01', '12:00', 'Europe/Stockholm').utc.toISOString()).toBe('1947-07-01T10:00:00.000Z');
+    expect(resolveLocalToUtc('1947-07-01', '12:00', 'Europe/Stockholm', { longitude: 18.07 }).utc.toISOString())
+      .toBe('1947-07-01T11:00:00.000Z');
+    const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
+    expect(page).toContain('a Stockholm birth reads 10:00 UTC with Berlin\'s summer time in the browser\'s history, where Sweden kept +1:00 and the chart uses 11:00');
   });
 });
