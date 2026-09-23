@@ -10,6 +10,8 @@ const BUFFALO = -78.88;
 const BREST = -4.49;
 const OMAHA = -95.94;
 const NEW_YORK = -74.01;
+const CHICAGO = -87.65;
+const PARIS = 2.35;
 const HARTFORD = -72.69;
 const PORTO = -8.61;
 const GALWAY = -9.05;
@@ -41,12 +43,24 @@ describe('birthplace local mean time', () => {
     expect(zoneOnly.localMeanTime).toBeUndefined();
   });
 
-  it('agrees with the zone at its own reference city', () => {
-    // New York's mean time is tzdb's −4:56:02; 74.01° W rounds to the same second.
-    const withPlace = resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: NEW_YORK });
-    const zoneOnly = resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York');
+  it.each([
+    // New York's mean time is tzdb's −4:56:02, Chicago's −5:50:36; the city
+    // index's 74.01° W and 87.65° W round to the same seconds.
+    ['New York 1870', '1870-06-15', 'America/New_York', NEW_YORK],
+    ['Chicago 1880', '1880-06-15', 'America/Chicago', CHICAGO],
+  ])('agrees with the zone at its own reference city: %s', (_label, date, zone, longitude) => {
+    const withPlace = resolveLocalToUtc(date, '12:00', zone, { longitude });
+    const zoneOnly = resolveLocalToUtc(date, '12:00', zone);
     expect(withPlace.utc.toISOString()).toBe(zoneOnly.utc.toISOString());
     expect(withPlace.offsetMinutes).toBeCloseTo(zoneOnly.offsetMinutes, 9);
+  });
+
+  it('moves Paris before 1891 by the 3 s between the city index and tzdb', () => {
+    // tzdb's Paris mean time is +0:09:21; the index's 2.35° E is +0:09:24.
+    const resolved = resolveLocalToUtc('1880-06-15', '12:00', 'Europe/Paris', { longitude: PARIS });
+    expect(resolved.utc.toISOString()).toBe('1880-06-15T11:50:36.000Z');
+    expect(resolved.offsetMinutes).toBeCloseTo(minutes(0, 9, 24), 9);
+    expect(resolved.localMeanTime?.zoneOffsetMinutes).toBeCloseTo(minutes(0, 9, 21), 9);
   });
 
   it.each([

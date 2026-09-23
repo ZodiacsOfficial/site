@@ -137,7 +137,15 @@ milliseconds comparison correction, nine civil controls that stayed valid, and
 executed on two Node majors and again in Chrome 152 offline.
 
 Conventions, stated rather than implied: a spring-forward gap shifts forward;
-a fall-back fold selects the earlier instant; both are flagged. Offsets with
+a fall-back fold selects the earlier instant; both are flagged. The engine
+audit's all-zone round-trip scan is a test
+(`src/lib/time/localToUtc-roundtrip.test.ts`): every offset change the host
+knows in every zone from 1850 to 2100, with the wall minutes around each
+compared against a brute-force reading of every nearby offset. By default it
+steps two weeks to find changes and tests each edge; `TZ_SCAN=full` repeats
+the audit's daily step and sampling, which on Node 22.22 (ICU 78.2, tzdata
+2025c) is 42,861 changes and 1,675,757 wall minutes in 418 zones, with no
+disagreement. Offsets with
 seconds survive (Mexico City's −6:36:36 before 1922 is a live case).
 
 Since 2026-09-23 the site, though not `@zodiacs/engine/geo`, reads a birth
