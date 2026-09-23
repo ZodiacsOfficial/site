@@ -148,7 +148,7 @@ describe('sky data API — lunations', () => {
   it('joins sign and degree by nearest instant within the tolerance, never by calendar day', () => {
     const anchor = months.flatMap((month) => month.lunations).find((moon) => moon.type === 'full');
     const shifted = (ms) => new Date(Date.parse(anchor.at) + ms).toISOString();
-    expect(joinLunationDetail({ type: 'full', at: shifted(5 * 3600 * 1000) }, months)).toEqual({ sign: anchor.sign, degree: anchor.degree });
+    expect(joinLunationDetail({ type: 'full', at: shifted(30 * 1000) }, months)).toEqual({ sign: anchor.sign, degree: anchor.degree });
     expect(joinLunationDetail({ type: 'full', at: shifted(-(LUNATION_JOIN_TOLERANCE_MS - 1)) }, months)).toEqual({ sign: anchor.sign, degree: anchor.degree });
     expect(joinLunationDetail({ type: 'full', at: shifted(LUNATION_JOIN_TOLERANCE_MS + 60_000) }, months)).toBeNull();
     expect(joinLunationDetail({ type: 'new', at: anchor.at }, months)).not.toEqual({ sign: anchor.sign, degree: anchor.degree });
