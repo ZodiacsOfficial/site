@@ -1,6 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { eventsCatalog } from '../src/lib/events/catalog.ts';
+import { bodyLongitude } from '../src/lib/engine/full.ts';
+import { solarReturnInstant } from '../src/lib/engine/solar-return.ts';
+import { resolveLocalToUtc } from '../src/lib/time/localToUtc.ts';
 
 /*
  * Sentences that state a measured accuracy, held to the measurement behind
@@ -52,5 +55,21 @@ describe('event times against Swiss Ephemeris', () => {
     expect(band).toContain('this time can be off by up to about half an hour.');
     expect(band).toContain('so slowly that this time can be off by several hours.');
     expect(read('src/pages/events/index.astro')).toContain('Uranus, Neptune or Pluto by several hours');
+  });
+});
+
+describe('the solar return with an unknown birth time', () => {
+  it('can move by up to about 12 hours, as the page and the result notice say', () => {
+    // The widest case of a 1930-2010 sweep of five zones: a birth at the start of the day.
+    const date = '1958-10-15';
+    const noon = resolveLocalToUtc(date, '12:00', 'Pacific/Pago_Pago').utc;
+    const midnight = resolveLocalToUtc(date, '00:00', 'Pacific/Pago_Pago').utc;
+    const near = new Date(Date.UTC(2026, 9, 15, 12));
+    const shift = Math.abs(solarReturnInstant(bodyLongitude('Sun', midnight), near).getTime()
+      - solarReturnInstant(bodyLongitude('Sun', noon), near).getTime()) / 3_600_000;
+    expect(shift).toBeGreaterThan(11.5);
+    expect(shift).toBeLessThan(12.5);
+    expect(read('src/pages/solar-return/index.astro')).toContain('shift the return by up to about 12 hours');
+    expect(read('src/islands/solar-return/copy.ts')).toContain('can shift by up to about 12 hours');
   });
 });
