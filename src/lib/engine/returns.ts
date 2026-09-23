@@ -8,18 +8,12 @@
  * Lives beside full.ts and is only ever lazy-loaded with it — the
  * ephemeris stays out of every eager bundle.
  */
-import { bodyLongitude } from './full.js';
+import { bodyLongitude, longitudeSpeed } from './full.js';
 import { findLongitudeCrossingsWith } from './longitude-crossings.js';
 import type { LongitudeCrossing } from './longitude-crossings';
 import type { BodyName } from './types';
 
 const DAY = 86400_000;
-
-/** Signed shortest angular distance a→b, degrees (−180, 180]. */
-function delta(a: number, b: number): number {
-  const d = (((b - a) % 360) + 360) % 360;
-  return d > 180 ? d - 360 : d;
-}
 
 export type Crossing = LongitudeCrossing;
 
@@ -80,11 +74,9 @@ export interface SaturnReturnResult {
  */
 export function saturnReturns(birthUtc: Date): SaturnReturnResult {
   const natalLon = bodyLongitude('Saturn', birthUtc);
-  const speed =
-    delta(
-      bodyLongitude('Saturn', new Date(birthUtc.getTime() - DAY)),
-      bodyLongitude('Saturn', new Date(birthUtc.getTime() + DAY)),
-    ) / 2;
+  // The chart's own speed, so the two never disagree about the direction
+  // near a station.
+  const speed = longitudeSpeed('Saturn', birthUtc);
 
   // Scan +26y..+92y: the first return can't land before ~28y, but a
   // retrograde first pass can lead the exact-age mark by many months.
