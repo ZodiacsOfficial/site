@@ -1,0 +1,212 @@
+From 805126fa1ba0701b6256226b6ac7dc1fc509b3d6 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Wed, 23 Sep 2026 07:59:57 +0000
+Subject: [PATCH 2/4] Take speeds as the derivative of the reported longitude
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Every body's speed was a central difference over ±0.25 day. For the Moon
+that leaves up to 8.9″ a day of error at perigee against Swiss Ephemeris'
+own speeds, 7.55″ of it from the step alone (audit ledger, finding 1g). The
+Saturn return scan took natal Saturn's direction from a separate ±1-day
+difference, so at a station the two could disagree for about 40 s.
+
+The planets and the Moon now use ±0.001 day (86.4 s). That differentiates
+the longitude the engine reports with no frame bookkeeping. The Moon's step
+error is left at 0.0015″ a day, and each body still costs two extra
+evaluations. The true node keeps ±0.25 day: its short-period noise makes
+smaller steps worse against Swiss' true node, and its gates depend on it.
+computeSaturnReturns takes the natal direction from the same speed.
+
+Tests: every body's speed matches a ±1e-4-day difference of its longitude
+to 0.01″ a day, every third day of 2025. Node speed equals the six-hour
+difference. retrograde matches the sign of the speed. The Saturn return
+scan agrees with the chart on both sides of the 2026-07-26 station. The
+bounds test's ephemeris mock gains the two new names.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01SGUSXTX75fHU1eyUdSTnef
+---
+ packages/engine/src/ephemeris.ts           | 13 +++-
+ packages/engine/src/returns-bounds.test.ts |  6 +-
+ packages/engine/src/returns.ts             |  9 +--
+ packages/engine/src/speed.test.ts          | 79 ++++++++++++++++++++++
+ packages/engine/src/types.ts               |  5 +-
+ 5 files changed, 104 insertions(+), 8 deletions(-)
+ create mode 100644 packages/engine/src/speed.test.ts
+
+diff --git a/packages/engine/src/ephemeris.ts b/packages/engine/src/ephemeris.ts
+index f7ad64f..949aec7 100644
+--- a/packages/engine/src/ephemeris.ts
++++ b/packages/engine/src/ephemeris.ts
+@@ -75,9 +75,18 @@ export function bodyLongitude(body: BodyName, date: Date): number {
+   return longitudeAt(body, date);
+ }
+ 
+-/** Longitude speed by a central difference over plus/minus six hours. */
++/**
++ * Longitude speed in degrees per day: the derivative of the longitude this
++ * engine reports, by a central difference over plus/minus 0.001 day (86.4 s).
++ * The true node keeps plus/minus six hours, where its short-period noise
++ * would otherwise dominate.
++ */
++export const SPEED_STEP_DAYS = 0.001;
++export const NODE_SPEED_STEP_DAYS = 0.25;
++
+ export function longitudeSpeed(body: BodyName, date: Date): number {
+-  const stepDays = 0.25;
++  const stepDays =
++    body === "North Node" || body === "South Node" ? NODE_SPEED_STEP_DAYS : SPEED_STEP_DAYS;
+   const before = longitudeAt(body, new Date(date.getTime() - stepDays * 86_400_000));
+   const after = longitudeAt(body, new Date(date.getTime() + stepDays * 86_400_000));
+   let difference = after - before;
+diff --git a/packages/engine/src/returns-bounds.test.ts b/packages/engine/src/returns-bounds.test.ts
+index e222029..4a18e6d 100644
+--- a/packages/engine/src/returns-bounds.test.ts
++++ b/packages/engine/src/returns-bounds.test.ts
+@@ -2,7 +2,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
+ import { bodyLongitude } from "./ephemeris.js";
+ import { computeSaturnReturns, findLongitudeCrossings } from "./returns.js";
+ 
+-vi.mock("./ephemeris.js", () => ({ bodyLongitude: vi.fn() }));
++vi.mock("./ephemeris.js", () => ({
++  SPEED_STEP_DAYS: 0.001,
++  bodyLongitude: vi.fn(),
++  longitudeSpeed: vi.fn()
++}));
+ 
+ const DAY = 86_400_000;
+ const start = new Date("2024-01-01T00:00:00Z");
+diff --git a/packages/engine/src/returns.ts b/packages/engine/src/returns.ts
+index 7798bb7..27cc013 100644
+--- a/packages/engine/src/returns.ts
++++ b/packages/engine/src/returns.ts
+@@ -1,4 +1,4 @@
+-import { bodyLongitude } from "./ephemeris.js";
++import { SPEED_STEP_DAYS, bodyLongitude, longitudeSpeed } from "./ephemeris.js";
+ import type { BodyName } from "./types.js";
+ 
+ const DAY = 86_400_000;
+@@ -173,8 +173,9 @@ export function groupIntoSeasons(
+ 
+ export function computeSaturnReturns(birthUtc: Date): SaturnReturnResult {
+   const birthTime = validMilliseconds(birthUtc, "Birth date");
+-  const before = new Date(birthTime - DAY);
+-  const after = new Date(birthTime + DAY);
++  // The chart's own speed decides the natal direction, so the two agree at a station.
++  const before = new Date(birthTime - SPEED_STEP_DAYS * DAY);
++  const after = new Date(birthTime + SPEED_STEP_DAYS * DAY);
+   const from = new Date(birthTime + 26 * 365.25 * DAY);
+   const to = new Date(birthTime + 92 * 365.25 * DAY);
+   validMilliseconds(before, "Natal speed window start");
+@@ -182,7 +183,7 @@ export function computeSaturnReturns(birthUtc: Date): SaturnReturnResult {
+   validMilliseconds(from, "Saturn return window start");
+   validMilliseconds(to, "Saturn return window end");
+   const natalLon = bodyLongitude("Saturn", birthUtc);
+-  const speed = signedDelta(bodyLongitude("Saturn", before), bodyLongitude("Saturn", after)) / 2;
++  const speed = longitudeSpeed("Saturn", birthUtc);
+ 
+   return {
+     natalLon,
+diff --git a/packages/engine/src/speed.test.ts b/packages/engine/src/speed.test.ts
+new file mode 100644
+index 0000000..d1aa1e3
+--- /dev/null
++++ b/packages/engine/src/speed.test.ts
+@@ -0,0 +1,79 @@
++import { describe, expect, it } from "vitest";
++
++import { NODE_SPEED_STEP_DAYS, bodyLongitude, computeBodies, longitudeSpeed } from "./ephemeris.js";
++import { computeSaturnReturns } from "./returns.js";
++import { natalChart } from "./api.js";
++import type { BodyName } from "./types.js";
++
++const DAY = 86_400_000;
++const BODIES: BodyName[] = [
++  "Sun",
++  "Moon",
++  "Mercury",
++  "Venus",
++  "Mars",
++  "Jupiter",
++  "Saturn",
++  "Uranus",
++  "Neptune",
++  "Pluto"
++];
++
++function centralDifference(body: BodyName, date: Date, stepDays: number): number {
++  const before = bodyLongitude(body, new Date(date.getTime() - stepDays * DAY));
++  const after = bodyLongitude(body, new Date(date.getTime() + stepDays * DAY));
++  let difference = after - before;
++  if (difference > 180) difference -= 360;
++  if (difference < -180) difference += 360;
++  return difference / (2 * stepDays);
++}
++
++describe("longitude speeds", () => {
++  it("are the derivative of the reported longitude to 0.01″ a day", () => {
++    let worst = 0;
++    for (let t = Date.UTC(2025, 0, 1); t < Date.UTC(2026, 0, 1); t += 3 * DAY) {
++      for (const body of BODIES) {
++        const date = new Date(t);
++        const error =
++          Math.abs(longitudeSpeed(body, date) - centralDifference(body, date, 1e-4)) * 3600;
++        worst = Math.max(worst, error);
++      }
++    }
++    expect(worst).toBeLessThan(0.01);
++  });
++
++  it("keep the true node's six-hour difference", () => {
++    for (const iso of ["1990-02-01T12:00:00Z", "2026-07-15T11:15:00Z", "2040-12-31T23:59:59Z"]) {
++      const date = new Date(iso);
++      expect(longitudeSpeed("North Node", date)).toBe(
++        centralDifference("North Node", date, NODE_SPEED_STEP_DAYS)
++      );
++    }
++  });
++
++  it("set retrograde from the sign of the speed for every body", () => {
++    for (const row of computeBodies(new Date("2024-04-01T22:14:00Z"))) {
++      expect(row.retrograde).toBe(row.speed < 0);
++    }
++  });
++});
++
++describe("natal Saturn direction in the return scan", () => {
++  // Saturn stations retrograde on 2026-07-26; this speed changes sign near 19:57:39.6Z.
++  it.each([
++    "2026-07-26T19:57:16.990Z",
++    "2026-07-26T19:57:29.612Z",
++    "2026-07-26T19:57:49.612Z",
++    "1990-02-01T12:00:00Z"
++  ])("agrees with the chart at %s", (iso) => {
++    const utc = new Date(iso);
++    const saturn = natalChart({
++      utc,
++      latitude: 0,
++      longitude: 0,
++      houseSystem: "whole",
++      timeKnown: true
++    }).bodies.find((row) => row.body === "Saturn")!;
++    expect(computeSaturnReturns(utc).natalRetrograde).toBe(saturn.retrograde);
++  });
++});
+diff --git a/packages/engine/src/types.ts b/packages/engine/src/types.ts
+index 8aca1c8..c165a08 100644
+--- a/packages/engine/src/types.ts
++++ b/packages/engine/src/types.ts
+@@ -80,7 +80,10 @@ export interface BodyPosition {
+   lon: number;
+   /** Ecliptic latitude, degrees (zero for the Moon nodes). */
+   lat: number;
+-  /** Longitude speed in degrees/day; negative means retrograde. */
++  /**
++   * Longitude speed in degrees/day, the derivative of `lon` over plus/minus
++   * 0.001 day (the nodes: plus/minus 0.25 day); negative means retrograde.
++   */
+   speed: number;
+   retrograde: boolean;
+   sign: ZodiacSign;

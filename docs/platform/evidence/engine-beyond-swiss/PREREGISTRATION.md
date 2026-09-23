@@ -58,8 +58,10 @@ Each step names its rule's source. Baselines are the shipped engine,
   in the scan and misclassifies 486 (0.205 %): every applying aspect whose orb
   is under 0.01 × the relative speed (ledger angles-houses-aspects-2).
 - **Verdict: NOT RUN.** A package change. It is written on a local rc.7
-  branch of the SDK, where the scan gave 0 of 236,932; that branch is not
-  pushed, so the figure cannot be checked from this repository yet.
+  branch of the SDK, kept as patches in `rc7-phase1/` until that branch can
+  be pushed. There the scan gave 0 of 236,932. The scan runs on Swiss's
+  positions, which are named by digest and not committed, so the figure
+  cannot be checked from this repository alone.
 
 ### 1.3 True obliquity for angles and Placidus (version 1, rule 1b)
 
@@ -78,7 +80,10 @@ Each step names its rule's source. Baselines are the shipped engine,
   of the mean one gives p50 0.065″, p95 0.240″, max 6.36″ and 0.36″ for
   |lat| ≤ 45, inside the rule's ERFA gates. `scripts/angles-grid.test.mjs`
   pins both, and is written to fail when rc.7 lands.
-- **Verdict: NOT RUN.** See amendment A1.
+- **Verdict: NOT RUN.** See amendment A1. The change is written on the local rc.7
+  branch as patch `0004` in `rc7-phase1/`, where twelve anchors from the ERFA
+  arbiter pass the rule's gates. The verdict on the full grid waits for rc.7
+  to be vendored.
 
 ### 1.4 Observed ΔT with a band (version 1, rule 1c)
 
@@ -133,7 +138,7 @@ Each step names its rule's source. Baselines are the shipped engine,
   (angles-houses-aspects-10).
 - **Verdict: PARTIAL.** Natal Saturn's direction now comes from the chart's
   own speed (1.8c, landed). The speeds themselves are a package change on the
-  local rc.7 branch. See amendment A3.
+  local rc.7 branch, kept as patches in `rc7-phase1/`. See amendment A3.
 
 ### 1.9 Placidus polar limit (version 1, rule 1h)
 
