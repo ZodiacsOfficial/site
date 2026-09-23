@@ -228,15 +228,7 @@ export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader):
   const { resolveSavedChart } = await loadModule(() => import('../lib/profile/resolve'));
   const resolved = await resolveSavedChart(chart, loadEngine);
   const { summary } = resolved;
-  // A recomputed summary is kept through the profile refresh's compare-and-set,
-  // which leaves birth input and timestamps alone.
-  if (summary !== chart.summary) {
-    await import('../lib/profile/store')
-      .then(({ updateChartSummaries }) => updateChartSummaries([
-        { id: chart.id, utcISO: chart.summary.utcISO, summary },
-      ]))
-      .catch(() => {});
-  }
+  // Comparing reads a saved chart and never writes it back.
   return {
     label: handleOf(chart.name),
     bodies: resolved.bodies,

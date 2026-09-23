@@ -262,23 +262,23 @@ describe('saved comparison calculation coherence', () => {
     expect(saved.summary.angles).toEqual({ asc: 0, mc: 0 });
   });
 
-  it('writes the recomputed summary back to the saved chart without changing its record', async () => {
+  it('compares the recomputed summary without writing the saved chart back', async () => {
     const saved = legacySaved();
-    const storage = new Map([[PROFILE_KEY, JSON.stringify({ ...EMPTY_PROFILE, charts: [saved] })]]);
+    const stored = JSON.stringify({ ...EMPTY_PROFILE, charts: [saved] });
+    const setItem = vi.fn();
     vi.stubGlobal('localStorage', {
-      getItem: (key: string) => storage.get(key) ?? null,
-      setItem: (key: string, value: string) => storage.set(key, value),
+      getItem: (key: string) => (key === PROFILE_KEY ? stored : null),
+      setItem,
     });
     const dispatchEvent = vi.fn();
     vi.stubGlobal('window', { dispatchEvent });
 
-    await resolveSaved(loadProfile().charts[0], async () => engine);
+    const person = await resolveSaved(loadProfile().charts[0], async () => engine);
 
-    const [stored] = loadProfile().charts;
-    expect(stored.summary.engineVersion).toBe(ENGINE_VERSION);
-    expect(stored.summary.angles!.asc).toBeCloseTo(23.872, 3);
-    expect({ ...stored, summary: saved.summary }).toEqual(saved);
-    expect(dispatchEvent).toHaveBeenCalledOnce();
+    expect(person.positions.engineVersion).toBe(ENGINE_VERSION);
+    expect(person.asc).toBeCloseTo(23.872, 3);
+    expect(setItem).not.toHaveBeenCalled();
+    expect(dispatchEvent).not.toHaveBeenCalled();
   });
 
   it('keeps positions-only comparisons unchanged and never fabricates a house ring or latitude', async () => {
