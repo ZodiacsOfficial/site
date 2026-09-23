@@ -200,10 +200,21 @@ Each step names its rule's source. Baselines are the shipped engine,
 
 - **Rule.** Every public sentence about accuracy, time handling or privacy
   has an evidence path; any sentence without one is removed.
-- **Verdict: PARTIAL.** The corrections the audit and fact-check found in
-  English copy have landed, each bound to its measurement by
-  `scripts/claims-bindings.test.mjs`. The full ledger, listing every such
-  sentence, has not.
+- **Verdict: PARTIAL.** `docs/claims/ledger.json` lists the 1,075 public
+  sentences its trigger lists select in 1,390 files, each with the claim it
+  makes (74 claims) or the listed reason it makes none (277), and
+  `scripts/claims-ledger.test.mjs` holds the copy to it. The corrections the
+  audit, the fact-check and the ledger's own research found in English copy
+  have landed, the measured ones bound by `scripts/claims-bindings.test.mjs`.
+  68 claims are supported. 43 sentences are not, and are still public: four
+  overstated claims (the positions-only chart code, 7 sentences, owner
+  decision 10.4 with step 1.15; the receipt's "apparent" label, a receipt
+  value rather than a sentence, step 1.11; the rising-sign guides, 12; the
+  English catalog, 1) and two stale ones (the es/fr/it/pt pages the English
+  has moved past, 23). The guides, the catalog and the translations are
+  protected by the scope guard, and the chart code waits on the owner, so
+  none was removed; each has what closes it. A sentence that uses none of
+  the trigger words is outside the ledger.
 
 ### 1.15 The share token (version 2)
 
