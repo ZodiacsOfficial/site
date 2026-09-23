@@ -87,9 +87,14 @@ const jsonLd = [
         Across the 160 measurements from 1801 to 2026, the median
         disagreement in longitude is <strong>1.6 arcseconds</strong>, the
         95th percentile is <strong>12.1 arcseconds</strong>, and the largest
-        is <strong>18.6 arcseconds</strong> — Pluto in 1801. A zodiac sign is
-        30 degrees, which is 108,000 arcseconds, so a difference that size
-        changes a sign only for a body within 18.6 arcseconds of its edge.
+        is <strong>18.6 arcseconds</strong> — Pluto in 1801. Dates picked in
+        advance can miss a body's worst moments, so on 23 September 2026 we
+        also compared every tenth day from 1800 to 2199, at noon UTC, for the
+        ten bodies and the North Node. Up to 2026 that is 91,201 comparisons,
+        with a median of 1.9 arcseconds and a largest of{' '}
+        <strong>23.0 arcseconds</strong> — Venus in 1878. A zodiac sign is 30
+        degrees, which is 108,000 arcseconds, so a difference that size
+        changes a sign only for a body within 23 arcseconds of its edge.
       </p>
       <p>
         The other 20 measurements are the far-future cases, and two of them
@@ -101,9 +106,12 @@ const jsonLd = [
         seconds where this engine reads 202.7, a gap of 109.5 seconds, and
         the Moon moves about half an arcsecond per second of time — which
         accounts for about 60 of those 64.8 arcseconds. The 2190 case was not
-        taken apart the same way; the clock is the likely cause there too. Nobody knows ΔT that
-        far ahead. Its present value is known, and there this engine's formula
-        is already off: on 22 September 2026 it reads 75.5 seconds where the
+        taken apart the same way, but the every-tenth-day comparison settles
+        it: at the same instant of Terrestrial Time, which takes the clock
+        out, the Moon stays within 7.1 arcseconds from 2150 to 2199, where at
+        the same UT it reaches 183.1 arcseconds. Nobody knows ΔT that far
+        ahead. Its present value is known, and there this engine's formula is
+        already off: on 22 September 2026 it reads 75.5 seconds where the
         IERS value is 69.2, which on its own moves the Moon about 3.5
         arcseconds.
       </p>

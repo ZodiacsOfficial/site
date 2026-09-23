@@ -212,13 +212,15 @@ Each step names its rule's source. Baselines are the shipped engine,
 
 - **Rule.** Every public sentence about accuracy, time handling or privacy
   has an evidence path; any sentence without one is removed.
-- **Verdict: PARTIAL.** `docs/claims/ledger.json` lists the 1,075 public
-  sentences its trigger lists select in 1,390 files, each with the claim it
-  makes (74 claims) or the listed reason it makes none (277), and
-  `scripts/claims-ledger.test.mjs` holds the copy to it. The corrections the
-  audit, the fact-check and the ledger's own research found in English copy
-  have landed, the measured ones bound by `scripts/claims-bindings.test.mjs`.
-  68 claims are supported. 43 sentences are not, and are still public: four
+- **Verdict: PARTIAL.** `docs/claims/ledger.json` listed, when it landed
+  (`3a8f22e3`), the 1,075 public sentences its trigger lists select in 1,390
+  files, each with the claim it makes (74 claims) or the listed reason it
+  makes none (277), and `scripts/claims-ledger.test.mjs` holds the copy to
+  it; later commits add to it, and `node scripts/claims-ledger.mjs --summary`
+  prints the current counts. The corrections the audit, the fact-check and
+  the ledger's own research found in English copy have landed, the measured
+  ones bound by `scripts/claims-bindings.test.mjs`. 68 of those 74 claims
+  are supported. 43 sentences are not, and are still public: four
   overstated claims (the positions-only chart code, 7 sentences, owner
   decision 10.4 with step 1.15; the receipt's "apparent" label, a receipt
   value rather than a sentence, step 1.11; the rising-sign guides, 12; the
@@ -246,7 +248,7 @@ Each step names its rule's source. Baselines are the shipped engine,
 | 1. This file and the corpora | Done, except the multi-year distribution (item 4). |
 | 2. Appended corrections | Done. Every file version 1 lists carries a dated correction beside the passage, with the original kept. The ΔT correction is appended to `docs/engine-validation/README.md` and `swiss-benchmark/RESULTS.md`; on the methodology page it and the mean obliquity are rewritten in place, since a reader's page cannot carry both wordings. In the validation report, the "1.57″ worst angle" row and Swiss's polar limit (90° − ε, about 66.56°), with four other passages the claims ledger found, are corrected in place because step 1.14 holds the report's sentences to their evidence, and their earlier wording is appended under the report's *Corrections*. Appended on 2026-09-23: `numerics/RESULTS.md` (the `.se1` files are DE441-based; the Moon's 0.0107″ is the DE440-versus-DE441 lunar difference); `PARTITION-RESULTS.md` (the widest floor cell, not span; 11 of the 42 test families record their mutation, and one of those does not hold); `CHART-ADAPTER-CONTRACT.md` (UTC → TT, the nutation model, the nodes, a coverage policy); `examples/00-prepare-a-pack.md` (423 tests); `METADATA-CORRECTION.md` and `LICENSING.md` (every tracked file of Swiss output, listed). `compiler/RESULTS.md` §11 also carries the public-domain correction `RIGHTS.md` made. |
 | 3. Premises and the frame decomposition | The three false premises are recorded (brief v2, R8). The pyerfa decomposition of Horizons's IAU 1976/1980 frame on the 24-instant corpus has not been run; the corpus it needs is now in `corpora/horizons-24/`. |
-| 4. Multi-year distribution fixture | Not done. The numbers are in `../engine-audit-2026-09-22/CRITIC.md`. |
+| 4. Multi-year distribution fixture | Done. `../swiss-benchmark/multiyear-1800-2199.json`: every tenth day from 1800 to 2199, the ten bodies and the true node, statistics only, at the same UT and at the same TT. It reproduces the critic's maxima (Venus 22.9″, Pluto 29.1″ at the same TT). The methodology and developer engine pages and the validation report quote it beside the 160-measurement sample, whose 18.6″ was not the worst up to 2026 (Venus reaches 23.0″ in 1878), and `scripts/methodology-accuracy-claim.test.mjs` binds them to it. |
 | 5. `lite.ts` header and fixture test | Done, with one deviation: the test measures `lite.ts` against the full engine at 50 instants, not against a Swiss fixture, so no Swiss output is committed under `src/`. |
 | 6. Commit the audit, its evidence and both briefs | Done (`88621826`). |
 | 7. Baselines for §9's measures | Not done; needs the owner's analytics. |

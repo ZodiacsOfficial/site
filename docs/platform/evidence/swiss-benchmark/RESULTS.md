@@ -213,3 +213,27 @@ If it were ever adopted it would have to be as an **optional** backend, because
 and because fetching a data pack on demand would reveal a date range to whoever
 serves it — which an interface advertised as device-only must not do silently.
 Gates for that conversation are in [`NEXT.md`](NEXT.md).
+
+## Addition, 2026-09-23: every tenth day, 1800 to 2199
+
+The 180 measurements above are dates picked in advance, and a picked date can
+miss a body's worst moment. The engine audit's completeness critic first ran
+the comparison densely (`../engine-audit-2026-09-22/CRITIC.md`);
+[`multiyear-1800-2199.json`](multiyear-1800-2199.json) is that run again,
+committed as statistics without its per-instant Swiss values, by
+`tools/multiyear-zodiacs.mjs` and `tools/multiyear_swiss.py` in the
+configuration above: every tenth day from 1800 to 2199 at noon UTC, the ten
+bodies and the true node, 14,610 instants, every Swiss call answered from the
+`.se1` files.
+
+| longitude, all eleven bodies | median | 95th percentile | largest |
+| --- | ---: | ---: | ---: |
+| to 2026, same UT (91,201) | 1.94″ | 11.90″ | 22.96″, Venus 1878 |
+| 2027–2199, same UT (69,509) | 5.55″ | 65.63″ | 183.12″, Moon 2199 |
+| to 2026, same TT | 1.96″ | 11.90″ | 22.92″, Venus 1878 |
+| 2027–2199, same TT | 2.19″ | 15.03″ | 29.12″, Pluto 2199 |
+
+The sample's 18.64″ was not the worst up to 2026: Venus reaches 22.96″ in
+1878. Beyond 2026 the same-UT figures are mostly the clock: at the same TT the
+Moon stays within 7.15″ from 2150 to 2199, where at the same UT it reaches
+183.12″. The file has each body by half-century.

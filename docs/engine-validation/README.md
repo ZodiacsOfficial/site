@@ -35,6 +35,7 @@ Ephemeris* for the Moon. Zodiacs did not write those models.
 | Positions | Swiss 2.10.03 / DE441, 6 frozen cases | 6.07″ node longitude | [`swiss-node-polar/`](swiss-node-polar/) |
 | Positions | Swiss 2.10.03 / DE441, 8 epoch and station cases | inside frozen gates (a pass, not a residual) | [`swiss-eight-cases/`](swiss-eight-cases/) |
 | Positions | Swiss 2.10.03 / `.se1`, 180-measurement distribution | 18.64″ within 1801–2026 | [`../platform/evidence/swiss-benchmark/`](../platform/evidence/swiss-benchmark/) |
+| Positions | Swiss 2.10.03 / `.se1`, every tenth day 1800–2199, ten bodies and the true node | 22.96″ to 2026 at the same UT (Venus, 1878); 29.12″ to 2199 at the same TT (Pluto) | [`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json) |
 | Angles and houses | Swiss `houses_ex`: three polar cases and five Placidus cases in the suite; the audit's latitude grid | 1.57″ worst angle and exact whole-sign cusps in the polar cases; ascendant up to 512″ near 66° on the grid | [`swiss-node-polar/`](swiss-node-polar/), [audit](../platform/evidence/engine-audit-2026-09-22/LEDGER.md) |
 | Local time | host IANA/ICU, two Node majors and a browser | no disagreement in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 | Event search | Swiss hourly scans, independent roots | one contract **failed-incomplete** | [`transit-windows/`](transit-windows/), [`swiss-lunar-return/`](swiss-lunar-return/) |
@@ -79,6 +80,18 @@ percentile 12.08″ and the worst 18.64″ (Pluto, 1801). Over all 180, which
 brings in the two far-future cases below, it is 1.88″, 14.90″ and 159.38″.
 Each set is quoted with its own denominator, because mixing them is how a
 distribution gets flattered.
+
+**The dense run.** Dates picked in advance can miss a body's worst moments,
+so on 2026-09-23 the same configuration was run every tenth day from 1800 to
+2199 at noon UTC, for the ten bodies and the true node
+([`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json),
+statistics only, by `tools/multiyear-zodiacs.mjs` and `tools/multiyear_swiss.py`
+beside it). Up to 2026, at the same UT, the 91,201 longitudes have a median
+difference of 1.94″, a 95th percentile of 11.90″ and a largest of 22.96″
+(Venus, 1878), where the sample's worst was 18.64″. At the same TT, which
+takes the clock out, the largest over the whole span is 29.12″ (Pluto, 2199),
+and the Moon stays within 7.15″ from 2150 to 2199 where at the same UT it
+reaches 183.12″: the far-future Moon residuals are the clock.
 
 Two of the 180 exceed one arcminute, both the Moon far in the future: 64.8″ at
 2100 and 159.4″ at 2190. That is a clock difference. The two programs

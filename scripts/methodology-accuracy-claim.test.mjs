@@ -282,3 +282,37 @@ describe('the same figures on /developers/engine/', () => {
     expect(enginePage).toMatch(/makes\s+HTTP requests/u);
   });
 });
+
+describe('the every-tenth-day comparison, 1800 to 2199', () => {
+  // Statistics only: the per-instant Swiss values stay out of the repository.
+  const dense = JSON.parse(read('docs/platform/evidence/swiss-benchmark/multiyear-1800-2199.json'));
+  const upTo2026 = dense.allBodiesLongitude.sameUt['1800-2026'];
+  const moonSameTt = dense.sameTt.Moon.lon.byEra['2150-2199'];
+  const moonSameUt = dense.sameUt.Moon.lon.byEra['2150-2199'];
+  const worstYear = upTo2026.maxAt.slice(0, 4);
+
+  it('was measured on the engine the site runs, with every call answered from the Swiss data files', () => {
+    const installed = JSON.parse(read('node_modules/@zodiacs/engine/package.json')).version;
+    expect(dense.engine, 'a new engine needs the run again: tools/multiyear-zodiacs.mjs').toBe(installed);
+    expect(dense.swissBackendsObserved).toEqual(['SWIEPH']);
+    expect([dense.instants, dense.cadenceDays, dense.from, dense.to]).toEqual([14610, 10, '1800-01-01', '2199-12-31']);
+    expect(upTo2026.n).toBe(8291 * 11);
+  });
+
+  it('gives the page its worst case up to 2026, and the width of sign edge that follows from it', () => {
+    expect(prose).toContain(`Up to 2026 that is ${upTo2026.n.toLocaleString('en-US')} comparisons,`
+      + ` with a median of ${tenth(upTo2026.p50)} arcseconds and a largest of ${tenth(upTo2026.max)} arcseconds`
+      + ` — ${upTo2026.maxBody} in ${worstYear}`);
+    expect(prose).toContain(`changes a sign only for a body within ${Math.round(upTo2026.max)} arcseconds of its edge`);
+    expect(enginePage).toContain(`the median is ${tenth(upTo2026.p50)} arcseconds and the largest`
+      + ` ${tenth(upTo2026.max)} arcseconds (${upTo2026.maxBody}, ${worstYear})`);
+  });
+
+  it('shows the far-future Moon is the clock: small at the same TT, large at the same UT', () => {
+    expect(moonSameTt.max).toBeLessThan(10);
+    expect(moonSameUt.max).toBeGreaterThan(120);
+    expect(prose).toContain(`the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199,`
+      + ` where at the same UT it reaches ${tenth(moonSameUt.max)} arcseconds`);
+    expect(enginePage).toContain(`Terrestrial Time the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199`);
+  });
+});
