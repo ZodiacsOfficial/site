@@ -51,7 +51,7 @@ const {
   handleChartPreviewNodeRequest,
   PREVIEW_KICKER,
 } = await import('../../src/server/chart-preview');
-const { previewModel } = await import('../../src/server/chart-preview-model');
+const { previewModel, previewPlacementsFromToken } = await import('../../src/server/chart-preview-model');
 const { default: compatibilityHandler } = await import('../../api/compatibility');
 
 const token = encodePositionsLink({
@@ -66,19 +66,33 @@ const noAnglesToken = encodePositionsLink({
   houseSystem: 'whole',
   engineVersion: '1.2.3',
 })!;
+// The same chart as `token`, as the query of a link with a preview carries it.
+const PREVIEW_QUERY = 'sun=0&moon=29&rising=359&houses=whole';
+const PREVIEW_IMAGE = '/api/og/chart-image?sun=0&amp;moon=29&amp;rising=359&amp;houses=whole';
+
+function redirectTarget(html: string, hash: string): string {
+  const script = /<script nonce="chart-preview">([^<]*)<\/script>/u.exec(html)?.[1] ?? '';
+  let target = '';
+  new Function('location', script)({ hash, replace: (url: string) => { target = url; } });
+  return target;
+}
 
 describe('chart preview functions', () => {
-  it('builds a bounded positions-only model with minute carry', () => {
-    const model = previewModel(token);
-    expect(model?.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon', 'Rising']);
-    expect(model?.placements[2]).toMatchObject({ sign: 'Aries', degree: '0 deg 00 min' });
-    expect(model?.settings).toBe('Whole sign / Tropical');
+  it('builds a bounded whole-degree model that keeps the sign at its edge', () => {
+    const placements = previewPlacementsFromToken(token);
+    expect(placements).toEqual({ sun: 0, moon: 29, rising: 359, houses: 'whole' });
+    const model = previewModel(placements!);
+    expect(model.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon', 'Rising']);
+    // ASC 359.999° is Pisces 29, not a rounded-up Aries 0.
+    expect(model.placements[2]).toMatchObject({ sign: 'Pisces', degree: '29 deg' });
+    expect(model.placements[1]).toMatchObject({ sign: 'Aries', degree: '29 deg' });
+    expect(model.settings).toBe('Whole sign / Tropical');
     expect(JSON.stringify(model)).not.toMatch(/[^\x20-\x7e]/);
-    expect(JSON.stringify(model)).not.toMatch(/\b(?:birth|date|time|place|coordinates?)\b/i);
+    expect(JSON.stringify(model)).not.toMatch(/\b(?:birth|date|time|place|coordinates?|min)\b/i);
   });
 
   it('labels an angle-free token as reference positions without a clock claim without claiming Rising or houses', async () => {
-    const model = previewModel(noAnglesToken);
+    const model = previewModel(previewPlacementsFromToken(noAnglesToken)!);
     expect(model?.placements.map(({ label }) => label)).toEqual(['Sun', 'Moon']);
     expect(model?.settings).toBe('Reference positions / No houses / Tropical');
 
@@ -92,7 +106,7 @@ describe('chart preview functions', () => {
   });
 
   it('returns a no-store noindex HTML wrapper that redirects to the fragment receiver', async () => {
-    const response = await linkHandler(new Request(`https://zodiacs.org/api/og/chart?p=${encodeURIComponent(token)}`));
+    const response = await linkHandler(new Request(`https://zodiacs.org/api/og/chart?${PREVIEW_QUERY}`));
     const html = await response.text();
     expect(response.status).toBe(200);
     expect(response.headers.get('cache-control')).toBe('no-store, max-age=0');
@@ -100,9 +114,30 @@ describe('chart preview functions', () => {
     expect(response.headers.get('referrer-policy')).toBe('no-referrer');
     expect(response.headers.get('content-security-policy')).toContain("default-src 'none'");
     expect(html).toContain('property="og:image"');
-    expect(html).toContain(`/api/og/chart-image?p=${encodeURIComponent(token)}`);
-    expect(html).toContain('/birth-chart/#p=');
+    expect(html).toContain(PREVIEW_IMAGE);
+    expect(html).toContain('Sun, Moon and Rising positions, to the whole degree.');
     expect(html).not.toMatch(/registry|astrofolio|terminal|wallet|birth date:\s*\d/i);
+  });
+
+  it('keeps the full code in the fragment and sends the preview only whole-degree Sun, Moon and Rising', async () => {
+    const html = await (await linkHandler(new Request(`https://zodiacs.org/api/og/chart?${PREVIEW_QUERY}`))).text();
+    expect(html).not.toContain(token);
+    expect(html).not.toMatch(/#p=2\.[A-Za-z0-9_-]/u);
+    // The page script reads the code from the fragment, which only the browser sees.
+    expect(redirectTarget(html, `#p=${token}`)).toBe(`https://zodiacs.org/birth-chart/#p=${token}`);
+    for (const hash of ['', '#p=', '#p=2.', '#p=javascript:alert(1)', `#p=${token}&c=1.x`, `#c=${token}`]) {
+      expect(redirectTarget(html, hash)).toBe('https://zodiacs.org/birth-chart/');
+    }
+  });
+
+  it('still opens a link made when the code was in the query, without echoing it any further', async () => {
+    const response = await linkHandler(new Request(`https://zodiacs.org/api/og/chart?p=${encodeURIComponent(token)}`));
+    const html = await response.text();
+    expect(response.status).toBe(200);
+    expect(html).toContain(PREVIEW_IMAGE);
+    expect(html).not.toContain('chart-image?p=');
+    expect(html.split(token).length - 1).toBe(3);
+    expect(redirectTarget(html, '')).toBe(`https://zodiacs.org/birth-chart/#p=${token}`);
   });
 
   it('rejects non-GET, missing, duplicate, invalid, and extra parameters generically', async () => {
@@ -112,6 +147,16 @@ describe('chart preview functions', () => {
       'https://zodiacs.org/api/og/chart?p=bad',
       `https://zodiacs.org/api/og/chart?p=${token}&free=text`,
       `https://zodiacs.org/api/og/chart?p=${token}&image=1`,
+      `https://zodiacs.org/api/og/chart?${PREVIEW_QUERY}&p=${token}`,
+      'https://zodiacs.org/api/og/chart?sun=0',
+      'https://zodiacs.org/api/og/chart?sun=0&moon=29&rising=359',
+      'https://zodiacs.org/api/og/chart?sun=0&moon=29&houses=whole',
+      'https://zodiacs.org/api/og/chart?sun=0&moon=29&sun=1',
+      'https://zodiacs.org/api/og/chart?sun=360&moon=29',
+      'https://zodiacs.org/api/og/chart?sun=01&moon=29',
+      'https://zodiacs.org/api/og/chart?sun=1.5&moon=29',
+      'https://zodiacs.org/api/og/chart?sun=0&moon=29&rising=359&houses=equal',
+      `https://zodiacs.org/api/og/chart?${PREVIEW_QUERY}&free=text`,
     ];
     for (const url of urls) {
       const response = await linkHandler(new Request(url));
@@ -130,6 +175,9 @@ describe('chart preview functions', () => {
       new Request(`https://zodiacs.org/api/og/chart-image?p=${token}&p=${token}`),
       new Request(`https://zodiacs.org/api/og/chart-image?p=${token}&free=text`),
       new Request(`https://zodiacs.org/api/og/chart-image?p=${token}`, { method: 'POST' }),
+      new Request(`https://zodiacs.org/api/og/chart-image?${PREVIEW_QUERY}&free=text`),
+      new Request('https://zodiacs.org/api/og/chart-image?sun=0&moon=29&rising=359'),
+      new Request(`https://zodiacs.org/api/og/chart-image?${PREVIEW_QUERY}`, { method: 'POST' }),
     ]) {
       const response = await imageHandler(request);
       expect([400, 405]).toContain(response.status);
@@ -160,12 +208,24 @@ describe('chart preview functions', () => {
       ],
     }));
     const serializedCard = JSON.stringify(imageResponseMock.element.mock.calls[0]?.[0]);
+    expect(serializedCard).toContain('Rising / 29 deg');
+    expect(serializedCard).not.toContain(' min');
     expect(serializedCard).toContain('Your chart signature');
     expect(serializedCard).toContain('"fontFamily":"EB Garamond"');
     expect(serializedCard).toContain('"fontStyle":"italic"');
     expect(serializedCard).toContain('data:image/png;base64,');
     expect(serializedCard).toContain('zodiacs.org');
     expect(serializedCard).toContain('"width":48');
+  });
+
+  it('draws the same whole-degree image from the preview query', async () => {
+    imageResponseMock.element.mockClear();
+    const response = await imageHandler(new Request(`https://zodiacs.org/api/og/chart-image?${PREVIEW_QUERY}`));
+    expect(response.status).toBe(200);
+    const serializedCard = JSON.stringify(imageResponseMock.element.mock.calls[0]?.[0]);
+    for (const text of ['Sun / 0 deg', 'Moon / 29 deg', 'Rising / 29 deg', 'Pisces', 'Whole sign / Tropical']) {
+      expect(serializedCard).toContain(text);
+    }
   });
 
   it('writes the buffered image through the Vercel Node response contract', async () => {
@@ -214,10 +274,19 @@ describe('chart preview functions', () => {
     expect(headers.get('content-type')).toContain('text/html');
     expect(headers.get('cache-control')).toBe('no-store, max-age=0');
     const html = Buffer.from(end.mock.calls[0]?.[0] as Buffer).toString('utf8');
-    expect(html).toContain(
-      `https://zodiacs-preview.vercel.app/api/og/chart-image?p=${encodeURIComponent(token)}`,
-    );
+    expect(html).toContain(`https://zodiacs-preview.vercel.app${PREVIEW_IMAGE}`);
     expect(html).toContain('https://zodiacs-preview.vercel.app/birth-chart/#p=');
+
+    const current = vi.fn();
+    await compatibilityHandler({
+      method: 'GET',
+      headers: { 'x-forwarded-host': 'zodiacs-preview.vercel.app' },
+      query: { [CHART_PREVIEW_ROUTE_KEY]: 'link', sun: '0', moon: '29', rising: '359', houses: 'whole' },
+    }, { statusCode: 0, setHeader: vi.fn(), end: current });
+    const currentHtml = Buffer.from(current.mock.calls[0]?.[0] as Buffer).toString('utf8');
+    expect(currentHtml).toContain(`https://zodiacs-preview.vercel.app${PREVIEW_IMAGE}`);
+    expect(redirectTarget(currentHtml, `#p=${token}`))
+      .toBe(`https://zodiacs-preview.vercel.app/birth-chart/#p=${token}`);
   });
 
   it('rejects extra or duplicate values before the consolidated route renders', async () => {
@@ -225,6 +294,10 @@ describe('chart preview functions', () => {
       { [CHART_PREVIEW_ROUTE_KEY]: 'link', p: token, extra: 'value' },
       { [CHART_PREVIEW_ROUTE_KEY]: ['link', 'link'], p: token },
       { [CHART_PREVIEW_ROUTE_KEY]: 'link', p: [token, token] },
+      { [CHART_PREVIEW_ROUTE_KEY]: 'link', sun: ['0', '1'], moon: '29' },
+      { [CHART_PREVIEW_ROUTE_KEY]: 'link', sun: '0', moon: '29', extra: 'value' },
+      { [CHART_PREVIEW_ROUTE_KEY]: 'link', sun: '0', moon: '29', p: token },
+      { [CHART_PREVIEW_ROUTE_KEY]: 'image', sun: '0', moon: '29' },
     ]) {
       const end = vi.fn();
       const response = { statusCode: 0, setHeader: vi.fn(), end };

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Chart } from '../lib/engine/types';
 import { t, type CatalogLocale as Locale } from '../lib/i18n';
 import { encodeSharedPositionsLink } from '../lib/share-positions';
+import { previewPlacements, previewQuery } from '../lib/share-preview';
 import {
   prepareBigThreeCard,
   prepareChartCard,
@@ -110,15 +111,19 @@ export default function ChartShareDialog({
   }, []);
 
   useEffect(() => {
-    const token = encodeSharedPositionsLink({
+    const shared = {
       bodies: chart.bodies,
       angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
       houseSystem: chart.houses?.system ?? 'whole',
       engineVersion: chart.engineVersion,
-    });
-    if (!token) return;
+    };
+    const token = encodeSharedPositionsLink(shared);
+    const placements = previewPlacements(shared);
+    if (!token || !placements) return;
     const positions = `${window.location.origin}${receiverPath}#p=${token}`;
-    const preview = `${window.location.origin}/api/og/chart?p=${encodeURIComponent(token)}`;
+    // The preview service gets the Sun, Moon and Rising to the whole degree;
+    // the full code stays in the fragment.
+    const preview = `${window.location.origin}/api/og/chart?${previewQuery(placements)}#p=${token}`;
     setLinks({ positions, preview });
   }, [chart, receiverPath]);
 

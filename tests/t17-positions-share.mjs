@@ -405,8 +405,16 @@ try {
       await source.waitForFunction(() => globalThis.__t17Clipboard.length === 2, null, { timeout: TIMEOUT });
       const previewUrl = new URL((await clipboard(source))[1]);
       assert.equal(previewUrl.pathname, '/api/og/chart');
-      assert.equal(previewUrl.hash, '', 'preview opt-in must put only positions in the query');
-      assert.equal(previewUrl.searchParams.get('p'), sourcePositions.token);
+      assert.equal(previewUrl.hash, `#p=${sourcePositions.token}`,
+        'preview opt-in must keep the full code in the fragment');
+      const wholeDegree = (longitude) => String(Math.floor(longitude));
+      assert.deepEqual([...previewUrl.searchParams.keys()], ['sun', 'moon', 'rising', 'houses']);
+      assert.deepEqual(Object.fromEntries(previewUrl.searchParams), {
+        sun: wholeDegree(sourcePositions.wire.b[0]),
+        moon: wholeDegree(sourcePositions.wire.b[1]),
+        rising: wholeDegree(sourcePositions.wire.a[0]),
+        houses: 'whole',
+      }, 'preview query must carry only the Sun, Moon and Rising to the whole degree');
 
       await dialog.locator('[data-details-link]').click();
       await source.waitForFunction(() => globalThis.__t17Clipboard.length === 3, null, { timeout: TIMEOUT });
