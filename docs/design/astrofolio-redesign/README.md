@@ -2,6 +2,8 @@
 
 **Decision (2026-09-23):** the owner chose **B, Campaign**. It is built into the live page: `src/app.jsx` (the `Campaign*` components), `src/terminal/split-styles.css` (the "Astrofolio · Campaign" section), and the no-JavaScript shell in `public/astrofolio/index.html`. The prototypes below stay as the design record.
 
+**After launch (2026-09-23):** the owner found the opening crowded. The "Find your sign" and "How buying works" buttons are gone, the caption is one sentence, and on phones the shade darkens only the band behind the caption, so more of the film shows. The Fomo price alert no longer sits on the phones; it has its own row after them, captioned as on `/fomo/`.
+
 These are four working prototypes for `/astrofolio/`. Each is built only from assets already in this repository:
 
 - the twelve gold figures (`public/assets/sculptures/`)

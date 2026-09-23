@@ -188,6 +188,9 @@ async function assertFirstScreen(page, { width, height }) {
   }
   const title = await page.locator('#campaign-hero-title').boundingBox();
   assert.ok(title && title.y >= 0 && title.y + title.height <= height, `the headline sits in the first ${width}x${height} screen`);
+  assert.equal(await page.locator('.campaign-hero a, .campaign-hero button').count(), 0, 'no buttons sit over the opening film');
+  const captionRise = await page.locator('.campaign-hero__caption').evaluate((node) => window.innerHeight - node.getBoundingClientRect().top);
+  assert.ok(captionRise <= 360, `the opening caption stays inside the shaded band at ${width}x${height} (${Math.round(captionRise)}px)`);
   assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), null, 'the bag is live in the first phone screen');
   await assertBuyActionInView(page, '.campaign-bag', { width, height }, 'hydrated bag');
   // The site-wide Guide launcher rises above the bag rather than covering it.
@@ -211,11 +214,36 @@ async function assertFirstScreen(page, { width, height }) {
   assert.ok(overflow <= 0, `no horizontal overflow at ${width}x${height}`);
 }
 
+async function assertAlertStandsAlone(page, label) {
+  await page.locator('.campaign-alert').scrollIntoViewIfNeeded();
+  const layout = await page.evaluate(() => {
+    const alert = document.querySelector('.campaign-alert');
+    const bounds = alert.getBoundingClientRect();
+    const render = alert.querySelector('.campaign-alert__render img').getBoundingClientRect();
+    const phones = [...document.querySelectorAll('.campaign-phone')].map((phone) => phone.getBoundingClientRect());
+    return {
+      inPhone: Boolean(alert.closest('.campaign-phone')),
+      overlaps: phones.filter((phone) => !(
+        phone.bottom <= bounds.top || phone.top >= bounds.bottom || phone.right <= bounds.left || phone.left >= bounds.right
+      )).length,
+      below: phones.every((phone) => phone.bottom <= bounds.top),
+      render: { width: render.width, height: render.height },
+      caption: alert.querySelector('figcaption strong')?.textContent,
+    };
+  });
+  assert.equal(layout.inPhone, false, `${label}: the alert is not part of a phone`);
+  assert.equal(layout.overlaps, 0, `${label}: the alert overlaps no phone`);
+  assert.equal(layout.below, true, `${label}: the alert follows the phones`);
+  assert.ok(layout.render.width > 200 && layout.render.height > 80, `${label}: the alert render is shown`);
+  assert.equal(layout.caption, 'Alerts when your sign moves');
+}
+
 async function assertStaticFirstScreen(page, { width, height, slug }) {
   assert.deepEqual(page.viewportSize(), { width, height });
   for (const selector of ['.static-astrofolio-kicker', '#static-astrofolio-title', '.campaign-hero__film']) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
+  assert.equal(await page.locator('.campaign-hero a, .campaign-hero button').count(), 0, 'no buttons sit over the no-JavaScript opening');
   assert.equal(await page.locator(`.campaign-bag--static[data-campaign-bag="${slug}"]`).count(), 1, 'the no-JavaScript bag carries the season sign');
   await assertBuyActionInView(page, '.campaign-bag--static', { width, height }, 'no-JavaScript bag');
 }
@@ -537,6 +565,7 @@ try {
     assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), 'true');
     await page.locator('#buy').evaluate((node) => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    await assertAlertStandsAlone(page, '390px');
     await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
     await page.waitForFunction(() => document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
 
@@ -679,6 +708,7 @@ try {
     assert.equal(await desktopPage.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'virgo');
     await desktopPage.locator('#buy').evaluate((node) => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await desktopPage.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    await assertAlertStandsAlone(desktopPage, '1440px');
     assert.equal(await desktopPage.locator('#registry .campaign-record__label').innerText(), 'Virgo · Solana origin');
 
     for (const [width, height] of [[1024, 900], [1200, 900], [901, 900], [1280, 680]]) {
@@ -948,6 +978,7 @@ try {
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
+    await assertAlertStandsAlone(noJsPage, 'no-JavaScript 390px');
     await noJsPage.evaluate(() => window.scrollTo(0, 0));
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: expectedSeason.sign });
     await noJsPage.setViewportSize({ width: 375, height: 600 });

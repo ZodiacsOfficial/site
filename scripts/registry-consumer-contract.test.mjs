@@ -201,11 +201,13 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     // carries the first-screen Fomo action; the runway carries all twelve.
     const opening = section(html, 'official-twelve');
     expect(normalizedText(opening)).toContain('Astro folio');
-    expect(normalizedText(opening)).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
+    expect(normalizedText(opening)).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record.');
     expect(opening).toContain('<img src="/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async">');
     expect(opening).toContain('<source srcset="/assets/fomo/fomo-film-poster.avif" type="image/avif">');
-    expect(opening).toContain('href="#the-twelve"><span>Find your sign</span>');
-    expect(opening).toContain('href="#buy"><span>How buying works</span>');
+    // The film is the opening: no buttons over it. The bag carries the
+    // first-screen action and the runway follows directly.
+    expect(opening).not.toMatch(/<a\s/u);
+    expect(opening).not.toContain('campaign-hero__actions');
     expect(opening).not.toContain('<video');
     expect(opening).not.toContain('href="/terminal/');
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
@@ -258,6 +260,16 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(buy).toContain('href="/fomo/">Zodiacs on Fomo');
     expect(buy).toContain('src="/assets/fomo/fomo-alert-900.webp"');
     expect(buy).not.toContain('fomo-alert.png');
+    // The alert is its own figure after the three phones, never laid over one.
+    expect(buy).not.toContain('campaign-phone__alert');
+    expect(buy.match(/fomo-alert-900\.webp/gu)).toHaveLength(1);
+    ordered(buy, [
+      '<figcaption><strong>Write your thesis</strong>',
+      '<figure class="campaign-alert">',
+      'src="/assets/fomo/fomo-alert-900.webp"',
+      '<figcaption><strong>Alerts when your sign moves</strong>',
+    ]);
+    expect(normalizedText(buy)).toContain('Alerts when your sign moves Fomo sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.');
     expect(html).not.toMatch(/href="\/terminal\/\?sign=[a-z]+#selected"/gu);
     const marketGateway = section(html, 'market-layer');
     expect(marketGateway.match(/href="\/registry\/technical\/#market-transparency"/gu)).toHaveLength(1);
@@ -481,8 +493,17 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(source).not.toContain('function ConsumerIntroduction(');
     const hero = functionBlock(source, 'CampaignHero');
     expect(hero).toContain('<h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>');
-    expect(hero).toContain('<p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>');
+    expect(hero).toContain('<p>One for every sign, each with its own design and a public record.</p>');
+    expect(hero).not.toMatch(/<a\s/u);
+    expect(hero).not.toContain('campaign-hero__actions');
     const app = functionBlock(source, 'CampaignApp');
+    expect(app).not.toContain('campaign-phone__alert');
+    ordered(app, [
+      '<figcaption><strong>Write your thesis</strong>',
+      '<figure className="campaign-alert">',
+      'src="/assets/fomo/fomo-alert-900.webp"',
+      '<figcaption><strong>Alerts when your sign moves</strong>',
+    ]);
     expect(app).toContain('id="buy" className="campaign-app reveal"');
     expect(app).toContain('<h2 id="campaign-app-title">Buy yours in a few taps.</h2>');
     expect(app).toContain('href={FOMO_APP_STORE_URL} rel="external nofollow noopener"');

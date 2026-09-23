@@ -4930,13 +4930,7 @@
                 </span>
               </div>
               <h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>
-              <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
-              <div className="campaign-hero__actions">
-                <a className="campaign-button campaign-button--light" href="#the-twelve">
-                  <span>Find your sign</span><span aria-hidden="true">↓</span>
-                </a>
-                <a className="campaign-button" href="#buy"><span>How buying works</span></a>
-              </div>
+              <p>One for every sign, each with its own design and a public record.</p>
             </div>
           </div>
         </section>
@@ -5363,10 +5357,6 @@
               <figcaption><strong>Follow your friends</strong><span>Add the people you trust and see their buys and sells as they happen.</span></figcaption>
             </figure>
             <figure className="campaign-phone campaign-phone--main" ref={stageRef}>
-              <picture className="campaign-phone__alert">
-                <source srcSet="/assets/fomo/fomo-alert-900.avif" type="image/avif" />
-                <img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async" />
-              </picture>
               <div className="campaign-phone__screen" data-playing={playing ? 'true' : 'false'}>
                 <picture>
                   <source srcSet={CAMPAIGN_APP_FOOTAGE.posterAvif} type="image/avif" />
@@ -5399,6 +5389,13 @@
               <figcaption><strong>Write your thesis</strong><span>When you buy, say why. It posts with the trade, so followers get the reasoning.</span></figcaption>
             </figure>
           </div>
+          <figure className="campaign-alert">
+            <picture className="campaign-alert__render">
+              <source srcSet="/assets/fomo/fomo-alert-900.avif" type="image/avif" />
+              <img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async" />
+            </picture>
+            <figcaption><strong>Alerts when your sign moves</strong><span>Fomo sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</span></figcaption>
+          </figure>
         </section>
       );
     }

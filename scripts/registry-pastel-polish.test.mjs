@@ -152,7 +152,11 @@ describe('registry pastel polish', () => {
     expect(cssRule(css, '.consumer-registry .consumer-section-head h2,')).toContain('var(--serif)');
     expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('var(--mono)');
     expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('font-variant-numeric: tabular-nums;');
-    expect(cssRule(campaign, '.campaign-button {')).toContain('var(--sans)');
+    expect(cssRule(campaign, '.campaign-alert figcaption strong {')).toContain('var(--serif)');
+    expect(campaign).toContain('.campaign-alert figcaption span { max-width: 40ch; color: var(--ink-2); font: 400 16.5px/1.6 var(--sans); }');
+    // The opening carries no buttons, so no button styles remain.
+    expect(campaign).not.toContain('.campaign-button');
+    expect(campaign).not.toContain('.campaign-hero__actions');
     const eyebrow = cssRule(campaign, '.consumer-campaign .consumer-eyebrow,');
     expect(eyebrow).toContain('font: italic 400');
     expect(eyebrow).toContain('var(--serif)');
@@ -185,7 +189,6 @@ describe('registry pastel polish', () => {
   it('pins the press responses and disables all consumer motion on request', async () => {
     const css = await read('src/terminal/split-styles.css');
     const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
-    expect(campaign).toContain('.campaign-button:active { transform: scale(.98); }');
     expect(campaign).toContain('.static-campaign .btn.btn--fomo:active { transform: scale(.975); transition-duration: 120ms; }');
     expect(css).toContain('.consumer-registry .vrf__submit:active,');
     expect(css).toContain('.consumer-registry .vrf__example:active { transform: scale(.98); }');
@@ -200,7 +203,6 @@ describe('registry pastel polish', () => {
     expect(campaignReduced).toContain('.static-campaign *,');
     expect(campaignReduced).toContain('animation: none !important;');
     expect(campaignReduced).toContain('transition: none !important;');
-    expect(campaignReduced).toContain('.campaign-button:active,');
     expect(campaignReduced).toContain('.consumer-registry .btn.btn--fomo:active,');
     // Reduced motion also keeps the film still and the runway unpinned.
     const stillFilm = campaign.slice(campaign.indexOf('@media (min-width: 901px) and (prefers-reduced-motion: reduce)'));

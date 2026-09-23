@@ -10099,30 +10099,6 @@
       color: var(--ink-2);
       font: 400 clamp(16px, 1.3vw, 19px)/1.55 var(--sans);
     }
-    .campaign-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-    .campaign-button {
-      min-height: 52px;
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      padding: 0 22px;
-      border: 1px solid var(--hair-3);
-      border-radius: 999px;
-      color: var(--ink);
-      background: rgba(10,12,17,.42);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
-      font: 550 14px/1 var(--sans);
-      text-decoration: none;
-      transition: border-color 180ms ease, background-color 180ms ease, transform 120ms ease;
-    }
-    .campaign-button--light { border-color: rgba(255,255,255,.78); color: #111318; background: #f1f0ec; }
-    .campaign-button:active { transform: scale(.98); }
-    .campaign-button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-    @media (hover: hover) and (pointer: fine) {
-      .campaign-button:hover { border-color: rgba(238,241,247,.7); background-color: rgba(14,16,22,.7); }
-      .campaign-button--light:hover { border-color: #fff; background-color: #f8f7f4; }
-    }
 
     /* The no-JavaScript opening: the wide closed state keeps its first
        screen, and the caption follows it as an ordinary block. */
@@ -10524,20 +10500,39 @@
       transition: opacity 560ms ease;
     }
     .campaign-phone__screen[data-playing="true"] .campaign-phone__video { opacity: 1; }
-    .campaign-phone__alert {
-      position: absolute;
-      z-index: 2;
-      top: 7%;
-      left: -46%;
-      width: 104%;
-      transform: rotate(-3deg);
-      filter: drop-shadow(0 30px 40px rgba(0,0,0,.8));
-      pointer-events: none;
-    }
-    .campaign-phone__alert img { width: 100%; height: auto; display: block; }
     .campaign-phone figcaption { display: grid; gap: 5px; margin-top: 18px; }
     .campaign-phone figcaption strong { color: var(--ink); font: 400 24px/1.1 var(--serif); letter-spacing: -.01em; }
     .campaign-phone figcaption span { max-width: 32ch; color: var(--ink-dim); font: 400 14.5px/1.5 var(--sans); }
+    /* The Fomo alert has its own row after the phones, clear of every screen. */
+    .campaign-alert {
+      max-width: 1080px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 72px);
+      align-items: center;
+      margin: clamp(48px, 7vw, 96px) auto 0;
+    }
+    /* The render's shadow is near-transparent above and below the card;
+       trimming it keeps the row about the card, not the empty shadow. */
+    .campaign-alert__render img {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      aspect-ratio: 900 / 420;
+      display: block;
+      margin-inline: auto;
+      object-fit: cover;
+      object-position: 50% 52%;
+    }
+    .campaign-alert figcaption { display: grid; gap: 12px; }
+    .campaign-alert figcaption strong {
+      max-width: 15ch;
+      color: var(--ink);
+      font: 400 clamp(32px, 3.6vw, 52px)/1 var(--serif);
+      letter-spacing: -.02em;
+      text-wrap: balance;
+    }
+    .campaign-alert figcaption span { max-width: 40ch; color: var(--ink-2); font: 400 16.5px/1.6 var(--sans); }
 
     /* ── The record ──────────────────────────────────────────────── */
     .campaign-record__identity { margin-top: clamp(28px, 4vw, 44px); }
@@ -10637,7 +10632,14 @@
         transform: none;
       }
       .campaign-hero__poster img { object-position: 50% 38%; }
-      .campaign-hero__shade { background: linear-gradient(180deg, rgba(6,7,9,.46) 0%, rgba(6,7,9,.08) 18%, rgba(6,7,9,.34) 38%, rgba(6,7,9,.86) 62%, rgba(6,7,9,.96) 100%); }
+      /* Clear through the upper film. The dark band is measured from the
+         bottom, so it sits behind the caption (which starts about 350px up)
+         on any screen height and any frame of the film. */
+      .campaign-hero__shade {
+        background:
+          linear-gradient(180deg, rgba(6,7,9,.46) 0, rgba(6,7,9,0) 140px),
+          linear-gradient(0deg, rgba(6,7,9,.96) 0, rgba(6,7,9,.88) 200px, rgba(6,7,9,.76) 360px, rgba(6,7,9,.36) 430px, rgba(6,7,9,0) 520px);
+      }
       .campaign-hero__shade::after,
       .campaign-hero__word,
       .campaign-hero__foot { display: none; }
@@ -10653,8 +10655,6 @@
       .campaign-hero__caption { text-shadow: 0 1px 18px rgba(0,0,0,.55); }
       .campaign-hero__caption h1 { font-size: clamp(40px, 12vw, 58px); }
       .campaign-hero__caption > p { margin-top: 12px; font-size: 15.5px; }
-      .campaign-hero__actions { gap: 10px; margin-top: 18px; }
-      .campaign-button { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
       .static-campaign__nav { padding-top: 14px; }
 
       .campaign-bag {
@@ -10697,7 +10697,8 @@
       .campaign-phone { flex: 0 0 min(70vw, 300px); scroll-snap-align: center; }
       .campaign-phone--main { order: -1; }
       .campaign-phone--side { margin-top: 0; }
-      .campaign-phone__alert { top: 6%; left: 4%; width: 92%; }
+      .campaign-alert { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 40px; }
+      .campaign-alert__render img { max-width: 460px; }
 
       .consumer-campaign .consumer-shop__copy { grid-template-columns: minmax(0, 1fr); }
       .consumer-campaign .consumer-shop__copy > h2,
@@ -10757,7 +10758,6 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
-      .campaign-button:active,
       .consumer-registry .btn.btn--fomo:active,
       .static-campaign .btn.btn--fomo:active,
       .campaign-look:hover .campaign-look__figure,
