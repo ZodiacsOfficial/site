@@ -28,6 +28,9 @@ describe('ChartCalculator Registry bridge contract', () => {
     expect(source.indexOf('data-registry-bridge-surface="birth_chart"', bridge + 1)).toBe(-1);
     expect(source).toContain("trackAnalytics('registry_bridge_impression'");
     expect(source).toContain("trackAnalytics('registry_bridge_click'");
+    // The birth chart's bridge is the visitor's own Sun sign: its events carry
+    // the surface and locale only, so analytics receive no birth data.
+    expect(source).not.toMatch(/trackAnalytics\('registry_bridge_(?:impression|click)', \{\s*sign:/u);
     expect(source).toContain("tf(locale, 'recordChartSun'");
     expect(source).toContain("tf(locale, 'recordChartBody'");
     expect(source).toContain("tf(locale, 'recordChartLink'");

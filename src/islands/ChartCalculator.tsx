@@ -2003,8 +2003,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (!chart || !registryRecord || mode !== 'full' || sharedReceiver) return;
     if (registryBridgeImpressionChartRef.current === chart) return;
     registryBridgeImpressionChartRef.current = chart;
+    // No sign: here it is the visitor's own Sun sign, and analytics receive no
+    // birth data. Sign guides and birthday pages send the page's sign.
     trackAnalytics('registry_bridge_impression', {
-      sign: registryRecord.slug,
       surface: 'birth_chart',
       locale,
     });
@@ -2643,7 +2644,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 href={`/registry/${registryRecord.slug}/`}
                 title={russianCopy?.chart.englishOnlyTitle}
                 onClick={() => trackAnalytics('registry_bridge_click', {
-                  sign: registryRecord.slug,
                   surface: 'birth_chart',
                   locale,
                 })}
