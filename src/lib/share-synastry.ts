@@ -1,14 +1,14 @@
 /**
  * Positions-only two-chart share codec for the Phase 4 send-back loop.
  *
- * Each side is an existing v2 positions token. The wrapper adds only a
- * display label and an explicit time-known bit. No date, time, place,
- * coordinates, timezone, account id, invitation id, or email can be
- * represented by this grammar.
+ * Each side is an existing v2 positions token, with ASC and MC at the whole
+ * degree (encodeSharedPositionsLink). The wrapper adds only a display label
+ * and an explicit time-known bit. The grammar has no field for a date, time,
+ * place, coordinates, timezone, account id, invitation id, or email.
  */
 import {
   decodePositionsLink,
-  encodePositionsLink,
+  encodeSharedPositionsLink,
   type PositionsShareChart,
   type PositionsShareInput,
 } from './share-positions';
@@ -80,8 +80,8 @@ export function encodeSynastryLink(input: SynastryShareInput): string | null {
   const second = input.sides[1];
   if (!first?.chart || !second?.chart) return null;
 
-  const tokenA = encodePositionsLink(first.chart);
-  const tokenB = encodePositionsLink(second.chart);
+  const tokenA = encodeSharedPositionsLink(first.chart);
+  const tokenB = encodeSharedPositionsLink(second.chart);
   const labelA = cleanLabel(first.label);
   const labelB = cleanLabel(second.label);
   if (!tokenA || !tokenB || labelA === null || labelB === null) return null;

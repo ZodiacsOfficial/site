@@ -394,6 +394,8 @@ try {
       const sourcePositions = v2Wire(sourcePositionsUrl);
       assert.equal(sourcePositions.wire.b.length, 12, 'positions-only link must carry all twelve body longitudes');
       assert.deepEqual(Object.keys(sourcePositions.wire).sort(), ['a', 'b', 'h', 'v']);
+      assert.deepEqual(sourcePositions.wire.a.map((angle) => angle % 1), [0.5, 0.5],
+        'positions-only link must carry ASC and MC to the whole degree');
       for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'America/New_York']) {
         assert.equal(sourcePositionsUrl.includes(privateValue), false,
           `positions-only link leaked ${privateValue}`);

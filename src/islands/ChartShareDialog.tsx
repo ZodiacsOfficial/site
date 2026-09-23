@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { Chart } from '../lib/engine/types';
 import { t, type CatalogLocale as Locale } from '../lib/i18n';
-import { encodePositionsLink } from '../lib/share-positions';
+import { encodeSharedPositionsLink } from '../lib/share-positions';
 import {
   prepareBigThreeCard,
   prepareChartCard,
@@ -110,7 +110,7 @@ export default function ChartShareDialog({
   }, []);
 
   useEffect(() => {
-    const token = encodePositionsLink({
+    const token = encodeSharedPositionsLink({
       bodies: chart.bodies,
       angles: chart.angles ? { asc: chart.angles.asc, mc: chart.angles.mc } : null,
       houseSystem: chart.houses?.system ?? 'whole',

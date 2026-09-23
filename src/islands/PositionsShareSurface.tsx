@@ -17,7 +17,7 @@ import {
   type PreparedChartCard,
 } from '../lib/share-card';
 import { ensurePastelZodiacIconEmbedding } from '../lib/share-card-pastel-icons';
-import { formatLongitude } from '../lib/signs';
+import { degreeInSign, formatLongitude } from '../lib/signs';
 import { moonIsUncertain } from '../lib/moon-certainty';
 import { positionsReading } from '../lib/share-positions-reading';
 import Wheel from '../lib/wheel/Wheel';
@@ -283,7 +283,7 @@ export function PositionsOnlyResult({ chart, locale }: PositionsOnlyResultProps)
                   {row.body && <span class="calc__glyph"><PlanetGlyph body={row.body} size={15} /></span>}
                   {row.label}
                 </td>
-                <td class="mono">{formatLongitude(row.lon, locale).split(' ')[0]}</td>
+                <td class="mono">{row.body ? formatLongitude(row.lon, locale).split(' ')[0] : `${Math.floor(degreeInSign(row.lon))}°`}</td>
                 <td>{row.body === 'Moon' && moonIsUncertain(chart) ? t(locale, 'needsBirthTime') : <SignChip lon={row.lon} locale={locale} />}</td>
                 {reading.cusps && <td class="mono">{reading.houses.get(row.body ?? (row.key === 'asc' ? 'ASC' : 'MC'))}</td>}
               </tr>

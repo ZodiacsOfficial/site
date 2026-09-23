@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import {
-  encodePositionsLink,
+  encodeSharedPositionsLink,
   type PositionsShareInput,
 } from '../lib/share-positions';
 import type { TransitContact } from '../lib/engine/transit-scan';
@@ -60,6 +60,11 @@ const COPY = {
   },
 } as const;
 
+/** The feed's code: every position to 0.001°, ASC and MC to the whole degree. */
+export function calendarToken(positions: CalendarPositionsSource): string | null {
+  return encodeSharedPositionsLink(positions as PositionsShareInput);
+}
+
 export function calendarWebcalUrl(origin: string, token: string): string {
   const url = new URL('/api/calendar/transits', origin);
   url.searchParams.set('token', token);
@@ -86,7 +91,7 @@ interface CalendarSubscribeProps {
 
 export default function CalendarSubscribe({ locale, positions, contacts }: CalendarSubscribeProps) {
   const copy = COPY[locale];
-  const token = useMemo(() => encodePositionsLink(positions as PositionsShareInput), [positions]);
+  const token = useMemo(() => calendarToken(positions), [positions]);
   const [href, setHref] = useState('');
   const [busy, setBusy] = useState(false);
 

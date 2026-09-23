@@ -9,6 +9,12 @@ export interface TransitCalendarOptions {
   /** Receipt time used for VEVENT DTSTAMP values. */
   generatedAt: Date | string;
   calendarName?: string;
+  /**
+   * 'whole-degree' when ASC and MC were taken to the whole degree, as in the
+   * subscribed feed: contacts to them are then not called exact and are
+   * given to the minute. Contacts to planets are unchanged.
+   */
+  natalAngles?: 'exact' | 'whole-degree';
 }
 
 /** Escape an RFC 5545 TEXT value. */
@@ -69,10 +75,12 @@ export function transitContactUid(contact: TransitContact): string {
   ].join('-') + '@zodiacs.org';
 }
 
-function exactDescription(contact: TransitContact): string {
+function contactDescription(contact: TransitContact, exact: boolean): string {
   const iso = new Date(contact.exactUtc).toISOString();
   const utcMinute = `${iso.slice(0, 10)} ${iso.slice(11, 16)} UTC`;
-  const description = `Exact tropical transit contact. Time: ${utcMinute}.`;
+  const description = exact
+    ? `Exact tropical transit contact. Time: ${utcMinute}.`
+    : `Tropical transit contact. Natal angle to the whole degree. Time: ${utcMinute}.`;
   // Multi-hit groups get their window-scoped pass number. The cause is
   // deliberately not asserted: dual-target aspects can produce a second
   // pass for a fast body with no retrograde loop involved.
@@ -81,9 +89,10 @@ function exactDescription(contact: TransitContact): string {
     : description;
 }
 
-function eventLines(contact: TransitContact, dtstamp: string): string[] {
+function eventLines(contact: TransitContact, dtstamp: string, exact: boolean): string[] {
   // Calling formatIcalUtc first keeps invalid input from reaching description.
   const dtstart = formatIcalUtc(contact.exactUtc);
+  const summary = `Transiting ${contact.transitBody} ${contact.aspect} natal ${contact.natalPoint}`;
   return [
     'BEGIN:VEVENT',
     `UID:${transitContactUid(contact)}`,
@@ -91,14 +100,21 @@ function eventLines(contact: TransitContact, dtstamp: string): string[] {
     `DTSTART:${dtstart}`,
     'DURATION:PT1M',
     'TRANSP:TRANSPARENT',
-    `SUMMARY:${escapeIcalText(`Transiting ${contact.transitBody} ${contact.aspect} natal ${contact.natalPoint} (exact)`)}`,
-    `DESCRIPTION:${escapeIcalText(exactDescription(contact))}`,
+    `SUMMARY:${escapeIcalText(exact ? `${summary} (exact)` : summary)}`,
+    `DESCRIPTION:${escapeIcalText(contactDescription(contact, exact))}`,
     'END:VEVENT',
   ];
 }
 
+/** Truncate an instant to its UTC minute, for a contact that is not exact. */
+function truncateToMinute(value: string): string {
+  formatIcalUtc(value);
+  const time = new Date(value).getTime();
+  return new Date(time - (((time % 60_000) + 60_000) % 60_000)).toISOString();
+}
+
 /**
- * Serialize one zero-PII calendar. Input order does not affect event order or
+ * Serialize one transit calendar. Input order does not affect event order or
  * UIDs; separate retrograde passes remain separate because their instants do.
  */
 export function serializeTransitContacts(
@@ -107,10 +123,12 @@ export function serializeTransitContacts(
 ): string {
   if (contacts.length === 0) throw new RangeError('A transit calendar requires at least one contact.');
   const dtstamp = formatIcalUtc(options.generatedAt);
-  const prepared = contacts.map((contact) => ({
-    contact,
-    dtstart: formatIcalUtc(contact.exactUtc),
-  })).sort((a, b) =>
+  const prepared = contacts.map((contact) => {
+    const exact = options.natalAngles !== 'whole-degree'
+      || (contact.natalPoint !== 'ASC' && contact.natalPoint !== 'MC');
+    const shown = exact ? contact : { ...contact, exactUtc: truncateToMinute(contact.exactUtc) };
+    return { contact: shown, exact, dtstart: formatIcalUtc(shown.exactUtc) };
+  }).sort((a, b) =>
     a.dtstart.localeCompare(b.dtstart)
     || a.contact.transitBody.localeCompare(b.contact.transitBody)
     || a.contact.natalPoint.localeCompare(b.contact.natalPoint)
@@ -122,7 +140,7 @@ export function serializeTransitContacts(
     'PRODID:-//Zodiacs.org//Transit Contacts 1.0//EN',
     'CALSCALE:GREGORIAN',
     `X-WR-CALNAME:${escapeIcalText(options.calendarName ?? 'Zodiacs.org transit contacts')}`,
-    ...prepared.flatMap(({ contact }) => eventLines(contact, dtstamp)),
+    ...prepared.flatMap(({ contact, exact }) => eventLines(contact, dtstamp, exact)),
     'END:VCALENDAR',
   ];
 
