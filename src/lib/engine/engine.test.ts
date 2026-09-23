@@ -202,9 +202,11 @@ const SWISS_HOUSE_VECTORS = [
 // ── 1. Modern vector: JPL Horizons, 2020-01-01 00:00 UTC ─────────────
 // The literals live in fixtures/horizons-reference.json, which
 // scripts/claims-bindings.test.mjs also reads for the published figure.
-const [HORIZONS_2020_EPOCH, HORIZONS_1907_EPOCH] = horizonsReference.epochs;
-const HORIZONS_2020: Record<string, number> = HORIZONS_2020_EPOCH.longitudes;
-const HORIZONS_1907: Record<string, number> = HORIZONS_1907_EPOCH.longitudes;
+const [HORIZONS_2020_EPOCH, HORIZONS_1907_EPOCH] = (horizonsReference as {
+  epochs: { utc: string; longitudes: Record<string, number> }[];
+}).epochs;
+const HORIZONS_2020 = HORIZONS_2020_EPOCH.longitudes;
+const HORIZONS_1907 = HORIZONS_1907_EPOCH.longitudes;
 
 describe('ephemeris vs JPL Horizons (2020-01-01)', () => {
   const bodies = computeBodies(new Date(HORIZONS_2020_EPOCH.utc));
