@@ -175,17 +175,25 @@ era ends (of 518) where the host's history agrees with the table, the zone's
 own meridian giving exactly the zone clock's answer around the change; the date-line days of
 Alaska, Manila, Pohnpei and Apia inside eras; a bound that ignores a longitude
 more than three hours from the zone's mean time. Not established:
-agreement with other programs' era ends. And after the era the legal history
-is still the host's, which lacks backzone: on Node 22.22 (ICU 78.2), 90 of the
-355 zones with an era in the birthplace index take their first offsets from
-another city, and for 85 of them the legal offset before 1970 differs from
-backzone's by 5 to 180 minutes (Amsterdam 1900 resolves on Brussels's +0:00,
-not Amsterdam Mean Time's +0:19:32). Step 1.12 of the engine brief moves that
-history into the engine.
+agreement with other programs' era ends.
 
-Not established: which IANA version any given visitor's runtime carries. The
-history is the host's, so two machines can legitimately disagree on a
-pre-standardisation birth. Signed fixed-offset receipt syntax and exact-pole
+Since the same day, the legal offsets of a birthplace time before 1970 come
+from that pinned release too, backzone included (`src/data/tz-history/`, by
+`scripts/build-tz-history.mjs`, which compiles it with zic): the host's data
+is tzdb's default build, which gives a merged place another city's history
+before 1970. For 89 of the 356 zones in the birthplace index the two differ
+on some day from 1900 to 1969, 58 of them by an hour or more
+([`tz-history-2025c/`](../platform/evidence/tz-history-2025c/)); Stockholm on
+1 July 1947 resolves on Sweden's +1:00, not Berlin's +2:00, and Amsterdam in
+1900 on Amsterdam Mean Time's +0:19:32, not Brussels's +0:00. From 1970 on the
+host decides. Seventeen names whose pinned history also differs after 1970,
+none in the birthplace index, keep the host's history throughout.
+
+Not established: which IANA version any given visitor's runtime carries. From
+1970 on the history is the host's, so two machines can legitimately disagree
+on a birth there; before 1970, in the zones of the birthplace index, a
+birthplace time no longer depends on the host. Nor is backzone established as right: its maintainers call it less
+reliable than the main data. Signed fixed-offset receipt syntax and exact-pole
 coverage are declared limitations, and the separate local-date endpoint
 interval and policy defects are recorded as unresolved, not fixed.
 

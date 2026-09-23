@@ -104,3 +104,13 @@ describe('today\'s ΔT on the developer engine page', () => {
     expect(page).toContain(`moves the Moon about ${today.moonArcseconds.toFixed(1)} arcseconds`);
   });
 });
+
+describe('the pinned zone history on the methodology page', () => {
+  it('states how many city-index zones it changes, as measured', () => {
+    const measured = JSON.parse(read('docs/platform/evidence/tz-history-2025c/index-divergence.json'));
+    const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
+    expect(page).toContain(`for ${measured.divergentZones} of the ${measured.indexZones} time zones in our city index`);
+    expect(page).toContain(`${measured.divergentByAnHourOrMore} of them by an hour or more`);
+    expect(measured.divergent['Europe/Stockholm']).toBeDefined();
+  });
+});

@@ -175,19 +175,19 @@ const jsonLd = [
 
       <h2>Time zones</h2>
       <p>
-        A birth chart is only as good as its clock conversion. We resolve your
-        birth time with the IANA time-zone history available in your browser's{' '}
-        <strong>host ICU data</strong>: daylight saving in all its regional weirdness
-        and wartime clock changes. The date each place adopted a legal time
-        comes from a pinned release of the IANA database (below); before it,
-        the clock was the birthplace's own <em>local mean time</em>, which runs
-        to seconds.
+        A birth chart is only as good as its clock conversion. For births from
+        1970 on, we resolve your birth time with the IANA time-zone history in
+        your browser's <strong>host ICU data</strong>: daylight saving in all its
+        regional weirdness. For earlier births the history, wartime clock
+        changes included, comes from a pinned release of the IANA database
+        (below); before the date each place adopted a legal time, the clock was
+        the birthplace's own <em>local mean time</em>, which runs to seconds.
       </p>
       <ul>
         <li><strong>Skipped times</strong> (spring-forward gaps) shift forward across the gap — the standard convention — and the chart says so.</li>
         <li><strong>Repeated times</strong> (fall-back folds) use the earlier pass, flagged on the chart.</li>
         <li><strong>Very old dates</strong>, from before a place adopted a legal time, use the local mean time of the birthplace itself, worked out from its longitude at four minutes of time per degree, as professional software does. The time zone data records only its reference city's mean time, which for a town a few hundred kilometres away can be 20 minutes or more off; Buffalo in 1870 ran 19 minutes 29 seconds behind New York. The date each place's local mean time ended comes from the IANA database's fuller historical records (release 2025c). The famous-people pages are the exception for now: their noon reference instants still use each time zone's own clock, as they were first computed.</li>
-        <li><strong>After that date</strong>, the legal time comes from your browser's time zone history, including national mean times such as Paris Mean Time from 1891. Browsers leave out some of the IANA database's older records, so for about a quarter of the places with a local mean time era, among them Norway, Sweden, Denmark, Iceland, the Netherlands and much of Africa and the Caribbean, the clock before 1970 can follow another city's history instead, sometimes by an hour or more. In 1900, for example, the Netherlands kept Amsterdam mean time, 19 minutes 32 seconds ahead of Greenwich, where the browser's history gives Brussels's Greenwich time.</li>
+        <li><strong>From then until 1970</strong>, the legal time comes from the same release, national mean times such as Paris Mean Time from 1891 included, and with the older records the database keeps separately for places whose clocks have agreed since 1970, which its maintainers consider less reliable than the rest. Browsers leave those records out and give such a place another city's history, so for 89 of the 356 time zones in our city index the browser's clock before 1970 differs from the one used here, 58 of them by an hour or more at some point: among them Sweden, Norway, Denmark, Iceland, the Netherlands and much of Africa and the Caribbean. At noon on 1 July 1947, for example, a Stockholm birth reads 10:00 UTC with Berlin's summer time in the browser's history, where Sweden kept +1:00 and the chart uses 11:00. A handful of old zone names whose records differ after 1970 as well, none of them in the city index, keep the browser's history throughout.</li>
       </ul>
       <p>
         Every result lists its computed UTC instant, so the conversion is
