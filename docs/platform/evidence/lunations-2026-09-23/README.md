@@ -19,3 +19,15 @@ it. By linear interpolation of Moon − Sun, the new moon falls at
 These are NASA's published values, retrieved by the audit on 2026-09-22 and
 listed in `../engine-audit-2026-09-22/ARTIFACTS.sha256.tsv`. No Swiss output is
 committed here.
+
+## Against Swiss Ephemeris, and the brief's first rule
+
+Version 1 of the engine brief set this step's rule as all 124 lunations
+within 2 seconds of Swiss Ephemeris. Measured after this change
+(`../events-vs-swiss-2026-09-23/`), 1 of 124 are, 25 are within 5 seconds, and
+the largest difference is 11.8 seconds. By that rule the step fails, and the
+verdict stands as recorded here. What remains is mostly the engine's ΔT,
+75.5 s in 2026 where Swiss reads 68.8 s, which moves the Moon about 3.5″ and
+the instant about 7 seconds (`../deltat-2026-09-23/`); step 1.4 of the brief
+replaces that model. Every lunation is within a minute, which is what the
+site's pages claim.

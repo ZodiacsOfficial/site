@@ -34,7 +34,7 @@ These lines use each live page’s meta description to state what it computes or
 - /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.
 - /numerology/ — Free numerology calculator: Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from your name and birth date, computed in your browser.
 - /profile/ — Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place.
-- /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
+- /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions for each window.
 - /rising-sign/ — Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart.
 - /saturn-return/ — Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date.
 - /solar-return/ — See the themes shaping your personal year with a solar return chart for any year and location. Free and private by default.
