@@ -377,7 +377,7 @@ try {
       await dialog.locator('[data-hide-birth-details]').check();
       assert.equal(
         (await dialog.locator('[data-chart-image-privacy]').innerText()).trim(),
-        'The image includes chart positions and calculation settings, but not a name, birth date, time, place, coordinates, or chart link.',
+        'The image shows chart positions and calculation settings, with no name, birth date, time, place, coordinates or chart link. Its positions still give the birth date and time, and its Ascendant and Midheaven the approximate birthplace.',
         'privacy copy must return to the hidden-details statement',
       );
       await source.waitForFunction(() => (
