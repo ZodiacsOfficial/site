@@ -356,6 +356,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [city, setCity] = useState<City | null>(null);
   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
   const [chart, setChart] = useState<Chart | null>(null);
+  // Read on a local mean time even when its offset is whole minutes, which
+  // the receipt's `lmt` flag (sub-minute offsets only) does not show.
+  const [onMeanTime, setOnMeanTime] = useState(false);
   const resultOwnerRef = useRef<ChartResultOwner | null>(null);
   const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
   const receiptExportRef = useRef<ChartReceiptExport | null>(null);
@@ -455,6 +458,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     clearPostChartContext();
     shareRuntimeRef.current.primary = undefined;
     setChart(null);
+    setOnMeanTime(false);
     setComputedInput(null);
     setShareInput(null);
     setSignature(null);
@@ -1355,6 +1359,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       };
       resultOwnerRef.current = owner;
       setChart(result);
+      setOnMeanTime(resolved.localMeanTime !== undefined);
       if (portable) {
         const captured: ChartReceiptExport = {
           ...owner, envelopeJson: portable.envelopeJson,
@@ -2142,7 +2147,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {chart.flags.includes('dst-fold') && (
             <p class="notice" role="status">{t(locale, 'dstFoldNotice')}</p>
           )}
-          {chart.flags.includes('lmt') && (
+          {(chart.flags.includes('lmt') || onMeanTime) && (
             <p class="notice" role="status">{t(locale, 'lmtNotice')} <a href={localizePath(locale, '/methodology/')}>{t(locale, 'howWeCompute')}</a>.</p>
           )}
           {chart.flags.includes('polar-fallback') && (

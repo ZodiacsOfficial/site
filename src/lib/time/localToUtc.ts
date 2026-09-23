@@ -323,9 +323,29 @@ function birthplaceMeanTime(
   const eraSample = Math.min(wallMs, endMs - 1);
   if (Math.abs(meanOffset(eraSample) - eraOffset(eraSample)) > MAX_MEAN_TIME_DEPARTURE_MINUTES) return null;
 
-  const clockAt = (utcMs: number): number => (utcMs < endMs ? meanOffset(utcMs) : offsetAt(tz, utcMs));
+  // The host's data lacks backzone, and can record the change out of the era
+  // later than the table does, with another city's offset in between. If the
+  // host's offset changes within the probe after the era's end, the
+  // birthplace went straight to the later one.
+  let hostCatchesUp = endMs;
+  const atEnd = offsetAt(tz, endMs);
+  if (offsetAt(tz, endMs + probe) !== atEnd) {
+    let lo = endMs;
+    let hi = endMs + probe;
+    while (hi - lo > 1) {
+      const mid = Math.floor((lo + hi) / 2);
+      if (offsetAt(tz, mid) === atEnd) lo = mid;
+      else hi = mid;
+    }
+    hostCatchesUp = hi;
+  }
+  const clockAt = (utcMs: number): number => {
+    if (utcMs < endMs) return meanOffset(utcMs);
+    return offsetAt(tz, Math.max(utcMs, hostCatchesUp));
+  };
   const readings: { utcMs: number; offset: number }[] = [];
-  for (const offset of new Set([wallMs - probe, wallMs, wallMs + probe, endMs - 1, endMs].map(clockAt))) {
+  const samples = [wallMs - probe, wallMs, wallMs + probe, endMs - 1, endMs, hostCatchesUp];
+  for (const offset of new Set(samples.map(clockAt))) {
     const utcMs = wallMs - Math.round(offset * 60_000);
     if (Math.abs(clockAt(utcMs) - offset) < 1e-9 && !readings.some((reading) => reading.utcMs === utcMs)) {
       readings.push({ utcMs, offset });

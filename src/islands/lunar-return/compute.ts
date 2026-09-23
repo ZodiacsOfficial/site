@@ -18,6 +18,8 @@ export interface LunarReturnResultData {
   /** Captured once by submit; retries retain this instant. */
   referenceUtc: string;
   natalTimeFlags: ReadonlyArray<'lmt'>;
+  /** Read on the birthplace's own mean time, even at a whole-minute offset. */
+  natalLocalMeanTime: boolean;
 }
 
 /** Resolve original birth input afresh. A summary or cached Moon is never an input. */
@@ -41,5 +43,6 @@ export function computeLunarReturn(input: LunarReturnComputeInput, reference: Da
   return {
     chart, referenceUtc: reference.toISOString(),
     natalTimeFlags: resolved.flags.filter((flag): flag is 'lmt' => flag === 'lmt'),
+    natalLocalMeanTime: resolved.localMeanTime !== undefined,
   };
 }

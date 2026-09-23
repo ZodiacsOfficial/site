@@ -40,7 +40,16 @@ describe('lunar return complete-input caller', () => {
     expect(resolved.utc.getTime() - resolveLocalToUtc(birthDate, birthTime, birthplace.tz).utc.getTime()).toBe(-4000);
     const result = computeLunarReturn({ ...input(), birthDate, birthTime, birthplace }, after);
     expect(result.natalTimeFlags).toEqual(resolved.flags.filter((flag) => flag === 'lmt'));
+    expect(result.natalLocalMeanTime).toBe(true);
     expect(result.chart).toEqual(lunarReturnChart({ utc: resolved.utc, latitude: birthplace.lat, longitude: birthplace.lon, houseSystem: 'placidus', timeKnown: true, flags: resolved.flags }, after));
+  });
+  it('marks a whole-minute local mean time, which carries no lmt flag', () => {
+    // 31.25° E is exactly +2:05:00, so the receipt rule sets no `lmt` flag.
+    const birthplace = { name: 'Cairo', lat: 30.04, lon: 31.25, tz: 'Africa/Cairo' };
+    const result = computeLunarReturn({ ...input(), birthDate: '1890-05-01', birthTime: '10:00', birthplace }, after);
+    expect(result.natalTimeFlags).toEqual([]);
+    expect(result.natalLocalMeanTime).toBe(true);
+    expect(computeLunarReturn(input(), after).natalLocalMeanTime).toBe(false);
   });
   it('keeps the event and planets under relocation while changing angles', () => {
     const first = computeLunarReturn(input(), after);

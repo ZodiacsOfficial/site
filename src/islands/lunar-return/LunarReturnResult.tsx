@@ -41,7 +41,7 @@ export function LunarReturnResult({ result, Wheel }: LunarReturnResultProps) {
         <p class="sr-result__instant mono" data-lr-reading-basis>Reading basis · {model.readingBasis.join(' · ')}</p>
         <p class="field__help">The Moon returns to its natal tropical longitude. The birthplace supplies the default return location. {wheel.houses!.system === 'whole' ? 'Whole-sign' : 'Placidus'} houses.</p>
         {model.notes.slice(1).map((note) => <p class="notice" key={note}>{note}</p>)}
-        {result.natalTimeFlags.includes('lmt') && <p class="notice">The birth time is read on a historical mean time, set by longitude rather than a time zone.</p>}
+        {(result.natalTimeFlags.includes('lmt') || result.natalLocalMeanTime) && <p class="notice">The birth time is read on a historical mean time, set by longitude rather than a time zone.</p>}
         <h2>Return placements</h2>
         <div class="calc__table-wrap"><table class="calc__table">
           <caption class="sr-only">Lunar return placements</caption>

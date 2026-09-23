@@ -9,7 +9,9 @@ import { offsetAt, prepareLocalTime, resolveLocalToUtc } from './localToUtc';
  * for towns east and west of the zone's reference meridian (and the
  * reference city itself), checked against a separate model of the
  * birthplace's clock: before the end, wall = t + the town's mean time; from
- * the end, wall = t + the zone's legal offset from Intl. One reading is the
+ * the end, wall = t + the zone's legal offset from Intl, except that where
+ * Intl records the change up to 36 hours late, its later offset applies from
+ * the end. One reading is the
  * answer; two are a fold and take the earlier with `dst-fold`; none is a gap,
  * moved forward by the offset in force just before, with `dst-gap`. Sampled
  * results must also make portable receipts that validate.
@@ -30,7 +32,28 @@ const CASES: [zone: string, town: string, longitude: number][] = [
   ['Asia/Kolkata', 'Mumbai', 72.88],
   ['America/Mexico_City', 'Merida', -89.62],
   ['America/Sitka', 'Sitka', -135.33],
+  // Intl changes offset after the table's era end in these two.
+  ['Africa/Maseru', 'Butha-Buthe', 28.25],
+  ['Africa/Ouagadougou', 'Aribinda', -0.87],
 ];
+
+/** The first instant within 36 h after the era end at which Intl's offset changes, or the end itself. */
+function catchUp(zone: string, endMs: number): number {
+  const atEnd = offsetAt(zone, endMs);
+  for (let t = endMs; t <= endMs + 36 * 3_600_000; t += 60_000) {
+    if (offsetAt(zone, t) !== atEnd) {
+      let lo = t - 60_000;
+      let hi = t;
+      while (hi - lo > 1) {
+        const mid = Math.floor((lo + hi) / 2);
+        if (offsetAt(zone, mid) === atEnd) lo = mid;
+        else hi = mid;
+      }
+      return hi;
+    }
+  }
+  return endMs;
+}
 
 function wallParts(ms: number): [string, string] {
   const iso = new Date(ms).toISOString();
@@ -42,6 +65,8 @@ describe('the birthplace clock at the end of its local mean time era', () => {
 
   it.each(CASES)('%s: %s', (zone, _town, longitude) => {
     const endMs = eras[zone] * 1000;
+    const legalFrom = catchUp(zone, endMs);
+    const legalAt = (t: number) => offsetAt(zone, Math.max(t, legalFrom));
     const meanSeconds = Math.round(longitude * 240);
     const zoneBefore = offsetAt(zone, endMs - 1000) * 60;
     const place = (meanSeconds + Math.round((zoneBefore - meanSeconds) / 86_400) * 86_400) / 60;
@@ -53,17 +78,17 @@ describe('the birthplace clock at the end of its local mean time era', () => {
       const readings: { t: number; offset: number }[] = [];
       const inEra = wall - Math.round(place * 60_000);
       if (inEra < endMs) readings.push({ t: inEra, offset: place });
-      const legal = new Set([endMs, wall - 36 * 3_600_000, wall, wall + 36 * 3_600_000, endMs + 86_400_000]
-        .map((instant) => offsetAt(zone, instant)));
+      const legal = new Set([endMs, legalFrom, wall - 36 * 3_600_000, wall, wall + 36 * 3_600_000, endMs + 86_400_000]
+        .map(legalAt));
       for (const offset of legal) {
         const t = wall - Math.round(offset * 60_000);
-        if (t >= endMs && Math.abs(offsetAt(zone, t) - offset) < 1e-9 && !readings.some((r) => r.t === t)) {
+        if (t >= endMs && Math.abs(legalAt(t) - offset) < 1e-9 && !readings.some((r) => r.t === t)) {
           readings.push({ t, offset });
         }
       }
       readings.sort((a, b) => a.t - b.t);
       const expected = readings.length === 0
-        ? { t: inEra, offset: offsetAt(zone, inEra), flag: 'dst-gap' }
+        ? { t: inEra, offset: legalAt(inEra), flag: 'dst-gap' }
         : { t: readings[0].t, offset: readings[0].offset, flag: readings.length > 1 ? 'dst-fold' : '' };
 
       const [date, time] = wallParts(wall);

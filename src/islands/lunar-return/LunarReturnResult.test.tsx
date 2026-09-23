@@ -38,5 +38,11 @@ describe('lunar result presentation', () => {
     const data = result(); data.natalTimeFlags = ['lmt']; const tree = nodes(LunarReturnResult({ result: data, Wheel }));
     expect(tree.some((n) => n.type === 'p' && typeof n.props.children === 'string' && n.props.children.includes('historical mean time, set by longitude'))).toBe(true);
     expect(JSON.stringify(tree.find((n) => n.type === LunarReturnActions)!.props.model)).not.toContain('lmt');
+    const wholeMinute = result(); wholeMinute.natalTimeFlags = []; wholeMinute.natalLocalMeanTime = true;
+    expect(nodes(LunarReturnResult({ result: wholeMinute, Wheel })).some((n) => n.type === 'p' && typeof n.props.children === 'string'
+      && n.props.children.includes('historical mean time, set by longitude'))).toBe(true);
+    const standard = result();
+    expect(nodes(LunarReturnResult({ result: standard, Wheel })).some((n) => n.type === 'p' && typeof n.props.children === 'string'
+      && n.props.children.includes('historical mean time'))).toBe(false);
   });
 });
