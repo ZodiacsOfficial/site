@@ -10099,6 +10099,30 @@
       color: var(--ink-2);
       font: 400 clamp(16px, 1.3vw, 19px)/1.55 var(--sans);
     }
+    .campaign-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .campaign-button {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 22px;
+      border: 1px solid var(--hair-3);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(10,12,17,.42);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      font: 550 14px/1 var(--sans);
+      text-decoration: none;
+      transition: border-color 180ms ease, background-color 180ms ease, transform 120ms ease;
+    }
+    .campaign-button--light { border-color: rgba(255,255,255,.78); color: #111318; background: #f1f0ec; }
+    .campaign-button:active { transform: scale(.98); }
+    .campaign-button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    @media (hover: hover) and (pointer: fine) {
+      .campaign-button:hover { border-color: rgba(238,241,247,.7); background-color: rgba(14,16,22,.7); }
+      .campaign-button--light:hover { border-color: #fff; background-color: #f8f7f4; }
+    }
 
     /* The no-JavaScript opening: the wide closed state keeps its first
        screen, and the caption follows it as an ordinary block. */
@@ -10633,12 +10657,12 @@
       }
       .campaign-hero__poster img { object-position: 50% 38%; }
       /* Clear through the upper film. The dark band is measured from the
-         bottom, so it sits behind the caption (which starts about 350px up)
-         on any screen height and any frame of the film. */
+         bottom, so it sits behind the caption (which starts about 410px up,
+         buttons included) on any screen height and any frame of the film. */
       .campaign-hero__shade {
         background:
           linear-gradient(180deg, rgba(6,7,9,.46) 0, rgba(6,7,9,0) 140px),
-          linear-gradient(0deg, rgba(6,7,9,.96) 0, rgba(6,7,9,.88) 200px, rgba(6,7,9,.76) 360px, rgba(6,7,9,.36) 430px, rgba(6,7,9,0) 520px);
+          linear-gradient(0deg, rgba(6,7,9,.96) 0, rgba(6,7,9,.88) 220px, rgba(6,7,9,.76) 420px, rgba(6,7,9,.36) 490px, rgba(6,7,9,0) 580px);
       }
       .campaign-hero__shade::after,
       .campaign-hero__word,
@@ -10655,6 +10679,11 @@
       .campaign-hero__caption { text-shadow: 0 1px 18px rgba(0,0,0,.55); }
       .campaign-hero__caption h1 { font-size: clamp(40px, 12vw, 58px); }
       .campaign-hero__caption > p { margin-top: 12px; font-size: 15.5px; }
+      /* Phones keep both buttons, so the caption drops the sentence that
+         only repeats them. */
+      .campaign-hero__more { display: none; }
+      .campaign-hero__actions { gap: 10px; margin-top: 18px; }
+      .campaign-button { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
       .static-campaign__nav { padding-top: 14px; }
 
       .campaign-bag {
@@ -10717,6 +10746,49 @@
         transition: opacity 180ms ease, transform 180ms ease, translate 320ms var(--ease);
       }
     }
+    /* Phones: the runway rises over the opening as a card while the film
+       behind it dims and recedes. The opening sticks only inside
+       .campaign-stack, so it never shows behind later sections, and the
+       card is at least a screen tall, so it covers the film completely. */
+    @media (max-width: 900px) {
+      .campaign-stack { position: relative; }
+      .campaign-stack > .campaign-hero { position: sticky; top: 0; z-index: 0; }
+      .campaign-stack > .campaign-runway {
+        z-index: 1;
+        min-height: 100vh;
+        min-height: 100lvh;
+        border-radius: 28px 28px 0 0;
+        background: linear-gradient(180deg, #0d0f15 0, #08090d 280px);
+        box-shadow: 0 -30px 60px -34px rgba(0,0,0,.95), inset 0 1px 0 rgba(238,241,247,.09);
+      }
+      /* "Find your sign" lands the card fully risen, over the whole film,
+         with its heading clear of the floating navigation. */
+      .consumer-registry .campaign-stack > .campaign-runway { scroll-margin-top: 0; }
+      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: 92px; }
+      .campaign-stack .campaign-hero__pin {
+        border-radius: calc(var(--stack, 0) * 28px);
+        transform: scale(calc(1 - var(--stack, 0) * .07));
+        transform-origin: 50% 0;
+      }
+      .campaign-stack .campaign-hero__pin::after {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        background: #060709;
+        opacity: calc(var(--stack, 0) * .74);
+        pointer-events: none;
+        content: "";
+      }
+      /* The looks pop up from below as the card arrives. */
+      .campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(72px); }
+      .campaign-runway[data-rise="rising"] .campaign-look {
+        transition: opacity 520ms ease, transform 820ms cubic-bezier(.16, 1, .3, 1), border-color 360ms var(--ease);
+        transition-delay: calc(var(--rise-order, 0) * 90ms);
+      }
+    }
+    @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+      .campaign-stack .campaign-hero__pin { border-radius: 0; transform: none; }
+    }
     @media (min-width: 601px) and (max-width: 900px) {
       .campaign-bag { right: auto; left: 50%; width: min(560px, calc(100% - 24px)); transform: translateX(-50%); }
       .campaign-bag.is-hidden { transform: translate(-50%, 140%); }
@@ -10758,6 +10830,7 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
+      .campaign-button:active,
       .consumer-registry .btn.btn--fomo:active,
       .static-campaign .btn.btn--fomo:active,
       .campaign-look:hover .campaign-look__figure,

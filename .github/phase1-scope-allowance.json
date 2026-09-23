@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "id": "owner-requested-astrofolio-clear-opening-2026-09-23",
+  "id": "owner-requested-astrofolio-phone-motion-2026-09-23",
   "baseCommit": "69d15523fc44f961012e4b6ab34894e559bd770d",
   "protectedPaths": [
     "public/assets/app.js",
@@ -8,5 +8,5 @@
     "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ],
-  "authorization": "The owner reviewed the live Campaign /astrofolio/ and asked for a clearer opening: remove the Find your sign and How buying works buttons from the hero so the film reads first, and move the Capricorn Fomo notification off the phones in the app section so it stands on its own. Only the hero caption, the phone shade, and the app-section alert placement change. Preserve market data, addresses, flags, and transaction behavior."
+  "authorization": "The owner reviewed the live Campaign /astrofolio/ and asked, on every width, for the Capricorn Fomo notification to move off the phones in the app section so it stands on its own; desktop is otherwise unchanged. On phones only, the owner asked for a less crowded first screen with both hero buttons kept, a Rolex-style card motion (the runway rises from the bottom over the film while the film dims), and the pastel zodiac discs following the swiped card. Preserve market data, addresses, flags, and transaction behavior."
 }

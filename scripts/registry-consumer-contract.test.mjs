@@ -201,13 +201,13 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     // carries the first-screen Fomo action; the runway carries all twelve.
     const opening = section(html, 'official-twelve');
     expect(normalizedText(opening)).toContain('Astro folio');
-    expect(normalizedText(opening)).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record.');
+    expect(normalizedText(opening)).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
     expect(opening).toContain('<img src="/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async">');
     expect(opening).toContain('<source srcset="/assets/fomo/fomo-film-poster.avif" type="image/avif">');
-    // The film is the opening: no buttons over it. The bag carries the
-    // first-screen action and the runway follows directly.
-    expect(opening).not.toMatch(/<a\s/u);
-    expect(opening).not.toContain('campaign-hero__actions');
+    expect(opening).toContain('href="#the-twelve"><span>Find your sign</span>');
+    expect(opening).toContain('href="#buy"><span>How buying works</span>');
+    // Phones drop only the sentence that repeats the two buttons.
+    expect(opening).toContain('<span class="campaign-hero__more"> Find yours, then buy it in the Fomo app.</span>');
     expect(opening).not.toContain('<video');
     expect(opening).not.toContain('href="/terminal/');
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
@@ -377,9 +377,31 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(runway).toContain("trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' })");
     expect(runway).toContain("url.searchParams.set('sign', next.asset.sign)");
     expect(runway).toContain("window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`)");
-    // Passing looks moves the count, never the chosen sign.
+    // Passing looks on the pinned stage moves the count, never the chosen
+    // sign; on phones a swipe moves the spotlight to the centred look and
+    // the address bar follows once the swipe rests.
     expect(functionBlock(source, 'CampaignRunway')).toContain('if (best >= 0) setPosition(best);');
-    expect(runway.slice(runway.indexOf('const pickLook'), runway.indexOf('const showLook'))).not.toContain('setActive(');
+    expect(runway.slice(runway.indexOf('const pickLook'), runway.indexOf('const followSwipe'))).not.toContain('setActive(');
+    const follow = runway.slice(runway.indexOf('const followSwipe'), runway.indexOf('const showLook'));
+    expect(follow).toContain('if (stageRef.current.pinned || !matchesMedia(CAMPAIGN_PHONE_QUERY)) return;');
+    expect(follow).toContain('if (ticker !== steer.ticker && window.performance.now() < steer.until) return;');
+    expect(follow).toContain("trackAnalytics('registry_sign_selected', { sign: chosen.asset.sign, source: 'consumer_swipe' });");
+    expect(runway).toContain('if (!stageRef.current.pinned) window.requestAnimationFrame(() => followSwipe(pickLook()));');
+    expect(runway).toContain("if (!stageRef.current.pinned) steerRef.current = { ticker: next.ticker, until: window.performance.now() + 1200 };");
+    // Phones: the looks pop up as the card arrives, never under reduced motion.
+    expect(runway).toContain("section.dataset.rise = 'pending';");
+    expect(runway).toContain('|| matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)');
+    expect(source).toContain("const CAMPAIGN_PHONE_QUERY = '(max-width: 900px)';");
+    // The opening sticks only behind the runway, inside one stack.
+    ordered(source, [
+      '<div className="campaign-stack">',
+      '<CampaignHero />',
+      '<CampaignBag sign={sign} batch={consumerMarket} />',
+      '<CampaignRunway',
+      '</div>',
+      '<CampaignApp />',
+    ]);
+    expect(functionBlock(source, 'CampaignHero')).toContain("hero.style.setProperty('--stack', rise.toFixed(3));");
     expect(runway).toContain("section.dataset.mode = stage.pinned ? 'pinned' : 'carousel';");
     expect(runway).toContain('const history = useRegistryMarketHistory(historyWanted);');
     expect(runway).toContain("rootMargin: '600px 0px'");
@@ -493,9 +515,9 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(source).not.toContain('function ConsumerIntroduction(');
     const hero = functionBlock(source, 'CampaignHero');
     expect(hero).toContain('<h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>');
-    expect(hero).toContain('<p>One for every sign, each with its own design and a public record.</p>');
-    expect(hero).not.toMatch(/<a\s/u);
-    expect(hero).not.toContain('campaign-hero__actions');
+    expect(hero).toContain('<p>One for every sign, each with its own design and a public record.<span className="campaign-hero__more"> Find yours, then buy it in the Fomo app.</span></p>');
+    expect(hero).toContain('<a className="campaign-button campaign-button--light" href="#the-twelve">');
+    expect(hero).toContain('<a className="campaign-button" href="#buy"><span>How buying works</span></a>');
     const app = functionBlock(source, 'CampaignApp');
     expect(app).not.toContain('campaign-phone__alert');
     ordered(app, [

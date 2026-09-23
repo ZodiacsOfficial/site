@@ -188,9 +188,10 @@ async function assertFirstScreen(page, { width, height }) {
   }
   const title = await page.locator('#campaign-hero-title').boundingBox();
   assert.ok(title && title.y >= 0 && title.y + title.height <= height, `the headline sits in the first ${width}x${height} screen`);
-  assert.equal(await page.locator('.campaign-hero a, .campaign-hero button').count(), 0, 'no buttons sit over the opening film');
+  assert.equal(await page.locator('.campaign-hero .campaign-button').count(), 2, 'both opening buttons stay on phones');
+  assert.equal(await page.locator('.campaign-hero__more').isVisible(), false, 'phones drop only the sentence that repeats the buttons');
   const captionRise = await page.locator('.campaign-hero__caption').evaluate((node) => window.innerHeight - node.getBoundingClientRect().top);
-  assert.ok(captionRise <= 360, `the opening caption stays inside the shaded band at ${width}x${height} (${Math.round(captionRise)}px)`);
+  assert.ok(captionRise <= 420, `the opening caption stays inside the shaded band at ${width}x${height} (${Math.round(captionRise)}px)`);
   assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), null, 'the bag is live in the first phone screen');
   await assertBuyActionInView(page, '.campaign-bag', { width, height }, 'hydrated bag');
   // The site-wide Guide launcher rises above the bag rather than covering it.
@@ -243,7 +244,7 @@ async function assertStaticFirstScreen(page, { width, height, slug }) {
   for (const selector of ['.static-astrofolio-kicker', '#static-astrofolio-title', '.campaign-hero__film']) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
-  assert.equal(await page.locator('.campaign-hero a, .campaign-hero button').count(), 0, 'no buttons sit over the no-JavaScript opening');
+  assert.equal(await page.locator('.campaign-hero .campaign-button').count(), 2, 'both opening buttons stay without JavaScript');
   assert.equal(await page.locator(`.campaign-bag--static[data-campaign-bag="${slug}"]`).count(), 1, 'the no-JavaScript bag carries the season sign');
   await assertBuyActionInView(page, '.campaign-bag--static', { width, height }, 'no-JavaScript bag');
 }
@@ -548,16 +549,63 @@ try {
     assert.equal(new URL(page.url()).searchParams.get('sign'), 'pisces');
     assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'pisces');
 
-    // Swiping the runway moves along it without changing the chosen sign.
+    // On phones a swipe moves the spotlight to the look in the centre; the
+    // bag and the address bar follow once the swipe rests.
+    await page.locator('.campaign-runway__track').evaluate((node) => { node.scrollLeft = 0; });
+    await page.waitForTimeout(400);
+    const firstLook = await page.locator('.campaign-runway__track > .campaign-look').first().getAttribute('data-look');
+    await page.waitForFunction((sign) => document.querySelector(`[data-consumer-sign="${sign}"]`)?.getAttribute('aria-pressed') === 'true', firstLook);
+    await page.waitForFunction((sign) => new URL(location.href).searchParams.get('sign') === sign, firstLook);
+    // One swipe to the next look (the row scrolls exactly as a swipe does).
+    await page.locator('.campaign-runway__track').evaluate((node) => {
+      const look = node.children[1];
+      node.scrollTo({ left: look.offsetLeft - (node.clientWidth - look.offsetWidth) / 2, behavior: 'instant' });
+    });
+    const secondLook = await page.locator('.campaign-runway__track > .campaign-look').nth(1).getAttribute('data-look');
+    await page.waitForFunction((sign) => document.querySelector(`[data-consumer-sign="${sign}"]`)?.getAttribute('aria-pressed') === 'true', secondLook);
+    assert.equal(await page.locator('.campaign-dot[aria-pressed="true"]').count(), 1, 'one disc carries the spotlight');
+    await page.waitForFunction((sign) => new URL(location.href).searchParams.get('sign') === sign, secondLook);
+    assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), secondLook, 'the bag follows the swiped look');
     await page.locator('.campaign-runway__track').evaluate((node) => { node.scrollLeft = node.scrollWidth; });
-    await page.waitForTimeout(250);
-    assert.equal(await page.locator('[data-consumer-sign="pisces"]').getAttribute('aria-pressed'), 'true');
-    assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'pisces');
-    const lookHeightTall = await page.locator('[data-look="pisces"]').evaluate((node) => node.getBoundingClientRect().height);
+    const lastLook = await page.locator('.campaign-runway__track > .campaign-look').last().getAttribute('data-look');
+    await page.waitForFunction((sign) => document.querySelector(`[data-consumer-sign="${sign}"]`)?.getAttribute('aria-pressed') === 'true', lastLook);
+    const lookHeightTall = await page.locator(`[data-look="${lastLook}"]`).evaluate((node) => node.getBoundingClientRect().height);
     await page.setViewportSize({ width: 390, height: 760 });
-    const lookHeightShort = await page.locator('[data-look="pisces"]').evaluate((node) => node.getBoundingClientRect().height);
+    const lookHeightShort = await page.locator(`[data-look="${lastLook}"]`).evaluate((node) => node.getBoundingClientRect().height);
     assert.ok(Math.abs(lookHeightTall - lookHeightShort) <= 1, 'browser-chrome height changes do not resize the swipeable looks');
     await page.setViewportSize({ width: 390, height: 844 });
+
+    // Phones: the runway rises over the film as a card. The film stays in
+    // place behind it and dims as the card climbs; Find your sign lands the
+    // card fully risen.
+    const readStack = () => page.evaluate(() => {
+      const hero = document.getElementById('official-twelve');
+      return {
+        heroTop: Math.round(hero.getBoundingClientRect().top),
+        runwayTop: Math.round(document.getElementById('the-twelve').getBoundingClientRect().top),
+        stack: Number.parseFloat(hero.style.getPropertyValue('--stack') || '0'),
+        dim: Number.parseFloat(getComputedStyle(hero.querySelector('.campaign-hero__pin'), '::after').opacity),
+      };
+    });
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForFunction(() => document.getElementById('official-twelve')?.style.getPropertyValue('--stack') === '0.000');
+    const stackStart = await readStack();
+    assert.equal(stackStart.dim, 0, 'the first screen shows the film undimmed');
+    await page.evaluate(() => window.scrollTo({ top: Math.round(window.innerHeight / 2), behavior: 'instant' }));
+    await page.waitForFunction(() => Math.abs(Number.parseFloat(document.getElementById('official-twelve')?.style.getPropertyValue('--stack') || '0') - 0.5) < 0.05);
+    const stackMiddle = await readStack();
+    assert.ok(Math.abs(stackMiddle.heroTop) <= 1, 'the film stays in place while the card rises over it');
+    assert.ok(Math.abs(stackMiddle.runwayTop - 422) <= 2, 'the card is halfway up the screen');
+    assert.ok(stackMiddle.dim > 0.3 && stackMiddle.dim < 0.45, `the film dims with the rise (${stackMiddle.dim})`);
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.locator('.campaign-hero .campaign-button--light').click();
+    await page.waitForFunction(() => Math.abs(document.getElementById('the-twelve')?.getBoundingClientRect().top ?? 99) <= 1);
+    await page.waitForFunction(() => document.getElementById('official-twelve')?.style.getPropertyValue('--stack') === '1.000');
+    const stackTop = await readStack();
+    assert.ok(Math.abs(stackTop.dim - 0.74) < 0.01, 'the risen card leaves the film fully dimmed behind it');
+    const cardHead = await page.locator('.campaign-runway__head').evaluate((node) => node.getBoundingClientRect().top);
+    const navBottom = await page.locator('.wnav').first().evaluate((node) => node.getBoundingClientRect().bottom);
+    assert.ok(cardHead >= navBottom + 8, 'the risen card heading clears the floating navigation');
 
     // The bag rests while the runway fills the screen and over the ending.
     await page.locator('#the-twelve').evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
