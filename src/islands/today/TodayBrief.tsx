@@ -133,8 +133,8 @@ export default function TodayBrief({
     // No contact is read until stale saved summaries are rewritten; a refresh
     // that cannot load leaves the stored chart in use. Its modules load here,
     // not in the page's initial script.
-    const refreshed = Promise.all([import('../../lib/profile/refresh'), import('../../lib/hooks/useEngine')])
-      .then(([{ refreshSavedChartSummaries }, { loadEngine }]) => refreshSavedChartSummaries(loadEngine))
+    const refreshed = import('../../lib/profile/refresh')
+      .then(({ refreshSavedChartSummaries }) => refreshSavedChartSummaries())
       .catch(() => 0);
     void Promise.all([import('../../lib/transits'), import('../../lib/today/contacts'), refreshed])
       .then(([transits, contacts]) => {

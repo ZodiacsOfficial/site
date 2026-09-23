@@ -9,6 +9,7 @@
  * sync. Callers import this lazily, never from the homepage.
  */
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
+import { loadEngine as loadSiteEngine } from '../hooks/useEngine';
 import { birthplaceTimeCanApply } from '../time/localToUtc';
 import type { SavedChart } from './schema';
 import { resolveSavedChart, type SavedChartEngineLoader } from './resolve';
@@ -62,9 +63,12 @@ function saveChecked(checked: Set<string>): void {
  * chart state is remembered, so a second run loads neither the engine nor the
  * time tables; a recomputation that failed, such as a download while offline,
  * is tried again on the next run. Concurrent calls share one run. Resolves to
- * the number of summaries rewritten.
+ * the number of summaries rewritten. The engine loader defaults to the one
+ * every island shares.
  */
-export function refreshSavedChartSummaries(loadEngine: SavedChartEngineLoader): Promise<number> {
+export function refreshSavedChartSummaries(
+  loadEngine: SavedChartEngineLoader = loadSiteEngine,
+): Promise<number> {
   if (!running) running = refresh(loadEngine).finally(() => { running = null; });
   return running;
 }

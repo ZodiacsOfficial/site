@@ -9,7 +9,6 @@ import { BirthFields } from './BirthFields';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
-import { resolveSavedChart } from '../lib/profile/resolve';
 import {
   MAX_PAIRS,
   deletePair,
@@ -226,6 +225,7 @@ export function comparisonResultSource(
 const handleOf = (name: string) => name.split('·')[0].trim() || name;
 
 export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
+  const { resolveSavedChart } = await loadModule(() => import('../lib/profile/resolve'));
   const resolved = await resolveSavedChart(chart, loadEngine);
   const { summary } = resolved;
   // A recomputed summary is kept through the profile refresh's compare-and-set,
