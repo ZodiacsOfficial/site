@@ -226,27 +226,45 @@ Each step names its rule's source. Baselines are the shipped engine,
 
 - **Rule.** Every public sentence about accuracy, time handling or privacy
   has an evidence path; any sentence without one is removed.
-- **Verdict: PARTIAL.** `docs/claims/ledger.json` listed, when it landed
-  (`3a8f22e3`), the 1,075 public sentences its trigger lists select in 1,390
-  files, each with the claim it makes (74 claims) or the listed reason it
-  makes none (277), and `scripts/claims-ledger.test.mjs` holds the copy to
-  it; later commits add to it, and `node scripts/claims-ledger.mjs --summary`
-  prints the current counts. The corrections the audit, the fact-check and
-  the ledger's own research found in English copy have landed, the measured
-  ones bound by `scripts/claims-bindings.test.mjs`. 68 of those 74 claims
-  are supported. 43 sentences are not, and are still public: four
-  overstated claims (the positions-only chart code, 7 sentences, owner
-  decision 10.4 with step 1.15; the receipt's "apparent" label, a receipt
-  value rather than a sentence, step 1.11; the rising-sign guides, 12; the
-  English catalog, 1) and two stale ones (the es/fr/it/pt pages the English
-  has moved past, 23). The guides, the catalog and the translations are
-  protected by the scope guard, and the chart code waits on the owner, so
-  none was removed; each has what closes it. A sentence that uses none of
-  the trigger words is outside the ledger.
+- **Verdict: PASS for sentences** (2026-09-23). `docs/claims/ledger.json`
+  listed, when it landed (`3a8f22e3`), the 1,075 public sentences its trigger
+  lists select in 1,390 files, each with the claim it makes (74 claims) or the
+  listed reason it makes none (277), and `scripts/claims-ledger.test.mjs`
+  holds the copy to it. After the owner delegated the pending decisions, the
+  sentences that were not supported were corrected: the rising-sign guides,
+  the English catalog and the es/fr/it/pt time and privacy copy under a
+  one-time scope allowance, the positions-only code by step 1.15, and the
+  privacy pages after an independent check. The ledger now lists 1,139
+  sentences, 279 of them exempt, and 73 claims. Every claim a sentence makes is
+  supported. One claim is still open: the receipt's "apparent" label, a
+  receipt value rather than a sentence, which step 1.11 closes. A sentence
+  that uses none of the trigger words is outside the ledger.
 
 ### 1.15 The share token (version 2)
 
-- **Verdict: NOT RUN.** Needs an owner decision.
+- **Rule.** A decoder test shows the chosen precision cannot recover the birth
+  instant to better than the stated window; the claims ledger carries the new
+  wording.
+- **Decision** (owner-delegated, 2026-09-23). Measurement changed the
+  premise. On 300 births, no rounding hides the birth date: a search over
+  1900–2030 finds one matching window even with every body at 1°. Hiding the
+  time needs every body at 0.1° or coarser, which moves most calendar
+  events by 30 minutes or more. The birthplace is carried only by the
+  ascendant and midheaven, since the planets, the Moon and the nodes are
+  geocentric. So the angles in every shared code go to the middle of their
+  whole degree, which keeps the sign. That covers the link, the calendar
+  feed (the server rounds older codes too), the two-chart link and
+  invitations. The planets stay at 0.001°. The preview link keeps the code
+  in its fragment.
+- **Verdict: PASS, against the rule as the decision restates it.**
+  `src/lib/share-positions.test.ts` decodes the rounded code for the same 300
+  births with the instant known. For every birth, the region contains the
+  birthplace and is at least 0.9° wide east–west. Across the sample, the
+  long side is at least 70 km, has a median between 500 and 550 km, and is at
+  least 240 km within 45° of the equator. The birth instant stays
+  recoverable to a 6.3 s window at the median. The copy states that, rather
+  than a window the code does not give, and the ledger's
+  `priv.positions-token` carries the wording.
 
 ### Version 1's other M3 rules
 
