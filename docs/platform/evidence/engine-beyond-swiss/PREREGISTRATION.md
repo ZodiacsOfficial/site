@@ -70,6 +70,14 @@ Each step names its rule's source. Baselines are the shipped engine,
 - **Baseline.** Grid A through the shipped `computeChart`: ASC p50 2.409″,
   p95 22.406″, max 512.529″ (2100-03-21T06Z, lat 66); |lat| ≤ 45 max 16.22″;
   MC max 3.94″ (ledger angles-houses-aspects-1, verifier).
+- **Baseline against the ERFA arbiter** (`corpora/angle-grid-erfa.json`:
+  pyerfa 2.0.1.5, `gst06a` with UT1 taken as UTC, `obl06` plus `nut06a`'s
+  Δε, on the engine's own clock): ASC p50 2.12″, p95 23.16″, max 506.81″
+  (1950-03-21T18Z, lat −66); |lat| ≤ 45 max 14.63″; MC max 2.25″. The
+  engine's own sidereal time with astronomy-engine's true obliquity in place
+  of the mean one gives p50 0.065″, p95 0.240″, max 6.36″ and 0.36″ for
+  |lat| ≤ 45, inside the rule's ERFA gates. `scripts/angles-grid.test.mjs`
+  pins both, and is written to fail when rc.7 lands.
 - **Verdict: NOT RUN.** See amendment A1.
 
 ### 1.4 Observed ΔT with a band (version 1, rule 1c)
@@ -136,6 +144,10 @@ Each step names its rule's source. Baselines are the shipped engine,
   up to 147.5°. With the limit at 90° − ε and Swiss's inputs, the same
   iteration agrees 336/336 and matches to 0.0085″ (ledger
   angles-houses-aspects-3, verifier).
+- **Baseline against the ERFA arbiter.** 90° − ε, with ε the true
+  obliquity of date, runs from 66.533° to 66.589° over the ladder's dates;
+  it allows Placidus on 320 of the 336 cases, the count Swiss computes, and
+  the shipped engine refuses all 336 (`scripts/angles-grid.test.mjs`).
 - **Verdict: NOT RUN.**
 
 ### 1.10 One crossing solver (version 1, rule 1i)
