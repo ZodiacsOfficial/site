@@ -88,6 +88,12 @@ with a pinned ΔT, and subtracting the prototype's improvement from its own
 residual would put it near 0.9″ rather than near zero. The comparison below is
 therefore reported both ways, and both ways are the prototype.
 
+*Correction, 2026-09-23.* "Neither model is wrong" holds only past the
+observed record. Today ΔT is measured, and astronomy-engine's formula reads
+75.497 s on 2026-09-22 where the IERS value is 69.196 s: 6.3 s, or 3.46″ of
+Moon at its mean rate. See
+[`../deltat-2026-09-23/values.json`](../deltat-2026-09-23/values.json).
+
 The 2190 case (159.379″) has no such decomposition. It falls outside DE440s
 coverage, so it was excluded from the prototype and could not be ΔT-pinned; the
 same mechanism plainly dominates there, but that is an expectation rather than

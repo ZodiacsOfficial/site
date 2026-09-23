@@ -89,6 +89,15 @@ mechanism plainly dominates but that is an expectation, not a measurement.
 Reporting any of these residuals as an ephemeris error would still be wrong
 about the cause.
 
+*Correction, 2026-09-23.* "A clock difference" is right about the far future
+and silent about the present, where ΔT is measured. The formula the engine uses
+(astronomy-engine's `DeltaT_EspenakMeeus`) reads 75.497 s on 2026-09-22 where
+the IERS value is 69.196 s, 6.3 s ahead and growing about 1.2 s a year; at the
+Moon's mean rate that is 3.46″ today. The values, for 2017, 2020, 2024 and
+2026, and the script that derives them from the IERS finals file are in
+[`../platform/evidence/deltat-2026-09-23/`](../platform/evidence/deltat-2026-09-23/).
+Step 1.4 of the engine brief replaces the formula with observed ΔT.
+
 **Neptune is the worst modern body in both comparisons** — a single-epoch
 14.77″ against Horizons, a median of 11.5″ against Swiss. Those are different
 statistics and should not be read as one number seen twice, and the two

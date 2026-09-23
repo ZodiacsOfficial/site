@@ -26,6 +26,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { DeltaT_EspenakMeeus } from 'astronomy-engine';
 import { describe, expect, it } from 'vitest';
 
 const root = process.cwd();
@@ -178,6 +179,24 @@ describe('the accuracy claim on /methodology/', () => {
     expect(Number(claimed[1])).toBeCloseTo(accounted, -1);
     expect(Number(claimed[2])).toBeCloseTo(observed, 1);
     expect(Number(claimed[1])).toBeLessThan(observed);
+  });
+
+  it('states today\'s ΔT error from the IERS value, not as a convention', () => {
+    const deltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-23/values.json'));
+    const today = deltaT.values.find((row) => row.date === '2026-09-22');
+    expect(prose).not.toContain('Neither extrapolation is wrong');
+    const stated = /on 22 September 2026 it reads ([\d.]+) seconds where the IERS value is ([\d.]+), which on its own moves the Moon about ([\d.]+) arcseconds/u
+      .exec(prose);
+    expect(stated, 'the page must give both values and the Moon displacement').toBeTruthy();
+    expect(stated[1]).toBe(tenth(today.formulaSeconds));
+    expect(stated[2]).toBe(tenth(today.observedSeconds));
+    expect(stated[3]).toBe(tenth(today.moonArcseconds));
+    // The formula value is the installed library's, at that instant.
+    const installed = JSON.parse(read('node_modules/astronomy-engine/package.json')).version;
+    expect(deltaT.formula).toEqual({ function: 'DeltaT_EspenakMeeus', package: 'astronomy-engine', version: installed });
+    const days = (Date.parse('2026-09-22T00:00:00Z') - Date.UTC(2000, 0, 1, 12)) / 86_400_000;
+    expect(DeltaT_EspenakMeeus(days)).toBeCloseTo(today.formulaSeconds, 3);
+    expect(today.moonArcseconds).toBeCloseTo(today.differenceSeconds * deltaT.moonArcsecondsPerSecond, 2);
   });
 
   it('says what agreement with another implementation does not establish', () => {
