@@ -209,9 +209,30 @@ than papering over it: the reviewed `EclipticGeoMoon` path applies no explicit
 light-time, aberration or deflection pass, so the two correction paths are
 **not** claimed to be identical, only to agree inside the stated budget.
 
+The event times the site publishes were measured against Swiss Ephemeris on
+2026-09-23
+([`events-vs-swiss-2026-09-23/`](../platform/evidence/events-vs-swiss-2026-09-23/)):
+from 2026 to 2030, all 124 new and full moons and 24 eclipse peaks are
+within 14 seconds, the 92 stations within 41 minutes (Pluto), and the sign
+changes and exact aspects of Uranus, Neptune or Pluto within 6.4 hours.
+Those slow events are ill-conditioned: a few arcseconds of position error in
+an outer planet, or in the ±0.25-day speed estimate the station finder uses,
+moves the instant by minutes to hours. The pages state these limits, and
+`scripts/claims-bindings.test.mjs` holds the copy to the measurement.
+
 Each longitude-crossing search caps ephemeris evaluations at 10,000. Sampling
 can miss an event between steps; interior tangencies are omitted, and
-direction at a window endpoint rests on one-sided evidence.
+direction at a window endpoint rests on one-sided evidence. The site's own
+return solver also examines each sampled turn of the motion, which finds the
+grazing passes a coarse step misses: all 4,941 cases of a station-graze corpus
+([`phase1-events/`](../platform/evidence/phase1-events/)), where the plain
+sign-change search found 3,627.
+
+Return and year scans stop at the end of 2199, the span the engine is checked
+over. A Saturn return search that reaches past it is clipped, so a birth after
+about 2108 shows fewer Saturn seasons. The result records the clipping
+(`rangeClipped`), but the pages do not yet say so: that notice needs text in
+the locale catalogs (step 1.7 of the engine brief).
 
 Not established: complete event discovery. Nothing here is a guarantee that
 every event in a window is found, and the cap is a sampling bound rather than
