@@ -109,7 +109,7 @@ describe('the pinned zone history on the methodology page', () => {
   it('states how many city-index zones it changes, as measured', () => {
     const measured = JSON.parse(read('docs/platform/evidence/tz-history-2025c/index-divergence.json'));
     const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
-    expect(page).toContain(`for ${measured.divergentZones} of the ${measured.indexZones} time zones in our city index`);
+    expect(page).toContain(`for about ${measured.divergentZones} of the ${measured.indexZones} time zones in our city index`);
     expect(page).toContain(`${measured.divergentByAnHourOrMore} of them by an hour or more`);
     expect(measured.divergent['Europe/Stockholm']).toBeDefined();
   });
@@ -121,5 +121,45 @@ describe('the pinned zone history on the methodology page', () => {
       .toBe('1947-07-01T11:00:00.000Z');
     const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
     expect(page).toContain('a Stockholm birth reads 10:00 UTC with Berlin\'s summer time in the browser\'s history, where Sweden kept +1:00 and the chart uses 11:00');
+  });
+});
+
+describe('the famous-people exception', () => {
+  it('states how many pages differ from the calculator, as the resolver reads them now', async () => {
+    // A person's page keeps the noon instant it was first computed with; the
+    // calculator now reads the birthplace's mean time and the pinned history.
+    // Recomputing the pages changes these counts, and the copy with them.
+    const { people } = JSON.parse(read('src/data/people.json'));
+    const minutes = [];
+    for (const person of people) {
+      const { computation, birthDate, birthPlace } = person;
+      await prepareLocalTime(birthDate.computedGregorianDate, birthPlace.timeZone);
+      const resolved = resolveLocalToUtc(birthDate.computedGregorianDate, computation.civilTime, birthPlace.timeZone,
+        { longitude: birthPlace.coordinates.longitude });
+      minutes.push(Math.abs(resolved.utc.getTime() - Date.parse(computation.utcInstant)) / 60_000);
+    }
+    const differ = minutes.filter((m) => m > 0);
+    const withinTen = differ.filter((m) => m <= 10).length;
+    const fullHour = differ.filter((m) => m >= 60).length;
+    const between = differ.length - withinTen - fullHour;
+    expect([people.length, differ.length, withinTen, between, fullHour]).toEqual([501, 218, 145, 70, 3]);
+    expect(Math.max(...differ)).toBe(60);
+    const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
+    expect(page).toContain(`so ${differ.length} of the ${people.length} differ from what the birth chart calculator gives`);
+    expect(page).toContain(`${withinTen} by ten minutes or less, ${between} by between ten minutes and an hour, and three by a full hour`);
+    for (const path of ['public/llms-full.txt', 'scripts/build-assistant-context.mjs']) {
+      expect(read(path), path).toContain(`so ${differ.length} of the ${people.length} differ from the calculator`);
+    }
+  });
+});
+
+describe('the Moon\'s disagreement with Swiss Ephemeris on the methodology page', () => {
+  it('states the in-span maximum as the ceiling, and the median beside it', () => {
+    const report = JSON.parse(read('docs/platform/evidence/swiss-benchmark/report-measure.json'));
+    const moon = report.rows.filter((row) => row.body === 'Moon' && row.stratum !== 'future')
+      .map((row) => Math.abs(row.dLonArcsec)).sort((a, b) => a - b);
+    const median = (moon[moon.length / 2 - 1] + moon[moon.length / 2]) / 2;
+    const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
+    expect(page).toContain(`is at most ${moon.at(-1).toFixed(1)} arcseconds over the span measured below, with a median of ${median.toFixed(1)}`);
   });
 });

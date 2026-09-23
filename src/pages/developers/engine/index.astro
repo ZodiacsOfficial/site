@@ -154,8 +154,8 @@ const jsonLd = [{
     <h2 id="accuracy">How close it is</h2>
     <div class="prose">
       <p>
-        Every change has to pass a comparison against NASA JPL Horizons
-        reference data before it ships; at the two dates it checks, 1907 and
+        Every change runs a comparison against NASA JPL Horizons reference
+        data; at the two dates it checks, 1907 and
         2020, the largest difference is 14.8 arcseconds (Neptune, 2020).
         Separately, on 20 September 2026 the
         engine was measured against Swiss Ephemeris 2.10.03 over a stratified
@@ -166,16 +166,19 @@ const jsonLd = [{
       </p>
       <p>
         Three caveats that matter more than the number.{' '}
-        <a href="/methodology/#swiss-comparison">Both programs descend from JPL
-        development ephemerides</a>, so that is two implementations agreeing
-        rather than a check against observation.
+        <a href="/methodology/#swiss-comparison">Swiss Ephemeris and this
+        engine's planetary series both descend from JPL development
+        ephemerides</a>, and the engine's Moon comes from an older lunar theory,
+        so that is two implementations agreeing rather than a check against
+        observation.
       </p>
       <p>
         Further out the disagreement grows, and past the observed record it is
         mostly the clock: the Moon is <strong>64.8 arcseconds</strong> at 2100 and{' '}
-        <strong>159.4 arcseconds</strong> at 2190, almost all of which is the two programs extrapolating the
-        Earth's slowing rotation differently rather than either ephemeris
-        being wrong. The engine's clock model is already off today: on 22
+        <strong>159.4 arcseconds</strong> at 2190. At 2100 about 60 of those
+        64.8 come from the two programs extrapolating the Earth's slowing
+        rotation differently rather than either ephemeris being wrong; the 2190
+        case was not taken apart the same way. The engine's clock model is already off today: on 22
         September 2026 it reads 75.5 seconds where the IERS value is 69.2,
         which on its own moves the Moon about 3.5 arcseconds.
       </p>
@@ -190,7 +193,7 @@ const jsonLd = [{
         <a href="https://github.com/ZodiacsOfficial/site/tree/main/docs/engine-validation" rel="noopener noreferrer">One
         report covers all of it</a> — positions, angles and houses, local time,
         event search and runtime support — with the measured residual for each,
-        the pinned oracle it came from, and what it does not establish. It also
+        the oracle it came from, and what it does not establish. It also
         carries the event-search contract that is still failing, which is the
         weakest thing anyone evaluating this should know.
       </p>

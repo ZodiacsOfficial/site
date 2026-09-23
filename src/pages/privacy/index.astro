@@ -7,8 +7,8 @@ const accountSyncV2Enabled = isAccountSyncV2Enabled({
   PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
   PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
 });
-const updated = '29 August 2026';
-const modifiedAt = '2026-08-29T00:00:00.000Z';
+const updated = '23 September 2026';
+const modifiedAt = '2026-09-23T00:00:00.000Z';
 
 const jsonLd = [
   {
@@ -30,14 +30,15 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacy</em>
-    <h1 class="method-title display">You choose when data leaves your device.</h1>
+    <h1 class="method-title display">Your birth details leave your device only when you send them.</h1>
 
     <div class="prose">
       <p class="lede">
         Chart calculation runs in your browser. Birth fields
         are not sent as part of calculation or a Cabinet of Twelve lookup; they
-        leave your device only if you choose account sync or type them into an
-        assistant message. If you explicitly attach a chart to the assistant,
+        leave your device only if you sign in to sync saved charts, share a link
+        that carries them, or type them into an assistant message. If you
+        explicitly attach a chart to the assistant,
         a placements-only summary also leaves the device; saved names and raw
         birth fields are not attached. Aura sends one public wallet address—not your birth or chart
         data—to a blockchain-data provider for a read-only lookup. Accounts,
@@ -56,12 +57,13 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 
       <h2>What happens when you use a calculator</h2>
       <p>
-        Every chart on this site is computed on your own device. When you enter
-        a birth date, time, and place, that information is used by code running
-        in your browser to calculate the chart. It is not transmitted to our
-        servers, logged, or stored by us as part of that calculation. It leaves
-        the device only if you later choose account sync or put it in an
-        assistant message. This is a deliberate design choice, described in
+        Every chart you calculate here is computed on your own device. When you
+        enter a birth date, time, and place, that information is used by code
+        running in your browser to calculate the chart. It is not transmitted to
+        our servers, logged, or stored by us as part of that calculation. It
+        leaves the device only if you later sign in to sync a saved chart, share
+        a link that carries it, or put it in an assistant message. This is a
+        deliberate design choice, described in
         full on our <a href="/methodology/">methodology page</a>.
       </p>
       <p>
@@ -79,9 +81,10 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
         Every Responses API request uses <code>store: false</code>. The current web Guide conversation stays only
         in this browser session, is not synced to an account, and is not stored
         as text on Zodiacs.org servers, whether or not you are signed in.
-        OpenAI states that API data is not used to train its models by default;
-        its standard abuse-monitoring logs may retain submitted content for up
-        to 30 days unless stricter data controls apply. A saved chart is included
+        OpenAI states that API data is not used to train its models by default,
+        and that its abuse-monitoring logs keep submitted content for up to 30
+        days, or longer where the law requires it or where that is needed to
+        protect its services or others from harm. A saved chart is included
         only after you press “Attach my chart”; the consent screen shows the
         placements-only summary before it is sent. That summary accompanies
         each question while “Using my chart” remains on; you can turn it off.
@@ -89,8 +92,9 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
         and coordinates are never attached by Guide; anything you type
         into chat is part of the message you send.
         To enforce the daily limit, we keep a salted one-way identifier derived
-        from your IP address with its daily count, never the raw IP; quota
-        checks delete entries older than the previous UTC day. We do not send
+        from your IP address, never the raw IP, with its daily count and a
+        record of each request. Each later quota check deletes counts older than
+        the previous UTC day and request records older than 48 hours. We do not send
         that identifier to OpenAI or put conversation text in provider metadata.
       </p>
 
@@ -98,9 +102,9 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
       <p>
         When you save a chart, it is stored in your browser's local storage —
         on your device, under your control. It is not sent anywhere unless you
-        choose to create an account (below). Clearing your browser's site data
-        removes saved charts. We cannot see them and cannot recover them for
-        you.
+        sign in to an account (below), share it, or attach it to Guide (above).
+        Clearing your browser's site data removes saved charts. Unless you sign
+        in, we cannot see them and cannot recover them for you.
       </p>
 
       <h2>Living Chart moments</h2>
@@ -174,7 +178,8 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
       <p>
         When a relevant Zodiac Terminal or Registry market panel is displayed, your browser may request
         public market data from Dex Screener, public chart data from GeckoTerminal,
-        or public attention data from Wikimedia. Those automatic requests do not include a wallet address,
+        or public attention data from Wikimedia, and opening a Terminal market asks
+        independent Jupiter for a price quote on a sample amount. Those automatic requests do not include a wallet address,
         birth fields, chart data, or Aura results. The independent service still
         receives ordinary web-request metadata, such as your IP address,
         browser information, and request time, and its own privacy terms and
@@ -215,10 +220,11 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
         infrastructure logs.
       </p>
       <p>
-        Aura share images are composed on your device. The image omits
-        the public address, chain, chart name, birth fields, exact placements,
-        chart geometry, and the held-sign count and list. It does not include a
-        saved-chart fact. A browser share sheet or download sends the image to
+        Aura share images are composed on your device. The image omits the
+        public address, chart name, birth fields, exact placements, and chart
+        geometry. The seal image names the signs held, and the cabinet image
+        shows the chain, the date, and how many of the twelve are held. Neither
+        includes a saved-chart fact. A browser share sheet or download sends the image to
         a destination you choose, whose
         privacy terms then apply. Clearing Aura cannot recall copies that other
         people or services have saved or reposted.
@@ -307,8 +313,9 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
               no password to store.
             </li>
             <li>
-              We store your email address and the charts you choose to sync (which
-              include the birth details for those charts) with our database
+              We store your email address and every chart saved in your browser
+              while you are signed in, including those saved before you signed
+              in, with their birth details, with our database
               provider, <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>,
               so they can appear on your other devices. Access is restricted to your
               own account.
@@ -406,10 +413,14 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
       <h2>Cookies</h2>
       <p>
         We do not use advertising or tracking cookies. The only browser storage
-        we use is first-party storage for features you request: saved charts,
-        bounded Aura session data, an optional remembered Aura address, site
-        preferences, and, if you sign in, a sign-in token. These stay on your
-        device and are not used to track you across other sites.
+        we use is first-party storage for features you use: what you save
+        (charts, comparisons, Living Chart moments, learning progress), working
+        state for the tools you use (such as Guide's session and cached
+        calculations), bounded Aura session data, an optional remembered Aura
+        address, site preferences, copies of the site's own files for offline
+        use, and, if you sign in, a sign-in token. It stays on your device
+        unless you turn on a sync described above, and none of it is used to
+        track you across other sites.
       </p>
 
       <h2>Children</h2>
@@ -421,7 +432,7 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 
       <h2>Your choices</h2>
       <ul>
-        <li>Use every calculator with no account and nothing stored off-device.</li>
+        <li>Use every calculator with no account; nothing you enter is stored off your device.</li>
         <li>Use the Aura example without a chart, address, wallet connection, or purchase.</li>
         <li>Paste a public address instead of connecting third-party wallet software.</li>
         <li>Leave Aura's “Remember” option unchecked and clear its browser data at any time.</li>

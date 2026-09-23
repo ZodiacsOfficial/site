@@ -221,7 +221,7 @@ Each step names its rule's source. Baselines are the shipped engine,
 | item | status |
 | --- | --- |
 | 1. This file and the corpora | Done, except the multi-year distribution (item 4). |
-| 2. Appended corrections | Partly. Landed: the ΔT sentence and the mean obliquity on the methodology page. Open: `docs/engine-validation/README.md` still says "1.57″ worst angle, cusps exact" (line 36) and describes Swiss's polar behaviour without its 90° − ε limit (lines 125–130); the other files version 1 lists are not yet annotated. |
+| 2. Appended corrections | Partly. Landed: the ΔT correction, on the methodology page and appended to `docs/engine-validation/README.md` and `swiss-benchmark/RESULTS.md`; the mean obliquity on the methodology page; and, in the validation report, the "1.57″ worst angle" row and Swiss's polar limit (90° − ε, about 66.56°), with four other passages the claims ledger found. Those were corrected in place, because step 1.14 holds the report's sentences to their evidence, and their earlier wording is appended under the report's *Corrections*. Open: the other files version 1 lists are not yet annotated. |
 | 3. Premises and the frame decomposition | The three false premises are recorded (brief v2, R8). The pyerfa decomposition of Horizons's IAU 1976/1980 frame on the 24-instant corpus has not been run; the corpus it needs is now in `corpora/horizons-24/`. |
 | 4. Multi-year distribution fixture | Not done. The numbers are in `../engine-audit-2026-09-22/CRITIC.md`. |
 | 5. `lite.ts` header and fixture test | Done, with one deviation: the test measures `lite.ts` against the full engine at 50 instants, not against a Swiss fixture, so no Swiss output is committed under `src/`. |

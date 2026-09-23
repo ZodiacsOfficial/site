@@ -335,7 +335,7 @@ export default function SomeoneElseChart() {
               onInput={(event) => setName((event.currentTarget as HTMLInputElement).value)}
               placeholder="A first name or nickname"
             />
-            <p>Names stay in this browser unless you intentionally include one in a full-details link. Nothing leaves this browser unless you share it.</p>
+            <p>Names stay in this browser unless you intentionally include one in a full-details link. The birth details stay in this browser unless you share them.</p>
           </div>
 
           <fieldset class="other-chart__mode">

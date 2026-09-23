@@ -4,9 +4,11 @@ One page for a question that was answered in five places. Each section below
 says what was measured, against what, what came out, and — the part that
 matters most — what the result does not establish.
 
-Read it with one thing in mind: **every comparison here is against another
-program, not against the sky.** Nothing in this directory was checked against
-an observation, and nothing here says otherwise.
+Read it with one thing in mind: **every position comparison here is against
+another program, not against the sky.** No position in this directory was
+checked against an observation. The one observed quantity used is the Earth's
+rotation: the IERS value of ΔT, in section 1, which checks the engine's clock
+rather than a position.
 
 The shared lineage is real but not uniform, and the difference matters for the
 two bodies that produce the extremes below. Swiss Ephemeris and JPL Horizons
@@ -33,7 +35,7 @@ Ephemeris* for the Moon. Zodiacs did not write those models.
 | Positions | Swiss 2.10.03 / DE441, 6 frozen cases | 6.07″ node longitude | [`swiss-node-polar/`](swiss-node-polar/) |
 | Positions | Swiss 2.10.03 / DE441, 8 epoch and station cases | inside frozen gates (a pass, not a residual) | [`swiss-eight-cases/`](swiss-eight-cases/) |
 | Positions | Swiss 2.10.03 / `.se1`, 180-measurement distribution | 18.64″ within 1801–2026 | [`../platform/evidence/swiss-benchmark/`](../platform/evidence/swiss-benchmark/) |
-| Angles and houses | Swiss `houses_ex`, polar and ordinary | 1.57″ worst angle, cusps exact | [`swiss-node-polar/`](swiss-node-polar/) |
+| Angles and houses | Swiss `houses_ex`: three polar cases and five Placidus cases in the suite; the audit's latitude grid | 1.57″ worst angle and exact whole-sign cusps in the polar cases; ascendant up to 512″ near 66° on the grid | [`swiss-node-polar/`](swiss-node-polar/), [audit](../platform/evidence/engine-audit-2026-09-22/LEDGER.md) |
 | Local time | host IANA/ICU, two Node majors and a browser | no disagreement in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 | Event search | Swiss hourly scans, independent roots | one contract **failed-incomplete** | [`transit-windows/`](transit-windows/), [`swiss-lunar-return/`](swiss-lunar-return/) |
 | Runtime support | Node 22.23.2, Node 24.19.0, Chrome 152 | parity in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
@@ -58,9 +60,11 @@ chosen to fail loudly on a real regression, not claims about typical error.
 
 **Frozen Swiss packs.** All four directories here hold Swiss Ephemeris 2.10.03
 oracles acquired through pinned, unmodified pyswisseph 2.10.3.2 against the
-official DE441 files, with the acceptance policy written and reviewed *before*
-the application was run, byte-hashed inputs, and extractors that perform no
-calculation of their own. The node/polar pack's measured maxima were
+official DE441 files, with an acceptance policy each pack records as written
+and reviewed *before* the application was run, byte-hashed inputs, and
+extractors that perform no calculation of their own. The order is the packs'
+own record: the 2026-09-22 audit found the policies and fixtures first
+committed together, so it could not confirm it independently. The node/polar pack's measured maxima were
 0.001685457° (6.07″) in node longitude, 0.000350604°/day in node speed, and
 0.000434825° (1.57″) in polar angles — recorded against `@zodiacs/engine`
 0.1.0, not the rc.6 named at the top of this page. The fixtures are frozen and
@@ -121,13 +125,19 @@ flag. Nothing here says anything about those.
 ## 2. Angles and houses
 
 Swiss `swe.houses_ex(jdUT1, lat, lon, b'W', 0)` at Tromsø, Longyearbyen and
-Longyearbyen's southern mirror, plus ordinary latitudes. Measured angle
-residual 0.000434825° (1.57″); every whole-sign cusp matched exactly. Gates
-are 0.1° for ASC/MC and 0.2° for cusps.
+Longyearbyen's southern mirror: measured angle residual 0.000434825° (1.57″),
+and every whole-sign cusp matched exactly. The suite's five Placidus cases, at
+latitudes up to 60.2°, pass gates of 0.1° for ASC/MC and 0.2° for cusps. The
+2026-09-22 audit measured more widely: on its latitude grid the ascendant is
+up to 512″ off near 66° and 22″ at the 95th percentile, because the engine
+pairs apparent sidereal time with the mean obliquity (finding
+angles-houses-aspects-1; step 1.3 of the engine brief).
 
-Placidus is where the two programs deliberately differ. Above 66° absolute
-latitude Swiss returns C status −1 and its conventional Porphyry fallback
-array; this engine falls back to **whole sign** and sets `polar-fallback`.
+Placidus is where the two programs deliberately differ. Above 90° minus the
+obliquity, about 66.56° absolute latitude, Swiss returns C status −1 and its
+conventional Porphyry fallback array; this engine falls back to **whole sign**
+above 66° and sets `polar-fallback`, so from 66° to about 66.56° the two
+differ by design.
 Both behaviours are compared against the same Swiss `W` tuples, so the
 fallback is checked rather than excused.
 
@@ -137,9 +147,11 @@ cusp agreement is convention agreement.
 
 ## 3. Local time
 
-`@zodiacs/engine/geo` and the site's `src/lib/time/localToUtc.ts` resolve a
-local wall time and IANA zone through the host's `Intl`/ICU data — never a
-hand-rolled offset table. 326 tests cover that path. The rc.6 evidence ledger
+`@zodiacs/engine/geo` resolves a local wall time and IANA zone through the
+host's `Intl`/ICU data — never a hand-rolled offset table — and so does the
+site's `src/lib/time/localToUtc.ts` from 1970 on and wherever no birthplace is
+given; before 1970 the site reads the pinned tables described below. The
+2026-09-22 audit counted 326 tests on that path; more have been added since. The rc.6 evidence ledger
 records 16 historical receipts that became valid under the seconds-and-
 milliseconds comparison correction, nine civil controls that stayed valid, and
 96 rc.5/rc.6 chart comparisons preserving every value but the version field,
@@ -163,13 +175,13 @@ from before its place adopted a legal time on the birthplace's own local mean
 time: 240 seconds of time per degree of longitude, rounded to the second. The
 time zone data records mean time only for each zone's reference city, so a
 Buffalo birth in 1870 had been read on New York's clock, 19 min 29 s early. The
-only table involved says when each zone's local mean time ended; it is
-generated from a pinned tzdb release, 2025c, with backzone
-(`src/data/tz-lmt.json`, by `scripts/build-tz-lmt.mjs`), and legal offsets still
-come from the host. Checked: the table against that release, by
-`node scripts/build-tz-lmt.mjs --check`, which downloads the release and is run
-by hand rather than in CI, while tests pin ten era ends and the generator's
-rules. Tested: every wall minute within 26 hours of sixteen era ends, for
+date each zone's local mean time ended comes from a table generated from a
+pinned tzdb release, 2025c, with backzone (`src/data/tz-lmt.json`, by
+`scripts/build-tz-lmt.mjs`), and the legal offsets after it come from the same
+release (next paragraph). Checked: the table against that release, by
+`node scripts/build-tz-lmt.mjs --check`, which downloads the release and runs
+in CI's time zone data drift job, while tests pin ten era ends and the
+generator's rules. Tested: every wall minute within 26 hours of sixteen era ends, for
 twenty-one towns east and west of the reference meridian, against a separate
 model of the birthplace clock, with receipts validated; at each of the 338
 era ends (of 518) where the host's history agrees with the table, the zone's
@@ -233,8 +245,9 @@ an outer planet, or in the ±0.25-day speed estimate the station finder uses,
 moves the instant by minutes to hours. The pages state these limits, and
 `scripts/claims-bindings.test.mjs` holds the copy to the measurement.
 
-Each longitude-crossing search caps ephemeris evaluations at 10,000. Sampling
-can miss an event between steps; interior tangencies are omitted, and
+The package's longitude-crossing search (`findLongitudeCrossings`) caps
+ephemeris samples at 10,000 and refuses larger requests; the site's own solver
+has no such cap. Sampling can miss an event between steps; interior tangencies are omitted, and
 direction at a window endpoint rests on one-sided evidence. The site's own
 return solver also examines each sampled turn of the motion, which finds the
 grazing passes a coarse step misses: all 4,941 cases of a station-graze corpus
@@ -264,17 +277,20 @@ finite matrix is a finite matrix.
 
 ## What none of this is
 
-- Not independent astronomical validation. Every oracle here is another
-  implementation of the same JPL family.
+- Not independent astronomical validation. Every position oracle here is
+  another implementation of the same JPL family; the one observed input, the
+  IERS value of ΔT, checks the clock rather than a position.
 - Not human practitioner certification, and not a review by anyone outside
   this project.
 - Not evidence that astrological interpretation is scientifically valid. The
   engine returns geometry; meaning is a separate tradition and is labelled as
   one everywhere it appears.
 - Not a claim that the engine is the most accurate available. On the
-  measurements here a DE440s-backed prototype agrees with Swiss to 0.16″
-  worst case against this engine's 64.8″ on the same rows, at 2.06× the warm
-  p50 runtime cost — 3.39× at the warm p95 — and 31 MiB of data. That prototype has not been adopted and does not
+  measurements here a DE440s-backed prototype, with ΔT matched to Swiss's,
+  agrees with Swiss to 0.16″ worst case on the rows inside DE440s's coverage,
+  where this engine, on its own ΔT, reaches 64.8″ (about 0.9″ would remain
+  with the same correction). It costs 2.06× the warm p50 runtime — 3.39× at
+  the warm p95 — and 31 MiB of data. That prototype has not been adopted and does not
   run in production; its gates are in
   [`swiss-benchmark/NEXT.md`](../platform/evidence/swiss-benchmark/NEXT.md).
 
@@ -286,10 +302,36 @@ carries its corpus, its per-call record of which Swiss backend answered, and
 its raw rows.
 
 Three things here are not reproducible from the repository, and naming them is
-the point of the rest of it. The JPL Horizons vectors in `engine.test.ts` are
-bare literals — the query is in the file header, the provider version is not,
-and `swiss-eight-cases/README.md` says it "remains unknown". The Swiss ΔT of
+the point of the rest of it. The JPL Horizons values the suite checks
+(`src/lib/engine/fixtures/horizons-reference.json`) record their query, and
+the audit's re-fetch on 2026-09-22 (API version 1.2, DE441) matched six of
+the seven 2020 values exactly and Neptune to 0.004″, but the provider version
+of the original fetch is not recorded, and `swiss-eight-cases/README.md` says
+it "remains unknown". The Swiss ΔT of
 93.18 s at 2100 was transcribed from a run rather than committed as a receipt
 (astronomy-engine's 202.65 s is reproducible offline). And the benchmark's
-`prototype, engine ΔT` row and its performance table have no committed JSON
-beside the four that do. Everything else can be re-derived.
+performance table has no committed JSON; its `prototype, engine ΔT` row, which
+had none either, was recovered and committed on 2026-09-20
+(`precision-2026-09-20/raw/recovered-report-proto-engine-deltat.json`).
+Everything else can be re-derived.
+
+## Corrections
+
+Building the claims ledger on 2026-09-23 (step 1.14 of the engine brief)
+corrected these published passages in place. Their earlier wording is kept
+here as the record:
+
+- the table's angles row: "Swiss `houses_ex`, polar and ordinary" and "1.57″
+  worst angle, cusps exact";
+- section 1, on the frozen packs: "with the acceptance policy written and
+  reviewed *before* the application was run";
+- section 2, before the polar figures: "plus ordinary latitudes";
+- section 2, on Placidus: "Above 66° absolute latitude Swiss returns C status
+  −1";
+- section 4: "Each longitude-crossing search caps ephemeris evaluations at
+  10,000";
+- the prototype, under what none of this is: "agrees with Swiss to 0.16″ worst
+  case against this engine's 64.8″ on the same rows";
+- the benchmark, under reproducing any of it: "the benchmark's `prototype,
+  engine ΔT` row and its performance table have no committed JSON beside the
+  four that do".

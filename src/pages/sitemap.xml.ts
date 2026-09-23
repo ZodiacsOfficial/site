@@ -51,6 +51,20 @@ const YEAR_PAGES_LASTMOD = '2026-09-01';
 const NUMEROLOGY_LASTMOD = '2026-09-07';
 // The void-of-course Moon calendar shipped in the same review cycle.
 const VOID_OF_COURSE_LASTMOD = '2026-09-07';
+// Phase 1 of the engine brief and the claims ledger's corrections (step 1.14)
+// changed the rendered copy of these routes: birthplace local mean time, the
+// pinned zone history, event timing, and privacy wording held to the code.
+// The events hub dates itself from its publication data and the rising-sign
+// profiles from their Learn content, so neither is listed; the experimental
+// preview under /developers/ is kept out of the sitemap altogether.
+const ENGINE_PHASE1_LASTMOD = '2026-09-23';
+const ENGINE_PHASE1_ROUTES = [
+  '/', '/about/', '/ask/', '/birth-chart/', '/birth-chart/three-dimensions/', '/developers/',
+  '/developers/compare/', '/developers/engine/', '/developers/examples/', '/developers/support/',
+  '/full-moon-calendar/', '/mercury-retrograde/', '/methodology/', '/moon-sign/', '/privacy/', '/race/',
+  '/retrogrades/', '/solar-return/', '/void-of-course-moon/', '/ru/birth-chart/', '/ru/methodology/',
+  '/ru/moon-sign/', '/ru/privacy/',
+] as const;
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -169,6 +183,8 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   // Ephemeris in place of the upstream library's own arcminute target. Last,
   // so it wins over the numerology cycle's date for the same page.
   ['/methodology/', '2026-09-20'] as const,
+  // Last, so it wins over each route's earlier date.
+  ...ENGINE_PHASE1_ROUTES.map((loc) => [loc, ENGINE_PHASE1_LASTMOD] as const),
 ]);
 
 function getLastmod(loc: string): string {

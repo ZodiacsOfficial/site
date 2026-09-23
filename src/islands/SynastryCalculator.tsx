@@ -377,7 +377,7 @@ function SlotForm({
               onClick={() => setSlot(() => emptySlot())}
             >×</button>
           </span>
-          <p class="field__help">This side arrived as chart positions only.</p>
+          <p class="field__help">This side arrived as chart positions, with no birth details.</p>
         </div>
       </div>
     );
