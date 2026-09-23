@@ -1,0 +1,373 @@
+{
+  "area": "swiss-parity",
+  "summary": "On a preregistered 24-instant x 10-body corpus (1851-2148) compared against JPL Horizons at a fixed TT clock, the precision alpha (pack or raw DE440s) and Swiss Ephemeris (DE441 .se1 or DE440 JPL binary) are indistinguishable: every one of those configurations lands at max 0.384 arcsec / p50 0.098 arcsec from Horizons barycentres, the residual pattern is identical across bodies and linear in time, and it is Horizons's own IAU76/80 frame convention rather than either program's ephemeris. Alpha versus Swiss on the same DE440 is 0.0025 arcsec worst (Moon) and under 0.001 arcsec for planets, so positional parity with Swiss is achieved by the alpha and no available arbiter can show either side to be more accurate. The premise that Zodiacs gains from DE440 over Swiss's DE431 is false: the .se1 files in use (and hashed in the benchmark CONFIGURATION) are DE441-based and differ from DE440 by at most 0.010 arcsec, and docs/platform/evidence/precision-2026-09-20/numerics/RESULTS.md misattributes the Moon's 0.0107 arcsec to DE431. The shipped production engine is the problem, not the alpha: clock-pinned it sits at max 18.8 arcsec / p50 2.07 arcsec from Horizons with Saturn latitude off by 19 arcsec, which is 4-10x worse than Swiss's own built-in zero-data Moshier fallback (max 2.8 arcsec), and its astronomy-engine Delta-T is 6.7 s too large today (75.50 s versus an observed bound of 68.3-70.1 s), displacing the production Moon by 3.5 arcsec in 2026 and 21 arcsec by 2055. Swiss's centre-of-body correction is exact (matches Horizons to 0.001 arcsec for Jupiter, Saturn, Pluto), so satellite kernels are a 0.075 arcsec catch-up, not a lead. The things that matter most: (1) ship the alpha's pack plus reduction as the default positional backend and fix Delta-T with an IERS-based table, which gets production to Swiss parity; (2) stop framing superiority as ephemeris accuracy, since the truthful lead over Swiss is rigor (integrity-verified packs, proven error bounds, declared completeness, browser-native determinism, Delta-T with an uncertainty band) and Swiss's breadth (asteroids, fixed stars, 24 house systems, 48 ayanamsas, eclipses, rise/set, topocentric) remains years ahead; (3) the daily-use gaps that are cheap to close are Chiron, Lilith, mean node, Koch/Equal/Porphyry/Regiomontanus/Campanus and Lahiri/Fagan-Bradley sidereal.",
+  "findings": [
+    {
+      "id": "swiss-parity-1",
+      "severity": "major",
+      "title": "Production Delta-T is 6.7 s wrong at the present epoch, displacing the Moon 3.5 arcsec today",
+      "claim": "@zodiacs/engine uses astronomy-engine's DeltaT_EspenakMeeus polynomial, which returns 75.50 s at 2026-09-22 while the observed value is bounded to [68.28, 70.08] s (TT-UTC = 69.184 s since 2017 and |UT1-UTC| < 0.9 s). Swiss gives 68.82 s and Horizons's own clock agrees with Swiss to 0.36 s. The error grows: +2.75 s at 2020, +6.68 s at 2026, +11.95 s at 2038, +27.9 s at 2055. At 0.549 arcsec/s the Moon is displaced 3.5 arcsec in production charts cast today and 7.4 arcsec at 2038; this is not a far-future extrapolation dispute but an error where the answer is known.",
+      "evidence": "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js MakeTime(date) -> astronomy-engine esm/astronomy.js:1131 (DeltaT = DeltaT_EspenakMeeus). Yearly table Swiss vs astronomy-engine 1990-2030 and the three-model comparison (Swiss, Horizons UT request, astronomy-engine) in <audit>/swiss-parity/deltat-three-models.json; row D4: dT_horizons-dT_swiss = +0.36 s, dT_ae-dT_swiss = +6.68 s, engine Moon minus Horizons Moon(UT) = 3.505 arcsec while the clock-pinned engine is 0.266 arcsec from the TT Horizons Moon.",
+      "reproduction": "node -e \"const A=require('<worktree>/node_modules/astronomy-engine/astronomy.js');const t=A.MakeTime(new Date('2026-09-22T17:00:00Z'));console.log((t.tt-t.ut)*86400)\" -> 75.50; python3 -c \"import swisseph as s;s.set_ephe_path('<swisslab>/ephe');print(s.deltat_ex(s.julday(2026,9,22,17.0),s.FLG_SWIEPH)*86400)\" -> 68.82; Horizons query in horizons/queries.log (label Moon_UT) vs horizons/Moon.txt.",
+      "impact": "Keeps the production Moon materially below Swiss at exactly the epochs users chart most; also poisons every Moon-driven event (void-of-course, lunar returns, phases) by ~6 s of time. It is the single largest correctable error in current-epoch production positions.",
+      "fix": "Replace the polynomial with an IERS-derived ΔT table (historical Bulletin B / finals.all through the present, monthly points) plus a declared long-term extrapolation (e.g. Morrison-Stephenson-Hohenkerk 2021) and record the model name in the receipt conventions; add a test pinning ΔT within 0.5 s of the IERS table for 1962-present.",
+      "effortDays": 3,
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+        "node_modules/astronomy-engine/esm/astronomy.js"
+      ]
+    },
+    {
+      "id": "swiss-parity-2",
+      "severity": "major",
+      "title": "Shipped engine positions are 4-10x further from JPL than Swiss's own zero-data Moshier fallback",
+      "claim": "With the clock pinned to Swiss's ΔT, @zodiacs/engine 0.1.1-rc.6 longitudes are max 18.80 arcsec / p50 2.07 arcsec / p95 12.0 arcsec from Horizons over 240 rows (per body max: Neptune 18.8, Pluto 14.6, Venus 12.6, Uranus 12.0, Saturn 10.2, Mercury 8.0, Jupiter 7.7, Mars 4.5, Moon 4.2, Sun 1.4) and latitudes are off by up to 19.0 arcsec (Saturn, p50 8.2 arcsec; Uranus 16.5; Neptune 9.7). Swiss run with NO ephemeris files at all (built-in Moshier series) is max 2.82 arcsec (Pluto), Moon 1.25, Neptune 2.05, Sun 0.066 against DE440 on the same rows. The fair like-for-like (no data download on either side) is lost by a factor of 4-10; the alpha with its 1.66 MiB pack is at 0.0025 arcsec of Swiss.",
+      "evidence": "<audit>/swiss-parity/results.json (perBody['c_pinned-e'], resLat) and swiss-moshier-vs-de440.json; compare.out. Source of the series: astronomy-engine 2.1.19 truncated VSOP87 planets, ILE Moon, 5-term nutation, imported at chunk-GBH7JIYF.js lines 15-25.",
+      "reproduction": "cd <scratch>/audit/swiss-parity && python3 swiss_dump.py && node zodiacs_dump.mjs && node alpha_dump.mjs && node compare.mjs (Horizons responses cached under horizons/). Moshier: the inline python in the transcript writing swiss-moshier-vs-de440.json (set_ephe_path('/nonexistent'), FLG_MOSEPH).",
+      "impact": "Production is below Swiss in every configuration Swiss offers, including Swiss with no data. The alpha already closes this to sub-mas; the gap is an adoption gap, not a research gap.",
+      "fix": "Adopt the alpha's Reducer + ZODEPH02 pack as the default positional backend in @zodiacs/engine (the 1.66 MiB pack is small enough to ship or lazy-load; proven position error ≤1.3 km, compression ≤0.001 arcsec), keep astronomy-engine only as the no-pack fallback and label it in the receipt; follow examples/precision-alpha/CHART-ADAPTER-CONTRACT.md.",
+      "effortDays": 12,
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+        "examples/precision-alpha/CHART-ADAPTER-CONTRACT.md"
+      ]
+    },
+    {
+      "id": "swiss-parity-3",
+      "severity": "major",
+      "title": "The 'DE440 vs Swiss DE431' advantage does not exist and a committed record misattributes the Moon residual to it",
+      "claim": "The Swiss .se1 files actually used (sepl_18.se1 sha256 ca1393ce..., semo_18.se1 1ca07bd6..., the same hashes as docs/platform/evidence/swiss-benchmark/CONFIGURATION.md) carry the header 'Created for Astrodienst in Switzerland 2026/05/26, based on JPL Ephemeris DE441'. Measured Swiss-.se1 minus Swiss-DE440 (same Swiss code, FLG_JPLEPH on the JPL binary) is max 0.0104 arcsec (Moon), ≤0.0054 arcsec planets. docs/platform/evidence/precision-2026-09-20/numerics/RESULTS.md line 231 states 'Swiss's semo_18.se1 is a fit to DE431' and line 346 keeps the DE431 hypothesis; the artifact says DE441 and the 0.0107 arcsec Moon residual is the DE440-vs-DE441 lunar difference (alpha vs Swiss both on DE440: Moon 0.0025 arcsec).",
+      "evidence": "strings <swisslab>/ephe/semo_18.se1 | head -3; results.json perBody['a-b'] and perBody['b-d_kernel']; RESULTS.md quoted lines.",
+      "reproduction": "strings <swisslab>/ephe/sepl_18.se1 | head -3; node compare.mjs and read the a-b / b-d_kernel tables in compare.out.",
+      "impact": "Any superiority narrative resting on a newer JPL series is unsupported: Swiss's current data files are already DE441. The truthful ephemeris-generation gap is ≤0.01 arcsec.",
+      "fix": "Correct RESULTS.md lines 231 and 346 to 'DE441-based .se1; the Moon residual is the DE440/DE441 lunar difference (measured 0.010 arcsec)'; remove 'newer JPL series than Swiss' from any owner-facing claim.",
+      "effortDays": 0.2,
+      "files": [
+        "docs/platform/evidence/precision-2026-09-20/numerics/RESULTS.md",
+        "docs/platform/evidence/swiss-benchmark/CONFIGURATION.md"
+      ]
+    },
+    {
+      "id": "swiss-parity-4",
+      "severity": "note",
+      "title": "No Zodiacs configuration is measurably closer to Horizons than Swiss; the residual is Horizons's IAU76/80 frame",
+      "claim": "Against Horizons apparent ecliptic-of-date (QUANTITIES=31, header: 'IAU76/80 ecliptic-of-date'), Swiss .se1, Swiss DE440, alpha pack and alpha kernel all give exactly max 0.384 / p50 0.098 arcsec versus planetary barycentres and identical per-row values to 0.01 arcsec. The residual is +0.369 arcsec at 1851, +0.047 at 2000-2026 and -0.346 at 2148 for every body: the IAU 1976 precession-rate difference (~-0.3 arcsec/century) plus EOP pole offsets, i.e. Horizons's older frame model, not ephemeris. Consequently 'more accurate than Swiss' in positions is unmeasurable with any available arbiter: Swiss, DE440s and Horizons agree to within convention differences. The only body over 0.4 arcsec (Uranus, 1.017) is a Horizons-internal inconsistency: Horizons Uranus(799, source ura184_merged) minus Uranus barycentre(7, DE441) reaches 0.671 arcsec although the physical centre offset is 0.003 arcsec.",
+      "evidence": "results.json perEpoch and perBody for a-e, b-e, d_pack-e, d_kernel-e, a-e_bary, d_kernel-e_bary, e_centre-e_bary; horizons/Uranus.txt and horizons/UranusBary.txt headers.",
+      "reproduction": "node compare.mjs; inspect 'Uranus rows' output in the transcript (id, a-e, e_centre-e_bary).",
+      "impact": "Sets what 'substantially better than Swiss' can truthfully mean: not positional accuracy (parity is the ceiling), but rigor, bounds, integrity, determinism and completeness semantics.",
+      "fix": "State parity explicitly in docs/engine-validation/README.md and in the owner brief; never quote Horizons agreement below 0.4 arcsec as evidence of superiority; if Horizons is used again as arbiter, query barycentres for the outer planets and note the IAU76/80 frame.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "swiss-parity-5",
+      "severity": "note",
+      "title": "Swiss's centre-of-body correction is exact; satellite kernels are a 0.075 arcsec catch-up for the alpha, not a lead",
+      "claim": "With the sepm9599/9699/9799/9899/9999.se1 files, Swiss FLG_CENTER_BODY reproduces Horizons's centre-minus-barycentre offset to ≤0.001 arcsec on all 24 instants for Jupiter (max 0.059), Saturn (0.041) and Pluto (0.075), and ≤0.003 for Uranus/Neptune. The alpha returns system barycentres for Mars..Pluto (labelled isSystemBarycentre). Swiss's DEFAULT (no sepm files, no flag) is also barycentric, so the effect is a ceiling of 0.075 arcsec either way.",
+      "evidence": "results.json perBody['a_centre-a'] vs ['e_centre-e_bary'] and the per-row Jupiter/Saturn/Pluto table in the transcript; sepm files downloaded to <scratch>/audit/swiss-parity/ephe/.",
+      "reproduction": "python3 swiss_dump.py (configs a_centre/b_centre) then node compare.mjs.",
+      "impact": "Item (ii) of the owner's list is not a place to exceed Swiss; it is a small parity item.",
+      "fix": "Add centre-relative-to-barycentre segments from jup348/sat480/nep097/plu060 to the pack compiler as optional low-degree series and expose centre vs barycentre as a convention flag in the receipt.",
+      "effortDays": 2
+    },
+    {
+      "id": "swiss-parity-6",
+      "severity": "minor",
+      "title": "Production Moon is not the apparent place its receipt declares: 0.6 arcsec systematic today, 4.2 arcsec at 1851 with the clock pinned",
+      "claim": "receipt conventions declare planetPositions apparent-geocentric-ecliptic-of-date, but moonOfDate() uses EclipticGeoMoon with no light-time or aberration pass (conceded in CHART-ADAPTER-CONTRACT.md). Measured with the clock pinned: Moon 0.45-0.71 arcsec from Horizons over 1957-2026 (the omitted Moon-relative light-time/aberration term is ~0.7 arcsec) rising to 2.0-4.25 arcsec over 1851-1933 (the ILE-based series degrading backwards).",
+      "evidence": "results.json rows body=Moon, res['c_pinned-e']; chunk-GBH7JIYF.js moonOfDate.",
+      "reproduction": "node compare.mjs; 'Moon rows' printout.",
+      "impact": "Small for readings, but the receipt's convention statement is literally false for the Moon and the alpha already does it right (0.0025 arcsec).",
+      "fix": "Either apply light-time and aberration to the Moon in the shipped engine or amend the receipt conventions to say the Moon is geometric-of-date; adopting the alpha removes the issue.",
+      "effortDays": 1,
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+        "node_modules/@zodiacs/engine/dist/receipt.js"
+      ]
+    },
+    {
+      "id": "swiss-parity-7",
+      "severity": "minor",
+      "title": "Speeds are a ±0.25-day central difference; Moon speed differs from Swiss's analytic speed by up to 3.4 arcsec/day",
+      "claim": "longitudeSpeed() differences longitudes at ±0.25 day. Against Swiss FLG_SPEED: Moon max 3.45 arcsec/day (p50 2.24), Mercury 2.12, Venus 0.61, others <0.14 arcsec/day. Impact on station timing is unconfirmed (not measured at a station): 2 arcsec/day of speed error near a Mercury station (acceleration ~0.03 deg/day^2) would move the station by ~30 minutes.",
+      "evidence": "zodiacs.json speed vs swiss.json configs.a lonSpeed; per-body table in the transcript ('speed' columns).",
+      "reproduction": "node -e over results/zodiacs.json/swiss.json as in the transcript.",
+      "impact": "Minor for retrograde flags; matters if speeds are ever used for station timing or exposed as a precision quantity.",
+      "fix": "Use the pack's analytic derivative (the alpha already returns state derivatives) or reduce the step to ±0.01 day with a Richardson correction; document the speed convention in the receipt.",
+      "effortDays": 1
+    },
+    {
+      "id": "swiss-parity-8",
+      "severity": "note",
+      "title": "Delta-T has no published uncertainty anywhere; three respected models spread 256 s (140 arcsec of Moon) at 2148",
+      "claim": "At F3 (2148-12-30) Horizons's ΔT is 51.8 s below Swiss and astronomy-engine's is 204.7 s above it; at E1 (2055) the spread is 35 s (19 arcsec Moon). None of Swiss, Horizons or astronomy-engine reports an uncertainty; Swiss's swe_deltat returns a bare number. This is an opportunity to exceed Swiss: a ΔT with a stated band, propagated to Moon longitude and to event times in the receipt.",
+      "evidence": "deltat-three-models.json (implied Horizons ΔT from the Moon_UT vs Moon TT requests; Swiss deltat_ex; astronomy-engine MakeTime).",
+      "reproduction": "python3 inline script in the transcript reading horizons/Moon_UT.txt and horizons/Moon.txt.",
+      "impact": "A genuine, demonstrable advantage over Swiss in honesty rather than in a number.",
+      "fix": "Model ΔT as (IERS table to present) + (long-term extrapolation with a 1-sigma band growing ~±(0.3 s/yr) past the table end); surface 'Moon ±x arcsec from ΔT uncertainty' in receipts for dates outside the observed record.",
+      "effortDays": 3
+    },
+    {
+      "id": "swiss-parity-9",
+      "severity": "note",
+      "title": "Swiss cannot read SPK kernels: set_jpl_file('de440s.bsp') silently answers from Moshier",
+      "claim": "swe.set_ephe_path('<swisslab>'); swe.set_jpl_file('de440s.bsp'); swe.calc_ut(..., FLG_JPLEPH) returns retflag 260 (MOSEPH|SPEED), identical to a nonexistent file name. Swiss reads only the classic JPL binary export; the real configuration (b) needed linux_p1550p2650.440 (102 MB), which then answered JPLEPH (257). The audit brief's stated method for (b) would have compared Moshier and called it DE440.",
+      "evidence": "Transcript probe output; jpl/linux_p1550p2650.440 sha256 29915576d0a6...; swiss.json backendsObserved {b: [JPLEPH]}.",
+      "reproduction": "python3 -c \"import swisseph as s;s.set_ephe_path('<swisslab>');s.set_jpl_file('de440s.bsp');print(s.calc_ut(2451545.0,s.MARS,s.FLG_JPLEPH)[1])\" -> 260.",
+      "impact": "Any future Swiss-with-DE440 comparison in the repo must use the JPL binary format and read the return flag, as dump_swiss.py already does.",
+      "fix": "Record this in docs/platform/evidence/swiss-benchmark/CONFIGURATION.md as a pitfall; keep the return-flag check mandatory in every Swiss harness.",
+      "effortDays": 0.1
+    },
+    {
+      "id": "swiss-parity-10",
+      "severity": "major",
+      "title": "Daily-use bodies absent: Chiron, Lilith (mean/true apogee), mean node, and the four main asteroids",
+      "claim": "BodyName in src/lib/engine/types.ts is exactly Sun..Pluto plus North/South Node (true node only). No Chiron, no mean node, no mean or osculating apogee, no Ceres/Pallas/Juno/Vesta, no numbered asteroids, no fixed stars anywhere in src/lib, src/mcp, the engine package or the alpha (grep across src/lib, src/mcp, scripts). Swiss provides all of these (SE_CHIRON, SE_MEAN_NODE, SE_MEAN_APOG, SE_OSCU_APOG, SE_INTP_APOG, SE_CERES.., swe_fixstar2 with ~1000 stars and proper motion). Chiron, Lilith and the mean node appear in most professional charts.",
+      "evidence": "src/lib/engine/types.ts lines 5-9; node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js PLANETS array; examples/precision-alpha/src/core/reduce.mjs line 40 CONTRACT.bodies; grep results in the transcript (only test fixtures and copy files matched 'mean node|chiron|lilith').",
+      "reproduction": "grep -rn -i 'chiron\\|lilith\\|apogee\\|mean node' <worktree>/src/lib <worktree>/src/mcp --include='*.ts' | grep -v test.",
+      "impact": "A practitioner cannot reproduce a standard chart; this is the most visible breadth gap after houses.",
+      "fix": "Mean node and mean apogee are closed-form lunar-theory series (Meeus/ELP) — 1 day each with Swiss as instrument. Chiron and Ceres/Pallas/Juno/Vesta need a small-body ephemeris: extend the pack compiler to ingest JPL SBDB/Horizons-generated SPK for 2060 Chiron, 1 Ceres, 2 Pallas, 3 Juno, 4 Vesta (Chiron's ephemeris is poorly determined before 1900; state coverage). True/osculating apogee from the Moon state vector.",
+      "effortDays": 8,
+      "files": [
+        "src/lib/engine/types.ts",
+        "examples/precision-alpha/src/core/reduce.mjs"
+      ]
+    },
+    {
+      "id": "swiss-parity-11",
+      "severity": "major",
+      "title": "Two house systems (whole sign, Placidus) against Swiss's 24; Koch, Equal, Porphyry, Regiomontanus, Campanus are daily-use",
+      "claim": "HOUSE_SYSTEMS = ['whole','placidus'] in the engine (chunk-H7RJKCBO.js line 8) and HouseSystem = 'whole' | 'placidus' in src/lib/engine/types.ts line 10. Placidus above |lat| 66 falls back to whole sign. Swiss swe_houses_ex2 offers P,K,O,R,C,A/E,V,W,X,H,T,B,M,U,G,Y,F,D,N,I,i,L,Q,S with speeds, swe_house_pos for house position of any body, and Gauquelin sectors.",
+      "evidence": "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js:8; src/lib/engine/types.ts:10; pyswisseph dir() lists houses, houses_ex, houses_ex2, houses_armc_ex2, house_pos, gauquelin_sector.",
+      "reproduction": "grep -n HOUSE_SYSTEMS <worktree>/node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js.",
+      "impact": "Blocks most professional users; Vedic users need Equal/Whole plus sidereal; Koch is the second most common quadrant system.",
+      "fix": "Add Equal, Porphyry, Koch, Regiomontanus, Campanus, Meridian, Morinus, Alcabitius, Topocentric (Polich-Page) with the existing Swiss-oracle test pattern (docs/engine-validation/swiss-node-polar); Koch/Regiomontanus/Campanus are closed-form given ARMC, obliquity and latitude.",
+      "effortDays": 6,
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "src/lib/engine/types.ts",
+        "src/lib/engine/houses.ts"
+      ]
+    },
+    {
+      "id": "swiss-parity-12",
+      "severity": "major",
+      "title": "No sidereal zodiac: zero ayanamsas against Swiss's 48",
+      "claim": "No 'sidereal' or 'ayanamsa' appears in src/lib, src/mcp, the engine package or the alpha; the receipt declares zodiac: tropical only. pyswisseph exposes 48 SIDM_ constants (Lahiri, Lahiri_ICRC, Fagan-Bradley, Krishnamurti, Raman, True Citra, Galactic Centre variants...) plus FLG_SIDEREAL and get_ayanamsa_ex_ut. Lahiri and Fagan-Bradley are in daily use by Vedic and Western sidereal practitioners.",
+      "evidence": "grep in the transcript; pyswisseph introspection output (48 SIDM_ names).",
+      "reproduction": "grep -rn -i 'ayanamsa\\|sidereal' <worktree>/src/lib <worktree>/src/mcp --include='*.ts' | grep -v test (no output).",
+      "impact": "Excludes the whole Vedic market; a pure subtraction once the ayanamsa definitions are implemented, so the gap is cheap.",
+      "fix": "Implement ayanamsa as a longitude offset with the Swiss definitions (t0 + reference value + precession from t0 in the IAU 2006 model the alpha already has); ship Lahiri, Lahiri ICRC, Fagan-Bradley, Krishnamurti, Raman, True Citra, Galactic Centre 0 Sag first; verify against swe.get_ayanamsa_ex_ut to 0.01 arcsec; add zodiac: sidereal(<name>) to the receipt.",
+      "effortDays": 3
+    },
+    {
+      "id": "swiss-parity-13",
+      "severity": "minor",
+      "title": "No topocentric option; the geocentric-only Moon is up to ~1 degree from the observer's sky",
+      "claim": "Neither the engine nor the alpha offers topocentric positions, diurnal aberration or parallax (alpha README: 'The observer is the geocentre'). Swiss FLG_TOPOCTR with swe_set_topo gives it, with WGS84 geodesy. Measured at London 2026-09-22 17:00 UT the Moon moves +909 arcsec in longitude and -3180 arcsec in latitude between geocentric and topocentric. Astrologers conventionally use geocentric, so this is a completeness gap, not an error.",
+      "evidence": "Transcript (Swiss FLG_TOPOCTR probe); examples/precision-alpha/README.md 'Coordinates' paragraph.",
+      "reproduction": "python3 -c \"import swisseph as s;s.set_ephe_path('<swisslab>/ephe');jd=s.julday(2026,9,22,17.0);g=s.calc_ut(jd,s.MOON,s.FLG_SWIEPH)[0];s.set_topo(-0.1278,51.5074,0);t=s.calc_ut(jd,s.MOON,s.FLG_SWIEPH|s.FLG_TOPOCTR)[0];print((t[0]-g[0])*3600,(t[1]-g[1])*3600)\".",
+      "impact": "Needed for local eclipses, occultations, rise/set and parallax-corrected Moon; a place to exceed Swiss with proper geodesy (WGS84 + geoid height + polar motion) at ~0.01 arcsec if done rigorously.",
+      "fix": "Add observer geodetic position -> ITRS -> GCRS (Earth rotation angle, polar motion optional) in the alpha reducer; validate against Swiss FLG_TOPOCTR to 0.05 arcsec.",
+      "effortDays": 4
+    }
+  ],
+  "measurements": [
+    {
+      "name": "Head-to-head vs JPL Horizons, 240 rows, fixed TT clock",
+      "method": "Preregistered corpus.json (24 instants 1851-2148, 10 bodies). swiss_dump.py (a, a_centre, b, b_centre; return flag recorded per call: a=SWIEPH, b=JPLEPH), zodiacs_dump.mjs (c_raw, c_pinned), alpha_dump.mjs (d_pack over D.v2.zeph, d_kernel over de440s.bsp, nodefl and PROTOTYPE variants), horizons_fetch.py (16 requests: 10 bodies + 6 barycentres, QUANTITIES=31, TIME_TYPE=TT, TLIST of 24 JDs) and compare.mjs.",
+      "result": "|dlon| max/p50/p95 arcsec vs Horizons: a 1.017/0.100/0.401; b 1.018/0.100/0.401; d_pack 1.018/0.100/0.401; d_kernel 1.018/0.100/0.401; c_pinned 18.800/2.068/12.005; c_raw 108.247/2.522/14.786. Vs Horizons barycentres (outer six): a, b, d all 0.384/0.098. Latitude max: a/b/d 0.113, c 19.0.",
+      "artifactPath": "<audit>/swiss-parity/results.json",
+      "computeMinutes": 1.5
+    },
+    {
+      "name": "Series and reduction differences between configurations",
+      "method": "compare.mjs pairwise rows",
+      "result": "a-b (DE441 .se1 vs DE440 JPL binary) max 0.0104 arcsec Moon, ≤0.0054 planets; b-d_kernel (Swiss vs alpha, same DE440) max 0.0025 Moon, ≤0.0009 planets; a-d_kernel max 0.0108; d_pack-d_kernel (compression) max 0.0010 Moon, ≤0.0003 planets; d_kernel-nodefl (solar deflection) max 0.157 Jupiter; PROTOTYPE reduction vs Horizons max 1.082 / p50 0.130 (0.13 arcsec worse than CORRECTED).",
+      "artifactPath": "<audit>/swiss-parity/compare.out",
+      "computeMinutes": 0.1
+    },
+    {
+      "name": "Swiss FLG_CENTER_BODY vs Horizons centre-minus-barycentre",
+      "method": "sepm9599/9699/9799/9899/9999.se1 fetched from github aloistr/swisseph ephe/sat into scratch; a_centre-a compared per row with Horizons target(centre) minus target(barycentre)",
+      "result": "Jupiter max 0.059 (Swiss) vs 0.058 (Horizons), Saturn 0.041 vs 0.041, Pluto 0.075 vs 0.075, agreement ≤0.001 arcsec on all 72 rows; Uranus Swiss 0.003 vs Horizons 0.671 (Horizons ura184_merged inconsistent with DE441 barycentre).",
+      "artifactPath": "<audit>/swiss-parity/results.json",
+      "computeMinutes": 0.2
+    },
+    {
+      "name": "Delta-T: Swiss vs astronomy-engine vs Horizons",
+      "method": "deltat_ex(FLG_SWIEPH) vs MakeTime(date).tt-ut yearly 1990-2030; 17th Horizons request (Moon, TIME_TYPE=UT) differenced against the TT-clock Moon request and divided by the Moon's rate",
+      "result": "astronomy-engine minus Swiss: +0.25 s (2006), +1.05 (2012), +2.48 (2020), +6.51 (2026), +8.52 (2030); Horizons minus Swiss ≤0.5 s through 2026, -2.1 s (2038), -26 s (2104), -51.8 s (2148); astronomy-engine minus Swiss +204.7 s at 2148. Observed bound for 2026: [68.28, 70.08] s.",
+      "artifactPath": "<audit>/swiss-parity/deltat-three-models.json",
+      "computeMinutes": 0.1
+    },
+    {
+      "name": "Swiss built-in Moshier (no data files) vs DE440 on the corpus",
+      "method": "set_ephe_path('/nonexistent'), FLG_MOSEPH|FLG_SPEED at the fixed TT, differenced against configuration b",
+      "result": "max/p50 arcsec: Sun 0.066/0.021, Moon 1.249/0.588, Mercury 0.063/0.026, Venus 0.275/0.039, Mars 0.228/0.053, Jupiter 0.511/0.113, Saturn 0.415/0.071, Uranus 0.759/0.358, Neptune 2.053/0.317, Pluto 2.816/0.433.",
+      "artifactPath": "<audit>/swiss-parity/swiss-moshier-vs-de440.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Shipped engine speed vs Swiss FLG_SPEED",
+      "method": "zodiacs.json c_pinned speed minus swiss.json a lonSpeed, |.| max/p50 arcsec/day",
+      "result": "Moon 3.448/2.244, Mercury 2.120/0.518, Venus 0.608/0.054, Sun 0.134/0.056, Mars 0.128/0.040, Jupiter 0.104/0.020, others <0.08.",
+      "artifactPath": "<audit>/swiss-parity/zodiacs.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Swiss JPL-file reading probes",
+      "method": "set_jpl_file('de440s.bsp') and ('nonexistent.eph') with FLG_JPLEPH; then linux_p1550p2650.440 (102,272,352 B, sha256 29915576d0a6555766b99485ac3056ee415e86df4fce282611c31afb329ad062) downloaded from ssd.jpl.nasa.gov",
+      "result": "SPK: retflag 260 = MOSEPH fallback, identical to a missing file. JPL binary: retflag 257 = JPLEPH; Sun at J2000 differs from .se1 by -0.0005 arcsec.",
+      "artifactPath": "<audit>/swiss-parity/jpl/",
+      "computeMinutes": 1.5
+    },
+    {
+      "name": "Topocentric Moon magnitude",
+      "method": "Swiss FLG_TOPOCTR, London, 2026-09-22 17:00 UT",
+      "result": "dlon +909.4 arcsec, dlat -3179.9 arcsec relative to geocentric.",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "pyswisseph capability inventory",
+      "method": "python3 -c 'import swisseph as s; dir(s)'",
+      "result": "101 callables, 27 FLG_ flags, 48 SIDM_ ayanamsa constants; library 2.10.03.",
+      "computeMinutes": 0.01
+    }
+  ],
+  "swissGap": [
+    {
+      "capability": "Bodies: Sun..Pluto apparent geocentric",
+      "swiss": "All ten, DE441 .se1 or JPL binary, Moshier fallback; ~0.001 arcsec fidelity to DE",
+      "zodiacs": "Production: astronomy-engine, max 18.8 arcsec / p50 2.07 from Horizons (clock pinned). Alpha: ten bodies, 0.0025 arcsec from Swiss on the same DE440, 0.10 p50 from Horizons identical to Swiss",
+      "exceedPath": "Parity is the ceiling (all arbiters agree within frame conventions). Adopt the alpha as default (12 days). Exceeding is only possible in rigor: proven bounds and integrity, not smaller residuals.",
+      "evidence": "results.json; compare.out"
+    },
+    {
+      "capability": "Bodies: mean node / true node",
+      "swiss": "SE_MEAN_NODE and SE_TRUE_NODE with speeds",
+      "zodiacs": "True node only (angular momentum of GeoMoonState); no mean node. Alpha: none",
+      "exceedPath": "Mean node is a closed-form series (1 day); true node from the pack's Moon state derivative; verify against Swiss to 0.1 arcsec (node/polar pack pattern already exists)."
+    },
+    {
+      "capability": "Bodies: Lilith (mean, osculating, interpolated apogee)",
+      "swiss": "SE_MEAN_APOG, SE_OSCU_APOG, SE_INTP_APOG, SE_INTP_PERG",
+      "zodiacs": "Absent everywhere",
+      "exceedPath": "Mean apogee series 1 day; osculating apogee from the pack's Moon state 1 day; interpolated apogee via the alpha's bounded extremum search could carry a proven bracket, which Swiss does not offer."
+    },
+    {
+      "capability": "Bodies: Chiron, Pholus, Ceres/Pallas/Juno/Vesta, numbered asteroids",
+      "swiss": "Chiron/Pholus/big-4 in seas_18.se1; any numbered asteroid via ast files; hypothetical/fictitious bodies (Uranian, Transpluto)",
+      "zodiacs": "Absent",
+      "exceedPath": "Extend the pack compiler to ingest small-body SPKs generated by Horizons (Chiron, Ceres, Pallas, Juno, Vesta) with stated coverage: 5-8 days. Numbered-asteroid breadth and fictitious bodies: not for a long time."
+    },
+    {
+      "capability": "Bodies: fixed stars with proper motion",
+      "swiss": "swe_fixstar2 over sefstars.txt (~1000 stars), proper motion, parallax, radial velocity, magnitudes",
+      "zodiacs": "Absent",
+      "exceedPath": "Hipparcos/Gaia-derived catalogue of the ~60 astrologically used stars with proper motion and the alpha's precession-nutation: 3 days; full catalogue breadth is not a near-term goal."
+    },
+    {
+      "capability": "Frames: sidereal zodiac / ayanamsas",
+      "swiss": "48 SIDM_ modes incl. Lahiri, Lahiri ICRC, Fagan-Bradley, Krishnamurti, Raman, True Citra, Galactic variants; user-defined",
+      "zodiacs": "Tropical only",
+      "exceedPath": "Implement the top ~8 ayanamsas as offsets with the IAU 2006 precession already in the alpha, verified against get_ayanamsa_ex_ut: 3 days. Could exceed by publishing each ayanamsa's definition and reference epoch in the receipt."
+    },
+    {
+      "capability": "Frames: J2000 / of-date / ICRS; ecliptic / equatorial / cartesian output",
+      "swiss": "FLG_J2000, FLG_ICRS, FLG_NONUT, FLG_EQUATORIAL, FLG_XYZ, FLG_RADIANS",
+      "zodiacs": "Production: true ecliptic of date only. Alpha: apparent ecliptic of date + geometric distance; internal matrices exist for bias/precession/nutation but no equatorial or J2000 output API",
+      "exceedPath": "Expose the existing frames.mjs matrices as output options (1 day); equatorial output enables declinations without the site's separate mean-obliquity path."
+    },
+    {
+      "capability": "Frames: geocentric / topocentric / heliocentric / barycentric; true vs apparent vs astrometric",
+      "swiss": "All via FLG_TOPOCTR (WGS84 set_topo), FLG_HELCTR, FLG_BARYCTR, FLG_TRUEPOS, FLG_ASTROMETRIC, FLG_NOABERR, FLG_NOGDEFL",
+      "zodiacs": "Geocentric apparent only. Alpha excludes barycentric position by contract (0.449 km proven bound missed); no topocentric; heliocentric absent",
+      "exceedPath": "Topocentric with rigorous geodesy 4 days (Moon parallax measured 909/3180 arcsec); heliocentric 0.5 day (trivial from the pack); barycentric needs a higher-order Moon fit (2 days) or a stated bound."
+    },
+    {
+      "capability": "Time: Delta-T",
+      "swiss": "Historical table + Stephenson/Morrison/Hohenkerk-style extrapolation, tidal-acceleration adjusted per ephemeris, user-definable; no uncertainty",
+      "zodiacs": "Production: Espenak-Meeus polynomial, +6.7 s wrong today, +205 s from Swiss at 2148. Alpha: takes TT, no ΔT",
+      "exceedPath": "IERS table + declared extrapolation + uncertainty band propagated into the receipt (3 days). This is a real place to exceed Swiss.",
+      "evidence": "deltat-three-models.json"
+    },
+    {
+      "capability": "Time: UT1 vs UTC, calendars, sidereal time",
+      "swiss": "utc_to_jd/jdet_to_utc with leap seconds, Julian/Gregorian conversion, sidtime/sidtime0, time_equ, lmt/lat",
+      "zodiacs": "UTC treated as UT1 (astronomy-engine documents this); Gregorian only via JS Date; GAST via astronomy-engine SiderealTime (5-term nutation)",
+      "exceedPath": "Leap-second table and UT1-UTC from IERS finals (1 day); proleptic-Julian input for pre-1582 (0.5 day); full-series equation of the equinoxes (0.5 day)."
+    },
+    {
+      "capability": "Houses: systems, house position, Gauquelin",
+      "swiss": "24 systems in houses_ex2 with cusp speeds; house_pos for any body; gauquelin_sector; ARMC-based variants",
+      "zodiacs": "Whole sign and Placidus; Placidus >66 deg falls back to whole sign; no house_pos, no Gauquelin",
+      "exceedPath": "Add Koch, Equal, Porphyry, Regiomontanus, Campanus, Meridian, Morinus, Alcabitius, Topocentric (6 days) with the Swiss-oracle test pattern; Gauquelin niche, skip. Could exceed by returning proven cusp intervals under polar degeneracy instead of a fallback."
+    },
+    {
+      "capability": "Events: longitude crossings (solcross, mooncross, helio_cross)",
+      "swiss": "Closed-form searches for Sun/Moon crossings and heliocentric crossings; no completeness semantics",
+      "zodiacs": "findLongitudeCrossings with a 10,000-evaluation cap (sampling); alpha search with typed verdicts, declared epsilon, geometric mode with PROVEN completeness (not apparent)",
+      "exceedPath": "Already ahead in semantics for geometric events; apparent-place completeness remains empirical. Wire the alpha search into production events (part of adoption)."
+    },
+    {
+      "capability": "Events: solar and lunar eclipses (global/local, contacts, magnitudes), occultations",
+      "swiss": "sol_eclipse_when_glob/loc/where/how, lun_eclipse_when/loc/how, lun_occult_when_glob/loc/where with contact times, magnitudes, Saros",
+      "zodiacs": "scripts/build-eclipses.mjs lists global eclipses via astronomy-engine SearchGlobalSolarEclipse/SearchLunarEclipse (peak time, kind) baked into src/data/eclipses.json; no local circumstances, no contacts, no occultations, not in the engine API",
+      "exceedPath": "Global eclipse kinds and peaks from the pack (2 days); local circumstances need topocentric + Besselian elements (5 days); occultations of planets/stars: not soon."
+    },
+    {
+      "capability": "Events: rise/set/transit with refraction, heliacal phenomena, phenomena (phase, elongation, magnitude), nodes/apsides, orbital elements, max/min distance",
+      "swiss": "rise_trans, rise_trans_true_hor, refrac_extended, heliacal_ut, heliacal_pheno_ut, vis_limit_mag, pheno_ut, nod_aps_ut, get_orbital_elements, orbit_max_min_true_distance",
+      "zodiacs": "moonPhase only; stations via transit-scan-core refineLongitudeExtremum; none of the rest",
+      "exceedPath": "Rise/set with refraction after topocentric (2 days); pheno (phase angle, elongation) 1 day; nod_aps/orbital elements 2 days; heliacal is niche, skip."
+    },
+    {
+      "capability": "Data: coverage and fidelity",
+      "swiss": ".se1 files 13201 BCE-17191 CE (DE441-based since this file generation), Moshier built-in 3000 BCE-3000 CE, direct JPL binary; fidelity ~0.001 arcsec to DE; no integrity check on files",
+      "zodiacs": "Production accepts 1800-2199 (site validation) with degrading accuracy and no bound; alpha pack 1849-2150 (DE440s), proven ≤1.3 km position bound, refuses outside coverage, ≤0.001 arcsec compression",
+      "exceedPath": "Historical range: compile a DE441 long-span pack (kernel is ~3 GB; a 10-body Chebyshev pack for 3000 BCE-3000 CE would be ~30 MiB) — 5 days but Swiss's 30,000-year range remains far ahead. Exceed on fidelity honesty: the pack ships a proven bound; Swiss ships none."
+    },
+    {
+      "capability": "Engineering: integrity verification, error bounds, completeness semantics",
+      "swiss": "None of the three: no file digests, no stated bounds, results are bare numbers; return flag only says which ephemeris answered",
+      "zodiacs": "Alpha: SHA-256 sealed ZODEPH02 packs, refusal without verification, proven position bounds per body, five-state search accounting, empirical vs proven support labelled",
+      "exceedPath": "Already exceeds in the alpha; the path is to make it the production path and surface bounds in receipts (part of adoption)."
+    },
+    {
+      "capability": "Engineering: language, ports, determinism, browser",
+      "swiss": "C library, 25 years of use, ports to many languages, WASM builds exist; thread-safety caveats (global state: set_ephe_path, set_topo, set_sid_mode); GPL/AGPL or commercial licence",
+      "zodiacs": "ESM JavaScript, MIT (engine) with ERFA notice; one numerical core for browser and Node checked bit-identical; no global state; no C dependency",
+      "exceedPath": "Cross-runtime byte-identical results and a permissive licence are genuine leads; maturity and breadth cannot be caught up quickly."
+    },
+    {
+      "capability": "Planet centre vs system barycentre",
+      "swiss": "Barycentre by default; exact centre with FLG_CENTER_BODY and sepm files (matches Horizons to 0.001 arcsec)",
+      "zodiacs": "Barycentre only, labelled isSystemBarycentre in the alpha; production astronomy-engine VSOP87 is heliocentric planet-centre series of ~arcsec quality so the question is moot there",
+      "exceedPath": "Compile centre offsets from jup348/sat480/nep097/plu060 into the pack (2 days); effect ≤0.075 arcsec; parity, not lead.",
+      "evidence": "results.json a_centre-a vs e_centre-e_bary"
+    },
+    {
+      "capability": "Nutation and deflection models",
+      "swiss": "IAU 2000B nutation (measured by the repo to sit within 0.0013 arcsec of 2000B), solar deflection, IAU 2006/Vondrak precession",
+      "zodiacs": "Production: 5-term nutation (astronomy-engine), no deflection. Alpha: IAU 2000B 77 terms, solar deflection, frame bias, IAU 2006 precession; 2000A measured at ≤0.0025 arcsec effect and not carried",
+      "exceedPath": "IAU 2000A plus Jupiter/Saturn deflection would move results by ≤0.003 arcsec and ≤0.017 arcsec only within a planetary radius of the deflector — below every arbiter's convention noise (0.05-0.4 arcsec). Not a meaningful place to exceed."
+    }
+  ],
+  "notExamined": [
+    "House cusp numerics and angles (another auditor's dimension); only the count of systems was compared",
+    "Event-search completeness, transit windows, lunar/solar returns, progressions (positions only were measured)",
+    "Time-zone and local-time resolution (src/lib/time) beyond noting UTC is treated as UT1",
+    "The MCP adapter and receipt validation code beyond reading the receipt conventions",
+    "Swiss speed conventions (FLG_SPEED3) and speeds of the alpha (it exposes state derivatives, not apparent rates)",
+    "Numerical values of Swiss ayanamsas, fixed-star catalogue contents, and eclipse contact algorithms",
+    "Accuracy of scripts/build-eclipses.mjs / build-sky.mjs / build-ingresses.mjs output against Swiss",
+    "Delta-T before 1850 and after 2150; Swiss and Horizons behaviour outside DE440s coverage",
+    "Topocentric geodesy details (only the magnitude of the Moon's parallax was measured)",
+    "The compile of the pack (used another auditor's D.v2.zeph; its header and proven bounds were read, not re-derived)",
+    "The provenance of the JPL Horizons literals in src/lib/engine/engine.test.ts and the 1907 case",
+    "Swiss thread-safety and WASM ports (stated from knowledge, not tested)",
+    "Licensing specifics of redistributing DE-derived packs (LICENSING.md not re-evaluated)",
+    "The 5-term astronomy-engine nutation's isolated contribution to production residuals (folded into the c_pinned totals, not decomposed)",
+    "Mars centre-of-body (no sepm9499 file exists at the source; effect is ~0.00002 arcsec)"
+  ]
+}

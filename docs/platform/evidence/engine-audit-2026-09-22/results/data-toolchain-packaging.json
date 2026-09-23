@@ -1,0 +1,408 @@
+{
+  "area": "data-toolchain-packaging",
+  "summary": "The data toolchain is in better shape than most research code: the ZODEPH02 container does parse-validate-verify in the right order with bounds checks before allocation, every one of nine byte-flips I made to a sealed synthetic pack was refused with a typed code, a real candidate-D pack compiled from de440s.bsp in 24.5 s to 1.6571 MiB whose payload SHA-256 (0a218764…) reproduces the committed figure byte for byte, and the first ever run of the data-dependent tier passed 85/85 in 59 s against that pack and the raw kernel. The production tarball also rebuilt byte-identically (sha256 09c3e634…) from the pinned SDK commit in 8 s, so the engine is auditable and reproducible despite its source living in another repository. Three things matter most for the goal of exceeding Swiss. First, the precision stack cannot reach users: @zodiacs/engine is 404 on npm, the alpha is private, no pack is distributed pending the derived-coefficient rights question, the compiler is hard-wired to DE440s' 109,600-day span so it cannot even produce a pack covering the site's 1800–2199 epoch, and the alpha's released browser path is already 27.5 KB gzip against a 25 KB engine-chunk budget. Second, the licensing posture has three concrete holes: RIGHTS.md says every pack header carries the producer/DE440 attribution the NAIF modified-kernel rule requires and the header carries none of it; a pack compiled with the compiler's default --out lands in a directory that `npm pack` ships (demonstrated: 87 files including tools/compiler/packs/D.zeph); and the tree commits ~20,000 per-instant Swiss output numbers while stating bulk per-instant values are not committed. Third, the public API is a chart API, not an ephemeris API: nothing on either surface offers calc(body, time, flags) with distance, speeds, frame/centre/time-scale selection, error bounds and a per-result identity, which is the minimum a Swiss-class engine exposes. Authenticity remains unestablished by design; a re-sealed header edit opens cleanly, and only an out-of-band expectDigest catches it. The most valuable single decision is a distribution path that is already permitted: redistribute de440s.bsp unmodified (NAIF allows it outright) and compile the pack client-side or at build time under the user's own copy, which sidesteps the unsettled derived-coefficient question entirely.",
+  "findings": [
+    {
+      "id": "data-toolchain-packaging-1",
+      "severity": "major",
+      "title": "Compiler is hard-wired to DE440s' span; no pack can cover the site's 1800–2199 epoch",
+      "claim": "tools/compiler/compile.mjs cannot compile a valid pack from any kernel other than DE440s (1849-12-26..2150-01-22). SPAN_DAYS=109600 and LADDER (divisors of 109600) are constants in sources.mjs; compile.mjs:428 caps gridTo at SPAN_DAYS/Ldays, so for DE440 (1550–2650, ~401,775 days, ratio 3.67) bodies would carry records for only the first 109,600 days while coverage.stopEtSecTdb is set to the kernel's T1 (compile.mjs:353,375,511), and container.mjs:257-259 would refuse the result as bad-geometry ('body spans .. but the pack claims coverage ..'). The site accepts 1800-01-01..2199-12-31 (src/mcp/bounds.ts:22-25, localToUtc tests) and the production engine computes any year, so the precision stack is structurally unable to serve 1800–1849 and 2150–2199. Unconfirmed by execution (no DE440 kernel on this machine); confirmed by code reading.",
+      "evidence": "examples/precision-alpha/tools/compiler/sources.mjs:55-59 (LADDER, SPAN_DAYS=109600); compile.mjs:427-428 (gridTo = Math.min(SPAN_DAYS / Ldays, ...)), :342 default kernel path; container.mjs:251-260 coverage-vs-span refusal. Coverage of the compiled pack: -4734072000..4735368000 s TDB (1849-12-26..2150-01-22), scratch D-header.txt. Size scaling from the measured 1.6571 MiB / 300.07 y: 2.21 MiB for 1800–2200, 6.07 MiB for DE440 1550–2650, 167.8 MiB for DE441 (python one-liner in transcript).",
+      "files": [
+        "examples/precision-alpha/tools/compiler/compile.mjs",
+        "examples/precision-alpha/tools/compiler/sources.mjs",
+        "examples/precision-alpha/src/core/container.mjs",
+        "src/mcp/bounds.ts"
+      ],
+      "reproduction": "Read compile.mjs:427-428 and sources.mjs:55-59; then run `node examples/precision-alpha/tools/compiler/compile.mjs --candidate=D --kernel=<de440.bsp> --out=/tmp/x.zeph && node tools/seal.mjs /tmp/x.zeph /tmp/x2.zeph && node -e \"import('./src/node.mjs').then(m=>m.openPackFile('/tmp/x2.zeph'))\"` with a DE440 kernel: expected PrecisionError bad-geometry.",
+      "impact": "Swiss with sepl_18/semo_18 covers 1800–2400 and with the full .se1 set -13000..+17000; the alpha covers 300 years and the toolchain cannot extend it without code changes. Any production integration must either fall back to astronomy-engine outside 1849–2150 (a 60″-class accuracy cliff at the boundary) or fix this first.",
+      "fix": "Derive span from the kernel (T1-T0), let nrec = ceil(span/L) with a partial last record clipped to coverage, drop the divisibility ladder or regenerate choice.json per kernel via sweep.mjs, and default --kernel to a required argument. Add a tier-A test that compiles a synthetic SPK of a non-DE440s span. Then compile a 1550–2650 pack from DE440 (~6 MiB by scaling) or a 1790–2210 crop (~2.3 MiB) for the site.",
+      "effortDays": 3
+    },
+    {
+      "id": "data-toolchain-packaging-2",
+      "severity": "major",
+      "title": "A pack compiled with the default --out ships inside the npm archive",
+      "claim": "package.json `files` includes `tools/compiler/` wholesale; compile.mjs defaults --out to `tools/compiler/packs/<candidate>.zeph` (compile.mjs:343) and unconditionally mkdirs that directory inside the package (compile.mjs:562). There is no .npmignore. Any developer who runs the documented compile without --out and then `npm pack` distributes a derived JPL coefficient set, which every rights document says must not happen.",
+      "evidence": "Copied examples/precision-alpha to scratch, placed D.zeph at tools/compiler/packs/D.zeph, ran `npm pack --dry-run --json`: 87 files, `tools/compiler/packs/D.zeph included: true`. Artifact: <audit>/data-toolchain-packaging/npm-pack-packs-hazard.txt and npm-pack-dryrun.json. Also observed: my compile with an explicit --out still created tools/compiler/packs/ inside the read-only worktree (removed afterwards; `git status` clean).",
+      "files": [
+        "examples/precision-alpha/package.json",
+        "examples/precision-alpha/tools/compiler/compile.mjs"
+      ],
+      "reproduction": "cp -r examples/precision-alpha /tmp/a && mkdir -p /tmp/a/tools/compiler/packs && cp <any>.zeph /tmp/a/tools/compiler/packs/ && cd /tmp/a && npm pack --dry-run --json | node -e 'const j=JSON.parse(require(\"fs\").readFileSync(0))[0];console.log(j.files.some(f=>f.path.endsWith(\".zeph\")))'",
+      "impact": "Direct contradiction of the stated posture 'no pack is distributed while the rights question is unsettled'; a single careless pack turns the MIT archive into a redistributor of derived JPL data.",
+      "fix": "Add `!tools/compiler/packs/**` and `!**/*.zeph` to `files` (or a .npmignore), make --out default to process.cwd(), remove the unconditional mkdirSync of a package-internal directory, and add a tier-A test that runs `npm pack --dry-run --json` and asserts no *.zeph/*.bsp path is listed.",
+      "effortDays": 0.25
+    },
+    {
+      "id": "data-toolchain-packaging-3",
+      "severity": "major",
+      "title": "RIGHTS.md claims the pack header carries the NAIF attribution obligations; it does not",
+      "claim": "RIGHTS.md states 'Every pack header carries the obligations anyway: source kernel identity and hash, compiler version and settings, coverage, conventions, and the producer named as Zodiacs rather than JPL, with the DE440 reference cited as the source of the underlying data.' The compiled header has no producer field, no DE440 citation (Park et al., doi:10.3847/1538-3881/abd414), no attribution-replacement text and no reference to the kernel's own NIO2SPK/author comment block. NAIF's modified-kernel rule (quoted in RIGHTS.md) requires replacing the producer attribution with the modifier's name and institution, annotating and renaming; the header satisfies only the annotate/rename part.",
+      "evidence": "grep of the 16,187-byte header of the compiled D.zeph for 'Park','DOI','10.3847','producer','Zodiacs','attribution','NIO2SPK','Folkner','DE440 ' — all false; top-level keys: format,formatVersion,candidate,compiler,input,settings,coverage,conventions,derived,dependencies,bodies,payloadSha256,payloadEndOffset. Artifact: scratch/audit/data-toolchain-packaging/header-attribution.txt. RIGHTS.md §'What follows operationally' bullet 2; compile.mjs:499-537 (header construction), :591-616 (dependencies()).",
+      "files": [
+        "docs/platform/evidence/precision-2026-09-20/RIGHTS.md",
+        "examples/precision-alpha/tools/compiler/compile.mjs"
+      ],
+      "reproduction": "node -e 'const b=require(\"fs\").readFileSync(\"D.zeph\");const s=b.subarray(16,16+b.readUInt32LE(8)).toString();for(const k of [\"Park\",\"DOI\",\"producer\",\"Zodiacs\"])console.log(k,s.includes(k))'",
+      "impact": "A documented compliance claim is false. If packs are ever distributed (finding 11's path), the header as-is does not meet the conditions the project itself identified as the conservative course.",
+      "fix": "Add a `provenance` block: producer {name:'Zodiacs', institution, contact}, sourceEphemeris {name:'JPL DE440', citation, doi, kernelFile, kernelSha256, kernelCommentExcerpt}, modification {what:'Chebyshev refit and quantisation', compilerVersion}, attributionNote quoting the NAIF rule. Bump COMPILER_VERSION to 1.2.0 and demonstrate payload digest unchanged as METADATA-CORRECTION.md did. Correct RIGHTS.md until then.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "data-toolchain-packaging-4",
+      "severity": "major",
+      "title": "No distribution path reaches users: 404 on npm, private alpha, no pack, and the alpha already exceeds the engine-chunk budget",
+      "claim": "@zodiacs/engine returns HTTP 404 from registry.npmjs.org (confirmed 2026-09-22); @zodiacs/precision-alpha is `private: true`; no coefficient pack is distributed; and the alpha's released browser entry bundles to 73,509 B minified / 27,533 B gzip, already above budgets.json `engine-chunk: 25` KB before any pack loader, chart adapter or house code is added (the experimental entry is 30,363 B gzip). The accuracy the tree has measured (0.16″ worst vs Swiss for the DE440s prototype against 64.8″ for the shipped engine) is therefore unavailable to any user, and the site's bundle gate would refuse the runtime as it stands.",
+      "evidence": "curl registry.npmjs.org/@zodiacs%2Fengine → HTTP 404 (scratch npm-zodiacs-engine.json); examples/precision-alpha/package.json:4 private:true; NOTICE.md 'No ephemeris data'; esbuild minify+gzip of src/browser.mjs and src/experimental.mjs (scratch alpha-bundle-size.txt); budgets.json engine-chunk 25, scripts/report-bundles.mjs:230-239 enforces it on the static closure of the full.*.js chunk; docs/engine-validation/README.md 'What none of this is' bullet 4.",
+      "files": [
+        "budgets.json",
+        "scripts/report-bundles.mjs",
+        "examples/precision-alpha/package.json",
+        "node_modules/@zodiacs/engine/README.md"
+      ],
+      "reproduction": "curl -s -o /dev/null -w '%{http_code}' https://registry.npmjs.org/@zodiacs%2Fengine ; node -e 'const e=require(\"esbuild\"),z=require(\"zlib\");e.build({entryPoints:[\"examples/precision-alpha/src/browser.mjs\"],bundle:true,minify:true,format:\"esm\",platform:\"browser\",write:false}).then(r=>console.log(z.gzipSync(Buffer.from(r.outputFiles[0].contents),{level:9}).length))'",
+      "impact": "This is the gap that keeps the stack below Swiss in practice: Swiss is installable (pyswisseph, sweph npm bindings) and ships its data; Zodiacs' better-measured engine is not installable and has no data.",
+      "fix": "(a) Publish @zodiacs/engine (operator decision; the tarball is reproducible, see finding 10). (b) Use the NAIF permission that already exists: redistribute de440s.bsp UNMODIFIED (permitted outright per RIGHTS.md quote) from zodiacs.org with its own attribution, and compile the ZODEPH02 pack client-side in a Worker (24.5 s in Node here; cache the pack in the Cache API keyed by kernel sha256) or at site build time into a user-downloaded file — this avoids the unsettled derived-coefficient question. (c) Load the alpha runtime as a separate dynamically imported chunk with its own budget line (e.g. `precision-chunk: 40`), keeping the eager engine-chunk gate intact. (d) Email NAIF the derived-coefficient question in parallel.",
+      "effortDays": 5
+    },
+    {
+      "id": "data-toolchain-packaging-5",
+      "severity": "major",
+      "title": "Public API is a chart API, not an ephemeris API; no calc(body,time,flags), no frames/centres/time scales/bounds",
+      "claim": "@zodiacs/engine exposes positions/natalChart/transits/synastry/moonPhase/saturnReturn/findLongitudeCrossings; BodyPosition is {body, lon, lat, speed, retrograde, sign, degree} — no distance, no latitude/radial speed, no frame choice (always true ecliptic of date), no centre choice (always geocentric), no time-scale input (Date = UTC only; TT via astronomy-engine's ΔT with no override), no sidereal ayanamsa, no fixed stars, no asteroids, two house systems, and `positions()` carries no engine identity (only Chart.engineVersion). The alpha's apparent(body, ttDays, options) adds lon/lat/distKm, light-time and nutation diagnostics, TT input and typed refusals, but returns no speeds, no equatorial/cartesian selection beyond the raw `geometric` triple, no topocentric/heliocentric/barycentric option, no sidereal mode, ten bodies with Mars-outward as system barycentres, and no per-result identity (pack digest lives on runtime.integrity, not on the result). Swiss exposes swe_calc_ut(tjd, ipl, iflag) → lon/lat/dist + 3 speeds with FLG_J2000/EQUATORIAL/XYZ/TOPOCTR/HELCTR/BARYCTR/SIDEREAL/TRUEPOS/NOABERR/NOGDEFL/NONUT, swe_houses_ex with ~20 systems, swe_fixstar, asteroids, swe_deltat_ex, swe_set_tid_acc.",
+      "evidence": "node_modules/@zodiacs/engine/dist/index.d.ts (public surface), dist/types-BQGrRiSd.d.ts:44-56 (BodyPosition), :78-87 (Chart), dist/chunk-GBH7JIYF.js:35-41 (eclipticOfDate: GeoVector→Rotation_EQJ_ECT, no options); examples/precision-alpha/types/index.d.ts:33-63 (ApparentPlace, ReductionOptions), :336-353 (PrecisionRuntime); ephemeris.mjs BARYCENTRE_NOT_CENTRE.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/index.d.ts",
+        "node_modules/@zodiacs/engine/dist/types-BQGrRiSd.d.ts",
+        "examples/precision-alpha/types/index.d.ts",
+        "examples/precision-alpha/src/core/ephemeris.mjs"
+      ],
+      "reproduction": "Read the two .d.ts files; compare against pyswisseph `help(swe.calc_ut)` flag list.",
+      "impact": "Without a uniform calc call a consumer cannot ask the Zodiacs stack the questions Swiss answers; 'more advanced than Swiss' is not testable through the current surface.",
+      "fix": "Proposed shape (both surfaces): `calc(body: Body, t: {jd:number, scale:'utc'|'ut1'|'tt'|'tdb'} | Date, opts?: {frame:'of-date'|'j2000'|'icrs', coords:'ecliptic'|'equatorial'|'cartesian', centre:'geocentric'|'topocentric'|'heliocentric'|'barycentric', observer?:{latDeg,lonDeg,heightM}, sidereal?:{ayanamsa:string}, corrections:{lightTime,aberration,deflection,nutation}, deltaT?: number|'model'}) => {lon,lat,dist,dlon,dlat,ddist, units, bounds?:{lonArcsec,latArcsec,distKm, basis:'proven'|'sampled'|'none'}, identity:{engine, ephemeris:{name,version,digest}, deltaTModel, options}}`, plus `bodies()` enumeration with centre/coverage per body, `houses(t, observer, system)` and `fixedStar(name, t, opts)` later. Implement over the alpha reducer first (it already has options and TT), then map the production API onto it.",
+      "effortDays": 15
+    },
+    {
+      "id": "data-toolchain-packaging-6",
+      "severity": "minor",
+      "title": "Tree commits ~20,000 per-instant Swiss output values while stating bulk per-instant values are not committed",
+      "claim": "METADATA-CORRECTION.md says Swiss output is 'treated as a measurement, not redistributed in bulk' and 'bulk per-instant values are not committed'; LICENSING.md says 'Nothing Swiss is committed'. Yet docs/platform/evidence/precision-2026-09-20/numerics/raw/t1-swiss.json (380,798 B, ~7,856 decimal values) and numerics/verify/v1-swiss.json (570,916 B, ~11,780 values) are raw Swiss dumps, and src/lib/engine/fixtures/swiss-node-polar.fixture.json (184 values) and swiss-eight-cases.fixture.json (164 values) are Swiss outputs used as test oracles. The legal exposure is probably small (program output), but the project's own statement is inaccurate.",
+      "evidence": "stat/grep counts in transcript; docs/platform/evidence/precision-2026-09-20/METADATA-CORRECTION.md 'The rights picture, by artifact' table and second bullet; docs/platform/evidence/swiss-benchmark/LICENSING.md:15-19.",
+      "files": [
+        "docs/platform/evidence/precision-2026-09-20/METADATA-CORRECTION.md",
+        "docs/platform/evidence/swiss-benchmark/LICENSING.md",
+        "docs/platform/evidence/precision-2026-09-20/numerics/raw/t1-swiss.json",
+        "docs/platform/evidence/precision-2026-09-20/numerics/verify/v1-swiss.json"
+      ],
+      "reproduction": "for f in docs/platform/evidence/precision-2026-09-20/numerics/raw/t1-swiss.json docs/platform/evidence/precision-2026-09-20/numerics/verify/v1-swiss.json; do grep -oE '[-]?[0-9]+\\.[0-9]{4,}' $f | wc -l; done",
+      "impact": "Inconsistency between stated and actual licensing posture; a reviewer checking the claim finds it false, which weakens the (otherwise careful) rights record.",
+      "fix": "Either amend the sentence to 'Swiss outputs are committed only as frozen measurement fixtures and never as fitting targets' and list the files, or move the two raw dumps to an artifact store and keep only their digests in-tree.",
+      "effortDays": 0.1
+    },
+    {
+      "id": "data-toolchain-packaging-7",
+      "severity": "minor",
+      "title": "Cross-runtime bit-identity holds for the partitioned path only; the released reducer relies on Math.sin/cos/atan2",
+      "claim": "The tree's bit-identical claim (Node/Chromium/Firefox, one digest-verified file) is for the domain plan/partitioned search, which uses trig.mjs (Cody-Waite + Taylor, +,-,* only, ABS_ERR=4e-15 justified term by term and measured at 1.48e-16 over 40,656 arguments), sqrt-of-squares instead of Math.hypot, cosine comparisons rather than acos, and a key built from decimal strings and FNV hashes. The released `apparent()` reducer, the nutation series, the R1/R2/R3 frame matrices and the two released validated modes' projection weights still call Math.sin/Math.cos/Math.atan2 (implementation-defined in ECMAScript); agreement there is observed on V8/SpiderMonkey, not guaranteed, as frames.mjs:130-133 admits. Interval widening (PAD = 8·u) covers missing directed rounding; sinCosInterval pads by ABS_ERR; both justified in comments. No remaining Math.hypot in src/core.",
+      "evidence": "examples/precision-alpha/src/core/frames.mjs:33-35,114-115,138-140; nutation.mjs:84-123; validated-search.mjs:168-169; reduce.mjs:152 (Math.sin in TDB-TT); retarded-search.mjs:572-582 (explicitly keeps Math.sin in released modes); trig.mjs header and :46-51; interval.mjs:19-20 (PAD); domain-partition.mjs:142-161 (partitionKey), :196-209 (FNV fingerprint); docs/platform/evidence/precision-partition/cross-runtime/README.md.",
+      "files": [
+        "examples/precision-alpha/src/core/frames.mjs",
+        "examples/precision-alpha/src/core/nutation.mjs",
+        "examples/precision-alpha/src/core/trig.mjs",
+        "examples/precision-alpha/src/core/domain-partition.mjs"
+      ],
+      "reproduction": "grep -nE 'Math\\.(sin|cos|atan2|hypot|acos|asin)\\b' examples/precision-alpha/src/core/*.mjs",
+      "impact": "A chart produced by the released reducer on one browser is not guaranteed bit-identical on another; only the experimental partitioned search is. Swiss (C, libm) has the same weakness, so this is parity, not a deficit — but the tree's headline determinism claim must be read as scoped.",
+      "fix": "Route frames.mjs rotations and nutation.mjs through trig.mjs (angles are reduced to |x|≤8 already or reducible in arcseconds), replace eclipticLonLatDeg's atan2 with a documented two-argument arctangent built from a correctly-rounded primitive or accept and document the last-ulp scope; re-pin the released mode roots when doing so.",
+      "effortDays": 1
+    },
+    {
+      "id": "data-toolchain-packaging-8",
+      "severity": "minor",
+      "title": "Receipt CONVENTIONS strings are truthful but 'apparent' omits deflection and the receipt does not identify the ephemeris model by default",
+      "claim": "receipt.js CONVENTIONS: planetPositions 'apparent-geocentric-ecliptic-of-date' — GeoVector(body,time,true) applies light-time and aberration (astronomy.js:3843-3855 BackdatePosition) but no gravitational deflection, so 'apparent' is overstated by ≤0.1″ beyond 5° elongation and up to 1.75″ at the limb; moonPosition 'astronomy-engine-ecliptic-geo-moon' honestly names the implementation (no light-time/aberration — conceded in CHART-ADAPTER-CONTRACT.md); moonNodes 'instantaneous-geocentric-moon-orbit-plane' matches trueNodeLongitude (GeoMoonState angular momentum rotated by Rotation_EQJ_ECT); angles 'gast-and-mean-obliquity' matches computeChart (SiderealTime = GAST, meanObliquity) and records an internal inconsistency (apparent sidereal time paired with mean rather than true obliquity; Swiss pairs GAST with true obliquity); speed 'central-difference-plus-minus-0.25-day' matches longitudeSpeed. Gap: receipt.provenance.ephemeris {name:'astronomy-engine', version} is optional caller-supplied (receipt.js validateProvenance), so a receipt alone does not pin the positional model; two engines with the same ENGINE_VERSION but different astronomy-engine minor versions would emit indistinguishable receipts.",
+      "evidence": "node_modules/@zodiacs/engine/dist/receipt.js CONVENTIONS/COVERAGE blocks and validateProvenance; dist/chunk-GBH7JIYF.js:35-41,43-46,47-60,66-75,113-122; node_modules/astronomy-engine/esm/astronomy.js:3843 GeoVector, :2781-2789 EclipticGeoMoon doc, :1881 SiderealTime (GAST).",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/receipt.js",
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js"
+      ],
+      "reproduction": "Read the cited lines; optionally compute Swiss FLG_SWIEPH vs FLG_SWIEPH|FLG_NOGDEFL for Mercury at 5° elongation to size the omitted term (~0.09″).",
+      "impact": "Small semantic overclaim; the larger issue for a Swiss-class engine is that the receipt cannot prove which ephemeris model produced it unless the caller volunteers it.",
+      "fix": "Rename to 'aberrated-geocentric-ecliptic-of-date;no-deflection' or add deflection; make `ephemeris: {name, version}` a required CONVENTIONS-adjacent field populated by the engine from its own dependency at build time (tsup define), and add `moonPosition: 'no-light-time;no-aberration'` qualifier text.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "data-toolchain-packaging-9",
+      "severity": "minor",
+      "title": "Container validates geometry but not numerical conventions; a pack declaring a different Chebyshev convention decodes silently wrong",
+      "claim": "container.mjs validates magic, extents, widths, offsets, coverage monotonicity and EMRAT plausibility, but `conventions.chebyshev` (c0 not halved), `conventions.units` and `formatVersion` are free text/unchecked (validateConstants only inspects emrat and that conventions is an object). The evaluator (ephemeris.mjs:122-140) always assumes SPK type-2 convention in km and km/s. A pack from a variant compiler that halves c0 or stores AU would pass parse+digest and return wrong positions with no error. Unconfirmed by execution; confirmed by code reading.",
+      "evidence": "examples/precision-alpha/src/core/container.mjs:281-292 (validateConstants), :128-130; ephemeris.mjs:122-140; compile.mjs:521-528 (conventions written as prose).",
+      "files": [
+        "examples/precision-alpha/src/core/container.mjs",
+        "examples/precision-alpha/src/core/ephemeris.mjs"
+      ],
+      "reproduction": "Build a synthetic pack with header.conventions.chebyshev='c_0 halved' and coefficients written accordingly; it opens and evaluates the unhalved polynomial.",
+      "impact": "Integrity ≠ interpretation: the digest proves bytes, not that the runtime reads them under the compiler's convention. Low probability today (one compiler), but it is a latent silent-wrong-answer path.",
+      "fix": "Pin `formatVersion` to an allowed set and require `conventions.chebyshev === 'spk2-c0-unhalved'` and `conventions.units.position === 'km'` as enumerated tokens (compiler writes tokens, prose moves to a `notes` field); refuse otherwise with 'unsupported-version'.",
+      "effortDays": 0.25
+    },
+    {
+      "id": "data-toolchain-packaging-10",
+      "severity": "note",
+      "title": "Production tarball rebuilds byte-identically from the pinned commit; pins, hashes and lock integrity all agree",
+      "claim": "The vendored @zodiacs/engine 0.1.1-rc.6 is fully auditable despite living in another repository: vendor/zodiacs-engine-0.1.1-rc.6.sha256 = sha256(tgz) = sha256 of the raw.githubusercontent artifact at carrier commit 51129a19 = sha256 of a fresh `pnpm install --frozen-lockfile; pnpm run build; npm pack` at source commit fb57af7a (09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e), and package-integration.test.ts additionally pins the package-lock sha512 integrity and ENGINE_VERSION==='0.1.1-rc.6'. Swiss Ephemeris has no equivalent reproducible-build attestation for sweph or the .se1 files. Gap: the rebuild is not performed in CI, so the sourceCommit→artifact link is asserted in prose (vendor/README.md) rather than checked.",
+      "evidence": "scratch/audit/data-toolchain-packaging/sdk-install.log, sdk-build.log, measurements.json (engineRebuild: wall 8 s); vendor/README.md:8-12; src/lib/engine/package-integration.test.ts:51-68,75-76; package.json:152 file: pin.",
+      "files": [
+        "vendor/README.md",
+        "src/lib/engine/package-integration.test.ts",
+        "package.json"
+      ],
+      "reproduction": "git init t && cd t && git fetch --depth 1 https://github.com/ZodiacsOfficial/sdk.git fb57af7a2cd7c30983cc8fb655183d5a11f9cf30 && git checkout FETCH_HEAD && corepack pnpm install --frozen-lockfile --ignore-scripts --filter @zodiacs/engine... && cd packages/engine && corepack pnpm run build && npm pack --ignore-scripts && sha256sum zodiacs-engine-0.1.1-rc.6.tgz",
+      "impact": "Opportunity to exceed Swiss on provenance: a CI job that rebuilds from sourceCommit and diffs against vendor/*.sha256 makes the pin verifiable rather than declared.",
+      "fix": "Add a scheduled/PR CI job that performs the rebuild above and fails on hash mismatch; record sourceCommit in a machine-readable candidate.json the test reads (scripts/platform-engine-candidate.mjs already validates such a schema).",
+      "effortDays": 0.5
+    },
+    {
+      "id": "data-toolchain-packaging-11",
+      "severity": "note",
+      "title": "Integrity verified end to end; authenticity absent by design — what an Ed25519 manifest would add and cost",
+      "claim": "ZODEPH02 = 16-byte prologue (magic, uint32 headerLen, uint32 payloadOffset) + JSON header + 16-aligned body blocks + 32-byte SHA-256 trailer over everything before it. Measured on a sealed synthetic pack (198,055 B): flipping intervalSec 86400→86401, a body name, a payload byte, a trailer byte → 'corrupt'; emrat digit → 'bad-header'; headerLen+1 → 'bad-header'; magic ZODEPH01 → 'unsupported-version'; size-cap tripwire refuses before any read. A header edit followed by re-sealing OPENS with selfConsistent=true (integrity cannot see it); the same file with expectDigest of the original → 'mutated'. LIMITS checks precede allocation (safeExtent overflow guard). Swiss .se1 files carry no digest or signature at all.",
+      "evidence": "scratch/audit/data-toolchain-packaging/flip.log and flip.mjs; container.mjs:44-52 LIMITS, :63-72 safeExtent, :83-138 parseContainer, :299-321 integrity policy; tools/seal.mjs; tier-b 'an out-of-band digest that matches opens, and one that does not is refused' pass.",
+      "files": [
+        "examples/precision-alpha/src/core/container.mjs",
+        "examples/precision-alpha/tools/seal.mjs",
+        "examples/precision-alpha/src/index.mjs"
+      ],
+      "reproduction": "node <audit>/data-toolchain-packaging/flip.mjs",
+      "impact": "Exceed-Swiss opportunity: a signed manifest {packDigest, kernelSha256, compilerVersion, compilerSourceSha256, coverage, producedAt(omit for determinism), keyId, signature} with Ed25519 (WebCrypto: Node 22, Chrome ≥113, Firefox ≥130, Safari 17) binds a pack to the producer's key so a re-sealed edit is detected without an out-of-band digest per pack; it does not solve key distribution (publish the public key at zodiacs.org/.well-known and in the repo, pin in the runtime). SLSA-style provenance (GitHub attestations of the compile job with kernel hash and compiler commit) adds build-integrity for ~1–2 more days.",
+      "fix": "Add `tools/sign.mjs` and `openPack*({manifest, trustedKeys})`; refuse when a manifest is supplied and fails; keep expectDigest as the unsigned fallback; add tier-A tests with a test key.",
+      "effortDays": 2
+    },
+    {
+      "id": "data-toolchain-packaging-12",
+      "severity": "minor",
+      "title": "NOTICE gaps: shipped ERFA-derived vectors and verbatim ERFA C sources are not named; no JPL attribution text for user-compiled packs; site root has no LICENSE/NOTICE",
+      "claim": "examples/precision-alpha/NOTICE.md names the ERFA-derived nutation series, precession recipe and the astronomy-engine comparator, but not test/tier-a/_erfa-ld-vectors.json (358 eraLd output vectors, shipped via files:'test/tier-a/'), nor tools/measure/erfa-ab.c.pinned and tools/measure/erfa-deflection/{ld.c,ldsun.c,ab.c,ld_body.h} (verbatim BSD-3 ERFA C in the repo; PROVENANCE.md covers them but NOTICE does not). NOTICE.md carries no JPL/DE440 attribution sentence a user could copy into a pack they compile. The site repository root has no LICENSE or NOTICE file; the astronomy-engine MIT notice exists only inside the vendored tarball and at public/sdk/engine/media/NOTICE; whether the minified browser bundle retains the MIT header was not examined.",
+      "evidence": "examples/precision-alpha/NOTICE.md; package.json:44-63 files; test/tier-a/_erfa-ld-vectors.json head ('eraLd outputs from the pinned liberfa source'); tools/measure/erfa-deflection/PROVENANCE.md; `ls` of repo root shows no LICENSE*/NOTICE*; public/sdk/engine/media/NOTICE exists.",
+      "files": [
+        "examples/precision-alpha/NOTICE.md",
+        "examples/precision-alpha/test/tier-a/_erfa-ld-vectors.json",
+        "examples/precision-alpha/tools/measure/erfa-deflection/PROVENANCE.md"
+      ],
+      "reproduction": "grep -n 'erfa-ld-vectors\\|ld.c\\|DE440\\|Park' examples/precision-alpha/NOTICE.md (no hits); ls /repo-root | grep -i licen",
+      "impact": "Compliance hygiene; ERFA clause 2 is met by LICENSE-erfa shipping, but the NOTICE inventory is incomplete and a pack producer has no ready attribution text.",
+      "fix": "Extend NOTICE.md with the ERFA test-vector and pinned-source entries and a 'If you compile a pack' JPL/DE440 attribution block; add a root THIRD-PARTY-NOTICES.md; add a check that the built browser chunk containing astronomy-engine retains its MIT comment (esbuild legalComments).",
+      "effortDays": 0.25
+    },
+    {
+      "id": "data-toolchain-packaging-13",
+      "severity": "minor",
+      "title": "Documentation drift in the shipped compile guide and frozen compiler RESULTS",
+      "claim": "examples/00-prepare-a-pack.md says `npm test # 168 tests`; tier A now runs 423 tests (measured). compile.mjs:342 defaults --kernel to a session-specific `<swisslab>/de440s.bsp`. docs/platform/evidence/precision-2026-09-20/compiler/RESULTS.md §11 still asserts 'JPL ephemerides are public-domain US Government work', which RIGHTS.md refuted (the file is frozen evidence, so it needs a pointer rather than an edit). Compile time '~20 seconds' vs 24.5 s measured is fine.",
+      "evidence": "scratch tier-a.log '# tests 423'; 00-prepare-a-pack.md:49; compile.mjs:342; compiler/RESULTS.md:379-381.",
+      "files": [
+        "examples/precision-alpha/examples/00-prepare-a-pack.md",
+        "examples/precision-alpha/tools/compiler/compile.mjs",
+        "docs/platform/evidence/precision-2026-09-20/compiler/RESULTS.md"
+      ],
+      "reproduction": "cd examples/precision-alpha && npm test 2>&1 | grep '^# tests'",
+      "impact": "Minor credibility cost; a reader checking numbers finds stale ones.",
+      "fix": "Update the count (or drop it), make --kernel required, add a one-line correction banner to RESULTS.md §11 pointing at RIGHTS.md.",
+      "effortDays": 0.1
+    },
+    {
+      "id": "data-toolchain-packaging-14",
+      "severity": "note",
+      "title": "Coverage refusal verified: typed out-of-coverage errors, no silent fallback; usable window is coverage minus max light-time",
+      "claim": "On the real pack, apparent('Sun', ±73050 d) throws PrecisionError code 'out-of-coverage' with detail {et}; ±54700/54800 d inside coverage succeed; apparent('Pluto', start+0.01 d) is refused because the 24,168 s light-time lookback leaves coverage, while start+0.5 d succeeds. raw() and seriesAt() refuse rather than clamp (ephemeris.mjs:104-112,168-176). The production engine, by contrast, computes any year with no flag (docs/engine-validation/README.md concedes this; astronomy-engine's Pluto table spans -730000..+730000 days TT and integrates one-way beyond it).",
+      "evidence": "scratch/audit/data-toolchain-packaging/coverage-probe.log; ephemeris.mjs:104-112; reduce.mjs light-time lookback refusal message; astronomy.js:2994-2999,3238.",
+      "files": [
+        "examples/precision-alpha/src/core/ephemeris.mjs",
+        "examples/precision-alpha/src/core/reduce.mjs"
+      ],
+      "reproduction": "node -e 'import(\"./src/node.mjs\").then(async m=>{const rt=await m.openPackFile(process.argv[1]);try{rt.apparent(\"Sun\",73050,m.CORRECTED)}catch(e){console.log(e.code,e.detail)}})' <pack>",
+      "impact": "Behaviour is correct and better than Swiss's silent Moshier fallback when .se1 files are missing (Swiss returns a different-model answer with only a flag change). A production integration must still define the boundary policy (CHART-ADAPTER-CONTRACT §5.2) and should expose `usableCoverage = coverage minus max light-time (~0.28 d for Pluto)`.",
+      "fix": "Add `runtime.usableCoverage(body)` and document; in the adapter, refuse or downgrade with an explicit per-body flag rather than mixing models silently.",
+      "effortDays": 0.25
+    }
+  ],
+  "measurements": [
+    {
+      "name": "Compile real candidate-D pack from DE440s",
+      "method": "node examples/precision-alpha/tools/compiler/compile.mjs --candidate=D --kernel=<swisslab>/de440s.bsp (sha256 c1c7feea…0a49f2, 32,726,016 B) --out=<scratch>/D.zeph; wall clock via date",
+      "result": "rc=0, 24.53 s wall; 1,737,632 B = 1.6571 MiB; header 16,187 B; file sha256 258cd56278d915a7830c15202b695deeb088cc7fda19d97768bfe0923c6ca75e; payloadSha256 0a2187642704459a47983c79ed4ecb70deed5ab5ba75465e89319d39089e1afa = the value METADATA-CORRECTION.md records (byte-identical payload reproduced); compiler 1.1.0, sourceSha256 table matches SOURCE.md; EMRAT 81.30056822149722, worst residual 9.09e-13 km. Proven bounds (posKm/velKmS): mercuryBary 0.3595/6.90e-5, venusBary 0.4063/1.10e-5, emb 0.4265/8.65e-6, marsBary 1.0104/1.22e-5, jupiterBary 1.2860/5.60e-6, saturnBary 1.2649/1.79e-6, uranusBary 1.1781/1.00e-6, neptuneBary 1.2428/8.01e-7, plutoBary 1.2758/6.33e-7, sun 0.3792/1.22e-5, moon 0.0221/7.36e-6",
+      "artifactPath": "<audit>/data-toolchain-packaging/D.zeph (+ compile-D.log, compile-D.time, D-header.txt)",
+      "computeMinutes": 0.5
+    },
+    {
+      "name": "Seal to ZODEPH02",
+      "method": "node examples/precision-alpha/tools/seal.mjs D.zeph D.v2.zeph",
+      "result": "1,737,632 → 1,737,664 B; whole-artifact sha256 d21783461f26199ba51f10ee6ff42ac77d3ac86ebb8062cf7619a565530701a3; payload unchanged (asserted by the tool); file sha256 063f4996eeb6249f9e9424c37a4cee53ed7062fcdf991afb9dbe381131256181",
+      "artifactPath": "<audit>/data-toolchain-packaging/D.v2.zeph (+ seal.log)",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Tier B data-dependent tests (first run in this session)",
+      "method": "cd examples/precision-alpha && PRECISION_PACK=<scratch>/D.v2.zeph PRECISION_KERNEL=<swisslab>/de440s.bsp npm run test:data",
+      "result": "85 tests, 85 pass, 0 fail, duration 58,637 ms (59 s wall). Includes: pack agrees with the uncompressed kernel inside 0.05″ (pack-versus-kernel); real pack opens/verifies, out-of-band digest accept/refuse, resident vs streamed loaders bit-identical, equinox sanity, 13 new moons of 2024, validated geometric Moon 100° in 2019 proven = 13 events, empty-interval proof; retarded/aberrated/of-date/deflection holdout families H1–H10, A1–A10, F1–F10, B1–B10, K1–K10, S1–S2, M1–M10, T1, T9, T12",
+      "artifactPath": "<audit>/data-toolchain-packaging/tier-b.log (+ tier-b.time)",
+      "computeMinutes": 1
+    },
+    {
+      "name": "Tier A tests",
+      "method": "cd examples/precision-alpha && npm test",
+      "result": "423 tests, 423 pass, 0 fail, 23 s (the shipped guide says 168)",
+      "artifactPath": "<audit>/data-toolchain-packaging/tier-a.log",
+      "computeMinutes": 0.4
+    },
+    {
+      "name": "Byte-flip integrity test on a sealed synthetic pack",
+      "method": "node flip.mjs: build via examples/synthetic-pack.mjs (198,055 B), mutate one byte at a time in header JSON, payload, trailer, prologue and magic; attempt openPackFromBytes; then re-seal an edited header and retry with/without expectDigest",
+      "result": "unmodified opens; intervalSec 86400→86401 → corrupt; name sun→Sun → corrupt; emrat digit → bad-header; payload byte ^1 → corrupt; trailer byte ^1 → corrupt; headerLen+1 → bad-header; magic ZODEPH01 → unsupported-version; header edited AND re-sealed → OPENS selfConsistent=true (authenticity gap); same with expectDigest of original → mutated",
+      "artifactPath": "<audit>/data-toolchain-packaging/flip.log (+ flip.mjs)",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Vendored tarball vs recorded hashes vs GitHub artifact vs fresh rebuild",
+      "method": "sha256sum vendor/*.tgz vs vendor/*.sha256; curl raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a19…/artifacts/zodiacs-engine-0.1.1-rc.6.tgz; git fetch --depth 1 fb57af7a…; corepack pnpm install --frozen-lockfile --ignore-scripts --filter @zodiacs/engine...; pnpm run build; npm pack --ignore-scripts",
+      "result": "All five vendored tarballs match their .sha256 files; rc.6 = 09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e in vendor, on GitHub (HTTP 200) and from the rebuild (install 4 s, build+pack 4 s): byte-identical. Source commit fb57af7a and repo ZodiacsOfficial/sdk reachable (HTTP 200). package.json pins file:vendor/zodiacs-engine-0.1.1-rc.6.tgz; package-integration.test.ts pins sha256, lock sha512 and ENGINE_VERSION",
+      "artifactPath": "<audit>/data-toolchain-packaging/{rc6-from-github.tgz,sdk-install.log,sdk-build.log,sdk-rebuild/packages/zodiacs-engine-0.1.1-rc.6.tgz,measurements.json}",
+      "computeMinutes": 0.3
+    },
+    {
+      "name": "npm registry state",
+      "method": "curl https://registry.npmjs.org/@zodiacs%2Fengine",
+      "result": "HTTP 404 {\"error\":\"Not found\"} on 2026-09-22 (README's 2026-09-07 statement still true)",
+      "artifactPath": "<audit>/data-toolchain-packaging/npm-zodiacs-engine.json",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Would a pack at the compiler's default --out ship in the npm archive?",
+      "method": "copy examples/precision-alpha to scratch, add tools/compiler/packs/D.zeph, npm pack --dry-run --json",
+      "result": "87 files in the archive; tools/compiler/packs/D.zeph included: true",
+      "artifactPath": "<audit>/data-toolchain-packaging/npm-pack-packs-hazard.txt (+ npm-pack-dryrun.json)",
+      "computeMinutes": 0.1
+    },
+    {
+      "name": "Pack header attribution fields",
+      "method": "grep of the compiled header JSON for Park, DOI, 10.3847, producer, Zodiacs, attribution, NIO2SPK, Folkner, 'DE440 '",
+      "result": "all absent; only dependencies[0].licence prose cites the NAIF rules page",
+      "artifactPath": "<audit>/data-toolchain-packaging/header-attribution.txt",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Out-of-coverage behaviour on the real pack",
+      "method": "apparent('Sun', tt) at tt=-73050,-54700,54800,73050 d; apparent('Pluto', start+0.01 d and start+0.5 d)",
+      "result": "±73050 → PrecisionError out-of-coverage {et}; inside → OK; Pluto start+0.01 d → out-of-coverage (light-time lookback 24,168 s leaves coverage); start+0.5 d OK. Coverage -54792.5..54807.5 TT days",
+      "artifactPath": "<audit>/data-toolchain-packaging/coverage-probe.log (+ example01.log)",
+      "computeMinutes": 0.02
+    },
+    {
+      "name": "Alpha runtime bundle size vs site engine-chunk budget",
+      "method": "esbuild bundle+minify of src/browser.mjs and src/experimental.mjs, gzip level 9",
+      "result": "released path 73,509 B min / 27,533 B gz; experimental 86,586 B min / 30,363 B gz; budgets.json engine-chunk = 25 KB gz; committed engine-bundle.json natal path 24.7 KB gz",
+      "artifactPath": "<audit>/data-toolchain-packaging/alpha-bundle-size.txt",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Wider-coverage pack size estimate",
+      "method": "linear scaling of 1.6571 MiB / 300.07 y",
+      "result": "1800–2200: 2.21 MiB; DE440 1550–2650: 6.07 MiB; DE441 -13200..17191: 167.8 MiB (below LIMITS.maxFileBytes 256 MiB)",
+      "artifactPath": "transcript (python one-liner)",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Committed Swiss output inventory",
+      "method": "grep -oE decimal counts on fixture/dump files",
+      "result": "t1-swiss.json 380,798 B ~7,856 values; v1-swiss.json 570,916 B ~11,780 values; swiss-node-polar.fixture.json 184; swiss-eight-cases.fixture.json 164; swiss-benchmark/report-measure.json rows are differences (180), not raw Swiss values",
+      "artifactPath": "transcript",
+      "computeMinutes": 0.02
+    }
+  ],
+  "swissGap": [
+    {
+      "capability": "Ephemeris data source and fidelity",
+      "swiss": "JPL DE431 (.se1, 1800–2400 with sepl_18/semo_18) or DE441 via FLG_JPLEPH; compressed proprietary format; Moshier analytic fallback when files are absent",
+      "zodiacs": "Production: astronomy-engine (VSOP87 planets, ILE Moon, custom Pluto integrator, 5-term nutation) with no data file. Alpha: DE440s Chebyshev pack, 1.6571 MiB for 1849–2150, refit+quantised, per-body PROVEN bounds ≤0.0221 km Moon / ≤1.286 km outer planets, representation error 0.0049″ max vs kernel; compiled here in 24.5 s, payload byte-identical to the committed digest",
+      "evidence": "D-header.txt; RESULTS.md §3-§5; tier-b pack-versus-kernel pass",
+      "exceedPath": "Ship DE440-derived packs with proven bounds (Swiss publishes none): settle rights or redistribute de440s.bsp unmodified and compile client-side; generalise the compiler (finding 1) to DE440 1550–2650 (~6 MiB)"
+    },
+    {
+      "capability": "Time coverage",
+      "swiss": "1800–2400 with the two .se1 files on this machine; -13000..+17000 with the full set; silent Moshier fallback outside",
+      "zodiacs": "Production computes any year uncertified (no flag); alpha refuses outside 1849-12-26..2150-01-22 with typed out-of-coverage and light-time lookback refusal; site accepts 1800–2199",
+      "evidence": "coverage-probe.log; docs/engine-validation/README.md",
+      "exceedPath": "DE440 pack (1550–2650) with typed refusals beats Swiss's silent model switch; expose usableCoverage per body"
+    },
+    {
+      "capability": "Data integrity and provenance",
+      "swiss": ".se1 files carry no digest or signature; no header provenance beyond file name",
+      "zodiacs": "ZODEPH02: SHA-256 trailer over magic+header+payload, bounds-checked parse before allocation, v1 refused by name, typed errors, header records kernel sha256, compiler source hashes, settings, coverage, proven bounds; 9/9 byte flips refused; authenticity explicitly not established (re-sealed edit opens)",
+      "evidence": "flip.log; container.mjs",
+      "exceedPath": "Ed25519-signed detached manifest + published key; SLSA-style attestation of the compile job (finding 11); add the missing JPL attribution block (finding 3)"
+    },
+    {
+      "capability": "Reproducible build of the engine binary",
+      "swiss": "C source under AGPL/commercial; no reproducible-build attestation for sweph or pyswisseph wheels",
+      "zodiacs": "@zodiacs/engine tarball rebuilt byte-identically from pinned commit fb57af7a (sha256 09c3e634…); vendor sha256, GitHub artifact and package-lock sha512 all agree; not checked in CI",
+      "evidence": "sdk-build.log; package-integration.test.ts",
+      "exceedPath": "Already ahead; add the CI rebuild check to make it a verified property"
+    },
+    {
+      "capability": "Licensing and redistribution",
+      "swiss": "AGPL-3.0 or paid commercial licence; data files under the same terms",
+      "zodiacs": "MIT engine and alpha; astronomy-engine MIT; ERFA BSD-3 with LICENSE-erfa shipped; JPL kernel = NAIF permission-with-conditions; derived pack rights unsettled so nothing shipped; ~20k Swiss output values committed as fixtures despite 'not committed in bulk' wording; header lacks NAIF attribution replacement; npm archive would ship a default-out pack",
+      "evidence": "RIGHTS.md; NOTICE.md; npm-pack-packs-hazard.txt; header-attribution.txt",
+      "exceedPath": "MIT + freely redistributable unmodified kernel is a strictly better licence position than Swiss once findings 2, 3, 6, 12 are fixed and the NAIF question is asked"
+    },
+    {
+      "capability": "Public calculation API",
+      "swiss": "swe_calc_ut(tjd, ipl, iflag) → lon, lat, dist + 3 speeds with flags for J2000/equatorial/XYZ/topocentric/heliocentric/barycentric/sidereal/true-position/no-aberration/no-deflection/no-nutation; swe_houses_ex (~20 systems); swe_fixstar; asteroids; swe_deltat_ex; swe_set_tid_acc; version string",
+      "zodiacs": "Production: chart-level functions; BodyPosition lon/lat/speed only, geocentric true-ecliptic-of-date only, Date input only, 12 bodies incl. nodes, 2 house systems, engineVersion on Chart only. Alpha: apparent(body, ttDays, options) with lon/lat/distKm, light-time/nutation diagnostics, TT input, reduction options, 10 bodies (Mars-outward = barycentres), validated searches with completeness proofs; no speeds, no frame/centre selection, no sidereal, no per-result identity",
+      "evidence": "dist/index.d.ts, types-BQGrRiSd.d.ts; types/index.d.ts",
+      "exceedPath": "calc(body, {jd, scale}, opts) returning lon/lat/dist + speeds + proven/sampled error bounds + identity block (finding 5); proven-completeness searches are already something Swiss does not offer"
+    },
+    {
+      "capability": "Time scales and ΔT control",
+      "swiss": "UT and ET entry points, swe_deltat_ex with selectable models, tidal acceleration setting",
+      "zodiacs": "Production: JS Date (UTC) → astronomy-engine's Espenak-Meeus ΔT, no override (109.5 s divergence from Swiss at 2100 is the largest benchmark residual). Alpha: TT days in, TDB-TT internally, no UTC/UT1 conversion, no ΔT model selection",
+      "evidence": "astronomy.js:1131 DeltaT default; swiss-benchmark RESULTS.md",
+      "exceedPath": "Accept {jd, scale} with an explicit ΔT model/value in the identity block"
+    },
+    {
+      "capability": "Cross-runtime determinism",
+      "swiss": "C double arithmetic; results depend on platform libm and compiler flags",
+      "zodiacs": "Partitioned search path bit-identical across Node/Chromium/Firefox on one digest-verified file (trig.mjs, sqrt not hypot, decimal-string keys); released apparent() path still uses Math.sin/cos/atan2 (observed agreement only)",
+      "evidence": "cross-runtime/README.md; frames.mjs:130-133",
+      "exceedPath": "Route the released reducer through trig.mjs (finding 7) to make the whole chart bit-reproducible, which Swiss cannot claim"
+    },
+    {
+      "capability": "Distribution and installability",
+      "swiss": "pip install pyswisseph; sweph npm bindings; data downloadable from Astrodienst",
+      "zodiacs": "@zodiacs/engine 404 on npm; alpha private; MCP server and platform starter distributed as SHA-256-verified tarballs only",
+      "evidence": "npm-zodiacs-engine.json; README.md of the engine",
+      "exceedPath": "Publish (operator gate); ship the precision runtime as a separately budgeted dynamic chunk"
+    },
+    {
+      "capability": "Bundle-size governance",
+      "swiss": "n/a (native library, ~2 MB with data)",
+      "zodiacs": "report-bundles.mjs enforces route gzip budgets, a 25 KB gz engine-chunk static-closure budget, an exact astronomy-engine import allowlist and marker checks; alpha released path is 27.5 KB gz",
+      "evidence": "budgets.json; alpha-bundle-size.txt",
+      "exceedPath": "Add a precision-chunk budget and lazy-load; keep the eager gate"
+    }
+  ],
+  "notExamined": [
+    "Compiling from a real DE440 or DE441 kernel (not on this machine); the SPAN_DAYS/ladder finding is from code reading only",
+    "Whether the site's built browser chunks retain astronomy-engine's MIT header (requires `npm run build`, which writes dist/ into the tree)",
+    "JPL Horizons cross-checks (0 requests made; other auditors own accuracy)",
+    "The alpha's browser demo and the recorded Chromium/Firefox runs (relied on the committed cross-runtime-run.json)",
+    "The engine tarball's TypeDoc pages under public/sdk/engine beyond the integration test that pins them",
+    "The MCP server artifact's own tarball hash chain and its host-integration evidence (read the source and READMEs only)",
+    "The platform starter archive (examples/platform) beyond its README and verify-platform-starter.mjs header",
+    "Deep review of scripts/build-transits.mjs, build-sky.mjs, build-eclipses.mjs, build-ingresses.mjs (data generators owned by other areas)",
+    "The research-tree compiler copy at docs/platform/evidence/precision-2026-09-20/compiler beyond the vendored-copy hash test that passed",
+    "Swiss Ephemeris runs for receipt-convention magnitudes (e.g. deflection at 5° elongation, GAST+mean-obliquity ASC error) — sized from formulas, not measured",
+    "Legal validity of the derived-coefficient question itself (this audit checks consistency of the tree's statements, not the law)"
+  ]
+}

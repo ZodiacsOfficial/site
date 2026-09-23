@@ -1,0 +1,60 @@
+{
+  "area": "data-toolchain-packaging",
+  "verdicts": [
+    {
+      "id": "data-toolchain-packaging-1",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "evidence": "Executed what the auditor could only code-read. Downloaded de440.bsp (119,799,808 B, sha256 a4ce9bf9...c4b5) and de432s.bsp from NAIF; compiled with a scratch copy of the alpha (worktree untouched). (a) Full DE440, --candidate=D: rc=0 in 25.4 s, 1,740,208 B — the same size as the DE440s pack despite a 401,792-day kernel span; header coverage 1549-12-31..2650-01-25 but every body's records span -14200747200..-4731307200 s (1550→1850, exactly T0+109,600 d; short by 292,192 d); after seal.mjs, openPackFile refused with code bad-geometry 'body mercuryBary spans -14200747200..-4731307200 but the pack claims coverage -14200747200..20514081600' — the exact refusal predicted from container.mjs:257-259. (b) DE440 cropped --fromYear=1800 --toYear=2200 (the site's epoch): header coverage 1800-01-01..2200-01-01, records again end at -4731307200 (1850-01), short by 127,809 d, refused bad-geometry. So 'no pack can cover 1800–2199' is demonstrated, and the cause is compile.mjs:428 gridTo=Math.min(SPAN_DAYS/Ldays,...) with SPAN_DAYS=109600 in sources.mjs:58 while coverage.stopEtSecTdb is the kernel T1 (compile.mjs:375,511). (c) Shorter kernel DE432s (36,544 d): compiles (rc=0, 8.2 s, 0.61 MiB), seals and OPENS — but because spkref.mjs:92-94 clamps the record index and extrapolates the last kernel polynomial, tail records overrun T1 by up to 1,816 d; emb provenPosKm is 52.6 km against a 0.3 km budget (venus 0.44/0.3, sun 0.52/0.3, moon 0.022/0.010) and the compiler does not refuse; emb widths reach 8 bytes; every apparent() call (Sun, Moon, Mercury, Mars, Jupiter, Pluto at 2000/2024/2049) throws bad-geometry 'no determinable direction', while the auditor's DE440s pack answers the same instants. So the auditor's 'cannot compile a valid pack from any kernel other than DE440s' holds for shorter kernels too, via an opens-but-unusable mode rather than a refusal. Artifacts: verify/data-toolchain-packaging/{compile-de440.log,inspect-de440.txt,open-de440.txt,compile-de440-crop.log,inspect-de440-crop.txt,open-de440-crop.txt,compile-de432s.log,inspect-de432s.txt,open-de432s.txt,raw-probe.out,compare-de432s-vs-de440s.txt}. Severity major is earned: a capability gap that keeps coverage below Swiss's 1800–2400 and below the site's own 1800–2199 bounds.",
+      "correctedClaim": "As stated, plus: kernels SHORTER than 109,600 days also fail — the compiler extrapolates the kernel's last record past T1 (spkref clamps the index), the tail records blow the budgets (DE432s emb 52.6 km vs 0.3 km) without any compiler refusal, the pack passes integrity and geometry and opens, and every apparent() then fails with bad-geometry. Only a kernel whose span is exactly 109,600 days (DE440s) compiles into a usable pack.",
+      "correctedSeverity": "major",
+      "artifactPath": "<audit>/verify/data-toolchain-packaging/open-de440-crop.txt"
+    },
+    {
+      "id": "data-toolchain-packaging-2",
+      "verdict": "adjusted",
+      "reproductionRan": true,
+      "evidence": "Reproduced: copied examples/precision-alpha to scratch, placed D.zeph at tools/compiler/packs/, `npm pack --dry-run --json` → entryCount 87, tools/compiler/packs/D.zeph (1,737,632 B) listed (npm-pack-result.txt, npm-pack-dryrun.json). package.json files includes 'tools/compiler/' wholesale; no .npmignore; no .gitignore rule for *.zeph. The unconditional mkdirSync at compile.mjs:562 is also confirmed by execution: I deleted packs/ and it was recreated (22:28) by a compile that passed an explicit --out elsewhere. Two facts the auditor omitted lower the severity: (1) package.json:4 is `private: true`, so `npm publish` refuses — only a hand-shared `npm pack` tarball can carry the pack; (2) the documented compile command (examples/00-prepare-a-pack.md:18-19) already passes `--out=./D.zeph`, so the auditor's 'runs the documented compile without --out' misdescribes the docs — the hazard needs a developer to deviate from them. The defect (files glob + default --out inside the package + unconditional mkdir + no ignore rule) is real but small.",
+      "correctedClaim": "package.json `files` ships tools/compiler/ wholesale with no *.zeph exclusion and compile.mjs defaults --out to tools/compiler/packs/ and unconditionally creates that directory even with an explicit --out; a pack left there is included by `npm pack` (87 files, D.zeph included). Mitigations the auditor did not weigh: the package is private:true (npm publish refuses) and the documented command already uses --out=./D.zeph, so the exposure is a hand-shared tarball after deviating from the docs.",
+      "correctedSeverity": "minor",
+      "artifactPath": "<audit>/verify/data-toolchain-packaging/npm-pack-result.txt"
+    },
+    {
+      "id": "data-toolchain-packaging-3",
+      "verdict": "adjusted",
+      "reproductionRan": true,
+      "evidence": "Re-grepped the 16,187-byte header of the auditor's D.zeph (header-grep.out). Absent, as claimed: 'producer', 'institution', 'Park', 'DOI', '10.3847', 'attribution', 'NIO2SPK', 'Folkner'. But the auditor's greps for 'Zodiacs' (capitalised) and 'DE440 ' (trailing space) were false negatives: the header contains compiler.name 'zodiacs precision compiler', input {file:'de440s.bsp', sha256:c1c7feea...}, conventions.frame '(DE440s segment frame id 1)', and dependencies[0] {what:'JPL DE440s SPK kernel', role:'the only source of position data', licence:'...Produced by Caltech/JPL under contract to NASA; NAIF grants permission...see RIGHTS.md'}. Against RIGHTS.md:139-142's five-part sentence, 'source kernel identity and hash', 'compiler version and settings', 'coverage', 'conventions' are all present, and 'the DE440 reference cited as the source of the underlying data' is met in the sense of naming the DE440s kernel (not the Park et al. paper); only 'the producer named as Zodiacs' has no dedicated field — and NAIF's rule (RIGHTS.md:34-37) asks for name AND institution of the last modifier, which the header lacks. So the RIGHTS.md sentence is partly overstated, not false as titled; the auditor's 'no DE440 citation' is wrong. Nothing is distributed, so the compliance consequence is conditional.",
+      "correctedClaim": "RIGHTS.md overstates one clause: the compiled header does record source kernel identity+sha256, compiler version/settings, coverage, conventions, and names 'JPL DE440s SPK kernel' (Caltech/JPL) as the only source of position data, but it has no explicit producer name-and-institution field (only 'zodiacs precision compiler' as compiler.name) and no literature citation for DE440; the NAIF modified-kernel attribution-replacement obligation is therefore not met by the header as it stands.",
+      "correctedSeverity": "minor",
+      "artifactPath": "<audit>/verify/data-toolchain-packaging/header-grep.out"
+    },
+    {
+      "id": "data-toolchain-packaging-4",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "evidence": "curl https://registry.npmjs.org/@zodiacs%2Fengine → HTTP 404 {\"error\":\"Not found\"} (npm-engine.json, 2026-09-22). examples/precision-alpha/package.json:4 private:true; NOTICE.md:34 '**No ephemeris data.** No JPL kernel, no compiled coefficient pack...'. esbuild 0.28.1 bundle+minify, gzip level 9 (the same method scripts/report-bundles.mjs:165 uses): src/browser.mjs 73,509 B min / 27,533 B gz (brotli 23,955); src/experimental.mjs 86,586 / 30,363; src/index.mjs 72,144 / 27,117 — the auditor's numbers reproduce byte-for-byte (bundle-size.txt). budgets.json engine-chunk = 25; report-bundles.mjs:214-221 enforces it on the static closure of the single full.*.js chunk; committed src/data/engine-bundle.json natal gzipKb 24.7. Caveat on the inference, not the facts: the 25 KB gate applies only to the eager engine closure; a lazily imported alpha chunk would face only chunk-max 60 KB, so 'the gate would refuse the runtime as it stands' holds if the alpha were folded into the full.*.js closure, which is the auditor's fix (c) anyway. Severity major earned: not installable, no data, against pip-installable Swiss with data.",
+      "correctedSeverity": "major",
+      "artifactPath": "<audit>/verify/data-toolchain-packaging/bundle-size.txt"
+    },
+    {
+      "id": "data-toolchain-packaging-5",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "evidence": "Read node_modules/@zodiacs/engine/dist/index.d.ts: exports positions(date: DateInput), natalChart, transits, synastry, moonPhase, saturnReturn, findLongitudeCrossings — positions() takes no options; types-BQGrRiSd.d.ts:44-56 BodyPosition = {body, lon, lat, speed, retrograde, sign, degree} (no distance, no lat/radial speed), HouseSystem = 'whole' | 'placidus' (:17), engineVersion only on Chart (:86). examples/precision-alpha/types/index.d.ts:33-63: ApparentPlace has lon/lat/distKm, light-time and nutation diagnostics, geometric triple; ReductionOptions has nutation/bias/aberration/deflection/timescale/observerVelocity — no frame, centre, sidereal or speed output (grep for speed/velocity/dlon in the .d.ts: none); PrecisionRuntime (:336-353) exposes apparent/apparentAtJdTt/search/searchGeometric with integrity on the runtime, not the result; ten bodies, BARYCENTRE_NOT_CENTRE = Mars..Pluto (ephemeris.mjs:254); raw()/seriesAt() are internal (ephemeris.mjs:101,163), not on the runtime. Swiss side tested live on pyswisseph 2.10.03 with <swisslab>/ephe (swe-probe.out): calc_ut(Mars, SWIEPH|SPEED) retflag 258 (SWIEPH answered, 6 values incl. 3 speeds); SWIEPH|SPEED|EQUATORIAL|XYZ|J2000 retflag 6498; Moon TOPOCTR after set_topo retflag 33026; Mars HELCTR retflag 1546; houses_ex accepts 24 system letters (ABCDEFGHIKLMNOPQRSTUVWXY); fixstar_ut, deltat_ex, set_tid_acc, set_sid_mode, calc_pctr, nod_aps_ut all present (fixstar needs sefstars.txt, absent locally). Severity major earned: a capability gap relative to Swiss's uniform calc surface.",
+      "correctedSeverity": "major",
+      "artifactPath": "<audit>/verify/data-toolchain-packaging/swe-probe.out"
+    }
+  ],
+  "unverified": [
+    "data-toolchain-packaging-6",
+    "data-toolchain-packaging-7",
+    "data-toolchain-packaging-8",
+    "data-toolchain-packaging-9",
+    "data-toolchain-packaging-10",
+    "data-toolchain-packaging-11",
+    "data-toolchain-packaging-12",
+    "data-toolchain-packaging-13",
+    "data-toolchain-packaging-14"
+  ],
+  "notes": "All work ran against a scratch copy of examples/precision-alpha under <audit>/verify/data-toolchain-packaging/alpha-copy; the read-only worktree at 39b7a127 stayed clean (git status empty before and after). Finding 1 was the one the auditor flagged as code-reading only; I executed it with real DE440 and DE432s kernels fetched from NAIF (2 HTTPS downloads, 0 Horizons requests). New fact surfaced while verifying it, worth carrying into the report as its own item: the compiler writes provenPosKm values that exceed the declared budgets without refusing (DE432s emb 52.6 km vs 0.3 km), and such a pack passes integrity+geometry and opens but cannot answer any apparent() call — an opens-but-unusable pack, which the container's validation does not catch. Also relevant to finding 9 (unverified here): the DE432s pack shows the container accepts header-declared bounds it never checks against the budgets. The 114 MB de440.bsp was deleted after use; its sha256 is in kernels.sha256; de432s.bsp (10.9 MB) and all compiled packs, logs and scripts remain under the verify directory. Swiss backend confirmed as SWIEPH (retflag bit 2 set) in every probe."
+}

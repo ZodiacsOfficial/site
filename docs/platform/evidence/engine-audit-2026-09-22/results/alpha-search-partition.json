@@ -1,0 +1,374 @@
+{
+  "area": "alpha-search-partition",
+  "summary": "The precision alpha's search layer is the one part of this stack that already exceeds Swiss Ephemeris in kind: typed completeness verdicts, whole-request budgets, cancellation-as-result, and a completeness proof for geometric longitude that survived every adversarial fixture I built. On 20 exact-polynomial fixtures (tangency, triple root, window-edge and record-boundary roots at offsets down to 1e-9 s, pairs at 10 s/1 s/1 ms, grazes to 0.01 s, three crossings in one record) run through validated-geometric and the retarded, aberrated and identity-frame of-date rungs, there were zero false 'proven' verdicts and zero roots outside a reported bracket; every failed proof came back as `unresolved`, and the 1-ms pair was found and bracketed by the geometric mode. Budget accounting is sound: evaluations are counted in one closure per operation, the partitioned path shares one allowance, and the F2 Moon partition reproduces the committed figures bit-for-bit (939,176 evaluations, 5.266 % boundary, widest span 42.19 s) on a pack whose payload digest 0a218764… matches the evidence pack. Three things matter most. First, the deflected rung's FAIL and the partition's PARTIAL are not structural: the cos(elongation) enclosure over a 60-s Moon cell is 2,893× the true variation (4.045e-2 vs 1.398e-5), and I traced ~50× of that to enclosing the geocentric vector as R.pos − O.pos with the Earth–Moon co-motion lost (split enclosure 103–319× true variation vs 2.2–6.8× for the merged single-series form the geometric mode already uses) and the rest to naive interval composition of e·d/|d|; a merged-weight plus centred-form enclosure would cut the Moon's boundary residue from 15.8 d to an estimated 0.04 d and should collapse the 47–831× deflected cost, because the same D = R − O enclosure drives every retarded rung's subdivision. Second, `acceptPartialPlan: true` is inert: the refusal message and types promise it will 'search the part it did classify', but the run inherits the plan's status and `runOn` then refuses every span (0 evaluations, 0 events, the whole 25-day admissible span in `notSearched`). Third, the capability set is narrow — longitude crossings only — while the machinery for proven stations (roots of the polynomial x·y′ − y·x′), proven aspects (a bilinear polynomial in two states), proven latitude crossings and proven elongation/separation thresholds (the partition already brackets elongation = 5° to 60 s) is essentially in hand; Swiss offers none of these with any completeness or error semantics and has no geocentric planetary crossing finder at all (pyswisseph 2.10.03 exposes only solcross, mooncross, helio_cross). Smaller defects: a dead `tauPadFactor` option, a partition cache key that omits every numerical constant whose change would move spans, endpoint-root ownership that fires only on exact zeros, unmerged unresolved lists (101,850 entries on the triple-root fixture), a compiler tool that treats `--help` as a full compile into the package tree from a machine-specific default kernel path, and 16–25 % of wall time spent in phases that charge zero evaluations.",
+  "findings": [
+    {
+      "id": "alpha-search-partition-1",
+      "severity": "major",
+      "title": "acceptPartialPlan is inert: an accepted partial plan searches nothing, contradicting the option's documented purpose",
+      "claim": "searchDeflectedOverPartition sets `status` to the plan's non-finished status before any subsearch (partitioned-search.mjs:281-284), and `runOn` (line 340) returns early for every span whenever `status !== 'finished'`. So with `acceptPartialPlan: true` no admissible or boundary span is ever searched, although the refusal text (partitioned-search.mjs:199: 'pass acceptPartialPlan: true to search the part it did classify') and types/experimental.d.ts:297-303 promise exactly that.",
+      "evidence": "Synthetic pack (examples/synthetic-pack.mjs), Mars, target 95°, window [-38 d, +38 d]. Full plan: finished, 1,816 evaluations, 1 admissible span; full search finds 1 event. Plan starved to 605 evaluations: budget-exhausted, 1 admissible span of 2,160,000 s (25 d) plus 1 unprocessed. Search over it with acceptPartialPlan:true and maxEvaluations 4,000,000: status 'budget-exhausted', reason 'the supplied plan stopped with budget-exhausted…', events 0, searchEvaluations 0, spanResults 0, notSearchedSec 2,160,000, exhaustiveOverAdmissible false. Artifact: <audit>/alpha-search-partition/partition/accept-partial.json (script accept-partial.mjs beside it, 0.3 s). README.md:251 is more careful ('the run then reports finished: false') but still implies the classified part is answered.",
+      "reproduction": "node <audit>/alpha-search-partition/partition/accept-partial.mjs",
+      "impact": "The one mechanism for amortising a partition across processes or budgets does not work, so the 'plan once, query many' story (PARTITION-RESULTS 'Cold against repeated') holds only for finished native plans in one heap. The result is internally honest (mayHoldUnfoundSupportedEvents true, notSearched listed), so no wrong answer is returned; the documented capability simply does not exist.",
+      "fix": "Separate the two axes in searchDeflectedOverPartition: keep a `stopped` flag that only subsearch outcomes and the shared budget set, let `runOn` gate on that, and fold the inherited plan status into the final `execution.status/finished` after the subsearches. Add a tier-a test asserting spanResults.length === plan.admissible.length + plan.boundary.length for an accepted partial plan with ample budget, and that events found in the classified part match the full plan's events there.",
+      "effortDays": 0.5,
+      "files": [
+        "examples/precision-alpha/src/core/partitioned-search.mjs",
+        "examples/precision-alpha/types/experimental.d.ts",
+        "examples/precision-alpha/README.md"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-2",
+      "severity": "major",
+      "title": "The Moon's partition failures (P-3, P-4) are an enclosure-construction defect, not the geometry: cos(elongation) is enclosed 2,900x too wide",
+      "claim": "PARTITION-RESULTS.md:105-123 attributes the 5.266 % Moon boundary to the mean-value enclosure 'scaling with the cell width' and calls it 'the honest verdict at the declared tolerance'. Measured, the enclosure's width ratio to the true variation is constant (~2,900x at 60 s, 600 s and 3,600 s), so shrinking cells cannot fix it; the looseness comes from (a) classifyCell enclosing the geocentric vector as R.pos − O.pos with the observer and target enclosed separately (domain-partition.mjs:315-329), which discards the Earth–Moon co-motion (the geometric mode's contributions() merges those weights and does not pay this), and (b) naive interval composition of −(e·d)/|d| in elongationCosInterval (deflection.mjs:178-180) where d appears in numerator and denominator and each dot-product term is enclosed independently.",
+      "evidence": "Real DE440s pack (payload sha256 0a218764…, identical to the evidence pack), F2 Moon window, floor crossing at 1977-10-12T11:28:05Z (9.03 h before the 0.38° conjunction). 60-s cell straddling the crossing, tight light-time interval ±0.02 s: enclosure width 4.045e-2 in cos, true variation 1.398e-5, ratio 2,893x; at ±6 h offsets ratios 1,704x–8,859x; every one of 24 cells (offsets −6 h…+18 h, two light-time widths) classifies 'boundary' although 20 are truly admissible or truly excluded with margins up to 6.7e-3. Geocentric vector over the same 60-s cell: split R.pos−O.pos width 5,852/5,997/2,588 km vs true variation 18.3/58.3/18.9 km (319x/103x/137x); merged single-series enclosure 124.5/126.3/42.4 km (6.8x/2.2x/2.3x). A centred form (value at midpoint + derivative bound × half-width) with a 3x-loose derivative would be ~4.2e-5 wide → undecidable residue ≈ ±180 s per crossing → ~0.04 d for 20 crossings (0.014 % of 300 d) against the measured 15.8 d (5.266 %). Reproduced the committed partition exactly: 939,176 evaluations, 158,121 cells, 10 boundary spans, 5.266 %, widest 42.19 s, 14.8 s wall. Artifacts: …/audit/alpha-search-partition/partition/enclosure-width.json, moon-relative-state.json, phase-share.json (scripts beside them; 1.4 s, 2 s, 20 s).",
+      "reproduction": "node partition/enclosure-width.mjs; node partition/moon-relative-state.mjs; node partition/phase-share.mjs (all under <audit>/alpha-search-partition/, pack at pack/D.v2.zeph)",
+      "impact": "This is the mechanism behind both preregistered failures and behind the deflected rung's 47–831x cost and the Moon's 4,000,001-evaluation exhaustion (DEFLECTION-RESULTS): retardedCell builds the same split D = R.pos − O.pos (retarded-search.mjs:411) and its M1/M2 from it, so every retarded rung over-subdivides the Moon by roughly the same factor. Fixing it is the single largest lever toward making 'proven for apparent longitude of date' practical.",
+      "fix": "(1) Enclose the geocentric vector from MERGED weights: d(t) = [T(t) − O(t)] + [T(t−τ) − T(t)], where the first term uses one combined weight map (for the Moon a single series with weight 1+1/EMRAT, as validated-search.contributions does) and the second is a mean-value term −v_T·[τ.lo, τ.hi] ± ½·a_T·τ.hi² from the existing velocity/acceleration bounds. (2) Replace the naive cos(elongation) enclosure by a centred form: cos at the cell midpoint (point enclosure) plus an interval bound on d(cos)/dt from the velocity enclosures times the half-width; keep the naive form as a cross-check and take the intersection. (3) Apply (1) to retardedCell as well and re-run the cost baseline and the P-1…P-7 evaluation. Expected: P-3 and P-4 pass by orders of magnitude; Moon deflected search finishes well inside budget.",
+      "effortDays": 4,
+      "files": [
+        "examples/precision-alpha/src/core/domain-partition.mjs",
+        "examples/precision-alpha/src/core/deflection.mjs",
+        "examples/precision-alpha/src/core/retarded-search.mjs",
+        "examples/precision-alpha/src/core/retarded.mjs",
+        "examples/precision-alpha/PARTITION-RESULTS.md"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-3",
+      "severity": "major",
+      "title": "Only longitude crossings exist; stations, aspects, latitude/declination/elongation events and eclipses are absent although the proof machinery covers them",
+      "claim": "SEARCH_CONTRACT.notSupported (search.mjs:82-86) lists stations, latitude/declination/distance/elongation events and rise/set as unsupported, and no eclipse or occultation operation exists. For the geometric quantity each of the first four is a root problem of an explicit polynomial in the stored coefficients, so the validated mode's exclusion/monotone proof applies unchanged: stations are roots of N(t) = x·y′ − y·x′ (numerator of dλ/dt); an aspect θ between bodies 1 and 2 is a root of (x1·y2 − y1·x2)·cosθ − (x1·x2 + y1·y2)·sinθ (degree 2n−2); ecliptic latitude crossings are roots of z_ecl(t); an elongation/separation threshold is what the partition already brackets (boundary spans enclose elongation = 5° to 60 s).",
+      "evidence": "Code reading: validated-search.mjs:166-225 builds f, g and their sum|c_k| bounds for one linear combination of series; the same seriesBounds/derivative machinery (cheb.mjs:45-119) yields bounds for products via the Chebyshev product rule or by re-fitting the product on the piece. Swiss inventory: pyswisseph 2.10.03 dir() shows solcross, mooncross, mooncross_node, helio_cross, rise_trans, sol_eclipse_when_glob/loc, lun_eclipse_when, lun_occult_when_glob/loc — and no station finder, no aspect finder, no geocentric planetary crossing finder, none with completeness or error semantics.",
+      "reproduction": "grep -n notSupported examples/precision-alpha/src/core/search.mjs; <swisslab>/venv/bin/python -c 'import swisseph as s; print([n for n in dir(s) if \"cross\" in n or \"eclipse\" in n or \"occult\" in n or \"rise\" in n])'",
+      "impact": "Against the goal, the alpha currently beats Swiss on one operation (proven longitude crossings) and is absent on the operations astrologers and almanacs use most (stations, aspects, node/latitude crossings, eclipses). The polynomial route gives proven-complete versions of stations, aspects and latitude crossings for the geometric quantity at roughly the cost of the existing mode; elongation/separation events fall out of the partition machinery; eclipse detection is a separation threshold against apparent radii (contact times and local circumstances additionally need a topocentric observer).",
+      "fix": "Add to validated-search.mjs a generic 'piece polynomial from a product/combination of two state series' builder (product Chebyshev coefficients on the common refinement, exact up to rounding, with sum|c_k| bounds) and three operations on it: searchGeometricStation (roots of x·y′ − y·x′ with a sign/derivative test for direct→retrograde), searchGeometricAspect (two bodies, angle θ), searchGeometricLatitude (roots of z_ecl, half-plane by sign of ż). Generalise partitionDomain's floor to `separationThresholdEvents(body, other, angle)` and expose its boundary spans as bracketed events. Eclipses: separation < (apparent radii sum) over an enclosure, then contact bisection. Then lift each to the retarded/aberrated/of-date rungs via the existing interval chain.",
+      "effortDays": 12,
+      "files": [
+        "examples/precision-alpha/src/core/validated-search.mjs",
+        "examples/precision-alpha/src/core/cheb.mjs",
+        "examples/precision-alpha/src/core/domain-partition.mjs",
+        "examples/precision-alpha/src/core/search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-4",
+      "severity": "minor",
+      "title": "Record-wide Lipschitz constants make a double root of f′ catastrophic: 794,201 evaluations and 101,850 unmerged unresolved slivers (geometric), 4,000,001 and zero events (retarded rungs)",
+      "claim": "searchPiece uses M1 = max|f′| and M2 = max|f″| over the WHOLE record (validated-search.mjs:181-190, 256) for every sub-cell, so where f and f′ both vanish (a triple root, or a station lying on the target level) the undecided band shrinks only as w^{1/3} (exclusion) and √w (monotone) rather than with w; the run bisects to the 1e-4 s floor across ±4 s and emits one unresolved entry per floor cell without merging (line 466). The retarded rungs, with the same global bounds plus ~20 evaluations per cell, exhaust the 4,000,000 budget and return nothing.",
+      "evidence": "Fixture 'triple-root' (p(t) = (t−r0)³/3600², observer at rest, X0 = 1e8 km): geometric → found 0, established false, 101,850 unresolved entries, 794,201 evaluations; retarded/aberrated/of-date(identity) → status budget-exhausted, 4,000,001 evaluations, found 0. Contrast 'tangency' (double root of f, simple root of f′): 186 evaluations, 11 unresolved. Artifact: …/audit/alpha-search-partition/fixtures/results.json (run.mjs, 172 s total for 20 fixtures × 6 rungs).",
+      "reproduction": "node <audit>/alpha-search-partition/fixtures/run.mjs (see the triple-root row)",
+      "impact": "An exact triple root does not occur in nature, but a station within ~1e-3° of the target level produces the same regime for the cells near it; the A2 Uranus contract case ('two passes near a station') already shows brackets of 5,495 s in the empirical mode. Cost near stations is what a station finder (finding 3) would meet head-on.",
+      "fix": "Compute local derivative bounds per cell: either re-expand the derivative series on the sub-interval (Chebyshev economisation / Clenshaw-Curtis on [lo,hi]) or evaluate the derivative series by interval arithmetic over the cell; both make M1, M2 shrink with w so the undecided band is O(rounding). Merge adjacent unresolved spans as retarded-search.mergeSpans does. Add a fixture with f′ double root to tier-a asserting a bounded unresolved count.",
+      "effortDays": 1.5,
+      "files": [
+        "examples/precision-alpha/src/core/validated-search.mjs",
+        "examples/precision-alpha/src/core/cheb.mjs",
+        "examples/precision-alpha/src/core/retarded-search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-5",
+      "severity": "minor",
+      "title": "partitionKey omits every numerical constant whose change would move spans, so an imported plan from a different build passes the key check",
+      "claim": "partitionKey (domain-partition.mjs:143-162) hashes contract id, profile id, pack digest, pack structure, observer, body, window, boundaryToleranceSec, relightWidthRatio, maxTauWidenings and tauPadFloorSec. Not included, although each changes the classification: MIN_ELONGATION_RAD and the two guard constants (deflection.mjs:111-150, covered only by the profile-id string), PAD (interval.mjs:18), clenshawRoundoff's 4n²u (cheb.mjs:87-90), C_KM_S, the solveTau contraction tolerance 0.5 (domain-partition.mjs:414), the crude emission window pad 1.2·half+1 (line 419), the widening factor 0.25 (line 465), the free light-time tightening rule (lines 359-364), the record-boundary seeding rule, the trig ABS_ERR, and the package version. The partitioned path refuses non-native plans by default, so this matters only under acceptImportedPlan, which is the documented cross-process path.",
+      "evidence": "Key emitted by the F2 Moon partition: 'zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d21783461f…|907402c97fbb91ef|0,0,0,0,0,0|Moon|tdb|-711201535.816|-685281535.816|60|8|6|0.000001' (phase-share.json). Reviewer B's finding 2 (review/REVIEW.md) already moved the budget question out of the key; nothing there covers algorithm identity.",
+      "reproduction": "grep -n 'partitionKey' -A 20 examples/precision-alpha/src/core/domain-partition.mjs; compare with the constants at the lines cited",
+      "impact": "A cache of serialized plans accepted with acceptImportedPlan would silently keep proofs computed under a previous build's constants; the result already labels such runs CONDITIONAL, so this is a hygiene gap rather than an unsound verdict.",
+      "fix": "Add a `numericsPolicy` object collecting every constant named above plus package.json version, hash it (the existing FNV fingerprint is fine), and include the hash as a key component; expose it in plan.request.identity so a consumer's cache can key on it.",
+      "effortDays": 0.5,
+      "files": [
+        "examples/precision-alpha/src/core/domain-partition.mjs",
+        "examples/precision-alpha/src/core/partitioned-search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-6",
+      "severity": "minor",
+      "title": "tauPadFactor is a dead option: accepted, validated, typed and documented, never read",
+      "claim": "RETARDED_DEFAULTS.tauPadFactor = 64 (retarded-search.mjs:229) is validated as positive (line 765) and declared in types/experimental.d.ts:36 with the description 'first half-width of the candidate light-time interval, as a multiple of the solver's own error bound', but no code reads it; retardedCell derives T from tauSlope·half + errorSec + tauPadFloorSec (lines 379-383).",
+      "evidence": "grep -rn tauPadFactor examples/precision-alpha/src → exactly one hit (the default). Passing tauPadFactor: 1e-9 or 1e9 changes nothing.",
+      "reproduction": "grep -rn tauPadFactor examples/precision-alpha/src examples/precision-alpha/types",
+      "impact": "A consumer tuning it gets no effect and no refusal; the type docs describe a behaviour that does not exist.",
+      "fix": "Remove the option from RETARDED_DEFAULTS and the .d.ts (an unknown key is then refused, which is the existing contract), or implement it as the multiplier on rough.errorSec.",
+      "effortDays": 0.1,
+      "files": [
+        "examples/precision-alpha/src/core/retarded-search.mjs",
+        "examples/precision-alpha/types/experimental.d.ts"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-7",
+      "severity": "minor",
+      "title": "Endpoint-root ownership fires only on exact zeros, so window-edge and record-boundary roots cost the proven claim in every rung",
+      "claim": "validated-search.mjs:297-299 reports an 'endpoint' root only when the fitted polynomial evaluates to exactly 0 at the cell edge; on fitted data the value is a few ulps, |f| ≤ RHO, and lines 323/362 file the cell as unresolved. The retarded rungs have no ownership rule at all: an endpoint enclosure straddling zero is filed unresolved (retarded-search.mjs:1062-1066). EVALUATION-RESULTS.md:183 records that the plan's boundary convention C2 'never triggered', so this path was untested on real data.",
+      "evidence": "Fixtures (results.json, results-edges-retarded.json): geometric left-edge root → found 0, unresolved 1, 6 evaluations; geometric root within |δ| ≤ 1e-8 s of a record boundary → found 1, established false; retarded reception root at either window edge → found 0, unresolved 1; retarded reception root within 1e-6 s of a record boundary → found 0, unresolved 1, while at 1e-5 s → found 1, proven. No wrong answer in any case.",
+      "reproduction": "node <audit>/alpha-search-partition/fixtures/run-edges-retarded.mjs",
+      "impact": "Negligible probability per root on real data (~1e-11 to 1e-13), but it means splitting a window at an instant that happens to be a root turns two proven halves into two unresolved ones, and the 'endpoint' event kind is effectively unreachable on packs.",
+      "fix": "When a cell is proven monotone and one endpoint value lies within RHO (or its enclosure straddles zero), report an 'endpoint' event with bracket [edge − reach, edge + reach], reach = RHO/slopeFloor (or the enclosure half-width divided by mig(F′)), owned by the [lo, hi) convention, and keep `established`: monotonicity already proves at most one root in the cell and locates it within reach of the edge. Add the edge fixtures above to tier-a.",
+      "effortDays": 0.75,
+      "files": [
+        "examples/precision-alpha/src/core/validated-search.mjs",
+        "examples/precision-alpha/src/core/retarded-search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-8",
+      "severity": "minor",
+      "title": "The of-date and deflected rungs' projection weights enter as point values whose declared 4e-15 error is not carried into the enclosure",
+      "claim": "retarded-search.mjs:583-585 takes wL = sinCos(L) and forms dF = [wL.s, −wL.c, 0]; proj (line 504) multiplies interval components by these plain numbers via I.scale, which widens by PAD = 8·u ≈ 8.9e-16 relative (interval.mjs:18-23). trig.mjs declares an absolute error bound of 4e-15 on sinCos (OF_DATE_CONTRACT.evaluation cites it as the reason Math.sin is not used), which exceeds PAD by ~4.5x for |s| near 1; the enclosure is therefore covered only by the MEASURED worst error (1.484e-16, trig.nodetest) and not by the declared bound the contract rests on. Unconfirmed as a counterexample: no root can be moved by it at any realistic margin (≤ 4e-15·|Q| ≈ 4e-7 km ≈ 1e-8 s).",
+      "evidence": "Code reading of retarded-search.mjs:504, 583-585; interval.mjs:18-23; trig.mjs header; OF_DATE_CONTRACT.evaluation string (retarded-search.mjs:139).",
+      "reproduction": "sed -n 500,506p and 580,600p examples/precision-alpha/src/core/retarded-search.mjs; sed -n 15,25p examples/precision-alpha/src/core/interval.mjs",
+      "impact": "Proof hygiene only: the 'no unspecified host function enters this mode' claim is true, but the chain is sound by measurement rather than by the stated analysis.",
+      "fix": "Use I.around(wL.s, ABS_ERR) and I.around(wL.c, ABS_ERR) (or sinCosInterval at a point) for the projection weights so the declared bound travels with the value.",
+      "effortDays": 0.1,
+      "files": [
+        "examples/precision-alpha/src/core/retarded-search.mjs",
+        "examples/precision-alpha/src/core/trig.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-9",
+      "severity": "minor",
+      "title": "zodiacs-partitioned-search/1 has no invariant gate: a self-inconsistent result is reported, not refused",
+      "claim": "buildResult enforces eight invariants for zodiacs-precision-search/2 (result.mjs:83-158) but searchDeflectedOverPartition assembles its object by hand (partitioned-search.mjs:546-708) with no equivalent check: coversRequestExactly is computed and returned even when false (lines 650-652); nothing asserts isExactTotalOverRequest ⇒ exhaustiveOverAdmissible ⇒ every admissible span in spanResults is finished and established, that eventCount.found === events.length, that no 'established' event lies outside plan.admissible, or that eligibilityEstablished + eligibilityAmbiguous === found.",
+      "evidence": "Code reading; the fields are set from the same local variables today, so they agree by construction, which is exactly the situation result.mjs's header says a gate exists to protect.",
+      "reproduction": "grep -n 'coversRequestExactly\\|isExactTotalOverRequest\\|eligibilityEstablished' examples/precision-alpha/src/core/partitioned-search.mjs",
+      "impact": "A future edit can ship a contradictory partitioned result silently; the released contract cannot.",
+      "fix": "Add buildPartitionedResult() with the invariants above (throwing 'unsupported-option' like buildResult), route the one return through it, and pin it with the same style of test result.mjs has.",
+      "effortDays": 0.5,
+      "files": [
+        "examples/precision-alpha/src/core/partitioned-search.mjs",
+        "examples/precision-alpha/src/core/result.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-10",
+      "severity": "minor",
+      "title": "compile.mjs treats --help as a full compile into the package tree from a machine-specific default kernel path",
+      "claim": "tools/compiler/compile.mjs has no --help handling (argOf at lines 47-50 ignores unknown flags), defaults `--kernel` to the absolute path <swisslab>/de440s.bsp (line 342) and `--out` to tools/compiler/packs/<candidate>.zeph inside the vendored package (line 343). Running `node tools/compiler/compile.mjs --help` therefore compiled a 1.7 MB pack from that kernel into the worktree.",
+      "evidence": "Observed during this audit: the command emitted {candidate: 'D', out: '…/examples/precision-alpha/tools/compiler/packs/D.zeph', bytes: 1737632} in under 60 s and left an untracked directory; moved to …/audit/alpha-search-partition/pack/ and the tree re-verified clean (git status empty). The vendored SOURCE.md describes the tool as 'a tested route from their own kernel to a local pack' with no mention of the default path.",
+      "reproduction": "node examples/precision-alpha/tools/compiler/compile.mjs --help  (then remove tools/compiler/packs/)",
+      "impact": "A consumer following SOURCE.md gets a surprising write into node_modules or the repo, and CI drift checks on the vendored tree could trip; harmless to correctness.",
+      "fix": "Add --help/-h handling, refuse unknown flags, require --kernel explicitly (no absolute default), default --out to the current working directory, and add tools/compiler/packs/ to .gitignore.",
+      "effortDays": 0.25,
+      "files": [
+        "examples/precision-alpha/tools/compiler/compile.mjs",
+        "examples/precision-alpha/tools/compiler/SOURCE.md",
+        "examples/precision-alpha/.gitignore"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-11",
+      "severity": "note",
+      "title": "Evaluations undercount wall time by 16–25 %: frame, aberration and deflection phases charge zero evaluations",
+      "claim": "The budget currency counts one unit per stored-series record evaluation (retarded.mjs:129 and 183 via spend), which is sound and counted in exactly one closure per operation (validated-search.mjs:394-398; retarded-search.mjs:798-805; domain-partition.mjs:644-649; partitioned-search sums the two). The frame rotation, aberration and deflection arithmetic run outside any spend and cost real time, so evaluation-based ratios (P-4, P-5, the 47–831x) are not wall ratios.",
+      "evidence": "Instrument sink on the real pack: Saturn F7 window, 63,945 evaluations, 3,978 cells, 886 ms wall; zero-evaluation phases frame 168.5 ms + deflection 32.8 ms + aberration 7.8 ms = 209.1 ms = 25.0 % of attributed time (23.6 % of wall). Mars F5: 285,731 evaluations, 3,934 ms; zero-evaluation phases 614.6 ms = 16.3 % of attributed. domain-test itself 3.8 ms / 4.8 ms (negligible, as PARTITION-EVALUATION claims). Artifact: …/audit/alpha-search-partition/partition/phase-share.json.",
+      "reproduction": "node <audit>/alpha-search-partition/partition/phase-share.mjs",
+      "impact": "None on soundness; the preregistered cost targets are honestly stated in evaluations and the wall figures are labelled secondary. Worth knowing when the fix in finding 2 shifts the balance toward frame cost.",
+      "fix": "Report `execution.wallMs` and the zero-evaluation share alongside evaluations when a sink is installed, or charge a fixed 'frame unit' per frame call so the currency approximates wall.",
+      "effortDays": 0.25,
+      "files": [
+        "examples/precision-alpha/src/core/instrument.mjs",
+        "examples/precision-alpha/src/core/retarded-search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-12",
+      "severity": "note",
+      "title": "Bracket claim near a noise-level endpoint is technically a tolerance, not a containment (unconfirmed)",
+      "claim": "In the different-sign branch of searchPiece (validated-search.mjs:302-348) an endpoint whose |value| ≤ RHO is trusted for its sign, and the bisection clips the bracket to [lo, hi] (lines 344-345). If rounding flipped that sign the true root would lie up to RHO/slopeFloor outside the reported bracket, contradicting the comment 'the bracket is real, not a tolerance'. The same-sign branch already declines such cells (line 323). Unconfirmed: constructing a sign flip inside the rounding allowance is not controllable, and the realised Clenshaw error is far below RHO, so no reproduction exists; the bound on the discrepancy is RHO/slopeFloor ≈ 1e-8 s on the fixtures.",
+      "evidence": "Code reading; fixtures at record-edge offsets 0, ±1e-9, ±1e-8 s all came back unresolved rather than mis-bracketed (results.json), consistent with the same-sign guard catching them.",
+      "reproduction": "Not reproducible by construction; see the code lines cited.",
+      "impact": "Negligible numerically; matters only for the wording of the theorem.",
+      "fix": "When |flo| ≤ RHO or |fhi| ≤ RHO in the different-sign branch, widen the final bracket by reach = RHO/slopeFloor toward that endpoint (into the neighbouring cell), or state the bracket as 'root within reach of this bracket'.",
+      "effortDays": 0.2,
+      "files": [
+        "examples/precision-alpha/src/core/validated-search.mjs"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-13",
+      "severity": "note",
+      "title": "Chart-adapter contract omissions: nutation model versus frame, nodes, coverage window, houses",
+      "claim": "CHART-ADAPTER-CONTRACT.md is careful and largely right, but (a) §1 says the of-date frame is 'the same frame' as production's Rotation_EQJ_ECT and 'the one place the two stacks already agree' — it is the same frame DEFINITION with a different nutation MODEL (astronomy-engine keeps 5 of the 77 IAU 2000B terms; the alpha uses all 77 + P03), so a longitude comparison will see a model difference the contract does not budget; (b) §2.3 says to refuse the nodes, but a chart cannot refuse two of its twelve bodies and the pack's Moon state gives the true node by the same angular-momentum construction production uses; (c) the pack covers 1849–2150 while production has no such limit and the contract names no out-of-coverage policy; (d) houses and angles need GAST/obliquity of date from the same nutation model as the longitudes, and the alpha exposes no such API; (e) the proposed pointwise DeflectedPlace carries no error interval although the search layer's whole advantage is verified enclosures — a pointwise place with a proven interval would be the thing that exceeds Swiss.",
+      "evidence": "CHART-ADAPTER-CONTRACT.md:66-71, 165-179, 345-381; the task brief's description of astronomy-engine's nutation truncation; pack coverage from the compiled header (1849-12-25 … 2150-01-21).",
+      "reproduction": "Read the sections cited.",
+      "impact": "An integration built to this contract would attribute a nutation-model difference to implementation, would have no answer for nodes, and would fail outside 1849–2150.",
+      "fix": "Amend §1 to separate frame from model and quote the 5-term vs 77-term difference; specify node computation from the pack's Moon state (true node = direction of r × v of the geocentric Moon, with its own provenance field); add an explicit out-of-coverage fallback policy; add a GAST/obliquity-of-date requirement; define the pointwise place as value plus proven half-width.",
+      "effortDays": 1,
+      "files": [
+        "examples/precision-alpha/CHART-ADAPTER-CONTRACT.md"
+      ]
+    },
+    {
+      "id": "alpha-search-partition-14",
+      "severity": "note",
+      "title": "Empirical mode: request endpoints are silently rounded to whole milliseconds and reported as if requested",
+      "claim": "search.mjs:159-160 does a = Math.round(fromTtDays·MS_PER_DAY) and intervalOf reports requestedTtDays as a/MS_PER_DAY (line 460), so a caller's window is moved by up to 0.5 ms at each end without a note; a root in that sliver is neither reported nor listed as unprocessed. The validated and experimental modes work in real seconds and do not have this.",
+      "evidence": "Code reading; the empirical mode's brackets are ≥ 1 ms and its completeness is conditional anyway, so no proven claim is affected.",
+      "reproduction": "sed -n 155,162p and 457,468p examples/precision-alpha/src/core/search.mjs",
+      "impact": "Cosmetic; mention here because the plan's C1 partition invariant compares windows that could differ by this rounding.",
+      "fix": "Report the caller's original TT days in interval.requestedTtDays and the rounded ms grid separately, or refuse non-integer-ms endpoints with a note.",
+      "effortDays": 0.1,
+      "files": [
+        "examples/precision-alpha/src/core/search.mjs"
+      ]
+    }
+  ],
+  "measurements": [
+    {
+      "name": "Tier-a suite baseline",
+      "method": "cd examples/precision-alpha && npm test (node --test test/tier-a/*.nodetest.mjs), read-only",
+      "result": "423 pass, 0 fail, 22.7 s",
+      "computeMinutes": 0.4
+    },
+    {
+      "name": "Real DE440s pack compiled and sealed for tier-b and real-case runs",
+      "method": "node tools/compiler/compile.mjs (default kernel <swisslab>/de440s.bsp, candidate D), then node tools/seal.mjs; output moved out of the worktree; git status verified empty",
+      "result": "D.v2.zeph 1,737,664 bytes; payload sha256 0a2187642704459a… identical to the evidence pack named in DEFLECTION-EVALUATION.md §8; container digest d21783461f…; coverage 1849-12-25 … 2150-01-21",
+      "artifactPath": "<audit>/alpha-search-partition/pack/D.v2.zeph",
+      "computeMinutes": 1
+    },
+    {
+      "name": "Tier-b real-pack and deflection-families tests on the compiled pack",
+      "method": "PRECISION_PACK=…/pack/D.v2.zeph PRECISION_KERNEL=<swisslab>/de440s.bsp node --test test/tier-b/real-pack.nodetest.mjs test/tier-b/deflection-families.nodetest.mjs",
+      "result": "12 pass, 0 fail (T9 stationary point, T12 reference vs reducer, 2024 equinox and thirteen new moons found, validated mode proves completeness on the real pack), 0.7 s",
+      "artifactPath": "<audit>/alpha-search-partition/tierb/real-pack-and-deflection-families.log",
+      "computeMinutes": 0.1
+    },
+    {
+      "name": "Adversarial fixture matrix: 20 exact-polynomial cases × validated-geometric, retarded, aberrated, identity-frame of-date (known roots) + real-frame of-date and deflected (count only)",
+      "method": "Own pack per case via test/tier-a/_geometry.packOf (observer at rest, target [1e8 km, p(t)]), so f = −p(t) exactly; retarded roots = r + 1e8/c; matching tolerance 1e-2 s and bracket containment checked",
+      "result": "0 WRONG-PROVEN in 80 known-root mode-cases: every 'established: true' had the exact count and every matched root inside its bracket. tangency → unresolved in all rungs; triple root → geometric 794,201 evaluations / 101,850 unresolved / not established, retarded rungs budget-exhausted at 4,000,001; pair 10 s → 2 found proven everywhere; pair 1 s → geometric 2 found (unproven, 1 open cell), retarded 1 found + 1 unresolved span containing the other root; pair 1 ms → geometric found both (brackets 4.0e-3 s and 2.1e-2 s wide, 9 open cells), retarded 0 found + unresolved; grazes 10 s → proven empty, 0.1 s and 0.01 s → unresolved; three crossings in one record → 3 found proven in all rungs; record-boundary roots |δ| ≤ 1e-8 s → geometric found 1 but not established, |δ| ≥ 1e-7 s → proven; left-edge root → geometric unresolved, right-edge → geometric proven endpoint",
+      "artifactPath": "<audit>/alpha-search-partition/fixtures/results.json",
+      "computeMinutes": 2.9
+    },
+    {
+      "name": "Retarded-rung window-edge and record-boundary reception roots",
+      "method": "Same fixtures with the emission root placed so the reception root (r + X0/c) lands exactly on the window edge or within δ of the 3-day record boundary; brackets and unresolved spans printed",
+      "result": "Reception root exactly at from or to → found 0, unresolved 1, not established (retarded and aberrated); 1 s inside either edge → found 1 proven. Record boundary: δ ∈ {0, ±1e-9, ±1e-7, 1e-6} → found 0, unresolved 1; δ ≥ 1e-5 → found 1 proven. pair-1s retarded: event bracket [264534.082, 264534.741] contains root 2, unresolved span [264532.76, 264533.92] contains root 1",
+      "artifactPath": "<audit>/alpha-search-partition/fixtures/results-edges-retarded.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "acceptPartialPlan behaviour",
+      "method": "Synthetic pack; plan starved to one third of the full plan's evaluations; searchRetardedAberratedDeflectedOfDateOverPlan with acceptPartialPlan:true and a 4,000,000 budget",
+      "result": "Full plan finished (1,816 evaluations) and its search finds 1 event; partial plan (605 evaluations) left a 2,160,000-s admissible span; accepted partial search: 0 subsearches, 0 search evaluations, 0 events, notSearchedSec 2,160,000, status budget-exhausted inherited from the plan",
+      "artifactPath": "<audit>/alpha-search-partition/partition/accept-partial.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Partition cos(elongation) enclosure width vs true variation at the F2 Moon floor crossing",
+      "method": "Real pack; floor crossing located at 1977-10-12T11:28:05Z; 60-s cells at offsets −6 h…+18 h; enclosure rebuilt exactly as classifyCell (stateEnclosure × 3, elongationCosInterval) with tight (±0.02 s) and seed-like (±2 s) light-time intervals; true variation from 121 pointwise samples with solveTau; centred-form width estimated as max|dcos/dt| × cell width",
+      "result": "At the crossing: enclosure width 4.045e-2 vs true 1.398e-5 (2,893x); ratios 1,704x–8,859x across all 24 cells; all 24 classify 'boundary' though 20 are truly decidable with margins to 6.7e-3. Ratio independent of light-time width (2,893x vs 2,971x). dcos/dt = 2.33e-7 /s → naive undecidable residue ≈ ±1.7e5 s per crossing; centred form with 3x-loose derivative ≈ ±180 s → ~0.04 d for 20 crossings (0.014 %) against 15.8 d (5.266 %) measured",
+      "artifactPath": "<audit>/alpha-search-partition/partition/enclosure-width.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Geocentric Moon vector: split R.pos − O.pos enclosure vs merged single-series enclosure vs true variation",
+      "method": "Same cell family at 60, 600, 3,600 s; split as retardedCell/classifyCell build it; merged with weights {moon: 1+1/EMRAT} as validated-search.contributions collapses to",
+      "result": "60-s cell: split width 5,852/5,997/2,588 km, merged 124.5/126.3/42.4 km, true 18.3/58.3/18.9 km → split/true 319x/103x/137x, merged/true 6.8x/2.2x/2.3x; ratios identical at 600 s and 3,600 s (linear in width)",
+      "artifactPath": "<audit>/alpha-search-partition/partition/moon-relative-state.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Zero-evaluation phase share of deflected-search wall time, and F2 Moon partition reproduction",
+      "method": "Instrument sink (process.hrtime.bigint) on the real pack: Saturn F7 (1989-10 window) and Mars F5 (1984-11 window) searchRetardedAberratedDeflectedOfDate with the of-date longitude at the midpoint as target; then planDeflectedDomain for the Moon F2 window (1977-06-19 + 300 d) with packDigest",
+      "result": "Saturn: 63,945 evaluations, 3,978 cells, 886 ms; frame 168.5 + deflection 32.8 + aberration 7.8 ms = 25.0 % of attributed time, domain-test 3.8 ms. Mars: 285,731 evaluations, 3,934 ms; zero-evaluation phases 16.3 %. Moon partition: finished, 939,176 evaluations, 158,121 cells, 11 admissible, 0 excluded, 10 boundary spans = 5.266 %, widest 42.19 s, narrowest 31.64 s, 14.8 s wall — matching PARTITION-RESULTS.md (939,176; 5.266 %; 42.2 s)",
+      "artifactPath": "<audit>/alpha-search-partition/partition/phase-share.json",
+      "computeMinutes": 0.35
+    },
+    {
+      "name": "Swiss Ephemeris finder inventory",
+      "method": "<swisslab>/venv/bin/python: dir(swisseph) filtered for cross/eclipse/occult/rise/trans, docstrings read",
+      "result": "pyswisseph 2.10.03 exposes solcross(_ut), mooncross(_ut), mooncross_node(_ut), helio_cross(_ut), rise_trans, rise_trans_true_hor, sol_eclipse_when_glob/loc/how/where, lun_eclipse_when/when_loc/how, lun_occult_when_glob/loc/where, heliacal_*; no geocentric planetary longitude crossing, no station finder, no aspect finder, and every docstring is 'compute NEXT crossing' with no completeness or error semantics",
+      "computeMinutes": 0.02
+    }
+  ],
+  "swissGap": [
+    {
+      "capability": "Longitude crossing of the Sun and Moon",
+      "swiss": "swe_solcross / swe_mooncross: iterative 'next crossing after t', no bracket, no count, no error bound, no cancellation",
+      "zodiacs": "Released: proven-complete geometric-J2000 crossings (validated-geometric) and conditional apparent-of-date crossings (empirical); experimental: proven-complete crossings for retarded, retarded+aberrated and of-date (true-equinox) quantities over any window, with brackets ≤ 1e-4 s and typed support",
+      "evidence": "EVALUATION-RESULTS.md holdout 0 missed/0 extra both modes; my fixtures: 0 false proven verdicts in 80 mode-cases; tier-b: thirteen 2024 new moons and the March equinox found on the real pack",
+      "exceedPath": "Already exceeds in semantics. To exceed in the quantity Swiss reports (apparent of date): release rung 4 with a TT↔TDB/UTC adapter that states its error, and fix the Moon enclosure (finding 2) so rung 5 finishes; add planetary deflection and Shapiro terms as listed omissions with bounds (both far below 0.02″)"
+    },
+    {
+      "capability": "Geocentric longitude crossing of planets (ingresses with retrograde loops)",
+      "swiss": "None. swe_helio_cross is heliocentric only; users must scan and bisect themselves and can miss the three crossings of a retrograde loop",
+      "zodiacs": "Yes, all ten bodies, retrograde handled by construction (a projection, not a wrapped angle): the retro-3-in-record fixture returned 3 crossings proven in every rung",
+      "evidence": "pyswisseph 2.10.03 dir(); fixtures/results.json 'retro-3-in-record'",
+      "exceedPath": "Already exceeds; keep the of-date rung as the flagship and publish the proof statement per result"
+    },
+    {
+      "capability": "Stations / retrograde turns",
+      "swiss": "None built in (users detect a speed sign change from swe_calc's velocity, itself a numerical derivative in some paths)",
+      "zodiacs": "Not supported (SEARCH_CONTRACT.notSupported); production uses a ±0.25 d finite difference for speed",
+      "evidence": "search.mjs:82-86; CHART-ADAPTER-CONTRACT §1",
+      "exceedPath": "Roots of N(t) = x·y′ − y·x′ (ecliptic components), an explicit polynomial of degree 2n−2 per piece; the same exclusion/monotone proof gives proven-complete stations for the geometric quantity in ~2 days; lift to of-date via the interval chain (dλ/dt enclosure already exists as fDotEnclosure)"
+    },
+    {
+      "capability": "Aspects between two bodies at any angle",
+      "swiss": "None (users iterate)",
+      "zodiacs": "Empirical mode kind 'aspect' only (conditional completeness, 20°/day rate assumption)",
+      "evidence": "search.mjs:77-81; validated mode has no aspect kind",
+      "exceedPath": "Aspect θ is a root of (x1·y2 − y1·x2)cosθ − (x1·x2 + y1·y2)sinθ, a polynomial in the two stored states on the common refinement of their records; proven-complete aspects for the geometric quantity in ~3 days including a product-coefficient builder in cheb.mjs"
+    },
+    {
+      "capability": "Latitude / node / declination crossings",
+      "swiss": "swe_mooncross_node (Moon only, next crossing)",
+      "zodiacs": "None",
+      "evidence": "pyswisseph inventory; SEARCH_CONTRACT.notSupported",
+      "exceedPath": "Ecliptic latitude zero is the root of z_ecl(t), a polynomial; declination crossings need the equatorial component directly (also stored); proven for all ten bodies in ~1 day on top of the station work"
+    },
+    {
+      "capability": "Elongation / angular-separation threshold events (including the solar-conjunction floor)",
+      "swiss": "None as events; positions only",
+      "zodiacs": "The domain partition already brackets elongation = 5° crossings to a 60-s span for any body, without a target longitude",
+      "evidence": "phase-share.json: 10 boundary spans of 31.6–42.2 s on the Moon F2 window; enclosure-width.json shows the current enclosure is 2,900x too loose",
+      "exceedPath": "Generalise partitionDomain's floor to any angle and any body pair and expose boundary spans as bracketed events; with the finding-2 enclosure fix the brackets tighten to seconds at a few thousand evaluations"
+    },
+    {
+      "capability": "Solar and lunar eclipses, occultations",
+      "swiss": "swe_sol_eclipse_when_glob/loc, swe_lun_eclipse_when, swe_lun_occult_when_glob/loc: iterative, global and local, with Besselian-style circumstances; no completeness semantics",
+      "zodiacs": "None",
+      "evidence": "pyswisseph inventory; no eclipse code in examples/precision-alpha/src",
+      "exceedPath": "Eclipse detection = separation(Sun, Moon) < apparent radii sum, a threshold event on the same separation enclosure as above, proven-complete over a window; local circumstances and contact times additionally need a topocentric observer (weights for a site offset rotated by GAST); detection in ~3 days, local circumstances ~5 more"
+    },
+    {
+      "capability": "Rise, set, transit",
+      "swiss": "swe_rise_trans and swe_rise_trans_true_hor with refraction and true horizon",
+      "zodiacs": "None; observer is the geocentre in every mode",
+      "evidence": "RETARDED_CONTRACT.notApplied lists topocentric parallax and refraction as absent",
+      "exceedPath": "Add a topocentric observer (site vector rotated by an interval GAST from the existing nutation/precession chain) and an altitude function h(t) with interval enclosure; proven-complete rise/set is then a threshold event; ~5 days; refraction stays a stated model term"
+    },
+    {
+      "capability": "Completeness, error and budget semantics",
+      "swiss": "None: every finder returns a time or an error code; a missed or spurious crossing is undetectable from the API",
+      "zodiacs": "Typed support none/conditional/proven, exact totals only under established completeness, unresolved and excluded spans listed, whole-request budgets, cancellation as a result state; buildResult refuses contradictory results",
+      "evidence": "result.mjs:83-158; all fixtures emitted unresolved on every failed proof; accept-partial.json shows honest accounting even where the capability is inert",
+      "exceedPath": "Already exceeds; add the missing invariant gate for the partitioned contract (finding 9) and carry the declared trig bound into the enclosure (finding 8) so the theorem statement is fully self-contained"
+    },
+    {
+      "capability": "Behaviour near solar conjunction (deflection domain)",
+      "swiss": "Always answers, applying its own deflection with an internal limiter; no domain flag",
+      "zodiacs": "Rung 5 declines inside 5° and lists the span as excluded; the partition proves admissible/excluded spans; but the Moon cannot be decided at 60 s and the cost is 47–831x rung 4",
+      "evidence": "DEFLECTION-RESULTS FAIL 6/20; PARTITION-RESULTS PARTIAL; my enclosure measurements",
+      "exceedPath": "Finding 2 (merged-weight geocentric enclosure + centred elongation form) should make the partition decide the Moon at seconds and cut the deflected cost by one to two orders; then the honest 'declined below 5°, rung-4 downgrade recorded per body' policy of DEFLECTION-PROFILE §7 becomes a strict improvement over Swiss's silent limiter"
+    }
+  ],
+  "notExamined": [
+    "The empirical apparent mode (search.mjs / interval-search.mjs) was audited by reading only; no fixture was run through runtime.search() beyond the repo's own angle-counterexamples suite (which passes).",
+    "The internals of the interval frame chain (frame-of-date.mjs frameMatrixInterval, ttCenturiesInterval), aberrateInterval and deflectInterval beyond their gate logic and calling conventions; assumed sound per the other auditors' areas.",
+    "The three tier-b holdout files (retarded, aberrated, of-date) were not re-run: 20 cases each at up to 76 s per case exceeds the compute cap; the committed *-RESULTS.md figures are cited instead.",
+    "The pack-versus-kernel bound and the compiler's fitting error (tools/compiler, tier-b pack-versus-kernel.nodetest.mjs) — outside this area.",
+    "The knobs sweep under docs/platform/evidence/precision-partition/knobs/ (cited via PARTITION-RESULTS, not reopened).",
+    "The browser runtime, the preview worker and cross-runtime byte-identity tests.",
+    "JPL Horizons was not queried: the search layer's claims are about the pack's polynomial, so a sky arbiter would not change any verdict here (0 of the ~30-request allowance used).",
+    "The domainProvedByCaller soundness argument in deflection.mjs:580-612 was read, not exercised beyond the shipped tests.",
+    "Wall-clock cost of seriesBounds being recomputed (with Float64Array allocation) on every stateEnclosure call; likely a 2-3x wall inefficiency, not measured."
+  ]
+}
