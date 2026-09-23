@@ -1,12 +1,11 @@
 {
   "version": 1,
-  "id": "approved-astrofolio-option-c-2026-09-22",
-  "baseCommit": "808975e5444c5957bc9716110e4848fb4c84213f",
+  "id": "owner-requested-astrofolio-mobile-collection-2026-09-22",
+  "baseCommit": "4e9d2dcd41d4f2ccd66e6c73b69ffc2c148169ae",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/technical/index.html",
-    "scripts/registry-pastel-polish.test.mjs",
+    "scripts/registry-consumer-contract.test.mjs",
     "src/app.jsx"
   ],
-  "authorization": "The owner selected Astrofolio design option C and explicitly authorized production: \"Okay go with C. Push it live\". This allowance covers the twelve-sign grid, quieter selected treatment, smaller sign title, responsive keyboard navigation, updated selector checks, and mechanically regenerated shared wing styles. Preserve market data, artwork, account and transaction behavior."
+  "authorization": "The owner selected mobile Option A and explicitly requested production publication: compact header with official collection copy and current season, larger overlapping artwork, slower subtle gold glint, clearer positive/negative movement, and the existing live Fomo button. Preserve market data, addresses, and transaction behavior."
 }

@@ -714,8 +714,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     /* ── Editorial split ── */
     .split { display: grid; grid-template-columns: 1fr; gap: 40px; padding-bottom: 24px; }
-    .split__figure { order: 2; }
-    .split__content { order: 1; }
+    .split__figure { order: 1; }
+    .split__content { order: 2; }
     @media (min-width: 960px) {
       .split { grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: start; }
       .split__figure { order: 1; position: sticky; top: 86px; }
@@ -1175,7 +1175,8 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .split__figure { position: static !important; }
     .profile-art { height: 100%; min-height: 440px; border-color: color-mix(in srgb, ${m.hue} 32%, transparent); }
     .profile-art .card__inner { height: calc(100% - 16px); }
-    .profile-art .stage { height: 100%; min-height: 410px; }
+    .profile-art .stage { height: 410px; min-height: 0; padding: 0; align-items: center; }
+    .profile-art .stage img { width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
     .profile-panel { padding: 24px; border: 1px solid var(--hair-2); background: var(--surface); }
     .profile-panel + .profile-panel { margin-top: 14px; }
     .profile-panel h2 { margin: 0 0 18px; font: 600 clamp(22px, 3vw, 30px)/1.15 var(--sans); letter-spacing: -0.02em; }
@@ -1323,9 +1324,13 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     .strip img { opacity: 1; }
     .strip__name { min-width: 0; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
     @media (min-width: 720px) { .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 959.5px) {
+      .split { gap: 24px; }
+      .profile-art { height: auto; min-height: 0; }
+      .profile-art .card__inner { height: auto; }
+      .profile-art .stage { height: clamp(260px, 48vw, 360px); }
+    }
     @media (max-width: 520px) {
-      .profile-art { min-height: 340px; }
-      .profile-art .stage { min-height: 310px; }
       .market__head, .market__chart-head { flex-direction: column; align-items: stretch; }
       .market__source { min-height: 44px; }
       .rec__row { align-items: flex-start; }
@@ -1358,7 +1363,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
     <div class="split">
       <div class="split__figure" aria-label="${esc(m.name)} artwork">
         <div class="card profile-art" style="margin:0">
-          <div class="card__inner"><div class="stage"><img src="${sculpturePath(m.slug)}" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
+          <div class="card__inner"><div class="stage"><img src="/assets/sculptures/512/${m.slug}.webp" srcset="/assets/sculptures/512/${m.slug}.webp 512w, /assets/sculptures/1024/${m.slug}.webp 1024w" sizes="(max-width: 540px) 260px, (max-width: 959px) 360px, 410px" width="1024" height="1024" alt="${esc(m.name)} zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
         </div>
       </div>
 

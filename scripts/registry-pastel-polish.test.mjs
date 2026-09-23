@@ -46,7 +46,7 @@ describe('registry pastel polish', () => {
     ]);
     const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
     expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
-    expect(lit).toContain('0 0 0 4px var(--sign);');
+    expect(lit).toContain('border: 1px solid color-mix(in srgb, var(--sign) 72%, transparent);');
     expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
     expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
     const hydratedDisc = cssRule(lit, '.consumer-registry .vitrine-disc img {');
@@ -62,11 +62,11 @@ describe('registry pastel polish', () => {
     expect(hydratedGlow).toContain('radial-gradient');
     expect(hydratedGlow).toContain('var(--sign) 28%');
     expect(hydratedGlow).toContain('opacity: .45;');
-    expect(hydratedGlow).not.toContain('transition');
+    expect(hydratedGlow).toContain('transition: opacity 160ms cubic-bezier(.23,1,.32,1);');
     expect(lit).toContain('.consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }');
     expect(html).toContain('<span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp"');
-    expect(html).toContain('.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc {');
-    expect(html).toContain('0 0 0 4px var(--disc);');
+    expect(html).toContain('.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::after {');
+    expect(html).toContain('border: 1px solid color-mix(in srgb, var(--disc) 72%, transparent);');
     expect(cssRule(html, '.static-vitrine__rail img {')).toContain('filter: none;');
     const staticGlow = cssRule(html, '.static-vitrine__disc::before {');
     expect(staticGlow).toContain('radial-gradient');

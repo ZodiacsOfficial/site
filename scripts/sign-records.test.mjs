@@ -87,7 +87,7 @@ describe('Zodiac token records', () => {
       expect((visible.match(/<h1\b/gu) || [])).toHaveLength(1);
       expect(visible).toContain(`Zodiac sign <span class="g">·</span> ${index + 1} of 12`);
       expect(visible).toContain(`${name} at a glance`);
-      expect(visible).toContain(`<div class="stage"><img src="/assets/nuggets/${sign}.png`);
+      expect(visible).toContain(`<div class="stage"><img src="/assets/sculptures/512/${sign}.webp`);
       expect(visible).toContain(`The ${name} token`);
       expect(visible).toContain('Supply &amp; ownership');
       expect(visible).toContain(`Born under ${name}`);

@@ -195,7 +195,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ]);
 
     const opening = section(html, 'official-twelve');
-    expect(normalizedText(opening)).toContain('Astrofolio Leo Season · The Twelve Choose your sign');
+    expect(normalizedText(opening)).toContain('Astrofolio Leo Season Choose your sign');
     expect(opening.match(/class="static-vitrine__choice"/gu)).toHaveLength(12);
     expect(opening.match(/data-static-sign="[a-z]+"/gu)).toHaveLength(12);
     expect(opening).toContain('id="astrofolio-aries" checked');
@@ -294,7 +294,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const explorer = functionBlock(source, 'ConsumerExplorer');
     const placard = functionBlock(source, 'VitrinePlacard');
 
-    expect(normalizedText(identity)).toContain('Astrofolio {season.name} Season · The Twelve Choose your sign');
+    expect(normalizedText(identity)).toContain('Astrofolio {season.name} Season Choose your sign');
     expect(identity).not.toContain('<TerminalViewLink');
     expect(explorer).toContain('className="consumer-explorer astrofolio-vitrine"');
     expect(explorer).toContain('aria-label="Astrofolio sign collection"');

@@ -364,8 +364,8 @@
 
     /* ── Editorial split ── */
     .split { display: grid; grid-template-columns: 1fr; gap: 40px; padding-bottom: 24px; }
-    .split__figure { order: 2; }
-    .split__content { order: 1; }
+    .split__figure { order: 1; }
+    .split__content { order: 2; }
     @media (min-width: 960px) {
       .split { grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: start; }
       .split__figure { order: 1; position: sticky; top: 86px; }
@@ -825,7 +825,8 @@
     .split__figure { position: static !important; }
     .profile-art { height: 100%; min-height: 440px; border-color: color-mix(in srgb, #DE8E79 32%, transparent); }
     .profile-art .card__inner { height: calc(100% - 16px); }
-    .profile-art .stage { height: 100%; min-height: 410px; }
+    .profile-art .stage { height: 410px; min-height: 0; padding: 0; align-items: center; }
+    .profile-art .stage img { width: 100%; height: 100%; max-width: 100%; object-fit: contain; }
     .profile-panel { padding: 24px; border: 1px solid var(--hair-2); background: var(--surface); }
     .profile-panel + .profile-panel { margin-top: 14px; }
     .profile-panel h2 { margin: 0 0 18px; font: 600 clamp(22px, 3vw, 30px)/1.15 var(--sans); letter-spacing: -0.02em; }
@@ -973,9 +974,13 @@
     .strip img { opacity: 1; }
     .strip__name { min-width: 0; font-size: 14px; font-weight: 600; overflow-wrap: anywhere; }
     @media (min-width: 720px) { .strip { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 959.5px) {
+      .split { gap: 24px; }
+      .profile-art { height: auto; min-height: 0; }
+      .profile-art .card__inner { height: auto; }
+      .profile-art .stage { height: clamp(260px, 48vw, 360px); }
+    }
     @media (max-width: 520px) {
-      .profile-art { min-height: 340px; }
-      .profile-art .stage { min-height: 310px; }
       .market__head, .market__chart-head { flex-direction: column; align-items: stretch; }
       .market__source { min-height: 44px; }
       .rec__row { align-items: flex-start; }
@@ -1054,7 +1059,7 @@
     <div class="split">
       <div class="split__figure" aria-label="Aries artwork">
         <div class="card profile-art" style="margin:0">
-          <div class="card__inner"><div class="stage"><img src="/assets/nuggets/aries.png" alt="Aries zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
+          <div class="card__inner"><div class="stage"><img src="/assets/sculptures/512/aries.webp" srcset="/assets/sculptures/512/aries.webp 512w, /assets/sculptures/1024/aries.webp 1024w" sizes="(max-width: 540px) 260px, (max-width: 959px) 360px, 410px" width="1024" height="1024" alt="Aries zodiac artwork" decoding="async" fetchpriority="high" /></div></div>
         </div>
       </div>
 
@@ -1124,11 +1129,11 @@
         <div class="market__head"><p class="market__copy">The price can change quickly and can fall to zero.</p><a class="market__source" data-market-live-link href="https://dexscreener.com/solana/HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS" rel="noopener noreferrer external nofollow">View live chart ↗</a></div>
         <section class="quick" aria-labelledby="quick-title" data-live-quote>
           <span class="quick__label" id="quick-title" data-live-price-label>Latest recorded price</span>
-          <div class="quick__quote" aria-live="polite"><strong class="quick__price" data-live-price>$0.00008185</strong><span class="quick__change" data-live-change>Past 24 hours +6.70%</span><p class="quick__state" data-live-state>Showing the latest saved price. Checking for a newer one…</p></div>
+          <div class="quick__quote" aria-live="polite"><strong class="quick__price" data-live-price>$0.0000833</strong><span class="quick__change" data-live-change>Past 24 hours +0.61%</span><p class="quick__state" data-live-state>Showing the latest saved price. Checking for a newer one…</p></div>
         </section>
         <div class="market__grid" data-market-grid>
-          <div class="market__cell"><div class="market__k">Total market value</div><div class="market__v ">$81.8K</div></div>
-          <div class="market__cell"><div class="market__k">Traded in 24 hours</div><div class="market__v ">$373.72</div></div>
+          <div class="market__cell"><div class="market__k">Total market value</div><div class="market__v ">$83.3K</div></div>
+          <div class="market__cell"><div class="market__k">Traded in 24 hours</div><div class="market__v ">$260.22</div></div>
         </div>
         <p class="market__state" data-market-state>Loading price history…</p>
         <div class="market__chart" data-market-chart hidden>
@@ -1136,27 +1141,27 @@
           <div data-market-chart-canvas></div><dl class="chart-summary" data-chart-summary hidden></dl>
         </div>
         <noscript><p class="market__state">Price history is unavailable here. The latest recorded price and verified address are still shown.</p></noscript>
-        <div class="market__foot" data-market-foot>Updated Sep 22, 2026, 12:07 AM UTC</div>
+        <div class="market__foot" data-market-foot>Updated Sep 23, 2026, 12:07 AM UTC</div>
       </aside>
       <section class="standings" data-market-standings aria-labelledby="standings-title">
-        <div class="standings__head"><div><span>Market standings</span><h3 id="standings-title">10th of 12 by total market value</h3></div><p data-standings-summary>This rank only compares total market value. It does not show how many people support each sign.</p></div>
+        <div class="standings__head"><div><span>Market standings</span><h3 id="standings-title">9th of 12 by total market value</h3></div><p data-standings-summary>This rank only compares total market value. It does not show how many people support each sign.</p></div>
         <details class="standings__all"><summary>See all 12 market standings</summary>
           <ol class="standings__list" data-standings-list>
-          <li><a href="/registry/gemini/" style="--sign:#B29DD0"><span class="standings__rank">#1</span><picture><source srcset="/assets/zodiac-icons/48/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Gemini</strong><span>$162,207</span></a></li>
-          <li><a href="/registry/aquarius/" style="--sign:#AE8FC9"><span class="standings__rank">#2</span><picture><source srcset="/assets/zodiac-icons/48/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Aquarius</strong><span>$93,871</span></a></li>
-          <li><a href="/registry/libra/" style="--sign:#D3A9DE"><span class="standings__rank">#3</span><picture><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Libra</strong><span>$89,088</span></a></li>
-          <li><a href="/registry/leo/" style="--sign:#E0A9B4"><span class="standings__rank">#4</span><picture><source srcset="/assets/zodiac-icons/48/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Leo</strong><span>$85,971</span></a></li>
-          <li><a href="/registry/pisces/" style="--sign:#A9D4C4"><span class="standings__rank">#5</span><picture><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Pisces</strong><span>$84,307</span></a></li>
-          <li><a href="/registry/scorpio/" style="--sign:#B9DCE8"><span class="standings__rank">#6</span><picture><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Scorpio</strong><span>$82,439</span></a></li>
-          <li><a href="/registry/taurus/" style="--sign:#B9D4BE"><span class="standings__rank">#7</span><picture><source srcset="/assets/zodiac-icons/48/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Taurus</strong><span>$82,298</span></a></li>
-          <li><a href="/registry/sagittarius/" style="--sign:#E0B080"><span class="standings__rank">#8</span><picture><source srcset="/assets/zodiac-icons/48/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Sagittarius</strong><span>$82,249</span></a></li>
-          <li><a href="/registry/virgo/" style="--sign:#B7D9B0"><span class="standings__rank">#9</span><picture><source srcset="/assets/zodiac-icons/48/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Virgo</strong><span>$81,886</span></a></li>
-          <li class="is-current" aria-current="true"><a href="/registry/aries/" style="--sign:#DE8E79"><span class="standings__rank">#10</span><picture><source srcset="/assets/zodiac-icons/48/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Aries</strong><span>$81,831</span></a></li>
-          <li><a href="/registry/capricorn/" style="--sign:#C0DEA8"><span class="standings__rank">#10</span><picture><source srcset="/assets/zodiac-icons/48/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Capricorn</strong><span>$81,831</span></a></li>
-          <li><a href="/registry/cancer/" style="--sign:#B6D4E4"><span class="standings__rank">#12</span><picture><source srcset="/assets/zodiac-icons/48/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Cancer</strong><span>$80,673</span></a></li>
+          <li><a href="/registry/gemini/" style="--sign:#B29DD0"><span class="standings__rank">#1</span><picture><source srcset="/assets/zodiac-icons/48/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Gemini</strong><span>$184,813</span></a></li>
+          <li><a href="/registry/aquarius/" style="--sign:#AE8FC9"><span class="standings__rank">#2</span><picture><source srcset="/assets/zodiac-icons/48/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Aquarius</strong><span>$92,620</span></a></li>
+          <li><a href="/registry/libra/" style="--sign:#D3A9DE"><span class="standings__rank">#3</span><picture><source srcset="/assets/zodiac-icons/48/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Libra</strong><span>$88,877</span></a></li>
+          <li><a href="/registry/leo/" style="--sign:#E0A9B4"><span class="standings__rank">#4</span><picture><source srcset="/assets/zodiac-icons/48/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Leo</strong><span>$86,994</span></a></li>
+          <li><a href="/registry/pisces/" style="--sign:#A9D4C4"><span class="standings__rank">#5</span><picture><source srcset="/assets/zodiac-icons/48/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Pisces</strong><span>$85,876</span></a></li>
+          <li><a href="/registry/scorpio/" style="--sign:#B9DCE8"><span class="standings__rank">#6</span><picture><source srcset="/assets/zodiac-icons/48/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Scorpio</strong><span>$84,180</span></a></li>
+          <li><a href="/registry/taurus/" style="--sign:#B9D4BE"><span class="standings__rank">#7</span><picture><source srcset="/assets/zodiac-icons/48/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Taurus</strong><span>$83,825</span></a></li>
+          <li><a href="/registry/virgo/" style="--sign:#B7D9B0"><span class="standings__rank">#8</span><picture><source srcset="/assets/zodiac-icons/48/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Virgo</strong><span>$83,339</span></a></li>
+          <li class="is-current" aria-current="true"><a href="/registry/aries/" style="--sign:#DE8E79"><span class="standings__rank">#9</span><picture><source srcset="/assets/zodiac-icons/48/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Aries</strong><span>$83,279</span></a></li>
+          <li><a href="/registry/sagittarius/" style="--sign:#E0B080"><span class="standings__rank">#10</span><picture><source srcset="/assets/zodiac-icons/48/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Sagittarius</strong><span>$82,949</span></a></li>
+          <li><a href="/registry/cancer/" style="--sign:#B6D4E4"><span class="standings__rank">#11</span><picture><source srcset="/assets/zodiac-icons/48/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Cancer</strong><span>$82,806</span></a></li>
+          <li><a href="/registry/capricorn/" style="--sign:#C0DEA8"><span class="standings__rank">#12</span><picture><source srcset="/assets/zodiac-icons/48/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/48/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><strong>Capricorn</strong><span>$82,572</span></a></li>
           </ol>
         </details>
-        <p class="standings__time" data-standings-time>Updated Sep 22, 2026, 12:07 AM UTC</p>
+        <p class="standings__time" data-standings-time>Updated Sep 23, 2026, 12:07 AM UTC</p>
         <details class="market-explainer"><summary>Where do these numbers come from?</summary><p>The source reports each sign’s price, trading activity and total market value. Zodiacs.org matches each sign by its verified address. Total market value is a comparison, not money held in a bank, and light trading can move it quickly. <a href="/registry/technical/#market-transparency">See sources and method details.</a></p></details>
       </section>
     </section>

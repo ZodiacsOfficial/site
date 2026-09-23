@@ -41,10 +41,11 @@ await withPreview({ port: 4396 }, async (baseURL) => {
   });
 
   try {
-    for (const width of [390, 781]) {
+    for (const width of [390, 728, 781]) {
       for (const record of [
         { slug: 'cancer', current: 'Cancer' },
         { slug: 'pisces', current: 'Pisces' },
+        { slug: 'taurus', current: 'Taurus' },
       ]) {
         const page = await browser.newPage({ viewport: { width, height: 844 } });
         const errors = [];
@@ -52,6 +53,29 @@ await withPreview({ port: 4396 }, async (baseURL) => {
         await page.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
         const action = page.locator('[data-share-sign]');
         await action.waitFor({ state: 'visible' });
+        await page.waitForFunction(() => {
+          const image = document.querySelector('.profile-art img');
+          return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
+        });
+        const artwork = await page.locator('.profile-art img').evaluate((image) => {
+          const box = image.getBoundingClientRect();
+          const stage = image.parentElement.getBoundingClientRect();
+          const card = image.closest('.profile-art').getBoundingClientRect();
+          const facts = document.querySelector('.glance').getBoundingClientRect();
+          return {
+            source: image.currentSrc,
+            contained: box.top >= stage.top && box.bottom <= stage.bottom + 1 && box.left >= stage.left && box.right <= stage.right + 1,
+            beforeFacts: card.bottom <= facts.top,
+            height: box.height,
+            bottom: box.bottom,
+            fit: getComputedStyle(image).objectFit,
+          };
+        });
+        check(`${record.slug} at ${width}px presents the complete artwork before its facts`,
+          artwork.contained && artwork.beforeFacts && artwork.height >= 260
+            && artwork.height <= 360 && artwork.bottom <= 844 && artwork.fit === 'contain'
+            && /\/assets\/sculptures\/(512|1024)\//.test(artwork.source),
+          JSON.stringify(artwork));
         // Capture the header at its natural scroll position. Clicking the
         // standings disclosure below intentionally scrolls it into view.
         const headerState = await page.evaluate(() => {

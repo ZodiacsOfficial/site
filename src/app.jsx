@@ -4669,11 +4669,11 @@
             />
             <span className="astrofolio-lockup__copy">
               <em className="terminal-consumer-hero__kicker">Astrofolio</em>
-              <small><strong style={{ color: season.hue }}>{season.name}</strong> Season<span aria-hidden="true"> · </span>The Twelve</small>
+              <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
             </span>
           </div>
           <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>The Zodiac token collection. Explore your sign’s design, story, and verified public record.</p>
+          <p>The official Zodiac token collection.</p>
         </header>
       );
     }
@@ -5916,7 +5916,7 @@
       const movement = quote ? plainMarketMovement(change) : waiting ? 'Updating market context' : 'Movement unavailable';
       return (
         <p
-          className="vitrine-price"
+          className={'vitrine-price' + (quote ? '' : ' is-pending')}
           role={live ? 'status' : undefined}
           aria-live={live ? 'polite' : undefined}
           aria-atomic={live ? 'true' : undefined}
@@ -6000,6 +6000,18 @@
         const viewportHeight = Number(window.visualViewport?.height || window.innerHeight || 900);
         return Math.round(Math.min(700, Math.max(520, viewportHeight * .68)));
       });
+      const stageRef = useRef(null);
+      useEffect(() => {
+        const stage = stageRef.current;
+        if (!stage) return undefined;
+        let visible = true;
+        const update = () => { stage.dataset.motionPaused = String(document.hidden || !visible); };
+        const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); });
+        observer.observe(stage);
+        document.addEventListener('visibilitychange', update);
+        update();
+        return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
+      }, []);
       const presentationFor = (slug) => SCULPTURE_PRESENTATION[slug] || { scale: 1, translateY: '0%' };
       const renderSculpture = (layer) => {
         const item = SIGNS.find((candidate) => candidate.asset.sign === layer.slug) ?? SIGNS[0];
@@ -6010,44 +6022,53 @@
             className={'vitrine-stage__layer' + (layer.active ? ' is-active' : '') + (layer.fallback ? ' is-fallback' : '') + (layer.anchored ? ' is-interrupt-anchor' : '')}
             aria-hidden={layer.current ? undefined : 'true'}
             data-vitrine-sculpture={layer.slug}
-            style={{ '--art-scale': presentation.scale, '--art-y': presentation.translateY }}
+            style={{
+              '--art-scale': presentation.scale,
+              '--art-y': presentation.translateY,
+              // Equal visible height for tall figures and wider animals.
+              '--mobile-art-scale': ({ cancer: 1, taurus: 1, leo: .96, pisces: .78 })[layer.slug] || .76,
+              '--art-mask': `url(/assets/sculptures/512/${layer.slug}.webp)`,
+            }}
             onTransitionEnd={(event) => {
               if (event.target === event.currentTarget && event.propertyName === 'opacity' && layer.active) {
                 settleLayer(layer.id);
               }
             }}
           >
-            <img
-              src={`/assets/sculptures/512/${layer.slug}.webp`}
-              srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}
-              sizes="(max-width: 899px) calc(100vw - 32px), min(54vw, 760px)"
-              width="1024"
-              height="1024"
-              alt={layer.current ? `${item.name} Zodiac artwork` : ''}
-              decoding="async"
-              onLoad={(event) => {
-                const image = event.currentTarget;
-                const decoded = image.decode?.();
-                if (decoded) decoded.then(() => markLayerReady(layer.id), () => markLayerReady(layer.id));
-                else markLayerReady(layer.id);
-              }}
-              onError={(event) => {
-                const image = event.currentTarget;
-                const attempt = Number(image.dataset.fallbackAttempt || 0);
-                if (attempt === 0) {
-                  image.dataset.fallbackAttempt = '1';
-                  image.srcset = '';
-                  image.src = `/assets/sculptures/512/${layer.slug}.webp`;
-                  return;
-                }
-                if (attempt === 1) {
-                  image.dataset.fallbackAttempt = '2';
-                  image.src = `/assets/cabinet-materials/gold/${layer.slug}.webp`;
-                  return;
-                }
-                markLayerFailed(layer.id);
-              }}
-            />
+            <div className="vitrine-stage__art">
+              <img
+                src={`/assets/sculptures/512/${layer.slug}.webp`}
+                srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}
+                sizes="(max-width: 899px) calc(100vw - 32px), min(54vw, 760px)"
+                width="1024"
+                height="1024"
+                alt={layer.current ? `${item.name} Zodiac artwork` : ''}
+                decoding="async"
+                onLoad={(event) => {
+                  const image = event.currentTarget;
+                  const decoded = image.decode?.();
+                  if (decoded) decoded.then(() => markLayerReady(layer.id), () => markLayerReady(layer.id));
+                  else markLayerReady(layer.id);
+                }}
+                onError={(event) => {
+                  const image = event.currentTarget;
+                  const attempt = Number(image.dataset.fallbackAttempt || 0);
+                  if (attempt === 0) {
+                    image.dataset.fallbackAttempt = '1';
+                    image.srcset = '';
+                    image.src = `/assets/sculptures/512/${layer.slug}.webp`;
+                    return;
+                  }
+                  if (attempt === 1) {
+                    image.dataset.fallbackAttempt = '2';
+                    image.src = `/assets/cabinet-materials/gold/${layer.slug}.webp`;
+                    return;
+                  }
+                  markLayerFailed(layer.id);
+                }}
+              />
+              <span className="vitrine-gold-light" aria-hidden="true" />
+            </div>
             <span
               className="vitrine-stage__fallback"
               role={layer.current && layer.fallback ? 'img' : undefined}
@@ -6071,7 +6092,7 @@
         >
           <ConsumerIdentityHeader />
           <VitrineDiscRail active={active} setActive={setActive} interruptTransition={interruptTransition} />
-          <div className="vitrine-stage" aria-label={`${sign.name} Zodiac artwork`} data-vitrine-stage>
+          <div className="vitrine-stage" ref={stageRef} aria-label={`${sign.name} Zodiac artwork`} data-vitrine-stage>
             {layers.map(renderSculpture)}
           </div>
           <VitrinePlacard layers={layers} batch={batch} />
