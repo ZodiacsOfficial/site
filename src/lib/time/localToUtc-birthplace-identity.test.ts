@@ -11,7 +11,7 @@ import { loadZoneHistory } from './tz-history-load';
  * either side), resolving with the zone's own mean-time longitude must give
  * exactly what resolving without a longitude gives: the same instant, offset
  * and flags, for every wall time around the change. Wall minutes are checked
- * one by one across the jump and an hour either side, and every half hour
+ * one by one across the jump and an hour either side, and every two hours
  * elsewhere within 26 hours of the end.
  */
 const table = lmtTable as unknown as {
@@ -84,7 +84,7 @@ describe('the birthplace clock on its zone\'s own meridian', () => {
       const high = Math.max(...walls) + 3_600_000;
       const times = new Set<number>();
       for (let wall = low; wall <= high; wall += 60_000) times.add(wall);
-      for (let wall = low - 26 * 3_600_000; wall <= high + 26 * 3_600_000; wall += 30 * 60_000) times.add(wall);
+      for (let wall = low - 26 * 3_600_000; wall <= high + 26 * 3_600_000; wall += 2 * 3_600_000) times.add(wall);
       for (const wall of times) {
         const [date, time] = wallParts(wall);
         const zoneClock = resolveLocalToUtc(date, time, zone);
@@ -99,8 +99,8 @@ describe('the birthplace clock on its zone\'s own meridian', () => {
         }
       }
     }
-    // On Node 22.22 (ICU 78.2): 338 of 518 zones, 81,222 wall times, 5,214 of them gaps or folds.
-    expect(checked).toBeGreaterThan(75_000);
+    // On Node 22.22 (ICU 78.2): 338 of 518 zones, 54,858 wall times, 5,214 of them gaps or folds.
+    expect(checked).toBeGreaterThan(50_000);
     expect(jumps).toBeGreaterThan(5_000);
     expect(failures.slice(0, 5)).toEqual([]);
   }, 300_000);

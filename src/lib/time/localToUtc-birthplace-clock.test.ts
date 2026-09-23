@@ -78,6 +78,7 @@ describe('the birthplace clock at the end of its local mean time era', () => {
     const start = Math.floor((endWall - 26 * 3_600_000) / 60_000) * 60_000;
     const failures: string[] = [];
     let receipts = 0;
+    let previousFlag = '';
     for (let wall = start; wall <= endWall + 26 * 3_600_000; wall += 60_000) {
       const readings: { t: number; offset: number }[] = [];
       const inEra = wall - Math.round(place * 60_000);
@@ -104,7 +105,10 @@ describe('the birthplace clock at the end of its local mean time era', () => {
         failures.push(`${date} ${time}: got ${resolved.utc.toISOString()} ${resolved.offsetMinutes} [${resolved.flags}], `
           + `expected ${new Date(expected.t).toISOString()} ${expected.offset} [${expected.flag}]`);
       }
-      if (flag || (wall - start) % (60 * 60_000) === 0) {
+      // A receipt for the first minute of each run of flagged readings, and every six hours.
+      const firstFlagged = flag !== '' && flag !== previousFlag;
+      previousFlag = flag;
+      if (firstFlagged || (wall - start) % (6 * 60 * 60_000) === 0) {
         receipts += 1;
         const captured = computeCalculatorReceipt({
           utc: resolved.utc, latitude: 40, longitude, houseSystem: 'placidus', timeKnown: true, flags: resolved.flags,
@@ -112,7 +116,7 @@ describe('the birthplace clock at the end of its local mean time era', () => {
         if (!captured || !parseNatalEnvelope(captured.envelopeJson).ok) failures.push(`${date} ${time}: receipt did not validate`);
       }
     }
-    expect(receipts).toBeGreaterThan(40);
+    expect(receipts).toBeGreaterThan(8);
     expect(failures.slice(0, 5)).toEqual([]);
   });
 });

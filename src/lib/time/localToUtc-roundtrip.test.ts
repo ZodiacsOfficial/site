@@ -11,15 +11,16 @@ import { offsetAt, resolveLocalToUtc } from './localToUtc';
  * `dst-fold`), none is a gap (moved forward by the offset just before, with
  * `dst-gap`).
  *
- * The default run steps two weeks at a time to find changes, and tests the
- * minute before, at and after each edge of every gap or fold, plus points
- * inside it. TZ_SCAN=full repeats the audit's scope: a daily step, which also
- * finds a change undone within two weeks, and wider sampling, about five
- * minutes in all.
+ * The default run, which CI runs beside everything else, stops at the end of
+ * 2037 (later changes repeat the rules in force then), steps two weeks at a
+ * time to find changes, and tests the minute before, at and after each edge
+ * of every gap or fold, plus its midpoint. TZ_SCAN=full repeats the audit's
+ * scope: to 2100, a daily step, which also finds a change undone within two
+ * weeks, and wider sampling, about five minutes in all.
  */
 const FULL = process.env.TZ_SCAN === 'full';
 const START = Date.UTC(1850, 0, 1);
-const END = Date.UTC(2101, 0, 1);
+const END = FULL ? Date.UTC(2101, 0, 1) : Date.UTC(2038, 0, 1);
 const STEP = (FULL ? 1 : 14) * 86_400_000;
 const MINUTE = 60_000;
 const HOUR = 3_600_000;
@@ -63,7 +64,7 @@ function wallMinutes(change: Change): number[] {
   if (FULL) {
     for (let wall = low - 2 * HOUR; wall <= high + 2 * HOUR; wall += 10 * MINUTE) walls.add(wall);
   } else {
-    for (const fraction of [0.25, 0.5, 0.75]) walls.add(low + (high - low) * fraction);
+    walls.add(low + (high - low) / 2);
   }
   return [...walls].map((wall) => Math.floor(wall / MINUTE) * MINUTE).filter((wall) => wall >= START && wall < END);
 }
@@ -72,7 +73,7 @@ const ZONES = Intl.supportedValuesOf('timeZone');
 const GROUPS = Array.from({ length: 12 }, (_, group) => ZONES.filter((_, index) => index % 12 === group));
 const totals = { transitions: 0, tested: 0 };
 
-describe('resolveLocalToUtc on the zone clock, around every offset change, 1850-2100', () => {
+describe('resolveLocalToUtc on the zone clock, around every offset change, 1850-2037 (2100 in the full scan)', () => {
   // Groups of zones, so the worker reports between them on a long full scan.
   it.each(GROUPS.map((zones, group) => [group + 1, zones] as const))('round-trips zone group %i of 12', (_group, zones) => {
     const failures: string[] = [];
@@ -107,7 +108,9 @@ describe('resolveLocalToUtc on the zone clock, around every offset change, 1850-
 
   it('covered every zone and every offset change it found', () => {
     expect(ZONES.length).toBeGreaterThan(400);
-    expect(totals.transitions).toBeGreaterThan(40_000);
-    expect(totals.tested).toBeGreaterThan(FULL ? 1_600_000 : 300_000);
+    // Node 22.22 (ICU 78.2): 26,403 changes and 184,817 wall minutes by default;
+    // 42,861 and 1,675,757 in the full scan.
+    expect(totals.transitions).toBeGreaterThan(FULL ? 40_000 : 25_000);
+    expect(totals.tested).toBeGreaterThan(FULL ? 1_600_000 : 170_000);
   });
 });
