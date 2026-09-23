@@ -43,6 +43,8 @@ export interface LocalTimeResolution {
 
 /** Unix seconds at which each zone's local mean time era ended, once loaded. */
 let lmtEraEnd: Readonly<Record<string, number>> | null = null;
+/** For eras that crossed the date line: each line's end (Unix seconds) and offset (seconds east). */
+let lmtDateLine: Readonly<Record<string, readonly (readonly number[])[]>> = {};
 let lmtEraLoad: Promise<void> | null = null;
 
 /**
@@ -72,6 +74,7 @@ export function prepareLocalTime(date: string): Promise<void> {
   if (!localMeanTimeCanApply(date) || lmtEraEnd) return Promise.resolve();
   if (!lmtEraLoad) {
     const pending = loadModule(() => import('../../data/tz-lmt.json')).then(({ default: table }) => {
+      lmtDateLine = table.dateLine;
       lmtEraEnd = table.eras;
     });
     lmtEraLoad = pending;
@@ -276,9 +279,9 @@ const MAX_MEAN_TIME_DEPARTURE_MINUTES = 180;
  * era. Null leaves Intl's reading, which also covers every later instant.
  *
  * Until the era ended the clock showed the birthplace's mean time, on the
- * zone's side of the date line at that instant (Manila kept the American
- * date until 1844, Alaska the Asian one until 1867); from then on it showed
- * the zone's legal time. Readings are enumerated against that clock and the
+ * side of the date line the zone's own era kept at that instant (Manila and
+ * Pohnpei kept the American date until 1844, Alaska the Asian one until
+ * 1867); from then on it showed the zone's legal time. Readings are enumerated against that clock and the
  * ordinary policy applied to them, so every gap and fold comes from the
  * birthplace's clock, never from the reference city's: a repeated reading
  * takes the earlier instant, a skipped one moves forward by the gap.
@@ -303,15 +306,22 @@ function birthplaceMeanTime(
   // Mean solar time runs four minutes per degree of longitude, kept to whole
   // seconds as IANA offsets are.
   const meanSeconds = Math.round(longitude * 240);
+  // The zone's own mean time during the era, which fixes the side of the date
+  // line. The table's record wins where the era crossed it, because the
+  // host's data can lack the move (it has Manila's in 1844, not Pohnpei's).
+  const eraLines = Object.prototype.hasOwnProperty.call(lmtDateLine, tz) ? lmtDateLine[tz] : null;
+  const eraOffset = (utcMs: number): number => {
+    if (eraLines) for (const [until, offset] of eraLines) if (utcMs < until * 1000) return offset / 60;
+    return offsetAt(tz, utcMs);
+  };
   const meanOffset = (utcMs: number): number => {
-    const zone = offsetAt(tz, utcMs);
-    const days = Math.round((zone * 60 - meanSeconds) / 86_400);
+    const days = Math.round((eraOffset(utcMs) * 60 - meanSeconds) / 86_400);
     return (meanSeconds + days * 86_400) / 60;
   };
   // A longitude hours away from the zone's own mean time belongs to another
   // zone; leave such an input to the zone alone rather than invent a clock.
   const eraSample = Math.min(wallMs, endMs - 1);
-  if (Math.abs(meanOffset(eraSample) - offsetAt(tz, eraSample)) > MAX_MEAN_TIME_DEPARTURE_MINUTES) return null;
+  if (Math.abs(meanOffset(eraSample) - eraOffset(eraSample)) > MAX_MEAN_TIME_DEPARTURE_MINUTES) return null;
 
   const clockAt = (utcMs: number): number => (utcMs < endMs ? meanOffset(utcMs) : offsetAt(tz, utcMs));
   const readings: { utcMs: number; offset: number }[] = [];

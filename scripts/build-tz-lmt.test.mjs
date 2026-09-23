@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildEras, lmtEraEnd, parseClock, parseTzdb, untilToUnixSeconds } from './build-tz-lmt.mjs';
+import { buildEras, lmtEraEnd, lmtEraLines, parseClock, parseTzdb, untilToUnixSeconds } from './build-tz-lmt.mjs';
 
 // Excerpts in tzdb's own syntax; the full table is generated from the pinned
 // release and checked with `node scripts/build-tz-lmt.mjs --check`.
@@ -30,11 +30,15 @@ Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 `;
 
 describe('the local mean time era builder', () => {
-  it('reads tzdb clock fields, rounding fractional seconds as zic does', () => {
+  it('reads tzdb clock fields, rounding fractional seconds half to even as zic does', () => {
     expect(parseClock('-4:56:02')).toBe(-(4 * 3600 + 56 * 60 + 2));
     expect(parseClock('0:09:21')).toBe(561);
     expect(parseClock('8')).toBe(28_800);
-    expect(parseClock('-0:36:44.5')).toBe(-(36 * 60 + 45));
+    expect(parseClock('-0:36:44.5')).toBe(-(36 * 60 + 44));
+    expect(parseClock('0:36:44.5')).toBe(36 * 60 + 44);
+    expect(parseClock('0:00:45.5')).toBe(46);
+    expect(parseClock('0:00:45.51')).toBe(46);
+    expect(parseClock('0:00:44.49')).toBe(44);
     expect(() => parseClock('noon')).toThrow('unrecognised time');
   });
 
@@ -59,13 +63,19 @@ describe('the local mean time era builder', () => {
     const { zones } = parseTzdb(MAIN);
     // Manila moved west to east of the date line in 1844 and kept its own mean time.
     expect(lmtEraEnd(zones.get('Asia/Manila'))).toBe(Date.UTC(1899, 8, 6, 4) / 1000);
+    expect(lmtEraLines(zones.get('Asia/Manila'))).toEqual([
+      [Date.UTC(1844, 11, 31) / 1000 + parseClock('15:56:08'), parseClock('-15:56:08')],
+      [Date.UTC(1899, 8, 6, 4) / 1000, parseClock('8:03:52')],
+    ]);
     // São Tomé's second LMT line is Lisbon's clock adopted in 1884, not the town's.
     expect(lmtEraEnd(zones.get('Africa/Sao_Tome'))).toBe(Date.UTC(1884, 0, 1) / 1000 - parseClock('0:26:56'));
     expect(lmtEraEnd(zones.get('Antarctica/Troll'))).toBeNull();
   });
 
   it('prefers backzone over a main-data link and resolves the remaining links', () => {
-    const eras = buildEras(parseTzdb(MAIN), parseTzdb(BACKZONE));
+    const { eras, dateLine } = buildEras(parseTzdb(MAIN), parseTzdb(BACKZONE));
+    // Only eras that crossed the date line carry their lines.
+    expect(Object.keys(dateLine)).toEqual(['Asia/Manila']);
     expect(eras['Europe/Oslo']).toBe(Date.UTC(1895, 0, 1) / 1000 - 43 * 60);
     expect(eras['US/Eastern']).toBe(eras['America/New_York']);
     expect(eras).not.toHaveProperty('Antarctica/Troll');

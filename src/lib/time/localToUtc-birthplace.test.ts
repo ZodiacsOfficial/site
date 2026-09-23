@@ -98,6 +98,14 @@ describe('birthplace local mean time', () => {
     const after = resolveLocalToUtc('1850-06-15', '12:00', 'Asia/Manila', { longitude: MANILA });
     expect(after.offsetMinutes).toBeCloseTo(minutes(8, 3, 55), 9);
     expect(after.utc.toISOString()).toBe('1850-06-15T03:56:05.000Z');
+    // Pohnpei made the same move at the same time, but the host's zone data
+    // lacks it; the table's record decides. 158.16° E is 10:32:38.
+    const pohnpei = resolveLocalToUtc('1840-06-01', '12:00', 'Pacific/Pohnpei', { longitude: 158.16 });
+    expect(pohnpei.utc.toISOString()).toBe('1840-06-02T01:27:22.000Z');
+    expect(pohnpei.offsetMinutes).toBeCloseTo(-minutes(13, 27, 22), 9);
+    expect(pohnpei.localMeanTime?.longitude).toBe(158.16);
+    const pohnpeiAfter = resolveLocalToUtc('1850-06-01', '12:00', 'Pacific/Pohnpei', { longitude: 158.16 });
+    expect(pohnpeiAfter.utc.toISOString()).toBe('1850-06-01T01:27:22.000Z');
   });
 
   it('moves a skipped wall time forward by the gap the change to standard time left', () => {

@@ -27,9 +27,11 @@
  * Time from 1884, Paris Mean Time from 1891, Dublin Mean Time from 1880), not
  * the town's own clock, and ends the era.
  *
- * Output: { tzdb, source, eras: { "<zone>": <era end, Unix seconds> } }, keys
- * sorted. Zones whose first line is not local mean time ("-00" placeholders,
- * fixed offsets) are omitted; the resolver leaves them to Intl.
+ * Output: { tzdb, source, eras: { "<zone>": <era end, Unix seconds> },
+ * dateLine: { "<zone>": [[<line end>, <offset, seconds east>], …] } }, keys
+ * sorted; dateLine lists only eras that crossed the date line. Zones whose
+ * first line is not local mean time ("-00" placeholders, fixed offsets) are
+ * omitted; the resolver leaves them to Intl.
  *
  *   node scripts/build-tz-lmt.mjs          — refresh when the pinned release changes
  *   node scripts/build-tz-lmt.mjs --check  — exit 1 if the committed table differs
@@ -61,11 +63,15 @@ function byPrefix(word, names, what) {
   return names.indexOf(hits[0]);
 }
 
-/** "[-]h[:mm[:ss[.frac]]]" → seconds. zic rounds fractional seconds. */
+/** "[-]h[:mm[:ss[.frac]]]" → seconds, fractions rounded half to even as zic does. */
 export function parseClock(text) {
   const match = /^(-)?(\d+)(?::(\d{1,2}))?(?::(\d{1,2}(?:\.\d+)?))?$/.exec(text);
   if (!match) throw new Error(`tz-lmt: unrecognised time "${text}"`);
-  const seconds = Number(match[2]) * 3600 + Number(match[3] ?? 0) * 60 + Math.round(Number(match[4] ?? 0));
+  const raw = Number(match[4] ?? 0);
+  const whole = Math.floor(raw);
+  const fraction = raw - whole;
+  const rounded = fraction > 0.5 || (fraction === 0.5 && whole % 2 === 1) ? whole + 1 : whole;
+  const seconds = Number(match[2]) * 3600 + Number(match[3] ?? 0) * 60 + rounded;
   return match[1] ? -seconds : seconds;
 }
 
@@ -140,8 +146,12 @@ export function parseTzdb(text) {
   return { zones, links };
 }
 
-/** The end of a zone's local mean time era, or null when it has none. */
-export function lmtEraEnd(lines) {
+/**
+ * A zone's local mean time era as [until, offset] per line, in Unix seconds
+ * and seconds east, or null when it has none. More than one line means the
+ * era crossed the date line.
+ */
+export function lmtEraLines(lines) {
   const [first] = lines;
   if (!first || first[2] !== 'LMT') return null;
   const firstOffset = parseClock(first[0]);
@@ -152,13 +162,27 @@ export function lmtEraEnd(lines) {
     if (format !== 'LMT' || difference === 0 || difference % 86400 !== 0) break;
     last = index;
   }
-  const line = lines[last];
-  if (line[1] !== '-') throw new Error(`tz-lmt: local mean time line with rules "${line[1]}"`);
-  if (line.length < 4) throw new Error('tz-lmt: a zone that never leaves local mean time');
-  return untilToUnixSeconds(line.slice(3), parseClock(line[0]));
+  return lines.slice(0, last + 1).map((line, index) => {
+    if (line[1] !== '-') throw new Error(`tz-lmt: local mean time line with rules "${line[1]}"`);
+    if (line.length < 4) throw new Error('tz-lmt: a zone that never leaves local mean time');
+    const offset = parseClock(line[0]);
+    return [untilToUnixSeconds(line.slice(3), offset), offset];
+  });
 }
 
-/** Backzone replaces the main data's definition of a name; links resolve to zones. */
+/** The end of a zone's local mean time era, or null when it has none. */
+export function lmtEraEnd(lines) {
+  const era = lmtEraLines(lines);
+  return era ? era.at(-1)[0] : null;
+}
+
+/**
+ * Backzone replaces the main data's definition of a name; links resolve to
+ * zones. `dateLine` keeps, for eras that crossed the date line, each line's
+ * end and offset: the host's zone data can lack such a move (it has Manila's
+ * but not Pohnpei's), so the resolver takes the side of the date line from
+ * here.
+ */
 export function buildEras(main, backzone) {
   const zoneOf = (name, seen = new Set()) => {
     if (seen.has(name)) throw new Error(`tz-lmt: link cycle at ${name}`);
@@ -172,13 +196,16 @@ export function buildEras(main, backzone) {
     ...main.zones.keys(), ...main.links.keys(), ...backzone.zones.keys(), ...backzone.links.keys(),
   ]);
   const eras = {};
+  const dateLine = {};
   for (const name of [...names].sort()) {
     const lines = zoneOf(name);
     if (!lines) throw new Error(`tz-lmt: ${name} resolves to no zone`);
-    const end = lmtEraEnd(lines);
-    if (end !== null) eras[name] = end;
+    const era = lmtEraLines(lines);
+    if (!era) continue;
+    eras[name] = era.at(-1)[0];
+    if (era.length > 1) dateLine[name] = era;
   }
-  return eras;
+  return { eras, dateLine };
 }
 
 /** Minimal ustar reader: the release tarball holds plain files only. */
@@ -220,12 +247,13 @@ async function buildTable(root) {
     for (const [name, target] of parsed.links) main.links.set(name, target);
   }
   const backzone = parseTzdb(files.get(BACKZONE) ?? '');
-  const eras = buildEras(main, backzone);
+  const { eras, dateLine } = buildEras(main, backzone);
 
   const output = {
     tzdb: TZDB_VERSION,
     source: { url: TZDB_URL, sha256: TZDB_SHA256, files: [...MAIN_FILES, BACKZONE] },
     eras,
+    dateLine,
   };
   return { text: `${JSON.stringify(output, null, 1)}\n`, count: Object.keys(eras).length };
 }
