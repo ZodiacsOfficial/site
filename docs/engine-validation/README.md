@@ -170,8 +170,13 @@ within 26 hours of fourteen era ends, east and west of the reference meridian,
 against a separate model of the birthplace clock, with receipts validated;
 the date-line days of Alaska, Manila and Apia inside eras; a bound that ignores
 a longitude more than three hours from the zone's mean time. Not established:
-agreement with other programs' era ends, and for a few zones the host's legal
-history after the era, which lacks backzone, belongs to another city.
+agreement with other programs' era ends. And after the era the legal history
+is still the host's, which lacks backzone: on Node 22.22 (ICU 78.2), 90 of the
+355 zones with an era in the birthplace index take their first offsets from
+another city, and for 85 of them the legal offset before 1970 differs from
+backzone's by 5 to 180 minutes (Amsterdam 1900 resolves on Brussels's +0:00,
+not Amsterdam Mean Time's +0:19:32). Step 1.12 of the engine brief moves that
+history into the engine.
 
 Not established: which IANA version any given visitor's runtime carries. The
 history is the host's, so two machines can legitimately disagree on a
