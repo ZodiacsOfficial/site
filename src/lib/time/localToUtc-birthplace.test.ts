@@ -106,6 +106,9 @@ describe('birthplace local mean time', () => {
     expect(pohnpei.localMeanTime?.longitude).toBe(158.16);
     const pohnpeiAfter = resolveLocalToUtc('1850-06-01', '12:00', 'Pacific/Pohnpei', { longitude: 158.16 });
     expect(pohnpeiAfter.utc.toISOString()).toBe('1850-06-01T01:27:22.000Z');
+    // Midway kept the American date; the host links it to Pago Pago, on the Asian one until 1892.
+    const midway = resolveLocalToUtc('1880-06-01', '12:00', 'Pacific/Midway', { longitude: -177.37 });
+    expect(midway.utc.toISOString()).toBe('1880-06-01T23:49:29.000Z');
   });
 
   it('moves a skipped wall time forward by the gap the change to standard time left', () => {

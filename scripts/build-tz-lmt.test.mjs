@@ -73,9 +73,12 @@ describe('the local mean time era builder', () => {
   });
 
   it('prefers backzone over a main-data link and resolves the remaining links', () => {
-    const { eras, dateLine } = buildEras(parseTzdb(MAIN), parseTzdb(BACKZONE));
-    // Only eras that crossed the date line carry their lines.
+    const { eras, offsets, dateLine } = buildEras(parseTzdb(MAIN), parseTzdb(BACKZONE));
+    // Eras that crossed the date line carry their lines; the rest their offset.
     expect(Object.keys(dateLine)).toEqual(['Asia/Manila']);
+    expect(offsets['Europe/Oslo']).toBe(43 * 60);
+    expect(offsets['US/Eastern']).toBe(parseClock('-4:56:02'));
+    expect(Object.keys(offsets).length + Object.keys(dateLine).length).toBe(Object.keys(eras).length);
     expect(eras['Europe/Oslo']).toBe(Date.UTC(1895, 0, 1) / 1000 - 43 * 60);
     expect(eras['US/Eastern']).toBe(eras['America/New_York']);
     expect(eras).not.toHaveProperty('Antarctica/Troll');

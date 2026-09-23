@@ -28,8 +28,10 @@
  * the town's own clock, and ends the era.
  *
  * Output: { tzdb, source, eras: { "<zone>": <era end, Unix seconds> },
+ * offsets: { "<zone>": <era offset, seconds east> },
  * dateLine: { "<zone>": [[<line end>, <offset, seconds east>], …] } }, keys
- * sorted; dateLine lists only eras that crossed the date line. Zones whose
+ * sorted; an era that crossed the date line is in dateLine, any other in
+ * offsets. Zones whose
  * first line is not local mean time ("-00" placeholders, fixed offsets) are
  * omitted; the resolver leaves them to Intl.
  *
@@ -178,10 +180,11 @@ export function lmtEraEnd(lines) {
 
 /**
  * Backzone replaces the main data's definition of a name; links resolve to
- * zones. `dateLine` keeps, for eras that crossed the date line, each line's
- * end and offset: the host's zone data can lack such a move (it has Manila's
- * but not Pohnpei's), so the resolver takes the side of the date line from
- * here.
+ * zones. `offsets` keeps each era's own mean time offset, and `dateLine`,
+ * for eras that crossed the date line, each line's end and offset. The
+ * host's zone data can put an era on the other side of the date line (it
+ * has Manila's move but not Pohnpei's, and puts Midway on the Asian date), so
+ * the resolver takes the side from here.
  */
 export function buildEras(main, backzone) {
   const zoneOf = (name, seen = new Set()) => {
@@ -196,6 +199,7 @@ export function buildEras(main, backzone) {
     ...main.zones.keys(), ...main.links.keys(), ...backzone.zones.keys(), ...backzone.links.keys(),
   ]);
   const eras = {};
+  const offsets = {};
   const dateLine = {};
   for (const name of [...names].sort()) {
     const lines = zoneOf(name);
@@ -204,8 +208,9 @@ export function buildEras(main, backzone) {
     if (!era) continue;
     eras[name] = era.at(-1)[0];
     if (era.length > 1) dateLine[name] = era;
+    else offsets[name] = era[0][1];
   }
-  return { eras, dateLine };
+  return { eras, offsets, dateLine };
 }
 
 /** Minimal ustar reader: the release tarball holds plain files only. */
@@ -247,12 +252,13 @@ async function buildTable(root) {
     for (const [name, target] of parsed.links) main.links.set(name, target);
   }
   const backzone = parseTzdb(files.get(BACKZONE) ?? '');
-  const { eras, dateLine } = buildEras(main, backzone);
+  const { eras, offsets, dateLine } = buildEras(main, backzone);
 
   const output = {
     tzdb: TZDB_VERSION,
     source: { url: TZDB_URL, sha256: TZDB_SHA256, files: [...MAIN_FILES, BACKZONE] },
     eras,
+    offsets,
     dateLine,
   };
   return { text: `${JSON.stringify(output, null, 1)}\n`, count: Object.keys(eras).length };

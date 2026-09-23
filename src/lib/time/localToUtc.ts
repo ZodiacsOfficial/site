@@ -43,6 +43,8 @@ export interface LocalTimeResolution {
 
 /** Unix seconds at which each zone's local mean time era ended, once loaded. */
 let lmtEraEnd: Readonly<Record<string, number>> | null = null;
+/** Each era's own mean time offset (seconds east), from the table rather than the host. */
+let lmtOffsets: Readonly<Record<string, number>> = {};
 /** For eras that crossed the date line: each line's end (Unix seconds) and offset (seconds east). */
 let lmtDateLine: Readonly<Record<string, readonly (readonly number[])[]>> = {};
 let lmtEraLoad: Promise<void> | null = null;
@@ -74,6 +76,7 @@ export function prepareLocalTime(date: string): Promise<void> {
   if (!localMeanTimeCanApply(date) || lmtEraEnd) return Promise.resolve();
   if (!lmtEraLoad) {
     const pending = loadModule(() => import('../../data/tz-lmt.json')).then(({ default: table }) => {
+      lmtOffsets = table.offsets;
       lmtDateLine = table.dateLine;
       lmtEraEnd = table.eras;
     });
@@ -306,12 +309,14 @@ function birthplaceMeanTime(
   // Mean solar time runs four minutes per degree of longitude, kept to whole
   // seconds as IANA offsets are.
   const meanSeconds = Math.round(longitude * 240);
-  // The zone's own mean time during the era, which fixes the side of the date
-  // line. The table's record wins where the era crossed it, because the
-  // host's data can lack the move (it has Manila's in 1844, not Pohnpei's).
-  const eraLines = Object.prototype.hasOwnProperty.call(lmtDateLine, tz) ? lmtDateLine[tz] : null;
+  // The zone's own mean time during the era, from the table: it fixes the
+  // side of the date line, which the host's data can get wrong (it lacks
+  // Pohnpei's move in 1844 and puts Midway on the Asian date).
+  const own = (table: Readonly<Record<string, unknown>>) => Object.prototype.hasOwnProperty.call(table, tz);
+  const eraLines = own(lmtDateLine) ? lmtDateLine[tz] : null;
   const eraOffset = (utcMs: number): number => {
     if (eraLines) for (const [until, offset] of eraLines) if (utcMs < until * 1000) return offset / 60;
+    if (own(lmtOffsets)) return lmtOffsets[tz] / 60;
     return offsetAt(tz, utcMs);
   };
   const meanOffset = (utcMs: number): number => {
