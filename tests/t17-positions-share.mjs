@@ -338,8 +338,8 @@ try {
         'the v1 birth-details link must remain a labeled secondary action');
       assert.equal(
         (await dialog.locator('[data-preview-link]').locator('xpath=../following-sibling::p[1]').innerText()).trim(),
-        'The private link keeps positions in your browser; the preview link sends positions — never birth details — to the preview service.',
-        'the preview tradeoff must stay one dry sentence',
+        'Both links keep the chart code after the # sign, which browsers do not send to servers. The preview link also sends the Sun, Moon and Rising, to the whole degree, to our preview service.',
+        'the preview tradeoff must stay two dry sentences',
       );
 
       await source.waitForFunction(() => (
@@ -889,7 +889,10 @@ try {
       assert.equal(await received.locator(SHARE_WING_LINKS).count(), 0,
         'a #p receiver must be Registry-sterile');
       assert.equal(new URL(received.url()).hash, '', 'successful #p fragment must be consumed and stripped');
-      assert.equal((await positions.locator('.notice').innerText()).trim(), 'Positions only — birth details not included.');
+      assert.equal((await positions.locator('.notice').innerText()).trim(), 'Positions only, with no name, date, time or place fields.');
+      assert.equal((await positions.locator('.calc__positions-privacy').first().innerText()).trim(),
+        'The exact positions still give the birth date and time. They give the birthplace only as a region about 500 km across.',
+        'positions receiver must say what the exact positions still give');
       assert.equal(await positions.locator('svg.wheel').count(), 1, 'positions result keeps a static wheel');
       assert.equal(await positions.locator('tbody tr').count(), 14, 'twelve bodies plus encoded ASC/MC must be shown');
       assert.equal(await positions.locator('.xplr, [data-entity], [data-share-card], [data-share-link]').count(), 0,

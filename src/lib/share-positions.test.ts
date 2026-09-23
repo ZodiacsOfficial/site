@@ -173,7 +173,7 @@ function median(values: number[]): number {
 }
 
 describe('what a shared positions code leaves of the birthplace', () => {
-  it('leaves the birthplace inside a region at least 70 km across, 500 km at the median, over 300 seeded births', () => {
+  it('leaves the birthplace inside a region at least 70 km across, about 500 km at the median, over 300 seeded births', () => {
     const random = seededRandom(20260923);
     const start = Date.UTC(1950, 0, 1);
     const end = Date.UTC(2008, 11, 31);
@@ -194,6 +194,7 @@ describe('what a shared positions code leaves of the birthplace', () => {
     expect(regions.every((region) => region.containsBirthplace)).toBe(true);
     expect(Math.min(...longSides)).toBeGreaterThanOrEqual(70);
     expect(median(longSides)).toBeGreaterThanOrEqual(500);
+    expect(median(longSides)).toBeLessThan(550);
     expect(nearEquator.length).toBeGreaterThan(200);
     expect(Math.min(...nearEquator)).toBeGreaterThanOrEqual(240);
     expect(Math.min(...regions.map((region) => region.eastWestDegrees))).toBeGreaterThanOrEqual(0.9);

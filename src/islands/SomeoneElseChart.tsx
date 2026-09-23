@@ -532,7 +532,7 @@ export default function SomeoneElseChart() {
             <header>
               <span class="other-chart__step">Fastest</span>
               <h2>Use the link they sent</h2>
-              <p>Paste a Zodiacs birth-chart link. Both full-details links and privacy-reduced positions-only links are accepted.</p>
+              <p>Paste a Zodiacs birth-chart link. Full-details links and positions-only links both work.</p>
             </header>
             <form class="other-chart__link-form" onSubmit={validateSharedLink}>
               <label for="other-chart-link">Zodiacs chart link</label>
@@ -560,7 +560,7 @@ export default function SomeoneElseChart() {
                   <strong>{shared.kind === 'details' ? 'Full-details chart recognized' : 'Positions-only chart recognized'}</strong>
                   <p>{shared.kind === 'details'
                     ? `Includes a ${shared.input.timeKnown ? 'known' : 'missing'} birth time. The details stay inside the link fragment.`
-                    : 'Birth date, time, place, coordinates, and name are not present in this link.'}</p>
+                    : 'The link has no name, date, time or place fields. Its exact positions still give their birth date and time, and their birthplace as a region about 500 km across.'}</p>
                 </div>
               </div>
             )}
@@ -592,7 +592,7 @@ export default function SomeoneElseChart() {
               ) : null}
             </div>
             {shared?.kind === 'positions' && (
-              <p class="other-chart__privacy">A positions-only link can be viewed safely here. The current full-chart comparison accepts saved charts or full-details links; the Sun-sign guide remains available without inventing missing data.</p>
+              <p class="other-chart__privacy">A positions-only link opens here as a read-only chart. The current full-chart comparison accepts saved charts or full-details links; the Sun-sign guide remains available without inventing missing data.</p>
             )}
           </div>
         </section>
