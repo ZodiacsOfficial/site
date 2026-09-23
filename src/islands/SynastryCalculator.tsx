@@ -228,6 +228,15 @@ const handleOf = (name: string) => name.split('·')[0].trim() || name;
 export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promise<Person> {
   const resolved = await resolveSavedChart(chart, loadEngine);
   const { summary } = resolved;
+  // A recomputed summary is kept through the profile refresh's compare-and-set,
+  // which leaves birth input and timestamps alone.
+  if (summary !== chart.summary) {
+    await import('../lib/profile/store')
+      .then(({ updateChartSummaries }) => updateChartSummaries([
+        { id: chart.id, utcISO: chart.summary.utcISO, summary },
+      ]))
+      .catch(() => {});
+  }
   return {
     label: handleOf(chart.name),
     bodies: resolved.bodies,

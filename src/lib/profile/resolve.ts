@@ -24,11 +24,13 @@ export type SavedChartEngineLoader = () => Promise<{
  * zone's reference city instead of the birthplace's own, so a Buffalo birth
  * in 1870 was saved on New York's clock, and those before 1970 used the
  * browser's zone history, which gives Oslo Berlin's. Any failure falls back
- * quietly to the stored summary.
+ * quietly to the stored summary; `strict` rejects instead, for a caller that
+ * must tell a failed download from a summary that needs no change.
  */
 export async function resolveSavedChart(
   source: SavedChart,
   loadEngine: SavedChartEngineLoader,
+  { strict = false }: { strict?: boolean } = {},
 ): Promise<ResolvedSavedChart> {
   const chart = repairLegacyPolarChart(source);
   const stored: ResolvedSavedChart = {
@@ -76,7 +78,8 @@ export async function resolveSavedChart(
         flags: result.flags,
       },
     };
-  } catch {
+  } catch (cause) {
+    if (strict) throw cause;
     return stored;
   }
 }

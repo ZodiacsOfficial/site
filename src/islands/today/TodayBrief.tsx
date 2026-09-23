@@ -130,7 +130,13 @@ export default function TodayBrief({
     setTransitsFailed(false);
     // Start arithmetic and phrasing together only when personalization needs
     // them. Neither dependency waits for the other before its request starts.
-    void Promise.all([import('../../lib/transits'), import('../../lib/today/contacts')])
+    // No contact is read until stale saved summaries are rewritten; a refresh
+    // that cannot load leaves the stored chart in use. Its modules load here,
+    // not in the page's initial script.
+    const refreshed = Promise.all([import('../../lib/profile/refresh'), import('../../lib/hooks/useEngine')])
+      .then(([{ refreshSavedChartSummaries }, { loadEngine }]) => refreshSavedChartSummaries(loadEngine))
+      .catch(() => 0);
+    void Promise.all([import('../../lib/transits'), import('../../lib/today/contacts'), refreshed])
       .then(([transits, contacts]) => {
         if (active) setTransitsModule({ ...transits, ...contacts });
       })

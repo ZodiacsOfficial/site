@@ -7,6 +7,7 @@
  * chart id + calculation inputs + engine version, refreshed every two weeks.
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useEngine } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 import { explicitSelfChart } from '../lib/profile/read-store';
 import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
@@ -66,6 +67,7 @@ const readYearCache = (): YearCacheFile => {
 
 export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   const locale = normalizeCatalogLocale(rawLocale);
+  const loadEngine = useEngine();
   const { profile } = useProfile();
   const charts = useMemo(
     () => [...profile.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
@@ -166,6 +168,14 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
     })();
     return cleanup;
   }, [requestKey]);
+
+  // Stale saved summaries are rewritten once; the profile event from that
+  // write re-reads today and the year ahead from the corrected chart.
+  useEffect(() => {
+    void import('../lib/profile/refresh')
+      .then(({ refreshSavedChartSummaries }) => refreshSavedChartSummaries(loadEngine))
+      .catch(() => {});
+  }, []);
 
   const today = useMemo(() => {
     if (!chart) return null;

@@ -262,6 +262,25 @@ describe('saved comparison calculation coherence', () => {
     expect(saved.summary.angles).toEqual({ asc: 0, mc: 0 });
   });
 
+  it('writes the recomputed summary back to the saved chart without changing its record', async () => {
+    const saved = legacySaved();
+    const storage = new Map([[PROFILE_KEY, JSON.stringify({ ...EMPTY_PROFILE, charts: [saved] })]]);
+    vi.stubGlobal('localStorage', {
+      getItem: (key: string) => storage.get(key) ?? null,
+      setItem: (key: string, value: string) => storage.set(key, value),
+    });
+    const dispatchEvent = vi.fn();
+    vi.stubGlobal('window', { dispatchEvent });
+
+    await resolveSaved(loadProfile().charts[0], async () => engine);
+
+    const [stored] = loadProfile().charts;
+    expect(stored.summary.engineVersion).toBe(ENGINE_VERSION);
+    expect(stored.summary.angles!.asc).toBeCloseTo(23.872, 3);
+    expect({ ...stored, summary: saved.summary }).toEqual(saved);
+    expect(dispatchEvent).toHaveBeenCalledOnce();
+  });
+
   it('keeps positions-only comparisons unchanged and never fabricates a house ring or latitude', async () => {
     const saved = legacySaved();
     saved.birth.place = null;
