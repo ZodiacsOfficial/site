@@ -10,6 +10,7 @@
  */
 import { bodyLongitude, longitudeSpeed } from './full.js';
 import { findLongitudeCrossingsWith } from './longitude-crossings.js';
+import { clipToReferenceSpan } from './reference-span.js';
 import type { LongitudeCrossing } from './longitude-crossings';
 import type { BodyName } from './types';
 
@@ -71,6 +72,10 @@ export interface SaturnReturnResult {
   natalLon: number;
   natalRetrograde: boolean;
   seasons: ReturnSeason[];
+  /** True when the scan stopped at the end of 2199, so later passes are not shown. */
+  rangeClipped: boolean;
+  /** The window actually searched, or null when none of it was in range. */
+  searched: { from: Date; to: Date } | null;
 }
 
 /**
@@ -85,13 +90,17 @@ export function saturnReturns(birthUtc: Date): SaturnReturnResult {
 
   // Scan +26y..+92y: the first return can't land before ~28y, but a
   // retrograde first pass can lead the exact-age mark by many months.
-  const from = new Date(birthUtc.getTime() + 26 * 365.25 * DAY);
-  const to = new Date(birthUtc.getTime() + 92 * 365.25 * DAY);
-  const crossings = findLongitudeCrossings('Saturn', natalLon, from, to);
+  const window = clipToReferenceSpan(
+    new Date(birthUtc.getTime() + 26 * 365.25 * DAY),
+    new Date(birthUtc.getTime() + 92 * 365.25 * DAY),
+  );
+  const crossings = window ? findLongitudeCrossings('Saturn', natalLon, window.from, window.to) : [];
 
   return {
     natalLon,
     natalRetrograde: speed < 0,
     seasons: groupIntoSeasons(crossings),
+    rangeClipped: !window || window.clipped,
+    searched: window ? { from: window.from, to: window.to } : null,
   };
 }

@@ -223,7 +223,7 @@ export default function SolarReturnCalculator() {
                 <option value="current">Current return</option>
                 <option value="custom">Choose a year</option>
               </select>
-              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2200" required value={customYear} onInput={(event) => { invalidateResult(); setCustomYear((event.target as HTMLInputElement).value); }} />}
+              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2199" required value={customYear} onInput={(event) => { invalidateResult(); setCustomYear((event.target as HTMLInputElement).value); }} />}
             </div>
 
             {effectiveTimeKnown && !(saved && !saved.birth.place) && (
