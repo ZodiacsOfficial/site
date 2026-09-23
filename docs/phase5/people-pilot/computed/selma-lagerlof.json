@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Stockholm",
     "civilTime": "12:00",
-    "utcInstant": "1858-11-20T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1858-11-19T23:06:32.000Z",
-    "civilDayEndUtc": "1858-11-20T23:06:32.000Z",
+    "utcInstant": "1858-11-20T11:07:12.000Z",
+    "utcOffsetMinutesAtBirth": 52.8,
+    "civilDayStartUtc": "1858-11-19T23:07:12.000Z",
+    "civilDayEndUtc": "1858-11-20T23:07:12.000Z",
     "latitude": 59.733416666667,
     "longitude": 13.200138888889,
     "coordinateEscalationSteps": 0,
@@ -30,7 +30,7 @@
   "sun": {
     "sign": "scorpio",
     "signName": "Scorpio",
-    "degree": 27.88
+    "degree": 27.89
   },
   "moon": {
     "sign": "taurus",
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.4171,
-    "degreesToNextBoundaryAtWindowEnd": 1.5727
+    "degreesInsideAtWindowStart": 27.3801,
+    "degreesToNextBoundaryAtWindowEnd": 1.6097
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.01,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 27.88,
+      "degree": 27.89,
       "retrograde": false,
       "speedPerDay": 1.0102,
       "dignity": null,
@@ -77,7 +77,7 @@
       "signName": "Taurus",
       "degree": 19.09,
       "retrograde": false,
-      "speedPerDay": 14.7141,
+      "speedPerDay": 14.7143,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -241,7 +241,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "sextile",
-      "orb": 3.09,
+      "orb": 3.08,
       "applying": true
     },
     {
@@ -255,7 +255,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "opposition",
-      "orb": 8.8,
+      "orb": 8.79,
       "applying": true
     }
   ],

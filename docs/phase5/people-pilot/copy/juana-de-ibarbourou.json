@@ -7,14 +7,14 @@
   "identity": "Writer · Uruguay · 1892–1979",
   "title": "Juana de Ibarbourou's birth chart",
   "metaDescription": "Juana de Ibarbourou's chart, computed from a sourced birth date: Sun at 18.6° Pisces. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 23.2° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 23.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:domicile",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:18.57",
+        "sun-degree:18.56",
         "decan:pisces:second"
       ],
       "text": "Measured rather than labelled, the Sun holds 18.6° Pisces: the second decan, whose classical sub-ruler is the Moon. A water sign, read here in its second face."
@@ -57,7 +57,7 @@
         "dignity:Venus:detriment",
         "dignity:Jupiter:domicile"
       ],
-      "text": "The classical table has four entries for this chart. The Moon in Cancer at 23.2° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 20.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 28.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 28.0° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+      "text": "The classical table has four entries for this chart. The Moon in Cancer at 23.1° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 20.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 28.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 28.0° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
     },
     {
       "key": "shape",
@@ -78,7 +78,7 @@
         "moon-band:12.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 23.2°."
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 23.1°."
     }
   ],
   "birthdayLink": {
@@ -91,7 +91,7 @@
   },
   "substantiveFacts": [
     "dignity:Moon:domicile",
-    "sun-degree:18.57",
+    "sun-degree:18.56",
     "decan:pisces:second",
     "personal:Mercury:Pisces:20.8°",
     "personal:Venus:Aries:28.2°",

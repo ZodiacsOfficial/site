@@ -35,9 +35,9 @@
       "facts": [
         "aspect:Neptune:Pluto:sextile:0.74",
         "aspect:Mars:Jupiter:sextile:0.93",
-        "aspect:Mercury:Uranus:conjunction:1.54"
+        "aspect:Mercury:Uranus:conjunction:1.56"
       ],
-      "text": "Nothing in the geometry sits closer than Neptune and Pluto: 0.7° from an exact sextile. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars sextile Jupiter at 0.9°, and Mercury conjunction Uranus at 1.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "Nothing in the geometry sits closer than Neptune and Pluto: 0.7° from an exact sextile. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars sextile Jupiter at 0.9°, and Mercury conjunction Uranus at 1.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
@@ -78,7 +78,7 @@
         "moon-band:13.6"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.9°."
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.7°."
     }
   ],
   "birthdayLink": {
@@ -98,7 +98,7 @@
     "personal:Mars:Taurus:18.3°",
     "aspect:Neptune:Pluto:sextile:0.74",
     "aspect:Mars:Jupiter:sextile:0.93",
-    "aspect:Mercury:Uranus:conjunction:1.54",
+    "aspect:Mercury:Uranus:conjunction:1.56",
     "figure:none",
     "dignity:Sun:exaltation",
     "dignity:Venus:domicile",

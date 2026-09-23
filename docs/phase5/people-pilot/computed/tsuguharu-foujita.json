@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Tokyo",
     "civilTime": "12:00",
-    "utcInstant": "1886-11-27T02:41:01.000Z",
-    "utcOffsetMinutesAtBirth": 558.9833,
-    "civilDayStartUtc": "1886-11-26T14:41:01.000Z",
-    "civilDayEndUtc": "1886-11-27T14:41:01.000Z",
+    "utcInstant": "1886-11-27T02:41:02.000Z",
+    "utcOffsetMinutesAtBirth": 558.9667,
+    "civilDayStartUtc": "1886-11-26T14:41:02.000Z",
+    "civilDayEndUtc": "1886-11-27T14:41:02.000Z",
     "latitude": 35.70591666666667,
     "longitude": 139.74244166666668,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 4.7077,
-    "degreesToNextBoundaryAtWindowEnd": 24.2789
+    "degreesInsideAtWindowStart": 4.3144,
+    "degreesToNextBoundaryAtWindowEnd": 24.6723
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.013,

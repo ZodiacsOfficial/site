@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Mexico_City",
     "civilTime": "12:00",
-    "utcInstant": "1911-08-12T18:36:36.000Z",
-    "utcOffsetMinutesAtBirth": -396.6,
-    "civilDayStartUtc": "1911-08-12T06:36:36.000Z",
-    "civilDayEndUtc": "1911-08-13T06:36:36.000Z",
+    "utcInstant": "1911-08-12T18:36:33.000Z",
+    "utcOffsetMinutesAtBirth": -396.55,
+    "civilDayStartUtc": "1911-08-12T06:36:33.000Z",
+    "civilDayEndUtc": "1911-08-13T06:36:33.000Z",
     "latitude": 19.353773,
     "longitude": -99.13589,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.1665,
-    "degreesToNextBoundaryAtWindowEnd": 10.8739
+    "degreesInsideAtWindowStart": 18.4308,
+    "degreesToNextBoundaryAtWindowEnd": 10.6096
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.96,

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Tehran",
     "civilTime": "12:00",
-    "utcInstant": "1903-02-17T08:34:16.000Z",
-    "utcOffsetMinutesAtBirth": 205.7333,
-    "civilDayStartUtc": "1903-02-16T20:34:16.000Z",
-    "civilDayEndUtc": "1903-02-17T20:34:16.000Z",
+    "utcInstant": "1903-02-17T08:34:26.000Z",
+    "utcOffsetMinutesAtBirth": 205.5667,
+    "civilDayStartUtc": "1903-02-16T20:34:26.000Z",
+    "civilDayEndUtc": "1903-02-17T20:34:26.000Z",
     "latitude": 35.68888888888889,
     "longitude": 51.389722222222225,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.1559,
-    "degreesToNextBoundaryAtWindowEnd": 1.8353
+    "degreesInsideAtWindowStart": 27.0118,
+    "degreesToNextBoundaryAtWindowEnd": 1.9793
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.009,

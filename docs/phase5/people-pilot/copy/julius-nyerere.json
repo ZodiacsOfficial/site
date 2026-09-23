@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:22.67",
+        "sun-degree:22.68",
         "decan:aries:third"
       ],
       "text": "The Sun's exact place is 22.7° Aries. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a cardinal season."
@@ -33,9 +33,9 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Pluto:sextile:0.28",
+        "aspect:Venus:Pluto:sextile:0.29",
         "aspect:Jupiter:Neptune:sextile:0.33",
-        "aspect:Sun:Mars:trine:0.81"
+        "aspect:Sun:Mars:trine:0.82"
       ],
       "text": "The tightest geometry in the chart puts Venus a sixth of the circle apart from Pluto, 0.3° off exact. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Jupiter sextile Neptune at 0.3°, and the Sun trine Mars at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
@@ -56,7 +56,7 @@
         "dignity:Venus:domicile",
         "dignity:Saturn:exaltation"
       ],
-      "text": "The classical table has four entries for this chart. The Sun in Aries at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Scorpio at 13.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Taurus at 8.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 2.8° is in exaltation. Condition, not character: that is all the dignity table ever measured."
+      "text": "The classical table has four entries for this chart. The Sun in Aries at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Scorpio at 13.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Taurus at 8.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 2.8° is in exaltation. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:14.4"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.6°."
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.7°."
     }
   ],
   "birthdayLink": {
@@ -90,14 +90,14 @@
   },
   "substantiveFacts": [
     "dignity:Sun:exaltation",
-    "sun-degree:22.67",
+    "sun-degree:22.68",
     "decan:aries:third",
     "personal:Mercury:Aries:10.8°",
     "personal:Venus:Taurus:8.3°",
     "personal:Mars:Sagittarius:21.9°",
-    "aspect:Venus:Pluto:sextile:0.28",
+    "aspect:Venus:Pluto:sextile:0.29",
     "aspect:Jupiter:Neptune:sextile:0.33",
-    "aspect:Sun:Mars:trine:0.81",
+    "aspect:Sun:Mars:trine:0.82",
     "figure:t-square:Mercury-Jupiter:apex-Pluto",
     "dignity:Sun:exaltation",
     "dignity:Moon:fall",

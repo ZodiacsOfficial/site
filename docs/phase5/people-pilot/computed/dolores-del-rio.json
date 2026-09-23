@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Monterrey",
     "civilTime": "12:00",
-    "utcInstant": "1904-08-03T18:41:16.000Z",
-    "utcOffsetMinutesAtBirth": -401.2667,
-    "civilDayStartUtc": "1904-08-03T06:41:16.000Z",
-    "civilDayEndUtc": "1904-08-04T06:41:16.000Z",
+    "utcInstant": "1904-08-03T18:58:37.000Z",
+    "utcOffsetMinutesAtBirth": -418.6167,
+    "civilDayStartUtc": "1904-08-03T06:58:37.000Z",
+    "civilDayEndUtc": "1904-08-04T06:58:37.000Z",
     "latitude": 24.022777777778,
     "longitude": -104.65444444444,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "leo",
     "signName": "Leo",
-    "degree": 10.95
+    "degree": 10.96
   },
   "moon": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 1.76,
+    "degree": 1.91,
     "uncertain": true,
     "signAtCivilDayStart": "aries",
     "signAtCivilDayEnd": "taurus"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 10.2015,
-    "degreesToNextBoundaryAtWindowEnd": 18.8411
+    "degreesInsideAtWindowStart": 10.4798,
+    "degreesToNextBoundaryAtWindowEnd": 18.5627
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.957,
-    "Moon": 12.231,
+    "Moon": 12.234,
     "Mercury": 1.514,
     "Venus": 1.234,
     "Mars": 0.652,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 10.95,
+      "degree": 10.96,
       "retrograde": false,
       "speedPerDay": 0.9575,
       "dignity": "domicile",
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 1.76,
+      "degree": 1.91,
       "retrograde": false,
-      "speedPerDay": 12.2334,
+      "speedPerDay": 12.2367,
       "dignity": "exaltation",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,9 +92,9 @@
       "body": "Mercury",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 3.43,
+      "degree": 3.45,
       "retrograde": false,
-      "speedPerDay": 1.5134,
+      "speedPerDay": 1.5131,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -103,7 +103,7 @@
       "body": "Venus",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 18.26,
+      "degree": 18.28,
       "retrograde": false,
       "speedPerDay": 1.2335,
       "dignity": null,
@@ -114,7 +114,7 @@
       "body": "Mars",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 22.63,
+      "degree": 22.64,
       "retrograde": false,
       "speedPerDay": 0.6519,
       "dignity": "fall",
@@ -136,7 +136,7 @@
       "body": "Saturn",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 18.18,
+      "degree": 18.17,
       "retrograde": true,
       "speedPerDay": -0.0739,
       "dignity": "domicile",
@@ -182,28 +182,28 @@
       "a": "Venus",
       "b": "Saturn",
       "type": "opposition",
-      "orb": 0.09,
+      "orb": 0.1,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "trine",
-      "orb": 1.67,
+      "orb": 1.54,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "conjunction",
-      "orb": 1.99,
+      "orb": 2.14,
       "applying": false
     },
     {
       "a": "Venus",
       "b": "Pluto",
       "type": "sextile",
-      "orb": 3.04,
+      "orb": 3.02,
       "applying": true
     },
     {
@@ -224,7 +224,7 @@
       "a": "Mercury",
       "b": "Jupiter",
       "type": "trine",
-      "orb": 3.66,
+      "orb": 3.68,
       "applying": false
     },
     {
@@ -238,7 +238,7 @@
       "a": "Sun",
       "b": "Saturn",
       "type": "opposition",
-      "orb": 7.23,
+      "orb": 7.22,
       "applying": true
     },
     {
@@ -254,14 +254,14 @@
       "a": "Mercury",
       "b": "Neptune",
       "type": "sextile",
-      "orb": 3.53,
+      "orb": 3.52,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 5.39,
+      "orb": 5.54,
       "applying": false
     }
   ],

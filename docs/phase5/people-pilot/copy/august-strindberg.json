@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:2.40",
+        "sun-degree:2.38",
         "decan:aquarius:first"
       ],
       "text": "At noon on that date the Sun stood at 2.4° Aquarius, inside the first decan (0°–10°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Jupiter:Uranus:trine:0.87",
-        "aspect:Mars:Neptune:sextile:1.12",
-        "aspect:Venus:Saturn:conjunction:6.36"
+        "aspect:Jupiter:Uranus:trine:0.88",
+        "aspect:Mars:Neptune:sextile:1.11",
+        "aspect:Mars:Pluto:trine:6.36"
       ],
-      "text": "Nothing in the geometry sits closer than Jupiter and Uranus: 0.9° from an exact trine. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mars sextile Neptune at 1.1°, and Venus conjunction Saturn at 6.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "Nothing in the geometry sits closer than Jupiter and Uranus: 0.9° from an exact trine. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mars sextile Neptune at 1.1°, and Mars trine Pluto at 6.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -56,7 +56,7 @@
         "dignity:Venus:exaltation",
         "dignity:Mars:exaltation"
       ],
-      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 2.4° is in detriment — the planet opposite its home, working against the grain; the Moon in Capricorn at 10.0° is in detriment; Venus in Pisces at 15.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Capricorn at 2.3° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 2.4° is in detriment — the planet opposite its home, working against the grain; the Moon in Capricorn at 9.8° is in detriment; Venus in Pisces at 15.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Capricorn at 2.3° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:12.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.0°."
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 9.8°."
     }
   ],
   "birthdayLink": {
@@ -90,14 +90,14 @@
   },
   "substantiveFacts": [
     "modality:cardinal:4",
-    "sun-degree:2.40",
+    "sun-degree:2.38",
     "decan:aquarius:first",
     "personal:Mercury:Aquarius:11.5°",
     "personal:Venus:Pisces:15.3°",
     "personal:Mars:Capricorn:2.3°",
-    "aspect:Jupiter:Uranus:trine:0.87",
-    "aspect:Mars:Neptune:sextile:1.12",
-    "aspect:Venus:Saturn:conjunction:6.36",
+    "aspect:Jupiter:Uranus:trine:0.88",
+    "aspect:Mars:Neptune:sextile:1.11",
+    "aspect:Mars:Pluto:trine:6.36",
     "figure:unaspected:Moon",
     "dignity:Sun:detriment",
     "dignity:Moon:detriment",

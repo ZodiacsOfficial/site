@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Berlin",
     "civilTime": "12:00",
-    "utcInstant": "1819-09-13T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1819-09-12T23:06:32.000Z",
-    "civilDayEndUtc": "1819-09-13T23:06:32.000Z",
+    "utcInstant": "1819-09-13T11:10:30.000Z",
+    "utcOffsetMinutesAtBirth": 49.5,
+    "civilDayStartUtc": "1819-09-12T23:10:30.000Z",
+    "civilDayEndUtc": "1819-09-13T23:10:30.000Z",
     "latitude": 51.3406321,
     "longitude": 12.3747329,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 12.99,
+    "degree": 13.02,
     "uncertain": false,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "cancer"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 19.3361,
-    "degreesToNextBoundaryAtWindowEnd": 9.6891
+    "degreesInsideAtWindowStart": 19.3026,
+    "degreesToNextBoundaryAtWindowEnd": 9.7226
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.975,
     "Moon": 11.919,
-    "Mercury": 0.462,
+    "Mercury": 0.461,
     "Venus": 1.243,
     "Mars": 0.58,
     "Jupiter": 0.066,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 12.99,
+      "degree": 13.02,
       "retrograde": false,
-      "speedPerDay": 11.9145,
+      "speedPerDay": 11.9142,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Virgo",
       "degree": 8.69,
       "retrograde": true,
-      "speedPerDay": -0.4592,
+      "speedPerDay": -0.4588,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -225,7 +225,7 @@
       "a": "Sun",
       "b": "Neptune",
       "type": "square",
-      "orb": 6.14,
+      "orb": 6.13,
       "applying": true
     },
     {
@@ -262,21 +262,21 @@
       "a": "Moon",
       "b": "Venus",
       "type": "sextile",
-      "orb": 0.19,
+      "orb": 0.22,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "sextile",
-      "orb": 4.3,
+      "orb": 4.33,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "conjunction",
-      "orb": 8.53,
+      "orb": 8.56,
       "applying": false
     }
   ],

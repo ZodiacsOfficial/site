@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:7.86",
+        "sun-degree:7.87",
         "decan:sagittarius:first"
       ],
       "text": "Sagittarius, but precisely: 7.9°, first decan, 0°–10°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -33,7 +33,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Pluto:trine:0.21",
+        "aspect:Mars:Pluto:trine:0.22",
         "aspect:Saturn:Neptune:square:0.79",
         "aspect:Jupiter:Pluto:square:1.75"
       ],
@@ -74,7 +74,7 @@
         "moon-band:12.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 19.1°."
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 19.3°."
     }
   ],
   "birthdayLink": {
@@ -87,12 +87,12 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Pluto:trine",
-    "sun-degree:7.86",
+    "sun-degree:7.87",
     "decan:sagittarius:first",
     "personal:Mercury:Scorpio:19.2°",
     "personal:Venus:Sagittarius:22.1°",
     "personal:Mars:Sagittarius:13.2°",
-    "aspect:Mars:Pluto:trine:0.21",
+    "aspect:Mars:Pluto:trine:0.22",
     "aspect:Saturn:Neptune:square:0.79",
     "aspect:Jupiter:Pluto:square:1.75",
     "figure:unaspected:Moon",

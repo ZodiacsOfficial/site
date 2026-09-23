@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Berlin",
     "civilTime": "12:00",
-    "utcInstant": "1883-05-18T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1883-05-17T23:06:32.000Z",
-    "civilDayEndUtc": "1883-05-18T23:06:32.000Z",
+    "utcInstant": "1883-05-18T11:06:28.000Z",
+    "utcOffsetMinutesAtBirth": 53.5333,
+    "civilDayStartUtc": "1883-05-17T23:06:28.000Z",
+    "civilDayEndUtc": "1883-05-18T23:06:28.000Z",
     "latitude": 52.516666666667,
     "longitude": 13.383333333333,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 26.6878,
-    "degreesToNextBoundaryAtWindowEnd": 2.3501
+    "degreesInsideAtWindowStart": 26.652,
+    "degreesToNextBoundaryAtWindowEnd": 2.3859
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.962,

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1743-08-26T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1743-08-25T23:50:39.000Z",
-    "civilDayEndUtc": "1743-08-26T23:50:39.000Z",
+    "utcInstant": "1743-08-26T11:50:35.000Z",
+    "utcOffsetMinutesAtBirth": 9.4167,
+    "civilDayStartUtc": "1743-08-25T23:50:35.000Z",
+    "civilDayEndUtc": "1743-08-26T23:50:35.000Z",
     "latitude": 48.85666666666667,
     "longitude": 2.352222222222222,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 2.2414,
-    "degreesToNextBoundaryAtWindowEnd": 26.7917
+    "degreesInsideAtWindowStart": 2.2351,
+    "degreesToNextBoundaryAtWindowEnd": 26.798
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.967,
@@ -259,7 +259,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "square",
-      "orb": 6.03,
+      "orb": 6.04,
       "applying": true
     },
     {

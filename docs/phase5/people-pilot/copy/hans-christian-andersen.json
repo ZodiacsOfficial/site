@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:12.27",
+        "sun-degree:12.28",
         "decan:aries:second"
       ],
       "text": "Aries, but precisely: 12.3°, second decan, 10°–20°, under the Sun in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -23,21 +23,21 @@
       "key": "personal",
       "title": "The personal registers",
       "facts": [
-        "personal:Mercury:Aries:14.1°",
+        "personal:Mercury:Aries:14.2°",
         "personal:Venus:Pisces:27.8°",
         "personal:Mars:Leo:2.5°"
       ],
-      "text": "Closer in, Mercury stands at 14.1° Aries; Venus stands at 27.8° Pisces; Mars stands at 2.5° Leo. The tradition reads a mind that decides at speaking speed from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+      "text": "Closer in, Mercury stands at 14.2° Aries; Venus stands at 27.8° Pisces; Mars stands at 2.5° Leo. The tradition reads a mind that decides at speaking speed from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Neptune:trine:0.05",
-        "aspect:Sun:Saturn:opposition:0.6",
-        "aspect:Mercury:Saturn:opposition:1.27"
+        "aspect:Venus:Neptune:trine:0.04",
+        "aspect:Sun:Saturn:opposition:0.59",
+        "aspect:Mercury:Saturn:opposition:1.29"
       ],
-      "text": "Venus and Neptune hold the closest angle here — a trine, 0.1° wide. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun opposition Saturn at 0.6°, and Mercury opposition Saturn at 1.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+      "text": "Venus and Neptune hold the closest angle here — a trine, 0.0° wide. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun opposition Saturn at 0.6°, and Mercury opposition Saturn at 1.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
     {
       "key": "figures",
@@ -58,7 +58,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:exaltation"
       ],
-      "text": "The classical table has five entries for this chart. The Sun in Aries at 12.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Taurus at 15.8° is in exaltation; Venus in Pisces at 27.8° is in exaltation; Jupiter in Sagittarius at 6.2° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 12.9° is in exaltation. Condition, not character: that is all the dignity table ever measured."
+      "text": "The classical table has five entries for this chart. The Sun in Aries at 12.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Taurus at 16.0° is in exaltation; Venus in Pisces at 27.8° is in exaltation; Jupiter in Sagittarius at 6.2° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 12.9° is in exaltation. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -79,7 +79,7 @@
         "moon-band:14.5"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 15.8°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 16.0°."
     }
   ],
   "birthdayLink": {
@@ -92,14 +92,14 @@
   },
   "substantiveFacts": [
     "dignity:Sun:exaltation",
-    "sun-degree:12.27",
+    "sun-degree:12.28",
     "decan:aries:second",
-    "personal:Mercury:Aries:14.1°",
+    "personal:Mercury:Aries:14.2°",
     "personal:Venus:Pisces:27.8°",
     "personal:Mars:Leo:2.5°",
-    "aspect:Venus:Neptune:trine:0.05",
-    "aspect:Sun:Saturn:opposition:0.6",
-    "aspect:Mercury:Saturn:opposition:1.27",
+    "aspect:Venus:Neptune:trine:0.04",
+    "aspect:Sun:Saturn:opposition:0.59",
+    "aspect:Mercury:Saturn:opposition:1.29",
     "figure:grand-trine:Venus-Mars-Neptune",
     "figure:unaspected:Moon",
     "dignity:Sun:exaltation",

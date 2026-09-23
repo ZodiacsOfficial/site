@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:17.13",
+        "sun-degree:17.14",
         "decan:libra:second"
       ],
       "text": "At the noon reference the Sun sits 17.1° into Libra — the second decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Jupiter:Uranus:square:0.01",
-        "aspect:Mercury:Pluto:opposition:0.52",
-        "aspect:Sun:Uranus:trine:0.93"
+        "aspect:Jupiter:Uranus:square:0.02",
+        "aspect:Mercury:Pluto:opposition:0.51",
+        "aspect:Jupiter:Saturn:conjunction:0.93"
       ],
-      "text": "The day's firmest angle joins Jupiter and Uranus — a square holding at 0.0°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mercury opposition Pluto at 0.5°, and the Sun trine Uranus at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "The day's firmest angle joins Jupiter and Uranus — a square holding at 0.0°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mercury opposition Pluto at 0.5°, and Jupiter conjunction Saturn at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -57,7 +57,7 @@
         "dignity:Mars:detriment",
         "dignity:Jupiter:detriment"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Libra at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Capricorn at 11.4° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 25.9° is in detriment; Mars in Libra at 2.2° is in detriment; Jupiter in Virgo at 16.2° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Libra at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Capricorn at 11.5° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 25.9° is in detriment; Mars in Libra at 2.2° is in detriment; Jupiter in Virgo at 16.2° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -78,7 +78,7 @@
         "moon-band:13.6"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.4°."
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.5°."
     }
   ],
   "birthdayLink": {
@@ -91,14 +91,14 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Pluto:opposition",
-    "sun-degree:17.13",
+    "sun-degree:17.14",
     "decan:libra:second",
     "personal:Mercury:Scorpio:9.3°",
     "personal:Venus:Scorpio:25.9°",
     "personal:Mars:Libra:2.2°",
-    "aspect:Jupiter:Uranus:square:0.01",
-    "aspect:Mercury:Pluto:opposition:0.52",
-    "aspect:Sun:Uranus:trine:0.93",
+    "aspect:Jupiter:Uranus:square:0.02",
+    "aspect:Mercury:Pluto:opposition:0.51",
+    "aspect:Jupiter:Saturn:conjunction:0.93",
     "figure:unaspected:Moon",
     "dignity:Sun:fall",
     "dignity:Moon:detriment",
@@ -113,7 +113,7 @@
     "moon-band:13.6"
   ],
   "measurements": {
-    "originalWords": 445,
+    "originalWords": 444,
     "substantiveStatements": 21,
     "blocks": 7
   }

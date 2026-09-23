@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1756-01-27T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1756-01-26T22:54:39.000Z",
-    "civilDayEndUtc": "1756-01-27T22:54:39.000Z",
+    "utcInstant": "1756-01-27T11:07:49.000Z",
+    "utcOffsetMinutesAtBirth": 52.1833,
+    "civilDayStartUtc": "1756-01-26T23:07:49.000Z",
+    "civilDayEndUtc": "1756-01-27T23:07:49.000Z",
     "latitude": 47.8,
     "longitude": 13.045,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "aquarius",
     "signName": "Aquarius",
-    "degree": 7.04
+    "degree": 7.05
   },
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 12.84,
+    "degree": 12.97,
     "uncertain": false,
     "signAtCivilDayStart": "sagittarius",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 6.5744,
-    "degreesToNextBoundaryAtWindowEnd": 22.41
+    "degreesInsideAtWindowStart": 6.5375,
+    "degreesToNextBoundaryAtWindowEnd": 22.4468
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.016,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 7.04,
+      "degree": 7.05,
       "retrograde": false,
       "speedPerDay": 1.0157,
       "dignity": "detriment",
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 12.84,
+      "degree": 12.97,
       "retrograde": false,
-      "speedPerDay": 14.4717,
+      "speedPerDay": 14.4723,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -86,9 +86,9 @@
       "body": "Mercury",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 7.55,
+      "degree": 7.56,
       "retrograde": false,
-      "speedPerDay": 1.7283,
+      "speedPerDay": 1.7284,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 28.89,
+      "degree": 28.91,
       "retrograde": false,
       "speedPerDay": 1.2457,
       "dignity": null,
@@ -110,7 +110,7 @@
       "signName": "Cancer",
       "degree": 0.37,
       "retrograde": true,
-      "speedPerDay": -0.132,
+      "speedPerDay": -0.1319,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -176,14 +176,14 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "square",
-      "orb": 0.34,
+      "orb": 0.21,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 0.51,
+      "orb": 0.52,
       "applying": false
     },
     {
@@ -197,21 +197,21 @@
       "a": "Venus",
       "b": "Mars",
       "type": "trine",
-      "orb": 1.48,
+      "orb": 1.47,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 2.1,
+      "orb": 2.08,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 2.61,
+      "orb": 2.6,
       "applying": true
     },
     {
@@ -225,14 +225,14 @@
       "a": "Sun",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 5.09,
+      "orb": 5.1,
       "applying": false
     },
     {
       "a": "Mercury",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 5.6,
+      "orb": 5.62,
       "applying": false
     },
     {
@@ -248,14 +248,14 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "trine",
-      "orb": 3.19,
+      "orb": 3.32,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "conjunction",
-      "orb": 4.93,
+      "orb": 4.8,
       "applying": true
     }
   ],

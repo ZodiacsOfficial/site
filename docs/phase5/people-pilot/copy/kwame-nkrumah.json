@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:27.86",
+        "sun-degree:27.85",
         "decan:virgo:third"
       ],
       "text": "At noon on that date the Sun stood at 27.9° Virgo, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
@@ -24,10 +24,10 @@
       "title": "The fast planets",
       "facts": [
         "personal:Mercury:Libra:23.9°",
-        "personal:Venus:Scorpio:5.4°",
+        "personal:Venus:Scorpio:5.3°",
         "personal:Mars:Aries:1.6°"
       ],
-      "text": "The personal planets sit Mercury at 23.9° Libra, Venus at 5.4° Scorpio, Mars at 1.6° Aries. Mercury in an air sign reads as thought that travels by comparison; Venus in a water sign reads as attraction that works by atmosphere; Mars in a fire sign reads as effort spent in bursts and openings."
+      "text": "The personal planets sit Mercury at 23.9° Libra, Venus at 5.3° Scorpio, Mars at 1.6° Aries. Mercury in an air sign reads as thought that travels by comparison; Venus in a water sign reads as attraction that works by atmosphere; Mars in a fire sign reads as effort spent in bursts and openings."
     },
     {
       "key": "geometry",
@@ -57,7 +57,7 @@
         "dignity:Jupiter:detriment",
         "dignity:Saturn:fall"
       ],
-      "text": "Read against the old dignities, four placements stand out. Venus in Scorpio at 5.4° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 1.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 25.6° is in detriment; Saturn in Aries at 21.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+      "text": "Read against the old dignities, four placements stand out. Venus in Scorpio at 5.3° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 1.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 25.6° is in detriment; Saturn in Aries at 21.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
     },
     {
       "key": "shape",
@@ -78,7 +78,7 @@
         "moon-band:12.4"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.3°."
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.2°."
     }
   ],
   "birthdayLink": {
@@ -91,10 +91,10 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Pluto:square",
-    "sun-degree:27.86",
+    "sun-degree:27.85",
     "decan:virgo:third",
     "personal:Mercury:Libra:23.9°",
-    "personal:Venus:Scorpio:5.4°",
+    "personal:Venus:Scorpio:5.3°",
     "personal:Mars:Aries:1.6°",
     "aspect:Sun:Pluto:square:0.97",
     "aspect:Jupiter:Pluto:square:1.28",

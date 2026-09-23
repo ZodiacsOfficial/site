@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/New_York",
     "civilTime": "12:00",
-    "utcInstant": "1815-11-12T16:56:02.000Z",
-    "utcOffsetMinutesAtBirth": -296.0333,
-    "civilDayStartUtc": "1815-11-12T04:56:02.000Z",
-    "civilDayEndUtc": "1815-11-13T04:56:02.000Z",
+    "utcInstant": "1815-11-12T16:57:29.000Z",
+    "utcOffsetMinutesAtBirth": -297.4833,
+    "civilDayStartUtc": "1815-11-12T04:57:29.000Z",
+    "civilDayEndUtc": "1815-11-13T04:57:29.000Z",
     "latitude": 43.0072,
     "longitude": -74.3722,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 29.87,
+    "degree": 29.88,
     "uncertain": true,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "aries"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.7706,
-    "degreesToNextBoundaryAtWindowEnd": 10.2224
+    "degreesInsideAtWindowStart": 18.9786,
+    "degreesToNextBoundaryAtWindowEnd": 10.0143
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.007,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 29.87,
+      "degree": 29.88,
       "retrograde": false,
-      "speedPerDay": 12.1771,
+      "speedPerDay": 12.1773,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -105,7 +105,7 @@
       "signName": "Libra",
       "degree": 12.89,
       "retrograde": false,
-      "speedPerDay": 0.3419,
+      "speedPerDay": 0.342,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -240,14 +240,14 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 6.23,
+      "orb": 6.22,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "conjunction",
-      "orb": 8.88,
+      "orb": 8.89,
       "applying": false
     }
   ],

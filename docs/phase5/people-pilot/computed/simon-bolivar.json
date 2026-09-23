@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Caracas",
     "civilTime": "12:00",
-    "utcInstant": "1783-07-24T16:27:44.000Z",
-    "utcOffsetMinutesAtBirth": -267.7333,
-    "civilDayStartUtc": "1783-07-24T04:27:44.000Z",
-    "civilDayEndUtc": "1783-07-25T04:27:44.000Z",
+    "utcInstant": "1783-07-24T16:27:39.000Z",
+    "utcOffsetMinutesAtBirth": -267.65,
+    "civilDayStartUtc": "1783-07-24T04:27:39.000Z",
+    "civilDayEndUtc": "1783-07-25T04:27:39.000Z",
     "latitude": 10.50611111111111,
     "longitude": -66.91444444444444,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.8704,
-    "degreesToNextBoundaryAtWindowEnd": 28.1737
+    "degreesInsideAtWindowStart": 1.0481,
+    "degreesToNextBoundaryAtWindowEnd": 27.996
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.956,
@@ -88,7 +88,7 @@
       "signName": "Cancer",
       "degree": 11.91,
       "retrograde": false,
-      "speedPerDay": 0.8852,
+      "speedPerDay": 0.8851,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -290,7 +290,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "trine",
-      "orb": 2.87,
+      "orb": 2.86,
       "applying": false
     },
     {

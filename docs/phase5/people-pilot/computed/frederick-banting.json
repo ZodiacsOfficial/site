@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Toronto",
     "civilTime": "12:00",
-    "utcInstant": "1891-11-14T17:17:32.000Z",
-    "utcOffsetMinutesAtBirth": -317.5333,
-    "civilDayStartUtc": "1891-11-14T05:17:32.000Z",
-    "civilDayEndUtc": "1891-11-15T05:17:32.000Z",
+    "utcInstant": "1891-11-14T17:19:27.000Z",
+    "utcOffsetMinutesAtBirth": -319.45,
+    "civilDayStartUtc": "1891-11-14T05:19:27.000Z",
+    "civilDayEndUtc": "1891-11-15T05:19:27.000Z",
     "latitude": 44.1499,
     "longitude": -79.8632,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 4.4,
+    "degree": 4.42,
     "uncertain": true,
     "signAtCivilDayStart": "aries",
     "signAtCivilDayEnd": "taurus"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 21.3504,
-    "degreesToNextBoundaryAtWindowEnd": 7.6422
+    "degreesInsideAtWindowStart": 21.5738,
+    "degreesToNextBoundaryAtWindowEnd": 7.4187
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.007,
-    "Moon": 14.788,
+    "Moon": 14.787,
     "Mercury": 1.532,
     "Venus": 1.25,
     "Mars": 0.634,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 4.4,
+      "degree": 4.42,
       "retrograde": false,
-      "speedPerDay": 14.7909,
+      "speedPerDay": 14.7908,
       "dignity": "exaltation",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -114,7 +114,7 @@
       "body": "Mars",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 15.07,
+      "degree": 15.08,
       "retrograde": false,
       "speedPerDay": 0.634,
       "dignity": "detriment",
@@ -203,14 +203,14 @@
       "a": "Venus",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 1.39,
+      "orb": 1.38,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 1.39,
+      "orb": 1.41,
       "applying": false
     },
     {
@@ -268,7 +268,7 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 3.95,
+      "orb": 3.93,
       "applying": true
     },
     {

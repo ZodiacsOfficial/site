@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Seoul",
     "civilTime": "12:00",
-    "utcInstant": "1902-12-17T03:32:08.000Z",
-    "utcOffsetMinutesAtBirth": 507.8667,
-    "civilDayStartUtc": "1902-12-16T15:32:08.000Z",
-    "civilDayEndUtc": "1902-12-17T15:32:08.000Z",
+    "utcInstant": "1902-12-17T03:31:25.000Z",
+    "utcOffsetMinutesAtBirth": 508.5833,
+    "civilDayStartUtc": "1902-12-16T15:31:25.000Z",
+    "civilDayEndUtc": "1902-12-17T15:31:25.000Z",
     "latitude": 36.81,
     "longitude": 127.1475,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 22.67,
+    "degree": 22.66,
     "uncertain": true,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "leo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 24.121,
-    "degreesToNextBoundaryAtWindowEnd": 4.8614
+    "degreesInsideAtWindowStart": 23.7616,
+    "degreesToNextBoundaryAtWindowEnd": 5.2208
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.018,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 22.67,
+      "degree": 22.66,
       "retrograde": false,
-      "speedPerDay": 15.1322,
+      "speedPerDay": 15.1323,
       "dignity": "domicile",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,7 +92,7 @@
       "body": "Mercury",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 26.87,
+      "degree": 26.86,
       "retrograde": false,
       "speedPerDay": 1.5821,
       "dignity": "detriment",
@@ -273,7 +273,7 @@
       "a": "Mercury",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 5.67,
+      "orb": 5.68,
       "applying": true
     },
     {
@@ -303,7 +303,7 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "opposition",
-      "orb": 3.45,
+      "orb": 3.46,
       "applying": true
     },
     {

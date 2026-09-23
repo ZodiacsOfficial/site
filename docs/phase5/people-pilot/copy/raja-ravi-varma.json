@@ -6,7 +6,7 @@
   "displayName": "Raja Ravi Varma",
   "identity": "Painter · India · 1848–1906",
   "title": "Raja Ravi Varma's birth chart",
-  "metaDescription": "Raja Ravi Varma's chart, computed from a sourced birth date: Sun at 9.0° Taurus. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Raja Ravi Varma's chart, computed from a sourced birth date: Sun at 9.1° Taurus. Birth time unknown, so no houses or rising sign.",
   "lede": "Four of the ten placements whose signs are settled stand in Aries — Mercury, Venus, Uranus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
   "ledeFact": "stellium:aries:4",
   "blocks": [
@@ -14,30 +14,30 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:9.02",
+        "sun-degree:9.05",
         "decan:taurus:first"
       ],
-      "text": "The Sun's exact place is 9.0° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — an earth sign read through a fixed season."
+      "text": "The Sun's exact place is 9.1° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — an earth sign read through a fixed season."
     },
     {
       "key": "personal",
       "title": "The fast planets",
       "facts": [
         "personal:Mercury:Aries:18.8°",
-        "personal:Venus:Aries:16.4°",
-        "personal:Mars:Cancer:6.6°"
+        "personal:Venus:Aries:16.5°",
+        "personal:Mars:Cancer:6.7°"
       ],
-      "text": "Mercury holds 18.8° Aries, Venus holds 16.4° Aries, Mars holds 6.6° Cancer — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+      "text": "Mercury holds 18.8° Aries, Venus holds 16.5° Aries, Mars holds 6.7° Cancer — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Uranus:conjunction:0.63",
-        "aspect:Venus:Jupiter:square:1.64",
-        "aspect:Mercury:Venus:conjunction:2.36"
+        "aspect:Mercury:Uranus:conjunction:0.57",
+        "aspect:Venus:Jupiter:square:1.68",
+        "aspect:Mercury:Venus:conjunction:2.37"
       ],
-      "text": "Closest first: Mercury to Uranus, a conjunction with 0.6° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Venus square Jupiter at 1.6°, and Mercury conjunction Venus at 2.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+      "text": "Closest first: Mercury to Uranus, a conjunction with 0.6° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Venus square Jupiter at 1.7°, and Mercury conjunction Venus at 2.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
     {
       "key": "figures",
@@ -55,7 +55,7 @@
         "dignity:Mars:fall",
         "dignity:Jupiter:exaltation"
       ],
-      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Aries at 16.4° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 6.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 14.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Aries at 16.5° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 6.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 14.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:14.2"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 12.7°."
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.2°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "stellium:aries:4",
-    "sun-degree:9.02",
+    "sun-degree:9.05",
     "decan:taurus:first",
     "personal:Mercury:Aries:18.8°",
-    "personal:Venus:Aries:16.4°",
-    "personal:Mars:Cancer:6.6°",
-    "aspect:Mercury:Uranus:conjunction:0.63",
-    "aspect:Venus:Jupiter:square:1.64",
-    "aspect:Mercury:Venus:conjunction:2.36",
+    "personal:Venus:Aries:16.5°",
+    "personal:Mars:Cancer:6.7°",
+    "aspect:Mercury:Uranus:conjunction:0.57",
+    "aspect:Venus:Jupiter:square:1.68",
+    "aspect:Mercury:Venus:conjunction:2.37",
     "figure:unaspected:Moon",
     "dignity:Venus:detriment",
     "dignity:Mars:fall",

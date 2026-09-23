@@ -204,15 +204,6 @@ const jsonLd = [
         <li><strong>From then until 1970</strong>, the legal time comes from the same release. That includes national mean times, such as Paris Mean Time from 1891, and the older records the database keeps apart for places whose clocks have matched another city's since 1970; its maintainers consider those records less reliable than the rest. Browsers leave them out and give such a place the other city's history, so for about 85 of the 356 time zones in our city index the browser's legal time before 1970 differs from the one used here at some point, 55 of them by an hour or more. Sweden, Norway, Denmark, Iceland and the Netherlands are among those 55. At noon on 1 July 1947, for example, a Stockholm birth reads 10:00 UTC with Berlin's summer time in the browser's history, where Sweden kept +1:00 and the chart uses 11:00. A handful of old zone names, none of them in the city index, keep the browser's history throughout, because their records differ after 1970 as well or browsers do not know them.</li>
       </ul>
       <p>
-        The famous-people pages are the exception for now. Their noon reference
-        instants were computed with the browser's history and each time zone's
-        own mean time, before the calculator took up the birthplace's mean time
-        and the pinned release, so 218 of the 501 differ from what the birth
-        chart calculator gives for the same place and day: 145 by ten minutes
-        or less, 70 by between ten minutes and an hour, and three by a full
-        hour.
-      </p>
-      <p>
         Every birth chart result lists its computed UTC instant, so the
         conversion is yours to check.
       </p>

@@ -7,14 +7,14 @@
   "identity": "Philosopher and university teacher · Germany · 1770–1831",
   "title": "Georg Wilhelm Friedrich Hegel's birth chart",
   "metaDescription": "Georg Wilhelm Friedrich Hegel's chart, computed from a sourced birth date: Sun at 4.1° Virgo. Birth time unknown, so no houses or rising sign.",
-  "lede": "Five of the nine placements whose signs are settled fall in earth signs — at least half of what the unknown hour leaves certain. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up.",
-  "ledeFact": "element:earth:5",
+  "lede": "1.0° separates Mercury and Jupiter from an exact square; at that range thinking and expansion read as one mechanism. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Mercury:Jupiter:square",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:4.12",
+        "sun-degree:4.13",
         "decan:virgo:first"
       ],
       "text": "The Sun's position resolves to 4.1° Virgo — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Uranus:Pluto:trine:0.29",
-        "aspect:Mercury:Jupiter:square:1",
+        "aspect:Mercury:Jupiter:square:0.98",
         "aspect:Mars:Saturn:sextile:1.15"
       ],
       "text": "Closest first: Uranus to Pluto, a trine with 0.3° of slack. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury square Jupiter at 1.0°, and Mars sextile Saturn at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
@@ -89,14 +89,14 @@
     "label": "The Virgo guide"
   },
   "substantiveFacts": [
-    "element:earth:5",
-    "sun-degree:4.12",
+    "aspect:Mercury:Jupiter:square",
+    "sun-degree:4.13",
     "decan:virgo:first",
     "personal:Mercury:Virgo:13.9°",
     "personal:Venus:Libra:13.0°",
     "personal:Mars:Gemini:8.4°",
     "aspect:Uranus:Pluto:trine:0.29",
-    "aspect:Mercury:Jupiter:square:1",
+    "aspect:Mercury:Jupiter:square:0.98",
     "aspect:Mars:Saturn:sextile:1.15",
     "figure:grand-trine:Mercury-Uranus-Pluto",
     "figure:t-square:Mars-Jupiter:apex-Mercury",
@@ -111,7 +111,7 @@
     "moon-uncertain:scorpio:sagittarius"
   ],
   "measurements": {
-    "originalWords": 492,
+    "originalWords": 486,
     "substantiveStatements": 20,
     "blocks": 7
   }

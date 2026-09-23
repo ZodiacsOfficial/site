@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:19.57",
+        "sun-degree:19.59",
         "decan:scorpio:second"
       ],
       "text": "The Sun's position resolves to 19.6° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
@@ -25,19 +25,19 @@
       "facts": [
         "personal:Mercury:Sagittarius:10.8°",
         "personal:Venus:Sagittarius:25.6°",
-        "personal:Mars:Cancer:27.8°"
+        "personal:Mars:Cancer:27.9°"
       ],
-      "text": "Mercury holds 10.8° Sagittarius, Venus holds 25.6° Sagittarius, Mars holds 27.8° Cancer — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort that surges when it matters."
+      "text": "Mercury holds 10.8° Sagittarius, Venus holds 25.6° Sagittarius, Mars holds 27.9° Cancer — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort that surges when it matters."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Neptune:trine:0.36",
-        "aspect:Mars:Jupiter:opposition:0.95",
+        "aspect:Mercury:Neptune:trine:0.38",
+        "aspect:Mars:Jupiter:opposition:0.96",
         "aspect:Saturn:Pluto:opposition:1.5"
       ],
-      "text": "Nothing in the geometry sits closer than Mercury and Neptune: 0.4° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Mars opposition Jupiter at 0.9°, and Saturn opposition Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+      "text": "Nothing in the geometry sits closer than Mercury and Neptune: 0.4° from an exact trine. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Mars opposition Jupiter at 1.0°, and Saturn opposition Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
     },
     {
       "key": "figures",
@@ -57,7 +57,7 @@
         "dignity:Mars:fall",
         "dignity:Jupiter:fall"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 11.0° is in detriment — the planet opposite its home, working against the grain; Mercury in Sagittarius at 10.8° is in detriment; Mars in Cancer at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 26.9° is in fall. Dignity is a statement about conditions, not about worth."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 11.2° is in detriment — the planet opposite its home, working against the grain; Mercury in Sagittarius at 10.8° is in detriment; Mars in Cancer at 27.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 26.9° is in fall. Dignity is a statement about conditions, not about worth."
     },
     {
       "key": "shape",
@@ -78,7 +78,7 @@
         "moon-band:12.0"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.0°."
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.2°."
     }
   ],
   "birthdayLink": {
@@ -91,13 +91,13 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Neptune:trine",
-    "sun-degree:19.57",
+    "sun-degree:19.59",
     "decan:scorpio:second",
     "personal:Mercury:Sagittarius:10.8°",
     "personal:Venus:Sagittarius:25.6°",
-    "personal:Mars:Cancer:27.8°",
-    "aspect:Mercury:Neptune:trine:0.36",
-    "aspect:Mars:Jupiter:opposition:0.95",
+    "personal:Mars:Cancer:27.9°",
+    "aspect:Mercury:Neptune:trine:0.38",
+    "aspect:Mars:Jupiter:opposition:0.96",
     "aspect:Saturn:Pluto:opposition:1.5",
     "figure:t-square:Moon-Uranus:apex-Neptune",
     "figure:unaspected:Venus",

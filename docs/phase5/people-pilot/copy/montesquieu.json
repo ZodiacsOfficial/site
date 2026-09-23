@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:29.21",
+        "sun-degree:29.22",
         "decan:capricorn:third"
       ],
       "text": "Capricorn, but precisely: 29.2°, third decan, 20°–30°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -25,16 +25,16 @@
       "facts": [
         "personal:Mercury:Capricorn:10.9°",
         "personal:Venus:Pisces:2.1°",
-        "personal:Mars:Sagittarius:12.6°"
+        "personal:Mars:Sagittarius:12.7°"
       ],
-      "text": "Closer in, Mercury stands at 10.9° Capricorn; Venus stands at 2.1° Pisces; Mars stands at 12.6° Sagittarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+      "text": "Closer in, Mercury stands at 10.9° Capricorn; Venus stands at 2.1° Pisces; Mars stands at 12.7° Sagittarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
         "aspect:Jupiter:Saturn:square:0.58",
-        "aspect:Mercury:Neptune:sextile:1.78",
+        "aspect:Mercury:Neptune:sextile:1.79",
         "aspect:Saturn:Neptune:trine:2.66"
       ],
       "text": "Jupiter and Saturn hold the closest angle here — a square, 0.6° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury sextile Neptune at 1.8°, and Saturn trine Neptune at 2.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
@@ -86,13 +86,13 @@
   },
   "substantiveFacts": [
     "modality:cardinal:3",
-    "sun-degree:29.21",
+    "sun-degree:29.22",
     "decan:capricorn:third",
     "personal:Mercury:Capricorn:10.9°",
     "personal:Venus:Pisces:2.1°",
-    "personal:Mars:Sagittarius:12.6°",
+    "personal:Mars:Sagittarius:12.7°",
     "aspect:Jupiter:Saturn:square:0.58",
-    "aspect:Mercury:Neptune:sextile:1.78",
+    "aspect:Mercury:Neptune:sextile:1.79",
     "aspect:Saturn:Neptune:trine:2.66",
     "figure:unaspected:Moon",
     "dignity:Venus:exaltation",

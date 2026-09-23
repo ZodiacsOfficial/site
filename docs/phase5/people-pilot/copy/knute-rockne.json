@@ -6,7 +6,7 @@
   "displayName": "Knute Rockne",
   "identity": "American football player and writer · Norway · 1888–1931",
   "title": "Knute Rockne's birth chart",
-  "metaDescription": "Knute Rockne's chart, computed from a sourced birth date: Sun at 14.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Knute Rockne's chart, computed from a sourced birth date: Sun at 14.4° Pisces. Birth time unknown, so no houses or rising sign.",
   "lede": "Tightest of all, Mars holds a square to Saturn at 0.0° — close enough to weld drive to structure. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
   "ledeFact": "aspect:Mars:Saturn:square",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:14.35",
+        "sun-degree:14.37",
         "decan:pisces:second"
       ],
-      "text": "At the noon reference the Sun sits 14.3° into Pisces — the second decan, which the old scheme hands to the Moon. Same sign, different decan, different chart."
+      "text": "At the noon reference the Sun sits 14.4° into Pisces — the second decan, which the old scheme hands to the Moon. Same sign, different decan, different chart."
     },
     {
       "key": "personal",
@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Mars:Saturn:square:0.01",
-        "aspect:Sun:Mercury:conjunction:1.36",
+        "aspect:Sun:Mercury:conjunction:1.4",
         "aspect:Saturn:Neptune:sextile:2.76"
       ],
       "text": "The day's firmest angle joins Mars and Saturn — a square holding at 0.0°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, the Sun conjunction Mercury at 1.4°, and Saturn sextile Neptune at 2.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
@@ -89,13 +89,13 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Saturn:square",
-    "sun-degree:14.35",
+    "sun-degree:14.37",
     "decan:pisces:second",
     "personal:Mercury:Pisces:13.0°",
     "personal:Venus:Aquarius:11.4°",
     "personal:Mars:Scorpio:0.2°",
     "aspect:Mars:Saturn:square:0.01",
-    "aspect:Sun:Mercury:conjunction:1.36",
+    "aspect:Sun:Mercury:conjunction:1.4",
     "aspect:Saturn:Neptune:sextile:2.76",
     "figure:none",
     "dignity:Mercury:fall",

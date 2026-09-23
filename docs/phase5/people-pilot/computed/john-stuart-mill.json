@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1806-05-20T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1806-05-20T00:01:15.000Z",
-    "civilDayEndUtc": "1806-05-21T00:01:15.000Z",
+    "utcInstant": "1806-05-20T12:00:25.000Z",
+    "utcOffsetMinutesAtBirth": -0.4167,
+    "civilDayStartUtc": "1806-05-20T00:00:25.000Z",
+    "civilDayEndUtc": "1806-05-21T00:00:25.000Z",
     "latitude": 51.541666666667,
     "longitude": -0.10222222222222,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "gemini",
     "signName": "Gemini",
-    "degree": 27.77,
+    "degree": 27.76,
     "uncertain": true,
     "signAtCivilDayStart": "gemini",
     "signAtCivilDayEnd": "cancer"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 28.2452,
-    "degreesToNextBoundaryAtWindowEnd": 0.7932
+    "degreesInsideAtWindowStart": 28.2455,
+    "degreesToNextBoundaryAtWindowEnd": 0.793
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.962,
@@ -81,7 +81,7 @@
       "body": "Moon",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 27.77,
+      "degree": 27.76,
       "retrograde": false,
       "speedPerDay": 14.419,
       "dignity": null,
@@ -226,21 +226,21 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 5.03,
+      "orb": 5.02,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 5.53,
+      "orb": 5.52,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "opposition",
-      "orb": 9.56,
+      "orb": 9.57,
       "applying": true
     }
   ],

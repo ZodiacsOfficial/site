@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1847-03-03T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1847-03-03T00:01:15.000Z",
-    "civilDayEndUtc": "1847-03-04T00:01:15.000Z",
+    "utcInstant": "1847-03-03T12:12:45.000Z",
+    "utcOffsetMinutesAtBirth": -12.75,
+    "civilDayStartUtc": "1847-03-03T00:12:45.000Z",
+    "civilDayEndUtc": "1847-03-04T00:12:45.000Z",
     "latitude": 55.95333333333333,
     "longitude": -3.1891666666666665,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 12.32
+    "degree": 12.33
   },
   "moon": {
     "sign": "virgo",
     "signName": "Virgo",
-    "degree": 27.14,
+    "degree": 27.24,
     "uncertain": true,
     "signAtCivilDayStart": "virgo",
     "signAtCivilDayEnd": "libra"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 11.8225,
-    "degreesToNextBoundaryAtWindowEnd": 17.1763
+    "degreesInsideAtWindowStart": 11.8314,
+    "degreesToNextBoundaryAtWindowEnd": 17.1674
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.001,
-    "Moon": 11.817,
-    "Mercury": 1.821,
+    "Moon": 11.818,
+    "Mercury": 1.82,
     "Venus": 1.241,
     "Mars": 0.712,
     "Jupiter": 0.097,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 12.32,
+      "degree": 12.33,
       "retrograde": false,
       "speedPerDay": 1.0012,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 27.14,
+      "degree": 27.24,
       "retrograde": false,
-      "speedPerDay": 11.8162,
+      "speedPerDay": 11.8163,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,9 +92,9 @@
       "body": "Mercury",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 25.25,
+      "degree": 25.27,
       "retrograde": false,
-      "speedPerDay": 1.8202,
+      "speedPerDay": 1.82,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -103,7 +103,7 @@
       "body": "Venus",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 0.82,
+      "degree": 0.83,
       "retrograde": false,
       "speedPerDay": 1.2409,
       "dignity": "detriment",
@@ -114,7 +114,7 @@
       "body": "Mars",
       "sign": "capricorn",
       "signName": "Capricorn",
-      "degree": 14.86,
+      "degree": 14.87,
       "retrograde": false,
       "speedPerDay": 0.7124,
       "dignity": "exaltation",
@@ -127,7 +127,7 @@
       "signName": "Gemini",
       "degree": 8.16,
       "retrograde": false,
-      "speedPerDay": 0.0972,
+      "speedPerDay": 0.0973,
       "dignity": "detriment",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -149,7 +149,7 @@
       "signName": "Aries",
       "degree": 12.42,
       "retrograde": false,
-      "speedPerDay": 0.0511,
+      "speedPerDay": 0.0512,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -182,28 +182,28 @@
       "a": "Moon",
       "b": "Mercury",
       "type": "opposition",
-      "orb": 1.89,
+      "orb": 1.97,
       "applying": false
     },
     {
       "a": "Mars",
       "b": "Uranus",
       "type": "square",
-      "orb": 2.44,
+      "orb": 2.45,
       "applying": false
     },
     {
       "a": "Sun",
       "b": "Mars",
       "type": "sextile",
-      "orb": 2.54,
+      "orb": 2.53,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "opposition",
-      "orb": 3.67,
+      "orb": 3.59,
       "applying": true
     },
     {
@@ -224,7 +224,7 @@
       "a": "Sun",
       "b": "Jupiter",
       "type": "square",
-      "orb": 4.16,
+      "orb": 4.17,
       "applying": false
     },
     {
@@ -245,7 +245,7 @@
       "a": "Sun",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 7.89,
+      "orb": 7.9,
       "applying": false
     }
   ],

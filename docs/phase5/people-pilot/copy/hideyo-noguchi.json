@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Uranus:Pluto:square:0.81",
-        "aspect:Mercury:Neptune:opposition:0.91",
+        "aspect:Mercury:Neptune:opposition:0.92",
         "aspect:Mercury:Saturn:trine:1.22"
       ],
       "text": "Start where the chart is tightest — Uranus square Pluto, 0.8° of separation. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mercury opposition Neptune at 0.9°, and Mercury trine Saturn at 1.2° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
@@ -77,7 +77,7 @@
         "moon-band:13.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.2°."
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.1°."
     }
   ],
   "birthdayLink": {
@@ -96,7 +96,7 @@
     "personal:Venus:Libra:5.8°",
     "personal:Mars:Libra:16.8°",
     "aspect:Uranus:Pluto:square:0.81",
-    "aspect:Mercury:Neptune:opposition:0.91",
+    "aspect:Mercury:Neptune:opposition:0.92",
     "aspect:Mercury:Saturn:trine:1.22",
     "figure:t-square:Sun-Pluto:apex-Uranus",
     "figure:unaspected:Mars",

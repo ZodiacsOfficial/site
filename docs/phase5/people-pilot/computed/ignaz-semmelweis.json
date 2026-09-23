@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Budapest",
     "civilTime": "12:00",
-    "utcInstant": "1818-07-01T10:43:40.000Z",
-    "utcOffsetMinutesAtBirth": 76.3333,
-    "civilDayStartUtc": "1818-06-30T22:43:40.000Z",
-    "civilDayEndUtc": "1818-07-01T22:43:40.000Z",
+    "utcInstant": "1818-07-01T10:43:51.000Z",
+    "utcOffsetMinutesAtBirth": 76.15,
+    "civilDayStartUtc": "1818-06-30T22:43:51.000Z",
+    "civilDayEndUtc": "1818-07-01T22:43:51.000Z",
     "latitude": 47.491666666667,
     "longitude": 19.038611111111,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 8.4867,
-    "degreesToNextBoundaryAtWindowEnd": 20.5596
+    "degreesInsideAtWindowStart": 8.4363,
+    "degreesToNextBoundaryAtWindowEnd": 20.6101
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
@@ -204,7 +204,7 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 1.91,
+      "orb": 1.9,
       "applying": true
     },
     {
@@ -283,7 +283,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 9.33,
+      "orb": 9.32,
       "applying": true
     }
   ],

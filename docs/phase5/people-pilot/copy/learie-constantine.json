@@ -6,7 +6,7 @@
   "displayName": "Learie Constantine",
   "identity": "Cricketer and diplomat · Trinidad and Tobago · 1901–1971",
   "title": "Learie Constantine's birth chart",
-  "metaDescription": "Learie Constantine's chart, computed from a sourced birth date: Sun at 27.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Learie Constantine's chart, computed from a sourced birth date: Sun at 28.0° Virgo. Birth time unknown, so no houses or rising sign.",
   "lede": "Cardinal signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
   "ledeFact": "modality:cardinal:4",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:27.95",
+        "sun-degree:27.96",
         "decan:virgo:third"
       ],
-      "text": "Measured rather than labelled, the Sun holds 27.9° Virgo: the third decan, whose classical sub-ruler is Venus. An earth sign, read here in its third face."
+      "text": "Measured rather than labelled, the Sun holds 28.0° Virgo: the third decan, whose classical sub-ruler is Venus. An earth sign, read here in its third face."
     },
     {
       "key": "personal",
@@ -33,8 +33,8 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Jupiter:sextile:1.03",
-        "aspect:Mercury:Pluto:trine:2.18",
+        "aspect:Venus:Jupiter:sextile:1.04",
+        "aspect:Mercury:Pluto:trine:2.17",
         "aspect:Jupiter:Neptune:opposition:2.52"
       ],
       "text": "Venus and Jupiter hold the closest angle here — a sextile, 1.0° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury trine Pluto at 2.2°, and Jupiter opposition Neptune at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
@@ -90,13 +90,13 @@
   },
   "substantiveFacts": [
     "modality:cardinal:4",
-    "sun-degree:27.95",
+    "sun-degree:27.96",
     "decan:virgo:third",
     "personal:Mercury:Libra:16.5°",
     "personal:Venus:Scorpio:5.0°",
     "personal:Mars:Scorpio:14.0°",
-    "aspect:Venus:Jupiter:sextile:1.03",
-    "aspect:Mercury:Pluto:trine:2.18",
+    "aspect:Venus:Jupiter:sextile:1.04",
+    "aspect:Mercury:Pluto:trine:2.17",
     "aspect:Jupiter:Neptune:opposition:2.52",
     "figure:t-square:Jupiter-Neptune:apex-Sun",
     "figure:unaspected:Mars",

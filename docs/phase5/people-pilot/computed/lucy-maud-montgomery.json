@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Halifax",
     "civilTime": "12:00",
-    "utcInstant": "1874-11-30T16:14:24.000Z",
-    "utcOffsetMinutesAtBirth": -254.4,
-    "civilDayStartUtc": "1874-11-30T04:14:24.000Z",
-    "civilDayEndUtc": "1874-12-01T04:14:24.000Z",
+    "utcInstant": "1874-11-30T16:12:48.000Z",
+    "utcOffsetMinutesAtBirth": -252.8,
+    "civilDayStartUtc": "1874-11-30T04:12:48.000Z",
+    "civilDayEndUtc": "1874-12-01T04:12:48.000Z",
     "latitude": 46.4,
     "longitude": -63.2,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "virgo",
     "signName": "Virgo",
-    "degree": 7.28,
+    "degree": 7.27,
     "uncertain": false,
     "signAtCivilDayStart": "virgo",
     "signAtCivilDayEnd": "virgo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.6557,
-    "degreesToNextBoundaryAtWindowEnd": 21.3302
+    "degreesInsideAtWindowStart": 7.8337,
+    "degreesToNextBoundaryAtWindowEnd": 21.1522
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.014,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 7.28,
+      "degree": 7.27,
       "retrograde": false,
-      "speedPerDay": 12.3667,
+      "speedPerDay": 12.367,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Scorpio",
       "degree": 18.11,
       "retrograde": false,
-      "speedPerDay": 0.8737,
+      "speedPerDay": 0.8736,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -176,7 +176,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "square",
-      "orb": 1.06,
+      "orb": 1.07,
       "applying": true
     },
     {
@@ -204,7 +204,7 @@
       "a": "Mercury",
       "b": "Uranus",
       "type": "square",
-      "orb": 2.89,
+      "orb": 2.88,
       "applying": false
     },
     {

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Montevideo",
     "civilTime": "12:00",
-    "utcInstant": "1886-10-24T15:44:51.000Z",
-    "utcOffsetMinutesAtBirth": -224.85,
-    "civilDayStartUtc": "1886-10-24T03:44:51.000Z",
-    "civilDayEndUtc": "1886-10-25T03:44:51.000Z",
+    "utcInstant": "1886-10-24T15:44:46.000Z",
+    "utcOffsetMinutesAtBirth": -224.7667,
+    "civilDayStartUtc": "1886-10-24T03:44:46.000Z",
+    "civilDayEndUtc": "1886-10-25T03:44:46.000Z",
     "latitude": -34.90591666666667,
     "longitude": -56.19131111111111,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.5172,
-    "degreesToNextBoundaryAtWindowEnd": 28.4851
+    "degreesInsideAtWindowStart": 0.6729,
+    "degreesToNextBoundaryAtWindowEnd": 28.3293
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.998,

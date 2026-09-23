@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1874-09-13T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1874-09-12T22:54:39.000Z",
-    "civilDayEndUtc": "1874-09-13T22:54:39.000Z",
+    "utcInstant": "1874-09-13T10:54:31.000Z",
+    "utcOffsetMinutesAtBirth": 65.4833,
+    "civilDayStartUtc": "1874-09-12T22:54:31.000Z",
+    "civilDayEndUtc": "1874-09-13T22:54:31.000Z",
     "latitude": 48.208333333333336,
     "longitude": 16.3725,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 20.0088,
-    "degreesToNextBoundaryAtWindowEnd": 9.0162
+    "degreesInsideAtWindowStart": 19.9644,
+    "degreesToNextBoundaryAtWindowEnd": 9.0606
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.975,
@@ -190,7 +190,7 @@
       "a": "Mars",
       "b": "Neptune",
       "type": "trine",
-      "orb": 2.15,
+      "orb": 2.16,
       "applying": true
     },
     {

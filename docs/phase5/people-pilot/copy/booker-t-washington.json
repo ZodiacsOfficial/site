@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:16.09",
+        "sun-degree:16.11",
         "decan:aries:second"
       ],
       "text": "At the noon reference the Sun sits 16.1° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
@@ -34,10 +34,10 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Uranus:Neptune:sextile:0.06",
-        "aspect:Venus:Uranus:sextile:0.56",
-        "aspect:Venus:Neptune:conjunction:0.62"
+        "aspect:Venus:Uranus:sextile:0.54",
+        "aspect:Venus:Neptune:conjunction:0.6"
       ],
-      "text": "Closest first: Uranus to Neptune, a sextile with 0.1° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Venus sextile Uranus at 0.6°, and Venus conjunction Neptune at 0.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+      "text": "Closest first: Uranus to Neptune, a sextile with 0.1° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Venus sextile Uranus at 0.5°, and Venus conjunction Neptune at 0.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
     },
     {
       "key": "figures",
@@ -90,14 +90,14 @@
   },
   "substantiveFacts": [
     "stellium:pisces:4",
-    "sun-degree:16.09",
+    "sun-degree:16.11",
     "decan:aries:second",
     "personal:Mercury:Pisces:26.3°",
     "personal:Venus:Pisces:18.3°",
     "personal:Mars:Libra:11.8°",
     "aspect:Uranus:Neptune:sextile:0.06",
-    "aspect:Venus:Uranus:sextile:0.56",
-    "aspect:Venus:Neptune:conjunction:0.62",
+    "aspect:Venus:Uranus:sextile:0.54",
+    "aspect:Venus:Neptune:conjunction:0.6",
     "figure:unaspected:Moon",
     "dignity:Sun:exaltation",
     "dignity:Mercury:fall",

@@ -124,32 +124,30 @@ describe('the pinned zone history on the methodology page', () => {
   });
 });
 
-describe('the famous-people exception', () => {
-  it('states how many pages differ from the calculator, as the resolver reads them now', async () => {
-    // A person's page keeps the noon instant it was first computed with; the
-    // calculator now reads the birthplace's mean time and the pinned history.
-    // Recomputing the pages changes these counts, and the copy with them.
+describe('the famous-people pages', () => {
+  it('keep the reference instant and civil day the birth chart calculator gives for the same place and date', async () => {
+    // Until 2026-09-23, 218 of these pages kept instants computed with the
+    // browser's history and each zone's own mean time, and the methodology
+    // page named them as the exception. The migration recorded in
+    // docs/phase5/people-pilot/corrections/2026-09-23-reference-instants.json
+    // moved them to the calculator's resolver, so no exception remains.
     const { people } = JSON.parse(read('src/data/people.json'));
-    const minutes = [];
-    for (const person of people) {
-      const { computation, birthDate, birthPlace } = person;
-      await prepareLocalTime(birthDate.computedGregorianDate, birthPlace.timeZone);
-      const resolved = resolveLocalToUtc(birthDate.computedGregorianDate, computation.civilTime, birthPlace.timeZone,
-        { longitude: birthPlace.coordinates.longitude });
-      minutes.push(Math.abs(resolved.utc.getTime() - Date.parse(computation.utcInstant)) / 60_000);
+    const differ = [];
+    for (const { slug, computation, birthDate, birthPlace } of people) {
+      const date = birthDate.computedGregorianDate;
+      const next = new Date(Date.parse(`${date}T00:00:00Z`) + 86_400_000).toISOString().slice(0, 10);
+      await prepareLocalTime(date, birthPlace.timeZone);
+      await prepareLocalTime(next, birthPlace.timeZone);
+      const at = (day, time) => resolveLocalToUtc(day, time, birthPlace.timeZone,
+        { longitude: birthPlace.coordinates.longitude }).utc.toISOString();
+      if (at(date, computation.civilTime) !== computation.utcInstant
+          || at(date, '00:00') !== computation.civilDayStartUtc
+          || at(next, '00:00') !== computation.civilDayEndUtc) differ.push(slug);
     }
-    const differ = minutes.filter((m) => m > 0);
-    const withinTen = differ.filter((m) => m <= 10).length;
-    const fullHour = differ.filter((m) => m >= 60).length;
-    const between = differ.length - withinTen - fullHour;
-    expect([people.length, differ.length, withinTen, between, fullHour]).toEqual([501, 218, 145, 70, 3]);
-    expect(Math.max(...differ)).toBe(60);
+    expect(people).toHaveLength(501);
+    expect(differ).toEqual([]);
     const page = read('src/pages/methodology/index.astro').replace(/\s+/g, ' ');
-    expect(page).toContain(`so ${differ.length} of the ${people.length} differ from what the birth chart calculator gives`);
-    expect(page).toContain(`${withinTen} by ten minutes or less, ${between} by between ten minutes and an hour, and three by a full hour`);
-    for (const path of ['public/llms-full.txt', 'scripts/build-assistant-context.mjs']) {
-      expect(read(path), path).toContain(`so ${differ.length} of the ${people.length} differ from the calculator`);
-    }
+    expect(page).not.toContain('famous-people pages are the exception');
   });
 });
 

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Havana",
     "civilTime": "12:00",
-    "utcInstant": "1853-01-28T17:29:28.000Z",
-    "utcOffsetMinutesAtBirth": -329.4667,
-    "civilDayStartUtc": "1853-01-28T05:29:28.000Z",
-    "civilDayEndUtc": "1853-01-29T05:29:28.000Z",
+    "utcInstant": "1853-01-28T17:29:26.000Z",
+    "utcOffsetMinutesAtBirth": -329.4333,
+    "civilDayStartUtc": "1853-01-28T05:29:26.000Z",
+    "civilDayEndUtc": "1853-01-29T05:29:26.000Z",
     "latitude": 23.136666666667,
     "longitude": -82.358888888889,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 8.0543,
-    "degreesToNextBoundaryAtWindowEnd": 20.9305
+    "degreesInsideAtWindowStart": 8.2866,
+    "degreesToNextBoundaryAtWindowEnd": 20.6983
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.015,

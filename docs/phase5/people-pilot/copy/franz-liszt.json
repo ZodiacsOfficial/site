@@ -34,10 +34,10 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Mars:Uranus:sextile:0.57",
-        "aspect:Mars:Pluto:sextile:0.86",
+        "aspect:Mars:Pluto:sextile:0.85",
         "aspect:Uranus:Pluto:trine:1.43"
       ],
-      "text": "Mars and Uranus hold the closest angle here — a sextile, 0.6° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars sextile Pluto at 0.9°, and Uranus trine Pluto at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "Mars and Uranus hold the closest angle here — a sextile, 0.6° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars sextile Pluto at 0.8°, and Uranus trine Pluto at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -95,7 +95,7 @@
     "personal:Venus:Scorpio:0.8°",
     "personal:Mars:Capricorn:17.3°",
     "aspect:Mars:Uranus:sextile:0.57",
-    "aspect:Mars:Pluto:sextile:0.86",
+    "aspect:Mars:Pluto:sextile:0.85",
     "aspect:Uranus:Pluto:trine:1.43",
     "figure:none",
     "dignity:Sun:fall",

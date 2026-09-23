@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:10.36",
+        "sun-degree:10.37",
         "decan:taurus:second"
       ],
       "text": "The Sun's exact place is 10.4° Taurus. That falls in the second decan, 10°–20°, sub-ruled by Mercury in the classical scheme — an earth sign read through a fixed season."
@@ -35,7 +35,7 @@
       "facts": [
         "aspect:Mars:Pluto:trine:0.54",
         "aspect:Saturn:Pluto:square:0.87",
-        "aspect:Sun:Mercury:conjunction:3.92"
+        "aspect:Sun:Mercury:conjunction:3.93"
       ],
       "text": "Mars to Pluto is the closest call of the day, a trine within 0.5°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Saturn square Pluto at 0.9°, and the Sun conjunction Mercury at 3.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
@@ -76,7 +76,7 @@
         "moon-band:13.2"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.2°."
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.3°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Pluto:trine",
-    "sun-degree:10.36",
+    "sun-degree:10.37",
     "decan:taurus:second",
     "personal:Mercury:Taurus:14.3°",
     "personal:Venus:Gemini:17.4°",
     "personal:Mars:Libra:0.7°",
     "aspect:Mars:Pluto:trine:0.54",
     "aspect:Saturn:Pluto:square:0.87",
-    "aspect:Sun:Mercury:conjunction:3.92",
+    "aspect:Sun:Mercury:conjunction:3.93",
     "figure:unaspected:Moon",
     "dignity:Mars:detriment",
     "dignity:Jupiter:exaltation",

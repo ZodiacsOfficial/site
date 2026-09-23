@@ -35,9 +35,9 @@
       "facts": [
         "aspect:Sun:Uranus:square:1.13",
         "aspect:Neptune:Pluto:conjunction:1.14",
-        "aspect:Mercury:Jupiter:trine:3.16"
+        "aspect:Mercury:Jupiter:trine:3.15"
       ],
-      "text": "The day's firmest angle joins the Sun and Uranus — a square holding at 1.1°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Neptune conjunction Pluto at 1.1°, and Mercury trine Jupiter at 3.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+      "text": "The day's firmest angle joins the Sun and Uranus — a square holding at 1.1°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Neptune conjunction Pluto at 1.1°, and Mercury trine Jupiter at 3.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "figures",
@@ -94,7 +94,7 @@
     "personal:Mars:Aquarius:15.2°",
     "aspect:Sun:Uranus:square:1.13",
     "aspect:Neptune:Pluto:conjunction:1.14",
-    "aspect:Mercury:Jupiter:trine:3.16",
+    "aspect:Mercury:Jupiter:trine:3.15",
     "figure:t-square:Jupiter-Uranus:apex-Sun",
     "figure:unaspected:Venus",
     "dignity:Sun:domicile",

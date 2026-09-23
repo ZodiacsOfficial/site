@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:12.32",
+        "sun-degree:12.33",
         "decan:pisces:second"
       ],
       "text": "The Sun sits at 12.3° Pisces — the second decan, 10°–20°, which the tradition sub-rules by the Moon. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Uranus:square:2.44",
-        "aspect:Sun:Mars:sextile:2.54",
+        "aspect:Mars:Uranus:square:2.45",
+        "aspect:Sun:Mars:sextile:2.53",
         "aspect:Jupiter:Saturn:square:3.73"
       ],
-      "text": "The day's firmest angle joins Mars and Uranus — a square holding at 2.4°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun sextile Mars at 2.5°, and Jupiter square Saturn at 3.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "The day's firmest angle joins Mars and Uranus — a square holding at 2.5°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun sextile Mars at 2.5°, and Jupiter square Saturn at 3.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
@@ -89,13 +89,13 @@
   },
   "substantiveFacts": [
     "modality:mutable:4",
-    "sun-degree:12.32",
+    "sun-degree:12.33",
     "decan:pisces:second",
     "personal:Mercury:Pisces:25.3°",
     "personal:Venus:Aries:0.8°",
     "personal:Mars:Capricorn:14.9°",
-    "aspect:Mars:Uranus:square:2.44",
-    "aspect:Sun:Mars:sextile:2.54",
+    "aspect:Mars:Uranus:square:2.45",
+    "aspect:Sun:Mars:sextile:2.53",
     "aspect:Jupiter:Saturn:square:3.73",
     "figure:none",
     "dignity:Mercury:fall",

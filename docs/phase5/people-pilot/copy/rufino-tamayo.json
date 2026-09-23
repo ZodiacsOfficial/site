@@ -7,7 +7,7 @@
   "identity": "Painter · Mexico · 1899–1991",
   "title": "Rufino Tamayo's birth chart",
   "metaDescription": "Rufino Tamayo's chart, computed from an adopted, uncertain birth date: Sun at 3.3° Virgo. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 18.6° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 18.5° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:exaltation",
   "blocks": [
     {
@@ -34,8 +34,8 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Saturn:Pluto:opposition:0.46",
-        "aspect:Sun:Uranus:square:0.81",
-        "aspect:Venus:Neptune:sextile:0.98"
+        "aspect:Sun:Uranus:square:0.82",
+        "aspect:Venus:Neptune:sextile:0.97"
       ],
       "text": "Closest first: Saturn to Pluto, an opposition with 0.5° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Uranus at 0.8°, and Venus sextile Neptune at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
@@ -54,7 +54,7 @@
         "dignity:Moon:exaltation",
         "dignity:Mars:detriment"
       ],
-      "text": "The classical table has two entries for this chart. The Moon in Taurus at 18.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Libra at 13.2° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+      "text": "The classical table has two entries for this chart. The Moon in Taurus at 18.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Libra at 13.2° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
     },
     {
       "key": "shape",
@@ -75,7 +75,7 @@
         "moon-band:13.2"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.6°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.5°."
     }
   ],
   "birthdayLink": {
@@ -94,8 +94,8 @@
     "personal:Venus:Leo:27.7°",
     "personal:Mars:Libra:13.2°",
     "aspect:Saturn:Pluto:opposition:0.46",
-    "aspect:Sun:Uranus:square:0.81",
-    "aspect:Venus:Neptune:sextile:0.98",
+    "aspect:Sun:Uranus:square:0.82",
+    "aspect:Venus:Neptune:sextile:0.97",
     "figure:unaspected:Moon",
     "dignity:Moon:exaltation",
     "dignity:Mars:detriment",

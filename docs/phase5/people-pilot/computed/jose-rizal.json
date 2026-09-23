@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Manila",
     "civilTime": "12:00",
-    "utcInstant": "1861-06-19T03:56:08.000Z",
-    "utcOffsetMinutesAtBirth": 483.8667,
-    "civilDayStartUtc": "1861-06-18T15:56:08.000Z",
-    "civilDayEndUtc": "1861-06-19T15:56:08.000Z",
+    "utcInstant": "1861-06-19T03:55:20.000Z",
+    "utcOffsetMinutesAtBirth": 484.6667,
+    "civilDayStartUtc": "1861-06-18T15:55:20.000Z",
+    "civilDayEndUtc": "1861-06-19T15:55:20.000Z",
     "latitude": 14.216666666667,
     "longitude": 121.16666666667,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "scorpio",
     "signName": "Scorpio",
-    "degree": 11.28,
+    "degree": 11.27,
     "uncertain": false,
     "signAtCivilDayStart": "scorpio",
     "signAtCivilDayEnd": "scorpio"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.6333,
-    "degreesToNextBoundaryAtWindowEnd": 1.413
+    "degreesInsideAtWindowStart": 27.3122,
+    "degreesToNextBoundaryAtWindowEnd": 1.734
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
@@ -75,7 +75,7 @@
       "body": "Moon",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 11.28,
+      "degree": 11.27,
       "retrograde": false,
       "speedPerDay": 14.6112,
       "dignity": "fall",
@@ -213,7 +213,7 @@
       "a": "Moon",
       "b": "Venus",
       "type": "trine",
-      "orb": 3.08,
+      "orb": 3.07,
       "applying": false
     },
     {

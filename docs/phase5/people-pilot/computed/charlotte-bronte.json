@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1816-04-21T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1816-04-21T00:01:15.000Z",
-    "civilDayEndUtc": "1816-04-22T00:01:15.000Z",
+    "utcInstant": "1816-04-21T12:07:24.000Z",
+    "utcOffsetMinutesAtBirth": -7.4,
+    "civilDayStartUtc": "1816-04-21T00:07:24.000Z",
+    "civilDayEndUtc": "1816-04-22T00:07:24.000Z",
     "latitude": 53.7898,
     "longitude": -1.8504,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 1.23
+    "degree": 1.24
   },
   "moon": {
     "sign": "aquarius",
     "signName": "Aquarius",
-    "degree": 24.49,
+    "degree": 24.55,
     "uncertain": true,
     "signAtCivilDayStart": "aquarius",
     "signAtCivilDayEnd": "pisces"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.7447,
-    "degreesToNextBoundaryAtWindowEnd": 28.2812
+    "degreesInsideAtWindowStart": 0.7497,
+    "degreesToNextBoundaryAtWindowEnd": 28.2762
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.974,
-    "Moon": 11.905,
+    "Moon": 11.904,
     "Mercury": 1.85,
     "Venus": 1.217,
     "Mars": 0.602,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 1.23,
+      "degree": 1.24,
       "retrograde": false,
       "speedPerDay": 0.9741,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 24.49,
+      "degree": 24.55,
       "retrograde": false,
-      "speedPerDay": 11.9001,
+      "speedPerDay": 11.8997,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,9 +92,9 @@
       "body": "Mercury",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 16.56,
+      "degree": 16.57,
       "retrograde": false,
-      "speedPerDay": 1.8503,
+      "speedPerDay": 1.8504,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -114,7 +114,7 @@
       "body": "Mars",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 28.48,
+      "degree": 28.49,
       "retrograde": false,
       "speedPerDay": 0.6015,
       "dignity": null,
@@ -127,7 +127,7 @@
       "signName": "Scorpio",
       "degree": 5.79,
       "retrograde": true,
-      "speedPerDay": -0.1268,
+      "speedPerDay": -0.1269,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -196,7 +196,7 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 1.93,
+      "orb": 1.98,
       "applying": false
     },
     {
@@ -210,7 +210,7 @@
       "a": "Sun",
       "b": "Jupiter",
       "type": "opposition",
-      "orb": 4.56,
+      "orb": 4.55,
       "applying": true
     },
     {
@@ -224,7 +224,7 @@
       "a": "Mercury",
       "b": "Neptune",
       "type": "trine",
-      "orb": 5.34,
+      "orb": 5.33,
       "applying": true
     },
     {
@@ -245,7 +245,7 @@
       "a": "Venus",
       "b": "Mars",
       "type": "square",
-      "orb": 5.93,
+      "orb": 5.94,
       "applying": false
     },
     {
@@ -261,14 +261,14 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "sextile",
-      "orb": 2.59,
+      "orb": 2.64,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 3.99,
+      "orb": 3.94,
       "applying": true
     },
     {
