@@ -140,6 +140,22 @@ Conventions, stated rather than implied: a spring-forward gap shifts forward;
 a fall-back fold selects the earlier instant; both are flagged. Offsets with
 seconds survive (Mexico City's −6:36:36 before 1922 is a live case).
 
+Since 2026-09-23 the site, though not `@zodiacs/engine/geo`, reads a birth
+from before its place adopted a legal time on the birthplace's own local mean
+time: 240 seconds of time per degree of longitude, rounded to the second. The
+time zone data records mean time only for each zone's reference city, so a
+Buffalo birth in 1870 had been read on New York's clock, 19 min 29 s early. The
+only table involved says when each zone's local mean time ended; it is
+generated from a pinned tzdb release, 2025c, with backzone
+(`src/data/tz-lmt.json`, by `scripts/build-tz-lmt.mjs`), and legal offsets still
+come from the host. Tested: the table against that release; every wall minute
+within 26 hours of fourteen era ends, east and west of the reference meridian,
+against a separate model of the birthplace clock, with receipts validated;
+the date-line days of Alaska, Manila and Apia inside eras; a bound that ignores
+a longitude more than three hours from the zone's mean time. Not established:
+agreement with other programs' era ends, and for a few zones the host's legal
+history after the era, which lacks backzone, belongs to another city.
+
 Not established: which IANA version any given visitor's runtime carries. The
 history is the host's, so two machines can legitimately disagree on a
 pre-standardisation birth. Signed fixed-offset receipt syntax and exact-pole

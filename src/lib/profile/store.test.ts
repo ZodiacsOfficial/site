@@ -421,6 +421,58 @@ describe('resolveSavedChart', () => {
     });
   });
 
+  function buffalo1870(utcISO: string): SavedChart {
+    const chart = makeChart('buffalo', { date: '1870-06-01', time: '12:00' });
+    return {
+      ...chart,
+      birth: {
+        ...chart.birth,
+        place: { name: 'Buffalo', admin1: 'New York', country: 'US', lat: 42.886, lon: -78.878, tz: 'America/New_York' },
+      },
+      summary: { ...chart.summary, utcISO },
+    };
+  }
+
+  it('keeps a current summary before standard time while its instant matches the birthplace clock', async () => {
+    let loads = 0;
+    const loader: SavedChartEngineLoader = async () => {
+      loads += 1;
+      throw new Error('must stay lazy');
+    };
+    const chart = buffalo1870('1870-06-01T17:15:31.000Z');
+
+    await expect(resolveSavedChart(chart, loader)).resolves.toMatchObject({ summary: chart.summary });
+    expect(loads).toBe(0);
+  });
+
+  it('recomputes a current summary saved on the zone reference city clock', async () => {
+    let received: Chart['input'] | null = null;
+    const loader: SavedChartEngineLoader = async () => ({
+      computeChart(input) {
+        received = input;
+        return {
+          input,
+          bodies: [{ body: 'Sun', lon: 70, lat: 0, speed: 1, retrograde: false }],
+          angles: { asc: 150, mc: 60, dsc: 330, ic: 240 },
+          houses: null,
+          aspects: [],
+          flags: input.flags ?? [],
+          engineVersion: ENGINE_VERSION,
+        };
+      },
+    });
+
+    // New York's mean time, 4 h 56 min 2 s behind Greenwich, as saved before
+    // 2026-09; Buffalo's own is 5 h 15 min 31 s behind.
+    const resolved = await resolveSavedChart(buffalo1870('1870-06-01T16:56:02.000Z'), loader);
+
+    expect(received!.utc.toISOString()).toBe('1870-06-01T17:15:31.000Z');
+    expect(received!.flags).toEqual(['lmt']);
+    expect(resolved.summary).toMatchObject({ utcISO: '1870-06-01T17:15:31.000Z', flags: ['lmt'] });
+    expect(resolved.bodies).toEqual([{ body: 'Sun', lon: 70 }]);
+    expect(resolved.asc).toBe(150);
+  });
+
   it('falls back to the stored summary when stale recomputation fails', async () => {
     const loader: SavedChartEngineLoader = async () => {
       throw new Error('offline');

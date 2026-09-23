@@ -1297,9 +1297,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setMineHandoff(input.mine ?? null);
     if (mode === 'full' && !chartActionDockModule) requestChartControls();
     try {
+      // Early dates also download the local mean time table; the two
+      // downloads run together. A rejection is observed by the loader itself.
+      const localTimeReady = prepareLocalTime(input.date);
       const engine = await loadEngine();
       if (!runIsCurrent()) return;
-      await prepareLocalTime(input.date);
+      await localTimeReady;
       if (!runIsCurrent()) return;
       let receiptModule: Awaited<ReturnType<typeof loadCalculatorReceipt>> | null = null;
       if (mode === 'full') {
@@ -2140,7 +2143,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             <p class="notice" role="status">{t(locale, 'dstFoldNotice')}</p>
           )}
           {chart.flags.includes('lmt') && (
-            <p class="notice" role="status">{t(locale, 'lmtNotice')} ({city?.tz}). <a href={localizePath(locale, '/methodology/')}>{t(locale, 'howWeCompute')}</a>.</p>
+            <p class="notice" role="status">{t(locale, 'lmtNotice')} <a href={localizePath(locale, '/methodology/')}>{t(locale, 'howWeCompute')}</a>.</p>
           )}
           {chart.flags.includes('polar-fallback') && (
             <p class="notice" role="status">{t(locale, 'polarNotice')}</p>

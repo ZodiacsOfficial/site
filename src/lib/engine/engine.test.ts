@@ -19,7 +19,7 @@ import { computeBodies, computeChart } from './full';
 import { computeAngles, meanObliquity, placidusCusps, wholeSignCusps, houseOf, norm } from './houses';
 import { findAspects, separation } from './aspects';
 import { sunLongitude, moonLongitude, moonPhaseAngle } from './lite';
-import { resolveLocalToUtc } from '../time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../time/localToUtc';
 import { formatLongitude, signForLongitude } from '../signs';
 import type { BodyPosition } from './types';
 import independentSwiss from './fixtures/swiss-node-polar.fixture.json';
@@ -460,8 +460,11 @@ describe('aspects', () => {
 });
 
 // ── 8. The full pipeline: Frida Kahlo fixture ────────────────────────
+await prepareLocalTime('1907-07-06');
 describe('Frida Kahlo chart (the demo fixture)', () => {
-  const resolved = resolveLocalToUtc('1907-07-06', '08:30', 'America/Mexico_City');
+  // Coyoacán's own mean time, 6 h 36 min 38 s behind Greenwich, as the
+  // calculator resolves this birth from its city index.
+  const resolved = resolveLocalToUtc('1907-07-06', '08:30', 'America/Mexico_City', { longitude: -99.16 });
   const chart = computeChart({
     utc: resolved.utc,
     latitude: 19.35,   // Coyoacán

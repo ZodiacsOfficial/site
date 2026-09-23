@@ -127,7 +127,7 @@ export default function MoonPhaseTool({ locale: rawLocale = 'en' }: { locale?: L
     setError('');
     setResult(null);
     try {
-      const [engine] = await Promise.all([loadEngine(), prepareLocalTime(date)]);
+      const [engine] = await Promise.all([loadEngine(), city ? prepareLocalTime(date) : null]);
       if (!isCurrent()) return;
       const hasTime = time !== '';
       let utc: Date;

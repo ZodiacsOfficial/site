@@ -175,14 +175,14 @@ const jsonLd = [
         A birth chart is only as good as its clock conversion. We resolve your
         birth time with the IANA time-zone history available in your browser's{' '}
         <strong>host ICU data</strong>: daylight saving in all its regional weirdness,
-        wartime clock changes, and pre-standardization <em>local mean time</em>{' '}
-        — including offsets with seconds, like Mexico City's −6:36:36 before
-        1922.
+        wartime clock changes, and the date each place adopted a legal time.
+        Before that date, the clock was the birthplace's own{' '}
+        <em>local mean time</em>, which runs to seconds.
       </p>
       <ul>
         <li><strong>Skipped times</strong> (spring-forward gaps) shift forward across the gap — the standard convention — and the chart says so.</li>
         <li><strong>Repeated times</strong> (fall-back folds) use the earlier pass, flagged on the chart.</li>
-        <li><strong>Very old dates</strong>, from before a place adopted a legal time, use the local mean time of the birthplace itself, worked out from its longitude at four minutes of time per degree, as professional software does. The time zone data records only its reference city's mean time, which for a town a few hundred kilometres away can be 20 minutes or more off. Once a country adopted a legal time, that applies, including national mean times such as Paris Mean Time from 1891. These charts are flagged too.</li>
+        <li><strong>Very old dates</strong>, from before a place adopted a legal time, use the local mean time of the birthplace itself, worked out from its longitude at four minutes of time per degree, as professional software does. The time zone data records only its reference city's mean time, which for a town a few hundred kilometres away can be 20 minutes or more off; Buffalo in 1870 ran 19 minutes 29 seconds behind New York. Once a country adopted a legal time, that applies, including national mean times such as Paris Mean Time from 1891. The date each place's local mean time ended comes from the IANA database's fuller historical records (release 2025c), which for a few places can differ from your browser's.</li>
       </ul>
       <p>
         Every result lists its computed UTC instant, so the conversion is

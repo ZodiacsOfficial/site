@@ -36,7 +36,7 @@ describe('lunar result presentation', () => {
   });
   it('keeps local-time provenance in details without adding it to export data', () => {
     const data = result(); data.natalTimeFlags = ['lmt']; const tree = nodes(LunarReturnResult({ result: data, Wheel }));
-    expect(tree.some((n) => n.type === 'p' && typeof n.props.children === 'string' && n.props.children.includes('historical local mean time'))).toBe(true);
+    expect(tree.some((n) => n.type === 'p' && typeof n.props.children === 'string' && n.props.children.includes('historical mean time, set by longitude'))).toBe(true);
     expect(JSON.stringify(tree.find((n) => n.type === LunarReturnActions)!.props.model)).not.toContain('lmt');
   });
 });

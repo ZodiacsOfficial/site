@@ -19,6 +19,7 @@ import {
  */
 const KAHLO = { asc: demoChart.angles.asc, latitude: 19.35, longitude: -99.16 };
 const KAHLO_UTC_MS = Date.parse(demoChart.utc);
+const KAHLO_UTC_LABEL = `${demoChart.utc.replace('T', ' ').slice(0, 19)} UTC`;
 const KAHLO_BODIES = demoChart.bodies
   .filter(({ body }) => !body.includes('Node'))
   .map(({ body, lon, lat }) => ({ body, lon, lat }));
@@ -140,11 +141,11 @@ const jsonLd = [
       utcMs={KAHLO_UTC_MS}
       showHorizon
       showBounds
-      caption="Frida Kahlo’s chart as an armillary sphere: the zodiac band, the celestial equator, her horizon for 1907-07-06 15:06:36 UTC at Coyoacán, and each body at its real height above or below the ecliptic plane."
+      caption={`Frida Kahlo’s chart as an armillary sphere: the zodiac band, the celestial equator, her horizon for ${KAHLO_UTC_LABEL} at Coyoacán, and each body at its real height above or below the ecliptic plane.`}
     />
     <p class="td-source">
       Sample provenance: <a href={KAHLO_SOURCE_URL} target="_blank" rel="noopener noreferrer">the published Astro-Databank record</a>
-      {' '}reports 8:30 a.m. in Coyoacán and labels the time AA (birth record). The calculator converts that historical local-mean time to 15:06:36 UTC; Zodiacs.org has not independently inspected the underlying record.
+      {' '}reports 8:30 a.m. in Coyoacán and labels the time AA (birth record). The calculator reads that time on Coyoacán’s own local mean time and converts it to {KAHLO_UTC_LABEL}; Zodiacs.org has not independently inspected the underlying record.
     </p>
 
     <div class="prose">

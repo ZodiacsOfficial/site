@@ -16,8 +16,9 @@ import { technicalCollisionFan } from '../wheel/technical-layout';
 import { emphasisFor, emphasisOpacity } from './emphasis';
 import { entityId, parseEntityId, type EntityRef } from './types';
 
-// Frida Kahlo — the repo's canonical demo chart (1907-07-06 15:06:36Z,
-// Coyoacán). Same instant the engine test suite and homepage fixture use.
+// Frida Kahlo at Coyoacán, 1907-07-06 15:06:36Z: 8:30 on Mexico City's mean
+// time, the instant the homepage demo used before it moved to Coyoacán's own
+// (15:06:38Z). Kept, with its snapshot, as a fixed input.
 const kahlo = () => computeChart({
   utc: new Date('1907-07-06T15:06:36.000Z'),
   latitude: 19.35,

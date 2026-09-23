@@ -16,9 +16,14 @@ export type SavedChartEngineLoader = () => Promise<{
 
 /**
  * Resolve a saved chart against the current engine without making the common
- * profile-store path pay for the ephemeris. Current summaries (and charts
- * without a place) return immediately; stale summaries recompute from their
- * lossless birth input and fall back quietly on any failure.
+ * profile-store path pay for the ephemeris. Charts without a place return
+ * immediately. A summary from another engine recomputes from the lossless
+ * birth input. So does one from the current engine whose instant no longer
+ * matches the birthplace clock, which can happen only for a birth before
+ * standard time: until 2026-09 those used the mean time of the zone's
+ * reference city instead of the birthplace's own, so a Buffalo birth in 1870
+ * was saved on New York's clock. Any failure falls back quietly to the stored
+ * summary.
  */
 export async function resolveSavedChart(
   source: SavedChart,
@@ -31,24 +36,28 @@ export async function resolveSavedChart(
     timeKnown: chart.birth.timeKnown,
     summary: chart.summary,
   };
-  if (currentSavedCalculation(chart.summary.engineVersion) || !chart.birth.place) return stored;
+  const place = chart.birth.place;
+  if (!place) return stored;
+  const current = currentSavedCalculation(chart.summary.engineVersion);
 
   try {
-    const [engine, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
-      loadEngine(),
+    const [engine, { localMeanTimeCanApply, prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
+      current ? null : loadEngine(),
       import('../time/localToUtc'),
     ]);
+    if (current && !localMeanTimeCanApply(chart.birth.date)) return stored;
     await prepareLocalTime(chart.birth.date);
     const resolved = resolveLocalToUtc(
       chart.birth.date,
       chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',
-      chart.birth.place.tz,
-      { longitude: chart.birth.place.lon },
+      place.tz,
+      { longitude: place.lon },
     );
-    const result = engine.computeChart({
+    if (current && resolved.utc.toISOString() === chart.summary.utcISO) return stored;
+    const result = (engine ?? await loadEngine()).computeChart({
       utc: resolved.utc,
-      latitude: chart.birth.place.lat,
-      longitude: chart.birth.place.lon,
+      latitude: place.lat,
+      longitude: place.lon,
       houseSystem: chart.summary.houseSystem,
       timeKnown: chart.birth.timeKnown,
       flags: resolved.flags,

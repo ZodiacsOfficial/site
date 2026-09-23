@@ -213,8 +213,12 @@ sides — the exact import allowlist AND a marker check that no browser
 chunk ever carries astronomy-engine/createRequire; a CI parity test pins
 server and browser ephemeris to 1e-12 agreement.
 Accuracy is gated by `vitest` test vectors; run `npm test` after any engine
-change. Timezone conversion (`src/lib/time/localToUtc.ts`) resolves historical
-offsets via `Intl` — never hand-roll offsets.
+change. Timezone conversion (`src/lib/time/localToUtc.ts`) resolves legal
+offsets via `Intl` — never hand-roll offsets. The one computed clock is a
+birthplace's own local mean time (240 s per degree of longitude) before its
+zone's local mean time era ended, per the generated `src/data/tz-lmt.json`;
+any caller that passes a longitude must `await prepareLocalTime(date)` first
+(`src/lib/time/localToUtc-callers.test.ts` checks the call sites).
 
 ## Checks
 

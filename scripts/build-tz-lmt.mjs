@@ -31,7 +31,11 @@
  * sorted. Zones whose first line is not local mean time ("-00" placeholders,
  * fixed offsets) are omitted; the resolver leaves them to Intl.
  *
- *   node scripts/build-tz-lmt.mjs        — refresh when the pinned release changes
+ *   node scripts/build-tz-lmt.mjs          — refresh when the pinned release changes
+ *   node scripts/build-tz-lmt.mjs --check  — exit 1 if the committed table differs
+ *
+ * Both download the pinned release once if .cache/ lacks it; the table is not
+ * in the offline drift job for that reason.
  */
 import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -190,8 +194,7 @@ function untar(buffer) {
   return files;
 }
 
-async function main() {
-  const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+async function buildTable(root) {
   const cache = resolve(root, '.cache');
   await mkdir(cache, { recursive: true });
   const archive = resolve(cache, `tzdata${TZDB_VERSION}.tar.gz`);
@@ -224,9 +227,24 @@ async function main() {
     source: { url: TZDB_URL, sha256: TZDB_SHA256, files: [...MAIN_FILES, BACKZONE] },
     eras,
   };
+  return { text: `${JSON.stringify(output, null, 1)}\n`, count: Object.keys(eras).length };
+}
+
+async function main() {
+  const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
   const target = resolve(root, 'src/data/tz-lmt.json');
-  await writeFile(target, `${JSON.stringify(output, null, 1)}\n`);
-  console.log(`tz-lmt: ${Object.keys(eras).length} zone names → src/data/tz-lmt.json (tzdb ${TZDB_VERSION})`);
+  const { text, count } = await buildTable(root);
+  if (process.argv.includes('--check')) {
+    const committed = await readFile(target, 'utf8').catch(() => '');
+    if (committed !== text) {
+      console.error(`tz-lmt: src/data/tz-lmt.json differs from tzdb ${TZDB_VERSION}; run node scripts/build-tz-lmt.mjs`);
+      process.exit(1);
+    }
+    console.log(`tz-lmt: src/data/tz-lmt.json matches tzdb ${TZDB_VERSION} (${count} zone names)`);
+    return;
+  }
+  await writeFile(target, text);
+  console.log(`tz-lmt: ${count} zone names → src/data/tz-lmt.json (tzdb ${TZDB_VERSION})`);
 }
 
 const direct = process.argv[1] && resolve(process.argv[1]) === resolve(fileURLToPath(import.meta.url));

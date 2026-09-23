@@ -4,18 +4,20 @@
  * carry seconds, e.g. America/Mexico_City at −6:36:36 before 1922).
  *
  * The browser/Node host's ICU data exposes its tzdb history through Intl.
- * Coverage and tzdb version therefore depend on that runtime. Never hand-roll
- * offsets.
+ * Coverage and tzdb version therefore depend on that runtime. Legal offsets
+ * always come from there; nothing here hand-rolls a legal offset.
  *
  * One era needs more than the zone: before a place adopted a legal time, its
  * clocks kept that place's own mean solar time, and tzdb records that only
  * for the zone's reference city. Given the birthplace's longitude, instants
- * before the zone's local mean time era ended (src/data/tz-lmt.json, from a
- * pinned tzdb release) use the birthplace's mean time — four minutes per
- * degree — instead of the reference city's. Every later instant is Intl's.
- * The table loads on demand, only for dates that can need it: await
+ * before the zone's local mean time era ended use the birthplace's mean time
+ * (four minutes of time per degree of longitude) instead of the reference
+ * city's. When each era ended comes from src/data/tz-lmt.json, generated
+ * from a pinned tzdb release that includes backzone; every later instant is
+ * Intl's. The table loads on demand, only for dates that can need it: await
  * prepareLocalTime(date) before resolving a birthplace time.
  */
+import { loadModule } from '../module-load';
 import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from './technical-locales';
 import { parseCivilDate, parseCivilTime } from './civil-date';
 
@@ -33,8 +35,8 @@ export interface LocalTimeResolution {
   offsetMinutes: number;
   flags: ('dst-gap' | 'dst-fold' | 'lmt')[];
   /**
-   * Present when the birthplace's own mean time decided the instant: the
-   * longitude used, and the offset the zone alone would have applied.
+   * Present when the instant falls in the birthplace's own local mean time:
+   * the longitude used, and the offset the zone alone would have applied.
    */
   localMeanTime?: { longitude: number; zoneOffsetMinutes: number };
 }
@@ -50,16 +52,33 @@ let lmtEraLoad: Promise<void> | null = null;
 export const LOCAL_MEAN_TIME_ERAS_END_BEFORE = Date.UTC(1953, 0, 1);
 
 /**
+ * Whether a local date (YYYY-MM-DD) could fall in a local mean time era, so
+ * that a birthplace's longitude can change how its wall time resolves. False
+ * only for years after the last era ended.
+ */
+export function localMeanTimeCanApply(date: string): boolean {
+  const year = Number(String(date).slice(0, 4));
+  return !(Number.isFinite(year) && year > new Date(LOCAL_MEAN_TIME_ERAS_END_BEFORE).getUTCFullYear());
+}
+
+/**
  * Loads the local mean time era table when `date` (YYYY-MM-DD) could fall in
  * an era, and does nothing for later dates. Resolving a birthplace time from
- * such a date without it throws rather than guess.
+ * such a date without it throws rather than guess. A failed download rejects
+ * with a ModuleLoadError, like the calculators' other code downloads, and is
+ * not remembered: the next call tries again.
  */
 export function prepareLocalTime(date: string): Promise<void> {
-  const year = Number(String(date).slice(0, 4));
-  if (Number.isFinite(year) && year > new Date(LOCAL_MEAN_TIME_ERAS_END_BEFORE).getUTCFullYear()) {
-    return Promise.resolve();
+  if (!localMeanTimeCanApply(date) || lmtEraEnd) return Promise.resolve();
+  if (!lmtEraLoad) {
+    const pending = loadModule(() => import('../../data/tz-lmt.json')).then(({ default: table }) => {
+      lmtEraEnd = table.eras;
+    });
+    lmtEraLoad = pending;
+    void pending.catch(() => {
+      if (lmtEraLoad === pending) lmtEraLoad = null;
+    });
   }
-  lmtEraLoad ??= import('../../data/tz-lmt.json').then(({ default: table }) => { lmtEraEnd = table.eras; });
   return lmtEraLoad;
 }
 
@@ -230,7 +249,7 @@ export function resolveLocalToUtc(
   }
 
   const zoneOffset = chosen.offset;
-  const meanTime = birthplaceMeanTime(tz, wallMs, chosen, options.longitude);
+  const meanTime = birthplaceMeanTime(tz, wallMs, options.longitude);
   if (meanTime) ({ chosen, flags } = meanTime);
 
   if (Math.abs(chosen.offset % 1) > 1e-9) flags.push('lmt');
@@ -239,57 +258,76 @@ export function resolveLocalToUtc(
     utc: new Date(chosen.utcMs),
     offsetMinutes: chosen.offset,
     flags,
-    ...(meanTime ? { localMeanTime: { longitude: options.longitude!, zoneOffsetMinutes: zoneOffset } } : {}),
+    ...(meanTime?.inEra ? { localMeanTime: { longitude: options.longitude!, zoneOffsetMinutes: zoneOffset } } : {}),
   };
 }
 
 /**
- * The reading of a wall time under the birthplace's own mean time, where
- * that decides it: a finite longitude, a zone whose local mean time era is
- * known, and a wall time near or inside that era. Null leaves Intl's reading.
+ * A birthplace this far from its zone's own mean time is not in that zone.
+ * The widest real case in the city index is Gar, in western Tibet, 165
+ * minutes from Shanghai's mean time.
+ */
+const MAX_MEAN_TIME_DEPARTURE_MINUTES = 180;
+
+/**
+ * The birthplace's clock, and the reading of a wall time on it, where the
+ * birthplace's own mean time can decide it: a plausible longitude, a zone
+ * whose local mean time era is known, and a wall time near or inside that
+ * era. Null leaves Intl's reading, which also covers every later instant.
  *
- * When the era ended, the birthplace's clock stepped from its own mean time
- * to the zone's first legal time. That step leaves a gap or a fold exactly
- * as a daylight-saving change does, and the same policy applies: a repeated
- * reading takes the earlier instant, a skipped one moves forward by the gap.
+ * Until the era ended the clock showed the birthplace's mean time, on the
+ * zone's side of the date line at that instant (Manila kept the American
+ * date until 1844, Alaska the Asian one until 1867); from then on it showed
+ * the zone's legal time. Readings are enumerated against that clock and the
+ * ordinary policy applied to them, so every gap and fold comes from the
+ * birthplace's clock, never from the reference city's: a repeated reading
+ * takes the earlier instant, a skipped one moves forward by the gap.
  */
 function birthplaceMeanTime(
   tz: string,
   wallMs: number,
-  intl: { utcMs: number; offset: number },
   longitude: number | undefined,
-): { chosen: { utcMs: number; offset: number }; flags: LocalTimeResolution['flags'] } | null {
+): { chosen: { utcMs: number; offset: number }; flags: LocalTimeResolution['flags']; inEra: boolean } | null {
   if (typeof longitude !== 'number' || !Number.isFinite(longitude) || Math.abs(longitude) > 180) return null;
-  // A birthplace reading lies within a day of Intl's; later instants are Intl's.
-  if (intl.utcMs - LOCAL_MEAN_TIME_ERAS_END_BEFORE > 2 * 86_400_000) return null;
+  const probe = 36 * 3600_000;
+  // Every era ended before LOCAL_MEAN_TIME_ERAS_END_BEFORE; no reading of a
+  // later wall time can fall inside one, so later instants never need the table.
+  if (wallMs - probe - LOCAL_MEAN_TIME_ERAS_END_BEFORE > 0) return null;
   if (!lmtEraEnd) {
     throw new Error('Local mean time eras are not loaded: await prepareLocalTime(date) before resolving.');
   }
   if (!Object.prototype.hasOwnProperty.call(lmtEraEnd, tz)) return null;
   const endMs = lmtEraEnd[tz] * 1000;
-  if (intl.utcMs - endMs > 2 * 86_400_000) return null;
+  if (wallMs - probe - endMs > 0) return null;
 
   // Mean solar time runs four minutes per degree of longitude, kept to whole
-  // seconds as IANA offsets are. Before a move across the date line (Manila
-  // 1844, Alaska 1867) the zone's calendar sat a whole day from its
-  // longitude; the zone's own offset at the time supplies that day.
+  // seconds as IANA offsets are.
   const meanSeconds = Math.round(longitude * 240);
-  const zoneSeconds = offsetAt(tz, Math.min(wallMs, endMs - 1)) * 60;
-  const days = Math.round((zoneSeconds - meanSeconds) / 86_400);
-  const placeOffset = (meanSeconds + days * 86_400) / 60;
-  const placeUtc = wallMs - Math.round(placeOffset * 60_000);
-  const placeReading = { utcMs: placeUtc, offset: placeOffset };
+  const meanOffset = (utcMs: number): number => {
+    const zone = offsetAt(tz, utcMs);
+    const days = Math.round((zone * 60 - meanSeconds) / 86_400);
+    return (meanSeconds + days * 86_400) / 60;
+  };
+  // A longitude hours away from the zone's own mean time belongs to another
+  // zone; leave such an input to the zone alone rather than invent a clock.
+  const eraSample = Math.min(wallMs, endMs - 1);
+  if (Math.abs(meanOffset(eraSample) - offsetAt(tz, eraSample)) > MAX_MEAN_TIME_DEPARTURE_MINUTES) return null;
 
-  if (intl.utcMs >= endMs) {
-    // Intl read the wall time after the era; a birthplace reading before the
-    // era's end is then the earlier half of the fold the change created.
-    return placeUtc < endMs ? { chosen: placeReading, flags: ['dst-fold'] } : null;
+  const clockAt = (utcMs: number): number => (utcMs < endMs ? meanOffset(utcMs) : offsetAt(tz, utcMs));
+  const readings: { utcMs: number; offset: number }[] = [];
+  for (const offset of new Set([wallMs - probe, wallMs, wallMs + probe, endMs - 1, endMs].map(clockAt))) {
+    const utcMs = wallMs - Math.round(offset * 60_000);
+    if (Math.abs(clockAt(utcMs) - offset) < 1e-9 && !readings.some((reading) => reading.utcMs === utcMs)) {
+      readings.push({ utcMs, offset });
+    }
   }
-  if (placeUtc < endMs) return { chosen: placeReading, flags: [] };
-  // Inside the era by the reference city's clock, after it by the
-  // birthplace's: the zone's first legal time, or the gap the change left.
-  const legal = offsetAt(tz, endMs);
-  const legalUtc = wallMs - Math.round(legal * 60_000);
-  if (legalUtc >= endMs) return { chosen: { utcMs: legalUtc, offset: legal }, flags: [] };
-  return { chosen: { utcMs: placeUtc, offset: offsetAt(tz, placeUtc) }, flags: ['dst-gap'] };
+  readings.sort((a, b) => a.utcMs - b.utcMs);
+
+  if (readings.length > 0) {
+    const chosen = readings[0];
+    return { chosen, flags: readings.length > 1 ? ['dst-fold'] : [], inEra: chosen.utcMs < endMs };
+  }
+  // Skipped: apply the offset the birthplace's clock showed just before.
+  const utcMs = wallMs - Math.round(clockAt(wallMs - probe) * 60_000);
+  return { chosen: { utcMs, offset: clockAt(utcMs) }, flags: ['dst-gap'], inEra: utcMs < endMs };
 }

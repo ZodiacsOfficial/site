@@ -1049,7 +1049,7 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'local-mean-time',
     term: 'Local mean time',
-    definition: 'Local mean time is civil time based on the average Sun at a place’s longitude, used historically before standard time zones became common. This site relies on historical zone records to resolve local input rather than asking users to supply a manual UTC offset.',
+    definition: 'Local mean time is civil time based on the average Sun at a place’s longitude, used historically before standard time zones became common. For a birth from before its place adopted a legal time, this site works out the birthplace’s own local mean time from its longitude rather than asking for a manual UTC offset.',
     related: ['time-zone', 'utc'],
     link: { href: '/methodology/', label: 'Read the time method' },
   },

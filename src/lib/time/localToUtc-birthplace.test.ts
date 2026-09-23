@@ -1,4 +1,4 @@
-import { beforeAll, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { parseNatalEnvelope } from '@zodiacs/engine/receipt';
 import lmtEras from '../../data/tz-lmt.json';
 import cityIndex from '../../../public/data/cities/index.json';
@@ -92,7 +92,8 @@ describe('birthplace local mean time', () => {
     expect(resolved.utc.toISOString()).toBe('1883-11-18T17:05:31.000Z');
     expect(resolved.offsetMinutes).toBe(-300);
     expect(resolved.flags).toEqual(['dst-gap']);
-    expect(resolved.localMeanTime).toBeDefined();
+    // The shifted instant is already on Eastern time.
+    expect(resolved.localMeanTime).toBeUndefined();
     // Either side of the gap reads normally.
     expect(resolveLocalToUtc('1883-11-18', '11:44', 'America/New_York', { longitude: BUFFALO }).utc.toISOString())
       .toBe('1883-11-18T16:59:31.000Z');
@@ -118,6 +119,25 @@ describe('birthplace local mean time', () => {
     expect(resolved).toEqual(resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York'));
   });
 
+  it('loads the table for 1953 dates, the last year an era can reach', async () => {
+    const fresh = await import('./localToUtc?boundary' as string) as typeof import('./localToUtc');
+    await fresh.prepareLocalTime('1953-01-01');
+    expect(() => fresh.resolveLocalToUtc('1953-01-01', '00:00', 'Pacific/Kiritimati', { longitude: -157.4 })).not.toThrow();
+  });
+
+  it('does not remember a failed download of the table', async () => {
+    vi.resetModules();
+    vi.doMock('../../data/tz-lmt.json', () => { throw new Error('offline'); });
+    const fresh = await import('./localToUtc');
+    const { ModuleLoadError } = await import('../module-load');
+    await expect(fresh.prepareLocalTime('1870-06-15')).rejects.toBeInstanceOf(ModuleLoadError);
+    vi.doUnmock('../../data/tz-lmt.json');
+    await expect(fresh.prepareLocalTime('1870-06-15')).resolves.toBeUndefined();
+    expect(fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }).utc.toISOString())
+      .toBe('1870-06-15T17:15:31.000Z');
+    vi.resetModules();
+  });
+
   it('refuses to guess an early birthplace time before the table is loaded', async () => {
     const fresh = await import('./localToUtc?unloaded' as string) as typeof import('./localToUtc');
     expect(() => fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }))
@@ -128,6 +148,36 @@ describe('birthplace local mean time', () => {
     await fresh.prepareLocalTime('1952-12-31');
     expect(fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }).utc.toISOString())
       .toBe('1870-06-15T17:15:31.000Z');
+  });
+
+  it('keeps a skipped or repeated date across a date-line move inside the era', () => {
+    // Alaska left the Asian date on 1867-10-19: 10:00 that day happened twice.
+    const anchorage = resolveLocalToUtc('1867-10-19', '10:00', 'America/Anchorage', { longitude: -149.9 });
+    expect(anchorage.utc.toISOString()).toBe('1867-10-18T19:59:36.000Z');
+    expect(anchorage.flags).toEqual(['dst-fold', 'lmt']);
+    // Manila skipped 1844-12-31 when it moved to the Asian date.
+    const manila = resolveLocalToUtc('1844-12-31', '20:00', 'Asia/Manila', { longitude: MANILA });
+    expect(manila.flags).toContain('dst-gap');
+    expect(manila.utc.getTime()).toBeGreaterThan(resolveLocalToUtc('1844-12-30', '20:00', 'Asia/Manila', { longitude: MANILA }).utc.getTime());
+    // Samoa lived 1892-07-04 twice.
+    const apia = resolveLocalToUtc('1892-07-04', '18:00', 'Pacific/Apia', { longitude: -171.76 });
+    expect(apia.flags).toContain('dst-fold');
+  });
+
+  it('treats a whole-minute mean time as local mean time too', () => {
+    // 38.75° E is exactly +2:35:00: no seconds, so no lmt flag, but still the birthplace clock.
+    const resolved = resolveLocalToUtc('1860-06-15', '12:00', 'Africa/Addis_Ababa', { longitude: 38.75 });
+    expect(resolved.offsetMinutes).toBe(155);
+    expect(resolved.flags).toEqual([]);
+    expect(resolved.localMeanTime?.longitude).toBe(38.75);
+  });
+
+  it('ignores a longitude hours away from the zone, as a birthplace in another zone', () => {
+    // Toronto's longitude under Juneau's zone is 3 h 40 min from Juneau's mean time.
+    const resolved = resolveLocalToUtc('1867-10-18', '12:00', 'America/Juneau', { longitude: -79.38 });
+    expect(resolved).toEqual(resolveLocalToUtc('1867-10-18', '12:00', 'America/Juneau'));
+    // The widest real case in the city index, Gar under Shanghai's zone, is kept.
+    expect(resolveLocalToUtc('1890-06-15', '12:00', 'Asia/Shanghai', { longitude: 80.1 }).localMeanTime).toBeDefined();
   });
 
   it.each(['UTC', 'Etc/GMT+5'])('leaves %s, which has no local mean time era, to Intl', (zone) => {

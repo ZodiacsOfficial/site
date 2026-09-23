@@ -146,6 +146,19 @@ describe('ChartCalculator reference confidence', () => {
     expect(moonCandidates(actual.result)).toEqual([]);
   });
 
+  it.each([
+    ['1867-10-18', 'America/Juneau', '1867-10-17T20:57:41.000Z', ['lmt']],
+    ['1892-07-04', 'Pacific/Apia', '1892-07-03T23:26:56.000Z', ['dst-fold', 'lmt']],
+  ])('keeps the zone clock for %s in %s, hours from the synthetic longitude', (date, zone, instant, flags) => {
+    // Toronto's longitude is outside the bound on a birthplace's departure
+    // from the zone's mean time, so these controls keep the zone's clock.
+    const actual = capture(input(date, zone));
+    expect(actual.resolved).toEqual(resolveLocalToUtc(date, '12:00', zone));
+    expect(actual.resolved.utc.toISOString()).toBe(instant);
+    expect(actual.resolved.flags).toEqual(flags);
+    expect(actual.resolved.localMeanTime).toBeUndefined();
+  });
+
   it.each(['full', 'moon', 'rising'])('preserves known-time numerical, receipt and confidence behavior in %s mode', mode => {
     const value = input('1990-06-15', 'America/Toronto', true), expected = reference(value), actual = capture(value, mode);
     // The legacy adapter preserves caller input/property identity, while the
