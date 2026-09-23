@@ -23,10 +23,12 @@ Zone Europe/Berlin	0:53:28 -	LMT	1893 Apr
 			1:00	C-Eur	CE%sT
 Link	Europe/Berlin	Europe/Oslo
 Link	America/New_York	US/Eastern
+Link	America/New_York	America/Test
 `;
 const BACKZONE = `
 Zone	Europe/Oslo	0:43:00 -	LMT	1895 Jan  1
 			1:00	Norway	CE%sT
+Link	Europe/Oslo	America/Test
 `;
 
 describe('the local mean time era builder', () => {
@@ -50,6 +52,9 @@ describe('the local mean time era builder', () => {
     expect(untilToUnixSeconds(['1884'], 1616)).toBe(Date.UTC(1884, 0, 1) / 1000 - 1616);
     expect(untilToUnixSeconds(['1911', 'Mar', 'Sun>=8'], 0)).toBe(Date.UTC(1911, 2, 12) / 1000);
     expect(untilToUnixSeconds(['1916', 'Oct', 'lastSun'], 0)).toBe(Date.UTC(1916, 9, 29) / 1000);
+    // Standard time ("s") is the line's own offset, like wall time on an LMT line.
+    expect(untilToUnixSeconds(['1883', 'Mar', '30', '0:00s'], parseClock('-0:17:55')))
+      .toBe(Date.UTC(1883, 2, 30) / 1000 + 17 * 60 + 55);
   });
 
   it('ends an era at the first legal clock, including a legal mean time on the same offset', () => {
@@ -81,6 +86,8 @@ describe('the local mean time era builder', () => {
     expect(Object.keys(offsets).length + Object.keys(dateLine).length).toBe(Object.keys(eras).length);
     expect(eras['Europe/Oslo']).toBe(Date.UTC(1895, 0, 1) / 1000 - 43 * 60);
     expect(eras['US/Eastern']).toBe(eras['America/New_York']);
+    // A backzone Link beats a main-data Link of the same name.
+    expect(eras['America/Test']).toBe(eras['Europe/Oslo']);
     expect(eras).not.toHaveProperty('Antarctica/Troll');
     expect(Object.keys(eras)).toEqual([...Object.keys(eras)].sort());
   });

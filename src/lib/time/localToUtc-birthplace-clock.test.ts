@@ -38,6 +38,9 @@ const CASES: [zone: string, town: string, longitude: number][] = [
   ['Africa/Ouagadougou', 'Bobo-Dioulasso', -4.3],
   ['Asia/Muscat', 'Muscat', 58.41],
   ['Africa/Mbabane', 'Manzini', 31.38],
+  // Towns whose mean time puts an in-era reading one second before the end.
+  ['Asia/Seoul', 'Andong', 128.72],
+  ['Africa/Cairo', 'Armant', 32.54],
 ];
 
 /** The first instant within 36 h after the era end at which Intl's offset changes, or the end itself. */

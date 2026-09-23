@@ -266,6 +266,10 @@ describe('local mean time era table', () => {
     ['Europe/Oslo', '1894-12-31T23:17:00.000Z'],
     ['Asia/Manila', '1899-09-06T04:00:00.000Z'],
     ['America/Anchorage', '1900-08-20T21:59:36.000Z'],
+    // A backzone Zone that replaces a main-data Link (to Puerto Rico).
+    ['America/Kralendijk', '1912-02-12T04:35:47.000Z'],
+    // An UNTIL in standard time ("0:00s"), not universal time.
+    ['Europe/Isle_of_Man', '1883-03-30T00:17:55.000Z'],
   ])('ends %s at %s', (zone, iso) => {
     expect(new Date(eras[zone] * 1000).toISOString()).toBe(iso);
   });
