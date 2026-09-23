@@ -155,7 +155,9 @@ const jsonLd = [{
     <div class="prose">
       <p>
         Every change has to pass a comparison against NASA JPL Horizons
-        reference data before it ships. Separately, on 20 September 2026 the
+        reference data before it ships; at the two dates it checks, 1907 and
+        2020, the largest difference is 14.8 arcseconds (Neptune, 2020).
+        Separately, on 20 September 2026 the
         engine was measured against Swiss Ephemeris 2.10.03 over a stratified
         set of dates written down beforehand: across the 160 measurements from
         1801 to 2026 the median disagreement in ecliptic longitude is{' '}
@@ -173,7 +175,9 @@ const jsonLd = [{
         mostly the clock: the Moon is <strong>64.8 arcseconds</strong> at 2100 and{' '}
         <strong>159.4 arcseconds</strong> at 2190, almost all of which is the two programs extrapolating the
         Earth's slowing rotation differently rather than either ephemeris
-        being wrong.
+        being wrong. The engine's clock model is already off today: on 22
+        September 2026 it reads 75.5 seconds where the IERS value is 69.2,
+        which on its own moves the Moon about 3.5 arcseconds.
       </p>
       <p>
         And the engine does not bound its input date at all. It will compute

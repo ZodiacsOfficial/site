@@ -73,3 +73,34 @@ describe('the solar return with an unknown birth time', () => {
     expect(read('src/islands/solar-return/copy.ts')).toContain('can shift by up to about 12 hours');
   });
 });
+
+describe('the NASA JPL Horizons figure', () => {
+  it('is the largest residual of the reference values the engine test uses', () => {
+    const reference = JSON.parse(read('src/lib/engine/fixtures/horizons-reference.json'));
+    const wrap = (d) => ((d + 540) % 360) - 180;
+    let largest = { arcseconds: 0, where: '' };
+    for (const epoch of reference.epochs) {
+      for (const [body, longitude] of Object.entries(epoch.longitudes)) {
+        const arcseconds = Math.abs(wrap(bodyLongitude(body, new Date(epoch.utc)) - longitude)) * 3600;
+        if (arcseconds > largest.arcseconds) largest = { arcseconds, where: `${body} ${epoch.utc.slice(0, 4)}` };
+      }
+    }
+    expect(largest.where).toBe('Neptune 2020');
+    expect(largest.arcseconds.toFixed(1)).toBe('14.8');
+    for (const path of ['public/llms.txt', 'public/llms-full.txt', 'src/lib/sky-api/meta.ts',
+      'src/pages/developers/engine/index.astro']) {
+      expect(read(path), path).toContain('the largest difference is 14.8 arcseconds');
+    }
+    expect(read('src/pages/developers/index.astro').replace(/\s+/g, ' ')).toContain('the largest difference is 14.8 arcseconds');
+  });
+});
+
+describe('today\'s ΔT on the developer engine page', () => {
+  it('states the measured 2026-09-22 values', () => {
+    const deltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-23/values.json'));
+    const today = deltaT.values.find((row) => row.date === '2026-09-22');
+    const page = read('src/pages/developers/engine/index.astro').replace(/\s+/g, ' ');
+    expect(page).toContain(`it reads ${today.formulaSeconds.toFixed(1)} seconds where the IERS value is ${today.observedSeconds.toFixed(1)}`);
+    expect(page).toContain(`moves the Moon about ${today.moonArcseconds.toFixed(1)} arcseconds`);
+  });
+});
