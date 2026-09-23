@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060709">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Option C · The Salon — Astrofolio redesign prototype</title>
+  <link rel="icon" type="image/svg+xml" href="../../../public/assets/astrofolio/v2/leo/favicon.svg">
+  <link rel="stylesheet" href="shared/base.css">
+  <link rel="stylesheet" href="../../../public/assets/site-footer.css">
+  <style>
+    /* The arch: a semicircular head on a 1 : 1.3 niche. Vertical radius is
+       half the width, expressed against the height (1 / 1.3 / 2 = 38.46%). */
+    :root { --arch: 50% 50% 10px 10px / 38.46% 38.46% 10px 10px; }
+
+    /* ── Hero: the wall ─────────────────────────────────────────────────── */
+    .salon { min-height: 100dvh; padding: 80px var(--gutter) 28px; max-width: 1440px; margin-inline: auto; display: grid; grid-template-rows: auto 1fr; gap: 22px; }
+    .salon__head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; }
+    .salon__head h1 { margin-top: 6px; font: 400 clamp(40px, 4.2vw, 64px)/.98 var(--serif); letter-spacing: -.028em; }
+    .salon__head p.sub { margin-top: 10px; color: var(--ink-2); font-size: 15.5px; max-width: 80ch; }
+    .pick { display: flex; align-items: center; gap: 16px; padding: 8px 8px 8px 12px; border: 1px solid var(--hair-2); border-radius: 999px; background: var(--void-1); transition: border-color 300ms; }
+    .pick img.disc { width: 40px; height: 40px; }
+    .pick__who b { display: block; font: 400 21px/1 var(--serif); }
+    .pick__who span { display: block; margin-top: 4px; font: 400 11.5px var(--mono); color: var(--ink-2); white-space: nowrap; }
+    .pick__who span .delta { font-family: var(--sans); font-size: 11.5px; }
+    .pick__label { font: italic 400 14px var(--serif); color: var(--ink-3); }
+
+    .wall { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px 18px; align-content: start; }
+    .niche { position: relative; width: 100%; display: grid; gap: 10px; padding: 0; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
+    .niche__arch {
+      position: relative; aspect-ratio: 1 / 1.3; border-radius: var(--arch); overflow: hidden;
+      background: radial-gradient(ellipse 85% 60% at 50% 0%, rgba(238, 241, 247, .075), rgba(238, 241, 247, 0) 72%), var(--void-1);
+      box-shadow: inset 0 0 0 1px var(--hair-1), inset 0 -40px 50px -30px rgba(0, 0, 0, .8);
+      transition: box-shadow 500ms var(--ease-drawer);
+    }
+    .niche__arch::after { content: ''; position: absolute; left: 14%; right: 14%; bottom: 17%; height: 1px; background: linear-gradient(90deg, transparent, rgba(198, 204, 218, .22), transparent); }
+    .niche__arch img {
+      position: absolute; left: 50%; bottom: 17%; width: 80%; height: auto; transform: translate(-50%, 0);
+      filter: drop-shadow(0 14px 14px rgba(0, 0, 0, .7));
+      -webkit-box-reflect: below 0 linear-gradient(transparent 62%, rgba(0, 0, 0, .22));
+      transition: transform 700ms var(--ease-out);
+    }
+    .niche:hover .niche__arch, .niche:focus-visible .niche__arch { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sign) 70%, transparent), inset 0 -40px 50px -30px rgba(0, 0, 0, .8); }
+    .niche:hover .niche__arch img, .niche:focus-visible .niche__arch img { transform: translate(-50%, -6px) scale(1.03); }
+    .niche:focus-visible { outline: none; }
+    .niche__plac { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 2px 8px; padding-inline: 4px; }
+    .niche__plac b { font: 400 10.5px var(--mono); color: var(--ink-3); letter-spacing: .06em; }
+    .niche__plac strong { font: 400 19px/1 var(--serif); letter-spacing: -.01em; }
+    .niche__plac .price { font-size: 11px; color: var(--ink-2); }
+    .niche__plac small { grid-column: 2 / 4; font-size: 12px; color: var(--ink-3); }
+    .niche__tag { position: absolute; z-index: 2; left: 50%; top: 10px; transform: translateX(-50%); padding: 4px 10px; border-radius: 999px; background: rgba(6, 7, 9, .7); border: 1px solid color-mix(in srgb, var(--sign) 60%, transparent); font: italic 400 13px var(--serif); color: var(--ink-0); white-space: nowrap; }
+
+    /* ── Object view ────────────────────────────────────────────────────── */
+    .obj { position: fixed; inset: 0; width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--void-0); color: var(--ink-0); overflow: auto; }
+    .obj::backdrop { background: var(--void-0); }
+    .obj[open] { display: block; }
+    .obj__bar { position: sticky; top: 0; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px var(--gutter); background: linear-gradient(180deg, var(--void-0) 55%, rgba(6, 7, 9, 0)); }
+    .obj__bar .btn { min-height: 42px; }
+    .obj__nav { display: flex; gap: 8px; }
+    .obj__nav button { display: inline-flex; align-items: center; gap: 10px; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--hair-2); background: transparent; cursor: pointer; font-size: 14px; color: var(--ink-1); }
+    .obj__nav button img { width: 22px; height: 22px; }
+    .obj__nav button:hover { border-color: var(--hair-3); color: var(--ink-0); }
+    .obj__body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 5vw, 88px); align-items: center; padding: 0 var(--gutter) 64px; max-width: 1480px; margin-inline: auto; min-height: calc(100dvh - 80px); }
+    .obj__arch { position: relative; width: min(100%, 64vh, 620px); margin-inline: auto; aspect-ratio: 1 / 1.3; border-radius: var(--arch); overflow: hidden;
+      background: radial-gradient(ellipse 85% 60% at 50% 0%, rgba(238, 241, 247, .08), rgba(238, 241, 247, 0) 72%), var(--void-1);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sign) 55%, transparent), 0 60px 120px -60px rgba(0, 0, 0, .95); }
+    .obj__arch .stars { position: absolute; left: -6%; right: -6%; top: 6%; width: 112%; height: auto; opacity: .8; }
+    .obj__arch .stars g[stroke] { stroke: var(--sign); stroke-opacity: .45; }
+    .obj__arch img.fig { position: absolute; left: 50%; bottom: 14%; width: 86%; height: auto; transform: translateX(-50%); filter: drop-shadow(0 30px 30px rgba(0, 0, 0, .75)); -webkit-box-reflect: below 0 linear-gradient(transparent 64%, rgba(0, 0, 0, .2)); view-transition-name: obj-figure; }
+    .obj__arch::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 14%; height: 1px; background: linear-gradient(90deg, transparent, rgba(198, 204, 218, .26), transparent); }
+    .label { display: grid; gap: 0; max-width: 520px; }
+    .label__no { font: 400 12px var(--mono); letter-spacing: .08em; color: var(--ink-3); }
+    .label h2 { margin-top: 12px; font: 400 clamp(64px, 7vw, 112px)/.9 var(--serif); letter-spacing: -.035em; padding-bottom: .06em; }
+    .label__facts { margin-top: 12px; color: var(--ink-2); font-size: 15px; }
+    .label__bio { margin-top: 20px; font: italic 400 21px/1.4 var(--serif); color: var(--ink-1); }
+    .label__quote { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--hair-1); display: grid; grid-template-columns: auto minmax(120px, 1fr); gap: 6px 26px; align-items: end; }
+    .label__quote .price { font-size: 28px; line-height: 1; }
+    .label__quote .delta { display: block; margin-top: 8px; }
+    .label__quote .spark { height: 50px; }
+    .label__quote small { grid-column: 1 / -1; color: var(--ink-3); font-size: 12px; margin-top: 6px; }
+    .label__cta { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .label__more { margin-top: 14px; font-size: 13.5px; color: var(--ink-3); }
+    .label__more a { color: var(--ink-1); }
+    .prov { margin-top: 30px; border-top: 1px solid var(--hair-2); }
+    .prov__head { display: flex; justify-content: space-between; padding: 14px 0 6px; font: italic 400 17px var(--serif); color: var(--ink-1); }
+    .prov div { display: grid; grid-template-columns: 130px 1fr auto; gap: 14px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--hair-1); }
+    .prov dt { font-size: 12.5px; color: var(--ink-3); }
+    .prov dd { margin: 0; font: 400 12.5px var(--mono); color: var(--ink-1); overflow-wrap: anywhere; }
+    .prov button { padding: 6px 11px; border-radius: 999px; border: 1px solid var(--hair-2); background: transparent; color: var(--ink-1); font-size: 12px; cursor: pointer; }
+    ::view-transition-group(obj-figure) { animation-duration: 650ms; animation-timing-function: cubic-bezier(.23, 1, .32, 1); }
+
+    /* ── Wall text ──────────────────────────────────────────────────────── */
+    .walltext p.big { max-width: 24ch; font: 400 clamp(34px, 3.8vw, 58px)/1.12 var(--serif); letter-spacing: -.018em; color: var(--ink-0); }
+    .walltext p.big em { color: var(--ink-2); }
+    .facts { margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--hair-2); }
+    .facts div { padding: 22px 24px 0 0; }
+    .facts div + div { padding-left: 24px; border-left: 1px solid var(--hair-1); }
+    .facts b { display: block; font: 400 56px/1 var(--serif); letter-spacing: -.02em; }
+    .facts span { display: block; margin-top: 10px; color: var(--ink-2); font-size: 14.5px; }
+
+    /* ── Acquire ────────────────────────────────────────────────────────── */
+    .acquire__grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: clamp(40px, 6vw, 100px); align-items: center; }
+    .acquire__img { position: relative; }
+    .acquire__img img { width: 100%; height: auto; filter: drop-shadow(0 40px 60px rgba(0, 0, 0, .8)); }
+    .steps { margin: 36px 0 0; padding: 0; list-style: none; counter-reset: step; border-top: 1px solid var(--hair-2); }
+    .steps li { counter-increment: step; display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--hair-1); }
+    .steps li::before { content: counter(step, upper-roman); font: 400 13px var(--mono); color: var(--ink-3); padding-top: 4px; }
+    .steps b { display: block; font: 400 24px/1.1 var(--serif); }
+    .steps span { display: block; margin-top: 6px; color: var(--ink-2); font-size: 15px; }
+    .acquire .stores { margin-top: 30px; }
+
+    /* ── Museum shop ────────────────────────────────────────────────────── */
+    .shop__row { margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+    .shop__item { display: grid; gap: 14px; text-decoration: none; }
+    .shop__item .niche__arch { aspect-ratio: 1 / 1.3; }
+    .shop__item .niche__arch img { width: 86%; bottom: 12%; -webkit-box-reflect: unset; filter: drop-shadow(0 24px 30px rgba(0, 0, 0, .6)); }
+    .shop__item:hover .niche__arch img { transform: translate(-50%, -6px); }
+    .shop__item span { display: flex; justify-content: space-between; font-size: 15px; color: var(--ink-1); padding-inline: 4px; }
+
+    /* ── Cabinet ────────────────────────────────────────────────────────── */
+    .cabinet { border-block: 1px solid var(--hair-1); background: var(--void-1); }
+    .cabinet__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+    .mini { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+    .mini span { position: relative; aspect-ratio: 1 / 1.3; border-radius: var(--arch); background: var(--void-0); box-shadow: inset 0 0 0 1px var(--hair-1); overflow: hidden; display: grid; place-items: center; }
+    .mini span img { width: 78%; height: auto; opacity: .1; filter: grayscale(1); }
+    .mini span.is-held { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sign) 65%, transparent); background: radial-gradient(ellipse 85% 60% at 50% 0%, rgba(238, 241, 247, .08), rgba(238, 241, 247, 0) 72%), var(--void-0); }
+    .mini span.is-held img { opacity: 1; filter: drop-shadow(0 8px 8px rgba(0, 0, 0, .7)); }
+    .cabinet__note { margin-top: 14px; font: 400 12px var(--mono); color: var(--ink-3); }
+
+    /* ── Provenance / verify ────────────────────────────────────────────── */
+    .verify__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    .checker { display: grid; gap: 12px; }
+    .checker__row { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; }
+    .checker input { min-width: 0; height: 54px; padding: 0 18px; border-radius: 16px; border: 1px solid var(--hair-2); background: var(--void-1); color: var(--ink-0); font: 400 14px var(--mono); }
+    .checker input:focus { outline: none; border-color: var(--ink-2); }
+    .checker .btn { height: 54px; }
+    .checker__out { min-height: 60px; display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--hair-1); color: var(--ink-2); font-size: 14.5px; }
+    .checker__out img { width: 34px; height: 34px; }
+    .checker__out.is-match { color: var(--ink-0); border-color: color-mix(in srgb, var(--sign) 60%, transparent); }
+    .checker__out.is-bad { color: var(--ink-0); border-color: color-mix(in srgb, var(--down) 70%, transparent); }
+
+    /* ── Standings ──────────────────────────────────────────────────────── */
+    .rail { margin-top: 48px; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; align-items: end; }
+    .rail a { display: grid; grid-template-rows: auto auto 92px; justify-items: center; text-decoration: none; }
+    .rail img { width: 78%; height: auto; margin-bottom: -2px; filter: drop-shadow(0 8px 10px rgba(0, 0, 0, .7)); transition: transform 500ms var(--ease-out); }
+    .rail__bar { width: 70%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, rgba(198, 204, 218, .2), rgba(198, 204, 218, .07)); box-shadow: inset 0 1px 0 rgba(238, 241, 247, .12); transition: background 300ms; }
+    .rail a:hover .rail__bar { background: linear-gradient(180deg, rgba(198, 204, 218, .32), rgba(198, 204, 218, .1)); }
+    .rail a:hover img { transform: translateY(-4px); }
+    .rail__lab { width: 100%; display: grid; gap: 4px; justify-items: center; align-content: start; padding-top: 12px; border-top: 1px solid var(--hair-2); text-align: center; }
+    .rail b { font: 400 11px var(--mono); color: var(--ink-3); font-weight: 400; }
+    .rail strong { font: 400 15px/1 var(--serif); font-weight: 400; }
+    .rail__lab span { font: 400 11.5px var(--mono); color: var(--ink-1); }
+    .rail .delta { font-family: var(--sans); font-size: 11.5px; }
+    .rail__note { margin-top: 18px; font-size: 12.5px; color: var(--ink-3); max-width: 76ch; }
+
+    /* ── Story ──────────────────────────────────────────────────────────── */
+    .story { position: relative; overflow: hidden; }
+    .story__grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+    .story__media { border-radius: 28px; overflow: hidden; border: 1px solid var(--hair-1); aspect-ratio: 16 / 10; }
+    .story__media video, .story__media img { width: 100%; height: 100%; object-fit: cover; }
+    .story .btn { margin-top: 28px; }
+
+    .bag { display: none; }
+
+    @media (max-width: 980px) {
+      .salon { padding-top: 76px; gap: 18px; }
+      .salon__head { grid-template-columns: 1fr; }
+      .salon__head h1 { font-size: 38px; }
+      .salon__head p.sub { font-size: 14.5px; }
+      .pick { display: none; }
+      .wall { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; }
+      .niche__plac { grid-template-columns: 1fr; }
+      .niche__plac b, .niche__plac small, .niche__plac .price { display: none; }
+      .niche__plac strong { font-size: 16px; }
+      .niche__tag { font-size: 11px; top: 6px; padding: 3px 7px; }
+      .obj__body { grid-template-columns: 1fr; padding-top: 0; }
+      .obj__arch { width: min(78vw, 46vh); }
+      .obj__nav button span { display: none; }
+      .label h2 { font-size: 60px; }
+      .facts, .acquire__grid, .cabinet__grid, .verify__grid, .story__grid { grid-template-columns: 1fr; }
+      .facts div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--hair-1); }
+      .shop__row { grid-template-columns: 1fr 1fr; }
+      .shop__item:first-child { grid-column: 1 / -1; }
+      .rail { grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 28px; }
+      .bag { position: fixed; z-index: var(--z-bar); left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 6px 6px 6px 8px; border-radius: 999px; border: 1px solid var(--hair-2); background: rgba(10, 12, 17, .82); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .95); }
+      .bag .pick__who b { font-size: 18px; }
+      .bag img.disc { width: 34px; height: 34px; }
+      .bag .btn-fomo { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="nav"></div>
+  <main id="main">
+    <section class="salon" id="top" aria-labelledby="salon-title">
+      <div class="salon__head">
+        <div>
+          <p class="kicker">Astrofolio</p>
+          <h1 id="salon-title">The twelve official Zodiacs</h1>
+          <p class="sub">One for every sign, each with its own design and public record. Choose one to see it up close.</p>
+        </div>
+        <div class="pick" data-pick aria-live="polite"></div>
+      </div>
+      <div class="wall" data-wall role="list"></div>
+    </section>
+
+    <section class="walltext band" aria-labelledby="walltext-title">
+      <div class="wrap">
+        <p class="kicker" id="walltext-title">About the collection</p>
+        <p class="big reveal" style="margin-top:20px">Astrofolio brings the twelve official Zodiacs into one collection. <em>Each sign has its own design, market, and verified public record.</em></p>
+        <div class="facts reveal">
+          <div><b>12</b><span>official Zodiacs, one for every sign</span></div>
+          <div><b>24</b><span>verified addresses: Solana origins and Base counterparts</span></div>
+          <div><b>1</b><span>public Registry, the source of truth</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="acquire band" aria-labelledby="acquire-title">
+      <div class="wrap acquire__grid">
+        <div class="acquire__img reveal">
+          <picture><source type="image/avif" srcset="../../../public/assets/fomo/fomo-verified.avif"><source type="image/webp" srcset="../../../public/assets/fomo/fomo-verified.webp"><img src="../../../public/assets/fomo/fomo-verified.png" width="1243" height="1265" alt="A phone showing fomo’s Verified list with the Zodiacs, each marked with a blue check." loading="lazy"></picture>
+        </div>
+        <div class="reveal" style="--d:80ms">
+          <p class="kicker">Acquiring one</p>
+          <h2 class="section-title" id="acquire-title" data-acquire-title>Every Zodiac here can be bought in fomo.</h2>
+          <ol class="steps">
+            <li><div><b>Get the app</b><span>fomo is free on the App Store, Google Play, and at fomo.family in a browser.</span></div></li>
+            <li><div><b>Add funds</b><span>Apple Pay where it is offered, or send money from a wallet or exchange you already use. Start small.</span></div></li>
+            <li><div><b>Open your sign</b><span>Every Buy with Fomo button on this page opens that sign in fomo, so you never pick it out of a search list.</span></div></li>
+          </ol>
+          <div data-stores></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cabinet band" aria-labelledby="cabinet-title">
+      <div class="wrap cabinet__grid">
+        <div>
+          <p class="kicker">A public collection</p>
+          <h2 class="section-title" id="cabinet-title">Cabinet of Twelve</h2>
+          <p class="lede">See which signs a public address holds, lit on its own wall. No wallet connection is required.</p>
+          <a class="btn btn--light" style="margin-top:28px" href="https://zodiacs.org/registry/collection/">Open the Cabinet <span class="btn__orb" aria-hidden="true">→</span></a>
+        </div>
+        <div>
+          <div class="mini" data-mini aria-label="A sample cabinet: five of twelve signs held"></div>
+          <p class="cabinet__note">5 / 12 · curator’s sample</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="shop-title">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+          <div><p class="kicker">The museum shop</p><h2 class="section-title" id="shop-title">Wear your sign.</h2></div>
+          <a class="link-arrow" href="https://shop.app/" rel="external noopener">Browse the full Astrofolio shop ↗</a>
+        </div>
+        <div class="shop__row" data-shop></div>
+      </div>
+    </section>
+
+    <section class="band" id="verify" aria-labelledby="verify-title" style="border-top:1px solid var(--hair-1)">
+      <div class="wrap verify__grid">
+        <div>
+          <p class="kicker">Provenance</p>
+          <h2 class="section-title" id="verify-title">Every Zodiac has one public record.</h2>
+          <p class="lede">A name or a ticker can be copied. The Registry keeps each sign’s complete addresses, its Solana origin and its official Base counterpart. Paste one to check it before you buy.</p>
+        </div>
+        <form class="checker" data-checker novalidate>
+          <label class="vh" for="addr">Token address</label>
+          <div class="checker__row"><input id="addr" autocomplete="off" spellcheck="false" placeholder="Solana mint or Base contract"><button class="btn btn--light" type="submit">Check <span class="btn__orb" aria-hidden="true">→</span></button></div>
+          <p class="checker__out" data-out aria-live="polite">Never paste a recovery phrase, here or anywhere.</p>
+          <a class="link-arrow" href="https://zodiacs.org/registry/">Browse all twelve records →</a>
+        </form>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="standings-title">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+          <div><p class="kicker">Latest market snapshot</p><h2 class="section-title" id="standings-title">Who’s leading today?</h2></div>
+          <a class="link-arrow" href="https://zodiacs.org/terminal/?rank=marketCap">View the full market ↗</a>
+        </div>
+        <div class="rail" data-rail></div>
+        <p class="rail__note" data-rail-note></p>
+      </div>
+    </section>
+
+    <section class="story band" aria-labelledby="story-title" style="border-top:1px solid var(--hair-1)">
+      <div class="wrap story__grid">
+        <div class="story__media reveal">
+          <video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/art/zodiac-clock-1280.jpg" aria-hidden="true"><source src="../../../public/assets/art/zodiac-clock.mp4" type="video/mp4"></video>
+        </div>
+        <div class="reveal" style="--d:80ms">
+          <p class="kicker">The story</p>
+          <h2 class="section-title" id="story-title">The story behind the collection.</h2>
+          <p class="lede">The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their designs and token records one public home.</p>
+          <a class="btn btn--light" href="https://zodiacs.org/thesis/">Read the story <span class="btn__orb" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="band band--tight" id="faq" data-faq></section>
+  </main>
+  <div id="ending"></div>
+  <p class="wrap" style="padding:0 0 100px;font-size:12px;color:var(--ink-3)" data-credit></p>
+
+  <dialog class="obj" data-obj aria-labelledby="obj-name">
+    <div class="obj__bar">
+      <button class="btn" type="button" data-close>← The twelve</button>
+      <div class="obj__nav"><button type="button" data-prev></button><button type="button" data-next></button></div>
+    </div>
+    <div class="obj__body">
+      <div class="obj__arch" data-obj-arch></div>
+      <div class="label" data-label></div>
+    </div>
+  </dialog>
+  <div class="bag" data-bag></div>
+
+  <script type="module">
+    import {
+      SIGNS, bySlug, art, esc, fmtPrice, fmtCompact, fmtChange, snapshotLabel, season, initialSign,
+      sparkline, fomoButton, storeBadges, mountFaq, mountEnding, reveal, lazyVideo, protoChrome, siteNav,
+      checkAddress, shortAddr, loadStars, figureAlt, STAR_CREDIT, DATA, reducedMotion, fomoWord, SHOT,
+    } from './shared/common.js';
+
+    document.getElementById('nav').innerHTML = siteNav();
+    const now = season(new Date());
+
+    /* ── The wall ──────────────────────────────────────────────────────── */
+    const wall = document.querySelector('[data-wall]');
+    wall.innerHTML = SIGNS.map((sign) => `
+      <div role="listitem"><button class="niche" type="button" style="--sign:${sign.hue}" data-slug="${sign.slug}" aria-label="${esc(`${sign.name}, ${sign.dates}. See it up close.`)}">
+        ${sign === now.sign ? '<span class="niche__tag">In season</span>' : ''}
+        <span class="niche__arch"><img src="${art.figure(sign.slug, 512)}" width="512" height="512" alt="" data-fig="${sign.slug}"></span>
+        <span class="niche__plac"><b>${sign.roman}</b><strong>${esc(sign.name)}</strong><span class="price">${fmtPrice(sign.price)}</span><small>${esc(sign.dates)}</small></span>
+      </button></div>`).join('');
+
+    const pickHtml = (sign, label) => {
+      const delta = fmtChange(sign.change, { words: false });
+      return `${label ? `<span class="pick__label">${label}</span>` : ''}<img class="disc" src="${art.disc(sign.slug, 128)}" alt=""><div class="pick__who"><b>${esc(sign.name)}</b><span>${fmtPrice(sign.price)} · <span class="delta ${delta.cls}">${delta.text}</span></span></div>${fomoButton(sign, { compact: true })}`;
+    };
+    const pick = document.querySelector('[data-pick]');
+    const bag = document.querySelector('[data-bag]');
+    let chosen = initialSign();
+    const showPick = (sign, label) => { pick.innerHTML = pickHtml(sign, label); pick.style.borderColor = `color-mix(in srgb, ${sign.hue} 45%, var(--hair-2))`; bag.innerHTML = pickHtml(sign); };
+    showPick(chosen, chosen === now.sign ? 'In season' : '');
+    wall.addEventListener('pointerover', (event) => {
+      const niche = event.target.closest('.niche');
+      if (niche) showPick(bySlug[niche.dataset.slug]);
+    });
+    wall.addEventListener('pointerleave', () => showPick(chosen, chosen === now.sign ? 'In season' : ''));
+
+    /* ── Object view (shared-element transition where supported) ──────── */
+    const dlg = document.querySelector('[data-obj]');
+    const archHost = document.querySelector('[data-obj-arch]');
+    const label = document.querySelector('[data-label]');
+    function paintObject(sign) {
+      chosen = sign;
+      dlg.style.setProperty('--sign', sign.hue);
+      archHost.innerHTML = `<img class="fig" src="${art.figure(sign.slug, 1024)}" width="1024" height="1024" alt="${esc(figureAlt(sign))}">`;
+      loadStars(sign.slug).then((svg) => { if (chosen === sign) archHost.insertAdjacentHTML('afterbegin', svg); });
+      const delta = fmtChange(sign.change);
+      label.innerHTML = `
+        <span class="label__no">No. ${sign.roman} of XII</span>
+        <h2 id="obj-name">${esc(sign.name)}</h2>
+        <p class="label__facts">${esc(sign.datesLong)} · ${esc(sign.element[0].toUpperCase() + sign.element.slice(1))} · ${esc(sign.modality[0].toUpperCase() + sign.modality.slice(1))} · ${esc(sign.ruler)}</p>
+        <p class="label__bio">${esc(sign.bio)}</p>
+        <div class="label__quote"><div><span class="price">${fmtPrice(sign.price)}</span><span class="delta ${delta.cls}">${delta.text}</span></div><div data-spark></div><small>${snapshotLabel()}</small></div>
+        <div class="label__cta">${fomoButton(sign)}<a class="btn" href="${sign.registry}">Explore ${esc(sign.name)}</a></div>
+        <p class="label__more"><a href="${sign.howToBuy}">Other ways to buy</a> · Opens the fomo app</p>
+        <dl class="prov">
+          <div class="prov__head"><span>Provenance</span></div>
+          <div><dt>Solana · origin</dt><dd>${sign.solana}</dd><button type="button" data-copy="${sign.solana}">Copy</button></div>
+          <div><dt>Base · counterpart</dt><dd>${sign.base}</dd><button type="button" data-copy="${sign.base}">Copy</button></div>
+        </dl>`;
+      sparkline(label.querySelector('[data-spark]'), sign, { height: 50 });
+      const i = SIGNS.indexOf(sign);
+      const prev = SIGNS[(i + 11) % 12];
+      const next = SIGNS[(i + 1) % 12];
+      const pb = document.querySelector('[data-prev]');
+      const nb = document.querySelector('[data-next]');
+      pb.innerHTML = `‹ <img src="${art.disc(prev.slug, 48)}" alt=""><span>${esc(prev.name)}</span>`; pb.dataset.slug = prev.slug; pb.setAttribute('aria-label', `Previous: ${prev.name}`);
+      nb.innerHTML = `<span>${esc(next.name)}</span><img src="${art.disc(next.slug, 48)}" alt=""> ›`; nb.dataset.slug = next.slug; nb.setAttribute('aria-label', `Next: ${next.name}`);
+      const url = new URL(location.href); url.searchParams.set('sign', sign.slug); history.replaceState(null, '', url);
+    }
+    function openObject(sign, fromImg) {
+      const go = () => { paintObject(sign); if (!dlg.open) dlg.showModal(); dlg.scrollTop = 0; };
+      if (document.startViewTransition && !reducedMotion && fromImg) {
+        fromImg.style.viewTransitionName = 'obj-figure';
+        const t = document.startViewTransition(() => { fromImg.style.viewTransitionName = ''; go(); });
+        t.finished.finally(() => { fromImg.style.viewTransitionName = ''; });
+      } else go();
+    }
+    function closeObject() {
+      const img = wall.querySelector(`[data-fig="${chosen.slug}"]`);
+      const done = () => { dlg.close(); };
+      if (document.startViewTransition && !reducedMotion && img) {
+        const t = document.startViewTransition(() => { done(); img.style.viewTransitionName = 'obj-figure'; });
+        t.finished.finally(() => { img.style.viewTransitionName = ''; });
+      } else done();
+      showPick(chosen);
+    }
+    wall.addEventListener('click', (event) => {
+      const niche = event.target.closest('.niche');
+      if (niche) openObject(bySlug[niche.dataset.slug], niche.querySelector('img'));
+    });
+    document.querySelector('[data-close]').addEventListener('click', closeObject);
+    dlg.addEventListener('cancel', (event) => { event.preventDefault(); closeObject(); });
+    const step = (slug) => {
+      if (document.startViewTransition && !reducedMotion) document.startViewTransition(() => paintObject(bySlug[slug]));
+      else paintObject(bySlug[slug]);
+    };
+    document.querySelector('[data-prev]').addEventListener('click', (e) => step(e.currentTarget.dataset.slug));
+    document.querySelector('[data-next]').addEventListener('click', (e) => step(e.currentTarget.dataset.slug));
+    dlg.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') document.querySelector('[data-prev]').click();
+      if (event.key === 'ArrowRight') document.querySelector('[data-next]').click();
+    });
+    document.addEventListener('click', (event) => {
+      const copy = event.target.closest('[data-copy]');
+      if (copy) { navigator.clipboard?.writeText(copy.dataset.copy); copy.textContent = 'Copied'; setTimeout(() => { copy.textContent = 'Copy'; }, 1400); }
+    });
+    if (new URLSearchParams(location.search).get('view') === 'object') openObject(chosen);
+
+    /* ── Sections ──────────────────────────────────────────────────────── */
+    document.querySelector('[data-acquire-title]').innerHTML = `Every Zodiac here can be bought in ${fomoWord()}.`;
+    document.querySelector('[data-stores]').innerHTML = storeBadges();
+    const held = new Set(['aries', 'cancer', 'leo', 'scorpio', 'aquarius']);
+    document.querySelector('[data-mini]').innerHTML = SIGNS.map((sign) => `<span class="${held.has(sign.slug) ? 'is-held' : ''}" style="--sign:${sign.hue}" title="${esc(sign.name)}${held.has(sign.slug) ? ' · held' : ''}"><img src="${art.figure(sign.slug, 512)}" alt="" loading="lazy"></span>`).join('');
+    document.querySelector('[data-shop]').innerHTML = [DATA.shop[0], DATA.shop[1], DATA.shop[2]].map((item) => `
+      <a class="shop__item reveal" href="${item.href}" rel="external noopener"><span class="niche__arch"><img src="${art.merch(item.image)}" width="800" height="892" alt="${esc(item.name)}" loading="lazy"></span><span>${esc(item.name)}<span aria-hidden="true">↗</span></span></a>`).join('');
+
+    document.querySelector('[data-checker]').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const out = document.querySelector('[data-out]');
+      const result = checkAddress(document.getElementById('addr').value);
+      out.className = 'checker__out';
+      if (result.state === 'match') { out.classList.add('is-match'); out.style.setProperty('--sign', result.sign.hue); out.innerHTML = `<img src="${art.disc(result.sign.slug, 128)}" alt=""><span>This is the official ${esc(result.sign.name)} address on ${result.chain} (the ${result.role}).</span>`; }
+      else if (result.state === 'nomatch') { out.classList.add('is-bad'); out.textContent = 'Not in the Registry. A token at this address is not an official Zodiac, whatever it is called.'; }
+      else if (result.state === 'invalid') { out.classList.add('is-bad'); out.textContent = 'That does not look like a Solana mint or a Base contract address.'; }
+      else out.textContent = 'Paste a complete address to check it.';
+    });
+
+    /* Standings as a gallery rail: a bar per sign, in zodiac order. */
+    const maxCap = Math.max(...SIGNS.map((x) => x.marketCap ?? 0));
+    document.querySelector('[data-rail]').innerHTML = SIGNS.map((sign) => {
+      const delta = fmtChange(sign.change, { words: false });
+      const h = Math.max(6, Math.round(((sign.marketCap ?? 0) / maxCap) * 180));
+      return `<a href="${sign.registry}" aria-label="${esc(`${sign.name}: rank ${sign.rank}, ${fmtCompact(sign.marketCap)} reported market cap`)}" title="${esc(`${sign.name} · ${fmtCompact(sign.marketCap)}`)}">
+        <img src="${art.figure(sign.slug, 512)}" alt="" loading="lazy"><i class="rail__bar" style="height:${h}px"></i>
+        <span class="rail__lab"><b>#${sign.rank}</b><strong>${esc(sign.name)}</strong><span>${fmtCompact(sign.marketCap)}</span><span class="delta ${delta.cls}">${delta.text}</span></span></a>`;
+    }).join('');
+    document.querySelector('[data-rail-note]').textContent = `Each plinth is the sign’s reported market cap, in zodiac order; the number above each name is its rank. ${snapshotLabel()}. Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.`;
+
+    document.querySelectorAll('video[data-lazy]').forEach(lazyVideo);
+    mountFaq(document.querySelector('[data-faq]'));
+    mountEnding(document.getElementById('ending'));
+    document.querySelector('[data-credit]').textContent = `Prototype. ${STAR_CREDIT}`;
+    reveal();
+    protoChrome('Option C · The Salon');
+  </script>
+</body>
+</html>

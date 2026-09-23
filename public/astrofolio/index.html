@@ -3291,27 +3291,6 @@
       outline: 2px solid var(--active-sign, var(--gold-bright));
       outline-offset: 4px;
     }
-
-    .consumer-explorer {
-      position: relative;
-      padding: clamp(44px, 6vw, 72px) clamp(20px, 6vw, 72px) clamp(48px, 6.5vw, 84px);
-      overflow: clip;
-      border-bottom: 1px solid var(--hair-2);
-      background:
-        radial-gradient(65% 62% at 12% 50%, color-mix(in srgb, var(--active-sign, #E0A9B4) 10%, transparent), transparent 70%),
-        linear-gradient(180deg, rgba(15,18,26,.7), rgba(6,7,9,.25));
-      transition: background-color 420ms var(--ease-soft);
-    }
-    .consumer-explorer::after {
-      content: '';
-      position: absolute;
-      right: -18%; bottom: -40%;
-      width: min(58vw, 660px); aspect-ratio: 1;
-      pointer-events: none;
-      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 18%, transparent);
-      border-radius: 50%;
-      opacity: .55;
-    }
     .consumer-signs {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -3661,30 +3640,6 @@
       transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
     }
     /* Below the stage breakpoint the plate is the whole opening screen. */
-    .consumer-explorer:not(.consumer-explorer--stage) {
-      display: block;
-      padding: clamp(76px, 11vh, 104px) 16px clamp(32px, 5vh, 56px);
-      border-bottom: 0;
-      background: none;
-      width: 100vw;
-      margin-inline: calc(50% - 50vw);
-    }
-    .consumer-explorer .gband--flat {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 1400px;
-      height: clamp(560px, 92svh, 980px);
-      margin-inline: auto;
-      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
-      border-radius: 26px;
-      overflow: clip;
-      background:
-        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
-        rgba(15,18,26,.88);
-      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
-      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
-    }
     /* Twelve discs will not fit across a phone, so the rail scrolls. */
     .gband--flat .rail {
       /* The flat plate is what touch gets, so every disc is a 44px target
@@ -4463,7 +4418,6 @@
       .zd.technical-registry,
       .zd:has(> .consumer-registry),
       .zd:has(> .technical-registry) { width: 100%; }
-      .consumer-explorer,
       .consumer-how,
       .consumer-verify,
       .consumer-purpose,
@@ -4546,13 +4500,11 @@
     /* ── Registry visual polish · August 2026 ─────────────────────
        One coherent museum stage, one acquisition surface, and owned artwork
        carrying the editorial sections below it. */
-    .consumer-explorer--stage,
-    .consumer-explorer:not(.consumer-explorer--stage) {
+    .consumer-explorer--stage {
       width: calc(100% + 32px);
       margin-inline: -16px;
     }
-    .consumer-explorer--stage .gband--consumer,
-    .consumer-explorer .gband--flat {
+    .consumer-explorer--stage .gband--consumer {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto auto minmax(0, 1fr) auto;
@@ -4560,10 +4512,6 @@
       transition:
         border-color 240ms cubic-bezier(0.23, 1, 0.32, 1),
         box-shadow 240ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .consumer-explorer .gband--flat {
-      height: auto;
-      min-height: 0;
     }
     .gband--consumer > .season-now { grid-row: 1; }
     .gband--consumer .gband__rail-top {
@@ -5062,8 +5010,7 @@
     }
 
     @media (max-width: 1020px) {
-      .consumer-explorer--stage,
-      .consumer-explorer:not(.consumer-explorer--stage) {
+      .consumer-explorer--stage {
         width: 100%;
         margin-inline: 0;
       }
@@ -5072,11 +5019,6 @@
       .consumer-thesis { border-radius: 22px 22px 5px 22px; }
     }
     @media (max-width: 700px) {
-      .consumer-explorer:not(.consumer-explorer--stage) { padding-top: clamp(72px, 10vh, 92px); }
-      .consumer-explorer .gband--flat {
-        grid-template-rows: auto auto auto auto;
-        border-radius: 22px;
-      }
       .season-now {
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
@@ -5227,7 +5169,6 @@
       .consumer-step__cabinet { grid-template-columns: repeat(3, 26px); }
     }
     @media (max-height: 650px) and (max-width: 700px) {
-      .consumer-explorer:not(.consumer-explorer--stage) { padding-top: 70px; }
       .gband__rail-top { min-height: 56px; padding-top: 5px; }
       .stage-carousel { height: clamp(226px, 68vw, 270px); }
       .stage-carousel__slide { width: clamp(220px, 68vw, 270px); }
@@ -5259,8 +5200,7 @@
     /* ── Consumer market room · August 2026 ──────────────────────
        The stage, exchange tape, ranked board and personal marker share one
        active sign. Pastel is information; gold remains the artifact. */
-    .consumer-explorer--stage .gband--consumer,
-    .consumer-explorer .gband--flat {
+    .consumer-explorer--stage .gband--consumer {
       grid-template-rows: auto auto minmax(0, 1fr) auto;
     }
     .consumer-masthead {
@@ -5703,8 +5643,7 @@
       .consumer-market__personal { padding: 18px; }
     }
     @media (prefers-reduced-motion: reduce) {
-      .consumer-masthead,
-      .consumer-explorer > .market-tape {
+      .consumer-masthead {
         animation: none;
       }
       .market-row,
@@ -7414,9 +7353,6 @@
     .consumer-static h2 { max-width: 18ch; }
     .consumer-static p,
     .consumer-static li { font-family: var(--sans); }
-
-    .static-astrofolio-opening { padding: clamp(18px, 2vw, 24px) 0 clamp(88px, 11vw, 142px); }
-    .static-astrofolio-header { max-width: 790px; }
     .static-astrofolio-lockup {
       display: flex;
       align-items: center;
@@ -7440,284 +7376,6 @@
       color: var(--ink-dim);
       font: italic 400 19px/1.2 var(--serif) !important;
       text-transform: none;
-    }
-    .static-astrofolio-header h1 {
-      max-width: 12ch;
-      font: 400 clamp(62px, 7vw, 94px)/.87 var(--serif);
-      letter-spacing: -.045em;
-      text-wrap: balance;
-    }
-    .static-astrofolio-header > p:last-child {
-      max-width: 60ch;
-      margin: 27px 0 0;
-      color: var(--ink-2);
-      font: 400 18px/1.55 var(--sans);
-      text-wrap: pretty;
-    }
-
-    .static-vitrine { position: relative; min-width: 0; margin: 22px 0 0; padding: 0; border: 0; }
-    .static-vitrine > legend {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip-path: inset(50%);
-      white-space: nowrap;
-    }
-    .static-vitrine__choice {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      opacity: 0;
-      cursor: pointer;
-    }
-    .static-vitrine__rail {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 7px 6px;
-      overflow: visible;
-      padding: 4px 0 0;
-    }
-    .static-vitrine__rail label {
-      position: relative;
-      min-width: 0;
-      min-height: 72px;
-      display: grid;
-      place-items: center;
-      gap: 8px;
-      padding: 9px 0 7px;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
-      color: var(--ink-dim);
-      font: 500 9px/1.3 var(--sans);
-      cursor: pointer;
-      transition: none;
-    }
-    .static-vitrine__disc {
-      position: relative;
-      display: grid;
-      box-sizing: border-box;
-      width: 34px;
-      height: 34px;
-      aspect-ratio: 1;
-      place-items: center;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: none;
-      isolation: isolate;
-    }
-    .static-vitrine__disc::before {
-      position: absolute;
-      inset: -6px;
-      z-index: 0;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        color-mix(in srgb, var(--disc) 28%, transparent) 0 40%,
-        color-mix(in srgb, var(--disc) 12%, transparent) 56%,
-        transparent 76%
-      );
-      content: "";
-      opacity: .45;
-      pointer-events: none;
-      transition: opacity 160ms cubic-bezier(.23,1,.32,1);
-    }
-    .static-vitrine__disc::after {
-      position: absolute;
-      inset: -5px;
-      border: 1px solid color-mix(in srgb, var(--disc) 72%, transparent);
-      border-radius: 50%;
-      content: "";
-      opacity: 0;
-      transform: scale(.94);
-      pointer-events: none;
-      transition: opacity 120ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1);
-    }
-    .static-vitrine__rail img {
-      position: relative;
-      z-index: 1;
-      display: block;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      opacity: .86;
-      filter: none;
-    }
-    .static-vitrine__rail label[for="astrofolio-aries"] { --disc: #DE8E79; }
-    .static-vitrine__rail label[for="astrofolio-taurus"] { --disc: #B9D4BE; }
-    .static-vitrine__rail label[for="astrofolio-gemini"] { --disc: #B29DD0; }
-    .static-vitrine__rail label[for="astrofolio-cancer"] { --disc: #B6D4E4; }
-    .static-vitrine__rail label[for="astrofolio-leo"] { --disc: #E0A9B4; }
-    .static-vitrine__rail label[for="astrofolio-virgo"] { --disc: #B7D9B0; }
-    .static-vitrine__rail label[for="astrofolio-libra"] { --disc: #D3A9DE; }
-    .static-vitrine__rail label[for="astrofolio-scorpio"] { --disc: #B9DCE8; }
-    .static-vitrine__rail label[for="astrofolio-sagittarius"] { --disc: #E0B080; }
-    .static-vitrine__rail label[for="astrofolio-capricorn"] { --disc: #C0DEA8; }
-    .static-vitrine__rail label[for="astrofolio-aquarius"] { --disc: #AE8FC9; }
-    .static-vitrine__rail label[for="astrofolio-pisces"] { --disc: #A9D4C4; }
-
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) { color: var(--ink); }
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::after {
-      opacity: 1;
-      transform: scale(1);
-      transition-duration: 180ms;
-    }
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::before { opacity: 1; }
-    .static-vitrine__rail label:has(.static-vitrine__choice:checked) img { opacity: 1; }
-    .static-vitrine__choice:focus-visible { outline: 0; box-shadow: none; }
-    .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) {
-      outline: 0;
-      box-shadow: none;
-    }
-    .static-vitrine__rail label:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc {
-      outline: 2px solid var(--ink-2);
-      outline-offset: 6px;
-    }
-    .static-vitrine__rail:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc::before,
-    .static-vitrine__rail:has(.static-vitrine__choice:focus-visible) .static-vitrine__disc::after {
-      transition: none;
-    }
-
-    .static-vitrine__panel { display: none; }
-    .static-vitrine:has(#astrofolio-aries:checked) [data-static-sign="aries"],
-    .static-vitrine:has(#astrofolio-taurus:checked) [data-static-sign="taurus"],
-    .static-vitrine:has(#astrofolio-gemini:checked) [data-static-sign="gemini"],
-    .static-vitrine:has(#astrofolio-cancer:checked) [data-static-sign="cancer"],
-    .static-vitrine:has(#astrofolio-leo:checked) [data-static-sign="leo"],
-    .static-vitrine:has(#astrofolio-virgo:checked) [data-static-sign="virgo"],
-    .static-vitrine:has(#astrofolio-libra:checked) [data-static-sign="libra"],
-    .static-vitrine:has(#astrofolio-scorpio:checked) [data-static-sign="scorpio"],
-    .static-vitrine:has(#astrofolio-sagittarius:checked) [data-static-sign="sagittarius"],
-    .static-vitrine:has(#astrofolio-capricorn:checked) [data-static-sign="capricorn"],
-    .static-vitrine:has(#astrofolio-aquarius:checked) [data-static-sign="aquarius"],
-    .static-vitrine:has(#astrofolio-pisces:checked) [data-static-sign="pisces"] {
-      display: grid;
-    }
-    .static-vitrine__panel {
-      grid-template-columns: minmax(260px, .7fr) minmax(0, 1.3fr);
-      grid-template-areas: "placard stage";
-      align-items: center;
-      gap: clamp(34px, 6vw, 88px);
-      margin-top: 6px;
-    }
-    [data-static-sign="aries"] { --static-sign: #DE8E79; }
-    [data-static-sign="taurus"] { --static-sign: #B9D4BE; }
-    [data-static-sign="gemini"] { --static-sign: #B29DD0; }
-    [data-static-sign="cancer"] { --static-sign: #B6D4E4; }
-    [data-static-sign="leo"] { --static-sign: #E0A9B4; }
-    [data-static-sign="virgo"] { --static-sign: #B7D9B0; }
-    [data-static-sign="libra"] { --static-sign: #D3A9DE; }
-    [data-static-sign="scorpio"] { --static-sign: #B9DCE8; }
-    [data-static-sign="sagittarius"] { --static-sign: #E0B080; }
-    [data-static-sign="capricorn"] { --static-sign: #C0DEA8; }
-    [data-static-sign="aquarius"] { --static-sign: #AE8FC9; }
-    [data-static-sign="pisces"] { --static-sign: #A9D4C4; }
-    .static-vitrine__stage {
-      grid-area: stage;
-      width: min(100%, 610px);
-      aspect-ratio: 6 / 5;
-      justify-self: center;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 50% 56%, rgba(218, 177, 112, .16), transparent 31%),
-        radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--static-sign) 8%, transparent), transparent 68%);
-    }
-    .static-vitrine__stage img {
-      width: min(92%, 570px);
-      height: min(92%, 570px);
-      object-fit: contain;
-      filter: drop-shadow(0 28px 38px rgba(0, 0, 0, .32));
-    }
-    .static-vitrine__placard { grid-area: placard; min-width: 0; }
-    .consumer-static .static-vitrine__placard h2 {
-      max-width: none;
-      margin: 0;
-      font: 400 62px/1 var(--serif);
-      letter-spacing: -.04em;
-    }
-    .static-vitrine__dates {
-      margin: 16px 0 0;
-      color: var(--ink-dim) !important;
-      font: 400 15px/1.4 var(--sans) !important;
-    }
-    .static-vitrine__price {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      margin: 24px 0 0;
-      color: var(--ink-mute) !important;
-      font: 500 12px/1.4 var(--sans) !important;
-    }
-    .static-vitrine__figure {
-      color: var(--ink-2);
-      font-family: var(--mono);
-      font-variant-numeric: tabular-nums;
-    }
-    .static-vitrine__movement { color: var(--market-flat); font-family: var(--sans); }
-    .static-vitrine__movement.is-up { color: var(--market-up); }
-    .static-vitrine__movement.is-down { color: var(--vermilion); }
-    .static-vitrine__actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      justify-items: stretch;
-      gap: 9px;
-      max-width: 510px;
-      margin-top: 24px;
-    }
-    .consumer-static .static-vitrine__actions .btn {
-      width: 100%;
-      height: 48px;
-      justify-content: space-between;
-      padding: 0 9px 0 17px;
-      border-radius: 999px;
-      color: var(--ink);
-      font: 600 13px/1 var(--sans);
-      letter-spacing: 0;
-      text-transform: none;
-      border: 1px solid rgba(198,204,218,.22);
-      background: linear-gradient(180deg, rgba(238,241,247,.06), rgba(238,241,247,.015)), rgba(10,12,17,.66);
-      box-shadow: inset 0 1px 0 rgba(238,241,247,.1), inset 0 -1px 0 rgba(0,0,0,.28), 0 12px 30px -20px rgba(0,0,0,.82);
-      transition: transform 80ms cubic-bezier(.23,1,.32,1), background-color 180ms var(--ease-soft), border-color 180ms var(--ease-soft);
-    }
-    .consumer-static .static-vitrine__actions .btn::before,
-    .consumer-static .static-vitrine__actions .btn::after { display: none; }
-    .consumer-static .static-vitrine__actions .btn--primary {
-      border-color: rgba(238,241,247,.3);
-      color: var(--ink);
-    }
-    .consumer-static .static-vitrine__actions .btn--primary::after {
-      content: "↗";
-      display: grid;
-      place-items: center;
-      flex: 0 0 30px;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      color: var(--bg);
-      background: var(--ink);
-      font: 600 14px/1 var(--sans);
-    }
-    .consumer-static .static-vitrine__actions .btn--ghost {
-      padding-inline: 17px;
-      justify-content: center;
-      color: var(--ink-2);
-    }
-    .consumer-static .static-vitrine__actions .btn:active { transform: scale(.98); }
-    .static-vitrine__record {
-      grid-column: 1 / -1;
-      justify-self: start;
-      min-height: 42px;
-      display: inline-flex;
-      align-items: center;
-      border-bottom-color: var(--hair-2) !important;
-      color: var(--ink-dim) !important;
-      font: 500 12px/1 var(--sans);
     }
 
     .static-buy__intro,
@@ -8072,37 +7730,6 @@
     @media (max-width: 720px) {
       .consumer-static { width: calc(100% - 32px); padding-inline: 0; }
       .consumer-static .static-site__nav { flex-wrap: nowrap; padding-bottom: 20px; }
-      .static-astrofolio-opening { padding-top: 8px; }
-      .static-astrofolio-header h1 { font-size: clamp(56px, 17vw, 78px); }
-      .static-vitrine { margin-top: 10px; }
-      .static-astrofolio-header > p:last-child { font-size: 16px; }
-      .static-vitrine__rail { gap: 5px 2px; }
-      .static-vitrine__rail label { min-height: 64px; padding: 7px 1px; font-size: 8px; }
-      .static-vitrine__disc,
-      .static-vitrine__rail img { width: 29px; height: 29px; }
-      .static-vitrine__panel {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-areas: "stage";
-        gap: 0;
-        margin-top: 0;
-      }
-      .static-vitrine__stage { width: min(100%, 416px); aspect-ratio: 1; }
-      .static-vitrine__stage img { width: 84%; height: 84%; transform: translateY(-7%); }
-      .static-vitrine__placard {
-        z-index: 2;
-        grid-area: stage;
-        align-self: end;
-        min-height: 244px;
-        padding-top: 68px;
-        background: linear-gradient(180deg, transparent, rgba(6, 7, 9, .82) 30%, var(--bg) 59%);
-      }
-      .consumer-static .static-vitrine__placard h2 { font-size: 50px; }
-      .static-vitrine__dates { margin-top: 9px; }
-      .static-vitrine__price { margin-top: 15px; }
-      .static-vitrine__actions { margin-top: 17px; }
-      .static-vitrine__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); justify-items: stretch; }
-      .consumer-static .static-vitrine__actions .btn { width: 100%; }
-      .static-vitrine__record { grid-column: 1 / -1; justify-self: start; }
       .static-buy__steps { grid-template-columns: 1fr; padding: 6px; }
       .static-buy__steps li { padding: 22px 18px; }
       .static-buy__steps li + li::before {
@@ -8125,21 +7752,9 @@
       .static-collection__art { margin-inline: 12px; }
       .static-astrofolio-closing__actions { flex-direction: column; align-items: center; gap: 6px; }
     }
-    @media (min-width: 721px) and (max-height: 940px) {
-      .static-astrofolio-header h1 { font-size: clamp(62px, 6vw, 82px); }
-      .static-astrofolio-header > p:last-child { margin-top: 16px; }
-      .static-vitrine { margin-top: 12px; }
-    }
     @media (max-width: 480px) and (max-height: 860px) {
       .consumer-static { padding-top: 12px; }
-      .static-astrofolio-opening { padding-top: 2px; }
       .static-astrofolio-lockup { margin-bottom: 9px; }
-      .static-astrofolio-header > p:last-child { margin-top: 18px; line-height: 1.42; }
-      .static-vitrine { margin-top: 5px; }
-      .static-vitrine__rail { padding-bottom: 4px; }
-    }
-    @media (max-width: 359px) {
-      .static-vitrine__rail { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .consumer-static *,
@@ -8149,7 +7764,6 @@
         scroll-behavior: auto !important;
         transition: none !important;
       }
-      .consumer-static .static-vitrine__actions .btn:active,
       .static-story-band__link:active b,
       .static-collection__link:active .static-collection__cta,
       .static-story-band__arrow { transform: none; }
@@ -8157,7 +7771,6 @@
   </style>
 
 <style data-terminal-split-styles>    /* Terminal consumer / Pro split styles are generated here. */
-    .terminal-consumer-hero,
     .pro-masthead,
     .terminal-pro > section,
     .terminal-pro > aside,
@@ -8165,26 +7778,13 @@
       width: min(100% - 40px, 1400px);
       margin-inline: auto;
     }
-    .terminal-consumer-hero {
-      position: relative;
-      z-index: 4;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: end;
-      gap: clamp(30px, 7vw, 110px);
-      padding: clamp(112px, 14vw, 184px) 18px clamp(46px, 6vw, 78px);
-      border-bottom: 1px solid var(--hair-2);
-    }
-    .terminal-consumer-hero > div > span,
     .pro-masthead__identity > div > span {
       color: var(--ink-mute);
       font: 500 9px/1 var(--mono);
       letter-spacing: .18em;
       text-transform: uppercase;
     }
-    .terminal-consumer-hero > div > span a,
     .pro-masthead__identity > div > span a { color: inherit; text-decoration: none; }
-    .terminal-consumer-hero h1,
     .pro-masthead h1 {
       max-width: 10ch;
       margin: 18px 0 0;
@@ -8192,7 +7792,6 @@
       font: 400 clamp(58px, 8.4vw, 112px)/.84 var(--serif);
       letter-spacing: -.05em;
     }
-    .terminal-consumer-hero p,
     .pro-masthead__identity p {
       max-width: 56ch;
       margin: 25px 0 0;
@@ -8408,14 +8007,10 @@
     .pro-verifier strong { color: var(--ink); font: 400 29px/1 var(--serif); }
     .pro-verifier a { min-height: 46px; display: inline-flex; align-items: center; padding: 0 16px; border: 1px solid var(--hair-3); color: var(--ink); font: 500 11px/1 var(--sans); text-decoration: none; }
     @media (max-width: 760px) {
-      .terminal-consumer-hero,
       .pro-masthead__identity,
       .pro-board > header,
       .pro-selected > header,
       .pro-research > header { grid-template-columns: 1fr; align-items: start; gap: 20px; }
-      .terminal-consumer-hero { width: min(100% - 24px, 1400px); padding: 104px 10px 42px; }
-      .terminal-consumer-hero h1 { font-size: clamp(54px, 17vw, 78px); }
-      .terminal-consumer-hero .terminal-view-link { justify-self: start; }
       .consumer-snapshot__rows li,
       .static-snapshot__rows li { grid-template-columns: minmax(130px, 1fr) auto; gap: 8px 14px; padding: 12px 2px; }
       .consumer-snapshot__move,
@@ -8506,10 +8101,11 @@
       .terminal-pro .consumer-briefing__next { padding: 26px 0; border-top: 1px solid var(--hair-2); }
     }
 
-    /* Astrofolio · Lit Vitrine
+    /* Astrofolio
        This consumer layer intentionally follows the legacy/shared rules so
        the Pro desk can keep its dense language while the collection reads as
-       one quiet, editorial object. */
+       one quiet, editorial object. The Campaign layout itself is at the end
+       of this file. */
     .zd.consumer-registry {
       --gold: var(--ink-2);
       --gold-bright: var(--ink);
@@ -8532,42 +8128,6 @@
     .consumer-registry :focus-visible {
       outline-color: var(--ink-2);
     }
-
-    .consumer-registry .astrofolio-vitrine {
-      position: relative;
-      z-index: 3;
-      display: grid;
-      grid-template-columns: minmax(340px, .78fr) minmax(500px, 1.22fr);
-      grid-template-rows: auto auto minmax(270px, 1fr);
-      grid-template-areas:
-        "intro stage"
-        "selector stage"
-        "placard stage";
-      column-gap: clamp(44px, 5vw, 84px);
-      row-gap: 24px;
-      /* The text column sits on the shared 1180px section grid — one left
-         axis from the hero headline down. Only the stage's extra room
-         (up to 110px) bleeds past the grid's right edge, so the artwork
-         keeps the breathing room the old 1400px container gave it. */
-      --vitrine-column: min(100% - 48px, 1180px);
-      --vitrine-bleed: clamp(0px, (100% - 1228px) / 2, 110px);
-      width: calc(var(--vitrine-column) + var(--vitrine-bleed));
-      min-height: min(900px, 100svh);
-      margin: 0 0 0 calc((100% - var(--vitrine-column)) / 2);
-      padding: clamp(104px, 10vw, 138px) 0 clamp(54px, 7vw, 90px);
-      border: 0;
-      background: transparent;
-    }
-    .consumer-registry .astrofolio-vitrine::after { content: none; }
-    .consumer-registry .terminal-consumer-hero {
-      grid-area: intro;
-      align-self: end;
-      display: block;
-      width: auto;
-      margin: 0;
-      padding: 0;
-      border: 0;
-    }
     .consumer-registry .terminal-consumer-hero__kicker {
       display: block;
       margin: 0;
@@ -8580,20 +8140,6 @@
       align-items: center;
       gap: 13px;
       margin: 0 0 16px;
-    }
-    /* While the page scrolls under the fixed nav pill, the lockup bows out
-       instead of sliding beneath it. Additive: browsers without
-       scroll-driven animations keep the static lockup, which the pill's
-       backdrop blur already masks. */
-    @supports (animation-timeline: scroll()) {
-      .consumer-registry .astrofolio-lockup {
-        animation: astrofolio-lockup-recede linear both;
-        animation-timeline: scroll(root block);
-        animation-range: 0 180px;
-      }
-      @keyframes astrofolio-lockup-recede {
-        to { opacity: 0; }
-      }
     }
     .consumer-registry .astrofolio-lockup__avatar {
       width: 60px;
@@ -8645,218 +8191,6 @@
     .wnav-tools__item:focus-visible { background: rgba(238,241,247,.055); }
     .wnav-tools__name { font: 550 14px/1.25 var(--sans); }
     .wnav-tools__desc { overflow: hidden; color: var(--ink-mute); font: 9px/1.4 var(--mono); letter-spacing: .025em; text-overflow: ellipsis; white-space: nowrap; }
-    .consumer-registry .terminal-consumer-hero h1 {
-      max-width: none;
-      margin: 0;
-      color: var(--ink);
-      font: 500 clamp(60px, 6.4vw, 94px)/.84 var(--serif);
-      letter-spacing: -.052em;
-      text-wrap: balance;
-    }
-    .consumer-registry .terminal-consumer-hero p {
-      max-width: 39ch;
-      margin: clamp(20px, 2.4vw, 30px) 0 0;
-      color: var(--ink-2);
-      font: 400 18px/1.55 var(--sans);
-      letter-spacing: 0;
-      text-wrap: pretty;
-    }
-
-    .consumer-registry .vitrine-disc-rail {
-      grid-area: selector;
-      --vitrine-selector-columns: 6;
-      display: grid;
-      grid-template-columns: repeat(var(--vitrine-selector-columns), minmax(0, 1fr));
-      gap: 7px 6px;
-      width: 100%;
-      padding: 4px 0 0;
-      overflow: visible;
-    }
-    .consumer-registry .vitrine-disc {
-      display: grid;
-      justify-items: center;
-      gap: 8px;
-      min-width: 0;
-      width: 100%;
-      min-height: 72px;
-      padding: 9px 0 7px;
-      border-radius: 0;
-      color: var(--ink-mute);
-      font: 500 9px/1.3 var(--sans);
-      letter-spacing: 0;
-      text-transform: none;
-    }
-    .consumer-registry .vitrine-disc,
-    .consumer-registry .vitrine-disc:hover,
-    .consumer-registry .vitrine-disc:active,
-    .consumer-registry .vitrine-disc:focus-visible {
-      border: 0;
-      background: transparent;
-      box-shadow: none;
-    }
-    .consumer-registry .vitrine-disc:focus-visible { outline: 0; }
-    .consumer-registry .vitrine-disc picture {
-      position: relative;
-      display: block;
-      box-sizing: border-box;
-      width: 34px;
-      height: 34px;
-      aspect-ratio: 1;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: none;
-      isolation: isolate;
-    }
-    .consumer-registry .vitrine-disc picture::before {
-      position: absolute;
-      inset: -6px;
-      z-index: 0;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle,
-        color-mix(in srgb, var(--sign) 28%, transparent) 0 40%,
-        color-mix(in srgb, var(--sign) 12%, transparent) 56%,
-        transparent 76%
-      );
-      content: "";
-      opacity: .45;
-      pointer-events: none;
-      transition: opacity 160ms cubic-bezier(.23,1,.32,1);
-    }
-    .consumer-registry .vitrine-disc picture::after {
-      position: absolute;
-      inset: -5px;
-      border: 1px solid color-mix(in srgb, var(--sign) 72%, transparent);
-      border-radius: 50%;
-      content: "";
-      opacity: 0;
-      transform: scale(.94);
-      pointer-events: none;
-      transition: opacity 120ms cubic-bezier(.23,1,.32,1), transform 180ms cubic-bezier(.23,1,.32,1);
-    }
-    .consumer-registry .vitrine-disc picture > source { display: none; }
-    .consumer-registry .vitrine-disc img {
-      position: relative;
-      z-index: 1;
-      width: 34px;
-      height: 34px;
-      margin: 0;
-      border-radius: 50%;
-      opacity: .86;
-      filter: none;
-      transition: none;
-    }
-    .consumer-registry .vitrine-disc.is-active { color: var(--ink); }
-    .consumer-registry .vitrine-disc.is-active picture::after {
-      opacity: 1;
-      transform: scale(1);
-      transition-duration: 180ms;
-    }
-    .consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }
-    .consumer-registry .vitrine-disc:focus-visible picture {
-      outline: 2px solid var(--ink-2);
-      outline-offset: 6px;
-    }
-    /* Arrow-key browsing changes selection immediately, including the old ring. */
-    .consumer-registry .vitrine-disc-rail:has(:focus-visible) .vitrine-disc picture::before,
-    .consumer-registry .vitrine-disc-rail:has(:focus-visible) .vitrine-disc picture::after {
-      transition: none;
-    }
-    .consumer-registry .vitrine-disc.is-active img { opacity: 1; }
-    @media (hover: hover) and (pointer: fine) {
-      .consumer-registry .vitrine-disc:hover img { opacity: 1; }
-    }
-
-    .consumer-registry .vitrine-stage {
-      position: relative;
-      grid-area: stage;
-      align-self: center;
-      justify-self: center;
-      width: min(100%, calc(var(--vitrine-stage-height, 520px) * 1.2));
-      max-width: none;
-      height: auto;
-      min-height: 0;
-      aspect-ratio: 6 / 5;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .consumer-registry .vitrine-stage::before,
-    .consumer-registry .vitrine-stage::after {
-      position: absolute;
-      inset: 7% 4% 3%;
-      z-index: 0;
-      border-radius: 50%;
-      pointer-events: none;
-      content: "";
-    }
-    .consumer-registry .vitrine-stage::before {
-      background: radial-gradient(circle at 52% 47%, rgba(215, 173, 105, .15), rgba(151, 105, 50, .055) 36%, transparent 68%);
-      filter: blur(18px);
-    }
-    .consumer-registry .vitrine-stage::after {
-      background: radial-gradient(circle at 52% 48%, color-mix(in srgb, var(--active-sign) 13%, transparent), transparent 64%);
-      mix-blend-mode: screen;
-    }
-    .consumer-registry .vitrine-stage__layer {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      display: grid;
-      place-items: center;
-      opacity: 0;
-      transition: opacity 180ms linear;
-      will-change: opacity;
-    }
-    .consumer-registry .vitrine-stage__layer.is-active { opacity: 1; }
-    .consumer-registry .vitrine-stage__layer.is-interrupt-anchor,
-    .consumer-registry .vitrine-placard__layer.is-interrupt-anchor { transition: none; }
-    .consumer-registry .vitrine-stage__layer img {
-      width: min(100%, 720px);
-      height: min(100%, 720px);
-      object-fit: contain;
-      filter: drop-shadow(0 28px 54px rgba(0, 0, 0, .55));
-      transform: translateY(var(--art-y)) scale(var(--art-scale));
-      transform-origin: 50% 55%;
-    }
-    .consumer-registry .vitrine-stage__fallback {
-      display: none;
-      color: var(--ink-2);
-      font: 400 clamp(150px, 26vw, 280px)/1 var(--serif);
-      opacity: .48;
-    }
-    .consumer-registry .vitrine-stage__layer.is-fallback img { display: none; }
-    .consumer-registry .vitrine-stage__layer.is-fallback .vitrine-stage__fallback { display: block; }
-    @media (min-width: 900px) and (max-width: 1120px) {
-      .consumer-registry .astrofolio-vitrine {
-        grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr);
-        column-gap: clamp(28px, 4vw, 44px);
-      }
-    }
-    .consumer-registry .vitrine-placard {
-      position: relative;
-      grid-area: placard;
-      align-self: start;
-      min-height: 274px;
-    }
-    .consumer-registry .vitrine-placard__layer {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      opacity: 0;
-      transition: opacity 180ms linear;
-      will-change: opacity;
-    }
-    .consumer-registry .vitrine-placard__layer.is-active { opacity: 1; }
-    .consumer-registry .vitrine-placard__layer[aria-hidden="true"] { pointer-events: none; }
-    .consumer-registry .vitrine-placard__identity h2 {
-      margin: 0;
-      color: var(--ink);
-      font: 500 62px/1 var(--serif);
-      letter-spacing: -.045em;
-    }
     .consumer-registry .vitrine-price {
       display: flex;
       flex-wrap: wrap;
@@ -8874,67 +8208,6 @@
     .consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }
     .consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }
     .consumer-registry .vitrine-price__movement.is-flat { color: var(--market-flat); }
-    .consumer-registry .vitrine-market-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px 12px;
-      margin-top: 12px;
-      color: var(--ink-mute);
-      font: 500 11px/1.4 var(--sans);
-      letter-spacing: 0;
-    }
-    .consumer-registry .vitrine-market-meta__date { flex-basis: 100%; color: var(--ink-dim); font-size: 12px; }
-    .consumer-registry .vitrine-market-meta a { color: var(--ink-dim); text-underline-offset: 4px; }
-    .consumer-registry .vitrine-placard__actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 18px;
-    }
-    .consumer-registry .vitrine-placard__actions .btn {
-      height: 48px;
-      min-height: 48px;
-      padding: 0 9px 0 17px;
-      justify-content: space-between;
-      border: 1px solid rgba(198,204,218,.22);
-      border-radius: 999px;
-      color: var(--ink);
-      background: linear-gradient(180deg, rgba(238,241,247,.06), rgba(238,241,247,.015)), rgba(10,12,17,.66);
-      box-shadow: inset 0 1px 0 rgba(238,241,247,.1), inset 0 -1px 0 rgba(0,0,0,.28), 0 12px 30px -20px rgba(0,0,0,.82);
-      font: 550 13px/1 var(--sans);
-      letter-spacing: 0;
-      text-transform: none;
-      transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
-    }
-    .consumer-registry .vitrine-placard__actions .btn::before,
-    .consumer-registry .vitrine-placard__actions .btn::after { display: none; }
-    .consumer-registry .vitrine-placard__actions .btn--explore,
-    .consumer-static .static-vitrine__actions .btn--explore { padding-inline: 17px; justify-content: center; color: var(--ink-2); }
-    .consumer-registry .vitrine-placard__actions .btn--fomo,
-    .consumer-static .static-vitrine__actions .btn--fomo {
-      gap: 8px;
-      padding: 4px 7px 4px 5px;
-      justify-content: flex-start;
-      border-color: rgba(255,255,255,.78);
-      color: #111318;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.96), rgba(229,228,224,.98)),
-        #f1f0ec;
-      box-shadow:
-        inset 0 1px 0 #fff,
-        inset 0 -1px 0 rgba(17,19,24,.1),
-        0 0 0 1px rgba(83,93,221,.12),
-        0 16px 34px -22px rgba(0,0,0,.95);
-      transition: transform 120ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
-    }
-    .consumer-registry .vitrine-placard__actions .btn--fomo img,
-    .consumer-static .static-vitrine__actions .btn--fomo img {
-      flex: 0 0 34px;
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      box-shadow: 0 0 0 1px rgba(17,19,24,.08), 0 5px 12px -7px rgba(0,0,0,.82);
-    }
     .btn--fomo__copy { min-width: 0; display: grid; gap: 2px; text-align: left; }
     .btn--fomo__copy small {
       overflow: hidden;
@@ -8972,31 +8245,6 @@
       font: 650 14px/1 var(--sans);
       transition: transform 160ms cubic-bezier(.23,1,.32,1), background-color 180ms cubic-bezier(.32,.72,0,1);
     }
-    @media (hover: hover) and (pointer: fine) {
-      .consumer-registry .vitrine-placard__actions .btn:hover { border-color: rgba(238,241,247,.5); background-color: rgba(14,16,22,.84); }
-      .consumer-registry .vitrine-placard__actions .btn--fomo:hover,
-      .consumer-static .static-vitrine__actions .btn--fomo:hover {
-        transform: translateY(-1px);
-        border-color: #fff;
-        color: #111318;
-        background-color: #f8f7f4;
-      }
-      .consumer-registry .vitrine-placard__actions .btn--fomo:hover .btn--fomo__arrow,
-      .consumer-static .static-vitrine__actions .btn--fomo:hover .btn--fomo__arrow {
-        transform: translate(1px, -1px);
-        background-color: #626ce9;
-      }
-    }
-    .consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }
-    .consumer-registry .vitrine-placard__actions .btn--fomo:active,
-    .consumer-static .static-vitrine__actions .btn--fomo:active {
-      transform: scale(.975);
-      transition-duration: 120ms;
-    }
-    .consumer-registry .vitrine-placard__actions .btn:focus-visible,
-    .consumer-static .static-vitrine__actions .btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-    .consumer-registry .vitrine-placard__actions .btn--fomo:focus-visible,
-    .consumer-static .static-vitrine__actions .btn--fomo:focus-visible { outline-color: #7f88ff; }
     .consumer-registry .vitrine-buy-options,
     .consumer-static .vitrine-buy-options {
       display: flex;
@@ -9015,17 +8263,8 @@
       color: var(--ink-2);
       text-underline-offset: 4px;
     }
-    .consumer-registry .vitrine-placard__record {
-      grid-column: 1 / -1;
-      justify-self: start;
-      margin-top: 3px;
-      color: var(--ink-dim);
-      font: 500 12px/1.4 var(--sans);
-      text-decoration-color: var(--hair-3);
-    }
 
     .consumer-registry > .consumer-buy,
-    .consumer-registry > .consumer-intro,
     .consumer-registry > .consumer-story,
     .consumer-registry > .consumer-shop,
     .consumer-registry > .consumer-snapshot,
@@ -9046,7 +8285,6 @@
       box-shadow: none;
     }
     .consumer-registry > .consumer-buy,
-    .consumer-registry > .consumer-intro,
     .consumer-registry > .consumer-story,
     .consumer-registry > .consumer-shop,
     .consumer-registry > .consumer-snapshot,
@@ -9078,7 +8316,6 @@
     }
     .consumer-registry .consumer-section-head { max-width: 790px; }
     .consumer-registry .consumer-section-head h2,
-    .consumer-registry .consumer-intro h2,
     .consumer-registry .consumer-shop h2,
     .consumer-registry .consumer-story h2,
     .consumer-registry .consumer-terminal-strip h2,
@@ -9243,43 +8480,6 @@
       font: 600 10px/1 var(--mono);
       letter-spacing: .15em;
       text-transform: uppercase;
-    }
-
-    .consumer-registry > .consumer-intro {
-      display: grid;
-      grid-template-columns: minmax(0, 1.04fr) minmax(420px, .96fr);
-      gap: clamp(44px, 8vw, 110px);
-      align-items: end;
-    }
-    .consumer-registry .consumer-intro__copy > p {
-      max-width: 54ch;
-      margin: 22px 0 0;
-      color: var(--ink-2);
-      font: 400 clamp(16px, 1.5vw, 20px)/1.62 var(--sans);
-    }
-    .consumer-registry .consumer-intro__facts {
-      display: grid;
-      gap: 0;
-      margin: 0;
-      padding: 0;
-      border-top: 1px solid var(--hair-2);
-    }
-    .consumer-registry .consumer-intro__facts > div {
-      display: grid;
-      grid-template-columns: minmax(128px, .8fr) minmax(0, 1fr);
-      gap: 22px;
-      align-items: baseline;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--hair-2);
-    }
-    .consumer-registry .consumer-intro__facts dt {
-      color: var(--ink);
-      font: 500 15px/1.3 var(--sans);
-    }
-    .consumer-registry .consumer-intro__facts dd {
-      margin: 0;
-      color: var(--ink-dim);
-      font: 400 13px/1.45 var(--sans);
     }
 
     .consumer-registry > .consumer-story { padding-top: clamp(36px, 5vw, 70px); }
@@ -10249,51 +9449,7 @@
     }
 
     @media (max-width: 899px) {
-      .consumer-registry .astrofolio-vitrine {
-        grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: auto auto auto;
-        grid-template-areas: "intro" "selector" "stage";
-        gap: 14px;
-        --vitrine-column: min(100% - 32px, 620px);
-        --vitrine-bleed: 0px;
-        min-height: 0;
-        padding: 92px 0 44px;
-      }
-      .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(54px, 16vw, 76px); }
-      .consumer-registry .terminal-consumer-hero p { max-width: 36ch; margin-top: 18px; font-size: 16px; }
-      .consumer-registry .vitrine-disc-rail { margin-top: 2px; gap: 5px 2px; }
-      .consumer-registry .vitrine-disc { min-height: 64px; padding: 7px 1px; font-size: 8px; }
-      .consumer-registry .vitrine-disc picture,
-      .consumer-registry .vitrine-disc img { width: 29px; height: 29px; }
-      .consumer-registry .vitrine-stage {
-        justify-self: center;
-        width: min(100%, 416px);
-        height: auto;
-        max-height: none;
-        aspect-ratio: 4 / 5;
-      }
-      .consumer-registry .vitrine-stage__layer img {
-        width: 90%;
-        height: 90%;
-        transform: translateY(calc(var(--art-y) - 7%)) scale(var(--art-scale));
-      }
-      .consumer-registry .vitrine-placard {
-        z-index: 2;
-        grid-area: stage;
-        align-self: end;
-        width: min(100%, 416px);
-        min-height: 244px;
-        margin-inline: auto;
-      }
-      .consumer-registry .vitrine-placard__layer {
-        justify-content: flex-end;
-        padding-top: 68px;
-        background: linear-gradient(180deg, transparent, rgba(6, 7, 9, .82) 30%, var(--bg) 59%);
-      }
-      .consumer-registry .vitrine-placard__identity h2 { font-size: 50px; }
-      .consumer-registry .vitrine-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-registry > .consumer-buy,
-      .consumer-registry > .consumer-intro,
       .consumer-registry > .consumer-story,
       .consumer-registry > .consumer-shop,
       .consumer-registry > .consumer-snapshot,
@@ -10308,10 +9464,8 @@
       .consumer-registry > .consumer-market-gateway,
       .consumer-registry > .ftr { width: min(calc(100% - 32px), 620px); }
       .consumer-registry .consumer-buy__opening { grid-template-columns: minmax(0, 1fr); align-items: start; }
-      .consumer-registry > .consumer-intro,
       .consumer-registry > .consumer-shop,
       .consumer-registry .consumer-registry-guide__grid { grid-template-columns: minmax(0, 1fr); }
-      .consumer-registry .consumer-intro { gap: 42px; align-items: start; }
       .consumer-registry .consumer-story .consumer-thesis__link {
         min-height: 0;
         grid-template-columns: minmax(0, 1fr);
@@ -10365,19 +9519,9 @@
     }
 
     @media (max-width: 480px) {
-      .consumer-registry .astrofolio-vitrine { padding-top: 84px; }
       .consumer-registry .astrofolio-lockup { gap: 10px; margin-bottom: 11px; }
       .consumer-registry .astrofolio-lockup__avatar { width: 52px; height: 52px; flex-basis: 52px; }
       .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
-      .consumer-registry .terminal-consumer-hero h1 { font-size: clamp(51px, 15vw, 64px); }
-      .consumer-registry .terminal-consumer-hero p { font-size: 16px; line-height: 1.5; }
-      .consumer-registry .vitrine-placard__actions {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 9px;
-      }
-      .consumer-registry .vitrine-placard__record { grid-column: 1 / -1; margin-top: 5px; }
-      .consumer-registry .vitrine-placard { min-height: 244px; }
-      .consumer-registry > .consumer-intro,
       .consumer-registry > .consumer-story,
       .consumer-registry > .consumer-shop,
       .consumer-registry > .consumer-snapshot,
@@ -10402,10 +9546,6 @@
       .consumer-registry .consumer-registry-guide__record,
       .consumer-registry .consumer-verify.is-embedded { padding: 24px 20px; }
       .consumer-registry .consumer-snapshot__rows li { grid-template-columns: minmax(114px, 1fr) auto; }
-      .consumer-registry .vitrine-market-meta { gap: 5px 10px; font-size: 11px; }
-      .consumer-registry .vitrine-placard__actions .btn { padding-inline: 11px; font-size: 12px; line-height: 1.12; text-align: center; }
-      .consumer-registry .vitrine-placard__actions .btn--fomo,
-      .consumer-static .static-vitrine__actions .btn--fomo { gap: 7px; padding: 4px 6px 4px 5px; }
       .btn--fomo__arrow { width: 31px; height: 31px; flex-basis: 31px; }
       .consumer-registry .consumer-purpose__cta { min-height: 50px; padding-left: 18px; }
       .consumer-registry .consumer-purpose__arrow { width: 38px; height: 38px; }
@@ -10437,129 +9577,36 @@
       .consumer-registry .vrf__submit { width: 100%; }
     }
 
-    @media (max-width: 359px) {
-      .consumer-registry .vitrine-disc-rail { --vitrine-selector-columns: 4; }
-    }
-
-    /* Compact collection opening. Keep the sculpture and primary action in
-       the first phone viewport without shrinking the existing Fomo control. */
+    /* Compact lockup and clearer movement colours (owner-approved mobile
+       Option A, carried into the Campaign caption and runway). */
     .consumer-registry .astrofolio-lockup__copy,
     .static-astrofolio-lockup > span { display: flex; align-items: center; justify-content: space-between; flex: 1; gap: 12px; }
     .consumer-registry .astrofolio-lockup__copy small,
     .static-astrofolio-lockup small { white-space: nowrap; }
-    .consumer-registry .vitrine-price__movement,
-    .static-vitrine__movement { font-weight: 600; }
-    .consumer-registry .vitrine-price__movement.is-up,
-    .static-vitrine__movement.is-up { color: #8dd9ad; }
-    .consumer-registry .vitrine-price__movement.is-down,
-    .static-vitrine__movement.is-down { color: #f28e87; }
-    @media (min-width: 900px) {
-      .consumer-registry .vitrine-stage__layer { grid-template-rows: minmax(0,1fr); grid-template-columns: minmax(0,1fr); }
-    }
-    .consumer-registry .vitrine-stage__art {
-      position: relative;
-      width: min(100%, 720px);
-      height: min(100%, 720px);
-      transform: translateY(var(--art-y)) scale(var(--art-scale));
-      transform-origin: 50% 55%;
-    }
-    .consumer-registry .vitrine-stage__art img { width: 100%; height: 100%; transform: none; }
-    .consumer-registry .vitrine-stage__layer.is-fallback .vitrine-stage__art { display: none; }
-    .vitrine-gold-light {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      -webkit-mask: var(--art-mask) center / contain no-repeat;
-      mask: var(--art-mask) center / contain no-repeat;
-      mix-blend-mode: screen;
-    }
-    .vitrine-gold-light::after {
-      content: "";
-      position: absolute;
-      inset: -30% -65%;
-      background: linear-gradient(110deg, transparent 40%, #fff5ce00 44%, #fff5ce33 47%, #fffbe78c 50%, #fff5ce33 53%, #fff5ce00 56%, transparent 60%);
-      transform: translateX(-55%);
-      opacity: 0;
-    }
-    .vitrine-stage__layer.is-active .vitrine-gold-light::after { animation: vitrine-gold-glint 10s cubic-bezier(.4,0,.2,1) 650ms infinite; }
-    @keyframes vitrine-gold-glint {
-      0% { transform: translateX(-55%); opacity: 0; }
-      3%, 19% { opacity: .38; }
-      24%, 100% { transform: translateX(55%); opacity: 0; }
-    }
-    .vitrine-stage[data-motion-paused="true"] .vitrine-gold-light::after { animation-play-state: paused; }
-    .astrofolio-vitrine:has(.vitrine-disc:focus-visible) .vitrine-gold-light::after { animation: none; }
+    .consumer-registry .vitrine-price__movement { font-weight: 600; }
+    .consumer-registry .vitrine-price__movement.is-up { color: #8dd9ad; }
+    .consumer-registry .vitrine-price__movement.is-down { color: #f28e87; }
     @media (max-width: 899px) {
-      .consumer-registry .astrofolio-vitrine {
-        --vitrine-column: min(100% - 40px, 620px);
-        grid-template-areas: "intro" "selector" "stage" "placard";
-        grid-template-rows: auto;
-        gap: 0;
-        padding: 84px 0 36px;
-      }
-      .consumer-registry .astrofolio-lockup { gap: 8px; height: 28px; margin-bottom: 14px; animation: none; }
+      .consumer-registry .astrofolio-lockup { gap: 8px; height: 28px; margin-bottom: 14px; }
       .consumer-registry .astrofolio-lockup__avatar { width: 24px; height: 24px; flex-basis: 24px; }
       .consumer-registry .terminal-consumer-hero__kicker { font-size: 19px; }
       .consumer-registry .astrofolio-lockup__copy small { font-size: 10px; }
-      .consumer-registry .terminal-consumer-hero h1 { font-size: 38px; line-height: .95; letter-spacing: -.035em; }
-      .consumer-registry .terminal-consumer-hero p { margin-top: 8px; font-size: 12px; line-height: 1.5; max-width: none; }
-      .consumer-registry .vitrine-disc-rail { margin: 14px -7px 0; gap: 4px 0; }
-      .consumer-registry .vitrine-disc { min-height: 52px; padding: 4px 0; gap: 4px; }
-      .consumer-registry .vitrine-disc picture,
-      .consumer-registry .vitrine-disc img { width: 28px; height: 28px; }
-      .consumer-registry .vitrine-stage { width: 100%; height: clamp(255px,70vw,300px); aspect-ratio: auto; overflow: visible; margin-top: 2px; }
-      .consumer-registry .vitrine-stage__art { width: min(92vw,360px); height: min(92vw,360px); transform: translateY(-38px) scale(var(--mobile-art-scale)); transform-origin: center; }
-      .consumer-registry .vitrine-placard { grid-area: placard; width: 100%; max-width: 416px; min-height: 0; margin-top: -62px; }
-      .consumer-registry .vitrine-placard__layer { padding-top: 0; background: none; justify-content: flex-start; }
-      .consumer-registry .vitrine-placard__layer.is-active { position: relative; }
-      .consumer-registry .vitrine-placard__identity h2 { font-size: 43px; line-height: 1; text-shadow: 0 2px 15px #090c0e, 0 2px 4px #090c0e99; }
       .consumer-registry .vitrine-price { margin-top: 10px; gap: 6px; font-size: 13px; }
       .consumer-registry .vitrine-price__figure { font-size: 16px; }
       .consumer-registry .vitrine-price.is-pending .vitrine-price__figure { font-size: 12px; }
       .consumer-registry .vitrine-price.is-pending .vitrine-price__movement { font-size: 11px; }
-      .consumer-registry .vitrine-placard__actions { grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); margin-top: 15px; }
-      .consumer-registry .vitrine-market-meta { margin-top: 12px; }
       .static-astrofolio-lockup { height: 28px; gap: 8px; margin-bottom: 14px; }
       .static-astrofolio-lockup > img { width: 24px; height: 24px; }
       .static-astrofolio-lockup small { font-size: 10px; }
-      .static-astrofolio-header h1 { max-width: none; font-size: 38px; line-height: .95; }
-      .static-astrofolio-header > p:last-child { margin-top: 8px; font-size: 12px; }
-      .static-vitrine { margin-top: 14px; }
-      .static-vitrine__rail { gap: 4px 0; }
-      .static-vitrine__rail label { min-height: 52px; padding: 4px 0; }
-      .static-vitrine__disc, .static-vitrine__rail img { width: 28px; height: 28px; }
-      .static-vitrine__panel { grid-template-areas: "stage" "placard"; grid-template-columns: minmax(0,1fr); gap: 0; margin-top: 2px; }
-      .static-vitrine__stage { width: 100%; height: clamp(255px,70vw,300px); aspect-ratio: auto; overflow: visible; }
-      .static-vitrine__stage img { width: min(92vw,360px); height: min(92vw,360px); transform: translateY(-38px) scale(.76); }
-      [data-static-sign="cancer"] .static-vitrine__stage img,
-      [data-static-sign="taurus"] .static-vitrine__stage img { transform: translateY(-38px); }
-      [data-static-sign="leo"] .static-vitrine__stage img { transform: translateY(-38px) scale(.96); }
-      [data-static-sign="pisces"] .static-vitrine__stage img { transform: translateY(-38px) scale(.78); }
-      .static-vitrine__placard { grid-area: placard; align-self: start; min-height: 0; position: relative; z-index: 2; width: 100%; margin-top: -62px; padding-top: 0; background: none; }
-      .consumer-static .static-vitrine__placard h2 { font-size: 43px; }
-      .static-vitrine__price { margin-top: 10px; }
-      .static-vitrine__actions { grid-template-columns: minmax(0,.88fr) minmax(0,1.12fr); margin-top: 15px; }
     }
     @media (max-width: 899px) and (max-height: 680px) {
-      .consumer-registry .astrofolio-vitrine { padding-top: 78px; }
       .consumer-registry .astrofolio-lockup { margin-bottom: 9px; }
-      .consumer-registry .terminal-consumer-hero h1, .static-astrofolio-header h1 { font-size: 32px; }
-      .consumer-registry .terminal-consumer-hero p { margin-top: 7px; }
-      .consumer-registry .vitrine-disc-rail { margin-top: 11px; }
-      .consumer-registry .vitrine-stage, .static-vitrine__stage { height: 239px; }
-      .consumer-registry .vitrine-stage__art { width: min(94vw,320px); height: min(94vw,320px); transform: translateY(-44px) scale(var(--mobile-art-scale)); }
-      .consumer-registry .vitrine-placard, .static-vitrine__placard { margin-top: -72px; }
-      .consumer-registry .vitrine-placard__identity h2, .consumer-static .static-vitrine__placard h2 { font-size: 40px; }
       .consumer-registry .vitrine-price { margin-top: 8px; }
-      .consumer-registry .vitrine-placard__actions, .static-vitrine__actions { margin-top: 12px; }
-      .static-vitrine__stage img { width: min(94vw,320px); height: min(94vw,320px); }
     }
     @media (prefers-reduced-motion: reduce) {
       .wnav-tools,
       .wnav-signs,
       .wnav__dropdown-btn svg { transition: none !important; }
-      .vitrine-gold-light { display: none; }
       .consumer-registry *,
       .consumer-registry *::before,
       .consumer-registry *::after {
@@ -10568,226 +9615,1098 @@
         transition: none !important;
       }
       .consumer-registry .reveal { opacity: 1; }
-      .consumer-registry .vitrine-placard__actions .btn:active,
       .consumer-registry .vrf__submit:active,
       .consumer-registry .vrf__example:active,
       .consumer-registry .consumer-thesis__link:active .consumer-purpose__cta,
       .consumer-registry .consumer-collection__link:active .consumer-purpose__cta,
       .consumer-registry .consumer-purpose__arrow,
       .consumer-market-gateway__action:active { transform: none; }
-      .consumer-static .static-vitrine__actions .btn--fomo,
-      .consumer-static .static-vitrine__actions .btn--fomo__arrow { transition: none !important; }
-      .consumer-static .static-vitrine__actions .btn--fomo:active { transform: none; }
+    }
+
+    /* Astrofolio · Campaign
+       The owner-selected launch layout (2026-09-23). The same classes dress
+       the hydrated page and the no-JavaScript shell, so the first screen does
+       not move when the application takes over. The scroll-driven stage
+       (pinned film and sideways runway) exists only on wide screens with
+       motion allowed; phones, reduced motion, and the static shell read the
+       same markup as a still film and a swipeable runway. */
+    .consumer-campaign,
+    .static-campaign {
+      --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --campaign-gutter: clamp(16px, 4vw, 56px);
+      --campaign-up: #8dd9ad;
+      --campaign-down: #f28e87;
+    }
+    .static-campaign { position: relative; z-index: var(--z-base); color: var(--ink); font-family: var(--sans); }
+    .consumer-campaign .consumer-eyebrow,
+    .static-campaign .consumer-eyebrow {
+      display: block;
+      margin: 0 0 14px;
+      color: var(--ink-2);
+      font: italic 400 clamp(17px, 1.5vw, 21px)/1.2 var(--serif);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* The approved Fomo control, unchanged wherever the Campaign places it. */
+    .consumer-registry .btn.btn--fomo,
+    .static-campaign .btn.btn--fomo {
+      flex: 0 0 auto;
+      height: 48px;
+      min-height: 48px;
+      gap: 8px;
+      padding: 4px 7px 4px 5px;
+      justify-content: flex-start;
+      border: 1px solid rgba(255,255,255,.78);
+      border-radius: 999px;
+      color: #111318;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.96), rgba(229,228,224,.98)),
+        #f1f0ec;
+      box-shadow:
+        inset 0 1px 0 #fff,
+        inset 0 -1px 0 rgba(17,19,24,.1),
+        0 0 0 1px rgba(83,93,221,.12),
+        0 16px 34px -22px rgba(0,0,0,.95);
+      font: 550 13px/1 var(--sans);
+      letter-spacing: 0;
+      text-decoration: none;
+      text-transform: none;
+      transition: transform 120ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);
+    }
+    .consumer-registry .btn.btn--fomo::before,
+    .consumer-registry .btn.btn--fomo::after,
+    .static-campaign .btn.btn--fomo::before,
+    .static-campaign .btn.btn--fomo::after { display: none; }
+    .consumer-registry .btn--fomo img,
+    .static-campaign .btn--fomo img {
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      box-shadow: 0 0 0 1px rgba(17,19,24,.08), 0 5px 12px -7px rgba(0,0,0,.82);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .consumer-registry .btn.btn--fomo:hover,
+      .static-campaign .btn.btn--fomo:hover {
+        transform: translateY(-1px);
+        border-color: #fff;
+        color: #111318;
+        background-color: #f8f7f4;
+      }
+      .consumer-registry .btn.btn--fomo:hover .btn--fomo__arrow,
+      .static-campaign .btn.btn--fomo:hover .btn--fomo__arrow {
+        transform: translate(1px, -1px);
+        background-color: #626ce9;
+      }
+    }
+    .consumer-registry .btn.btn--fomo:active,
+    .static-campaign .btn.btn--fomo:active { transform: scale(.975); transition-duration: 120ms; }
+    .consumer-registry .btn.btn--fomo:focus-visible,
+    .static-campaign .btn.btn--fomo:focus-visible { outline: 2px solid #7f88ff; outline-offset: 3px; }
+    .consumer-registry .vitrine-buy-options,
+    .static-campaign .vitrine-buy-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 7px;
+      align-items: baseline;
+      margin: 6px 0 0;
+      color: var(--ink-mute);
+      font: 500 11px/1.4 var(--sans);
+    }
+    .consumer-registry .vitrine-buy-options a,
+    .static-campaign .vitrine-buy-options a {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-2);
+      text-underline-offset: 4px;
+    }
+
+    /* ── Opening: Astro [film] folio ─────────────────────────────── */
+    .campaign-hero { position: relative; height: 230vh; }
+    .campaign-hero__pin {
+      --film-w: min(27vw, 40vh);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      /* clip, not hidden: neither pin may become a scroll container that
+         focus could scroll behind the scroll-driven transform. */
+      overflow: clip;
+    }
+    .campaign-hero__film {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 50%;
+      width: var(--film-w);
+      aspect-ratio: 9 / 16;
+      overflow: hidden;
+      border-radius: calc(26px / var(--hero-scale, 1));
+      background: #0b0d12;
+      box-shadow: 0 50px 120px -50px rgba(0,0,0,.95), 0 0 0 1px rgba(238,241,247,.08);
+      transform: translate(-50%, -50%) scale(var(--hero-scale, 1));
+      will-change: transform;
+    }
+    .campaign-hero__poster,
+    .campaign-hero__poster img,
+    .campaign-hero__video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+    .campaign-hero__video { opacity: 0; transition: opacity 560ms ease; }
+    .campaign-hero__film[data-playing="true"] .campaign-hero__video { opacity: 1; }
+    .campaign-hero__shade {
+      position: absolute;
+      inset: 0;
+      background: rgba(6,7,9, calc(var(--hero-out, 0) * .3));
+      pointer-events: none;
+    }
+    .campaign-hero__shade::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(6,7,9,0) 40%, rgba(6,7,9,.88) 100%);
+      opacity: var(--hero-out, 0);
+      content: "";
+    }
+    .campaign-hero__word {
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      color: var(--ink);
+      font: 400 clamp(88px, 12.4vw, 220px)/1 var(--serif);
+      letter-spacing: -.04em;
+      white-space: nowrap;
+      opacity: calc(1 - var(--hero-out, 0) * 1.4);
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+    .campaign-hero__word--astro {
+      right: calc(50% + var(--film-w) / 2 + 2.2vw);
+      transform: translate(calc(var(--hero-out, 0) * -40vw), -54%);
+    }
+    .campaign-hero__word--folio {
+      left: calc(50% + var(--film-w) / 2 + 1.2vw);
+      font-style: italic;
+      transform: translate(calc(var(--hero-out, 0) * 40vw), -54%);
+    }
+    .campaign-hero__foot {
+      position: absolute;
+      z-index: 2;
+      right: var(--campaign-gutter);
+      bottom: 34px;
+      left: var(--campaign-gutter);
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      opacity: calc(1 - var(--hero-out, 0) * 3);
+      pointer-events: none;
+    }
+    .campaign-hero__foot p { max-width: 32ch; margin: 0; color: var(--ink-2); font: 400 15px/1.5 var(--sans); }
+    .campaign-hero__foot span { margin-left: auto; color: var(--ink-mute); font: 500 13px/1 var(--sans); white-space: nowrap; }
+    .campaign-hero__foot i { display: inline-block; font-style: normal; animation: campaign-cue 2.4s ease-in-out infinite; }
+    @keyframes campaign-cue {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(4px); }
+    }
+    .campaign-hero__caption {
+      position: absolute;
+      z-index: 3;
+      right: var(--campaign-gutter);
+      /* Clears the bag, which now shows from the first screen. */
+      bottom: clamp(100px, 12vh, 124px);
+      left: var(--campaign-gutter);
+      max-width: 980px;
+      opacity: var(--hero-caption, 0);
+      transform: translateY(calc((1 - var(--hero-caption, 0)) * 26px));
+      pointer-events: none;
+    }
+    .campaign-hero[data-caption="live"] .campaign-hero__caption { pointer-events: auto; }
+    .campaign-hero__caption:focus-within { opacity: 1; transform: none; }
+    .campaign-hero__caption .astrofolio-lockup,
+    .campaign-hero__caption .static-astrofolio-lockup { width: fit-content; margin: 0 0 18px; }
+    .campaign-hero__caption .astrofolio-lockup__copy,
+    .campaign-hero__caption .static-astrofolio-lockup > span { flex: 0 1 auto; justify-content: flex-start; gap: 12px; }
+    .campaign-hero__caption .astrofolio-lockup__copy small,
+    .campaign-hero__caption .static-astrofolio-lockup small { color: var(--ink-2); font-size: 12px; }
+    .campaign-hero__caption h1 {
+      max-width: 12ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(48px, 6.6vw, 112px)/.95 var(--serif);
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+    .campaign-hero__caption > p {
+      max-width: 34em;
+      margin: 18px 0 0;
+      color: var(--ink-2);
+      font: 400 clamp(16px, 1.3vw, 19px)/1.55 var(--sans);
+    }
+    .campaign-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .campaign-button {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 22px;
+      border: 1px solid var(--hair-3);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(10,12,17,.42);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+      font: 550 14px/1 var(--sans);
+      text-decoration: none;
+      transition: border-color 180ms ease, background-color 180ms ease, transform 120ms ease;
+    }
+    .campaign-button--light { border-color: rgba(255,255,255,.78); color: #111318; background: #f1f0ec; }
+    .campaign-button:active { transform: scale(.98); }
+    .campaign-button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    @media (hover: hover) and (pointer: fine) {
+      .campaign-button:hover { border-color: rgba(238,241,247,.7); background-color: rgba(14,16,22,.7); }
+      .campaign-button--light:hover { border-color: #fff; background-color: #f8f7f4; }
+    }
+
+    /* The no-JavaScript opening: the wide closed state keeps its first
+       screen, and the caption follows it as an ordinary block. */
+    .static-campaign__nav {
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      gap: 22px;
+      overflow-x: auto;
+      padding: 20px var(--campaign-gutter) 44px;
+      background: linear-gradient(180deg, rgba(6,7,9,.78), rgba(6,7,9,0));
+      font: 500 13px/1 var(--sans);
+      scrollbar-width: none;
+    }
+    .static-campaign__nav::-webkit-scrollbar { display: none; }
+    .static-campaign__nav a { flex: 0 0 auto; padding: 8px 0; border: 0; color: var(--ink-dim); text-decoration: none; white-space: nowrap; }
+    .static-campaign__nav a[aria-current="page"] { color: var(--ink); }
+    .static-campaign a { text-underline-offset: .22em; }
+    .static-campaign ~ .zfooter { position: relative; z-index: var(--z-base); }
+    @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+      .campaign-hero--static { height: auto; }
+      .campaign-hero--static .campaign-hero__pin {
+        position: relative;
+        height: auto;
+        overflow: visible;
+        padding: 100vh 0 clamp(56px, 7vw, 96px);
+      }
+      .campaign-hero--static .campaign-hero__film,
+      .campaign-hero--static .campaign-hero__word { top: 50vh; }
+      .campaign-hero--static .campaign-hero__foot { top: calc(100vh - 34px); bottom: auto; transform: translateY(-100%); }
+      .campaign-hero--static .campaign-hero__caption {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        left: auto;
+        margin: 0 var(--campaign-gutter);
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+    }
+
+    /* ── The bag: the selected sign, ready to buy ────────────────── */
+    .campaign-bag {
+      position: fixed;
+      z-index: 45;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      max-width: calc(100% - 24px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 6px 6px 6px 8px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: rgba(10,12,17,.8);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+      backdrop-filter: blur(18px) saturate(1.2);
+      box-shadow: 0 24px 60px -24px rgba(0,0,0,.95);
+      transform: translate(-50%, 0);
+      transition: transform 480ms var(--ease), opacity 360ms ease, visibility 0s linear 0s;
+    }
+    .campaign-bag.is-hidden {
+      visibility: hidden;
+      opacity: 0;
+      transform: translate(-50%, 140%);
+      transition: transform 480ms var(--ease), opacity 360ms ease, visibility 0s linear 480ms;
+    }
+    .campaign-bag__who { min-width: 0; display: flex; align-items: center; gap: 10px; padding-right: 2px; }
+    .campaign-bag__who img {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      border-radius: 50%;
+      filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--sign) 36%, transparent));
+    }
+    .campaign-bag__who > span { min-width: 0; display: grid; gap: 4px; }
+    .campaign-bag__who strong { color: var(--ink); font: 400 20px/1 var(--serif); letter-spacing: -.01em; }
+    .campaign-bag__who small {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1px 7px;
+      color: var(--ink-dim);
+      font: 500 11.5px/1.2 var(--mono);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .campaign-bag__who strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .campaign-bag__move.is-up { color: var(--campaign-up); }
+    .campaign-bag__move.is-down { color: var(--campaign-down); }
+    .static-campaign ~ .zfooter { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+    /* On narrow desktops the closed film's foot keeps only its cue, so the
+       centred bag never meets the copy. */
+    @media (min-width: 901px) and (max-width: 1120px) {
+      .campaign-hero__foot p { display: none; }
+    }
+
+    /* ── Runway: all twelve ──────────────────────────────────────── */
+    .campaign-runway { --runway-inset: max(24px, calc((100% - 1180px) / 2)); position: relative; }
+    /* The opening and the runway carry their own clearance for the floating
+       navigation, so a link to either lands exactly where it pins. */
+    .campaign-hero,
+    .campaign-runway,
+    .campaign-runway > .terminal-compat-target { scroll-margin-top: 0; }
+    .campaign-runway__pin {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      padding: clamp(72px, 9vw, 110px) 0 clamp(36px, 5vw, 60px);
+    }
+    .campaign-runway__head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px 24px;
+      padding-inline: var(--runway-inset);
+    }
+    .campaign-runway__head h2 {
+      max-width: 16ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(40px, 4.6vw, 72px)/.95 var(--serif);
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .campaign-runway__side { display: grid; justify-items: end; gap: 12px; }
+    .campaign-runway__count { margin: 0; color: var(--ink-mute); font: 400 13px/1 var(--mono); }
+    .campaign-runway__count b { color: var(--ink); font-weight: 400; }
+    .campaign-runway__dots {
+      --campaign-dot-columns: 12;
+      display: grid;
+      grid-template-columns: repeat(var(--campaign-dot-columns), 44px);
+      gap: 2px;
+    }
+    .campaign-dot {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      opacity: .5;
+      transition: opacity 180ms ease;
+    }
+    .campaign-dot img { width: 30px; height: 30px; display: block; border-radius: 50%; }
+    .campaign-dot::after {
+      position: absolute;
+      inset: 4px;
+      border: 1px solid var(--sign);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 180ms ease;
+      content: "";
+    }
+    .campaign-dot.is-active,
+    .campaign-dot.is-active::after { opacity: 1; }
+    .campaign-dot:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
+    /* Arrow-key browsing changes the choice immediately, old ring included. */
+    .campaign-runway__dots:has(.campaign-dot:focus-visible) .campaign-dot,
+    .campaign-runway__dots:has(.campaign-dot:focus-visible) .campaign-dot::after { transition: none; }
+    @media (hover: hover) and (pointer: fine) {
+      .campaign-dot:hover { opacity: .9; }
+    }
+    .campaign-runway__track {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      gap: 18px;
+      padding: 30px var(--runway-inset) 22px;
+    }
+    .campaign-runway[data-mode="pinned"] .campaign-runway__pin {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: clip;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      padding: 92px 0 22px;
+    }
+    .campaign-runway[data-mode="pinned"] .campaign-runway__track { min-height: 0; will-change: transform; }
+    .campaign-runway[data-mode="carousel"] .campaign-runway__track {
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--runway-inset);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+    .campaign-runway[data-mode="carousel"] .campaign-runway__track::-webkit-scrollbar { display: none; }
+    .campaign-runway[data-mode="carousel"] .campaign-look { scroll-snap-align: start; }
+    .campaign-runway__note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 18px;
+      margin: 0;
+      padding: 0 var(--runway-inset);
+      color: var(--ink-mute);
+      font: 500 11.5px/1.5 var(--sans);
+    }
+    .campaign-runway__note a { color: var(--ink-2); text-underline-offset: 4px; }
+
+    .campaign-look {
+      --sign: var(--ink-2);
+      position: relative;
+      isolation: isolate;
+      flex: 0 0 clamp(300px, 29vw, 420px);
+      max-height: 680px;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
+      padding: 22px 22px 14px;
+      overflow: hidden;
+      border: 1px solid var(--hair);
+      border-radius: 28px;
+      background:
+        radial-gradient(120% 70% at 50% 40%, color-mix(in srgb, var(--sign) 9%, transparent), transparent 64%),
+        #0c0e14;
+      transition: border-color 360ms var(--ease);
+    }
+    .campaign-look::before {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 2px;
+      background: var(--sign);
+      opacity: .85;
+      content: "";
+    }
+    .campaign-look.is-active,
+    .campaign-look.is-season { border-color: var(--hair-2); }
+    .campaign-look__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin: 0;
+      color: var(--ink-mute);
+      font: 500 12.5px/1.3 var(--sans);
+    }
+    .campaign-look__top b { color: var(--ink-2); font: 400 12px/1 var(--mono); letter-spacing: .06em; }
+    .campaign-look__tag { color: var(--ink); font: italic 400 15px/1 var(--serif); }
+    .campaign-look:not(.is-season) .campaign-look__tag,
+    .campaign-look.is-season .campaign-look__dates { display: none; }
+    .campaign-look h3 {
+      margin: 12px 0 0;
+      color: var(--ink);
+      font: 400 clamp(42px, 3.9vw, 60px)/.95 var(--serif);
+      letter-spacing: -.03em;
+    }
+    .campaign-look__art {
+      position: relative;
+      min-height: 160px;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
+      place-items: center;
+      padding: 6px 0;
+    }
+    .campaign-look__stars {
+      position: absolute;
+      inset: 4% -6%;
+      width: 112%;
+      height: 92%;
+      object-fit: contain;
+      opacity: .75;
+      mix-blend-mode: lighten;
+      pointer-events: none;
+      /* The map's own caption line sits in its lower corner; the stars and
+         guide lines above it are what the look needs. */
+      -webkit-mask-image: linear-gradient(180deg, #000 68%, transparent 86%);
+      mask-image: linear-gradient(180deg, #000 68%, transparent 86%);
+    }
+    .campaign-look__figure {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      max-height: 330px;
+      object-fit: contain;
+      filter: drop-shadow(0 26px 30px rgba(0,0,0,.75));
+      transition: transform 900ms var(--ease-soft);
+    }
+    .campaign-look__fallback { display: none; }
+    .campaign-look__art.is-fallback .campaign-look__figure { display: none; }
+    .campaign-look__art.is-fallback .campaign-look__fallback {
+      position: relative;
+      display: grid;
+      place-items: center;
+      color: var(--sign);
+      font: 400 110px/1 var(--serif);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .campaign-look:hover { border-color: var(--hair-2); }
+      .campaign-look:hover .campaign-look__figure { transform: translateY(-6px) scale(1.02); }
+    }
+    .campaign-look__stats {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 120px;
+      align-items: end;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--hair);
+    }
+    .campaign-look .vitrine-price { display: grid; gap: 4px; margin: 0; font: 400 13px/1.3 var(--sans); }
+    .campaign-look .vitrine-price > span[aria-hidden="true"] { display: none; }
+    .campaign-look .vitrine-price__figure { color: var(--ink); font: 500 17px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+    .campaign-look .vitrine-price.is-pending .vitrine-price__figure { color: var(--ink-dim); font: 500 13px/1.3 var(--sans); }
+    .campaign-look .vitrine-price__movement { color: var(--ink-dim); font-weight: 600; }
+    .campaign-look .vitrine-price__movement.is-up { color: var(--campaign-up); }
+    .campaign-look .vitrine-price__movement.is-down { color: var(--campaign-down); }
+    .campaign-spark { width: 120px; height: 40px; overflow: visible; }
+    .campaign-spark__area { fill: color-mix(in srgb, var(--sign) 14%, transparent); }
+    .campaign-spark__line { fill: none; stroke: var(--sign); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
+    .campaign-look__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px 14px;
+      margin-top: 14px;
+    }
+    .campaign-look__explore {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-2);
+      font: 550 13px/1.3 var(--sans);
+      text-decoration: underline;
+      text-decoration-color: var(--hair-3);
+      text-underline-offset: 4px;
+    }
+
+    /* ── In the Fomo app ─────────────────────────────────────────── */
+    .consumer-registry > .campaign-app {
+      position: relative;
+      width: min(calc(100% - 48px), 1180px);
+      margin-inline: auto;
+      padding: clamp(72px, 9vw, 128px) 0;
+    }
+    .campaign-app__head {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      gap: clamp(32px, 6vw, 96px);
+      align-items: end;
+    }
+    .consumer-campaign .campaign-app__head h2,
+    .static-campaign .campaign-app__head h2 {
+      max-width: 10ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(48px, 6vw, 96px)/.92 var(--serif);
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .campaign-app__lede > p:first-child { max-width: 42ch; margin: 0; color: var(--ink-2); font: 400 17px/1.6 var(--sans); }
+    .campaign-stores { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; margin-top: 26px; }
+    .campaign-store { display: inline-flex; border: 0; border-radius: 8px; line-height: 0; }
+    .campaign-store img { display: block; width: auto; }
+    .campaign-store--apple img { height: 48px; }
+    .campaign-store--google img { height: 71.43px; margin: -11.71px; }
+    .campaign-store:focus-visible { outline: 1.5px solid var(--ink); outline-offset: 4px; }
+    .campaign-app__web { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 16px 0 0; color: var(--ink-mute); font: 500 13.5px/1.5 var(--sans); }
+    .campaign-app__web a { border: 0; color: var(--ink-2); text-decoration: underline; text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+    .campaign-app__stage {
+      max-width: 1080px;
+      display: grid;
+      grid-template-columns: 1fr 1.18fr 1fr;
+      gap: clamp(20px, 4vw, 64px);
+      align-items: start;
+      margin: clamp(56px, 8vw, 112px) auto 0;
+    }
+    .campaign-phone { position: relative; margin: 0; }
+    .campaign-phone--side { margin-top: 110px; }
+    .campaign-phone__screen {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 720 / 1480;
+      padding: 8px;
+      border-radius: 40px;
+      background: #0b0d12;
+      box-shadow: 0 0 0 1px rgba(238,241,247,.12), 0 50px 90px -46px rgba(0,0,0,.95);
+    }
+    .campaign-phone__screen picture,
+    .campaign-phone__screen img { width: 100%; height: 100%; display: block; }
+    .campaign-phone__screen img { object-fit: cover; object-position: top; border-radius: 33px; background: #000; }
+    .campaign-phone__video {
+      position: absolute;
+      inset: 8px;
+      width: calc(100% - 16px);
+      height: calc(100% - 16px);
+      object-fit: cover;
+      object-position: top;
+      border-radius: 33px;
+      opacity: 0;
+      transition: opacity 560ms ease;
+    }
+    .campaign-phone__screen[data-playing="true"] .campaign-phone__video { opacity: 1; }
+    .campaign-phone__alert {
+      position: absolute;
+      z-index: 2;
+      top: 7%;
+      left: -46%;
+      width: 104%;
+      transform: rotate(-3deg);
+      filter: drop-shadow(0 30px 40px rgba(0,0,0,.8));
+      pointer-events: none;
+    }
+    .campaign-phone__alert img { width: 100%; height: auto; display: block; }
+    .campaign-phone figcaption { display: grid; gap: 5px; margin-top: 18px; }
+    .campaign-phone figcaption strong { color: var(--ink); font: 400 24px/1.1 var(--serif); letter-spacing: -.01em; }
+    .campaign-phone figcaption span { max-width: 32ch; color: var(--ink-dim); font: 400 14.5px/1.5 var(--sans); }
+
+    /* ── The record ──────────────────────────────────────────────── */
+    .campaign-record__identity { margin-top: clamp(28px, 4vw, 44px); }
+    .campaign-record__label { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--ink-dim); font: 500 13.5px/1.3 var(--sans); }
+    .campaign-record__label img { width: 28px; height: 28px; border-radius: 50%; }
+    .campaign-record__address { margin: 16px 0 0; }
+    .campaign-record__address code {
+      display: block;
+      color: var(--ink);
+      font: 300 clamp(18px, 2.9vw, 44px)/1.15 var(--mono);
+      letter-spacing: -.03em;
+      overflow-wrap: anywhere;
+    }
+    .campaign-record__address span { color: var(--record-sign); }
+    .campaign-record__meta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 18px 0 0; color: var(--ink-mute); font: 500 13.5px/1.4 var(--sans); }
+    .campaign-record__meta code { color: var(--ink-2); font: 500 12.5px/1.4 var(--mono); }
+    .campaign-record__meta a { color: var(--ink-2); text-decoration-color: var(--hair-3); text-underline-offset: 4px; }
+    .campaign-record__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: clamp(32px, 6vw, 96px);
+      align-items: start;
+      margin-top: clamp(40px, 6vw, 64px);
+    }
+    .campaign-record__copy > p { max-width: 44ch; margin: 0 0 12px; color: var(--ink-2); font: 400 17px/1.6 var(--sans); }
+
+    /* ── Wear your sign ──────────────────────────────────────────── */
+    .consumer-campaign > .consumer-shop { display: block; }
+    .consumer-campaign .consumer-shop__copy {
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: 40px;
+      align-items: end;
+    }
+    .consumer-campaign .consumer-shop__copy > .consumer-eyebrow { grid-column: 1; grid-row: 1; }
+    .consumer-campaign .consumer-shop__copy > h2 {
+      grid-column: 1;
+      grid-row: 2 / 4;
+      max-width: 9ch;
+      font: 400 clamp(56px, 8vw, 132px)/.9 var(--serif);
+      letter-spacing: -.04em;
+    }
+    .consumer-campaign .consumer-shop__copy > p { grid-column: 2; grid-row: 2; align-self: end; margin: 0; }
+    .consumer-campaign .consumer-shop__copy > .consumer-shop__cta { grid-column: 2; grid-row: 3; justify-self: start; margin-top: 22px; }
+    .consumer-campaign .consumer-shop__products {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 5fr 4fr 4fr;
+      grid-template-rows: none;
+      align-items: end;
+      gap: 16px;
+      margin-top: clamp(36px, 5vw, 56px);
+    }
+    .consumer-campaign .consumer-shop__product,
+    .consumer-campaign .consumer-shop__product.is-featured {
+      grid-row: auto;
+      display: grid;
+      gap: 14px;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: none;
+    }
+    .consumer-campaign .consumer-shop__product img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      padding: 8%;
+      border: 1px solid var(--hair-2);
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,.08), transparent 55%),
+        rgba(238,241,247,.024);
+      transition: transform 900ms var(--ease-soft);
+    }
+    .consumer-campaign .consumer-shop__product.is-featured img { aspect-ratio: 4 / 5.4; }
+    .consumer-campaign .consumer-shop__product span {
+      position: static;
+      padding: 0;
+      border: 0;
+      color: var(--ink-2);
+      font: 500 15px/1.3 var(--sans);
+    }
+    .consumer-campaign .consumer-shop__product:hover img { transform: scale(1.02) rotate(-1deg); }
+
+    @media (max-width: 900px) {
+      .campaign-hero { height: auto; }
+      .campaign-hero__pin { position: relative; height: 100svh; min-height: 560px; }
+      .campaign-hero__film {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+      }
+      .campaign-hero__poster img { object-position: 50% 38%; }
+      .campaign-hero__shade { background: linear-gradient(180deg, rgba(6,7,9,.46) 0%, rgba(6,7,9,.08) 18%, rgba(6,7,9,.34) 38%, rgba(6,7,9,.86) 62%, rgba(6,7,9,.96) 100%); }
+      .campaign-hero__shade::after,
+      .campaign-hero__word,
+      .campaign-hero__foot { display: none; }
+      .campaign-hero__caption {
+        right: 16px;
+        /* Clears the bag and, above its right end, the lifted Guide launcher. */
+        bottom: calc(150px + env(safe-area-inset-bottom, 0px));
+        left: 16px;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+      .campaign-hero__caption { text-shadow: 0 1px 18px rgba(0,0,0,.55); }
+      .campaign-hero__caption h1 { font-size: clamp(40px, 12vw, 58px); }
+      .campaign-hero__caption > p { margin-top: 12px; font-size: 15.5px; }
+      .campaign-hero__actions { gap: 10px; margin-top: 18px; }
+      .campaign-button { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
+      .static-campaign__nav { padding-top: 14px; }
+
+      .campaign-bag {
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        left: 12px;
+        max-width: none;
+        justify-content: space-between;
+        transform: none;
+      }
+      .campaign-bag.is-hidden { transform: translateY(140%); }
+      .campaign-bag__who small > span:only-child { white-space: normal; }
+
+      .campaign-runway { --runway-inset: 16px; }
+      .campaign-runway__pin { padding: 72px 0 36px; }
+      .campaign-runway__head { flex-direction: column; align-items: stretch; gap: 20px; }
+      .campaign-runway__side { justify-items: stretch; }
+      .campaign-runway__count { display: none; }
+      .campaign-runway__dots { --campaign-dot-columns: 6; grid-template-columns: repeat(6, minmax(44px, 1fr)); gap: 2px; }
+      .campaign-dot { width: 100%; height: 48px; border-radius: 14px; }
+      .campaign-dot img { width: 34px; height: 34px; }
+      .campaign-dot::after { inset: auto; width: 40px; height: 40px; }
+      .campaign-runway__track { gap: 12px; padding-block: 24px 18px; }
+      .campaign-look { flex-basis: min(84vw, 380px); padding: 20px 18px 12px; }
+      .campaign-look h3 { font-size: 44px; }
+
+      .consumer-registry > .campaign-app { width: calc(100% - 32px); }
+      .campaign-app__head,
+      .campaign-record__grid { grid-template-columns: minmax(0, 1fr); }
+      .campaign-app__stage {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        margin-inline: -16px;
+        padding: 0 16px 8px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+      .campaign-app__stage::-webkit-scrollbar { display: none; }
+      .campaign-phone { flex: 0 0 min(70vw, 300px); scroll-snap-align: center; }
+      .campaign-phone--main { order: -1; }
+      .campaign-phone--side { margin-top: 0; }
+      .campaign-phone__alert { top: 6%; left: 4%; width: 92%; }
+
+      .consumer-campaign .consumer-shop__copy { grid-template-columns: minmax(0, 1fr); }
+      .consumer-campaign .consumer-shop__copy > h2,
+      .consumer-campaign .consumer-shop__copy > p,
+      .consumer-campaign .consumer-shop__copy > .consumer-shop__cta { grid-column: 1; grid-row: auto; }
+      .consumer-campaign .consumer-shop__copy > p { margin-top: 18px; }
+      .consumer-campaign .consumer-shop__products { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .consumer-campaign .consumer-shop__product.is-featured { grid-column: 1 / -1; }
+    }
+    /* The site-wide Guide launcher shares the bottom-right corner with the
+       bag on phones and tablets; it rises above the bag while the bag shows
+       and settles back when the bag rests. */
+    @media (max-width: 900px) {
+      body:has(.campaign-bag:not(.is-hidden)) .zguide-launcher {
+        translate: 0 -78px;
+        transition: opacity 180ms ease, transform 180ms ease, translate 320ms var(--ease);
+      }
+    }
+    @media (min-width: 601px) and (max-width: 900px) {
+      .campaign-bag { right: auto; left: 50%; width: min(560px, calc(100% - 24px)); transform: translateX(-50%); }
+      .campaign-bag.is-hidden { transform: translate(-50%, 140%); }
+    }
+    @media (max-width: 360px) {
+      .campaign-bag { gap: 10px; padding-left: 12px; }
+      .campaign-bag__who img { display: none; }
+    }
+    @media (min-width: 901px) and (prefers-reduced-motion: reduce) {
+      .campaign-hero { height: auto; }
+      .campaign-hero__pin { position: relative; }
+      .campaign-hero__film {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        border-radius: 0;
+        box-shadow: none;
+        transform: none;
+      }
+      .campaign-hero__shade { background: rgba(6,7,9,.28); }
+      .campaign-hero__shade::after { opacity: 1; }
+      .campaign-hero__word,
+      .campaign-hero__foot { display: none; }
+      .campaign-hero__caption { opacity: 1; transform: none; pointer-events: auto; }
+    }
+    @media (min-width: 901px) and (max-height: 780px) {
+      .campaign-runway[data-mode="pinned"] .campaign-runway__pin { padding-top: 84px; }
+      .campaign-runway__head h2 { font-size: clamp(34px, 3.6vw, 52px); }
+      .campaign-runway[data-mode="pinned"] .campaign-runway__track { padding-block: 18px 14px; }
+      .campaign-look h3 { font-size: clamp(34px, 3vw, 46px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .static-campaign *,
+      .static-campaign *::before,
+      .static-campaign *::after {
+        animation: none !important;
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+      .campaign-button:active,
+      .consumer-registry .btn.btn--fomo:active,
+      .static-campaign .btn.btn--fomo:active,
+      .campaign-look:hover .campaign-look__figure,
+      .consumer-campaign .consumer-shop__product:hover img { transform: none; }
     }
 </style>
 </head>
 <body>
   <div id="root">
     <a class="skip" href="#main">Skip to content</a>
-    <main class="static-site consumer-static" id="main">
-      <nav class="static-site__nav" aria-label="Astrofolio navigation">
+    <main class="static-campaign" id="main">
+      <nav class="static-campaign__nav" aria-label="Astrofolio navigation">
         <a href="#official-twelve" aria-current="page">Astrofolio</a>
-        <a href="#about">The collection</a>
+        <a href="#the-twelve">The collection</a>
+        <a href="#buy">How to buy</a>
         <a href="#shop">Shop</a>
         <a href="#market-layer">Markets</a>
         <a href="#registry">Registry</a>
         <a href="#faq">Questions</a>
       </nav>
 
-      <section class="static-astrofolio-opening" id="official-twelve" aria-labelledby="static-astrofolio-title">
-        <span id="market-snapshot" class="terminal-compat-target" aria-hidden="true"></span>
-        <span id="terminal" class="terminal-compat-target" aria-hidden="true"></span>
-        <header class="static-astrofolio-header">
-          <div class="static-astrofolio-lockup">
-            <img src="/assets/astrofolio/v2/zodiac-ring-192.png" width="52" height="52" alt="">
-            <span><em class="static-astrofolio-kicker">Astrofolio</em><small><strong data-astrofolio-season-name style="--season-hue:#E0A9B4">Leo</strong> Season</small></span>
+      <section class="campaign-hero campaign-hero--static" id="official-twelve" aria-labelledby="static-astrofolio-title" data-caption="rest">
+        <div class="campaign-hero__pin">
+          <div class="campaign-hero__film">
+            <picture class="campaign-hero__poster">
+              <source srcset="/assets/fomo/fomo-film-poster.avif" type="image/avif">
+              <img src="/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async">
+            </picture>
+            <span class="campaign-hero__shade" aria-hidden="true"></span>
           </div>
-          <h1 id="static-astrofolio-title">Choose your sign</h1>
-          <p>The official Zodiac token collection.</p>
-        </header>
-
-        <fieldset class="static-vitrine">
-          <legend>Choose one of the twelve signs</legend>
-          <div class="static-vitrine__rail" aria-label="Choose a zodiac sign">
-            <label id="astrofolio-aries-label" for="astrofolio-aries"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aries" checked><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt=""></span><span>Aries</span></label>
-            <label id="astrofolio-taurus-label" for="astrofolio-taurus"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-taurus"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt=""></span><span>Taurus</span></label>
-            <label id="astrofolio-gemini-label" for="astrofolio-gemini"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-gemini"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt=""></span><span>Gemini</span></label>
-            <label id="astrofolio-cancer-label" for="astrofolio-cancer"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-cancer"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt=""></span><span>Cancer</span></label>
-            <label id="astrofolio-leo-label" for="astrofolio-leo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-leo"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt=""></span><span>Leo</span></label>
-            <label id="astrofolio-virgo-label" for="astrofolio-virgo"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-virgo"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt=""></span><span>Virgo</span></label>
-            <label id="astrofolio-libra-label" for="astrofolio-libra"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-libra"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt=""></span><span>Libra</span></label>
-            <label id="astrofolio-scorpio-label" for="astrofolio-scorpio"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-scorpio"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt=""></span><span>Scorpio</span></label>
-            <label id="astrofolio-sagittarius-label" for="astrofolio-sagittarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-sagittarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt=""></span><span>Sagittarius</span></label>
-            <label id="astrofolio-capricorn-label" for="astrofolio-capricorn"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-capricorn"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt=""></span><span>Capricorn</span></label>
-            <label id="astrofolio-aquarius-label" for="astrofolio-aquarius"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-aquarius"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt=""></span><span>Aquarius</span></label>
-            <label id="astrofolio-pisces-label" for="astrofolio-pisces"><input class="static-vitrine__choice" type="radio" name="astrofolio-sign" id="astrofolio-pisces"><span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt=""></span><span>Pisces</span></label>
+          <span class="campaign-hero__word campaign-hero__word--astro" aria-hidden="true">Astro</span>
+          <span class="campaign-hero__word campaign-hero__word--folio" aria-hidden="true">folio</span>
+          <div class="campaign-hero__foot" aria-hidden="true"><p>The twelve official Zodiacs, one for every sign. Each has its own design and public record.</p><span>Scroll <i>↓</i></span></div>
+          <div class="campaign-hero__caption">
+            <div class="static-astrofolio-lockup">
+              <img src="/assets/astrofolio/v2/zodiac-ring-192.png" width="52" height="52" alt="">
+              <span><em class="static-astrofolio-kicker">Astrofolio</em><small><strong data-astrofolio-season-name style="--season-hue:#E0A9B4">Leo</strong> Season</small></span>
+            </div>
+            <h1 id="static-astrofolio-title">The twelve official Zodiacs.</h1>
+            <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
+            <div class="campaign-hero__actions">
+              <a class="campaign-button campaign-button--light" href="#the-twelve"><span>Find your sign</span><span aria-hidden="true">↓</span></a>
+              <a class="campaign-button" href="#buy"><span>How buying works</span></a>
+            </div>
           </div>
-          <div class="static-vitrine__panels" aria-live="polite">
-            <article class="static-vitrine__panel" data-static-sign="aries" aria-labelledby="static-aries-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aries.webp" width="512" height="512" alt="Aries Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-aries-title">Aries</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/aries/">Explore Aries</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aries" data-fomo-buy="aries"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aries <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♈️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">March 21 to April 19</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aries/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="taurus" aria-labelledby="static-taurus-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/taurus.webp" width="512" height="512" alt="Taurus Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-taurus-title">Taurus</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/taurus/">Explore Taurus</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Taurus" data-fomo-buy="taurus"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Taurus <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♉️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">April 20 to May 20</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/taurus/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="gemini" aria-labelledby="static-gemini-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/gemini.webp" width="512" height="512" alt="Gemini Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-gemini-title">Gemini</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/gemini/">Explore Gemini</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Gemini" data-fomo-buy="gemini"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Gemini <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♊️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">May 21 to June 20</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/gemini/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="cancer" aria-labelledby="static-cancer-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/cancer.webp" width="512" height="512" alt="Cancer Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-cancer-title">Cancer</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/cancer/">Explore Cancer</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Cancer" data-fomo-buy="cancer"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Cancer <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♋️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">June 21 to July 22</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/cancer/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="leo" aria-labelledby="static-leo-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/leo.webp" width="512" height="512" alt="Leo Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-leo-title">Leo</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/leo/">Explore Leo</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Leo" data-fomo-buy="leo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Leo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♌️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">July 23 to August 22</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/leo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="virgo" aria-labelledby="static-virgo-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/virgo.webp" width="512" height="512" alt="Virgo Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-virgo-title">Virgo</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/virgo/">Explore Virgo</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Virgo" data-fomo-buy="virgo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Virgo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♍️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">August 23 to September 22</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/virgo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="libra" aria-labelledby="static-libra-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/libra.webp" width="512" height="512" alt="Libra Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-libra-title">Libra</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/libra/">Explore Libra</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Libra" data-fomo-buy="libra"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Libra <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♎️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">September 23 to October 22</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/libra/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="scorpio" aria-labelledby="static-scorpio-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/scorpio.webp" width="512" height="512" alt="Scorpio Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-scorpio-title">Scorpio</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/scorpio/">Explore Scorpio</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Scorpio" data-fomo-buy="scorpio"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Scorpio <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♏️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">October 23 to November 21</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/scorpio/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="sagittarius" aria-labelledby="static-sagittarius-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/sagittarius.webp" width="512" height="512" alt="Sagittarius Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-sagittarius-title">Sagittarius</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/sagittarius/">Explore Sagittarius</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Sagittarius" data-fomo-buy="sagittarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Sagittarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♐️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">November 22 to December 21</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/sagittarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="capricorn" aria-labelledby="static-capricorn-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/capricorn.webp" width="512" height="512" alt="Capricorn Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-capricorn-title">Capricorn</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/capricorn/">Explore Capricorn</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Capricorn" data-fomo-buy="capricorn"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Capricorn <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♑️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">December 22 to January 19</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/capricorn/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="aquarius" aria-labelledby="static-aquarius-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/aquarius.webp" width="512" height="512" alt="Aquarius Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-aquarius-title">Aquarius</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/aquarius/">Explore Aquarius</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aquarius" data-fomo-buy="aquarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aquarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♒️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">January 20 to February 18</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aquarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-            <article class="static-vitrine__panel" data-static-sign="pisces" aria-labelledby="static-pisces-title">
-              <div class="static-vitrine__stage"><img src="/assets/sculptures/512/pisces.webp" width="512" height="512" alt="Pisces Zodiac artwork"></div>
-              <div class="static-vitrine__placard">
-                <h2 id="static-pisces-title">Pisces</h2>
-                <p class="static-vitrine__price" role="status" aria-live="polite" aria-atomic="true"><span class="static-vitrine__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="static-vitrine__movement">movement unavailable</span></p>
-                <div class="static-vitrine__actions">
-                  <a class="btn btn--explore" href="/registry/pisces/">Explore Pisces</a>
-                  <a class="btn btn--fomo" href="https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Pisces" data-fomo-buy="pisces"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Pisces <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♓️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
-                </div>
-                <p class="static-vitrine__dates">February 19 to March 20</p>
-                <div class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/pisces/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></div>
-              </div>
-            </article>
-          </div>
-        </fieldset>
+        </div>
         <div hidden aria-hidden="true"><!-- registry-collection-hero:slot --></div>
       </section>
 
-      <section class="static-site__section static-how" id="about" aria-labelledby="static-about-title">
-        <h2 id="static-about-title">What is Astrofolio?</h2>
-        <p class="static-how__intro">Astrofolio brings the twelve official Zodiacs into one collection. Each sign has its own design, market, and verified public record.</p>
-        <div class="static-how__proof" aria-label="Astrofolio facts"><span><strong>12 official Zodiacs</strong> one for every sign</span><span><strong>24 verified addresses</strong> Solana origins and Base counterparts</span><span><strong>One public Registry</strong> the source of truth</span></div>
+      <!-- astrofolio-season-bag:start -->
+      <aside class="campaign-bag campaign-bag--static" aria-label="Buy Leo" data-campaign-bag="leo" style="--sign:#E0A9B4">
+        <span class="campaign-bag__who"><img src="/assets/zodiac-icons/128/leo.webp" width="40" height="40" alt=""><span><strong>Leo</strong><small><span>In season now</span></small></span></span>
+        <a class="btn btn--fomo" href="https://fomo.family/coin?address=8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Leo" data-fomo-buy="leo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Leo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♌️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a>
+      </aside>
+      <!-- astrofolio-season-bag:end -->
+
+      <section class="campaign-runway campaign-runway--static" id="the-twelve" aria-labelledby="static-runway-title" data-mode="carousel">
+        <span id="consumer-sign-preview" class="terminal-compat-target" aria-hidden="true"></span>
+        <span id="market-snapshot" class="terminal-compat-target" aria-hidden="true"></span>
+        <span id="terminal" class="terminal-compat-target" aria-hidden="true"></span>
+        <div class="campaign-runway__pin">
+          <header class="campaign-runway__head">
+            <div>
+              <span class="consumer-eyebrow">The collection</span>
+              <h2 id="static-runway-title">All twelve, in zodiac order.</h2>
+            </div>
+          </header>
+          <div class="campaign-runway__track">
+            <article class="campaign-look" data-static-sign="aries" style="--sign:#DE8E79" aria-labelledby="static-aries-title">
+              <p class="campaign-look__top"><b>I</b><span class="campaign-look__dates">March 21 to April 19</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-aries-title">Aries</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/aries.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/aries.webp" width="512" height="512" alt="Aries Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aries" data-fomo-buy="aries"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aries <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♈️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/aries/">Explore Aries</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aries/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="taurus" style="--sign:#B9D4BE" aria-labelledby="static-taurus-title">
+              <p class="campaign-look__top"><b>II</b><span class="campaign-look__dates">April 20 to May 20</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-taurus-title">Taurus</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/taurus.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/taurus.webp" width="512" height="512" alt="Taurus Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Taurus" data-fomo-buy="taurus"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Taurus <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♉️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/taurus/">Explore Taurus</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/taurus/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="gemini" style="--sign:#B29DD0" aria-labelledby="static-gemini-title">
+              <p class="campaign-look__top"><b>III</b><span class="campaign-look__dates">May 21 to June 20</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-gemini-title">Gemini</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/gemini.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/gemini.webp" width="512" height="512" alt="Gemini Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Gemini" data-fomo-buy="gemini"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Gemini <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♊️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/gemini/">Explore Gemini</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/gemini/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="cancer" style="--sign:#B6D4E4" aria-labelledby="static-cancer-title">
+              <p class="campaign-look__top"><b>IV</b><span class="campaign-look__dates">June 21 to July 22</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-cancer-title">Cancer</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/cancer.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/cancer.webp" width="512" height="512" alt="Cancer Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Cancer" data-fomo-buy="cancer"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Cancer <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♋️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/cancer/">Explore Cancer</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/cancer/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look is-season" data-static-sign="leo" style="--sign:#E0A9B4" aria-labelledby="static-leo-title">
+              <p class="campaign-look__top"><b>V</b><span class="campaign-look__dates">July 23 to August 22</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-leo-title">Leo</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/leo.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/leo.webp" width="512" height="512" alt="Leo Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Leo" data-fomo-buy="leo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Leo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♌️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/leo/">Explore Leo</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/leo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="virgo" style="--sign:#B7D9B0" aria-labelledby="static-virgo-title">
+              <p class="campaign-look__top"><b>VI</b><span class="campaign-look__dates">August 23 to September 22</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-virgo-title">Virgo</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/virgo.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/virgo.webp" width="512" height="512" alt="Virgo Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Virgo" data-fomo-buy="virgo"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Virgo <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♍️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/virgo/">Explore Virgo</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/virgo/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="libra" style="--sign:#D3A9DE" aria-labelledby="static-libra-title">
+              <p class="campaign-look__top"><b>VII</b><span class="campaign-look__dates">September 23 to October 22</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-libra-title">Libra</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/libra.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/libra.webp" width="512" height="512" alt="Libra Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Libra" data-fomo-buy="libra"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Libra <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♎️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/libra/">Explore Libra</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/libra/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="scorpio" style="--sign:#B9DCE8" aria-labelledby="static-scorpio-title">
+              <p class="campaign-look__top"><b>VIII</b><span class="campaign-look__dates">October 23 to November 21</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-scorpio-title">Scorpio</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/scorpio.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/scorpio.webp" width="512" height="512" alt="Scorpio Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Scorpio" data-fomo-buy="scorpio"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Scorpio <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♏️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/scorpio/">Explore Scorpio</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/scorpio/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="sagittarius" style="--sign:#E0B080" aria-labelledby="static-sagittarius-title">
+              <p class="campaign-look__top"><b>IX</b><span class="campaign-look__dates">November 22 to December 21</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-sagittarius-title">Sagittarius</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/sagittarius.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/sagittarius.webp" width="512" height="512" alt="Sagittarius Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Sagittarius" data-fomo-buy="sagittarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Sagittarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♐️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/sagittarius/">Explore Sagittarius</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/sagittarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="capricorn" style="--sign:#C0DEA8" aria-labelledby="static-capricorn-title">
+              <p class="campaign-look__top"><b>X</b><span class="campaign-look__dates">December 22 to January 19</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-capricorn-title">Capricorn</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/capricorn.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/capricorn.webp" width="512" height="512" alt="Capricorn Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Capricorn" data-fomo-buy="capricorn"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Capricorn <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♑️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/capricorn/">Explore Capricorn</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/capricorn/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="aquarius" style="--sign:#AE8FC9" aria-labelledby="static-aquarius-title">
+              <p class="campaign-look__top"><b>XI</b><span class="campaign-look__dates">January 20 to February 18</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-aquarius-title">Aquarius</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/aquarius.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/aquarius.webp" width="512" height="512" alt="Aquarius Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Aquarius" data-fomo-buy="aquarius"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Aquarius <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♒️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/aquarius/">Explore Aquarius</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/aquarius/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+            <article class="campaign-look" data-static-sign="pisces" style="--sign:#A9D4C4" aria-labelledby="static-pisces-title">
+              <p class="campaign-look__top"><b>XII</b><span class="campaign-look__dates">February 19 to March 20</span><span class="campaign-look__tag">In season now</span></p>
+              <h3 id="static-pisces-title">Pisces</h3>
+              <div class="campaign-look__art"><img class="campaign-look__stars" src="/assets/constellations/pisces.svg" width="720" height="460" alt="" loading="lazy" decoding="async"><img class="campaign-look__figure" src="/assets/sculptures/512/pisces.webp" width="512" height="512" alt="Pisces Zodiac artwork" loading="lazy" decoding="async"></div>
+              <div class="campaign-look__stats"><p class="vitrine-price is-pending"><span class="vitrine-price__figure">Price unavailable</span><span aria-hidden="true">·</span><span class="vitrine-price__movement">movement unavailable</span></p></div>
+              <div class="campaign-look__actions"><a class="btn btn--fomo" href="https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&amp;chainId=1399811149" rel="external nofollow" aria-label="Open Fomo to buy Pisces" data-fomo-buy="pisces"><img src="/assets/venues/fomo-official.svg" width="34" height="34" alt=""><span class="btn--fomo__copy"><small>Pisces <span class="btn--fomo__zodiac-emoji" aria-hidden="true">♓️</span></small><strong>Buy with Fomo</strong></span><span class="btn--fomo__arrow" aria-hidden="true">↗</span></a><a class="campaign-look__explore" href="/registry/pisces/">Explore Pisces</a></div>
+              <p class="vitrine-buy-options"><a href="/astrofolio/how-to-buy/pisces/">Other ways to buy</a><span aria-hidden="true">·</span><span>Opens the Fomo app</span></p>
+            </article>
+          </div>
+          <p class="campaign-runway__note"><span>Live prices appear once the page has loaded.</span><span>Star positions: HYG Database v4.0, CC BY-SA 4.0.</span><a href="/registry/technical/#market-transparency">Data &amp; methodology</a></p>
+        </div>
+      </section>
+
+      <div class="static-site consumer-static">
+      <section class="static-site__section campaign-app campaign-app--static" id="buy" aria-labelledby="static-buy-title">
+        <div class="campaign-app__head">
+          <div>
+            <span class="consumer-eyebrow">In the Fomo app</span>
+            <h2 id="static-buy-title">Buy yours in a few taps.</h2>
+          </div>
+          <div class="campaign-app__lede">
+            <p>All twelve Zodiacs are in Fomo, a free trading app for iPhone, Android and the web. Buy with Fomo opens your sign ready to buy; after that you can follow friends and see what they hold.</p>
+            <div class="campaign-stores">
+              <a class="campaign-store campaign-store--apple" href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427" rel="external nofollow noopener"><img src="/assets/badges/app-store-en.svg" width="144" height="48" alt="Download on the App Store" loading="lazy" decoding="async"></a>
+              <a class="campaign-store campaign-store--google" href="https://play.google.com/store/apps/details?id=family.fomo.app" rel="external nofollow noopener"><img src="/assets/badges/google-play-en.png" width="185" height="71" alt="Get it on Google Play" loading="lazy" decoding="async"></a>
+            </div>
+            <p class="campaign-app__web"><span>On a computer:</span><a href="https://fomo.family/" rel="external nofollow noopener">fomo.family <span aria-hidden="true">↗</span></a><a href="/fomo/">Zodiacs on Fomo <span aria-hidden="true">→</span></a></p>
+          </div>
+        </div>
+        <div class="campaign-app__stage">
+          <figure class="campaign-phone campaign-phone--side">
+            <div class="campaign-phone__screen"><picture><source srcset="/assets/fomo/fomo-friends.avif" type="image/avif"><img src="/assets/fomo/fomo-friends.webp" width="720" height="1397" alt="Fomo's friends list, showing each trader's returns" loading="lazy" decoding="async"></picture></div>
+            <figcaption><strong>Follow your friends</strong><span>Add the people you trust and see their buys and sells as they happen.</span></figcaption>
+          </figure>
+          <figure class="campaign-phone campaign-phone--main">
+            <picture class="campaign-phone__alert"><source srcset="/assets/fomo/fomo-alert-900.avif" type="image/avif"><img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async"></picture>
+            <div class="campaign-phone__screen"><picture><source srcset="/assets/fomo/fomo-zodiacs-poster.avif" type="image/avif"><img src="/assets/fomo/fomo-zodiacs-poster.webp" width="720" height="1566" alt="The Fomo app listing the twelve Zodiacs" loading="lazy" decoding="async"></picture></div>
+            <figcaption><strong>Open your sign</strong><span>Each sign has its own sheet: the chart, your position, and buy and sell at the foot.</span></figcaption>
+          </figure>
+          <figure class="campaign-phone campaign-phone--side">
+            <div class="campaign-phone__screen"><picture><source srcset="/assets/fomo/fomo-thesis.avif" type="image/avif"><img src="/assets/fomo/fomo-thesis.webp" width="720" height="1466" alt="A trader writing a thesis for a Sagittarius position in Fomo" loading="lazy" decoding="async"></picture></div>
+            <figcaption><strong>Write your thesis</strong><span>When you buy, say why. It posts with the trade, so followers get the reasoning.</span></figcaption>
+          </figure>
+        </div>
       </section>
 
       <section class="static-site__section static-purpose" id="story" aria-labelledby="static-story-title">
@@ -10807,10 +10726,10 @@
         <p>Explore Astrofolio merchandise inspired by the collection.</p>
         <div class="consumer-destinations__grid static-shop__products">
           <article class="consumer-destinations__card static-shop__product">
-            <a class="static-shop__image" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/t-shirt-800.webp" width="800" height="892" alt="White Astrofolio T-shirt" loading="lazy" decoding="async"></a>
+            <a class="static-shop__image" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/hoodie-800.webp" width="800" height="892" alt="Grey melange Astrofolio hoodie" loading="lazy" decoding="async"></a>
             <span class="consumer-destinations__eyebrow">Astrofolio</span>
-            <h3>T-shirt</h3>
-            <a class="consumer-destinations__link" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external">View the T-shirt <span aria-hidden="true">↗</span></a>
+            <h3>Hoodie</h3>
+            <a class="consumer-destinations__link" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external">View the hoodie <span aria-hidden="true">↗</span></a>
           </article>
           <article class="consumer-destinations__card static-shop__product">
             <a class="static-shop__image" href="https://shop.app/products/9654676455767/astrofolio-cap" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/cap-800.webp" width="800" height="892" alt="Washed black Astrofolio cap" loading="lazy" decoding="async"></a>
@@ -10819,10 +10738,10 @@
             <a class="consumer-destinations__link" href="https://shop.app/products/9654676455767/astrofolio-cap" rel="noopener noreferrer external">View the cap <span aria-hidden="true">↗</span></a>
           </article>
           <article class="consumer-destinations__card static-shop__product">
-            <a class="static-shop__image" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/hoodie-800.webp" width="800" height="892" alt="Grey melange Astrofolio hoodie" loading="lazy" decoding="async"></a>
+            <a class="static-shop__image" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/t-shirt-800.webp" width="800" height="892" alt="White Astrofolio T-shirt" loading="lazy" decoding="async"></a>
             <span class="consumer-destinations__eyebrow">Astrofolio</span>
-            <h3>Hoodie</h3>
-            <a class="consumer-destinations__link" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external">View the hoodie <span aria-hidden="true">↗</span></a>
+            <h3>T-shirt</h3>
+            <a class="consumer-destinations__link" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external">View the T-shirt <span aria-hidden="true">↗</span></a>
           </article>
         </div>
         <p><a class="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">Browse the full Astrofolio shop <span aria-hidden="true">↗</span></a></p>
@@ -10908,6 +10827,7 @@
       <span id="briefing" class="terminal-compat-target" aria-hidden="true"></span>
       <span id="research" class="terminal-compat-target" aria-hidden="true"></span>
       <span id="outlook" class="terminal-compat-target" aria-hidden="true"></span>
+      </div>
 
     </main>
 
