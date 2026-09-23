@@ -88,7 +88,27 @@ const displayBlocks = person.copy.blocks.map((block) => (
     : block
 ));
 const pageUrl = `https://zodiacs.org/people/${person.slug}/`;
-const identityCardRevision = person.sourceReview
+// The share cards whose Sun degree moved in the reference-instant migration of
+// 2026-09-23 (docs/phase5/people-pilot/corrections/2026-09-23-reference-instants.json).
+const REFERENCE_INSTANT_CARDS = [
+  'dolores-del-rio',
+  'edvard-grieg',
+  'emily-bronte',
+  'fanny-blankers-koen',
+  'francisco-goya',
+  'getulio-vargas',
+  'harriet-beecher-stowe',
+  'hector-berlioz',
+  'jane-austen',
+  'knute-rockne',
+  'learie-constantine',
+  'pablo-picasso',
+  'raja-ravi-varma',
+  'xiang-jingyu',
+];
+const identityCardRevision = REFERENCE_INSTANT_CARDS.includes(person.slug)
+  ? '?v=instants-2026-09-23'
+  : person.sourceReview
   ? `?v=facts-${person.sourceReview.reviewedOn}`
   : ['neil-armstrong', 'amelia-earhart', 'maya-angelou'].includes(person.slug)
   ? '?v=identity-2026-09-05'
