@@ -153,6 +153,13 @@ describe('registry pastel polish', () => {
     expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('var(--mono)');
     expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('font-variant-numeric: tabular-nums;');
     expect(cssRule(campaign, '.campaign-button {')).toContain('var(--sans)');
+    // Phones: the headline becomes a tracked sans line above the serif name.
+    const phoneCaption = campaign.slice(campaign.indexOf('/* The phone opening ends like a campaign page'));
+    expect(cssRule(phoneCaption, '.campaign-hero__caption h1 {')).toContain('text-transform: uppercase;');
+    expect(cssRule(phoneCaption, '.campaign-hero__caption h1 {')).toContain('var(--sans)');
+    expect(cssRule(phoneCaption, '.campaign-hero__caption > .campaign-hero__name {')).toContain('var(--serif)');
+    expect(cssRule(phoneCaption, '.campaign-discover__pill {')).toContain('min-height: 44px;');
+    expect(campaign).toContain('.campaign-hero__caption > .campaign-hero__name,\n    .campaign-discover { display: none; }');
     expect(cssRule(campaign, '.campaign-alert figcaption strong {')).toContain('var(--serif)');
     expect(campaign).toContain('.campaign-alert figcaption span { max-width: 40ch; color: var(--ink-2); font: 400 16.5px/1.6 var(--sans); }');
     const eyebrow = cssRule(campaign, '.consumer-campaign .consumer-eyebrow,');
@@ -205,13 +212,14 @@ describe('registry pastel polish', () => {
     expect(campaignReduced).toContain('.campaign-button:active,');
     expect(campaignReduced).toContain('.consumer-registry .btn.btn--fomo:active,');
     // Reduced motion also keeps the film still and the runway unpinned.
-    const stack = campaign.slice(campaign.indexOf('/* Phones: the runway rises over the opening'), campaign.indexOf('@media (min-width: 601px) and (max-width: 900px)'));
+    const stack = campaign.slice(campaign.indexOf('/* Phones: as the page moves on, the film stays in place and dims'), campaign.indexOf('@media (min-width: 601px) and (max-width: 900px)'));
     expect(stack).toContain('.campaign-stack > .campaign-hero { position: sticky; top: 0; z-index: 0; }');
-    expect(stack).toContain('opacity: calc(var(--stack, 0) * .74);');
-    expect(stack).toContain('transform: scale(calc(1 - var(--stack, 0) * .07));');
-    expect(stack).toContain('min-height: 100lvh;');
-    expect(stack).toContain('.campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(72px); }');
-    expect(stack).toContain('@media (max-width: 900px) and (prefers-reduced-motion: reduce) {\n      .campaign-stack .campaign-hero__pin { border-radius: 0; transform: none; }');
+    expect(stack).toContain('opacity: calc(var(--stack, 0) * .78);');
+    expect(stack).toContain('opacity: calc(1 - var(--stack, 0) * 1.7);');
+    expect(stack).toContain('transform: translateY(calc(var(--stack, 0) * -26vh));');
+    expect(stack).not.toContain('scale(calc(1 - var(--stack');
+    expect(stack).toContain('.campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(120px); }');
+    expect(stack).toContain('@media (max-width: 900px) and (prefers-reduced-motion: reduce) {\n      .campaign-stack .campaign-hero__caption { transform: none; }\n      .campaign-discover__cue { animation: none; }');
     const stillFilm = campaign.slice(campaign.indexOf('@media (min-width: 901px) and (prefers-reduced-motion: reduce)'));
     expect(stillFilm).toContain('.campaign-hero { height: auto; }');
     expect(stillFilm).toContain('.campaign-hero__pin { position: relative; }');

@@ -4847,8 +4847,8 @@
             hero.style.removeProperty('--hero-out');
             hero.style.removeProperty('--hero-caption');
             hero.dataset.caption = 'live';
-            // On phones the runway rises over the film as a card; the film
-            // dims (and, with motion allowed, recedes) as the card climbs.
+            // On phones the film stays behind the runway: it dims, and the
+            // caption rises and fades, as the runway comes up the screen.
             const runway = document.getElementById('the-twelve');
             if (runway && matchesMedia(CAMPAIGN_PHONE_QUERY)) {
               const rise = clampUnit(1 - runway.getBoundingClientRect().top / Math.max(1, window.innerHeight));
@@ -4939,14 +4939,19 @@
                   <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
                 </span>
               </div>
-              <h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>
-              <p>One for every sign, each with its own design and a public record.<span className="campaign-hero__more"> Find yours, then buy it in the Fomo app.</span></p>
+              <h1 id="campaign-hero-title">The twelve official Zodiacs<span className="campaign-hero__stop">.</span></h1>
+              <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
               <div className="campaign-hero__actions">
                 <a className="campaign-button campaign-button--light" href="#the-twelve">
                   <span>Find your sign</span><span aria-hidden="true">↓</span>
                 </a>
                 <a className="campaign-button" href="#buy"><span>How buying works</span></a>
               </div>
+              <p className="campaign-hero__name">Astro<em>folio</em></p>
+              <a className="campaign-discover" href="#the-twelve">
+                <span className="campaign-discover__pill">Discover more</span>
+                <svg className="campaign-discover__cue" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M4 7l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </a>
             </div>
           </div>
         </section>
@@ -5110,21 +5115,23 @@
         activeRef.current = active;
       }, [active]);
 
-      // On phones the looks pop up as the runway card arrives over the film.
+      // On phones the looks pop up from below as they reach the screen, over
+      // the dimmed film.
       useEffect(() => {
         const section = sectionRef.current;
-        if (!section || !matchesMedia(CAMPAIGN_PHONE_QUERY) || matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)
+        const track = trackRef.current;
+        if (!section || !track || !matchesMedia(CAMPAIGN_PHONE_QUERY) || matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)
             || !('IntersectionObserver' in window)) return undefined;
-        if (section.getBoundingClientRect().top < window.innerHeight * 0.8) return undefined;
+        if (track.getBoundingClientRect().top < window.innerHeight) return undefined;
         section.dataset.rise = 'pending';
         let done = 0;
         const observer = new IntersectionObserver(([entry]) => {
           if (!entry?.isIntersecting) return;
           observer.disconnect();
           section.dataset.rise = 'rising';
-          done = window.setTimeout(() => { delete section.dataset.rise; }, 1400);
-        }, { threshold: 0.18 });
-        observer.observe(section);
+          done = window.setTimeout(() => { delete section.dataset.rise; }, 1500);
+        }, { threshold: 0.08 });
+        observer.observe(track);
         return () => {
           observer.disconnect();
           window.clearTimeout(done);

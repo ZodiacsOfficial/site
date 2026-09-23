@@ -183,13 +183,21 @@ async function assertBuyActionInView(page, scope, { width, height }, label) {
 
 async function assertFirstScreen(page, { width, height }) {
   assert.deepEqual(page.viewportSize(), { width, height });
-  for (const selector of ['.campaign-hero__film', '#campaign-hero-title', '.terminal-consumer-hero__kicker']) {
+  for (const selector of ['.campaign-hero__film', '#campaign-hero-title', '.campaign-hero__name', '.campaign-discover']) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible at ${width}x${height}`);
   }
   const title = await page.locator('#campaign-hero-title').boundingBox();
   assert.ok(title && title.y >= 0 && title.y + title.height <= height, `the headline sits in the first ${width}x${height} screen`);
-  assert.equal(await page.locator('.campaign-hero .campaign-button').count(), 2, 'both opening buttons stay on phones');
-  assert.equal(await page.locator('.campaign-hero__more').isVisible(), false, 'phones drop only the sentence that repeats the buttons');
+  // Phones end the opening like a campaign page: the headline as a tracked
+  // line, the name, and one Discover more with its moving cue.
+  assert.equal(await page.locator('#campaign-hero-title').evaluate((node) => getComputedStyle(node).textTransform), 'uppercase');
+  assert.equal(await page.locator('.campaign-hero__actions').isVisible(), false, 'phones trade the two opening buttons for Discover more');
+  assert.equal(await page.locator('.campaign-hero__name').innerText(), 'Astrofolio');
+  assert.equal(await page.locator('.campaign-discover').getAttribute('href'), '#the-twelve');
+  const discover = await page.locator('.campaign-discover').boundingBox();
+  assert.ok(discover && discover.y >= 0 && discover.y + discover.height <= height, `Discover more sits in the first ${width}x${height} screen`);
+  assert.ok((await page.locator('.campaign-discover__pill').boundingBox()).height >= 44, 'Discover more keeps a 44px target');
+  assert.equal(await page.locator('.campaign-discover__cue').evaluate((node) => getComputedStyle(node).animationName), 'campaign-discover-cue', 'the Discover more arrow moves');
   const captionRise = await page.locator('.campaign-hero__caption').evaluate((node) => window.innerHeight - node.getBoundingClientRect().top);
   assert.ok(captionRise <= 420, `the opening caption stays inside the shaded band at ${width}x${height} (${Math.round(captionRise)}px)`);
   assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), null, 'the bag is live in the first phone screen');
@@ -241,10 +249,15 @@ async function assertAlertStandsAlone(page, label) {
 
 async function assertStaticFirstScreen(page, { width, height, slug }) {
   assert.deepEqual(page.viewportSize(), { width, height });
-  for (const selector of ['.static-astrofolio-kicker', '#static-astrofolio-title', '.campaign-hero__film']) {
+  const phone = width <= 900;
+  const selectors = phone
+    ? ['#static-astrofolio-title', '.campaign-hero__name', '.campaign-discover', '.campaign-hero__film']
+    : ['.static-astrofolio-kicker', '#static-astrofolio-title', '.campaign-hero__film'];
+  for (const selector of selectors) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
-  assert.equal(await page.locator('.campaign-hero .campaign-button').count(), 2, 'both opening buttons stay without JavaScript');
+  assert.equal(await page.locator('.campaign-hero__actions').isVisible(), !phone, 'wide screens keep the two buttons; phones show Discover more');
+  assert.equal(await page.locator('.campaign-discover').isVisible(), phone);
   assert.equal(await page.locator(`.campaign-bag--static[data-campaign-bag="${slug}"]`).count(), 1, 'the no-JavaScript bag carries the season sign');
   await assertBuyActionInView(page, '.campaign-bag--static', { width, height }, 'no-JavaScript bag');
 }
@@ -338,7 +351,7 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#campaign-hero-title');
-    assert.equal(await page.locator('#campaign-hero-title').innerText(), 'The twelve official Zodiacs.');
+    assert.equal(await page.locator('#campaign-hero-title').textContent(), 'The twelve official Zodiacs.');
     assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
@@ -575,34 +588,42 @@ try {
     assert.ok(Math.abs(lookHeightTall - lookHeightShort) <= 1, 'browser-chrome height changes do not resize the swipeable looks');
     await page.setViewportSize({ width: 390, height: 844 });
 
-    // Phones: the runway rises over the film as a card. The film stays in
-    // place behind it and dims as the card climbs; Find your sign lands the
-    // card fully risen.
+    // Phones: as the page moves on, the film stays in place and dims, the
+    // caption rises and fades, and the runway comes up over the dimmed film.
+    // Discover more lands the runway at the top.
     const readStack = () => page.evaluate(() => {
       const hero = document.getElementById('official-twelve');
+      const caption = hero.querySelector('.campaign-hero__caption');
       return {
         heroTop: Math.round(hero.getBoundingClientRect().top),
         runwayTop: Math.round(document.getElementById('the-twelve').getBoundingClientRect().top),
         stack: Number.parseFloat(hero.style.getPropertyValue('--stack') || '0'),
         dim: Number.parseFloat(getComputedStyle(hero.querySelector('.campaign-hero__pin'), '::after').opacity),
+        captionTop: Math.round(caption.getBoundingClientRect().top),
+        captionOpacity: Number.parseFloat(getComputedStyle(caption).opacity),
       };
     });
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.waitForFunction(() => document.getElementById('official-twelve')?.style.getPropertyValue('--stack') === '0.000');
     const stackStart = await readStack();
     assert.equal(stackStart.dim, 0, 'the first screen shows the film undimmed');
+    assert.equal(stackStart.captionOpacity, 1);
     await page.evaluate(() => window.scrollTo({ top: Math.round(window.innerHeight / 2), behavior: 'instant' }));
     await page.waitForFunction(() => Math.abs(Number.parseFloat(document.getElementById('official-twelve')?.style.getPropertyValue('--stack') || '0') - 0.5) < 0.05);
     const stackMiddle = await readStack();
     assert.ok(Math.abs(stackMiddle.heroTop) <= 1, 'the film stays in place while the card rises over it');
     assert.ok(Math.abs(stackMiddle.runwayTop - 422) <= 2, 'the card is halfway up the screen');
     assert.ok(stackMiddle.dim > 0.3 && stackMiddle.dim < 0.45, `the film dims with the rise (${stackMiddle.dim})`);
+    assert.ok(stackMiddle.captionTop < stackStart.captionTop - 60, 'the caption rises as the page moves on');
+    assert.ok(stackMiddle.captionOpacity < 0.3, `the caption fades as it rises (${stackMiddle.captionOpacity})`);
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-    await page.locator('.campaign-hero .campaign-button--light').click();
+    await page.locator('.campaign-discover').click();
     await page.waitForFunction(() => Math.abs(document.getElementById('the-twelve')?.getBoundingClientRect().top ?? 99) <= 1);
     await page.waitForFunction(() => document.getElementById('official-twelve')?.style.getPropertyValue('--stack') === '1.000');
     const stackTop = await readStack();
-    assert.ok(Math.abs(stackTop.dim - 0.74) < 0.01, 'the risen card leaves the film fully dimmed behind it');
+    assert.ok(Math.abs(stackTop.dim - 0.78) < 0.01, 'the runway leaves the film fully dimmed behind it');
+    assert.equal(stackTop.captionOpacity, 0, 'the caption has faded away');
+    assert.equal(await page.locator('#the-twelve').evaluate((node) => getComputedStyle(node).backgroundColor), 'rgba(0, 0, 0, 0)', 'the looks float over the dimmed film');
     const cardHead = await page.locator('.campaign-runway__head').evaluate((node) => node.getBoundingClientRect().top);
     const navBottom = await page.locator('.wnav').first().evaluate((node) => node.getBoundingClientRect().bottom);
     assert.ok(cardHead >= navBottom + 8, 'the risen card heading clears the floating navigation');
@@ -837,9 +858,11 @@ try {
         currentSrc: video?.currentSrc ?? null,
         pending: video?.querySelectorAll('source[data-src]').length,
         cue: getComputedStyle(document.querySelector('.campaign-hero__foot i')).animationName,
+        discoverCue: getComputedStyle(document.querySelector('.campaign-discover__cue')).animationName,
         bag: getComputedStyle(document.querySelector('.campaign-bag')).transitionDuration,
       };
     });
+    assert.equal(reducedFilm.discoverCue, 'none', 'reduced motion keeps the Discover more cue still');
     assert.equal(reducedFilm.playing, 'false', 'reduced motion keeps the film as its poster');
     assert.equal(reducedFilm.currentSrc, '', 'reduced motion never attaches film sources');
     assert.equal(reducedFilm.pending, 2);
@@ -906,7 +929,7 @@ try {
     const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     const noJsPage = await noJs.newPage();
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'The twelve official Zodiacs.');
+    assert.equal(await noJsPage.locator('#static-astrofolio-title').textContent(), 'The twelve official Zodiacs.');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
     assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await noJsPage.locator('#the-twelve .campaign-look').count(), 12);

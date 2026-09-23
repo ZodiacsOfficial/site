@@ -201,13 +201,21 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     // carries the first-screen Fomo action; the runway carries all twelve.
     const opening = section(html, 'official-twelve');
     expect(normalizedText(opening)).toContain('Astro folio');
-    expect(normalizedText(opening)).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
+    // The headline's full stop is its own span, so phones can set the
+    // headline as a tracked line without it.
+    expect(opening).toContain('<h1 id="static-astrofolio-title">The twelve official Zodiacs<span class="campaign-hero__stop">.</span></h1>');
+    expect(normalizedText(opening.replace('<span class="campaign-hero__stop">.</span>', '.'))).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
     expect(opening).toContain('<img src="/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async">');
     expect(opening).toContain('<source srcset="/assets/fomo/fomo-film-poster.avif" type="image/avif">');
     expect(opening).toContain('href="#the-twelve"><span>Find your sign</span>');
     expect(opening).toContain('href="#buy"><span>How buying works</span>');
-    // Phones drop only the sentence that repeats the two buttons.
-    expect(opening).toContain('<span class="campaign-hero__more"> Find yours, then buy it in the Fomo app.</span>');
+    // Phones end the opening like a campaign page: the name and one
+    // Discover more with its cue, after the wide caption's buttons.
+    ordered(opening, [
+      'href="#buy"><span>How buying works</span>',
+      '<p class="campaign-hero__name">Astro<em>folio</em></p>',
+      '<a class="campaign-discover" href="#the-twelve"><span class="campaign-discover__pill">Discover more</span><svg class="campaign-discover__cue"',
+    ]);
     expect(opening).not.toContain('<video');
     expect(opening).not.toContain('href="/terminal/');
     expect(opening).not.toMatch(/aggregate|market cap|indexed liquidity|volume|tape/iu);
@@ -346,7 +354,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const button = functionBlock(source, 'FomoBuyButton');
     const spark = functionBlock(source, 'CampaignSpark');
 
-    expect(normalizedText(hero)).toContain('Astrofolio {season.name} Season The twelve official Zodiacs.');
+    expect(normalizedText(hero.replace('<span className="campaign-hero__stop">.</span>', '.'))).toContain('Astrofolio {season.name} Season The twelve official Zodiacs.');
     expect(hero).toContain('id="official-twelve"');
     expect(hero).toContain('<span className="campaign-hero__word campaign-hero__word--astro" aria-hidden="true">Astro</span>');
     expect(hero).toContain('<span className="campaign-hero__word campaign-hero__word--folio" aria-hidden="true">folio</span>');
@@ -514,8 +522,15 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const source = await read('src/app.jsx');
     expect(source).not.toContain('function ConsumerIntroduction(');
     const hero = functionBlock(source, 'CampaignHero');
-    expect(hero).toContain('<h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>');
-    expect(hero).toContain('<p>One for every sign, each with its own design and a public record.<span className="campaign-hero__more"> Find yours, then buy it in the Fomo app.</span></p>');
+    expect(hero).toContain('<h1 id="campaign-hero-title">The twelve official Zodiacs<span className="campaign-hero__stop">.</span></h1>');
+    expect(hero).toContain('<p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>');
+    ordered(hero, [
+      '<a className="campaign-button" href="#buy"><span>How buying works</span></a>',
+      '<p className="campaign-hero__name">Astro<em>folio</em></p>',
+      '<a className="campaign-discover" href="#the-twelve">',
+      '<span className="campaign-discover__pill">Discover more</span>',
+      '<svg className="campaign-discover__cue"',
+    ]);
     expect(hero).toContain('<a className="campaign-button campaign-button--light" href="#the-twelve">');
     expect(hero).toContain('<a className="campaign-button" href="#buy"><span>How buying works</span></a>');
     const app = functionBlock(source, 'CampaignApp');
