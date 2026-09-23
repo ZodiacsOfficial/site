@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060709">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Option D · Season Cover — Astrofolio redesign prototype</title>
+  <link rel="icon" type="image/svg+xml" href="../../../public/assets/astrofolio/v2/leo/favicon.svg">
+  <link rel="stylesheet" href="shared/base.css">
+  <link rel="stylesheet" href="../../../public/assets/site-footer.css">
+  <style>
+    /* ── The cover ──────────────────────────────────────────────────────── */
+    .cover { position: relative; min-height: 100dvh; padding: 78px var(--gutter) 26px; display: grid; grid-template-rows: auto auto 1fr auto; max-width: 1560px; margin-inline: auto; view-transition-name: cover; }
+    .cover__dateline { display: flex; justify-content: space-between; gap: 16px; padding: 12px 2px 10px; border-bottom: 1px solid color-mix(in srgb, var(--sign) 55%, var(--hair-2)); font: 400 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+    .cover__dateline b { color: var(--ink-0); font-weight: 400; }
+    .cover__mast { position: relative; z-index: 1; margin: 0; text-align: center; font: italic 400 clamp(96px, 17.6vw, 300px)/.82 var(--serif); letter-spacing: -.045em; padding-top: .04em; color: var(--ink-0); white-space: nowrap; }
+    .cover__body { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); align-items: end; gap: 24px; margin-top: -8.2vw; }
+    .cover__fig { position: relative; z-index: 2; grid-column: 2; align-self: start; display: grid; place-items: end center; height: min(68vh, 47vw); }
+    .cover__fig img { position: absolute; inset: 0 -16%; width: 132%; max-width: none; height: 100%; object-fit: contain; object-position: 50% 100%; filter: drop-shadow(0 40px 50px rgba(0, 0, 0, .8)); }
+    .cover__stars { position: absolute; inset: 8% -20% 0; z-index: 0; opacity: .9; pointer-events: none; }
+    .cover__stars .stars { width: 100%; height: 100%; }
+    .cover__stars .stars g[stroke] { stroke: var(--sign); stroke-opacity: .38; }
+    .cover__left, .cover__right { position: relative; z-index: 3; padding-bottom: 12px; }
+    .cover__season { font: italic 400 clamp(40px, 4vw, 64px)/.95 var(--serif); letter-spacing: -.02em; }
+    .cover__season::after { content: ''; display: block; width: 54px; height: 2px; margin-top: 18px; background: var(--sign); }
+    .cover__dates { margin-top: 16px; color: var(--ink-1); font-size: 16px; }
+    .cover__line { margin-top: 26px; max-width: 18ch; font: 400 clamp(24px, 2.2vw, 34px)/1.1 var(--serif); letter-spacing: -.012em; }
+    .cover__facts { margin-top: 12px; color: var(--ink-3); font-size: 14px; }
+    .cover__right { justify-self: end; max-width: 330px; }
+    .cover__sun { font-size: 14.5px; color: var(--ink-2); }
+    .cover__sun b { color: var(--ink-0); font-weight: 500; }
+    .cover__quote { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--hair-2); }
+    .cover__quote .price { display: block; font-size: 30px; line-height: 1; }
+    .cover__quote .delta { display: block; margin-top: 8px; }
+    .cover__quote .spark { margin-top: 16px; height: 46px; }
+    .cover__cta { margin-top: 22px; display: grid; gap: 10px; justify-items: start; }
+    .cover__cta small { color: var(--ink-3); font-size: 12.5px; }
+    .cover__cta small a { color: var(--ink-2); }
+    .cover__issues { position: relative; z-index: 3; margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; padding-top: 14px; border-top: 1px solid var(--hair-1); }
+    .cover__issues span { font: italic 400 15px var(--serif); color: var(--ink-3); margin-right: 6px; }
+    .cover__issues button { width: 44px; height: 44px; padding: 3px; border: 0; border-radius: 50%; background: none; cursor: pointer; opacity: .55; transition: opacity 250ms, transform 300ms var(--ease-out); }
+    .cover__issues button img { width: 100%; height: 100%; }
+    .cover__issues button:hover { opacity: 1; transform: translateY(-2px); }
+    .cover__issues button[aria-pressed="true"] { opacity: 1; }
+    .cover__issues button[aria-pressed="true"] img { border-radius: 50%; box-shadow: 0 0 0 3px var(--void-0), 0 0 0 4.5px var(--sign); }
+    ::view-transition-old(cover) { animation: 420ms var(--ease-io) both page-out; }
+    ::view-transition-new(cover) { animation: 620ms var(--ease-out) both page-in; }
+    @keyframes page-out { to { opacity: 0; transform: translateX(-3%); } }
+    @keyframes page-in { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+
+    /* ── Next issue ─────────────────────────────────────────────────────── */
+    .next { border-block: 1px solid var(--hair-1); }
+    .next__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+    .next__sil { position: relative; display: grid; place-items: center; min-height: 420px; }
+    .next__sil img { width: min(420px, 90%); height: auto; filter: brightness(0) drop-shadow(0 0 1px rgba(198, 204, 218, .5)) drop-shadow(0 0 24px color-mix(in srgb, var(--next) 38%, transparent)); transition: filter 900ms var(--ease-out); }
+    .next__sil:hover img { filter: drop-shadow(0 30px 30px rgba(0, 0, 0, .7)); }
+    .count { display: flex; gap: 28px; margin-top: 30px; }
+    .count div { display: grid; gap: 6px; }
+    .count b { font: 400 clamp(56px, 6vw, 96px)/.9 var(--serif); letter-spacing: -.03em; }
+    .count span { font-size: 13px; color: var(--ink-3); }
+
+    /* ── Feature ────────────────────────────────────────────────────────── */
+    .feature__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(40px, 7vw, 120px); align-items: start; }
+    .feature__film { position: sticky; top: 90px; border-radius: 28px; overflow: hidden; aspect-ratio: 9 / 16; max-height: 82vh; justify-self: center; width: min(100%, 46vh); box-shadow: 0 0 0 1px var(--hair-1), 0 60px 120px -60px rgba(0, 0, 0, .95); }
+    .feature__film video, .feature__film img { width: 100%; height: 100%; object-fit: cover; }
+    .feature__film figcaption { position: absolute; left: 16px; right: 16px; bottom: 14px; font-size: 12px; color: rgba(238, 241, 247, .8); }
+    .feature__copy .section-title { font-size: clamp(44px, 5vw, 80px); }
+    .feature__copy .deck { margin-top: 20px; font: italic 400 24px/1.35 var(--serif); color: var(--ink-1); max-width: 30ch; }
+    .feature__copy .body { margin-top: 34px; display: grid; gap: 18px; font: 400 19px/1.62 var(--serif); color: var(--ink-1); max-width: 36em; }
+    .feature__copy .body p:first-child::first-letter { float: left; margin: 6px 12px 0 0; font: 400 76px/.8 var(--serif); color: var(--ink-0); }
+    .feature__shot { position: relative; margin: 48px 0 0; display: grid; grid-template-columns: 190px minmax(0, 1fr); gap: 28px; align-items: end; }
+    .feature__shot .phone { border-radius: 28px; padding: 6px; background: #0b0d12; box-shadow: 0 0 0 1px rgba(238, 241, 247, .12), 0 40px 70px -40px rgba(0, 0, 0, .95); aspect-ratio: 720 / 1566; overflow: hidden; }
+    .feature__shot .phone video { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; }
+    .feature__alert { position: absolute; left: 118px; top: 38px; width: min(400px, 76%); transform: rotate(-2deg); filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .8)); }
+    .feature__shot figcaption { color: var(--ink-2); font-size: 15px; max-width: 34ch; padding-bottom: 8px; }
+    .feature__copy .stores { margin-top: 30px; }
+
+    /* ── Back issues ────────────────────────────────────────────────────── */
+    .issues__grid { margin-top: 44px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; }
+    .issue { position: relative; display: grid; grid-template-rows: auto 1fr auto; aspect-ratio: 3 / 4.1; padding: 12px 12px 14px; border: 1px solid var(--hair-1); border-radius: 8px; background: var(--void-1); color: inherit; text-align: left; cursor: pointer; overflow: hidden; transition: transform 500ms var(--ease-out), border-color 300ms, box-shadow 500ms var(--ease-out); }
+    .issue:hover { transform: translateY(-6px) rotate(-.6deg); border-color: color-mix(in srgb, var(--sign) 60%, transparent); box-shadow: 0 30px 50px -30px rgba(0, 0, 0, .95); }
+    .issue__top { display: flex; justify-content: space-between; border-bottom: 1px solid color-mix(in srgb, var(--sign) 50%, transparent); padding-bottom: 6px; font: 400 9.5px var(--mono); letter-spacing: .1em; color: var(--ink-3); text-transform: uppercase; }
+    .issue__mast { margin-top: 6px; text-align: center; font: italic 400 clamp(22px, 2.3vw, 34px)/.9 var(--serif); letter-spacing: -.04em; }
+    .issue__fig { position: relative; min-height: 0; display: grid; place-items: end center; margin-top: -8px; }
+    .issue__fig img { max-height: 100%; width: 88%; height: auto; object-fit: contain; filter: drop-shadow(0 12px 14px rgba(0, 0, 0, .7)); }
+    .issue__name { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; padding-top: 8px; }
+    .issue__name b { font: italic 400 19px/1 var(--serif); }
+    .issue__name span { font: 400 10.5px var(--mono); color: var(--ink-2); }
+    .issue__flag { position: absolute; right: 10px; bottom: 40px; padding: 3px 8px; border-radius: 999px; font: italic 400 12px var(--serif); background: var(--sign); color: var(--void-0); }
+
+    /* ── The edit ───────────────────────────────────────────────────────── */
+    .edit__grid { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 18px; }
+    .edit__col { display: grid; gap: 18px; }
+    .edit__item { position: relative; display: grid; place-items: center; min-height: 300px; border-radius: 26px; background: var(--void-1); border: 1px solid var(--hair-1); overflow: hidden; text-decoration: none; }
+    .edit__item img { width: 70%; height: auto; transition: transform 900ms var(--ease-out); }
+    .edit__item:hover img { transform: scale(1.04); }
+    .edit__item figcaption { position: absolute; left: 20px; right: 20px; bottom: 16px; display: flex; justify-content: space-between; font-size: 14px; color: var(--ink-1); }
+    .edit__item--big { min-height: 640px; }
+    .edit__item--big img { width: 64%; }
+
+    /* ── Fine print ─────────────────────────────────────────────────────── */
+    .fine__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); }
+    .checker { display: grid; gap: 12px; align-content: start; }
+    .checker__row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .checker input { min-width: 0; height: 54px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--hair-2); background: var(--void-1); color: var(--ink-0); font: 400 14px var(--mono); }
+    .checker input:focus { outline: none; border-color: var(--ink-2); }
+    .checker .btn { height: 54px; }
+    .checker__out { color: var(--ink-2); font-size: 14.5px; min-height: 44px; }
+    .checker__out.is-match { color: var(--ink-0); }
+    .checker__out.is-bad { color: var(--ink-0); }
+
+    /* ── The chart ──────────────────────────────────────────────────────── */
+    .chart { margin-top: 44px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 56px; }
+    .chart a { display: grid; grid-template-columns: 64px 44px 1fr auto auto; gap: 16px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--hair-1); text-decoration: none; }
+    .chart a:hover { background: rgba(238, 241, 247, .02); }
+    .chart b { font: 400 44px/1 var(--serif); letter-spacing: -.03em; color: var(--ink-2); font-variant-numeric: lining-nums; }
+    .chart img { width: 44px; height: 44px; object-fit: contain; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .7)); }
+    .chart strong { font: 400 22px/1 var(--serif); font-weight: 400; }
+    .chart .num { font: 400 13px var(--mono); color: var(--ink-1); font-variant-numeric: tabular-nums; }
+    .chart .delta { min-width: 72px; text-align: right; font-size: 12.5px; }
+    .chart__note { margin-top: 18px; font-size: 12.5px; color: var(--ink-3); max-width: 76ch; }
+
+    @media (max-width: 980px) {
+      .cover { padding-top: 66px; grid-template-rows: auto auto auto auto; }
+      .cover__dateline { font-size: 9.5px; letter-spacing: .08em; }
+      .cover__dateline span:nth-child(2), .cover__dateline span:nth-child(3) { display: none; }
+      .cover__mast { font-size: 25.5vw; }
+      .cover__body { grid-template-columns: 1fr; margin-top: -9vw; gap: 0; }
+      .cover__fig { grid-column: 1; height: min(40vh, 330px); }
+      .cover__fig img { inset: 0; width: 100%; }
+      .cover__left { order: 2; padding-bottom: 0; }
+      .cover__right { order: 3; justify-self: stretch; max-width: none; }
+      .cover__season { font-size: 34px; display: flex; align-items: baseline; gap: 12px; }
+      .cover__season::after { display: none; }
+      .cover__dates { margin-top: 6px; font-size: 14px; }
+      .cover__line, .cover__facts, .cover__sun { display: none; }
+      .cover__quote { margin-top: 12px; padding-top: 12px; display: grid; grid-template-columns: auto 1fr; gap: 0 18px; align-items: center; }
+      .cover__quote .price { font-size: 21px; }
+      .cover__quote .spark { margin-top: 0; height: 34px; grid-row: 1 / 3; grid-column: 2; }
+      .cover__cta { margin-top: 14px; grid-template-columns: 1fr; }
+      .cover__cta .btn-fomo { width: 100%; }
+      .cover__issues { gap: 6px; }
+      .cover__issues span { width: 100%; text-align: center; }
+      .cover__issues { gap: 2px; }
+      .cover__issues button { width: 44px; height: 44px; padding: 7px; }
+      .next__grid, .feature__grid, .fine__grid, .edit__grid { grid-template-columns: 1fr; }
+      .feature__film { position: relative; top: 0; width: min(100%, 62vh); }
+      .feature__shot { grid-template-columns: 1fr; gap: 18px; }
+      .feature__shot .phone { width: 58%; }
+      .feature__alert { left: 34%; top: 26px; width: 66%; }
+      .issue__top span:last-child { display: none; }
+      .next__sil { min-height: 300px; }
+      .issues__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .chart { grid-template-columns: 1fr; }
+      .chart a { grid-template-columns: 44px 36px 1fr auto auto; gap: 12px; }
+      .chart b { font-size: 32px; }
+      .edit__item--big { min-height: 420px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="nav"></div>
+  <main id="main">
+    <section class="cover" id="top" aria-labelledby="cover-season" data-cover>
+      <p class="cover__dateline"><span data-issue></span><span>The official Zodiac collection</span><span data-range></span></p>
+      <h1 class="cover__mast" aria-label="Astrofolio">Astrofolio</h1>
+      <div class="cover__body">
+        <div class="cover__left">
+          <h2 class="cover__season" id="cover-season" data-season></h2>
+          <p class="cover__dates" data-dates></p>
+          <p class="cover__line" data-line></p>
+          <p class="cover__facts" data-facts></p>
+        </div>
+        <div class="cover__fig"><div class="cover__stars" data-stars aria-hidden="true"></div><img data-fig alt=""></div>
+        <div class="cover__right">
+          <p class="cover__sun" data-sun></p>
+          <div class="cover__quote"><span class="price" data-price></span><span class="delta" data-delta></span><div data-spark></div></div>
+          <div class="cover__cta" data-cta></div>
+        </div>
+      </div>
+      <nav class="cover__issues" aria-label="Other signs' issues" data-issues></nav>
+    </section>
+
+    <section class="next band--tight" aria-labelledby="next-title" data-next>
+      <div class="wrap next__grid">
+        <div class="next__sil" data-next-sil></div>
+        <div>
+          <p class="kicker">Next issue</p>
+          <h2 class="section-title" id="next-title" data-next-title></h2>
+          <p class="lede" data-next-lede></p>
+          <div class="count" data-count></div>
+          <button class="btn" type="button" style="margin-top:30px" data-next-preview></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature band" aria-labelledby="feature-title">
+      <div class="wrap feature__grid">
+        <figure class="feature__film">
+          <img src="../../../public/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" loading="lazy" style="position:absolute;inset:0">
+          <video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/fomo/fomo-film-poster.webp" aria-label="The Astrofolio film: the twelve glyphs over footage" style="position:relative">
+            <source src="../../../public/assets/fomo/fomo-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'>
+            <source src="../../../public/assets/fomo/fomo-film.mp4" type="video/mp4">
+          </video>
+          <figcaption>The Astrofolio film: the twelve glyphs over footage.</figcaption>
+        </figure>
+        <div class="feature__copy">
+          <p class="kicker">The feature</p>
+          <h2 class="section-title" id="feature-title" data-feature-title>How to buy your sign in fomo.</h2>
+          <p class="deck">All twelve Zodiacs are in the fomo app. Here is how buying one works, from download to your first sign.</p>
+          <div class="body reveal">
+            <p>The fomo app is free on iPhone, Android, and the web, and is made by FOMO Labs, a company independent of Zodiacs.org. You sign in with an email address or Apple ID, and fomo sets up a wallet inside the app.</p>
+            <p>You add funds with Apple Pay where it is offered, or send money in from a wallet or exchange you already use. Starting with a small amount is sensible: Zodiac tokens are speculative, and their prices can fall as fast as they rise.</p>
+            <p>Every Buy with Fomo button on this page opens your sign in fomo directly, using its verified address from the Registry, so you never have to pick it out of a list of lookalikes.</p>
+          </div>
+          <div data-stores></div>
+          <figure class="feature__shot reveal">
+            <div class="phone"><video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/fomo/fomo-zodiacs-poster.webp" aria-label="A screen recording of the fomo app listing the twelve Zodiacs"><source src="../../../public/assets/fomo/fomo-zodiacs-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'><source src="../../../public/assets/fomo/fomo-zodiacs.mp4" type="video/mp4"></video></div>
+            <img class="feature__alert" src="../../../public/assets/fomo/fomo-alert.png" width="1425" height="1104" alt="A fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12." loading="lazy">
+            <figcaption>Inside the app, each sign has its own sheet with a chart, your position, and buy and sell at the foot. You can follow friends, see who holds your sign, and turn on alerts for the signs you watch.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="issues-title" style="border-top:1px solid var(--hair-1)">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+          <div><p class="kicker">All twelve</p><h2 class="section-title" id="issues-title">One issue for every season.</h2></div>
+          <p class="muted" style="max-width:40ch">Open any sign’s cover. The page turns to that sign and its price, record, and Buy with Fomo button.</p>
+        </div>
+        <div class="issues__grid" data-issues-grid></div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="edit-title">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+          <div><p class="kicker">The Astrofolio edit</p><h2 class="section-title" id="edit-title">Wear the ring of twelve.</h2></div>
+          <a class="link-arrow" href="https://shop.app/" rel="external noopener">Browse the full Astrofolio shop ↗</a>
+        </div>
+        <div class="edit__grid" data-edit></div>
+      </div>
+    </section>
+
+    <section class="band" id="verify" aria-labelledby="fine-title" style="border-top:1px solid var(--hair-1)">
+      <div class="wrap fine__grid">
+        <div>
+          <p class="kicker">The fine print</p>
+          <h2 class="section-title" id="fine-title">Every Zodiac has one public record.</h2>
+          <p class="lede">Names and tickers can be copied. The Registry identifies each Zodiac by its complete address: a Solana origin and an official Base counterpart. Paste an address to check it against all 24.</p>
+        </div>
+        <form class="checker" data-checker novalidate>
+          <label class="vh" for="addr">Token address</label>
+          <div class="checker__row"><input id="addr" autocomplete="off" spellcheck="false" placeholder="Solana mint or Base contract"><button class="btn btn--light" type="submit">Check <span class="btn__orb" aria-hidden="true">→</span></button></div>
+          <p class="checker__out" data-out aria-live="polite">Never paste a recovery phrase, here or anywhere.</p>
+          <a class="link-arrow" href="https://zodiacs.org/registry/">Browse all twelve records →</a>
+        </form>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="chart-title">
+      <div class="wrap">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px">
+          <div><p class="kicker">Latest market snapshot</p><h2 class="section-title" id="chart-title">Who’s leading today?</h2></div>
+          <a class="link-arrow" href="https://zodiacs.org/terminal/?rank=marketCap">View the full market ↗</a>
+        </div>
+        <div class="chart" data-chart></div>
+        <p class="chart__note" data-chart-note></p>
+      </div>
+    </section>
+
+    <section class="band band--tight" id="faq" data-faq></section>
+  </main>
+  <div id="ending"></div>
+  <p class="wrap" style="padding:0 0 60px;font-size:12px;color:var(--ink-3)" data-credit></p>
+
+  <script type="module">
+    import {
+      SIGNS, bySlug, art, esc, fmtPrice, fmtCompact, fmtChange, fmtDay, fmtUtcTime, snapshotLabel, season,
+      initialSign, sunLongitude, signDegrees, sparkline, fomoButton, storeBadges, mountFaq, mountEnding,
+      reveal, lazyVideo, protoChrome, siteNav, checkAddress, loadStars, figureAlt, STAR_CREDIT, DATA,
+      reducedMotion, fomoWord,
+    } from './shared/common.js';
+
+    document.getElementById('nav').innerHTML = siteNav();
+    const now = season(new Date());
+    const windows = DATA.sunWindows;
+    /** The season a cover names: the current one for the Sun's sign, otherwise the next one ahead. */
+    const windowFor = (sign) => {
+      const iso = new Date().toISOString();
+      return windows.find((w) => w.sign === sign.slug && w.to > iso) ?? windows.filter((w) => w.sign === sign.slug).pop();
+    };
+    const cap = (s) => s[0].toUpperCase() + s.slice(1);
+    const cover = document.querySelector('[data-cover]');
+    const sky = signDegrees(sunLongitude(new Date()));
+
+    function paint(sign) {
+      document.documentElement.style.setProperty('--sign', sign.hue);
+      const w = windowFor(sign);
+      const year = new Date(w.from).getUTCFullYear();
+      document.querySelector('[data-issue]').innerHTML = `Issue <b>${sign.roman}</b> · ${esc(sign.name)} season ${year}`;
+      document.querySelector('[data-range]').textContent = `Sun in ${sign.name}: ${fmtDay(w.from)} ${fmtUtcTime(w.from).replace(' UTC', '')} – ${fmtDay(w.to)} ${fmtUtcTime(w.to)}`;
+      document.querySelector('[data-season]').textContent = `${sign.name} season`;
+      document.querySelector('[data-dates]').textContent = sign.datesLong;
+      document.querySelector('[data-line]').textContent = sign.bio.split('. ').slice(0, 2).join('. ').replace(/\.?$/, '.');
+      document.querySelector('[data-facts]').textContent = `${cap(sign.element)} · ${cap(sign.modality)} · ruled by ${sign.ruler}`;
+      const current = sign === now.sign;
+      document.querySelector('[data-sun]').innerHTML = current
+        ? `The Sun entered ${esc(sign.name)} on ${fmtDay(w.from, { long: true })} at ${fmtUtcTime(w.from)}. Today it is at <b>${esc(sky.text)}</b>.`
+        : `The Sun enters ${esc(sign.name)} on ${fmtDay(w.from, { long: true })} at ${fmtUtcTime(w.from)}.`;
+      document.querySelector('[data-price]').textContent = fmtPrice(sign.price);
+      const delta = fmtChange(sign.change);
+      const d = document.querySelector('[data-delta]');
+      d.textContent = delta.text; d.className = `delta ${delta.cls}`;
+      sparkline(document.querySelector('[data-spark]'), sign, { height: 46 });
+      document.querySelector('[data-cta]').innerHTML = `${fomoButton(sign)}<a class="btn" href="${sign.registry}">Explore ${esc(sign.name)}</a><small><a href="${sign.howToBuy}">Other ways to buy</a> · ${snapshotLabel()}</small>`;
+      const img = document.querySelector('[data-fig]');
+      img.src = art.figure(sign.slug, 1024); img.alt = figureAlt(sign);
+      const stars = document.querySelector('[data-stars]');
+      stars.innerHTML = '';
+      loadStars(sign.slug).then((svg) => { stars.innerHTML = svg; });
+      document.querySelectorAll('[data-issue-btn]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.issueBtn === sign.slug)));
+      const url = new URL(location.href); url.searchParams.set('sign', sign.slug); history.replaceState(null, '', url);
+    }
+    function turnTo(sign, scroll = false) {
+      const run = () => paint(sign);
+      const go = () => (document.startViewTransition && !reducedMotion ? document.startViewTransition(run) : run());
+      if (scroll && scrollY > 40) { scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' }); setTimeout(go, reducedMotion ? 0 : 520); }
+      else go();
+    }
+
+    document.querySelector('[data-issues]').innerHTML = `<span>Other signs’ issues</span>${SIGNS.map((sign) => `<button type="button" data-issue-btn="${sign.slug}" style="--sign:${sign.hue}" aria-label="${esc(`${sign.name} season issue`)}"><img src="${art.disc(sign.slug, 128)}" alt=""></button>`).join('')}`;
+    document.querySelector('[data-issues]').addEventListener('click', (event) => {
+      const b = event.target.closest('[data-issue-btn]');
+      if (b) turnTo(bySlug[b.dataset.issueBtn]);
+    });
+    await document.fonts.ready;
+    paint(initialSign());
+
+    /* ── Next issue ────────────────────────────────────────────────────── */
+    if (now.next) {
+      const next = now.next.sign;
+      const ms = new Date(now.next.from) - new Date();
+      const days = Math.floor(ms / 86400000);
+      const hours = Math.floor((ms % 86400000) / 3600000);
+      document.querySelector('[data-next]').style.setProperty('--next', next.hue);
+      document.querySelector('[data-next-sil]').innerHTML = `<img src="${art.figure(next.slug, 1024)}" width="1024" height="1024" alt="${esc(figureAlt(next))}" loading="lazy">`;
+      document.querySelector('[data-next-title]').textContent = `${next.name} season`;
+      document.querySelector('[data-next-lede]').textContent = `The Sun moves into ${next.name} on ${fmtDay(now.next.from, { long: true })} at ${fmtUtcTime(now.next.from)}, and this page re-issues itself with ${next.name} on the cover.`;
+      document.querySelector('[data-count]').innerHTML = `<div><b>${days}</b><span>days</span></div><div><b>${hours}</b><span>hours</span></div>`;
+      const btn = document.querySelector('[data-next-preview]');
+      btn.textContent = `Preview the ${next.name} cover ↑`;
+      btn.addEventListener('click', () => turnTo(next, true));
+    }
+
+    /* ── Feature, issues, edit, fine print, chart ──────────────────────── */
+    document.querySelector('[data-stores]').innerHTML = storeBadges();
+    document.querySelectorAll('video[data-lazy]').forEach(lazyVideo);
+    document.querySelector('[data-issues-grid]').innerHTML = SIGNS.map((sign) => `
+      <button class="issue reveal" type="button" style="--sign:${sign.hue}" data-open="${sign.slug}" aria-label="${esc(`Open the ${sign.name} season cover`)}">
+        <span class="issue__top"><span>No. ${sign.roman}</span><span>${esc(sign.dates)}</span></span>
+        <span class="issue__mast">Astrofolio</span>
+        ${sign === now.sign ? '<span class="issue__flag">Current</span>' : ''}
+        <span class="issue__fig"><img src="${art.figure(sign.slug, 512)}" width="512" height="512" alt="" loading="lazy"></span>
+        <span class="issue__name"><b>${esc(sign.name)}</b><span>${fmtPrice(sign.price)}</span></span>
+      </button>`).join('');
+    document.querySelector('[data-issues-grid]').addEventListener('click', (event) => {
+      const b = event.target.closest('[data-open]');
+      if (b) turnTo(bySlug[b.dataset.open], true);
+    });
+
+    const [tee, capItem, hoodie] = DATA.shop;
+    const fig = (item, big) => `<a class="edit__item${big ? ' edit__item--big' : ''} reveal" href="${item.href}" rel="external noopener"><img src="${art.merch(item.image)}" width="800" height="892" alt="${esc(item.name)}" loading="lazy"><figcaption><span>${esc(item.name)}</span><span aria-hidden="true">View ↗</span></figcaption></a>`;
+    document.querySelector('[data-edit]').innerHTML = `${fig(hoodie, true)}<div class="edit__col">${fig(capItem)}${fig(tee)}</div>`;
+
+    document.querySelector('[data-checker]').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const out = document.querySelector('[data-out]');
+      const result = checkAddress(document.getElementById('addr').value);
+      out.className = 'checker__out';
+      if (result.state === 'match') { out.classList.add('is-match'); out.innerHTML = `✓ Official: ${esc(result.sign.name)} on ${result.chain} (the ${result.role}). <a href="${result.sign.registry}">Open the record →</a>`; }
+      else if (result.state === 'nomatch') { out.classList.add('is-bad'); out.textContent = '✕ Not in the Registry. A token at this address is not an official Zodiac, whatever it is called.'; }
+      else if (result.state === 'invalid') { out.classList.add('is-bad'); out.textContent = '✕ That does not look like a Solana mint or a Base contract address.'; }
+      else out.textContent = 'Paste a complete address to check it.';
+    });
+
+    document.querySelector('[data-chart]').innerHTML = [...SIGNS].sort((a, b) => a.rank - b.rank).map((sign) => {
+      const delta = fmtChange(sign.change, { words: false });
+      return `<a href="${sign.registry}"><b>${sign.rank}</b><img src="${art.figure(sign.slug, 512)}" alt="" loading="lazy"><strong>${esc(sign.name)}</strong><span class="num">${fmtCompact(sign.marketCap)}</span><span class="delta ${delta.cls}">${delta.text}</span></a>`;
+    }).join('');
+    document.querySelector('[data-chart-note]').textContent = `Ranked by reported market cap. ${snapshotLabel()}. Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.`;
+
+    mountFaq(document.querySelector('[data-faq]'));
+    mountEnding(document.getElementById('ending'));
+    document.querySelector('[data-credit]').textContent = `Prototype. ${STAR_CREDIT}`;
+    document.querySelector('[data-feature-title]').innerHTML = `How to buy your sign in ${fomoWord()}.`;
+    reveal();
+    protoChrome('Option D · Season Cover');
+  </script>
+</body>
+</html>

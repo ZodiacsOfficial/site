@@ -1,11 +1,14 @@
 {
   "version": 1,
-  "id": "owner-requested-astrofolio-mobile-collection-2026-09-22",
-  "baseCommit": "4e9d2dcd41d4f2ccd66e6c73b69ffc2c148169ae",
+  "id": "owner-requested-astrofolio-campaign-2026-09-23",
+  "baseCommit": "25eaa205cc7d1fcff2dd43ed3c53e027791b5178",
   "protectedPaths": [
     "public/assets/app.js",
+    "public/registry/technical/index.html",
     "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-gallery-band.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ],
-  "authorization": "The owner selected mobile Option A and explicitly requested production publication: compact header with official collection copy and current season, larger overlapping artwork, slower subtle gold glint, clearer positive/negative movement, and the existing live Fomo button. Preserve market data, addresses, and transaction behavior."
+  "authorization": "The owner reviewed the four Astrofolio redesign prototypes in docs/design/astrofolio-redesign/ and chose Option B, Campaign, for production: the Astrofolio film opening inside the wordmark, a runway of all twelve looks each carrying the existing Fomo buy control, a floating buy bar for the chosen sign, a Fomo app section, and a restyled Registry record. The technical page changes only because its shared style copy drops the retired vitrine rules. Preserve market data, addresses, flags, and transaction behavior."
 }

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060709">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Astrofolio redesign: four directions</title>
+  <link rel="icon" type="image/svg+xml" href="../../../public/assets/astrofolio/v2/leo/favicon.svg">
+  <link rel="stylesheet" href="shared/base.css">
+  <style>
+    .head { padding: 72px 0 40px; }
+    .head h1 { margin-top: 10px; font: 400 clamp(44px, 6vw, 92px)/.95 var(--serif); letter-spacing: -.03em; }
+    .head .lede { margin-top: 20px; max-width: 46em; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding-bottom: 40px; }
+    .card { display: grid; gap: 16px; padding: 14px 14px 22px; border: 1px solid var(--hair-1); border-radius: 26px; background: var(--void-1); text-decoration: none; transition: border-color 300ms, transform 500ms var(--ease-out); }
+    .card:hover { border-color: var(--hair-3); transform: translateY(-4px); }
+    .card img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--hair-1); }
+    .card div { padding-inline: 8px; }
+    .card b { display: block; font: 400 34px/1 var(--serif); letter-spacing: -.02em; }
+    .card b span { color: var(--ink-3); font-style: italic; margin-right: 8px; }
+    .card p { margin-top: 10px; color: var(--ink-2); font-size: 15.5px; max-width: 52ch; }
+    .card em { display: inline-block; margin-top: 14px; font-style: normal; color: var(--ink-0); font-size: 14.5px; text-decoration: underline; text-decoration-color: var(--hair-3); text-underline-offset: .3em; }
+    .today { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 28px; align-items: start; padding: 32px 0 80px; border-top: 1px solid var(--hair-1); }
+    .today img { width: 100%; height: auto; border-radius: 14px; border: 1px solid var(--hair-1); }
+    .today p { color: var(--ink-2); margin-top: 12px; font-size: 15px; }
+    .foot { padding: 0 0 60px; color: var(--ink-3); font-size: 13px; }
+    .foot code { font-family: var(--mono); color: var(--ink-1); }
+    @media (max-width: 860px) { .grid, .today { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="head">
+      <p class="kicker">Astrofolio redesign</p>
+      <h1>Four directions for /astrofolio/</h1>
+      <p class="lede">Each prototype uses only assets already in the repository: the twelve gold figures, the ring identity, the constellation maps, the films, the merch, and the material from /fomo/. Prices, addresses and dates are real: the public Registry, the committed DexScreener snapshot, and the Sun’s ingress times.</p>
+    </header>
+    <section class="grid" aria-label="Options">
+      <a class="card" href="option-a-orrery.html"><img src="screenshots/a-orrery-desktop.jpg" width="1280" height="800" alt="Option A: a large zodiac dial with the Libra figure in the centre"><div><b><span>A</span>The Orrery</b><p>The Astrofolio ring becomes the sign picker: a real ecliptic dial that turns until your sign reaches the top, with a marker at the Sun’s actual position.</p><em>Open the prototype →</em></div></a>
+      <a class="card" href="option-b-campaign.html"><img src="screenshots/b-campaign-desktop.jpg" width="1280" height="800" alt="Option B: the word Astrofolio split around a vertical film"><div><b><span>B</span>Campaign</b><p>A collection launch. The glyph film from /fomo/ sits inside the wordmark and opens to full screen; the twelve follow on a sideways runway; fomo is the store.</p><em>Open the prototype →</em></div></a>
+      <a class="card" href="option-c-salon.html"><img src="screenshots/c-salon-desktop.jpg" width="1280" height="800" alt="Option C: twelve gold figures in lit arched niches"><div><b><span>C</span>The Salon</b><p>All twelve at once, each in a lit arched niche like a gallery wall. Any one opens into a full-screen object view with its label, price and provenance.</p><em>Open the prototype →</em></div></a>
+      <a class="card" href="option-d-season.html"><img src="screenshots/d-season-desktop.jpg" width="1280" height="800" alt="Option D: a magazine cover with the Libra figure in front of the Astrofolio masthead"><div><b><span>D</span>Season Cover</b><p>A magazine cover that re-issues itself every zodiac season, with the season’s figure standing in front of the masthead and every other sign’s issue one tap away.</p><em>Open the prototype →</em></div></a>
+    </section>
+    <section class="today" aria-labelledby="today-title">
+      <img src="screenshots/current-desktop.jpg" width="1280" height="800" alt="The current /astrofolio/ page">
+      <div>
+        <p class="kicker" id="today-title">For comparison</p>
+        <p>The live page today: a two-column hero with one figure at a time, followed by a stack of similar dark cards. The ring identity appears only as a 52px lockup, and none of the footage is used.</p>
+        <p>Add <code style="font-family:var(--mono)">?sign=scorpio</code> to any prototype to open it on another sign. The write-up is in README.md beside this page.</p>
+      </div>
+    </section>
+    <p class="foot">Prototypes only; nothing here is imported by the site build. Serve the repository root (<code>python3 -m http.server 8000</code>) and open <code>/docs/design/astrofolio-redesign/</code>.</p>
+  </main>
+</body>
+</html>

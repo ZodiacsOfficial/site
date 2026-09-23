@@ -101,46 +101,34 @@ describe('the landing', () => {
 
   it('offers Registry, beginner-guide, and same-origin market handoffs across twelve no-JS sign states', async () => {
     const html = await hub();
-    const vitrine = html.match(/<fieldset class="static-vitrine">([\s\S]*?)<\/fieldset>/)?.[1];
-    expect(vitrine).toBeDefined();
+    const runway = html.match(/<section\b[^>]*\bid="the-twelve"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+    expect(runway).toBeDefined();
 
-    const choices = [...vitrine.matchAll(/<input\b[^>]*>/g)]
-      .map(([tag]) => tag)
-      .filter((tag) => /\bclass="[^"]*\bstatic-vitrine__choice\b[^"]*"/.test(tag));
-    const choiceSign = (tag) => tag.match(/\bid="astrofolio-([a-z]+)"/)?.[1];
-    const checked = choices.filter((tag) => /\schecked(?:\s|>)/.test(tag));
-
-    expect(choices).toHaveLength(12);
-    expect(choices.map(choiceSign)).toEqual(SIGNS);
-    expect(choices.every((tag) => /\btype="radio"/.test(tag))).toBe(true);
-    expect(choices.every((tag) => /\bname="astrofolio-sign"/.test(tag))).toBe(true);
-    expect(checked).toHaveLength(1);
-
-    const panels = [...vitrine.matchAll(
+    // Without JavaScript the runway is one swipeable row: all twelve looks
+    // are present in zodiac order, and exactly one carries the season mark
+    // (stamped with the real season at release by stamp-astrofolio-season).
+    const looks = [...runway.matchAll(
       /<article\b[^>]*\bdata-static-sign="([a-z]+)"[^>]*>([\s\S]*?)<\/article>/g,
     )];
-    expect(panels.map(([, sign]) => sign)).toEqual(SIGNS);
-    for (const [, sign, panel] of panels) {
-      const records = [...panel.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
-      const guides = [...panel.matchAll(/href="\/astrofolio\/how-to-buy\/([a-z]+)\/"/g)];
+    expect(looks.map(([, sign]) => sign)).toEqual(SIGNS);
+    expect(runway.match(/<article class="campaign-look is-season"/g)).toHaveLength(1);
+    for (const [, sign, look] of looks) {
+      const records = [...look.matchAll(/href="\/registry\/([a-z]+)\/"/g)];
+      const guides = [...look.matchAll(/href="\/astrofolio\/how-to-buy\/([a-z]+)\/"/g)];
+      const fomo = [...look.matchAll(/data-fomo-buy="([a-z]+)"/g)];
       expect(records, sign).toHaveLength(1);
       expect(records[0][1], sign).toBe(sign);
       expect(guides, sign).toHaveLength(1);
       expect(guides[0][1], sign).toBe(sign);
-      expect(html, sign).toContain(
-        `.static-vitrine:has(#astrofolio-${sign}:checked) [data-static-sign="${sign}"]`,
-      );
+      expect(fomo, sign).toHaveLength(1);
+      expect(fomo[0][1], sign).toBe(sign);
     }
-
-    // Every panel is dormant by default. A single-name radio group can select
-    // only one sign, and its matching :has() rule is the only reveal path.
-    expect(html).toMatch(/\.static-vitrine__panel\s*\{\s*display:\s*none;/);
-    expect(panels.some(([, sign]) => sign === choiceSign(checked[0]))).toBe(true);
+    expect(html).toMatch(/\.campaign-runway\[data-mode="carousel"\] \.campaign-runway__track \{[^}]*overflow-x: auto;/);
 
     // Sign-level handoffs stay educational. Market discovery is consolidated
     // into the leaderboard gateway rather than repeated in each panel, while
     // the executable venue route remains out of the Consumer landing.
-    expect(vitrine).not.toContain('href="/terminal/');
+    expect(runway).not.toContain('href="/terminal/');
     const gateway = html.match(/<section\b[^>]*\bid="market-layer"[^>]*>([\s\S]*?)<\/section>/)?.[1];
     expect(gateway).toBeDefined();
     expect(gateway.match(/href="\/astrofolio\/\?sign=[a-z]+#consumer-sign-preview"/g)).toHaveLength(12);

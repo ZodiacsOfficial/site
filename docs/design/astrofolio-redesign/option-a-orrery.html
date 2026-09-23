@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060709">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Option A · The Orrery — Astrofolio redesign prototype</title>
+  <link rel="icon" type="image/svg+xml" href="../../../public/assets/astrofolio/v2/leo/favicon.svg">
+  <link rel="stylesheet" href="shared/base.css">
+  <link rel="stylesheet" href="../../../public/assets/site-footer.css">
+  <style>
+    @property --rot { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+    /* ── Hero: the dial ─────────────────────────────────────────────────── */
+    .orr {
+      position: relative;
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: minmax(380px, 5fr) minmax(0, 7fr);
+      align-items: center;
+      gap: clamp(24px, 3vw, 56px);
+      padding: 92px var(--gutter) 40px;
+      max-width: 1560px;
+      margin-inline: auto;
+    }
+    .orr__plate { position: relative; z-index: 2; display: grid; gap: 0; align-content: center; }
+    .orr__lockup { display: flex; align-items: center; gap: 12px; margin-bottom: clamp(20px, 3vh, 34px); }
+    .orr__lockup img { width: 34px; height: 34px; }
+    .orr__lockup b { font: italic 400 24px/1 var(--serif); letter-spacing: -.01em; }
+    .orr__lockup span { color: var(--ink-3); font-size: 13px; }
+    .orr__name {
+      font-family: var(--serif); font-weight: 400; letter-spacing: -.035em; line-height: .9;
+      font-size: 148px; white-space: nowrap; margin-left: -.04em; padding-bottom: .1em;
+    }
+    .orr__meta { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--ink-2); font-size: 15px; }
+    .orr__meta span + span::before { content: ''; display: inline-block; width: 3px; height: 3px; margin-right: 14px; border-radius: 50%; background: var(--ink-3); vertical-align: middle; }
+    .orr__bio { margin-top: 20px; max-width: 31ch; font: 400 21px/1.36 var(--serif); color: var(--ink-1); }
+    .orr__quote { margin-top: 30px; display: grid; grid-template-columns: auto minmax(120px, 220px); align-items: end; gap: 8px 28px; }
+    .orr__quote-label { grid-column: 1 / -1; font-size: 12.5px; color: var(--ink-3); }
+    .orr__price { font-size: 32px; line-height: 1; }
+    .orr__quote .delta { display: block; margin-top: 8px; }
+    .orr__quote .spark { height: 52px; }
+    .orr__actions { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .orr__more { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink-3); }
+    .orr__more a { color: var(--ink-2); }
+    .orr__snap { color: var(--ink-3); }
+
+    .orr__stage { position: relative; display: grid; place-items: center; min-width: 0; }
+    .dial {
+      --D: min(78vh, 52vw, 840px);
+      position: relative; width: var(--D); height: var(--D);
+      touch-action: pan-y; user-select: none; -webkit-user-select: none;
+      cursor: grab; overflow: clip; border-radius: 50%;
+    }
+    .dial.is-dragging { cursor: grabbing; }
+    .dial__pool { position: absolute; inset: 14%; border-radius: 50%; background: radial-gradient(closest-side, rgba(238, 241, 247, .055), rgba(238, 241, 247, 0) 72%); }
+    .dial__face, .dial__ring { position: absolute; inset: 0; }
+    .dial__face svg, .dial__ring svg { width: 100%; height: 100%; overflow: visible; }
+    .dial__ring { transform: rotate(calc(var(--rot) * 1deg)); transition: --rot 1400ms var(--ease-io); }
+    .dial.is-dragging .dial__ring, .dial.no-anim .dial__ring { transition: none; }
+    .tick { stroke: var(--ink-1); vector-effect: non-scaling-stroke; }
+    .deg { fill: var(--ink-3); font: 500 15px var(--mono); letter-spacing: .04em; }
+    .seg { fill: none; stroke: var(--sign); stroke-width: 3.5; stroke-linecap: round; opacity: 0; transition: opacity 500ms var(--ease-out); }
+    .seg.is-on { opacity: 1; }
+    .sun circle { fill: var(--void-0); stroke: var(--ink-0); stroke-width: 1.6; }
+    .sun circle + circle { fill: var(--ink-0); stroke: none; }
+
+    .dial__stars { position: absolute; left: 50%; top: 50%; width: 70%; transform: translate(-50%, -52%); opacity: .9; transition: opacity 700ms var(--ease-out); }
+    .dial__stars .stars { width: 100%; height: auto; }
+    .dial__stars .stars g[stroke] { stroke: var(--sign); stroke-opacity: .42; }
+    .dial__stars.is-swapping { opacity: 0; }
+
+    .dial__figure { position: absolute; left: 50%; top: 50%; width: 58%; aspect-ratio: 1; transform: translate(-50%, -50%); pointer-events: none; }
+    .dial__figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 34px 38px rgba(0, 0, 0, .72)); transition: opacity 650ms var(--ease-out), transform 900ms var(--ease-out); }
+    .dial__figure img.is-out { opacity: 0; transform: translateY(14px) scale(.965); }
+    .dial__float { position: absolute; inset: 0; animation: float 7s ease-in-out infinite; }
+    @keyframes float { 50% { transform: translateY(-9px); } }
+
+    .dial__discs { position: absolute; inset: 0; transform: rotate(calc(var(--rot) * 1deg)); transition: --rot 1400ms var(--ease-io); }
+    .dial.is-dragging .dial__discs, .dial.no-anim .dial__discs { transition: none; }
+    .dial__disc {
+      --a: 0;
+      --ds: max(44px, calc(var(--D) * .082));
+      position: absolute; left: 50%; top: 50%; width: var(--ds); height: var(--ds); margin: calc(var(--ds) / -2) 0 0 calc(var(--ds) / -2);
+      padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer;
+      transform: rotate(calc(var(--a) * 1deg)) translateY(calc(var(--D) * var(--rr, -.405))) rotate(calc((var(--a) + var(--rot)) * -1deg));
+    }
+    .dial__disc img { width: 100%; height: 100%; border-radius: 50%; transition: transform 500ms var(--ease-out), box-shadow 500ms var(--ease-out); box-shadow: 0 10px 20px -10px rgba(0, 0, 0, .9); }
+    .dial__disc:hover img { transform: scale(1.08); }
+    .dial__disc[aria-pressed="true"] img { transform: scale(1.16); box-shadow: 0 0 0 4px var(--void-0), 0 0 0 5.5px var(--sign), 0 14px 28px -12px rgba(0, 0, 0, .95); }
+    .dial__disc:focus-visible { outline-offset: 6px; border-radius: 50%; }
+    .dial__lubber { position: absolute; left: 50%; top: -2px; width: 0; height: 0; transform: translateX(-50%); border: 7px solid transparent; border-top: 10px solid var(--ink-0); border-bottom: 0; }
+    .dial__hint { margin-top: 18px; display: flex; gap: 14px; align-items: center; color: var(--ink-3); font-size: 12.5px; white-space: nowrap; }
+    .dial__hint button { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hair-2); background: transparent; cursor: pointer; color: var(--ink-1); }
+    .dial__hint button:hover { border-color: var(--hair-3); color: var(--ink-0); }
+    .orr__sky { margin-top: 10px; display: flex; align-items: center; gap: 9px; color: var(--ink-3); font-size: 13.5px; }
+    .orr__sky svg { width: 14px; height: 14px; color: var(--ink-1); }
+    .orr__sky b { color: var(--ink-0); font-weight: 500; font-family: var(--mono); font-size: 12px; letter-spacing: -.01em; }
+
+    /* ── Season ─────────────────────────────────────────────────────────── */
+    .season { border-top: 1px solid var(--hair-1); }
+    .season__grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(40px, 7vw, 120px); align-items: center; }
+    .season__ruler { margin-top: 44px; }
+    .season__track { position: relative; height: 44px; }
+    .season__track svg { width: 100%; height: 100%; overflow: visible; }
+    .season__legend { display: flex; justify-content: space-between; margin-top: 12px; font: 400 12px var(--mono); color: var(--ink-3); }
+    .season__facts { margin-top: 36px; display: grid; gap: 14px; }
+    .season__facts p { display: grid; grid-template-columns: 110px 1fr; gap: 16px; padding-top: 14px; border-top: 1px solid var(--hair-1); color: var(--ink-1); font-size: 15px; }
+    .season__facts p span:first-child { color: var(--ink-3); font-size: 13px; }
+    .season__next { position: relative; display: grid; justify-items: center; text-align: center; gap: 12px; padding: 40px 24px 36px; border: 1px solid var(--hair-1); border-radius: 28px; background: var(--void-1); }
+    .season__next img { width: min(300px, 70%); aspect-ratio: 1; object-fit: contain; filter: grayscale(.35) brightness(.72) drop-shadow(0 24px 30px rgba(0, 0, 0, .7)); transition: filter 600ms var(--ease-out); }
+    .season__next:hover img { filter: none; }
+    .season__next h3 { font: 400 40px/1 var(--serif); letter-spacing: -.02em; }
+
+    /* ── fomo ───────────────────────────────────────────────────────────── */
+    .inapp__grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(40px, 7vw, 120px); align-items: center; }
+    .inapp__stage { position: relative; display: grid; place-items: center; min-height: 680px; }
+    .inapp__rings { position: absolute; inset: 50% auto auto 50%; width: min(640px, 100%); aspect-ratio: 1; transform: translate(-50%, -50%); }
+    .inapp__rings circle { fill: none; stroke: var(--hair-2); }
+    .phone { position: relative; width: 300px; aspect-ratio: 720 / 1566; border-radius: 48px; padding: 10px; background: #0b0d12; box-shadow: 0 0 0 1px rgba(238, 241, 247, .12), 0 0 0 11px #0b0d12, 0 0 0 12px rgba(238, 241, 247, .08), 0 60px 90px -40px rgba(0, 0, 0, .95); }
+    .phone video, .phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 38px; background: #000; }
+    .inapp__alert { position: absolute; right: -4%; top: 16%; width: min(380px, 62%); transform: rotate(-4deg); filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .8)); }
+    .inapp__copy .section-title { font-size: clamp(40px, 4.6vw, 68px); }
+    .inapp__copy .lede { margin-top: 22px; }
+    .inapp__copy .stores { margin-top: 34px; }
+    .inapp__web { margin-top: 18px; font-size: 14px; color: var(--ink-3); }
+    .inapp__web a { color: var(--ink-1); }
+
+    /* ── Story film ─────────────────────────────────────────────────────── */
+    .story { position: relative; min-height: 86vh; display: grid; align-items: end; overflow: hidden; border-block: 1px solid var(--hair-1); }
+    .story video, .story > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .story__scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 7, 9, .92) 0%, rgba(6, 7, 9, .55) 42%, rgba(6, 7, 9, 0) 70%), linear-gradient(0deg, rgba(6, 7, 9, .9) 0%, rgba(6, 7, 9, 0) 40%); }
+    .story__copy { position: relative; padding-block: 0 clamp(56px, 9vw, 120px); }
+    .story__copy .section-title { max-width: 11ch; font-size: clamp(44px, 6vw, 92px); }
+    .story__copy .lede { margin-top: 22px; max-width: 30em; }
+    .story__copy .btn { margin-top: 30px; }
+
+    /* ── Shop ───────────────────────────────────────────────────────────── */
+    .shop__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 44px; }
+    .shop__grid { display: grid; grid-template-columns: 7fr 5fr; grid-template-rows: 1fr 1fr; gap: 14px; height: min(92vh, 860px); }
+    .product { position: relative; display: grid; grid-template-rows: 1fr auto; border: 1px solid var(--hair-1); border-radius: 26px; background: var(--void-1); overflow: hidden; text-decoration: none; transition: border-color 300ms var(--ease-drawer); }
+    .product:hover { border-color: var(--hair-2); }
+    .product:first-child { grid-row: 1 / 3; }
+    .product img { width: 100%; height: 100%; object-fit: contain; padding: 6% 8% 0; transition: transform 900ms var(--ease-out); min-height: 0; }
+    .product:hover img { transform: scale(1.035); }
+    .product span { display: flex; justify-content: space-between; padding: 18px 22px 20px; border-top: 1px solid var(--hair-1); font-size: 14.5px; color: var(--ink-1); }
+
+    /* ── Verify ─────────────────────────────────────────────────────────── */
+    .verify { border-top: 1px solid var(--hair-1); }
+    .verify__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(40px, 7vw, 120px); }
+    .checker { display: grid; gap: 14px; padding: 28px; border: 1px solid var(--hair-2); border-radius: 26px; background: var(--void-1); }
+    .checker label { font-size: 13px; color: var(--ink-3); }
+    .checker__row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; }
+    .checker__row .btn { height: 52px; }
+    .checker input { min-width: 0; height: 52px; padding: 0 18px; border-radius: 14px; border: 1px solid var(--hair-2); background: var(--void-0); color: var(--ink-0); font: 400 14px var(--mono); }
+    .checker input:focus { outline: none; border-color: var(--ink-2); }
+    .checker__out { min-height: 64px; display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 16px; background: rgba(238, 241, 247, .03); color: var(--ink-2); font-size: 14.5px; }
+    .checker__out img { width: 36px; height: 36px; }
+    .checker__out.is-match { color: var(--ink-0); box-shadow: inset 0 0 0 1px var(--sign); }
+    .checker__out.is-bad { color: var(--ink-0); box-shadow: inset 0 0 0 1px var(--down); }
+    .checker__try { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12.5px; color: var(--ink-3); align-items: center; }
+    .checker__try button { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--hair-2); background: transparent; color: var(--ink-1); cursor: pointer; font-size: 12.5px; }
+    .record { margin-top: 34px; display: grid; gap: 0; border-top: 1px solid var(--hair-2); }
+    .record div { display: grid; grid-template-columns: 150px 1fr auto; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--hair-1); }
+    .record dt { color: var(--ink-3); font-size: 13px; }
+    .record dd { margin: 0; font: 400 13px var(--mono); color: var(--ink-1); overflow-wrap: anywhere; }
+    .record button { padding: 7px 12px; border-radius: 999px; border: 1px solid var(--hair-2); background: transparent; color: var(--ink-1); font-size: 12px; cursor: pointer; }
+
+    /* ── Standings ──────────────────────────────────────────────────────── */
+    .standings__head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 36px; }
+    .board { width: 100%; border-collapse: collapse; }
+    .board th { padding: 0 0 12px; text-align: left; font-weight: 400; font-size: 12px; color: var(--ink-3); border-bottom: 1px solid var(--hair-2); }
+    .board td { padding: 12px 0; border-bottom: 1px solid var(--hair-1); vertical-align: middle; }
+    .board tr[data-sign] { cursor: pointer; transition: background-color 200ms; }
+    .board tr[data-sign]:hover { background: rgba(238, 241, 247, .025); }
+    .board .rank { width: 56px; font: 400 13px var(--mono); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+    .board .who { width: 26%; }
+    .board .who span { display: inline-flex; align-items: center; gap: 12px; font-size: 15.5px; }
+    .board .who img { width: 30px; height: 30px; }
+    .board .bar { padding-right: 28px; }
+    .board .bar i { display: block; height: 8px; border-radius: 0 4px 4px 0; background: var(--ink-2); opacity: .55; }
+    .board tr:hover .bar i { opacity: .85; }
+    .board .num { width: 120px; text-align: right; font: 400 14px var(--mono); font-variant-numeric: tabular-nums; }
+    .board .chg { width: 120px; text-align: right; }
+    .board__note { margin-top: 18px; font-size: 12.5px; color: var(--ink-3); max-width: 70ch; }
+
+    .credit { padding: 0 0 24px; font-size: 12px; color: var(--ink-3); }
+
+    /* ── Small screens ──────────────────────────────────────────────────── */
+    @media (max-width: 980px) {
+      .orr { grid-template-columns: 1fr; padding-top: 70px; gap: 0; align-content: start; }
+      .orr__plate { display: contents; }
+      .orr__lockup { order: 1; margin: 6px 0 6px; justify-content: space-between; }
+      .orr__lockup span { display: none; }
+      .orr__stage { order: 2; margin: 4px 0 10px; }
+      .orr__sky { display: none; }
+      .dial { --D: min(88vw, 47vh, 560px); --rr: -.37; }
+      .dial__figure { width: 52%; }
+      .dial__hint { display: none; }
+      .orr__head { order: 4; }
+      .orr__name { font-size: 64px; text-align: left; }
+      .orr__meta { display: none; }
+      .orr__quote { order: 5; margin-top: 10px; grid-template-columns: auto minmax(90px, 140px); gap: 4px 18px; }
+      .orr__quote-label { display: none; }
+      .orr__price { font-size: 21px; }
+      .orr__quote .delta { margin-top: 4px; font-size: 13px; }
+      .orr__quote .spark { height: 34px; }
+      .orr__actions { order: 6; margin-top: 14px; display: grid; grid-template-columns: 1fr auto; }
+      .orr__actions .btn-fomo { min-width: 0; }
+      .orr__more { order: 7; }
+      .orr__bio { order: 8; margin-top: 26px; font-size: 19px; }
+      .season__grid, .inapp__grid, .verify__grid { grid-template-columns: 1fr; }
+      .inapp__stage { min-height: 560px; order: 2; }
+      .inapp__alert { right: 0; width: 70%; }
+      .phone { width: 250px; }
+      .shop__grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; height: auto; }
+      .product:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .product img { aspect-ratio: 1; }
+      .board .bar { display: none; }
+      .board .who { width: auto; }
+      .board .num { width: 92px; }
+      .board .chg { width: 88px; }
+      .record div { grid-template-columns: 1fr auto; }
+      .record dt { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="nav"></div>
+  <main id="main">
+    <section class="orr" id="top" aria-labelledby="sign-name">
+      <div class="orr__plate">
+        <div class="orr__lockup">
+          <span style="display:flex;align-items:center;gap:12px"><img data-ring src="" width="34" height="34" alt=""><b>Astrofolio</b></span>
+          <span>The official Zodiac collection</span>
+        </div>
+        <div class="orr__head">
+          <h1 class="orr__name" id="sign-name" aria-live="polite">Libra</h1>
+          <p class="orr__meta"><span data-dates></span><span data-facts></span></p>
+          <p class="orr__sky" data-sky></p>
+        </div>
+        <p class="orr__bio" data-bio></p>
+        <div class="orr__quote">
+          <span class="orr__quote-label">Price</span>
+          <div><span class="price orr__price" data-price></span><span class="delta" data-delta></span></div>
+          <div data-spark></div>
+        </div>
+        <div class="orr__actions" data-actions></div>
+        <p class="orr__more"><a data-howto href="#">Other ways to buy</a><span>Opens the fomo app</span><span class="orr__snap" data-snap></span></p>
+      </div>
+
+      <div class="orr__stage">
+        <div class="dial" data-dial role="group" aria-label="Zodiac dial. Drag to turn, or choose a sign.">
+          <div class="dial__pool" aria-hidden="true"></div>
+          <div class="dial__face" aria-hidden="true"><svg viewBox="-500 -500 1000 1000" data-face></svg></div>
+          <div class="dial__ring" aria-hidden="true"><svg viewBox="-500 -500 1000 1000" data-ring-svg></svg></div>
+          <div class="dial__stars" data-stars aria-hidden="true"></div>
+          <div class="dial__figure"><div class="dial__float"><img data-fig="a" alt=""><img data-fig="b" class="is-out" alt=""></div></div>
+          <div class="dial__discs" data-discs></div>
+          <span class="dial__lubber" aria-hidden="true"></span>
+        </div>
+        <p class="dial__hint"><button type="button" data-step="-1" aria-label="Previous sign">←</button><span>Drag the dial, or use the arrow keys</span><button type="button" data-step="1" aria-label="Next sign">→</button></p>
+      </div>
+    </section>
+
+    <section class="season band" aria-labelledby="season-title">
+      <div class="wrap season__grid">
+        <div>
+          <p class="kicker">Where the Sun is</p>
+          <h2 class="section-title" id="season-title" data-season-title></h2>
+          <p class="lede" data-season-lede></p>
+          <div class="season__ruler">
+            <div class="season__track" data-season-track></div>
+            <div class="season__legend" data-season-legend></div>
+          </div>
+          <div class="season__facts" data-season-facts></div>
+        </div>
+        <button class="season__next" type="button" data-season-next></button>
+      </div>
+    </section>
+
+    <section class="inapp band" aria-labelledby="inapp-title">
+      <div class="wrap inapp__grid">
+        <div class="inapp__stage reveal">
+          <svg class="inapp__rings" viewBox="-100 -100 200 200" aria-hidden="true"><circle r="99.5"></circle><circle r="80"></circle><circle r="56" style="stroke:var(--hair-1)"></circle></svg>
+          <div class="phone">
+            <video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/fomo/fomo-zodiacs-poster.webp" aria-label="A screen recording of the fomo app listing the twelve Zodiacs with prices">
+              <source src="../../../public/assets/fomo/fomo-zodiacs-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'>
+              <source src="../../../public/assets/fomo/fomo-zodiacs.mp4" type="video/mp4">
+            </video>
+          </div>
+          <img class="inapp__alert" src="../../../public/assets/fomo/fomo-alert.png" width="1425" height="1104" alt="A fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12." loading="lazy">
+        </div>
+        <div class="inapp__copy reveal" style="--d:80ms">
+          <p class="kicker">Buying one</p>
+          <h2 class="section-title" id="inapp-title" data-inapp-title>All twelve are in the fomo app.</h2>
+          <p class="lede">fomo is a free trading app for iPhone, Android and the web. Each Buy with Fomo button on this page opens that sign in fomo, ready to buy in a few taps, and you can follow friends to see what they hold.</p>
+          <div data-stores></div>
+          <p class="inapp__web">On a computer: <a href="https://fomo.family/" rel="external nofollow noopener">fomo.family in a browser ↗</a> · <a href="https://zodiacs.org/fomo/">Zodiacs on fomo →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" aria-labelledby="story-title">
+      <video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/art/registry-loop-poster.jpg" aria-hidden="true">
+        <source src="../../../public/assets/art/registry-loop.mp4" type="video/mp4">
+      </video>
+      <div class="story__scrim" aria-hidden="true"></div>
+      <div class="wrap story__copy reveal">
+        <p class="kicker">The story</p>
+        <h2 class="section-title" id="story-title">The story behind the collection.</h2>
+        <p class="lede">The twelve signs have travelled through calendars, charts, jewellery, and screens. Astrofolio gives their designs and token records one public home.</p>
+        <a class="btn btn--light" href="https://zodiacs.org/thesis/">Read the story <span class="btn__orb" aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <section class="shop band" aria-labelledby="shop-title">
+      <div class="wrap">
+        <div class="shop__head">
+          <div><p class="kicker">Shop</p><h2 class="section-title" id="shop-title">Wear the ring of twelve.</h2></div>
+          <a class="link-arrow" href="https://shop.app/" rel="external noopener">Browse the full Astrofolio shop ↗</a>
+        </div>
+        <div class="shop__grid" data-shop></div>
+      </div>
+    </section>
+
+    <section class="verify band" id="verify" aria-labelledby="verify-title">
+      <div class="wrap verify__grid">
+        <div>
+          <p class="kicker">The official record</p>
+          <h2 class="section-title" id="verify-title">Check you have the official Zodiac.</h2>
+          <p class="lede">Names and tickers can be copied. The Registry identifies each Zodiac by its complete address: a Solana origin and an official Base counterpart. Paste an address to compare it with all 24.</p>
+          <dl class="record" data-record></dl>
+        </div>
+        <form class="checker" data-checker novalidate>
+          <label for="addr">Token address</label>
+          <div class="checker__row">
+            <input id="addr" name="addr" autocomplete="off" spellcheck="false" placeholder="Solana mint or Base contract">
+            <button class="btn btn--light" type="submit">Check <span class="btn__orb" aria-hidden="true">→</span></button>
+          </div>
+          <p class="checker__out" data-out aria-live="polite">Nothing checked yet. Never paste a recovery phrase here or anywhere else.</p>
+          <p class="checker__try"><span>Try one:</span><span data-try></span></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="standings band" aria-labelledby="standings-title">
+      <div class="wrap">
+        <div class="standings__head">
+          <div><p class="kicker">Latest market snapshot</p><h2 class="section-title" id="standings-title">Who’s leading today?</h2></div>
+          <a class="link-arrow" href="https://zodiacs.org/terminal/?rank=marketCap">View the full market ↗</a>
+        </div>
+        <table class="board">
+          <thead><tr><th>Rank</th><th>Sign</th><th><span class="vh">Reported market cap, bar</span></th><th style="text-align:right">Market cap</th><th style="text-align:right">24h</th></tr></thead>
+          <tbody data-board></tbody>
+        </table>
+        <p class="board__note" data-board-note></p>
+      </div>
+    </section>
+
+    <section class="band band--tight" id="faq" data-faq></section>
+  </main>
+  <div id="ending"></div>
+  <p class="credit wrap" data-credit></p>
+
+  <script type="module">
+    import {
+      SIGNS, bySlug, art, esc, fmtPrice, fmtCompact, fmtChange, fmtDay, fmtUtcTime, snapshotLabel,
+      sunLongitude, signDegrees, season, initialSign, sparkline, fomoButton, storeBadges, mountFaq,
+      mountEnding, reveal, lazyVideo, protoChrome, siteNav, preloadFigures, checkAddress, shortAddr,
+      loadStars, figureAlt, STAR_CREDIT, DATA, reducedMotion, fomoWord,
+    } from './shared/common.js';
+
+    document.getElementById('nav').innerHTML = siteNav();
+    document.querySelector('[data-ring]').src = art.ring;
+    preloadFigures(1024);
+
+    /* ── Dial geometry (viewBox units, clockwise from Aries 0° at the top) ── */
+    const NS = 'http://www.w3.org/2000/svg';
+    const polar = (deg, r) => { const a = (deg - 90) * Math.PI / 180; return [Math.cos(a) * r, Math.sin(a) * r]; };
+    const face = document.querySelector('[data-face]');
+    face.innerHTML = `
+      <circle r="496" fill="none" stroke="rgba(198,204,218,.16)" vector-effect="non-scaling-stroke"></circle>
+      <circle r="352" fill="none" stroke="rgba(198,204,218,.10)" vector-effect="non-scaling-stroke"></circle>
+      <circle r="300" fill="none" stroke="rgba(198,204,218,.06)" vector-effect="non-scaling-stroke"></circle>`;
+
+    const ringSvg = document.querySelector('[data-ring-svg]');
+    let ticks = '';
+    for (let d = 0; d < 360; d += 1) {
+      const major = d % 30 === 0;
+      const mid = d % 5 === 0;
+      const len = major ? 30 : mid ? 15 : 7;
+      const [x1, y1] = polar(d, 488 - len);
+      const [x2, y2] = polar(d, 488);
+      ticks += `<line class="tick" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke-opacity="${major ? .6 : mid ? .32 : .14}"></line>`;
+    }
+    let labels = '';
+    for (let d = 0; d < 360; d += 30) labels += `<text class="deg" text-anchor="middle" transform="rotate(${d}) translate(0 -432)">${d}°</text>`;
+    let segs = '';
+    for (const sign of SIGNS) {
+      const [sx, sy] = polar(sign.longitude + 1.2, 496);
+      const [ex, ey] = polar(sign.longitude + 28.8, 496);
+      segs += `<path class="seg" data-seg="${sign.slug}" style="--sign:${sign.hue}" d="M${sx.toFixed(1)} ${sy.toFixed(1)} A496 496 0 0 1 ${ex.toFixed(1)} ${ey.toFixed(1)}"></path>`;
+    }
+    const sunLon = sunLongitude(new Date());
+    const [sunX, sunY] = polar(sunLon, 462);
+    ringSvg.innerHTML = `<g>${ticks}</g><g>${labels}</g><g>${segs}</g>
+      <g class="sun" transform="translate(${sunX.toFixed(1)} ${sunY.toFixed(1)})"><circle r="10"></circle><circle r="3"></circle></g>`;
+
+    const discs = document.querySelector('[data-discs]');
+    discs.innerHTML = SIGNS.map((sign) => `
+      <button class="dial__disc" type="button" style="--a:${sign.longitude + 15};--sign:${sign.hue}" data-slug="${sign.slug}" aria-pressed="false" aria-label="${esc(sign.name)}, ${esc(sign.dates)}">
+        <img src="${art.disc(sign.slug, 128)}" width="128" height="128" alt="" draggable="false">
+      </button>`).join('');
+
+    const dial = document.querySelector('[data-dial]');
+    const sky = signDegrees(sunLon);
+    document.querySelector('[data-sky]').innerHTML = `<svg viewBox="-10 -10 20 20" aria-hidden="true"><circle r="8" fill="none" stroke="currentColor" stroke-width="1.6"></circle><circle r="2.4" fill="currentColor"></circle></svg>The Sun is at <b>${sky.text}</b> today`;
+
+    /* ── Selection ─────────────────────────────────────────────────────── */
+    let current = initialSign();
+    let rot = -(current.longitude + 15);
+    const setRot = (value, animate = true) => {
+      rot = value;
+      dial.classList.toggle('no-anim', !animate);
+      dial.style.setProperty('--rot', rot.toFixed(3));
+      if (!animate) requestAnimationFrame(() => dial.classList.remove('no-anim'));
+    };
+    const nearestRotFor = (sign) => {
+      const target = -(sign.longitude + 15);
+      return target + 360 * Math.round((rot - target) / 360);
+    };
+    const figA = document.querySelector('[data-fig="a"]');
+    const figB = document.querySelector('[data-fig="b"]');
+    let front = figA;
+    const nameEl = document.getElementById('sign-name');
+    const plateHead = document.querySelector('.orr__head');
+
+    function fitName() {
+      const mobile = matchMedia('(max-width: 980px)').matches;
+      const max = mobile ? 66 : Math.min(150, window.innerWidth * .105);
+      nameEl.style.fontSize = `${max}px`;
+      const room = plateHead.clientWidth;
+      const need = nameEl.scrollWidth;
+      if (need > room) nameEl.style.fontSize = `${Math.floor(max * room / need * .98)}px`;
+    }
+
+    function render(sign, { turn = true, animate = true } = {}) {
+      const changed = sign !== current;
+      current = sign;
+      document.documentElement.style.setProperty('--sign', sign.hue);
+      if (turn) setRot(nearestRotFor(sign), animate);
+      discs.querySelectorAll('.dial__disc').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.slug === sign.slug)));
+      ringSvg.querySelectorAll('.seg').forEach((p) => p.classList.toggle('is-on', p.dataset.seg === sign.slug));
+
+      nameEl.textContent = sign.name;
+      fitName();
+      document.querySelector('[data-dates]').textContent = sign.datesLong;
+      document.querySelector('[data-facts]').textContent = `${sign.element[0].toUpperCase()}${sign.element.slice(1)} · ${sign.modality[0].toUpperCase()}${sign.modality.slice(1)} · ${sign.ruler}`;
+      document.querySelector('[data-bio]').textContent = sign.bio;
+      document.querySelector('[data-price]').textContent = fmtPrice(sign.price);
+      const delta = fmtChange(sign.change);
+      const deltaEl = document.querySelector('[data-delta]');
+      deltaEl.textContent = delta.text;
+      deltaEl.className = `delta ${delta.cls}`;
+      sparkline(document.querySelector('[data-spark]'), sign, { height: 52 });
+      document.querySelector('[data-actions]').innerHTML = `${fomoButton(sign)}<a class="btn" href="${sign.registry}">Explore ${esc(sign.name)}</a>`;
+      document.querySelector('[data-howto]').href = sign.howToBuy;
+      document.querySelector('[data-snap]').textContent = snapshotLabel();
+      renderRecord(sign);
+
+      if (changed || !front.src) {
+        const back = front === figA ? figB : figA;
+        back.src = art.figure(sign.slug, 1024);
+        back.alt = figureAlt(sign);
+        const swap = () => { back.classList.remove('is-out'); front.classList.add('is-out'); front.alt = ''; front = back; };
+        back.decode().then(swap, swap);
+      }
+      const starsHost = document.querySelector('[data-stars]');
+      starsHost.classList.add('is-swapping');
+      loadStars(sign.slug).then((svg) => {
+        setTimeout(() => { starsHost.innerHTML = svg; starsHost.classList.remove('is-swapping'); }, animate && !reducedMotion ? 260 : 0);
+      });
+      const url = new URL(location.href);
+      url.searchParams.set('sign', sign.slug);
+      history.replaceState(null, '', url);
+    }
+
+    discs.addEventListener('click', (event) => {
+      const button = event.target.closest('.dial__disc');
+      if (button && !dragMoved) render(bySlug[button.dataset.slug]);
+    });
+    const step = (n) => render(SIGNS[(SIGNS.indexOf(current) + n + 12) % 12]);
+    document.querySelectorAll('[data-step]').forEach((b) => b.addEventListener('click', () => step(Number(b.dataset.step))));
+    document.addEventListener('keydown', (event) => {
+      if (event.target.closest('input, textarea')) return;
+      if (event.key === 'ArrowRight') { step(1); event.preventDefault(); }
+      if (event.key === 'ArrowLeft') { step(-1); event.preventDefault(); }
+    });
+
+    /* Drag to turn: follows the pointer, then settles on the nearest sign. */
+    let dragging = false; let dragMoved = false; let startAngle = 0; let startRot = 0; let lastIndex = -1;
+    const angleAt = (event) => {
+      const box = dial.getBoundingClientRect();
+      return Math.atan2(event.clientY - (box.top + box.height / 2), event.clientX - (box.left + box.width / 2)) * 180 / Math.PI;
+    };
+    dial.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      dragging = true; dragMoved = false;
+      startAngle = angleAt(event); startRot = rot;
+    });
+    window.addEventListener('pointermove', (event) => {
+      if (!dragging) return;
+      let delta = angleAt(event) - startAngle;
+      if (delta > 180) delta -= 360;
+      if (delta < -180) delta += 360;
+      if (!dragMoved && Math.abs(delta) < 3) return;
+      if (!dragMoved) { dragMoved = true; dial.classList.add('is-dragging'); dial.setPointerCapture?.(event.pointerId); }
+      setRot(startRot + delta, false);
+      const index = ((Math.round((-rot - 15) / 30) % 12) + 12) % 12;
+      if (index !== lastIndex) { lastIndex = index; render(SIGNS[index], { turn: false }); }
+    });
+    window.addEventListener('pointerup', () => {
+      if (!dragging) return;
+      dragging = false;
+      dial.classList.remove('is-dragging');
+      if (dragMoved) { render(current); setTimeout(() => { dragMoved = false; }, 0); }
+    });
+
+    window.addEventListener('resize', fitName);
+    document.fonts.ready.then(fitName);
+    render(current, { animate: false });
+
+    /* ── Season ────────────────────────────────────────────────────────── */
+    const now = season(new Date());
+    const s = now.sign;
+    document.querySelector('[data-season-title]').textContent = `${s.name} season`;
+    document.querySelector('[data-season-lede]').textContent = `Day ${now.day} of ${now.days}. The Sun is at ${sky.text} today; the small marker on the dial above shows where.`;
+    const track = document.querySelector('[data-season-track]');
+    let marks = '';
+    for (let d = 0; d <= now.days; d += 1) marks += `<line x1="${(d / now.days * 1000).toFixed(1)}" x2="${(d / now.days * 1000).toFixed(1)}" y1="${d % 5 === 0 ? 8 : 16}" y2="30" stroke="rgba(198,204,218,${d % 5 === 0 ? .4 : .18})" vector-effect="non-scaling-stroke"></line>`;
+    const px = Math.max(0.004, now.progress) * 1000;
+    track.innerHTML = `<svg viewBox="0 0 1000 44" preserveAspectRatio="none" role="img" aria-label="${esc(`${s.name} season, day ${now.day} of ${now.days}`)}">
+      ${marks}
+      <line x1="0" x2="1000" y1="30" y2="30" stroke="rgba(198,204,218,.28)" vector-effect="non-scaling-stroke"></line>
+      <line x1="0" x2="${px.toFixed(1)}" y1="30" y2="30" stroke="${s.hue}" stroke-width="3" vector-effect="non-scaling-stroke"></line>
+    </svg><span style="position:absolute;left:${(px / 10).toFixed(2)}%;top:30px;width:12px;height:12px;border-radius:50%;background:var(--void-0);border:2px solid ${s.hue};transform:translate(-50%,-50%)"></span>`;
+    document.querySelector('[data-season-legend]').innerHTML = `<span>${fmtDay(now.from)}</span><span>Today</span><span>${fmtDay(now.to)}</span>`;
+    document.querySelector('[data-season-facts]').innerHTML = `
+      <p><span>Began</span><span>The Sun entered ${s.name} on ${fmtDay(now.from, { long: true })} at ${fmtUtcTime(now.from)}.</span></p>
+      ${now.next ? `<p><span>Next</span><span>It moves into ${now.next.sign.name} on ${fmtDay(now.next.from, { long: true })} at ${fmtUtcTime(now.next.from)}.</span></p>` : ''}`;
+    if (now.next) {
+      const next = now.next.sign;
+      const btn = document.querySelector('[data-season-next]');
+      btn.style.setProperty('--sign', next.hue);
+      btn.innerHTML = `<span class="kicker">Next season</span><img src="${art.figure(next.slug, 512)}" width="512" height="512" alt="${esc(figureAlt(next))}" loading="lazy"><h3>${esc(next.name)}</h3><span class="muted" style="font-size:14px">${esc(next.datesLong)}</span><span class="link-arrow" style="font-size:13.5px">Turn the dial to ${esc(next.name)} ↑</span>`;
+      btn.style.cursor = 'pointer';
+      btn.style.color = 'inherit';
+      btn.addEventListener('click', () => { render(next); document.getElementById('top').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' }); });
+    }
+
+    /* ── fomo, shop, record, standings, FAQ ────────────────────────────── */
+    document.querySelector('[data-inapp-title]').innerHTML = `All twelve are in the ${fomoWord()} app.`;
+    document.querySelector('[data-stores]').innerHTML = storeBadges();
+    document.querySelectorAll('video[data-lazy]').forEach(lazyVideo);
+
+    document.querySelector('[data-shop]').innerHTML = [DATA.shop[2], DATA.shop[1], DATA.shop[0]].map((item) => `
+      <a class="product reveal" href="${item.href}" rel="external noopener"><img src="${art.merch(item.image)}" width="800" height="892" alt="${esc(item.name)}" loading="lazy"><span>${esc(item.name)}<span aria-hidden="true">↗</span></span></a>`).join('');
+
+    function renderRecord(sign) {
+      document.querySelector('[data-record]').innerHTML = `
+        <div><dt>${esc(sign.name)} on Solana · origin</dt><dd>${sign.solana}</dd><button type="button" data-copy="${sign.solana}">Copy</button></div>
+        <div><dt>${esc(sign.name)} on Base · counterpart</dt><dd>${sign.base}</dd><button type="button" data-copy="${sign.base}">Copy</button></div>
+        <div><dt>Full record</dt><dd style="font-family:var(--sans)"><a href="${sign.registry}">zodiacs.org/registry/${sign.slug}/</a></dd><span></span></div>`;
+      document.querySelector('[data-try]').innerHTML = `<button type="button" data-fill="${sign.solana}">${esc(sign.name)} on Solana</button><button type="button" data-fill="So11111111111111111111111111111111111111112">A different token</button>`;
+    }
+    document.addEventListener('click', (event) => {
+      const copy = event.target.closest('[data-copy]');
+      if (copy) { navigator.clipboard?.writeText(copy.dataset.copy); copy.textContent = 'Copied'; setTimeout(() => { copy.textContent = 'Copy'; }, 1400); }
+      const fill = event.target.closest('[data-fill]');
+      if (fill) { document.getElementById('addr').value = fill.dataset.fill; document.querySelector('[data-checker]').requestSubmit(); }
+    });
+    document.querySelector('[data-checker]').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const out = document.querySelector('[data-out]');
+      const result = checkAddress(document.getElementById('addr').value);
+      out.className = 'checker__out';
+      if (result.state === 'match') {
+        out.classList.add('is-match');
+        out.style.setProperty('--sign', result.sign.hue);
+        out.innerHTML = `<img src="${art.disc(result.sign.slug, 128)}" alt=""><span>This is the official ${esc(result.sign.name)} address on ${result.chain} (the ${result.role}). <a href="${result.sign.registry}">Open the record →</a></span>`;
+      } else if (result.state === 'nomatch') {
+        out.classList.add('is-bad');
+        out.textContent = 'That address is not in the Registry. A token using it is not an official Zodiac, whatever its name or ticker says.';
+      } else if (result.state === 'invalid') {
+        out.classList.add('is-bad');
+        out.textContent = 'That does not look like a Solana mint or a Base contract address.';
+      } else {
+        out.textContent = 'Paste a complete address to check it.';
+      }
+    });
+
+    const maxCap = Math.max(...SIGNS.map((x) => x.marketCap ?? 0));
+    document.querySelector('[data-board]').innerHTML = [...SIGNS].sort((a, b) => a.rank - b.rank).map((sign) => {
+      const delta = fmtChange(sign.change, { words: false });
+      return `<tr data-sign="${sign.slug}" tabindex="0" aria-label="${esc(`${sign.name}, rank ${sign.rank}. Turn the dial to ${sign.name}.`)}">
+        <td class="rank">${String(sign.rank).padStart(2, '0')}</td>
+        <td class="who"><span><img src="${art.disc(sign.slug, 48)}" width="48" height="48" alt="">${esc(sign.name)}</span></td>
+        <td class="bar"><i style="width:${((sign.marketCap ?? 0) / maxCap * 100).toFixed(1)}%"></i></td>
+        <td class="num">${fmtCompact(sign.marketCap)}</td>
+        <td class="chg"><span class="delta ${delta.cls}">${delta.text}</span></td>
+      </tr>`;
+    }).join('');
+    document.querySelector('[data-board]').addEventListener('click', (event) => {
+      const row = event.target.closest('[data-sign]');
+      if (!row) return;
+      render(bySlug[row.dataset.sign]);
+      document.getElementById('top').scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+    document.querySelector('[data-board-note]').textContent = `Ranked by reported market cap. ${snapshotLabel()}. Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.`;
+
+    mountFaq(document.querySelector('[data-faq]'));
+    mountEnding(document.getElementById('ending'));
+    document.querySelector('[data-credit]').textContent = `Prototype. ${STAR_CREDIT} Prices: ${snapshotLabel()}.`;
+    reveal();
+    protoChrome('Option A · The Orrery');
+  </script>
+</body>
+</html>
