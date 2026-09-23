@@ -321,7 +321,9 @@ function birthplaceMeanTime(
   // A longitude hours away from the zone's own mean time belongs to another
   // zone; leave such an input to the zone alone rather than invent a clock.
   const eraSample = Math.min(wallMs, endMs - 1);
-  if (Math.abs(meanOffset(eraSample) - eraOffset(eraSample)) > MAX_MEAN_TIME_DEPARTURE_MINUTES) return null;
+  // In whole seconds, so a departure of exactly the bound is treated alike in every zone.
+  const departure = Math.abs(Math.round(meanOffset(eraSample) * 60) - Math.round(eraOffset(eraSample) * 60));
+  if (departure > MAX_MEAN_TIME_DEPARTURE_MINUTES * 60) return null;
 
   // The host's data lacks backzone, and can record the change out of the era
   // later than the table does, with another city's offset in between. If the
@@ -357,7 +359,16 @@ function birthplaceMeanTime(
     const chosen = readings[0];
     return { chosen, flags: readings.length > 1 ? ['dst-fold'] : [], inEra: chosen.utcMs < endMs };
   }
-  // Skipped: apply the offset the birthplace's clock showed just before.
-  const utcMs = wallMs - Math.round(clockAt(wallMs - probe) * 60_000);
+  // Skipped: the clock jumped over this wall time. Find the jump, and apply
+  // the offset the birthplace's clock showed just before it.
+  const wallOf = (utcMs: number): number => utcMs + Math.round(clockAt(utcMs) * 60_000);
+  let lo = wallMs - probe - 86_400_000;
+  let hi = wallMs + probe + 86_400_000;
+  while (hi - lo > 1) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (wallOf(mid) > wallMs) hi = mid;
+    else lo = mid;
+  }
+  const utcMs = wallMs - Math.round(clockAt(lo) * 60_000);
   return { chosen: { utcMs, offset: clockAt(utcMs) }, flags: ['dst-gap'], inEra: utcMs < endMs };
 }

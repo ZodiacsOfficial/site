@@ -194,6 +194,13 @@ describe('birthplace local mean time', () => {
     expect(resolved.localMeanTime?.longitude).toBe(38.75);
   });
 
+  it('bounds the departure in whole seconds, alike in every zone', () => {
+    // 29.008333° W is exactly 180 minutes from New York's mean time.
+    expect(resolveLocalToUtc('1883-11-17', '09:03', 'America/New_York', { longitude: -29.008333333333333 }).localMeanTime)
+      .toBeDefined();
+    expect(resolveLocalToUtc('1883-11-17', '09:03', 'America/New_York', { longitude: -29 }).localMeanTime).toBeUndefined();
+  });
+
   it('ignores a longitude hours away from the zone, as a birthplace in another zone', () => {
     // Toronto's longitude under Juneau's zone is 3 h 40 min from Juneau's mean time.
     const resolved = resolveLocalToUtc('1867-10-18', '12:00', 'America/Juneau', { longitude: -79.38 });
