@@ -20,6 +20,16 @@ Two consequences, both acted on:
    `CONFIGURATION.md` records their sizes and SHA-256 so a reader can confirm
    they fetched the same bytes, which is not the same thing as redistributing
    them.
+
+   **Correction, 2026-09-23.** This holds for Swiss code and data files, and
+   not for Swiss output, which is committed as measurements and test oracles:
+   three raw files under `../precision-2026-09-20/numerics/`, five oracle
+   fixtures under `src/lib/engine/fixtures/`, and differences from which
+   Swiss's values can be recovered, in this directory's `report-*.json` and in
+   `../events-vs-swiss-2026-09-23/deltas.json`.
+   [`../precision-2026-09-20/METADATA-CORRECTION.md`](../precision-2026-09-20/METADATA-CORRECTION.md)
+   lists them with the owner decision they wait on (the engine audit,
+   data-toolchain-packaging-6). None is used as a fitting target.
 2. **No Swiss output is used as a fitting target.** Swiss appears here only as
    a *measuring instrument*. Fitting an approximation to Swiss output and then
    presenting the result as independent physical accuracy would be circular,

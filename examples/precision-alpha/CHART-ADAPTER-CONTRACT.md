@@ -70,6 +70,15 @@ The frame is the **same frame** the of-date and deflected experimental
 modes use. That is the one place the two stacks already agree, and it is
 worth saying because it is the only one.
 
+*Correction, 2026-09-23.* The same frame definition, not the same model.
+`astronomy-engine`'s nutation keeps five of the 77 IAU 2000B terms
+(`iau2000b` in `astronomy.js`), where the experimental modes use all 77,
+adjusted to P03 (`src/core/frame-of-date.mjs`). A longitude comparison
+between the two stacks therefore includes a nutation-model difference this
+contract does not budget for (the engine audit's
+`docs/platform/evidence/engine-audit-2026-09-22/LEDGER.md`,
+alpha-search-partition-13).
+
 ### The other three bodies do not go through that path at all
 
 `computeBodies` assembles twelve bodies from three different routes, and
@@ -162,6 +171,14 @@ than hiding them in one number:
   `uncertainty.timeScale.conversionApproximation.inducedLongitudeArcsec` —
   1.15e-10 arcsec on the cross-runtime fixture. Keep that reporting shape.
 
+*Correction, 2026-09-23.* The second bullet has the split backwards: leap
+seconds exist only from 1972. From 1972-01-01, UTC → TT is exact, TT = UTC +
+(TAI − UTC) + 32.184 s, with TAI − UTC from the leap-second table. Before
+1972, civil time is taken as UT and TT comes from ΔT. After 1972, ΔT is
+needed only for UT1, which sidereal time and so the houses use: UT1 = UTC +
+(UT1 − UTC) from the IERS, never more than 0.9 s either way (LEDGER.md,
+time-8).
+
 ### 2.3 Bodies
 
 The chart's twelve are not the package's ten:
@@ -176,6 +193,13 @@ so a deflection step applied to them would be a light-bending correction to
 something that emits no light. Refuse, do not approximate. The Moon is the
 opposite problem — it is in both, and production computes it without the
 two corrections it applies to everything else.
+
+*Correction, 2026-09-23.* Refusing the deflection step for the nodes is
+right, but a chart cannot leave out two of its twelve bodies. The pack's
+Moon state gives the true node by the construction production already uses
+(§1: from the cross product of the geocentric Moon's position and velocity),
+so an adapter should compute them from it and say so in a provenance field
+of their own (alpha-search-partition-13).
 
 ### 2.4 What point each source means by "Jupiter"
 
@@ -433,6 +457,12 @@ The chart's own contract, which the package cannot enforce:
 6. **Preserve the twelve-body order** (§1). The array is positional at the
    engine boundary, so a reordering is a silent data corruption rather
    than a type error.
+
+*Correction, 2026-09-23.* This list names no policy for instants outside
+the pack's coverage (1849-12-25 to 2150-01-21 for `c9ebc641…`), and
+production computes any date. An adapter needs one, stated per body like
+the rung selector: refuse, or answer from the production path and record
+that it did (alpha-search-partition-13).
 
 ### 5.3 What stays out, and stays out on purpose
 

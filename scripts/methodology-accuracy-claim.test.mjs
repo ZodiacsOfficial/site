@@ -24,7 +24,7 @@
  * mutations, and the ones that suggested themselves while fixing them, fail
  * here.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { DeltaT_EspenakMeeus } from 'astronomy-engine';
 import { describe, expect, it } from 'vitest';
@@ -218,7 +218,13 @@ describe('the accuracy claim on /methodology/', () => {
     // The Moon does not go through the light-time and aberration pass the
     // planets do: @zodiacs/engine calls EclipticGeoMoon, astronomy-engine's
     // own lunar path, which applies nutation and nothing else of the three.
-    const engineSource = read('node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js');
+    // Every emitted file, not one hashed chunk: a new engine build renames
+    // its chunks, and the test must follow the code rather than the name.
+    const engineDist = 'node_modules/@zodiacs/engine/dist';
+    const engineSource = readdirSync(resolve(root, engineDist))
+      .filter((name) => name.endsWith('.js'))
+      .map((name) => read(`${engineDist}/${name}`))
+      .join('\n');
     expect(engineSource).toMatch(/EclipticGeoMoon\(/u);
     expect(engineSource).toMatch(/GeoVector\(body, time, true\)/u);
     expect(prose).toMatch(/The Moon is the exception/u);

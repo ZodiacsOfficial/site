@@ -103,6 +103,12 @@ Boundary width, as a fraction of each 300-day window:
 | F9 / A9 Neptune | 0.017 % | 2 | 42.2 s |
 | F1, F6, F10 and antipodes | 0 % | 0 | — |
 
+*Correction, 2026-09-23.* The last column is the widest floor cell, not the
+widest span. Coalesced, the boundary spans run 2,489 to 2,658 s for Saturn
+and 11,264 to 12,192 s for Mars, and the Moon's ten total 15.8 days
+(`docs/platform/evidence/engine-audit-2026-09-22/CRITIC.md`, on
+alpha-search-partition-3).
+
 Eighteen of twenty are an order of magnitude inside the 1 % target. The
 Moon is five times outside it, and the reason is measurable rather than
 mysterious.
@@ -339,6 +345,17 @@ guard and fires first, so the guard is a redundant backstop rather than a
 live check. It is pinned indirectly, through the ordering it depends on.
 `docs/platform/evidence/precision-partition/review/REVIEW.md` records that
 and the rest of what the two bounded reviews found.
+
+*Correction, 2026-09-23.* "Each was confirmed by a mutation" is recorded for
+eleven of the forty-two: the tests in
+`test/tier-a/partitioned-search.nodetest.mjs` name their mutation, and the
+thirty-one in the other three files carry no mutation record anywhere in the
+tree. One of the eleven does not hold. Replacing the `&& unprocessedTotal ===
+0` conjunct of `completeOverRequest` with `&& true` still passes 42 of 42,
+because the conjunct before it already requires a finished run. The code is
+not wrong, since that conjunct is redundant, but the sentence about the tests
+was (`docs/platform/evidence/engine-audit-2026-09-22/LEDGER.md`,
+verification-honesty-4).
 
 **That a faster search is a better one.** Nothing here measures accuracy.
 `DEFLECTION-RESULTS.md` records **FAIL** at six of twenty, and that verdict
