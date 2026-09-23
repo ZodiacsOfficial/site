@@ -170,7 +170,9 @@ come from the host. Checked: the table against that release, by
 by hand rather than in CI, while tests pin ten era ends and the generator's
 rules. Tested: every wall minute within 26 hours of sixteen era ends, for
 twenty-one towns east and west of the reference meridian, against a separate
-model of the birthplace clock, with receipts validated; the date-line days of
+model of the birthplace clock, with receipts validated; at each of the 338
+era ends (of 518) where the host's history agrees with the table, the zone's
+own meridian giving exactly the zone clock's answer around the change; the date-line days of
 Alaska, Manila, Pohnpei and Apia inside eras; a bound that ignores a longitude
 more than three hours from the zone's mean time. Not established:
 agreement with other programs' era ends. And after the era the legal history
