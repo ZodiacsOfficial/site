@@ -99,7 +99,7 @@ export default function BigThreeQuick() {
     setCardState('idle');
     setCardError('');
     try {
-      await prepareLocalTime(date);
+      await prepareLocalTime(date, city.tz);
       const resolution = resolveLocalToUtc(date, time, city.tz, { longitude: city.lon });
       const engine = await loadEngine();
       if (run !== generation.current) return;

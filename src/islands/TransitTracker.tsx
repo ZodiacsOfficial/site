@@ -276,7 +276,9 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       const [engine, mod] = await Promise.all([
         loadEngine(),
         ringMod ? Promise.resolve(ringMod) : loadModule(() => import('./transit/TransitRing')),
-        prepareLocalTime(capturedSlot.source === 'saved' && capturedChart ? capturedChart.birth.date : capturedSlot.date),
+        capturedSlot.source === 'saved' && capturedChart
+          ? prepareLocalTime(capturedChart.birth.date, capturedChart.birth.place?.tz ?? 'UTC')
+          : prepareLocalTime(capturedSlot.date, capturedSlot.city!.tz),
       ]);
       if (!isCurrent()) return;
       if (capturedSlot.source === 'saved' && !capturedChart) return;

@@ -3,17 +3,17 @@ import { parseNatalEnvelope } from '@zodiacs/engine/receipt';
 import lmtEras from '../../data/tz-lmt.json';
 import { computeCalculatorReceipt } from '../engine/calculator-receipt';
 import { offsetAt, prepareLocalTime, resolveLocalToUtc } from './localToUtc';
+import { loadZoneHistory, type ZoneHistory } from './tz-history-load';
 
 /*
  * Every wall minute within 26 hours of a zone's local mean time era end,
  * for towns east and west of the zone's reference meridian (and the
  * reference city itself), checked against a separate model of the
  * birthplace's clock: before the end, wall = t + the town's mean time; from
- * the end, wall = t + the zone's legal offset from Intl, except that where
- * Intl records the change up to 36 hours late, its later offset applies from
- * the end. One reading is the
- * answer; two are a fold and take the earlier with `dst-fold`; none is a gap,
- * moved forward by the offset in force just before, with `dst-gap`. Sampled
+ * the end, wall = t + the zone's legal offset, which before 1970 is the
+ * pinned release's (src/data/tz-history/). One reading is the answer; two
+ * are a fold and take the earlier with `dst-fold`; none is a gap, moved
+ * forward by the offset in force just before, with `dst-gap`. Sampled
  * results must also make portable receipts that validate.
  */
 const eras: Record<string, number> = lmtEras.eras;
@@ -43,22 +43,15 @@ const CASES: [zone: string, town: string, longitude: number][] = [
   ['Africa/Cairo', 'Armant', 32.54],
 ];
 
-/** The first instant within 36 h after the era end at which Intl's offset changes, or the end itself. */
-function catchUp(zone: string, endMs: number): number {
-  const atEnd = offsetAt(zone, endMs);
-  for (let t = endMs; t <= endMs + 36 * 3_600_000; t += 60_000) {
-    if (offsetAt(zone, t) !== atEnd) {
-      let lo = t - 60_000;
-      let hi = t;
-      while (hi - lo > 1) {
-        const mid = Math.floor((lo + hi) / 2);
-        if (offsetAt(zone, mid) === atEnd) lo = mid;
-        else hi = mid;
-      }
-      return hi;
-    }
-  }
-  return endMs;
+const histories = new Map<string, ZoneHistory>();
+
+/** The legal offset in minutes at an instant: the pinned history's before 1970, Intl's after. */
+function legalOffset(zone: string, t: number): number {
+  const history = histories.get(zone);
+  if (!history || t >= 0) return offsetAt(zone, t);
+  let index = 0;
+  while (index < history.t.length && history.t[index] * 1000 <= t) index += 1;
+  return history.o[index] / 60;
 }
 
 function wallParts(ms: number): [string, string] {
@@ -67,14 +60,19 @@ function wallParts(ms: number): [string, string] {
 }
 
 describe('the birthplace clock at the end of its local mean time era', () => {
-  beforeAll(() => prepareLocalTime('1800-01-01'));
+  beforeAll(async () => {
+    for (const [zone] of CASES) {
+      await prepareLocalTime('1800-01-01', zone);
+      histories.set(zone, (await loadZoneHistory(zone))!);
+    }
+  });
 
   it.each(CASES)('%s: %s', (zone, _town, longitude) => {
     const endMs = eras[zone] * 1000;
-    const legalFrom = catchUp(zone, endMs);
-    const legalAt = (t: number) => offsetAt(zone, Math.max(t, legalFrom));
+    const legalFrom = endMs;
+    const legalAt = (t: number) => legalOffset(zone, Math.max(t, legalFrom));
     const meanSeconds = Math.round(longitude * 240);
-    const zoneBefore = offsetAt(zone, endMs - 1000) * 60;
+    const zoneBefore = legalOffset(zone, endMs - 1000) * 60;
     const place = (meanSeconds + Math.round((zoneBefore - meanSeconds) / 86_400) * 86_400) / 60;
     const endWall = endMs + Math.round(place * 60_000);
     const start = Math.floor((endWall - 26 * 3_600_000) / 60_000) * 60_000;

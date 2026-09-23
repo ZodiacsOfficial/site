@@ -9,8 +9,9 @@ const input = (): LunarReturnComputeInput => ({ birthDate: '1990-02-01', birthTi
   birthplace: { ...place }, houseSystem: 'placidus', castLocation: null });
 
 describe('lunar return complete-input caller', () => {
-  // The calculator awaits this before computing; the table covers every early date here.
-  beforeAll(() => prepareLocalTime('1799-12-31'));
+  // The calculator awaits this before computing, for each birthplace zone used here.
+  beforeAll(() => Promise.all(['Etc/UTC', 'America/New_York', 'America/Mexico_City', 'Africa/Cairo']
+    .map((zone) => prepareLocalTime('1799-12-31', zone))));
   it('resolves original birth input and preserves the submitted reference', () => {
     const result = computeLunarReturn(input(), after);
     expect(result.chart).toEqual(lunarReturnChart({ utc: new Date('1990-02-01T12:00:00Z'), latitude: 0, longitude: 0, houseSystem: 'placidus', timeKnown: true, flags: [] }, after));

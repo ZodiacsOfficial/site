@@ -41,12 +41,12 @@ export async function resolveSavedChart(
   const current = currentSavedCalculation(chart.summary.engineVersion);
 
   try {
-    const [engine, { localMeanTimeCanApply, prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
+    const [engine, { birthplaceTimeCanApply, prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
       current ? null : loadEngine(),
       import('../time/localToUtc'),
     ]);
-    if (current && !localMeanTimeCanApply(chart.birth.date)) return stored;
-    await prepareLocalTime(chart.birth.date);
+    if (current && !birthplaceTimeCanApply(chart.birth.date)) return stored;
+    await prepareLocalTime(chart.birth.date, place.tz);
     const resolved = resolveLocalToUtc(
       chart.birth.date,
       chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',

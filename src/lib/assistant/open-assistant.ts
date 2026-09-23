@@ -798,8 +798,8 @@ export async function placementSummaryForChart(chart: StoredChart): Promise<stri
       const [{ computeChart }, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
         import('../engine/full'), import('../time/localToUtc'),
       ]);
-      await prepareLocalTime(chart.birth.date);
       const place = chart.birth.place!;
+      await prepareLocalTime(chart.birth.date, place.tz);
       const resolved = resolveLocalToUtc(chart.birth.date, chart.birth.time!, place.tz, { longitude: place.lon });
       const computed = computeChart({
         utc: resolved.utc, latitude: place.lat, longitude: place.lon,

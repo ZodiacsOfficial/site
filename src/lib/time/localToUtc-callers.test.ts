@@ -4,12 +4,13 @@ import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
 
 /*
- * A birthplace longitude makes an early date need the local mean time table,
- * and resolving without it throws. So every production call that passes a
- * longitude must follow an awaited prepareLocalTime of the same date in the
- * same function, or sit in a module that re-exports the preparation to the
- * islands that await it; and the longitude must be a place's `.lon`. Calls
- * without a longitude keep the zone clock, and each is listed with a reason.
+ * A birthplace longitude makes an early date need the local mean time table
+ * and the zone's pinned history, and resolving without them throws. So every
+ * production call that passes a longitude must follow an awaited
+ * prepareLocalTime of the same date and zone in the same function, or sit in
+ * a module that re-exports the preparation to the islands that await it; and
+ * the longitude must be a place's `.lon`. Calls without a longitude keep the
+ * host's clock, and each is listed with a reason.
  */
 const root = resolve(process.cwd(), 'src');
 
@@ -99,23 +100,26 @@ describe('callers of resolveLocalToUtc', () => {
         if (!/\.lon$/.test(longitude.getText())) problems.push(`${where} passes ${longitude.getText()} as the longitude`);
         if (PREPARED_BY[path]) continue;
         const date = call.arguments[0].getText();
+        const zone = call.arguments[2].getText();
         const scope = enclosingFunction(call);
         const prepared = calls(scope, 'prepareLocalTime')
-          .some((prepare) => prepare.arguments[0]?.getText() === date && awaitedBefore(prepare, call.getStart()));
+          .some((prepare) => prepare.arguments[0]?.getText() === date && prepare.arguments[1]?.getText() === zone
+            && awaitedBefore(prepare, call.getStart()));
         // A named helper is prepared for when every call of it follows an
         // awaited preparation in its caller (TransitTracker's natal helpers).
         const helper = ts.isFunctionDeclaration(scope) && scope.name ? scope.name.text : null;
         const uses = helper ? calls(file, helper) : [];
         const preparedByCallers = uses.length > 0 && uses.every((use) => calls(enclosingFunction(use), 'prepareLocalTime')
-          .some((prepare) => awaitedBefore(prepare, use.getStart())));
-        if (!prepared && !preparedByCallers) problems.push(`${where} has no awaited prepareLocalTime(${date}) before it`);
+          .some((prepare) => prepare.arguments.length === 2 && awaitedBefore(prepare, use.getStart())));
+        if (!prepared && !preparedByCallers) problems.push(`${where} has no awaited prepareLocalTime(${date}, ${zone}) before it`);
       }
     }
     for (const [module, islands] of Object.entries(PREPARED_BY)) {
       if (!/export \{ prepareLocalTime \}/.test(readFileSync(resolve(root, module), 'utf8'))) problems.push(`${module} does not re-export prepareLocalTime`);
       for (const island of islands) {
         const file = parse(island, readFileSync(resolve(root, island), 'utf8'));
-        if (!calls(file, 'prepareLocalTime').some((prepare) => awaitedBefore(prepare, Number.POSITIVE_INFINITY))) {
+        if (!calls(file, 'prepareLocalTime').some((prepare) => prepare.arguments.length === 2
+          && awaitedBefore(prepare, Number.POSITIVE_INFINITY))) {
           problems.push(`${island} does not await prepareLocalTime`);
         }
       }

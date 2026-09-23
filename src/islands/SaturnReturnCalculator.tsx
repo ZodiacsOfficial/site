@@ -54,7 +54,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
     setBusy(true);
     setError('');
     try {
-      const [returns] = await Promise.all([loadReturns(), showDetail && city ? prepareLocalTime(date) : null]);
+      const [returns] = await Promise.all([loadReturns(), showDetail && city ? prepareLocalTime(date, city.tz) : null]);
       if (run !== generation.current) return;
       const utc = showDetail && city
         ? resolveLocalToUtc(date, time || '12:00', city.tz, { longitude: city.lon }).utc

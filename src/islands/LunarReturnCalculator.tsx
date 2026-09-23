@@ -120,7 +120,7 @@ export default function LunarReturnCalculator() {
       const [{ computeLunarReturn, prepareLocalTime }, view, wheel] = await loadModule(() => Promise.all([
         import('./lunar-return/compute'), import('./lunar-return/LunarReturnResult'), import('./transit/TransitRing'),
       ]));
-      await prepareLocalTime(input.birthDate);
+      await prepareLocalTime(input.birthDate, input.birthplace?.tz ?? 'UTC');
       if (!isCurrent()) return;
       const data = computeLunarReturn(input, after);
       if (!isCurrent()) return;

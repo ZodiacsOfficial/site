@@ -1,16 +1,18 @@
 import { beforeAll, describe, expect, it } from 'vitest';
 import lmtTable from '../../data/tz-lmt.json';
 import { offsetAt, prepareLocalTime, resolveLocalToUtc } from './localToUtc';
+import { loadZoneHistory } from './tz-history-load';
 
 /*
  * A town on its zone's own reference meridian keeps the zone's clock. So at
- * every era end where the host's history agrees with the table (the same
- * mean time before, a change at the same instant, and no second change
- * within 36 hours), resolving with the zone's own mean-time longitude must
- * give exactly what resolving without a longitude gives: the same instant,
- * offset and flags, for every wall time around the change. Wall minutes are
- * checked one by one across the jump and an hour either side, and every
- * half hour elsewhere within 26 hours of the end.
+ * every era end where the host's history agrees with the table and with the
+ * pinned history (the same mean time before, a change at the same instant,
+ * no second change within 36 hours, and the same offsets for three days
+ * either side), resolving with the zone's own mean-time longitude must give
+ * exactly what resolving without a longitude gives: the same instant, offset
+ * and flags, for every wall time around the change. Wall minutes are checked
+ * one by one across the jump and an hour either side, and every half hour
+ * elsewhere within 26 hours of the end.
  */
 const table = lmtTable as unknown as {
   eras: Record<string, number>;
@@ -40,16 +42,29 @@ function wallParts(ms: number): [string, string] {
 }
 
 const zones = Object.keys(table.eras).filter(supported);
-const agreeing = zones.filter((zone) => {
-  const endMs = table.eras[zone] * 1000;
-  const before = offsetAt(zone, endMs - 1);
-  const after = offsetAt(zone, endMs);
-  return Math.round(before * 60) === eraSeconds(zone, endMs) && after !== before
-    && offsetAt(zone, endMs + 36 * 3_600_000) === after;
-});
+let agreeing: string[] = [];
 
 describe('the birthplace clock on its zone\'s own meridian', () => {
-  beforeAll(() => prepareLocalTime('1800-01-01'));
+  beforeAll(async () => {
+    agreeing = [];
+    for (const zone of zones) {
+      await prepareLocalTime('1800-01-01', zone);
+      const history = await loadZoneHistory(zone);
+      if (!history) continue;
+      const endMs = table.eras[zone] * 1000;
+      const before = offsetAt(zone, endMs - 1);
+      const after = offsetAt(zone, endMs);
+      if (Math.round(before * 60) !== eraSeconds(zone, endMs) || after === before
+        || offsetAt(zone, endMs + 36 * 3_600_000) !== after) continue;
+      let pinnedAgrees = true;
+      for (let t = endMs - 3 * 86_400_000; t <= endMs + 3 * 86_400_000 && pinnedAgrees; t += 10 * 60_000) {
+        let index = 0;
+        while (index < history.t.length && history.t[index] * 1000 <= t) index += 1;
+        pinnedAgrees = history.o[index] === Math.round(offsetAt(zone, t) * 60);
+      }
+      if (pinnedAgrees) agreeing.push(zone);
+    }
+  }, 120_000);
 
   it('covers most era ends', () => {
     expect(agreeing.length).toBeGreaterThan(300);

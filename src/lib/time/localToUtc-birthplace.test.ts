@@ -21,7 +21,12 @@ const MANILA = 120.98;
 const minutes = (h: number, m: number, s: number) => Math.sign(h || m || s) * (Math.abs(h) * 60 + m + s / 60);
 
 describe('birthplace local mean time', () => {
-  beforeAll(() => prepareLocalTime('1800-01-01'));
+  beforeAll(() => Promise.all([
+    'Africa/Addis_Ababa', 'America/Anchorage', 'America/Chicago', 'America/Juneau', 'America/Kralendijk',
+    'America/Mexico_City', 'America/New_York', 'Asia/Manila', 'Asia/Shanghai', 'Europe/Dublin', 'Europe/Isle_of_Man',
+    'Europe/Lisbon', 'Europe/Oslo', 'Europe/Paris', 'Indian/Kerguelen', 'Pacific/Apia', 'Pacific/Kiritimati',
+    'Pacific/Midway', 'Pacific/Pohnpei', 'UTC', 'Etc/GMT+5',
+  ].map((zone) => prepareLocalTime('1800-01-01', zone))));
 
   it.each([
     // The three towns the engine review measured, each 19–33 minutes from
@@ -83,7 +88,9 @@ describe('birthplace local mean time', () => {
     const resolved = resolveLocalToUtc('1894-06-15', '12:00', 'Europe/Oslo', { longitude: BERGEN });
     expect(resolved.utc.toISOString()).toBe('1894-06-15T11:38:43.000Z');
     expect(resolved.offsetMinutes).toBeCloseTo(minutes(0, 21, 17), 9);
-    expect(resolved.localMeanTime?.zoneOffsetMinutes).toBeCloseTo(offsetAt('Europe/Oslo', Date.UTC(1894, 5, 15, 11)), 9);
+    // The zone's own clock is Oslo's mean time from the pinned history, not Berlin's +1:00.
+    expect(offsetAt('Europe/Oslo', Date.UTC(1894, 5, 15, 11))).toBe(60);
+    expect(resolved.localMeanTime?.zoneOffsetMinutes).toBe(43);
     // A year later, Norway's legal time applies.
     const later = resolveLocalToUtc('1895-06-15', '12:00', 'Europe/Oslo', { longitude: BERGEN });
     expect(later.offsetMinutes).toBe(60);
@@ -146,7 +153,7 @@ describe('birthplace local mean time', () => {
 
   it('loads the table for 1953 dates, the last year an era can reach', async () => {
     const fresh = await import('./localToUtc?boundary' as string) as typeof import('./localToUtc');
-    await fresh.prepareLocalTime('1953-01-01');
+    await fresh.prepareLocalTime('1953-01-01', 'Pacific/Kiritimati');
     expect(() => fresh.resolveLocalToUtc('1953-01-01', '00:00', 'Pacific/Kiritimati', { longitude: -157.4 })).not.toThrow();
   });
 
@@ -155,9 +162,9 @@ describe('birthplace local mean time', () => {
     vi.doMock('../../data/tz-lmt.json', () => { throw new Error('offline'); });
     const fresh = await import('./localToUtc');
     const { ModuleLoadError } = await import('../module-load');
-    await expect(fresh.prepareLocalTime('1870-06-15')).rejects.toBeInstanceOf(ModuleLoadError);
+    await expect(fresh.prepareLocalTime('1870-06-15', 'America/New_York')).rejects.toBeInstanceOf(ModuleLoadError);
     vi.doUnmock('../../data/tz-lmt.json');
-    await expect(fresh.prepareLocalTime('1870-06-15')).resolves.toBeUndefined();
+    await expect(fresh.prepareLocalTime('1870-06-15', 'America/New_York')).resolves.toBeUndefined();
     expect(fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }).utc.toISOString())
       .toBe('1870-06-15T17:15:31.000Z');
     vi.resetModules();
@@ -167,10 +174,12 @@ describe('birthplace local mean time', () => {
     const fresh = await import('./localToUtc?unloaded' as string) as typeof import('./localToUtc');
     expect(() => fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }))
       .toThrow('prepareLocalTime');
-    // Later dates, and early dates without a longitude, need no table.
-    expect(fresh.resolveLocalToUtc('1953-01-04', '12:00', 'America/New_York', { longitude: BUFFALO }).offsetMinutes).toBe(-300);
+    // Dates up to 1970 need the zone's pinned history too; later dates, and
+    // early dates without a longitude, need neither.
+    expect(() => fresh.resolveLocalToUtc('1953-01-04', '12:00', 'America/New_York', { longitude: BUFFALO })).toThrow('prepareLocalTime');
+    expect(fresh.resolveLocalToUtc('1971-01-04', '12:00', 'America/New_York', { longitude: BUFFALO }).offsetMinutes).toBe(-300);
     expect(fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York').offsetMinutes).toBeCloseTo(-(4 * 60 + 56 + 2 / 60), 9);
-    await fresh.prepareLocalTime('1952-12-31');
+    await fresh.prepareLocalTime('1952-12-31', 'America/New_York');
     expect(fresh.resolveLocalToUtc('1870-06-15', '12:00', 'America/New_York', { longitude: BUFFALO }).utc.toISOString())
       .toBe('1870-06-15T17:15:31.000Z');
   });

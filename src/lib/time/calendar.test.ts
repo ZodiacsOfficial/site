@@ -79,7 +79,7 @@ describe('Julian and Gregorian calendar dates', () => {
 });
 
 describe('an Old Style birth', () => {
-  beforeAll(() => prepareLocalTime('1917-11-07'));
+  beforeAll(() => prepareLocalTime('1917-11-07', 'Europe/Moscow'));
 
   it('gives the same chart in Petrograd as typing its Gregorian date', () => {
     const place = { latitude: 59.94, longitude: 30.31 };

@@ -75,7 +75,8 @@ const controls = [
 
 describe('ChartCalculator reference confidence', () => {
   // The calculator awaits this before its calculation block, which runs here alone.
-  beforeAll(() => prepareLocalTime('1800-01-01'));
+  beforeAll(() => Promise.all(['America/Toronto', 'America/Juneau', 'Pacific/Apia', 'Asia/Bangkok', 'Europe/London', 'Australia/Lord_Howe']
+    .map((zone) => prepareLocalTime('1800-01-01', zone))));
   it.each(['complete', 'unavailable', 'failed'] as const)('keeps reference receipt bytes and unverified signs with %s date coverage', state => {
     const value = input('1990-06-15', 'UTC'), expected = reference(value);
     const provider = state === 'unavailable' ? null : {

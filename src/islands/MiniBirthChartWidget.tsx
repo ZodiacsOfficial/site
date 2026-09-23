@@ -95,7 +95,7 @@ export default function MiniBirthChartWidget() {
     setBusy(true);
     setError('');
     try {
-      await prepareLocalTime(date);
+      await prepareLocalTime(date, city.tz);
       const resolution = resolveLocalToUtc(date, time, city.tz, { longitude: city.lon });
       const { computeChart } = await import('../lib/engine/full');
       const chart = computeChart({

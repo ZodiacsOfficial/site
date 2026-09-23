@@ -255,7 +255,7 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
     loadModule(() => import('../lib/time/localToUtc')),
   ]);
   const { input } = link;
-  await prepareLocalTime(input.date);
+  await prepareLocalTime(input.date, input.tz);
   const resolved = resolveLocalToUtc(
     input.date,
     input.timeKnown && input.time ? input.time : '12:00',
@@ -295,7 +295,7 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
     loadEngine(),
     loadModule(() => import('../lib/time/localToUtc')),
   ]);
-  await prepareLocalTime(slot.date);
+  await prepareLocalTime(slot.date, slot.city!.tz);
   const timeKnown = slot.timeKnown && slot.time !== '';
   const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz, { longitude: slot.city!.lon });
   const result = engine.computeChart({
@@ -1101,7 +1101,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         import('../lib/time/localToUtc'),
         import('../lib/profile/store'),
       ]);
-      await prepareLocalTime(slotB.date);
+      await prepareLocalTime(slotB.date, slotB.city.tz);
       if (accessGeneration !== profileAccessGeneration.current) return false;
       const resolved = resolveLocalToUtc(
         slotB.date,

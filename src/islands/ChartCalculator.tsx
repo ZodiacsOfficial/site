@@ -1301,9 +1301,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setMineHandoff(input.mine ?? null);
     if (mode === 'full' && !chartActionDockModule) requestChartControls();
     try {
-      // Early dates also download the local mean time table; the two
-      // downloads run together. A rejection is observed by the loader itself.
-      const localTimeReady = prepareLocalTime(input.date);
+      // Early dates also download the local mean time table and the zone's
+      // pinned history; the downloads run together. A rejection is observed
+      // by the loader itself.
+      const localTimeReady = prepareLocalTime(input.date, input.city.tz);
       const engine = await loadEngine();
       if (!runIsCurrent()) return;
       await localTimeReady;

@@ -456,7 +456,7 @@ describe('aspects', () => {
 });
 
 // ── 8. The full pipeline: Frida Kahlo fixture ────────────────────────
-await prepareLocalTime('1907-07-06');
+await prepareLocalTime('1907-07-06', 'America/Mexico_City');
 describe('Frida Kahlo chart (the demo fixture)', () => {
   // Coyoacán's own mean time, 6 h 36 min 38 s behind Greenwich, as the
   // calculator resolves this birth from its city index.

@@ -158,7 +158,7 @@ export default function SolarReturnCalculator() {
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
       ]));
-      await prepareLocalTime(input.birthDate);
+      await prepareLocalTime(input.birthDate, input.birthplace?.tz ?? 'UTC');
       if (!isCurrent()) return;
       const resultData = computeSolarReturn(input);
       if (!isCurrent()) return;
