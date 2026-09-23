@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060709">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex">
+  <title>Option B · Campaign — Astrofolio redesign prototype</title>
+  <link rel="icon" type="image/svg+xml" href="../../../public/assets/astrofolio/v2/leo/favicon.svg">
+  <link rel="stylesheet" href="shared/base.css">
+  <link rel="stylesheet" href="../../../public/assets/site-footer.css">
+  <style>
+    /* ── Hero: Astro [film] folio, the film opens to full screen on scroll ── */
+    .hero { position: relative; height: 230vh; }
+    .hero__pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; display: grid; place-items: center; }
+    .hero__film {
+      --w: min(27vw, 44vh);
+      position: absolute; left: 50%; top: 50%; width: var(--w); aspect-ratio: 9 / 16;
+      transform: translate(-50%, -50%) scale(var(--s, 1)); border-radius: calc(26px / var(--s, 1));
+      overflow: hidden; background: #111; will-change: transform;
+      box-shadow: 0 50px 120px -50px rgba(0, 0, 0, .95), 0 0 0 1px rgba(238, 241, 247, .08);
+    }
+    .hero__film video, .hero__film img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero__shade { position: absolute; inset: 0; background: rgba(6, 7, 9, var(--shade, 0)); pointer-events: none; }
+    .hero__shade::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6, 7, 9, 0) 45%, rgba(6, 7, 9, .82) 100%); opacity: var(--scrim, 0); }
+    .hero__word {
+      position: absolute; top: 50%; font: 400 clamp(88px, 12.4vw, 220px)/1 var(--serif); letter-spacing: -.04em;
+      white-space: nowrap; will-change: transform, opacity;
+    }
+    .hero__word--l { right: calc(50% + var(--w-half, 13.5vw) + 2.2vw); transform: translate(calc(var(--out, 0) * -40vw), -54%); opacity: calc(1 - var(--out, 0) * 1.4); }
+    .hero__word--r { left: calc(50% + var(--w-half, 13.5vw) + 1.2vw); transform: translate(calc(var(--out, 0) * 40vw), -54%); opacity: calc(1 - var(--out, 0) * 1.4); font-style: italic; }
+    .hero__foot { position: absolute; left: 0; right: 0; bottom: 34px; display: flex; justify-content: space-between; align-items: end; padding-inline: var(--gutter); opacity: calc(1 - var(--out, 0) * 3); }
+    .hero__foot p { max-width: 30ch; color: var(--ink-1); font-size: 15px; }
+    .hero__foot .cue { font-size: 13px; color: var(--ink-3); }
+    .hero__caption { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(40px, 8vh, 96px); opacity: var(--cap, 0); transform: translateY(calc((1 - var(--cap, 0)) * 26px)); pointer-events: none; }
+    .hero__caption.is-live { pointer-events: auto; }
+    .hero__caption h1 { max-width: 12ch; font: 400 clamp(48px, 6.6vw, 112px)/.95 var(--serif); letter-spacing: -.03em; }
+    .hero__caption p { margin-top: 18px; max-width: 34em; color: var(--ink-1); font-size: clamp(16px, 1.3vw, 19px); }
+    .hero__caption .row { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+    /* ── Runway: pinned, moves sideways as you scroll down ──────────────── */
+    .runway { position: relative; }
+    .runway__pin { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; padding: 96px 0 34px; }
+    .runway__head { display: flex; justify-content: space-between; align-items: end; gap: 24px; padding-inline: var(--gutter); }
+    .runway__head .section-title { font-size: clamp(40px, 4.6vw, 72px); }
+    .runway__count { font: 400 13px var(--mono); color: var(--ink-3); }
+    .runway__count b { color: var(--ink-0); font-weight: 400; }
+    .runway__track { display: flex; gap: 18px; align-items: stretch; padding: 30px var(--gutter) 22px; will-change: transform; }
+    .look {
+      --sign: #d3a9de;
+      position: relative; flex: 0 0 clamp(300px, 29vw, 440px); max-height: 640px; display: grid; grid-template-rows: auto auto 1fr auto auto; gap: 0;
+      padding: 24px 24px 22px; border: 1px solid var(--hair-1); border-radius: 30px; background: var(--void-1); overflow: hidden;
+      transition: border-color 400ms var(--ease-drawer);
+    }
+    .look::before { content: ''; position: absolute; inset: 0 0 auto; height: 2px; background: var(--sign); opacity: .9; }
+    .look:hover { border-color: var(--hair-2); }
+    .look.is-season { border-color: var(--hair-3); }
+    .look__top { display: flex; justify-content: space-between; align-items: center; color: var(--ink-3); font-size: 13px; }
+    .look__top b { font: 400 12px var(--mono); letter-spacing: .06em; color: var(--ink-2); }
+    .look__top .tag { color: var(--ink-0); font: italic 400 15px var(--serif); }
+    .look h3 { margin-top: 14px; font: 400 clamp(44px, 4.2vw, 64px)/.95 var(--serif); letter-spacing: -.03em; }
+    .look__art { position: relative; min-height: 0; display: grid; place-items: center; }
+    .look__art .stars { position: absolute; inset: 6% 0; width: 100%; height: 88%; opacity: .75; }
+    .look__art .stars g[stroke] { stroke: var(--sign); stroke-opacity: .4; }
+    .look__art img { position: relative; width: auto; height: 100%; max-height: 330px; max-width: 100%; object-fit: contain; filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .75)); transition: transform 900ms var(--ease-out); }
+    .look:hover .look__art img { transform: translateY(-6px) scale(1.02); }
+    .look__stats { display: grid; grid-template-columns: auto 1fr; gap: 4px 18px; align-items: end; padding-top: 14px; border-top: 1px solid var(--hair-1); }
+    .look__stats .price { font-size: 17px; }
+    .look__stats .delta { font-size: 12.5px; }
+    .look__stats .spark { grid-row: 1 / 3; grid-column: 2; height: 40px; }
+    .look__cta { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .look__cta a.link-arrow { font-size: 13.5px; }
+    .runway__side { display: grid; justify-items: end; gap: 12px; }
+    .runway__dots { display: flex; gap: 6px; }
+    .runway__dots button { width: 28px; height: 28px; padding: 0; border: 0; border-radius: 50%; background: none; cursor: pointer; opacity: .45; transition: opacity 300ms, transform 300ms var(--ease-out); }
+    .runway__dots button img { width: 100%; height: 100%; }
+    .runway__dots button.is-on { opacity: 1; transform: scale(1.12); }
+
+    /* ── In the app ─────────────────────────────────────────────────────── */
+    .app__head { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+    .app__head .section-title { font-size: clamp(48px, 6vw, 96px); line-height: .92; }
+    .app__head .stores { margin-top: 26px; }
+    .app__head .fine { margin-top: 16px; font-size: 13.5px; color: var(--ink-3); }
+    .app__head .fine a { color: var(--ink-1); }
+    .app__stage { margin-top: clamp(56px, 8vw, 112px); display: grid; grid-template-columns: 1fr 1.18fr 1fr; gap: clamp(20px, 4vw, 64px); align-items: start; max-width: 1080px; margin-inline: auto; }
+    .app__phone { position: relative; margin: 0; will-change: transform; }
+    .app__phone--l, .app__phone--r { margin-top: 110px; }
+    .phone { position: relative; width: 100%; aspect-ratio: 720 / 1480; border-radius: 40px; padding: 8px; background: #0b0d12; box-shadow: 0 0 0 1px rgba(238, 241, 247, .12), 0 50px 90px -46px rgba(0, 0, 0, .95); overflow: hidden; }
+    .phone video, .phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 33px; background: #000; }
+    .app__phone figcaption { margin-top: 18px; display: grid; gap: 5px; }
+    .app__phone figcaption b { font: 400 24px/1.1 var(--serif); letter-spacing: -.01em; }
+    .app__phone figcaption span { color: var(--ink-2); font-size: 14.5px; max-width: 32ch; }
+    .app__alert { position: absolute; z-index: 2; left: -46%; top: 7%; width: 104%; transform: rotate(-3deg); filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .8)); }
+
+    /* ── Lookbook ───────────────────────────────────────────────────────── */
+    .lookbook__head { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 40px; align-items: end; margin-bottom: 48px; }
+    .lookbook__head .section-title { font-size: clamp(56px, 8vw, 132px); line-height: .9; }
+    .lookbook__head p { color: var(--ink-2); max-width: 34ch; justify-self: end; }
+    .lookbook__row { display: grid; grid-template-columns: 5fr 4fr 4fr; gap: 16px; align-items: end; }
+    .item { display: grid; gap: 14px; text-decoration: none; }
+    .item__img { aspect-ratio: 4 / 5; border-radius: 26px; background: var(--void-1); border: 1px solid var(--hair-1); display: grid; place-items: center; overflow: hidden; }
+    .item:first-child .item__img { aspect-ratio: 4 / 5.4; }
+    .item__img img { width: 86%; height: auto; transition: transform 900ms var(--ease-out); }
+    .item:hover .item__img img { transform: scale(1.04) rotate(-1deg); }
+    .item span { display: flex; justify-content: space-between; color: var(--ink-1); font-size: 15px; }
+
+    /* ── Record ─────────────────────────────────────────────────────────── */
+    .record { border-block: 1px solid var(--hair-1); background: var(--void-1); }
+    .record__addr { margin: 34px 0 0; font: 300 clamp(18px, 2.9vw, 46px)/1.15 var(--mono); letter-spacing: -.03em; color: var(--ink-0); overflow-wrap: anywhere; }
+    .record__addr span { color: var(--sign); }
+    .record__meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--ink-3); font-size: 13.5px; }
+    .record__grid { margin-top: 56px; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    .checker { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .checker input { min-width: 0; height: 54px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--hair-2); background: var(--void-0); color: var(--ink-0); font: 400 14px var(--mono); }
+    .checker input:focus { outline: none; border-color: var(--ink-2); }
+    .checker__out { grid-column: 1 / -1; margin-top: 6px; color: var(--ink-2); font-size: 14.5px; min-height: 44px; }
+    .checker__out.is-match { color: var(--ink-0); }
+    .checker__out.is-bad { color: var(--ink-0); }
+    .checker__out.is-bad::before { content: '✕ '; color: var(--down); }
+    .checker__out.is-match::before { content: '✓ '; color: var(--up); }
+
+    /* ── Standings ──────────────────────────────────────────────────────── */
+    .podium { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
+    .podium a { position: relative; display: grid; grid-template-columns: auto 1fr; gap: 6px 18px; align-items: center; padding: 20px 22px; border: 1px solid var(--hair-1); border-radius: 22px; text-decoration: none; background: var(--void-1); }
+    .podium img { grid-row: 1 / 4; width: 96px; height: 96px; object-fit: contain; filter: drop-shadow(0 12px 16px rgba(0, 0, 0, .7)); }
+    .podium b { font: 400 13px var(--mono); color: var(--ink-3); }
+    .podium strong { font: 400 30px/1 var(--serif); }
+    .podium span { font-size: 13.5px; color: var(--ink-2); }
+    .ranks { margin-top: 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; }
+    .ranks a { display: grid; grid-template-columns: 30px 28px 1fr auto auto; gap: 12px; align-items: center; padding: 12px 4px; border-bottom: 1px solid var(--hair-1); text-decoration: none; font-size: 14.5px; }
+    .ranks a b { font: 400 12.5px var(--mono); color: var(--ink-3); font-weight: 400; }
+    .ranks img { width: 28px; height: 28px; }
+    .ranks .num { font: 400 13px var(--mono); color: var(--ink-1); font-variant-numeric: tabular-nums; }
+    .ranks .delta { font-size: 12.5px; min-width: 64px; text-align: right; }
+    .standings__note { margin-top: 18px; font-size: 12.5px; color: var(--ink-3); max-width: 76ch; }
+
+    /* ── The bag: follows the look in view ──────────────────────────────── */
+    .bag {
+      position: fixed; z-index: var(--z-bar); left: 50%; bottom: 16px; transform: translate(-50%, 0);
+      display: flex; align-items: center; gap: 14px; padding: 6px 6px 6px 8px; border-radius: 999px;
+      border: 1px solid var(--hair-2); background: rgba(10, 12, 17, .78); -webkit-backdrop-filter: blur(18px) saturate(1.2); backdrop-filter: blur(18px) saturate(1.2);
+      box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .95); transition: transform 500ms var(--ease-out), opacity 400ms;
+    }
+    .bag.is-hidden { transform: translate(-50%, 140%); opacity: 0; }
+    .bag__who { display: flex; align-items: center; gap: 10px; padding-right: 4px; }
+    .bag__who img { width: 36px; height: 36px; }
+    .bag__who b { display: block; font: 400 19px/1 var(--serif); }
+    .bag__who span { display: block; margin-top: 3px; font: 400 11.5px var(--mono); color: var(--ink-2); white-space: nowrap; }
+    .bag__who span .delta { font-family: var(--sans); font-size: 11.5px; }
+
+    @media (max-width: 900px) {
+      .hero { height: auto; }
+      .hero__pin { position: relative; height: 100svh; min-height: 560px; }
+      .hero__film { --w: 100vw; width: 100vw; height: 100%; aspect-ratio: auto; border-radius: 0; transform: translate(-50%, -50%); box-shadow: none; }
+      .hero__shade { background: linear-gradient(180deg, rgba(6, 7, 9, .15) 30%, rgba(6, 7, 9, .9) 100%); }
+      .hero__word { display: none; }
+      .hero__foot { display: none; }
+      .hero__caption { opacity: 1; transform: none; bottom: 96px; pointer-events: auto; }
+      .hero__caption .kicker { font-size: 17px; }
+      .hero__caption h1 { font-size: 50px; }
+      .hero__caption p { font-size: 15.5px; }
+      .hero__caption .row { display: none; }
+      .runway { height: auto !important; }
+      .runway__pin { position: relative; height: auto; padding: 80px 0 40px; }
+      .runway__track { transform: none !important; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-inline: 16px; }
+      .runway__track::-webkit-scrollbar { display: none; }
+      .look { flex-basis: 84vw; height: 600px; scroll-snap-align: center; }
+      .runway__side { display: none; }
+      .lookbook__head, .record__grid, .app__head { grid-template-columns: 1fr; }
+      .app__stage { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; }
+      .app__phone { flex: 0 0 70vw; scroll-snap-align: center; }
+      .app__phone--main { order: -1; }
+      .app__phone--l, .app__phone--r { margin-top: 0; }
+      .app__alert { left: 4%; width: 92%; top: 6%; }
+      .lookbook__row { grid-template-columns: 1fr 1fr; }
+      .item:first-child { grid-column: 1 / -1; }
+      .lookbook__head p { justify-self: start; }
+      .podium, .ranks { grid-template-columns: 1fr; }
+      .podium img { width: 72px; height: 72px; }
+      .bag { left: 12px; right: 12px; bottom: 12px; transform: none; justify-content: space-between; }
+      .bag.is-hidden { transform: translateY(140%); }
+      .bag .btn-fomo { min-width: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero { height: auto; }
+      .hero__pin { position: relative; }
+      .runway { height: auto !important; }
+      .runway__pin { position: relative; height: auto; }
+      .runway__track { transform: none !important; overflow-x: auto; scroll-snap-type: x mandatory; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div id="nav"></div>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title" data-hero>
+      <div class="hero__pin">
+        <div class="hero__film" data-film>
+          <img src="../../../public/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high">
+          <video muted loop playsinline preload="auto" poster="../../../public/assets/fomo/fomo-film-poster.webp" aria-hidden="true" data-hero-video>
+            <source src="../../../public/assets/fomo/fomo-film-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'>
+            <source src="../../../public/assets/fomo/fomo-film.mp4" type="video/mp4">
+          </video>
+          <div class="hero__shade"></div>
+        </div>
+        <span class="hero__word hero__word--l" aria-hidden="true">Astro</span>
+        <span class="hero__word hero__word--r" aria-hidden="true">folio</span>
+        <div class="hero__foot">
+          <p>The twelve official Zodiacs, one for every sign. Each has its own design and public record.</p>
+          <span class="cue">Scroll ↓</span>
+        </div>
+        <div class="hero__caption" data-caption>
+          <p class="kicker">Astrofolio</p>
+          <h1 id="hero-title">The twelve official Zodiacs.</h1>
+          <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the fomo app.</p>
+          <div class="row"><a class="btn btn--light" href="#runway">Find your sign <span class="btn__orb" aria-hidden="true">↓</span></a><a class="btn" href="#app">How buying works</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="runway" id="runway" aria-labelledby="runway-title" data-runway>
+      <div class="runway__pin">
+        <div class="runway__head">
+          <div><p class="kicker">The collection</p><h2 class="section-title" id="runway-title" data-runway-title>All twelve, in zodiac order.</h2></div>
+          <div class="runway__side"><p class="runway__count" aria-live="polite"><b data-count>01</b> / 12</p><div class="runway__dots" data-dots></div></div>
+        </div>
+        <div class="runway__track" data-track></div>
+      </div>
+    </section>
+
+    <section class="app band" id="app" aria-labelledby="app-title">
+      <div class="wrap">
+        <div class="app__head">
+          <div class="reveal"><p class="kicker">In the fomo app</p><h2 class="section-title" id="app-title">Buy yours in a few taps.</h2></div>
+          <div class="reveal" style="--d:80ms">
+            <p class="lede">All twelve Zodiacs are in fomo, a free trading app for iPhone, Android and the web. Buy with Fomo opens your sign ready to buy; after that you can follow friends and see what they hold.</p>
+            <div data-stores></div>
+            <p class="fine">On a computer: <a href="https://fomo.family/" rel="external nofollow noopener">fomo.family ↗</a> · <a href="https://zodiacs.org/fomo/">Zodiacs on fomo →</a></p>
+          </div>
+        </div>
+        <div class="app__stage">
+          <figure class="app__phone app__phone--l reveal" data-par="0.05">
+            <div class="phone"><picture><source type="image/avif" srcset="../../../public/assets/fomo/fomo-friends.avif"><img src="../../../public/assets/fomo/fomo-friends.webp" width="720" height="1397" alt="fomo's friends list with each trader's returns" loading="lazy"></picture></div>
+            <figcaption><b>Follow your friends</b><span>Add the people you trust and see their buys and sells as they happen.</span></figcaption>
+          </figure>
+          <figure class="app__phone app__phone--main reveal" data-par="-0.04" style="--d:90ms">
+            <img class="app__alert" src="../../../public/assets/fomo/fomo-alert.png" width="1425" height="1104" alt="A fomo notification: Capricorn is up 5.98 percent. 50 top traders bought $88,203.12." loading="lazy">
+            <div class="phone"><video data-lazy muted loop playsinline preload="none" poster="../../../public/assets/fomo/fomo-zodiacs-poster.webp" aria-label="A screen recording of the fomo app listing the twelve Zodiacs">
+              <source src="../../../public/assets/fomo/fomo-zodiacs-av1.mp4" type='video/mp4; codecs="av01.0.08M.08"'>
+              <source src="../../../public/assets/fomo/fomo-zodiacs.mp4" type="video/mp4"></video></div>
+            <figcaption><b>Open your sign</b><span>Each sign has its own sheet: the chart, your position, and buy and sell at the foot.</span></figcaption>
+          </figure>
+          <figure class="app__phone app__phone--r reveal" data-par="0.05" style="--d:180ms">
+            <div class="phone"><picture><source type="image/avif" srcset="../../../public/assets/fomo/fomo-thesis.avif"><img src="../../../public/assets/fomo/fomo-thesis.webp" width="720" height="1466" alt="A trader writing a thesis for a Sagittarius position in fomo" loading="lazy"></picture></div>
+            <figcaption><b>Write your thesis</b><span>When you buy, say why. It posts with the trade, so followers get the reasoning.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="lookbook band" aria-labelledby="look-title">
+      <div class="wrap">
+        <div class="lookbook__head">
+          <h2 class="section-title" id="look-title">Wear your sign.</h2>
+          <p>Everyday Astrofolio pieces made for the whole collection, each carrying the ring of twelve.</p>
+        </div>
+        <div class="lookbook__row" data-lookbook></div>
+      </div>
+    </section>
+
+    <section class="record band" id="verify" aria-labelledby="record-title">
+      <div class="wrap">
+        <p class="kicker">The official record</p>
+        <h2 class="section-title" id="record-title">Check the address, not the name.</h2>
+        <p class="record__addr" data-addr></p>
+        <p class="record__meta" data-addr-meta></p>
+        <div class="record__grid">
+          <p class="lede">Names and tickers can be copied. The Registry identifies each Zodiac by its complete address: a Solana origin and an official Base counterpart, 24 in all. Paste one here to compare.</p>
+          <form class="checker" data-checker novalidate>
+            <label class="vh" for="addr">Token address</label>
+            <input id="addr" autocomplete="off" spellcheck="false" placeholder="Paste a Solana mint or Base contract">
+            <button class="btn btn--light" type="submit">Check <span class="btn__orb" aria-hidden="true">→</span></button>
+            <p class="checker__out" data-out aria-live="polite">Never paste a recovery phrase, here or anywhere.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="standings band" aria-labelledby="standings-title">
+      <div class="wrap">
+        <p class="kicker">Latest market snapshot</p>
+        <h2 class="section-title" id="standings-title">Who’s leading today?</h2>
+        <div class="podium" data-podium></div>
+        <div class="ranks" data-ranks></div>
+        <p class="standings__note" data-note></p>
+      </div>
+    </section>
+
+    <section class="band band--tight" id="faq" data-faq></section>
+  </main>
+  <div id="ending"></div>
+  <p class="wrap" style="padding:0 0 110px;font-size:12px;color:var(--ink-3)" data-credit></p>
+
+  <div class="bag" data-bag aria-label="Selected sign"></div>
+
+  <script type="module">
+    import {
+      SIGNS, bySlug, art, esc, fmtPrice, fmtCompact, fmtChange, snapshotLabel, season, initialSign,
+      sparkline, fomoButton, storeBadges, mountFaq, mountEnding, reveal, lazyVideo, protoChrome, siteNav,
+      checkAddress, loadStars, figureAlt, STAR_CREDIT, DATA, reducedMotion, fomoWord, SHOT,
+    } from './shared/common.js';
+
+    document.getElementById('nav').innerHTML = siteNav();
+    const mobile = () => matchMedia('(max-width: 900px)').matches;
+    const now = season(new Date());
+
+    /* ── Hero: scroll opens the film ───────────────────────────────────── */
+    const hero = document.querySelector('[data-hero]');
+    const film = document.querySelector('[data-film]');
+    const caption = document.querySelector('[data-caption]');
+    const heroVideo = document.querySelector('[data-hero-video]');
+    if (!reducedMotion) heroVideo.play().then(() => { heroVideo.previousElementSibling.style.visibility = 'hidden'; }).catch(() => {});
+    const clamp01 = (v) => Math.min(1, Math.max(0, v));
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    function heroFrame() {
+      if (mobile()) { hero.style.removeProperty('--out'); film.style.removeProperty('--s'); return; }
+      if (reducedMotion) {
+        // No scroll-driven motion: show the opened state as a still, headline visible.
+        const cover = Math.max(innerWidth / film.offsetWidth, innerHeight / film.offsetHeight) * 1.001;
+        film.style.setProperty('--s', cover.toFixed(4));
+        hero.style.setProperty('--out', '1');
+        film.style.setProperty('--shade', '.28');
+        film.style.setProperty('--scrim', '1');
+        caption.style.setProperty('--cap', '1');
+        caption.classList.add('is-live');
+        return;
+      }
+      const w = film.offsetWidth;
+      const h = film.offsetHeight;
+      hero.style.setProperty('--w-half', `${w / 2}px`);
+      const span = hero.offsetHeight - innerHeight;
+      const p = clamp01(-hero.getBoundingClientRect().top / span);
+      const grow = ease(clamp01(p / 0.72));
+      const cover = Math.max(innerWidth / w, innerHeight / h) * 1.001;
+      film.style.setProperty('--s', (1 + (cover - 1) * grow).toFixed(4));
+      hero.style.setProperty('--out', grow.toFixed(4));
+      film.style.setProperty('--shade', (grow * 0.28).toFixed(3));
+      film.style.setProperty('--scrim', grow.toFixed(3));
+      const cap = clamp01((p - 0.6) / 0.3);
+      caption.style.setProperty('--cap', cap.toFixed(3));
+      caption.classList.toggle('is-live', cap > 0.5);
+    }
+
+    /* ── Runway ────────────────────────────────────────────────────────── */
+    const runway = document.querySelector('[data-runway]');
+    const track = document.querySelector('[data-track]');
+    const order = [...SIGNS.slice(SIGNS.indexOf(now.sign)), ...SIGNS.slice(0, SIGNS.indexOf(now.sign))];
+    document.querySelector('[data-runway-title]').textContent = `All twelve, starting with ${now.sign.name}.`;
+    track.innerHTML = order.map((sign) => {
+      const delta = fmtChange(sign.change);
+      return `<article class="look${sign === now.sign ? ' is-season' : ''}" style="--sign:${sign.hue}" data-look="${sign.slug}" aria-labelledby="look-${sign.slug}">
+        <div class="look__top"><b>${sign.roman}</b>${sign === now.sign ? '<span class="tag">In season now</span>' : `<span>${esc(sign.dates)}</span>`}</div>
+        <h3 id="look-${sign.slug}">${esc(sign.name)}</h3>
+        <div class="look__art" data-art="${sign.slug}"><img src="${art.figure(sign.slug, 512)}" width="512" height="512" alt="${esc(figureAlt(sign))}" loading="${sign === now.sign ? 'eager' : 'lazy'}"></div>
+        <div class="look__stats"><span class="price">${fmtPrice(sign.price)}</span><div data-spark="${sign.slug}"></div><span class="delta ${delta.cls}">${delta.text}</span></div>
+        <div class="look__cta">${fomoButton(sign, { compact: true })}<a class="link-arrow" href="${sign.registry}">Explore ${esc(sign.name)}</a></div>
+      </article>`;
+    }).join('');
+    order.forEach((sign) => {
+      sparkline(track.querySelector(`[data-spark="${sign.slug}"]`), sign, { height: 40, label: true });
+      loadStars(sign.slug).then((svg) => track.querySelector(`[data-art="${sign.slug}"]`).insertAdjacentHTML('afterbegin', svg));
+    });
+    const dots = document.querySelector('[data-dots]');
+    dots.innerHTML = order.map((sign, i) => `<button type="button" data-dot="${i}" aria-label="Show ${esc(sign.name)}"><img src="${art.disc(sign.slug, 48)}" alt=""></button>`).join('');
+    let runwayMax = 0;
+    function sizeRunway() {
+      if (mobile() || reducedMotion) { runway.style.height = ''; return; }
+      runwayMax = Math.max(0, track.scrollWidth - innerWidth);
+      runway.style.height = `${innerHeight + runwayMax * 1.05}px`;
+    }
+    let active = -1;
+    function setActive(i) {
+      if (i === active) return;
+      active = i;
+      document.querySelector('[data-count]').textContent = String(i + 1).padStart(2, '0');
+      dots.querySelectorAll('button').forEach((b, k) => b.classList.toggle('is-on', k === i));
+      setBag(order[i]);
+    }
+    function runwayFrame() {
+      if (mobile() || reducedMotion) return;
+      const span = runway.offsetHeight - innerHeight;
+      const p = clamp01(-runway.getBoundingClientRect().top / span);
+      track.style.transform = `translate3d(${(-p * runwayMax).toFixed(1)}px,0,0)`;
+      const looks = track.children;
+      const mid = innerWidth / 2;
+      let best = 0; let bestD = Infinity;
+      for (let i = 0; i < looks.length; i += 1) { const r = looks[i].getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bestD) { bestD = d; best = i; } }
+      if (runway.getBoundingClientRect().top < innerHeight * 0.5 && runway.getBoundingClientRect().bottom > innerHeight * 0.5) setActive(best);
+    }
+    dots.addEventListener('click', (event) => {
+      const b = event.target.closest('[data-dot]');
+      if (!b) return;
+      const i = Number(b.dataset.dot);
+      const look = track.children[i];
+      const target = Math.min(runwayMax, Math.max(0, look.offsetLeft + look.offsetWidth / 2 - innerWidth / 2));
+      const span = runway.offsetHeight - innerHeight;
+      scrollTo({ top: runway.offsetTop + (runwayMax ? target / runwayMax : 0) * span, behavior: reducedMotion ? 'auto' : 'smooth' });
+    });
+
+    /* ── The bag ───────────────────────────────────────────────────────── */
+    const bag = document.querySelector('[data-bag]');
+    function setBag(sign) {
+      const delta = fmtChange(sign.change, { words: false });
+      bag.style.setProperty('--sign', sign.hue);
+      bag.innerHTML = `<div class="bag__who"><img src="${art.disc(sign.slug, 128)}" alt=""><div><b>${esc(sign.name)}</b><span>${fmtPrice(sign.price)} · <span class="delta ${delta.cls}">${delta.text}</span></span></div></div>${fomoButton(sign, { compact: true })}`;
+    }
+    setBag(initialSign());
+
+    function bagFrame() {
+      if (mobile()) { bag.classList.remove('is-hidden'); return; }
+      const h = hero.getBoundingClientRect();
+      const r = runway.getBoundingClientRect();
+      const inHero = -h.top < (hero.offsetHeight - innerHeight) * 0.85;
+      const inRunway = r.top <= 1 && r.bottom >= innerHeight - 1;
+      bag.classList.toggle('is-hidden', inHero || inRunway);
+    }
+    let ticking = false;
+    const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { heroFrame(); runwayFrame(); bagFrame(); ticking = false; }); };
+    addEventListener('scroll', onScroll, { passive: true });
+    addEventListener('resize', () => { sizeRunway(); onScroll(); });
+    await document.fonts.ready;
+    sizeRunway(); heroFrame(); runwayFrame(); bagFrame();
+
+    /* Phones drift at slightly different speeds. */
+    const phones = [...document.querySelectorAll('[data-par]')];
+    if (!reducedMotion && !SHOT) addEventListener('scroll', () => {
+      for (const el of phones) {
+        const r = el.getBoundingClientRect();
+        const off = (r.top + r.height / 2 - innerHeight / 2) * Number(el.dataset.par);
+        el.style.transform = `translate3d(0, ${off.toFixed(1)}px, 0)`;
+      }
+    }, { passive: true });
+
+    /* ── The rest ──────────────────────────────────────────────────────── */
+    document.querySelector('[data-stores]').innerHTML = storeBadges();
+    document.querySelectorAll('video[data-lazy]').forEach(lazyVideo);
+    document.querySelector('[data-lookbook]').innerHTML = [DATA.shop[2], DATA.shop[1], DATA.shop[0]].map((item, i) => `
+      <a class="item reveal" style="--d:${i * 80}ms" href="${item.href}" rel="external noopener"><span class="item__img"><img src="${art.merch(item.image)}" width="800" height="892" alt="${esc(item.name)}" loading="lazy"></span><span>${esc(item.name)}<span aria-hidden="true">View ↗</span></span></a>`).join('');
+
+    const featured = initialSign();
+    const addr = featured.solana;
+    document.querySelector('[data-addr]').innerHTML = `${esc(addr.slice(0, 4))}<span>${esc(addr.slice(4, -4))}</span>${esc(addr.slice(-4))}`;
+    document.querySelector('[data-addr-meta]').innerHTML = `<span>${esc(featured.name)} · Solana origin</span><span>Base counterpart ${esc(featured.base.slice(0, 6))}…${esc(featured.base.slice(-4))}</span><a href="${featured.registry}" style="color:var(--ink-1)">Open the ${esc(featured.name)} record →</a>`;
+    document.querySelector('[data-addr]').style.setProperty('--sign', featured.hue);
+    document.querySelector('[data-checker]').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const out = document.querySelector('[data-out]');
+      const result = checkAddress(document.getElementById('addr').value);
+      out.className = 'checker__out';
+      if (result.state === 'match') { out.classList.add('is-match'); out.innerHTML = `Official. This is ${esc(result.sign.name)} on ${result.chain} (the ${result.role}). <a href="${result.sign.registry}">Open the record →</a>`; }
+      else if (result.state === 'nomatch') { out.classList.add('is-bad'); out.textContent = 'Not in the Registry. A token at this address is not an official Zodiac, whatever it is called.'; }
+      else if (result.state === 'invalid') { out.classList.add('is-bad'); out.textContent = 'That does not look like a Solana mint or a Base contract address.'; }
+      else out.textContent = 'Paste a complete address to check it.';
+    });
+
+    const ranked = [...SIGNS].sort((a, b) => a.rank - b.rank);
+    document.querySelector('[data-podium]').innerHTML = ranked.slice(0, 3).map((sign) => {
+      const delta = fmtChange(sign.change, { words: false });
+      return `<a href="${sign.registry}" style="--sign:${sign.hue}"><img src="${art.figure(sign.slug, 512)}" alt="" loading="lazy"><b>${String(sign.rank).padStart(2, '0')}</b><strong>${esc(sign.name)}</strong><span>${fmtCompact(sign.marketCap)} market cap · <span class="delta ${delta.cls}">${delta.text}</span></span></a>`;
+    }).join('');
+    document.querySelector('[data-ranks]').innerHTML = ranked.slice(3).map((sign) => {
+      const delta = fmtChange(sign.change, { words: false });
+      return `<a href="${sign.registry}"><b>${String(sign.rank).padStart(2, '0')}</b><img src="${art.disc(sign.slug, 48)}" alt=""><span>${esc(sign.name)}</span><span class="num">${fmtCompact(sign.marketCap)}</span><span class="delta ${delta.cls}">${delta.text}</span></a>`;
+    }).join('');
+    document.querySelector('[data-note]').textContent = `Ranked by reported market cap. ${snapshotLabel()}. Market data comes from an independent index and can be delayed, incomplete, unavailable, or wrong. It is context, not a recommendation.`;
+
+    mountFaq(document.querySelector('[data-faq]'));
+    mountEnding(document.getElementById('ending'));
+    document.querySelector('[data-credit]').textContent = `Prototype. ${STAR_CREDIT} Film: the owner's Astrofolio film, as used on /fomo/.`;
+    reveal();
+    protoChrome('Option B · Campaign');
+  </script>
+</body>
+</html>
