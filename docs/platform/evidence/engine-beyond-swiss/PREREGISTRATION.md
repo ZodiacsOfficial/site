@@ -157,7 +157,12 @@ Each step names its rule's source. Baselines are the shipped engine,
   patch `0005` in `rc7-phase1/`. Measured there against Swiss on Swiss's own
   inputs, the status agrees on 336 of 336 cases and the cusps are within
   0.0085″, inside the rule. The verdict waits for rc.7 to be vendored.
-  Naming the fallback and offering Porphyry wait on an owner decision.
+  Patch `0006` adds the rest of the rule. The owner delegated the fallback
+  decision on 2026-09-23. Whole sign stays the Placidus fallback, named as
+  `PLACIDUS_POLAR_FALLBACK`, and Porphyry can be asked for at any latitude.
+  Its cusps agree with Swiss's `houses_armc(..., 'O')` to 6.1e-9″ on Swiss's
+  own inputs, at 1,632 cases from 55° to 85° in both hemispheres. The site
+  still offers whole sign and Placidus only.
 
 ### 1.10 One crossing solver (version 1, rule 1i)
 

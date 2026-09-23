@@ -1,7 +1,7 @@
-From b534a25226e5a387c115f9d2feb5bf0cd8fda0ea Mon Sep 17 00:00:00 2001
+From 787ce313223842a9aad3edfba75e6885bc3bfa63 Mon Sep 17 00:00:00 2001
 From: Claude <noreply@anthropic.com>
 Date: Wed, 23 Sep 2026 13:33:58 +0000
-Subject: [PATCH 5/5] Put the Placidus limit at 90 degrees minus the true
+Subject: [PATCH 5/6] Put the Placidus limit at 90 degrees minus the true
  obliquity
 
 placidusCusps refused every latitude beyond 66 degrees. The semi-arcs are
@@ -33,11 +33,33 @@ becomes Porphyry, as it is in Swiss.
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_01SGUSXTX75fHU1eyUdSTnef
 ---
+ packages/engine/README.md                  | 10 +--
  packages/engine/src/houses.ts              |  5 +-
  packages/engine/src/placidus-limit.test.ts | 71 ++++++++++++++++++++++
- 2 files changed, 74 insertions(+), 2 deletions(-)
+ 3 files changed, 79 insertions(+), 7 deletions(-)
  create mode 100644 packages/engine/src/placidus-limit.test.ts
 
+diff --git a/packages/engine/README.md b/packages/engine/README.md
+index d5efe55..fbb3245 100644
+--- a/packages/engine/README.md
++++ b/packages/engine/README.md
+@@ -100,11 +100,11 @@ Returned longitudes use degrees in `[0, 360)` and positions include sign and deg
+ annotations. Charts use the tropical ecliptic of date. Planetary positions are
+ apparent and geocentric; this package does not calculate topocentric parallax.
+ 
+-Placidus is undefined in polar regions. Above 66 degrees absolute latitude the
+-engine falls back to whole-sign houses and adds `polar-fallback` to the chart
+-flags. When the birth time is unknown, pass a conventional UTC instant with
+-`timeKnown: false`; angles and houses remain absent and the chart carries the
+-`no-time` flag.
++Placidus is undefined in polar regions, where |latitude| ≥ 90° − ε, with ε the
++true obliquity of date (about 66.56° today). There the engine falls back to
++whole-sign houses and adds `polar-fallback` to the chart flags. When the birth
++time is unknown, pass a conventional UTC instant with `timeKnown: false`;
++angles and houses remain absent and the chart carries the `no-time` flag.
+ 
+ ### Input flag compatibility
+ 
 diff --git a/packages/engine/src/houses.ts b/packages/engine/src/houses.ts
 index 4d52599..c0e0de5 100644
 --- a/packages/engine/src/houses.ts

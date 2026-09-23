@@ -1,7 +1,7 @@
 From 737b980c2a32a1ad4945a157fbdb6d171f134c2d Mon Sep 17 00:00:00 2001
 From: Claude <noreply@anthropic.com>
 Date: Wed, 23 Sep 2026 13:28:09 +0000
-Subject: [PATCH 4/5] Build the angles on the true obliquity of date
+Subject: [PATCH 4/6] Build the angles on the true obliquity of date
 
 computeChart projected apparent sidereal time onto the mean ecliptic. GAST
 carries the nutation in longitude, but the obliquity was the mean one,
