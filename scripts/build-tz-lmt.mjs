@@ -48,11 +48,11 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 export const TZDB_VERSION = '2025c';
-const TZDB_URL = `https://data.iana.org/time-zones/releases/tzdata${TZDB_VERSION}.tar.gz`;
-const TZDB_SHA256 = '4aa79e4effee53fc4029ffe5f6ebe97937282ebcdf386d5d2da91ce84142f957';
+export const TZDB_URL = `https://data.iana.org/time-zones/releases/tzdata${TZDB_VERSION}.tar.gz`;
+export const TZDB_SHA256 = '4aa79e4effee53fc4029ffe5f6ebe97937282ebcdf386d5d2da91ce84142f957';
 
-const MAIN_FILES = ['africa', 'antarctica', 'asia', 'australasia', 'europe', 'northamerica', 'southamerica', 'etcetera', 'backward'];
-const BACKZONE = 'backzone';
+export const MAIN_FILES = ['africa', 'antarctica', 'asia', 'australasia', 'europe', 'northamerica', 'southamerica', 'etcetera', 'backward'];
+export const BACKZONE = 'backzone';
 
 const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'];
 const WEEKDAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
@@ -179,6 +179,26 @@ export function lmtEraEnd(lines) {
 }
 
 /**
+ * Every name in the release, sorted, and the zone each one means: backzone's
+ * zone of that name first, then the main data's, then a link, backzone's
+ * before the main data's. scripts/build-tz-history.mjs resolves names the
+ * same way, so the two tables cannot disagree about what a name means.
+ */
+export function zoneNames(main, backzone) {
+  const zoneOf = (name, seen = new Set()) => {
+    if (seen.has(name)) throw new Error(`tz-lmt: link cycle at ${name}`);
+    seen.add(name);
+    if (backzone.zones.has(name) || main.zones.has(name)) return name;
+    const target = backzone.links.get(name) ?? main.links.get(name);
+    return target === undefined ? null : zoneOf(target, seen);
+  };
+  const names = [...new Set([
+    ...main.zones.keys(), ...main.links.keys(), ...backzone.zones.keys(), ...backzone.links.keys(),
+  ])].sort();
+  return { names, zoneOf };
+}
+
+/**
  * Backzone replaces the main data's definition of a name; links resolve to
  * zones. `offsets` keeps each era's own mean time offset, and `dateLine`,
  * for eras that crossed the date line, each line's end and offset. The
@@ -187,22 +207,13 @@ export function lmtEraEnd(lines) {
  * the resolver takes the side from here.
  */
 export function buildEras(main, backzone) {
-  const zoneOf = (name, seen = new Set()) => {
-    if (seen.has(name)) throw new Error(`tz-lmt: link cycle at ${name}`);
-    seen.add(name);
-    if (backzone.zones.has(name)) return backzone.zones.get(name);
-    if (main.zones.has(name)) return main.zones.get(name);
-    const target = backzone.links.get(name) ?? main.links.get(name);
-    return target === undefined ? null : zoneOf(target, seen);
-  };
-  const names = new Set([
-    ...main.zones.keys(), ...main.links.keys(), ...backzone.zones.keys(), ...backzone.links.keys(),
-  ]);
+  const { names, zoneOf } = zoneNames(main, backzone);
   const eras = {};
   const offsets = {};
   const dateLine = {};
-  for (const name of [...names].sort()) {
-    const lines = zoneOf(name);
+  for (const name of names) {
+    const source = zoneOf(name);
+    const lines = source && (backzone.zones.get(source) ?? main.zones.get(source));
     if (!lines) throw new Error(`tz-lmt: ${name} resolves to no zone`);
     const era = lmtEraLines(lines);
     if (!era) continue;
@@ -214,7 +225,7 @@ export function buildEras(main, backzone) {
 }
 
 /** Minimal ustar reader: the release tarball holds plain files only. */
-function untar(buffer) {
+export function untar(buffer) {
   const files = new Map();
   for (let offset = 0; offset + 512 <= buffer.length;) {
     const name = buffer.toString('latin1', offset, offset + 100).replace(/\0.*$/s, '');
@@ -226,7 +237,11 @@ function untar(buffer) {
   return files;
 }
 
-async function buildTable(root) {
+/**
+ * The pinned release's files, downloaded into .cache/ once and checked
+ * against the pinned SHA-256, with the main data and backzone parsed.
+ */
+export async function loadRelease(root) {
   const cache = resolve(root, '.cache');
   await mkdir(cache, { recursive: true });
   const archive = resolve(cache, `tzdata${TZDB_VERSION}.tar.gz`);
@@ -252,6 +267,11 @@ async function buildTable(root) {
     for (const [name, target] of parsed.links) main.links.set(name, target);
   }
   const backzone = parseTzdb(files.get(BACKZONE) ?? '');
+  return { files, main, backzone };
+}
+
+async function buildTable(root) {
+  const { main, backzone } = await loadRelease(root);
   const { eras, offsets, dateLine } = buildEras(main, backzone);
 
   const output = {
