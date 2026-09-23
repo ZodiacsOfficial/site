@@ -165,11 +165,14 @@ Buffalo birth in 1870 had been read on New York's clock, 19 min 29 s early. The
 only table involved says when each zone's local mean time ended; it is
 generated from a pinned tzdb release, 2025c, with backzone
 (`src/data/tz-lmt.json`, by `scripts/build-tz-lmt.mjs`), and legal offsets still
-come from the host. Tested: the table against that release; every wall minute
-within 26 hours of fourteen era ends, east and west of the reference meridian,
-against a separate model of the birthplace clock, with receipts validated;
-the date-line days of Alaska, Manila and Apia inside eras; a bound that ignores
-a longitude more than three hours from the zone's mean time. Not established:
+come from the host. Checked: the table against that release, by
+`node scripts/build-tz-lmt.mjs --check`, which downloads the release and is run
+by hand rather than in CI, while tests pin eight era ends and the generator's
+rules. Tested: every wall minute within 26 hours of fourteen era ends, for
+nineteen towns east and west of the reference meridian, against a separate
+model of the birthplace clock, with receipts validated; the date-line days of
+Alaska, Manila, Pohnpei and Apia inside eras; a bound that ignores a longitude
+more than three hours from the zone's mean time. Not established:
 agreement with other programs' era ends. And after the era the legal history
 is still the host's, which lacks backzone: on Node 22.22 (ICU 78.2), 90 of the
 355 zones with an era in the birthplace index take their first offsets from

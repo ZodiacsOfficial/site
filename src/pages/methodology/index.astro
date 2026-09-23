@@ -177,10 +177,11 @@ const jsonLd = [
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
         birth time with the IANA time-zone history available in your browser's{' '}
-        <strong>host ICU data</strong>: daylight saving in all its regional weirdness,
-        wartime clock changes, and the date each place adopted a legal time.
-        Before that date, the clock was the birthplace's own{' '}
-        <em>local mean time</em>, which runs to seconds.
+        <strong>host ICU data</strong>: daylight saving in all its regional weirdness
+        and wartime clock changes. The date each place adopted a legal time
+        comes from a pinned release of the IANA database (below); before it,
+        the clock was the birthplace's own <em>local mean time</em>, which runs
+        to seconds.
       </p>
       <ul>
         <li><strong>Skipped times</strong> (spring-forward gaps) shift forward across the gap — the standard convention — and the chart says so.</li>

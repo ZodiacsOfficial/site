@@ -35,14 +35,17 @@ describe('lunar result presentation', () => {
     expect(tree.filter((n) => n.type === 'th' && n.props.scope === 'row').map((n) => n.props.children)).toEqual(data.chart.bodies.map((b) => b.body));
   });
   it('keeps local-time provenance in details without adding it to export data', () => {
+    const notice = (data: ReturnType<typeof result>) => nodes(LunarReturnResult({ result: data, Wheel }))
+      .find((n) => n.type === 'p' && n.props.class === 'notice' && typeof n.props.children === 'string'
+        && /local mean time|ran to seconds/.test(n.props.children))?.props.children;
+    // A legal mean time, such as Paris Mean Time, ran to seconds but was set by a time zone.
     const data = result(); data.natalTimeFlags = ['lmt']; const tree = nodes(LunarReturnResult({ result: data, Wheel }));
-    expect(tree.some((n) => n.type === 'p' && typeof n.props.children === 'string' && n.props.children.includes('historical mean time, set by longitude'))).toBe(true);
+    expect(notice(data)).toBe('The birth time is read on a historical clock that ran to seconds.');
     expect(JSON.stringify(tree.find((n) => n.type === LunarReturnActions)!.props.model)).not.toContain('lmt');
     const wholeMinute = result(); wholeMinute.natalTimeFlags = []; wholeMinute.natalLocalMeanTime = true;
-    expect(nodes(LunarReturnResult({ result: wholeMinute, Wheel })).some((n) => n.type === 'p' && typeof n.props.children === 'string'
-      && n.props.children.includes('historical mean time, set by longitude'))).toBe(true);
-    const standard = result();
-    expect(nodes(LunarReturnResult({ result: standard, Wheel })).some((n) => n.type === 'p' && typeof n.props.children === 'string'
-      && n.props.children.includes('historical mean time'))).toBe(false);
+    expect(notice(wholeMinute)).toBe('The birth time is read on the birthplace\'s own local mean time, set by its longitude.');
+    const both = result(); both.natalTimeFlags = ['lmt']; both.natalLocalMeanTime = true;
+    expect(notice(both)).toBe('The birth time is read on the birthplace\'s own local mean time, set by its longitude.');
+    expect(notice(result())).toBeUndefined();
   });
 });
