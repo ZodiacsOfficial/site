@@ -473,6 +473,40 @@ describe('resolveSavedChart', () => {
     expect(resolved.asc).toBe(150);
   });
 
+  it('recomputes a current summary from 1954 to 1970 saved on the browser\'s zone history', async () => {
+    let received: Chart['input'] | null = null;
+    const loader: SavedChartEngineLoader = async () => ({
+      computeChart(input) {
+        received = input;
+        return {
+          input,
+          bodies: [{ body: 'Sun', lon: 99, lat: 0, speed: 1, retrograde: false }],
+          angles: { asc: 200, mc: 110, dsc: 20, ic: 290 },
+          houses: null,
+          aspects: [],
+          flags: input.flags ?? [],
+          engineVersion: ENGINE_VERSION,
+        };
+      },
+    });
+    const chart = makeChart('oslo', { date: '1960-07-01', time: '12:00' });
+    // Browsers give Oslo Berlin's history, +1:00 in July 1960; Norway kept
+    // summer time that year, +2:00, which the pinned history has.
+    const saved: SavedChart = {
+      ...chart,
+      birth: {
+        ...chart.birth,
+        place: { name: 'Oslo', admin1: 'Oslo', country: 'NO', lat: 59.913, lon: 10.75, tz: 'Europe/Oslo' },
+      },
+      summary: { ...chart.summary, utcISO: '1960-07-01T11:00:00.000Z' },
+    };
+
+    const resolved = await resolveSavedChart(saved, loader);
+
+    expect(received!.utc.toISOString()).toBe('1960-07-01T10:00:00.000Z');
+    expect(resolved.summary).toMatchObject({ utcISO: '1960-07-01T10:00:00.000Z' });
+  });
+
   it('falls back to the stored summary when stale recomputation fails', async () => {
     const loader: SavedChartEngineLoader = async () => {
       throw new Error('offline');

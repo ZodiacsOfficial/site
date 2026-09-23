@@ -27,7 +27,11 @@ let lmtOffsets: Readonly<Record<string, number>> = {};
 let lmtDateLine: Readonly<Record<string, readonly (readonly number[])[]>> = {};
 let lmtEraLoad: Promise<void> | null = null;
 
-/** Offsets before 1970 from the pinned release, per zone name once loaded; null where the host's apply. */
+/**
+ * Offsets before 1970 from the pinned release, per lower-cased zone name once
+ * loaded (Intl ignores the case of a name, so this does too); null where the
+ * host's apply.
+ */
 const zoneHistories = new Map<string, ZoneHistory | null>();
 const zoneHistoryLoads = new Map<string, Promise<void>>();
 /** The host's history applies from 1970-01-01T00:00:00Z. */
@@ -54,14 +58,15 @@ export function prepare(date: string, timeZone: string): Promise<void> {
     }
     loads.push(lmtEraLoad);
   }
-  if (birthplaceTimeCanApply(date) && !zoneHistories.has(timeZone)) {
-    let pending = zoneHistoryLoads.get(timeZone);
+  const key = timeZone.toLowerCase();
+  if (birthplaceTimeCanApply(date) && !zoneHistories.has(key)) {
+    let pending = zoneHistoryLoads.get(key);
     if (!pending) {
       const load = loadModule(async () => (await import('./tz-history-load')).loadZoneHistory(timeZone))
-        .then((history) => { zoneHistories.set(timeZone, history); });
-      zoneHistoryLoads.set(timeZone, load);
+        .then((history) => { zoneHistories.set(key, history); });
+      zoneHistoryLoads.set(key, load);
       void load.catch(() => {
-        if (zoneHistoryLoads.get(timeZone) === load) zoneHistoryLoads.delete(timeZone);
+        if (zoneHistoryLoads.get(key) === load) zoneHistoryLoads.delete(key);
       });
       pending = load;
     }
@@ -96,8 +101,8 @@ export function readBirthplace(tz: string, wallMs: number, longitude: number): {
  */
 const MAX_MEAN_TIME_DEPARTURE_MINUTES = 180;
 
-/** The offset (minutes east) a pinned history gives at an instant before 1970. */
-function pinnedOffset(history: ZoneHistory, utcMs: number): number {
+/** The offset (minutes east) a pinned history gives at an instant before 1970; null where it has none ("-00"). */
+function pinnedOffset(history: ZoneHistory, utcMs: number): number | null {
   let lo = 0;
   let hi = history.t.length;
   while (lo < hi) {
@@ -105,7 +110,8 @@ function pinnedOffset(history: ZoneHistory, utcMs: number): number {
     if (history.t[mid] * 1000 <= utcMs) lo = mid + 1;
     else hi = mid;
   }
-  return history.o[lo] / 60;
+  const offset = history.o[lo];
+  return offset === null ? null : offset / 60;
 }
 
 /**
@@ -131,12 +137,15 @@ function birthplaceClock(
   // offset reaches 24 hours), so later dates never need the pinned history.
   let history: ZoneHistory | null = null;
   if (wallMs < ZONE_HISTORY_END + 86_400_000) {
-    if (!zoneHistories.has(tz)) {
+    const key = tz.toLowerCase();
+    if (!zoneHistories.has(key)) {
       throw new Error('Zone history is not loaded: await prepareLocalTime(date, timeZone) before resolving.');
     }
-    history = zoneHistories.get(tz)!;
+    history = zoneHistories.get(key)!;
   }
-  const zoneAt = (utcMs: number): number => (history && utcMs < ZONE_HISTORY_END ? pinnedOffset(history, utcMs) : offsetAt(tz, utcMs));
+  const zoneAt = (utcMs: number): number => (history && utcMs < ZONE_HISTORY_END
+    ? pinnedOffset(history, utcMs) ?? offsetAt(tz, utcMs)
+    : offsetAt(tz, utcMs));
 
   let endMs = Number.NEGATIVE_INFINITY;
   let meanOffset = (utcMs: number): number => zoneAt(utcMs);

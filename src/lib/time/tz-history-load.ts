@@ -7,27 +7,38 @@
 export interface ZoneHistory {
   /** Transitions before 1970, Unix seconds, ascending. */
   readonly t: readonly number[];
-  /** Offsets in seconds east: before t[0], then after each transition. */
-  readonly o: readonly number[];
+  /**
+   * Offsets in seconds east: before t[0], then after each transition. Null
+   * where tzdb writes "-00", a place with no local time yet; the host's
+   * offset applies there.
+   */
+  readonly o: readonly (number | null)[];
 }
 
-/** The file a name's history is in; scripts/build-tz-history.mjs hashes names the same way. */
+/** The file a name's history is in; scripts/build-tz-history.mjs hashes names the same way, lower-cased. */
 export function historyBucket(name: string): string {
+  const key = name.toLowerCase();
   let hash = 0x811c9dc5;
-  for (let index = 0; index < name.length; index += 1) {
-    hash ^= name.charCodeAt(index);
+  for (let index = 0; index < key.length; index += 1) {
+    hash ^= key.charCodeAt(index);
     hash = Math.imul(hash, 0x01000193) >>> 0;
   }
   return String(hash % 64).padStart(2, '0');
 }
 
-/** The pinned history of a zone name, or null when the release has none the browser's data should give way to. */
+/**
+ * The pinned history of a zone name in any letter case, as Intl accepts it,
+ * or null when the release has none the browser's data should give way to.
+ */
 export async function loadZoneHistory(name: string): Promise<ZoneHistory | null> {
   // A template-literal import rather than import.meta.glob, so that esbuild
   // bundles (the browser drives) split the files as Vite does.
   const bucket: { default: { zones: Record<string, ZoneHistory> } } = await import(
     `../../data/tz-history/2025c/${historyBucket(name)}.json`
   );
-  const { zones } = bucket.default;
-  return Object.prototype.hasOwnProperty.call(zones, name) ? zones[name] : null;
+  const key = name.toLowerCase();
+  for (const [zone, history] of Object.entries(bucket.default.zones)) {
+    if (zone.toLowerCase() === key) return history;
+  }
+  return null;
 }

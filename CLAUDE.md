@@ -104,7 +104,8 @@ owns that page.
   (each zone name's offsets before 1970 from the same pinned release with
   backzone, compiled by zic, in 64 name-hashed files plus `excluded.json`;
   loaded on demand by `src/lib/time/tz-history-load.ts`. Needs zic; refresh
-  with tz-lmt.json, and `--check` re-derives it. Not in the drift job)
+  with tz-lmt.json. `--check` re-derives both from the release; CI runs it in
+  site-check.yml's `tz-data-drift` job, not the offline drift job)
 - `src/data/ingresses.json` ← `node scripts/build-ingresses.mjs` (refresh
   yearly with sky.json)
 - `src/data/eclipses.json` ← `node scripts/build-eclipses.mjs` (refresh

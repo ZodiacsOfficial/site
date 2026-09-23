@@ -22,23 +22,38 @@
  * pinned history differs from the default build (the main files with
  * `backward`, which is what browsers carry) at any instant from 1970 on:
  * backzone keeps Harbin at +8:30 until 1980, for example, and the old
- * rule-based WET and CET, and a hand-off at 1970 would jump. Those names keep
- * the browser's history throughout; `excluded` lists them.
+ * rule-based WET and EET, and a hand-off at 1970 would jump. A name the
+ * default build lacks (Asia/Hanoi) is left out too, as the browser cannot
+ * resolve it at all. `excluded` lists them.
+ *
+ * tzdb writes "-00" for a place with no local time yet (uninhabited: the
+ * Kerguelen Islands before 1950, Antarctic stations before they opened).
+ * That is not a UTC offset, so such a span is stored as null, and the
+ * resolver reads the browser's offset there instead.
  *
  * Output: 64 files, 00.json to 63.json, each holding the names whose FNV-1a
- * hash falls in it (historyBucket; the resolver's loader hashes the same
- * way), so a birth loads about a kilobyte, not a continent:
+ * hash of the lower-cased name falls in it (historyBucket; the resolver's
+ * loader hashes the same way and, as Intl does, ignores letter case), so a
+ * birth loads about a kilobyte, not a continent:
  * { tzdb, zones: { "<name>": { source, t: [transition, Unix seconds, …],
- * o: [offset before t[0], after t[0], …, seconds east] } } }; and
- * excluded.json, the names left out and why.
+ * o: [offset before t[0], after t[0], …, seconds east, or null for "-00"] } } };
+ * and excluded.json, the names left out and why.
+ *
+ * The data matches backzone's own rule, "Links in this file point to zones
+ * in this file, superseding links in the file 'backward'", as the Makefile's
+ * check_zishrink overlay build applies it. `make PACKRATDATA=backzone`
+ * resolves twelve names otherwise (Arctic/Longyearbyen to Berlin, for
+ * example), as does a build with PACKRATLIST=zone.tab (America/Coral_Harbour
+ * to Atikokan).
  *
  *   node scripts/build-tz-history.mjs          — refresh when the pinned release changes
  *   node scripts/build-tz-history.mjs --check  — exit 1 if the committed files differ
  *
  * Needs zic (libc-bin on Debian and Ubuntu) and the pinned release, which it
- * downloads once into .cache/ like build-tz-lmt.mjs; not in the offline drift
- * job for that reason. scripts/build-tz-history.test.mjs checks the committed
- * files offline.
+ * downloads once into .cache/ like build-tz-lmt.mjs; CI runs --check in its
+ * own job (site-check.yml, tz-data-drift) for that reason, not in the offline
+ * drift job. scripts/build-tz-history.test.mjs checks the committed files
+ * offline.
  */
 import { execFileSync } from 'node:child_process';
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
@@ -50,7 +65,7 @@ import { BACKZONE, MAIN_FILES, TZDB_VERSION, loadRelease, zoneNames } from './bu
 /** Offsets from 1970-01-01T00:00:00Z on are the host's. */
 export const HISTORY_END = 0;
 
-/** The 64-bit data block of a TZif file (RFC 8536): transitions, their types, and each type's offset. */
+/** The 64-bit data block of a TZif file (RFC 8536): transitions, their types, and each type's offset and designation. */
 export function readTzif(buffer) {
   if (buffer.toString('latin1', 0, 4) !== 'TZif') throw new Error('tz-history: not a TZif file');
   const counts = (at) => [0, 1, 2, 3, 4, 5].map((index) => buffer.readUInt32BE(at + 20 + index * 4));
@@ -59,24 +74,31 @@ export function readTzif(buffer) {
   const v1 = timecnt * 5 + typecnt * 6 + charcnt + leapcnt * 8 + isstdcnt + isutcnt;
   const header = 44 + v1;
   if (buffer.toString('latin1', header, header + 4) !== 'TZif') throw new Error('tz-history: missing second TZif header');
-  const [, , , times, types] = counts(header);
+  const [, , , times, types, chars] = counts(header);
   let at = header + 44;
   const t = [];
   for (let index = 0; index < times; index += 1, at += 8) t.push(Number(buffer.readBigInt64BE(at)));
   const typeOf = [...buffer.subarray(at, at + times)];
   at += times;
   const offsets = [];
-  for (let index = 0; index < types; index += 1, at += 6) offsets.push(buffer.readInt32BE(at));
-  return { t, typeOf, offsets };
+  const designationAt = [];
+  for (let index = 0; index < types; index += 1, at += 6) {
+    offsets.push(buffer.readInt32BE(at));
+    designationAt.push(buffer[at + 5]);
+  }
+  const text = buffer.toString('latin1', at, at + chars);
+  const designations = designationAt.map((start) => text.slice(start, text.indexOf('\0', start)));
+  return { t, typeOf, offsets, designations };
 }
 
-/** The offsets in force before HISTORY_END: type 0's before the first transition, then each change. */
-export function historyBefore({ t, typeOf, offsets }) {
-  const o = [offsets[0]];
+/** The offsets in force before HISTORY_END: type 0's before the first transition, then each change; null where tzdb writes "-00". */
+export function historyBefore({ t, typeOf, offsets, designations = [] }) {
+  const offsetOf = (type) => (designations[type] === '-00' ? null : offsets[type]);
+  const o = [offsetOf(0)];
   const kept = [];
   for (let index = 0; index < t.length; index += 1) {
     if (t[index] >= HISTORY_END) break;
-    const offset = offsets[typeOf[index]];
+    const offset = offsetOf(typeOf[index]);
     // zic's "big bang" transition to type 0, and any transition that keeps the offset, change nothing here.
     if (offset === o.at(-1)) continue;
     kept.push(t[index]);
@@ -87,11 +109,12 @@ export function historyBefore({ t, typeOf, offsets }) {
 
 export const HISTORY_BUCKETS = 64;
 
-/** The file a name's history is in: 32-bit FNV-1a of the name, modulo HISTORY_BUCKETS, two digits. */
+/** The file a name's history is in: 32-bit FNV-1a of the lower-cased name, modulo HISTORY_BUCKETS, two digits. */
 export function historyBucket(name) {
+  const key = name.toLowerCase();
   let hash = 0x811c9dc5;
-  for (let index = 0; index < name.length; index += 1) {
-    hash ^= name.charCodeAt(index);
+  for (let index = 0; index < key.length; index += 1) {
+    hash ^= key.charCodeAt(index);
     hash = Math.imul(hash, 0x01000193) >>> 0;
   }
   return String(hash % HISTORY_BUCKETS).padStart(2, '0');
@@ -136,7 +159,11 @@ export async function buildHistory(root) {
   const { names, zoneOf } = zoneNames(main, backzone);
   const buckets = Array.from({ length: HISTORY_BUCKETS }, () => ({}));
   const excluded = {};
+  const folded = new Set();
   for (const name of names) {
+    // The loader matches names without regard to case, as Intl does.
+    if (folded.has(name.toLowerCase())) throw new Error(`tz-history: two names differ only in case: ${name}`);
+    folded.add(name.toLowerCase());
     const source = zoneOf(name);
     const tzif = source && pinned.get(source);
     if (!tzif) throw new Error(`tz-history: ${name} (${source}) did not compile`);

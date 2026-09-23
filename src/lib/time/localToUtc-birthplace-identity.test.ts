@@ -60,7 +60,8 @@ describe('the birthplace clock on its zone\'s own meridian', () => {
       for (let t = endMs - 3 * 86_400_000; t <= endMs + 3 * 86_400_000 && pinnedAgrees; t += 10 * 60_000) {
         let index = 0;
         while (index < history.t.length && history.t[index] * 1000 <= t) index += 1;
-        pinnedAgrees = history.o[index] === Math.round(offsetAt(zone, t) * 60);
+        const host = Math.round(offsetAt(zone, t) * 60);
+        pinnedAgrees = (history.o[index] ?? host) === host;
       }
       if (pinnedAgrees) agreeing.push(zone);
     }

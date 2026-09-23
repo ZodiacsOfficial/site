@@ -10,7 +10,7 @@ import { prepareLocalTime, resolveLocalToUtc } from './localToUtc';
  * backzone), which the "host" column records.
  */
 const CASES: [label: string, date: string, zone: string, longitude: number, utc: string, offset: number, host: number][] = [
-  // Sweden had no summer time from 1949 to 1979, and none in 1947; Berlin had double summer time.
+  // Sweden kept +1:00 all year from 1917 to 1979; Berlin had summer time, and double summer time in 1947.
   ['Stockholm, July 1947', '1947-07-01', 'Europe/Stockholm', 18.07, '1947-07-01T11:00:00.000Z', 60, 120],
   ['Stockholm, June 1947', '1947-06-15', 'Europe/Stockholm', 18.07, '1947-06-15T11:00:00.000Z', 60, 180],
   // Amsterdam's own summer time, +1:20, where the host has Brussels's +1:00.
@@ -27,7 +27,7 @@ const CASES: [label: string, date: string, zone: string, longitude: number, utc:
 ];
 
 describe('the pinned zone history before 1970', () => {
-  beforeAll(() => Promise.all([...new Set([...CASES.map((row) => row[2]), 'America/New_York', 'WET'])]
+  beforeAll(() => Promise.all([...new Set([...CASES.map((row) => row[2]), 'America/New_York', 'WET', 'Indian/Kerguelen'])]
     .map((zone) => prepareLocalTime('1900-01-01', zone))));
 
   it.each(CASES)('%s', (_label, date, zone, longitude, utc, offset, host) => {
@@ -43,7 +43,7 @@ describe('the pinned zone history before 1970', () => {
     expect(resolved).toEqual(resolveLocalToUtc('1950-07-01', '12:00', 'America/New_York'));
   });
 
-  it('hands over to the host at 1970 without a jump', () => {
+  it('resolves across the hand-over to the host at 1970', () => {
     for (const [date, time, utc] of [
       ['1969-12-31', '23:30', '1969-12-31T22:30:00.000Z'],
       ['1970-01-01', '00:30', '1969-12-31T23:30:00.000Z'],
@@ -53,6 +53,19 @@ describe('the pinned zone history before 1970', () => {
       expect(resolved.utc.toISOString()).toBe(utc);
       expect(resolved.flags).toEqual([]);
     }
+  });
+
+  it('matches a zone name in any letter case, as Intl does', async () => {
+    await prepareLocalTime('1947-07-01', 'europe/stockholm');
+    for (const zone of ['europe/stockholm', 'EUROPE/STOCKHOLM', 'Europe/Stockholm']) {
+      expect(resolveLocalToUtc('1947-07-01', '12:00', zone, { longitude: 18.07 }).utc.toISOString()).toBe('1947-07-01T11:00:00.000Z');
+    }
+  });
+
+  it('reads the host where the pinned history has no local time ("-00")', () => {
+    // tzdb has no local time for the Kerguelen Islands before 1950.
+    const resolved = resolveLocalToUtc('1940-01-01', '12:00', 'Indian/Kerguelen', { longitude: 70.22 });
+    expect(resolved.utc.getTime()).toBe(resolveLocalToUtc('1940-01-01', '12:00', 'Indian/Kerguelen').utc.getTime());
   });
 
   it('leaves a name whose pinned history differs after 1970 to the host', () => {
@@ -76,6 +89,13 @@ describe('loading the pinned history', () => {
     expect(() => fresh.resolveLocalToUtc('1971-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 })).not.toThrow();
     await fresh.prepareLocalTime('1938-06-15', 'Europe/Luxembourg');
     expect(() => fresh.resolveLocalToUtc('1938-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 })).not.toThrow();
+  });
+
+  it('prepares 1 January 1970, whose early wall times fall in 1969', async () => {
+    const fresh = await import('./localToUtc?history-1970' as string) as typeof import('./localToUtc');
+    await fresh.prepareLocalTime('1970-01-01', 'Asia/Tokyo');
+    expect(fresh.resolveLocalToUtc('1970-01-01', '06:00', 'Asia/Tokyo', { longitude: 139.69 }).utc.toISOString())
+      .toBe('1969-12-31T21:00:00.000Z');
   });
 
   it('downloads a zone once, and does not remember a failed download', async () => {
@@ -103,5 +123,29 @@ describe('loading the pinned history', () => {
     expect(fresh.resolveLocalToUtc('1947-07-01', '12:00', 'Europe/Stockholm', { longitude: 18.07 }).offsetMinutes).toBe(60);
     vi.doUnmock('./tz-history-load');
     vi.resetModules();
+  });
+
+  it('raises no unhandled rejection when a caller stops waiting for a failed download', async () => {
+    vi.resetModules();
+    vi.doMock('./tz-history-load', async (importOriginal) => ({
+      ...await importOriginal<typeof import('./tz-history-load')>(),
+      loadZoneHistory: async () => { throw new Error('offline'); },
+    }));
+    const unhandled: unknown[] = [];
+    const listener = (reason: unknown) => { unhandled.push(reason); };
+    process.on('unhandledRejection', listener);
+    try {
+      const fresh = await import('./localToUtc');
+      // Started early and never awaited, as the chart calculator does when its engine fails first.
+      void fresh.prepareLocalTime('1947-07-01', 'Europe/Oslo');
+      await new Promise((settle) => { setTimeout(settle, 50); });
+      expect(unhandled).toEqual([]);
+      // A caller that does wait still sees the failure.
+      await expect(fresh.prepareLocalTime('1947-07-01', 'Europe/Oslo')).rejects.toThrow();
+    } finally {
+      process.off('unhandledRejection', listener);
+      vi.doUnmock('./tz-history-load');
+      vi.resetModules();
+    }
   });
 });

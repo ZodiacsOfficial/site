@@ -39,7 +39,8 @@
  *   node scripts/build-tz-lmt.mjs --check  — exit 1 if the committed table differs
  *
  * Both download the pinned release once if .cache/ lacks it; the table is not
- * in the offline drift job for that reason.
+ * in the offline drift job for that reason, and CI runs --check in its own job
+ * (site-check.yml, tz-data-drift).
  */
 import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';

@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { HISTORY_BUCKETS, historyBefore, historyBucket } from './build-tz-history.mjs';
+import { HISTORY_BUCKETS, historyBefore, historyBucket, readTzif } from './build-tz-history.mjs';
 import { historyBucket as resolverBucket } from '../src/lib/time/tz-history-load.ts';
 
 // The committed output of `node scripts/build-tz-history.mjs`, checked
@@ -25,8 +25,40 @@ describe('the pinned zone history generator', () => {
     expect(historyBefore(tzif)).toEqual({ t: [-2871681132, -2208992414, -1692496800, -1680483600], o: [4332, 3614, 3600, 7200, 3600] });
   });
 
-  it('hashes names to buckets as the resolver\'s loader does', () => {
+  it('stores tzdb\'s "-00" (no local time yet) as null', () => {
+    const tzif = { t: [-(2 ** 59), -631152000], typeOf: [0, 1], offsets: [0, 18000], designations: ['-00', '+05'] };
+    expect(historyBefore(tzif)).toEqual({ t: [-631152000], o: [null, 18000] });
+  });
+
+  it('reads the 64-bit block of a TZif file, with each type\'s designation', () => {
+    // RFC 8536: a version-2 file, its version-1 block empty, then the 64-bit
+    // block with two transitions and three types.
+    const header = (counts) => {
+      const buffer = Buffer.alloc(44);
+      buffer.write('TZif2', 0, 'latin1');
+      counts.forEach((count, index) => buffer.writeUInt32BE(count, 20 + index * 4));
+      return buffer;
+    };
+    const chars = Buffer.from('LMT\0-00\0+05\0', 'latin1');
+    const times = Buffer.alloc(16);
+    times.writeBigInt64BE(-2000000000n, 0);
+    times.writeBigInt64BE(-631152000n, 8);
+    const types = Buffer.alloc(18);
+    [[4332, 0, 0], [0, 0, 4], [18000, 0, 8]].forEach(([offset, dst, at], index) => {
+      types.writeInt32BE(offset, index * 6);
+      types[index * 6 + 4] = dst;
+      types[index * 6 + 5] = at;
+    });
+    const file = Buffer.concat([
+      header([0, 0, 0, 0, 1, 1]), Buffer.alloc(6 + 1),
+      header([0, 0, 0, 2, 3, chars.length]), times, Buffer.from([1, 2]), types, chars,
+    ]);
+    expect(readTzif(file)).toEqual({ t: [-2000000000, -631152000], typeOf: [1, 2], offsets: [4332, 0, 18000], designations: ['LMT', '-00', '+05'] });
+  });
+
+  it('hashes names to buckets as the resolver\'s loader does, without regard to case', () => {
     expect(historyBucket('Europe/Stockholm')).toBe(resolverBucket('Europe/Stockholm'));
+    expect(historyBucket('europe/STOCKHOLM')).toBe(historyBucket('Europe/Stockholm'));
     for (const name of [...Object.keys(zones), ...Object.keys(excluded)]) expect(resolverBucket(name)).toBe(historyBucket(name));
   });
 });
@@ -52,7 +84,7 @@ describe('the committed pinned zone history (tzdb 2025c with backzone)', () => {
         if (index > 0) expect(t > history.t[index - 1], name).toBe(true);
       });
       history.o.forEach((offset, index) => {
-        expect(Number.isInteger(offset) && Math.abs(offset) <= 16 * 3600, name).toBe(true);
+        expect(offset === null || (Number.isInteger(offset) && Math.abs(offset) <= 16 * 3600), name).toBe(true);
         if (index > 0) expect(offset, name).not.toBe(history.o[index - 1]);
       });
     }
@@ -97,7 +129,8 @@ describe('the committed pinned zone history (tzdb 2025c with backzone)', () => {
       if (!known) {
         try { hostOffset(name); known = true; } catch { known = false; }
       }
-      if (known && history.o.at(-1) !== hostOffset(name)) differ.push(name);
+      // A null ("-00") offset reads the host's, so it cannot jump.
+      if (known && history.o.at(-1) !== null && history.o.at(-1) !== hostOffset(name)) differ.push(name);
     }
     expect(differ).toEqual([]);
   });

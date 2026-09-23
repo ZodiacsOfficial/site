@@ -77,6 +77,29 @@ const longitudeOf = (call: ts.CallExpression): ts.Expression | null => {
   return ts.isPropertyAssignment(property) ? property.initializer : property.name as ts.Expression;
 };
 
+/**
+ * An argument's text with what does not change which date or zone it names
+ * taken out: spacing, non-null assertions, optional chaining, and a trailing
+ * `?? 'UTC'` fallback (the callers resolve only once a place is present).
+ */
+const normal = (text: string) => text.replace(/\s+/g, '').replace(/!/g, '').replace(/\?\./g, '.').replace(/\?\?'[^']*'$/, '');
+
+/** An expression in a function's body, with each parameter replaced by the argument a call passes. */
+function substituted(expression: ts.Expression, fn: ts.SignatureDeclaration, use: ts.CallExpression): string {
+  let text = expression.getText();
+  fn.parameters.forEach((parameter, index) => {
+    if (ts.isIdentifier(parameter.name) && use.arguments[index]) {
+      text = text.replace(new RegExp(`\\b${parameter.name.text}\\b`, 'g'), use.arguments[index].getText());
+    }
+  });
+  return normal(text);
+}
+
+/** Whether the function around a call awaits prepareLocalTime(date, zone) before it. */
+const preparedBefore = (use: ts.CallExpression, date: string, zone: string) => calls(enclosingFunction(use), 'prepareLocalTime')
+  .some((prepare) => prepare.arguments.length === 2 && normal(prepare.arguments[0].getText()) === date
+    && normal(prepare.arguments[1].getText()) === zone && awaitedBefore(prepare, use.getStart()));
+
 const sources = walk(root)
   .filter((path) => /\.(?:ts|tsx)$/.test(path) && !/\.test\.tsx?$/.test(path))
   .map((path) => {
@@ -90,7 +113,7 @@ describe('callers of resolveLocalToUtc', () => {
     expect(sources.length).toBeGreaterThan(10);
   });
 
-  it('await prepareLocalTime of the same date before each call that passes a longitude', () => {
+  it('await prepareLocalTime of the same date and zone before each call that passes a longitude', () => {
     const problems: string[] = [];
     for (const { path, file } of sources) {
       for (const call of calls(file, 'resolveLocalToUtc')) {
@@ -98,31 +121,28 @@ describe('callers of resolveLocalToUtc', () => {
         if (!longitude) continue;
         const where = `${path}:${file.getLineAndCharacterOfPosition(call.getStart()).line + 1}`;
         if (!/\.lon$/.test(longitude.getText())) problems.push(`${where} passes ${longitude.getText()} as the longitude`);
-        if (PREPARED_BY[path]) continue;
-        const date = call.arguments[0].getText();
-        const zone = call.arguments[2].getText();
+        const date = normal(call.arguments[0].getText());
+        const zone = normal(call.arguments[2].getText());
         const scope = enclosingFunction(call);
-        const prepared = calls(scope, 'prepareLocalTime')
-          .some((prepare) => prepare.arguments[0]?.getText() === date && prepare.arguments[1]?.getText() === zone
-            && awaitedBefore(prepare, call.getStart()));
-        // A named helper is prepared for when every call of it follows an
-        // awaited preparation in its caller (TransitTracker's natal helpers).
+        if (preparedBefore(call, date, zone)) continue;
+        // A named function is prepared for when every call of it follows an
+        // awaited preparation of the same date and zone, its parameters
+        // replaced by the call's arguments: TransitTracker's natal helpers in
+        // the same file, and the return calculators' compute functions in the
+        // islands that load them.
         const helper = ts.isFunctionDeclaration(scope) && scope.name ? scope.name.text : null;
-        const uses = helper ? calls(file, helper) : [];
-        const preparedByCallers = uses.length > 0 && uses.every((use) => calls(enclosingFunction(use), 'prepareLocalTime')
-          .some((prepare) => prepare.arguments.length === 2 && awaitedBefore(prepare, use.getStart())));
-        if (!prepared && !preparedByCallers) problems.push(`${where} has no awaited prepareLocalTime(${date}, ${zone}) before it`);
+        const users = PREPARED_BY[path]
+          ? PREPARED_BY[path].map((island) => parse(island, readFileSync(resolve(root, island), 'utf8')))
+          : [file];
+        const uses = helper ? users.flatMap((user) => calls(user, helper)) : [];
+        const preparedByCallers = uses.length > 0 && uses.every((use) => preparedBefore(use,
+          substituted(call.arguments[0], scope as ts.SignatureDeclaration, use),
+          substituted(call.arguments[2], scope as ts.SignatureDeclaration, use)));
+        if (!preparedByCallers) problems.push(`${where} has no awaited prepareLocalTime(${date}, ${zone}) before it`);
       }
     }
-    for (const [module, islands] of Object.entries(PREPARED_BY)) {
+    for (const module of Object.keys(PREPARED_BY)) {
       if (!/export \{ prepareLocalTime \}/.test(readFileSync(resolve(root, module), 'utf8'))) problems.push(`${module} does not re-export prepareLocalTime`);
-      for (const island of islands) {
-        const file = parse(island, readFileSync(resolve(root, island), 'utf8'));
-        if (!calls(file, 'prepareLocalTime').some((prepare) => prepare.arguments.length === 2
-          && awaitedBefore(prepare, Number.POSITIVE_INFINITY))) {
-          problems.push(`${island} does not await prepareLocalTime`);
-        }
-      }
     }
     expect(problems).toEqual([]);
   });

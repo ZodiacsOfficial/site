@@ -19,11 +19,12 @@ export type SavedChartEngineLoader = () => Promise<{
  * profile-store path pay for the ephemeris. Charts without a place return
  * immediately. A summary from another engine recomputes from the lossless
  * birth input. So does one from the current engine whose instant no longer
- * matches the birthplace clock, which can happen only for a birth before
- * standard time: until 2026-09 those used the mean time of the zone's
- * reference city instead of the birthplace's own, so a Buffalo birth in 1870
- * was saved on New York's clock. Any failure falls back quietly to the stored
- * summary.
+ * matches the birthplace clock, which can happen only for a birth up to
+ * 1970: until 2026-09 those before standard time used the mean time of the
+ * zone's reference city instead of the birthplace's own, so a Buffalo birth
+ * in 1870 was saved on New York's clock, and those before 1970 used the
+ * browser's zone history, which gives Oslo Berlin's. Any failure falls back
+ * quietly to the stored summary.
  */
 export async function resolveSavedChart(
   source: SavedChart,

@@ -45,13 +45,14 @@ const CASES: [zone: string, town: string, longitude: number][] = [
 
 const histories = new Map<string, ZoneHistory>();
 
-/** The legal offset in minutes at an instant: the pinned history's before 1970, Intl's after. */
+/** The legal offset in minutes at an instant: the pinned history's before 1970 (Intl's where it has none), Intl's after. */
 function legalOffset(zone: string, t: number): number {
   const history = histories.get(zone);
   if (!history || t >= 0) return offsetAt(zone, t);
   let index = 0;
   while (index < history.t.length && history.t[index] * 1000 <= t) index += 1;
-  return history.o[index] / 60;
+  const offset = history.o[index];
+  return offset === null ? offsetAt(zone, t) : offset / 60;
 }
 
 function wallParts(ms: number): [string, string] {
@@ -117,6 +118,70 @@ describe('the birthplace clock at the end of its local mean time era', () => {
       }
     }
     expect(receipts).toBeGreaterThan(8);
+    expect(failures.slice(0, 5)).toEqual([]);
+  });
+});
+
+/*
+ * Every wall minute within 90 minutes of each change in a zone's pinned
+ * history before 1970, read with a longitude, against the same model: one
+ * reading is the answer, two a fold, none a gap moved forward by the offset
+ * in force just before. The local mean time era is long over at these
+ * changes, so only the pinned legal clock is involved.
+ */
+const LEGAL_CASES: [zone: string, town: string, longitude: number][] = [
+  ['America/New_York', 'New York', -74.01],
+  ['Europe/Stockholm', 'Stockholm', 18.07],
+  ['Europe/Amsterdam', 'Amsterdam', 4.89],
+  ['Atlantic/Reykjavik', 'Reykjavik', -21.9],
+  ['America/Aruba', 'Oranjestad', -70.03],
+];
+
+describe('the birthplace clock at each change of its pinned history before 1970', () => {
+  beforeAll(async () => {
+    for (const [zone] of LEGAL_CASES) {
+      await prepareLocalTime('1800-01-01', zone);
+      histories.set(zone, (await loadZoneHistory(zone))!);
+    }
+  });
+
+  it.each(LEGAL_CASES)('%s: %s', (zone, _town, longitude) => {
+    const history = histories.get(zone)!;
+    const eraEnd = Object.prototype.hasOwnProperty.call(eras, zone) ? eras[zone] * 1000 : Number.NEGATIVE_INFINITY;
+    const failures: string[] = [];
+    let changes = 0;
+    let gaps = 0;
+    let folds = 0;
+    history.t.forEach((seconds, index) => {
+      const at = seconds * 1000;
+      if (at - eraEnd < 2 * 86_400_000) return;
+      changes += 1;
+      const before = history.o[index] as number;
+      const after = history.o[index + 1] as number;
+      const jumpWall = at + Math.min(before, after) * 1000;
+      // Wall times are whole minutes; some jumps fall on odd seconds (Stockholm, 1900).
+      const first = Math.floor((jumpWall - 90 * 60_000) / 60_000) * 60_000;
+      for (let wall = first; wall <= jumpWall + 90 * 60_000 + Math.abs(after - before) * 1000; wall += 60_000) {
+        const readings = [before, after]
+          .map((offset) => ({ t: wall - offset * 1000, offset: offset / 60 }))
+          .filter(({ t, offset }) => legalOffset(zone, t) === offset)
+          .sort((a, b) => a.t - b.t);
+        const expected = readings.length === 0
+          ? { t: wall - before * 1000, offset: legalOffset(zone, wall - before * 1000), flag: 'dst-gap' }
+          : { t: readings[0].t, offset: readings[0].offset, flag: readings.length > 1 && readings[0].t !== readings[1].t ? 'dst-fold' : '' };
+        if (expected.flag === 'dst-gap') gaps += 1;
+        if (expected.flag === 'dst-fold') folds += 1;
+        const [date, time] = wallParts(wall);
+        const resolved = resolveLocalToUtc(date, time, zone, { longitude });
+        const flag = resolved.flags.filter((f) => f !== 'lmt').join(',');
+        if (resolved.utc.getTime() !== expected.t || Math.abs(resolved.offsetMinutes - expected.offset) > 1e-9 || flag !== expected.flag) {
+          failures.push(`${date} ${time}: got ${resolved.utc.toISOString()} ${resolved.offsetMinutes} [${resolved.flags}], `
+            + `expected ${new Date(expected.t).toISOString()} ${expected.offset} [${expected.flag}]`);
+        }
+      }
+    });
+    expect(changes).toBeGreaterThan(0);
+    expect(gaps + folds).toBeGreaterThan(0);
     expect(failures.slice(0, 5)).toEqual([]);
   });
 });

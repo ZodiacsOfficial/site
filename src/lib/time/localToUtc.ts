@@ -4,8 +4,9 @@
  * carry seconds, e.g. America/Mexico_City at −6:36:36 before 1922).
  *
  * The browser/Node host's ICU data exposes its tzdb history through Intl.
- * Coverage and tzdb version therefore depend on that runtime. Legal offsets
- * always come from there; nothing here hand-rolls a legal offset.
+ * Coverage and tzdb version therefore depend on that runtime. Without a
+ * birthplace, and for every instant from 1970 on, legal offsets come from
+ * there; nothing here hand-rolls a legal offset.
  *
  * One era needs more than the zone: before a place adopted a legal time, its
  * clocks kept that place's own mean solar time, and tzdb records that only
@@ -86,7 +87,10 @@ export function birthplaceTimeCanApply(date: string): boolean {
  * Later dates need nothing. Resolving such a date with a longitude without
  * them throws rather than guess. A failed download rejects with a
  * ModuleLoadError, like the calculators' other code downloads, and is not
- * remembered: the next call tries again.
+ * remembered: the next call tries again. The rejection counts as observed,
+ * so a caller that starts preparing early and stops waiting (the chart
+ * calculator, when its engine fails to load first) raises no unhandled
+ * rejection; a caller that awaits still sees it.
  */
 export function prepareLocalTime(date: string, timeZone: string): Promise<void> {
   if (!birthplaceTimeCanApply(date)) return Promise.resolve();
@@ -97,10 +101,12 @@ export function prepareLocalTime(date: string, timeZone: string): Promise<void> 
       if (birthplaceLoad === pending) birthplaceLoad = null;
     });
   }
-  return birthplaceLoad.then((module) => {
+  const ready = birthplaceLoad.then((module) => {
     birthplace = module;
     return module.prepare(date, timeZone);
   });
+  void ready.catch(() => {});
+  return ready;
 }
 
 const offsetFormatters = new Map<string, Intl.DateTimeFormat>();
