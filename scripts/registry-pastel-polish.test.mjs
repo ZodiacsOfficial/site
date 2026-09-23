@@ -174,7 +174,7 @@ describe('registry pastel polish', () => {
     expect(campaign).toContain('.campaign-hero__video { opacity: 0; transition: opacity 560ms ease; }');
     expect(cssRule(campaign, '.campaign-phone__video {')).toContain('transition: opacity 560ms ease;');
     const pin = cssRule(campaign, '.campaign-hero__pin {');
-    expect(pin).toContain('--film-w: min(27vw, 44vh);');
+    expect(pin).toContain('--film-w: min(27vw, 40vh);');
     expect(pin).toContain('position: sticky;');
     expect(pin).toContain('height: 100vh;');
     expect(cssRule(campaign, '.campaign-runway[data-mode="pinned"] .campaign-runway__pin {')).toContain('height: 100vh;');

@@ -556,9 +556,9 @@ try {
       };
     }));
     assert.deepEqual(hydratedShopImages.map(({ path }) => path), [
-      '/assets/astrofolio/merch/t-shirt-800.webp',
-      '/assets/astrofolio/merch/cap-800.webp',
       '/assets/astrofolio/merch/hoodie-800.webp',
+      '/assets/astrofolio/merch/cap-800.webp',
+      '/assets/astrofolio/merch/t-shirt-800.webp',
     ]);
     assert.ok(hydratedShopImages.every((image) => image.sameOrigin && image.naturalWidth > 0 && image.naturalHeight > 0 && image.width > 0 && image.height > 0), 'every hydrated merchandise image loads visibly from the site origin');
     if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-merch-mobile.png`, fullPage: false });
@@ -584,29 +584,35 @@ try {
     await desktopPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
     await waitForTerminal(desktopPage, '#campaign-hero-title');
     await waitForConsumerQuote(desktopPage, 'leo');
-    // The closed film sits inside the wordmark; the headline and the bag
-    // wait until the film has opened.
+    // The closed film sits inside the wordmark and the headline waits until
+    // it has opened; the bag is live from the first screen, below the film.
     const closed = await desktopPage.evaluate(() => {
       const film = document.querySelector('.campaign-hero__film').getBoundingClientRect();
       const astro = document.querySelector('.campaign-hero__word--astro').getBoundingClientRect();
       const folio = document.querySelector('.campaign-hero__word--folio').getBoundingClientRect();
+      const bag = document.querySelector('.campaign-bag').getBoundingClientRect();
+      const foot = document.querySelector('.campaign-hero__foot p').getBoundingClientRect();
       return {
         film: film.toJSON(),
         astro: astro.toJSON(),
         folio: folio.toJSON(),
+        bag: bag.toJSON(),
+        foot: foot.toJSON(),
         caption: getComputedStyle(document.querySelector('.campaign-hero__caption')).opacity,
         bagHidden: document.querySelector('.campaign-bag').classList.contains('is-hidden'),
-        bagVisibility: getComputedStyle(document.querySelector('.campaign-bag')).visibility,
         heroHeight: document.getElementById('official-twelve').offsetHeight,
       };
     });
-    assert.ok(Math.abs(closed.film.width - Math.min(1440 * .27, 900 * .44)) <= 1, 'the closed film keeps its wordmark width');
+    assert.ok(Math.abs(closed.film.width - Math.min(1440 * .27, 900 * .40)) <= 1, 'the closed film keeps its wordmark width');
     assert.ok(Math.abs(closed.film.x + closed.film.width / 2 - 720) <= 1 && Math.abs(closed.film.y + closed.film.height / 2 - 450) <= 1, 'the closed film is centred');
     assert.ok(closed.astro.right <= closed.film.x && closed.folio.left >= closed.film.right, 'Astro and folio flank the film');
     assert.ok(closed.astro.left >= 0 && closed.folio.right <= 1440, 'the wordmark stays inside the screen');
     assert.equal(closed.caption, '0');
-    assert.equal(closed.bagHidden, true);
-    assert.equal(closed.bagVisibility, 'hidden');
+    assert.equal(closed.bagHidden, false, 'the bag is live in the first desktop screen');
+    assert.ok(closed.bag.top >= closed.film.bottom, 'the bag sits below the closed film');
+    assert.ok(closed.foot.width === 0 || closed.foot.right <= closed.bag.left, 'the foot copy stays clear of the bag');
+    await assertBuyActionInView(desktopPage, '.campaign-bag', { width: 1440, height: 900 }, 'first desktop screen');
+    assert.equal(await desktopPage.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'leo');
     assert.ok(closed.heroHeight > 900 * 2, 'the opening pins for more than two screens of scroll');
     if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900.png`, fullPage: false });
     await desktopPage.evaluate(() => {
@@ -675,19 +681,25 @@ try {
     await desktopPage.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
     assert.equal(await desktopPage.locator('#registry .campaign-record__label').innerText(), 'Virgo · Solana origin');
 
-    for (const width of [1024, 1200]) {
-      await desktopPage.setViewportSize({ width, height: 900 });
+    for (const [width, height] of [[1024, 900], [1200, 900], [901, 900], [1280, 680]]) {
+      await desktopPage.setViewportSize({ width, height });
       await desktopPage.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
       await desktopPage.waitForTimeout(80);
+      await desktopPage.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
       const geometry = await desktopPage.evaluate(() => ({
         client: document.documentElement.clientWidth,
         scroll: document.documentElement.scrollWidth,
         astroLeft: document.querySelector('.campaign-hero__word--astro').getBoundingClientRect().left,
         folioRight: document.querySelector('.campaign-hero__word--folio').getBoundingClientRect().right,
+        film: document.querySelector('.campaign-hero__film').getBoundingClientRect().toJSON(),
+        bag: document.querySelector('.campaign-bag').getBoundingClientRect().toJSON(),
+        foot: document.querySelector('.campaign-hero__foot p').getBoundingClientRect().toJSON(),
       }));
       assert.ok(geometry.scroll <= geometry.client, `${width}px desktop has no horizontal overflow`);
       assert.ok(geometry.astroLeft >= 0 && geometry.folioRight <= geometry.client, `${width}px keeps the wordmark inside the screen`);
-      await assertSignPicker(desktopPage, { width, height: 900 });
+      assert.ok(geometry.bag.top >= geometry.film.bottom, `${width}px keeps the bag below the closed film`);
+      assert.ok(geometry.foot.width === 0 || geometry.foot.right <= geometry.bag.left, `${width}px keeps the foot copy clear of the bag`);
+      await assertSignPicker(desktopPage, { width, height });
     }
     assert.deepEqual(desktopErrors, []);
     await desktop.close();
@@ -908,9 +920,9 @@ try {
     assert.ok(staticPageGeometry.scrollWidth <= staticPageGeometry.viewport, 'the no-JavaScript Astrofolio page has no horizontal overflow');
     assert.ok(staticPageGeometry.shopImages.every(({ left, right, width }) => left >= 0 && right <= staticPageGeometry.viewport && width > 0), 'every no-JavaScript shop image stays inside the mobile viewport');
     assert.deepEqual(staticPageGeometry.shopImages.map(({ path }) => path), [
-      '/assets/astrofolio/merch/t-shirt-800.webp',
-      '/assets/astrofolio/merch/cap-800.webp',
       '/assets/astrofolio/merch/hoodie-800.webp',
+      '/assets/astrofolio/merch/cap-800.webp',
+      '/assets/astrofolio/merch/t-shirt-800.webp',
     ]);
     assert.ok(staticPageGeometry.shopImages.every((image) => image.sameOrigin && image.naturalWidth > 0 && image.naturalHeight > 0 && image.height > 0), 'every no-JavaScript merchandise image loads visibly from the site origin');
     const staticStoryStyle = await noJsPage.locator('.static-story-band').evaluate((node) => {
@@ -991,11 +1003,12 @@ try {
         folioRight: document.querySelector('.campaign-hero__word--folio').getBoundingClientRect().right,
       };
     });
-    assert.ok(Math.abs(staticWide.film.width - Math.min(1440 * .27, 900 * .44)) <= 1, 'the no-JavaScript film matches the application width');
+    assert.ok(Math.abs(staticWide.film.width - Math.min(1440 * .27, 900 * .40)) <= 1, 'the no-JavaScript film matches the application width');
     assert.ok(Math.abs(staticWide.film.x + staticWide.film.width / 2 - 720) <= 1 && Math.abs(staticWide.film.y + staticWide.film.height / 2 - 450) <= 1, 'the no-JavaScript film matches the application position');
     assert.ok(staticWide.astroLeft >= 0 && staticWide.folioRight <= 1440);
     assert.ok(staticWide.titleTop >= 900, 'the no-JavaScript caption follows the first wide screen');
-    assert.equal(staticWide.bagDisplay, 'none', 'the wide no-JavaScript opening matches the application, which rests the bag while the film is closed');
+    assert.notEqual(staticWide.bagDisplay, 'none', 'the wide no-JavaScript opening carries the season bag, as the application does');
+    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: expectedSeason.sign });
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');

@@ -9726,7 +9726,7 @@
     /* ── Opening: Astro [film] folio ─────────────────────────────── */
     .campaign-hero { position: relative; height: 230vh; }
     .campaign-hero__pin {
-      --film-w: min(27vw, 44vh);
+      --film-w: min(27vw, 40vh);
       position: sticky;
       top: 0;
       height: 100vh;
@@ -9808,7 +9808,7 @@
       pointer-events: none;
     }
     .campaign-hero__foot p { max-width: 32ch; margin: 0; color: var(--ink-2); font: 400 15px/1.5 var(--sans); }
-    .campaign-hero__foot span { color: var(--ink-mute); font: 500 13px/1 var(--sans); white-space: nowrap; }
+    .campaign-hero__foot span { margin-left: auto; color: var(--ink-mute); font: 500 13px/1 var(--sans); white-space: nowrap; }
     .campaign-hero__foot i { display: inline-block; font-style: normal; animation: campaign-cue 2.4s ease-in-out infinite; }
     @keyframes campaign-cue {
       0%, 100% { transform: translateY(0); }
@@ -9818,7 +9818,8 @@
       position: absolute;
       z-index: 3;
       right: var(--campaign-gutter);
-      bottom: clamp(40px, 8vh, 96px);
+      /* Clears the bag, which now shows from the first screen. */
+      bottom: clamp(100px, 12vh, 124px);
       left: var(--campaign-gutter);
       max-width: 980px;
       opacity: var(--hero-caption, 0);
@@ -9964,8 +9965,11 @@
     .campaign-bag__who strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .campaign-bag__move.is-up { color: var(--campaign-up); }
     .campaign-bag__move.is-down { color: var(--campaign-down); }
-    @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-      .campaign-bag--static { display: none; }
+    .static-campaign ~ .zfooter { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+    /* On narrow desktops the closed film's foot keeps only its cue, so the
+       centred bag never meets the copy. */
+    @media (min-width: 901px) and (max-width: 1120px) {
+      .campaign-hero__foot p { display: none; }
     }
 
     /* ── Runway: all twelve ──────────────────────────────────────── */
@@ -10401,7 +10405,6 @@
       .campaign-hero__actions { gap: 10px; margin-top: 18px; }
       .campaign-button { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
       .static-campaign__nav { padding-top: 14px; }
-      .static-campaign ~ .zfooter { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 
       .campaign-bag {
         right: 12px;
@@ -10723,10 +10726,10 @@
         <p>Explore Astrofolio merchandise inspired by the collection.</p>
         <div class="consumer-destinations__grid static-shop__products">
           <article class="consumer-destinations__card static-shop__product">
-            <a class="static-shop__image" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/t-shirt-800.webp" width="800" height="892" alt="White Astrofolio T-shirt" loading="lazy" decoding="async"></a>
+            <a class="static-shop__image" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/hoodie-800.webp" width="800" height="892" alt="Grey melange Astrofolio hoodie" loading="lazy" decoding="async"></a>
             <span class="consumer-destinations__eyebrow">Astrofolio</span>
-            <h3>T-shirt</h3>
-            <a class="consumer-destinations__link" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external">View the T-shirt <span aria-hidden="true">↗</span></a>
+            <h3>Hoodie</h3>
+            <a class="consumer-destinations__link" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external">View the hoodie <span aria-hidden="true">↗</span></a>
           </article>
           <article class="consumer-destinations__card static-shop__product">
             <a class="static-shop__image" href="https://shop.app/products/9654676455767/astrofolio-cap" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/cap-800.webp" width="800" height="892" alt="Washed black Astrofolio cap" loading="lazy" decoding="async"></a>
@@ -10735,10 +10738,10 @@
             <a class="consumer-destinations__link" href="https://shop.app/products/9654676455767/astrofolio-cap" rel="noopener noreferrer external">View the cap <span aria-hidden="true">↗</span></a>
           </article>
           <article class="consumer-destinations__card static-shop__product">
-            <a class="static-shop__image" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/hoodie-800.webp" width="800" height="892" alt="Grey melange Astrofolio hoodie" loading="lazy" decoding="async"></a>
+            <a class="static-shop__image" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external"><img src="/assets/astrofolio/merch/t-shirt-800.webp" width="800" height="892" alt="White Astrofolio T-shirt" loading="lazy" decoding="async"></a>
             <span class="consumer-destinations__eyebrow">Astrofolio</span>
-            <h3>Hoodie</h3>
-            <a class="consumer-destinations__link" href="https://shop.app/products/9654762504535/astrofolio-hoodie" rel="noopener noreferrer external">View the hoodie <span aria-hidden="true">↗</span></a>
+            <h3>T-shirt</h3>
+            <a class="consumer-destinations__link" href="https://shop.app/products/9655740694871/astrofolio-t-shirt" rel="noopener noreferrer external">View the T-shirt <span aria-hidden="true">↗</span></a>
           </article>
         </div>
         <p><a class="consumer-destinations__link" href="https://shop.app/m/41mzeq7f2h" rel="noopener noreferrer external">Browse the full Astrofolio shop <span aria-hidden="true">↗</span></a></p>

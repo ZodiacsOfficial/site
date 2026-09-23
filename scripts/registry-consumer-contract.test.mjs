@@ -10,9 +10,9 @@ const SIGNS = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 const SHOP_IMAGE_PATHS = [
-  '/assets/astrofolio/merch/t-shirt-800.webp',
-  '/assets/astrofolio/merch/cap-800.webp',
   '/assets/astrofolio/merch/hoodie-800.webp',
+  '/assets/astrofolio/merch/cap-800.webp',
+  '/assets/astrofolio/merch/t-shirt-800.webp',
 ];
 const EXPECTED_FAQS = [
   {
@@ -285,6 +285,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       expect(shop).toContain(`src="${image}"`);
       await expect(access(resolve(root, `public${image}`))).resolves.toBeUndefined();
     }
+    ordered(shop, SHOP_IMAGE_PATHS.map((image) => `src="${image}"`));
     expect(shop).not.toContain('cdn.shopify.com');
     expect(html).not.toContain('data-terminal-preference-banner');
 
@@ -398,6 +399,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(functionBlock(source, 'zodiacEmoji')).toContain("`${symbol}\\uFE0F`");
 
     expect(bag).toContain('<FomoBuyButton item={sign} source="bag" />');
+    expect(bag).toContain('const [shown, setShown] = useState(true);');
+    expect(bag).not.toContain("hero.dataset.caption");
     expect(bag).toContain("inert={shown ? undefined : ''}");
     expect(bag).toContain("aria-hidden={shown ? undefined : 'true'}");
     expect(bag).toContain("document.querySelector('.consumer-campaign > .ftr')");
@@ -510,6 +513,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     for (const image of SHOP_IMAGE_PATHS) {
       expect(shopProducts).toContain(`image: '${image}'`);
     }
+    ordered(shopProducts, SHOP_IMAGE_PATHS.map((image) => `image: '${image}'`));
     expect(shopProducts).not.toContain('cdn.shopify.com');
 
     expect(source).not.toContain('function ConsumerTerminalStrip(');

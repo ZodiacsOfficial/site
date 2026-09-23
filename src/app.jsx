@@ -5403,25 +5403,21 @@
       );
     }
 
-    // The bag follows the selected sign. It rests while the pinned film
-    // opens, while the runway (where every look has its own button) fills
-    // the screen, and over the page's closing footer.
+    // The bag follows the selected sign from the first screen. It rests
+    // only while the runway (where every look has its own button) fills the
+    // screen, and over the page's closing notice and footer.
     function CampaignBag({ sign, batch }) {
       const seasonTicker = useCurrentSeason()?.sign.ticker ?? '';
-      const [shown, setShown] = useState(() => !campaignStageActive());
+      const [shown, setShown] = useState(true);
       useEffect(() => {
         let frame = 0;
         const paint = () => {
           frame = 0;
           const viewport = window.innerHeight;
           const stage = campaignStageActive();
-          const hero = document.getElementById('official-twelve');
           const runway = document.getElementById('the-twelve');
           const ending = document.querySelector('.consumer-campaign > .ftr') ?? document.querySelector('#main ~ .zfooter');
           let next = true;
-          if (stage && hero) {
-            next = hero.dataset.caption === 'live' || hero.getBoundingClientRect().bottom < viewport * 0.5;
-          }
           if (runway) {
             const rect = runway.getBoundingClientRect();
             const covering = stage
@@ -5475,11 +5471,12 @@
       );
     }
 
+    // The hoodie leads the lookbook (owner-approved Campaign order).
     const ASTROFOLIO_SHOP_PRODUCTS = Object.freeze([
       {
-        name: 'Astrofolio T-shirt',
-        image: '/assets/astrofolio/merch/t-shirt-800.webp',
-        href: 'https://shop.app/products/9655740694871/astrofolio-t-shirt',
+        name: 'Astrofolio Hoodie',
+        image: '/assets/astrofolio/merch/hoodie-800.webp',
+        href: 'https://shop.app/products/9654762504535/astrofolio-hoodie',
       },
       {
         name: 'Astrofolio Cap',
@@ -5487,9 +5484,9 @@
         href: 'https://shop.app/products/9654676455767/astrofolio-cap',
       },
       {
-        name: 'Astrofolio Hoodie',
-        image: '/assets/astrofolio/merch/hoodie-800.webp',
-        href: 'https://shop.app/products/9654762504535/astrofolio-hoodie',
+        name: 'Astrofolio T-shirt',
+        image: '/assets/astrofolio/merch/t-shirt-800.webp',
+        href: 'https://shop.app/products/9655740694871/astrofolio-t-shirt',
       },
     ]);
 
