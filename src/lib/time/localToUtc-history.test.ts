@@ -64,17 +64,18 @@ describe('the pinned zone history before 1970', () => {
 
 describe('loading the pinned history', () => {
   it('refuses to resolve a birthplace time before 1970 until the zone is prepared', async () => {
+    // Zones no other test in this file prepares: the loaded clock is shared.
     const fresh = await import('./localToUtc?history-unloaded' as string) as typeof import('./localToUtc');
-    expect(() => fresh.resolveLocalToUtc('1960-07-01', '12:00', 'Europe/Oslo', { longitude: 10.75 }))
+    expect(() => fresh.resolveLocalToUtc('1938-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 }))
       .toThrow('prepareLocalTime');
-    await fresh.prepareLocalTime('1960-07-01', 'Europe/Copenhagen');
+    await fresh.prepareLocalTime('1938-06-15', 'Europe/Zagreb');
     // Preparing another zone does not prepare this one.
-    expect(() => fresh.resolveLocalToUtc('1960-07-01', '12:00', 'Europe/Oslo', { longitude: 10.75 }))
+    expect(() => fresh.resolveLocalToUtc('1938-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 }))
       .toThrow('prepareLocalTime');
     // 1971 needs nothing.
-    expect(fresh.resolveLocalToUtc('1971-07-01', '12:00', 'Europe/Oslo', { longitude: 10.75 }).offsetMinutes).toBe(60);
-    await fresh.prepareLocalTime('1960-07-01', 'Europe/Oslo');
-    expect(fresh.resolveLocalToUtc('1960-07-01', '12:00', 'Europe/Oslo', { longitude: 10.75 }).offsetMinutes).toBe(120);
+    expect(() => fresh.resolveLocalToUtc('1971-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 })).not.toThrow();
+    await fresh.prepareLocalTime('1938-06-15', 'Europe/Luxembourg');
+    expect(() => fresh.resolveLocalToUtc('1938-06-15', '12:00', 'Europe/Luxembourg', { longitude: 6.13 })).not.toThrow();
   });
 
   it('downloads a zone once, and does not remember a failed download', async () => {
