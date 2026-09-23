@@ -4654,30 +4654,6 @@
       );
     }
 
-    function ConsumerIdentityHeader() {
-      const season = useCurrentSeason()?.sign ?? SIGNS[0];
-      return (
-        <header className="terminal-consumer-hero" aria-labelledby="consumer-explorer-title">
-          <div className="astrofolio-lockup">
-            <img
-              className="astrofolio-lockup__avatar"
-              src="/assets/astrofolio/v2/zodiac-ring-192.png"
-              width="84"
-              height="84"
-              alt=""
-              decoding="async"
-            />
-            <span className="astrofolio-lockup__copy">
-              <em className="terminal-consumer-hero__kicker">Astrofolio</em>
-              <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
-            </span>
-          </div>
-          <h1 id="consumer-explorer-title">Choose your sign</h1>
-          <p>The official Zodiac token collection.</p>
-        </header>
-      );
-    }
-
     function plainMarketMovement(value) {
       const movement = toFiniteNumber(value);
       if (movement === null) return 'movement unavailable';
@@ -4695,21 +4671,807 @@
       return ranked.findIndex(entry => entry.item.ticker === sign.ticker) + 1;
     }
 
-    function ConsumerIntroduction() {
-      const reveal = useReveal();
+    // ──────────────────────────────────────────────────────────────
+    // Astrofolio · Campaign
+    // The owner-selected launch layout (Option B, 2026-09-23): the
+    // Astrofolio film opens inside the wordmark, the twelve follow on a
+    // runway that moves sideways as the page scrolls, and Fomo is the store.
+    // Prices are the one batched live read; each line is the committed
+    // daily snapshot archive. Nothing on the runway is invented.
+    // ──────────────────────────────────────────────────────────────
+    const CAMPAIGN_FILM = Object.freeze({
+      av1: '/assets/fomo/fomo-film-av1.mp4',
+      h264: '/assets/fomo/fomo-film.mp4',
+      posterAvif: '/assets/fomo/fomo-film-poster.avif',
+      posterWebp: '/assets/fomo/fomo-film-poster.webp',
+    });
+    const CAMPAIGN_APP_FOOTAGE = Object.freeze({
+      av1: '/assets/fomo/fomo-zodiacs-av1.mp4',
+      h264: '/assets/fomo/fomo-zodiacs.mp4',
+      posterAvif: '/assets/fomo/fomo-zodiacs-poster.avif',
+      posterWebp: '/assets/fomo/fomo-zodiacs-poster.webp',
+    });
+    // Fomo's own destinations; no referral or partner parameter is added.
+    const FOMO_WEB_URL = 'https://fomo.family/';
+    const FOMO_APP_STORE_URL = 'https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427';
+    const FOMO_PLAY_URL = 'https://play.google.com/store/apps/details?id=family.fomo.app';
+    const CAMPAIGN_WIDE_QUERY = '(min-width: 901px)';
+    const CAMPAIGN_REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+    const CAMPAIGN_SPARK_DAYS = 14;
+
+    const clampUnit = (value) => Math.min(1, Math.max(0, value));
+    const easeOutCubic = (value) => 1 - ((1 - value) ** 3);
+
+    function matchesMedia(query) {
+      try {
+        return window.matchMedia(query).matches;
+      } catch {
+        return false;
+      }
+    }
+
+    // The scroll-driven stage (pinned hero and runway) runs only on wide
+    // screens with motion allowed. Everywhere else the same markup reads as
+    // a still film, a swipeable runway, and ordinary sections.
+    function campaignStageActive() {
+      return matchesMedia(CAMPAIGN_WIDE_QUERY) && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY);
+    }
+
+    function formatSnapshotDay(date) {
+      const parsed = new Date(`${date}T00:00:00Z`);
+      if (Number.isNaN(parsed.getTime())) return String(date || '');
+      return parsed.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    }
+
+    function campaignOrder(anchorTicker) {
+      const start = Math.max(0, SIGNS.findIndex((item) => item.ticker === anchorTicker));
+      return [...SIGNS.slice(start), ...SIGNS.slice(0, start)];
+    }
+
+    // Films follow the /fomo/ rules: the poster is the complete reduced-motion
+    // and constrained-data experience. Sources attach only after the page's
+    // load event and while the film is on screen, so the poster stays the
+    // largest paint, and playback rests whenever the film leaves the screen
+    // or the tab hides.
+    function useCampaignFilm(videoRef, stageRef, threshold = 0.01) {
+      const [playing, setPlaying] = useState(false);
+      useEffect(() => {
+        const video = videoRef.current;
+        const stage = stageRef.current;
+        if (!video || !stage || !('IntersectionObserver' in window)) return undefined;
+        const connection = navigator.connection;
+        const constrained = Boolean(connection && (
+          connection.saveData || ['slow-2g', '2g'].includes(connection.effectiveType || '')
+        ));
+        if (constrained || matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)) return undefined;
+        let cancelled = false;
+        let attached = false;
+        let onScreen = false;
+        let ready = document.readyState === 'complete';
+        video.muted = true;
+        video.defaultMuted = true;
+        const attach = () => {
+          if (attached) return;
+          attached = true;
+          video.querySelectorAll('source[data-src]').forEach((source) => {
+            source.src = source.dataset.src || '';
+            source.removeAttribute('data-src');
+          });
+          video.load();
+        };
+        const play = () => {
+          if (cancelled || !ready || !onScreen || document.hidden) return;
+          if (matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)) return;
+          attach();
+          video.play().catch(() => {
+            if (!cancelled) setPlaying(false);
+          });
+        };
+        const rest = () => {
+          if (attached && !video.paused) video.pause();
+        };
+        const onPlaying = () => { if (!cancelled) setPlaying(true); };
+        const onFailure = () => { if (!cancelled) setPlaying(false); };
+        const onLoad = () => { ready = true; play(); };
+        const onVisibility = () => { if (document.hidden) rest(); else play(); };
+        let motion = null;
+        const onMotion = () => {
+          if (!motion?.matches) {
+            play();
+            return;
+          }
+          rest();
+          setPlaying(false);
+        };
+        const observer = new IntersectionObserver(([entry]) => {
+          onScreen = Boolean(entry?.isIntersecting);
+          if (onScreen) play();
+          else rest();
+        }, { threshold });
+        observer.observe(stage);
+        video.addEventListener('playing', onPlaying);
+        // <source> errors do not bubble; the capture phase still sees them.
+        video.addEventListener('error', onFailure, true);
+        if (!ready) window.addEventListener('load', onLoad, { once: true });
+        document.addEventListener('visibilitychange', onVisibility);
+        try {
+          motion = window.matchMedia(CAMPAIGN_REDUCED_MOTION_QUERY);
+          motion.addEventListener?.('change', onMotion);
+        } catch { /* media query unavailable: the film simply keeps its state */ }
+        return () => {
+          cancelled = true;
+          observer.disconnect();
+          video.removeEventListener('playing', onPlaying);
+          video.removeEventListener('error', onFailure, true);
+          window.removeEventListener('load', onLoad);
+          document.removeEventListener('visibilitychange', onVisibility);
+          motion?.removeEventListener?.('change', onMotion);
+        };
+      }, [threshold]);
+      return playing;
+    }
+
+    function FomoBuyButton({ item, source }) {
       return (
-        <section ref={reveal} id="what-is-astrofolio" className="consumer-intro reveal" aria-labelledby="consumer-intro-title">
-          <div className="consumer-intro__copy">
-            <span className="consumer-eyebrow">What is Astrofolio?</span>
-            <h2 id="consumer-intro-title">Twelve signs. One collection.</h2>
-            <p>Astrofolio brings the twelve official Zodiac tokens into one place. Choose a sign to explore its design and verified public record.</p>
+        <a
+          className="btn btn--fomo"
+          href={fomoBuyPath(item)}
+          rel="external nofollow"
+          aria-label={`Open Fomo to buy ${item.name}`}
+          data-fomo-buy={item.asset.sign}
+          onClick={() => trackAnalytics('astrofolio_fomo_open', { sign: item.asset.sign, source })}
+        >
+          <img src="/assets/venues/fomo-official.svg" width="34" height="34" alt="" />
+          <span className="btn--fomo__copy"><small>{item.name} <span className="btn--fomo__zodiac-emoji" aria-hidden="true">{zodiacEmoji(item)}</span></small><strong>Buy with Fomo</strong></span>
+          <span className="btn--fomo__arrow" aria-hidden="true">↗</span>
+        </a>
+      );
+    }
+
+    function CampaignHero() {
+      const season = useCurrentSeason()?.sign ?? SIGNS[0];
+      const heroRef = useRef(null);
+      const filmRef = useRef(null);
+      const videoRef = useRef(null);
+      const playing = useCampaignFilm(videoRef, filmRef);
+      useEffect(() => {
+        const hero = heroRef.current;
+        const film = filmRef.current;
+        if (!hero || !film) return undefined;
+        let frame = 0;
+        const paint = () => {
+          frame = 0;
+          if (!campaignStageActive()) {
+            hero.style.removeProperty('--hero-scale');
+            hero.style.removeProperty('--hero-out');
+            hero.style.removeProperty('--hero-caption');
+            hero.dataset.caption = 'live';
+            return;
+          }
+          // The film opens from its place inside the wordmark until it
+          // covers the screen, then the headline arrives over it.
+          const width = film.offsetWidth;
+          const height = film.offsetHeight;
+          const span = Math.max(1, hero.offsetHeight - window.innerHeight);
+          const progress = clampUnit(-hero.getBoundingClientRect().top / span);
+          const grow = easeOutCubic(clampUnit(progress / 0.72));
+          const cover = width && height
+            ? Math.max(window.innerWidth / width, window.innerHeight / height) * 1.002
+            : 1;
+          const caption = clampUnit((progress - 0.6) / 0.3);
+          hero.style.setProperty('--hero-scale', (1 + (cover - 1) * grow).toFixed(4));
+          hero.style.setProperty('--hero-out', grow.toFixed(4));
+          hero.style.setProperty('--hero-caption', caption.toFixed(3));
+          hero.dataset.caption = caption > 0.5 ? 'live' : 'rest';
+        };
+        const schedule = () => {
+          if (!frame) frame = window.requestAnimationFrame(paint);
+        };
+        paint();
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        document.fonts?.ready?.then(schedule);
+        return () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener('scroll', schedule);
+          window.removeEventListener('resize', schedule);
+        };
+      }, []);
+      return (
+        <section
+          id="official-twelve"
+          ref={heroRef}
+          className="campaign-hero"
+          aria-labelledby="campaign-hero-title"
+          data-caption="rest"
+          style={{ '--active-sign': season.hue }}
+        >
+          <div className="campaign-hero__pin">
+            <div className="campaign-hero__film" ref={filmRef} data-playing={playing ? 'true' : 'false'}>
+              <picture className="campaign-hero__poster">
+                <source srcSet={CAMPAIGN_FILM.posterAvif} type="image/avif" />
+                <img src={CAMPAIGN_FILM.posterWebp} width="1080" height="1920" alt="" decoding="async" />
+              </picture>
+              <video
+                ref={videoRef}
+                className="campaign-hero__video"
+                muted
+                loop
+                playsInline
+                preload="none"
+                disablePictureInPicture
+                tabIndex={-1}
+                aria-hidden="true"
+              >
+                <source data-src={CAMPAIGN_FILM.av1} type={'video/mp4; codecs="av01.0.08M.08"'} />
+                <source data-src={CAMPAIGN_FILM.h264} type="video/mp4" />
+              </video>
+              <span className="campaign-hero__shade" aria-hidden="true" />
+            </div>
+            <span className="campaign-hero__word campaign-hero__word--astro" aria-hidden="true">Astro</span>
+            <span className="campaign-hero__word campaign-hero__word--folio" aria-hidden="true">folio</span>
+            <div className="campaign-hero__foot" aria-hidden="true">
+              <p>The twelve official Zodiacs, one for every sign. Each has its own design and public record.</p>
+              <span>Scroll <i>↓</i></span>
+            </div>
+            <div className="campaign-hero__caption">
+              <div className="astrofolio-lockup">
+                <img
+                  className="astrofolio-lockup__avatar"
+                  src="/assets/astrofolio/v2/zodiac-ring-192.png"
+                  width="84"
+                  height="84"
+                  alt=""
+                  decoding="async"
+                />
+                <span className="astrofolio-lockup__copy">
+                  <em className="terminal-consumer-hero__kicker">Astrofolio</em>
+                  <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
+                </span>
+              </div>
+              <h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>
+              <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
+              <div className="campaign-hero__actions">
+                <a className="campaign-button campaign-button--light" href="#the-twelve">
+                  <span>Find your sign</span><span aria-hidden="true">↓</span>
+                </a>
+                <a className="campaign-button" href="#buy"><span>How buying works</span></a>
+              </div>
+            </div>
           </div>
-          <dl className="consumer-intro__facts" aria-label="Astrofolio at a glance">
-            <div><dt>12</dt><dd>official Zodiacs</dd></div>
-            <div><dt>One for every sign</dt><dd>from Aries to Pisces</dd></div>
-            <div><dt>One public Registry</dt><dd>the source of truth</dd></div>
-          </dl>
         </section>
+      );
+    }
+
+    // A price line over the committed daily snapshots. Missing reads are
+    // skipped, never interpolated or invented.
+    function CampaignSpark({ item, observations }) {
+      const points = (observations || [])
+        .filter((point) => point.priceUsd !== null && point.priceUsd > 0)
+        .slice(-CAMPAIGN_SPARK_DAYS);
+      if (points.length < 2) return <span className="campaign-spark is-empty" aria-hidden="true" />;
+      const width = 120;
+      const height = 40;
+      const pad = 3;
+      const values = points.map((point) => point.priceUsd);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const x = (index) => pad + (index / (points.length - 1)) * (width - pad * 2);
+      const y = (value) => (max === min
+        ? height / 2
+        : height - pad - ((value - min) / (max - min)) * (height - pad * 2));
+      const line = points
+        .map((point, index) => `${index ? 'L' : 'M'}${x(index).toFixed(1)} ${y(point.priceUsd).toFixed(1)}`)
+        .join(' ');
+      const first = points[0];
+      const last = points[points.length - 1];
+      const label = `${item.name} price over ${points.length} daily reads: ${formatPriceUsd(first.priceUsd)} on ${formatSnapshotDay(first.date)}, ${formatPriceUsd(last.priceUsd)} on ${formatSnapshotDay(last.date)}.`;
+      return (
+        <svg className="campaign-spark" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={label}>
+          <path className="campaign-spark__area" d={`${line} L${x(points.length - 1).toFixed(1)} ${height} L${x(0).toFixed(1)} ${height} Z`} />
+          <path className="campaign-spark__line" d={line} vectorEffect="non-scaling-stroke" />
+        </svg>
+      );
+    }
+
+    function CampaignLook({ item, index, seasonTicker, batch, observations, active, onKeyboardFocus }) {
+      const slug = item.asset.sign;
+      const [artworkFailed, setArtworkFailed] = useState(false);
+      const inSeason = item.ticker === seasonTicker;
+      return (
+        <article
+          className={'campaign-look' + (inSeason ? ' is-season' : '') + (active ? ' is-active' : '')}
+          data-look={slug}
+          style={{ '--sign': item.hue }}
+          aria-labelledby={`campaign-look-${slug}`}
+          onFocus={(event) => {
+            // Keyboard focus inside the pinned runway brings the look into
+            // view. Pointer focus is left alone so a click is never moved.
+            if (event.target.matches?.(':focus-visible')) onKeyboardFocus(index);
+          }}
+        >
+          <p className="campaign-look__top">
+            <b>{ROMAN[item.order - 1]}</b>
+            {inSeason
+              ? <span className="campaign-look__tag">In season now</span>
+              : <span>{consumerSignDateLabel(item)}</span>}
+          </p>
+          <h3 id={`campaign-look-${slug}`}>{item.name}</h3>
+          <div className={'campaign-look__art' + (artworkFailed ? ' is-fallback' : '')}>
+            <img
+              className="campaign-look__stars"
+              src={`/assets/constellations/${slug}.svg`}
+              width="720"
+              height="460"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              className="campaign-look__figure"
+              src={`/assets/sculptures/512/${slug}.webp`}
+              srcSet={`/assets/sculptures/512/${slug}.webp 512w, /assets/sculptures/1024/${slug}.webp 1024w`}
+              sizes="(max-width: 900px) 72vw, 380px"
+              width="512"
+              height="512"
+              alt={`${item.name} Zodiac artwork`}
+              loading="lazy"
+              decoding="async"
+              onError={(event) => {
+                const image = event.currentTarget;
+                const attempt = Number(image.dataset.fallbackAttempt || 0);
+                if (attempt === 0) {
+                  image.dataset.fallbackAttempt = '1';
+                  image.srcset = '';
+                  image.src = `/assets/sculptures/512/${slug}.webp`;
+                  return;
+                }
+                if (attempt === 1) {
+                  image.dataset.fallbackAttempt = '2';
+                  image.src = `/assets/cabinet-materials/gold/${slug}.webp`;
+                  return;
+                }
+                setArtworkFailed(true);
+              }}
+            />
+            <span
+              className="campaign-look__fallback"
+              role={artworkFailed ? 'img' : undefined}
+              aria-label={artworkFailed ? `${item.name} artwork unavailable; ${item.symbol} symbol shown` : undefined}
+              aria-hidden={artworkFailed ? undefined : 'true'}
+            >
+              {item.symbol}
+            </span>
+          </div>
+          <div className="campaign-look__stats">
+            <VitrinePrice sign={item} batch={batch} live={false} />
+            <CampaignSpark item={item} observations={observations} />
+          </div>
+          <div className="campaign-look__actions">
+            <FomoBuyButton item={item} source="runway" />
+            <a className="campaign-look__explore" href={registryProfilePath(item)}>Explore {item.name}</a>
+          </div>
+          <p className="vitrine-buy-options">
+            <a href={howToBuyPath(item)}>Other ways to buy</a>
+            <span aria-hidden="true">·</span>
+            <span>Opens the Fomo app</span>
+          </p>
+        </article>
+      );
+    }
+
+    function CampaignRunway({ anchorTicker, active, setActive, batch }) {
+      const seasonTicker = useCurrentSeason()?.sign.ticker ?? '';
+      const order = useMemo(() => campaignOrder(anchorTicker), [anchorTicker]);
+      const sectionRef = useRef(null);
+      const trackRef = useRef(null);
+      const dotsRef = useRef(null);
+      const stageRef = useRef({ pinned: false, max: 0 });
+      const [position, setPosition] = useState(0);
+      const [historyWanted, setHistoryWanted] = useState(false);
+      const history = useRegistryMarketHistory(historyWanted);
+      const ledgers = useMemo(() => Object.fromEntries(SIGNS.map((item) => [
+        item.asset.sign,
+        marketHistoryForSign(history.data, item.asset.sign).observations,
+      ])), [history.data]);
+      const activeIndex = Math.max(0, SIGNS.findIndex((item) => item.ticker === active));
+
+      // The daily lines are the only extra read, fetched as the runway nears.
+      useEffect(() => {
+        const section = sectionRef.current;
+        if (!section) return undefined;
+        if (!('IntersectionObserver' in window)) {
+          setHistoryWanted(true);
+          return undefined;
+        }
+        const observer = new IntersectionObserver(([entry]) => {
+          if (!entry?.isIntersecting) return;
+          setHistoryWanted(true);
+          observer.disconnect();
+        }, { rootMargin: '600px 0px' });
+        observer.observe(section);
+        return () => observer.disconnect();
+      }, []);
+
+      // The count follows the runway: on the pinned stage it advances with
+      // the page's progress (the first look at the start, the last at the
+      // end); in the swipeable runway it is the look nearest the centre.
+      // Passing looks never changes the visitor's chosen sign.
+      const pickLook = useCallback((progress = null) => {
+        const track = trackRef.current;
+        if (!track) return;
+        let best = -1;
+        if (progress !== null) {
+          best = Math.round(clampUnit(progress) * (order.length - 1));
+        } else {
+          const bounds = track.getBoundingClientRect();
+          const centre = bounds.left + bounds.width / 2;
+          let distance = Infinity;
+          [...track.children].forEach((look, index) => {
+            const rect = look.getBoundingClientRect();
+            const gap = Math.abs(rect.left + rect.width / 2 - centre);
+            if (gap < distance) {
+              distance = gap;
+              best = index;
+            }
+          });
+        }
+        if (best >= 0) setPosition(best);
+      }, [order.length]);
+
+      useEffect(() => {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+        if (!section || !track) return undefined;
+        let frame = 0;
+        const measure = () => {
+          const stage = stageRef.current;
+          stage.pinned = campaignStageActive();
+          section.dataset.mode = stage.pinned ? 'pinned' : 'carousel';
+          if (!stage.pinned) {
+            stage.max = 0;
+            section.style.removeProperty('height');
+            track.style.removeProperty('transform');
+            return;
+          }
+          const last = track.lastElementChild;
+          const trailing = Number.parseFloat(window.getComputedStyle(track).paddingRight) || 0;
+          stage.max = last
+            ? Math.max(0, last.offsetLeft + last.offsetWidth + trailing - track.clientWidth)
+            : 0;
+          // One screen of pinning plus the sideways distance, so a steady
+          // scroll carries every look past the centre of the screen.
+          section.style.height = `${Math.round(window.innerHeight + stage.max * 1.05)}px`;
+        };
+        const paint = () => {
+          frame = 0;
+          const stage = stageRef.current;
+          if (!stage.pinned) return;
+          const rect = section.getBoundingClientRect();
+          const span = Math.max(1, section.offsetHeight - window.innerHeight);
+          const progress = clampUnit(-rect.top / span);
+          track.style.transform = `translate3d(${(-progress * stage.max).toFixed(1)}px, 0, 0)`;
+          if (rect.top <= 1 && rect.bottom >= window.innerHeight - 1) pickLook(progress);
+        };
+        const schedule = () => {
+          if (!frame) frame = window.requestAnimationFrame(paint);
+        };
+        const onResize = () => {
+          measure();
+          schedule();
+        };
+        const onTrackScroll = () => {
+          if (!stageRef.current.pinned) window.requestAnimationFrame(() => pickLook());
+        };
+        measure();
+        paint();
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', onResize);
+        track.addEventListener('scroll', onTrackScroll, { passive: true });
+        const resizeObserver = 'ResizeObserver' in window ? new ResizeObserver(onResize) : null;
+        resizeObserver?.observe(track);
+        let motion = null;
+        try {
+          motion = window.matchMedia(CAMPAIGN_REDUCED_MOTION_QUERY);
+          motion.addEventListener?.('change', onResize);
+        } catch { /* media query unavailable: the stage keeps its mode */ }
+        return () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener('scroll', schedule);
+          window.removeEventListener('resize', onResize);
+          track.removeEventListener('scroll', onTrackScroll);
+          resizeObserver?.disconnect();
+          motion?.removeEventListener?.('change', onResize);
+        };
+      }, [pickLook]);
+
+      const showLook = useCallback((ticker, behavior) => {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+        const look = track?.children[order.findIndex((item) => item.ticker === ticker)];
+        if (!section || !track || !look) return;
+        const stage = stageRef.current;
+        if (stage.pinned) {
+          const target = Math.min(stage.max, Math.max(0, look.offsetLeft + look.offsetWidth / 2 - track.clientWidth / 2));
+          const span = Math.max(1, section.offsetHeight - window.innerHeight);
+          const top = section.getBoundingClientRect().top + window.scrollY + (stage.max ? target / stage.max : 0) * span;
+          window.scrollTo({ top: Math.round(top), behavior });
+          return;
+        }
+        track.scrollTo({ left: look.offsetLeft - (track.clientWidth - look.offsetWidth) / 2, behavior });
+        const rect = section.getBoundingClientRect();
+        if (rect.top > window.innerHeight * 0.5 || rect.bottom < window.innerHeight * 0.5) {
+          section.scrollIntoView({ block: 'start', behavior });
+        }
+      }, [order]);
+
+      const onKeyboardFocus = useCallback((index) => {
+        if (!stageRef.current.pinned || !order[index]) return;
+        showLook(order[index].ticker, 'instant');
+      }, [order, showLook]);
+
+      const choose = (index, focus = false) => {
+        const next = SIGNS[Math.min(SIGNS.length - 1, Math.max(0, index))];
+        if (!next) return;
+        setActive(next.ticker);
+        showLook(next.ticker, matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY) ? 'instant' : 'smooth');
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('sign', next.asset.sign);
+          window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`);
+        } catch { /* malformed URL: selection still remains usable */ }
+        if (focus) {
+          window.requestAnimationFrame(() => {
+            dotsRef.current?.querySelector(`[data-consumer-sign="${next.asset.sign}"]`)?.focus({ preventScroll: true });
+          });
+        }
+        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' });
+      };
+      const onDotsKeyDown = (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        const columns = Number.parseInt(window.getComputedStyle(dotsRef.current)
+          .getPropertyValue('--campaign-dot-columns'), 10) || SIGNS.length;
+        const moves = {
+          ArrowRight: Math.min(SIGNS.length - 1, activeIndex + 1),
+          ArrowLeft: Math.max(0, activeIndex - 1),
+          ArrowDown: activeIndex + columns < SIGNS.length ? activeIndex + columns : activeIndex,
+          ArrowUp: activeIndex >= columns ? activeIndex - columns : activeIndex,
+          Home: 0,
+          End: SIGNS.length - 1,
+        };
+        if (!(event.key in moves)) return;
+        event.preventDefault();
+        choose(moves[event.key], true);
+      };
+
+      const observed = batch.observedAt
+        ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+        : '';
+      const status = batch.status === 'ok'
+        ? `Prices read ${observed || 'just now'}${batch.stale ? ' · delayed' : ''}`
+        : batch.status === 'unavailable' ? 'Prices unavailable · retrying automatically' : 'Reading prices…';
+
+      return (
+        <section
+          id="the-twelve"
+          ref={sectionRef}
+          className="campaign-runway"
+          aria-labelledby="campaign-runway-title"
+          data-mode="carousel"
+        >
+          <span id="consumer-sign-preview" className="terminal-compat-target" aria-hidden="true" />
+          <span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />
+          <span id="terminal" className="terminal-compat-target" aria-hidden="true" />
+          <div className="campaign-runway__pin">
+            <header className="campaign-runway__head">
+              <div>
+                <span className="consumer-eyebrow">The collection</span>
+                <h2 id="campaign-runway-title">All twelve, starting with {order[0].name}.</h2>
+              </div>
+              <div className="campaign-runway__side">
+                <p className="campaign-runway__count" aria-hidden="true"><b>{String(position + 1).padStart(2, '0')}</b> / 12</p>
+                <div
+                  className="campaign-runway__dots"
+                  ref={dotsRef}
+                  role="group"
+                  aria-label="Choose your zodiac sign"
+                  onKeyDown={onDotsKeyDown}
+                >
+                  {SIGNS.map((item, index) => {
+                    const selected = item.ticker === active;
+                    return (
+                      <button
+                        key={item.ticker}
+                        type="button"
+                        className={'campaign-dot' + (selected ? ' is-active' : '')}
+                        data-consumer-sign={item.asset.sign}
+                        aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
+                        aria-pressed={selected}
+                        tabIndex={selected ? 0 : -1}
+                        style={{ '--sign': item.hue }}
+                        onClick={() => choose(index)}
+                      >
+                        <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="48" height="48" alt="" decoding="async" />
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            </header>
+            <div className="campaign-runway__track" ref={trackRef}>
+              {order.map((item, index) => (
+                <CampaignLook
+                  key={item.ticker}
+                  item={item}
+                  index={index}
+                  seasonTicker={seasonTicker}
+                  batch={batch}
+                  observations={ledgers[item.asset.sign]}
+                  active={item.ticker === active}
+                  onKeyboardFocus={onKeyboardFocus}
+                />
+              ))}
+            </div>
+            <p className="campaign-runway__note">
+              <span role="status" aria-live="polite">{status}</span>
+              <span>Lines show the last {CAMPAIGN_SPARK_DAYS} daily Registry snapshots.</span>
+              <span>Star positions: HYG Database v4.0, CC BY-SA 4.0.</span>
+              <a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
+            </p>
+          </div>
+        </section>
+      );
+    }
+
+    function CampaignApp() {
+      const reveal = useReveal();
+      const stageRef = useRef(null);
+      const videoRef = useRef(null);
+      const playing = useCampaignFilm(videoRef, stageRef, 0.25);
+      return (
+        <section ref={reveal} id="buy" className="campaign-app reveal" aria-labelledby="campaign-app-title" data-vitrine-rule>
+          <div className="campaign-app__head">
+            <div>
+              <span className="consumer-eyebrow">In the Fomo app</span>
+              <h2 id="campaign-app-title">Buy yours in a few taps.</h2>
+            </div>
+            <div className="campaign-app__lede">
+              <p>All twelve Zodiacs are in Fomo, a free trading app for iPhone, Android and the web. Buy with Fomo opens your sign ready to buy; after that you can follow friends and see what they hold.</p>
+              <div className="campaign-stores">
+                <a className="campaign-store campaign-store--apple" href={FOMO_APP_STORE_URL} rel="external nofollow noopener">
+                  <img src="/assets/badges/app-store-en.svg" width="144" height="48" alt="Download on the App Store" loading="lazy" decoding="async" />
+                </a>
+                <a className="campaign-store campaign-store--google" href={FOMO_PLAY_URL} rel="external nofollow noopener">
+                  <img src="/assets/badges/google-play-en.png" width="185" height="71" alt="Get it on Google Play" loading="lazy" decoding="async" />
+                </a>
+              </div>
+              <p className="campaign-app__web">
+                <span>On a computer:</span>
+                <a href={FOMO_WEB_URL} rel="external nofollow noopener">fomo.family <span aria-hidden="true">↗</span></a>
+                <a href="/fomo/">Zodiacs on Fomo <span aria-hidden="true">→</span></a>
+              </p>
+            </div>
+          </div>
+          <div className="campaign-app__stage">
+            <figure className="campaign-phone campaign-phone--side">
+              <div className="campaign-phone__screen">
+                <picture>
+                  <source srcSet="/assets/fomo/fomo-friends.avif" type="image/avif" />
+                  <img src="/assets/fomo/fomo-friends.webp" width="720" height="1397" alt="Fomo's friends list, showing each trader's returns" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+              <figcaption><strong>Follow your friends</strong><span>Add the people you trust and see their buys and sells as they happen.</span></figcaption>
+            </figure>
+            <figure className="campaign-phone campaign-phone--main" ref={stageRef}>
+              <picture className="campaign-phone__alert">
+                <source srcSet="/assets/fomo/fomo-alert-900.avif" type="image/avif" />
+                <img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async" />
+              </picture>
+              <div className="campaign-phone__screen" data-playing={playing ? 'true' : 'false'}>
+                <picture>
+                  <source srcSet={CAMPAIGN_APP_FOOTAGE.posterAvif} type="image/avif" />
+                  <img src={CAMPAIGN_APP_FOOTAGE.posterWebp} width="720" height="1566" alt="The Fomo app listing the twelve Zodiacs" loading="lazy" decoding="async" />
+                </picture>
+                <video
+                  ref={videoRef}
+                  className="campaign-phone__video"
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  disablePictureInPicture
+                  tabIndex={-1}
+                  aria-hidden="true"
+                >
+                  <source data-src={CAMPAIGN_APP_FOOTAGE.av1} type={'video/mp4; codecs="av01.0.08M.08"'} />
+                  <source data-src={CAMPAIGN_APP_FOOTAGE.h264} type="video/mp4" />
+                </video>
+              </div>
+              <figcaption><strong>Open your sign</strong><span>Each sign has its own sheet: the chart, your position, and buy and sell at the foot.</span></figcaption>
+            </figure>
+            <figure className="campaign-phone campaign-phone--side">
+              <div className="campaign-phone__screen">
+                <picture>
+                  <source srcSet="/assets/fomo/fomo-thesis.avif" type="image/avif" />
+                  <img src="/assets/fomo/fomo-thesis.webp" width="720" height="1466" alt="A trader writing a thesis for a Sagittarius position in Fomo" loading="lazy" decoding="async" />
+                </picture>
+              </div>
+              <figcaption><strong>Write your thesis</strong><span>When you buy, say why. It posts with the trade, so followers get the reasoning.</span></figcaption>
+            </figure>
+          </div>
+        </section>
+      );
+    }
+
+    // The bag follows the selected sign. It rests while the pinned film
+    // opens, while the runway (where every look has its own button) fills
+    // the screen, and over the page's closing footer.
+    function CampaignBag({ sign, batch }) {
+      const seasonTicker = useCurrentSeason()?.sign.ticker ?? '';
+      const [shown, setShown] = useState(() => !campaignStageActive());
+      useEffect(() => {
+        let frame = 0;
+        const paint = () => {
+          frame = 0;
+          const viewport = window.innerHeight;
+          const stage = campaignStageActive();
+          const hero = document.getElementById('official-twelve');
+          const runway = document.getElementById('the-twelve');
+          const ending = document.querySelector('.consumer-campaign > .ftr') ?? document.querySelector('#main ~ .zfooter');
+          let next = true;
+          if (stage && hero) {
+            next = hero.dataset.caption === 'live' || hero.getBoundingClientRect().bottom < viewport * 0.5;
+          }
+          if (runway) {
+            const rect = runway.getBoundingClientRect();
+            const covering = stage
+              ? rect.top < viewport * 0.85 && rect.bottom > viewport * 0.15
+              : rect.top < viewport * 0.55 && rect.bottom > viewport * 0.45;
+            if (covering) next = false;
+          }
+          if (ending && ending.getBoundingClientRect().top < viewport - 24) next = false;
+          setShown(next);
+        };
+        const schedule = () => {
+          if (!frame) frame = window.requestAnimationFrame(paint);
+        };
+        paint();
+        window.addEventListener('scroll', schedule, { passive: true });
+        window.addEventListener('resize', schedule);
+        return () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener('scroll', schedule);
+          window.removeEventListener('resize', schedule);
+        };
+      }, []);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const change = quote ? toFiniteNumber(quote.priceChange24h) : null;
+      const direction = change === null ? 'flat' : change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
+      return (
+        <aside
+          className={'campaign-bag' + (shown ? '' : ' is-hidden')}
+          aria-label={`Buy ${sign.name}`}
+          aria-hidden={shown ? undefined : 'true'}
+          inert={shown ? undefined : ''}
+          data-campaign-bag={sign.asset.sign}
+          style={{ '--sign': sign.hue }}
+        >
+          <span className="campaign-bag__who">
+            <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
+            <span>
+              <strong>{sign.name}</strong>
+              <small>
+                {quote ? (
+                  <>
+                    <span>{formatPriceUsd(quote.priceUsd)}</span>
+                    {change !== null && <span className={`campaign-bag__move is-${direction}`}>{formatPercent(change)}</span>}
+                  </>
+                ) : <span>{sign.ticker === seasonTicker ? 'In season now' : consumerSignDateLabel(sign)}</span>}
+              </small>
+            </span>
+          </span>
+          <FomoBuyButton item={sign} source="bag" />
+        </aside>
       );
     }
 
@@ -5725,188 +6487,6 @@
       return `${date(range.sm, range.sd)} to ${date(range.em, range.ed)}`;
     }
 
-    function useConsumerSelectionLayers(sign) {
-      const slugRef = useRef(sign.asset.sign);
-      const idRef = useRef(0);
-      const pendingIdRef = useRef(null);
-      const transitionIdRef = useRef(null);
-      const timerRef = useRef(0);
-      const frameRef = useRef(0);
-      const [transitionId, setTransitionId] = useState(null);
-      const [layers, setLayers] = useState([
-        { id: 0, slug: sign.asset.sign, active: true, current: true, ready: true },
-      ]);
-      const interruptTransition = useCallback(() => {
-        transitionIdRef.current = null;
-        window.clearTimeout(timerRef.current);
-        window.cancelAnimationFrame(frameRef.current);
-        setTransitionId(null);
-      }, []);
-      useLayoutEffect(() => {
-        const next = sign.asset.sign;
-        if (slugRef.current === next) return undefined;
-        slugRef.current = next;
-        interruptTransition();
-        const id = idRef.current + 1;
-        idRef.current = id;
-        pendingIdRef.current = id;
-        // Keep the last decoded sculpture and its matching placard visible
-        // while the next local artwork loads. The selector ring still updates
-        // immediately, then both visual layers begin together once the image
-        // is ready. Retain every decoded layer during an interrupted fade:
-        // removing a partially visible outgoing layer would create a flash.
-        setLayers((current) => {
-          const ready = current.filter((layer) => layer.ready);
-          const anchor = ready.at(-1);
-          return [
-            ...ready.map((layer) => ({
-              ...layer,
-              active: layer.id === anchor?.id,
-              current: layer.id === anchor?.id,
-              anchored: layer.id === anchor?.id,
-            })),
-            { id, slug: next, active: false, current: false, ready: false, anchored: false },
-          ];
-        });
-        return undefined;
-      }, [interruptTransition, sign.asset.sign]);
-
-      const markLayerReady = useCallback((id) => {
-        if (pendingIdRef.current !== id) return;
-        pendingIdRef.current = null;
-        window.clearTimeout(timerRef.current);
-        window.cancelAnimationFrame(frameRef.current);
-        let reduce = false;
-        try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch { /* media query unavailable */ }
-        if (reduce) {
-          setLayers((current) => {
-            const target = current.find((layer) => layer.id === id);
-            return target ? [{ ...target, active: true, current: true, ready: true, anchored: false }] : current;
-          });
-          return;
-        }
-        // The pending layer has already been committed at opacity zero. Start
-        // its opacity-only transition on the next paint. Existing decoded
-        // layers stay mounted, so CSS can retarget from their current computed
-        // opacity when selections arrive faster than the 180ms crossfade.
-        setLayers((current) => current.map((layer) => (
-          layer.id === id ? { ...layer, ready: true } : layer
-        )));
-        frameRef.current = window.requestAnimationFrame(() => {
-          transitionIdRef.current = id;
-          setLayers((current) => current.map((layer) => ({
-            ...layer,
-            active: layer.id === id,
-            current: layer.id === id,
-            anchored: false,
-          })));
-          setTransitionId(id);
-        });
-      }, []);
-
-      const settleLayer = useCallback((id) => {
-        if (transitionIdRef.current !== id) return;
-        transitionIdRef.current = null;
-        window.clearTimeout(timerRef.current);
-        setLayers((current) => current.some((layer) => layer.id === id)
-          ? current.filter((layer) => layer.id === id)
-          : current);
-        setTransitionId((current) => current === id ? null : current);
-      }, []);
-
-      // The incoming sculpture's opacity transition is the source of truth
-      // for cleanup. A guarded fallback covers browsers that suppress the
-      // transitionend event without allowing an obsolete fade to remove a
-      // newer selection.
-      useEffect(() => {
-        if (transitionId === null) return undefined;
-        const timer = window.setTimeout(() => settleLayer(transitionId), 240);
-        timerRef.current = timer;
-        return () => window.clearTimeout(timer);
-      }, [settleLayer, transitionId]);
-
-      const markLayerFailed = useCallback((id) => {
-        setLayers((current) => current.map((layer) => (
-          layer.id === id ? { ...layer, fallback: true } : layer
-        )));
-        if (pendingIdRef.current === id) markLayerReady(id);
-      }, [markLayerReady]);
-
-      useEffect(() => () => {
-        pendingIdRef.current = null;
-        transitionIdRef.current = null;
-        window.clearTimeout(timerRef.current);
-        window.cancelAnimationFrame(frameRef.current);
-      }, []);
-      return [layers, markLayerReady, markLayerFailed, settleLayer, interruptTransition];
-    }
-
-    function VitrineDiscRail({ active, setActive, interruptTransition }) {
-      const railRef = useRef(null);
-      const activeIndex = Math.max(0, SIGNS.findIndex((item) => item.ticker === active));
-      const choose = (index, focus = false) => {
-        const nextIndex = Math.min(SIGNS.length - 1, Math.max(0, index));
-        const next = SIGNS[nextIndex];
-        if (!next) return;
-        if (next.ticker !== active) interruptTransition();
-        setActive(next.ticker);
-        try {
-          const url = new URL(window.location.href);
-          url.searchParams.set('sign', next.asset.sign);
-          window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`);
-        } catch { /* malformed URL: selection still remains usable */ }
-        if (focus) {
-          window.requestAnimationFrame(() => {
-            railRef.current?.querySelector(`[data-consumer-sign="${next.asset.sign}"]`)?.focus({ preventScroll: true });
-          });
-        }
-        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' });
-      };
-      const onKeyDown = (event) => {
-        if (event.altKey || event.ctrlKey || event.metaKey) return;
-        const columns = Number.parseInt(window.getComputedStyle(railRef.current)
-          .getPropertyValue('--vitrine-selector-columns'), 10) || 6;
-        const moves = {
-          ArrowRight: Math.min(SIGNS.length - 1, activeIndex + 1),
-          ArrowLeft: Math.max(0, activeIndex - 1),
-          ArrowDown: activeIndex + columns < SIGNS.length ? activeIndex + columns : activeIndex,
-          ArrowUp: activeIndex >= columns ? activeIndex - columns : activeIndex,
-          Home: 0,
-          End: SIGNS.length - 1,
-        };
-        if (!(event.key in moves)) return;
-        event.preventDefault();
-        choose(moves[event.key], true);
-      };
-      return (
-        <div className="vitrine-disc-rail" ref={railRef} role="group" aria-label="Choose your zodiac sign" onKeyDown={onKeyDown}>
-          {SIGNS.map((item, index) => {
-            const selected = item.ticker === active;
-            return (
-              <button
-                key={item.ticker}
-                type="button"
-                className={'vitrine-disc' + (selected ? ' is-active' : '')}
-                data-consumer-sign={item.asset.sign}
-                aria-label={`${item.name}, ${consumerSignDateLabel(item)}`}
-                aria-pressed={selected}
-                aria-controls="consumer-sign-preview"
-                tabIndex={selected ? 0 : -1}
-                style={{ '--sign': item.hue }}
-                onClick={() => choose(index)}
-              >
-                <picture aria-hidden="true">
-                  <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
-                  <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
-                </picture>
-                <span>{item.name}</span>
-              </button>
-            );
-          })}
-        </div>
-      );
-    }
-
     function VitrinePrice({ sign, batch, live = true }) {
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const waiting = batch.status === 'loading' || batch.status === 'idle';
@@ -5925,178 +6505,6 @@
           <span aria-hidden="true">·</span>
           <span className={`vitrine-price__movement is-${direction}`}>{movement}</span>
         </p>
-      );
-    }
-
-    function VitrinePlacard({ layers, batch }) {
-      const renderLayer = (layer) => {
-        const item = SIGNS.find((candidate) => candidate.asset.sign === layer.slug) ?? SIGNS[0];
-        const rank = marketRankForSign(item, batch);
-        const observed = batch.observedAt
-          ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
-          : '';
-        return (
-          <article
-            key={layer.id}
-            className={'vitrine-placard__layer' + (layer.active ? ' is-active' : '') + (layer.anchored ? ' is-interrupt-anchor' : '')}
-            aria-hidden={layer.current ? undefined : 'true'}
-            inert={layer.current ? undefined : ''}
-            data-vitrine-placard={layer.slug}
-          >
-            <div className="vitrine-placard__identity">
-              <h2>{item.name}</h2>
-            </div>
-            <VitrinePrice sign={item} batch={batch} live={layer.current} />
-            <div className="vitrine-placard__actions">
-              <a
-                className="btn btn--explore"
-                href={registryProfilePath(item)}
-                tabIndex={layer.current ? undefined : -1}
-              >Explore {item.name}</a>
-              <a
-                className="btn btn--fomo"
-                href={fomoBuyPath(item)}
-                rel="external nofollow"
-                aria-label={`Open Fomo to buy ${item.name}`}
-                data-fomo-buy={item.asset.sign}
-                tabIndex={layer.current ? undefined : -1}
-                onClick={() => trackAnalytics('astrofolio_fomo_open', { sign: item.asset.sign, source: 'vitrine' })}
-              >
-                <img src="/assets/venues/fomo-official.svg" width="34" height="34" alt="" />
-                <span className="btn--fomo__copy"><small>{item.name} <span className="btn--fomo__zodiac-emoji" aria-hidden="true">{zodiacEmoji(item)}</span></small><strong>Buy with Fomo</strong></span>
-                <span className="btn--fomo__arrow" aria-hidden="true">↗</span>
-              </a>
-            </div>
-            <div className="vitrine-market-meta">
-              <span className="vitrine-market-meta__date">{consumerSignDateLabel(item)}</span>
-              <span>{rank > 0 ? `#${rank} by reported market cap` : batch.status === 'loading' || batch.status === 'idle' ? 'Comparing all twelve' : 'Reported market-cap rank unavailable'}</span>
-              {observed && <span>Updated {observed}{batch.stale ? ' · delayed' : ''}</span>}
-              {batch.status === 'unavailable' && <span>Market data unavailable · retrying automatically</span>}
-              <a href="/registry/technical/#market-transparency" tabIndex={layer.current ? undefined : -1}>Data &amp; methodology</a>
-            </div>
-            <div className="vitrine-buy-options">
-              <a href={howToBuyPath(item)} tabIndex={layer.current ? undefined : -1}>Other ways to buy</a>
-              <span aria-hidden="true">·</span>
-              <span>Opens the Fomo app</span>
-            </div>
-          </article>
-        );
-      };
-      return (
-        <div id="consumer-sign-preview" className="vitrine-placard">
-          <span id="market-snapshot" className="terminal-compat-target" aria-hidden="true" />
-          <span id="terminal" className="terminal-compat-target" aria-hidden="true" />
-          {layers.map(renderLayer)}
-        </div>
-      );
-    }
-
-    function ConsumerExplorer({ active, setActive, sign, batch }) {
-      const [layers, markLayerReady, markLayerFailed, settleLayer, interruptTransition] = useConsumerSelectionLayers(sign);
-      // Lock the desktop stage to the dynamic viewport height measured on
-      // entry. Mobile chrome may subsequently alter visualViewport.height;
-      // retaining this clamped pixel value prevents the artwork from jumping.
-      const [desktopStageHeight] = useState(() => {
-        const viewportHeight = Number(window.visualViewport?.height || window.innerHeight || 900);
-        return Math.round(Math.min(700, Math.max(520, viewportHeight * .68)));
-      });
-      const stageRef = useRef(null);
-      useEffect(() => {
-        const stage = stageRef.current;
-        if (!stage) return undefined;
-        let visible = true;
-        const update = () => { stage.dataset.motionPaused = String(document.hidden || !visible); };
-        const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; update(); });
-        observer.observe(stage);
-        document.addEventListener('visibilitychange', update);
-        update();
-        return () => { observer.disconnect(); document.removeEventListener('visibilitychange', update); };
-      }, []);
-      const presentationFor = (slug) => SCULPTURE_PRESENTATION[slug] || { scale: 1, translateY: '0%' };
-      const renderSculpture = (layer) => {
-        const item = SIGNS.find((candidate) => candidate.asset.sign === layer.slug) ?? SIGNS[0];
-        const presentation = presentationFor(layer.slug);
-        return (
-          <div
-            key={layer.id}
-            className={'vitrine-stage__layer' + (layer.active ? ' is-active' : '') + (layer.fallback ? ' is-fallback' : '') + (layer.anchored ? ' is-interrupt-anchor' : '')}
-            aria-hidden={layer.current ? undefined : 'true'}
-            data-vitrine-sculpture={layer.slug}
-            style={{
-              '--art-scale': presentation.scale,
-              '--art-y': presentation.translateY,
-              // Equal visible height for tall figures and wider animals.
-              '--mobile-art-scale': ({ cancer: 1, taurus: 1, leo: .96, pisces: .78 })[layer.slug] || .76,
-              '--art-mask': `url(/assets/sculptures/512/${layer.slug}.webp)`,
-            }}
-            onTransitionEnd={(event) => {
-              if (event.target === event.currentTarget && event.propertyName === 'opacity' && layer.active) {
-                settleLayer(layer.id);
-              }
-            }}
-          >
-            <div className="vitrine-stage__art">
-              <img
-                src={`/assets/sculptures/512/${layer.slug}.webp`}
-                srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}
-                sizes="(max-width: 899px) calc(100vw - 32px), min(54vw, 760px)"
-                width="1024"
-                height="1024"
-                alt={layer.current ? `${item.name} Zodiac artwork` : ''}
-                decoding="async"
-                onLoad={(event) => {
-                  const image = event.currentTarget;
-                  const decoded = image.decode?.();
-                  if (decoded) decoded.then(() => markLayerReady(layer.id), () => markLayerReady(layer.id));
-                  else markLayerReady(layer.id);
-                }}
-                onError={(event) => {
-                  const image = event.currentTarget;
-                  const attempt = Number(image.dataset.fallbackAttempt || 0);
-                  if (attempt === 0) {
-                    image.dataset.fallbackAttempt = '1';
-                    image.srcset = '';
-                    image.src = `/assets/sculptures/512/${layer.slug}.webp`;
-                    return;
-                  }
-                  if (attempt === 1) {
-                    image.dataset.fallbackAttempt = '2';
-                    image.src = `/assets/cabinet-materials/gold/${layer.slug}.webp`;
-                    return;
-                  }
-                  markLayerFailed(layer.id);
-                }}
-              />
-              <span className="vitrine-gold-light" aria-hidden="true" />
-            </div>
-            <span
-              className="vitrine-stage__fallback"
-              role={layer.current && layer.fallback ? 'img' : undefined}
-              aria-label={layer.current && layer.fallback ? `${item.name} artwork unavailable; ${item.symbol} symbol shown` : undefined}
-              aria-hidden={layer.current && layer.fallback ? undefined : 'true'}
-            >
-              {item.symbol}
-            </span>
-          </div>
-        );
-      };
-      return (
-        <section
-          id="official-twelve"
-          className="consumer-explorer astrofolio-vitrine"
-          aria-label="Astrofolio sign collection"
-          style={{
-            '--active-sign': sign.hue,
-            '--vitrine-stage-height': `${desktopStageHeight}px`,
-          }}
-        >
-          <ConsumerIdentityHeader />
-          <VitrineDiscRail active={active} setActive={setActive} interruptTransition={interruptTransition} />
-          <div className="vitrine-stage" ref={stageRef} aria-label={`${sign.name} Zodiac artwork`} data-vitrine-stage>
-            {layers.map(renderSculpture)}
-          </div>
-          <VitrinePlacard layers={layers} batch={batch} />
-        </section>
       );
     }
 
@@ -6173,24 +6581,28 @@
 
     function ConsumerRegistryGuide({ sign }) {
       const reveal = useReveal();
+      const origin = sign.representations.solana.address;
+      const counterpart = sign.representations.base.address;
       return (
-        <section ref={reveal} id="registry" className="consumer-registry-guide reveal" aria-labelledby="consumer-registry-title" data-vitrine-rule>
+        <section ref={reveal} id="registry" className="consumer-registry-guide campaign-record reveal" aria-labelledby="consumer-registry-title" data-vitrine-rule style={{ '--record-sign': sign.hue }}>
           <header className="consumer-section-head">
-            <span className="consumer-eyebrow">The public Registry</span>
-            <h2 id="consumer-registry-title">Know you have the official Zodiac.</h2>
-            <p>Names and symbols can be copied. The exact address in the public record is what identifies each verified token.</p>
+            <span className="consumer-eyebrow">The official record</span>
+            <h2 id="consumer-registry-title">Check the address, not the name.</h2>
           </header>
-          <div className="consumer-registry-guide__grid">
-            <article id="identity" className="consumer-registry-guide__record" style={{ '--record-sign': sign.hue }}>
-              <div className="consumer-registry-guide__sign">
-                <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="72" height="72" alt="" loading="lazy" decoding="async" />
-                <span><small>Selected record</small><strong>{sign.name}</strong></span>
-              </div>
-              <dl>
-                <div><dt>Solana</dt><dd><code>{truncateAddress(sign.representations.solana.address, 7, 5)}</code></dd></div>
-                <div><dt>Base</dt><dd><code>{truncateAddress(sign.representations.base.address, 7, 5)}</code></dd></div>
-              </dl>
+          <div id="identity" className="campaign-record__identity">
+            <p className="campaign-record__label">
+              <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="28" height="28" alt="" loading="lazy" decoding="async" />
+              <span>{sign.name} · Solana origin</span>
+            </p>
+            <p className="campaign-record__address"><code>{origin.slice(0, 4)}<span>{origin.slice(4, -4)}</span>{origin.slice(-4)}</code></p>
+            <p className="campaign-record__meta">
+              <span>Base counterpart <code>{truncateAddress(counterpart, 6, 4)}</code></span>
               <a href={registryProfilePath(sign)}>Open the complete {sign.name} record <span aria-hidden="true">→</span></a>
+            </p>
+          </div>
+          <div className="campaign-record__grid">
+            <div className="campaign-record__copy">
+              <p>Names and tickers can be copied. The Registry identifies each Zodiac by its complete address: a Solana origin and an official Base counterpart, 24 in all. Paste one here to compare.</p>
               <details className="consumer-disclosure">
                 <summary>Why the address matters</summary>
                 <div className="consumer-disclosure__body">
@@ -6198,7 +6610,7 @@
                   <a href="/registry/technical/#records-networks">See how records work</a>
                 </div>
               </details>
-            </article>
+            </div>
             <ConsumerVerifier embedded />
           </div>
         </section>
@@ -6749,6 +7161,9 @@
           return currentSeason()?.sign.ticker ?? SIGNS[0].ticker;
         }
       );
+      // The runway starts from the sign the visit opened with; later
+      // selections move along it rather than reordering it.
+      const [anchorTicker] = useState(activeTicker);
       const sign = useMemo(
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
@@ -7020,14 +7435,16 @@
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
           <Header />
-          <main id="main" className="zd consumer-registry">
-            <ConsumerExplorer
+          <main id="main" className="zd consumer-registry consumer-campaign">
+            <CampaignHero />
+            <CampaignBag sign={sign} batch={consumerMarket} />
+            <CampaignRunway
+              anchorTicker={anchorTicker}
               active={activeTicker}
               setActive={setActiveTicker}
-              sign={sign}
               batch={consumerMarket}
             />
-            <ConsumerIntroduction />
+            <CampaignApp />
             <ConsumerStory />
             <ConsumerShop />
             <ConsumerCabinet />

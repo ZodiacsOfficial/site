@@ -85,9 +85,17 @@ describe('Astrofolio beginner buying guide', () => {
     expect(app).toContain('/assets/venues/fomo-official.svg');
     expect(app).toContain('href={howToBuyPath(item)}');
     expect(app).toContain('>Other ways to buy</a>');
+    // Twelve runway looks each carry their own guide and Fomo link; the
+    // season bag adds one more Fomo link for the sign in season.
+    const runway = shell.slice(shell.indexOf('id="the-twelve"'), shell.indexOf('</section>', shell.indexOf('id="the-twelve"')));
+    const bag = shell.slice(shell.indexOf('<!-- astrofolio-season-bag:start -->'), shell.indexOf('<!-- astrofolio-season-bag:end -->'));
     expect(shell.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/">Other ways to buy<\/a>/gu)).toHaveLength(12);
-    expect(shell.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(12);
-    expect(shell.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(12);
+    expect(runway.match(/href="\/astrofolio\/how-to-buy\/[a-z]+\/">Other ways to buy<\/a>/gu)).toHaveLength(12);
+    expect(runway.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(12);
+    expect(runway.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(12);
+    expect(bag.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(1);
+    expect(bag.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(1);
+    expect(shell.match(/data-fomo-buy="[a-z]+"/gu)).toHaveLength(13);
     expect(shell.match(/<a\b[^>]*data-terminal-static-view="pro"/gu) ?? []).toHaveLength(0);
   });
 

@@ -44,11 +44,11 @@ describe('the legacy shared gallery band', () => {
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
     // The shared gallery implementation remains available to its legacy
-    // consumers, while Astrofolio mounts the lean opacity-only vitrine and
-    // therefore never requests the WebGL shelf from its opening experience.
+    // consumers, while Astrofolio mounts the Campaign runway of plain images
+    // and therefore never requests the WebGL shelf from its opening experience.
     expect(source).toContain("const GALLERY_LIVE = document.documentElement.classList.contains('gallery-live');");
     expect(source).not.toContain('<GalleryBand');
-    expect(source).toContain('<ConsumerExplorer');
+    expect(source).toContain('<CampaignRunway');
     expect(source).toContain('batch={consumerMarket}');
     expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
@@ -344,7 +344,7 @@ describe('the legacy shared gallery band', () => {
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static vitrine keeps all twelve destinations useful without
+    // The static runway keeps all twelve destinations useful without
     // JavaScript and mirrors the hydrated Explore, Fomo, and alternative paths.
     for (const slug of ['aries', 'virgo', 'pisces']) {
       const title = slug[0].toUpperCase() + slug.slice(1);

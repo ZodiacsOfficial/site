@@ -30,13 +30,17 @@ function cssRule(source, selector) {
 }
 
 describe('registry pastel polish', () => {
-  it('uses canonical sign discs and gold artwork derivatives in the Lit Vitrine', async () => {
+  it('uses canonical sign discs and gold artwork derivatives in the Campaign runway', async () => {
     const source = await read('src/app.jsx');
-    expect(source).toContain('srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`}');
-    expect(source).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
-    expect(source).toContain('src={`/assets/sculptures/512/${layer.slug}.webp`}');
-    expect(source).toContain('srcSet={`/assets/sculptures/512/${layer.slug}.webp 512w, /assets/sculptures/1024/${layer.slug}.webp 1024w`}');
-    expect(source).toContain('alt={layer.current ? `${item.name} Zodiac artwork` : \'\'}');
+    const runway = source.slice(source.indexOf('    function CampaignRunway('), source.indexOf('\n    function CampaignApp('));
+    const look = source.slice(source.indexOf('    function CampaignLook('), source.indexOf('\n    function CampaignRunway('));
+    const bag = source.slice(source.indexOf('    function CampaignBag('), source.indexOf('\n    const ASTROFOLIO_SHOP_PRODUCTS'));
+    expect(runway).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
+    expect(look).toContain('src={`/assets/sculptures/512/${slug}.webp`}');
+    expect(look).toContain('srcSet={`/assets/sculptures/512/${slug}.webp 512w, /assets/sculptures/1024/${slug}.webp 1024w`}');
+    expect(look).toContain('alt={`${item.name} Zodiac artwork`}');
+    expect(look).toContain('src={`/assets/constellations/${slug}.svg`}');
+    expect(bag).toContain('src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}');
   });
 
   it('keeps every selector disc pastel, reserves the selected hue for atmosphere, and colors movement by direction', async () => {
@@ -44,53 +48,48 @@ describe('registry pastel polish', () => {
       read('src/terminal/split-styles.css'),
       read('public/astrofolio/index.html'),
     ]);
-    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
-    expect(lit).toContain('color-mix(in srgb, var(--active-sign) 13%, transparent)');
-    expect(lit).toContain('border: 1px solid color-mix(in srgb, var(--sign) 72%, transparent);');
-    expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
-    expect(lit).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
-    const hydratedDisc = cssRule(lit, '.consumer-registry .vitrine-disc img {');
-    expect(hydratedDisc).toContain('width: 34px;');
-    expect(hydratedDisc).toContain('height: 34px;');
-    expect(hydratedDisc).toContain('margin: 0;');
-    expect(hydratedDisc).toContain('opacity: .86;');
-    expect(hydratedDisc).toContain('filter: none;');
-    expect(hydratedDisc).not.toContain('grayscale');
-    expect(lit).toContain('.consumer-registry .vitrine-disc picture > source { display: none; }');
-    expect(lit).toContain('.consumer-registry .vitrine-disc.is-active img { opacity: 1; }');
-    const hydratedGlow = cssRule(lit, '.consumer-registry .vitrine-disc picture::before {');
-    expect(hydratedGlow).toContain('radial-gradient');
-    expect(hydratedGlow).toContain('var(--sign) 28%');
-    expect(hydratedGlow).toContain('opacity: .45;');
-    expect(hydratedGlow).toContain('transition: opacity 160ms cubic-bezier(.23,1,.32,1);');
-    expect(lit).toContain('.consumer-registry .vitrine-disc.is-active picture::before { opacity: 1; }');
-    expect(html).toContain('<span class="static-vitrine__disc"><img src="/assets/zodiac-icons/48/leo.webp"');
-    expect(html).toContain('.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc::after {');
-    expect(html).toContain('border: 1px solid color-mix(in srgb, var(--disc) 72%, transparent);');
-    expect(cssRule(html, '.static-vitrine__rail img {')).toContain('filter: none;');
-    const staticGlow = cssRule(html, '.static-vitrine__disc::before {');
-    expect(staticGlow).toContain('radial-gradient');
-    expect(staticGlow).toContain('var(--disc) 28%');
-    expect(staticGlow).toContain('opacity: .45;');
-    expect(html).toContain('.static-vitrine__disc::before { opacity: 1; }');
-    expect(cssRule(lit, '.consumer-registry .astrofolio-lockup__avatar {')).toContain('radial-gradient(circle, #010204');
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    expect(campaign).toContain('--campaign-up: #8dd9ad;');
+    expect(campaign).toContain('--campaign-down: #f28e87;');
+    expect(campaign).toContain('.campaign-look .vitrine-price__movement.is-up { color: var(--campaign-up); }');
+    expect(campaign).toContain('.campaign-look .vitrine-price__movement.is-down { color: var(--campaign-down); }');
+    expect(campaign).toContain('.campaign-bag__move.is-up { color: var(--campaign-up); }');
+    expect(campaign).toContain('.campaign-bag__move.is-down { color: var(--campaign-down); }');
+    const disc = cssRule(campaign, '.campaign-dot img {');
+    expect(disc).toContain('border-radius: 50%;');
+    expect(disc).not.toMatch(/filter|grayscale/u);
+    const ring = cssRule(campaign, '.campaign-dot::after {');
+    expect(ring).toContain('border: 1px solid var(--sign);');
+    expect(ring).toContain('border-radius: 50%;');
+    expect(campaign).toContain('.campaign-dot.is-active::after { opacity: 1; }');
+    expect(campaign).toContain('.campaign-runway__dots:has(.campaign-dot:focus-visible) .campaign-dot::after { transition: none; }');
+    const lookGlow = cssRule(campaign, '\n    .campaign-look {');
+    expect(lookGlow).toContain('color-mix(in srgb, var(--sign) 9%, transparent)');
+    expect(cssRule(css, '.consumer-registry .astrofolio-lockup__avatar {')).toContain('radial-gradient(circle, #010204');
     expect(cssRule(html, '.static-astrofolio-lockup > img {')).toContain('radial-gradient(circle, #010204');
+    expect(html).toContain('<img class="campaign-look__stars" src="/assets/constellations/leo.svg"');
     expect(html).not.toContain('class="static-snapshot"');
-    expect(lit).not.toContain('var(--gold)');
-    expect(lit).not.toContain('var(--gold-bright)');
-    expect(lit).not.toContain('var(--gold-deep)');
+    expect(campaign).not.toContain('var(--gold)');
+    expect(campaign).not.toContain('var(--gold-bright)');
+    expect(campaign).not.toContain('var(--gold-deep)');
+    expect(campaign).not.toMatch(/215, ?173, ?105/u);
   });
 
-  it('keeps all twelve signs visible and gives the final Astrofolio market gateway touch-safe chrome', async () => {
+  it('keeps all twelve signs reachable and gives the final Astrofolio market gateway touch-safe chrome', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const rail = cssRule(css, '.consumer-registry .vitrine-disc-rail {');
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    const dots = cssRule(campaign, '.campaign-runway__dots {');
     const gateway = cssRule(css, '.consumer-market-gateway__action {');
     const staticShopImage = cssRule(css, '.consumer-static .static-shop__image {');
     const staticShopAsset = cssRule(css, '.consumer-static .static-shop__image img {');
 
-    expect(rail).toContain('grid-area: selector;');
-    expect(rail).toContain('overflow: visible;');
-    expect(rail).toContain('grid-template-columns: repeat(var(--vitrine-selector-columns), minmax(0, 1fr));');
+    expect(dots).toContain('--campaign-dot-columns: 12;');
+    expect(dots).toContain('grid-template-columns: repeat(var(--campaign-dot-columns), 44px);');
+    expect(cssRule(campaign, '.campaign-dot {')).toContain('width: 44px;');
+    expect(cssRule(campaign, '.campaign-dot {')).toContain('height: 44px;');
+    expect(campaign).toContain('.campaign-runway__dots { --campaign-dot-columns: 6; grid-template-columns: repeat(6, minmax(44px, 1fr)); gap: 2px; }');
+    expect(campaign).toContain('.campaign-dot { width: 100%; height: 48px; border-radius: 14px; }');
+    expect(cssRule(campaign, '.campaign-runway[data-mode="carousel"] .campaign-runway__track {')).toContain('scroll-snap-type: x mandatory;');
     expect(css).not.toContain('.consumer-registry .vitrine-disc-picker');
 
     expect(gateway).toContain('min-height: 52px;');
@@ -104,37 +103,32 @@ describe('registry pastel polish', () => {
     expect(staticShopAsset).toContain('height: auto;');
   });
 
-  it('keeps the warm artwork halo, neutral Explore chrome, and branded Fomo action', async () => {
+  it('keeps the sign-hued artwork glow, neutral Explore chrome, and branded Fomo action', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const halo = cssRule(css, '.consumer-registry .vitrine-stage::before {');
-    const explore = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--explore,');
-    const fomo = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--fomo,');
-    const fomoIcon = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn--fomo img,');
-    const actionGrid = cssRule(css, '.consumer-registry .vitrine-placard__actions {');
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    const explore = cssRule(campaign, '.campaign-look__explore {');
+    const fomo = cssRule(campaign, '.consumer-registry .btn.btn--fomo,');
+    const fomoIcon = cssRule(campaign, '.consumer-registry .btn--fomo img,');
     const leaderboardIconShell = cssRule(css, '.consumer-market-leaderboard__icon {');
     const leaderboardIcon = cssRule(css, '.consumer-market-leaderboard__icon img {');
-    const buttons = cssRule(css, '.consumer-registry .vitrine-placard__actions .btn {');
-    expect(halo).toContain('radial-gradient');
-    expect(halo).toContain('rgba(215, 173, 105, .15)');
+    expect(cssRule(campaign, '.campaign-look__figure {')).toContain('filter: drop-shadow(0 26px 30px rgba(0,0,0,.75));');
     expect(explore).toContain('color: var(--ink-2);');
+    expect(explore).toContain('min-height: 44px;');
+    expect(fomo).toContain('height: 48px;');
     expect(fomo).toContain('justify-content: flex-start;');
-    expect(fomo).toContain('border-color: rgba(255,255,255,.78);');
+    expect(fomo).toContain('border: 1px solid rgba(255,255,255,.78);');
+    expect(fomo).toContain('border-radius: 999px;');
     expect(fomo).toContain('#f1f0ec;');
     expect(fomo).toContain('color: #111318;');
+    expect(fomo).not.toMatch(/--active-sign|--sign|215, 173, 105/u);
     expect(fomoIcon).toContain('width: 34px;');
     expect(fomoIcon).toContain('height: 34px;');
-    expect(actionGrid).toContain('grid-template-columns: repeat(2, minmax(0, 1fr));');
-    expect(css).not.toMatch(/grid-template-columns: minmax\(0, \.(?:82|86)fr\) minmax\(0, 1\.(?:18|14)fr\)/u);
-    expect(css).toContain('.consumer-registry .vitrine-price__movement.is-up { color: var(--market-up); }');
-    expect(css).toContain('.consumer-registry .vitrine-price__movement.is-down { color: var(--vermilion); }');
     expect(leaderboardIconShell).toContain('flex: 0 0 34px;');
     expect(leaderboardIconShell).toContain('width: 34px;');
     expect(leaderboardIconShell).toContain('height: 34px;');
     expect(leaderboardIcon).toContain('filter: none;');
     expect(leaderboardIcon).toContain('border-radius: 50%;');
     expect(css).toContain('.consumer-market-leaderboard__icon { width: 34px; height: 34px; flex-basis: 34px; }');
-    expect(buttons).toContain('rgba(10,12,17,.66)');
-    expect(buttons).toContain('inset 0 1px 0 rgba(238,241,247,.1)');
     expect(css).toContain('.btn--fomo__arrow {');
     expect(css).toContain('flex: 0 0 31px;');
     expect(css).toContain('.btn--fomo__arrow { width: 31px; height: 31px; flex-basis: 31px; }');
@@ -144,64 +138,77 @@ describe('registry pastel polish', () => {
     expect(css).toContain('filter: saturate(1.32) hue-rotate(-8deg) brightness(.78) contrast(1.8);');
     expect(css).toContain('transform: translateY(-.5px);');
     expect(css).toContain('@media (hover: hover) and (pointer: fine) {');
-    expect(css).toContain('.consumer-registry .vitrine-buy-options,');
-    expect(buttons).not.toMatch(/--active-sign|--sign|215, 173, 105/u);
+    expect(campaign).toContain('.consumer-registry .vitrine-buy-options,');
   });
 
-  it('pins the Lit Vitrine typography roles and removes consumer mono-caps labels', async () => {
+  it('pins the Campaign typography roles and removes consumer mono-caps labels', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
-    expect(cssRule(lit, '.consumer-registry .terminal-consumer-hero__kicker {')).toContain('font: italic 500');
-    expect(cssRule(lit, '.consumer-registry .terminal-consumer-hero h1 {')).toContain('var(--serif)');
-    expect(cssRule(lit, '.consumer-registry .vitrine-placard__identity h2 {')).toContain('var(--serif)');
-    expect(cssRule(lit, '.consumer-registry .consumer-section-head h2,')).toContain('var(--serif)');
-    expect(cssRule(lit, '.consumer-registry .vitrine-price__figure {')).toContain('var(--mono)');
-    expect(cssRule(lit, '.consumer-registry .vitrine-price__figure {')).toContain('font-variant-numeric: tabular-nums;');
-    expect(cssRule(lit, '.consumer-registry .vitrine-disc {')).toContain('var(--sans)');
-    expect(lit).toContain('.consumer-registry .consumer-section-head__eyebrow { display: none; }');
-    expect(lit).toContain('letter-spacing: 0;');
-    expect(lit).toContain('text-transform: none;');
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    expect(cssRule(css, '.consumer-registry .terminal-consumer-hero__kicker {')).toContain('font: italic 500');
+    expect(cssRule(campaign, '.campaign-hero__word {')).toContain('var(--serif)');
+    expect(cssRule(campaign, '.campaign-hero__caption h1 {')).toContain('var(--serif)');
+    expect(cssRule(campaign, '.campaign-runway__head h2 {')).toContain('var(--serif)');
+    expect(cssRule(campaign, '.campaign-look h3 {')).toContain('var(--serif)');
+    expect(cssRule(css, '.consumer-registry .consumer-section-head h2,')).toContain('var(--serif)');
+    expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('var(--mono)');
+    expect(cssRule(campaign, '.campaign-look .vitrine-price__figure {')).toContain('font-variant-numeric: tabular-nums;');
+    expect(cssRule(campaign, '.campaign-button {')).toContain('var(--sans)');
+    const eyebrow = cssRule(campaign, '.consumer-campaign .consumer-eyebrow,');
+    expect(eyebrow).toContain('font: italic 400');
+    expect(eyebrow).toContain('var(--serif)');
+    expect(eyebrow).toContain('letter-spacing: 0;');
+    expect(eyebrow).toContain('text-transform: none;');
+    expect(css).toContain('.consumer-registry .consumer-section-head__eyebrow { display: none; }');
   });
 
-  it('pins opacity-only crossfades, stable stage geometry, and quiet entrances', async () => {
+  it('pins opacity-only film fades, stable stage geometry, and quiet entrances', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
-    const stageLayer = cssRule(lit, '.consumer-registry .vitrine-stage__layer {');
-    const placardLayer = cssRule(lit, '.consumer-registry .vitrine-placard__layer {');
-    const reveal = cssRule(lit, '.consumer-registry .reveal {');
-    const stage = cssRule(lit, '.consumer-registry .vitrine-stage {');
-    expect(stageLayer).toContain('position: absolute;');
-    expect(stageLayer).toContain('transition: opacity 180ms linear;');
-    expect(stageLayer).not.toMatch(/transition:[^;]*(?:transform|filter)/u);
-    expect(placardLayer).toContain('position: absolute;');
-    expect(placardLayer).toContain('transition: opacity 180ms linear;');
-    expect(placardLayer).not.toMatch(/transition:[^;]*(?:transform|filter)/u);
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    const reveal = cssRule(css, '.consumer-registry .reveal {');
     expect(reveal).toContain('transition: opacity 240ms linear !important;');
     expect(reveal).toContain('transform: none !important;');
     expect(reveal).toContain('filter: none !important;');
-    expect(stage).toContain('width: min(100%, calc(var(--vitrine-stage-height, 520px) * 1.2));');
-    expect(stage).toContain('height: auto;');
-    expect(stage).toContain('aspect-ratio: 6 / 5;');
-    expect(lit).toContain('aspect-ratio: 4 / 5;');
-    expect(lit).toContain('--vitrine-selector-columns: 4;');
-    expect(lit).toContain('transition: none;');
+    const film = cssRule(campaign, '.campaign-hero__film {');
+    expect(film).toContain('aspect-ratio: 9 / 16;');
+    expect(film).toContain('transform: translate(-50%, -50%) scale(var(--hero-scale, 1));');
+    expect(campaign).toContain('.campaign-hero__video { opacity: 0; transition: opacity 560ms ease; }');
+    expect(cssRule(campaign, '.campaign-phone__video {')).toContain('transition: opacity 560ms ease;');
+    const pin = cssRule(campaign, '.campaign-hero__pin {');
+    expect(pin).toContain('--film-w: min(27vw, 44vh);');
+    expect(pin).toContain('position: sticky;');
+    expect(pin).toContain('height: 100vh;');
+    expect(cssRule(campaign, '.campaign-runway[data-mode="pinned"] .campaign-runway__pin {')).toContain('height: 100vh;');
+    expect(campaign).toContain('.campaign-hero__pin { position: relative; height: 100svh; min-height: 560px; }');
+    expect(campaign).toContain('.campaign-look { flex-basis: min(84vw, 380px); padding: 20px 18px 12px; }');
   });
 
-  it('pins the 0.98 press response and disables all consumer motion on request', async () => {
+  it('pins the press responses and disables all consumer motion on request', async () => {
     const css = await read('src/terminal/split-styles.css');
-    const lit = css.slice(css.indexOf('/* Astrofolio · Lit Vitrine'));
-    expect(lit).toContain('transition: transform 80ms cubic-bezier(.23,1,.32,1), border-color 180ms cubic-bezier(.32,.72,0,1), background-color 180ms cubic-bezier(.32,.72,0,1);');
-    expect(lit).toContain('.consumer-registry .vitrine-placard__actions .btn:active { transform: scale(.98); }');
-    expect(lit).toContain('.consumer-registry .vrf__submit:active,');
-    expect(lit).toContain('.consumer-registry .vrf__example:active { transform: scale(.98); }');
-    const reduced = lit.slice(lit.lastIndexOf('@media (prefers-reduced-motion: reduce)'));
-    expect(reduced).toContain('animation: none !important;');
-    expect(reduced).toContain('transition: none !important;');
-    expect(reduced).toContain('.consumer-registry .reveal { opacity: 1; }');
-    expect(reduced).toContain('.consumer-registry .vitrine-placard__actions .btn:active,');
-    expect(reduced).toContain('.consumer-registry .vrf__example:active,');
-    expect(reduced).toContain('.consumer-registry .consumer-purpose__arrow,');
-    expect(reduced).toContain('.consumer-market-gateway__action:active { transform: none; }');
+    const campaign = css.slice(css.indexOf('/* Astrofolio · Campaign'));
+    expect(campaign).toContain('.campaign-button:active { transform: scale(.98); }');
+    expect(campaign).toContain('.static-campaign .btn.btn--fomo:active { transform: scale(.975); transition-duration: 120ms; }');
+    expect(css).toContain('.consumer-registry .vrf__submit:active,');
+    expect(css).toContain('.consumer-registry .vrf__example:active { transform: scale(.98); }');
+    const consumerReduced = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce) {\n      .wnav-tools,'));
+    expect(consumerReduced).toContain('animation: none !important;');
+    expect(consumerReduced).toContain('transition: none !important;');
+    expect(consumerReduced).toContain('.consumer-registry .reveal { opacity: 1; }');
+    expect(consumerReduced).toContain('.consumer-registry .vrf__example:active,');
+    expect(consumerReduced).toContain('.consumer-registry .consumer-purpose__arrow,');
+    expect(consumerReduced).toContain('.consumer-market-gateway__action:active { transform: none; }');
+    const campaignReduced = campaign.slice(campaign.lastIndexOf('@media (prefers-reduced-motion: reduce)'));
+    expect(campaignReduced).toContain('.static-campaign *,');
+    expect(campaignReduced).toContain('animation: none !important;');
+    expect(campaignReduced).toContain('transition: none !important;');
+    expect(campaignReduced).toContain('.campaign-button:active,');
+    expect(campaignReduced).toContain('.consumer-registry .btn.btn--fomo:active,');
+    // Reduced motion also keeps the film still and the runway unpinned.
+    const stillFilm = campaign.slice(campaign.indexOf('@media (min-width: 901px) and (prefers-reduced-motion: reduce)'));
+    expect(stillFilm).toContain('.campaign-hero { height: auto; }');
+    expect(stillFilm).toContain('.campaign-hero__pin { position: relative; }');
+    const source = await read('src/app.jsx');
+    expect(source).toContain("const CAMPAIGN_REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';");
+    expect(source).toContain('return matchesMedia(CAMPAIGN_WIDE_QUERY) && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY);');
   });
 
   it('uses deliberate hierarchy hairlines and one editorial market gateway', async () => {
@@ -209,6 +216,7 @@ describe('registry pastel polish', () => {
       read('src/app.jsx'),
       read('src/terminal/split-styles.css'),
     ]);
+    expect(source.slice(source.indexOf('    function CampaignApp('), source.indexOf('\n    function CampaignBag('))).toContain('data-vitrine-rule');
     expect(source.slice(source.indexOf('    function ConsumerShop('), source.indexOf('\n    function ConsumerCabinet('))).toContain('data-vitrine-rule');
     expect(source.slice(source.indexOf('    function ConsumerRegistryGuide('), source.indexOf('\n    function ConsumerStory('))).toContain('data-vitrine-rule');
     expect(css).toContain('.consumer-registry > [data-vitrine-rule]::before {');
@@ -219,7 +227,6 @@ describe('registry pastel polish', () => {
     expect(sections).toContain('box-shadow: none;');
     expect(css).toContain('--gold: var(--ink-2);');
     expect(css).toContain('--gold-bright: var(--ink);');
-    expect(css).toContain('.consumer-registry .astrofolio-vitrine::after { content: none; }');
     expect(css).toContain('outline-color: var(--ink-2);');
     expect(css).not.toContain('outline-color: var(--active-sign');
     expect(css).toContain('grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);');

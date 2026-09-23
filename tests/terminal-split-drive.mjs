@@ -160,129 +160,133 @@ async function waitForTerminal(page, selector) {
   assert.ok((await page.locator('body').innerText()).trim().length > 500);
 }
 
-async function waitForConsumerQuote(page) {
-  await page.waitForFunction(() => (
-    /^\$/u.test(document.querySelector('.vitrine-placard__layer.is-active .vitrine-price__figure')?.textContent?.trim() ?? '')
-  ), undefined, { timeout: 30_000 });
+async function waitForConsumerQuote(page, slug) {
+  await page.waitForFunction((sign) => (
+    /^\$/u.test(document.querySelector(`[data-look="${sign}"] .vitrine-price__figure`)?.textContent?.trim() ?? '')
+  ), slug, { timeout: 30_000 });
+}
+
+async function assertBuyActionInView(page, scope, { width, height }, label) {
+  const action = page.locator(`${scope} .btn--fomo`);
+  assert.equal(await action.count(), 1, `${label}: one Fomo action`);
+  // The bag slides in; measure it once it has settled.
+  await page.waitForFunction((selector) => {
+    const box = document.querySelector(`${selector} .btn--fomo`)?.getBoundingClientRect();
+    return box && box.top >= 0 && box.bottom <= window.innerHeight;
+  }, scope, { timeout: 5_000 }).catch(() => {});
+  assert.ok(await action.isVisible(), `${label}: the Fomo action is visible at ${width}x${height}`);
+  const box = await action.boundingBox();
+  assert.ok(box && box.y >= 0 && box.y + box.height <= height && box.x >= 0 && box.x + box.width <= width, `${label}: the complete Fomo action stays in the ${width}x${height} screen`);
+  assert.ok(Math.abs(box.height - 48) <= .5, `${label}: the Fomo action keeps its 48px target`);
+  assert.ok(await action.locator('strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), `${label}: Buy with Fomo fits without clipping`);
 }
 
 async function assertFirstScreen(page, { width, height }) {
-  const opening = page.locator('.astrofolio-vitrine');
-  const viewport = page.viewportSize();
-  assert.deepEqual(viewport, { width, height });
-  for (const selector of [
-    '.terminal-consumer-hero__kicker',
-    '#consumer-explorer-title',
-    '.vitrine-disc-rail',
-    '.vitrine-stage',
-    '.vitrine-placard__layer.is-active h2',
-    '.vitrine-placard__layer.is-active .vitrine-price',
-    '.vitrine-placard__layer.is-active .btn--fomo',
-  ]) {
-    assert.ok(await opening.locator(selector).isVisible(), `${selector} must be visible at ${width}x${height}`);
+  assert.deepEqual(page.viewportSize(), { width, height });
+  for (const selector of ['.campaign-hero__film', '#campaign-hero-title', '.terminal-consumer-hero__kicker']) {
+    assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible at ${width}x${height}`);
   }
-  const openingBox = await opening.boundingBox();
-  const actionBox = await opening.locator('.vitrine-placard__layer.is-active .btn--fomo').boundingBox();
-  assert.ok(openingBox && openingBox.y < height, 'opening starts in the first screen');
-  assert.ok(actionBox && actionBox.y + actionBox.height <= height, `complete primary action stays in the first ${width}x${height} screen`);
+  const title = await page.locator('#campaign-hero-title').boundingBox();
+  assert.ok(title && title.y >= 0 && title.y + title.height <= height, `the headline sits in the first ${width}x${height} screen`);
+  assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), null, 'the bag is live in the first phone screen');
+  await assertBuyActionInView(page, '.campaign-bag', { width, height }, 'hydrated bag');
+  // The site-wide Guide launcher rises above the bag rather than covering it.
+  await page.locator('.zguide-launcher').waitFor({ state: 'visible', timeout: 5_000 }).catch(() => {});
+  await page.waitForTimeout(360);
+  const overlap = await page.evaluate(() => {
+    const launcher = document.querySelector('.zguide-launcher')?.getBoundingClientRect();
+    const bag = document.querySelector('.campaign-bag')?.getBoundingClientRect();
+    if (!launcher || !bag || launcher.width === 0) return null;
+    return !(launcher.right <= bag.left || launcher.left >= bag.right || launcher.bottom <= bag.top || launcher.top >= bag.bottom);
+  });
+  assert.notEqual(overlap, true, `the Guide launcher does not cover the bag at ${width}x${height}`);
+  const captionClear = await page.evaluate(() => {
+    const launcher = document.querySelector('.zguide-launcher')?.getBoundingClientRect();
+    const caption = document.querySelector('.campaign-hero__caption')?.getBoundingClientRect();
+    if (!launcher || !caption || launcher.width === 0) return null;
+    return launcher.top >= caption.bottom;
+  });
+  assert.notEqual(captionClear, false, `the Guide launcher stays clear of the opening caption at ${width}x${height}`);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  assert.ok(overflow <= 0, `no horizontal overflow at ${width}x${height}`);
 }
 
-async function assertStaticFirstScreen(page, { width, height, slug = 'aries' }) {
-  const viewport = page.viewportSize();
-  assert.deepEqual(viewport, { width, height });
-  const active = page.locator(`[data-static-sign="${slug}"]`);
-  for (const selector of [
-    '.static-astrofolio-kicker',
-    '#static-astrofolio-title',
-    '.static-vitrine__rail',
-  ]) {
+async function assertStaticFirstScreen(page, { width, height, slug }) {
+  assert.deepEqual(page.viewportSize(), { width, height });
+  for (const selector of ['.static-astrofolio-kicker', '#static-astrofolio-title', '.campaign-hero__film']) {
     assert.ok(await page.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
   }
-  for (const selector of ['.static-vitrine__stage', 'h2', '.static-vitrine__price', '.btn--fomo']) {
-    assert.ok(await active.locator(selector).isVisible(), `${selector} must be visible without JavaScript at ${width}x${height}`);
-  }
-  const actionBox = await active.locator('.btn--fomo').boundingBox();
-  assert.ok(
-    actionBox && actionBox.y + actionBox.height <= height,
-    `the no-JavaScript primary action stays in the first ${width}x${height} screen`,
-  );
+  assert.equal(await page.locator(`.campaign-bag--static[data-campaign-bag="${slug}"]`).count(), 1, 'the no-JavaScript bag carries the season sign');
+  await assertBuyActionInView(page, '.campaign-bag--static', { width, height }, 'no-JavaScript bag');
 }
 
-async function assertPastelSelectorGeometry(page, { width, height, staticView = false }) {
+async function assertSignPicker(page, { width, height }) {
   assert.deepEqual(page.viewportSize(), { width, height });
-  const imageSelector = staticView ? '.static-vitrine__rail img' : '.vitrine-disc img';
-  const wrapperSelector = staticView
-    ? '.static-vitrine__rail label:has(.static-vitrine__choice:checked) .static-vitrine__disc'
-    : '.vitrine-disc.is-active picture';
-  const activeImageSelector = staticView
-    ? '.static-vitrine__rail label:has(.static-vitrine__choice:checked) img'
-    : '.vitrine-disc.is-active img';
-  const filters = await page.locator(imageSelector).evaluateAll((images) => (
-    images.map((image) => getComputedStyle(image).filter)
-  ));
-  assert.equal(filters.length, 12);
-  assert.ok(filters.every((filter) => filter === 'none'), `all twelve selector discs stay pastel at ${width}x${height}`);
-
-  const grid = await page.locator(staticView ? '.static-vitrine__rail' : '.vitrine-disc-rail').evaluate((node) => {
+  const picker = await page.locator('.campaign-runway__dots').evaluate((node) => {
     const bounds = node.getBoundingClientRect();
     return {
       columns: getComputedStyle(node).gridTemplateColumns.split(' ').length,
-      width: node.clientWidth,
-      scrollWidth: node.scrollWidth,
-      choices: [...node.children].map((choice) => {
+      left: bounds.left,
+      right: bounds.right,
+      choices: [...node.querySelectorAll('.campaign-dot')].map((choice) => {
         const rect = choice.getBoundingClientRect();
-        return { width: rect.width, height: rect.height, left: rect.left - bounds.left, right: rect.right - bounds.left };
+        const image = choice.querySelector('img');
+        return {
+          width: rect.width,
+          height: rect.height,
+          left: rect.left,
+          right: rect.right,
+          filter: image ? getComputedStyle(image).filter : '',
+          ring: getComputedStyle(choice, '::after').opacity,
+          ringBorder: getComputedStyle(choice, '::after').borderTopWidth,
+          ringRadius: getComputedStyle(choice, '::after').borderRadius,
+          ringMotion: getComputedStyle(choice, '::after').transitionDuration,
+          pressed: choice.getAttribute('aria-pressed'),
+        };
       }),
     };
   });
-  assert.equal(grid.columns, width < 360 ? 4 : 6);
-  assert.equal(grid.choices.length, 12);
-  assert.ok(grid.scrollWidth <= grid.width, 'all signs fit without horizontal scrolling');
-  assert.ok(grid.choices.every((choice) => choice.width >= 44 && choice.height >= 44), 'every sign remains touch-safe');
-  assert.ok(grid.choices.every((choice) => choice.left >= -1 && choice.right <= grid.width + 1), 'every sign is fully exposed');
-  const wrapper = await page.locator(wrapperSelector).boundingBox();
-  const image = await page.locator(activeImageSelector).boundingBox();
-  assert.ok(wrapper && image);
-  const expectedWrapper = width <= 899 ? 28 : 34;
-  const expectedImage = expectedWrapper;
-  assert.ok(Math.abs(wrapper.width - expectedWrapper) <= .01 && Math.abs(wrapper.height - expectedWrapper) <= .01);
-  assert.ok(Math.abs(image.width - expectedImage) <= .01 && Math.abs(image.height - expectedImage) <= .01);
-  const deltaX = (image.x + image.width / 2) - (wrapper.x + wrapper.width / 2);
-  const deltaY = (image.y + image.height / 2) - (wrapper.y + wrapper.height / 2);
-  assert.ok(Math.abs(deltaX) <= .01 && Math.abs(deltaY) <= .01, `the active pastel ring is concentric at ${width}x${height}: ${deltaX}, ${deltaY}`);
-  const style = await page.locator(wrapperSelector).evaluate((node) => ({
-    radius: getComputedStyle(node).borderRadius,
-    ring: {
-      opacity: getComputedStyle(node, '::after').opacity,
-      border: getComputedStyle(node, '::after').borderTopWidth,
-      radius: getComputedStyle(node, '::after').borderRadius,
-    },
-    choice: {
-      background: getComputedStyle(node.parentElement).backgroundColor,
-      shadow: getComputedStyle(node.parentElement).boxShadow,
-    },
-  }));
-  assert.equal(style.radius, '50%');
-  assert.equal(style.ring.opacity, '1');
-  assert.equal(style.ring.border, '1px');
-  assert.equal(style.ring.radius, '50%');
-  assert.equal(style.choice.background, 'rgba(0, 0, 0, 0)', 'selection has no rectangular fill');
-  assert.equal(style.choice.shadow, 'none', 'selection has no rectangular border or shadow');
-  assert.equal(await page.locator(activeImageSelector).evaluate((node) => getComputedStyle(node).opacity), '1');
-  const glowHosts = staticView ? '.static-vitrine__disc' : '.vitrine-disc picture';
-  const activeGlow = await page.locator(wrapperSelector).evaluate((node) => {
-    const style = getComputedStyle(node, '::before');
-    return { background: style.backgroundImage, opacity: style.opacity, transition: style.transitionDuration };
+  assert.equal(picker.columns, width <= 900 ? 6 : 12);
+  assert.equal(picker.choices.length, 12);
+  assert.ok(picker.choices.every((choice) => choice.width >= 44 && choice.height >= 44), `every sign remains touch-safe at ${width}x${height}`);
+  assert.ok(picker.choices.every((choice) => choice.left >= -1 && choice.right <= width + 1), `every sign is fully exposed at ${width}x${height}`);
+  assert.ok(picker.choices.every(({ filter }) => filter === 'none'), 'all twelve discs stay pastel');
+  const pressed = picker.choices.filter((choice) => choice.pressed === 'true');
+  assert.equal(pressed.length, 1, 'exactly one sign is chosen');
+  assert.equal(pressed[0].ring, '1');
+  assert.equal(pressed[0].ringBorder, '1px');
+  assert.equal(pressed[0].ringRadius, '50%');
+  assert.ok(picker.choices.filter((choice) => choice.pressed !== 'true').every((choice) => choice.ring === '0'), 'only the chosen sign carries the ring');
+  assert.ok(picker.choices.every(({ ringMotion }) => ringMotion.split(',').every((duration) => Number.parseFloat(duration) <= .18)), 'the ring settles within 180ms');
+}
+
+async function assertFomoBranding(action) {
+  const style = await action.evaluate((node) => {
+    const computed = getComputedStyle(node);
+    const logo = node.querySelector('img')?.getBoundingClientRect();
+    const arrow = node.querySelector('.btn--fomo__arrow');
+    const arrowStyle = arrow ? getComputedStyle(arrow) : null;
+    return {
+      background: computed.backgroundImage,
+      backgroundColor: computed.backgroundColor,
+      color: computed.color,
+      radius: computed.borderRadius,
+      shadow: computed.boxShadow,
+      logoWidth: logo?.width,
+      arrowWidth: arrow?.getBoundingClientRect().width,
+      arrowBackground: arrowStyle?.backgroundColor,
+      arrowShape: arrowStyle?.borderRadius ?? '',
+    };
   });
-  const glows = await page.locator(glowHosts).evaluateAll((nodes) => nodes.map((node) => ({
-    background: getComputedStyle(node, '::before').backgroundImage,
-    opacity: getComputedStyle(node, '::before').opacity,
-  })));
-  assert.equal(glows.length, 12);
-  assert.ok(glows.every(({ background }) => background.includes('radial-gradient')), 'all twelve discs have a pastel ambient shadow');
-  assert.ok(glows.every(({ opacity }) => Number.parseFloat(opacity) >= .4), 'every disc keeps a low matching glow');
-  assert.equal(activeGlow.opacity, '1');
-  assert.ok(activeGlow.transition.split(',').every((duration) => Number.parseFloat(duration) <= .18), 'the selection settles within 180ms');
+  assert.notEqual(style.background, 'none', 'the primary action keeps its branded highlight');
+  assert.equal(style.backgroundColor, 'rgb(241, 240, 236)');
+  assert.equal(style.color, 'rgb(17, 19, 24)');
+  assert.equal(style.radius, '999px');
+  assert.notEqual(style.shadow, 'none');
+  assert.equal(style.logoWidth, 34);
+  assert.equal(style.arrowWidth, 31);
+  assert.equal(style.arrowBackground, 'rgb(83, 93, 221)');
+  assert.equal(style.arrowShape, '50%');
 }
 
 if (OUT) await mkdir(OUT, { recursive: true });
@@ -304,7 +308,8 @@ try {
     const page = await mobile.newPage();
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
-    await waitForTerminal(page, '#consumer-explorer-title');
+    await waitForTerminal(page, '#campaign-hero-title');
+    assert.equal(await page.locator('#campaign-hero-title').innerText(), 'The twelve official Zodiacs.');
     assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
@@ -358,77 +363,66 @@ try {
     assert.equal(compactNav.burgerHeight, '44px', 'the menu keeps a 44px touch target');
     await page.setViewportSize({ width: 390, height: 844 });
 
-    await waitForConsumerQuote(page);
-    assert.equal(counts.dex, 1, 'the first-screen placard uses one batched quote request');
+    // One batched read feeds the bag, all twelve looks, and the leaderboard.
+    await waitForConsumerQuote(page, 'pisces');
+    assert.equal(counts.dex, 1, 'the first screen uses one batched quote request');
     assert.equal(counts.dexPairs, 1, 'one pair overlay repairs the token batch without per-sign requests');
     assert.equal(await page.locator('[data-consumer-sign]').count(), 12);
-    assert.equal(await page.locator('[data-vitrine-sculpture="pisces"].is-active').count(), 1);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active').count(), 1);
-    const activePlacard = page.locator('[data-vitrine-placard="pisces"].is-active');
-    const activePlacardText = await activePlacard.innerText();
-    assert.match(activePlacardText, /Pisces/u);
-    assert.match(activePlacardText, /\$0\.000012[\s\S]*down 11\.50% today/u);
-    assert.match(activePlacardText, /February 19 to March 20/u);
-    const exploreCta = activePlacard.locator('.btn--explore');
+    assert.equal(await page.locator('[data-consumer-sign="pisces"][aria-pressed="true"]').count(), 1);
+    assert.equal(await page.locator('#the-twelve').getAttribute('data-mode'), 'carousel', 'phones swipe the runway rather than pinning it');
+    assert.equal(await page.locator('#campaign-runway-title').innerText(), 'All twelve, starting with Pisces.');
+    assert.equal(await page.locator('.campaign-runway__track > .campaign-look').count(), 12);
+    assert.equal(await page.locator('.campaign-runway__track > .campaign-look').first().getAttribute('data-look'), 'pisces');
+    assert.equal(await page.locator(`.campaign-look.is-season[data-look="${expectedSeason.sign}"]`).count(), 1);
+    assert.equal(await page.locator('.campaign-look.is-season').count(), 1);
+
+    const bag = page.locator('.campaign-bag[data-campaign-bag="pisces"]');
+    assert.equal(await bag.count(), 1, 'the bag follows the chosen sign');
+    assert.match(await bag.innerText(), /Pisces[\s\S]*\$0\.000012[\s\S]*-11\.50%/u);
+    assert.equal(await bag.locator('.campaign-bag__move').evaluate((node) => getComputedStyle(node).color), 'rgb(242, 142, 135)');
+    const bagCta = bag.locator('.btn--fomo');
+    assert.equal(await bagCta.getAttribute('href'), 'https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&chainId=1399811149');
+    assert.equal(await bagCta.getAttribute('aria-label'), 'Open Fomo to buy Pisces');
+    await assertFomoBranding(bagCta);
+
+    const activeLook = page.locator('[data-look="pisces"]');
+    const activeLookText = await activeLook.innerText();
+    assert.match(activeLookText, /Pisces/u);
+    assert.match(activeLookText, /\$0\.000012[\s\S]*down 11\.50% today/u);
+    assert.match(activeLookText, /February 19 to March 20/u);
+    const exploreCta = activeLook.locator('.campaign-look__explore');
     assert.equal(await exploreCta.innerText(), 'Explore Pisces');
     assert.equal(await exploreCta.getAttribute('href'), '/registry/pisces/');
-    const fomoCta = page.locator('[data-vitrine-placard="pisces"].is-active .btn--fomo');
+    assert.ok((await exploreCta.boundingBox()).height >= 44, 'Explore keeps a touch-safe target');
+    const fomoCta = activeLook.locator('.btn--fomo');
     assert.equal(await fomoCta.getAttribute('href'), 'https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&chainId=1399811149');
     assert.equal(await fomoCta.getAttribute('aria-label'), 'Open Fomo to buy Pisces');
     assert.equal(await fomoCta.locator('img[src="/assets/venues/fomo-official.svg"]').count(), 1);
     assert.equal(await fomoCta.locator('.btn--fomo__copy small').textContent(), 'Pisces ♓️');
     assert.equal(await fomoCta.locator('.btn--fomo__copy strong').innerText(), 'Buy with Fomo');
     assert.doesNotMatch(await fomoCta.innerText(), /selected/iu);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').innerText(), 'Other ways to buy');
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
-    assert.ok(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-buy-options a').evaluate((node) => node.getBoundingClientRect().height >= 32));
-    assert.equal(await page.locator('.vitrine-placard__market-actions').count(), 0);
-    assert.equal(await activePlacard.locator('.vitrine-official-note').count(), 0);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-placard__record').count(), 0);
-    const [exploreBox, fomoBox] = await Promise.all([exploreCta.boundingBox(), fomoCta.boundingBox()]);
-    assert.ok(exploreBox && fomoBox && fomoBox.width >= exploreBox.width && exploreBox.height === 48 && fomoBox.height === 48, 'both actions retain 48px targets and Fomo has room for its original branding');
+    assert.ok(Math.abs((await fomoCta.boundingBox()).height - 48) <= .5, 'the look keeps the 48px Fomo target');
     assert.ok(await fomoCta.locator('strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), 'the complete Buy with Fomo label fits without clipping');
-    const movementStyle = await activePlacard.locator('.vitrine-price__movement').evaluate((node) => ({
+    await assertFomoBranding(fomoCta);
+    assert.equal(await activeLook.locator('.vitrine-buy-options a').innerText(), 'Other ways to buy');
+    assert.equal(await activeLook.locator('.vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
+    assert.ok(await activeLook.locator('.vitrine-buy-options a').evaluate((node) => node.getBoundingClientRect().height >= 32));
+    const movementStyle = await activeLook.locator('.vitrine-price__movement').evaluate((node) => ({
       className: node.className,
       color: getComputedStyle(node).color,
     }));
     assert.match(movementStyle.className, /\bis-down\b/u);
     assert.equal(movementStyle.color, 'rgb(242, 142, 135)');
-    const placardOrder = await activePlacard.evaluate((node) => {
-      const actions = node.querySelector('.vitrine-placard__actions')?.getBoundingClientRect();
-      const meta = node.querySelector('.vitrine-market-meta')?.getBoundingClientRect();
-      return { actionsBottom: actions?.bottom, metaTop: meta?.top };
-    });
-    assert.ok(placardOrder.actionsBottom <= placardOrder.metaTop, 'date and market provenance sit below the action row');
-    assert.match(await activePlacard.locator('.vitrine-market-meta').innerText(), /February 19 to March 20[\s\S]*#12 by reported market cap[\s\S]*Updated/u);
-    const primaryCtaStyle = await fomoCta.evaluate((node) => {
-      const style = getComputedStyle(node);
-      const logo = node.querySelector('img')?.getBoundingClientRect();
-      const arrow = node.querySelector('.btn--fomo__arrow');
-      const arrowStyle = arrow ? getComputedStyle(arrow) : null;
-      return {
-        background: style.backgroundImage,
-        backgroundColor: style.backgroundColor,
-        color: style.color,
-        radius: style.borderRadius,
-        shadow: style.boxShadow,
-        logoWidth: logo?.width,
-        arrowWidth: arrow?.getBoundingClientRect().width,
-        arrowBackground: arrowStyle?.backgroundColor,
-        arrowShape: arrowStyle?.borderRadius ?? '',
-      };
-    });
-    assert.notEqual(primaryCtaStyle.background, 'none', 'the primary action keeps its branded highlight');
-    assert.equal(primaryCtaStyle.backgroundColor, 'rgb(241, 240, 236)');
-    assert.equal(primaryCtaStyle.color, 'rgb(17, 19, 24)');
-    assert.equal(primaryCtaStyle.radius, '999px');
-    assert.notEqual(primaryCtaStyle.shadow, 'none');
-    assert.equal(primaryCtaStyle.logoWidth, 34);
-    assert.equal(primaryCtaStyle.arrowWidth, 31);
-    assert.equal(primaryCtaStyle.arrowBackground, 'rgb(83, 93, 221)');
-    assert.equal(primaryCtaStyle.arrowShape, '50%');
+    assert.equal(await page.locator('[role="status"]').filter({ hasText: /Prices read/u }).count(), 1, 'one polite price status for the runway');
     assert.equal(await page.locator('[data-terminal-preference-banner]').count(), 0);
-    assert.equal(await page.locator('.terminal-consumer-hero [data-terminal-view-link="pro"]').count(), 0);
+    assert.equal(await page.locator('.campaign-hero [data-terminal-view-link="pro"]').count(), 0);
+
+    await assertFirstScreen(page, { width: 390, height: 844 });
+    if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-390x844.png`, fullPage: false });
+    await page.setViewportSize({ width: 375, height: 600 });
+    await assertFirstScreen(page, { width: 375, height: 600 });
+    await page.setViewportSize({ width: 390, height: 844 });
+
     const marketGateway = page.locator('#market-layer');
     assert.equal(await marketGateway.count(), 1);
     assert.equal(await marketGateway.locator('.consumer-market-leaderboard ol > li').count(), 12);
@@ -479,29 +473,33 @@ try {
     assert.equal(await page.locator('.consumer-shop a[href="https://shop.app/m/41mzeq7f2h"]').count(), 1);
     assert.equal(await page.locator('.consumer-shop a[href^="https://shop.app/products/"]').count(), 3);
     assert.equal(await page.locator('#registry .consumer-verify.is-embedded#verify').count(), 1);
+    assert.equal(await page.locator('#registry .campaign-record__address').innerText(), '3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE');
     assert.equal(await page.locator('#faq summary').count(), 7);
     assert.deepEqual(await page.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
     assert.equal(await page.locator('[data-consumer-market-snapshot], .consumer-snapshot').count(), 0);
-    assert.equal(await page.locator('[data-vitrine-placard="pisces"].is-active .vitrine-market-meta').count(), 1);
     assert.equal(await page.getByText('Data & methodology', { exact: true }).count(), 1);
     assert.equal(await page.locator('.consumer-registry .market-tape, .consumer-registry .pro-aggregate, .consumer-registry [data-landing-trade]').count(), 0);
+    assert.equal(await page.locator('#buy a[href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427"]').count(), 1);
+    assert.equal(await page.locator('#buy a[href="https://play.google.com/store/apps/details?id=family.fomo.app"]').count(), 1);
     assert.equal(counts.gecko, 0);
     assert.equal(counts.wikimedia, 0);
     assert.equal(counts.jupiter, 0);
     assert.equal(counts.wallet, 0);
-    assert.equal(await page.locator('.vitrine-disc-picker, .vitrine-disc-picker__arrow, .vitrine-disc-picker__hint').count(), 0);
-    assert.equal(await page.locator('.astrofolio-vitrine > .vitrine-disc-rail').count(), 1);
-    await assertPastelSelectorGeometry(page, { width: 390, height: 844 });
+    await assertSignPicker(page, { width: 390, height: 844 });
 
+    // Choosing a sign moves the swipeable runway to it and hands the bag,
+    // the record, and the address bar the choice.
     await page.locator('[data-consumer-sign="aquarius"]').click();
-    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aquarius"]')?.classList.contains('is-active'));
-    await page.locator('[data-consumer-sign="pisces"]').click();
-    await page.waitForFunction(() => (
-      document.querySelectorAll('.vitrine-stage__layer').length === 1
-      && document.querySelector('[data-vitrine-sculpture="pisces"]')?.classList.contains('is-active')
-    ));
+    await page.waitForFunction(() => {
+      const look = document.querySelector('[data-look="aquarius"]')?.getBoundingClientRect();
+      const track = document.querySelector('.campaign-runway__track')?.getBoundingClientRect();
+      return look && track && look.left >= track.left - 1 && look.right <= track.right + 1;
+    });
+    assert.equal(new URL(page.url()).searchParams.get('sign'), 'aquarius');
+    assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'aquarius');
+    assert.equal(await page.locator('[data-look="aquarius"].is-active').count(), 1);
 
-    const selector = page.locator('[data-consumer-sign="pisces"]');
+    const selector = page.locator('[data-consumer-sign="aquarius"]');
     await selector.focus();
     await page.keyboard.press('Home');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
@@ -510,79 +508,38 @@ try {
     assert.equal(await page.locator('[data-consumer-sign="libra"]').getAttribute('aria-pressed'), 'true');
     await page.keyboard.press('ArrowUp');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
-    const keyboardRingMotion = await page.locator('.vitrine-disc picture').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node, '::after').transitionDuration));
+    const keyboardRingMotion = await page.locator('.campaign-dot').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node, '::after').transitionDuration));
     assert.ok(keyboardRingMotion.every((duration) => /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u.test(duration)), 'keyboard selection is immediate for incoming and outgoing rings');
     await page.setViewportSize({ width: 320, height: 844 });
-    await assertPastelSelectorGeometry(page, { width: 320, height: 844 });
-    await page.keyboard.press('ArrowDown');
-    assert.equal(await page.locator('[data-consumer-sign="leo"]').getAttribute('aria-pressed'), 'true');
+    await assertSignPicker(page, { width: 320, height: 844 });
+    await page.keyboard.press('ArrowRight');
+    assert.equal(await page.locator('[data-consumer-sign="taurus"]').getAttribute('aria-pressed'), 'true');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.keyboard.press('End');
     assert.equal(await page.locator('[data-consumer-sign="pisces"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(new URL(page.url()).searchParams.get('sign'), 'pisces');
+    assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'pisces');
 
-    // Let the opacity-only selection transition settle before capturing the
-    // exact owner-requested mobile viewport. The following resize assertion
-    // deliberately exercises a shorter browser-chrome height.
-    await page.waitForTimeout(200);
-    await page.waitForFunction(() => {
-      const image = document.querySelector('[data-vitrine-sculpture="pisces"].is-active img');
-      return image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
-    });
-    await assertFirstScreen(page, { width: 390, height: 844 });
-    if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-390x844.png`, fullPage: false });
-    await page.setViewportSize({ width: 375, height: 600 });
-    await assertFirstScreen(page, { width: 375, height: 600 });
-    await page.locator('.vitrine-placard__layer.is-active h2').click();
-    assert.equal(await page.locator('.vitrine-stage__layer.is-active .vitrine-gold-light').getAttribute('aria-hidden'), 'true');
-    assert.equal(await page.locator('.vitrine-stage__layer.is-active .vitrine-gold-light').evaluate((node) => getComputedStyle(node, '::after').animationDuration), '10s');
-    await page.setViewportSize({ width: 390, height: 844 });
-    const stageBefore = await page.locator('.vitrine-stage').boundingBox();
+    // Swiping the runway moves along it without changing the chosen sign.
+    await page.locator('.campaign-runway__track').evaluate((node) => { node.scrollLeft = node.scrollWidth; });
+    await page.waitForTimeout(250);
+    assert.equal(await page.locator('[data-consumer-sign="pisces"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await page.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'pisces');
+    const lookHeightTall = await page.locator('[data-look="pisces"]').evaluate((node) => node.getBoundingClientRect().height);
     await page.setViewportSize({ width: 390, height: 760 });
-    const stageAfter = await page.locator('.vitrine-stage').boundingBox();
-    assert.ok(stageBefore && stageAfter);
-    assert.ok(Math.abs(stageBefore.height - stageAfter.height) <= 1, 'browser-chrome height changes must not move or resize the artwork stage');
+    const lookHeightShort = await page.locator('[data-look="pisces"]').evaluate((node) => node.getBoundingClientRect().height);
+    assert.ok(Math.abs(lookHeightTall - lookHeightShort) <= 1, 'browser-chrome height changes do not resize the swipeable looks');
+    await page.setViewportSize({ width: 390, height: 844 });
 
-    await page.locator('[data-consumer-sign="aries"]').click();
-    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="aries"]')?.classList.contains('is-active'));
-    await page.waitForTimeout(40);
-    await page.evaluate(() => {
-      window.__vitrineOpacitySamples = [];
-      window.__vitrineOpacitySamplingDone = false;
-      const started = performance.now();
-      const sample = (now) => {
-        const opacity = [...document.querySelectorAll('.vitrine-stage__layer')].reduce((sum, node) => (
-          sum + Number.parseFloat(getComputedStyle(node).opacity)
-        ), 0);
-        window.__vitrineOpacitySamples.push(opacity);
-        if (now - started < 320) window.requestAnimationFrame(sample);
-        else window.__vitrineOpacitySamplingDone = true;
-      };
-      window.requestAnimationFrame(sample);
-    });
-    const interruptedOutgoingOpacity = await page.locator('[data-vitrine-sculpture="pisces"]').first().evaluate((node) => {
-      const opacity = Number.parseFloat(getComputedStyle(node).opacity);
-      document.querySelector('[data-consumer-sign="leo"]')?.click();
-      return opacity;
-    });
-    assert.ok(interruptedOutgoingOpacity > 0, 'the outgoing decoded artwork remains visible during its fade');
-    await page.waitForFunction(() => document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active'));
-    assert.equal(await page.locator('[data-vitrine-sculpture="pisces"]').count(), 1, 'rapid selection retains the partially faded layer instead of flashing it away');
-    await page.waitForFunction(() => window.__vitrineOpacitySamplingDone === true);
-    const opacitySamples = await page.evaluate(() => window.__vitrineOpacitySamples);
-    const minimumCompositeOpacity = Math.min(...opacitySamples);
-    assert.ok(minimumCompositeOpacity >= .9, `rapid retargeting preserves the visible artwork composite (${minimumCompositeOpacity})`);
-    await page.waitForFunction(() => (
-      document.querySelectorAll('.vitrine-stage__layer').length === 1
-      && document.querySelector('[data-vitrine-sculpture="leo"]')?.classList.contains('is-active')
-    ));
-    assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
-    assert.equal(await page.locator('[data-vitrine-placard="leo"].is-active .vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/leo/');
-    assert.equal(await page.locator('.vitrine-stage__layer').count(), 1, 'an interrupted fade settles to one artwork layer');
-    assert.equal(await page.locator('.vitrine-placard__layer').count(), 1, 'an interrupted fade settles to one placard layer');
-    assert.equal(await page.locator('.is-interrupt-anchor').count(), 0, 'the interruption anchor is removed after the crossfade settles');
-    assert.equal(await page.locator('[data-vitrine-sculpture="leo"].is-active').count(), 1);
-    assert.equal(await page.locator('[data-vitrine-placard="leo"] [role="status"]').count(), 1);
-    assert.equal(await page.locator('[data-vitrine-placard="leo"] [aria-hidden="true"][role="status"]').count(), 0);
+    // The bag rests while the runway fills the screen and over the ending.
+    await page.locator('#the-twelve').evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
+    await page.waitForFunction(() => document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), 'true');
+    await page.locator('#buy').evaluate((node) => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    await page.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+    await page.waitForFunction(() => document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+
     await page.locator('#shop').scrollIntoViewIfNeeded();
     await page.waitForFunction(() => [...document.querySelectorAll('.consumer-shop__product img')].every((image) => (
       image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
@@ -606,7 +563,9 @@ try {
     assert.ok(hydratedShopImages.every((image) => image.sameOrigin && image.naturalWidth > 0 && image.naturalHeight > 0 && image.width > 0 && image.height > 0), 'every hydrated merchandise image loads visibly from the site origin');
     if (OUT) await page.screenshot({ path: `${OUT}/astrofolio-merch-mobile.png`, fullPage: false });
     await page.setViewportSize({ width: 768, height: 1024 });
-    await assertPastelSelectorGeometry(page, { width: 768, height: 1024 });
+    await assertSignPicker(page, { width: 768, height: 1024 });
+    const tabletOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    assert.ok(tabletOverflow <= 0, 'the tablet layout has no horizontal overflow');
     assert.deepEqual(errors, []);
     await mobile.close();
 
@@ -623,36 +582,113 @@ try {
     const desktopPage = await desktop.newPage();
     const desktopErrors = watchErrors(desktopPage, 'Astrofolio desktop');
     await desktopPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
-    await waitForTerminal(desktopPage, '#consumer-explorer-title');
-    await waitForConsumerQuote(desktopPage);
-    await assertFirstScreen(desktopPage, { width: 1440, height: 900 });
-    await assertPastelSelectorGeometry(desktopPage, { width: 1440, height: 900 });
+    await waitForTerminal(desktopPage, '#campaign-hero-title');
+    await waitForConsumerQuote(desktopPage, 'leo');
+    // The closed film sits inside the wordmark; the headline and the bag
+    // wait until the film has opened.
+    const closed = await desktopPage.evaluate(() => {
+      const film = document.querySelector('.campaign-hero__film').getBoundingClientRect();
+      const astro = document.querySelector('.campaign-hero__word--astro').getBoundingClientRect();
+      const folio = document.querySelector('.campaign-hero__word--folio').getBoundingClientRect();
+      return {
+        film: film.toJSON(),
+        astro: astro.toJSON(),
+        folio: folio.toJSON(),
+        caption: getComputedStyle(document.querySelector('.campaign-hero__caption')).opacity,
+        bagHidden: document.querySelector('.campaign-bag').classList.contains('is-hidden'),
+        bagVisibility: getComputedStyle(document.querySelector('.campaign-bag')).visibility,
+        heroHeight: document.getElementById('official-twelve').offsetHeight,
+      };
+    });
+    assert.ok(Math.abs(closed.film.width - Math.min(1440 * .27, 900 * .44)) <= 1, 'the closed film keeps its wordmark width');
+    assert.ok(Math.abs(closed.film.x + closed.film.width / 2 - 720) <= 1 && Math.abs(closed.film.y + closed.film.height / 2 - 450) <= 1, 'the closed film is centred');
+    assert.ok(closed.astro.right <= closed.film.x && closed.folio.left >= closed.film.right, 'Astro and folio flank the film');
+    assert.ok(closed.astro.left >= 0 && closed.folio.right <= 1440, 'the wordmark stays inside the screen');
+    assert.equal(closed.caption, '0');
+    assert.equal(closed.bagHidden, true);
+    assert.equal(closed.bagVisibility, 'hidden');
+    assert.ok(closed.heroHeight > 900 * 2, 'the opening pins for more than two screens of scroll');
     if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900.png`, fullPage: false });
-    const desktopStageBefore = await desktopPage.locator('.vitrine-stage').boundingBox();
-    await desktopPage.setViewportSize({ width: 1440, height: 760 });
-    const desktopStageAfter = await desktopPage.locator('.vitrine-stage').boundingBox();
-    assert.ok(desktopStageBefore && desktopStageAfter);
-    assert.ok(Math.abs(desktopStageBefore.height - desktopStageAfter.height) <= 1, 'desktop browser-chrome height changes must not resize the artwork stage');
-    assert.ok(Math.abs(desktopStageBefore.y - desktopStageAfter.y) <= 1, 'desktop browser-chrome height changes must not move the artwork stage');
-    await desktopPage.setViewportSize({ width: 1024, height: 900 });
-    await assertFirstScreen(desktopPage, { width: 1024, height: 900 });
-    await assertPastelSelectorGeometry(desktopPage, { width: 1024, height: 900 });
-    const intermediateStage = await desktopPage.locator('.vitrine-stage').boundingBox();
-    assert.ok(intermediateStage && Math.abs((intermediateStage.width / intermediateStage.height) - 1.2) <= .01, 'intermediate desktop keeps the 6:5 stage ratio');
-    const intermediateWidths = await desktopPage.evaluate(() => ({
-      client: document.documentElement.clientWidth,
-      scroll: document.documentElement.scrollWidth,
-    }));
-    assert.ok(intermediateWidths.scroll <= intermediateWidths.client, 'intermediate desktop has no horizontal overflow');
-    await desktopPage.setViewportSize({ width: 1200, height: 900 });
-    await assertFirstScreen(desktopPage, { width: 1200, height: 900 });
-    const upperIntermediateStage = await desktopPage.locator('.vitrine-stage').boundingBox();
-    assert.ok(upperIntermediateStage && Math.abs((upperIntermediateStage.width / upperIntermediateStage.height) - 1.2) <= .01, 'upper-intermediate desktop keeps the 6:5 stage ratio');
-    const upperIntermediateWidths = await desktopPage.evaluate(() => ({
-      client: document.documentElement.clientWidth,
-      scroll: document.documentElement.scrollWidth,
-    }));
-    assert.ok(upperIntermediateWidths.scroll <= upperIntermediateWidths.client, 'upper-intermediate desktop has no horizontal overflow');
+    await desktopPage.evaluate(() => {
+      const hero = document.getElementById('official-twelve');
+      window.scrollTo({ top: hero.offsetHeight - window.innerHeight, behavior: 'instant' });
+    });
+    await desktopPage.waitForFunction(() => document.getElementById('official-twelve')?.dataset.caption === 'live');
+    const opened = await desktopPage.evaluate(() => {
+      const film = document.querySelector('.campaign-hero__film').getBoundingClientRect();
+      return {
+        film: film.toJSON(),
+        caption: getComputedStyle(document.querySelector('.campaign-hero__caption')).opacity,
+        words: getComputedStyle(document.querySelector('.campaign-hero__word--astro')).opacity,
+      };
+    });
+    assert.ok(opened.film.x <= 0 && opened.film.y <= 0 && opened.film.right >= 1440 && opened.film.bottom >= 900, 'the opened film covers the screen');
+    assert.equal(opened.caption, '1');
+    assert.equal(Number.parseFloat(opened.words), 0);
+    await desktopPage.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    await assertBuyActionInView(desktopPage, '.campaign-bag', { width: 1440, height: 900 }, 'desktop bag');
+    await assertFomoBranding(desktopPage.locator('.campaign-bag .btn--fomo'));
+    if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900-opened.png`, fullPage: false });
+
+    // The runway pins and carries the looks sideways, starting with the sign
+    // the visit opened with.
+    await desktopPage.evaluate(() => window.scrollTo({ top: document.getElementById('the-twelve').offsetTop, behavior: 'instant' }));
+    await desktopPage.waitForFunction(() => document.getElementById('the-twelve')?.dataset.mode === 'pinned');
+    await desktopPage.waitForFunction(() => document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    assert.equal(await desktopPage.locator('#campaign-runway-title').innerText(), 'All twelve, starting with Leo.');
+    assert.equal(await desktopPage.locator('.campaign-runway__count').innerText(), '01 / 12');
+    const runwayStart = await desktopPage.evaluate(() => {
+      const pin = document.querySelector('.campaign-runway__pin').getBoundingClientRect();
+      const first = document.querySelector('.campaign-runway__track > .campaign-look').getBoundingClientRect();
+      const section = document.getElementById('the-twelve');
+      return { pinTop: pin.top, pinHeight: pin.height, firstLeft: first.left, firstRight: first.right, sectionHeight: section.offsetHeight };
+    });
+    assert.ok(Math.abs(runwayStart.pinTop) <= 1 && Math.abs(runwayStart.pinHeight - 900) <= 1, 'the runway pins to the screen');
+    assert.ok(runwayStart.firstLeft >= 0 && runwayStart.firstRight <= 1440, 'the first look starts in view');
+    assert.ok(runwayStart.sectionHeight > 900 * 3, 'the runway spends scroll on its sideways travel');
+    await assertSignPicker(desktopPage, { width: 1440, height: 900 });
+    if (OUT) await desktopPage.screenshot({ path: `${OUT}/astrofolio-1440x900-runway.png`, fullPage: false });
+    await desktopPage.evaluate(() => {
+      const section = document.getElementById('the-twelve');
+      window.scrollTo({ top: section.offsetTop + (section.offsetHeight - window.innerHeight) / 2, behavior: 'instant' });
+    });
+    await desktopPage.waitForFunction(() => document.querySelector('.campaign-runway__count b')?.textContent !== '01');
+    assert.match(await desktopPage.locator('.campaign-runway__track').evaluate((node) => node.style.transform), /translate3d\(-\d/u);
+    assert.equal(await desktopPage.locator('[data-consumer-sign="leo"]').getAttribute('aria-pressed'), 'true', 'passing looks never changes the chosen sign');
+    // Keyboard focus inside the pinned runway brings its look into view.
+    await desktopPage.locator('[data-look="gemini"] .campaign-look__explore').focus();
+    await desktopPage.keyboard.press('Shift+Tab');
+    await desktopPage.keyboard.press('Tab');
+    await desktopPage.waitForFunction(() => {
+      const look = document.querySelector('[data-look="gemini"]')?.getBoundingClientRect();
+      return look && look.left >= 0 && look.right <= window.innerWidth;
+    });
+    // Choosing a far sign travels there and hands the bag the choice.
+    await desktopPage.locator('[data-consumer-sign="virgo"]').click();
+    await desktopPage.waitForFunction(() => {
+      const look = document.querySelector('[data-look="virgo"]')?.getBoundingClientRect();
+      return look && Math.abs(look.left + look.width / 2 - window.innerWidth / 2) <= 2;
+    });
+    assert.equal(new URL(desktopPage.url()).searchParams.get('sign'), 'virgo');
+    assert.equal(await desktopPage.locator('.campaign-bag').getAttribute('data-campaign-bag'), 'virgo');
+    await desktopPage.locator('#buy').evaluate((node) => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
+    await desktopPage.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
+    assert.equal(await desktopPage.locator('#registry .campaign-record__label').innerText(), 'Virgo · Solana origin');
+
+    for (const width of [1024, 1200]) {
+      await desktopPage.setViewportSize({ width, height: 900 });
+      await desktopPage.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+      await desktopPage.waitForTimeout(80);
+      const geometry = await desktopPage.evaluate(() => ({
+        client: document.documentElement.clientWidth,
+        scroll: document.documentElement.scrollWidth,
+        astroLeft: document.querySelector('.campaign-hero__word--astro').getBoundingClientRect().left,
+        folioRight: document.querySelector('.campaign-hero__word--folio').getBoundingClientRect().right,
+      }));
+      assert.ok(geometry.scroll <= geometry.client, `${width}px desktop has no horizontal overflow`);
+      assert.ok(geometry.astroLeft >= 0 && geometry.folioRight <= geometry.client, `${width}px keeps the wordmark inside the screen`);
+      await assertSignPicker(desktopPage, { width, height: 900 });
+    }
     assert.deepEqual(desktopErrors, []);
     await desktop.close();
 
@@ -664,13 +700,15 @@ try {
     await installNetworkHarness(frenchLocale);
     const frenchPage = await frenchLocale.newPage();
     await frenchPage.goto(`${baseURL}/astrofolio/?sign=aries`, { waitUntil: 'load' });
-    await waitForTerminal(frenchPage, '#consumer-explorer-title');
-    await waitForConsumerQuote(frenchPage);
-    const frenchPlacard = frenchPage.locator('[data-vitrine-placard="aries"].is-active');
-    assert.equal(await frenchPlacard.locator('.vitrine-price__figure').innerText(), '$1,234.50');
-    assert.equal(await frenchPlacard.locator('.vitrine-price__movement').innerText(), 'up 0.50% today');
-    assert.match(await frenchPlacard.locator('.vitrine-price__movement').getAttribute('class'), /\bis-up\b/u);
-    assert.equal(await frenchPlacard.locator('.vitrine-price__movement').evaluate((node) => getComputedStyle(node).color), 'rgb(141, 217, 173)');
+    await waitForTerminal(frenchPage, '#campaign-hero-title');
+    await waitForConsumerQuote(frenchPage, 'aries');
+    const frenchLook = frenchPage.locator('[data-look="aries"]');
+    assert.equal(await frenchLook.locator('.vitrine-price__figure').innerText(), '$1,234.50');
+    assert.equal(await frenchLook.locator('.vitrine-price__movement').innerText(), 'up 0.50% today');
+    assert.match(await frenchLook.locator('.vitrine-price__movement').getAttribute('class'), /\bis-up\b/u);
+    assert.equal(await frenchLook.locator('.vitrine-price__movement').evaluate((node) => getComputedStyle(node).color), 'rgb(141, 217, 173)');
+    assert.match(await frenchPage.locator('.campaign-bag').innerText(), /\$1,234\.50[\s\S]*\+0\.50%/u);
+    assert.equal(await frenchPage.locator('.campaign-bag__move').evaluate((node) => getComputedStyle(node).color), 'rgb(141, 217, 173)');
     await frenchLocale.close();
 
     const failedArtwork = await browser.newContext({ viewport: { width: 390, height: 844 } });
@@ -681,20 +719,18 @@ try {
     );
     const failedArtworkPage = await failedArtwork.newPage();
     await failedArtworkPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
-    await waitForTerminal(failedArtworkPage, '#consumer-explorer-title');
+    await waitForTerminal(failedArtworkPage, '#campaign-hero-title');
     await failedArtworkPage.locator('[data-consumer-sign="virgo"]').click();
-    await failedArtworkPage.waitForFunction(() => (
-      document.querySelector('[data-vitrine-sculpture="virgo"].is-active.is-fallback')
-      && document.querySelector('[data-vitrine-placard="virgo"].is-active')
-    ));
-    assert.equal(await failedArtworkPage.locator('[data-vitrine-sculpture="virgo"].is-fallback img').isVisible(), false);
-    assert.equal(await failedArtworkPage.locator('[data-vitrine-sculpture="virgo"] .vitrine-stage__fallback').isVisible(), true);
-    assert.equal(await failedArtworkPage.locator('[data-vitrine-sculpture="virgo"] .vitrine-stage__fallback').getAttribute('role'), 'img');
+    await failedArtworkPage.waitForFunction(() => document.querySelector('[data-look="virgo"] .campaign-look__art.is-fallback'));
+    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] .campaign-look__figure').isVisible(), false);
+    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] .campaign-look__fallback').isVisible(), true);
+    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] .campaign-look__fallback').getAttribute('role'), 'img');
     assert.match(
-      await failedArtworkPage.locator('[data-vitrine-sculpture="virgo"] .vitrine-stage__fallback').getAttribute('aria-label') ?? '',
+      await failedArtworkPage.locator('[data-look="virgo"] .campaign-look__fallback').getAttribute('aria-label') ?? '',
       /^Virgo artwork unavailable; .+ symbol shown$/u,
     );
-    assert.equal(await failedArtworkPage.locator('[data-vitrine-placard="virgo"].is-active h2').innerText(), 'Virgo');
+    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] h3').innerText(), 'Virgo');
+    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] .btn--fomo').isVisible(), true, 'a missing artwork never removes the way to buy');
     await failedArtwork.close();
 
     const reduced = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
@@ -702,28 +738,44 @@ try {
     const reducedPage = await reduced.newPage();
     const reducedErrors = watchErrors(reducedPage, 'Astrofolio reduced motion');
     await reducedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
-    await waitForTerminal(reducedPage, '#consumer-explorer-title');
+    await waitForTerminal(reducedPage, '#campaign-hero-title');
+    await reducedPage.waitForTimeout(400);
+    const reducedFilm = await reducedPage.evaluate(() => {
+      const video = document.querySelector('.campaign-hero__video');
+      return {
+        playing: document.querySelector('.campaign-hero__film')?.dataset.playing,
+        currentSrc: video?.currentSrc ?? null,
+        pending: video?.querySelectorAll('source[data-src]').length,
+        cue: getComputedStyle(document.querySelector('.campaign-hero__foot i')).animationName,
+        bag: getComputedStyle(document.querySelector('.campaign-bag')).transitionDuration,
+      };
+    });
+    assert.equal(reducedFilm.playing, 'false', 'reduced motion keeps the film as its poster');
+    assert.equal(reducedFilm.currentSrc, '', 'reduced motion never attaches film sources');
+    assert.equal(reducedFilm.pending, 2);
+    assert.equal(reducedFilm.cue, 'none');
+    assert.match(reducedFilm.bag, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
     await reducedPage.locator('[data-consumer-sign="virgo"]').click();
     await reducedPage.waitForFunction(() => {
-      const artwork = document.querySelector('[data-vitrine-sculpture="virgo"].is-active');
-      const placard = document.querySelector('[data-vitrine-placard="virgo"].is-active');
-      const image = artwork?.querySelector('img');
-      return artwork && placard && image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0;
+      const look = document.querySelector('[data-look="virgo"]')?.getBoundingClientRect();
+      const track = document.querySelector('.campaign-runway__track')?.getBoundingClientRect();
+      return look && track && look.left >= track.left - 1 && look.right <= track.right + 1;
     });
-    assert.equal(await reducedPage.locator('.vitrine-stage__layer').count(), 1, 'reduced motion swaps artwork immediately');
-    assert.equal(await reducedPage.locator('.vitrine-placard__layer').count(), 1, 'reduced motion swaps placard immediately');
-    assert.equal(await reducedPage.locator('[data-vitrine-sculpture="virgo"].is-active').count(), 1);
-    assert.equal(await reducedPage.locator('[data-vitrine-placard="virgo"].is-active').count(), 1);
-    const motionState = await reducedPage.locator('.vitrine-stage__layer').evaluate((node) => ({
-      animation: getComputedStyle(node).animationName,
-      duration: getComputedStyle(node).transitionDuration,
-    }));
-    assert.equal(motionState.animation, 'none');
-    assert.equal(await reducedPage.locator('.vitrine-gold-light').evaluate((node) => getComputedStyle(node).display), 'none', 'decorative shine respects reduced motion');
-    assert.match(motionState.duration, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
-    const reducedRingMotion = await reducedPage.locator('.vitrine-disc.is-active picture').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
+    const reducedRingMotion = await reducedPage.locator('.campaign-dot.is-active').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
     assert.match(reducedRingMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
     if (OUT) await reducedPage.screenshot({ path: `${OUT}/astrofolio-390x844-reduced-motion.png`, fullPage: false });
+    await reducedPage.setViewportSize({ width: 1440, height: 900 });
+    await reducedPage.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await reducedPage.waitForFunction(() => document.getElementById('the-twelve')?.dataset.mode === 'carousel');
+    const reducedDesktop = await reducedPage.evaluate(() => ({
+      heroHeight: document.getElementById('official-twelve').getBoundingClientRect().height,
+      caption: getComputedStyle(document.querySelector('.campaign-hero__caption')).opacity,
+      runwayHeight: document.getElementById('the-twelve').style.height,
+    }));
+    assert.ok(Math.abs(reducedDesktop.heroHeight - 900) <= 1, 'reduced motion does not pin the opening');
+    assert.equal(reducedDesktop.caption, '1');
+    assert.equal(reducedDesktop.runwayHeight, '', 'reduced motion does not pin the runway');
+    await assertBuyActionInView(reducedPage, '.campaign-bag', { width: 1440, height: 900 }, 'reduced-motion desktop bag');
     assert.deepEqual(reducedErrors, []);
     await reduced.close();
 
@@ -764,12 +816,15 @@ try {
     const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     const noJsPage = await noJs.newPage();
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'Choose your sign');
+    assert.equal(await noJsPage.locator('#static-astrofolio-title').innerText(), 'The twelve official Zodiacs.');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
     assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season`);
-    assert.equal(await noJsPage.locator('.static-vitrine__choice').count(), 12);
-    assert.equal(await noJsPage.locator('.static-vitrine__panel').count(), 12);
+    assert.equal(await noJsPage.locator('#the-twelve .campaign-look').count(), 12);
+    assert.equal(await noJsPage.locator('#the-twelve .campaign-look.is-season').count(), 1);
+    assert.equal(await noJsPage.locator(`#the-twelve .campaign-look.is-season[data-static-sign="${expectedSeason.sign}"]`).count(), 1, 'the release marks the real season in the no-JavaScript runway');
+    assert.equal(await noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .campaign-look__tag`).innerText(), 'In season now');
     assert.equal(await noJsPage.locator('#market-snapshot').count(), 1);
+    assert.equal(await noJsPage.locator('#consumer-sign-preview').count(), 1);
     assert.equal(await noJsPage.locator('.static-snapshot').count(), 0);
     assert.equal(await noJsPage.locator('#faq details').count(), 7);
     assert.deepEqual(await noJsPage.locator('#faq summary').allInnerTexts().then((items) => items.slice(-2)), ['What are the risks?', 'What is the Terminal?']);
@@ -781,11 +836,15 @@ try {
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').count(), 0);
     assert.equal(await noJsPage.locator('a[href^="/astrofolio/how-to-buy/"]').count(), 12);
     assert.equal(await noJsPage.locator('a[href="/astrofolio/how-to-buy/aries/"]').count(), 1);
-    assert.equal(await noJsPage.locator('[data-fomo-buy]').count(), 12);
-    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"]').getAttribute('href'), 'https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&chainId=1399811149');
-    assert.equal(await noJsPage.locator('[data-fomo-buy="aries"] .btn--fomo__copy small').textContent(), 'Aries ♈️');
-    assert.doesNotMatch(await noJsPage.locator('[data-fomo-buy="aries"]').innerText(), /selected/iu);
+    assert.equal(await noJsPage.locator('#the-twelve [data-fomo-buy]').count(), 12);
+    assert.equal(await noJsPage.locator('[data-fomo-buy]').count(), 13, 'twelve looks and the season bag');
+    assert.equal(await noJsPage.locator(`.campaign-bag--static [data-fomo-buy="${expectedSeason.sign}"]`).count(), 1);
+    assert.equal(await noJsPage.locator('#the-twelve [data-fomo-buy="aries"]').getAttribute('href'), 'https://fomo.family/coin?address=GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv&chainId=1399811149');
+    assert.equal(await noJsPage.locator('#the-twelve [data-fomo-buy="aries"] .btn--fomo__copy small').textContent(), 'Aries ♈️');
+    assert.doesNotMatch(await noJsPage.locator('#the-twelve [data-fomo-buy="aries"]').innerText(), /selected/iu);
     assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 0);
+    assert.equal(await noJsPage.locator('video').count(), 0, 'the no-JavaScript opening is the film poster');
+    assert.equal(await noJsPage.locator('#buy a[href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer a[href="/registry/technical/#market-transparency"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard ol > li').count(), 12);
@@ -797,23 +856,32 @@ try {
     assert.ok(staticIconBoxes.every(({ width, height }) => width >= 34 && height >= 34 && Math.abs(width - height) <= 1), 'no-JavaScript leaderboard icons keep the larger size');
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__icon img').first().getAttribute('src'), '/assets/zodiac-icons/48/gemini.webp');
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__identity strong').first().innerText(), 'Gemini');
-    const staticActions = noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__actions`);
-    const staticActionGeometry = await staticActions.evaluate((node) => {
-      const [explore, fomo] = [...node.querySelectorAll('.btn')].map((button) => button.getBoundingClientRect());
-      const date = node.parentElement?.querySelector('.static-vitrine__dates')?.getBoundingClientRect();
-      const logo = node.querySelector('.btn--fomo img')?.getBoundingClientRect();
+    const seasonLook = noJsPage.locator(`#the-twelve [data-static-sign="${expectedSeason.sign}"]`);
+    await seasonLook.scrollIntoViewIfNeeded();
+    const staticLookGeometry = await seasonLook.evaluate((node) => {
+      const fomo = node.querySelector('.btn--fomo');
+      const explore = node.querySelector('.campaign-look__explore')?.getBoundingClientRect();
+      const logo = fomo?.querySelector('img')?.getBoundingClientRect();
+      const label = fomo?.querySelector('strong');
       return {
-        exploreWidth: explore?.width,
-        fomoWidth: fomo?.width,
-        actionsBottom: node.getBoundingClientRect().bottom,
-        dateTop: date?.top,
+        fomoHeight: fomo?.getBoundingClientRect().height,
+        exploreHeight: explore?.height,
         logoWidth: logo?.width,
+        labelFits: Boolean(label && label.clientWidth > 0 && label.scrollWidth <= label.clientWidth),
       };
     });
-    assert.ok(staticActionGeometry.fomoWidth >= staticActionGeometry.exploreWidth, 'no-JavaScript Fomo action has room for its original branding');
-    assert.ok(await staticActions.locator('.btn--fomo strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), 'the no-JavaScript Buy with Fomo label fits without clipping');
-    assert.ok(staticActionGeometry.actionsBottom <= staticActionGeometry.dateTop, 'no-JavaScript date sits below the action row');
-    assert.equal(staticActionGeometry.logoWidth, 34);
+    assert.ok(Math.abs(staticLookGeometry.fomoHeight - 48) <= .5, 'the no-JavaScript Fomo action keeps its 48px target');
+    assert.ok(staticLookGeometry.exploreHeight >= 44, 'the no-JavaScript Explore link stays touch-safe');
+    assert.ok(staticLookGeometry.labelFits, 'the no-JavaScript Buy with Fomo label fits without clipping');
+    assert.equal(staticLookGeometry.logoWidth, 34);
+    const staticTrack = await noJsPage.locator('#the-twelve .campaign-runway__track').evaluate((node) => ({
+      overflowX: getComputedStyle(node).overflowX,
+      snap: getComputedStyle(node).scrollSnapType,
+      scrollable: node.scrollWidth > node.clientWidth,
+    }));
+    assert.equal(staticTrack.overflowX, 'auto', 'all twelve looks are reachable without JavaScript');
+    assert.match(staticTrack.snap, /x mandatory/u);
+    assert.equal(staticTrack.scrollable, true);
     await noJsPage.locator('#shop').scrollIntoViewIfNeeded();
     await noJsPage.waitForFunction(() => [...document.querySelectorAll('.static-shop__image img')].every((image) => (
       image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0 && image.naturalHeight > 0
@@ -868,27 +936,17 @@ try {
     assert.notEqual(staticStoryStyle.filter, 'none');
     assert.doesNotMatch(staticStoryStyle.filter, /grayscale/u);
     assert.ok(staticStoryStyle.pictureBottom <= staticStoryStyle.copyTop + 1, 'the no-JavaScript thesis image sits above its copy');
+    await noJsPage.evaluate(() => window.scrollTo(0, 0));
     await assertStaticFirstScreen(noJsPage, { width: 390, height: 844, slug: expectedSeason.sign });
-    await assertPastelSelectorGeometry(noJsPage, { width: 390, height: 844, staticView: true });
-    const staticStageBefore = await noJsPage.locator(`[data-static-sign="${expectedSeason.sign}"] .static-vitrine__stage`).boundingBox();
-    await noJsPage.locator(`#astrofolio-${expectedSeason.sign}`).focus();
-    const expectedIndex = registry.assets.findIndex(({ sign }) => sign === expectedSeason.sign);
-    const piscesIndex = registry.assets.findIndex(({ sign }) => sign === 'pisces');
-    const stepsToPisces = (piscesIndex - expectedIndex + registry.assets.length) % registry.assets.length;
-    for (let index = 0; index < stepsToPisces; index += 1) await noJsPage.keyboard.press('ArrowRight');
-    assert.equal(await noJsPage.locator('#astrofolio-pisces').isChecked(), true);
-    const railBox = await noJsPage.locator('.static-vitrine__rail').boundingBox();
-    const selectedLabelBox = await noJsPage.locator('#astrofolio-pisces-label').boundingBox();
-    assert.ok(railBox && selectedLabelBox && selectedLabelBox.x < railBox.x + railBox.width && selectedLabelBox.x + selectedLabelBox.width > railBox.x);
-    await noJsPage.setViewportSize({ width: 390, height: 700 });
-    const staticStageAfter = await noJsPage.locator('[data-static-sign="pisces"] .static-vitrine__stage').boundingBox();
-    assert.ok(staticStageBefore && staticStageAfter);
-    assert.ok(Math.abs(staticStageBefore.height - staticStageAfter.height) <= 1, 'the no-JavaScript stage remains stable when browser chrome changes');
+    await noJsPage.setViewportSize({ width: 375, height: 600 });
+    await assertStaticFirstScreen(noJsPage, { width: 375, height: 600, slug: expectedSeason.sign });
+    await noJsPage.setViewportSize({ width: 390, height: 844 });
     await noJsPage.emulateMedia({ reducedMotion: 'reduce' });
-    const staticMotion = await noJsPage.locator('#astrofolio-pisces-label').evaluate((node) => getComputedStyle(node).transitionDuration);
+    const staticMotion = await noJsPage.locator('.campaign-bag--static .btn--fomo').evaluate((node) => getComputedStyle(node).transitionDuration);
     assert.match(staticMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
-    const staticRingMotion = await noJsPage.locator('#astrofolio-pisces-label .static-vitrine__disc').evaluate((node) => getComputedStyle(node, '::after').transitionDuration);
-    assert.match(staticRingMotion, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+    const staticCueMotion = await noJsPage.locator('.campaign-hero__foot i').evaluate((node) => getComputedStyle(node).animationName);
+    assert.equal(staticCueMotion, 'none');
+    await noJsPage.emulateMedia({ reducedMotion: 'no-preference' });
 
     const noJsCollection = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     await installCollectionFlag(noJsCollection);
@@ -912,10 +970,32 @@ try {
     ]) {
       await noJsPage.setViewportSize(viewport);
       await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-      await assertPastelSelectorGeometry(noJsPage, { ...viewport, staticView: true });
+      const overflow = await noJsPage.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      assert.ok(overflow <= 0, `the no-JavaScript page has no horizontal overflow at ${viewport.width}px`);
     }
+    await noJsPage.setViewportSize({ width: 768, height: 1024 });
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    await assertStaticFirstScreen(noJsPage, { width: 1440, height: 900, slug: expectedSeason.sign });
+    await assertStaticFirstScreen(noJsPage, { width: 768, height: 1024, slug: expectedSeason.sign });
+    // Wide screens open on the closed film exactly as the application does,
+    // so hydration never moves the first screen; the caption follows it.
+    await noJsPage.setViewportSize({ width: 1440, height: 900 });
+    await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
+    const staticWide = await noJsPage.evaluate(() => {
+      const film = document.querySelector('.campaign-hero__film').getBoundingClientRect();
+      const title = document.getElementById('static-astrofolio-title').getBoundingClientRect();
+      return {
+        film: film.toJSON(),
+        titleTop: title.top,
+        bagDisplay: getComputedStyle(document.querySelector('.campaign-bag--static')).display,
+        astroLeft: document.querySelector('.campaign-hero__word--astro').getBoundingClientRect().left,
+        folioRight: document.querySelector('.campaign-hero__word--folio').getBoundingClientRect().right,
+      };
+    });
+    assert.ok(Math.abs(staticWide.film.width - Math.min(1440 * .27, 900 * .44)) <= 1, 'the no-JavaScript film matches the application width');
+    assert.ok(Math.abs(staticWide.film.x + staticWide.film.width / 2 - 720) <= 1 && Math.abs(staticWide.film.y + staticWide.film.height / 2 - 450) <= 1, 'the no-JavaScript film matches the application position');
+    assert.ok(staticWide.astroLeft >= 0 && staticWide.folioRight <= 1440);
+    assert.ok(staticWide.titleTop >= 900, 'the no-JavaScript caption follows the first wide screen');
+    assert.equal(staticWide.bagDisplay, 'none', 'the wide no-JavaScript opening matches the application, which rests the bag while the film is closed');
     if (OUT) await noJsPage.screenshot({ path: `${OUT}/astrofolio-no-js-1440x900.png`, fullPage: false });
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
     assert.equal(await noJsPage.locator('#pro-static-title').innerText(), 'Terminal');
@@ -932,7 +1012,7 @@ try {
     await installCollectionFlag(collection);
     const collectionPage = await collection.newPage();
     await collectionPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    await waitForTerminal(collectionPage, '#consumer-explorer-title');
+    await waitForTerminal(collectionPage, '#campaign-hero-title');
     assert.equal(await collectionPage.locator('[data-registry-collection]').count(), 1);
     assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat').count(), 12);
     assert.equal(await collectionPage.locator('[data-registry-collection] .consumer-cabinet__seat.is-filled').count(), 5);
@@ -971,10 +1051,10 @@ try {
       return { visualRight: visual?.right, essayLeft: essay?.left };
     });
     assert.ok(thesisFlow.visualRight <= thesisFlow.essayLeft + 1, 'the thesis clock is contained beside its copy');
-    const storyOrder = await collectionPage.locator('#what-is-astrofolio, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
+    const storyOrder = await collectionPage.locator('#official-twelve, #the-twelve, #buy, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
       nodes.map((node) => node.id)
     ));
-    assert.deepEqual(storyOrder, ['what-is-astrofolio', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
+    assert.deepEqual(storyOrder, ['official-twelve', 'the-twelve', 'buy', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
     assert.equal(
       await collectionPage.locator('#market-layer a[href^="/terminal/markets/"]').count(),
       0,
@@ -988,7 +1068,7 @@ try {
     const flaggedPage = await flagged.newPage();
     const flaggedErrors = watchErrors(flaggedPage, 'flagged gateway');
     await flaggedPage.goto(`${baseURL}/astrofolio/?sign=leo`, { waitUntil: 'load' });
-    await waitForTerminal(flaggedPage, '#consumer-explorer-title');
+    await waitForTerminal(flaggedPage, '#campaign-hero-title');
     // Owner addendum 2026-08-31: flag-on Astrofolio carries the marker and
     // one venue-route entry at the market gateway; the pro gateway stays off
     // this surface and the full-market handoff remains, demoted to secondary.
