@@ -11,11 +11,6 @@ export interface ZoneHistory {
   readonly o: readonly number[];
 }
 
-const BUCKETS = import.meta.glob<{ zones: Record<string, ZoneHistory> }>(
-  '../../data/tz-history/2025c/[0-9][0-9].json',
-  { import: 'default' },
-);
-
 /** The file a name's history is in; scripts/build-tz-history.mjs hashes names the same way. */
 export function historyBucket(name: string): string {
   let hash = 0x811c9dc5;
@@ -28,8 +23,11 @@ export function historyBucket(name: string): string {
 
 /** The pinned history of a zone name, or null when the release has none the browser's data should give way to. */
 export async function loadZoneHistory(name: string): Promise<ZoneHistory | null> {
-  const load = BUCKETS[`../../data/tz-history/2025c/${historyBucket(name)}.json`];
-  if (!load) return null;
-  const { zones } = await load();
+  // A template-literal import rather than import.meta.glob, so that esbuild
+  // bundles (the browser drives) split the files as Vite does.
+  const bucket: { default: { zones: Record<string, ZoneHistory> } } = await import(
+    `../../data/tz-history/2025c/${historyBucket(name)}.json`
+  );
+  const { zones } = bucket.default;
   return Object.prototype.hasOwnProperty.call(zones, name) ? zones[name] : null;
 }
