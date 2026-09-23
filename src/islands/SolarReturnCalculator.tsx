@@ -153,11 +153,12 @@ export default function SolarReturnCalculator() {
     const isCurrent = () => mounted.current && request === revision.current
       && accessGeneration === profileAccessGeneration.current;
     try {
-      const [{ computeSolarReturn }, view, wheel] = await loadModule(() => Promise.all([
+      const [{ computeSolarReturn, prepareLocalTime }, view, wheel] = await loadModule(() => Promise.all([
         import('./solar-return/compute'),
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
       ]));
+      await prepareLocalTime(input.birthDate);
       if (!isCurrent()) return;
       const resultData = computeSolarReturn(input);
       if (!isCurrent()) return;

@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import * as actualEngine from '../lib/engine/full';
 import * as actualReceipt from '../lib/engine/calculator-receipt';
-import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { localDateContainsUtc, prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { moonCandidates, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import { signForLongitude } from '../lib/signs';
@@ -54,7 +54,7 @@ function capture(value: ReturnType<typeof input>, mode = 'full', fallback = fals
     resolved: ReturnType<typeof resolveLocalToUtc>; nextMoonAmbiguous: boolean; nextRegistryRecordSlug: string | null; calls: typeof calls };
 }
 function reference(value: ReturnType<typeof input>) {
-  const resolved = resolveLocalToUtc(value.date, value.timeKnown ? value.time : '12:00', value.city.tz);
+  const resolved = resolveLocalToUtc(value.date, value.timeKnown ? value.time : '12:00', value.city.tz, { longitude: value.city.lon });
   return actualReceipt.computeCalculatorReceipt({ utc: resolved.utc, latitude: value.city.lat, longitude: value.city.lon,
     houseSystem: 'whole', timeKnown: value.timeKnown, flags: resolved.flags }, {
     date: value.date, time: value.timeKnown ? value.time : '12:00', timeZone: value.city.tz,
@@ -74,6 +74,8 @@ const controls = [
 ] as const;
 
 describe('ChartCalculator reference confidence', () => {
+  // The calculator awaits this before its calculation block, which runs here alone.
+  beforeAll(() => prepareLocalTime('1800-01-01'));
   it.each(['complete', 'unavailable', 'failed'] as const)('keeps reference receipt bytes and unverified signs with %s date coverage', state => {
     const value = input('1990-06-15', 'UTC'), expected = reference(value);
     const provider = state === 'unavailable' ? null : {

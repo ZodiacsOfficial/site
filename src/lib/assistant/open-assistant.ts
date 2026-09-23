@@ -795,11 +795,12 @@ export async function placementSummaryForChart(chart: StoredChart): Promise<stri
     && typeof chart.birth.time === 'string' && /^\d{2}:\d{2}$/.test(chart.birth.time);
   if (canResolvePlacidus) {
     try {
-      const [{ computeChart }, { resolveLocalToUtc }] = await Promise.all([
+      const [{ computeChart }, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
         import('../engine/full'), import('../time/localToUtc'),
       ]);
+      await prepareLocalTime(chart.birth.date);
       const place = chart.birth.place!;
-      const resolved = resolveLocalToUtc(chart.birth.date, chart.birth.time!, place.tz);
+      const resolved = resolveLocalToUtc(chart.birth.date, chart.birth.time!, place.tz, { longitude: place.lon });
       const computed = computeChart({
         utc: resolved.utc, latitude: place.lat, longitude: place.lon,
         houseSystem: 'placidus', timeKnown: true, flags: resolved.flags,

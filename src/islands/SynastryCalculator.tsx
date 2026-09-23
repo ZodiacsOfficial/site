@@ -250,15 +250,17 @@ export async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader):
 }
 
 async function resolveLink(link: { input: ShareChartInput; label: string }, loadEngine: EngineLoader): Promise<Person> {
-  const [engine, { resolveLocalToUtc }] = await Promise.all([
+  const [engine, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
     loadEngine(),
     loadModule(() => import('../lib/time/localToUtc')),
   ]);
   const { input } = link;
+  await prepareLocalTime(input.date);
   const resolved = resolveLocalToUtc(
     input.date,
     input.timeKnown && input.time ? input.time : '12:00',
     input.tz,
+    { longitude: input.lon },
   );
   const result = engine.computeChart({
     utc: resolved.utc,
@@ -289,12 +291,13 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
 }
 
 async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: EngineLoader): Promise<Person> {
-  const [engine, { resolveLocalToUtc }] = await Promise.all([
+  const [engine, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
     loadEngine(),
     loadModule(() => import('../lib/time/localToUtc')),
   ]);
+  await prepareLocalTime(slot.date);
   const timeKnown = slot.timeKnown && slot.time !== '';
-  const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
+  const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz, { longitude: slot.city!.lon });
   const result = engine.computeChart({
     utc: resolved.utc,
     latitude: slot.city!.lat,
@@ -1094,15 +1097,17 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     const timeKnown = slotB.timeKnown && slotB.time !== '';
     const accessGeneration = profileAccessGeneration.current;
     try {
-      const [{ resolveLocalToUtc }, { saveChart }] = await Promise.all([
+      const [{ prepareLocalTime, resolveLocalToUtc }, { saveChart }] = await Promise.all([
         import('../lib/time/localToUtc'),
         import('../lib/profile/store'),
       ]);
+      await prepareLocalTime(slotB.date);
       if (accessGeneration !== profileAccessGeneration.current) return false;
       const resolved = resolveLocalToUtc(
         slotB.date,
         timeKnown ? slotB.time : '12:00',
         slotB.city.tz,
+        { longitude: slotB.city.lon },
       );
       const now = new Date().toISOString();
       const outcome = saveChart({

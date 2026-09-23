@@ -84,14 +84,16 @@ export async function savedChartFromRemote(input: unknown): Promise<{
 
   if (!parsed.birth.place) return { chart: fallback(), revision: parsed.revision };
   try {
-    const [{ computeChart }, { resolveLocalToUtc }] = await Promise.all([
+    const [{ computeChart }, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
       import('../engine/full'),
       import('../time/localToUtc'),
     ]);
+    await prepareLocalTime(parsed.birth.date);
     const resolved = resolveLocalToUtc(
       parsed.birth.date,
       parsed.birth.timeKnown && parsed.birth.time ? parsed.birth.time : '12:00',
       parsed.birth.place.tz,
+      { longitude: parsed.birth.place.lon },
     );
     const computed = computeChart({
       utc: resolved.utc,

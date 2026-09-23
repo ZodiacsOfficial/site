@@ -96,6 +96,10 @@ owns that page.
   keep byte-identical)
 - `public/data/cities/` ← `node scripts/build-cities.mjs` (GeoNames, CC-BY)
 - `src/data/sky.json` ← `node scripts/build-sky.mjs`
+- `src/data/tz-lmt.json` ← `node scripts/build-tz-lmt.mjs` (when each IANA
+  zone's local mean time era ended, from a pinned tzdb release including
+  backzone; loaded on demand by `src/lib/time/localToUtc.ts`. Refresh only
+  when the pinned release changes)
 - `src/data/ingresses.json` ← `node scripts/build-ingresses.mjs` (refresh
   yearly with sky.json)
 - `src/data/eclipses.json` ← `node scripts/build-eclipses.mjs` (refresh

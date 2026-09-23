@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'preact/hooks';
 import type { City } from '../lib/geo/search';
 import { preloadIndex, searchCities } from '../lib/geo/search';
 import { SIGNS, signForLongitude, type Sign } from '../lib/signs';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { WIDGET_EN, widgetSignName } from '../strings/widgets';
 
 interface Placement {
@@ -95,7 +95,8 @@ export default function MiniBirthChartWidget() {
     setBusy(true);
     setError('');
     try {
-      const resolution = resolveLocalToUtc(date, time, city.tz);
+      await prepareLocalTime(date);
+      const resolution = resolveLocalToUtc(date, time, city.tz, { longitude: city.lon });
       const { computeChart } = await import('../lib/engine/full');
       const chart = computeChart({
         utc: resolution.utc,

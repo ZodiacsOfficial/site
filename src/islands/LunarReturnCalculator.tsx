@@ -117,9 +117,10 @@ export default function LunarReturnCalculator() {
     const isCurrent = () => mounted.current && request === revision.current && generation === accessGeneration.current;
     inFlight.current = true; setResult(null); setBusy(true); setError(''); setRetryReference(after.toISOString());
     try {
-      const [{ computeLunarReturn }, view, wheel] = await loadModule(() => Promise.all([
+      const [{ computeLunarReturn, prepareLocalTime }, view, wheel] = await loadModule(() => Promise.all([
         import('./lunar-return/compute'), import('./lunar-return/LunarReturnResult'), import('./transit/TransitRing'),
       ]));
+      await prepareLocalTime(input.birthDate);
       if (!isCurrent()) return;
       const data = computeLunarReturn(input, after);
       if (!isCurrent()) return;

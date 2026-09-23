@@ -1,7 +1,7 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { computeLunarReturn, type LunarReturnComputeInput } from './compute';
 import { lunarReturnChart } from '../../lib/engine/lunar-return';
-import { resolveLocalToUtc } from '../../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../../lib/time/localToUtc';
 
 const place = { name: 'Synthetic UTC', lat: 0, lon: 0, tz: 'Etc/UTC' };
 const after = new Date('2026-03-01T00:00:00Z');
@@ -9,6 +9,8 @@ const input = (): LunarReturnComputeInput => ({ birthDate: '1990-02-01', birthTi
   birthplace: { ...place }, houseSystem: 'placidus', castLocation: null });
 
 describe('lunar return complete-input caller', () => {
+  // The calculator awaits this before computing; the table covers every early date here.
+  beforeAll(() => prepareLocalTime('1799-12-31'));
   it('resolves original birth input and preserves the submitted reference', () => {
     const result = computeLunarReturn(input(), after);
     expect(result.chart).toEqual(lunarReturnChart({ utc: new Date('1990-02-01T12:00:00Z'), latitude: 0, longitude: 0, houseSystem: 'placidus', timeKnown: true, flags: [] }, after));
@@ -30,10 +32,12 @@ describe('lunar return complete-input caller', () => {
     expect(() => computeLunarReturn({ ...input(), birthDate, birthTime, birthplace: { ...place, tz: 'America/New_York' } }, after))
       .toThrow('skipped or repeated');
   });
-  it('retains the IANA historical LMT convention without hand-written offsets', () => {
+  it('uses the birthplace mean time before standard time, without hand-written offsets', () => {
     const birthDate = '1907-07-06'; const birthTime = '08:30';
     const birthplace = { name: 'Mexico City', lat: 19.4326, lon: -99.1332, tz: 'America/Mexico_City' };
-    const resolved = resolveLocalToUtc(birthDate, birthTime, birthplace.tz);
+    const resolved = resolveLocalToUtc(birthDate, birthTime, birthplace.tz, { longitude: birthplace.lon });
+    // tzdb's −6:36:36 is its own reference point; this longitude reads −6:36:32.
+    expect(resolved.utc.getTime() - resolveLocalToUtc(birthDate, birthTime, birthplace.tz).utc.getTime()).toBe(-4000);
     const result = computeLunarReturn({ ...input(), birthDate, birthTime, birthplace }, after);
     expect(result.natalTimeFlags).toEqual(resolved.flags.filter((flag) => flag === 'lmt'));
     expect(result.chart).toEqual(lunarReturnChart({ utc: resolved.utc, latitude: birthplace.lat, longitude: birthplace.lon, houseSystem: 'placidus', timeKnown: true, flags: resolved.flags }, after));

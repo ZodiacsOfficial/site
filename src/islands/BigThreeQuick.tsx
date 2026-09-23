@@ -5,7 +5,7 @@ import { preloadIndex } from '../lib/geo/search';
 import { useEngine } from '../lib/hooks/useEngine';
 import CalculationReload, { calculationError } from './CalculationReload';
 import { loadModule } from '../lib/module-load';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { formatLongitude, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
 import { chartHandoffFragment } from '../lib/chart-handoff';
@@ -99,7 +99,8 @@ export default function BigThreeQuick() {
     setCardState('idle');
     setCardError('');
     try {
-      const resolution = resolveLocalToUtc(date, time, city.tz);
+      await prepareLocalTime(date);
+      const resolution = resolveLocalToUtc(date, time, city.tz, { longitude: city.lon });
       const engine = await loadEngine();
       if (run !== generation.current) return;
       const chart: Chart = engine.computeChart({

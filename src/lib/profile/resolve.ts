@@ -34,14 +34,16 @@ export async function resolveSavedChart(
   if (currentSavedCalculation(chart.summary.engineVersion) || !chart.birth.place) return stored;
 
   try {
-    const [engine, { resolveLocalToUtc }] = await Promise.all([
+    const [engine, { prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
       loadEngine(),
       import('../time/localToUtc'),
     ]);
+    await prepareLocalTime(chart.birth.date);
     const resolved = resolveLocalToUtc(
       chart.birth.date,
       chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',
       chart.birth.place.tz,
+      { longitude: chart.birth.place.lon },
     );
     const result = engine.computeChart({
       utc: resolved.utc,

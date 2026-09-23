@@ -8,7 +8,7 @@ import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import { SATURN_RETURN } from '../lib/interpretations';
 import { formatLongitude, signForLongitude } from '../lib/signs';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import type { ReturnSeason, SaturnReturnResult } from '../lib/engine/returns';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
@@ -54,10 +54,10 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
     setBusy(true);
     setError('');
     try {
-      const returns = await loadReturns();
+      const [returns] = await Promise.all([loadReturns(), prepareLocalTime(date)]);
       if (run !== generation.current) return;
       const utc = showDetail && city
-        ? resolveLocalToUtc(date, time || '12:00', city.tz).utc
+        ? resolveLocalToUtc(date, time || '12:00', city.tz, { longitude: city.lon }).utc
         : new Date(`${date}T12:00:00Z`);
       setResult(returns.saturnReturns(utc));
     } catch (err) {

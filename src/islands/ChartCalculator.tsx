@@ -37,7 +37,7 @@ import {
 } from '../lib/scene/types';
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseNameFromAngle } from '../lib/engine/lite';
@@ -1299,6 +1299,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     try {
       const engine = await loadEngine();
       if (!runIsCurrent()) return;
+      await prepareLocalTime(input.date);
+      if (!runIsCurrent()) return;
       let receiptModule: Awaited<ReturnType<typeof loadCalculatorReceipt>> | null = null;
       if (mode === 'full') {
         try {
@@ -1310,7 +1312,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         if (!runIsCurrent()) return;
       }
       const effectiveTime = input.timeKnown ? input.time : '12:00';
-      const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
+      const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz, { longitude: input.city.lon });
       if (!input.timeKnown) {
         try {
           if (assessLocalDateReference(input.date, resolved.utc, input.city.tz).referenceStatus !== 'member') throw localDateReferenceFailure;
