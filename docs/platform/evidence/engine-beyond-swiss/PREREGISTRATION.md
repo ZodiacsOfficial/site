@@ -153,7 +153,11 @@ Each step names its rule's source. Baselines are the shipped engine,
   obliquity of date, runs from 66.533° to 66.589° over the ladder's dates;
   it allows Placidus on 320 of the 336 cases, the count Swiss computes, and
   the shipped engine refuses all 336 (`scripts/angles-grid.test.mjs`).
-- **Verdict: NOT RUN.**
+- **Verdict: NOT RUN.** The limit is written on the local rc.7 branch as
+  patch `0005` in `rc7-phase1/`. Measured there against Swiss on Swiss's own
+  inputs, the status agrees on 336 of 336 cases and the cusps are within
+  0.0085″, inside the rule. The verdict waits for rc.7 to be vendored.
+  Naming the fallback and offering Porphyry wait on an owner decision.
 
 ### 1.10 One crossing solver (version 1, rule 1i)
 

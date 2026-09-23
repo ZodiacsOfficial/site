@@ -1,7 +1,7 @@
 From 73cc01d1ea99dac69c388665cc92b3a081561ecd Mon Sep 17 00:00:00 2001
 From: Claude <noreply@anthropic.com>
 Date: Wed, 23 Sep 2026 08:03:42 +0000
-Subject: [PATCH 3/4] Record the new speed and applying rules in receipts, and
+Subject: [PATCH 3/5] Record the new speed and applying rules in receipts, and
  keep reading old ones
 
 A receipt states its conventions, and validation accepted exactly one set.

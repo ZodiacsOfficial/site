@@ -1,7 +1,7 @@
 From 805126fa1ba0701b6256226b6ac7dc1fc509b3d6 Mon Sep 17 00:00:00 2001
 From: Claude <noreply@anthropic.com>
 Date: Wed, 23 Sep 2026 07:59:57 +0000
-Subject: [PATCH 2/4] Take speeds as the derivative of the reported longitude
+Subject: [PATCH 2/5] Take speeds as the derivative of the reported longitude
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
