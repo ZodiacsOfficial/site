@@ -216,6 +216,13 @@ nine findings.
 | R8 | **Shared premises.** Every author, auditor and reviewer so far has been an AI working from prompts written by one orchestrator. The context block given to all nine auditors stated two false premises — that Swiss reads the DE440s `.bsp` through `FLG_JPLEPH`, and that Swiss's `.se1` files are DE431-derived — and offered Horizons QUANTITIES=31 as an arbiter without its IAU76/80 frame limit of about 0.05″. Auditors who ran code and read the returned flags and file headers caught all three (alpha-reduction-math-10, production-positions-11, swiss-parity-3); a verifier confirmed one. | process | `tools/engine-audit-phase1.js:28` in the audit record | §5 |
 | R9 | **The share token reveals the birth.** The positions-only share token (`src/lib/share-positions.ts`) has no date, time or place fields, but stores every longitude, the Moon and the angles included, to 0.001°. The Moon alone then fixes the birth instant to a few seconds, and the angles give the birthplace approximately. The token travels in URLs, and `api/calendar/transits.ts` takes it as a GET parameter and describes the feed as "zero-PII". | major, privacy claim | files cited; found by the fact-check | 1–2 d + owner decision |
 
+*Correction, 2026-09-23.* R8's "about 0.05″" is the size of Horizons's
+IAU76/80 frame only inside its EOP span, 1962-01-20 to 2026-12-18. Outside
+it Horizons holds its nutation offsets constant, and the frame term reaches
+−0.373″ at 1851 and +0.345″ at 2148. Once the frame is carried out,
+Horizons and Swiss agree to within 5.5 mas
+(`evidence/engine-beyond-swiss/horizons-frame/`).
+
 ---
 
 ## 3. The programme

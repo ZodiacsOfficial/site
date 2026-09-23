@@ -246,7 +246,10 @@ against Horizons, whose Moon is DE441, Swiss's `.se1` Moon agrees with it to
 Swiss run on its `.se1` files minus Swiss run on the DE440 binary gives the
 same shape: 0.0104″ at 1851, under 0.001″ from 1933 to 2012, 0.0085″ at
 2148. The Moon's 0.0107″ is the DE440-versus-DE441 lunar difference
-(`../../engine-audit-2026-09-22/LEDGER.md`, swiss-parity-3).
+(`../../engine-audit-2026-09-22/LEDGER.md`, swiss-parity-3). Horizons's
+geometric vectors confirm it with no frame model. The DE440s Moon is
+10.24 mas from DE441 at 1851 and 8.60 mas at 2148, and under 1 mas from
+1933 to 2020 (`../../engine-beyond-swiss/horizons-frame/vectors/`).
 
 ## 5. Independent SPK reader — the readers agree to 1.7 ulp
 
