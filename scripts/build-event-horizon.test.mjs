@@ -49,7 +49,7 @@ describe('Phase 2 five-year event horizon', () => {
     expect(sky.retrogrades).toHaveLength(47);
     expect(sky.moons.find((moon) => moon.type === 'full' && moon.at.startsWith('2026-07-29'))).toEqual({
       type: 'full',
-      at: '2026-07-29T14:36:19.011Z',
+      at: '2026-07-29T14:35:36.043Z',
     });
     expect(sky.retrogrades.find((window) => window.planet === 'Mercury'
       && window.from.startsWith('2026-06-29'))).toEqual({

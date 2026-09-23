@@ -14,8 +14,9 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
-  MakeTime, GeoVector, RotateVector, Rotation_EQJ_ECT, SearchMoonPhase,
+  MakeTime, GeoVector, RotateVector, Rotation_EQJ_ECT,
 } from 'astronomy-engine';
+import { searchLunations } from './lunation-search.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputIndex = process.argv.indexOf('--output');
@@ -195,15 +196,12 @@ if (shadowProblems.length) {
 }
 
 // ── New + full moons ──────────────────────────────────────────────────
+// Apparent Moon − Sun longitude through the site engine, bisected exactly as
+// build-transits.mjs does (shared helper), so sky.json and the monthly
+// catalogs carry identical instants for every lunation.
 const moons = [];
 for (const [targetLon, type] of [[0, 'new'], [180, 'full']]) {
-  let cursor = MakeTime(FROM);
-  while (true) {
-    const found = SearchMoonPhase(targetLon, cursor, 40);
-    if (!found || found.date >= TO) break;
-    moons.push({ type, at: found.date.toISOString() });
-    cursor = found.AddDays(1);
-  }
+  for (const at of searchLunations(FROM, TO, targetLon)) moons.push({ type, at: at.toISOString() });
 }
 moons.sort((a, b) => a.at.localeCompare(b.at));
 
