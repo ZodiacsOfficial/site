@@ -41,6 +41,19 @@ gates regenerate with flags unset.
    audience; note the deliberate string mismatch — Vercel wants
    `PUSH_ENABLED=1`, GitHub wants `PUSH_ENABLED=true` (`SETUP.md`).
 
+## Daily email owner canary
+
+Keep the repository `DAILY_EMAIL_ENABLED` variable unset while checking delivery.
+Dispatch **Daily Email** on `main` with `canary=true` and `dry_run=true` first,
+then `dry_run=false` for the one-recipient delivery check. The protected
+`DAILY_EMAIL_CANARY_TO` secret must identify an owner-controlled, confirmed,
+opted-in account. A canary uses that address as its invocation-only test
+allowlist and forces limit one; the existing scheduled test allowlist stays
+unchanged. Missing or ineligible canary recipients never fall back to another
+recipient. Live canaries still require the verified edition to be deployed.
+
+Check the received message and unsubscribe POST before enabling schedules.
+
 ## What stays code, not config
 
 - General-audience daily email (`DAILY_EMAIL_ALL_APPROVED` is never passed
