@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "owner-requested-astrofolio-headline-explainer-and-card-rise-2026-09-24",
-  "baseCommit": "224dfb68abd55f7cc8473d3f027dd9700bb38341",
+  "baseCommit": "85f84f0b915d03adb76ef001e303cd25151e2a57",
   "protectedPaths": [
     "public/assets/app.js",
     "scripts/registry-consumer-contract.test.mjs",
