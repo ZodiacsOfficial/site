@@ -4,17 +4,109 @@
  * carry seconds, e.g. America/Mexico_City at −6:36:36 before 1922).
  *
  * The browser/Node host's ICU data exposes its tzdb history through Intl.
- * Coverage and tzdb version therefore depend on that runtime. Never hand-roll
- * offsets.
+ * Coverage and tzdb version therefore depend on that runtime. Without a
+ * birthplace, and for every instant from 1970 on, legal offsets come from
+ * there; nothing here hand-rolls a legal offset.
+ *
+ * One era needs more than the zone: before a place adopted a legal time, its
+ * clocks kept that place's own mean solar time, and tzdb records that only
+ * for the zone's reference city. Given the birthplace's longitude, instants
+ * before the zone's local mean time era ended use the birthplace's mean time
+ * (four minutes of time per degree of longitude) instead of the reference
+ * city's. When each era ended comes from src/data/tz-lmt.json, generated
+ * from a pinned tzdb release that includes backzone.
+ *
+ * Given a longitude, instants before 1970 also take the zone's legal offsets
+ * from that pinned release (src/data/tz-history/), not from Intl: browsers
+ * carry tzdb's default build, which gives many places another city's history
+ * before 1970 (Stockholm keeps Berlin's). Every later instant is Intl's. Both
+ * tables load on demand, only for dates that can need them: await
+ * prepareLocalTime(date, timeZone) before resolving a birthplace time.
  */
+import { loadModule } from '../module-load';
 import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from './technical-locales';
 import { parseCivilDate, parseCivilTime } from './civil-date';
+
+export interface LocalTimeOptions {
+  /**
+   * The birthplace's longitude, degrees east. Without it, a time from the
+   * local mean time era uses the zone reference city's mean time, and a time
+   * before 1970 the host's history.
+   */
+  longitude?: number;
+}
 
 export interface LocalTimeResolution {
   utc: Date;
   /** Offset applied, minutes east of UTC (may be fractional for LMT). */
   offsetMinutes: number;
   flags: ('dst-gap' | 'dst-fold' | 'lmt')[];
+  /**
+   * Present when the instant falls in the birthplace's own local mean time:
+   * the longitude used, and the offset the zone alone would have applied.
+   */
+  localMeanTime?: { longitude: number; zoneOffsetMinutes: number };
+}
+
+type BirthplaceClock = typeof import('./birthplace-clock');
+/** The birthplace clock, once prepareLocalTime has loaded it. */
+let birthplace: BirthplaceClock | null = null;
+let birthplaceLoad: Promise<BirthplaceClock> | null = null;
+/** A wall time from 1970-01-02 on never reads before 1970, so it never needs the birthplace clock. */
+const BIRTHPLACE_WALL_END = 86_400_000;
+
+/**
+ * Every era in the table ends before this instant (the last, Niue and
+ * Rarotonga, in October 1952); a test holds the table to it.
+ */
+export const LOCAL_MEAN_TIME_ERAS_END_BEFORE = Date.UTC(1953, 0, 1);
+
+/**
+ * Whether a local date (YYYY-MM-DD) could fall in a local mean time era, so
+ * that a birthplace's longitude can change how its wall time resolves. False
+ * only for years after the last era ended.
+ */
+export function localMeanTimeCanApply(date: string): boolean {
+  const year = Number(String(date).slice(0, 4));
+  return !(Number.isFinite(year) && year > new Date(LOCAL_MEAN_TIME_ERAS_END_BEFORE).getUTCFullYear());
+}
+
+/**
+ * Whether a birthplace's longitude can change how a wall time on this local
+ * date (YYYY-MM-DD) resolves, through its local mean time or its zone's
+ * pinned history: for dates up to 1970.
+ */
+export function birthplaceTimeCanApply(date: string): boolean {
+  return !(Number(String(date).slice(0, 4)) > 1970);
+}
+
+/**
+ * Loads what resolving a birthplace time on `date` (YYYY-MM-DD) in
+ * `timeZone` can need: for dates up to 1970, the birthplace clock with the
+ * local mean time era table (up to 1953) and the zone's pinned history.
+ * Later dates need nothing. Resolving such a date with a longitude without
+ * them throws rather than guess. A failed download rejects with a
+ * ModuleLoadError, like the calculators' other code downloads, and is not
+ * remembered: the next call tries again. The rejection counts as observed,
+ * so a caller that starts preparing early and stops waiting (the chart
+ * calculator, when its engine fails to load first) raises no unhandled
+ * rejection; a caller that awaits still sees it.
+ */
+export function prepareLocalTime(date: string, timeZone: string): Promise<void> {
+  if (!birthplaceTimeCanApply(date)) return Promise.resolve();
+  if (!birthplaceLoad) {
+    const pending = loadModule(() => import('./birthplace-clock'));
+    birthplaceLoad = pending;
+    void pending.catch(() => {
+      if (birthplaceLoad === pending) birthplaceLoad = null;
+    });
+  }
+  const ready = birthplaceLoad.then((module) => {
+    birthplace = module;
+    return module.prepare(date, timeZone);
+  });
+  void ready.catch(() => {});
+  return ready;
 }
 
 const offsetFormatters = new Map<string, Intl.DateTimeFormat>();
@@ -117,11 +209,19 @@ export function localDateContainsUtc(date: string, utc: Date, timeZone: string):
  * earlier instant with a `dst-fold` flag. Skipped times (clocks sprang
  * forward — no instant matches) shift forward by the gap with a
  * `dst-gap` flag. Sub-minute offsets (pre-standard LMT) add `lmt`.
+ *
+ * Pass the birthplace's longitude whenever it is known: before the zone's
+ * local mean time era ended, it replaces the reference city's mean time with
+ * the birthplace's own, and the change out of that era is a gap or a fold
+ * under the same policy; before 1970, the zone's legal offsets come from the
+ * pinned release rather than the host. With a longitude, await
+ * prepareLocalTime(date, tz) first.
  */
 export function resolveLocalToUtc(
   date: string, // 'YYYY-MM-DD'
   time: string, // 'HH:MM'
-  tz: string
+  tz: string,
+  options: LocalTimeOptions = {},
 ): LocalTimeResolution {
   // Reject before any Date normalization or timezone conversion. An
   // impossible date must not become a different date marked as a DST gap.
@@ -158,7 +258,7 @@ export function resolveLocalToUtc(
     }
   }
 
-  const flags: LocalTimeResolution['flags'] = [];
+  let flags: LocalTimeResolution['flags'] = [];
   let chosen: { utcMs: number; offset: number };
 
   if (matches.length === 1) {
@@ -177,7 +277,27 @@ export function resolveLocalToUtc(
     flags.push('dst-gap');
   }
 
+  let zoneOffset = chosen.offset;
+  let inEra = false;
+  const { longitude } = options;
+  if (typeof longitude === 'number' && Number.isFinite(longitude) && Math.abs(longitude) <= 180
+    && wallMs < BIRTHPLACE_WALL_END) {
+    if (!birthplace) {
+      throw new Error('The birthplace clock is not loaded: await prepareLocalTime(date, timeZone) before resolving.');
+    }
+    const place = birthplace.readBirthplace(tz, wallMs, longitude);
+    if (place) {
+      ({ chosen, flags, inEra } = place);
+      if (place.zoneOffset !== null) zoneOffset = place.zoneOffset;
+    }
+  }
+
   if (Math.abs(chosen.offset % 1) > 1e-9) flags.push('lmt');
 
-  return { utc: new Date(chosen.utcMs), offsetMinutes: chosen.offset, flags };
+  return {
+    utc: new Date(chosen.utcMs),
+    offsetMinutes: chosen.offset,
+    flags,
+    ...(inEra ? { localMeanTime: { longitude: longitude!, zoneOffsetMinutes: zoneOffset } } : {}),
+  };
 }

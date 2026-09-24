@@ -87,7 +87,8 @@ describe('assistant site context', () => {
     const { context } = await generateAssistantContext();
 
     expect(context).toContain('Chart calculation does not send birth fields to a chart API.');
-    expect(context).toContain('optional account sync uploads only the charts a person chooses');
+    expect(context).toContain('optional account sync, which starts when a person signs in, uploads their saved charts');
+    expect(context).not.toContain('only the charts a person chooses');
     expect(context).toContain('The public Guide sends chat messages to OpenAI');
     expect(context).toContain('placements-only chart summary only after the person explicitly chooses “Attach my chart”');
     expect(context).not.toContain('Birth details stay on the device.');
@@ -96,7 +97,7 @@ describe('assistant site context', () => {
     expect(context).toContain('historical coverage and tzdb version depend on that host');
     expect(context).toContain('uses 12:00 local civil time as a reference');
     expect(context).toContain('omits the rising sign, angles, and houses');
-    expect(context).toContain('flags uncertainty if the Moon changes signs during that local date');
+    expect(context).toContain('marks the Moon’s sign as unverified, because the Moon can change sign during that local date');
 
     expect(context).toContain('PAGE INVENTORY — DAILY AND MONTHLY HOROSCOPES');
     expect(context).toContain('Treat “today” as an exact UTC-date claim');

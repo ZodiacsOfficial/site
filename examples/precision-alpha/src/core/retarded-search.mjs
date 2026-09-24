@@ -35,9 +35,11 @@ import { BARYCENTRE_NOT_CENTRE } from './ephemeris.mjs';
 import { buildResult, SUPPORT, EXTERNAL_UNCERTAINTY as OUTSIDE } from './result.mjs';
 import { C_KM_S, targetWeights, observerWeights, stateEnclosure, solveTau, coverage } from './retarded.mjs';
 import { aberrateInterval } from './aberration.mjs';
+import { deflectInterval, DEFLECTION_PROFILE, MIN_ELONGATION_RAD } from './deflection.mjs';
 import { frameMatrixInterval, matApplyI, ttCenturiesInterval, FRAMES, TIME_MODEL } from './frame-of-date.mjs';
 import { sinCos } from './trig.mjs';
 import * as I from './interval.mjs';
+import { enter, leave, charge, setLabel } from './instrument.mjs';
 
 /** Arcseconds to radians, and seconds in a Julian century -- the frame's units. */
 const DAS2R = Math.PI / (180 * 3600);
@@ -156,6 +158,54 @@ export const OF_DATE_CONTRACT = Object.freeze({
   barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
 });
 
+/**
+ * `validated-retarded-aberrated-deflected-of-date`. Rung 5.
+ *
+ * One correction more than the of-date mode: gravitational light bending
+ * by the Sun. Still NOT an apparent place, and the name does not say it
+ * is; `notApplied` lists what remains absent on every result.
+ *
+ * The one structural difference from every mode below it: this one has a
+ * RESTRICTED DOMAIN. Inside five degrees of the Sun it declines to answer,
+ * and a search crossing that region comes back with `excluded` spans, no
+ * completeness claim over the request, and an event list that is a lower
+ * bound rather than a total.
+ */
+export const DEFLECTED_CONTRACT = Object.freeze({
+  operation: 'geometric ecliptic longitude of one body CORRECTED FOR RECEPTION LIGHT-TIME, SOLAR GRAVITATIONAL LIGHT DEFLECTION AND STELLAR ABERRATION, in the ECLIPTIC OF DATE with its origin at the TRUE EQUINOX OF DATE, reaching a given value',
+  frame: OF_DATE_CONTRACT.frame,
+  frameNote: OF_DATE_CONTRACT.frameNote,
+  origin: 'geocentric',
+  timeScale: OF_DATE_CONTRACT.timeScale,
+  timeModel: TIME_MODEL,
+  supportedRange: OF_DATE_CONTRACT.supportedRange,
+  deflectionProfile: DEFLECTION_PROFILE,
+  supportedDomain: `Solar elongation at least ${MIN_ELONGATION_RAD / DEG} degrees, over the WHOLE of any cell the search accepts. The floor is tested as cos(elongation) <= cos(floor) on an enclosure, so it holds at every instant rather than at sampled ones. Inside it the search excludes rather than guesses: see accounting.excluded and accounting.excludedNote. DEFLECTION-PROFILE.md section 7 gives the four boundaries the floor is set against -- they are four different boundaries -- and section 11 what verifying the transformation established.`,
+  order: 'light-time -> deflection -> aberration -> frame. Coordinate direction to natural direction to proper direction to the ecliptic of date, which is the order DEFLECTION-PROFILE.md section 4 fixes and the order ERFA\'s own apparent-place chain uses.',
+  models: `${OF_DATE_CONTRACT.models} DEFLECTION: ERFA eraLd with bm = 1, at FINITE source distance -- q is the real Sun-to-source direction at emission, NOT eraLdsun's q = p distant-star approximation, which for a planet is wrong by up to 1.5554 arcsec at 0.3 degrees of elongation. Pinned to liberfa src/ld.c, and reproduced bit for bit on 358 geometries against that source compiled and run.`,
+  evaluation: OF_DATE_CONTRACT.evaluation,
+  c: C_KM_S,
+  applied: Object.freeze([
+    'reception light-time (Newtonian, one-way, target retarded, observer not)',
+    'solar gravitational light deflection (first order, finite source distance, Sun only)',
+    'stellar (annual) aberration (special-relativistic, observer velocity at reception, geocentric)',
+    'IAU 2006 frame bias and precession, and IAU 2000B nutation in longitude, into the ecliptic of date with the true equinox of date as origin',
+  ]),
+  notApplied: Object.freeze([
+    'gravitational deflection by any body other than the Sun: Jupiter reaches about 0.017 arcsec at its limb and is not modelled here',
+    'the second-order term eraLd itself omits. A property of the MODEL, not of this implementation: measured against an independent ray integration at 2.08e-3 arcsec at 0.3 degrees of elongation, 4.23e-7 at 5 degrees, 4.97e-8 at 10. It is the reason the supported domain stops where it does',
+    'the Klioner solar-potential term inside the aberration, about 0.4 microarcsecond. A DIFFERENT term in a different transformation, and it stays off -- enabling it to match an ERFA comparison would be a silent model change',
+    'Shapiro (relativistic) delay: the light-time here is the Newtonian straight-line one',
+    'topocentric parallax, diurnal aberration and atmospheric refraction: the observer is the geocentre',
+    'any correction beyond the four applied: this is NOT an apparent place and must not be read as one',
+  ]),
+  sources: OF_DATE_CONTRACT.sources,
+  relationToErfa: 'The deflection is eraLd\'s arithmetic exactly -- 1074 of 1074 output components bit-identical to the pinned source compiled and run -- but NOT eraLdsun\'s geometry, which substitutes the observed direction for the Sun-to-source one. The frame rung is as the of-date contract describes it. No ERFA routine computes this combination end to end, and none is claimed to.',
+  comparableTo: 'the frame AND the deflection of an apparent place, with the Shapiro delay, planetary deflection and everything topocentric still missing. NOTHING HERE HAS BEEN COMPARED WITH AN ALMANAC, so no bound on that difference is offered: an earlier version of this field said it "should be well under 0.01 arcsec", which was an expectation dressed as a result, and is false for the Moon in any case -- the topocentric parallax this mode omits reaches about a degree there. What can be said is what is still absent, and the dominant remaining term away from the Sun is whatever the almanac does topocentrically. Near the Sun this mode declines to answer rather than closing any gap.',
+  bodies: RETARDED_CONTRACT.bodies,
+  barycentreNotCentre: BARYCENTRE_NOT_CENTRE,
+});
+
 export const RETARDED_DEFAULTS = Object.freeze({
   /** Subdivision floor, seconds of TDB. Below this a cell stays open. */
   minWidthSec: 1e-4,
@@ -186,7 +236,43 @@ export const RETARDED_DEFAULTS = Object.freeze({
  *
  * Returns null when the conditions cannot be established, with the reason.
  */
-function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null) {
+/**
+ * The deflector geometry a cell hands `deflectInterval`, as one rule in
+ * one place.
+ *
+ * Two things here are easy to get wrong and were, for a while, checkable
+ * nowhere:
+ *
+ * 1. **The epochs differ on purpose.** `e` and `em` come from the Sun at
+ *    RECEPTION, `q` from the Sun at EMISSION. `DEFLECTION-PROFILE.md`
+ *    section 2 measures the simpler reception-for-both at 1.96e-5 arcsec
+ *    against 3.13e-10 for this split, and the split is nearly free once
+ *    the emission window exists.
+ * 2. **`q` is differentiated with respect to RECEPTION time**, so it
+ *    carries the `(1 - dtau/dt)` factor and `e` does not. `deflection.mjs`
+ *    makes that the caller's contract precisely so the chain rule is not
+ *    hidden inside a routine that cannot see the light-time.
+ *
+ * Both were invisible to every search-level test: the enclosure is two
+ * orders of magnitude wider than either error, so a result cannot expose
+ * the difference. Extracting the rule is what makes it testable at all --
+ * `deflected-search.nodetest.mjs` checks it against a finite-difference
+ * reference on an analytic moving-Sun geometry, where both ARE separable.
+ *
+ * `oneMinus` is the `1 - dtau/dt` the light-time block already
+ * established; recomputing it here would be a second place for it to
+ * drift.
+ */
+export function deflectorGeometry(O, R, sunRec, sunEm, oneMinus) {
+  return {
+    eRaw: I.vSub(O.pos, sunRec.pos),
+    eRawDot: I.vSub(O.vel, sunRec.vel),
+    qRaw: I.vSub(R.pos, sunEm.pos),
+    qRawDot: I.vMulI(I.vSub(R.vel, sunEm.vel), oneMinus),
+  };
+}
+
+function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberration = false, ofDate = false, frameProvider = null, deflection = false, sunWeights = null, control = {}) {
   const L = lambdaDeg * DEG;
   const wF = [Math.sin(L), -Math.cos(L) * COS_E, -Math.cos(L) * SIN_E];
   const wG = [Math.cos(L), Math.sin(L) * COS_E, Math.sin(L) * SIN_E];
@@ -205,6 +291,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
   let O;
   let oPoint;
   const mid = (t0 + t1) / 2;
+  const observerToken = enter('observer-enclosure');
   try {
     O = stateEnclosure(eph, observer, t0, t1, spend);
     // A first light-time, solved at the cell's ends, to centre the
@@ -212,11 +299,14 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     // from it.
     oPoint = stateEnclosure(eph, observer, mid, mid, spend).pos.map((x) => (x.lo + x.hi) / 2);
   } catch (error) {
+    leave(observerToken);
     if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
       return { ok: false, retry: true, why: `the observer's records do not cover ${t0} .. ${t1} s TDB` };
     }
     throw error;
   }
+  leave(observerToken);
+  const lightTimeToken = enter('light-time');
   const rough = solveTau(eph, targets, mid, oPoint, 0.5, spend);
   if (rough.leftCoverage) {
     // The point iteration walked off the stored records. Two very
@@ -292,18 +382,23 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     hi: rough.tau + tauSlope * half + rough.errorSec + p.tauPadFloorSec,
   };
 
+  leave(lightTimeToken);
+
   for (let attempt = 0; attempt <= p.maxTauWidenings; attempt += 1) {
     const emitLo = t0 - T.hi;
     const emitHi = t1 - T.lo;
     let R;
+    const targetToken = enter('target-enclosure');
     try {
       R = stateEnclosure(eph, targets, emitLo, emitHi, spend);
     } catch (error) {
+      leave(targetToken);
       if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
         return { ok: false, retry: true, why: `the emission window ${emitLo} .. ${emitHi} s TDB reaches outside the stored records` };
       }
       throw error;
     }
+    leave(targetToken);
 
     // The contraction factor, from the pack's own differentiated series.
     // Not an assumed universal speed ceiling.
@@ -343,9 +438,73 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
     const oneMinus = I.sub(I.iv(1), tauDot);
     const dDot = I.vSub(I.vMulI(R.vel, oneMinus), O.vel);
 
+    // ---------------------------------------------- solar deflection
+    // Between light-time and aberration, which is the order
+    // DEFLECTION-PROFILE.md section 4 fixes: coordinate direction ->
+    // natural direction -> proper direction -> frame.
+    let dIn = D;
+    let dInDot = dDot;
+    let distIn = dist;
+    let deflectionReport = null;
+    if (deflection) {
+      let sunRec;
+      let sunEm;
+      const sunToken = enter('sun-enclosure');
+      try {
+        // The Sun at RECEPTION for e and em, and at EMISSION for q. Two
+        // different epochs on purpose -- the profile's section 2 measures
+        // the simpler reception-for-both at 1.96e-5 arcsec against
+        // 3.13e-10 for this split, and the whole point of the split is
+        // that it is nearly free once the emission window already exists.
+        sunRec = stateEnclosure(eph, sunWeights, t0, t1, spend);
+        sunEm = stateEnclosure(eph, sunWeights, emitLo, emitHi, spend);
+      } catch (error) {
+        leave(sunToken);
+        if (error instanceof PrecisionError && error.code === 'out-of-coverage') {
+          return { ok: false, retry: true, why: `the Sun's records do not cover this cell's reception or emission window: ${error.message}` };
+        }
+        throw error;
+      }
+      leave(sunToken);
+      const deflectToken = enter('deflection');
+      const { eRaw, eRawDot, qRaw, qRawDot } = deflectorGeometry(O, R, sunRec, sunEm, oneMinus);
+      const df = deflectInterval(D, dDot, dist, eRaw, eRawDot, qRaw, qRawDot, control);
+      leave(deflectToken);
+      if (!df.ok) {
+        return {
+          ok: false,
+          retry: df.retry === true,
+          excluded: df.excluded === true,
+          // Carried, not re-derived. Without this the subdivision loop
+          // cannot tell a cell bisecting toward the domain floor from one
+          // bisecting because its enclosures are loose, and the first
+          // measurement made with it said 98.9% `loose-enclosure` and no
+          // `domain-boundary` at all on a window that contains a
+          // conjunction -- which was the flag going missing, not the
+          // geometry.
+          domainStraddle: df.domainStraddle === true,
+          cosElongation: df.cosElongation ?? null,
+          why: df.why,
+        };
+      }
+      // The length is the DEFLECTED one. `d -> D` is a linear map, not a
+      // rescaling, so `dist` does not carry over; see `deflectInterval`.
+      dIn = df.D;
+      dInDot = df.DDot;
+      distIn = df.dist;
+      deflectionReport = {
+        tanDeflection: df.tanDeflection,
+        cosElongation: df.cosElongation,
+        qdqpe: df.qdqpe,
+        limiterThreshold: df.limiterThreshold,
+        emAu: df.emAu,
+      };
+    }
+
     const proj = (w, v) => I.add(I.add(I.scale(v[0], w[0]), I.scale(v[1], w[1])), I.scale(v[2], w[2]));
     const common = {
       ok: true,
+      deflection: deflectionReport,
       tauInterval: T,
       contraction: k,
       emission: [emitLo, emitHi],
@@ -364,7 +523,9 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
       // cell, and the aberrated mode discards every one of them.
       const vc = I.vScale(O.vel, 1 / C_KM_S);
       const vcDot = I.vScale(O.acc, 1 / C_KM_S);
-      const ab = aberrateInterval(D, dDot, dist, vc, vcDot);
+      const abToken = enter('aberration');
+      const ab = aberrateInterval(dIn, dInDot, distIn, vc, vcDot);
+      leave(abToken);
       // `ab.retry` is the transformation's own verdict on whether a
       // narrower cell could help: an enclosure that merely straddles the
       // domain edge can be tightened, an observer above c at every instant
@@ -382,10 +543,12 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
         // freezing R at the cell midpoint would not be an of-date search.
         let frame;
         let clock;
+        const frameToken = enter('frame');
         try {
           frame = frameProvider({ lo: t0, hi: t1 });
           clock = frame.clock;
         } catch (error) {
+          leave(frameToken);
           if (error instanceof PrecisionError) {
             // An angle too large for the argument reduction does not
             // shrink when the cell does: it is set by the epoch, not the
@@ -399,6 +562,7 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
           }
           throw error;
         }
+        leave(frameToken);
         const Q = matApplyI(frame.R, ab.P);
         const QDot = [0, 1, 2].map((i) => I.add(
           I.mul(I.add(I.add(I.mul(frame.Rdot[i][0], ab.P[0]), I.mul(frame.Rdot[i][1], ab.P[1])), I.mul(frame.Rdot[i][2], ab.P[2])), clock.dtdTdb),
@@ -488,10 +652,105 @@ function retardedCell(eph, targets, observer, lambdaDeg, t0, t1, spend, p, aberr
  * @param {object} spec {body, targetDeg, fromTdbSec, toTdbSec, signal?, ...tuning}
  * @param {{aberration: boolean, mode: string, contract: object, kind: string}} shape
  */
+/** How many cells of a run are examined for a reason, and how many reasons are kept. */
+const REASON_SAMPLE_CELLS = 200;
+const REASON_LIMIT = 4;
+
+/**
+ * Adjacent spans, joined.
+ *
+ * Subdivision produces cells that share endpoints exactly, so a region the
+ * search cannot close comes back as a run of touching slivers rather than
+ * as one span. Measured on a conjunction crossing: 1093 excluded cells and
+ * 145 unresolved ones, which are 1 excluded run and 2 unresolved runs -- a
+ * list of 1238 entries describing three intervals.
+ *
+ * This changes the PRESENTATION and not the set: the union is identical,
+ * and `cells` on each run keeps the count that was merged away.
+ *
+ * ## Reasons are SAMPLED, and the reason they are
+ *
+ * Most refusal messages embed the cell's own numbers -- an emission window,
+ * a speed bound, a pair of endpoints -- so over a long run nearly every
+ * cell carries a distinct string. A first version collected them all,
+ * deduplicating with `Array.prototype.includes`, which is quadratic in the
+ * number of cells in a run. On the case that found it, one released test
+ * file went from 9.9 seconds to 331. Nothing was wrong with the answers;
+ * the cost was entirely in assembling a message.
+ *
+ * So: at most `REASON_LIMIT` distinct reasons, taken from the first
+ * `REASON_SAMPLE_CELLS` cells of the run, and the result says that is what
+ * they are. A reader who needs every one has `cells` and can narrow the
+ * window.
+ */
+export function mergeSpans(list) {
+  const sorted = [...list].sort((x, y) => x.fromTdbSec - y.fromTdbSec);
+  const runs = [];
+  for (const span of sorted) {
+    const last = runs[runs.length - 1];
+    if (last && span.fromTdbSec <= last.toTdbSec) {
+      last.toTdbSec = Math.max(last.toTdbSec, span.toTdbSec);
+      last.cells += 1;
+      if (last.cells <= REASON_SAMPLE_CELLS && !last.seen.has(span.why)) {
+        last.seen.add(span.why);
+        if (last.whys.length < REASON_LIMIT) last.whys.push(span.why);
+      }
+    } else {
+      runs.push({
+        fromTdbSec: span.fromTdbSec,
+        toTdbSec: span.toTdbSec,
+        cells: 1,
+        whys: [span.why],
+        seen: new Set([span.why]),
+      });
+    }
+  }
+  return runs.map((r) => ({
+    fromTtDays: r.fromTdbSec / DAY,
+    toTtDays: r.toTdbSec / DAY,
+    fromTdbSec: r.fromTdbSec,
+    toTdbSec: r.toTdbSec,
+    cells: r.cells,
+    why: r.whys.length === 1
+      ? r.whys[0]
+      : `${r.whys.length}${r.seen.size > r.whys.length ? `+ of ${r.seen.size}` : ''} reasons, sampled from the first ${Math.min(r.cells, REASON_SAMPLE_CELLS)} of ${r.cells} adjacent cells: ${r.whys.join(' | ')}`,
+    reasonsAreSampled: r.cells > 1,
+  }));
+}
+
+/**
+ * What was actually DECIDED: [a, b] with the gap spans removed and the
+ * remainder merged.
+ *
+ * Only meaningful on a finished run. A run stopped by the budget or a
+ * cancellation still has cells on its stack that were never visited, and
+ * those are neither decided nor recorded anywhere -- so the caller gets
+ * `null` rather than a list that would read as "everything else was
+ * covered". That is the same overclaim `processedTdbSec` already avoids by
+ * going empty, stated once here instead of twice.
+ */
+function decidedSpans(a, b, gaps) {
+  const sorted = gaps.map((g) => [g.fromTdbSec, g.toTdbSec]).sort((x, y) => x[0] - y[0]);
+  const merged = [];
+  for (const [lo, hi] of sorted) {
+    const last = merged[merged.length - 1];
+    if (last && lo <= last[1]) last[1] = Math.max(last[1], hi);
+    else merged.push([lo, hi]);
+  }
+  const out = [];
+  let cursor = a;
+  for (const [lo, hi] of merged) {
+    if (lo > cursor) out.push([cursor, lo]);
+    cursor = Math.max(cursor, hi);
+  }
+  if (cursor < b) out.push([cursor, b]);
+  return out;
+}
+
 function runSearch(eph, spec, shape) {
   const {
-    aberration, ofDate = false, mode, contract, kind,
-    frameProvider = iauFrameProvider,
+    aberration, ofDate = false, deflection = false, mode, contract, kind,
+    frameProvider = iauFrameProvider, control = {},
   } = shape;
   const { body, targetDeg, fromTdbSec, toTdbSec, signal = null, ...tuning } = spec;
   for (const k of Object.keys(tuning)) {
@@ -510,16 +769,73 @@ function runSearch(eph, spec, shape) {
   const b = toTdbSec;
   const targets = targetWeights(eph, body);
   const observer = observerWeights(eph);
+  // Resolved once. A pack without a Sun cannot support the deflected mode
+  // at all, and finding that out on the first cell rather than per cell is
+  // the difference between one typed refusal and one per subdivision.
+  const sunWeights = deflection ? targetWeights(eph, 'Sun') : null;
+  /**
+   * The Sun does not deflect its own light.
+   *
+   * `DEFLECTION-PROFILE.md` section 2 says so and `reduce.mjs` already
+   * skips it; this is where the search does. It has to be decided from the
+   * BODY rather than per cell, because a cell cannot tell the two cases
+   * apart: when the target is the Sun, `q = R - S` is a difference of the
+   * same enclosure with itself, which interval arithmetic gives as
+   * `[-w, +w]` and not as zero. Its lower bound on |q| is exactly 0 at
+   * every width, so `deflectInterval` refuses and asks to be subdivided,
+   * and the subdivision never converges. Measured before this skip
+   * existed: the Sun over a 300-day window opened 153,842 cells in 76
+   * seconds and returned nothing, where the of-date mode answers in 75 ms.
+   *
+   * A narrower cell CAN resolve a different body passing near the Sun's
+   * centre, so the per-cell refusal stays retryable. Only the structural
+   * case is decided here.
+   */
+  const deflectorIsTarget = deflection && body === 'Sun';
+  const applyDeflection = deflection && !deflectorIsTarget;
 
   let evaluations = 0;
   const spend = () => {
     if (signal && signal.aborted) throw new PrecisionError('cancelled', 'the search was cancelled', { evaluations });
     evaluations += 1;
+    // The same unit the budget counts, attributed to the phase in force.
+    // One null check when no sink is installed.
+    charge('evaluations');
     if (evaluations > p.maxEvaluations) fail('budget-exhausted', `the evaluation budget of ${p.maxEvaluations} was spent`, { evaluations });
   };
 
   const events = [];
   const unresolved = [];
+  /**
+   * Spans the MODE declines to answer for, as opposed to spans it failed
+   * to decide. Only the deflected mode produces any: its supported domain
+   * has an elongation floor, and a cell wholly inside it is outside the
+   * profile, not merely hard. Kept apart from `unresolved` because the
+   * two call for different things -- one is a reason to subdivide or
+   * raise the budget, the other is a reason to stop -- and because a
+   * result that merged them would report a domain refusal as a numerical
+   * shortfall.
+   */
+  const excluded = [];
+  /**
+   * File a cell the enclosures could not close, into the RIGHT list.
+   *
+   * One helper because there are four places that do this and the
+   * distinction is the one the deflected contract rests on: an excluded
+   * span is a span this profile has no answer for at any resolution, an
+   * unresolved one is a span this run did not settle. Three of the four
+   * sites used to push straight into `unresolved` without looking at
+   * `excluded`, so a domain refusal arriving through the bracket or the
+   * endpoint evaluations would have been filed as a numerical shortfall,
+   * carrying "no subdivision changes that" inside `accounting.unresolved`.
+   *
+   * Not reachable on any fixture here -- the enclosing cell has already
+   * passed the domain test over a superset of the bracket -- which is
+   * exactly why it is worth closing rather than leaving to a comment.
+   */
+  const file = (cell, lo, hi) => {
+    (cell.excluded === true ? excluded : unresolved).push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
+  };
   let cells = 0;
   let status = 'finished';
   let reason = null;
@@ -527,6 +843,11 @@ function runSearch(eph, spec, shape) {
   let widestTauSec = 0;
   let widestEmissionSec = 0;
   let worstObserverSpeedOverC = 0;
+  /** The largest deflection any accepted cell admitted, and where the geometry came closest to the floor. */
+  let widestDeflectionArcsec = 0;
+  let maxCosElongation = -Infinity;
+  /** How far the limiter was from firing: min over cells of q.(q+e) / dlim. Above 1 everywhere, or the cell was refused. */
+  let tightestLimiterMargin = Infinity;
   /**
    * The widest the frame's own nutation-in-longitude enclosure grew on
    * any accepted cell, arcseconds. A frame enclosure is only useful while
@@ -566,14 +887,43 @@ function runSearch(eph, spec, shape) {
    * would be an upper bound over less of the interval than its own note
    * claims.
    */
+  /**
+   * Cell evaluations, and how many had the deflection applied.
+   *
+   * `retardedCell` is reached from three places -- the subdivision loop,
+   * the pointwise evaluator the bisection uses, and the bracket enclosure
+   * -- and all three run through here. Two of them were once left without
+   * the deflection arguments, so the roots were isolated on a different
+   * function from the one the cells were proved monotone on. Counting both
+   * sides turns that from something a reader has to notice into something
+   * the result states.
+   */
+  let cellEvaluations = 0;
+  let deflectedCellEvaluations = 0;
   const noteObserverSpeed = (c) => {
+    if (c && c.ok) {
+      cellEvaluations += 1;
+      if (c.deflection) deflectedCellEvaluations += 1;
+    }
     if (c && c.ok && c.observerSpeedOverC) {
       worstObserverSpeedOverC = Math.max(worstObserverSpeedOverC, c.observerSpeedOverC.hi);
     }
   };
 
+  // Every evaluation of the root function goes through here, and it must
+  // be the SAME function the cells were proved monotone on. It was not:
+  // this and the bracket call below were left without the deflection
+  // arguments, so the exclusion and monotone tests ran on the deflected
+  // direction while the bisection that actually located each root ran on
+  // the undeflected one. The search reported the of-date times, bit for
+  // bit, under the deflected mode's name -- and worse than a wrong time,
+  // a bracket found on one function inside a cell proved monotone for
+  // another is not the enclosure the completeness claim rests on.
+  //
+  // The reason it was invisible: the events looked exactly right, because
+  // they were exactly the events of a mode that works.
   const at = (t) => {
-    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate, frameProvider);
+    const c = retardedCell(eph, targets, observer, lambda, t, t, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
     noteObserverSpeed(c);
     return c;
   };
@@ -605,8 +955,10 @@ function runSearch(eph, spec, shape) {
   try {
     const stack = seeds;
     while (stack.length) {
-      const [lo, hi] = stack.pop();
+      const [lo, hi, why] = stack.pop();
+      setLabel(why ?? 'seed');
       cells += 1;
+      charge('cells');
       if (cells > p.maxCells) fail('budget-exhausted', `the retarded search passed ${p.maxCells} cells`, { cells });
       const m = (lo + hi) / 2;
       // NOT (hi - lo) / 2. `hi - lo` is exact by Sterbenz but `lo + hi`
@@ -620,19 +972,34 @@ function runSearch(eph, spec, shape) {
       // Taking the larger of the two actual distances is exact and free.
       const w = Math.max(hi - m, m - lo);
 
-      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate, frameProvider);
+      const cell = retardedCell(eph, targets, observer, lambda, lo, hi, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
       if (!cell.ok) {
         // A cell too wide for its own enclosures is a cell to split, not
         // a cell to give up on -- down to the enclosure floor, past which
         // the failure is about the geometry rather than the width.
-        if (cell.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
-        unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: cell.why });
+        if (cell.retry && hi - lo > p.enclosureFloorSec) {
+          // The one split whose reason the partition work is about: a cell
+          // whose elongation enclosure straddles the floor is bisecting
+          // toward a DOMAIN boundary, and a cell whose enclosures are
+          // merely loose is bisecting toward resolution. They cost the
+          // same and they are not the same problem, so the stack carries
+          // which it is.
+          const tag = cell.domainStraddle === true ? 'domain-boundary' : 'loose-enclosure';
+          stack.push([m, hi, tag], [lo, m, tag]);
+          continue;
+        }
+        file(cell, lo, hi);
         continue;
       }
       worstContraction = Math.max(worstContraction, cell.contraction);
       widestTauSec = Math.max(widestTauSec, cell.tauInterval.hi - cell.tauInterval.lo);
       widestEmissionSec = Math.max(widestEmissionSec, cell.emission[1] - cell.emission[0]);
       noteObserverSpeed(cell);
+      if (cell.deflection) {
+        widestDeflectionArcsec = Math.max(widestDeflectionArcsec, cell.deflection.tanDeflection.hi * (180 * 3600) / Math.PI);
+        maxCosElongation = Math.max(maxCosElongation, cell.deflection.cosElongation.hi);
+        tightestLimiterMargin = Math.min(tightestLimiterMargin, cell.deflection.qdqpe.lo / cell.deflection.limiterThreshold);
+      }
       if (cell.frameAngles && cell.frameAngles.dpsi) {
         const span = cell.frameAngles.dpsi.hi - cell.frameAngles.dpsi.lo;
         if (span > widestFrameSpan) { widestFrameSpan = span; widestFrameSpanCellSec = hi - lo; }
@@ -651,8 +1018,12 @@ function runSearch(eph, spec, shape) {
       // 1. Exclusion. The midpoint enclosure already carries every error.
       const fm = at(m);
       if (!fm.ok) {
-        if (fm.retry && hi - lo > p.enclosureFloorSec) { stack.push([m, hi], [lo, m]); continue; }
-        unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: fm.why });
+        if (fm.retry && hi - lo > p.enclosureFloorSec) {
+          const tag = fm.domainStraddle === true ? 'domain-boundary' : 'loose-enclosure';
+          stack.push([m, hi, tag], [lo, m, tag]);
+          continue;
+        }
+        file(fm, lo, hi);
         continue;
       }
       if (I.mig(fm.f) > cell.M1 * w) continue;
@@ -684,7 +1055,7 @@ function runSearch(eph, spec, shape) {
       if (monotone) {
         const flo = at(lo);
         const fhi = at(hi);
-        if (!flo.ok || !fhi.ok) { unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: (flo.ok ? fhi : flo).why }); continue; }
+        if (!flo.ok || !fhi.ok) { file(flo.ok ? fhi : flo, lo, hi); continue; }
         const sgn = (x) => (x.lo > 0 ? 1 : x.hi < 0 ? -1 : 0);
         const sLo = sgn(flo.f);
         const sHi = sgn(fhi.f);
@@ -707,9 +1078,9 @@ function runSearch(eph, spec, shape) {
           if (s === sa) { a2 = mm; sa = s; } else b2 = mm;
         }
         // The half-plane, with its own enclosure over the bracket.
-        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider);
+        const br = retardedCell(eph, targets, observer, lambda, a2, b2, spend, p, aberration, ofDate, frameProvider, applyDeflection, sunWeights, control);
         noteObserverSpeed(br);
-        if (!br.ok) { unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: br.why }); continue; }
+        if (!br.ok) { file(br, a2, b2); continue; }
         if (br.g.lo <= 0) {
           if (br.g.hi < 0) continue;                     // the antipode, not the requested direction
           unresolved.push({ fromTdbSec: a2, toTdbSec: b2, why: 'the half-plane projection could not be shown non-zero over this bracket, so the direction is not determined here' });
@@ -743,7 +1114,8 @@ function runSearch(eph, spec, shape) {
         unresolved.push({ fromTdbSec: lo, toTdbSec: hi, why: 'neither the exclusion nor the monotone test closed this cell at the subdivision floor' });
         continue;
       }
-      stack.push([m, hi], [lo, m]);
+      // Neither test closed it: a resolution question, not a domain one.
+      stack.push([m, hi, 'not-yet-monotone'], [lo, m, 'not-yet-monotone']);
     }
   } catch (error) {
     if (error instanceof PrecisionError && (error.code === 'budget-exhausted' || error.code === 'cancelled')) {
@@ -753,17 +1125,57 @@ function runSearch(eph, spec, shape) {
   }
 
   events.sort((x, y) => x.tdbSec - y.tdbSec);
-  const accounted = status === 'finished' && unresolved.length === 0;
+  excluded.sort((x, y) => x.fromTdbSec - y.fromTdbSec);
+  // An excluded span leaves the request partly uncovered just as surely as
+  // an unresolved one. `buildResult`'s invariant 8 enforces the same thing
+  // structurally, so this and that cannot drift apart silently.
+  const accounted = status === 'finished' && unresolved.length === 0 && excluded.length === 0;
+  // Computed once. Both the span list and the fraction need it, and on a
+  // run with many open cells the sort is not free.
+  const decided = status === 'finished' ? decidedSpans(a, b, [...unresolved, ...excluded]) : null;
+  const excludedRuns = mergeSpans(excluded);
 
   // One noun for the thing the search is complete ABOUT, so no sentence
   // below can say "light-time-corrected" while the aberrated mode is
   // running. The earlier contract defect in this package was exactly that:
   // a description left behind when the quantity moved.
-  const corrected = ofDate
+  const corrected = applyDeflection
+    ? 'light-time-, solar-deflection- and aberration-corrected, in the ecliptic of date with the true equinox of date as origin,'
+    : ofDate
     ? 'light-time- and aberration-corrected, in the ecliptic of date with the true equinox of date as origin,'
     : aberration
       ? 'light-time- and aberration-corrected'
       : 'light-time-corrected';
+
+  /**
+   * The same rule applied to the CONTRACT, which `request` spreads.
+   *
+   * `corrected` above keeps `completeness.statement` honest on the
+   * deflector-as-target path, and for one release `request` did not
+   * follow: a Sun result carried `operation: '... CORRECTED FOR RECEPTION
+   * LIGHT-TIME, SOLAR GRAVITATIONAL LIGHT DEFLECTION AND STELLAR
+   * ABERRATION ...'` and `applied[1]: 'solar gravitational light
+   * deflection'` beside `diagnostics.deflection.appliedToThisBody: false`
+   * and a widest deflection of exactly zero. Two sentences about one
+   * quantity, and the wrong one is the sentence `experimental.mjs` tells
+   * consumers to read before comparing anything with an almanac.
+   *
+   * What the Sun path actually computes IS the of-date rung, so it
+   * carries the of-date rung's description. The deflection metadata
+   * stays: a caller needs to know which mode answered, and
+   * `deflectionNotApplied` says in one field why the description is the
+   * rung below the mode's name.
+   */
+  const effectiveContract = deflectorIsTarget
+    ? {
+      ...contract,
+      operation: OF_DATE_CONTRACT.operation,
+      applied: OF_DATE_CONTRACT.applied,
+      notApplied: OF_DATE_CONTRACT.notApplied,
+      comparableTo: OF_DATE_CONTRACT.comparableTo,
+      deflectionNotApplied: 'the target IS the deflector, so no deflection was applied and this contract describes the of-date rung. diagnostics.deflection.notAppliedBecause has the reason.',
+    }
+    : contract;
 
   return buildResult({
     mode,
@@ -773,7 +1185,7 @@ function runSearch(eph, spec, shape) {
       targetDeg,
       normalisedTargetDeg: lambda,
       isSystemBarycentre: BARYCENTRE_NOT_CENTRE.includes(body),
-      ...contract,
+      ...effectiveContract,
     },
     events,
     interval: {
@@ -783,6 +1195,15 @@ function runSearch(eph, spec, shape) {
       processedTdbSec: accounted ? [[a, b]] : [],
       processedSpanDays: accounted ? (b - a) / DAY : 0,
       processedFraction: accounted ? 1 : 0,
+      // What was decided, span by span, rather than one Boolean about the
+      // whole window. For a mode with a restricted domain this is the
+      // useful field: the request can be mostly decided and partly
+      // declined, and `processedTdbSec` going empty says only that it was
+      // not all decided, not which parts were.
+      decidedTdbSec: decided,
+      decidedFraction: decided === null
+        ? null
+        : decided.reduce((acc, [lo, hi]) => acc + (hi - lo), 0) / (b - a),
       cells,
       subdivisionFloorSec: p.minWidthSec,
       units: 'TDB seconds past J2000, in and out',
@@ -797,21 +1218,23 @@ function runSearch(eph, spec, shape) {
     },
     accounting: {
       allIntervalsAccountedFor: accounted,
-      unresolved: unresolved.map((u) => ({
-        fromTtDays: u.fromTdbSec / DAY,
-        toTtDays: u.toTdbSec / DAY,
-        fromTdbSec: u.fromTdbSec,
-        toTdbSec: u.toTdbSec,
-        why: u.why,
-      })),
+      unresolved: mergeSpans(unresolved),
+      unresolvedCells: unresolved.length,
+      excluded: excludedRuns,
+      excludedCells: excluded.length,
+      excludedNote: deflection
+        ? `Spans this profile DECLINES to answer for, not spans it failed to decide. ${DEFLECTION_PROFILE.id} supports solar elongations of at least ${MIN_ELONGATION_RAD / DEG} degrees; inside that floor the first-order deflection model's own omitted second-order term grows past what the correction is worth, the limiter threshold and the solar disc are both nearby, and a finite answer there is not an observable direction. No subdivision and no budget reaches them. Any crossing inside an excluded span is neither found nor ruled out, so the event list is NOT exhaustive over the requested window -- only over the decided spans.`
+        : 'this mode has no restricted domain, so nothing is ever excluded',
       note: accounted
-        ? `every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction${aberration ? ', with the observer-motion transformation applied over the whole cell rather than at sampled instants' : ''}`
-        : 'at least one cell could not be closed, or its light-time interval could not be established',
+        ? `every cell left by the exclusion test or the monotone test, both from enclosures that follow from bounds true of the stored polynomial and a verified light-time contraction${aberration ? ', with the observer-motion transformation applied over the whole cell rather than at sampled instants' : ''}${applyDeflection ? ', and the solar deflection applied over the whole cell with the limiter proved inactive on each' : ''}`
+        : `at least one cell could not be closed, its light-time interval could not be established${excluded.length > 0 ? `, or it fell inside this profile's supported-domain floor (${excludedRuns.length} span${excludedRuns.length === 1 ? '' : 's'})` : ''}`,
     },
     completeness: {
       established: accounted,
       support: accounted ? SUPPORT.proven : SUPPORT.none,
-      statement: accounted
+      statement: !accounted && excluded.length > 0
+        ? `Nothing about completeness over the requested interval: ${excludedRuns.length} span${excludedRuns.length === 1 ? '' : 's'} fell inside this profile's supported-domain floor and were not examined. The events listed were isolated on the decided spans and are a lower bound over the request, not a total.`
+        : accounted
         ? `Every crossing of the requested longitude by the ${corrected} direction, for the function this pack defines, over the requested interval. The light-time is a verified contraction, not an iteration that stopped changing.${aberration ? ' The aberration is applied to an enclosure of the direction over each whole cell, so no crossing can hide between samples of it.' : ''}`
         : 'Nothing about completeness was established.',
       conditionalOn: [],
@@ -872,6 +1295,41 @@ function runSearch(eph, spec, shape) {
           },
         }
         : {}),
+      ...(deflection
+        ? {
+          /**
+           * Kept apart for the same reason the time-scale sources are.
+           * The first shrinks if a caller spends more; the second and
+           * third do not move without changing the declared model; the
+           * fourth is not bounded here at all. Summing them would hide
+           * which is which.
+           */
+          deflection: {
+            implementationNumerical: {
+              bounded: true,
+              widestDeflectionArcsec,
+              tightestLimiterMarginRatio: Number.isFinite(tightestLimiterMargin) ? tightestLimiterMargin : null,
+              what: 'the enclosure of the deflection over a cell, and how far q.(q+e) stayed above the limiter threshold. A ratio at or below 1 would mean the clamp could not be shown inactive, and such a cell is refused rather than differentiated through.',
+            },
+            modelOmission: {
+              bounded: true,
+              secondOrderArcsecAt5Deg: 4.23e-7,
+              secondOrderArcsecAt10Deg: 4.97e-8,
+              what: 'the second-order term eraLd itself omits, measured against an independent ray integration. A property of the MODEL, not of this code: tightening the intervals cannot tighten it, and it is the reason the supported domain stops at five degrees.',
+            },
+            deflectorSet: {
+              bounded: true,
+              deflectors: DEFLECTION_PROFILE.deflectors,
+              what: 'only the Sun deflects here. Jupiter reaches about 0.017 arcsec at its own limb and is not modelled; neither is any other body.',
+            },
+            externalPhysical: {
+              bounded: false,
+              what: 'that a first-order Schwarzschild deflection by a single body represents what a telescope would see, and that the pack\'s positions are the ones the real bodies had',
+              note: 'outside this package entirely; stated, never bounded here',
+            },
+          },
+        }
+        : {}),
       ...OUTSIDE,
     },
     diagnostics: {
@@ -908,7 +1366,54 @@ function runSearch(eph, spec, shape) {
           },
         }
         : {}),
-      notApplied: contract.notApplied,
+      ...(deflection
+        ? {
+          deflection: {
+            profile: DEFLECTION_PROFILE.id,
+            form: DEFLECTION_PROFILE.form,
+            epochs: DEFLECTION_PROFILE.epochs,
+            limiter: DEFLECTION_PROFILE.limiter,
+            order: contract.order,
+            supportedDomain: contract.supportedDomain,
+            minElongationDeg: MIN_ELONGATION_RAD / DEG,
+            // An ENCLOSURE's upper bound over the cells of this run, not a
+            // value at an instant, and it can exceed the largest deflection
+            // the domain actually admits: 0.094847 arcsec from the closed
+            // form against 0.161 reported on a case whose cells reach the
+            // floor, where `e x q` is closest to cancelling and the
+            // enclosure is therefore loosest. Named here because the field
+            // reads like a measurement and is not one.
+            widestDeflectionArcsec,
+            widestDeflectionIsAnEnclosureUpperBound: true,
+            // The domain verdict as the code actually takes it: a cosine,
+            // from `sinCos` and four arithmetic operations. Comparable
+            // between engines, which the degrees below are not.
+            closestElongationCos: Number.isFinite(maxCosElongation) ? maxCosElongation : null,
+            // Reporting only, and NOT comparable across engines:
+            // `Math.acos` is implementation-defined in ECMAScript. The
+            // DOMAIN test is the cosine above, which needs no inverse
+            // trigonometry; this is the same number in the unit a reader
+            // thinks in.
+            closestElongationDeg: Number.isFinite(maxCosElongation)
+              ? (Math.acos(Math.min(1, Math.max(-1, maxCosElongation))) * 180) / Math.PI
+              : null,
+            closestElongationIsAReport: true,
+            tightestLimiterMarginRatio: Number.isFinite(tightestLimiterMargin) ? tightestLimiterMargin : null,
+            appliedToThisBody: applyDeflection,
+            control: Object.keys(control).length === 0 ? null : { ...control },
+            notAppliedBecause: deflectorIsTarget
+              ? 'the target IS the deflector: the Sun does not deflect its own light, and the formula is degenerate there. DEFLECTION-PROFILE.md section 2. This result is the of-date one; the mode name is kept so the ladder stays comparable, and this field is how a reader tells.'
+              : null,
+            lengthRecomputedAfterDeflection: true,
+            cellEvaluations,
+            deflectedCellEvaluations,
+            everyCellEvaluationDeflected: cellEvaluations === deflectedCellEvaluations,
+            excludedSpans: excludedRuns.length,
+            excludedCells: excluded.length,
+          },
+        }
+        : {}),
+      notApplied: effectiveContract.notApplied,
     },
   });
 }
@@ -1001,5 +1506,91 @@ export function searchOfDateLongitude(eph, spec = {}) {
     mode: 'validated-retarded-aberrated-of-date',
     contract: OF_DATE_CONTRACT,
     kind: 'retarded-aberrated-of-date-longitude',
+  });
+}
+
+/**
+ * `validated-retarded-aberrated-deflected-of-date`. Light-time, SOLAR
+ * DEFLECTION, the observer's motion, and the date-dependent frame.
+ *
+ * The first mode in this package with a restricted domain. Read
+ * `accounting.excluded` before reading `events`: a run that crossed the
+ * five-degree floor returns a list that is a lower bound over the
+ * requested window, not a total, and `completeness.established` is false
+ * to say so. `interval.decidedTdbSec` gives the spans the list IS
+ * exhaustive over.
+ *
+ * Requires a pack containing the Sun. Without one this refuses with
+ * `unknown-body` on the first cell rather than per cell.
+ */
+export function searchDeflectedLongitude(eph, spec = {}) {
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    deflection: true,
+    mode: 'validated-retarded-aberrated-deflected-of-date',
+    contract: DEFLECTED_CONTRACT,
+    kind: 'retarded-aberrated-deflected-of-date-longitude',
+  });
+}
+
+/**
+ * The deflected search with the profile's two constants overridden.
+ *
+ * Deliberately NOT re-exported from `experimental.mjs`, for the same
+ * reason `searchOfDateLongitudeWithFrame` is not: a consumer that could
+ * set `srs` could make the mode report a deflection it did not apply while
+ * the result still carried the deflected mode's name. It exists for the
+ * CONTROL cases of `DEFLECTION-EVALUATION.md` section 5 -- zero deflecting
+ * mass, and the distant-source approximation -- and it is the same code
+ * path the real mode takes, with the override as the only difference.
+ * Every result says what it was given, in
+ * `diagnostics.deflection.control`.
+ */
+/**
+ * The deflected search over a span whose supported-domain membership the
+ * CALLER has already proved.
+ *
+ * Internal. Not exported from `experimental.mjs`, not reachable from any
+ * public entry point, and sound only when the caller really has the proof
+ * -- see `domainProvedByCaller` in `deflection.mjs` for what it skips and
+ * what it does not.
+ */
+export function searchDeflectedLongitudeOnProvedDomain(eph, spec) {
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    deflection: true,
+    control: { domainProvedByCaller: true },
+    mode: 'validated-retarded-aberrated-deflected-of-date',
+    contract: DEFLECTED_CONTRACT,
+    kind: 'retarded-aberrated-deflected-of-date-longitude',
+  });
+}
+
+export function searchDeflectedLongitudeWithControl(eph, spec, control) {
+  if (control === null || typeof control !== 'object') {
+    fail('unsupported-option', 'a deflection control must be an object');
+  }
+  for (const k of Object.keys(control)) {
+    // `domainProvedByCaller` is deliberately NOT here. It disables the
+    // supported-domain gate, which is only sound with a proof in hand,
+    // and this entry point cannot check for one. The partitioned search
+    // sets it internally, having just produced that proof.
+    if (!['srs', 'distantSource'].includes(k)) {
+      fail('unsupported-option', `unknown deflection control ${k}`);
+    }
+  }
+  if ('srs' in control && !(Number.isFinite(control.srs) && control.srs >= 0)) {
+    fail('unsupported-option', 'srs must be a finite number at or above zero');
+  }
+  return runSearch(eph, spec, {
+    aberration: true,
+    ofDate: true,
+    deflection: true,
+    control,
+    mode: 'validated-retarded-aberrated-deflected-of-date',
+    contract: DEFLECTED_CONTRACT,
+    kind: 'retarded-aberrated-deflected-of-date-longitude',
   });
 }

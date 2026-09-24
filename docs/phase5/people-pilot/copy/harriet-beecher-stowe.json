@@ -6,7 +6,7 @@
   "displayName": "Harriet Beecher Stowe",
   "identity": "Novelist · United States · 1811–1896",
   "title": "Harriet Beecher Stowe's birth chart",
-  "metaDescription": "Harriet Beecher Stowe's chart, computed from a sourced birth date: Sun at 22.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Harriet Beecher Stowe's chart, computed from a sourced birth date: Sun at 22.6° Gemini. Birth time unknown, so no houses or rising sign.",
   "lede": "The chart's headline is an opposition: the Sun and Saturn within 0.8°, identity wired to structure. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
   "ledeFact": "aspect:Sun:Saturn:opposition",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:22.66",
+        "sun-degree:22.65",
         "decan:gemini:third"
       ],
-      "text": "Measured rather than labelled, the Sun holds 22.7° Gemini: the third decan, whose classical sub-ruler is Saturn. An air sign, read here in its third face."
+      "text": "Measured rather than labelled, the Sun holds 22.6° Gemini: the third decan, whose classical sub-ruler is Saturn. An air sign, read here in its third face."
     },
     {
       "key": "personal",
@@ -90,7 +90,7 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Saturn:opposition",
-    "sun-degree:22.66",
+    "sun-degree:22.65",
     "decan:gemini:third",
     "personal:Mercury:Gemini:5.4°",
     "personal:Venus:Taurus:21.5°",

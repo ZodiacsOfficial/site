@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Shanghai",
     "civilTime": "12:00",
-    "utcInstant": "1881-09-25T03:54:17.000Z",
-    "utcOffsetMinutesAtBirth": 485.7167,
-    "civilDayStartUtc": "1881-09-24T15:54:17.000Z",
-    "civilDayEndUtc": "1881-09-25T15:54:17.000Z",
+    "utcInstant": "1881-09-25T03:57:40.000Z",
+    "utcOffsetMinutesAtBirth": 482.3333,
+    "civilDayStartUtc": "1881-09-24T15:57:40.000Z",
+    "civilDayEndUtc": "1881-09-25T15:57:40.000Z",
     "latitude": 30,
     "longitude": 120.58333333333,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 21.52,
+    "degree": 21.55,
     "uncertain": false,
     "signAtCivilDayStart": "libra",
     "signAtCivilDayEnd": "libra"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 2.05,
-    "degreesToNextBoundaryAtWindowEnd": 26.9685
+    "degreesInsideAtWindowStart": 1.7213,
+    "degreesToNextBoundaryAtWindowEnd": 27.2973
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.981,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 21.52,
+      "degree": 21.55,
       "retrograde": false,
-      "speedPerDay": 12.7211,
+      "speedPerDay": 12.7216,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Libra",
       "degree": 20.33,
       "retrograde": false,
-      "speedPerDay": 1.4956,
+      "speedPerDay": 1.4955,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 27.04,
+      "degree": 27.05,
       "retrograde": false,
       "speedPerDay": 1.1963,
       "dignity": null,
@@ -108,7 +108,7 @@
       "body": "Mars",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 0.42,
+      "degree": 0.43,
       "retrograde": false,
       "speedPerDay": 0.4839,
       "dignity": "fall",
@@ -190,7 +190,7 @@
       "a": "Moon",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 1.19,
+      "orb": 1.22,
       "applying": false
     },
     {

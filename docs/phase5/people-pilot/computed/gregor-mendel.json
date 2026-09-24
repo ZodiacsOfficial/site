@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Prague",
     "civilTime": "12:00",
-    "utcInstant": "1822-07-20T11:02:16.000Z",
-    "utcOffsetMinutesAtBirth": 57.7333,
-    "civilDayStartUtc": "1822-07-19T23:02:16.000Z",
-    "civilDayEndUtc": "1822-07-20T23:02:16.000Z",
+    "utcInstant": "1822-07-20T10:48:40.000Z",
+    "utcOffsetMinutesAtBirth": 71.3333,
+    "civilDayStartUtc": "1822-07-19T22:48:40.000Z",
+    "civilDayEndUtc": "1822-07-20T22:48:40.000Z",
     "latitude": 49.618888888889,
     "longitude": 17.835277777778,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 27.09
+    "degree": 27.08
   },
   "moon": {
     "sign": "leo",
     "signName": "Leo",
-    "degree": 21.84,
+    "degree": 21.71,
     "uncertain": false,
     "signAtCivilDayStart": "leo",
     "signAtCivilDayEnd": "leo"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 26.6502,
-    "degreesToNextBoundaryAtWindowEnd": 2.3946
+    "degreesInsideAtWindowStart": 26.6029,
+    "degreesToNextBoundaryAtWindowEnd": 2.4419
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.955,
-    "Moon": 13.84,
-    "Mercury": 0.393,
+    "Moon": 13.843,
+    "Mercury": 0.394,
     "Venus": 1.158,
     "Mars": 0.586,
     "Jupiter": 0.176,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 27.09,
+      "degree": 27.08,
       "retrograde": false,
       "speedPerDay": 0.9551,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 21.84,
+      "degree": 21.71,
       "retrograde": false,
-      "speedPerDay": 13.8329,
+      "speedPerDay": 13.8366,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Cancer",
       "degree": 17.61,
       "retrograde": true,
-      "speedPerDay": -0.3921,
+      "speedPerDay": -0.3928,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -103,7 +103,7 @@
       "body": "Venus",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 19.25,
+      "degree": 19.24,
       "retrograde": false,
       "speedPerDay": 1.1583,
       "dignity": null,
@@ -182,7 +182,7 @@
       "a": "Mars",
       "b": "Neptune",
       "type": "square",
-      "orb": 0.57,
+      "orb": 0.58,
       "applying": true
     },
     {
@@ -210,7 +210,7 @@
       "a": "Mars",
       "b": "Uranus",
       "type": "square",
-      "orb": 1.83,
+      "orb": 1.84,
       "applying": true
     },
     {
@@ -231,7 +231,7 @@
       "a": "Sun",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 2.89,
+      "orb": 2.9,
       "applying": true
     },
     {
@@ -245,7 +245,7 @@
       "a": "Sun",
       "b": "Pluto",
       "type": "trine",
-      "orb": 3.83,
+      "orb": 3.84,
       "applying": true
     },
     {
@@ -268,14 +268,14 @@
       "a": "Moon",
       "b": "Venus",
       "type": "sextile",
-      "orb": 2.59,
+      "orb": 2.47,
       "applying": false
     },
     {
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 9.48,
+      "orb": 9.47,
       "applying": false
     }
   ],

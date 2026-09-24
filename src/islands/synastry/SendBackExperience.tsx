@@ -24,11 +24,11 @@ type BigThreeModule = Pick<
 const COPY = {
   sendCue: 'Before anything else',
   sendTitle: 'Send the result back.',
-  sendBody: "{label} can't see this reading — it happened here, on your device. One tap makes a picture of it and a private link that carries the positions back, and nothing else.",
+  sendBody: "{label} can't see this reading — it happened here, on your device. One tap makes a picture of it and a private link that carries the positions and the two labels back, with no birth details.",
   sendShare: 'Share it back',
   sendShareText: 'Our charts, read together — from zodiacs.org',
   sendCopy: 'Copy the private link',
-  sendCopied: 'Link copied. It carries chart positions only.',
+  sendCopied: 'Link copied. It carries chart positions and the two labels, with no birth details.',
   sendImage: 'Download the picture',
 } as const;
 
@@ -37,11 +37,11 @@ const COPY = {
 const SHARE_COPY = {
   sendCue: 'Share the reading',
   sendTitle: 'Send this to {label}.',
-  sendBody: 'One tap makes a picture of this reading and a private link that carries both charts as positions only — the labels you typed, no birth details.',
+  sendBody: 'One tap makes a picture of this reading and a private link that carries both charts as positions, with the labels you typed and no birth details.',
   sendShare: 'Send it',
   sendShareText: 'Our charts, read together — from zodiacs.org',
   sendCopy: 'Copy the private link',
-  sendCopied: 'Link copied. It carries chart positions only.',
+  sendCopied: 'Link copied. It carries chart positions and the two labels, with no birth details.',
   sendImage: 'Download the picture',
 } as const;
 
@@ -248,7 +248,7 @@ export function ReturnBand({
           <h2 id="syn-return-title">{invalid ? "This result link isn't right." : 'A reading, sent back.'}</h2>
           <p>{invalid
             ? 'It may have been copied incompletely.'
-            : 'Two sides, compared — carried here as chart positions only. If one of them is yours, the rest of your chart is a minute away.'}</p>
+            : 'Two sides, compared — carried here as chart positions and labels, with no birth details. If one of them is yours, the rest of your chart is a minute away.'}</p>
         </div>
         <div class="syn-return__actions">
           {!invalid && <a class="btn btn--primary" href="/birth-chart/">Get your free birth chart</a>}

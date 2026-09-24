@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Australia/Adelaide",
     "civilTime": "12:00",
-    "utcInstant": "1872-09-28T02:45:40.000Z",
-    "utcOffsetMinutesAtBirth": 554.3333,
-    "civilDayStartUtc": "1872-09-27T14:45:40.000Z",
-    "civilDayEndUtc": "1872-09-28T14:45:40.000Z",
+    "utcInstant": "1872-09-28T02:43:28.000Z",
+    "utcOffsetMinutesAtBirth": 556.5333,
+    "civilDayStartUtc": "1872-09-27T14:43:28.000Z",
+    "civilDayEndUtc": "1872-09-28T14:43:28.000Z",
     "latitude": -35.506,
     "longitude": 139.135,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "leo",
     "signName": "Leo",
-    "degree": 14.03,
+    "degree": 14.01,
     "uncertain": false,
     "signAtCivilDayStart": "leo",
     "signAtCivilDayEnd": "leo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 5.1568,
-    "degreesToNextBoundaryAtWindowEnd": 23.8598
+    "degreesInsideAtWindowStart": 4.7769,
+    "degreesToNextBoundaryAtWindowEnd": 24.24
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.983,
@@ -66,7 +66,7 @@
       "signName": "Libra",
       "degree": 5.27,
       "retrograde": false,
-      "speedPerDay": 0.9832,
+      "speedPerDay": 0.9831,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 14.03,
+      "degree": 14.01,
       "retrograde": false,
-      "speedPerDay": 11.9196,
+      "speedPerDay": 11.9194,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 25.21,
+      "degree": 25.2,
       "retrograde": false,
       "speedPerDay": 1.2368,
       "dignity": "domicile",
@@ -197,7 +197,7 @@
       "a": "Venus",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 0.24,
+      "orb": 0.25,
       "applying": true
     },
     {
@@ -211,7 +211,7 @@
       "a": "Venus",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 2.41,
+      "orb": 2.4,
       "applying": false
     },
     {
@@ -255,21 +255,21 @@
       "a": "Moon",
       "b": "Pluto",
       "type": "square",
-      "orb": 6.55,
+      "orb": 6.57,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "conjunction",
-      "orb": 8.77,
+      "orb": 8.79,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "conjunction",
-      "orb": 9,
+      "orb": 8.98,
       "applying": false
     }
   ],

@@ -1,10 +1,11 @@
 // Vercel serverless function for a durable, subscribable transit calendar.
-// The query carries the existing positions-only v2 share token: planetary
-// longitudes plus ASC/MC, with no name, birth date, time, place, or coordinates.
+// The query carries the positions-only v2 share token: body longitudes to
+// 0.001° plus ASC/MC. The token has no name, birth date, time, place, or
+// coordinates field, but the positions still give the birth date and time.
 import { checkRateLimit } from '@vercel/firewall';
 import { scanTransitContacts } from '../../src/lib/engine/transit-scan-server.js';
 import { serializeTransitContacts } from '../../src/lib/ical.js';
-import { decodePositionsLink } from '../../src/lib/share-positions.js';
+import { decodePositionsLink, wholeDegreeAngles } from '../../src/lib/share-positions.js';
 
 const DAY = 86_400_000;
 const BACK_DAYS = 31;
@@ -21,13 +22,19 @@ function validDate(value: Date): boolean {
   return Number.isFinite(value.getTime());
 }
 
-/** Build the zero-PII feed from the same v2 token used by chart share links. */
+/**
+ * Build the feed from the same v2 token used by chart share links. ASC and MC
+ * are taken to the whole degree whatever the token carries, so a subscription
+ * made before the site rounded them stops listing exact angle contacts at its
+ * next refresh.
+ */
 export function buildTransitCalendar(
   token: string,
   options: CalendarBuildOptions = {},
 ): string {
   const chart = decodePositionsLink(token);
   if (!chart) throw new RangeError('Invalid positions-only chart token.');
+  const angles = chart.angles ? wholeDegreeAngles(chart.angles) : null;
 
   const generatedAt = options.generatedAt == null
     ? new Date()
@@ -41,13 +48,14 @@ export function buildTransitCalendar(
   }
 
   const contacts = scanTransitContacts(
-    { bodies: chart.bodies, angles: chart.angles },
+    { bodies: chart.bodies, angles },
     from,
     to,
   );
   return serializeTransitContacts(contacts, {
     generatedAt,
     calendarName: 'Zodiacs.org transit contacts',
+    natalAngles: 'whole-degree',
   });
 }
 

@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:22.20",
+        "sun-degree:22.21",
         "decan:libra:third"
       ],
       "text": "The Sun's position resolves to 22.2° Libra — deep enough in the third decan (20°–30°) that Mercury, its traditional sub-ruler, colours the reading."
@@ -77,7 +77,7 @@
         "moon-band:14.6"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.6° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.2°."
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.6° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.3°."
     }
   ],
   "birthdayLink": {
@@ -90,7 +90,7 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Uranus:opposition",
-    "sun-degree:22.20",
+    "sun-degree:22.21",
     "decan:libra:third",
     "personal:Mercury:Libra:4.3°",
     "personal:Venus:Virgo:6.5°",

@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:4.00",
+        "sun-degree:3.99",
         "decan:cancer:first"
       ],
       "text": "At the noon reference the Sun sits 4.0° into Cancer — the first decan, which the old scheme hands to the Moon. Same sign, different decan, different chart."
@@ -32,7 +32,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Uranus:trine:0.07",
+        "aspect:Mars:Uranus:trine:0.06",
         "aspect:Jupiter:Saturn:opposition:0.78",
         "aspect:Venus:Uranus:square:1"
       ],
@@ -74,7 +74,7 @@
         "moon-band:14.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 12.6°."
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 12.4°."
     }
   ],
   "birthdayLink": {
@@ -87,11 +87,11 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Uranus:trine",
-    "sun-degree:4.00",
+    "sun-degree:3.99",
     "decan:cancer:first",
     "personal:Venus:Leo:6.5°",
     "personal:Mars:Virgo:7.6°",
-    "aspect:Mars:Uranus:trine:0.07",
+    "aspect:Mars:Uranus:trine:0.06",
     "aspect:Jupiter:Saturn:opposition:0.78",
     "aspect:Venus:Uranus:square:1",
     "figure:unaspected:Moon",

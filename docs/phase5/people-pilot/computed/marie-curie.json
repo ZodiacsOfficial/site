@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Warsaw",
     "civilTime": "12:00",
-    "utcInstant": "1867-11-07T10:36:00.000Z",
-    "utcOffsetMinutesAtBirth": 84,
-    "civilDayStartUtc": "1867-11-06T22:36:00.000Z",
-    "civilDayEndUtc": "1867-11-07T22:36:00.000Z",
+    "utcInstant": "1867-11-07T10:35:57.000Z",
+    "utcOffsetMinutesAtBirth": 84.05,
+    "civilDayStartUtc": "1867-11-06T22:35:57.000Z",
+    "civilDayEndUtc": "1867-11-07T22:35:57.000Z",
     "latitude": 52.23,
     "longitude": 21.011111111111113,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 14.1323,
-    "degreesToNextBoundaryAtWindowEnd": 14.8634
+    "degreesInsideAtWindowStart": 14.0737,
+    "degreesToNextBoundaryAtWindowEnd": 14.922
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.004,
@@ -211,7 +211,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "trine",
-      "orb": 1.91,
+      "orb": 1.9,
       "applying": false
     },
     {

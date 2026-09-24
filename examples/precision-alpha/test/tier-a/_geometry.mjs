@@ -66,7 +66,24 @@ export function fit(g, lo, hi, n) {
  * IS the observer path, with `moon` zero so Earth = emb exactly.
  */
 export function packOf(targetFn, observerFn, opts = {}) {
-  const { ncoef = 20, nrec = 80, intervalSec = DAY, initEt = -40 * DAY, targetRecords = null } = opts;
+  const {
+    ncoef = 20, nrec = 80, intervalSec = DAY, initEt = -40 * DAY, targetRecords = null,
+    // The Sun. Zero by default, which is what every suite before the
+    // deflected one wanted: those modes never look at it, and a Sun at
+    // the barycentre keeps their geometries heliocentric for free.
+    //
+    // The deflected mode DOES look at it, and a Sun that does not move
+    // makes the emission/reception epoch split exactly zero -- so a
+    // mutation collapsing the two epochs is invisible against a static
+    // Sun however carefully the rest is tested. Pass `sunFn` to make it
+    // move.
+    sunFn = null,
+    // Drop the Sun body entirely. The deflected mode resolves the Sun's
+    // weights once, before any cell opens, and refuses `unknown-body` if
+    // there is none -- which nothing could check while this helper always
+    // emitted one.
+    omitSun = false,
+  } = opts;
   const zeros = () => new Array(ncoef).fill(0);
   const series = (fn) => (r) => {
     const lo = initEt + r * intervalSec;
@@ -75,7 +92,15 @@ export function packOf(targetFn, observerFn, opts = {}) {
   };
   const bytes = buildPack({
     bodies: [
-      { name: 'sun', frame: 'native', ncoef, nrec, initEt, intervalSec, coeffs: () => [...zeros(), ...zeros(), ...zeros()] },
+      ...(omitSun ? [] : [{
+        name: 'sun',
+        frame: 'native',
+        ncoef,
+        nrec,
+        initEt,
+        intervalSec,
+        coeffs: sunFn ? series(sunFn) : () => [...zeros(), ...zeros(), ...zeros()],
+      }]),
       { name: 'emb', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: series(observerFn) },
       { name: 'moon', frame: 'ssb', ncoef, nrec, initEt, intervalSec, coeffs: () => [...zeros(), ...zeros(), ...zeros()] },
       { name: 'marsBary', frame: 'ssb', ncoef, nrec: targetRecords ?? nrec, initEt, intervalSec, coeffs: series(targetFn) },

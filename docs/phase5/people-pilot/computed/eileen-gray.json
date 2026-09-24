@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Dublin",
     "civilTime": "12:00",
-    "utcInstant": "1878-08-08T12:25:21.000Z",
-    "utcOffsetMinutesAtBirth": -25.35,
-    "civilDayStartUtc": "1878-08-08T00:25:21.000Z",
-    "civilDayEndUtc": "1878-08-09T00:25:21.000Z",
+    "utcInstant": "1878-08-08T12:26:16.000Z",
+    "utcOffsetMinutesAtBirth": -26.2667,
+    "civilDayStartUtc": "1878-08-08T00:26:16.000Z",
+    "civilDayEndUtc": "1878-08-09T00:26:16.000Z",
     "latitude": 52.502064,
     "longitude": -6.565876,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 23.16,
+    "degree": 23.17,
     "uncertain": false,
     "signAtCivilDayStart": "sagittarius",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 15.2754,
-    "degreesToNextBoundaryAtWindowEnd": 13.7656
+    "degreesInsideAtWindowStart": 15.2929,
+    "degreesToNextBoundaryAtWindowEnd": 13.7481
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.959,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 23.16,
+      "degree": 23.17,
       "retrograde": false,
-      "speedPerDay": 13.1761,
+      "speedPerDay": 13.1759,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -234,21 +234,21 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 5.77,
+      "orb": 5.76,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 6.1,
+      "orb": 6.09,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Moon",
       "type": "trine",
-      "orb": 7.38,
+      "orb": 7.39,
       "applying": false
     }
   ],

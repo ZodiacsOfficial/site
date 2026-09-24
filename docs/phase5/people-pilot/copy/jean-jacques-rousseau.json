@@ -7,7 +7,7 @@
   "identity": "Philosopher and pedagogue · Switzerland · 1712–1778",
   "title": "Jean-Jacques Rousseau's birth chart",
   "metaDescription": "Jean-Jacques Rousseau's chart, computed from a sourced birth date: Sun at 6.7° Cancer. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 7.0° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 7.1° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:exaltation",
   "blocks": [
     {
@@ -55,7 +55,7 @@
         "dignity:Mercury:domicile",
         "dignity:Saturn:detriment"
       ],
-      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 7.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Gemini at 15.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Leo at 12.5° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 7.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Gemini at 15.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Leo at 12.5° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:12.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 7.0°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 7.1°."
     }
   ],
   "birthdayLink": {

@@ -22,7 +22,7 @@ const faq = [
   },
   {
     q: 'How accurate are the charts?',
-    a: 'Planetary positions come from an astronomical engine tested automatically against NASA JPL reference data to within a few hundredths of a degree. Historical clock changes, including pre-1922 local mean time where available, use the IANA/ICU history supplied by your browser or device runtime. Every chart lists its computed UTC instant so you can check the conversion.',
+    a: 'Planetary positions come from an astronomical engine tested automatically against NASA JPL reference data to within a few hundredths of a degree. Historical clock changes from 1970 on use the IANA/ICU history supplied by your browser or device runtime; earlier ones come from a pinned release of the IANA database, including the older records it keeps apart for places whose clocks later matched another city’s, which its maintainers consider less reliable. A birth from before its place adopted a legal time uses the local mean time of the birthplace itself. Every chart lists its computed UTC instant so you can check the conversion.',
   },
   {
     q: 'What happens to my birth data?',

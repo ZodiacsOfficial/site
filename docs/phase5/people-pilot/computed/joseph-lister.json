@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1827-04-05T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1827-04-05T00:01:15.000Z",
-    "civilDayEndUtc": "1827-04-06T00:01:15.000Z",
+    "utcInstant": "1827-04-05T11:59:54.000Z",
+    "utcOffsetMinutesAtBirth": 0.1,
+    "civilDayStartUtc": "1827-04-04T23:59:54.000Z",
+    "civilDayEndUtc": "1827-04-05T23:59:54.000Z",
     "latitude": 51.5395,
     "longitude": 0.0232,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "aries",
     "signName": "Aries",
-    "degree": 14.94
+    "degree": 14.93
   },
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 24.92,
+    "degree": 24.91,
     "uncertain": true,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "leo"
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 14.94,
+      "degree": 14.93,
       "retrograde": false,
       "speedPerDay": 0.9831,
       "dignity": "exaltation",
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 24.92,
+      "degree": 24.91,
       "retrograde": false,
-      "speedPerDay": 12.2156,
+      "speedPerDay": 12.2154,
       "dignity": "domicile",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -210,7 +210,7 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 2.98,
+      "orb": 2.99,
       "applying": true
     },
     {
@@ -254,7 +254,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 8.77,
+      "orb": 8.76,
       "applying": false
     },
     {

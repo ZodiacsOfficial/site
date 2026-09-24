@@ -1,0 +1,212 @@
+# GAPS
+
+## Multi-year residual distribution of the shipped engine vs Swiss (run here, not by any auditor) (0.3 d)
+WHY: Every phase-1 position figure came from 2025-daily (production-positions), 24 instants (swiss-parity) or 8 epochs; the VSOP87 truncation is long-period, so those understate the worst case over the site's own 1800-2199 span. My TT-pinned run every 10 days 1800-2200 (21,909 instants, 0 non-SWIEPH calls; <audit>/verify/completeness/multiyear-vs-swiss.json) gives lon maxima Venus 23.0", Pluto 29.1", North Node 26.6", Neptune 19.8", Mercury 14.1", Mars 13.5", Saturn 13.2", Uranus 12.1", Moon 11.3" (1800-1850), Jupiter 10.6", Sun 2.3"; lat maxima Saturn 21.9", Uranus 18.9", Mars 18.2", Jupiter 16.7"; p95 Neptune 17.4", Pluto 20.2", node 16.0". The honest headline for the supported span is ~30", not the 15.6"/18.8" quoted by production-positions-1 and swiss-parity-2.
+CLOSE: Commit this distribution (per-body p50/p95/max per half-century) as the benchmark fixture the methodology page and docs/engine-validation quote, and re-run it in the quarterly benchmark job proposed in verification-honesty-5.
+
+## Homepage lite engine (src/lib/engine/lite.ts) never examined; its stated bounds are exceeded (0.3 d)
+WHY: lite.ts feeds ZodiacWheelHero, MoonPhaseTool ('tonight'), ChartCalculator phase naming and src/lib/aura/events.ts, and its header claims Sun +-0.01 deg, Moon +-0.3 deg. Measured against Swiss (lite-vs-swiss.json): Sun max 0.0085 deg in 2026 but 0.016 deg over 1950-2100; Moon max 0.356 deg (2026) and 0.348 deg (1950-2100); phase angle max 0.35 deg, i.e. ~40 min at a phase-name boundary. Small, but it is a user-visible surface with a false bound and no test.
+CLOSE: Correct the header to Sun +-0.02 deg / Moon +-0.4 deg (or add one more Moon term), add a Swiss-fixture test at ~50 instants, and decide whether MoonPhaseTool's 'tonight' dial should lazily use the full engine.
+
+## Horizons IAU76/80 frame residual never decomposed, and it was misread as an ephemeris difference (0.5 d)
+WHY: swiss-parity-4 inferred the 0.098"/0.384" Horizons residual is Horizons's IAU76/80 ecliptic-of-date frame because it is identical for every body and linear in time; production-positions-6/11 instead read Swiss's -0.50" Pluto offset at 2200 as 'DE431 vs DE441', and the verifier repeated it. My two Horizons requests (Sun 10 and Mars 499 at JD 2524593.5 TT; frame-2200.json) give Swiss minus Horizons -0.499" (Sun), -0.498" (Mars), -0.498" (Pluto barycentre): the offset is the frame, not Pluto's ephemeris. Nobody has computed the expected IAU76/80-vs-IAU2006/2000A ecliptic-of-date difference independently, so the -0.24"/century slope remains an inference.
+CLOSE: Compute the difference with pyerfa (prec76+nut80+obl80 vs pfw06+nut06a+obl06) on the 24-instant corpus and confirm it reproduces +0.369/+0.047/-0.346"; then state in the evidence tree that Horizons QUANTITIES=31 cannot arbitrate below ~0.5" over 1850-2200 and must be used with barycentre COMMANDs (9, 8, 7) for the outer planets.
+
+## Horizons VECTORS (geometric ICRF, DE441) never used as the frame-free mas-level arbiter for the pack (0.5 d)
+WHY: alpha-reduction-math-9/11 proposed it and nobody ran it; it is the only way on this machine to settle whether the 0.010" lunar difference is DE440-vs-DE441 (the swiss-parity verifier's Sun-subtraction cancellation is indirect) and to give the pack a sky-referenced check independent of Swiss and of Horizons's frame model.
+CLOSE: Two to four Horizons VECTORS requests (Moon 301 and Mars 499 geocentric, 1851 and 2148, TT) differenced against the pack's raw geometric states from ephemeris.mjs; commit as a tier-b fixture.
+
+## No browser modality at all: browser ICU tzdb, browser Temporal path, cross-browser bit-identity of the released reducer, Worker pack-compile time (1.5 d)
+WHY: time-2 was measured on Node's ICU only (browsers ship the same tzdb default form but were not tested); src/lib/time/local-date-intervals.ts has a Temporal path that Node 22 never exercises; the tree's bit-identical claim covers only the partitioned search (data-toolchain-packaging-7) while the released apparent() uses Math.sin/cos/atan2; and data-toolchain-packaging-4's client-side-compile proposal rests on a 24.5 s Node timing with no Worker measurement.
+CLOSE: One Playwright run on Chromium and Firefox: Stockholm 1947 offset via Intl, the Temporal interval provider, apparent() digests on 200 instants vs Node, and compile.mjs in a Worker against de440s.bsp with timing.
+
+## DE-backed event timing was asserted as the exceed path but not demonstrated (now demonstrated for one station) (1 d)
+WHY: production-event-search-7 claims a DE440-backed longitude 'agrees with Horizons to seconds' at stations; no auditor computed one. My probe (neptune-station-alpha.json) bisects the alpha's CORRECTED Neptune longitude derivative: station 2027-12-15T09:06:53Z, -43 s from the Horizons barycentre (COMMAND 8) fit, where Swiss is -76 s and sky.json +2110 s. The alpha has no station operation (alpha-search-partition-3), so this is a manual derivative, not a product.
+CLOSE: Add searchGeometricStation (roots of x*y' - y*x') to validated-search.mjs with the exclusion/monotone proof, lift to of-date via fDotEnclosure, and route scripts/build-sky.mjs through it with a published time band; gate one Neptune and one Mercury station against Horizons barycentre tables at 60 s.
+
+## Compiler does not refuse packs whose proven bounds exceed the budgets (verifier fact with no finding) (0.5 d)
+WHY: The toolchain verifier found compile.mjs writes provenPosKm above BUDGET_KM without refusing (DE432s: emb 52.6 km vs 0.3 km) and the result opens (integrity and geometry pass) but every apparent() throws bad-geometry; I confirmed by reading compile.mjs:391-491 that provenFit/provenQ are recorded, never compared to budget. container.mjs likewise accepts header-declared bounds it never checks. This is an opens-but-unusable pack path that no finding lists.
+CLOSE: Refuse in compile.mjs when provenPosKm > budgetKm or provenPosKm === null for a body that promises a bound; have container.validateConstants compare declared bounds to budgetsKm; add a tier-A test with a short synthetic kernel.
+
+## Observational anchors beyond the four NASA canon events were identified but never fetched (2 d)
+WHY: verification-honesty-3 is the only check against anything not descended from a JPL vector table, and its canon is itself DE405-era (0.1-0.5"). IOTA lunar occultation timings (Moon limb to ~0.1"), Astronomical Almanac/MICA apparent places, the 2016 and 2019 Mercury transits, and Stephenson-Morrison-Hohenkerk historical eclipse Delta-T (where the engine is 30 s off at 1600) would discriminate the shipped engine, the alpha and Swiss on quantities none of them fitted.
+CLOSE: Fetch 10-20 IOTA reduced occultation timings and 6 Almanac rows, compute the same quantity with all three engines in TT, commit as canon-events.json with per-engine gates as verification-honesty-3 proposes.
+
+## UT1-UTC never applied: both sides of every angle comparison used UTC as UT1 (0.5 d)
+WHY: time-4 bounded the neglect (13.5" RAMC, 44" MC/ASC at 66 deg) and the verifiers fetched IERS finals, but nobody measured the site's ASC/RAMC against a UT1-correct arbiter or built the leap-second-exact UTC->TT chain that time-1, time-4 and production-event-search-3 all ask for; the 'exceeds Swiss on angles' claim (angles-houses-aspects-11) is conditional on DUT1 being applied or disclosed.
+CLOSE: ERFA gst06a with IERS DUT1 on the 3,128-case angle grid; prototype UTC->TAI->TT from a leap-second table plus finals.all DUT1 in a scratch copy of the SDK and measure the ASC shift.
+
+## Topocentric reduction: magnitude measured, implementation never prototyped or validated (2 d)
+WHY: swiss-parity-13 and alpha-reduction-math-2 size the Moon parallax at ~1 deg and propose WGS84 observer + ERA; no one validated a topocentric chain against pyerfa atco13 or Swiss FLG_TOPOCTR, so the effort and accuracy of the one positional item that could go past Swiss's default output are unknown.
+CLOSE: Prototype observer geodetic->GCRS in a scratch copy of reduce.mjs, validate at 100 instants x 3 sites against Swiss FLG_TOPOCTR (0.05") and pyerfa atco13.
+
+## Small-body ephemeris feasibility (Chiron, Ceres, Pallas, Juno, Vesta) untested (2 d)
+WHY: swiss-parity-10 estimates 5-8 days on the assumption that Horizons-generated SPKs can be ingested by the pack compiler, but data-toolchain-packaging-1 shows the compiler compiles a usable pack only from a 109,600-day kernel, and Chiron's orbit is poorly determined before 1900; nobody generated a single small-body SPK or tried it.
+CLOSE: Generate a Horizons SPK for 2060 Chiron over 1900-2100, extend BODY_SEGS/spkref for a type-21/13 segment or resample to type 2, compile, and compare with Swiss SE_CHIRON (needs seas_18.se1, absent locally).
+
+## MCP adapter (src/mcp) and api/calendar/transits.ts numeric outputs excluded by every auditor (1 d)
+WHY: These are the machine-facing surfaces a Swiss-class integrator would compare; the MCP bounds (1800-2199), parseInstant offsets and the calendar API's -31/+183-day transit scan inherit every production defect (Delta-T, applying flag, 5-day-step drops) and no one measured what they emit or whether receipts through them carry the right conventions.
+CLOSE: Drive the built MCP artifact and api/calendar/transits.ts with the same 24-instant corpus and compare to natalChart/transit-scan-core outputs and receipts; fuzz parseInstant.
+
+## Synastry, composite, progressions, transit-scan-core station splitting and moon-phase-category audited by reading only (1 d)
+WHY: angles-houses-aspects and production-event-search both list these as code-read; progressions' 365.2422 mapping and transit-scan-core's stationBreakpoints are the site's most-used timed products after returns and inherit the applying-flag and finite-difference defects without any measurement.
+CLOSE: Run synastry(a,b) and progressions against Swiss-derived positions for 50 chart pairs and 20 progressed dates; probe transit-scan-core with the Saturn 2019 graze fixture from production-event-search-4.
+
+## Cost of the fix set in the real build never measured (1 d)
+WHY: production-positions lists performance/bundle cost as not examined; data-toolchain-packaging measured only the bare alpha runtime (27.5 KB gz vs a 25 KB engine-chunk budget). Nobody ran npm run build / scripts/report-bundles.mjs with the DE pack loader, 77-term nutation, an IERS Delta-T table or a backzone tzdb table, so the owner has no number for what adopting the alpha costs the homepage and chart routes.
+CLOSE: In a scratch worktree, wire the alpha as a lazily imported chunk with a precision-chunk budget line, add the IERS and tzdb tables as /data shards, build, and record report-bundles output and chart-route timings.
+
+## Ayanamsa numerics untested; the 'cheap' sidereal path is an estimate (0.5 d)
+WHY: swiss-parity-12 says sidereal is a pure subtraction and three days of work; no one computed a single ayanamsa or checked that the alpha's IAU 2006 precession reproduces get_ayanamsa_ex_ut (Lahiri 24.232917 deg at 2026-09-22 17:00 UT per the verifier) to 0.01".
+CLOSE: Implement Lahiri and Fagan-Bradley as offsets from the alpha's frames.mjs precession and compare to Swiss at 50 instants 1850-2150.
+
+## Alpha empirical apparent mode and tier-b holdouts not exercised in the audit (1 d)
+WHY: alpha-search-partition audited search.mjs/interval-search.mjs by reading only and did not re-run the retarded/aberrated/of-date holdout files; the toolchain auditor's 85/85 tier-b run covers them once, but the conditional-completeness empirical mode that production would most plausibly adopt first has no adversarial fixture run.
+CLOSE: Run the 20 exact-polynomial fixtures through runtime.search() (empirical mode) and record missed/extra roots; re-run the three holdout files on D.v2.zeph.
+
+## Population-weighted exposure of the tzdb backzone gap; city->zone assignment only partly checked (0.5 d)
+WHY: time-2 counts zones and zone-years but not users; the verifier showed the >=60-min post-1900 exposure per zone is far smaller than the zone-year headline. I probed the GeoNames zone table: all 356 ids resolve in ICU, 16 canonicalise to legacy aliases (harmless), so assignment is not the problem; which birthplaces fall in the 98 affected zones remains unknown.
+CLOSE: Join public/data/cities population to the 98-zone list and the verifier's per-zone >=60-min segments to give births-per-year exposure.
+
+## Uranus Horizons 799-vs-7 anomaly (0.67") unresolved arbiter hygiene (0.3 d)
+WHY: swiss-parity-4 found Horizons Uranus body centre (799, ura184_merged) differs from the DE441 barycentre (7) by up to 0.671" though the physical offset is 0.003"; every Horizons comparison of Uranus in the tree (engine.test.ts literal, benchmark) is affected at that level and no one explained it.
+CLOSE: One Horizons request pair (799 and 7 with VECTORS) at two instants to see whether the offset is a satellite-ephemeris barycentre inconsistency; then standardise the tree on barycentre COMMANDs for the outer planets.
+
+# CONTRADICTIONS
+
+- BETWEEN production-positions (summary, -6, -11, swiss-dump.py docstring 'DE431 excerpts'), alpha-reduction-math-9 and production-event-search-7 vs swiss-parity-3/-4 and every verifier
+  WHAT: Whether the local Swiss .se1 files are DE431 and whether Swiss's -0.50" Pluto offset vs Horizons at 2200 is 'DE431 vs DE441'.
+  RESOLUTION: swiss-parity is right: sepl_18/semo_18 headers read 'based on JPL Ephemeris DE441' and swe.get_current_file_data reports denum 441 (re-checked). My Horizons probe at the same instant (JD 2524593.5 TT) gives Swiss minus Horizons -0.499" Sun, -0.498" Mars, -0.498" Pluto barycentre, so the Pluto offset is Horizons's IAU76/80 frame drift (swiss-parity-4's linear residual), not Pluto's ephemeris; production-positions-6/11 and their verifier misattributed it. alpha-reduction-math-9's U-shaped Moon residual is DE440-vs-DE441 (swiss-parity verifier measured it), same mechanism, wrong file name.
+
+- BETWEEN verification-honesty-2 (and its verifier) vs time-1 and production-positions-2
+  WHAT: Rate at which the Delta-T error grows: 'about 1.2 s per year' vs '0.62 s/yr'; production-positions-2 says Moon displacement grows '~0.6"/yr' (which would be 1.1 s/yr).
+  RESOLUTION: time-1 is right. Recomputed: astronomy-engine 71.578 s (2020-01-01) to 75.497 s (2026-09-22) is 0.583 s/yr, IERS TT-UT1 falls 0.025 s/yr, so the gap grows 0.61 s/yr = 0.33"/yr of Moon. verification-honesty's 1.2 s/yr is 2x too high and production-positions' 0.6"/yr should read 0.33"/yr.
+
+- BETWEEN production-positions-4 vs its verifier
+  WHAT: The node bias is 'provably a Moon-velocity error, not a definition difference'.
+  RESOLUTION: Verifier is right: swapping components between astronomy-engine and Swiss states gives -3.63" from position and -3.64" from velocity, summing to the -7.27" bias; the definition part (not a convention difference) stands, the 'velocity' attribution is half the story. Fix unchanged.
+
+- BETWEEN production-positions-1 swissGap and -6 vs swiss-parity-5 and alpha-reduction-math-1
+  WHAT: Planet-centre resolution via satellite kernels is 'the only positional lever that goes past Swiss' and 'an effect Swiss does not apply'.
+  RESOLUTION: swiss-parity-5 measured it: with sepm9599/9699/9999.se1 Swiss FLG_CENTER_BODY reproduces Horizons centre-minus-barycentre to 0.001" (Jupiter 0.059", Saturn 0.041", Pluto 0.075"). Swiss's default is barycentric, but the capability exists, so centres are a <=0.093" catch-up to parity, not a lead.
+
+- BETWEEN production-event-search-7 (summary and swissGap) vs its verifier
+  WHAT: 'Swiss with the .se1 files (DE431) is worse than the engine against DE441' at the 2028 Pluto station.
+  RESOLUTION: Verifier is right: the auditor compared to Horizons 999 (Pluto body centre, 0.08" Charon wobble) while Swiss and the engine model the barycentre; against Horizons 9 Swiss is -241 s and sky.json -2704 s, and the files are DE441. My alpha Neptune-station probe (-43 s vs Horizons 8) supports the corrected exceed path: DE-backed timing lands within a minute of Horizons.
+
+- BETWEEN angles-houses-aspects-2 first verifier ('blocking' confirmed, 'all Moon pairs') vs second lens ('major', 83 of 506 non-Moon)
+  WHAT: Severity and scope of the wrong applying flag.
+  RESOLUTION: Second lens is right: the closed form shows the flag is false for the last 14.4 min (half the 0.02-day step) before every exact aspect of every pair, measured with Swiss positions as 506/236,932 (0.21%), zero false positives, orbs the UI prints as 0.0-0.1 deg; 'all Moon pairs' was a 30-min sampling artifact. Deterministically wrong but small exposure and a 0.25-day fix: major, ranked below angles-houses-aspects-1.
+
+- BETWEEN swiss-parity-7 vs production-positions-9 and angles-houses-aspects-10
+  WHAT: swiss-parity-7 speculates a 2"/day Moon/Mercury speed error 'would move the station by ~30 minutes'; production-positions-9 measured 54 stations (shipped minus Swiss median 0.06 h, Mercury/Venus <= 0.11 h, derivative share <= 0.018 h) and angles-10 measured Mercury -0.9 min, Venus -3.8 min.
+  RESOLUTION: The measurements win: the central-difference error is largest at perihelion, not at stations, and the station offsets are minutes, set by the series not the derivative; swiss-parity-7's 30-minute figure should be dropped.
+
+- BETWEEN production-positions-3 ('up to 18.5"'), time-6 ('up to 128" at 66 deg') and angles-houses-aspects-1 ('max 512" at lat 66')
+  WHAT: Size of the mean-obliquity Ascendant error.
+  RESOLUTION: All three are correct on their grids and the same defect; the authoritative maximum over the supported latitude range is angles-1's 512" (verified through the shipped computeChart on 3,128 cases), with 36" already at Helsinki (production-positions verifier). production-positions-3's title understates.
+
+- BETWEEN verification-honesty-4 vs its verifier
+  WHAT: '13 of 42' families carry a mutation record.
+  RESOLUTION: Verifier is right: 11 tests in partitioned-search.nodetest.mjs; 13 was the count of lines matching 'mutat'. The surviving mutation (unprocessedTotal conjunct) is reproduced by both.
+
+- BETWEEN production-event-search-8 vs its verifier
+  WHAT: Committed totality minutes exceed Swiss by 0.7-1.4 min 'because the builder rounds 2*sd_total'.
+  RESOLUTION: Verifier is right: raw 2*sd_total from astronomy-engine is already 59.41/72.26/102.51/54.95 min vs Swiss 58.3/71.3/101.9/53.6, a shadow-model difference; rounding contributes <= 0.5 min.
+
+- BETWEEN production-event-search-3 vs its verifier
+  WHAT: Sign of the Moon light-time sub-attribution ('partly offset by the missing -0.7" term').
+  RESOLUTION: Verifier is right: omitting light-time puts the engine Moon ahead of the apparent Moon and makes Moon events ~1.2 s earlier, compounding the Delta-T bias; the smaller observed bias is offset by the Moon series residual. Claim unaffected.
+
+- BETWEEN data-toolchain-packaging (tier-b 85/85) vs verification-honesty verifier (84/85)
+  WHAT: Tier-b pass count on the compiled D.v2.zeph.
+  RESOLUTION: Both right: the one failure in an out-of-tree copy is tools/spk-backend.mjs importing docs/platform/evidence/.../spk2.mjs, a path that exists only in the full tree; in-tree 85/85. Consequence for verification-honesty-5's CI plan: tier-b cannot run from the packaged alpha alone.
+
+- BETWEEN data-toolchain-packaging-4 vs its verifier
+  WHAT: 'The site's bundle gate would refuse the runtime as it stands'.
+  RESOLUTION: Only if the alpha were folded into the eager full.*.js closure (25 KB gate); a lazily imported chunk faces the 60 KB chunk-max and passes. The facts (27.5 KB gz) reproduce; the inference is conditional.
+
+- BETWEEN angles-houses-aspects-3 and verification-honesty-9 vs the angles verifier
+  WHAT: Placidus above 66 deg as a major gap vs a narrow documented limit.
+  RESOLUTION: Verifier is right (minor): Swiss itself fails at 90 - eps_true (66.53-66.59), the band is 0.53-0.59 deg wide, the fallback is documented and flagged and ASC/MC stay correct; and widening the limit before fixing angles-1 would expose 2.2-deg cusp errors at 66.5.
+
+- BETWEEN swiss-parity-3 (major) vs its verifier (minor)
+  WHAT: Whether the DE431 parenthetical in numerics/RESULTS.md is a major unsupported claim.
+  RESOLUTION: Verifier is right: RESULTS.md hedges the attribution, the rest of the tree says DE441, and FOUR-CONFIGURATIONS.md disclaims superiority; the refuted premise came from the audit brief. One wrong parenthetical, 0.2 days.
+
+# OVERCLAIMS
+
+- production-positions-6 and production-positions-11: 'Swiss is -0.50" (DE431 vs DE441 Pluto)' at 2200: The offset is Horizons's IAU76/80 frame: my probe shows the Sun (-0.499") and Mars (-0.498") carry the identical offset at the same TT instant, and the .se1 files are DE441. A mis-framed Horizons quantity read as an ephemeris difference; the verifier repeated it without checking another body.
+
+- production-positions-4: 'provably a Moon-velocity error': Component swapping shows half the -7.27" bias comes from the position of the same analytic series; 'provably' and 'velocity' both overreach although the fix is unchanged.
+
+- production-positions-1 swissGap and -6 fix: planet centres are 'the only positional lever that goes past Swiss', an effect 'Swiss does not apply': Swiss applies it exactly with FLG_CENTER_BODY plus sepm files (swiss-parity-5, 0.001" agreement with Horizons); it is a <=0.093" parity item.
+
+- production-positions-3 title: Ascendant 'off by up to 18.5"': 18.5" is London; the same defect is 36" at Helsinki (verifier) and 512" at 66 deg (angles-houses-aspects-1); the title understates a maximum.
+
+- production-positions-2: Delta-T error 'growing ~0.6"/yr': 0.61 s/yr of Delta-T is 0.33"/yr of Moon longitude; the unit slipped from seconds to arcseconds.
+
+- swiss-parity-7: a Mercury station 'would move by ~30 minutes' from the speed error: Unmeasured speculation contradicted by two measurements (production-positions-9: derivative share <= 1.1 min over 54 stations; angles-houses-aspects-10: Mercury -0.9 min).
+
+- swiss-parity-2: production is '4-10x worse than Swiss's zero-data Moshier': Overall maxima ratio is 6.7x, but per body it runs from 3x (Moon) to over 100x (Mercury); the range understates the inner planets rather than overstating, but the number is not a per-body statement.
+
+- swiss-parity-3 severity 'major' for the DE431 misattribution: The tree hedges the attribution and disclaims the advantage elsewhere; the premise being refuted came from the audit brief, not from an owner-facing claim (verifier downgraded to minor).
+
+- time-2: '~7,270 zone-years' as exposure, and the Atlantic/Reykjavik 1950-06-15 example: Only 1,975 zone-years are >=15 min after 1900 and the >=60-min post-1900 exposure per zone is years not decades (Stockholm 7 yr, Amsterdam 0.4 yr); Iceland was on +0:00 summer time on the example date and ICU agrees. The defect and its Stockholm 1947 chart impact (ASC 9.5 deg) stand.
+
+- time-3: the people pilot is affected by the missing Julian-calendar path: docs/phase5/people-pilot/tools/compute-astro.mjs has a JDN Julian converter and screening.json excludes Julian-dated births (Option A); the gap is that the converter is not wired into the SDK, site form, MCP or share codec, and UI date inputs start at 1800 so pre-1800 examples are SDK-only.
+
+- verification-honesty-1: literals 'carry no query strings'; gate '12x-3600x' looser: engine.test.ts:4-5 records QUANTITIES='31' and CENTER='500@399'; what is missing is API version, source kernels and retrieval date. The ratio range is 12x (Neptune) to ~9,400x (Mercury).
+
+- verification-honesty-2: the 2024 eclipse TT residual (4.18 s) cited as Delta-T evidence; 'growing about 1.2 s per year': The TT residual is Delta-T-independent ephemeris geometry (the Delta-T error cancels it to +0.87 s in UT); the growth rate is 0.61 s/yr. The Delta-T finding itself is sound and reproduced to 0.001 s.
+
+- verification-honesty-4: '13 of 42' recorded families: 11 tests carry a mutation comment; 13 counted matching lines. The surviving mutation is real.
+
+- alpha-search-partition-2: 'shrinking cells cannot fix it'; 'every retarded rung over-subdivides by roughly the same factor'; the ~0.04 d post-fix residue: The width ratio is constant so the residue scales linearly with cell width (PARTITION-RESULTS' 5-s sweep shows 0.71%); the retarded and aberrated Moon runs finished (296,106 and 264,398 evaluations), so only the deflected rung/partition is affected; 0.04 d is a linear model that predicts 40 d where 15.8 d was measured. The 2,900x enclosure defect itself reproduces.
+
+- alpha-search-partition-3: the partition 'already brackets elongation = 5 deg to 60 s': Coalesced boundary spans are 2,489-2,658 s (Saturn), 11,264-12,192 s (Mars) and 15.8 d total (Moon); 42.19 s is the widest floor cell, not a span.
+
+- alpha-search-partition summary: the search layer 'already exceeds Swiss in kind': True only for the released validated geometric-J2000 longitude crossing; the apparent-of-date proven rungs are experimental, the deflected rung fails 6/20 and the Moon partition is partial, and production uses none of it.
+
+- alpha-reduction-math-1: 'no path to the body centre'; Jupiter max 0.0709": reduce.mjs:182-206 has the non-contract offsetKm hook (nothing feeds it); the Jupiter maximum is 0.0758" (the 18-day grid aliased the 7-17 day Galilean modulation); the ephemeris.mjs citation points past the file's end. Severity stands.
+
+- alpha-reduction-math-9: the Moon's U-shaped residual is 'Swiss's DE431 fit vs DE440': The files are DE441; the swiss-parity verifier measured the residual as DE440-vs-DE441 (Swiss .se1 vs Horizons DE441 Moon 0.002" rms after frame cancellation). Mechanism right, attribution wrong.
+
+- data-toolchain-packaging-2 as major: 'runs the documented compile without --out': examples/00-prepare-a-pack.md already passes --out=./D.zeph and package.json is private:true so npm publish refuses; the hazard needs a deviation from the docs and a hand-shared tarball (minor). The files glob, default --out and unconditional mkdir are real.
+
+- data-toolchain-packaging-3: the header has 'no DE440 citation' and the RIGHTS.md claim is 'false': The greps for 'Zodiacs' and 'DE440 ' were false negatives: the header names 'JPL DE440s SPK kernel', the kernel sha256, compiler and conventions; only the producer name-and-institution field is missing, so RIGHTS.md is partly overstated (minor).
+
+- data-toolchain-packaging-4: 'the site's bundle gate would refuse the runtime as it stands': Only if the alpha entered the eager engine-chunk closure; a lazy chunk faces the 60 KB chunk-max. The 404, private flag and 27.5 KB figure reproduce.
+
+- production-event-search-2: solar returns and Sun ingresses run '37-39 s late': The Sun error is seasonal (+1.2" February to -1.67" June), so instants run from ~28 s early (Feb-Mar) to ~42 s late (May-Jul) with a signed mean of +0.5 s over the ingress table; both Horizons cases were July births.
+
+- production-event-search-5 (two solvers) and -6 (transit-window budgets) as major: Both semantics are documented (index.d.ts:21-27; transit-windows README:46-48), no sign-change crossing differs between the copies, and no pass count changes at any budget; they are consistency and calibration defects (minor).
+
+- production-event-search-7: 'Swiss with the .se1 files (DE431) is worse than the engine against DE441' on Pluto: Compared to Horizons 999 (body centre) instead of the barycentre Swiss and the engine model; against Horizons 9 Swiss is -241 s and sky.json -2704 s; files are DE441.
+
+- production-event-search-8: totality minutes exceed Swiss because 'the builder rounds': astronomy-engine's own sd_total is 0.6-1.35 min larger than Swiss's contact difference; rounding contributes <= 0.5 min.
+
+- angles-houses-aspects-2 as blocking, 'all involving the Moon': 0.21% of aspect rows at a random instant, no false positives, 83 of 506 misclassifications are non-Moon pairs under Swiss positions, a 0.25-day fix; deterministically wrong and contract-contradicting, so major, but ranking it above the 512" ASC defect inverts impact.
+
+- angles-houses-aspects-11 and the angles swissGap: a 'measurable, honest exceeds Swiss claim for angles' on sidereal time: The 1.9" departure is Swiss's DEFAULT long-term sidereal model outside 1850-2050; Swiss exposes the IAU 2006 model through swe_set_astro_models (SEMOD_SIDT_IAU_2006), so this is a default-setting difference, not a capability lead, and it is conditional on DUT1 being applied or disclosed by both.
+
+- Verifier verdicts confirmed without running anything: None: all 43 verdicts in verdicts.json have reproductionRan=true. Two weaker cases: swiss-parity-10's Swiss-side Chiron/asteroid/fixed-star claims rest on library capability (seas_18.se1 and sefstars.txt absent locally), and 76 of the 119 findings (all minor/note) were never verified by anyone.
+
+- Swiss comparisons resting on a Moshier fallback: None found: every auditor asserted the SWIEPH flag and verification-honesty-10 excluded the 1800-01-01 row (which answers MOSEPH; sepl_18 begins at JD 2378496.5 and needs the prior segment). The only mislabels are production-positions' swiss-dump.py docstring ('DE431 excerpts') and the DE431 attributions above.
+
+- Tree claim (not an auditor's): src/lib/engine/lite.ts header 'Sun +-0.01 deg, Moon +-0.3 deg': Measured against Swiss: Sun 0.016 deg max over 1950-2100, Moon 0.356 deg max in 2026 (lite-vs-swiss.json); nobody audited this surface.
+
+# TOP TEN
+1. production-positions-1: the truncated VSOP87/ILE/Pluto series is the entire 2-30" positional gap to Swiss over 1800-2200 (Venus 23", Pluto 29", Neptune 20" in my multi-year run) and no reduction work closes it; adopting the DE440s pack, already 0.0025" from Swiss on the same DE, is the only route to parity.
+2. swiss-parity-4: parity is the positional ceiling, because the alpha, Swiss .se1 (DE441) and Swiss-on-DE440 are indistinguishable against Horizons (0.384"/0.098", a residual that is Horizons's IAU76/80 frame, identical for Sun, Mars and Pluto at 2200), so 'more accurate than Swiss' is unmeasurable with any available arbiter.
+3. time-1 (with production-positions-2, swiss-parity-1, verification-honesty-2): Delta-T is +6.3 s against IERS today and worsens 0.61 s/yr, displacing the Moon 3.3" and every Moon event ~6 s; it is the largest correctable current-epoch error and, with an IERS table plus a stated band, the clearest place to truthfully exceed Swiss.
+4. angles-houses-aspects-1: pairing the mean obliquity with apparent sidereal time puts the Ascendant up to 512" off (36" at Helsinki), a frame inconsistency Swiss does not have; a one-line fix and the prerequisite for any angle claim or wider Placidus band.
+5. data-toolchain-packaging-4: nothing reaches users (npm 404, private alpha, no pack, runtime above the eager chunk budget), so the measured alpha accuracy is unavailable and Swiss wins by default until a distribution path exists.
+6. data-toolchain-packaging-1: the compiler produces a usable pack only from a kernel of exactly 109,600 days (verified with real DE440 and DE432s kernels: refused or opens-but-unusable), so the precision path cannot cover the site's own 1800-2199 span.
+7. alpha-search-partition-2: the split R.pos - O.pos enclosure makes the Moon's cos(elongation) 2,900x too wide and is why the proven apparent-of-date search fails for the Moon; fixing it unlocks the one capability class (certified completeness) Swiss cannot match.
+8. alpha-reduction-math-12: no pointwise output carries a sky-referenced bound, so the 'proven error bounds on every output' differentiator is an internal property of the search, not something a chart consumer receives.
+9. swiss-parity-11 (with swiss-parity-10, swiss-parity-12, angles-houses-aspects-7): two house systems against 24, no Chiron, mean node, Lilith, asteroids, fixed stars or ayanamsas; 'more advanced than Swiss' is impossible while a practitioner cannot reproduce a standard chart.
+10. time-2: 98 zones return another city's pre-1970 offsets (Stockholm 1947 +60 min moves the ASC 9.5 deg), the largest wrong-answer magnitude anywhere in the stack, and a backzone-complete shipped tzdb would exceed Swiss, which ships no time-zone data at all.
+
+# SWISS VERDICT
+On positions, "substantially better than Swiss Ephemeris" cannot truthfully mean smaller residuals: the alpha on DE440s and Swiss on DE441 or DE440 agree to 0.0025-0.010 arcsec and both sit 0.098/0.384 arcsec from Horizons in a residual that is Horizons's own IAU76/80 frame (identical -0.498 arcsec for Sun, Mars and Pluto at 2200 in my probe), so parity is the measurable ceiling and no arbiter on this machine can rank them (swiss-parity-4, alpha-reduction-math-5). It cannot mean a newer JPL series: the Swiss data files in use are DE441-based (header text, denum 441), the DE440-vs-DE441 lunar difference is 0.010 arcsec, and the DE431 attributions in production-positions-6/11, alpha-reduction-math-9 and production-event-search-7 are wrong (swiss-parity-3). It cannot mean the shipped engine at all: over 1800-2200 production is 2-30 arcsec from Swiss (Venus 23, Pluto 29, node 27, Neptune 20, Saturn latitude 22), 6.7x worse than Swiss's zero-data Moshier, 6.3 s wrong on Delta-T, up to 512 arcsec off on the Ascendant, 40 s late on lunations and -28 to +42 s on solar returns, so the first meaning of "better" is simply reaching Swiss by adopting the pack, an IERS Delta-T and the true obliquity (production-positions-1, time-1, angles-houses-aspects-1, production-event-search-1/2). It cannot yet mean breadth or advancement: two house systems against 24, no Chiron, mean node, Lilith, asteroids, fixed stars, ayanamsas, topocentric place, apparent rates, eclipse circumstances or occultations, and no Julian-calendar input, so a practitioner cannot reproduce a standard chart (swiss-parity-10/11/12, angles-houses-aspects-7, time-3). It can truthfully mean rigor: integrity-sealed packs with proven per-body fit bounds, a reduction within 5e-7 arcsec of the ERFA chain (three orders closer than Swiss's own nutation departure), typed refusals outside coverage, a byte-identical cross-runtime search path and a reproducible engine build, none of which Swiss offers (data-toolchain-packaging-10/11/14, alpha-reduction-math-5/9) — once compile.mjs also refuses packs whose proven bounds exceed their budgets. It can mean completeness semantics: the validated geometric-longitude search with proven counts and typed unresolved verdicts already exceeds every Swiss finder in kind, and the same polynomial route reaches stations, aspects and latitude crossings, but today that proof is released only for J2000 geometric longitude, the apparent-of-date rung is experimental and the Moon fails until the enclosure defect is fixed (alpha-search-partition-2/3, production-event-search-17). It can mean honest time: a Delta-T from an IERS table with a stated band carried into Moon longitude and event times, exact leap-second TT and UT1-UTC, a backzone-complete tzdb with its version in the receipt, and a Julian-calendar field with adoption warnings would exceed Swiss, which ships a bare Delta-T and no time-zone data, while fixing the stack's largest wrong answers (time-1/2/3/4, swiss-parity-8). It can mean event timing at DE quality with a band: a DE440s-backed Neptune station lands -43 s from Horizons where sky.json is +2110 s and Swiss -76 s, so stations, ingresses and returns can match Swiss and carry an uncertainty Swiss never states (production-event-search-7 as corrected, my probe). It can mean small catch-ups labelled honestly as parity, not leads: body centres (<=0.093 arcsec, which Swiss already resolves with sepm files), IAU 2000A nutation (0.002 arcsec), solar deflection (already in the alpha), full-series equation of the equinoxes and IAU 2006 sidereal time (a model Swiss also offers, so angles-houses-aspects-11 is a default-setting difference, not a lead). None of it is true until it ships and is gated: @zodiacs/engine is 404 on npm, the alpha is private, the compiler cannot cover 1800-2199, the alpha runtime alone exceeds the engine-chunk budget, and CI enforces gates 12-9,400x looser than the residuals with no Delta-T, tier-b, benchmark or observational anchor (data-toolchain-packaging-1/4, verification-honesty-1/5), so the truthful claim today is "an experimental reducer at Swiss parity with stronger guarantees, behind a shipped engine that is below Swiss," and superiority can be substantiated only in rigor, completeness semantics and time-honesty, and only after those ten fixes land.

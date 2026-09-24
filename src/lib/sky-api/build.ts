@@ -20,7 +20,7 @@ import type {
   StationSource, TransitMonth,
 } from './types';
 
-export const LUNATION_JOIN_TOLERANCE_MS = 6 * 60 * 60 * 1000;
+export const LUNATION_JOIN_TOLERANCE_MS = 60 * 1000;
 export const STATION_JOIN_TOLERANCE_MS = 24 * 60 * 60 * 1000;
 export const UPCOMING_WINDOW_DAYS = 60;
 const DAY_MS = 86_400_000;

@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:24.62",
+        "sun-degree:24.63",
         "decan:pisces:third"
       ],
       "text": "24.6° of Pisces is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -25,9 +25,9 @@
       "facts": [
         "personal:Mercury:Pisces:28.3°",
         "personal:Venus:Aquarius:10.7°",
-        "personal:Mars:Sagittarius:21.7°"
+        "personal:Mars:Sagittarius:21.8°"
       ],
-      "text": "Closer in, Mercury stands at 28.3° Pisces; Venus stands at 10.7° Aquarius; Mars stands at 21.7° Sagittarius. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
+      "text": "Closer in, Mercury stands at 28.3° Pisces; Venus stands at 10.7° Aquarius; Mars stands at 21.8° Sagittarius. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
     },
     {
       "key": "geometry",
@@ -35,7 +35,7 @@
       "facts": [
         "aspect:Mars:Pluto:opposition:0.01",
         "aspect:Uranus:Neptune:opposition:2.41",
-        "aspect:Sun:Pluto:square:2.86"
+        "aspect:Sun:Pluto:square:2.88"
       ],
       "text": "Mars to Pluto is the closest call of the day, an opposition within 0.0°. The scheme reads an opposition as an axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Uranus opposition Neptune at 2.4°, and the Sun square Pluto at 2.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
     },
@@ -76,7 +76,7 @@
         "moon-band:13.0"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.6°."
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.7°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Pluto:opposition",
-    "sun-degree:24.62",
+    "sun-degree:24.63",
     "decan:pisces:third",
     "personal:Mercury:Pisces:28.3°",
     "personal:Venus:Aquarius:10.7°",
-    "personal:Mars:Sagittarius:21.7°",
+    "personal:Mars:Sagittarius:21.8°",
     "aspect:Mars:Pluto:opposition:0.01",
     "aspect:Uranus:Neptune:opposition:2.41",
-    "aspect:Sun:Pluto:square:2.86",
+    "aspect:Sun:Pluto:square:2.88",
     "figure:t-square:Mars-Pluto:apex-Sun",
     "figure:unaspected:Venus",
     "dignity:Mercury:fall",

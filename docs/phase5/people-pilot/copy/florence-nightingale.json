@@ -7,14 +7,14 @@
   "identity": "Nurse and writer · Italy · 1820–1910",
   "title": "Florence Nightingale's birth chart",
   "metaDescription": "Florence Nightingale's chart, computed from a sourced birth date: Sun at 21.6° Taurus. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 22.7° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 22.8° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:exaltation",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:21.58",
+        "sun-degree:21.59",
         "decan:taurus:third"
       ],
       "text": "The Sun's exact place is 21.6° Taurus. That falls in the third decan, 20°–30°, sub-ruled by Saturn in the classical scheme — an earth sign read through a fixed season."
@@ -55,7 +55,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:fall"
       ],
-      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 17.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 9.3° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 22.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 17.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 9.3° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:13.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 22.7°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 22.8°."
     }
   ],
   "birthdayLink": {
@@ -89,7 +89,7 @@
   },
   "substantiveFacts": [
     "dignity:Moon:exaltation",
-    "sun-degree:21.58",
+    "sun-degree:21.59",
     "decan:taurus:third",
     "personal:Mercury:Aries:25.7°",
     "personal:Venus:Cancer:6.7°",

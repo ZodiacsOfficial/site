@@ -65,6 +65,7 @@ function harness() {
     keepWheelAboveTour: () => {}, applySelect: () => {}, loadPushOptIn: () => {},
     readFirstReadingProgress: () => ({}),
     track: () => {}, signForLongitude: () => ({ slug: 'aries' }),
+    prepareLocalTime: () => Promise.resolve(),
     resolveLocalToUtc: (date: string) => ({ utc: new Date(date + 'T14:30:00Z'), offsetMinutes: 0, flags: [] }),
     assessLocalDateReference: () => ({ referenceStatus: 'member' }),
     moonIsUncertain: (chart: any) => chart.moonSignCandidates?.length !== 1,

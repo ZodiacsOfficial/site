@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1757-11-28T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1757-11-28T00:01:15.000Z",
-    "civilDayEndUtc": "1757-11-29T00:01:15.000Z",
+    "utcInstant": "1757-11-28T12:00:31.000Z",
+    "utcOffsetMinutesAtBirth": -0.5167,
+    "civilDayStartUtc": "1757-11-28T00:00:31.000Z",
+    "civilDayEndUtc": "1757-11-29T00:00:31.000Z",
     "latitude": 51.507222222222,
     "longitude": -0.1275,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 8.13,
+    "degree": 8.12,
     "uncertain": false,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "cancer"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 6.0229,
-    "degreesToNextBoundaryAtWindowEnd": 22.963
+    "degreesInsideAtWindowStart": 6.0233,
+    "degreesToNextBoundaryAtWindowEnd": 22.9626
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.014,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 8.13,
+      "degree": 8.12,
       "retrograde": false,
-      "speedPerDay": 12.1893,
+      "speedPerDay": 12.1894,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true

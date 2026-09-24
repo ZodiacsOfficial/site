@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1876-06-22T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1876-06-21T23:50:39.000Z",
-    "civilDayEndUtc": "1876-06-22T23:50:39.000Z",
+    "utcInstant": "1876-06-22T11:51:28.000Z",
+    "utcOffsetMinutesAtBirth": 8.5333,
+    "civilDayStartUtc": "1876-06-21T23:51:28.000Z",
+    "civilDayEndUtc": "1876-06-22T23:51:28.000Z",
     "latitude": 48.072222222222,
     "longitude": 2.1347222222222,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 9.44,
+    "degree": 9.45,
     "uncertain": false,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "cancer"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.8531,
-    "degreesToNextBoundaryAtWindowEnd": 28.1928
+    "degreesInsideAtWindowStart": 0.8475,
+    "degreesToNextBoundaryAtWindowEnd": 28.1984
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
@@ -75,7 +75,7 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 9.44,
+      "degree": 9.45,
       "retrograde": false,
       "speedPerDay": 15.3019,
       "dignity": "domicile",
@@ -88,7 +88,7 @@
       "signName": "Gemini",
       "degree": 22.01,
       "retrograde": true,
-      "speedPerDay": -0.3636,
+      "speedPerDay": -0.3635,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -241,15 +241,22 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 1.37,
+      "orb": 1.38,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Neptune",
       "type": "sextile",
-      "orb": 4.69,
+      "orb": 4.7,
       "applying": false
+    },
+    {
+      "a": "Moon",
+      "b": "Mars",
+      "type": "conjunction",
+      "orb": 8.11,
+      "applying": true
     },
     {
       "a": "Sun",
@@ -257,13 +264,6 @@
       "type": "conjunction",
       "orb": 8.12,
       "applying": false
-    },
-    {
-      "a": "Moon",
-      "b": "Mars",
-      "type": "conjunction",
-      "orb": 8.12,
-      "applying": true
     }
   ],
   "patterns": {

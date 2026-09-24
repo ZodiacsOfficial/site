@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Africa/Lagos",
     "civilTime": "12:00",
-    "utcInstant": "1900-10-25T11:46:25.000Z",
-    "utcOffsetMinutesAtBirth": 13.5833,
-    "civilDayStartUtc": "1900-10-24T23:46:25.000Z",
-    "civilDayEndUtc": "1900-10-25T23:46:25.000Z",
+    "utcInstant": "1900-10-25T11:46:36.000Z",
+    "utcOffsetMinutesAtBirth": 13.4,
+    "civilDayStartUtc": "1900-10-24T23:46:36.000Z",
+    "civilDayEndUtc": "1900-10-25T23:46:36.000Z",
     "latitude": 7.15,
     "longitude": 3.35,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 1.1252,
-    "degreesToNextBoundaryAtWindowEnd": 27.8768
+    "degreesInsideAtWindowStart": 1.1159,
+    "degreesToNextBoundaryAtWindowEnd": 27.886
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.998,

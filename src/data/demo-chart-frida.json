@@ -1,7 +1,7 @@
 {
   "name": "Frida Kahlo",
   "birth": "July 6, 1907 · 8:30 AM · Coyoacán, Mexico",
-  "utc": "1907-07-06T15:06:36.000Z",
+  "utc": "1907-07-06T15:06:38.000Z",
   "bodies": [
     {
       "body": "Sun",
@@ -12,16 +12,16 @@
     },
     {
       "body": "Moon",
-      "lon": 59.7121,
+      "lon": 59.7124,
       "lat": -4.2615,
-      "speed": 12.023644,
+      "speed": 12.023641,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 126.3359,
+      "lon": 126.336,
       "lat": -1.6612,
-      "speed": 0.372832,
+      "speed": 0.372831,
       "retrograde": false
     },
     {
@@ -77,20 +77,20 @@
       "body": "North Node",
       "lon": 113.4131,
       "lat": 0,
-      "speed": -0.053004,
+      "speed": -0.023484,
       "retrograde": true
     },
     {
       "body": "South Node",
       "lon": 293.4131,
       "lat": 0,
-      "speed": -0.053004,
+      "speed": -0.023484,
       "retrograde": true
     }
   ],
   "angles": {
-    "asc": 143.5128,
-    "mc": 53.3284
+    "asc": 143.5205,
+    "mc": 53.3366
   },
   "houses": {
     "system": "whole",

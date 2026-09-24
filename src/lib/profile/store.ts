@@ -149,6 +149,34 @@ export function saveChart(
   return 'saved';
 }
 
+export interface ChartSummaryUpdate {
+  id: string;
+  /** The stored instant the recomputed summary replaces. */
+  utcISO: string;
+  summary: SavedChart['summary'];
+}
+
+/**
+ * Replaces recomputed summaries in one write: one `zodiacs:profile` event and
+ * one cloud sync for the batch. Each applies only while the stored chart still
+ * has its id and the instant it was recomputed from, so a chart saved again in
+ * the meantime keeps its own summary. Birth input, name and timestamps stay as
+ * they are: a recomputed cache is not an edit, and a new updatedAt would change
+ * which chart reads as the newest. Returns the ids it replaced.
+ */
+export function updateChartSummaries(updates: readonly ChartSummaryUpdate[]): string[] {
+  const profile = loadProfile();
+  const replaced: string[] = [];
+  profile.charts = profile.charts.map((chart) => {
+    const update = updates.find((candidate) => candidate.id === chart.id);
+    if (!update || chart.summary.utcISO !== update.utcISO) return chart;
+    replaced.push(chart.id);
+    return { ...chart, summary: update.summary };
+  });
+  if (replaced.length === 0 || !persist(profile)) return [];
+  return replaced;
+}
+
 /** Makes one saved chart the canonical self chart and classifies every other chart as other. */
 export function markPrimarySelfChart(id: string): boolean {
   const profile = loadProfile();

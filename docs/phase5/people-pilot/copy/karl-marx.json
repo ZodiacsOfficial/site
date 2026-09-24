@@ -7,14 +7,14 @@
   "identity": "Economist and journalist · Germany · 1818–1883",
   "title": "Karl Marx's birth chart",
   "metaDescription": "Karl Marx's chart, computed from a sourced birth date: Sun at 14.3° Taurus. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 16.0° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 16.3° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:exaltation",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:14.31",
+        "sun-degree:14.33",
         "decan:taurus:second"
       ],
       "text": "Taurus, but precisely: 14.3°, second decan, 10°–20°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -34,8 +34,8 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Neptune:Pluto:square:0.17",
-        "aspect:Sun:Jupiter:trine:1.37",
-        "aspect:Sun:Saturn:sextile:1.51"
+        "aspect:Sun:Jupiter:trine:1.39",
+        "aspect:Sun:Saturn:sextile:1.5"
       ],
       "text": "Closest first: Neptune to Pluto, a square with 0.2° of slack. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, the Sun trine Jupiter at 1.4°, and the Sun sextile Saturn at 1.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
@@ -57,7 +57,7 @@
         "dignity:Mars:fall",
         "dignity:Jupiter:fall"
       ],
-      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Moon in Taurus at 16.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Gemini at 3.9° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 28.0° is in domicile; Mars in Cancer at 21.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 12.9° is in fall. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Moon in Taurus at 16.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Gemini at 3.9° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 28.0° is in domicile; Mars in Cancer at 21.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 12.9° is in fall. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
     },
     {
       "key": "shape",
@@ -78,7 +78,7 @@
         "moon-band:11.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 16.0°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 16.3°."
     }
   ],
   "birthdayLink": {
@@ -91,14 +91,14 @@
   },
   "substantiveFacts": [
     "dignity:Moon:exaltation",
-    "sun-degree:14.31",
+    "sun-degree:14.33",
     "decan:taurus:second",
     "personal:Mercury:Gemini:3.9°",
     "personal:Venus:Taurus:28.0°",
     "personal:Mars:Cancer:21.0°",
     "aspect:Neptune:Pluto:square:0.17",
-    "aspect:Sun:Jupiter:trine:1.37",
-    "aspect:Sun:Saturn:sextile:1.51",
+    "aspect:Sun:Jupiter:trine:1.39",
+    "aspect:Sun:Saturn:sextile:1.5",
     "figure:none",
     "dignity:Moon:exaltation",
     "dignity:Mercury:domicile",

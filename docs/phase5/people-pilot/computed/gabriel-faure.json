@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1845-05-12T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1845-05-11T23:50:39.000Z",
-    "civilDayEndUtc": "1845-05-12T23:50:39.000Z",
+    "utcInstant": "1845-05-12T11:53:33.000Z",
+    "utcOffsetMinutesAtBirth": 6.45,
+    "civilDayStartUtc": "1845-05-11T23:53:33.000Z",
+    "civilDayEndUtc": "1845-05-12T23:53:33.000Z",
     "latitude": 43.116388888889,
     "longitude": 1.6108333333333,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 28.21,
+    "degree": 28.24,
     "uncertain": true,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "leo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 21.0927,
-    "degreesToNextBoundaryAtWindowEnd": 7.9428
+    "degreesInsideAtWindowStart": 21.0884,
+    "degreesToNextBoundaryAtWindowEnd": 7.9471
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.964,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 28.21,
+      "degree": 28.24,
       "retrograde": false,
-      "speedPerDay": 11.9263,
+      "speedPerDay": 11.9265,
       "dignity": "domicile",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,9 +92,9 @@
       "body": "Mercury",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 15.88,
+      "degree": 15.87,
       "retrograde": true,
-      "speedPerDay": -0.5535,
+      "speedPerDay": -0.5534,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -231,14 +231,14 @@
       "a": "Mercury",
       "b": "Saturn",
       "type": "square",
-      "orb": 2.85,
+      "orb": 2.86,
       "applying": false
     },
     {
       "a": "Sun",
       "b": "Neptune",
       "type": "square",
-      "orb": 4.31,
+      "orb": 4.3,
       "applying": true
     },
     {
@@ -259,7 +259,7 @@
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 5.69,
+      "orb": 5.7,
       "applying": false
     },
     {
@@ -275,21 +275,21 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "square",
-      "orb": 2.8,
+      "orb": 2.82,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "square",
-      "orb": 4.13,
+      "orb": 4.15,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "opposition",
-      "orb": 9.98,
+      "orb": 9.95,
       "applying": true
     }
   ],

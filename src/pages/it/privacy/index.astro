@@ -1,301 +1,643 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { webAnalyticsEnabled as vercelWebAnalyticsFlag } from '../../../lib/web-analytics.mjs';
+import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../../lib/account-v2/feature-flags';
+import { weeklyDigestSignupEnabled } from '../../../lib/weekly-digest/feature-flags';
+import { configuredWalletChains } from '../../../lib/wallet/config';
 
-const updated = '31 agosto 2026';
+const accountSyncV2Enabled = isAccountSyncV2Enabled({
+  PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
+  PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
+});
+const weeklyDigestEnabled = weeklyDigestSignupEnabled();
+const webPushEnabled = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
+const walletChartEnabled = configuredWalletChains({
+  ...process.env,
+  PUBLIC_WALLET_CHART_ENABLED:
+    import.meta.env.PUBLIC_WALLET_CHART_ENABLED ?? process.env.PUBLIC_WALLET_CHART_ENABLED,
+}).length > 0;
+const updated = '23 settembre 2026';
+const modifiedAt = '2026-09-23T00:00:00.000Z';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacy su Zodiacs.org',
     url: 'https://zodiacs.org/it/privacy/',
-    description: 'Come zodiacs.org tratta temi natali, consultazioni di indirizzi pubblici di The Cabinet of Twelve e Shelf, memoria del browser, analisi e funzioni facoltative.',
+    description:
+      'Come Zodiacs.org tratta temi natali, memoria del browser, account, link di condivisione, Guide, analisi, consultazioni di indirizzi pubblici di wallet e richieste di dati di mercato.',
     inLanguage: 'it',
+    dateModified: modifiedAt,
   },
 ];
 const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 ---
 <Base
   title="Privacy — Come vengono trattati i tuoi dati | Zodiacs.org"
-  description="Come zodiacs.org tratta temi natali, consultazioni di indirizzi pubblici di The Cabinet of Twelve e Shelf, memoria del browser, analisi e funzioni facoltative."
+  description="Come Zodiacs.org tratta temi natali, memoria del browser, account, link di condivisione, Guide, analisi, consultazioni di indirizzi pubblici di wallet e richieste di dati di mercato."
   path="/it/privacy/"
   locale="it"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacy</em>
-    <h1 class="method-title display">Scegli tu quando i dati lasciano il dispositivo.</h1>
+    <h1 class="method-title display">I tuoi dati di nascita lasciano il dispositivo solo quando li invii tu.</h1>
 
     <div class="prose">
       <p class="lede">
-        In breve: il tema natale viene calcolato nel tuo browser. I dati di
-        nascita non vengono inviati durante quel calcolo né durante una
-        consultazione The Cabinet of Twelve; lasciano il dispositivo solo se scegli di
-        sincronizzare un account o se li scrivi nell’assistente. Aura invia un
-        indirizzo pubblico del wallet — non i dati di nascita o del tema — a un
-        fornitore di dati blockchain per una consultazione di sola lettura. Non
-        mostriamo pubblicità e non usiamo il tracciamento tra siti.
+        Il calcolo del tema avviene nel tuo browser. I dati di nascita non
+        vengono inviati nell’ambito del calcolo né di una consultazione di
+        The Cabinet of Twelve; lasciano il dispositivo solo se accedi per
+        sincronizzare i temi salvati, se condividi un link che li contiene o se
+        li scrivi in un messaggio all’assistente. Un calendario dei transiti o
+        un invito di compatibilità invia invece le posizioni del tema, e da
+        quelle posizioni si possono comunque ricavare la tua data e la tua ora
+        di nascita. Se alleghi esplicitamente un tema all’assistente, lascia il
+        dispositivo anche un riepilogo delle sole posizioni; i nomi salvati e i
+        dati di nascita grezzi non vengono allegati. Aura invia un indirizzo
+        pubblico del wallet — non i tuoi dati di nascita o del tema — a un
+        fornitore di dati blockchain per una consultazione di sola lettura.
+        Gli account{weeklyDigestEnabled ? ',' : ' e'}
+        i dati Aura memorizzati{weeklyDigestEnabled ? ' e l’e-mail settimanale' : ''} sono
+        facoltativi e disattivati per impostazione predefinita. Non mostriamo
+        pubblicità e non usiamo il tracciamento tra siti.
       </p>
 
       <h2>Chi gestisce questo sito</h2>
       <p>
         <strong>Zodiacs LLC</strong>, società a responsabilità limitata del
-        New Mexico («Zodiacs», «noi»), possiede e gestisce Zodiacs.org ed è
-        responsabile delle informazioni personali descritte in questa
-        informativa. Dove la normativa sulla protezione dei dati usa il termine
-        «titolare del trattamento», Zodiacs LLC è il titolare del trattamento
-        di tali informazioni. Le richieste su privacy e cancellazione possono
-        essere inviate a Zodiacs LLC all'indirizzo{' '}
-        <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+        New Mexico («Zodiacs», «noi», «ci» o «nostro»), possiede e gestisce
+        Zodiacs.org ed è responsabile delle informazioni personali descritte in
+        questa informativa. Dove la normativa sulla protezione dei dati usa il
+        termine «titolare del trattamento», Zodiacs LLC è il titolare del
+        trattamento di tali informazioni.
       </p>
 
-      <h2>Calcolatori e temi salvati</h2>
+      <h2>Cosa succede quando usi un calcolatore</h2>
       <p>
-        La ricerca dei luoghi e il calcolo astrologico avvengono sul tuo
-        dispositivo. I temi che salvi restano nella memoria locale del browser.
-        L’account è facoltativo; se lo usi, Supabase conserva il tuo indirizzo
-        e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri
-        dispositivi. I dati di nascita non vengono trasmessi né conservati sui
-        nostri server come parte del calcolo stesso.
+        Ogni tema che calcoli qui viene elaborato sul tuo dispositivo. Quando
+        inserisci data, ora e luogo di nascita, queste informazioni vengono
+        usate da codice eseguito nel tuo browser per calcolare il tema.
+        Nell’ambito di quel calcolo non vengono trasmesse ai nostri server, né
+        registrate nei log, né conservate da noi. Lasciano il dispositivo solo
+        se in seguito accedi per sincronizzare un tema salvato, condividi un
+        link che le contiene o le inserisci in un messaggio all’assistente. È
+        una scelta di progettazione deliberata, descritta per intero nella
+        nostra pagina sul <a href="/it/methodology/">metodo di calcolo</a>.
+      </p>
+      <p>
+        La ricerca del luogo scarica da zodiacs.org un file di città scelto in
+        base alla prima lettera che digiti, e cerca al suo interno nel tuo
+        browser. Per una nascita prima del 1970, il calcolatore scarica anche
+        un file con i cambi d’ora storici, scelto in base al fuso orario del
+        luogo di nascita. Nessuna delle due richieste va a un altro servizio. I file richiesti mostrano al nostro hosting la prima lettera della città che hai digitato e, per una nascita prima del 1970, un gruppo di fusi orari che comprende quello del luogo di nascita.
+      </p>
+
+      <h2>Guide</h2>
+      <p>
+        Quando invii una domanda a Guide, quel messaggio, i messaggi recenti di
+        Guide e il contesto visibile di Guide vengono inviati a OpenAI per un
+        controllo di sicurezza dell’input e per generare una bozza di risposta.
+        Quella bozza generata viene poi inviata di nuovo a
+        OpenAI per un secondo controllo di sicurezza prima che tu la veda.
+        Ogni richiesta all’API Responses usa <code>store: false</code>. La
+        conversazione web in corso con Guide resta soltanto in questa sessione
+        del browser, non viene sincronizzata con un account e non viene
+        archiviata come testo sui server di Zodiacs.org, che tu abbia effettuato
+        l’accesso o no. OpenAI dichiara che per impostazione predefinita i dati
+        dell’API non vengono usati per addestrare i suoi modelli, e che i suoi
+        log di monitoraggio degli abusi conservano i contenuti inviati fino a 30
+        giorni, o più a lungo quando la legge lo richiede o quando è necessario
+        per proteggere i suoi servizi o altre persone da danni. Un tema salvato
+        viene incluso solo dopo che premi “Allega il mio tema”; la schermata di
+        consenso mostra il riepilogo delle sole posizioni prima che venga
+        inviato. Quel riepilogo accompagna ogni domanda finché “Con il mio tema”
+        resta attivo; puoi disattivarlo. Guide non allega mai il nome, la data
+        e l’ora di nascita, il luogo di nascita o le coordinate che hai salvato;
+        tutto ciò che scrivi nella chat fa parte del messaggio che invii.
+        Per applicare il limite giornaliero conserviamo un identificativo
+        irreversibile con sale derivato dal tuo indirizzo IP, mai l’IP
+        originale, insieme al suo conteggio giornaliero e a una traccia di ogni
+        richiesta. Ogni successivo controllo del limite elimina i conteggi
+        anteriori al giorno UTC precedente e le tracce delle richieste più
+        vecchie di 48 ore. Non inviamo quell’identificativo a OpenAI e non
+        inseriamo il testo delle conversazioni nei metadati del fornitore.
+        Guide imposta anche un cookie di sessione che contiene un identificativo
+        casuale e firmato. Serve a limitare le richieste simultanee da uno
+        stesso browser, dura fino alla fine della sessione del browser e non
+        viene conservato insieme ai tuoi messaggi.
+      </p>
+
+      <h2>I temi che salvi</h2>
+      <p>
+        Quando salvi un tema, viene conservato nella memoria locale del tuo
+        browser — sul tuo dispositivo, sotto il tuo controllo. Non viene inviato
+        da nessuna parte, a meno che tu non acceda a un account (vedi sotto), lo
+        condivida o ti iscriva al suo calendario dei transiti (vedi sotto),
+        oppure lo alleghi a Guide (vedi sopra).
+        Cancellare i dati del sito nel tuo browser elimina i temi salvati. Se
+        non accedi, non possiamo vederli e non possiamo recuperarli per te.
+      </p>
+
+      <h2>Link di condivisione e inviti</h2>
+      <p>
+        I link di condivisione tengono i dati del tema dopo il «#»
+        nell’indirizzo, una parte che i browser non inviano ai server. Un link
+        con tutti i dati contiene il nome del tema, la data, l’ora e il luogo di
+        nascita, oltre alle coordinate. Un link con le sole posizioni contiene
+        invece il codice del tema descritto in «Riepilogo quotidiano,
+        calendario e notifiche». Chiunque abbia l’uno o l’altro link può
+        aprirlo, anche chi lo riceve inoltrato. Un link con un’immagine di
+        anteprima inserisce nell’indirizzo anche il Sole, la Luna e
+        l’ascendente, precisi al grado, quindi li ricevono il nostro server e
+        qualsiasi app che mostri l’anteprima.
+      </p>
+      <p>
+        Se hai effettuato l’accesso e crei un invito di compatibilità da un tema
+        sincronizzato, il nostro server conserva il nome del tema (fino a 24
+        caratteri), il suo segno solare, il suo codice del tema con le sole
+        posizioni e l’indicazione se l’ora di nascita è nota. Un invito dura al massimo 14 giorni, e chi lo apre vede quel nome e quelle posizioni. Le
+        posizioni vengono cancellate quando l’invito viene usato, ritirato o
+        scade, e il resto del record 30 giorni dopo.
+        Se lo chiedi, ti inviamo un’e-mail tramite
+        <a href="https://resend.com/" rel="noopener noreferrer">Resend</a>
+        quando l’invito viene completato.
       </p>
 
       <h2>Momenti Living Chart</h2>
       <p>
         Living Chart ti permette di salvare una categoria facoltativa o una
-        breve nota accanto a una copia datata della previsione personale e
-        della ricevuta fattuale del cielo che hai visto. Un primo salvataggio
-        resta in questo browser. Se scegli separatamente l’opzione
+        breve nota accanto a una copia datata della previsione personale e della
+        ricevuta fattuale del cielo che hai visto.
+        Un primo salvataggio resta in questo browser. Se scegli separatamente
         <strong>Keep this on every device</strong> (conserva su tutti i tuoi
         dispositivi), la data e la precisione oraria della voce, la categoria,
         la nota, la previsione congelata e l’identificativo del tema vengono
         inviati a Supabase e conservati per il tuo account con accesso
-        effettuato. L’accesso è limitato dalla sicurezza a livello di riga e
-        Supabase cifra i dati conservati a riposo. Non è una cifratura
-        end-to-end: Zodiacs.org e Supabase possono tecnicamente trattare la
-        voce conservata per fornire sincronizzazione, assistenza, esportazione
-        ed eliminazione.
+        effettuato. L’accesso agli account è limitato dalla sicurezza a livello
+        di riga e Supabase cifra i dati conservati a riposo. Non è una
+        cifratura end-to-end: Zodiacs.org e Supabase possono tecnicamente
+        trattare la voce conservata per fornire sincronizzazione, assistenza,
+        esportazione ed eliminazione.
       </p>
       <p>
-        La sincronizzazione di Living Chart ha un proprio consenso, separato
-        dalla sincronizzazione dei temi salvati. Non rendiamo pubbliche le
-        voci, non le indicizziamo, non le inviamo automaticamente a Guide o a
+        La sincronizzazione di Living Chart ha un proprio consenso, separato da
+        quello della sincronizzazione dei temi salvati. Non rendiamo pubbliche
+        le voci, non le indicizziamo, non le inviamo automaticamente a Guide o a
         un altro fornitore di IA, non le usiamo per generare oroscopi, non le
-        vendiamo e non includiamo intenzionalmente il loro testo nell’analisi
-        o nei log dell’applicazione. Revocare il consenso elimina le voci
-        remote e fa avanzare una versione del consenso, così una vecchia
-        scheda offline non può caricarle di nuovo. Le copie già presenti su un
-        dispositivo restano finché non le elimini lì o non cancelli i dati di
-        questo sito nel browser. Eliminare una voce rimuove nota, categoria,
-        previsione, identificativo del tema e data dal dispositivo e dal
-        record nel cloud; può restare un marcatore tecnico di eliminazione
-        privo di contenuto, perché una richiesta in ritardo non possa
-        ripristinarla. La cronologia offre esportazione in JSON portabile e
-        Markdown leggibile, modifica ed eliminazione per singola voce e un
-        controllo di nuovo tentativo quando la sincronizzazione richiede
-        attenzione.
+        vendiamo e non includiamo intenzionalmente il loro testo nell’analisi o
+        nei log dell’applicazione. Revocare la sincronizzazione di Living Chart
+        elimina le voci remote e fa avanzare una versione del consenso, così una
+        vecchia scheda offline non può caricarle di nuovo. Le copie già
+        conservate su un dispositivo restano finché non le elimini lì o non
+        cancelli i dati di questo sito nel browser. Eliminare una voce rimuove
+        nota, categoria, previsione, identificativo del tema e data dal
+        dispositivo e dal record nel cloud. Può restare un marcatore tecnico di
+        eliminazione privo di contenuto, perché una richiesta in ritardo non
+        possa ripristinarla. La cronologia offre l’esportazione in JSON
+        portabile e in Markdown leggibile, la modifica e l’eliminazione di ogni
+        singola voce e un comando per riprovare quando la sincronizzazione
+        richiede attenzione.
       </p>
 
-      <h2>The Cabinet of Twelve, Shelf e indirizzi pubblici</h2>
+      <h2>The Cabinet of Twelve e gli indirizzi pubblici dei wallet</h2>
       <p>
-        The Cabinet of Twelve legge affiancati un indirizzo pubblico del wallet e il
-        cielo con la relativa data. Se aggiungi un tema salvato in questo
-        browser, il suo riepilogo è un livello di confronto facoltativo che
-        rimane sul dispositivo. Il pattern e qualsiasi riflessione simbolica
-        vengono composti sul dispositivo. Quando componi o aggiorni un Aura,
-        il nostro endpoint delle disponibilità
+        The Cabinet of Twelve legge affiancati un indirizzo pubblico del wallet
+        e il cielo con la relativa data. Se scegli di aggiungere un tema già
+        salvato in questo browser, il suo riepilogo è un livello di confronto
+        facoltativo che resta sul dispositivo. Il pattern e qualsiasi
+        riflessione simbolica vengono composti sul tuo dispositivo. Quando
+        componi o aggiorni un Aura, il nostro endpoint delle disponibilità
         riceve l’indirizzo pubblico e lo inoltra al fornitore di dati blockchain
-        configurato per verificare quali voci del Registro sono presenti. Il
-        fornitore configurato è attualmente PublicNode, gestito da Allnodes. La
-        richiesta non include dati di nascita, nome del tema, posizioni o
-        geometria del tema.
-      </p>
-      <p>
-        Quando è attivo, lo Shelf pubblico facoltativo nella pagina iniziale del
-        Registro usa lo stesso endpoint e invia un solo indirizzo pubblico Solana
-        dopo che premi “View”; non invia dati di nascita o del tema. Quando Aura
+        configurato per verificare quali voci del Registro di Zodiacs.org sono
+        presenti. Il fornitore configurato è attualmente PublicNode, gestito da
+        Allnodes. Il fornitore riceve la consultazione dal nostro server, non
+        dal tuo browser. La richiesta non include dati di nascita, nomi dei
+        temi, posizioni del tema o geometria del tema. Quando la funzione è
+        attiva, lo Shelf pubblico facoltativo di Zodiac Terminal usa lo stesso
+        endpoint e invia un unico indirizzo pubblico Solana, quello che inserisci, soltanto
+        dopo che premi “View”; non invia dati del tema o di nascita. Quando Aura
         è disattivato, lo Shelf illustrativo non effettua richieste di indirizzi
-        o al fornitore. “Back to the example view” rimuove il risultato dallo
-        schermo; ricaricare o chiudere la pagina elimina la cache temporanea dello
-        Shelf conservata in memoria.
+        o al fornitore.
       </p>
+      {walletChartEnabled && (
+        <p>
+          La pagina Wallet Chart invia al nostro server l’indirizzo pubblico
+          che incolli. Il server chiede a un fornitore di dati blockchain (un
+          servizio RPC di Solana, Etherscan o un servizio RPC di Base) la prima
+          transazione dell’indirizzo e i segni del Registro che detiene, e
+          conserva la risposta in memoria per un massimo di un giorno. Non
+          vengono inviati dati di nascita o del tema.
+        </p>
+      )}
       <p>
-        Puoi incollare un indirizzo senza collegare un wallet. Se scegli
-        “Connect”, il software di un wallet di terze parti si apre solo dopo un
-        tuo clic. Può restituire a questo browser gli account pubblici che
-        autorizzi; Aura seleziona un indirizzo compatibile e inoltra solo quello
-        per la consultazione. Aura non richiede frase di recupero, chiave
-        privata, firma di un messaggio, approvazione di token, transazione o
-        cambio di rete. Al software si applica l’informativa sulla privacy del
-        fornitore del wallet.
+        Puoi incollare un indirizzo pubblico senza collegare un wallet. Se
+        scegli “Connect”, un software di wallet compatibile di terze parti viene
+        avviato solo dopo il tuo clic. Può restituire a questo browser gli
+        account pubblici che autorizzi; Aura seleziona un indirizzo compatibile
+        e inoltra solo quell’indirizzo per la consultazione. Aura non richiede
+        frase di recupero, chiave privata, firma di un messaggio, approvazione
+        di token, transazione o cambio di rete. Le condizioni sulla privacy del
+        fornitore del tuo wallet si applicano al suo software e alla sua
+        richiesta di connessione.
       </p>
       <p>
         Un indirizzo pubblico è pubblico, ma non necessariamente anonimo. Le sue
-        disponibilità e la cronologia on-chain possono essere visibili e
-        collegate a una persona o ad altre attività. Vercel, il fornitore di dati
-        blockchain configurato e le rispettive infrastrutture possono trattare
-        i normali metadati della richiesta e log operativi o di sicurezza, come
-        indirizzo IP, data, ora e informazioni sul browser. Non promettiamo che
-        una richiesta relativa a un indirizzo pubblico non venga mai registrata
-        da fornitori di infrastruttura dei quali non controlliamo i tempi di
-        conservazione.
-      </p>
-
-      <h2>Memoria e condivisione di Aura</h2>
-      <p>
-        Per impostazione predefinita, Aura salva l’indirizzo pubblico, la rete, i
-        segni del Registro trovati, l’ora della consultazione e l’identificatore
-        facoltativo del tema selezionato nella memoria di sessione di questa scheda, con una
-        validità di ripristino di otto ore. L’opzione non selezionata “Remember
-        this address on this device” salva gli stessi campi nella memoria locale
-        con una validità di ripristino di 24 ore. Dopo questi termini, le voci non
-        possono più essere ripristinate. Aura le elimina al successivo tentativo
-        di lettura, ma i byte scaduti possono restare nella memoria del browser
-        finché non torni in Aura o non cancelli i dati del sito. “Forget address
-        / Clear Aura data” rimuove entrambe le voci da questo browser, ma non può
-        cancellare la cronologia pubblica della blockchain o i log
-        dell’infrastruttura.
-      </p>
-      <p>
-        Le immagini Aura da condividere vengono composte sul tuo dispositivo.
-        Per impostazione predefinita escludono indirizzo, rete, nome e dati del
-        tema, posizioni esatte, geometria, numero e lista dei segni trovati.
-        Non includono alcun fatto proveniente da un tema salvato.
-        L’applicazione scelta nel pannello di condivisione applica la propria
-        informativa. Cancellare Aura non consente di ritirare copie salvate o
-        ripubblicate da altre persone o servizi.
+        disponibilità e la sua cronologia on-chain possono essere visibili e
+        possono venire collegate a una persona o ad altre attività. Vercel, il
+        fornitore di dati blockchain configurato e le rispettive infrastrutture
+        possono trattare i normali metadati delle richieste e log operativi o di
+        sicurezza, come indirizzo IP, ora e informazioni sul browser. Non
+        promettiamo che una richiesta relativa a un indirizzo pubblico non venga
+        mai registrata da fornitori di infrastruttura di cui non controlliamo le
+        pratiche di conservazione.
       </p>
 
       <h2>Fonti di dati pubbliche di Astrofolio, del Terminal e del Registro</h2>
       <p>
-        Alcune sezioni del Registro richiedono automaticamente, tramite il tuo
-        browser, dati pubblici di mercato a DexScreener, dati pubblici di
-        grafici e scambi a GeckoTerminal e statistiche pubbliche
-        sulle visualizzazioni a Wikimedia. Queste richieste GET automatiche non
-        contengono indirizzi di wallet, dati di nascita, dati del tema o testo
-        inserito da te. DexScreener, GeckoTerminal e Wikimedia possono ricevere i normali
-        metadati di una richiesta web, come indirizzo IP, data, ora, browser e la
-        pagina di provenienza consentita dalle impostazioni del browser; si applicano le
-        rispettive informative sulla privacy.
+        Quando viene mostrato un pannello di mercato pertinente di
+        Zodiac Terminal o del Registro, il tuo browser può richiedere dati
+        pubblici di mercato a Dex Screener, dati pubblici dei grafici a
+        GeckoTerminal o dati pubblici sull’attenzione a Wikimedia, e l’apertura
+        di un mercato del Terminal chiede al servizio indipendente Jupiter una
+        quotazione di prezzo per un importo di esempio. Queste richieste
+        automatiche non includono un indirizzo di wallet, dati di nascita, dati
+        del tema o risultati di Aura. Il servizio indipendente riceve comunque i
+        normali metadati di una richiesta web, come il tuo indirizzo IP, le
+        informazioni sul browser e l’ora della richiesta, e si applicano le sue
+        condizioni sulla privacy e le sue pratiche di conservazione.
       </p>
       <p>
-        Nella pagina Come acquistare di Astrofolio, aprire la pagina o
-        cambiare il segno selezionato non carica Jupiter, non contatta il
-        software del wallet e non richiede un prezzo. Solo dopo che carichi
-        esplicitamente lo strumento facoltativo, il tuo browser invia alla
-        piattaforma indipendente Jupiter l’identificativo del token
-        selezionato e l’importo richiesto come parametri di quotazione, e
-        chiede a DexScreener il contesto di liquidità indicizzata. Queste
-        richieste di visualizzazione non includono un indirizzo di wallet. Se
-        scegli di esaminare uno scambio diretto, il wallet compatibile che
-        selezioni fornisce il proprio indirizzo pubblico Solana a Jupiter,
-        così che Jupiter costruisca la transazione esatta che esaminerai. Il
-        tuo wallet firma localmente. Il tuo browser invia poi la transazione
-        firmata e l’identificativo della richiesta all’endpoint di esecuzione
-        di Jupiter. Né l’indirizzo pubblico né la transazione firmata vengono
-        inviati a un server di Zodiacs.org, e Zodiacs.org non chiede né riceve
-        mai una frase di recupero o una chiave privata. Jupiter, DexScreener e
-        il tuo servizio di wallet possono ricevere i normali metadati di una
-        richiesta web, come indirizzo IP, browser e ora; si applicano le
-        rispettive informative sulla privacy e sulla conservazione.
+        Nella pagina Come acquistare di Astrofolio, aprire la pagina o cambiare
+        il segno selezionato non carica Jupiter, non contatta il software del
+        wallet e non richiede una quotazione. Dopo che hai caricato
+        esplicitamente lo strumento pratico facoltativo, il tuo browser invia al
+        servizio indipendente Jupiter il mint del token selezionato e l’importo
+        richiesto come parametri di quotazione, e chiede a Dex Screener il
+        contesto di liquidità indicizzata. Queste richieste di visualizzazione
+        non includono un indirizzo di wallet. Se scegli di esaminare uno scambio
+        diretto, il wallet compatibile che selezioni fornisce a Jupiter il
+        proprio indirizzo pubblico Solana, così che Jupiter possa costruire la
+        transazione esatta che esaminerai. Il tuo wallet firma localmente. Il
+        tuo browser invia poi la transazione firmata e l’identificativo della
+        richiesta Jupiter all’endpoint di esecuzione di Jupiter. Né l’indirizzo
+        pubblico né la transazione firmata vengono inviati a un server di
+        Zodiacs.org, e Zodiacs.org non chiede né riceve mai una frase di
+        recupero o una chiave privata. Jupiter, Dex Screener e il tuo servizio
+        di wallet possono ricevere i normali metadati di una richiesta web, come
+        il tuo indirizzo IP, le informazioni sul browser e l’ora della
+        richiesta; si applicano le loro condizioni sulla privacy e le loro
+        pratiche di conservazione.
       </p>
       <p>
         Il profilo di ogni segno nel Registro è di sola lettura. Mostra dati
-        pubblici di mercato e indirizzi verificati, ma non contiene un percorso
-        di acquisto né un link a un mercato. Il profilo non collega un wallet,
-        non richiede un prezzo, non riceve il tuo indirizzo pubblico e non chiede
-        una transazione. Queste richieste di dati di mercato non includono dati
-        di nascita o del tema.
+        pubblici di mercato e indirizzi verificati dei token, ma non contiene un
+        percorso di acquisto né un link a una piattaforma di scambio. Il profilo
+        non collega un wallet, non richiede una quotazione, non riceve il tuo
+        indirizzo pubblico e non chiede una transazione. Queste richieste di
+        dati di mercato non includono dati di nascita o del tema.
       </p>
 
-      <h2>Guide</h2>
+      <h2>Memoria del browser e condivisione di Aura</h2>
       <p>
-        Quando invii una domanda a Guide, quel messaggio, i messaggi recenti e il
-        contesto visibile di Guide vengono inviati a OpenAI per un controllo di
-        sicurezza dell’input e per generare una bozza di risposta. La bozza
-        generata viene poi inviata di nuovo a OpenAI per un secondo controllo di
-        sicurezza prima di mostrartela. Ogni richiesta all’API Responses usa
-        <code>store: false</code>. La conversazione web corrente con Guide
-        resta soltanto in questa sessione del browser, non viene sincronizzata
-        con un account e non viene archiviata come testo sui server di
-        Zodiacs.org, anche se hai effettuato l’accesso. OpenAI dichiara che i dati API non vengono usati per
-        addestrare i modelli per impostazione predefinita; i normali registri
-        contro gli abusi possono conservare i contenuti inviati fino a 30 giorni,
-        salvo controlli dei dati più restrittivi. Un tema salvato
-        viene incluso solo dopo che premi “Allega il mio tema”; la schermata di
-        consenso mostra il riepilogo delle sole posizioni prima dell’invio. Il
-        riepilogo accompagna ogni domanda finché “Con il mio tema” resta attivo;
-        puoi disattivarlo. Guide non allega mai il tuo
-        nome né la data, l’ora, il luogo di nascita o le coordinate salvati;
-        tutto ciò che scrivi nella chat fa parte del messaggio
-        inviato. Per applicare il limite giornaliero, conserviamo un
-        identificatore irreversibile derivato dal tuo indirizzo IP con
-        l’aggiunta di un valore casuale e il relativo conteggio quotidiano, mai
-        l’IP originale; i controlli del limite eliminano le voci più vecchie di
-        il giorno UTC precedente. Non inviamo tale identificatore a OpenAI e
-        non inseriamo il testo delle conversazioni nei metadati del fornitore.
+        Per impostazione predefinita, Aura conserva l’indirizzo pubblico, la
+        rete, i risultati dei segni del Registro, l’ora della consultazione e
+        l’identificativo facoltativo del tema selezionato nella memoria di
+        sessione di questa scheda. Dopo otto ore questo record non può più
+        essere ripristinato. L’opzione non selezionata
+        “Remember this address on this device” salva gli stessi campi nella
+        memoria locale e li rende non ripristinabili dopo 24 ore.
+        I record non più ripristinabili vengono eliminati la volta successiva in
+        cui Aura li legge; se non torni, il browser può conservare i byte scaduti
+        finché non cancelli i dati del sito. “Forget address / Clear Aura data”
+        rimuove entrambi i record di Aura da questo browser; non può cancellare
+        la cronologia pubblica della blockchain né i log dell’infrastruttura.
+      </p>
+      <p>
+        Le immagini Aura da condividere vengono composte sul tuo dispositivo.
+        L’immagine omette l’indirizzo pubblico, il nome del tema, i dati di
+        nascita, le posizioni esatte e la geometria del tema. L’immagine del
+        sigillo mostra quali segni sono detenuti, quanti su dodici, e una data.
+        L’immagine del cabinet mostra la rete, la data, quali segni sono
+        detenuti e l’edizione di ciascuno, che riflette il saldo, con un
+        conteggio delle sculture d’oro fino a 99+. Nessuna delle due include un
+        dato proveniente da un tema salvato. Il pannello di condivisione del
+        browser o un download invia l’immagine a una destinazione che scegli tu,
+        le cui condizioni sulla privacy si applicano da quel momento. Cancellare
+        i dati di Aura non consente di ritirare le copie che altre persone o
+        servizi hanno salvato o ripubblicato.
+      </p>
+
+      <h2>Account facoltativo (sincronizzazione tra dispositivi)</h2>
+      {accountSyncV2Enabled ? (
+        <>
+          <p>
+            Gli account restano facoltativi. I calcolatori senza account e il
+            salvataggio locale dei temi funzionano senza effettuare l’accesso.
+            La versione di prova della sincronizzazione cifrata accetta al
+            massimo un tema che confermi esplicitamente come tuo. L’anteprima è
+            riservata agli adulti di 18 anni o più.
+          </p>
+          <ul>
+            <li>
+              Accedi con un link monouso inviato al tuo indirizzo e-mail. Un
+              token di sessione di prima parte resta in questo browser fino a
+              quando esci dall’account.
+            </li>
+            <li>
+              Prima del caricamento, la pagina del profilo mostra esattamente
+              quali dati di nascita di origine e quali posizioni derivate
+              lascerebbero il dispositivo. Nessun tema viene selezionato o
+              migrato automaticamente.
+            </li>
+            <li>
+              L’etichetta salvata, la data esatta, l’ora, il luogo, le
+              coordinate, il fuso orario e le posizioni derivate vengono cifrati
+              dal nostro server con una chiave dati propria di ciascun record.
+              Quella chiave è cifrata a sua volta con una chiave di servizio
+              conservata fuori dal database. È una cifratura gestita dal
+              servizio — non una cifratura end-to-end — quindi Zodiacs può
+              decifrare il record quando lo ripristini su un altro dispositivo
+              con accesso effettuato.
+            </li>
+            <li>
+              Il database riceve una busta cifrata del tema, più gli
+              identificativi minimi, le revisioni, lo stato del consenso e
+              l’autorizzazione all’eliminazione necessari alla sincronizzazione.
+              Con questo consenso il tema non diventa pubblico, non viene usato
+              in funzioni di scoperta, non viene inviato a un fornitore di IA né
+              concesso in licenza per la pubblicità.
+            </li>
+            <li>
+              <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>{' '}
+              tratta i record dell’account e del database, e{' '}
+              <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>{' '}
+              esegue il livello server che li convalida e li cifra.
+            </li>
+            <li>
+              Per rendere affidabile l’eliminazione dopo un cambio dell’indirizzo
+              e-mail dell’account, conserviamo una cronologia limitata di al
+              massimo 16 localizzatori confermati di indirizzi e-mail
+              dell’account. Ogni localizzatore è cifrato con una chiave gestita
+              dal servizio; il database non riceve l’indirizzo in chiaro.
+              Durante l’eliminazione, un record di pulizia cifrato e legato alla
+              richiesta può restare fino a sette giorni mentre si ritenta la
+              rimozione presso il fornitore di e-mail. Serve solo per quella
+              pulizia e poi viene eliminato insieme alla ricevuta di recupero.
+            </li>
+            <li>
+              Revocare il consenso alla sincronizzazione dei temi cancella
+              immediatamente il record remoto cifrato v2 del tema. Le copie
+              locali restano sui dispositivi, a meno che tu non le cancelli
+              separatamente.
+            </li>
+            <li>
+              Dalla pagina del profilo puoi scaricare un’esportazione JSON
+              dell’account o avviare l’eliminazione definitiva. L’eliminazione
+              dell’account rimuove anche un’iscrizione a Daily Sun collegata e
+              confermata in modo indipendente, quando quella pulizia può essere
+              confermata. Se un cambio di e-mail o una rotazione delle chiavi
+              rende ambigua la corrispondenza, la cancellazione dell’account
+              viene comunque completata e la pagina ti indica di usare il link
+              per annullare l’iscrizione presente nell’e-mail o di contattare
+              l’assistenza.
+            </li>
+            <li>
+              Gli account con temi del precedente sistema di sincronizzazione
+              nel cloud non vengono migrati in silenzio. La versione di prova si
+              mette in pausa e offre l’esportazione finché non sarà disponibile
+              una revisione esplicita della migrazione, tema per tema;
+              l’eliminazione definitiva dell’account rimuove anche quei record
+              del vecchio sistema.
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <p>
+            Puoi creare un account gratuito per avere i temi salvati su più di
+            un dispositivo. È del tutto facoltativo e gli strumenti funzionano
+            pienamente anche senza. Se ne crei uno:
+          </p>
+          <ul>
+            <li>
+              Accedi con un link monouso inviato al tuo indirizzo e-mail — non
+              c’è nessuna password da conservare.
+            </li>
+            <li>
+              Conserviamo il tuo indirizzo e-mail e ogni tema salvato nel tuo
+              browser mentre hai effettuato l’accesso, compresi quelli salvati
+              prima dell’accesso, con i relativi dati di nascita, presso il
+              nostro fornitore di database,
+              <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>,
+              perché possano comparire sugli altri tuoi dispositivi. L’accesso è
+              limitato al tuo account.
+            </li>
+            <li>
+              Conserviamo anche l’impostazione del sistema di case e una traccia
+              di ogni tema che elimini (il suo identificativo e il momento
+              dell’eliminazione), perché l’eliminazione arrivi sugli altri tuoi
+              dispositivi. Questi dati vengono conservati finché non elimini
+              l’account.
+            </li>
+            <li>
+              Mentre hai effettuato l’accesso, nel tuo browser viene conservato
+              un token di accesso perché la sessione resti aperta. Quando esci
+              dall’account, viene rimosso.
+            </li>
+            <li>
+              Puoi eliminare il tuo account e i temi che contiene in qualsiasi
+              momento scrivendo a <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+              Le copie nei nostri backup settimanali scadono entro 90 giorni
+              (vedi «Backup»).
+            </li>
+          </ul>
+        </>
+      )}
+
+      <h2>E-mail</h2>
+      {weeklyDigestEnabled && (
+        <p>
+          Chi ha un account può iscriversi a un’e-mail settimanale che riassume
+          il cielo della settimana in arrivo per i propri temi salvati.
+          L’opzione non è selezionata per impostazione predefinita. Se ti
+          iscrivi, conserviamo quella preferenza e inviamo l’e-mail tramite il
+          nostro fornitore di e-mail,
+          <a href="https://resend.com/" rel="noopener noreferrer">Resend</a>.
+          Ogni e-mail include un link per annullare l’iscrizione con un clic, e
+          puoi disattivarla dal tuo profilo in qualsiasi momento.
+        </p>
+      )}
+      <p>
+        L’indirizzo e-mail del tuo account viene usato per inviare i link di
+        accesso e, se lo chiedi, un avviso quando qualcuno completa un invito di
+        compatibilità che hai inviato. Non lo vendiamo e non lo condividiamo.
       </p>
 
       <h2>Riepilogo quotidiano, calendario e notifiche</h2>
       <p>
         Il riepilogo quotidiano legge le posizioni calcolate di un tema salvato
-        sul tuo dispositivo. Il calendario dei transiti riceve lo stesso codice
-        del tema, limitato alle posizioni, usato dalla funzione di condivisione;
-        nessuno dei due include nome, data, ora o luogo di nascita, né le
-        coordinate. Se attivi le notifiche quotidiane, conserviamo la
-        sottoscrizione del browser alle notifiche push — un URL del servizio di
-        notifica e le relative chiavi di consegna, senza dati di nascita — per
-        poter inviare la notifica. Puoi disattivarle in qualsiasi momento.
+        sul tuo dispositivo.
+      </p>
+      <p>
+        Il feed di un calendario dei transiti contiene nel suo indirizzo web un
+        codice del tema con le sole posizioni. Il nostro server, la sua cache e
+        il tuo servizio di calendario ricevono quel codice ogni volta che il
+        calendario si aggiorna. Il codice non ha campi per nome, data, ora o
+        luogo. Le sue posizioni planetarie permettono comunque di ricavare la
+        tua data e la tua ora di nascita; l’ascendente e il Medio Cielo sono
+        arrotondati al grado, il che colloca il luogo di nascita solo entro una
+        regione larga circa 500 km.
+        Gli indirizzi dei calendari creati prima del 23 settembre 2026
+        contengono l’ascendente e il Medio Cielo con maggiore precisione. Ora il
+        nostro server li arrotonda prima di usarli, ma l’indirizzo in sé non
+        cambia; per sostituirlo, rimuovi quel calendario e iscriviti di nuovo.
+      </p>
+      {webPushEnabled && (
+        <p>
+          Se attivi le notifiche quotidiane, conserviamo la sottoscrizione push
+          del tuo browser — un URL del servizio push del fornitore e le relative
+          chiavi di consegna — con la tua impostazione della lingua e senza dati
+          di nascita, per poterti inviare la notifica. Puoi disattivare le
+          notifiche in qualsiasi momento.
+        </p>
+      )}
+
+      <h2>Pagine pubbliche di People</h2>
+      <p>
+        La directory People usa nomi, date e luoghi di nascita pubblici, date
+        biografiche, discipline e ritratti con licenza tratti da voci esaminate
+        di Wikidata, Wikipedia e Wikimedia Commons. Il tema viene calcolato a
+        partire da questi fatti tratti dalle fonti e descrive il cielo registrato
+        e la sua incertezza; non afferma nulla sulla salute, sulla condotta,
+        sulle relazioni, sulle finanze o sulla vita privata di una persona. I
+        profili delle persone viventi non vengono inviati ai motori di ricerca.
+        Per chiedere una correzione, l’oscuramento o la rimozione, scrivi a
+        <a href="mailto:people@zodiacs.org">people@zodiacs.org</a>.
+        Accogliamo la richiesta di rimozione della persona interessata anche
+        quando la fonte pubblica di partenza resta invariata.
       </p>
 
-      <h2>E-mail, hosting e analisi</h2>
+      <h2>The Race</h2>
       <p>
-        L’e-mail settimanale richiede un account e un’iscrizione volontaria; è
-        disattivata per impostazione predefinita e ogni messaggio permette di
-        annullare l’iscrizione. Vercel ospita il sito e può conservare brevi log
-        tecnici per fornire le pagine e prevenire gli abusi. Non usiamo
-        pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di
-        pagina e l’uso anonimo delle funzioni con Plausible, un servizio di
-        analisi senza cookie. Per non conteggiare più volte lo stesso dispositivo
-        durante un giorno, Plausible elabora brevemente l’indirizzo IP e lo user
-        agent per ricavare un identificatore limitato a questo sito, dispositivo
-        e giorno. IP e user agent grezzi non vengono conservati; il sale usato
-        per l’identificatore ruota e viene eliminato ogni 24 ore. Non riceve dati di nascita, indirizzi pubblici,
-        identificatori del tema o dell’account collegato né la lista esatta dei
-        segni. Gli eventi Aura includono solo categorie consentite, come l’esito
-        e una fascia approssimativa del numero di segni; gli altri eventi
-        registrano «un tema è stato salvato», mai da chi.
+        Se entri in una squadra di The Race, conserviamo un codice irreversibile
+        derivato dal cookie di The Race, insieme alla tua squadra, alla
+        stagione, al momento della tua adesione e ai tuoi check-in settimanali.
+        Per limitare le adesioni ripetute conserviamo anche un codice
+        irreversibile derivato dal tuo indirizzo IP, che viene eliminato dopo il
+        giorno UTC successivo. Non sono coinvolti nomi, indirizzi e-mail,
+        account o wallet.
       </p>
-      {webAnalyticsEnabled && (
+
+      <h2>Backup</h2>
+      <p>
+        Una volta alla settimana copiamo il database, che contiene gli account,
+        i temi sincronizzati e gli altri record conservati descritti in questa
+        pagina. La copia viene cifrata con AES-256 prima di essere archiviata
+        presso GitHub, e ogni copia viene eliminata dopo 90 giorni. Eliminare il
+        tuo account lo rimuove dal database attivo; può restare in un backup
+        finché quel backup non scade.
+      </p>
+
+      <h2>Hosting, log e analisi</h2>
+      <p>
+        Il sito è ospitato su <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>.
+        Come per qualsiasi servizio di hosting web, i suoi server elaborano le
+        richieste fatte dal tuo browser e possono conservare log tecnici di
+        breve durata (come indirizzo IP e tipo di browser) per fornire il sito e
+        proteggerlo dagli abusi. Non mostriamo pubblicità e non usiamo cookie di
+        tracciamento tra siti né pixel di marketing di terze parti.
+      </p>
+      {accountSyncV2Enabled ? (
+        <p>
+          Gli strumenti di analisi di terze parti sono disattivati durante tutta
+          l’anteprima ad accesso controllato della sincronizzazione cifrata.
+          Questo impedisce che uno script di analisi condivida lo stesso
+          contesto di pagina della memoria privata dei temi nel browser.
+        </p>
+      ) : (
+        <p>
+          Contiamo le visualizzazioni di pagina e l’uso anonimo delle funzioni
+          con Plausible, un servizio di analisi senza cookie. Per non contare
+          più volte lo stesso dispositivo nell’arco di un giorno, Plausible
+          elabora brevemente l’indirizzo IP e lo user agent per ricavare un
+          identificativo limitato a questo sito, a questo dispositivo e a questo
+          giorno. L’IP e lo user agent originali non vengono conservati; il sale
+          usato per quell’identificativo ruota e viene eliminato ogni 24 ore.
+          Plausible non riceve dati di nascita, indirizzi pubblici,
+          identificativi del tema, identificativi dell’account collegato né
+          l’elenco esatto dei segni detenuti. Non riceve nemmeno un
+          identificativo tra siti.
+          Gli eventi di Aura contengono solo categorie ammesse, come un esito e
+          una fascia approssimativa del numero di segni detenuti; allo stesso
+          modo, gli altri eventi registrano «è stato salvato un tema», mai di
+          chi.
+        </p>
+      )}
+      {webAnalyticsEnabled && !accountSyncV2Enabled && (
         <p>
           Contiamo le visualizzazioni di pagina anche con Vercel Web Analytics,
           il contatore senza cookie integrato nella nostra piattaforma di
           hosting. Registra solo il percorso della pagina (query string e
-          frammenti vengono rimossi prima dell’invio), distingue i dispositivi
-          nell’arco di uno stesso giorno tramite un hash derivato dalla
-          richiesta e scartato a fine giornata, e non riceve nessuno dei dati
-          sugli eventi descritti sopra.
+          frammenti vengono rimossi prima di qualsiasi invio), distingue i
+          dispositivi nell’arco di uno stesso giorno tramite un hash derivato
+          dalla richiesta, che viene scartato dopo quel giorno, e non riceve
+          nessuno dei dati sugli eventi descritti sopra.
         </p>
       )}
 
-      <h2>Memoria del browser</h2>
+      <h2>Cookie</h2>
       <p>
-        Non usiamo cookie pubblicitari o di tracciamento. La memoria interna del
-        sito serve alle funzioni che richiedi: temi salvati, dati di sessione
-        Aura limitati, un indirizzo Aura ricordato facoltativamente, preferenze
-        del sito e, se accedi, un token di accesso. Non viene usata per seguirti
-        su altri siti.
+        Non usiamo cookie pubblicitari o di tracciamento. Per scelta di
+        progettazione, tre cookie di prima parte vengono inviati al nostro
+        server: il cookie di sessione di Guide, fino alla fine della sessione
+        del browser; il cookie di The Race, per un massimo di un anno; e un
+        cookie di invito, per un massimo di 14 giorni mentre usi un invito di
+        compatibilità. Il resto è memoria del browser di prima parte per le
+        funzioni che usi: ciò che salvi (temi, confronti, momenti Living Chart,
+        progressi di apprendimento), lo stato di lavoro degli strumenti che usi
+        (come la conversazione con Guide e i calcoli in cache), dati di sessione
+        di Aura limitati, l’eventuale indirizzo Aura memorizzato, le preferenze
+        del sito, copie dei file del sito stesso per l’uso offline e, se accedi,
+        un token di accesso. A parte questi cookie e quanto descritto nelle
+        sezioni precedenti, questa memoria resta sul tuo dispositivo, e nulla di
+        tutto ciò viene usato per seguirti su altri siti.
+      </p>
+
+      <h2>Minori</h2>
+      <p>
+        Il sito è pensato per un pubblico generale e non è rivolto ai minori di
+        13 anni. Non raccogliamo consapevolmente informazioni personali da loro.
       </p>
 
       <h2>Le tue scelte</h2>
       <ul>
-        <li>Usare i calcolatori senza account o memoria esterna al dispositivo.</li>
-        <li>Provare l’esempio Aura senza tema, indirizzo, collegamento o acquisto.</li>
-        <li>Incollare un indirizzo pubblico invece di collegare un wallet di terze parti.</li>
-        <li>Lasciare “Remember” non selezionato e cancellare i dati Aura in qualsiasi momento.</li>
-        <li>Tornare all’esempio dello Shelf e ricaricare la pagina per cancellarne la cache temporanea.</li>
-        <li>Eliminare i temi locali dal browser.</li>
-        <li>Chiedere la cancellazione di un account scrivendo a <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.</li>
+        <li>Usare ogni calcolatore senza account; nulla di ciò che inserisci viene conservato fuori dal tuo dispositivo, a meno che tu non acceda, condivida un tema o ti abboni al suo calendario.</li>
+        <li>Usare l’esempio di Aura senza tema, indirizzo, collegamento di un wallet o acquisto.</li>
+        <li>Incollare un indirizzo pubblico invece di collegare il software di un wallet di terze parti.</li>
+        <li>Lasciare non selezionata l’opzione “Remember” di Aura e cancellarne i dati nel browser in qualsiasi momento.</li>
+        <li>Eliminare i temi salvati cancellando i dati di questo sito nel tuo browser.</li>
+        {accountSyncV2Enabled
+          ? <li>Esportare o eliminare un account dalla pagina del profilo; scegliere separatamente se cancellare i dati di questo browser.</li>
+          : <li>Eliminare un account e i suoi dati sincronizzati scrivendoci.</li>}
+        {weeklyDigestEnabled && <li>Disattivare l’e-mail settimanale con un clic, in qualsiasi momento.</li>}
+        <li>Ritirare un invito di compatibilità dal tuo profilo prima che venga usato.</li>
+        <li>Chiedere la correzione, l’oscuramento o la rimozione di un profilo di People.</li>
       </ul>
+
+      <h2>Modifiche</h2>
+      <p>
+        Se cambiamo il modo in cui trattiamo i dati, aggiorneremo questa pagina
+        e la sua data. Le modifiche sostanziali alle funzioni di account o di
+        e-mail saranno riportate qui prima di entrare in vigore.
+      </p>
+
+      <h2>Contatti</h2>
+      <p>
+        Le richieste di privacy e di cancellazione possono essere inviate a
+        Zodiacs LLC all’indirizzo{' '}
+        <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+      </p>
 
       <p class="method-updated mono">Ultimo aggiornamento: {updated}</p>
     </div>

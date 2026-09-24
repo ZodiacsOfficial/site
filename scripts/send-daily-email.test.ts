@@ -7,10 +7,24 @@ import {
   parseDailyEmailArgs,
   recipientHashPrefix,
   requireResendCapabilities,
+  resolveChartRecipients,
   runDailyEmail,
   selectDailyEmailNearbyEvents,
 } from './send-daily-email';
+import dailyData from '../src/data/daily.json';
+import publicationData from '../src/data/daily-publication.json';
+import programData from '../src/data/horoscope-program.json';
+import { houseLine, wholeSignHouseFromAsc, type Daily } from '../src/lib/daily';
+import { renderDailyEmail } from '../src/lib/daily-email/content';
+import type { ChartRecipient, DailyEmailRecipient } from '../src/lib/daily-email/types';
+import type { DailyPublication } from '../src/lib/daily-publication';
+import legacyPolar from '../src/lib/engine/fixtures/legacy-polar-saved.json';
+import * as engine from '../src/lib/engine/full';
+import { ENGINE_VERSION } from '../src/lib/engine/types';
 import { futurePublishedEvents } from '../src/lib/events/publication';
+import type { HoroscopeProgram } from '../src/lib/horoscope-program';
+import type { SavedChart } from '../src/lib/profile/schema';
+import { signForLongitude } from '../src/lib/signs';
 
 describe('daily email CLI', () => {
   it('parses every bounded operator mode and rejects ambiguous instants', () => {
@@ -113,6 +127,76 @@ describe('daily email CLI', () => {
       fetchImpl: vi.fn() as unknown as typeof fetch,
       log: vi.fn(),
     })).rejects.toThrow(/requires --dry-run/u);
+  });
+
+  it('reads each chart recipient on the current engine and birthplace clock before rendering', async () => {
+    const daily = dailyData as Daily;
+    const moon = daily.bodies.find((body) => body.body === 'Moon')!;
+    const moonHouse = (rising: string) => houseLine(moon, wholeSignHouseFromAsc(moon.sign, rising)).text;
+    const text = (recipient: DailyEmailRecipient) => renderDailyEmail({
+      recipient,
+      daily,
+      publication: publicationData as DailyPublication,
+      program: programData as HoroscopeProgram,
+      baseUrl: 'https://zodiacs.org',
+      unsubscribeUrl: 'https://zodiacs.org/api/email/unsubscribe?token=test',
+    }).text;
+    const chartRecipient = (chart: SavedChart): ChartRecipient => ({
+      tier: 'chart', email: 'chart@example.com', userId: '10000000-0000-4000-8000-000000000002',
+      chartId: chart.id, chart, timezone: 'UTC',
+    });
+    // Synced from a browser that read Stockholm on Berlin's summer time in
+    // July 1947: 10:00Z for a noon birth, where Sweden's +1:00 gives 11:00Z.
+    const stale = engine.computeChart({
+      utc: new Date('1947-07-01T10:00:00.000Z'), latitude: 59.33, longitude: 18.07,
+      houseSystem: 'whole', timeKnown: true, flags: [],
+    });
+    const stockholm = chartRecipient({
+      id: '10000000-0000-4000-8000-000000000001', name: 'Stockholm chart',
+      createdAt: '2026-07-01T00:00:00.000Z', updatedAt: '2026-07-01T00:00:00.000Z',
+      birth: {
+        date: '1947-07-01', time: '12:00', timeKnown: true,
+        place: { name: 'Stockholm', admin1: 'Stockholm', country: 'SE', lat: 59.33, lon: 18.07, tz: 'Europe/Stockholm' },
+      },
+      summary: {
+        engineVersion: stale.engineVersion, utcISO: '1947-07-01T10:00:00.000Z', houseSystem: 'whole',
+        bodies: stale.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+        angles: { asc: stale.angles!.asc, mc: stale.angles!.mc }, flags: stale.flags,
+      },
+    });
+    // The package before 2026-08-24 stored the setting ASC, in Libra, for
+    // part of the polar day; the rising one is in Aries.
+    const polarCase = legacyPolar.cases.find((row) => row.latitude === 78.2232 && row.hour === 9)!;
+    const polar = chartRecipient({
+      id: '10000000-0000-4000-8000-000000000003', name: 'Polar chart',
+      createdAt: '2026-07-01T00:00:00.000Z', updatedAt: '2026-07-01T00:00:00.000Z',
+      birth: {
+        date: '2001-12-21', time: '09:00', timeKnown: true,
+        place: { name: 'Polar fixture', admin1: '', country: 'SJ', lat: 78.2232, lon: 15.6267, tz: 'UTC' },
+      },
+      summary: structuredClone(polarCase.summary) as SavedChart['summary'],
+    });
+    const sun: DailyEmailRecipient = {
+      tier: 'sun_sign', email: 'sun@example.com', sign: 'aries', contactId: 'contact_aries', timezone: 'UTC',
+    };
+
+    const [resolvedStockholm, resolvedPolar, resolvedSun] = await resolveChartRecipients([stockholm, polar, sun]);
+
+    expect(resolvedSun).toBe(sun);
+    const stockholmSummary = (resolvedStockholm as ChartRecipient).chart.summary;
+    expect(resolvedStockholm).toEqual({ ...stockholm, chart: { ...stockholm.chart, summary: stockholmSummary } });
+    expect(stockholmSummary.utcISO).toBe('1947-07-01T11:00:00.000Z');
+    expect(signForLongitude(stale.angles!.asc).slug).toBe('virgo');
+    expect(text(stockholm)).toContain(moonHouse('virgo'));
+    expect(text(resolvedStockholm)).toContain(moonHouse('libra'));
+    expect(text(resolvedStockholm)).not.toContain(moonHouse('virgo'));
+
+    const polarSummary = (resolvedPolar as ChartRecipient).chart.summary;
+    expect(polar.chart.summary.angles!.asc).toBeCloseTo(203.872, 3);
+    expect(polarSummary.angles!.asc).toBeCloseTo(23.872, 3);
+    expect(polarSummary.engineVersion).toBe(ENGINE_VERSION);
+    expect(text(polar)).toContain(moonHouse('libra'));
+    expect(text(resolvedPolar)).toContain(moonHouse('aries'));
   });
 
   it('binds both tier unsubscribe claims to the same opaque recipient hash', () => {

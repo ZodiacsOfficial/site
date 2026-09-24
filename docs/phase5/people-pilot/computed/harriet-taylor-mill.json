@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1807-10-08T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1807-10-08T00:01:15.000Z",
-    "civilDayEndUtc": "1807-10-09T00:01:15.000Z",
+    "utcInstant": "1807-10-08T12:00:31.000Z",
+    "utcOffsetMinutesAtBirth": -0.5167,
+    "civilDayStartUtc": "1807-10-08T00:00:31.000Z",
+    "civilDayEndUtc": "1807-10-09T00:00:31.000Z",
     "latitude": 51.507222222222,
     "longitude": -0.1275,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "capricorn",
     "signName": "Capricorn",
-    "degree": 14.7,
+    "degree": 14.69,
     "uncertain": false,
     "signAtCivilDayStart": "capricorn",
     "signAtCivilDayEnd": "capricorn"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 13.7845,
-    "degreesToNextBoundaryAtWindowEnd": 15.2267
+    "degreesInsideAtWindowStart": 13.7849,
+    "degreesToNextBoundaryAtWindowEnd": 15.2264
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.989,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "capricorn",
       "signName": "Capricorn",
-      "degree": 14.7,
+      "degree": 14.69,
       "retrograde": false,
-      "speedPerDay": 12.7197,
+      "speedPerDay": 12.7199,
       "dignity": "detriment",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -183,7 +183,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "square",
-      "orb": 0.42,
+      "orb": 0.41,
       "applying": false
     },
     {
@@ -248,14 +248,14 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 4.93,
+      "orb": 4.92,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "square",
-      "orb": 5.95,
+      "orb": 5.96,
       "applying": true
     },
     {

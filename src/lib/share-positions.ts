@@ -9,6 +9,10 @@
  * 0.0005° (1.8 arcseconds), comfortably below both the engine's accuracy
  * gate and the chart's displayed precision, while avoiding false precision
  * and keeping the fragment compact.
+ *
+ * A code that leaves the device (a chart link, the transit calendar feed, a
+ * two-chart link, an invitation) is made with encodeSharedPositionsLink,
+ * which keeps ASC and MC only to the whole degree. See wholeDegreeAngle.
  */
 import type {
   Angles, BodyName, BodyPosition, HouseSystem,
@@ -118,8 +122,10 @@ function canonicalLongitudes(
 }
 
 /**
- * Encode a privacy-safe, positions-only chart token. Runtime-invalid input
- * returns null rather than emitting a token that its strict decoder rejects.
+ * Encode a positions-only chart token with every value, angles included, to
+ * 0.001°. Runtime-invalid input returns null rather than emitting a token that
+ * its strict decoder rejects. For a code that leaves the device, use
+ * encodeSharedPositionsLink.
  */
 export function encodePositionsLink(input: PositionsShareInput): string | null {
   if (typeof input !== 'object' || input === null) return null;
@@ -142,6 +148,37 @@ export function encodePositionsLink(input: PositionsShareInput): string | null {
   const token = POSITIONS_VERSION_PREFIX
     + toBase64Url(new TextEncoder().encode(JSON.stringify(wire)));
   return token.length <= POSITIONS_TOKEN_MAX_LENGTH ? token : null;
+}
+
+/**
+ * The middle of the whole degree an angle falls in: 123.456° becomes 123.5°.
+ * The sign and the whole degree stay as they were, and the error is at most
+ * 0.5°. ASC and MC are the only values in a positions code that depend on
+ * where the birth took place; the planets, the Moon and the nodes do not, and
+ * they stay at 0.001°, so the birth date and time can still be worked out
+ * from a shared code. share-positions.test.ts measures the region the rounded
+ * angles leave for the birthplace.
+ */
+export function wholeDegreeAngle(longitude: number): number {
+  return typeof longitude === 'number' ? Math.floor(longitude) + 0.5 : Number.NaN;
+}
+
+export function wholeDegreeAngles(
+  angles: Pick<Angles, 'asc' | 'mc'>,
+): Pick<Angles, 'asc' | 'mc'> {
+  return { asc: wholeDegreeAngle(angles.asc), mc: wholeDegreeAngle(angles.mc) };
+}
+
+/**
+ * encodePositionsLink with ASC and MC at the whole degree. Every code that
+ * leaves the device is made here; encodePositionsLink alone stays exact for
+ * the charts a person keeps for themselves.
+ */
+export function encodeSharedPositionsLink(input: PositionsShareInput): string | null {
+  if (typeof input !== 'object' || input === null) return null;
+  const { angles } = input;
+  if (angles === null || typeof angles !== 'object') return encodePositionsLink(input);
+  return encodePositionsLink({ ...input, angles: wholeDegreeAngles(angles) });
 }
 
 const POSITIONS_WIRE_KEYS = new Set(['b', 'a', 'h', 'v']);

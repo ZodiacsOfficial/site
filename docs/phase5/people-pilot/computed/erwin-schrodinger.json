@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1887-08-12T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1887-08-11T22:54:39.000Z",
-    "civilDayEndUtc": "1887-08-12T22:54:39.000Z",
+    "utcInstant": "1887-08-12T10:54:31.000Z",
+    "utcOffsetMinutesAtBirth": 65.4833,
+    "civilDayStartUtc": "1887-08-11T22:54:31.000Z",
+    "civilDayEndUtc": "1887-08-12T22:54:31.000Z",
     "latitude": 48.208333333333336,
     "longitude": 16.3725,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.9309,
-    "degreesToNextBoundaryAtWindowEnd": 10.1087
+    "degreesInsideAtWindowStart": 18.8872,
+    "degreesToNextBoundaryAtWindowEnd": 10.1524
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.96,
@@ -99,7 +99,7 @@
       "signName": "Leo",
       "degree": 1.86,
       "retrograde": false,
-      "speedPerDay": 0.4568,
+      "speedPerDay": 0.4567,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -287,7 +287,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "conjunction",
-      "orb": 5.29,
+      "orb": 5.3,
       "applying": true
     },
     {

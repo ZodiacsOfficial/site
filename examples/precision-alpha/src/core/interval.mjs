@@ -87,6 +87,22 @@ export const vHull = (a, b) => (a === null ? b : [hull(a[0], b[0]), hull(a[1], b
 export const dot = (a, b) => add(add(mul(a[0], b[0]), mul(a[1], b[1])), mul(a[2], b[2]));
 
 /**
+ * The cross product, componentwise, with no attempt to be clever.
+ *
+ * Each component is a difference of two products, so where the two nearly
+ * cancel -- two nearly parallel or nearly antiparallel vectors -- the
+ * result is wide in RELATIVE terms. That is not a defect of this routine
+ * but a true statement about what the inputs determine, and the callers
+ * that care (solar deflection near conjunction) test the resulting
+ * enclosure rather than assuming it is tight.
+ */
+export const cross = (a, b) => [
+  sub(mul(a[1], b[2]), mul(a[2], b[1])),
+  sub(mul(a[2], b[0]), mul(a[0], b[2])),
+  sub(mul(a[0], b[1]), mul(a[1], b[0])),
+];
+
+/**
  * [min |v|, max |v|] over the vector interval. Both ends are true.
  *
  * `sqrt` of the sum of squares, not `Math.hypot`: see the note in

@@ -1,0 +1,1812 @@
+{
+ "note": "Output of tools/divergence-list-check.ts. \"before 1970\" rows are the rule; \"excluded name\", \"after 1970\" and \"no local time (-00)\" rows are left to the host by design and are expected to move 0.",
+ "host": {
+  "node": "v22.22.2",
+  "icu": "78.2",
+  "tz": "2025c"
+ },
+ "summary": {
+  "zones": 98,
+  "segments": 193,
+  "before1970": 185,
+  "before1970Agree": 179,
+  "excludedName": 0,
+  "noLocalTime": 8,
+  "after1970": 0
+ },
+ "disagreements": [
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1901-08-27",
+   "short": false,
+   "listedMinutes": -40.4,
+   "movedMinutes": 19.6,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1913-04-18",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1929-10-13",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1953-07-12",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1961-07-12",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1962-07-29",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  }
+ ],
+ "rows": [
+  {
+   "zone": "Pacific/Majuro",
+   "date": "1907-11-15",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Majuro",
+   "date": "1916-11-30",
+   "short": false,
+   "listedMinutes": -180,
+   "movedMinutes": -180,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Majuro",
+   "date": "1928-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Malabo",
+   "date": "1877-09-30",
+   "short": false,
+   "listedMinutes": 21.55,
+   "movedMinutes": 21.55,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Malabo",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 35.13333333333333,
+   "movedMinutes": 35.13333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Malabo",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 21.55,
+   "movedMinutes": 21.55,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Niamey",
+   "date": "1912-12-30",
+   "short": false,
+   "listedMinutes": -73.58333333333333,
+   "movedMinutes": -73.58333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Niamey",
+   "date": "1916-10-30",
+   "short": false,
+   "listedMinutes": -90,
+   "movedMinutes": -90,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Niamey",
+   "date": "1926-11-28",
+   "short": false,
+   "listedMinutes": -120,
+   "movedMinutes": -120,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Kerguelen",
+   "date": "1900-01-01",
+   "short": false,
+   "listedMinutes": -294,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Antarctica/Syowa",
+   "date": "1898-08-06",
+   "short": false,
+   "listedMinutes": -186.86666666666667,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Antarctica/Syowa",
+   "date": "1952-02-20",
+   "short": false,
+   "listedMinutes": -180,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Africa/Dar_es_Salaam",
+   "date": "1929-04-02",
+   "short": false,
+   "listedMinutes": -22.866666666666667,
+   "movedMinutes": -22.866666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Dar_es_Salaam",
+   "date": "1933-12-31",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Dar_es_Salaam",
+   "date": "1939-10-16",
+   "short": false,
+   "listedMinutes": 15,
+   "movedMinutes": 15,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Atlantic/St_Helena",
+   "date": "1931-07-02",
+   "short": false,
+   "listedMinutes": -22.8,
+   "movedMinutes": -22.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Atlantic/Reykjavik",
+   "date": "1878-12-31",
+   "short": false,
+   "listedMinutes": -71.86666666666666,
+   "movedMinutes": -71.86666666666666,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Atlantic/Reykjavik",
+   "date": "1909-12-31",
+   "short": false,
+   "listedMinutes": -43.86666666666667,
+   "movedMinutes": -43.86666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Atlantic/Reykjavik",
+   "date": "1914-07-27",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kampala",
+   "date": "1879-03-01",
+   "short": false,
+   "listedMinutes": -17.6,
+   "movedMinutes": -17.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kampala",
+   "date": "1918-05-31",
+   "short": false,
+   "listedMinutes": -20.333333333333332,
+   "movedMinutes": -20.333333333333332,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kampala",
+   "date": "1930-01-02",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Bahrain",
+   "date": "1930-10-09",
+   "short": false,
+   "listedMinutes": -37.666666666666664,
+   "movedMinutes": -37.666666666666664,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Bahrain",
+   "date": "1942-10-09",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Banjul",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -50.46666666666667,
+   "movedMinutes": -50.46666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Banjul",
+   "date": "1922-08-16",
+   "short": false,
+   "listedMinutes": -66.6,
+   "movedMinutes": -66.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Banjul",
+   "date": "1937-09-01",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Saipan",
+   "date": "1921-06-20",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Saipan",
+   "date": "1944-07-19",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Freetown",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -36.86666666666667,
+   "movedMinutes": -36.86666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Freetown",
+   "date": "1912-09-30",
+   "short": false,
+   "listedMinutes": -53,
+   "movedMinutes": -53,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Freetown",
+   "date": "1923-03-17",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Dakar",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -53.6,
+   "movedMinutes": -53.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Dakar",
+   "date": "1926-09-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Antananarivo",
+   "date": "1879-03-01",
+   "short": false,
+   "listedMinutes": 42.8,
+   "movedMinutes": 42.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Antananarivo",
+   "date": "1909-11-29",
+   "short": false,
+   "listedMinutes": 40.06666666666667,
+   "movedMinutes": 40.06666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Antananarivo",
+   "date": "1919-12-30",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Djibouti",
+   "date": "1879-03-01",
+   "short": false,
+   "listedMinutes": 25.333333333333332,
+   "movedMinutes": 25.333333333333332,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Djibouti",
+   "date": "1909-11-29",
+   "short": false,
+   "listedMinutes": 22.6,
+   "movedMinutes": 22.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Djibouti",
+   "date": "1919-12-30",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Comoro",
+   "date": "1879-03-01",
+   "short": false,
+   "listedMinutes": 25.8,
+   "movedMinutes": 25.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Comoro",
+   "date": "1909-11-29",
+   "short": false,
+   "listedMinutes": 23.066666666666666,
+   "movedMinutes": 23.066666666666666,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Comoro",
+   "date": "1919-12-30",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Mayotte",
+   "date": "1879-03-01",
+   "short": false,
+   "listedMinutes": 33.666666666666664,
+   "movedMinutes": 33.666666666666664,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Mayotte",
+   "date": "1909-11-29",
+   "short": false,
+   "listedMinutes": 30.933333333333334,
+   "movedMinutes": 30.933333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Mayotte",
+   "date": "1919-12-30",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Nouakchott",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -47.666666666666664,
+   "movedMinutes": -47.666666666666664,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Nouakchott",
+   "date": "1947-07-14",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Bamako",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -15.866666666666667,
+   "movedMinutes": -15.866666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Bamako",
+   "date": "1947-04-24",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Conakry",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": -38.733333333333334,
+   "movedMinutes": -38.733333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Conakry",
+   "date": "1947-01-29",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Antarctica/McMurdo",
+   "date": "1898-05-04",
+   "short": false,
+   "listedMinutes": -690,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Antarctica/McMurdo",
+   "date": "1928-01-03",
+   "short": false,
+   "listedMinutes": -750,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Antarctica/McMurdo",
+   "date": "1928-06-23",
+   "short": false,
+   "listedMinutes": -690,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Africa/Porto-Novo",
+   "date": "1916-10-30",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Porto-Novo",
+   "date": "1926-11-28",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Brunei",
+   "date": "1888-01-30",
+   "short": false,
+   "listedMinutes": 18.333333333333332,
+   "movedMinutes": 18.333333333333332,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Brunei",
+   "date": "1935-10-28",
+   "short": false,
+   "listedMinutes": -20,
+   "movedMinutes": -20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Brunei",
+   "date": "1936-10-28",
+   "short": false,
+   "listedMinutes": -20,
+   "movedMinutes": -20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Vientiane",
+   "date": "1908-11-28",
+   "short": false,
+   "listedMinutes": 24.433333333333334,
+   "movedMinutes": 24.433333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Vientiane",
+   "date": "1915-10-15",
+   "short": false,
+   "listedMinutes": 17.933333333333334,
+   "movedMinutes": 17.933333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Vientiane",
+   "date": "1944-02-06",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Accra",
+   "date": "1880-12-31",
+   "short": false,
+   "listedMinutes": 15.266666666666667,
+   "movedMinutes": 15.266666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Accra",
+   "date": "1919-12-13",
+   "short": false,
+   "listedMinutes": 20,
+   "movedMinutes": 20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Accra",
+   "date": "1920-11-01",
+   "short": false,
+   "listedMinutes": 20,
+   "movedMinutes": 20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Blantyre",
+   "date": "1910-04-12",
+   "short": false,
+   "listedMinutes": 20,
+   "movedMinutes": 20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Blantyre",
+   "date": "1913-01-09",
+   "short": false,
+   "listedMinutes": 21.166666666666668,
+   "movedMinutes": 21.166666666666668,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Blantyre",
+   "date": "1919-12-29",
+   "short": false,
+   "listedMinutes": 21,
+   "movedMinutes": 21,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Phnom_Penh",
+   "date": "1878-03-31",
+   "short": false,
+   "listedMinutes": 17.6,
+   "movedMinutes": 17.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Phnom_Penh",
+   "date": "1908-11-28",
+   "short": false,
+   "listedMinutes": 24.433333333333334,
+   "movedMinutes": 24.433333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Asia/Phnom_Penh",
+   "date": "1915-10-15",
+   "short": false,
+   "listedMinutes": 17.933333333333334,
+   "movedMinutes": 17.933333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Addis_Ababa",
+   "date": "1929-04-02",
+   "short": false,
+   "listedMinutes": -24.666666666666668,
+   "movedMinutes": -24.666666666666668,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Addis_Ababa",
+   "date": "1936-09-01",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Addis_Ababa",
+   "date": "1939-10-16",
+   "short": false,
+   "listedMinutes": 15,
+   "movedMinutes": 15,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Mahe",
+   "date": "1913-07-01",
+   "short": false,
+   "listedMinutes": 18.8,
+   "movedMinutes": 18.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Reunion",
+   "date": "1915-09-15",
+   "short": false,
+   "listedMinutes": 18.8,
+   "movedMinutes": 18.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Bangui",
+   "date": "1877-09-30",
+   "short": false,
+   "listedMinutes": 60.75,
+   "movedMinutes": 60.75,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Bangui",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 74.33333333333333,
+   "movedMinutes": 74.33333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Bangui",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 60.75,
+   "movedMinutes": 60.75,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Brazzaville",
+   "date": "1877-09-30",
+   "short": false,
+   "listedMinutes": 47.55,
+   "movedMinutes": 47.55,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Brazzaville",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 61.13333333333333,
+   "movedMinutes": 61.13333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Brazzaville",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 47.55,
+   "movedMinutes": 47.55,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Douala",
+   "date": "1877-09-30",
+   "short": false,
+   "listedMinutes": 25.216666666666665,
+   "movedMinutes": 25.216666666666665,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Douala",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 38.8,
+   "movedMinutes": 38.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Douala",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 25.216666666666665,
+   "movedMinutes": 25.216666666666665,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Libreville",
+   "date": "1877-09-30",
+   "short": false,
+   "listedMinutes": 24.216666666666665,
+   "movedMinutes": 24.216666666666665,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Libreville",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 37.8,
+   "movedMinutes": 37.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Libreville",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 24.216666666666665,
+   "movedMinutes": 24.216666666666665,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Aruba",
+   "date": "1905-09-04",
+   "short": false,
+   "listedMinutes": -40.4,
+   "movedMinutes": -40.4,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Aruba",
+   "date": "1927-03-24",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Aruba",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -90,
+   "movedMinutes": -90,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Curacao",
+   "date": "1905-09-04",
+   "short": false,
+   "listedMinutes": -35.78333333333333,
+   "movedMinutes": -35.78333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Curacao",
+   "date": "1927-03-24",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Curacao",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -90,
+   "movedMinutes": -90,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Kralendijk",
+   "date": "1905-09-04",
+   "short": false,
+   "listedMinutes": -35.78333333333333,
+   "movedMinutes": -35.78333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Kralendijk",
+   "date": "1927-03-24",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Kralendijk",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -90,
+   "movedMinutes": -90,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Lower_Princes",
+   "date": "1905-09-04",
+   "short": false,
+   "listedMinutes": -35.78333333333333,
+   "movedMinutes": -35.78333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Lower_Princes",
+   "date": "1927-03-24",
+   "short": false,
+   "listedMinutes": -30,
+   "movedMinutes": -30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Lower_Princes",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -90,
+   "movedMinutes": -90,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Guernsey",
+   "date": "1940-12-01",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Guernsey",
+   "date": "1941-12-07",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Guernsey",
+   "date": "1942-09-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Lusaka",
+   "date": "1876-07-30",
+   "short": false,
+   "listedMinutes": -17.166666666666668,
+   "movedMinutes": -17.166666666666668,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Antarctica/DumontDUrville",
+   "date": "1920-12-31",
+   "short": false,
+   "listedMinutes": -600,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Antarctica/DumontDUrville",
+   "date": "1954-06-08",
+   "short": false,
+   "listedMinutes": -600,
+   "movedMinutes": 0,
+   "kind": "no local time (-00)",
+   "agrees": false
+  },
+  {
+   "zone": "Africa/Mogadishu",
+   "date": "1901-01-30",
+   "short": false,
+   "listedMinutes": 32.733333333333334,
+   "movedMinutes": 32.733333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Mogadishu",
+   "date": "1918-05-31",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Mogadishu",
+   "date": "1930-07-03",
+   "short": false,
+   "listedMinutes": 30,
+   "movedMinutes": 30,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Antigua",
+   "date": "1927-04-02",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Antigua",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -120,
+   "movedMinutes": -120,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Antigua",
+   "date": "1948-05-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Funafuti",
+   "date": "1875-07-02",
+   "short": false,
+   "listedMinutes": 24.8,
+   "movedMinutes": 24.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Wake",
+   "date": "1875-07-02",
+   "short": false,
+   "listedMinutes": -25.6,
+   "movedMinutes": -25.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Wallis",
+   "date": "1875-07-02",
+   "short": false,
+   "listedMinutes": 43.266666666666666,
+   "movedMinutes": 43.266666666666666,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Amsterdam",
+   "date": "1903-08-05",
+   "short": false,
+   "listedMinutes": 19.533333333333335,
+   "movedMinutes": 19.533333333333335,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Amsterdam",
+   "date": "1916-07-20",
+   "short": false,
+   "listedMinutes": -40.46666666666667,
+   "movedMinutes": -40.46666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Amsterdam",
+   "date": "1918-04-08",
+   "short": false,
+   "listedMinutes": 19.533333333333335,
+   "movedMinutes": 19.533333333333335,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1901-08-27",
+   "short": false,
+   "listedMinutes": -40.4,
+   "movedMinutes": 19.6,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1913-04-18",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Coral_Harbour",
+   "date": "1929-10-13",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Nassau",
+   "date": "1918-07-21",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Nassau",
+   "date": "1919-07-13",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Nassau",
+   "date": "1920-07-14",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Luanda",
+   "date": "1898-09-29",
+   "short": false,
+   "listedMinutes": 38.483333333333334,
+   "movedMinutes": 38.483333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Luanda",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 52.06666666666667,
+   "movedMinutes": 52.06666666666667,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Luanda",
+   "date": "1910-04-01",
+   "short": false,
+   "listedMinutes": 38.483333333333334,
+   "movedMinutes": 38.483333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Christmas",
+   "date": "1907-09-01",
+   "short": false,
+   "listedMinutes": 17.933333333333334,
+   "movedMinutes": 17.933333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Gaborone",
+   "date": "1894-01-29",
+   "short": false,
+   "listedMinutes": -40.3,
+   "movedMinutes": -40.3,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Gaborone",
+   "date": "1943-12-18",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Indian/Cocos",
+   "date": "1943-10-31",
+   "short": false,
+   "listedMinutes": -150,
+   "movedMinutes": -150,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Luxembourg",
+   "date": "1898-05-16",
+   "short": false,
+   "listedMinutes": 24.6,
+   "movedMinutes": 24.6,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Luxembourg",
+   "date": "1909-08-19",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Luxembourg",
+   "date": "1916-05-07",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Lubumbashi",
+   "date": "1903-06-06",
+   "short": false,
+   "listedMinutes": -70.3,
+   "movedMinutes": -70.3,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Lubumbashi",
+   "date": "1914-08-28",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kinshasa",
+   "date": "1901-09-04",
+   "short": false,
+   "listedMinutes": 46.416666666666664,
+   "movedMinutes": 46.416666666666664,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kinshasa",
+   "date": "1906-12-30",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Kinshasa",
+   "date": "1911-04-01",
+   "short": false,
+   "listedMinutes": 46.416666666666664,
+   "movedMinutes": 46.416666666666664,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Lome",
+   "date": "1902-07-02",
+   "short": false,
+   "listedMinutes": 16.133333333333333,
+   "movedMinutes": 16.133333333333333,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Midway",
+   "date": "1896-10-02",
+   "short": false,
+   "listedMinutes": -26.666666666666668,
+   "movedMinutes": -26.666666666666668,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Midway",
+   "date": "1906-01-01",
+   "short": false,
+   "listedMinutes": 22.8,
+   "movedMinutes": 22.8,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Pacific/Midway",
+   "date": "1956-07-18",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Anguilla",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Marigot",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Port_of_Spain",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Barthelemy",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Kitts",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Lucia",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Vincent",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Dominica",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Grenada",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Montserrat",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Thomas",
+   "date": "1905-05-14",
+   "short": false,
+   "listedMinutes": -19.733333333333334,
+   "movedMinutes": -19.733333333333334,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/St_Thomas",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Tortola",
+   "date": "1905-05-14",
+   "short": false,
+   "listedMinutes": -18.466666666666665,
+   "movedMinutes": -18.466666666666665,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Tortola",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Guadeloupe",
+   "date": "1944-01-16",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Mbabane",
+   "date": "1897-08-18",
+   "short": false,
+   "listedMinutes": 34.4,
+   "movedMinutes": 34.4,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Mbabane",
+   "date": "1942-12-19",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Mbabane",
+   "date": "1943-12-18",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Maseru",
+   "date": "1897-08-18",
+   "short": false,
+   "listedMinutes": 20,
+   "movedMinutes": 20,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Africa/Maseru",
+   "date": "1942-12-19",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1953-07-12",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1961-07-12",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "America/Tijuana",
+   "date": "1962-07-29",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": 0,
+   "kind": "before 1970",
+   "agrees": false
+  },
+  {
+   "zone": "Arctic/Longyearbyen",
+   "date": "1916-05-11",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Arctic/Longyearbyen",
+   "date": "1916-09-30",
+   "short": true,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Arctic/Longyearbyen",
+   "date": "1917-07-02",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Oslo",
+   "date": "1916-05-11",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Oslo",
+   "date": "1916-09-30",
+   "short": true,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Oslo",
+   "date": "1917-07-02",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Stockholm",
+   "date": "1916-05-07",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Stockholm",
+   "date": "1917-07-02",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Stockholm",
+   "date": "1918-07-01",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Creston",
+   "date": "1917-07-01",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Creston",
+   "date": "1918-05-01",
+   "short": false,
+   "listedMinutes": -120,
+   "movedMinutes": -120,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Creston",
+   "date": "1918-08-14",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Copenhagen",
+   "date": "1916-05-07",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Copenhagen",
+   "date": "1917-07-02",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Copenhagen",
+   "date": "1918-07-01",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Jersey",
+   "date": "1940-12-01",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Jersey",
+   "date": "1941-12-07",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Jersey",
+   "date": "1942-09-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Monaco",
+   "date": "1940-11-23",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Monaco",
+   "date": "1941-12-21",
+   "short": false,
+   "listedMinutes": -60,
+   "movedMinutes": -60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Blanc-Sablon",
+   "date": "1918-07-21",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "America/Blanc-Sablon",
+   "date": "1942-03-22",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Ljubljana",
+   "date": "1945-04-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Sarajevo",
+   "date": "1945-04-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Skopje",
+   "date": "1945-04-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  },
+  {
+   "zone": "Europe/Zagreb",
+   "date": "1945-04-20",
+   "short": false,
+   "listedMinutes": 60,
+   "movedMinutes": 60,
+   "kind": "before 1970",
+   "agrees": true
+  }
+ ]
+}

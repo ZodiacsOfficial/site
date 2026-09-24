@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Amsterdam",
     "civilTime": "12:00",
-    "utcInstant": "1606-07-15T11:42:30.000Z",
-    "utcOffsetMinutesAtBirth": 17.5,
-    "civilDayStartUtc": "1606-07-14T23:42:30.000Z",
-    "civilDayEndUtc": "1606-07-15T23:42:30.000Z",
+    "utcInstant": "1606-07-15T11:42:02.000Z",
+    "utcOffsetMinutesAtBirth": 17.9667,
+    "civilDayStartUtc": "1606-07-14T23:42:02.000Z",
+    "civilDayEndUtc": "1606-07-15T23:42:02.000Z",
     "latitude": 52.16,
     "longitude": 4.49,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "scorpio",
     "signName": "Scorpio",
-    "degree": 22.49,
+    "degree": 22.48,
     "uncertain": false,
     "signAtCivilDayStart": "scorpio",
     "signAtCivilDayEnd": "scorpio"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 22.0564,
-    "degreesToNextBoundaryAtWindowEnd": 6.9894
+    "degreesInsideAtWindowStart": 22.0445,
+    "degreesToNextBoundaryAtWindowEnd": 7.0013
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 22.49,
+      "degree": 22.48,
       "retrograde": false,
-      "speedPerDay": 14.3693,
+      "speedPerDay": 14.3692,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Cancer",
       "degree": 2.41,
       "retrograde": false,
-      "speedPerDay": 1.0972,
+      "speedPerDay": 1.0971,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -290,7 +290,7 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 6.72,
+      "orb": 6.73,
       "applying": true
     },
     {

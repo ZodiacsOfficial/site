@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Australia/Sydney",
     "civilTime": "12:00",
-    "utcInstant": "1867-06-17T01:55:08.000Z",
-    "utcOffsetMinutesAtBirth": 604.8667,
-    "civilDayStartUtc": "1867-06-16T13:55:08.000Z",
-    "civilDayEndUtc": "1867-06-17T13:55:08.000Z",
+    "utcInstant": "1867-06-17T02:07:13.000Z",
+    "utcOffsetMinutesAtBirth": 592.7833,
+    "civilDayStartUtc": "1867-06-16T14:07:13.000Z",
+    "civilDayEndUtc": "1867-06-17T14:07:13.000Z",
     "latitude": -33.90972222222222,
     "longitude": 148.195,
     "coordinateEscalationSteps": 0,
@@ -30,26 +30,26 @@
   "sun": {
     "sign": "gemini",
     "signName": "Gemini",
-    "degree": 25.37
+    "degree": 25.38
   },
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 24.01,
-    "uncertain": false,
+    "degree": 24.11,
+    "uncertain": true,
     "signAtCivilDayStart": "sagittarius",
-    "signAtCivilDayEnd": "sagittarius"
+    "signAtCivilDayEnd": "capricorn"
   },
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 25.2973,
-    "degreesToNextBoundaryAtWindowEnd": 3.7487
+    "degreesInsideAtWindowStart": 24.9045,
+    "degreesToNextBoundaryAtWindowEnd": 4.1414
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
     "Moon": 11.886,
-    "Mercury": 1.785,
+    "Mercury": 1.784,
     "Venus": 1.203,
     "Mars": 0.566,
     "Jupiter": 0.032,
@@ -58,13 +58,19 @@
     "Neptune": 0.017,
     "Pluto": 0.018
   },
-  "signUncertainTransitions": [],
+  "signUncertainTransitions": [
+    {
+      "body": "Moon",
+      "signAtCivilDayStart": "sagittarius",
+      "signAtCivilDayEnd": "capricorn"
+    }
+  ],
   "placements": [
     {
       "body": "Sun",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 25.37,
+      "degree": 25.38,
       "retrograde": false,
       "speedPerDay": 0.9541,
       "dignity": null,
@@ -75,20 +81,20 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 24.01,
+      "degree": 24.11,
       "retrograde": false,
-      "speedPerDay": 11.8847,
+      "speedPerDay": 11.8845,
       "dignity": null,
-      "stableAcrossDay": true,
+      "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
     },
     {
       "body": "Mercury",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 13.16,
+      "degree": 13.18,
       "retrograde": false,
-      "speedPerDay": 1.7838,
+      "speedPerDay": 1.7835,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +103,7 @@
       "body": "Venus",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 28.68,
+      "degree": 28.69,
       "retrograde": false,
       "speedPerDay": 1.2032,
       "dignity": "domicile",
@@ -183,14 +189,14 @@
       "a": "Sun",
       "b": "Moon",
       "type": "opposition",
-      "orb": 1.36,
+      "orb": 1.27,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Neptune",
       "type": "square",
-      "orb": 1.64,
+      "orb": 1.63,
       "applying": true
     },
     {
@@ -211,7 +217,7 @@
       "a": "Mercury",
       "b": "Pluto",
       "type": "sextile",
-      "orb": 2.36,
+      "orb": 2.34,
       "applying": true
     },
     {
@@ -225,21 +231,21 @@
       "a": "Mercury",
       "b": "Saturn",
       "type": "trine",
-      "orb": 5.23,
+      "orb": 5.21,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Uranus",
       "type": "conjunction",
-      "orb": 5.42,
+      "orb": 5.43,
       "applying": false
     },
     {
       "a": "Mercury",
       "b": "Jupiter",
       "type": "trine",
-      "orb": 5.79,
+      "orb": 5.8,
       "applying": false
     }
   ],
@@ -248,21 +254,21 @@
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 3.02,
+      "orb": 2.93,
       "applying": true
     }
   ],
   "patterns": {
-    "settledBodyCount": 10,
+    "settledBodyCount": 9,
     "stelliums": [],
     "elements": {
       "air": 1,
-      "fire": 3,
       "water": 4,
-      "earth": 2
+      "earth": 2,
+      "fire": 2
     },
     "modalities": {
-      "mutable": 3,
+      "mutable": 2,
       "cardinal": 3,
       "fixed": 4
     },

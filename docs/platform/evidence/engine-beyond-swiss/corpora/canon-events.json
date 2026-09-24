@@ -1,0 +1,52 @@
+{
+ "note": "The four canon events of brief v1 M0 item 1: published instants from NASA's eclipse web pages (F. Espenak, GSFC), as the audit read them on 2026-09-22. The pages are not committed; their SHA-256 digests are listed. Values are transcribed to the precision the page gives, no further.",
+ "events": [
+  {
+   "id": "eclipse-2017-08-21",
+   "event": "total solar eclipse, instant of greatest eclipse",
+   "canon": { "TD": "2017-08-21T18:26:40", "UT": "2017-08-21T18:25:31.8" },
+   "rounding": "TD to the second (catalogue); UT to 0.1 s (path page)",
+   "sources": [
+    { "page": "SE2001-2100.html", "gives": "TD", "sha256": "a9c08f5b4b51d5c85ccfa18d8bfccd98ec8a7d93f06e2d40691943b4105acf9e" },
+    { "page": "SE2017Aug21Tpath.html", "gives": "UT: 'Greatest Eclipse : Time = 18:25:31.8 UT'", "sha256": "33b27c46134dded80975dbf73f74a4e12d8c2c8363744a1c3f2e4962a0413ce0" }
+   ]
+  },
+  {
+   "id": "eclipse-2024-04-08",
+   "event": "total solar eclipse, instant of greatest eclipse",
+   "canon": { "TD": "2024-04-08T18:18:29", "UT": "2024-04-08T18:17:18.3" },
+   "rounding": "TD to the second (catalogue); UT to 0.1 s (path page)",
+   "sources": [
+    { "page": "SE2001-2100.html", "gives": "TD", "sha256": "a9c08f5b4b51d5c85ccfa18d8bfccd98ec8a7d93f06e2d40691943b4105acf9e" },
+    { "page": "SE2024Apr08Tpath.html", "gives": "UT: 'Greatest Eclipse : Time = 18:17:18.3 UT'", "sha256": "0691bf43354ccdde57ae522c12bf3eb703930dc6eab697cf462973d02a7b9cea" }
+   ]
+  },
+  {
+   "id": "venus-transit-2004-06-08",
+   "event": "transit of Venus, greatest transit (geocentric)",
+   "canon": { "UT": "2004-06-08T08:19:44", "minimumSeparationArcsec": 627 },
+   "rounding": "UT to the second; separation to the arcsecond",
+   "tt": "No TD is published; the audit took TT = UT + 64.184 s (TT - UTC in 2004), leaving out UT1 - UTC, which is under 0.9 s: 2004-06-08T08:20:48.184",
+   "sources": [
+    { "page": "transit04.html", "gives": "'Greatest 08:19:44'; 'minimum separation from the Sun is 627 arc-seconds'", "sha256": "db1831b528deb3660337b0d596892a1f45b72f4a44e2c329f9ab760699cb2149" }
+   ]
+  },
+  {
+   "id": "venus-transit-2012-06-06",
+   "event": "transit of Venus, greatest transit (geocentric)",
+   "canon": { "UT": "2012-06-06T01:29:36", "minimumSeparationArcsec": 554 },
+   "rounding": "UT to the second; separation to the arcsecond",
+   "tt": "No TD is published; the audit took TT = UT + 66.184 s (TT - UTC in 2012), leaving out UT1 - UTC: 2012-06-06T01:30:42.184",
+   "sources": [
+    { "page": "transit12.html", "gives": "'Greatest 01:29:36'; 'minimum separation from the Sun is 554 arc-seconds'", "sha256": "b18149fc8233e2dd43cbcc51cdd7cfd58a452e3aab2772b21d3ac941a4900adb" }
+   ]
+  }
+ ],
+ "baseline": {
+  "note": "TT residuals in seconds, found instant minus canon, from the audit (AUDIT.md, verification-honesty-3): the shipped engine 0.1.1-rc.6, the precision research runtime over the de440s pack, and Swiss Ephemeris 2.10.03.",
+  "eclipse-2017-08-21": { "engine": 1.51, "alpha": 1.15, "swiss": 1.14 },
+  "eclipse-2024-04-08": { "engine": 4.18, "alpha": 0.68, "swiss": 0.69 },
+  "venus-transit-2004-06-08": { "engine": 16.76, "alpha": 0.74, "swiss": 0.87 },
+  "venus-transit-2012-06-06": { "engine": 21.07, "alpha": 0.69, "swiss": 0.89 }
+ }
+}

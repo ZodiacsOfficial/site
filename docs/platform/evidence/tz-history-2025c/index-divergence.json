@@ -1,0 +1,521 @@
+{
+ "measured": {
+  "host": "Node 22.22.2, ICU 78.2, tzdb 2025c",
+  "span": "legal time from 1900-01-01, or the end of the zone's local mean time era if later, to 1970-01-01"
+ },
+ "indexZones": 356,
+ "divergentZones": 85,
+ "divergentByAnHourOrMore": 55,
+ "divergent": {
+  "America/Antigua": {
+   "days": 14184.04,
+   "from": "1912-03-02T04:07:12Z",
+   "until": "1951-01-01T05:00:00Z",
+   "largestMinutes": 120
+  },
+  "America/Anguilla": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Luanda": {
+   "days": 7181.98,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 52.07
+  },
+  "America/Aruba": {
+   "days": 19316.99,
+   "from": "1912-02-12T04:40:24Z",
+   "until": "1965-01-01T04:30:00Z",
+   "largestMinutes": 90
+  },
+  "Europe/Sarajevo": {
+   "days": 36,
+   "from": "1945-04-02T01:00:00Z",
+   "until": "1945-05-08T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Ouagadougou": {
+   "days": 0.01,
+   "from": "1912-01-01T00:06:04Z",
+   "until": "1912-01-01T00:16:08Z",
+   "largestMinutes": 16.13
+  },
+  "Asia/Bahrain": {
+   "days": 894.99,
+   "from": "1941-07-19T20:37:40Z",
+   "until": "1943-12-31T20:30:00Z",
+   "largestMinutes": 30
+  },
+  "Africa/Bujumbura": {
+   "days": 3286.91,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1908-12-31T21:49:42Z",
+   "largestMinutes": 10.3
+  },
+  "Africa/Porto-Novo": {
+   "days": 8092.01,
+   "from": "1911-12-31T23:49:32Z",
+   "until": "1934-02-26T00:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/St_Barthelemy": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Asia/Brunei": {
+   "days": 1940.87,
+   "from": "1926-02-28T16:20:20Z",
+   "until": "1945-09-11T15:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Kralendijk": {
+   "days": 19317,
+   "from": "1912-02-12T04:35:47Z",
+   "until": "1965-01-01T04:30:00Z",
+   "largestMinutes": 90
+  },
+  "America/Nassau": {
+   "days": 7203.15,
+   "from": "1918-04-14T07:00:00Z",
+   "until": "1963-10-27T06:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Gaborone": {
+   "days": 3468.87,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1944-03-18T23:00:00Z",
+   "largestMinutes": 60
+  },
+  "Indian/Cocos": {
+   "days": 8401.63,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1945-05-02T15:00:00Z",
+   "largestMinutes": 150
+  },
+  "Africa/Lubumbashi": {
+   "days": 7418.96,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1920-04-24T23:00:00Z",
+   "largestMinutes": 70.3
+  },
+  "Africa/Kinshasa": {
+   "days": 7181.98,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Bangui": {
+   "days": 2800.03,
+   "from": "1911-12-31T22:45:40Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 46.42
+  },
+  "Africa/Brazzaville": {
+   "days": 2800.02,
+   "from": "1911-12-31T22:58:52Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 46.42
+  },
+  "Africa/Douala": {
+   "days": 2800.01,
+   "from": "1911-12-31T23:21:12Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 46.42
+  },
+  "America/Curacao": {
+   "days": 19317,
+   "from": "1912-02-12T04:35:47Z",
+   "until": "1965-01-01T04:30:00Z",
+   "largestMinutes": 90
+  },
+  "Indian/Christmas": {
+   "days": 7394.72,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1920-03-31T17:17:56Z",
+   "largestMinutes": 17.93
+  },
+  "Africa/Djibouti": {
+   "days": 10801.03,
+   "from": "1911-06-30T21:07:24Z",
+   "until": "1942-07-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "Europe/Copenhagen": {
+   "days": 981.96,
+   "from": "1916-04-30T22:00:00Z",
+   "until": "1949-10-02T01:00:00Z",
+   "largestMinutes": 120
+  },
+  "America/Dominica": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Asmara": {
+   "days": 15551.89,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1942-07-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "Africa/Addis_Ababa": {
+   "days": 15551.89,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1942-07-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "Pacific/Pohnpei": {
+   "days": 9009.16,
+   "from": "1900-12-31T13:27:08Z",
+   "until": "1945-07-31T15:00:00Z",
+   "largestMinutes": 120
+  },
+  "Africa/Libreville": {
+   "days": 2800.01,
+   "from": "1911-12-31T23:22:12Z",
+   "until": "1919-08-31T23:30:00Z",
+   "largestMinutes": 46.42
+  },
+  "America/Grenada": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Europe/Guernsey": {
+   "days": 701.08,
+   "from": "1940-07-01T23:00:00Z",
+   "until": "1944-10-02T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Accra": {
+   "days": 5127.62,
+   "from": "1919-11-24T00:00:00Z",
+   "until": "1956-01-01T01:30:00Z",
+   "largestMinutes": 30
+  },
+  "Africa/Banjul": {
+   "days": 10989,
+   "from": "1912-01-01T01:06:36Z",
+   "until": "1942-02-01T01:00:00Z",
+   "largestMinutes": 66.6
+  },
+  "Africa/Conakry": {
+   "days": 9440.04,
+   "from": "1934-02-26T00:00:00Z",
+   "until": "1960-01-01T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Guadeloupe": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Malabo": {
+   "days": 18976.02,
+   "from": "1911-12-31T23:24:52Z",
+   "until": "1963-12-15T00:00:00Z",
+   "largestMinutes": 60
+  },
+  "Europe/Zagreb": {
+   "days": 36,
+   "from": "1945-04-02T01:00:00Z",
+   "until": "1945-05-08T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Atlantic/Reykjavik": {
+   "days": 14989.81,
+   "from": "1908-01-01T01:28:00Z",
+   "until": "1968-04-07T02:00:00Z",
+   "largestMinutes": 60
+  },
+  "Europe/Jersey": {
+   "days": 701.08,
+   "from": "1940-07-01T23:00:00Z",
+   "until": "1944-10-02T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Asia/Phnom_Penh": {
+   "days": 5997.97,
+   "from": "1906-06-30T17:00:20Z",
+   "until": "1945-09-01T15:00:00Z",
+   "largestMinutes": 120
+  },
+  "Indian/Comoro": {
+   "days": 10801.03,
+   "from": "1911-06-30T21:06:56Z",
+   "until": "1942-07-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "America/St_Kitts": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Cayman": {
+   "days": 4413.21,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1912-02-01T05:07:10Z",
+   "largestMinutes": 12.43
+  },
+  "Asia/Vientiane": {
+   "days": 8933.92,
+   "from": "1906-06-30T17:09:36Z",
+   "until": "1955-04-14T16:00:00Z",
+   "largestMinutes": 120
+  },
+  "America/St_Lucia": {
+   "days": 5628.21,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Maseru": {
+   "days": 181.97,
+   "from": "1903-02-28T22:10:00Z",
+   "until": "1943-03-20T23:00:00Z",
+   "largestMinutes": 60
+  },
+  "Europe/Luxembourg": {
+   "days": 3861.23,
+   "from": "1904-05-31T23:35:24Z",
+   "until": "1944-09-18T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Europe/Monaco": {
+   "days": 496.08,
+   "from": "1911-03-10T23:50:39Z",
+   "until": "1942-03-08T23:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Marigot": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Indian/Antananarivo": {
+   "days": 10892.04,
+   "from": "1911-06-30T20:49:56Z",
+   "until": "1954-05-29T20:00:00Z",
+   "largestMinutes": 60
+  },
+  "Pacific/Majuro": {
+   "days": 25110.02,
+   "from": "1900-12-31T12:35:12Z",
+   "until": "1969-09-30T13:00:00Z",
+   "largestMinutes": 180
+  },
+  "Europe/Skopje": {
+   "days": 36,
+   "from": "1945-04-02T01:00:00Z",
+   "until": "1945-05-08T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Bamako": {
+   "days": 9611.04,
+   "from": "1934-02-26T00:00:00Z",
+   "until": "1960-06-20T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Pacific/Saipan": {
+   "days": 14974.99,
+   "from": "1900-12-31T14:17:00Z",
+   "until": "1944-07-30T15:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Nouakchott": {
+   "days": 9772.04,
+   "from": "1934-02-26T00:00:00Z",
+   "until": "1960-11-28T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Montserrat": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Blantyre": {
+   "days": 5091,
+   "from": "1911-07-23T21:40:00Z",
+   "until": "1925-06-30T21:39:00Z",
+   "largestMinutes": 21.17
+  },
+  "Africa/Niamey": {
+   "days": 17532.01,
+   "from": "1911-12-31T23:51:32Z",
+   "until": "1960-01-01T00:00:00Z",
+   "largestMinutes": 120
+  },
+  "Europe/Amsterdam": {
+   "days": 14905.08,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1946-10-07T01:00:00Z",
+   "largestMinutes": 100.47
+  },
+  "Europe/Oslo": {
+   "days": 2586.96,
+   "from": "1916-04-30T22:00:00Z",
+   "until": "1965-09-19T01:00:00Z",
+   "largestMinutes": 120
+  },
+  "Asia/Muscat": {
+   "days": 0.01,
+   "from": "1919-12-31T20:05:36Z",
+   "until": "1919-12-31T20:18:48Z",
+   "largestMinutes": 18.8
+  },
+  "Indian/Reunion": {
+   "days": 3136,
+   "from": "1911-05-31T20:18:08Z",
+   "until": "1919-12-31T20:18:48Z",
+   "largestMinutes": 18.8
+  },
+  "Indian/Mahe": {
+   "days": 4748,
+   "from": "1906-12-31T20:18:12Z",
+   "until": "1919-12-31T20:18:48Z",
+   "largestMinutes": 18.8
+  },
+  "Europe/Stockholm": {
+   "days": 2568.96,
+   "from": "1916-04-30T22:00:00Z",
+   "until": "1949-10-02T01:00:00Z",
+   "largestMinutes": 120
+  },
+  "Atlantic/St_Helena": {
+   "days": 18627.02,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1951-01-01T00:22:48Z",
+   "largestMinutes": 22.8
+  },
+  "Europe/Ljubljana": {
+   "days": 36,
+   "from": "1945-04-02T01:00:00Z",
+   "until": "1945-05-08T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Arctic/Longyearbyen": {
+   "days": 2586.96,
+   "from": "1916-04-30T22:00:00Z",
+   "until": "1965-09-19T01:00:00Z",
+   "largestMinutes": 120
+  },
+  "Africa/Freetown": {
+   "days": 15315.04,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1941-12-07T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Dakar": {
+   "days": 10743.99,
+   "from": "1912-01-01T01:09:44Z",
+   "until": "1941-06-01T01:00:00Z",
+   "largestMinutes": 60
+  },
+  "Africa/Mogadishu": {
+   "days": 18073.9,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1956-12-31T21:30:00Z",
+   "largestMinutes": 32.73
+  },
+  "America/Lower_Princes": {
+   "days": 19317,
+   "from": "1912-02-12T04:35:47Z",
+   "until": "1965-01-01T04:30:00Z",
+   "largestMinutes": 90
+  },
+  "Africa/Mbabane": {
+   "days": 363.94,
+   "from": "1903-02-28T21:55:36Z",
+   "until": "1944-03-18T23:00:00Z",
+   "largestMinutes": 60
+  },
+  "Indian/Kerguelen": {
+   "days": 3651.8,
+   "from": "1950-01-01T00:00:00Z",
+   "until": "1959-12-31T19:06:00Z",
+   "largestMinutes": 6
+  },
+  "Africa/Lome": {
+   "days": 4382.01,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1912-01-01T00:16:08Z",
+   "largestMinutes": 16.13
+  },
+  "America/Port_of_Spain": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Pacific/Funafuti": {
+   "days": 0.02,
+   "from": "1900-12-31T12:03:08Z",
+   "until": "1900-12-31T12:27:56Z",
+   "largestMinutes": 27.93
+  },
+  "Africa/Dar_es_Salaam": {
+   "days": 8979,
+   "from": "1930-12-31T21:22:52Z",
+   "until": "1960-12-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "Africa/Kampala": {
+   "days": 7308.99,
+   "from": "1929-12-31T21:00:00Z",
+   "until": "1956-12-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "America/St_Vincent": {
+   "days": 5628.21,
+   "from": "1900-01-01T00:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/Tortola": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "America/St_Thomas": {
+   "days": 1246.04,
+   "from": "1942-05-03T04:00:00Z",
+   "until": "1945-09-30T05:00:00Z",
+   "largestMinutes": 60
+  },
+  "Pacific/Wallis": {
+   "days": 0.03,
+   "from": "1900-12-31T11:44:40Z",
+   "until": "1900-12-31T12:27:56Z",
+   "largestMinutes": 27.93
+  },
+  "Indian/Mayotte": {
+   "days": 10801.03,
+   "from": "1911-06-30T20:59:04Z",
+   "until": "1942-07-31T21:15:00Z",
+   "largestMinutes": 30
+  },
+  "Africa/Lusaka": {
+   "days": 2132.99,
+   "from": "1903-02-28T22:06:52Z",
+   "until": "1908-12-31T21:49:42Z",
+   "largestMinutes": 10.3
+  },
+  "Africa/Harare": {
+   "days": 2133,
+   "from": "1903-02-28T21:55:48Z",
+   "until": "1908-12-31T21:49:42Z",
+   "largestMinutes": 10.3
+  }
+ }
+}

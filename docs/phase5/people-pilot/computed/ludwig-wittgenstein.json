@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1889-04-26T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1889-04-25T22:54:39.000Z",
-    "civilDayEndUtc": "1889-04-26T22:54:39.000Z",
+    "utcInstant": "1889-04-26T10:54:51.000Z",
+    "utcOffsetMinutesAtBirth": 65.15,
+    "civilDayStartUtc": "1889-04-25T22:54:51.000Z",
+    "civilDayEndUtc": "1889-04-26T22:54:51.000Z",
     "latitude": 48.2378,
     "longitude": 16.2861,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 24.27,
+    "degree": 24.28,
     "uncertain": true,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "aries"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 5.9323,
-    "degreesToNextBoundaryAtWindowEnd": 23.0956
+    "degreesInsideAtWindowStart": 5.8883,
+    "degreesToNextBoundaryAtWindowEnd": 23.1396
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.972,
@@ -81,7 +81,7 @@
       "body": "Moon",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 24.27,
+      "degree": 24.28,
       "retrograde": false,
       "speedPerDay": 12.9032,
       "dignity": null,

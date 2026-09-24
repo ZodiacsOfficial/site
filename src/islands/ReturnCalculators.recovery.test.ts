@@ -140,7 +140,7 @@ describe('return calculator file recovery', () => {
     const compute = vi.fn(() => result);
     const Result = () => null;
     harness.solarImport.mockRejectedValueOnce(new Error('offline')).mockResolvedValue([
-      { computeSolarReturn: compute }, { SolarReturnResult: Result }, { StaticWheel: () => null },
+      { computeSolarReturn: compute, prepareLocalTime: async () => {} }, { SolarReturnResult: Result }, { StaticWheel: () => null },
     ]);
     const fields = nodes(render(solar)).find((node) => node.type === BirthFields)!.props;
     fields.onDateChange('1990-01-01'); fields.onTimeChange('12:00'); fields.onCityChange(city);
@@ -156,7 +156,7 @@ describe('return calculator file recovery', () => {
 
   it('keeps solar-return calculation errors distinct from download failures', async () => {
     harness.solarImport.mockResolvedValue([
-      { computeSolarReturn: () => { throw new RangeError('invalid input'); } },
+      { computeSolarReturn: () => { throw new RangeError('invalid input'); }, prepareLocalTime: async () => {} },
       { SolarReturnResult: () => null }, { StaticWheel: () => null },
     ]);
     const fields = nodes(render(solar)).find((node) => node.type === BirthFields)!.props;
@@ -173,7 +173,7 @@ describe('return calculator file recovery', () => {
       };
       harness.compute.mockReturnValue(name === 'solar return' ? { chart } : chart);
       return name === 'solar return'
-        ? [{ computeSolarReturn: harness.compute }, { SolarReturnResult: () => null }, { StaticWheel: () => null }]
+        ? [{ computeSolarReturn: harness.compute, prepareLocalTime: async () => {} }, { SolarReturnResult: () => null }, { StaticWheel: () => null }]
         : { default: () => null };
     };
     const fill = () => {
@@ -354,7 +354,7 @@ describe('solar-return result ownership', () => {
   const Result = () => null;
   const returned = () => ({ chart: { input: { utc: new Date('2024-07-06T12:00:00Z') } }, returnYear: 2024 });
   const modules = () => [
-    { computeSolarReturn: harness.compute }, { SolarReturnResult: Result }, { StaticWheel: () => null },
+    { computeSolarReturn: harness.compute, prepareLocalTime: async () => {} }, { SolarReturnResult: Result }, { StaticWheel: () => null },
   ];
   const fill = () => {
     const fields = nodes(render(solar)).find((node) => node.type === BirthFields)!.props;

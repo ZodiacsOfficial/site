@@ -33,7 +33,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Neptune:square:0",
+        "aspect:Sun:Neptune:square:0.01",
         "aspect:Jupiter:Saturn:trine:0.44",
         "aspect:Saturn:Pluto:square:0.7"
       ],
@@ -55,7 +55,7 @@
         "dignity:Moon:exaltation",
         "dignity:Saturn:domicile"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Leo at 3.0° is in domicile — the planet in its own sign, running on home rules; the Moon in Taurus at 11.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 24.2° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Leo at 3.0° is in domicile — the planet in its own sign, running on home rules; the Moon in Taurus at 11.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 24.2° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:14.2"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 11.6°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 11.7°."
     }
   ],
   "birthdayLink": {
@@ -94,7 +94,7 @@
     "personal:Mercury:Cancer:13.5°",
     "personal:Venus:Cancer:17.2°",
     "personal:Mars:Sagittarius:21.4°",
-    "aspect:Sun:Neptune:square:0",
+    "aspect:Sun:Neptune:square:0.01",
     "aspect:Jupiter:Saturn:trine:0.44",
     "aspect:Saturn:Pluto:square:0.7",
     "figure:unaspected:Moon",

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1759-04-27T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1759-04-27T00:01:15.000Z",
-    "civilDayEndUtc": "1759-04-28T00:01:15.000Z",
+    "utcInstant": "1759-04-27T12:00:18.000Z",
+    "utcOffsetMinutesAtBirth": -0.3,
+    "civilDayStartUtc": "1759-04-27T00:00:18.000Z",
+    "civilDayEndUtc": "1759-04-28T00:00:18.000Z",
     "latitude": 51.5166,
     "longitude": -0.075,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 13.75,
+    "degree": 13.74,
     "uncertain": false,
     "signAtCivilDayStart": "taurus",
     "signAtCivilDayEnd": "taurus"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 6.3779,
-    "degreesToNextBoundaryAtWindowEnd": 22.6512
+    "degreesInsideAtWindowStart": 6.3782,
+    "degreesToNextBoundaryAtWindowEnd": 22.651
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.971,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 13.75,
+      "degree": 13.74,
       "retrograde": false,
-      "speedPerDay": 15.0209,
+      "speedPerDay": 15.0211,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Taurus",
       "degree": 27.22,
       "retrograde": false,
-      "speedPerDay": 0.8341,
+      "speedPerDay": 0.8342,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -227,21 +227,21 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 0.39,
+      "orb": 0.38,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Neptune",
       "type": "square",
-      "orb": 1.03,
+      "orb": 1.04,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Moon",
       "type": "conjunction",
-      "orb": 6.89,
+      "orb": 6.88,
       "applying": false
     },
     {

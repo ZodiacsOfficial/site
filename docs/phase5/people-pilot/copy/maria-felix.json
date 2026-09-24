@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:13.47",
+        "sun-degree:13.46",
         "decan:taurus:second"
       ],
       "text": "Taurus, but precisely: 13.5°, second decan, 10°–20°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -32,11 +32,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Pluto:sextile:0",
-        "aspect:Mercury:Mars:square:1.91",
-        "aspect:Sun:Uranus:square:1.92"
+        "aspect:Mercury:Pluto:sextile:0.01",
+        "aspect:Sun:Uranus:square:1.91",
+        "aspect:Mercury:Mars:square:1.91"
       ],
-      "text": "Nothing in the geometry sits closer than Mercury and Pluto: 0.0° from an exact sextile. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mercury square Mars at 1.9°, and the Sun square Uranus at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+      "text": "Nothing in the geometry sits closer than Mercury and Pluto: 0.0° from an exact sextile. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, the Sun square Uranus at 1.9°, and Mercury square Mars at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
     {
       "key": "figures",
@@ -86,13 +86,13 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Pluto:sextile",
-    "sun-degree:13.47",
+    "sun-degree:13.46",
     "decan:taurus:second",
     "personal:Venus:Gemini:3.9°",
     "personal:Mars:Leo:1.5°",
-    "aspect:Mercury:Pluto:sextile:0",
+    "aspect:Mercury:Pluto:sextile:0.01",
+    "aspect:Sun:Uranus:square:1.91",
     "aspect:Mercury:Mars:square:1.91",
-    "aspect:Sun:Uranus:square:1.92",
     "figure:none",
     "dignity:none",
     "elements:air5-earth1-fire1-water1",

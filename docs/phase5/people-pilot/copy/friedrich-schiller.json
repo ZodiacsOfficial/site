@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:17.80",
+        "sun-degree:17.81",
         "decan:scorpio:second"
       ],
       "text": "The Sun sits at 17.8° Scorpio — the second decan, 10°–20°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
@@ -23,19 +23,19 @@
       "key": "personal",
       "title": "The fast planets",
       "facts": [
-        "personal:Mercury:Scorpio:20.8°",
+        "personal:Mercury:Scorpio:20.9°",
         "personal:Venus:Libra:29.6°",
         "personal:Mars:Virgo:1.8°"
       ],
-      "text": "For the fast movers, Mercury was at 20.8° Scorpio, Venus was at 29.6° Libra, Mars was at 1.8° Virgo. Read together: a mind that absorbs before it argues; taste led by wit and proportion; drive that grinds rather than flares."
+      "text": "For the fast movers, Mercury was at 20.9° Scorpio, Venus was at 29.6° Libra, Mars was at 1.8° Virgo. Read together: a mind that absorbs before it argues; taste led by wit and proportion; drive that grinds rather than flares."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Jupiter:sextile:0.57",
-        "aspect:Mercury:Neptune:square:1.08",
-        "aspect:Sun:Neptune:square:1.94"
+        "aspect:Sun:Jupiter:sextile:0.56",
+        "aspect:Mercury:Neptune:square:1.1",
+        "aspect:Sun:Neptune:square:1.93"
       ],
       "text": "The day's firmest angle joins the Sun and Jupiter — a sextile holding at 0.6°. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mercury square Neptune at 1.1°, and the Sun square Neptune at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
@@ -87,14 +87,14 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Jupiter:sextile",
-    "sun-degree:17.80",
+    "sun-degree:17.81",
     "decan:scorpio:second",
-    "personal:Mercury:Scorpio:20.8°",
+    "personal:Mercury:Scorpio:20.9°",
     "personal:Venus:Libra:29.6°",
     "personal:Mars:Virgo:1.8°",
-    "aspect:Sun:Jupiter:sextile:0.57",
-    "aspect:Mercury:Neptune:square:1.08",
-    "aspect:Sun:Neptune:square:1.94",
+    "aspect:Sun:Jupiter:sextile:0.56",
+    "aspect:Mercury:Neptune:square:1.1",
+    "aspect:Sun:Neptune:square:1.93",
     "figure:unaspected:Moon",
     "dignity:Venus:domicile",
     "dignity:Jupiter:fall",

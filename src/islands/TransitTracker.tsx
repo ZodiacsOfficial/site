@@ -10,7 +10,7 @@ import { BirthFields } from './BirthFields';
 import type { MinimalBody } from '../lib/engine/synastry';
 import type { Chart } from '../lib/engine/types';
 import type { SavedChart } from '../lib/profile/schema';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import type { City } from '../lib/geo/search';
 import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
@@ -117,7 +117,7 @@ function calendarPositionsFromSaved(chart: SavedChart): CalendarPositionsSource 
 
 function natalFromForm(slot: SlotState, engine: Engine): NatalWheel {
   const timeKnown = slot.timeKnown && slot.time !== '';
-  const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz);
+  const resolved = resolveLocalToUtc(slot.date, timeKnown ? slot.time : '12:00', slot.city!.tz, { longitude: slot.city!.lon });
   const r = engine.computeChart({
     utc: resolved.utc,
     latitude: slot.city!.lat,
@@ -136,6 +136,7 @@ function natalFromSaved(chart: SavedChart, engine: Engine): NatalWheel {
       chart.birth.date,
       timeKnown && chart.birth.time ? chart.birth.time : '12:00',
       chart.birth.place.tz,
+      { longitude: chart.birth.place.lon },
     );
     const r = engine.computeChart({
       utc: resolved.utc,
@@ -275,6 +276,9 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
       const [engine, mod] = await Promise.all([
         loadEngine(),
         ringMod ? Promise.resolve(ringMod) : loadModule(() => import('./transit/TransitRing')),
+        capturedSlot.source === 'saved' && capturedChart
+          ? prepareLocalTime(capturedChart.birth.date, capturedChart.birth.place?.tz ?? 'UTC')
+          : prepareLocalTime(capturedSlot.date, capturedSlot.city!.tz),
       ]);
       if (!isCurrent()) return;
       if (capturedSlot.source === 'saved' && !capturedChart) return;

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Kaliningrad",
     "civilTime": "12:00",
-    "utcInstant": "1867-07-08T10:38:00.000Z",
-    "utcOffsetMinutesAtBirth": 82,
-    "civilDayStartUtc": "1867-07-07T22:38:00.000Z",
-    "civilDayEndUtc": "1867-07-08T22:38:00.000Z",
+    "utcInstant": "1867-07-08T10:37:58.000Z",
+    "utcOffsetMinutesAtBirth": 82.0333,
+    "civilDayStartUtc": "1867-07-07T22:37:58.000Z",
+    "civilDayEndUtc": "1867-07-08T22:37:58.000Z",
     "latitude": 54.71147222222222,
     "longitude": 20.509305555555557,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 15.3239,
-    "degreesToNextBoundaryAtWindowEnd": 13.7227
+    "degreesInsideAtWindowStart": 15.2696,
+    "degreesToNextBoundaryAtWindowEnd": 13.777
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.953,

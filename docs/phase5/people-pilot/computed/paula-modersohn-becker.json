@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Berlin",
     "civilTime": "12:00",
-    "utcInstant": "1876-02-08T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1876-02-07T23:06:32.000Z",
-    "civilDayEndUtc": "1876-02-08T23:06:32.000Z",
+    "utcInstant": "1876-02-08T11:05:03.000Z",
+    "utcOffsetMinutesAtBirth": 54.95,
+    "civilDayStartUtc": "1876-02-07T23:05:03.000Z",
+    "civilDayEndUtc": "1876-02-08T23:05:03.000Z",
     "latitude": 51.0493286,
     "longitude": 13.7381437,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "leo",
     "signName": "Leo",
-    "degree": 1.74,
+    "degree": 1.72,
     "uncertain": true,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "leo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.6209,
-    "degreesToNextBoundaryAtWindowEnd": 10.3673
+    "degreesInsideAtWindowStart": 18.5823,
+    "degreesToNextBoundaryAtWindowEnd": 10.4059
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.012,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 1.74,
+      "degree": 1.72,
       "retrograde": false,
-      "speedPerDay": 14.7063,
+      "speedPerDay": 14.7065,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Aquarius",
       "degree": 28.6,
       "retrograde": true,
-      "speedPerDay": -0.7332,
+      "speedPerDay": -0.733,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -275,14 +275,14 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "square",
-      "orb": 1.25,
+      "orb": 1.23,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "trine",
-      "orb": 1.95,
+      "orb": 1.93,
       "applying": false
     },
     {
@@ -296,7 +296,7 @@
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 9.51,
+      "orb": 9.52,
       "applying": true
     }
   ],

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1759-08-24T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1759-08-24T00:01:15.000Z",
-    "civilDayEndUtc": "1759-08-25T00:01:15.000Z",
+    "utcInstant": "1759-08-24T12:01:19.000Z",
+    "utcOffsetMinutesAtBirth": -1.3167,
+    "civilDayStartUtc": "1759-08-24T00:01:19.000Z",
+    "civilDayEndUtc": "1759-08-25T00:01:19.000Z",
     "latitude": 53.7441,
     "longitude": -0.328,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.4334,
-    "degreesToNextBoundaryAtWindowEnd": 28.6005
+    "degreesInsideAtWindowStart": 0.4343,
+    "degreesToNextBoundaryAtWindowEnd": 28.5996
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.966,

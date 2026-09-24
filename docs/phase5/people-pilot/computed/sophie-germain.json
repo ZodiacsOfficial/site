@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1776-04-01T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1776-03-31T23:50:39.000Z",
-    "civilDayEndUtc": "1776-04-01T23:50:39.000Z",
+    "utcInstant": "1776-04-01T11:50:35.000Z",
+    "utcOffsetMinutesAtBirth": 9.4167,
+    "civilDayStartUtc": "1776-03-31T23:50:35.000Z",
+    "civilDayEndUtc": "1776-04-01T23:50:35.000Z",
     "latitude": 48.85666666666667,
     "longitude": 2.352222222222222,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 11.8304,
-    "degreesToNextBoundaryAtWindowEnd": 17.1858
+    "degreesInsideAtWindowStart": 11.824,
+    "degreesToNextBoundaryAtWindowEnd": 17.1922
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.984,
@@ -183,7 +183,7 @@
       "a": "Moon",
       "b": "Mercury",
       "type": "opposition",
-      "orb": 1.17,
+      "orb": 1.18,
       "applying": true
     },
     {

@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Uranus:trine:0.17",
-        "aspect:Sun:Neptune:square:0.86",
+        "aspect:Venus:Uranus:trine:0.18",
+        "aspect:Sun:Neptune:square:0.85",
         "aspect:Venus:Pluto:opposition:1"
       ],
-      "text": "The tightest geometry in the chart puts Venus a third of the circle apart from Uranus, 0.2° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun square Neptune at 0.9°, and Venus opposition Pluto at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+      "text": "The tightest geometry in the chart puts Venus a third of the circle apart from Uranus, 0.2° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun square Neptune at 0.8°, and Venus opposition Pluto at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
     },
     {
       "key": "figures",
@@ -76,7 +76,7 @@
         "moon-band:12.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 8.2°."
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 8.3°."
     }
   ],
   "birthdayLink": {
@@ -94,8 +94,8 @@
     "personal:Mercury:Libra:3.9°",
     "personal:Venus:Libra:10.4°",
     "personal:Mars:Libra:14.4°",
-    "aspect:Venus:Uranus:trine:0.17",
-    "aspect:Sun:Neptune:square:0.86",
+    "aspect:Venus:Uranus:trine:0.18",
+    "aspect:Sun:Neptune:square:0.85",
     "aspect:Venus:Pluto:opposition:1",
     "figure:unaspected:Saturn",
     "dignity:Sun:fall",

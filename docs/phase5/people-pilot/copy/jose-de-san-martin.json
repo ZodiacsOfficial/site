@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:7.22",
+        "sun-degree:7.20",
         "decan:pisces:first"
       ],
       "text": "At the noon reference the Sun sits 7.2° into Pisces — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
@@ -32,8 +32,8 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Pluto:sextile:0.79",
-        "aspect:Mercury:Uranus:trine:1.12",
+        "aspect:Mars:Pluto:sextile:0.78",
+        "aspect:Mercury:Uranus:trine:1.14",
         "aspect:Neptune:Pluto:trine:2.41"
       ],
       "text": "Mars and Pluto hold the closest angle here — a sextile, 0.8° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury trine Uranus at 1.1°, and Neptune trine Pluto at 2.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
@@ -74,7 +74,7 @@
         "moon-band:13.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 17.9°."
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 17.7°."
     }
   ],
   "birthdayLink": {
@@ -87,12 +87,12 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Pluto:sextile",
-    "sun-degree:7.22",
+    "sun-degree:7.20",
     "decan:pisces:first",
     "personal:Mercury:Aquarius:10.2°",
     "personal:Mars:Aries:1.7°",
-    "aspect:Mars:Pluto:sextile:0.79",
-    "aspect:Mercury:Uranus:trine:1.12",
+    "aspect:Mars:Pluto:sextile:0.78",
+    "aspect:Mercury:Uranus:trine:1.14",
     "aspect:Neptune:Pluto:trine:2.41",
     "figure:none",
     "dignity:Mars:domicile",

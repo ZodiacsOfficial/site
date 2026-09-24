@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Madrid",
     "civilTime": "12:00",
-    "utcInstant": "1864-09-29T12:14:44.000Z",
-    "utcOffsetMinutesAtBirth": -14.7333,
-    "civilDayStartUtc": "1864-09-29T00:14:44.000Z",
-    "civilDayEndUtc": "1864-09-30T00:14:44.000Z",
+    "utcInstant": "1864-09-29T12:11:41.000Z",
+    "utcOffsetMinutesAtBirth": -11.6833,
+    "civilDayStartUtc": "1864-09-29T00:11:41.000Z",
+    "civilDayEndUtc": "1864-09-30T00:11:41.000Z",
     "latitude": 43.256548,
     "longitude": -2.922136,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 6.59
+    "degree": 6.58
   },
   "moon": {
     "sign": "virgo",
     "signName": "Virgo",
-    "degree": 20.86,
+    "degree": 20.83,
     "uncertain": false,
     "signAtCivilDayStart": "virgo",
     "signAtCivilDayEnd": "virgo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 6.0848,
-    "degreesToNextBoundaryAtWindowEnd": 22.9312
+    "degreesInsideAtWindowStart": 6.0927,
+    "degreesToNextBoundaryAtWindowEnd": 22.9232
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.984,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 6.59,
+      "degree": 6.58,
       "retrograde": false,
       "speedPerDay": 0.9841,
       "dignity": "fall",
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 20.86,
+      "degree": 20.83,
       "retrograde": false,
-      "speedPerDay": 11.8872,
+      "speedPerDay": 11.8871,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Virgo",
       "degree": 26.33,
       "retrograde": true,
-      "speedPerDay": -0.6152,
+      "speedPerDay": -0.6155,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -110,7 +110,7 @@
       "signName": "Gemini",
       "degree": 14.91,
       "retrograde": false,
-      "speedPerDay": 0.298,
+      "speedPerDay": 0.2981,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -176,7 +176,7 @@
       "a": "Sun",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 0.35,
+      "orb": 0.36,
       "applying": true
     },
     {
@@ -190,7 +190,7 @@
       "a": "Mercury",
       "b": "Uranus",
       "type": "square",
-      "orb": 3.15,
+      "orb": 3.14,
       "applying": false
     },
     {
@@ -218,7 +218,7 @@
       "a": "Sun",
       "b": "Uranus",
       "type": "square",
-      "orb": 7.12,
+      "orb": 7.11,
       "applying": false
     }
   ],
@@ -227,28 +227,28 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 4.6,
+      "orb": 4.63,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 5.47,
+      "orb": 5.49,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "square",
-      "orb": 5.95,
+      "orb": 5.92,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "trine",
-      "orb": 7.95,
+      "orb": 7.92,
       "applying": false
     }
   ],

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1871-07-10T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1871-07-09T23:50:39.000Z",
-    "civilDayEndUtc": "1871-07-10T23:50:39.000Z",
+    "utcInstant": "1871-07-10T11:50:54.000Z",
+    "utcOffsetMinutesAtBirth": 9.1,
+    "civilDayStartUtc": "1871-07-09T23:50:54.000Z",
+    "civilDayEndUtc": "1871-07-10T23:50:54.000Z",
     "latitude": 48.863611111111,
     "longitude": 2.2764888888889,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 17.2516,
-    "degreesToNextBoundaryAtWindowEnd": 11.7948
+    "degreesInsideAtWindowStart": 17.2456,
+    "degreesToNextBoundaryAtWindowEnd": 11.8008
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
@@ -83,7 +83,7 @@
       "signName": "Aries",
       "degree": 28.47,
       "retrograde": false,
-      "speedPerDay": 12.1892,
+      "speedPerDay": 12.1891,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -289,7 +289,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "conjunction",
-      "orb": 4.47,
+      "orb": 4.48,
       "applying": false
     },
     {

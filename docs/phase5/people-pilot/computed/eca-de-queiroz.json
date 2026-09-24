@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Lisbon",
     "civilTime": "12:00",
-    "utcInstant": "1845-11-25T12:36:45.000Z",
-    "utcOffsetMinutesAtBirth": -36.75,
-    "civilDayStartUtc": "1845-11-25T00:36:45.000Z",
-    "civilDayEndUtc": "1845-11-26T00:36:45.000Z",
+    "utcInstant": "1845-11-25T12:35:02.000Z",
+    "utcOffsetMinutesAtBirth": -35.0333,
+    "civilDayStartUtc": "1845-11-25T00:35:02.000Z",
+    "civilDayEndUtc": "1845-11-26T00:35:02.000Z",
     "latitude": 41.39158,
     "longitude": -8.75713,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 11.8,
+    "degree": 11.78,
     "uncertain": false,
     "signAtCivilDayStart": "libra",
     "signAtCivilDayEnd": "libra"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 2.6283,
-    "degreesToNextBoundaryAtWindowEnd": 26.3588
+    "degreesInsideAtWindowStart": 2.653,
+    "degreesToNextBoundaryAtWindowEnd": 26.3342
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.013,
-    "Moon": 13.17,
+    "Moon": 13.169,
     "Mercury": 1.466,
     "Venus": 1.131,
     "Mars": 0.556,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 11.8,
+      "degree": 11.78,
       "retrograde": false,
-      "speedPerDay": 13.1769,
+      "speedPerDay": 13.1764,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -213,7 +213,7 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 1.81,
+      "orb": 1.82,
       "applying": true
     },
     {
@@ -227,14 +227,14 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 5.32,
+      "orb": 5.3,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "square",
-      "orb": 6.9,
+      "orb": 6.92,
       "applying": true
     }
   ],

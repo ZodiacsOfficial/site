@@ -515,7 +515,7 @@ export function InviteArrival({
         <PastelSign sign={payload.sunSign} size={44} />
         <div class="syn-arrival__copy">
           <h2 id="syn-arrival-title">{payload.label} wants to read your charts together.</h2>
-          <p>Their side is already here — a {signName} Sun, shared by them on purpose as chart positions only. Add yours and the reading appears below, worked out in your browser. Your details stay here — {payload.label} won't see them, and neither do we.</p>
+          <p>Their side is already here — a {signName} Sun, shared by them on purpose as chart positions, with no birth details. Add yours and the reading appears below, worked out in your browser. Your details stay here — {payload.label} won't see them, and neither do we.</p>
           {!payload.timeKnown && <p class="field__help">They shared without a birth time, so their Moon is close rather than exact, and houses sit this reading out.</p>}
           <p class="mono syn-arrival__fine">Invitation links close once they're read — and after 14 days at the latest.</p>
         </div>

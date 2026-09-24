@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Sao_Paulo",
     "civilTime": "12:00",
-    "utcInstant": "1886-09-01T15:06:28.000Z",
-    "utcOffsetMinutesAtBirth": -186.4667,
-    "civilDayStartUtc": "1886-09-01T03:06:28.000Z",
-    "civilDayEndUtc": "1886-09-02T03:06:28.000Z",
+    "utcInstant": "1886-09-01T15:10:02.000Z",
+    "utcOffsetMinutesAtBirth": -190.0333,
+    "civilDayStartUtc": "1886-09-01T03:10:02.000Z",
+    "civilDayEndUtc": "1886-09-02T03:10:02.000Z",
     "latitude": -22.995,
     "longitude": -47.507777777778,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 22.19,
+    "degree": 22.22,
     "uncertain": false,
     "signAtCivilDayStart": "libra",
     "signAtCivilDayEnd": "libra"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 8.451,
-    "degreesToNextBoundaryAtWindowEnd": 20.5801
+    "degreesInsideAtWindowStart": 8.5788,
+    "degreesToNextBoundaryAtWindowEnd": 20.4522
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.969,
-    "Moon": 14.436,
-    "Mercury": 0.867,
+    "Moon": 14.435,
+    "Mercury": 0.868,
     "Venus": 1.222,
     "Mars": 0.657,
     "Jupiter": 0.201,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 22.19,
+      "degree": 22.22,
       "retrograde": false,
-      "speedPerDay": 14.4296,
+      "speedPerDay": 14.4286,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -86,9 +86,9 @@
       "body": "Mercury",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 21.02,
+      "degree": 21.03,
       "retrograde": false,
-      "speedPerDay": 0.8703,
+      "speedPerDay": 0.8706,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 15.58,
+      "degree": 15.59,
       "retrograde": false,
       "speedPerDay": 1.2222,
       "dignity": null,
@@ -227,14 +227,14 @@
       "a": "Moon",
       "b": "Mercury",
       "type": "sextile",
-      "orb": 1.16,
+      "orb": 1.2,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Saturn",
       "type": "square",
-      "orb": 3.08,
+      "orb": 3.11,
       "applying": false
     },
     {

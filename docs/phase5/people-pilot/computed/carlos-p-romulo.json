@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Manila",
     "civilTime": "12:00",
-    "utcInstant": "1899-01-14T03:56:08.000Z",
-    "utcOffsetMinutesAtBirth": 483.8667,
-    "civilDayStartUtc": "1899-01-13T15:56:08.000Z",
-    "civilDayEndUtc": "1899-01-14T15:56:08.000Z",
+    "utcInstant": "1899-01-14T03:58:21.000Z",
+    "utcOffsetMinutesAtBirth": 481.65,
+    "civilDayStartUtc": "1899-01-13T15:58:21.000Z",
+    "civilDayEndUtc": "1899-01-14T15:58:21.000Z",
     "latitude": 15.686666666666667,
     "longitude": 120.41305555555556,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "aquarius",
     "signName": "Aquarius",
-    "degree": 25.1,
+    "degree": 25.12,
     "uncertain": true,
     "signAtCivilDayStart": "aquarius",
     "signAtCivilDayEnd": "pisces"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 23.652,
-    "degreesToNextBoundaryAtWindowEnd": 5.3292
+    "degreesInsideAtWindowStart": 23.3112,
+    "degreesToNextBoundaryAtWindowEnd": 5.6699
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.019,
@@ -86,9 +86,9 @@
       "body": "Moon",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 25.1,
+      "degree": 25.12,
       "retrograde": false,
-      "speedPerDay": 14.9198,
+      "speedPerDay": 14.9193,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Mercury",
       "sign": "capricorn",
       "signName": "Capricorn",
-      "degree": 0.33,
+      "degree": 0.34,
       "retrograde": false,
       "speedPerDay": 1.1124,
       "dignity": null,
@@ -110,7 +110,7 @@
       "signName": "Sagittarius",
       "degree": 10.88,
       "retrograde": false,
-      "speedPerDay": 0.6897,
+      "speedPerDay": 0.6898,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -215,7 +215,7 @@
       "a": "Mars",
       "b": "Uranus",
       "type": "trine",
-      "orb": 5.94,
+      "orb": 5.95,
       "applying": false
     },
     {
@@ -238,7 +238,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "trine",
-      "orb": 2.51,
+      "orb": 2.54,
       "applying": false
     },
     {

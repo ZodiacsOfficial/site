@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1828-05-12T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1828-05-12T00:01:15.000Z",
-    "civilDayEndUtc": "1828-05-13T00:01:15.000Z",
+    "utcInstant": "1828-05-12T12:00:31.000Z",
+    "utcOffsetMinutesAtBirth": -0.5167,
+    "civilDayStartUtc": "1828-05-12T00:00:31.000Z",
+    "civilDayEndUtc": "1828-05-13T00:00:31.000Z",
     "latitude": 51.507222222222,
     "longitude": -0.1275,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 4.89,
+    "degree": 4.88,
     "uncertain": true,
     "signAtCivilDayStart": "aries",
     "signAtCivilDayEnd": "taurus"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 21.1952,
-    "degreesToNextBoundaryAtWindowEnd": 7.8403
+    "degreesInsideAtWindowStart": 21.1956,
+    "degreesToNextBoundaryAtWindowEnd": 7.8399
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.965,
-    "Moon": 13.063,
+    "Moon": 13.064,
     "Mercury": 1.956,
     "Venus": 1.008,
     "Mars": 0.201,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 4.89,
+      "degree": 4.88,
       "retrograde": false,
-      "speedPerDay": 13.0591,
+      "speedPerDay": 13.0592,
       "dignity": "exaltation",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -217,7 +217,7 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "opposition",
-      "orb": 3.08,
+      "orb": 3.09,
       "applying": true
     },
     {
@@ -238,7 +238,7 @@
       "a": "Mercury",
       "b": "Mars",
       "type": "trine",
-      "orb": 3.91,
+      "orb": 3.92,
       "applying": true
     },
     {
@@ -289,7 +289,7 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "square",
-      "orb": 2.58,
+      "orb": 2.57,
       "applying": false
     },
     {
@@ -303,7 +303,7 @@
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 7.96,
+      "orb": 7.97,
       "applying": true
     }
   ],

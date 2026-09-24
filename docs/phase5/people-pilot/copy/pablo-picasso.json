@@ -6,7 +6,7 @@
   "displayName": "Pablo Picasso",
   "identity": "Painter and costume designer · Spain · 1881–1973",
   "title": "Pablo Picasso's birth chart",
-  "metaDescription": "Pablo Picasso's chart, computed from a sourced birth date: Sun at 2.2° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Pablo Picasso's chart, computed from a sourced birth date: Sun at 2.3° Scorpio. Birth time unknown, so no houses or rising sign.",
   "lede": "Four of the nine placements whose signs are settled stand in Taurus — Jupiter, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
   "ledeFact": "stellium:taurus:4",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:2.24",
+        "sun-degree:2.25",
         "decan:scorpio:first"
       ],
-      "text": "The Sun's exact place is 2.2° Scorpio. That falls in the first decan, 0°–10°, sub-ruled by Mars in the classical scheme — a water sign read through a fixed season."
+      "text": "The Sun's exact place is 2.3° Scorpio. That falls in the first decan, 0°–10°, sub-ruled by Mars in the classical scheme — a water sign read through a fixed season."
     },
     {
       "key": "personal",
@@ -87,7 +87,7 @@
   },
   "substantiveFacts": [
     "stellium:taurus:4",
-    "sun-degree:2.24",
+    "sun-degree:2.25",
     "decan:scorpio:first",
     "personal:Mercury:Scorpio:24.1°",
     "personal:Venus:Libra:4.0°",

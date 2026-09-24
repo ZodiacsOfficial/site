@@ -40,6 +40,21 @@ describe('positions-only synastry share codec', () => {
     });
   });
 
+  it('carries ASC and MC on each side to the whole degree and every body to 0.001°', () => {
+    const token = encodeSynastryLink({
+      sides: [
+        { chart: chart(10), label: 'Frida' },
+        { chart: chart(90), label: 'Diego' },
+      ],
+    });
+    const decoded = decodeSynastryLink(token!);
+    expect(decoded?.sides.map((side) => side.chart.angles)).toEqual([
+      { asc: 22.5, mc: 111.5 },
+      { asc: 102.5, mc: 191.5 },
+    ]);
+    expect(decoded?.sides[0].chart.bodies[1]).toEqual({ body: 'Moon', lon: 37.123 });
+  });
+
   it('normalizes harmless label whitespace without accepting control text', () => {
     const token = encodeSynastryLink({
       sides: [

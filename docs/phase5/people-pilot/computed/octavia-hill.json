@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1838-12-03T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1838-12-03T00:01:15.000Z",
-    "civilDayEndUtc": "1838-12-04T00:01:15.000Z",
+    "utcInstant": "1838-12-03T11:59:22.000Z",
+    "utcOffsetMinutesAtBirth": 0.6333,
+    "civilDayStartUtc": "1838-12-02T23:59:22.000Z",
+    "civilDayEndUtc": "1838-12-03T23:59:22.000Z",
     "latitude": 52.664161111111,
     "longitude": 0.16031111111111,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 7.34,
+    "degree": 7.33,
     "uncertain": false,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "cancer"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 10.4353,
-    "degreesToNextBoundaryAtWindowEnd": 18.5499
+    "degreesInsideAtWindowStart": 10.4348,
+    "degreesToNextBoundaryAtWindowEnd": 18.5504
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.015,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 7.34,
+      "degree": 7.33,
       "retrograde": false,
-      "speedPerDay": 13.7161,
+      "speedPerDay": 13.7167,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 7.29,
+      "degree": 7.28,
       "retrograde": false,
       "speedPerDay": 1.2582,
       "dignity": null,
@@ -276,14 +276,14 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 1.29,
+      "orb": 1.31,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "square",
-      "orb": 6.05,
+      "orb": 6.07,
       "applying": true
     }
   ],

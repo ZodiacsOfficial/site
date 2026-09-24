@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Tehran",
     "civilTime": "12:00",
-    "utcInstant": "1907-03-16T08:34:16.000Z",
-    "utcOffsetMinutesAtBirth": 205.7333,
-    "civilDayStartUtc": "1907-03-15T20:34:16.000Z",
-    "civilDayEndUtc": "1907-03-16T20:34:16.000Z",
+    "utcInstant": "1907-03-16T08:54:49.000Z",
+    "utcOffsetMinutesAtBirth": 185.1833,
+    "civilDayStartUtc": "1907-03-15T20:54:49.000Z",
+    "civilDayEndUtc": "1907-03-16T20:54:49.000Z",
     "latitude": 38.07388888888889,
     "longitude": 46.29611111111111,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 24.62
+    "degree": 24.63
   },
   "moon": {
     "sign": "aries",
     "signName": "Aries",
-    "degree": 20.55,
+    "degree": 20.74,
     "uncertain": false,
     "signAtCivilDayStart": "aries",
     "signAtCivilDayEnd": "aries"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 24.2595,
-    "degreesToNextBoundaryAtWindowEnd": 4.7447
+    "degreesInsideAtWindowStart": 24.1314,
+    "degreesToNextBoundaryAtWindowEnd": 4.8727
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.996,
-    "Moon": 13.002,
-    "Mercury": 0.847,
+    "Moon": 12.997,
+    "Mercury": 0.848,
     "Venus": 1.14,
     "Mars": 0.524,
     "Jupiter": 0.059,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 24.62,
+      "degree": 24.63,
       "retrograde": false,
       "speedPerDay": 0.9959,
       "dignity": null,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 20.55,
+      "degree": 20.74,
       "retrograde": false,
-      "speedPerDay": 12.9953,
+      "speedPerDay": 12.9907,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -86,9 +86,9 @@
       "body": "Mercury",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 28.34,
+      "degree": 28.33,
       "retrograde": true,
-      "speedPerDay": -0.8492,
+      "speedPerDay": -0.85,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 10.73,
+      "degree": 10.74,
       "retrograde": false,
       "speedPerDay": 1.1401,
       "dignity": null,
@@ -108,7 +108,7 @@
       "body": "Mars",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 21.74,
+      "degree": 21.75,
       "retrograde": false,
       "speedPerDay": 0.5241,
       "dignity": null,
@@ -183,7 +183,7 @@
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 1.19,
+      "orb": 1.01,
       "applying": true
     },
     {
@@ -197,7 +197,7 @@
       "a": "Sun",
       "b": "Pluto",
       "type": "square",
-      "orb": 2.86,
+      "orb": 2.88,
       "applying": false
     },
     {
@@ -211,7 +211,7 @@
       "a": "Mercury",
       "b": "Jupiter",
       "type": "square",
-      "orb": 3.21,
+      "orb": 3.22,
       "applying": false
     },
     {
@@ -232,21 +232,28 @@
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 3.73,
+      "orb": 3.7,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 6.09,
+      "orb": 6.11,
       "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 6.58,
+      "applying": true
     },
     {
       "a": "Sun",
       "b": "Jupiter",
       "type": "square",
-      "orb": 6.94,
+      "orb": 6.92,
       "applying": true
     }
   ],
@@ -255,21 +262,14 @@
       "a": "Moon",
       "b": "Pluto",
       "type": "sextile",
-      "orb": 1.2,
-      "applying": true
-    },
-    {
-      "a": "Mercury",
-      "b": "Pluto",
-      "type": "square",
-      "orb": 6.59,
+      "orb": 1.02,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Mars",
       "type": "square",
-      "orb": 6.61,
+      "orb": 6.59,
       "applying": true
     }
   ],

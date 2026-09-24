@@ -49,6 +49,9 @@ node examples/01-open-and-calculate.mjs ./D.v2.zeph
 npm test          # 168 tests, no kernel, no pack, no network
 ```
 
+*Correction, 2026-09-23.* The suite has grown since this was written:
+`npm test` runs 423 tests, still with no kernel, no pack and no network.
+
 Everything the evaluator and the container do is checked there against
 polynomials the fixtures write down and hostile headers a few kilobytes
 long. The data-dependent tests are separate and say so:

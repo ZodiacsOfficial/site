@@ -82,6 +82,33 @@ describe('serializeTransitContacts', () => {
     expect(transitContactUid(closePass)).not.toBe(transitContactUid(SATURN_PASSES[0]));
   });
 
+  it('gives contacts to whole-degree angles to the minute without calling them exact', () => {
+    const angle: TransitContact = {
+      transitBody: 'Saturn',
+      natalPoint: 'ASC',
+      aspect: 'square',
+      exactUtc: '2019-03-21T16:04:37.250Z',
+      pass: 1,
+      passCount: 1,
+    };
+    const planet: TransitContact = { ...angle, natalPoint: 'Moon' };
+    const calendar = serializeTransitContacts([angle, planet], { ...OPTIONS, natalAngles: 'whole-degree' });
+    const unfolded = calendar.replace(/\r\n[ \t]/g, '');
+    expect(unfolded).toContain('UID:transit-20190321T160400Z-saturn-square-asc@zodiacs.org');
+    expect(unfolded).toContain('DTSTART:20190321T160400Z');
+    expect(unfolded).toContain(`SUMMARY:Transiting Saturn square natal ASC${CRLF}`);
+    expect(unfolded).toContain(
+      `DESCRIPTION:Tropical transit contact. Natal angle to the whole degree. Time: 2019-03-21 16:04 UTC.${CRLF}`,
+    );
+    expect(unfolded).toContain('UID:transit-20190321T160437250Z-saturn-square-moon@zodiacs.org');
+    expect(unfolded).toContain('DTSTART:20190321T160437Z');
+    expect(unfolded).toContain(`SUMMARY:Transiting Saturn square natal Moon (exact)${CRLF}`);
+
+    const exactAngles = serializeTransitContacts([angle], OPTIONS).replace(/\r\n[ \t]/g, '');
+    expect(exactAngles).toContain(`SUMMARY:Transiting Saturn square natal ASC (exact)${CRLF}`);
+    expect(exactAngles).toContain('DTSTART:20190321T160437Z');
+  });
+
   it('omits pass wording for a single-hit contact', () => {
     const single = { ...SATURN_PASSES[0], pass: 1, passCount: 1 };
     const calendar = serializeTransitContacts([single], OPTIONS);

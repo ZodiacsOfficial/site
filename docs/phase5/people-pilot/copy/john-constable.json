@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Venus:Mars:conjunction:0.67",
-        "aspect:Mercury:Saturn:square:0.92",
+        "aspect:Mercury:Saturn:square:0.91",
         "aspect:Sun:Neptune:square:1.17"
       ],
       "text": "Start where the chart is tightest — Venus conjunction Mars, 0.7° of separation. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Mercury square Saturn at 0.9°, and the Sun square Neptune at 1.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
@@ -75,7 +75,7 @@
         "moon-band:14.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 21.6°."
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 21.5°."
     }
   ],
   "birthdayLink": {
@@ -94,7 +94,7 @@
     "personal:Venus:Gemini:4.5°",
     "personal:Mars:Gemini:5.2°",
     "aspect:Venus:Mars:conjunction:0.67",
-    "aspect:Mercury:Saturn:square:0.92",
+    "aspect:Mercury:Saturn:square:0.91",
     "aspect:Sun:Neptune:square:1.17",
     "figure:unaspected:Moon",
     "dignity:Jupiter:exaltation",

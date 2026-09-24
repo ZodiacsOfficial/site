@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:19.63",
+        "sun-degree:19.62",
         "decan:sagittarius:second"
       ],
       "text": "19.6° of Sagittarius is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -23,18 +23,18 @@
       "key": "personal",
       "title": "The personal registers",
       "facts": [
-        "personal:Mercury:Sagittarius:27.9°",
+        "personal:Mercury:Sagittarius:28.0°",
         "personal:Venus:Sagittarius:4.3°",
         "personal:Mars:Aquarius:18.3°"
       ],
-      "text": "Mercury holds 27.9° Sagittarius, Venus holds 4.3° Sagittarius, Mars holds 18.3° Aquarius — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort aimed through strategy and words."
+      "text": "Mercury holds 28.0° Sagittarius, Venus holds 4.3° Sagittarius, Mars holds 18.3° Aquarius — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort aimed through strategy and words."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Saturn:sextile:0.27",
-        "aspect:Sun:Mars:sextile:1.31",
+        "aspect:Mercury:Saturn:sextile:0.29",
+        "aspect:Sun:Mars:sextile:1.3",
         "aspect:Jupiter:Saturn:square:1.4"
       ],
       "text": "The day's firmest angle joins Mercury and Saturn — a sextile holding at 0.3°. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun sextile Mars at 1.3°, and Jupiter square Saturn at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
@@ -54,7 +54,7 @@
         "dignity:Mercury:detriment",
         "dignity:Saturn:domicile"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mercury in Sagittarius at 27.9° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 27.7° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mercury in Sagittarius at 28.0° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 27.7° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
     },
     {
       "key": "shape",
@@ -75,7 +75,7 @@
         "moon-band:12.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 23.4°."
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 23.3°."
     }
   ],
   "birthdayLink": {
@@ -88,13 +88,13 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Saturn:sextile",
-    "sun-degree:19.63",
+    "sun-degree:19.62",
     "decan:sagittarius:second",
-    "personal:Mercury:Sagittarius:27.9°",
+    "personal:Mercury:Sagittarius:28.0°",
     "personal:Venus:Sagittarius:4.3°",
     "personal:Mars:Aquarius:18.3°",
-    "aspect:Mercury:Saturn:sextile:0.27",
-    "aspect:Sun:Mars:sextile:1.31",
+    "aspect:Mercury:Saturn:sextile:0.29",
+    "aspect:Sun:Mars:sextile:1.3",
     "aspect:Jupiter:Saturn:square:1.4",
     "figure:none",
     "dignity:Mercury:detriment",

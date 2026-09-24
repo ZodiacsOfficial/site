@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:6.06",
+        "sun-degree:6.07",
         "decan:virgo:first"
       ],
       "text": "6.1° of Virgo is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Mercury in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -33,7 +33,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Jupiter:trine:0.68",
+        "aspect:Sun:Jupiter:trine:0.69",
         "aspect:Jupiter:Pluto:sextile:1.2",
         "aspect:Jupiter:Neptune:square:1.74"
       ],
@@ -75,7 +75,7 @@
         "moon-band:12.4"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 18.0°."
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 18.1°."
     }
   ],
   "birthdayLink": {
@@ -88,12 +88,12 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Jupiter:trine",
-    "sun-degree:6.06",
+    "sun-degree:6.07",
     "decan:virgo:first",
     "personal:Mercury:Libra:0.8°",
     "personal:Venus:Cancer:20.9°",
     "personal:Mars:Libra:23.4°",
-    "aspect:Sun:Jupiter:trine:0.68",
+    "aspect:Sun:Jupiter:trine:0.69",
     "aspect:Jupiter:Pluto:sextile:1.2",
     "aspect:Jupiter:Neptune:square:1.74",
     "figure:unaspected:Moon",

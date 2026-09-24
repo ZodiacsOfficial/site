@@ -27,6 +27,22 @@ interface Row {
 const rows: Row[] = [];
 const signName = (slug: string) => signBySlug(slug).name;
 
+// How far the time shown can be from Swiss Ephemeris's, for the events whose
+// slow motion makes a few arcseconds of position into minutes or hours
+// (docs/platform/evidence/events-vs-swiss-2026-09-23/). Moons and eclipses
+// are within a minute and carry no note.
+const OUTER = ['Uranus', 'Neptune', 'Pluto'];
+const outer = facts.bodies.some((body) => OUTER.includes(body));
+let note: string | undefined;
+if (facts.family === 'retrograde') {
+  note = 'A planet at a station is barely moving, so these station times can be off by a few minutes.';
+} else if (facts.family === 'ingress' || facts.family === 'aspect') {
+  const moving = facts.family === 'ingress' ? `${facts.bodies[0]} moves` : 'The two planets draw level';
+  note = outer
+    ? `${moving} so slowly that this time can be off by several hours.`
+    : `${moving} slowly enough that this time can be off by up to about half an hour.`;
+}
+
 if (facts.family === 'lunation' || facts.family === 'eclipse') {
   rows.push({ label: facts.family === 'eclipse' ? 'Peak, universal time' : 'Exact, universal time', value: eventClock(facts.at!), mono: true });
   rows.push({ label: 'In the sign', value: signName(facts.signs[0]), sign: facts.signs[0] });
@@ -98,15 +114,18 @@ if (facts.family === 'aspect') {
 }
 ---
 <div class="shell tinted" style={hue ? `--sign:${hue}` : undefined}>
-  <dl class="core tinted event-facts__core">
-    {rows.map((row) => (
-      <div class="event-facts__item">
-        <dt class="mono--label">{row.label}</dt>
-        <dd class={row.mono ? 'mono' : undefined}>
-          {row.sign && <SignIcon sign={row.sign} size={20} />}
-          {row.value}
-        </dd>
-      </div>
-    ))}
-  </dl>
+  <div class="core tinted">
+    <dl class="event-facts__core">
+      {rows.map((row) => (
+        <div class="event-facts__item">
+          <dt class="mono--label">{row.label}</dt>
+          <dd class={row.mono ? 'mono' : undefined}>
+            {row.sign && <SignIcon sign={row.sign} size={20} />}
+            {row.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    {note && <p class="event-facts__note">{note}</p>}
+  </div>
 </div>
