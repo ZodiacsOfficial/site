@@ -327,12 +327,12 @@ describe('registry pastel polish', () => {
     for (const value of [wingNav, astrofolio, terminal, markets, thesis, sdk, technical]) {
       expect(value).toContain('@media (max-width: 599.5px) {\n    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }');
       expect(value).toContain('.wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }');
-      expect(value).toContain("html body .wnav-wrap .wnav { display: grid; grid-template-areas: 'menu . mark chip . search'; grid-template-columns: 44px minmax(0,1fr) auto auto minmax(0,1fr) 44px; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px));");
+      expect(value).toContain("html body .wnav-wrap .wnav { --wnav-lockup: clamp(12px, 3.8vw, 15px); display: grid; grid-template-areas: 'menu . mark chip . search'; grid-template-columns: 44px minmax(0,1fr) calc(var(--wnav-lockup) * 5.7 + 13px) calc(var(--wnav-lockup) * 8.27 + 13px) minmax(0,1fr) 44px; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px));");
       expect(value).toContain('border-width: 0 0 1px; border-radius: 0; box-shadow: none; }');
       expect(value).toContain('.wnav__burger { grid-area: menu; border-color: transparent; }');
       expect(value).toContain(".wnav__burger:not([aria-expanded='true']) .wnav__burger-line:nth-child(2) { opacity: 0; }");
-      expect(value).toContain('.wnav__mark { grid-area: mark; min-height: 44px; gap: 0; padding: 0 calc(13px - 0.2em) 0 0.2em; font-size: clamp(12px, 3.8vw, 15px); }');
-      expect(value).toContain('.wnav__chip { grid-area: chip; position: relative; padding: 0 0 0 13px; border-left: 0; font-size: clamp(12px, 3.8vw, 15px); letter-spacing: 0.2em; line-height: 1; }');
+      expect(value).toContain('.wnav__mark { grid-area: mark; min-height: 44px; gap: 0; padding: 0 calc(13px - 0.2em) 0 0.2em; font-size: var(--wnav-lockup); }');
+      expect(value).toContain('.wnav__chip { grid-area: chip; position: relative; padding: 0 0 0 13px; border-left: 0; font-size: var(--wnav-lockup); letter-spacing: 0.2em; line-height: 1; }');
       expect(value).toContain(".wnav__chip::before { content: ''; position: absolute; left: 0; top: 50%; width: 1px; height: 15px;");
       expect(value).toContain('.wnav__search { grid-area: search; }');
       expect(value).toContain('@media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }');
@@ -350,7 +350,7 @@ describe('registry pastel polish', () => {
     expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav-wrap.is-away { transform: translateY(-100%); opacity: 0; }");
     expect(siteNav).toContain("grid-template-areas: 'menu . mark chip . search';");
     expect(siteNav).toContain("grid-template-areas: 'menu . mark chip . .';");
-    expect(siteNav).toContain('grid-template-columns: 44px minmax(0, 1fr) auto auto minmax(0, 1fr) 44px;');
+    expect(siteNav).toContain('grid-template-columns: 44px minmax(0, 1fr) calc(var(--nav-lockup) * 5.7 + 13px) calc(var(--nav-lockup) * 8.27 + 13px) minmax(0, 1fr) 44px;');
     expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav__chip::before {");
     expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav__burger:not([aria-expanded='true']) .nav__burger-line:nth-child(2) { opacity: 0; }");
     expect(siteNav).toContain("var phone = window.matchMedia('(max-width: 599.5px)');");
