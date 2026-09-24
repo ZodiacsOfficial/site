@@ -1,0 +1,561 @@
+/* ────────────────────────────────────────────────────────────────────
+   /profile/ as your page: the header, a card arriving, your people, and
+   the keep-it-close line. This sheet leans on the shared primitives —
+   .btn + .orb, .next-action, .shell/.core, .chip, .field, .kicker — and
+   only adds layout, the initial, and the hairline rows. The twelve
+   pastel hues reach it through --sign; nothing else carries colour.
+   Focus rings are the site's own (base.css :focus-visible).
+   ──────────────────────────────────────────────────────────────────── */
+
+/* ── A person's initial: their Sun sign's colour, EB Garamond, void ink.
+   A sibling of the sign icons. Size comes from --size, set inline or by
+   the surrounding layout; the colour from --sign, set inline. ── */
+.initial {
+  width: var(--size, 40px);
+  height: var(--size, 40px);
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  /* EB Garamond capitals sit a touch high in their box. */
+  padding-top: calc(var(--size, 40px) * 0.05);
+  border-radius: 50%;
+  background: var(--sign);
+  color: var(--void-0);
+  font-family: var(--font-serif);
+  font-size: calc(var(--size, 40px) * 0.5);
+  font-weight: 500;
+  line-height: 1;
+  user-select: none;
+}
+/* No chosen name: the colour stays as a ring rather than a guessed letter. */
+.initial--unnamed {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--sign) 75%, transparent);
+}
+
+/* ── The quiet text action (the .next-action__quiet link, as a button) ── */
+.pf-quiet {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--hair-2);
+  text-underline-offset: 4px;
+  transition: color var(--dur-1) var(--ease), text-decoration-color var(--dur-1) var(--ease);
+}
+.pf-quiet:hover {
+  color: var(--text);
+  text-decoration-color: var(--hair-3);
+}
+.pf-quiet:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.pf-quiet--inline {
+  min-height: 0;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* ── Sun, Moon, rising (the homepage .wb__three grammar) ── */
+.pf-three {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.pf-three__pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.pf-three dt,
+.pf-three dd { margin: 0; }
+.pf-three dd { display: inline-flex; align-items: center; }
+.pf-three span.chip { cursor: default; }
+
+/* Stacked: a label column beside a chip column, as the homepage card
+   shows them on a phone. */
+.pf-share__card .pf-three {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px 14px;
+}
+.pf-share__card .pf-three__pair {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+/* ── The header ── */
+.pf-me {
+  display: grid;
+  gap: clamp(22px, 3.4vw, 30px);
+  margin-bottom: clamp(26px, 4vw, 36px);
+  scroll-margin-top: 110px;
+}
+.pf-me__id {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(18px, 4vw, 36px);
+  align-items: center;
+}
+.pf-me__initial { --size: clamp(76px, 16vw, 112px); }
+/* With no name yet, the disc is where you add one. */
+.pf-me__add-name {
+  --sign: var(--ink-2);
+  padding: 0;
+  border: 1.5px dashed var(--sign);
+  box-shadow: none;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: calc(var(--size) * 0.34);
+  font-weight: 300;
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
+}
+.pf-me__add-name:hover { --sign: var(--ink-0); color: var(--text); }
+.pf-me__text {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+.pf-me__text .kicker { font-size: var(--text-lg); }
+.pf-me__text h1 {
+  margin: 0 0 4px;
+  font-size: var(--text-2xl);
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+.pf-me__actions,
+.pf-me__panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+}
+
+/* ── Editing and sending open in place of the action row ── */
+.pf-me__panel {
+  display: grid;
+  gap: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--hair-1);
+}
+/* Focus lands on the panel itself only to carry it past the row it replaced. */
+.pf-me__panel:focus { outline: none; }
+.pf-me__name { max-width: 360px; }
+
+/* Sending your card: what travels, and a picture of it. */
+.pf-share__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
+  gap: clamp(20px, 4vw, 44px);
+  align-items: start;
+}
+.pf-share__copy {
+  min-width: 0;
+  display: grid;
+  gap: 10px;
+}
+.pf-share__title {
+  margin: 0 0 2px;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.pf-share__copy p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+.pf-share__copy p strong { color: var(--text); font-weight: 550; }
+.pf-share__copy .pf-share__note {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.pf-share__preview {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.pf-share__card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px;
+  border: 1px solid var(--hair-2);
+  border-radius: var(--r-lg);
+  /* The site's sign-tinted wash (.tinted .core), as the card arrives. */
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in oklab, var(--sign, var(--accent)) 9%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--void-2) 0%, var(--void-1) 100%);
+  box-shadow: inset 0 1px 0 rgba(238, 241, 247, 0.05);
+}
+.pf-share__card-text {
+  min-width: 0;
+  display: grid;
+  gap: 12px;
+  padding-top: 2px;
+}
+.pf-share__card-text strong {
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.pf-share__url {
+  max-width: 520px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* ── Keep this page close: one quiet line under the header ── */
+.pf-keep {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 18px;
+  margin: calc(clamp(26px, 4vw, 36px) * -0.35) 0 clamp(28px, 4vw, 40px);
+  padding: 6px 6px 6px 18px;
+  border: 1px solid var(--hair-1);
+  border-radius: var(--r-lg);
+  background: rgba(198, 204, 218, 0.018);
+}
+.pf-keep__text {
+  flex: 1 1 320px;
+  min-width: 0;
+  margin: 0;
+  padding-block: 8px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.pf-keep__lead {
+  font-family: var(--font-serif);
+  font-size: 1.06em;
+  color: var(--text-2);
+}
+.pf-keep__text strong { color: var(--text); font-weight: 550; }
+.pf-keep kbd {
+  display: inline-block;
+  min-width: 1.9em;
+  margin-inline: 1px;
+  padding: 2px 5px;
+  border: 1px solid var(--hair-2);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text-2);
+  vertical-align: 1px;
+}
+.pf-keep__glyph {
+  display: inline-block;
+  vertical-align: -2px;
+  color: var(--text-2);
+}
+.pf-keep__actions {
+  display: flex;
+  align-items: center;
+  gap: 2px 14px;
+}
+.pf-keep__close {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+  transition: color var(--dur-1) var(--ease), background var(--dur-1) var(--ease);
+}
+.pf-keep__close:hover {
+  color: var(--text);
+  background: rgba(198, 204, 218, 0.07);
+}
+.pf-keep__url {
+  flex: 1 1 100%;
+  max-width: 320px;
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+/* ── Cards of rows: which chart is yours, and your people ── */
+.pf-card-head h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.pf-card-head p {
+  max-width: 56ch;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+/* Rows share the list's columns, so stamps and actions line up down it. */
+.pf-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  column-gap: 14px;
+}
+.pf-choose .pf-rows { grid-template-columns: auto minmax(0, 1fr) auto; }
+.pf-row {
+  grid-column: 1 / -1;
+  min-width: 0;
+  min-height: 72px;
+  padding: 12px 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-columns: subgrid;
+  gap: 6px 14px;
+  align-items: center;
+  border-top: 1px solid var(--hair-1);
+}
+.pf-choose .pf-row {
+  min-height: 60px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: subgrid;
+}
+.pf-row__text {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+.pf-row__text strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pf-row__text small {
+  color: var(--muted);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.pf-row__when {
+  justify-self: end;
+  color: var(--faint);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pf-row__when.is-soon { color: var(--text-2); }
+.pf-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pf-choose .pf-row__actions { justify-content: flex-end; }
+/* The pills keep the saved-charts look; the hit area grows to 44px. */
+a.pf-chart__action { text-decoration: none; }
+.pf-row__actions .pf-chart__action { position: relative; }
+.pf-row__actions .pf-chart__action::after {
+  content: '';
+  position: absolute;
+  inset: -6px -3px;
+}
+.pf-chart__action--danger.is-armed {
+  border-color: color-mix(in oklab, var(--sign-aries) 55%, transparent);
+  color: var(--sign-aries);
+}
+
+.pf-people {
+  margin: clamp(18px, 3vw, 24px) 0;
+  scroll-margin-top: 110px;
+}
+.pf-people__core {
+  display: grid;
+  gap: 18px;
+  padding: clamp(18px, 3.4vw, 26px);
+}
+.pf-people__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px 18px;
+}
+.pf-people__count {
+  padding-top: 8px;
+  color: var(--faint);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pf-people__empty {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 0 4px;
+  border-top: 1px solid var(--hair-1);
+}
+.pf-people__empty p {
+  max-width: 52ch;
+  margin: 0;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+.pf-people__ghosts {
+  display: inline-flex;
+  flex: none;
+}
+.pf-people__ghosts span {
+  width: 40px;
+  height: 40px;
+  border: 1px dashed var(--hair-3);
+  border-radius: 50%;
+  background: var(--void-1);
+}
+.pf-people__ghosts span + span { margin-inline-start: -12px; }
+.pf-people__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  padding-top: 4px;
+}
+
+.pf-choose {
+  margin: calc(clamp(26px, 5vw, 42px) * -0.35) 0 clamp(26px, 4vw, 36px);
+}
+.pf-choose__core {
+  display: grid;
+  gap: 14px;
+  padding: clamp(18px, 3.4vw, 26px);
+}
+.pf-choose__more {
+  justify-self: start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── A card arriving (the shared .next-action card, with the sender's mark) ── */
+.pf-inbox { margin-bottom: clamp(26px, 4vw, 38px); }
+.pf-inbox__core {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: clamp(20px, 3vw, 36px);
+}
+.pf-inbox__initial {
+  --size: clamp(60px, 9vw, 84px);
+  align-self: start;
+}
+.pf-inbox .next-action__title {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+/* The shared quiet link, with its tap height and an unbroken underline. */
+.pf-inbox .next-action__quiet {
+  display: inline-block;
+  padding-block: 11px;
+}
+
+@media (max-width: 719px) {
+  /* The header: your mark beside your name, placements in a row below. */
+  .pf-me__id {
+    grid-template-areas:
+      'mark kicker'
+      'mark name'
+      'three three';
+    column-gap: 18px;
+    row-gap: 0;
+  }
+  .pf-me__text { display: contents; }
+  .pf-me__initial { grid-area: mark; }
+  .pf-me__text .kicker {
+    grid-area: kicker;
+    align-self: end;
+    margin-bottom: 6px;
+  }
+  .pf-me__text h1 {
+    grid-area: name;
+    align-self: start;
+    margin: 0;
+  }
+  .pf-me__text .pf-three {
+    grid-area: three;
+    margin-top: 22px;
+    gap: 14px 24px;
+  }
+  .pf-me__text .pf-three__pair {
+    display: grid;
+    gap: 8px;
+    justify-items: start;
+  }
+  .pf-me__actions .btn,
+  .pf-me__panel-actions .btn,
+  .pf-people__foot .btn {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pf-share__layout { grid-template-columns: minmax(0, 1fr); }
+
+  .pf-keep {
+    position: relative;
+    padding: 4px 50px 4px 16px;
+  }
+  .pf-keep__close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+  }
+
+  .pf-rows { grid-template-columns: minmax(0, 1fr); }
+  .pf-row,
+  .pf-choose .pf-row { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .pf-people .pf-row__actions { grid-column: 2 / -1; }
+
+  .pf-inbox__core { grid-template-columns: minmax(0, 1fr); }
+  /* Let the shared card's buttons take the full width, however short. */
+  .pf-inbox .next-action__actions { grid-template-columns: minmax(0, 1fr); }
+  .pf-inbox .pf-three {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    gap: 10px 14px;
+  }
+  .pf-inbox .pf-three__pair {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-columns: subgrid;
+    align-items: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-me__add-name,
+  .pf-quiet,
+  .pf-keep__close { transition: none; }
+}

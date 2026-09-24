@@ -40,6 +40,16 @@
       "statusCode": 301
     },
     {
+      "source": "/me",
+      "destination": "/profile/",
+      "permanent": false
+    },
+    {
+      "source": "/me/",
+      "destination": "/profile/",
+      "permanent": false
+    },
+    {
       "source": "/:path(.*)",
       "has": [
         {
