@@ -13,7 +13,10 @@ and becomes their page:
   - their name, or "Your chart";
   - their picture;
   - their Sun, Moon and rising (see §3 for when these are withheld);
-  - "Today's reading", "Send your card", and "Name and picture".
+  - the site's usual trio of actions: one white primary ("Open my full
+    daily brief"), one ghost ("Send your card"), and a quiet link ("Edit
+    name and picture"). Editing and sending open in place of that row, so
+    the header never shows two primaries.
 
   Before hydration, and on any profile without an explicit self chart, it
   renders the page's existing introduction and H1 unchanged. When charts
@@ -41,7 +44,9 @@ and becomes their page:
   - Chart;
   - Remove (cards only; two-step).
 
-  A "Coming up" list shows the next 45 days.
+  Rows are ordered by the next date, and each row's stamp says how far off
+  it is ("in 8 days"), brighter within 14 days. That replaces a separate
+  "Coming up" list.
 - **Chart cards** (the network, serverless). "Send your card" makes a link,
   `/profile/#card=c1.…`, from the self chart only. It carries the name the
   sender chose, their positions, and a time-known bit. The recipient's
@@ -111,26 +116,35 @@ and becomes their page:
     `AccountBoundProfileSurface` does (`surface-gate.ts`).
 - **No analytics.** `/profile/` is already a private surface. No event was
   added.
-- **Design.**
-  - The twelve pastel hues are the only chroma, and there are no gradients.
-  - People use the light `.tile`.
-  - Panels open inline; there are no modals.
-  - Touch targets are 44px or larger.
-  - There is one conversion anchor: new actions are glass or ghost, never a
-    second primary.
+- **Design.** It reuses the site's shared primitives rather than new ones.
+  - Buttons follow the homepage's "recommended next" hierarchy: one white
+    `btn--primary` with its orb (↗ to go somewhere, + to add, ✓ to save),
+    at most one `btn--ghost` with its orb, and quiet underlined text links
+    for everything else. On phones, buttons go full width.
+  - Sun, Moon and rising use the homepage's `.wb__three` grammar: mono
+    labels beside the site's sign chips (`PlacementList`).
+  - A received card is the shared `.next-action` card, with the sender's
+    mark beside it.
+  - Your people, and the "which chart is yours" question, are hairline rows
+    inside one bezel card. Row actions keep the saved-charts pills, with a
+    44px hit area.
+  - The twelve pastel hues are the only chroma, reaching surfaces through
+    `--sign`. The only wash is the site's own `.tinted` treatment.
+  - Panels open inline; there are no modals. Touch targets are 44px or
+    larger.
 
 ## 4. Verifying by hand
 
 1. Build, then preview. Save your own chart on `/birth-chart/` using "Save my
    chart", then open `/profile/`. Check the header, the tab title and icon,
    the nav picture, and the keep-close note.
-2. Choose "Name and picture". Set a name and try all three pictures,
+2. Choose "Edit name and picture". Set a name and try all three pictures,
    including a phone photo. Reload; the photo stays. Remove the photo.
 3. Choose "Send your card" and copy the link. Open it in a private window:
    the card shows at the top of the page, the address bar loses `#card=`,
    and "Add to your people" adds it. Open your own link on your device: it reports "This is your own
    card."
-4. On the recipient side, open Compare from the person's tile. It lands on
+4. On the recipient side, open Compare from the person's row. It lands on
    `/compatibility/?pair=…` and the comparison appears under Saved
    comparisons.
 5. Visit `/me` on a preview deployment; it lands on `/profile/`.

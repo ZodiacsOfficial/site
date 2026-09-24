@@ -101,7 +101,11 @@ describe('constellation geometry', () => {
         expect(Math.hypot(a.x - b.x, a.y - b.y)).toBeGreaterThanOrEqual(a.r + b.r);
       }
     }
-    expect(mark.ticks).toHaveLength(12);
+    expect(mark.rim.map((dot) => dot.fill)).toEqual([...MARK_SIGN_HUES]);
+    // The rising sign's own rim point sits nearest nine o'clock.
+    const risingIndex = Math.floor(chart.asc! / 30);
+    const nearest = mark.rim.reduce((best, dot, index) => (dot.x < mark.rim[best].x ? index : best), 0);
+    expect([risingIndex, (risingIndex + 1) % 12]).toContain(nearest);
     expect(mark.asc).not.toBeNull();
     expect(mark.asc!.y1).toBeCloseTo(50, 5);
   });

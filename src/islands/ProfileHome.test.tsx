@@ -1,12 +1,14 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'preact-render-to-string';
 import { keepCloseRoute } from './ProfileKeepClose';
-import { nextLine, soonLine, whenLabel } from './ProfilePeople';
+import { nextLine, whenLabel } from './ProfilePeople';
 import { takeCardFromLocation } from './ProfileCardInbox';
-import ProfileIdentity, { bigThree } from './ProfileIdentity';
+import ProfileIdentity from './ProfileIdentity';
+import PlacementList, { cardPlacements, chartPlacements } from '../components/PlacementList';
 import ProfilePeople from './ProfilePeople';
 import ProfileKeepClose from './ProfileKeepClose';
 import ProfileCardInbox from './ProfileCardInbox';
+import type { ChartCard } from '../lib/profile/card-link';
 import type { PersonRow, UpcomingKind } from '../lib/profile/your-people';
 import type { SavedChart } from '../lib/profile/schema';
 
@@ -44,12 +46,42 @@ describe('your page header', () => {
     expect(html).not.toContain('Your page');
   });
 
-  it('states the big three only as far as the chart settles them', () => {
-    expect(bigThree(chart(true)).map((row) => `${row.label} ${row.name}`)).toEqual([
+  it('states Sun, Moon and rising only as far as the chart settles them', () => {
+    expect(chartPlacements(chart(true)).map((row) => `${row.label} ${row.name}`)).toEqual([
       'Sun Leo', 'Moon Gemini', 'Rising Leo',
     ]);
-    expect(bigThree(chart(false)).map((row) => row.label)).toEqual(['Sun']);
-    expect(bigThree(chart(false, 120.3))).toEqual([]);
+    expect(chartPlacements(chart(false)).map((row) => row.label)).toEqual(['Sun']);
+    expect(chartPlacements(chart(false, 120.3))).toEqual([]);
+  });
+
+  it('reads a received card by the same rule', () => {
+    const received = (timeKnown: boolean): ChartCard => ({
+      chart: {
+        bodies: [{ body: 'Sun', lon: 141.3 }, { body: 'Moon', lon: 61.1 }],
+        angles: timeKnown ? { asc: 133.6, mc: 40 } : null,
+        houseSystem: 'whole',
+        engineVersion: 'fixture',
+      },
+      label: 'Maya',
+      timeKnown,
+    });
+    expect(cardPlacements(received(true)).map((row) => `${row.label} ${row.name}`)).toEqual([
+      'Sun Leo', 'Moon Gemini', 'Rising Leo',
+    ]);
+    expect(cardPlacements(received(false)).map((row) => row.label)).toEqual(['Sun']);
+  });
+
+  it('lists placements in the homepage grammar: mono labels beside sign chips', () => {
+    const html = render(<PlacementList placements={chartPlacements(chart(true))} />);
+    expect(html).toContain('<dl class="pf-three">');
+    expect(html).toContain('<dt class="mono--label">Sun</dt>');
+    expect(html).toContain('href="/leo/"');
+    expect(html).toContain('href="/gemini/"');
+    expect(html.match(/class="chip"/gu)).toHaveLength(3);
+
+    const unlinked = render(<PlacementList placements={chartPlacements(chart(true))} linked={false} />);
+    expect(unlinked).not.toContain('href=');
+    expect(render(<PlacementList placements={[]} />)).toBe('');
   });
 });
 
@@ -72,8 +104,6 @@ describe('your people', () => {
   it('distinguishes a birthday from a Sun return', () => {
     expect(nextLine(person(18, 'birthday'))).toBe('Birthday Oct 12');
     expect(nextLine(person(18, 'sun-return'))).toBe('Sun returns Oct 12');
-    expect(soonLine(person(18, 'birthday'))).toMatch(/^Maya’s birthday · .+Oct 12 · in 18 days$/u);
-    expect(soonLine(person(1, 'sun-return', ''))).toMatch(/^Sun return · .+ · tomorrow$/u);
   });
 
   it('renders nothing on the server, where there is no one to list yet', () => {

@@ -1,9 +1,9 @@
 /**
- * Once a chart is marked as yours, one quiet note on how to get back here
+ * Once a chart is marked as yours, one quiet line on how to get back here
  * in a tap: install the site where the browser offers it, add it to the
- * Home Screen on iPhone and iPad, or bookmark it — plus the short address,
- * zodiacs.org/me. It never shows inside the installed app, and hiding it
- * is remembered on this device.
+ * Home Screen on iPhone and iPad, or bookmark it (shown as the keys to
+ * press) — plus the short address, zodiacs.org/me. It never shows inside
+ * the installed app, and hiding it is remembered on this device.
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useProfile } from '../lib/hooks/useProfile';
@@ -31,13 +31,29 @@ export function keepCloseRoute(userAgent: string, canInstall: boolean): Route {
   return /\bMac OS X\b|\bMacintosh\b/u.test(userAgent) ? 'desktop-mac' : 'desktop';
 }
 
-const INSTRUCTION: Record<Route, string> = {
-  install: 'Add Zodiacs to this device so it opens like an app, or bookmark this page.',
-  ios: 'On iPhone or iPad, tap Share, then Add to Home Screen.',
-  android: 'In Chrome’s menu, tap Add to Home screen.',
-  'desktop-mac': 'Press ⌘D to bookmark it.',
-  desktop: 'Press Ctrl+D to bookmark it.',
-};
+/** How to keep the page one tap away, for this browser. */
+function Instruction({ route }: { route: Route }) {
+  switch (route) {
+    case 'install':
+      return <>Add Zodiacs to this device, or bookmark this page</>;
+    case 'ios':
+      return (
+        <>
+          Tap Share{' '}
+          <svg class="pf-keep__glyph" width="12" height="14" viewBox="0 0 12 14" aria-hidden="true">
+            <path d="M6 1.2v7.6M3.3 3.8 6 1.2l2.7 2.6M3.6 6H2a.8.8 0 0 0-.8.8v5.4c0 .5.4.8.8.8h8c.5 0 .8-.3.8-.8V6.8a.8.8 0 0 0-.8-.8H8.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          , then Add to Home Screen
+        </>
+      );
+    case 'android':
+      return <>In Chrome’s menu, tap Add to Home screen</>;
+    case 'desktop-mac':
+      return <>Press <kbd>⌘</kbd><kbd>D</kbd> to bookmark this page</>;
+    default:
+      return <>Press <kbd>Ctrl</kbd><kbd>D</kbd> to bookmark this page</>;
+  }
+}
 
 function installPrompt(): DeferredInstall | null {
   const event = Reflect.get(window, 'zodiacsInstallPrompt') as DeferredInstall | undefined;
@@ -100,36 +116,34 @@ export default function ProfileKeepClose({ accountBound = false }: { accountBoun
   }
 
   return (
-    <aside class="pf-keep" aria-labelledby="pf-keep-title" data-keep-close={route}>
-      <div class="pf-keep__text">
-        <h2 id="pf-keep-title">Keep your page one tap away</h2>
-        <p>{INSTRUCTION[route]}</p>
-        <p class="pf-keep__address">
-          Or remember the short address, <strong>{SHORT_ADDRESS}</strong>. Your charts are kept in this
-          browser, so come back in this one.
-        </p>
-        {copied === 'manual' && (
-          <input
-            class="field__input calc__share-url"
-            type="text"
-            readOnly
-            value={`https://${SHORT_ADDRESS}`}
-            aria-label="Short address for your page"
-            onFocus={(event) => (event.currentTarget as HTMLInputElement).select()}
-          />
-        )}
-      </div>
+    <aside class="pf-keep" aria-label="Keep this page close" data-keep-close={route}>
+      <p class="pf-keep__text">
+        <em class="pf-keep__lead">Keep it close.</em>{' '}
+        <Instruction route={route} />, or remember <strong>{SHORT_ADDRESS}</strong>.
+      </p>
       <div class="pf-keep__actions">
         {route === 'install' && (
-          <button class="btn btn--glass" type="button" onClick={install}>
-            <span>Add to this device</span><span class="orb" aria-hidden="true">↓</span>
-          </button>
+          <button class="pf-quiet" type="button" onClick={install}>Add to this device</button>
         )}
-        <button class="btn btn--ghost" type="button" onClick={copy}>
+        <button class="pf-quiet" type="button" onClick={copy}>
           {copied === 'copied' ? 'Address copied' : 'Copy address'}
         </button>
-        <button class="pf-me__text-action" type="button" onClick={dismiss}>Hide this</button>
+        <button class="pf-keep__close" type="button" onClick={dismiss} aria-label="Hide this tip">
+          <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+          </svg>
+        </button>
       </div>
+      {copied === 'manual' && (
+        <input
+          class="field__input pf-keep__url"
+          type="text"
+          readOnly
+          value={`https://${SHORT_ADDRESS}`}
+          aria-label="Short address for your page"
+          onFocus={(event) => (event.currentTarget as HTMLInputElement).select()}
+        />
+      )}
       <p class="sr-only" role="status">{copied === 'copied' ? 'Address copied' : ''}</p>
     </aside>
   );

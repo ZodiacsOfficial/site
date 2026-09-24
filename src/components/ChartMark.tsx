@@ -4,12 +4,17 @@ import { isStorablePhoto, type AvatarKind } from '../lib/profile/avatar';
 
 interface Props {
   source: ChartMarkSource | null;
+  /** Rendered size in px. With `fluid`, the design size only; the box fills its parent. */
   size: number;
   avatar?: AvatarKind;
   /** A data: URL kept in this browser; drawn only when `avatar` is 'photo'. */
   photo?: string | null;
   /** Accessible name. Without one the picture is decorative. */
   label?: string;
+  /** Fill the parent box instead of a fixed pixel size. */
+  fluid?: boolean;
+  /** Draw the constellation in once (planets, then aspects). Motion-safe. */
+  reveal?: boolean;
   class?: string;
 }
 
@@ -21,12 +26,15 @@ export const CONSTELLATION_MIN_SIZE = 44;
  * sign's disc, or a photo that lives only in this browser. A mark falls back
  * to a quiet ring when the chart cannot settle what it would show.
  */
-export default function ChartMark({ source, size, avatar = 'mark', photo = null, label, class: className = '' }: Props) {
+export default function ChartMark({
+  source, size, avatar = 'mark', photo = null, label, fluid = false, reveal = false, class: className = '',
+}: Props) {
   const a11y = label
     ? { role: 'img' as const, 'aria-label': label }
     : { 'aria-hidden': 'true' as const };
-  const classes = `chart-mark ${className}`.trim();
-  const box = `width:${size}px;height:${size}px`;
+  const classes = `chart-mark ${fluid ? 'chart-mark--fluid ' : ''}${className}`.trim();
+  const box = fluid ? undefined : `width:${size}px;height:${size}px`;
+  const dimension = fluid ? '100%' : size;
 
   if (avatar === 'photo' && isStorablePhoto(photo)) {
     return (
@@ -36,8 +44,8 @@ export default function ChartMark({ source, size, avatar = 'mark', photo = null,
     );
   }
 
-  // Below this the rim ticks vanish and hairlines thin to nothing, so a small
-  // constellation drops the ticks and draws larger planets and firmer lines.
+  // Below 80px the rim points and hairlines vanish, so a small constellation
+  // drops the rim and draws larger planets and firmer lines.
   const small = size < 80;
   const constellation = avatar !== 'sign' && source && size >= CONSTELLATION_MIN_SIZE
     ? constellationGeometry(source, { dotScale: small ? 1.3 : 1 })
@@ -45,29 +53,45 @@ export default function ChartMark({ source, size, avatar = 'mark', photo = null,
   if (constellation) {
     const weight = small ? 1.5 : 1;
     return (
-      <svg class={classes} viewBox="0 0 100 100" width={size} height={size} focusable="false" {...a11y}>
+      <svg
+        class={`${classes}${reveal ? ' chart-mark--reveal' : ''}`}
+        viewBox="0 0 100 100"
+        width={dimension}
+        height={dimension}
+        focusable="false"
+        {...a11y}
+      >
         <circle cx="50" cy="50" r="49.5" fill={MARK_VOID} />
-        <circle cx="50" cy="50" r="49.5" fill={constellation.glow} fill-opacity="0.11" />
-        <circle cx="50" cy="50" r="47.5" fill="none" stroke="rgba(198,204,218,0.24)" stroke-width="0.7" />
-        {!small && constellation.ticks.map((tick, index) => (
-          <line key={index} {...tick} stroke="rgba(198,204,218,0.28)" stroke-width="0.7" />
-        ))}
-        {constellation.lines.map((line) => (
-          <line
-            key={`${line.a}-${line.b}`}
-            x1={line.x1}
-            y1={line.y1}
-            x2={line.x2}
-            y2={line.y2}
-            stroke={MARK_INK}
-            stroke-opacity={line.tense ? 0.22 : 0.36}
-            stroke-width={(line.tense ? 0.55 : 0.7) * weight}
-            stroke-dasharray={line.tense ? '1.6 1.4' : undefined}
-          />
-        ))}
-        {constellation.dots.map((dot) => (
+        <circle cx="50" cy="50" r="49.5" fill={constellation.glow} fill-opacity="0.1" />
+        <circle cx="50" cy="50" r="47.5" fill="none" stroke="rgba(198,204,218,0.2)" stroke-width="0.6" />
+        {!small && (
+          <>
+            <circle cx="50" cy="50" r="33" fill="none" stroke="rgba(198,204,218,0.07)" stroke-width="0.5" />
+            {constellation.rim.map((dot, index) => (
+              <circle key={index} cx={dot.x} cy={dot.y} r="1.15" fill={dot.fill} fill-opacity="0.75" />
+            ))}
+          </>
+        )}
+        <g class="chart-mark__lines">
+          {constellation.lines.map((line) => (
+            <line
+              key={`${line.a}-${line.b}`}
+              x1={line.x1}
+              y1={line.y1}
+              x2={line.x2}
+              y2={line.y2}
+              stroke={MARK_INK}
+              stroke-opacity={line.tense ? 0.22 : 0.36}
+              stroke-width={(line.tense ? 0.55 : 0.7) * weight}
+              stroke-dasharray={line.tense ? '1.6 1.4' : undefined}
+            />
+          ))}
+        </g>
+        {constellation.dots.map((dot, index) => (
           <circle
             key={dot.body}
+            class="chart-mark__planet"
+            style={reveal ? `--i:${index}` : undefined}
             cx={dot.x}
             cy={dot.y}
             r={dot.r}
@@ -97,7 +121,7 @@ export default function ChartMark({ source, size, avatar = 'mark', photo = null,
   }
 
   return (
-    <svg class={`${classes} chart-mark--empty`} viewBox="0 0 100 100" width={size} height={size} focusable="false" {...a11y}>
+    <svg class={`${classes} chart-mark--empty`} viewBox="0 0 100 100" width={dimension} height={dimension} focusable="false" {...a11y}>
       <circle cx="50" cy="50" r="48.5" fill={MARK_VOID} stroke="rgba(198,204,218,0.34)" stroke-width="1.5" stroke-dasharray="3 3.2" />
     </svg>
   );

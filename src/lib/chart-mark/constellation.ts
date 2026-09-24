@@ -58,13 +58,23 @@ export interface MarkLine extends MarkSegment {
   tense: boolean;
 }
 
+export interface MarkRimDot {
+  x: number;
+  y: number;
+  fill: string;
+}
+
 export interface ConstellationGeometry {
   /** The Sun's settled sign hue for the faint wash behind the ring. */
   glow: string;
   dots: MarkDot[];
   lines: MarkLine[];
-  /** Twelve sign boundaries on the rim, rotated with the anchor. */
-  ticks: MarkSegment[];
+  /**
+   * The twelve signs as pastel points just inside the rim, each at its
+   * sign's middle degree and turned with the anchor: the brand's
+   * twelve-disc wheel, in miniature.
+   */
+  rim: MarkRimDot[];
   /** The rising-sign tick, or null for an unknown birth time. */
   asc: MarkSegment | null;
 }
@@ -142,7 +152,7 @@ export function constellationGeometry(
     glow: fillFor('Sun', sun.lon, source.timeKnown),
     dots,
     lines,
-    ticks: Array.from({ length: 12 }, (_, index) => segment(index * 30, anchor, 44.5, 47.5)),
+    rim: MARK_SIGN_HUES.map((fill, index) => ({ ...markPoint(index * 30 + 15, anchor, 44), fill })),
     asc: asc === null ? null : segment(asc, anchor, 40, 49),
   };
 }

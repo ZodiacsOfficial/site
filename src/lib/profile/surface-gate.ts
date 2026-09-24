@@ -43,3 +43,36 @@ export function useProfileSurface(accountBound: boolean): boolean {
 
   return visible;
 }
+
+/*
+ * A card arriving at the top of /profile/ can hold the page's one white
+ * action ("Add to your people", then "Send your card"). While it does, the
+ * header below offers its own actions as ghosts, so the page never shows two
+ * primaries at once. Announced on the document like the account gate, so
+ * the order the islands hydrate in does not matter.
+ */
+const INBOX_PRIMARY_ATTRIBUTE = 'data-card-inbox-primary';
+const INBOX_PRIMARY_EVENT = 'zodiacs:card-inbox-primary';
+
+export function announceInboxPrimary(holds: boolean): void {
+  try {
+    document.documentElement.toggleAttribute(INBOX_PRIMARY_ATTRIBUTE, holds);
+    window.dispatchEvent(new Event(INBOX_PRIMARY_EVENT));
+  } catch {
+    // Without a document there is no header to step down.
+  }
+}
+
+/** True while a received card holds the page's primary action. */
+export function useInboxHoldsPrimary(): boolean {
+  const [holds, setHolds] = useState(false);
+
+  useEffect(() => {
+    const sync = () => setHolds(document.documentElement.hasAttribute(INBOX_PRIMARY_ATTRIBUTE));
+    sync();
+    window.addEventListener(INBOX_PRIMARY_EVENT, sync);
+    return () => window.removeEventListener(INBOX_PRIMARY_EVENT, sync);
+  }, []);
+
+  return holds;
+}
