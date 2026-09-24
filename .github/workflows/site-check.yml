@@ -607,9 +607,9 @@ jobs:
   # here turn on one flag or none, and pages are smaller then, so a route can
   # pass every budget in CI and still stop the production build at its limit,
   # as /compatibility/ did after #556. The values are stand-ins: a flag only
-  # needs to be on, the publishable key only needs to be non-empty, and the
-  # RPC URLs only need to pass build-time validation. Keep the list in step
-  # with the flags set for Production in Vercel.
+  # needs to be on, the publishable and VAPID keys only need to be non-empty,
+  # and the RPC URLs only need to pass build-time validation. Keep the list in
+  # step with the public variables set for Production in Vercel.
   production-flags-build:
     name: Build with production's feature flags
     runs-on: ubuntu-latest
@@ -623,6 +623,7 @@ jobs:
       PUBLIC_WEEKLY_DIGEST_ENABLED: "1"
       PUBLIC_ZODIAC_GAMES_ENABLED: "1"
       PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_ci_stand_in
+      PUBLIC_VAPID_KEY: ci-stand-in-vapid-public-key
       PUBLIC_PLAUSIBLE_SCRIPT_URL: https://plausible.io/js/script.js
       SOLANA_RPC_URL: https://production-flags-ci.invalid/rpc
       BASE_RPC_URL: https://production-flags-ci.invalid/base
