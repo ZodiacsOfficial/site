@@ -6,6 +6,10 @@ import ProfileManager from '../../islands/ProfileManager';
 import AccountSyncV2Panel from '../../islands/AccountSyncV2Panel';
 import AccountBoundProfileSurface from '../../islands/AccountBoundProfileSurface';
 import ProfileSunSignCapture from '../../islands/ProfileSunSignCapture';
+import ProfileIdentity from '../../islands/ProfileIdentity';
+import ProfileCardInbox from '../../islands/ProfileCardInbox';
+import ProfilePeople from '../../islands/ProfilePeople';
+import ProfileKeepClose from '../../islands/ProfileKeepClose';
 import SavedRecordsPanel from '../../islands/SavedRecordsPanel';
 import { savedRecordsEnabled } from '../../lib/profile/saved-record-flags';
 import LivingChartTimeline from '../../islands/living-chart/LivingChartTimeline';
@@ -13,6 +17,7 @@ import { hasDailyChartEmailProvider } from '../../lib/email/daily-config';
 import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../lib/account-v2/feature-flags';
 import { livingChartSyncEnabled } from '../../lib/living-chart/feature-flags';
 import '../../styles/calculator.css';
+import '../../styles/profile-home.css';
 
 const dailyEmailEnabled = hasDailyChartEmailProvider(process.env);
 const inviteUiEnabled = process.env.PUBLIC_COMPAT_INVITES_ENABLED === '1';
@@ -36,15 +41,11 @@ const savedRecordsSurfaceEnabled = savedRecordsEnabled({
   privateSurface={accountSyncV2Enabled || livingChartSurfaceEnabled}
 >
   <section class="section--tight container container--narrow">
-    <div class="pf-hero">
-      <em class="kicker">Your astrology</em>
-      <h1 class="display">Your charts, today and ahead.</h1>
-      <p>
-        {livingChartSurfaceEnabled
-          ? 'Return to your chart, see what is active now, and keep the forecasts and moments you choose in one timeline.'
-          : 'Return to your chart, see what is active now, and keep the people you read most often close at hand.'}
-      </p>
-    </div>
+    <ProfileCardInbox accountBound={accountSyncV2Enabled} client:load />
+
+    <ProfileIdentity accountBound={accountSyncV2Enabled} client:load />
+
+    <ProfileKeepClose accountBound={accountSyncV2Enabled} client:idle />
 
     <ProfileSunSignCapture client:load />
 
@@ -58,11 +59,14 @@ const savedRecordsSurfaceEnabled = savedRecordsEnabled({
     ) : (
       <>
         <ProfileDashboard client:load />
+        <ProfilePeople client:idle />
         <LivingChartTimeline syncEnabled allowSyncGrant={livingChartSyncPrivacyEnabled} client:load />
         <ProfileInvites inviteUiEnabled={inviteUiEnabled} client:load />
         <ProfileManager dailyEmailEnabled={dailyEmailEnabled} client:load />
       </>
     )}
+
+    {accountSyncV2Enabled && <ProfilePeople accountBound client:idle />}
 
     <SavedRecordsPanel enabled={savedRecordsSurfaceEnabled} locale="en" client:load />
 

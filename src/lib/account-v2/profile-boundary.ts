@@ -1,6 +1,7 @@
 import { PROFILE_DELETIONS_KEY } from '../profile/deletions';
 import { PAIRS_KEY } from '../profile/pairs';
 import { PROFILE_KEY } from '../profile/schema';
+import { CIRCLE_KEY, ME_KEY } from '../profile/page-keys';
 import { LIVING_CHART_GUEST_VAULT_KEY } from '../living-chart/owner';
 import { livingChartSyncMetadataKeys } from '../living-chart/sync-metadata';
 import {
@@ -35,6 +36,9 @@ export const ACCOUNT_BOUNDARY_PROFILE_KEYS = [
   PAIRS_KEY,
   YEAR_AHEAD_CACHE_KEY,
   DAILY_CHART_SELECTION_KEY,
+  // Your-page name and picture, and cards received from other people.
+  ME_KEY,
+  CIRCLE_KEY,
 ] as const;
 
 interface LocalProfileArchiveV1 {

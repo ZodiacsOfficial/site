@@ -8,6 +8,7 @@ import {
 import { hasAccountBoundLocalProfileData } from '../lib/account-v2/profile-boundary';
 import { getAccountV2BrowserStorage } from '../lib/account-v2/browser-storage';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
+import { announceProfileSurface } from '../lib/profile/surface-gate';
 import type { CatalogLocale } from '../lib/i18n';
 
 interface Props {
@@ -109,6 +110,12 @@ export default function AccountBoundProfileSurface({
       window.removeEventListener('zodiacs:profile-access', onProfileAccess);
     };
   }, []);
+
+  // Announce the decision so the page's other personal surfaces (your page
+  // header, your people) reveal and withhold with this gate, never ahead of it.
+  useEffect(() => {
+    announceProfileSurface(access === 'visible');
+  }, [access]);
 
   if (access !== 'visible') return null;
   const LivingChartTimeline = livingChartModule?.default;
