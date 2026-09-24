@@ -160,6 +160,15 @@
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .wnav-tools, .wnav-signs, .wnav__burger, .wnav__dropdown-btn svg, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+@media (max-width: 599.5px) {
+    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }
+    .wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
+    .wnav-wrap.is-away .wnav { pointer-events: none; }
+    /* html body … outranks the hub's lens and frost pill rules. */
+    html body .wnav-wrap .wnav { display: flex; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) clamp(4px, 2.6vw, 10px) 0 clamp(12px, 5vw, 20px); gap: clamp(4px, 2.6vw, 10px); border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+    .wnav__chip { margin-left: auto; padding: 0 4px 0 12px; border-left: 0; }
+  }
+  @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }
 
     .page { width:var(--page); margin:0 auto; padding:clamp(130px,16vw,184px) 0 88px; }
     .crumbs { margin:0 0 48px; font:400 9px/1.5 var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); }
@@ -941,6 +950,27 @@
       setMobile(false);
       if(restore) restore.focus();
     });
+  })();
+  (function(){
+    var nav = document.querySelector('[data-wnav]');
+    var wrap = nav ? nav.parentElement : null;
+    var root = document.documentElement;
+    if(!wrap || !window.matchMedia) return;
+    var phone = window.matchMedia('(max-width: 599.5px)');
+    var last = Math.max(0, window.scrollY), away = false, frame = 0;
+    function set(next){ if(next === away) return; away = next; wrap.classList.toggle('is-away', next); }
+    function held(){ return root.style.overflow === 'hidden' || !!document.querySelector('[data-wnav-burger][aria-expanded="true"]') || !!wrap.querySelector(':focus-visible'); }
+    function tick(){
+      frame = 0;
+      var y = Math.max(0, window.scrollY);
+      if(!phone.matches || y < 64 || held()){ set(false); last = y; return; }
+      if(Math.abs(y - last) < 8) return;
+      set(y > last);
+      last = y;
+    }
+    window.addEventListener('scroll', function(){ if(!frame) frame = window.requestAnimationFrame(tick); }, { passive: true });
+    if(phone.addEventListener) phone.addEventListener('change', tick);
+    wrap.addEventListener('focusin', function(){ set(false); });
   })();
 
     var entries=[{"sign":"aries","name":"Aries","chain":"Solana","role":"verified original address","address":"GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv","normalized":"GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv"},{"sign":"aries","name":"Aries","chain":"Base","role":"verified Base address","address":"0x3ffB5282F5891Dd8c813E64059EdB0607537eC91","normalized":"0x3ffb5282f5891dd8c813e64059edb0607537ec91"},{"sign":"taurus","name":"Taurus","chain":"Solana","role":"verified original address","address":"EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp","normalized":"EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp"},{"sign":"taurus","name":"Taurus","chain":"Base","role":"verified Base address","address":"0xd5356c6E529569c6912978433DAfb7ca72B5f09C","normalized":"0xd5356c6e529569c6912978433dafb7ca72b5f09c"},{"sign":"gemini","name":"Gemini","chain":"Solana","role":"verified original address","address":"ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc","normalized":"ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc"},{"sign":"gemini","name":"Gemini","chain":"Base","role":"verified Base address","address":"0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f","normalized":"0x8f6eb25ab4cd2f8f064f7da5e35136d4ec600b4f"},{"sign":"cancer","name":"Cancer","chain":"Solana","role":"verified original address","address":"CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ","normalized":"CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ"},{"sign":"cancer","name":"Cancer","chain":"Base","role":"verified Base address","address":"0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378","normalized":"0xb9fd3c3157c7b69260ca285fbbc74f6309226378"},{"sign":"leo","name":"Leo","chain":"Solana","role":"verified original address","address":"8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm","normalized":"8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm"},{"sign":"leo","name":"Leo","chain":"Base","role":"verified Base address","address":"0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75","normalized":"0x4f7b4c12de5d47314c86ed3ba25e289aa139cf75"},{"sign":"virgo","name":"Virgo","chain":"Solana","role":"verified original address","address":"Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso","normalized":"Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso"},{"sign":"virgo","name":"Virgo","chain":"Base","role":"verified Base address","address":"0xAcFd97106bbE5D931aC430Be76A8E362832D48f4","normalized":"0xacfd97106bbe5d931ac430be76a8e362832d48f4"},{"sign":"libra","name":"Libra","chain":"Solana","role":"verified original address","address":"7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe","normalized":"7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe"},{"sign":"libra","name":"Libra","chain":"Base","role":"verified Base address","address":"0x4201eff5F419CD6EEDFb28fa240edeaFc9002204","normalized":"0x4201eff5f419cd6eedfb28fa240edeafc9002204"},{"sign":"scorpio","name":"Scorpio","chain":"Solana","role":"verified original address","address":"J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1","normalized":"J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1"},{"sign":"scorpio","name":"Scorpio","chain":"Base","role":"verified Base address","address":"0x0057C9cB6D16C2ecA808788f14d0d0c367b26676","normalized":"0x0057c9cb6d16c2eca808788f14d0d0c367b26676"},{"sign":"sagittarius","name":"Sagittarius","chain":"Solana","role":"verified original address","address":"8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3","normalized":"8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3"},{"sign":"sagittarius","name":"Sagittarius","chain":"Base","role":"verified Base address","address":"0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c","normalized":"0xd21fab1eb5e11ac3c281f7cf8096ecc4683eea9c"},{"sign":"capricorn","name":"Capricorn","chain":"Solana","role":"verified original address","address":"3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2","normalized":"3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2"},{"sign":"capricorn","name":"Capricorn","chain":"Base","role":"verified Base address","address":"0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018","normalized":"0xbfb102c18fdf49f2ffcb9b3af4522f7dc9f51018"},{"sign":"aquarius","name":"Aquarius","chain":"Solana","role":"verified original address","address":"C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt","normalized":"C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt"},{"sign":"aquarius","name":"Aquarius","chain":"Base","role":"verified Base address","address":"0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F","normalized":"0xcca7cd4f96336fd26ef6c5f579eac651bac5535f"},{"sign":"pisces","name":"Pisces","chain":"Solana","role":"verified original address","address":"3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE","normalized":"3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE"},{"sign":"pisces","name":"Pisces","chain":"Base","role":"verified Base address","address":"0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf","normalized":"0x43fa1855a89b7a3e07426fa7a1b44b4187d29daf"}];

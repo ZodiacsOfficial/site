@@ -699,6 +699,42 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
     .nav__burger-line,
     .nav-menu { transition: none; }
   }
+
+  /* Phones: the pill becomes a full-width bar at the top edge, in the same
+     colour and with the same items (owner request, after rolex.com). It
+     slides away as the page scrolls down and returns as it scrolls up; the
+     inline script below sets .is-away. Shared-chart receivers keep their
+     compact pill. */
+  @media (max-width: 599.5px) {
+    :global(html:not([data-chart-share-receiver])) .nav-wrap {
+      top: 0;
+      padding-top: 0;
+      transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
+    }
+    :global(html:not([data-chart-share-receiver])) .nav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
+    :global(html:not([data-chart-share-receiver])) .nav-wrap.is-away .nav { pointer-events: none; }
+    /* .nav-wrap .nav outranks the homepages' lens pill rules. */
+    :global(html:not([data-chart-share-receiver])) .nav-wrap .nav {
+      width: 100%;
+      max-width: none;
+      height: calc(52px + env(safe-area-inset-top, 0px));
+      padding: env(safe-area-inset-top, 0px) clamp(4px, 2.6vw, 10px) 0 clamp(12px, 5vw, 20px);
+      gap: clamp(4px, 2.6vw, 10px);
+      border-width: 0 0 1px;
+      border-radius: 0;
+      box-shadow: none;
+      grid-template-areas: 'mark search . chip menu';
+      grid-template-columns: auto 44px minmax(0, 1fr) auto 44px;
+    }
+    :global(html:not([data-chart-share-receiver])) .nav-wrap .nav--without-search {
+      grid-template-areas: 'mark . chip menu';
+      grid-template-columns: auto minmax(0, 1fr) auto 44px;
+    }
+    :global(html:not([data-chart-share-receiver])) .nav__chip { border-inline-start: 0; padding-inline: 12px 4px; }
+  }
+  @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) {
+    :global(html:not([data-chart-share-receiver])) .nav-wrap { transition: none; }
+  }
 </style>
 
 <script>
@@ -920,6 +956,50 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   window.addEventListener('zodiacs:profile-access', syncProfileGlyph);
   window.addEventListener('zodiacs:profile', syncProfileGlyph);
 
+</script>
+
+<script is:inline>
+  /* Phones: the bar slides away as the page scrolls down and returns as it
+     scrolls up. It always shows near the top, while a menu is open, and
+     while it holds keyboard focus. A classic inline script, so the nav
+     module above stays small enough to be inlined. */
+  (function () {
+    var nav = document.querySelector('[data-nav]');
+    var wrap = nav && nav.parentElement;
+    var root = document.documentElement;
+    if (!wrap || !window.matchMedia || root.hasAttribute('data-chart-share-receiver')) return;
+    var phone = window.matchMedia('(max-width: 599.5px)');
+    var last = Math.max(0, window.scrollY);
+    var away = false;
+    var frame = 0;
+    function set(next) {
+      if (next === away) return;
+      away = next;
+      wrap.classList.toggle('is-away', next);
+    }
+    function held() {
+      return root.style.overflow === 'hidden'
+        || !!document.querySelector('[data-menu-toggle][aria-expanded="true"]')
+        || !!wrap.querySelector(':focus-visible');
+    }
+    function tick() {
+      frame = 0;
+      var y = Math.max(0, window.scrollY);
+      if (!phone.matches || y < 64 || held()) {
+        set(false);
+        last = y;
+        return;
+      }
+      if (Math.abs(y - last) < 8) return;
+      set(y > last);
+      last = y;
+    }
+    window.addEventListener('scroll', function () {
+      if (!frame) frame = window.requestAnimationFrame(tick);
+    }, { passive: true });
+    if (phone.addEventListener) phone.addEventListener('change', tick);
+    wrap.addEventListener('focusin', function () { set(false); });
+  })();
 </script>
 
 {locale === 'en' && (

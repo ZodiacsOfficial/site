@@ -2819,9 +2819,9 @@
     @media (max-width: 900px) {
       .campaign-runway {
         /* Pin top, disc row, track padding and the bag's clearance. */
-        --look-room: calc(16px + 44px + 24px + 92px + env(safe-area-inset-bottom, 0px));
+        --look-top: 92px;
+        --look-room: calc(var(--look-top) + 44px + 24px + 92px + env(safe-area-inset-bottom, 0px));
       }
-      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: max(16px, env(safe-area-inset-top, 0px)); }
       .campaign-runway__head > div:first-child {
         position: absolute;
         width: 1px;
@@ -2865,6 +2865,12 @@
          behind the bag but the page. */
       .campaign-runway__note { margin-top: calc(96px + env(safe-area-inset-bottom, 0px)); }
       .campaign-runway__note > span:nth-child(2) { display: none; }
+    }
+    /* On phones the top bar slides away as the page scrolls down, so the
+       runway keeps no clearance for it. */
+    @media (max-width: 599.5px) {
+      .campaign-runway { --look-top: max(16px, env(safe-area-inset-top, 0px)); }
+      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: var(--look-top); }
     }
     /* The bag's sign opens a sheet of all twelve (phones). */
     .campaign-bag__pick {

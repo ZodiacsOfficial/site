@@ -266,7 +266,8 @@ export function wingNavScript() {
       setMobile(false);
       if(restore) restore.focus();
     });
-  })();`;
+  })();
+  ${WING_PHONE_BAR_SCRIPT}`;
 }
 
 // Canonical nav CSS — mirrors SiteNav.astro, inlined with literal token values
@@ -361,5 +362,45 @@ export function wingNavCss() {
   .wnav-menu__sign:last-child { border-bottom: 0; }
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-tools, .wnav-signs, .wnav__burger, .wnav__dropdown-btn svg, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
+  @media (prefers-reduced-motion: reduce) { .wnav-tools, .wnav-signs, .wnav__burger, .wnav__dropdown-btn svg, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+${WING_PHONE_BAR_CSS}`;
 }
+
+// Phones: the pill becomes a full-width bar at the top edge, in the same
+// colour and with the same items (owner request, after rolex.com). It slides
+// away as the page scrolls down and returns as it scrolls up. The same block
+// and script sit in the hand-kept wing pages (thesis, SDK, Terminal markets)
+// and the hub SPA shell; the SPA's Header sets .is-away itself.
+export const WING_PHONE_BAR_CSS = `@media (max-width: 599.5px) {
+    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }
+    .wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
+    .wnav-wrap.is-away .wnav { pointer-events: none; }
+    /* html body … outranks the hub's lens and frost pill rules. */
+    html body .wnav-wrap .wnav { display: flex; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) clamp(4px, 2.6vw, 10px) 0 clamp(12px, 5vw, 20px); gap: clamp(4px, 2.6vw, 10px); border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+    .wnav__chip { margin-left: auto; padding: 0 4px 0 12px; border-left: 0; }
+  }
+  @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }`;
+
+// It always shows near the top, while a menu is open, and while it holds
+// keyboard focus.
+export const WING_PHONE_BAR_SCRIPT = `(function(){
+    var nav = document.querySelector('[data-wnav]');
+    var wrap = nav ? nav.parentElement : null;
+    var root = document.documentElement;
+    if(!wrap || !window.matchMedia) return;
+    var phone = window.matchMedia('(max-width: 599.5px)');
+    var last = Math.max(0, window.scrollY), away = false, frame = 0;
+    function set(next){ if(next === away) return; away = next; wrap.classList.toggle('is-away', next); }
+    function held(){ return root.style.overflow === 'hidden' || !!document.querySelector('[data-wnav-burger][aria-expanded="true"]') || !!wrap.querySelector(':focus-visible'); }
+    function tick(){
+      frame = 0;
+      var y = Math.max(0, window.scrollY);
+      if(!phone.matches || y < 64 || held()){ set(false); last = y; return; }
+      if(Math.abs(y - last) < 8) return;
+      set(y > last);
+      last = y;
+    }
+    window.addEventListener('scroll', function(){ if(!frame) frame = window.requestAnimationFrame(tick); }, { passive: true });
+    if(phone.addEventListener) phone.addEventListener('change', tick);
+    wrap.addEventListener('focusin', function(){ set(false); });
+  })();`;

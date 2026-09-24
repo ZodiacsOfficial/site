@@ -1631,6 +1631,10 @@
     // Sub-components
     // ──────────────────────────────────────────────────────────────
 
+    // Phones: the navigation is a full-width bar at the top edge that slides
+    // away as the page scrolls down (the wing pages' shared rule).
+    const PHONE_BAR_QUERY = '(max-width: 599.5px)';
+
     function Header() {
       const [menuOpen, setMenuOpen] = useState(false);
       const [signsOpen, setSignsOpen] = useState(false);
@@ -1689,6 +1693,61 @@
         document.addEventListener('keydown', onKey);
         return () => { document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); };
       }, [toolsOpen]);
+      // On phones the bar slides away as the page scrolls down and returns as
+      // it scrolls up. It always shows near the top, while a menu or sheet is
+      // open, and while it holds keyboard focus.
+      const wrapRef = useRef(null);
+      const menusRef = useRef(false);
+      menusRef.current = menuOpen || signsOpen || toolsOpen;
+      useEffect(() => {
+        const wrap = wrapRef.current;
+        if (!wrap) return undefined;
+        let phone = null;
+        try {
+          phone = window.matchMedia(PHONE_BAR_QUERY);
+        } catch {
+          return undefined;
+        }
+        const root = document.documentElement;
+        let last = Math.max(0, window.scrollY);
+        let away = false;
+        let frame = 0;
+        const set = (next) => {
+          if (next === away) return;
+          away = next;
+          wrap.classList.toggle('is-away', next);
+        };
+        const held = () => menusRef.current
+          || root.style.overflow === 'hidden'
+          || root.classList.contains('has-campaign-sheet')
+          || document.body.classList.contains('registry-trade-open')
+          || !!wrap.querySelector(':focus-visible');
+        const tick = () => {
+          frame = 0;
+          const y = Math.max(0, window.scrollY);
+          if (!phone.matches || y < 64 || held()) {
+            set(false);
+            last = y;
+            return;
+          }
+          if (Math.abs(y - last) < 8) return;
+          set(y > last);
+          last = y;
+        };
+        const onScroll = () => {
+          if (!frame) frame = window.requestAnimationFrame(tick);
+        };
+        const onFocus = () => set(false);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        phone.addEventListener?.('change', tick);
+        wrap.addEventListener('focusin', onFocus);
+        return () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener('scroll', onScroll);
+          phone.removeEventListener?.('change', tick);
+          wrap.removeEventListener('focusin', onFocus);
+        };
+      }, []);
       const NAV_SIGNS = [
         { slug: 'aries', name: 'Aries', glyph: '♈', dates: 'Mar 21 – Apr 19', hue: '#DE8E79' },
         { slug: 'taurus', name: 'Taurus', glyph: '♉', dates: 'Apr 20 – May 20', hue: '#B9D4BE' },
@@ -1720,7 +1779,7 @@
       };
       return (
         <>
-          <div className="wnav-wrap">
+          <div className="wnav-wrap" ref={wrapRef}>
             <nav className="wnav" aria-label="Primary" data-wnav="">
                 <a className="wnav__mark" href="/">
                   <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
