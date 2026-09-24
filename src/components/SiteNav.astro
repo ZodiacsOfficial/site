@@ -701,7 +701,8 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   }
 
   /* Phones: the pill becomes a full-width bar at the top edge, in the same
-     colour and with the same items (owner request, after rolex.com). It
+     colour (owner request, after rolex.com): the menu on the left, the
+     ZODIACS | ASTROFOLIO lockup on the centre line, search on the right. It
      slides away as the page scrolls down and returns as it scrolls up; the
      inline script below sets .is-away. Shared-chart receivers keep their
      compact pill. */
@@ -713,24 +714,64 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
     }
     :global(html:not([data-chart-share-receiver])) .nav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
     :global(html:not([data-chart-share-receiver])) .nav-wrap.is-away .nav { pointer-events: none; }
-    /* .nav-wrap .nav outranks the homepages' lens pill rules. */
+    /* .nav-wrap .nav outranks the homepages' lens pill rules. The two outer
+       tracks match, so the lockup centres on the bar with or without search. */
     :global(html:not([data-chart-share-receiver])) .nav-wrap .nav {
       width: 100%;
       max-width: none;
       height: calc(52px + env(safe-area-inset-top, 0px));
-      padding: env(safe-area-inset-top, 0px) clamp(4px, 2.6vw, 10px) 0 clamp(12px, 5vw, 20px);
-      gap: clamp(4px, 2.6vw, 10px);
+      padding: env(safe-area-inset-top, 0px) 6px 0;
+      gap: 0;
       border-width: 0 0 1px;
       border-radius: 0;
       box-shadow: none;
-      grid-template-areas: 'mark search . chip menu';
-      grid-template-columns: auto 44px minmax(0, 1fr) auto 44px;
+      grid-template-areas: 'menu . mark chip . search';
+      grid-template-columns: 44px minmax(0, 1fr) auto auto minmax(0, 1fr) 44px;
     }
     :global(html:not([data-chart-share-receiver])) .nav-wrap .nav--without-search {
-      grid-template-areas: 'mark . chip menu';
-      grid-template-columns: auto minmax(0, 1fr) auto 44px;
+      grid-template-areas: 'menu . mark chip . .';
     }
-    :global(html:not([data-chart-share-receiver])) .nav__chip { border-inline-start: 0; padding-inline: 12px 4px; }
+    /* Both words share one size and tracking. The mark leads with the same
+       0.2em that trails the last letter, and the hairline gets 13px of room
+       on either side. */
+    :global(html:not([data-chart-share-receiver])) .nav__mark {
+      min-height: 44px;
+      gap: 0;
+      padding-inline: 0.2em calc(13px - 0.2em);
+      font-size: clamp(12px, 3.8vw, 15px);
+    }
+    :global(html:not([data-chart-share-receiver])) .nav__name { font-size: 1em; letter-spacing: 0.2em; }
+    :global(html:not([data-chart-share-receiver])) .nav__chip {
+      position: relative;
+      padding-inline: 13px 0;
+      border-inline-start: 0;
+      font-size: clamp(12px, 3.8vw, 15px);
+      letter-spacing: 0.2em;
+      line-height: 1;
+    }
+    :global(html:not([data-chart-share-receiver])) .nav__chip::before {
+      content: '';
+      position: absolute;
+      inset-inline-start: 0;
+      top: 50%;
+      width: 1px;
+      height: 15px;
+      background: var(--hair-3);
+      transform: translateY(-50%);
+    }
+    /* The English-only cue hangs under the word, so both words keep one line. */
+    :global(html:not([data-chart-share-receiver])) .nav__chip--deferred .nav__deferred {
+      position: absolute;
+      inset-inline: 13px 0;
+      top: calc(50% + 10px);
+      text-align: center;
+    }
+    /* A bare two-line menu mark that still folds into the X. */
+    :global(html:not([data-chart-share-receiver])) .nav__burger { border-color: transparent; }
+    :global(html:not([data-chart-share-receiver])) .nav__burger-line { width: 20px; }
+    :global(html:not([data-chart-share-receiver])) .nav__burger:not([aria-expanded='true']) .nav__burger-line:first-child { transform: translate(-50%, calc(-50% - 3.5px)); }
+    :global(html:not([data-chart-share-receiver])) .nav__burger:not([aria-expanded='true']) .nav__burger-line:nth-child(2) { opacity: 0; }
+    :global(html:not([data-chart-share-receiver])) .nav__burger:not([aria-expanded='true']) .nav__burger-line:last-child { transform: translate(-50%, calc(-50% + 3.5px)); }
   }
   @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) {
     :global(html:not([data-chart-share-receiver])) .nav-wrap { transition: none; }

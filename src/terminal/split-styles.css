@@ -2875,7 +2875,7 @@
     /* The bag's sign opens a sheet of all twelve (phones). */
     .campaign-bag__pick {
       min-height: 48px;
-      padding: 0 4px 0 0;
+      padding: 0;
       border: 0;
       border-radius: 999px;
       background: none;
@@ -2886,6 +2886,10 @@
       -webkit-tap-highlight-color: transparent;
     }
     .campaign-bag__pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    /* The caret rides beside the name, so the status line keeps its width.
+       Where a long name needs the room, the caret wraps onto a clipped
+       second line instead of cutting the name short. */
+    .campaign-bag__name { min-width: 0; height: 20px; display: flex; flex-wrap: wrap; align-items: center; column-gap: 6px; overflow: hidden; }
     .campaign-bag__caret { flex: 0 0 12px; color: var(--ink-dim); }
     .campaign-sheet {
       width: min(100%, 560px);

@@ -381,7 +381,15 @@ try {
         top: box.top,
         width: box.width,
         searchRight: search?.getBoundingClientRect().right ?? 0,
+        burgerLeft: burger?.getBoundingClientRect().left ?? 0,
+        markLeft: nav.querySelector('.wnav__mark')?.getBoundingClientRect().left ?? 0,
         chipLeft: chip?.getBoundingClientRect().left ?? 0,
+        chipRight: chip?.getBoundingClientRect().right ?? 0,
+        markName: nav.querySelector('.wnav__name') ? getComputedStyle(nav.querySelector('.wnav__name')).fontSize : '',
+        chipFont: chipStyle?.fontSize,
+        divider: chip ? (({ content, width, height }) => ({ content, width, height }))(getComputedStyle(chip, '::before')) : null,
+        middleLine: burger?.children[1] ? getComputedStyle(burger.children[1]).opacity : '',
+        burgerBorder: burgerStyle?.borderTopColor,
         navBackground: navStyle.backgroundColor,
         navBackdrop: navStyle.backdropFilter,
         navBorderBottom: navStyle.borderBottomWidth,
@@ -397,15 +405,21 @@ try {
     });
     assert.ok(compactNav.overflow <= 0, 'the 320px navigation does not create horizontal overflow');
     // Phones: the navigation is a full-width bar flush to the top edge, in the
-    // same glass, with ZODIACS and search on the left and Astrofolio and the
-    // menu on the right.
+    // same glass: the menu on the left, the ZODIACS | ASTROFOLIO lockup on the
+    // centre line, search on the right.
     assert.ok(compactNav.left === 0 && compactNav.right === 320, `the phone bar spans the viewport (${compactNav.left}–${compactNav.right})`);
     assert.equal(Math.round(compactNav.top), 0, 'the phone bar sits at the top edge');
     assert.notEqual(compactNav.navBackground, 'rgba(0, 0, 0, 0)', 'the navigation keeps its liquid-glass tint');
     assert.notEqual(compactNav.navBackdrop, 'none', 'the navigation keeps its refractive or frosted backdrop');
     assert.equal(compactNav.navBorderBottom, '1px', 'the phone bar keeps its optical hairline along its foot');
     assert.equal(compactNav.navRadius, '0px', 'the phone bar is flat, not a capsule');
-    assert.ok(compactNav.chipLeft - compactNav.searchRight >= 24, 'Astrofolio sits apart on the right, away from ZODIACS and search');
+    assert.ok(compactNav.burgerLeft >= 0 && compactNav.burgerLeft <= 8, `the menu opens the bar on the left (${compactNav.burgerLeft})`);
+    assert.ok(compactNav.searchRight >= 312 && compactNav.searchRight <= 320, `search closes the bar on the right (${compactNav.searchRight})`);
+    assert.ok(Math.abs((compactNav.markLeft + compactNav.chipRight) / 2 - 160) <= 1, `ZODIACS | ASTROFOLIO sits on the centre line (${compactNav.markLeft}–${compactNav.chipRight})`);
+    assert.equal(compactNav.markName, compactNav.chipFont, 'both words share one size');
+    assert.deepEqual(compactNav.divider, { content: '""', width: '1px', height: '15px' }, 'a short hairline divides the two words');
+    assert.equal(compactNav.middleLine, '0', 'the menu is a bare two-line mark');
+    assert.equal(compactNav.burgerBorder, 'rgba(0, 0, 0, 0)', 'the menu has no circle');
     assert.equal(compactNav.searchBackground, 'rgba(0, 0, 0, 0)', 'search has no separate circle background');
     assert.equal(compactNav.searchBorder, '0px', 'search has no separate circle border');
     assert.equal(compactNav.searchWidth, '44px', 'search keeps a 44px touch target inside the capsule');
@@ -664,6 +678,12 @@ try {
     });
     assert.equal(fit.bagHidden, false, 'the bag stays over the runway on phones');
     assert.ok(fit.top >= fit.dotsBottom && fit.bottom <= fit.bagTop - 8, `the look fits one screen above the bag (${Math.round(fit.top)}–${Math.round(fit.bottom)}, bag ${Math.round(fit.bagTop)})`);
+
+    const bagName = await page.evaluate(() => {
+      const strong = document.querySelector('.campaign-bag__name strong');
+      return { cut: strong.scrollWidth > strong.clientWidth + 0.5, caret: Boolean(document.querySelector('.campaign-bag__name .campaign-bag__caret')) };
+    });
+    assert.deepEqual(bagName, { cut: false, caret: true }, 'the bag shows the whole name, with its caret beside it');
 
     // The bag's sign opens a sheet of all twelve. A pick moves the bag, the
     // discs, the runway and the address bar to that sign; the page stays put

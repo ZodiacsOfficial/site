@@ -5648,7 +5648,14 @@
         <>
           <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
           <span>
-            <strong>{sign.name}</strong>
+            {phone ? (
+              <span className="campaign-bag__name">
+                <strong>{sign.name}</strong>
+                <svg className="campaign-bag__caret" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                  <path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            ) : <strong>{sign.name}</strong>}
             <small>
               {quote ? (
                 <>
@@ -5680,9 +5687,6 @@
                 onClick={openSheet}
               >
                 {who}
-                <svg className="campaign-bag__caret" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
-                  <path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
               </button>
             ) : <span className="campaign-bag__who">{who}</span>}
             <FomoBuyButton item={sign} source="bag" />
