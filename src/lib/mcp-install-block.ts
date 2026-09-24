@@ -22,7 +22,7 @@ export interface InstallManifest {
 
 /** The pinned, immutable download: a commit's contents cannot change. */
 export function archiveUrlFor(manifest: InstallManifest): string {
-  return `https://raw.githubusercontent.com/ZodiacsOfficial/site/${manifest.artifactCommit}/public/examples/${manifest.file}`;
+  return `https://raw.githubusercontent.com/zodiacs-org/site/${manifest.artifactCommit}/public/examples/${manifest.file}`;
 }
 
 export function installBlock(manifest: InstallManifest): string {

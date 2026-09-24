@@ -127,7 +127,7 @@ try {
       await page.waitForLoadState('networkidle');
       const setup = page.getByRole('region', { name: 'Starter setup commands', exact: true });
       const commands = await setup.locator('code').textContent();
-      const artifactUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${starter.artifactCommit}/public/examples/${starter.file}`;
+      const artifactUrl = `https://raw.githubusercontent.com/zodiacs-org/site/${starter.artifactCommit}/public/examples/${starter.file}`;
       assert.equal(await page.getByRole('link', { name: `Download starter ${starter.version} (.tgz)`, exact: true }).getAttribute('href'), artifactUrl);
       assert.ok(commands.includes(artifactUrl) && commands.includes(starter.sha256));
       assert.ok(commands.includes('npm ci --ignore-scripts --no-audit --no-fund'));

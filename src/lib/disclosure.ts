@@ -69,7 +69,7 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     links: [
       {
         label: disclosureText(locale, 'economicSnapshotsLink'),
-        href: 'https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json',
+        href: 'https://github.com/zodiacs-org/site/commits/main/public/assets/distribution.json',
         external: true,
       },
     ],

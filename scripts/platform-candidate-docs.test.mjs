@@ -14,6 +14,10 @@ const archive = readFileSync(resolve(root, candidate.artifactPath));
 // Read named members without extracting files or making network requests.
 const packed = (path) => execFileSync('tar', ['-xOf', resolve(root, candidate.artifactPath), `package/${path}`], { encoding: 'utf8' });
 const manifest = JSON.parse(packed('package.json'));
+// The SDK and site repositories moved from ZodiacsOfficial to zodiacs-org on
+// 2026-09-24. The archive's own manifest and the rc.6 evidence ledger were
+// written before the move and keep the address they were written with.
+const beforeMove = (url) => url.replace(/^https:\/\/(github\.com|raw\.githubusercontent\.com)\/zodiacs-org\//u, 'https://$1/ZodiacsOfficial/');
 
 describe('developer candidate documentation', () => {
   it('identifies the installed public engine and exact archived package', () => {
@@ -43,12 +47,12 @@ describe('developer candidate documentation', () => {
     expect(`https://github.com/${owner}/${repository}`).toBe(candidate.artifactRepository);
     expect(commit).toBe(candidate.artifactCommit);
     expect(path.join('/')).toBe(candidate.artifactRepositoryPath);
-    expect(read(candidate.evidencePaths.ledger)).toContain(candidate.artifactUrl);
+    expect(read(candidate.evidencePaths.ledger)).toContain(beforeMove(candidate.artifactUrl));
   });
 
   it('cross-checks source provenance and the linked packaged documents', () => {
     expect(candidate.sourceCommit).toMatch(/^[a-f0-9]{40}$/);
-    expect(manifest.repository.url).toBe(`git+${candidate.sourceRepository}.git`);
+    expect(manifest.repository.url).toBe(`git+${beforeMove(candidate.sourceRepository)}.git`);
     expect(manifest.repository.directory).toBe(candidate.sourcePackagePath);
     const provenance = read('vendor/README.md');
     expect(provenance).toContain(`Source commit: \`${candidate.sourceCommit}\``);
@@ -96,7 +100,7 @@ describe('developer candidate documentation', () => {
   });
 
   it('links existing evidence for the same artifact rather than another candidate', () => {
-    expect(candidate.evidenceRepository).toBe('https://github.com/ZodiacsOfficial/site');
+    expect(candidate.evidenceRepository).toBe('https://github.com/zodiacs-org/site');
     expect(candidate.evidenceCommit).toMatch(/^[a-f0-9]{40}$/);
     for (const path of Object.values(candidate.evidencePaths)) {
       expect(path).toMatch(/^docs\/platform\/(?:[a-zA-Z0-9_.-]+\/)*[a-zA-Z0-9_.-]+$/);

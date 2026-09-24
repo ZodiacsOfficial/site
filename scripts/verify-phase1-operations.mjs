@@ -394,7 +394,7 @@ async function inspectRun(repo, run, cutoverSha) {
 }
 
 async function main() {
-  const repo = option('--repo', 'ZodiacsOfficial/site');
+  const repo = option('--repo', 'zodiacs-org/site');
   const workflow = option('--workflow', 'daily-horoscopes.yml');
   const after = option('--after', '');
   const cutoverSha = option('--cutover-sha', '');
