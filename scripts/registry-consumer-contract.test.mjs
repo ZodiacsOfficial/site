@@ -139,7 +139,7 @@ function staticConsumerCopy(html) {
 const ABOUT_ASTROFOLIO = [
   'What is Astrofolio?',
   'Twelve tokens, one for each sign. Each Zodiac is a crypto token on the Solana blockchain, with a matching version on Base. You can buy, hold and sell it like other crypto.',
-  'Why “official”? Anyone can make a token called Aries. The zodiacs.org Registry lists the one genuine address for each sign, so you can check first.',
+  'Why the zodiac? Everyone is born under one of the twelve signs, and people have passed them down for 2,400 years, from clay tablets to your phone’s keyboard. A Zodiac makes your sign something you can own, give a friend on their birthday, and keep. Read the story →',
   'How do I get one? Pick your sign and tap Buy with Fomo. Fomo is a free app for iPhone, Android and the web.',
   'Prices can swing sharply and may fall to zero. Buy only what you can afford to lose.',
 ];
@@ -276,7 +276,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     // A newcomer's three questions come before buying, in the app's words.
     const about = section(html, 'about');
     for (const line of ABOUT_ASTROFOLIO) expect(normalizedText(about)).toContain(line);
-    expect(about).toContain('<a href="#registry">zodiacs.org Registry</a>');
+    expect(about).toContain('<a href="/thesis/">Read the story <span aria-hidden="true">→</span></a>');
     expect(about).toContain('<a href="#buy">Fomo</a>');
 
     const buy = section(html, 'buy');
@@ -584,7 +584,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const about = functionBlock(source, 'CampaignAbout');
     expect(about).toContain('id="about" className="campaign-about reveal" aria-labelledby="campaign-about-title"');
     for (const line of ABOUT_ASTROFOLIO) expect(normalizedText(about)).toContain(line);
-    expect(about).toContain('<a href="#registry">zodiacs.org Registry</a>');
+    expect(about).toContain('<a href="/thesis/">Read the story <span aria-hidden="true">→</span></a>');
+    expect(about).toContain('<a href="#buy">Fomo</a>');
     expect(app).toContain('id="buy" className="campaign-app reveal"');
     expect(app).toContain('<h2 id="campaign-app-title">Buy yours in a few taps.</h2>');
     expect(app).toContain('href={FOMO_APP_STORE_URL} rel="external nofollow noopener"');

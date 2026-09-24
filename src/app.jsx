@@ -5494,8 +5494,8 @@
               <p>Each Zodiac is a crypto token on the Solana blockchain, with a matching version on Base. You can buy, hold and sell it like other crypto.</p>
             </div>
             <div className="campaign-about__answer">
-              <h3>Why “official”?</h3>
-              <p>Anyone can make a token called Aries. The <a href="#registry">zodiacs.org Registry</a> lists the one genuine address for each sign, so you can check first.</p>
+              <h3>Why the zodiac?</h3>
+              <p>Everyone is born under one of the twelve signs, and people have passed them down for 2,400 years, from clay tablets to your phone’s keyboard. A Zodiac makes your sign something you can own, give a friend on their birthday, and keep. <a href="/thesis/">Read the story <span aria-hidden="true">→</span></a></p>
             </div>
             <div className="campaign-about__answer">
               <h3>How do I get one?</h3>

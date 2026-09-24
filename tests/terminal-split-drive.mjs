@@ -13,7 +13,7 @@ const counts = { dex: 0, dexPairs: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet
 const registry = JSON.parse(await readFile(new URL('../public/registry/zodiacs.registry.json', import.meta.url), 'utf8'));
 const expectedSeason = resolveAstrofolioSeasonUtc(new Date(), seasonsFromRegistry(registry));
 const WSOL_MINT = 'So11111111111111111111111111111111111111112';
-const ABOUT_ANSWERS = ['Twelve tokens, one for each sign.', 'Why “official”?', 'How do I get one?'];
+const ABOUT_ANSWERS = ['Twelve tokens, one for each sign.', 'Why the zodiac?', 'How do I get one?'];
 const ABOUT_RISK = 'Prices can swing sharply and may fall to zero. Buy only what you can afford to lose.';
 
 function fixturePair({ mint, pairAddress, index, canonical = false }) {
@@ -553,7 +553,7 @@ try {
     assert.equal(await page.locator('#about h2').innerText(), 'What is Astrofolio?');
     assert.deepEqual(await page.locator('#about h3').allInnerTexts(), ABOUT_ANSWERS);
     assert.equal(await page.locator('#about .campaign-about__risk').innerText(), ABOUT_RISK);
-    assert.equal(await page.locator('#about a[href="#registry"]').count(), 1);
+    assert.equal(await page.locator('#about a[href="/thesis/"]').innerText(), 'Read the story →');
     assert.equal(await page.locator('#about a[href="#buy"]').count(), 1);
     assert.equal(counts.gecko, 0);
     assert.equal(counts.wikimedia, 0);
