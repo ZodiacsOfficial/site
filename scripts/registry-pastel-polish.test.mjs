@@ -228,6 +228,33 @@ describe('registry pastel polish', () => {
     expect(source).toContain('return matchesMedia(CAMPAIGN_WIDE_QUERY) && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY);');
   });
 
+  it('fits one look per phone screen and changes sign from the bag', async () => {
+    const campaign = await read('src/terminal/split-styles.css');
+    const phone = campaign.slice(campaign.indexOf('/* Phones: one look per screen, after rolex.com'), campaign.indexOf('/* The bag\'s sign opens a sheet of all twelve (phones). */'));
+    expect(phone).toContain('@media (max-width: 900px) {');
+    // The heading stays for screen readers; the discs take one slim row.
+    expect(phone).toContain('.campaign-runway__head > div:first-child {');
+    expect(phone).toContain('clip-path: inset(50%);');
+    expect(phone).toContain('.campaign-runway__dots { --campaign-dot-columns: 12; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0; }');
+    expect(phone).toContain('.campaign-dot { height: 44px; border-radius: 12px; }');
+    // Each look is sized to the screen, above the bag.
+    expect(phone).toContain('--look-room: calc(16px + 44px + 24px + 92px + env(safe-area-inset-bottom, 0px));');
+    expect(phone).toContain('height: clamp(360px, calc(100svh - var(--look-room)), 640px);');
+    expect(phone).toContain('.campaign-look h3 { order: 2;');
+    // Buying is the bag's job; the whole look opens its page.
+    expect(phone).toContain('.campaign-look__actions > .btn--fomo,\n      .campaign-look > .vitrine-buy-options { display: none; }');
+    expect(phone).toContain('.campaign-look__explore {\n        position: absolute;\n        z-index: 3;\n        inset: 0;');
+    expect(phone).toContain('.campaign-look .campaign-spark { display: none; }');
+    const sheet = campaign.slice(campaign.indexOf('/* The bag\'s sign opens a sheet of all twelve (phones). */'), campaign.indexOf('@media (min-width: 601px) and (max-width: 900px)'));
+    expect(sheet).toContain('.campaign-bag__pick {\n      min-height: 48px;');
+    expect(sheet).toContain('.campaign-sheet__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }');
+    expect(sheet).toContain('.campaign-sheet__sign {\n      min-height: 84px;');
+    expect(sheet).toContain('.campaign-sheet__close {\n      width: 44px;\n      height: 44px;');
+    expect(sheet).toContain('.campaign-sheet[open] .campaign-sheet__panel { animation: campaign-sheet-up 420ms cubic-bezier(.16, 1, .3, 1); }');
+    expect(sheet).toContain('html.has-campaign-sheet { overflow: hidden; }');
+    expect(sheet).toContain('@media (prefers-reduced-motion: reduce) {\n      .campaign-sheet[open] .campaign-sheet__panel,\n      .campaign-sheet[open]::backdrop { animation: none; }');
+  });
+
   it('uses deliberate hierarchy hairlines and one editorial market gateway', async () => {
     const [source, css] = await Promise.all([
       read('src/app.jsx'),

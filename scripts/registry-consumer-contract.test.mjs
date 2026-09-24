@@ -324,7 +324,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const mounted = source.slice(start, source.indexOf('</main>', start));
     ordered(mounted, [
       '<CampaignHero />',
-      '<CampaignBag sign={sign} batch={consumerMarket} />',
+      '<CampaignBag sign={sign} batch={consumerMarket} onPick={pickFromBag} />',
       '<CampaignRunway',
       '<CampaignApp />',
       '<ConsumerStory />',
@@ -404,12 +404,28 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     ordered(source, [
       '<div className="campaign-stack">',
       '<CampaignHero />',
-      '<CampaignBag sign={sign} batch={consumerMarket} />',
+      '<CampaignBag sign={sign} batch={consumerMarket} onPick={pickFromBag} />',
       '<CampaignRunway',
       '</div>',
       '<CampaignApp />',
     ]);
     expect(functionBlock(source, 'CampaignHero')).toContain("hero.style.setProperty('--stack', rise.toFixed(3));");
+    // Phones: the looks carry no buttons, so the bag stays over the runway,
+    // and its sign opens a sheet of all twelve. A sign picked there moves the
+    // runway to its look without moving the page.
+    expect(bag).toContain('const phone = useMediaMatch(CAMPAIGN_PHONE_QUERY);');
+    expect(bag).toContain('if (runway && !matchesMedia(CAMPAIGN_PHONE_QUERY)) {');
+    expect(bag).toContain('aria-haspopup="dialog"');
+    expect(bag).toContain('className="campaign-sheet"');
+    expect(bag).toContain('aria-labelledby="campaign-sheet-title"');
+    expect(bag).toContain('sheet.showModal();');
+    expect(bag).toContain('aria-pressed={item.ticker === sign.ticker}');
+    expect(bag).toContain('onPick(item.ticker);');
+    expect(bag).toContain("openerRef.current?.focus({ preventScroll: true });");
+    expect(functionBlock(source, 'Zodiacs')).toContain("trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_bag' });");
+    expect(runway).toContain('if (active === activeRef.current) return;');
+    expect(runway).toContain('steerRef.current = { ticker: active, until: window.performance.now() + 1200 };');
+    expect(runway.slice(runway.indexOf('if (active === activeRef.current) return;'), runway.indexOf('const pickLook'))).not.toContain('scrollIntoView');
     expect(runway).toContain("section.dataset.mode = stage.pinned ? 'pinned' : 'carousel';");
     expect(runway).toContain('const history = useRegistryMarketHistory(historyWanted);');
     expect(runway).toContain("rootMargin: '600px 0px'");

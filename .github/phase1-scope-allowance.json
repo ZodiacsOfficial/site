@@ -1,13 +1,12 @@
 {
   "version": 1,
-  "id": "owner-requested-zodiacs-org-links-2026-09-24",
-  "baseCommit": "3b957e87743f118a0af3171d05d0cbfd6e6e7f2f",
+  "id": "owner-requested-phone-runway-and-top-bar-2026-09-24",
+  "baseCommit": "2d10102417abd4709740081283fb271ebd3da883",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/technical/index.html",
-    "public/sdk/engine/index.html",
-    "public/sdk/index.html",
+    "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ],
-  "authorization": "The owner moved the site and SDK repositories from the ZodiacsOfficial GitHub organization to the zodiacs-org account and asked for the whole site to be under zodiacs-org, then approved a pull request that repoints the site's links. This allowance covers only swapping github.com/ZodiacsOfficial repository links and labels for their zodiacs-org equivalents on the SDK pages, the Registry technical page and the Registry application, plus the regenerated bundle. Preserve market data, addresses, flags, and transaction behavior."
+  "authorization": "The owner reviewed /astrofolio/ on a phone and asked, for phones only: that each runway card fit on one screen (they chose the Rolex-clean card: numeral and dates, the figure, the name and a one-line price, with buying moved to the bottom panel and the whole card opening its sign's page); that the bottom panel let you change zodiac (they chose a tap on its sign opening a sheet of all twelve); and that the site's top navigation become a full-width bar at the top edge in the same colour and with the same items, hiding as you scroll down and returning as you scroll up, on every page, phones only. Desktop is unchanged. Preserve market data, addresses, flags, and transaction behavior."
 }
