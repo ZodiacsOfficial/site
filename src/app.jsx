@@ -4925,12 +4925,15 @@
             hero.dataset.caption = 'live';
             // On phones the film stays behind the runway: it dims, and the
             // caption rises and fades, as the runway comes up the screen.
+            // The runway reads the same value to raise its looks.
             const runway = document.getElementById('the-twelve');
             if (runway && matchesMedia(CAMPAIGN_PHONE_QUERY)) {
               const rise = clampUnit(1 - runway.getBoundingClientRect().top / Math.max(1, window.innerHeight));
               hero.style.setProperty('--stack', rise.toFixed(3));
+              runway.style.setProperty('--rise', rise.toFixed(3));
             } else {
               hero.style.removeProperty('--stack');
+              runway?.style.removeProperty('--rise');
             }
             return;
           }
@@ -4997,7 +5000,7 @@
             <span className="campaign-hero__word campaign-hero__word--astro" aria-hidden="true">Astro</span>
             <span className="campaign-hero__word campaign-hero__word--folio" aria-hidden="true">folio</span>
             <div className="campaign-hero__foot" aria-hidden="true">
-              <p>The twelve official Zodiacs, one for every sign. Each has its own design and public record.</p>
+              <p>Twelve tokens, one for every sign. Each has its own design and public record.</p>
               <span>Scroll <i>↓</i></span>
             </div>
             <div className="campaign-hero__caption">
@@ -5015,7 +5018,7 @@
                   <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
                 </span>
               </div>
-              <h1 id="campaign-hero-title">The twelve official Zodiacs<span className="campaign-hero__stop">.</span></h1>
+              <h1 id="campaign-hero-title">Twelve signs. Twelve tokens.</h1>
               <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
               <div className="campaign-hero__actions">
                 <a className="campaign-button campaign-button--light" href="#the-twelve">
@@ -5206,30 +5209,6 @@
           behavior: inView && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY) ? 'smooth' : 'instant',
         });
       }, [active, order]);
-
-      // On phones the looks pop up from below as they reach the screen, over
-      // the dimmed film.
-      useEffect(() => {
-        const section = sectionRef.current;
-        const track = trackRef.current;
-        if (!section || !track || !matchesMedia(CAMPAIGN_PHONE_QUERY) || matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)
-            || !('IntersectionObserver' in window)) return undefined;
-        if (track.getBoundingClientRect().top < window.innerHeight) return undefined;
-        section.dataset.rise = 'pending';
-        let done = 0;
-        const observer = new IntersectionObserver(([entry]) => {
-          if (!entry?.isIntersecting) return;
-          observer.disconnect();
-          section.dataset.rise = 'rising';
-          done = window.setTimeout(() => { delete section.dataset.rise; }, 1500);
-        }, { threshold: 0.08 });
-        observer.observe(track);
-        return () => {
-          observer.disconnect();
-          window.clearTimeout(done);
-          delete section.dataset.rise;
-        };
-      }, []);
 
       // The count follows the runway: on the pinned stage it advances with
       // the page's progress (the first look at the start, the last at the
@@ -5498,6 +5477,32 @@
               <a href="/registry/technical/#market-transparency">Data &amp; methodology</a>
             </p>
           </div>
+        </section>
+      );
+    }
+
+    // Under the looks, before buying: what the collection is, in the order
+    // a newcomer asks. The static shell carries the same three answers.
+    function CampaignAbout() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="about" className="campaign-about reveal" aria-labelledby="campaign-about-title">
+          <h2 id="campaign-about-title">What is Astrofolio?</h2>
+          <div className="campaign-about__answers">
+            <div className="campaign-about__answer">
+              <h3>Twelve tokens, one for each sign.</h3>
+              <p>Each Zodiac is a crypto token on the Solana blockchain, with a matching version on Base. You can buy, hold and sell it like other crypto.</p>
+            </div>
+            <div className="campaign-about__answer">
+              <h3>Why “official”?</h3>
+              <p>Anyone can make a token called Aries. The <a href="#registry">zodiacs.org Registry</a> lists the one genuine address for each sign, so you can check first.</p>
+            </div>
+            <div className="campaign-about__answer">
+              <h3>How do I get one?</h3>
+              <p>Pick your sign and tap Buy with Fomo. <a href="#buy">Fomo</a> is a free app for iPhone, Android and the web.</p>
+            </div>
+          </div>
+          <p className="campaign-about__risk">Prices can swing sharply and may fall to zero. Buy only what you can afford to lose.</p>
         </section>
       );
     }
@@ -7722,6 +7727,7 @@
                 batch={consumerMarket}
               />
             </div>
+            <CampaignAbout />
             <CampaignApp />
             <ConsumerStory />
             <ConsumerShop />

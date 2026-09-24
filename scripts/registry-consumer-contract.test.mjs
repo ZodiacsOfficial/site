@@ -134,6 +134,16 @@ function staticConsumerCopy(html) {
   return normalizedText([title, ...metadata, ...attributes, normalizedText(visibleBody), ...schemaCopy].join(' '));
 }
 
+// "What is Astrofolio?": the three answers and the risk line, the same in
+// the no-JS shell and the app.
+const ABOUT_ASTROFOLIO = [
+  'What is Astrofolio?',
+  'Twelve tokens, one for each sign. Each Zodiac is a crypto token on the Solana blockchain, with a matching version on Base. You can buy, hold and sell it like other crypto.',
+  'Why “official”? Anyone can make a token called Aries. The zodiacs.org Registry lists the one genuine address for each sign, so you can check first.',
+  'How do I get one? Pick your sign and tap Buy with Fomo. Fomo is a free app for iPhone, Android and the web.',
+  'Prices can swing sharply and may fall to zero. Buy only what you can afford to lose.',
+];
+
 describe('Astrofolio consumer and Terminal market-desk split', () => {
   it('pins the indexed routes and their owner-directed names', async () => {
     const [consumer, pro] = await Promise.all([
@@ -186,6 +196,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'id="consumer-sign-preview"',
       'id="market-snapshot"',
       'id="terminal"',
+      'id="about"',
       'id="buy"',
       'id="story"',
       'id="shop"',
@@ -201,10 +212,12 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     // carries the first-screen Fomo action; the runway carries all twelve.
     const opening = section(html, 'official-twelve');
     expect(normalizedText(opening)).toContain('Astro folio');
-    // The headline's full stop is its own span, so phones can set the
-    // headline as a tracked line without it.
-    expect(opening).toContain('<h1 id="static-astrofolio-title">The twelve official Zodiacs<span class="campaign-hero__stop">.</span></h1>');
-    expect(normalizedText(opening.replace('<span class="campaign-hero__stop">.</span>', '.'))).toContain('Astrofolio Leo Season The twelve official Zodiacs. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
+    // The headline says what the collection is, and phones set it as a
+    // tracked line with both of its full stops.
+    expect(opening).toContain('<h1 id="static-astrofolio-title">Twelve signs. Twelve tokens.</h1>');
+    expect(opening).not.toContain('campaign-hero__stop');
+    expect(opening).toContain('<p>Twelve tokens, one for every sign. Each has its own design and public record.</p>');
+    expect(normalizedText(opening)).toContain('Astrofolio Leo Season Twelve signs. Twelve tokens. One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.');
     expect(opening).toContain('<img src="/assets/fomo/fomo-film-poster.webp" width="1080" height="1920" alt="" fetchpriority="high" decoding="async">');
     expect(opening).toContain('<source srcset="/assets/fomo/fomo-film-poster.avif" type="image/avif">');
     expect(opening).toContain('href="#the-twelve"><span>Find your sign</span>');
@@ -259,6 +272,12 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(runway).not.toContain(' selected</small>');
     expect(runway.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(12);
     expect(html.match(/href="https:\/\/fomo\.family\/coin\?address=[^"&]+&amp;chainId=1399811149"/gu)).toHaveLength(13);
+
+    // A newcomer's three questions come before buying, in the app's words.
+    const about = section(html, 'about');
+    for (const line of ABOUT_ASTROFOLIO) expect(normalizedText(about)).toContain(line);
+    expect(about).toContain('<a href="#registry">zodiacs.org Registry</a>');
+    expect(about).toContain('<a href="#buy">Fomo</a>');
 
     const buy = section(html, 'buy');
     expect(normalizedText(buy)).toContain('In the Fomo app Buy yours in a few taps.');
@@ -354,7 +373,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const button = functionBlock(source, 'FomoBuyButton');
     const spark = functionBlock(source, 'CampaignSpark');
 
-    expect(normalizedText(hero.replace('<span className="campaign-hero__stop">.</span>', '.'))).toContain('Astrofolio {season.name} Season The twelve official Zodiacs.');
+    expect(normalizedText(hero)).toContain('Astrofolio {season.name} Season Twelve signs. Twelve tokens.');
     expect(hero).toContain('id="official-twelve"');
     expect(hero).toContain('<span className="campaign-hero__word campaign-hero__word--astro" aria-hidden="true">Astro</span>');
     expect(hero).toContain('<span className="campaign-hero__word campaign-hero__word--folio" aria-hidden="true">folio</span>');
@@ -396,9 +415,12 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     expect(follow).toContain("trackAnalytics('registry_sign_selected', { sign: chosen.asset.sign, source: 'consumer_swipe' });");
     expect(runway).toContain('if (!stageRef.current.pinned) window.requestAnimationFrame(() => followSwipe(pickLook()));');
     expect(runway).toContain("if (!stageRef.current.pinned) steerRef.current = { ticker: next.ticker, until: window.performance.now() + 1200 };");
-    // Phones: the looks pop up as the card arrives, never under reduced motion.
-    expect(runway).toContain("section.dataset.rise = 'pending';");
-    expect(runway).toContain('|| matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)');
+    // Phones: the looks rise with the scroll. The film's paint hands the
+    // runway the same 0-to-1 value that dims the film; nothing is timed.
+    expect(runway).not.toContain('dataset.rise');
+    expect(functionBlock(source, 'CampaignHero')).toContain("runway.style.setProperty('--rise', rise.toFixed(3));");
+    expect(functionBlock(source, 'CampaignHero')).toContain("runway?.style.removeProperty('--rise');");
+    expect(functionBlock(source, 'CampaignLook')).toContain("'--rise-order': Math.min(index, 3)");
     expect(source).toContain("const CAMPAIGN_PHONE_QUERY = '(max-width: 900px)';");
     // The opening sticks only behind the runway, inside one stack.
     ordered(source, [
@@ -407,6 +429,7 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       '<CampaignBag sign={sign} batch={consumerMarket} onPick={pickFromBag} />',
       '<CampaignRunway',
       '</div>',
+      '<CampaignAbout />',
       '<CampaignApp />',
     ]);
     expect(functionBlock(source, 'CampaignHero')).toContain("hero.style.setProperty('--stack', rise.toFixed(3));");
@@ -538,7 +561,8 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
     const source = await read('src/app.jsx');
     expect(source).not.toContain('function ConsumerIntroduction(');
     const hero = functionBlock(source, 'CampaignHero');
-    expect(hero).toContain('<h1 id="campaign-hero-title">The twelve official Zodiacs<span className="campaign-hero__stop">.</span></h1>');
+    expect(hero).toContain('<h1 id="campaign-hero-title">Twelve signs. Twelve tokens.</h1>');
+    expect(hero).toContain('<p>Twelve tokens, one for every sign. Each has its own design and public record.</p>');
     expect(hero).toContain('<p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>');
     ordered(hero, [
       '<a className="campaign-button" href="#buy"><span>How buying works</span></a>',
@@ -557,6 +581,10 @@ describe('Astrofolio consumer and Terminal market-desk split', () => {
       'src="/assets/fomo/fomo-alert-900.webp"',
       '<figcaption><strong>Alerts when your sign moves</strong>',
     ]);
+    const about = functionBlock(source, 'CampaignAbout');
+    expect(about).toContain('id="about" className="campaign-about reveal" aria-labelledby="campaign-about-title"');
+    for (const line of ABOUT_ASTROFOLIO) expect(normalizedText(about)).toContain(line);
+    expect(about).toContain('<a href="#registry">zodiacs.org Registry</a>');
     expect(app).toContain('id="buy" className="campaign-app reveal"');
     expect(app).toContain('<h2 id="campaign-app-title">Buy yours in a few taps.</h2>');
     expect(app).toContain('href={FOMO_APP_STORE_URL} rel="external nofollow noopener"');

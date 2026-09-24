@@ -13,6 +13,8 @@ const counts = { dex: 0, dexPairs: 0, gecko: 0, wikimedia: 0, jupiter: 0, wallet
 const registry = JSON.parse(await readFile(new URL('../public/registry/zodiacs.registry.json', import.meta.url), 'utf8'));
 const expectedSeason = resolveAstrofolioSeasonUtc(new Date(), seasonsFromRegistry(registry));
 const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+const ABOUT_ANSWERS = ['Twelve tokens, one for each sign.', 'Why “official”?', 'How do I get one?'];
+const ABOUT_RISK = 'Prices can swing sharply and may fall to zero. Buy only what you can afford to lose.';
 
 function fixturePair({ mint, pairAddress, index, canonical = false }) {
   const libra = mint === '7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe';
@@ -354,7 +356,7 @@ try {
     const errors = watchErrors(page, 'Astrofolio mobile');
     await page.goto(`${baseURL}/astrofolio/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#campaign-hero-title');
-    assert.equal(await page.locator('#campaign-hero-title').textContent(), 'The twelve official Zodiacs.');
+    assert.equal(await page.locator('#campaign-hero-title').textContent(), 'Twelve signs. Twelve tokens.');
     assert.equal(await page.locator('.astrofolio-lockup__copy small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await page.locator('.astrofolio-lockup__copy small strong').innerText(), expectedSeason.displayName);
     assert.match(await page.locator('.astrofolio-lockup__avatar').getAttribute('src') ?? '', /\/assets\/astrofolio\/v2\/zodiac-ring-192\.png$/u);
@@ -546,6 +548,13 @@ try {
     assert.equal(await page.locator('.consumer-registry .market-tape, .consumer-registry .pro-aggregate, .consumer-registry [data-landing-trade]').count(), 0);
     assert.equal(await page.locator('#buy a[href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427"]').count(), 1);
     assert.equal(await page.locator('#buy a[href="https://play.google.com/store/apps/details?id=family.fomo.app"]').count(), 1);
+    // Under the runway, three short answers tell a newcomer what Astrofolio
+    // is before the page turns to buying.
+    assert.equal(await page.locator('#about h2').innerText(), 'What is Astrofolio?');
+    assert.deepEqual(await page.locator('#about h3').allInnerTexts(), ABOUT_ANSWERS);
+    assert.equal(await page.locator('#about .campaign-about__risk').innerText(), ABOUT_RISK);
+    assert.equal(await page.locator('#about a[href="#registry"]').count(), 1);
+    assert.equal(await page.locator('#about a[href="#buy"]').count(), 1);
     assert.equal(counts.gecko, 0);
     assert.equal(counts.wikimedia, 0);
     assert.equal(counts.jupiter, 0);
@@ -620,18 +629,29 @@ try {
     await page.setViewportSize({ width: 390, height: 844 });
 
     // Phones: as the page moves on, the film stays in place and dims, the
-    // caption rises and fades, and the runway comes up over the dimmed film.
-    // Discover more lands the runway at the top.
+    // caption rises and fades, and the looks come up over the dimmed film in
+    // two beats: the film falls nearly black first, then the looks rise from
+    // below as solid cards, the next a beat behind. Discover more lands the
+    // runway at the top.
     const readStack = () => page.evaluate(() => {
       const hero = document.getElementById('official-twelve');
       const caption = hero.querySelector('.campaign-hero__caption');
+      const runway = document.getElementById('the-twelve');
+      const lift = (look) => {
+        const transform = getComputedStyle(look).transform;
+        return transform === 'none' ? 0 : Math.round(new DOMMatrixReadOnly(transform).m42);
+      };
       return {
         heroTop: Math.round(hero.getBoundingClientRect().top),
-        runwayTop: Math.round(document.getElementById('the-twelve').getBoundingClientRect().top),
+        runwayTop: Math.round(runway.getBoundingClientRect().top),
         stack: Number.parseFloat(hero.style.getPropertyValue('--stack') || '0'),
+        rise: Number.parseFloat(runway.style.getPropertyValue('--rise') || '0'),
         dim: Number.parseFloat(getComputedStyle(hero.querySelector('.campaign-hero__pin'), '::after').opacity),
         captionTop: Math.round(caption.getBoundingClientRect().top),
         captionOpacity: Number.parseFloat(getComputedStyle(caption).opacity),
+        lifts: [...runway.querySelectorAll('.campaign-look')].slice(0, 3).map(lift),
+        lookOpacity: Number.parseFloat(getComputedStyle(runway.querySelector('.campaign-look')).opacity),
+        dots: Number.parseFloat(getComputedStyle(runway.querySelector('.campaign-runway__dots')).opacity),
       };
     });
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
@@ -644,16 +664,23 @@ try {
     const stackMiddle = await readStack();
     assert.ok(Math.abs(stackMiddle.heroTop) <= 1, 'the film stays in place while the card rises over it');
     assert.ok(Math.abs(stackMiddle.runwayTop - 422) <= 2, 'the card is halfway up the screen');
-    assert.ok(stackMiddle.dim > 0.3 && stackMiddle.dim < 0.45, `the film dims with the rise (${stackMiddle.dim})`);
+    assert.ok(Math.abs(stackMiddle.dim - 0.81) < 0.03, `the film falls nearly black in the first beat (${stackMiddle.dim})`);
     assert.ok(stackMiddle.captionTop < stackStart.captionTop - 60, 'the caption rises as the page moves on');
     assert.ok(stackMiddle.captionOpacity < 0.3, `the caption fades as it rises (${stackMiddle.captionOpacity})`);
+    assert.equal(stackMiddle.rise, stackMiddle.stack, 'the looks rise on the same scroll as the film dims');
+    assert.ok(stackMiddle.lifts[0] > 40 && stackMiddle.lifts[0] < 140, `the first look is still rising (${stackMiddle.lifts[0]}px below its place)`);
+    assert.ok(stackMiddle.lifts[1] > stackMiddle.lifts[0] + 40, `the next look is a beat behind (${stackMiddle.lifts.join(', ')})`);
+    assert.equal(stackMiddle.lookOpacity, 1, 'the looks rise as solid cards');
+    assert.equal(stackMiddle.dots, 0, 'the disc row waits until the looks have nearly arrived');
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await page.locator('.campaign-discover').click();
     await page.waitForFunction(() => Math.abs(document.getElementById('the-twelve')?.getBoundingClientRect().top ?? 99) <= 1);
     await page.waitForFunction(() => document.getElementById('official-twelve')?.style.getPropertyValue('--stack') === '1.000');
     const stackTop = await readStack();
-    assert.ok(Math.abs(stackTop.dim - 0.78) < 0.01, 'the runway leaves the film fully dimmed behind it');
+    assert.ok(Math.abs(stackTop.dim - 0.9) < 0.01, 'the runway leaves the film fully dimmed behind it');
     assert.equal(stackTop.captionOpacity, 0, 'the caption has faded away');
+    assert.deepEqual(stackTop.lifts, [0, 0, 0], 'the looks have settled in place');
+    assert.equal(stackTop.dots, 1, 'the disc row is in place');
     assert.equal(await page.locator('#the-twelve').evaluate((node) => getComputedStyle(node).backgroundColor), 'rgba(0, 0, 0, 0)', 'the looks float over the dimmed film');
     // The phone bar slid away on the way down, so the disc row has the top of
     // the screen to itself.
@@ -959,6 +986,11 @@ try {
     assert.equal(reducedFilm.pending, 2);
     assert.equal(reducedFilm.cue, 'none');
     assert.match(reducedFilm.bag, /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u);
+    // Reduced motion never offsets the looks as the runway comes up.
+    await reducedPage.evaluate(() => window.scrollTo({ top: Math.round(window.innerHeight / 2), behavior: 'instant' }));
+    await reducedPage.waitForFunction(() => Number.parseFloat(document.getElementById('the-twelve')?.style.getPropertyValue('--rise') || '0') > 0.3);
+    assert.deepEqual(await reducedPage.locator('#the-twelve .campaign-look').evaluateAll((looks) => looks.slice(0, 3).map((look) => getComputedStyle(look).transform)), ['none', 'none', 'none'], 'reduced motion keeps the looks in place');
+    await reducedPage.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
     await reducedPage.locator('[data-consumer-sign="virgo"]').click();
     await reducedPage.waitForFunction(() => {
       const look = document.querySelector('[data-look="virgo"]')?.getBoundingClientRect();
@@ -1020,7 +1052,7 @@ try {
     const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     const noJsPage = await noJs.newPage();
     await noJsPage.goto(`${baseURL}/astrofolio/`, { waitUntil: 'load' });
-    assert.equal(await noJsPage.locator('#static-astrofolio-title').textContent(), 'The twelve official Zodiacs.');
+    assert.equal(await noJsPage.locator('#static-astrofolio-title').textContent(), 'Twelve signs. Twelve tokens.');
     assert.equal(await noJsPage.locator('.static-astrofolio-kicker').innerText(), 'Astrofolio');
     assert.equal(await noJsPage.locator('.static-astrofolio-lockup small').innerText(), `${expectedSeason.displayName} Season`);
     assert.equal(await noJsPage.locator('#the-twelve .campaign-look').count(), 12);
@@ -1049,6 +1081,10 @@ try {
     assert.equal(await noJsPage.locator('a[href^="/terminal/?sign="]').count(), 0);
     assert.equal(await noJsPage.locator('video').count(), 0, 'the no-JavaScript opening is the film poster');
     assert.equal(await noJsPage.locator('#buy a[href="https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427"]').count(), 1);
+    assert.equal(await noJsPage.locator('#about h2').innerText(), 'What is Astrofolio?');
+    assert.deepEqual(await noJsPage.locator('#about h3').allInnerTexts(), ABOUT_ANSWERS);
+    assert.equal(await noJsPage.locator('#about .campaign-about__risk').innerText(), ABOUT_RISK);
+    assert.deepEqual(await noJsPage.locator('#the-twelve, #about, #buy').evaluateAll((nodes) => nodes.map((node) => node.id)), ['the-twelve', 'about', 'buy']);
     assert.equal(await noJsPage.locator('#market-layer a[href="/registry/technical/#market-transparency"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer a[href="/terminal/?rank=marketCap"]').count(), 1);
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard ol > li').count(), 12);
@@ -1262,10 +1298,10 @@ try {
       return { visualRight: visual?.right, essayLeft: essay?.left };
     });
     assert.ok(thesisFlow.visualRight <= thesisFlow.essayLeft + 1, 'the thesis clock is contained beside its copy');
-    const storyOrder = await collectionPage.locator('#official-twelve, #the-twelve, #buy, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
+    const storyOrder = await collectionPage.locator('#official-twelve, #the-twelve, #about, #buy, #thesis, #shop, #cabinet, #registry, #faq, #market-layer').evaluateAll((nodes) => (
       nodes.map((node) => node.id)
     ));
-    assert.deepEqual(storyOrder, ['official-twelve', 'the-twelve', 'buy', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
+    assert.deepEqual(storyOrder, ['official-twelve', 'the-twelve', 'about', 'buy', 'thesis', 'shop', 'cabinet', 'registry', 'market-layer', 'faq']);
     assert.equal(
       await collectionPage.locator('#market-layer a[href^="/terminal/markets/"]').count(),
       0,

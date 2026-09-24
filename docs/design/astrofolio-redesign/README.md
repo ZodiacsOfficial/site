@@ -6,9 +6,12 @@
 
 - The opening ends like a campaign page: the headline set as a tracked line ("THE TWELVE OFFICIAL ZODIACS"), the name "Astrofolio", and one frosted "Discover more" with a moving arrow. The two wide-screen buttons and the paragraph stay on desktop.
 - As the page moves on, the film stays in place and dims to about 78%, and the caption rises and fades. The runway comes up over the dimmed film with no sheet behind it, and its looks pop up from below as they reach the screen. Reduced motion keeps the dim and the fade, without the rise or the moving arrow.
+
 **Phones, 2026-09-24:** each look fits one screen: the numeral and dates, the figure, the name and a one-line price, under one slim row of discs. The whole look opens its sign's page. Buying moves to the bag, which stays up over the runway and follows the look in view. Tapping the bag's sign opens a sheet of all twelve. Across the site, the navigation on phones (599.5px and below) is a full-width bar at the top edge. It keeps the same glass: the menu on the left, ZODIACS | ASTROFOLIO on the centre line, and search on the right. It slides away as the page scrolls down and returns as it scrolls up.
 
 - Swiping the looks moves the pastel disc spotlight to the look in the centre. The bag and the address bar follow once the swipe rests. On the pinned desktop stage, passing looks still never changes the chosen sign.
+
+**Headline, explainer and card rise, 2026-09-24:** the headline reads "Twelve signs. Twelve tokens." on every width, in place of "The twelve official Zodiacs.", so a newcomer learns from the first screen that these are tokens. Under the runway, a new section, "What is Astrofolio?", gives three short answers before the page turns to Fomo: what the tokens are, why the Registry calls them official, and how to get one, with a one-line risk note. On phones, the looks now rise with the scroll in two beats, after rolex.com. First the film falls nearly black (to 90%) and the caption lifts away. Then the looks come up from below the screen as solid cards, the next a beat behind, and settle as the runway reaches the top. Reduced motion keeps the dim and the fade, without the rise.
 
 These are four working prototypes for `/astrofolio/`. Each is built only from assets already in this repository:
 

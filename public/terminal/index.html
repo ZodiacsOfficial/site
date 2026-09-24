@@ -10485,6 +10485,57 @@
       text-underline-offset: 4px;
     }
 
+    /* ── What is Astrofolio? ──────────────────────────────────────── */
+    /* Under the looks, three plain answers in the order a newcomer asks,
+       then one line on risk. A row of three on wide screens, a ruled
+       column on phones. */
+    .consumer-registry > .campaign-about {
+      position: relative;
+      width: min(calc(100% - 48px), 1180px);
+      margin-inline: auto;
+      padding: clamp(72px, 9vw, 128px) 0 clamp(8px, 2vw, 24px);
+    }
+    .consumer-campaign .campaign-about h2,
+    .static-campaign .campaign-about h2 {
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(40px, 5vw, 72px)/.95 var(--serif);
+      letter-spacing: -.03em;
+      text-wrap: balance;
+    }
+    .campaign-about__answers {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 64px);
+      margin-top: clamp(32px, 4vw, 56px);
+      padding-top: clamp(24px, 3vw, 36px);
+      border-top: 1px solid var(--hair-2);
+    }
+    .consumer-campaign .campaign-about__answer h3,
+    .static-campaign .campaign-about__answer h3 {
+      margin: 0;
+      color: var(--ink);
+      font: 400 24px/1.15 var(--serif);
+      letter-spacing: -.01em;
+    }
+    .consumer-campaign .campaign-about__answer p,
+    .static-campaign .campaign-about__answer p { max-width: 38ch; margin: 12px 0 0; color: var(--ink-2); font: 400 16px/1.6 var(--sans); }
+    .campaign-about__answer a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-color: var(--hair-3);
+      text-underline-offset: 3px;
+    }
+    .campaign-about__answer a:hover { text-decoration-color: currentColor; }
+    .consumer-campaign .campaign-about__risk,
+    .static-campaign .campaign-about__risk { max-width: 60ch; margin: clamp(28px, 3vw, 40px) 0 0; color: var(--ink-dim); font: 400 13px/1.55 var(--sans); }
+    @media (max-width: 900px) {
+      .consumer-registry > .campaign-about { width: calc(100% - 32px); padding-top: 64px; padding-bottom: 8px; }
+      .campaign-about__answers { grid-template-columns: minmax(0, 1fr); gap: 0; padding-top: 0; }
+      .campaign-about__answer { padding: 22px 0; border-bottom: 1px solid var(--hair-2); }
+      .campaign-about__answer:last-child { border-bottom: 0; padding-bottom: 0; }
+    }
+
     /* ── In the Fomo app ─────────────────────────────────────────── */
     .consumer-registry > .campaign-app {
       position: relative;
@@ -10713,8 +10764,7 @@
       .campaign-hero__caption .astrofolio-lockup,
       .campaign-hero__caption .static-astrofolio-lockup,
       .campaign-hero__caption > p:not(.campaign-hero__name),
-      .campaign-hero__actions,
-      .campaign-hero__stop { display: none; }
+      .campaign-hero__actions { display: none; }
       .campaign-hero__caption h1 {
         max-width: none;
         color: var(--ink);
@@ -10818,9 +10868,15 @@
       }
     }
     /* Phones: as the page moves on, the film stays in place and dims, the
-       caption rises and fades, and the looks pop up over the dimmed film.
-       The opening sticks only inside .campaign-stack, so it is the backdrop
-       of the runway and never of later sections. */
+       caption rises and fades, and the looks rise over the dimmed film, in
+       two beats after rolex.com: the film falls nearly black and the
+       caption lifts away first, then the looks come up from below the
+       screen as solid cards, the next a beat behind, and settle as the
+       runway arrives. --stack (on the film) and --rise (on the runway) run
+       0 to 1 as the runway's top travels from the foot of the screen to its
+       head, so the motion follows the thumb. The opening sticks only inside
+       .campaign-stack, so it is the backdrop of the runway and never of
+       later sections. */
     @media (max-width: 900px) {
       .campaign-stack { position: relative; }
       .campaign-stack > .campaign-hero { position: sticky; top: 0; z-index: 0; }
@@ -10834,19 +10890,25 @@
         z-index: 5;
         inset: 0;
         background: #060709;
-        opacity: calc(var(--stack, 0) * .78);
+        opacity: calc(min(1, var(--stack, 0) * 1.8) * .9);
         pointer-events: none;
         content: "";
       }
       .campaign-stack .campaign-hero__caption {
-        opacity: calc(1 - var(--stack, 0) * 1.7);
-        transform: translateY(calc(var(--stack, 0) * -26vh));
+        opacity: calc(1 - var(--stack, 0) * 2.6);
+        transform: translateY(calc(var(--stack, 0) * -30vh));
       }
-      .campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(120px); }
-      .campaign-runway[data-rise="rising"] .campaign-look {
-        transition: opacity 600ms ease, transform 900ms cubic-bezier(.16, 1, .3, 1), border-color 360ms var(--ease);
-        transition-delay: calc(var(--rise-order, 0) * 90ms);
+    }
+    @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+      /* Each look rises through the middle half of the way up, easing out:
+         its offset is (1 - progress)^3 of 48vh, so it arrives fast and
+         settles. The next look starts a beat later. Unset, --rise reads as
+         arrived, so nothing is offset before the script runs. */
+      .campaign-stack > .campaign-runway .campaign-look {
+        --look-rise: clamp(0, calc((var(--rise, 1) - .3 - min(var(--rise-order, 0), 2) * .07) / .5), 1);
+        transform: translateY(calc((1 - var(--look-rise)) * (1 - var(--look-rise)) * (1 - var(--look-rise)) * 48vh));
       }
+      .campaign-stack > .campaign-runway .campaign-runway__dots { opacity: clamp(0, calc((var(--rise, 1) - .55) / .3), 1); }
     }
     @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
       .campaign-stack .campaign-hero__caption { transform: none; }
