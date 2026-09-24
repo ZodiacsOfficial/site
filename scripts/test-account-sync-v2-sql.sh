@@ -40,10 +40,12 @@ account_v2_container_id="$(docker run \
 
 account_v2_ready="false"
 for account_v2_attempt in {1..60}; do
-  if docker exec "${account_v2_container_id}" \
+  # The initialization server accepts Unix sockets before restarting. Wait for TCP.
+  if docker exec --env PGPASSWORD=account-v2-local-test-only "${account_v2_container_id}" \
     psql \
       --no-psqlrc \
       --quiet \
+      --host 127.0.0.1 \
       --tuples-only \
       --username postgres \
       --dbname "${account_v2_database}" \
