@@ -338,8 +338,8 @@ try {
         'the v1 birth-details link must remain a labeled secondary action');
       assert.equal(
         (await dialog.locator('[data-preview-link]').locator('xpath=../following-sibling::p[1]').innerText()).trim(),
-        'The private link keeps positions in your browser; the preview link sends positions — never birth details — to the preview service.',
-        'the preview tradeoff must stay one dry sentence',
+        'Both links keep the chart code after the # sign, which browsers do not send to servers. The preview link also sends the Sun, Moon and Rising, to the whole degree, to our preview service.',
+        'the preview tradeoff must stay two dry sentences',
       );
 
       await source.waitForFunction(() => (
@@ -377,7 +377,7 @@ try {
       await dialog.locator('[data-hide-birth-details]').check();
       assert.equal(
         (await dialog.locator('[data-chart-image-privacy]').innerText()).trim(),
-        'The image includes chart positions and calculation settings, but not a name, birth date, time, place, coordinates, or chart link.',
+        'The image shows chart positions and calculation settings, with no name, birth date, time, place, coordinates or chart link. Its positions still give the birth date and time, and its Ascendant and Midheaven the approximate birthplace.',
         'privacy copy must return to the hidden-details statement',
       );
       await source.waitForFunction(() => (
@@ -394,6 +394,8 @@ try {
       const sourcePositions = v2Wire(sourcePositionsUrl);
       assert.equal(sourcePositions.wire.b.length, 12, 'positions-only link must carry all twelve body longitudes');
       assert.deepEqual(Object.keys(sourcePositions.wire).sort(), ['a', 'b', 'h', 'v']);
+      assert.deepEqual(sourcePositions.wire.a.map((angle) => angle % 1), [0.5, 0.5],
+        'positions-only link must carry ASC and MC to the whole degree');
       for (const privateValue of [BIRTH.date, BIRTH.time, BIRTH.cityQuery, 'America/New_York']) {
         assert.equal(sourcePositionsUrl.includes(privateValue), false,
           `positions-only link leaked ${privateValue}`);
@@ -403,8 +405,16 @@ try {
       await source.waitForFunction(() => globalThis.__t17Clipboard.length === 2, null, { timeout: TIMEOUT });
       const previewUrl = new URL((await clipboard(source))[1]);
       assert.equal(previewUrl.pathname, '/api/og/chart');
-      assert.equal(previewUrl.hash, '', 'preview opt-in must put only positions in the query');
-      assert.equal(previewUrl.searchParams.get('p'), sourcePositions.token);
+      assert.equal(previewUrl.hash, `#p=${sourcePositions.token}`,
+        'preview opt-in must keep the full code in the fragment');
+      const wholeDegree = (longitude) => String(Math.floor(longitude));
+      assert.deepEqual([...previewUrl.searchParams.keys()], ['sun', 'moon', 'rising', 'houses']);
+      assert.deepEqual(Object.fromEntries(previewUrl.searchParams), {
+        sun: wholeDegree(sourcePositions.wire.b[0]),
+        moon: wholeDegree(sourcePositions.wire.b[1]),
+        rising: wholeDegree(sourcePositions.wire.a[0]),
+        houses: 'whole',
+      }, 'preview query must carry only the Sun, Moon and Rising to the whole degree');
 
       await dialog.locator('[data-details-link]').click();
       await source.waitForFunction(() => globalThis.__t17Clipboard.length === 3, null, { timeout: TIMEOUT });
@@ -879,7 +889,10 @@ try {
       assert.equal(await received.locator(SHARE_WING_LINKS).count(), 0,
         'a #p receiver must be Registry-sterile');
       assert.equal(new URL(received.url()).hash, '', 'successful #p fragment must be consumed and stripped');
-      assert.equal((await positions.locator('.notice').innerText()).trim(), 'Positions only — birth details not included.');
+      assert.equal((await positions.locator('.notice').innerText()).trim(), 'Positions only, with no name, date, time or place fields.');
+      assert.equal((await positions.locator('.calc__positions-privacy').first().innerText()).trim(),
+        'The exact positions still give the birth date and time. They give the birthplace only as a region about 500 km across.',
+        'positions receiver must say what the exact positions still give');
       assert.equal(await positions.locator('svg.wheel').count(), 1, 'positions result keeps a static wheel');
       assert.equal(await positions.locator('tbody tr').count(), 14, 'twelve bodies plus encoded ASC/MC must be shown');
       assert.equal(await positions.locator('.xplr, [data-entity], [data-share-card], [data-share-link]').count(), 0,

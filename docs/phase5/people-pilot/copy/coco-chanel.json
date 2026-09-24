@@ -23,11 +23,11 @@
       "key": "personal",
       "title": "The fast planets",
       "facts": [
-        "personal:Mercury:Virgo:14.6°",
+        "personal:Mercury:Virgo:14.7°",
         "personal:Venus:Leo:17.3°",
         "personal:Mars:Gemini:27.0°"
       ],
-      "text": "Closer in, Mercury stands at 14.6° Virgo; Venus stands at 17.3° Leo; Mars stands at 27.0° Gemini. The tradition reads thought with its feet on the ground from Mercury, attraction declared rather than implied from Venus, effort aimed through strategy and words from Mars."
+      "text": "Closer in, Mercury stands at 14.7° Virgo; Venus stands at 17.3° Leo; Mars stands at 27.0° Gemini. The tradition reads thought with its feet on the ground from Mercury, attraction declared rather than implied from Venus, effort aimed through strategy and words from Mars."
     },
     {
       "key": "geometry",
@@ -55,7 +55,7 @@
         "dignity:Mercury:exaltation",
         "dignity:Jupiter:exaltation"
       ],
-      "text": "Read against the old dignities, three placements stand out. The Sun in Leo at 26.1° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 14.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 23.0° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "Read against the old dignities, three placements stand out. The Sun in Leo at 26.1° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 14.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 23.0° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:14.5"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.0°."
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.1°."
     }
   ],
   "birthdayLink": {
@@ -91,7 +91,7 @@
     "dignity:Sun:domicile",
     "sun-degree:26.12",
     "decan:leo:third",
-    "personal:Mercury:Virgo:14.6°",
+    "personal:Mercury:Virgo:14.7°",
     "personal:Venus:Leo:17.3°",
     "personal:Mars:Gemini:27.0°",
     "aspect:Sun:Mars:sextile:0.89",

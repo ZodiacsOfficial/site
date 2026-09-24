@@ -16,13 +16,21 @@ export type SavedChartEngineLoader = () => Promise<{
 
 /**
  * Resolve a saved chart against the current engine without making the common
- * profile-store path pay for the ephemeris. Current summaries (and charts
- * without a place) return immediately; stale summaries recompute from their
- * lossless birth input and fall back quietly on any failure.
+ * profile-store path pay for the ephemeris. Charts without a place return
+ * immediately. A summary from another engine recomputes from the lossless
+ * birth input. So does one from the current engine whose instant no longer
+ * matches the birthplace clock, which can happen only for a birth up to
+ * 1970: until 2026-09 those before standard time used the mean time of the
+ * zone's reference city instead of the birthplace's own, so a Buffalo birth
+ * in 1870 was saved on New York's clock, and those before 1970 used the
+ * browser's zone history, which gives Oslo Berlin's. Any failure falls back
+ * quietly to the stored summary; `strict` rejects instead, for a caller that
+ * must tell a failed download from a summary that needs no change.
  */
 export async function resolveSavedChart(
   source: SavedChart,
   loadEngine: SavedChartEngineLoader,
+  { strict = false }: { strict?: boolean } = {},
 ): Promise<ResolvedSavedChart> {
   const chart = repairLegacyPolarChart(source);
   const stored: ResolvedSavedChart = {
@@ -31,22 +39,28 @@ export async function resolveSavedChart(
     timeKnown: chart.birth.timeKnown,
     summary: chart.summary,
   };
-  if (currentSavedCalculation(chart.summary.engineVersion) || !chart.birth.place) return stored;
+  const place = chart.birth.place;
+  if (!place) return stored;
+  const current = currentSavedCalculation(chart.summary.engineVersion);
 
   try {
-    const [engine, { resolveLocalToUtc }] = await Promise.all([
-      loadEngine(),
+    const [engine, { birthplaceTimeCanApply, prepareLocalTime, resolveLocalToUtc }] = await Promise.all([
+      current ? null : loadEngine(),
       import('../time/localToUtc'),
     ]);
+    if (current && !birthplaceTimeCanApply(chart.birth.date)) return stored;
+    await prepareLocalTime(chart.birth.date, place.tz);
     const resolved = resolveLocalToUtc(
       chart.birth.date,
       chart.birth.timeKnown && chart.birth.time ? chart.birth.time : '12:00',
-      chart.birth.place.tz,
+      place.tz,
+      { longitude: place.lon },
     );
-    const result = engine.computeChart({
+    if (current && resolved.utc.toISOString() === chart.summary.utcISO) return stored;
+    const result = (engine ?? await loadEngine()).computeChart({
       utc: resolved.utc,
-      latitude: chart.birth.place.lat,
-      longitude: chart.birth.place.lon,
+      latitude: place.lat,
+      longitude: place.lon,
       houseSystem: chart.summary.houseSystem,
       timeKnown: chart.birth.timeKnown,
       flags: resolved.flags,
@@ -64,7 +78,8 @@ export async function resolveSavedChart(
         flags: result.flags,
       },
     };
-  } catch {
+  } catch (cause) {
+    if (strict) throw cause;
     return stored;
   }
 }

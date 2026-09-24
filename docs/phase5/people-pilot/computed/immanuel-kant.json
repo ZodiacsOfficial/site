@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Kaliningrad",
     "civilTime": "12:00",
-    "utcInstant": "1724-04-22T10:38:00.000Z",
-    "utcOffsetMinutesAtBirth": 82,
-    "civilDayStartUtc": "1724-04-21T22:38:00.000Z",
-    "civilDayEndUtc": "1724-04-22T22:38:00.000Z",
+    "utcInstant": "1724-04-22T10:37:58.000Z",
+    "utcOffsetMinutesAtBirth": 82.0333,
+    "civilDayStartUtc": "1724-04-21T22:37:58.000Z",
+    "civilDayEndUtc": "1724-04-22T22:37:58.000Z",
     "latitude": 54.71147222222222,
     "longitude": 20.509305555555557,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 1.9801,
-    "degreesToNextBoundaryAtWindowEnd": 27.047
+    "degreesInsideAtWindowStart": 1.9247,
+    "degreesToNextBoundaryAtWindowEnd": 27.1024
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.973,

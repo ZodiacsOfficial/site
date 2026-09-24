@@ -6,6 +6,8 @@ import { legacyPolarFixture, installLegacyProfile, checkOriginalProfile } from '
 const TIMEOUT = 30_000;
 const BODY_ORDER = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto', 'North Node', 'South Node'];
 const rounded = (lon) => Math.round(lon * 1000) / 1000 % 360;
+// Shared codes carry ASC and MC at the middle of their whole degree.
+const wholeDegree = (lon) => Math.floor(lon) + 0.5;
 const unpack = (token, prefix) => {
   assert.ok(token?.startsWith(prefix), `expected ${prefix} share token`);
   return JSON.parse(Buffer.from(token.slice(prefix.length), 'base64url').toString('utf8'));
@@ -92,22 +94,22 @@ export async function driveLegacyPolarProfile({ browser, baseURL, check, outDir 
     const wrapper = unpack(new URLSearchParams(new URL(copied).hash.slice(1)).get('s'), 's1.');
     const [first, second] = wrapper.p.map((token) => unpack(token, '2.'));
     const expectedBodies = BODY_ORDER.map((body) => rounded(fixture.polar.summary.bodies.find((row) => row.body === body).lon));
-    check('legacy polar synastry share: recomputed positions, angles, house system and current engine receipt agree',
+    check('legacy polar synastry share: recomputed positions, whole-degree angles, house system and current engine receipt agree',
       JSON.stringify(first.b) === JSON.stringify(expectedBodies)
-      && JSON.stringify(first.a) === JSON.stringify([rounded(fixture.correctedAsc), rounded(fixture.legacy.angles.mc)])
+      && JSON.stringify(first.a) === JSON.stringify([wholeDegree(fixture.correctedAsc), wholeDegree(fixture.legacy.angles.mc)])
       && first.h === 'w' && first.v === ENGINE_VERSION
       && wrapper.l[0] === fixture.polar.name && wrapper.l[1] === fixture.positionsOnly.name);
-    check('legacy polar synastry share: positions-only side retains its original angles and receipt',
+    check('legacy polar synastry share: positions-only side retains its original angles, to the whole degree, and receipt',
       JSON.stringify(second.b) === JSON.stringify(expectedBodies)
-      && JSON.stringify(second.a) === JSON.stringify([rounded(fixture.legacy.angles.asc), rounded(fixture.legacy.angles.mc)])
+      && JSON.stringify(second.a) === JSON.stringify([wholeDegree(fixture.legacy.angles.asc), wholeDegree(fixture.legacy.angles.mc)])
       && second.h === 'w' && second.v === '0.1.0');
     await checkOriginalProfile(page, fixture, check, 'synastry');
     await shot('synastry');
 
     await open(page, `${baseURL}/birth-chart/#p=${wrapper.p[1]}`, '[data-positions-only]');
     const ascRow = page.locator('[data-positions-only] tr').filter({ has: page.getByRole('cell', { name: 'ASC', exact: true }) });
-    check('legacy polar positions receiver: shared Libra ASC remains read-only and unchanged',
-      (await ascRow.textContent()).includes('23°52′') && (await ascRow.textContent()).includes('Libra')
+    check('legacy polar positions receiver: shared Libra ASC remains read-only, to the whole degree',
+      (await ascRow.locator('td').nth(1).textContent()).trim() === '23°' && (await ascRow.textContent()).includes('Libra')
       && (await page.locator('[data-positions-only] .calc__receipt').textContent()).includes('0.1.0'));
     await checkOriginalProfile(page, fixture, check, 'positions receiver');
     check('legacy polar chart routes have no page errors', errors.length === 0, errors.join(' | '));

@@ -236,6 +236,21 @@ Everything else now sits at 0.4–3 mas, which is the same order as the
 IAU models (§1). **We are at the floor of what "agreement with Swiss" can measure.**
 Chasing the last 0.4 mas would be fitting to the instrument.
 
+*Correction, 2026-09-23.* The `.se1` files used here are not a fit to DE431.
+Both headers read "Created for Astrodienst in Switzerland 2026/05/26, based
+on JPL Ephemeris DE441", and their hashes are the ones pinned in
+`../../swiss-benchmark/CONFIGURATION.md`. The engine audit then measured the
+attribution this paragraph left open. With the frame residual cancelled
+against Horizons, whose Moon is DE441, Swiss's `.se1` Moon agrees with it to
+0.0018″ rms and this DE440s kernel's Moon differs from it by up to 0.0103″.
+Swiss run on its `.se1` files minus Swiss run on the DE440 binary gives the
+same shape: 0.0104″ at 1851, under 0.001″ from 1933 to 2012, 0.0085″ at
+2148. The Moon's 0.0107″ is the DE440-versus-DE441 lunar difference
+(`../../engine-audit-2026-09-22/LEDGER.md`, swiss-parity-3). Horizons's
+geometric vectors confirm it with no frame model. The DE440s Moon is
+10.24 mas from DE441 at 1851 and 8.60 mas at 2148, and under 1 mas from
+1933 to 2020 (`../../engine-beyond-swiss/horizons-frame/vectors/`).
+
 ## 5. Independent SPK reader — the readers agree to 1.7 ulp
 
 `src/spk_independent.py` is a second reader written from the NAIF DAF/SPK
@@ -345,6 +360,9 @@ bound on the remainder. Labelled empirical.
   Swiss agreement inherits that blind spot.
 - **The Moon's 0.0107″ is unexplained.** The DE431-vs-DE440 hypothesis fits the
   epoch dependence but is not tested; no DE431 kernel is present.
+  *Correction, 2026-09-23:* explained since, and not by DE431. The `.se1`
+  files are DE441-based, and the residual is the DE440-versus-DE441 lunar
+  difference (see the correction in §4).
 - **Swiss's own nutation matches neither published model.** It is within
   0.0013″ of IAU 2000B and 0.0022″ of IAU 2000A, correlated with the difference
   between them, and identical to neither. The last ~0.4 mas rms is a Swiss

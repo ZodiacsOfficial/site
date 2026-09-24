@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:17.21",
+        "sun-degree:17.20",
         "decan:cancer:second"
       ],
       "text": "17.2° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -33,8 +33,8 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Mars:sextile:0.02",
-        "aspect:Mars:Neptune:square:0.92",
+        "aspect:Venus:Mars:sextile:0.01",
+        "aspect:Mars:Neptune:square:0.91",
         "aspect:Uranus:Pluto:square:1.13"
       ],
       "text": "Nothing in the geometry sits closer than Venus and Mars: 0.0° from an exact sextile. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars square Neptune at 0.9°, and Uranus square Pluto at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
@@ -54,7 +54,7 @@
         "dignity:Moon:fall",
         "dignity:Saturn:fall"
       ],
-      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Scorpio at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 2.9° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Scorpio at 17.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 2.9° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
     },
     {
       "key": "shape",
@@ -75,7 +75,7 @@
         "moon-band:13.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.1°."
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.0°."
     }
   ],
   "birthdayLink": {
@@ -88,13 +88,13 @@
   },
   "substantiveFacts": [
     "aspect:Venus:Mars:sextile",
-    "sun-degree:17.21",
+    "sun-degree:17.20",
     "decan:cancer:second",
     "personal:Mercury:Cancer:23.2°",
     "personal:Venus:Gemini:10.4°",
     "personal:Mars:Leo:10.4°",
-    "aspect:Venus:Mars:sextile:0.02",
-    "aspect:Mars:Neptune:square:0.92",
+    "aspect:Venus:Mars:sextile:0.01",
+    "aspect:Mars:Neptune:square:0.91",
     "aspect:Uranus:Pluto:square:1.13",
     "figure:t-square:Mars-Jupiter:apex-Neptune",
     "dignity:Moon:fall",

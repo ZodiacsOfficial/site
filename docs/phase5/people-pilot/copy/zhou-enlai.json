@@ -34,8 +34,8 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Saturn:Pluto:opposition:0.69",
-        "aspect:Venus:Neptune:square:0.89",
-        "aspect:Mercury:Uranus:square:1.07"
+        "aspect:Venus:Neptune:square:0.88",
+        "aspect:Mercury:Uranus:square:1.09"
       ],
       "text": "The day's firmest angle joins Saturn and Pluto — an opposition holding at 0.7°. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Venus square Neptune at 0.9°, and Mercury square Uranus at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
     },
@@ -76,7 +76,7 @@
         "moon-band:12.4"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 6.2°."
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 6.3°."
     }
   ],
   "birthdayLink": {
@@ -95,8 +95,8 @@
     "personal:Venus:Pisces:18.9°",
     "personal:Mars:Aquarius:17.5°",
     "aspect:Saturn:Pluto:opposition:0.69",
-    "aspect:Venus:Neptune:square:0.89",
-    "aspect:Mercury:Uranus:square:1.07",
+    "aspect:Venus:Neptune:square:0.88",
+    "aspect:Mercury:Uranus:square:1.09",
     "figure:t-square:Saturn-Neptune:apex-Sun",
     "figure:unaspected:Moon",
     "dignity:Mercury:fall",

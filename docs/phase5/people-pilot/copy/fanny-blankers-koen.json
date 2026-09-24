@@ -6,7 +6,7 @@
   "displayName": "Fanny Blankers-Koen",
   "identity": "Sprinter · Netherlands · 1918–2004",
   "title": "Fanny Blankers-Koen's birth chart",
-  "metaDescription": "Fanny Blankers-Koen's chart, computed from a sourced birth date: Sun at 5.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Fanny Blankers-Koen's chart, computed from a sourced birth date: Sun at 5.4° Taurus. Birth time unknown, so no houses or rising sign.",
   "lede": "Fixed signs carry six of the ten placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
   "ledeFact": "modality:fixed:6",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:5.35",
+        "sun-degree:5.38",
         "decan:taurus:first"
       ],
-      "text": "The Sun's exact place is 5.3° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — an earth sign read through a fixed season."
+      "text": "The Sun's exact place is 5.4° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — an earth sign read through a fixed season."
     },
     {
       "key": "personal",
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Neptune:square:1.01",
-        "aspect:Sun:Mercury:conjunction:1.19",
+        "aspect:Sun:Neptune:square:1.04",
+        "aspect:Sun:Mercury:conjunction:1.15",
         "aspect:Mars:Jupiter:square:1.32"
       ],
-      "text": "The Sun and Neptune hold the closest angle here — a square, 1.0° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun conjunction Mercury at 1.2°, and Mars square Jupiter at 1.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+      "text": "The Sun and Neptune hold the closest angle here — a square, 1.0° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun conjunction Mercury at 1.1°, and Mars square Jupiter at 1.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "figures",
@@ -56,7 +56,7 @@
         "dignity:Jupiter:detriment",
         "dignity:Saturn:detriment"
       ],
-      "text": "The classical table has four entries for this chart. The Moon in Scorpio at 6.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 19.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 12.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 7.9° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+      "text": "The classical table has four entries for this chart. The Moon in Scorpio at 6.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 19.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 12.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 7.9° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:12.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 6.2°."
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 6.6°."
     }
   ],
   "birthdayLink": {
@@ -90,13 +90,13 @@
   },
   "substantiveFacts": [
     "modality:fixed:6",
-    "sun-degree:5.35",
+    "sun-degree:5.38",
     "decan:taurus:first",
     "personal:Mercury:Taurus:6.5°",
     "personal:Venus:Pisces:19.2°",
     "personal:Mars:Virgo:13.8°",
-    "aspect:Sun:Neptune:square:1.01",
-    "aspect:Sun:Mercury:conjunction:1.19",
+    "aspect:Sun:Neptune:square:1.04",
+    "aspect:Sun:Mercury:conjunction:1.15",
     "aspect:Mars:Jupiter:square:1.32",
     "figure:t-square:Sun-Moon:apex-Saturn",
     "dignity:Moon:fall",

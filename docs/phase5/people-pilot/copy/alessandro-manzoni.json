@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:17.33",
+        "sun-degree:17.34",
         "decan:pisces:second"
       ],
       "text": "Pisces, but precisely: 17.3°, second decan, 10°–20°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -25,15 +25,15 @@
       "facts": [
         "personal:Mercury:Aquarius:25.4°",
         "personal:Venus:Taurus:2.9°",
-        "personal:Mars:Capricorn:28.0°"
+        "personal:Mars:Capricorn:28.1°"
       ],
-      "text": "Mercury holds 25.4° Aquarius, Venus holds 2.9° Taurus, Mars holds 28.0° Capricorn — in the old shorthand, a mind at home in argument and pattern; taste for the substantial and the lasting; drive that grinds rather than flares."
+      "text": "Mercury holds 25.4° Aquarius, Venus holds 2.9° Taurus, Mars holds 28.1° Capricorn — in the old shorthand, a mind at home in argument and pattern; taste for the substantial and the lasting; drive that grinds rather than flares."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Saturn:square:1.01",
+        "aspect:Venus:Saturn:square:1.02",
         "aspect:Uranus:Neptune:square:1.52",
         "aspect:Neptune:Pluto:trine:1.7"
       ],
@@ -56,7 +56,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:domicile"
       ],
-      "text": "Four planets here sit in a sign the classical scheme scores. Venus in Taurus at 2.9° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 28.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 19.9° is in domicile; Saturn in Aquarius at 1.9° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+      "text": "Four planets here sit in a sign the classical scheme scores. Venus in Taurus at 2.9° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 28.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 19.9° is in domicile; Saturn in Aquarius at 1.9° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
     },
     {
       "key": "shape",
@@ -89,12 +89,12 @@
   },
   "substantiveFacts": [
     "modality:fixed:4",
-    "sun-degree:17.33",
+    "sun-degree:17.34",
     "decan:pisces:second",
     "personal:Mercury:Aquarius:25.4°",
     "personal:Venus:Taurus:2.9°",
-    "personal:Mars:Capricorn:28.0°",
-    "aspect:Venus:Saturn:square:1.01",
+    "personal:Mars:Capricorn:28.1°",
+    "aspect:Venus:Saturn:square:1.02",
     "aspect:Uranus:Neptune:square:1.52",
     "aspect:Neptune:Pluto:trine:1.7",
     "figure:unaspected:Mercury",

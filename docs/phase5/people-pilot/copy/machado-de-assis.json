@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:29.49",
+        "sun-degree:29.48",
         "decan:gemini:third"
       ],
       "text": "Gemini, but precisely: 29.5°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Neptune:opposition:0.57",
+        "aspect:Venus:Neptune:opposition:0.58",
         "aspect:Sun:Mars:square:1.98",
-        "aspect:Venus:Jupiter:sextile:2.56"
+        "aspect:Venus:Jupiter:sextile:2.55"
       ],
-      "text": "Closest first: Venus to Neptune, an opposition with 0.6° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Mars at 2.0°, and Venus sextile Jupiter at 2.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+      "text": "Closest first: Venus to Neptune, an opposition with 0.6° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Mars at 2.0°, and Venus sextile Jupiter at 2.5° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "figures",
@@ -86,14 +86,14 @@
   },
   "substantiveFacts": [
     "aspect:Venus:Neptune:opposition",
-    "sun-degree:29.49",
+    "sun-degree:29.48",
     "decan:gemini:third",
     "personal:Mercury:Gemini:22.4°",
     "personal:Venus:Leo:11.7°",
     "personal:Mars:Virgo:27.5°",
-    "aspect:Venus:Neptune:opposition:0.57",
+    "aspect:Venus:Neptune:opposition:0.58",
     "aspect:Sun:Mars:square:1.98",
-    "aspect:Venus:Jupiter:sextile:2.56",
+    "aspect:Venus:Jupiter:sextile:2.55",
     "figure:unaspected:Uranus",
     "dignity:Mercury:domicile",
     "elements:air4-fire3-earth1-water1",

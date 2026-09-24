@@ -29,7 +29,8 @@ describe('ChartShareDialog', () => {
     expect(markup).toContain('Share chart sheet');
     expect(markup).toContain('Share my chart signature');
     expect(markup).toContain('Hide birth details');
-    expect(markup).toContain('not a name, birth date, time, place, coordinates, or chart link');
+    expect(markup).toContain('with no name, birth date, time, place, coordinates or chart link');
+    expect(markup).toContain('Its positions still give the birth date and time');
     expect(markup).not.toMatch(/1990-06-15|12:30|40\.7128|74\.006|@|#i=|#s=/);
   });
 

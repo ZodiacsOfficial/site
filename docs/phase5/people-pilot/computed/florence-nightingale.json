@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Rome",
     "civilTime": "12:00",
-    "utcInstant": "1820-05-12T11:10:04.000Z",
-    "utcOffsetMinutesAtBirth": 49.9333,
-    "civilDayStartUtc": "1820-05-11T23:10:04.000Z",
-    "civilDayEndUtc": "1820-05-12T23:10:04.000Z",
+    "utcInstant": "1820-05-12T11:14:59.000Z",
+    "utcOffsetMinutesAtBirth": 45.0167,
+    "civilDayStartUtc": "1820-05-11T23:14:59.000Z",
+    "civilDayEndUtc": "1820-05-12T23:14:59.000Z",
     "latitude": 43.771388888889,
     "longitude": 11.254166666667,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 21.58
+    "degree": 21.59
   },
   "moon": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 22.71,
+    "degree": 22.75,
     "uncertain": false,
     "signAtCivilDayStart": "taurus",
     "signAtCivilDayEnd": "taurus"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 21.1337,
-    "degreesToNextBoundaryAtWindowEnd": 7.9017
+    "degreesInsideAtWindowStart": 21.1036,
+    "degreesToNextBoundaryAtWindowEnd": 7.9319
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.965,
-    "Moon": 13.816,
+    "Moon": 13.815,
     "Mercury": 1.049,
     "Venus": 1.021,
     "Mars": 0.491,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 21.58,
+      "degree": 21.59,
       "retrograde": false,
       "speedPerDay": 0.9646,
       "dignity": null,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 22.71,
+      "degree": 22.75,
       "retrograde": false,
-      "speedPerDay": 13.8131,
+      "speedPerDay": 13.8122,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Aries",
       "degree": 25.74,
       "retrograde": false,
-      "speedPerDay": 1.0502,
+      "speedPerDay": 1.0504,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -183,7 +183,7 @@
       "a": "Sun",
       "b": "Moon",
       "type": "conjunction",
-      "orb": 1.12,
+      "orb": 1.17,
       "applying": false
     },
     {
@@ -218,7 +218,7 @@
       "a": "Venus",
       "b": "Saturn",
       "type": "square",
-      "orb": 2.68,
+      "orb": 2.67,
       "applying": true
     },
     {
@@ -243,15 +243,7 @@
       "applying": false
     }
   ],
-  "aspectsAtNoonOnly": [
-    {
-      "a": "Moon",
-      "b": "Jupiter",
-      "type": "sextile",
-      "orb": 4.99,
-      "applying": false
-    }
-  ],
+  "aspectsAtNoonOnly": [],
   "patterns": {
     "settledBodyCount": 10,
     "stelliums": [],

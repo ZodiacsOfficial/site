@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Managua",
     "civilTime": "12:00",
-    "utcInstant": "1867-01-18T17:45:08.000Z",
-    "utcOffsetMinutesAtBirth": -345.1333,
-    "civilDayStartUtc": "1867-01-18T05:45:08.000Z",
-    "civilDayEndUtc": "1867-01-19T05:45:08.000Z",
+    "utcInstant": "1867-01-18T17:44:30.000Z",
+    "utcOffsetMinutesAtBirth": -344.5,
+    "civilDayStartUtc": "1867-01-18T05:44:30.000Z",
+    "civilDayEndUtc": "1867-01-19T05:44:30.000Z",
     "latitude": 12.731922222222222,
     "longitude": -86.12439166666667,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 6.32,
+    "degree": 6.31,
     "uncertain": true,
     "signAtCivilDayStart": "gemini",
     "signAtCivilDayEnd": "cancer"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.4809,
-    "degreesToNextBoundaryAtWindowEnd": 1.5015
+    "degreesInsideAtWindowStart": 27.7244,
+    "degreesToNextBoundaryAtWindowEnd": 1.2581
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.018,
@@ -81,7 +81,7 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 6.32,
+      "degree": 6.31,
       "retrograde": false,
       "speedPerDay": 14.9914,
       "dignity": "domicile",
@@ -103,9 +103,9 @@
       "body": "Venus",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 17.39,
+      "degree": 17.38,
       "retrograde": false,
-      "speedPerDay": 0.5741,
+      "speedPerDay": 0.574,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -196,7 +196,7 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "conjunction",
-      "orb": 0.87,
+      "orb": 0.86,
       "applying": false
     },
     {
@@ -240,14 +240,14 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "square",
-      "orb": 3.94,
+      "orb": 3.95,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "opposition",
-      "orb": 6.84,
+      "orb": 6.85,
       "applying": true
     },
     {

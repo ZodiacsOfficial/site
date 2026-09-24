@@ -7,14 +7,14 @@
   "identity": "Novelist and university teacher · Germany · 1875–1955",
   "title": "Thomas Mann's birth chart",
   "metaDescription": "Thomas Mann's chart, computed from a sourced birth date: Sun at 15.3° Gemini. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 20.6° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 20.8° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:domicile",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:15.29",
+        "sun-degree:15.30",
         "decan:gemini:second"
       ],
       "text": "The Sun's exact place is 15.3° Gemini. That falls in the second decan, 10°–20°, sub-ruled by Venus in the classical scheme — an air sign read through a mutable season."
@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Mars:Neptune:trine:0.3",
-        "aspect:Sun:Uranus:sextile:3.14",
+        "aspect:Sun:Uranus:sextile:3.15",
         "aspect:Saturn:Pluto:square:3.39"
       ],
       "text": "The day's firmest angle joins Mars and Neptune — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun sextile Uranus at 3.1°, and Saturn square Pluto at 3.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
@@ -56,7 +56,7 @@
         "dignity:Mars:exaltation",
         "dignity:Saturn:domicile"
       ],
-      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Moon in Cancer at 20.6° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 16.6° is in domicile; Mars in Capricorn at 2.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 26.1° is in domicile. Condition, not character: that is all the dignity table ever measured."
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Moon in Cancer at 20.8° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 16.6° is in domicile; Mars in Capricorn at 2.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 26.1° is in domicile. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:14.5"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.6°."
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.8°."
     }
   ],
   "birthdayLink": {
@@ -90,13 +90,13 @@
   },
   "substantiveFacts": [
     "dignity:Moon:domicile",
-    "sun-degree:15.29",
+    "sun-degree:15.30",
     "decan:gemini:second",
     "personal:Mercury:Cancer:9.1°",
     "personal:Venus:Taurus:16.6°",
     "personal:Mars:Capricorn:2.4°",
     "aspect:Mars:Neptune:trine:0.3",
-    "aspect:Sun:Uranus:sextile:3.14",
+    "aspect:Sun:Uranus:sextile:3.15",
     "aspect:Saturn:Pluto:square:3.39",
     "figure:unaspected:Moon",
     "dignity:Moon:domicile",

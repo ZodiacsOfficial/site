@@ -23,7 +23,7 @@ const faq = [
   },
   {
     q: 'How accurate is this calculator?',
-    a: 'Planetary positions are computed with an astronomical engine and tested against NASA JPL reference data to within a few hundredths of a degree. Historical clock changes, including pre-1922 local mean time where available, are resolved from the IANA time-zone history supplied by your browser or device runtime.',
+    a: 'Planetary positions are computed with an astronomical engine and tested against NASA JPL reference data to within a few hundredths of a degree. Historical clock changes from 1970 on are resolved from the IANA time-zone history supplied by your browser or device runtime, and earlier ones from a pinned release of the IANA database, including the older records it keeps apart for places whose clocks later matched another city’s, which its maintainers consider less reliable. A birth from before its place adopted a legal time uses the local mean time of the birthplace itself.',
   },
   {
     q: 'What happens to my birth data?',

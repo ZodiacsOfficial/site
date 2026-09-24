@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Cross-runtime: the same bytes in three engines, four modes</title>
+<style>
+  body { font: 16px/1.5 system-ui, sans-serif; margin: 2rem auto; max-width: 52rem; padding: 0 1rem; }
+  pre { background: #f4f4f5; padding: 1rem; overflow-x: auto; }
+  code { font-family: ui-monospace, monospace; }
+</style>
+<h1>The same bytes, in three engines</h1>
+<p>
+  This page fetches <code>pack.bin</code> — a synthetic fixture built once
+  in Node — re-computes its SHA-256 <em>here</em>, and only then searches
+  it. If the digest it computes is not the digest recorded in
+  <code>pack.json</code>, it has not run this test and says so.
+</p>
+<p id="state">loading…</p>
+<pre id="out"></pre>
+<script type="module">
+  import { openPackFromBytes } from '/pkg/src/index.mjs';
+  import { experimental } from '/pkg/src/experimental.mjs';
+  import { runCases } from './cases.mjs';
+
+  const state = document.getElementById('state');
+  const out = document.getElementById('out');
+  const hex = (buf) => [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+
+  try {
+    const [bytes, expected] = await Promise.all([
+      fetch('./pack.bin').then((r) => r.arrayBuffer()).then((b) => new Uint8Array(b)),
+      fetch('./pack.json').then((r) => r.json()),
+    ]);
+    const digest = hex(await crypto.subtle.digest('SHA-256', bytes));
+
+    const rt = await openPackFromBytes(bytes);
+    const x = experimental(rt);
+    const started = performance.now();
+    const rows = runCases(x);
+    const ms = Math.round(performance.now() - started);
+    x.dispose();
+    rt.dispose();
+
+    const record = {
+      runtime: navigator.userAgent,
+      digestSeen: digest,
+      digestExpected: expected.sha256,
+      digestMatches: digest === expected.sha256,
+      bytes: bytes.byteLength,
+      ms,
+      rows,
+    };
+    window.CROSS_RUNTIME = record;
+    state.textContent = record.digestMatches
+      ? `digest verified in this engine: ${digest.slice(0, 16)}… — ${rows.length} cases in ${ms} ms`
+      : `DIGEST MISMATCH: ${digest} is not ${expected.sha256}`;
+    out.textContent = JSON.stringify(record, null, 2);
+  } catch (error) {
+    window.CROSS_RUNTIME = { error: String(error && error.stack ? error.stack : error) };
+    state.textContent = `failed: ${error}`;
+  }
+  document.body.dataset.done = '1';
+</script>

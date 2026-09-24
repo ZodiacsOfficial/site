@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Dublin",
     "civilTime": "12:00",
-    "utcInstant": "1856-07-26T12:25:21.000Z",
-    "utcOffsetMinutesAtBirth": -25.35,
-    "civilDayStartUtc": "1856-07-26T00:25:21.000Z",
-    "civilDayEndUtc": "1856-07-27T00:25:21.000Z",
+    "utcInstant": "1856-07-26T12:25:02.000Z",
+    "utcOffsetMinutesAtBirth": -25.0333,
+    "civilDayStartUtc": "1856-07-26T00:25:02.000Z",
+    "civilDayEndUtc": "1856-07-27T00:25:02.000Z",
     "latitude": 53.34972222222222,
     "longitude": -6.260277777777778,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 3.122,
-    "degreesToNextBoundaryAtWindowEnd": 25.922
+    "degreesInsideAtWindowStart": 3.1386,
+    "degreesToNextBoundaryAtWindowEnd": 25.9054
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.956,

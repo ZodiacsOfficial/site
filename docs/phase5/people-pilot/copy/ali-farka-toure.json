@@ -7,14 +7,14 @@
   "identity": "Singer · Mali · 1939–2006",
   "title": "Ali Farka Touré's birth chart",
   "metaDescription": "Ali Farka Touré's chart, computed from a sourced birth date: Sun at 7.2° Scorpio. Birth time unknown, so no houses or rising sign.",
-  "lede": "Tightest of all, Mercury holds a trine to Jupiter at 0.9° — close enough to weld thinking to expansion. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "lede": "Tightest of all, Mercury holds a trine to Jupiter at 0.8° — close enough to weld thinking to expansion. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
   "ledeFact": "aspect:Mercury:Jupiter:trine",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:7.16",
+        "sun-degree:7.20",
         "decan:scorpio:first"
       ],
       "text": "At the noon reference the Sun sits 7.2° into Scorpio — the first decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
@@ -23,21 +23,21 @@
       "key": "personal",
       "title": "The personal registers",
       "facts": [
-        "personal:Mercury:Scorpio:29.0°",
-        "personal:Venus:Scorpio:21.7°",
-        "personal:Mars:Aquarius:18.3°"
+        "personal:Mercury:Scorpio:29.1°",
+        "personal:Venus:Scorpio:21.8°",
+        "personal:Mars:Aquarius:18.4°"
       ],
-      "text": "Day to day the chart speaks through Mercury in Scorpio (29.0°), Venus in Scorpio (21.7°), Mars in Aquarius (18.3°): thought steeped in tone and memory, attraction that works by atmosphere, effort aimed through strategy and words."
+      "text": "Day to day the chart speaks through Mercury in Scorpio (29.1°), Venus in Scorpio (21.8°), Mars in Aquarius (18.4°): thought steeped in tone and memory, attraction that works by atmosphere, effort aimed through strategy and words."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Jupiter:trine:0.88",
-        "aspect:Venus:Uranus:opposition:1.22",
-        "aspect:Mars:Uranus:square:2.15"
+        "aspect:Mercury:Jupiter:trine:0.83",
+        "aspect:Venus:Uranus:opposition:1.27",
+        "aspect:Mars:Uranus:square:2.12"
       ],
-      "text": "Mercury to Jupiter is the closest call of the day, a trine within 0.9°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus opposition Uranus at 1.2°, and Mars square Uranus at 2.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "Mercury to Jupiter is the closest call of the day, a trine within 0.8°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus opposition Uranus at 1.3°, and Mars square Uranus at 2.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -56,7 +56,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:fall"
       ],
-      "text": "Read against the old dignities, three placements stand out. Venus in Scorpio at 21.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 29.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 27.1° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "Read against the old dignities, three placements stand out. Venus in Scorpio at 21.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 29.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 27.1° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:13.3"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 15.6°."
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 16.2°."
     }
   ],
   "birthdayLink": {
@@ -90,14 +90,14 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Jupiter:trine",
-    "sun-degree:7.16",
+    "sun-degree:7.20",
     "decan:scorpio:first",
-    "personal:Mercury:Scorpio:29.0°",
-    "personal:Venus:Scorpio:21.7°",
-    "personal:Mars:Aquarius:18.3°",
-    "aspect:Mercury:Jupiter:trine:0.88",
-    "aspect:Venus:Uranus:opposition:1.22",
-    "aspect:Mars:Uranus:square:2.15",
+    "personal:Mercury:Scorpio:29.1°",
+    "personal:Venus:Scorpio:21.8°",
+    "personal:Mars:Aquarius:18.4°",
+    "aspect:Mercury:Jupiter:trine:0.83",
+    "aspect:Venus:Uranus:opposition:1.27",
+    "aspect:Mars:Uranus:square:2.12",
     "figure:grand-trine:Mercury-Jupiter-Pluto",
     "figure:t-square:Venus-Uranus:apex-Mars",
     "dignity:Venus:detriment",

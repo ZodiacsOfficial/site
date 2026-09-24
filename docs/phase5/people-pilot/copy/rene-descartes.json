@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:10.94",
+        "sun-degree:10.95",
         "decan:aries:second"
       ],
       "text": "The Sun's exact place is 10.9° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
@@ -54,7 +54,7 @@
         "dignity:Moon:exaltation",
         "dignity:Venus:domicile"
       ],
-      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aries at 10.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Taurus at 10.0° is in exaltation; Venus in Taurus at 6.3° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aries at 10.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Taurus at 10.1° is in exaltation; Venus in Taurus at 6.3° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:11.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 10.0°."
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 10.1°."
     }
   ],
   "birthdayLink": {
@@ -89,7 +89,7 @@
   },
   "substantiveFacts": [
     "stellium:aries:4",
-    "sun-degree:10.94",
+    "sun-degree:10.95",
     "decan:aries:second",
     "personal:Venus:Taurus:6.3°",
     "personal:Mars:Gemini:22.2°",

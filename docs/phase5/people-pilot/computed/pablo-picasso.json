@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Madrid",
     "civilTime": "12:00",
-    "utcInstant": "1881-10-25T12:14:44.000Z",
-    "utcOffsetMinutesAtBirth": -14.7333,
-    "civilDayStartUtc": "1881-10-25T00:14:44.000Z",
-    "civilDayEndUtc": "1881-10-26T00:14:44.000Z",
+    "utcInstant": "1881-10-25T12:17:40.000Z",
+    "utcOffsetMinutesAtBirth": -17.6667,
+    "civilDayStartUtc": "1881-10-25T00:17:40.000Z",
+    "civilDayEndUtc": "1881-10-26T00:17:40.000Z",
     "latitude": 36.716666666667,
     "longitude": -4.4166666666667,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "scorpio",
     "signName": "Scorpio",
-    "degree": 2.24
+    "degree": 2.25
   },
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 1.82,
+    "degree": 1.85,
     "uncertain": true,
     "signAtCivilDayStart": "scorpio",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 1.7339,
-    "degreesToNextBoundaryAtWindowEnd": 27.2677
+    "degreesInsideAtWindowStart": 1.7461,
+    "degreesToNextBoundaryAtWindowEnd": 27.2554
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.998,
-    "Moon": 13.535,
-    "Mercury": 0.312,
+    "Moon": 13.536,
+    "Mercury": 0.311,
     "Venus": 1.233,
     "Mars": 0.271,
     "Jupiter": 0.119,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 2.24,
+      "degree": 2.25,
       "retrograde": false,
       "speedPerDay": 0.9985,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 1.82,
+      "degree": 1.85,
       "retrograde": false,
-      "speedPerDay": 13.5399,
+      "speedPerDay": 13.5403,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Scorpio",
       "degree": 24.11,
       "retrograde": false,
-      "speedPerDay": 0.3098,
+      "speedPerDay": 0.3096,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -203,7 +203,7 @@
       "a": "Moon",
       "b": "Pluto",
       "type": "opposition",
-      "orb": 3.03,
+      "orb": 3.06,
       "applying": false
     },
     {
@@ -261,21 +261,21 @@
       "a": "Moon",
       "b": "Venus",
       "type": "sextile",
-      "orb": 2.12,
+      "orb": 2.1,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 7.72,
+      "orb": 7.74,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "opposition",
-      "orb": 8.21,
+      "orb": 8.24,
       "applying": false
     }
   ],

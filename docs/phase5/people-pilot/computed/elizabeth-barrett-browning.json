@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1806-03-06T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1806-03-06T00:01:15.000Z",
-    "civilDayEndUtc": "1806-03-07T00:01:15.000Z",
+    "utcInstant": "1806-03-06T12:05:57.000Z",
+    "utcOffsetMinutesAtBirth": -5.95,
+    "civilDayStartUtc": "1806-03-06T00:05:57.000Z",
+    "civilDayEndUtc": "1806-03-07T00:05:57.000Z",
     "latitude": 54.716746,
     "longitude": -1.48882,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 7.02,
+    "degree": 7.07,
     "uncertain": true,
     "signAtCivilDayStart": "virgo",
     "signAtCivilDayEnd": "libra"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 14.7775,
-    "degreesToNextBoundaryAtWindowEnd": 14.2232
+    "degreesInsideAtWindowStart": 14.7816,
+    "degreesToNextBoundaryAtWindowEnd": 14.2191
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.999,
-    "Moon": 14.257,
+    "Moon": 14.255,
     "Mercury": 1.809,
     "Venus": 0.498,
     "Mars": 0.787,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 7.02,
+      "degree": 7.07,
       "retrograde": false,
-      "speedPerDay": 14.2518,
+      "speedPerDay": 14.2505,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Pisces",
       "degree": 7.49,
       "retrograde": false,
-      "speedPerDay": 1.8092,
+      "speedPerDay": 1.8093,
       "dignity": "fall",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -105,7 +105,7 @@
       "signName": "Pisces",
       "degree": 28.52,
       "retrograde": true,
-      "speedPerDay": -0.4984,
+      "speedPerDay": -0.4985,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -238,7 +238,7 @@
       "a": "Venus",
       "b": "Jupiter",
       "type": "square",
-      "orb": 6.02,
+      "orb": 6.03,
       "applying": false
     },
     {
@@ -254,14 +254,14 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "square",
-      "orb": 2.48,
+      "orb": 2.52,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "opposition",
-      "orb": 8.5,
+      "orb": 8.55,
       "applying": false
     }
   ],

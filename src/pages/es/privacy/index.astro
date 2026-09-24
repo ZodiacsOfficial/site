@@ -1,62 +1,168 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { webAnalyticsEnabled as vercelWebAnalyticsFlag } from '../../../lib/web-analytics.mjs';
+import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../../lib/account-v2/feature-flags';
+import { weeklyDigestSignupEnabled } from '../../../lib/weekly-digest/feature-flags';
+import { configuredWalletChains } from '../../../lib/wallet/config';
 
-const updated = '31 de agosto de 2026';
+const accountSyncV2Enabled = isAccountSyncV2Enabled({
+  PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
+  PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
+});
+const weeklyDigestEnabled = weeklyDigestSignupEnabled();
+const webPushEnabled = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
+const walletChartEnabled = configuredWalletChains({
+  ...process.env,
+  PUBLIC_WALLET_CHART_ENABLED:
+    import.meta.env.PUBLIC_WALLET_CHART_ENABLED ?? process.env.PUBLIC_WALLET_CHART_ENABLED,
+}).length > 0;
+const updated = '23 de septiembre de 2026';
+const modifiedAt = '2026-09-23T00:00:00.000Z';
 
 const jsonLd = [
   {
     '@type': 'WebPage',
     name: 'Privacidad en Zodiacs.org',
     url: 'https://zodiacs.org/es/privacy/',
-    description: 'Cómo trata zodiacs.org las cartas natales, las consultas de direcciones públicas de The Cabinet of Twelve y Shelf, el almacenamiento, la analítica y las funciones opcionales.',
+    description:
+      'Cómo trata Zodiacs.org las cartas natales, el almacenamiento del navegador, las cuentas, los enlaces para compartir, Guide, la analítica, las consultas de direcciones públicas de billetera y las solicitudes de datos de mercado.',
     inLanguage: 'es',
+    dateModified: modifiedAt,
   },
 ];
 const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
 ---
 <Base
   title="Privacidad — Cómo tratamos tus datos | Zodiacs.org"
-  description="Cómo trata zodiacs.org las cartas natales, las consultas de direcciones públicas de The Cabinet of Twelve y Shelf, el almacenamiento, la analítica y las funciones opcionales."
+  description="Cómo trata Zodiacs.org las cartas natales, el almacenamiento del navegador, las cuentas, los enlaces para compartir, Guide, la analítica, las consultas de direcciones públicas de billetera y las solicitudes de datos de mercado."
   path="/es/privacy/"
   locale="es"
   jsonLd={jsonLd}
 >
   <section class="section container container--narrow">
     <em class="kicker">Privacidad</em>
-    <h1 class="method-title display">Tú decides cuándo salen datos de tu dispositivo.</h1>
+    <h1 class="method-title display">Tus datos de nacimiento solo salen de tu dispositivo cuando tú los envías.</h1>
 
     <div class="prose">
       <p class="lede">
         El cálculo de las cartas se ejecuta en tu navegador. Los datos de
         nacimiento no se envían como parte del cálculo ni de una consulta de
-        The Cabinet of Twelve; solo salen del dispositivo si eliges sincronizar una
-        cuenta o los escribes en el asistente. Aura envía una dirección pública
-        de billetera —no tus datos de nacimiento ni de la carta— a un proveedor
-        de datos de blockchain para realizar una consulta de solo lectura.
-        Mostramos cero anuncios y no usamos seguimiento entre sitios.
+        The Cabinet of Twelve; solo salen de tu dispositivo si inicias sesión
+        para sincronizar cartas guardadas, compartes un enlace que los lleva o
+        los escribes en un mensaje al asistente. Un calendario de tránsitos o
+        una invitación de compatibilidad envía, en su lugar, las posiciones de
+        la carta, y esas posiciones aún permiten deducir tu fecha y hora de
+        nacimiento. Si adjuntas explícitamente una carta al asistente, también
+        sale del dispositivo un resumen solo de posiciones; no se adjuntan los
+        nombres guardados ni los datos de nacimiento en bruto. Aura envía una
+        dirección pública de billetera —no tus datos de nacimiento ni de la
+        carta— a un proveedor de datos de blockchain para una consulta de solo
+        lectura. Las cuentas{weeklyDigestEnabled ? ',' : ' y'}
+        los datos recordados de Aura{weeklyDigestEnabled ? ' y el correo semanal' : ''} son
+        opcionales y están desactivados de forma predeterminada. No mostramos
+        anuncios ni usamos seguimiento entre sitios.
       </p>
 
       <h2>Quién opera este sitio</h2>
       <p>
         <strong>Zodiacs LLC</strong>, una sociedad de responsabilidad limitada
-        de Nuevo México («Zodiacs», «nosotros»), posee y opera Zodiacs.org y es
-        responsable de la información personal descrita en esta política.
-        Cuando la legislación de protección de datos usa el término
-        «responsable del tratamiento», Zodiacs LLC es el responsable del
-        tratamiento de esa información. Las solicitudes de privacidad y de
-        eliminación pueden enviarse a Zodiacs LLC a{' '}
-        <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+        de Nuevo México («Zodiacs», «nosotros» o «nuestro»), posee y opera
+        Zodiacs.org y es responsable de la información personal descrita en
+        esta política. Cuando la legislación de protección de datos usa el
+        término «responsable del tratamiento», Zodiacs LLC es el responsable
+        del tratamiento de esa información.
       </p>
 
-      <h2>Calculadoras y cartas guardadas</h2>
+      <h2>Qué pasa cuando usas una calculadora</h2>
       <p>
-        La búsqueda de lugares y el cálculo astrológico ocurren en tu
-        dispositivo. Las cartas que guardas permanecen en el almacenamiento
-        local del navegador. Una cuenta es opcional; si la usas, Supabase
-        guarda el correo y las cartas que eliges sincronizar para mostrarlas en
-        tus otros dispositivos. Los datos de nacimiento no se transmiten ni se
-        guardan en nuestros servidores como parte del cálculo en sí.
+        Cuando calculas una carta aquí, el cálculo se hace en tu propio
+        dispositivo. Al introducir una fecha, una hora y un lugar de
+        nacimiento, el código que se ejecuta en tu navegador usa esa
+        información para calcular la carta. Como parte de ese cálculo, no se
+        transmite a nuestros servidores, ni la registramos ni la almacenamos.
+        Solo sale del dispositivo si más adelante inicias sesión para
+        sincronizar una carta guardada, compartes un enlace que la lleva o la
+        pones en un mensaje al asistente. Es una decisión de diseño deliberada,
+        descrita en detalle en nuestra <a href="/es/methodology/">página de metodología</a>.
+      </p>
+      <p>
+        La búsqueda de lugares descarga de zodiacs.org un archivo de ciudades
+        elegido según la primera letra que escribes, y busca en él dentro de tu
+        navegador. Para un nacimiento anterior a 1970, la calculadora también
+        descarga un archivo de cambios históricos de hora elegido según la zona
+        horaria del lugar de nacimiento. Ninguna de las dos solicitudes va a otro servicio. Los archivos que se solicitan muestran a nuestro proveedor de alojamiento la primera letra de la ciudad que escribiste y, para un nacimiento anterior a 1970, un grupo de zonas horarias que incluye la del lugar de nacimiento.
+      </p>
+
+      <h2>Guide</h2>
+      <p>
+        Cuando envías una pregunta a Guide, ese mensaje, los mensajes recientes
+        de Guide y el contexto visible de Guide se envían a OpenAI para una
+        revisión de seguridad de la entrada y para generar un borrador de
+        respuesta. Ese borrador generado se envía después de nuevo a OpenAI
+        para una segunda revisión de seguridad antes de que lo veas. Cada
+        solicitud a la API Responses usa <code>store: false</code>. La
+        conversación actual con Guide en la web permanece solo en esta sesión
+        del navegador, no se sincroniza con una cuenta y no se almacena como
+        texto en los servidores de Zodiacs.org, hayas iniciado sesión o no.
+        OpenAI indica que, de forma predeterminada, los datos de la API no se
+        usan para entrenar sus modelos, y que sus registros de supervisión de
+        abusos conservan el contenido enviado hasta 30 días, o más tiempo
+        cuando la ley lo exige o cuando es necesario para proteger de daños sus
+        servicios o a terceros. Una carta guardada solo se incluye después de
+        que pulses «Adjuntar mi carta»; la pantalla de consentimiento muestra
+        el resumen solo de posiciones antes de enviarlo. Ese resumen acompaña
+        cada pregunta mientras «Usando mi carta» siga activo; puedes
+        desactivarlo. Guide nunca adjunta el nombre, la fecha de nacimiento, la
+        hora, el lugar de nacimiento ni las coordenadas que tengas guardados;
+        todo lo que escribes en el chat forma parte del mensaje que envías.
+        Para aplicar el límite diario, conservamos un identificador
+        unidireccional con sal derivado de tu dirección IP, nunca la IP
+        original, junto con su recuento diario y un registro de cada solicitud.
+        Cada comprobación de cuota posterior borra los recuentos anteriores al
+        día UTC previo y los registros de solicitudes de más de 48 horas. No
+        enviamos ese identificador a OpenAI ni incluimos texto de la
+        conversación en los metadatos del proveedor. Guide también establece
+        una cookie de sesión que contiene un identificador aleatorio y firmado.
+        Sirve para limitar las solicitudes simultáneas desde un mismo
+        navegador, dura hasta que termina la sesión del navegador y no se
+        almacena con tus mensajes.
+      </p>
+
+      <h2>Cartas que guardas</h2>
+      <p>
+        Cuando guardas una carta, queda en el almacenamiento local de tu
+        navegador: en tu dispositivo y bajo tu control. No se envía a ningún
+        sitio salvo que inicies sesión en una cuenta (más abajo), la compartas
+        o te suscribas a su calendario de tránsitos (más abajo), o la adjuntes
+        a Guide (más arriba). Borrar los datos del sitio en tu navegador
+        elimina las cartas guardadas. Salvo que inicies sesión, no podemos
+        verlas ni recuperarlas por ti.
+      </p>
+
+      <h2>Enlaces para compartir e invitaciones</h2>
+      <p>
+        Los enlaces para compartir guardan los datos de la carta después del
+        «#» de la dirección, una parte que los navegadores no envían a los
+        servidores. Un enlace con todos los datos lleva el nombre de la carta,
+        la fecha, la hora y el lugar de nacimiento, y las coordenadas. Un
+        enlace solo de posiciones lleva, en cambio, el código de carta descrito
+        en «Resumen diario, calendario y notificaciones». Cualquiera que tenga
+        uno de los dos enlaces puede abrirlo, incluida cualquier persona a la
+        que se le reenvíe. Un enlace con imagen de vista previa también pone en
+        la dirección el Sol, la Luna y el ascendente, con precisión de grado,
+        así que los reciben nuestro servidor y cualquier aplicación que muestre
+        la vista previa.
+      </p>
+      <p>
+        Si has iniciado sesión y creas una invitación de compatibilidad a
+        partir de una carta sincronizada, nuestro servidor guarda el nombre de
+        la carta (hasta 24 caracteres), su signo solar, su código de carta solo
+        de posiciones y si se conoce la hora de nacimiento. Una invitación dura como máximo 14 días, y quien la abre ve ese nombre y esas posiciones.
+        Las posiciones se borran cuando la invitación se usa, se retira o
+        caduca, y el resto del registro, 30 días después de eso. Si lo pides, te
+        enviamos un correo a través de
+        <a href="https://resend.com/" rel="noopener noreferrer">Resend</a>
+        cuando se completa la invitación.
       </p>
 
       <h2>Momentos de Living Chart</h2>
@@ -68,11 +174,11 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
         (mantenerlo en todos tus dispositivos), la fecha y la precisión horaria
         de la entrada, la categoría, la nota, el pronóstico congelado y el
         identificador de la carta se envían a Supabase y se almacenan para tu
-        cuenta con sesión iniciada. El acceso está restringido con seguridad a
-        nivel de fila y Supabase cifra los datos almacenados en reposo. No es
-        cifrado de extremo a extremo: Zodiacs.org y Supabase pueden procesar
-        técnicamente la entrada almacenada para ofrecer sincronización,
-        soporte, exportación y borrado.
+        cuenta con sesión iniciada. El acceso está restringido por cuenta
+        mediante seguridad a nivel de fila y Supabase cifra los datos
+        almacenados en reposo. No es cifrado de extremo a extremo: Zodiacs.org
+        y Supabase pueden procesar técnicamente la entrada almacenada para
+        ofrecer sincronización, soporte, exportación y borrado.
       </p>
       <p>
         La sincronización de Living Chart tiene su propio consentimiento,
@@ -80,220 +186,455 @@ const webAnalyticsEnabled = vercelWebAnalyticsFlag(import.meta.env);
         las entradas, no las indexamos, no las enviamos automáticamente a Guide
         ni a otro proveedor de IA, no las usamos para generar horóscopos, no
         las vendemos y no incluimos su texto de forma intencionada en la
-        analítica ni en los registros de la aplicación. Retirar el
-        consentimiento elimina las entradas remotas y avanza una versión de
-        consentimiento para que una pestaña antigua sin conexión no pueda
-        volver a subirlas. Las copias ya guardadas en un dispositivo permanecen
-        hasta que las borres allí o limpies los datos de este sitio en el
-        navegador. Borrar una entrada elimina su nota, categoría, pronóstico,
-        identificador de carta y fecha del dispositivo y del registro en la
-        nube; puede quedar una marca técnica de borrado sin contenido para que
-        una solicitud retrasada no pueda restaurarla. La línea de tiempo ofrece
-        exportación en JSON portable y Markdown legible, edición y borrado por
-        entrada, y un control de reintento cuando la sincronización necesita
-        atención.
+        analítica ni en los registros de la aplicación. Retirar la
+        sincronización de Living Chart elimina las entradas remotas y avanza
+        una versión de consentimiento para que una pestaña antigua sin conexión
+        no pueda volver a subirlas. Las copias ya guardadas en un dispositivo
+        permanecen hasta que las borres allí o borres los datos de este sitio
+        en el navegador. Borrar una entrada elimina su nota, categoría,
+        pronóstico, identificador de carta y fecha del dispositivo y del
+        registro en la nube. Puede quedar una marca técnica de borrado sin
+        contenido para que una solicitud retrasada no pueda restaurarla. La
+        línea de tiempo ofrece exportación en JSON portable y en Markdown
+        legible, edición y borrado por entrada, y un control de reintento
+        cuando la sincronización necesita atención.
       </p>
 
-      <h2>The Cabinet of Twelve, Shelf y direcciones públicas</h2>
+      <h2>The Cabinet of Twelve y las direcciones públicas de billetera</h2>
       <p>
-        The Cabinet of Twelve lee en paralelo una dirección pública de billetera y el
-        cielo fechado. Si eliges añadir una carta guardada en este navegador,
-        su resumen es una capa comparativa opcional que permanece en el
-        dispositivo. El patrón y cualquier reflexión simbólica se componen en
-        tu dispositivo. Al componer
-        o actualizar un Aura, nuestro endpoint de tenencias recibe la dirección
-        pública y la reenvía al proveedor de datos de blockchain configurado
-        para comprobar qué entradas del Registro están presentes. El proveedor
-        configurado es actualmente PublicNode, operado por Allnodes. La solicitud
-        no incluye datos de nacimiento, nombre de la carta, posiciones ni
-        geometría de la carta.
+        The Cabinet of Twelve lee en paralelo una dirección pública de billetera
+        y el cielo fechado. Si eliges añadir una carta ya guardada en este
+        navegador, su resumen es una capa de comparación opcional que se queda
+        en el dispositivo. El patrón y cualquier reflexión simbólica se componen
+        en tu dispositivo. Cuando compones o actualizas un Aura, nuestro
+        endpoint de tenencias recibe la dirección pública y la reenvía al
+        proveedor de datos de blockchain configurado para comprobar qué
+        entradas del Registro de Zodiacs.org están presentes. El proveedor
+        configurado es actualmente PublicNode, operado por Allnodes. El
+        proveedor recibe la consulta desde nuestro servidor, no desde tu
+        navegador. La solicitud no incluye datos de nacimiento ni nombres,
+        posiciones o geometría de cartas. Cuando la función está habilitada,
+        el Shelf público opcional de Zodiac Terminal usa el mismo endpoint y
+        envía una sola dirección pública de Solana, la que introduces, solo después de
+        que pulses «Ver»; no envía datos de la carta ni de nacimiento. Cuando
+        Aura está desactivado, el Shelf ilustrativo no hace ninguna solicitud
+        de dirección ni al proveedor.
+      </p>
+      {walletChartEnabled && (
+        <p>
+          La página Wallet Chart envía la dirección pública que pegas a nuestro
+          servidor, que pide a un proveedor de datos de blockchain (un servicio
+          RPC de Solana, Etherscan o un servicio RPC de Base) la primera
+          transacción de la dirección y los signos del Registro que esta posee,
+          y guarda la respuesta en memoria hasta un día. No se envían datos de
+          nacimiento ni de la carta.
+        </p>
+      )}
+      <p>
+        Puedes pegar una dirección pública sin conectar una billetera. Si
+        eliges «Conectar», el software de billetera compatible de terceros solo
+        se invoca después de tu clic. Puede devolver a este navegador las
+        cuentas públicas que autorices; Aura elige una dirección compatible y
+        solo reenvía esa dirección para la consulta. Aura no solicita ninguna
+        frase de recuperación, clave privada, firma de mensaje, aprobación de
+        token, transacción ni cambio de red. Las condiciones de privacidad del
+        propio proveedor de tu billetera se aplican a su software y a su
+        solicitud de conexión.
       </p>
       <p>
-        Cuando está habilitado, el Shelf público opcional de la portada del
-        Registro usa el mismo endpoint y envía una sola dirección pública de
-        Solana después de que pulses «Ver»; no envía datos de nacimiento ni de
-        cartas. Si Aura está deshabilitado, el Shelf ilustrativo no hace ninguna
-        solicitud de dirección o proveedor. «Volver a la vista de ejemplo» quita
-        el resultado de la pantalla; recargar o cerrar la página elimina la
-        caché temporal del Shelf en memoria.
-      </p>
-      <p>
-        Puedes pegar una dirección sin conectar una billetera. Si eliges
-        «Conectar», el software de una billetera externa solo se abre después de
-        tu clic. Puede devolver a este navegador las cuentas públicas que
-        autorices; Aura elige una dirección compatible y solo reenvía esa
-        dirección para la consulta. No solicita frase de recuperación, clave
-        privada, firma de mensaje, aprobación de tokens, transacción ni cambio
-        de red. Se aplican las condiciones de privacidad del proveedor de la
-        billetera.
-      </p>
-      <p>
-        Una dirección pública es pública, pero no necesariamente anónima. Su
-        historial y sus tenencias on-chain pueden ser visibles y vincularse con
-        una persona u otra actividad. Vercel, el proveedor de datos de
-        blockchain configurado y su infraestructura pueden tratar metadatos
-        ordinarios de la solicitud y registros operativos o de seguridad, como
-        dirección IP, fecha, hora y datos del navegador. No prometemos que los
-        proveedores de infraestructura nunca registren una consulta de
-        dirección pública ni controlamos sus plazos de conservación.
-      </p>
-
-      <h2>Almacenamiento y uso compartido de Aura</h2>
-      <p>
-        De forma predeterminada, Aura guarda la dirección pública, la red, los
-        signos del Registro encontrados, la hora de consulta y el identificador
-        opcional de la carta seleccionada en el almacenamiento de sesión de esta pestaña,
-        con una vigencia de restauración de ocho horas. La opción desmarcada
-        «Recordar esta dirección en este dispositivo» guarda los mismos campos
-        en el almacenamiento local con una vigencia de restauración de 24 horas.
-        Después de esos plazos, los registros ya no pueden restaurarse. Aura los
-        elimina la próxima vez que intenta leerlos, pero sus bytes caducados
-        pueden permanecer en el almacenamiento del navegador hasta que vuelvas
-        a Aura o borres los datos del sitio. «Olvidar dirección / Borrar datos
-        de Aura» elimina ambos registros del navegador, pero no el historial
-        público de la blockchain ni los registros de infraestructura.
-      </p>
-      <p>
-        Las imágenes para compartir se componen en tu dispositivo. De forma
-        predeterminada omiten dirección, red, nombre y datos de la carta,
-        posiciones exactas, geometría y la cantidad o lista de signos hallados.
-        No incluyen ningún dato de una carta guardada. La aplicación de destino
-        elegida en la hoja de compartir aplica sus propias condiciones. Borrar
-        Aura no puede retirar copias guardadas o republicadas por otras personas
-        o servicios.
+        Una dirección pública es pública, pero no necesariamente anónima. Sus
+        tenencias y su historial on-chain pueden ser visibles y pueden llegar a
+        vincularse con una persona o con otra actividad. Vercel, el proveedor
+        de datos de blockchain configurado y su infraestructura pueden tratar
+        metadatos habituales de la solicitud y registros operativos o de
+        seguridad, como la dirección IP, la hora y datos del navegador. No
+        prometemos que una solicitud con una dirección pública nunca quede
+        registrada por proveedores de infraestructura cuyas prácticas de
+        conservación no controlamos.
       </p>
 
       <h2>Fuentes de datos públicas de Astrofolio, la Terminal y el Registro</h2>
       <p>
-        Algunas secciones del Registro piden automáticamente desde tu navegador
-        datos públicos de mercado a DexScreener, datos públicos de gráficos y
-        operaciones a GeckoTerminal y estadísticas públicas de
-        visitas a Wikimedia. Estas solicitudes GET automáticas no contienen una
-        dirección de billetera, datos de nacimiento, datos de cartas ni texto
-        que hayas introducido. DexScreener, GeckoTerminal y Wikimedia pueden recibir metadatos
-        ordinarios de una solicitud web, como dirección IP, fecha, hora,
-        navegador y la página de origen que permita la política del navegador; se
-        aplican sus propias políticas de privacidad.
+        Cuando se muestra un panel de mercado pertinente de Zodiac Terminal o
+        del Registro, tu navegador puede pedir datos públicos de mercado a
+        Dex Screener, datos públicos de gráficos a GeckoTerminal o datos
+        públicos de audiencia a Wikimedia, y abrir un mercado de la Terminal
+        pide al servicio independiente Jupiter una cotización de precio para un
+        importe de muestra. Esas solicitudes automáticas no incluyen una
+        dirección de billetera, datos de nacimiento, datos de la carta ni
+        resultados de Aura. Aun así, el servicio independiente recibe metadatos
+        ordinarios de la solicitud web, como tu dirección IP, datos del
+        navegador y la hora de la solicitud, y se aplican sus propias
+        condiciones de privacidad y prácticas de conservación.
       </p>
       <p>
         En la página Cómo comprar de Astrofolio, abrir la página o cambiar el
         signo seleccionado no carga Jupiter, no contacta con el software de
-        billetera y no solicita un precio. Solo después de que cargues
-        explícitamente la herramienta opcional, tu navegador envía a la
-        Jupiter independiente el identificador del token seleccionado y el
-        importe solicitado como parámetros de cotización, y pide contexto de
-        liquidez indexada a DexScreener. Esas solicitudes de visualización no
+        billetera ni solicita una cotización. Después de que cargues
+        explícitamente la herramienta auxiliar opcional, tu navegador envía el
+        mint del token seleccionado y el importe solicitado como parámetros de
+        cotización al servicio independiente Jupiter, y pide contexto de
+        liquidez indexada a Dex Screener. Esas solicitudes de visualización no
         incluyen una dirección de billetera. Si decides revisar un intercambio
-        directo, la billetera compatible que elijas entrega su dirección
+        directo, la billetera compatible que elijas proporciona su dirección
         pública de Solana a Jupiter para que Jupiter construya la transacción
-        exacta que revisarás. Tu billetera firma localmente. Tu navegador
-        envía después la transacción firmada y el identificador de la
-        solicitud al punto de ejecución de Jupiter. Ni la dirección pública ni
-        la transacción firmada se envían a un servidor de Zodiacs.org, y
-        Zodiacs.org nunca pide ni recibe una frase de recuperación o una clave
-        privada. Jupiter, DexScreener y tu servicio de billetera pueden
-        recibir metadatos ordinarios de la solicitud web, como dirección IP,
-        navegador y hora; se aplican sus propias políticas de privacidad y
-        retención.
+        exacta que revisarás. Tu billetera firma localmente. Después, tu
+        navegador envía la transacción firmada y el identificador de solicitud
+        de Jupiter al endpoint de ejecución de Jupiter. Ni la dirección pública
+        ni la transacción firmada se envían a un servidor de Zodiacs.org, y
+        Zodiacs.org nunca pide ni recibe una frase de recuperación ni una clave
+        privada. Jupiter, Dex Screener y tu servicio de billetera pueden recibir
+        metadatos ordinarios de la solicitud web, como tu dirección IP, datos
+        del navegador y la hora de la solicitud; se aplican sus propias
+        condiciones de privacidad y prácticas de conservación.
       </p>
       <p>
         El perfil de cada signo en el Registro es de solo lectura. Muestra datos
-        públicos de mercado y direcciones verificadas, pero no contiene una ruta
-        de compra ni un enlace a un mercado. El perfil no conecta una billetera,
-        no solicita un precio, no recibe tu dirección pública y no pide una
-        transacción. Estas solicitudes de datos de mercado no incluyen datos de
-        nacimiento ni de la carta.
+        públicos de mercado y direcciones de token verificadas, pero no contiene
+        ninguna ruta de compra ni enlace a una plataforma de negociación. El
+        perfil no conecta una billetera, no pide una cotización, no recibe tu
+        dirección pública ni solicita una transacción. Estas solicitudes de
+        datos de mercado no incluyen datos de nacimiento ni de la carta.
       </p>
 
-      <h2>Guide</h2>
+      <h2>Almacenamiento en el navegador y uso compartido de Aura</h2>
       <p>
-        Cuando envías una pregunta a Guide, ese mensaje, los mensajes recientes y
-        el contexto visible de Guide se envían a OpenAI para una revisión de
-        seguridad de la entrada y para generar un borrador de respuesta. Ese
-        borrador generado se envía después de nuevo a OpenAI para una segunda
-        revisión de seguridad antes de mostrártelo. Cada solicitud a la API Responses usa
-        <code>store: false</code>. La conversación web actual permanece solo en
-        esta sesión del navegador, no se sincroniza con una cuenta y no se
-        almacena como texto en los servidores de Zodiacs.org, hayas iniciado
-        sesión o no. OpenAI indica que, de forma predeterminada, los
-        datos de la API no se usan para entrenar sus modelos; sus registros
-        estándar contra abusos pueden conservar el contenido enviado hasta 30
-        días, salvo que se apliquen controles de datos más estrictos. Una carta guardada
-        solo se incluye después de que pulses «Adjuntar mi carta»; la pantalla de
-        consentimiento muestra el resumen solo de posiciones antes de enviarlo.
-        El resumen acompaña cada pregunta mientras «Usando mi carta» siga activo;
-        puedes desactivarlo.
-        Guide nunca adjunta tu nombre,
-        fecha, hora, lugar de nacimiento o coordenadas
-        guardados; todo lo que escribas en el chat forma parte del mensaje que
-        envías. Para aplicar el límite diario, conservamos un identificador
-        unidireccional con sal derivado de tu dirección IP y su recuento diario,
-        nunca la IP original; las comprobaciones de cuota borran los registros
-        anteriores al día UTC previo. No enviamos ese identificador a OpenAI ni
-        incluimos texto de la conversación en los metadatos del proveedor.
+        De forma predeterminada, Aura guarda la dirección pública, la red, los
+        resultados de signos del Registro, la hora de la consulta y el
+        identificador opcional de la carta seleccionada en el almacenamiento de
+        sesión de esta pestaña. Ese registro deja de poder restaurarse al cabo
+        de ocho horas. La opción desmarcada «Recordar esta dirección en este
+        dispositivo» guarda los mismos campos en el almacenamiento local y hace
+        que dejen de poder restaurarse al cabo de 24 horas. Los registros que
+        ya no pueden restaurarse se eliminan la próxima vez que Aura los lee; si
+        no vuelves, el navegador puede conservar los bytes caducados hasta que
+        borres los datos del sitio. «Olvidar dirección / Borrar datos de Aura»
+        elimina ambos registros de Aura de este navegador; no puede borrar el
+        historial público de la blockchain ni los registros de infraestructura.
+      </p>
+      <p>
+        Las imágenes para compartir de Aura se componen en tu dispositivo. La
+        imagen omite la dirección pública, el nombre de la carta, los datos de
+        nacimiento, las posiciones exactas y la geometría de la carta. La imagen
+        del sello muestra qué signos se poseen, cuántos de los doce y una fecha.
+        La imagen del gabinete muestra la red, la fecha, qué signos se poseen y
+        la edición de cada uno, que refleja el saldo, con un recuento de
+        esculturas doradas de hasta 99+. Ninguna de las dos incluye ningún dato
+        de una carta guardada. La hoja para compartir del navegador o una
+        descarga envía la imagen al destino que elijas, cuyas condiciones de
+        privacidad se aplican a partir de ese momento. Borrar Aura no puede
+        retirar las copias que otras personas o servicios hayan guardado o
+        republicado.
+      </p>
+
+      <h2>Cuenta opcional (sincronización entre dispositivos)</h2>
+      {accountSyncV2Enabled ? (
+        <>
+          <p>
+            Las cuentas siguen siendo opcionales. Las calculadoras sin cuenta y
+            el guardado local de cartas funcionan sin iniciar sesión. La prueba
+            de sincronización cifrada acepta como máximo una carta que confirmes
+            explícitamente como tuya. La versión preliminar está limitada a
+            personas adultas de 18 años o más.
+          </p>
+          <ul>
+            <li>
+              Inicias sesión con un enlace de un solo uso enviado a tu dirección
+              de correo. Un token de sesión propio permanece en este navegador
+              hasta que cierras sesión.
+            </li>
+            <li>
+              Antes de la subida, la página de perfil muestra exactamente qué
+              datos de nacimiento de origen y qué posiciones derivadas saldrían
+              del dispositivo. Ninguna carta se selecciona ni se migra
+              automáticamente.
+            </li>
+            <li>
+              Nuestro servidor cifra la etiqueta guardada, la fecha exacta, la
+              hora, el lugar, las coordenadas, la zona horaria y las posiciones
+              derivadas con una clave de datos propia de cada registro. Esa
+              clave se envuelve con una clave de servicio almacenada fuera de la
+              base de datos. Es un cifrado gestionado por el servicio —no un
+              cifrado de extremo a extremo—, así que Zodiacs puede descifrar el
+              registro cuando lo restauras en otro dispositivo con sesión
+              iniciada.
+            </li>
+            <li>
+              La base de datos recibe un sobre cifrado con la carta, además de
+              los identificadores mínimos, las revisiones, el estado del
+              consentimiento y la autorización de borrado necesarios para la
+              sincronización. Con este consentimiento, la carta no se hace
+              pública, no se usa con fines de descubrimiento, no se envía a un
+              proveedor de IA ni se licencia para publicidad.
+            </li>
+            <li>
+              <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>{' '}
+              trata los registros de la cuenta y de la base de datos, y{' '}
+              <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>{' '}
+              ejecuta la capa de servidor que los valida y los cifra.
+            </li>
+            <li>
+              Para que el borrado sea fiable después de un cambio del correo de
+              la cuenta, conservamos un historial limitado de hasta 16
+              localizadores confirmados del correo de la cuenta. Cada localizador
+              se cifra con una clave gestionada por el servicio; la base de datos
+              no recibe la dirección en texto plano. Durante el borrado, puede
+              quedar durante un máximo de siete días un registro de limpieza
+              cifrado y vinculado a la solicitud, mientras se reintenta la
+              eliminación en el proveedor de correo. Solo se usa para esa
+              limpieza y después se borra junto con el recibo de recuperación.
+            </li>
+            <li>
+              Retirar el consentimiento de sincronización de cartas borra de
+              inmediato el registro remoto cifrado de la carta en v2. Las copias
+              locales permanecen en los dispositivos salvo que las borres por
+              separado.
+            </li>
+            <li>
+              Desde la página de perfil puedes descargar una exportación de la
+              cuenta en JSON o iniciar el borrado permanente. Borrar la cuenta
+              también elimina una suscripción a Daily Sun vinculada y confirmada
+              de forma independiente, cuando esa limpieza se puede confirmar. Si
+              un cambio de correo o una rotación de claves hace ambigua la
+              coincidencia, el borrado de la cuenta se completa igualmente y la
+              página te indica que uses el enlace para darte de baja del correo
+              o que contactes con soporte.
+            </li>
+            <li>
+              Las cuentas con cartas del sistema anterior de sincronización en la
+              nube no se migran sin avisar. La prueba queda en pausa y ofrece la
+              exportación hasta que haya disponible una revisión explícita de la
+              migración carta por carta; el borrado permanente de la cuenta
+              también elimina esos registros antiguos.
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <p>
+            Puedes crear una cuenta gratuita para tener tus cartas guardadas en
+            más de un dispositivo. Es totalmente opcional y las herramientas
+            funcionan por completo sin ella. Si creas una:
+          </p>
+          <ul>
+            <li>
+              Inicias sesión con un enlace de un solo uso enviado a tu dirección
+              de correo: no hay ninguna contraseña que guardar.
+            </li>
+            <li>
+              Guardamos tu dirección de correo y, mientras tienes la sesión
+              iniciada, todas las cartas guardadas en tu navegador, incluidas las
+              que guardaste antes de iniciar sesión, con sus datos de nacimiento,
+              en nuestro proveedor de base de datos,
+              <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>,
+              para que puedan aparecer en tus otros dispositivos. El acceso está
+              restringido a tu propia cuenta.
+            </li>
+            <li>
+              También guardamos tu ajuste de sistema de casas y un registro de
+              cada carta que eliminas (su identificador y cuándo), para que la
+              eliminación llegue a tus otros dispositivos. Se conservan hasta que
+              eliminas la cuenta.
+            </li>
+            <li>
+              Mientras tienes la sesión iniciada, se guarda un token de acceso en
+              tu navegador para que sigas con la sesión iniciada. Al cerrar
+              sesión, se elimina.
+            </li>
+            <li>
+              Puedes eliminar tu cuenta y sus cartas almacenadas en cualquier
+              momento escribiendo a <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+              Lo que quede en nuestras copias de seguridad semanales caduca en un
+              plazo de 90 días (consulta «Copias de seguridad»).
+            </li>
+          </ul>
+        </>
+      )}
+
+      <h2>Correo electrónico</h2>
+      {weeklyDigestEnabled && (
+        <p>
+          Quienes tienen una cuenta pueden optar por recibir un correo semanal
+          que resume el cielo de la semana siguiente para sus cartas guardadas.
+          La opción está desmarcada de forma predeterminada. Si optas por
+          recibirlo, guardamos esa preferencia y enviamos el correo a través de
+          nuestro proveedor de correo, <a href="https://resend.com/" rel="noopener noreferrer">Resend</a>.
+          Cada correo incluye un enlace para darte de baja con un clic, y puedes
+          desactivarlo desde tu perfil en cualquier momento.
+        </p>
+      )}
+      <p>
+        La dirección de correo de tu cuenta se usa para enviarte enlaces de
+        acceso y, si lo pides, un aviso cuando alguien completa una invitación
+        de compatibilidad que enviaste. No la vendemos ni la compartimos.
       </p>
 
       <h2>Resumen diario, calendario y notificaciones</h2>
       <p>
         El resumen diario lee las posiciones calculadas de una carta guardada
-        en tu dispositivo. El calendario de tránsitos recibe el mismo código de
-        solo posiciones que usa la función para compartir cartas; ninguno
-        incluye tu nombre, fecha, hora, lugar de nacimiento ni coordenadas. Si
-        activas las notificaciones diarias, guardamos la suscripción push del
-        navegador — una URL del servicio de notificaciones y sus claves de
-        entrega, sin datos de nacimiento — para poder enviar la nota. Puedes
-        desactivarlas en cualquier momento.
+        en tu dispositivo.
       </p>
-
-      <h2>Correo, alojamiento y analítica</h2>
       <p>
-        El correo semanal requiere una cuenta y una suscripción voluntaria;
-        está desactivado de forma predeterminada y cada mensaje permite darse
-        de baja. Vercel aloja el sitio y puede conservar registros técnicos
-        breves para entregar las páginas y prevenir abusos. No usamos
-        publicidad ni seguimiento entre sitios. Contamos visitas y uso anónimo
-        de funciones con Plausible, un servicio de analítica sin cookies. Para
-        no contar repetidamente el mismo dispositivo durante un día, Plausible
-        procesa brevemente la dirección IP y el agente de usuario para derivar
-        un identificador limitado a este sitio, dispositivo y día. No almacena
-        la IP ni el agente de usuario originales; la sal del identificador rota
-        y se elimina cada 24 horas. No recibe datos de nacimiento, direcciones públicas, identificadores de
-        cartas o cuentas conectadas ni la lista exacta de signos. Los eventos de
-        Aura solo incluyen categorías permitidas, como el resultado y un rango
-        aproximado de cantidad; los demás eventos registran «se guardó una
-        carta», nunca de quién.
+        Un calendario de tránsitos por suscripción lleva un código de carta solo
+        de posiciones en su dirección web. Nuestro servidor, su caché y tu
+        servicio de calendario reciben ese código cada vez que el calendario se
+        actualiza. El código no tiene campos de nombre, fecha, hora ni lugar.
+        Sus posiciones planetarias aún permiten deducir tu fecha y hora de
+        nacimiento; el ascendente y el Medio Cielo se redondean al grado, lo
+        que sitúa el lugar de nacimiento solo dentro de una región de unos
+        500 km de ancho. Las direcciones de calendario creadas antes del 23
+        de septiembre de 2026 llevan el ascendente y el Medio Cielo con más
+        precisión. Nuestro servidor ahora los redondea antes de usarlos, pero la
+        dirección en sí no cambia; para sustituirla, elimina ese calendario y
+        vuelve a suscribirte.
       </p>
-      {webAnalyticsEnabled && (
+      {webPushEnabled && (
         <p>
-          También contamos visitas a páginas con Vercel Web Analytics, el
-          contador sin cookies integrado en nuestra plataforma de alojamiento.
-          Solo registra la ruta de la página (las cadenas de consulta y los
-          fragmentos se eliminan antes del envío), distingue los dispositivos
-          dentro de un mismo día mediante un hash derivado de la solicitud que
-          se descarta al terminar el día, y no recibe ninguno de los datos de
-          eventos descritos arriba.
+          Si activas las notificaciones diarias, guardamos la suscripción push
+          de tu navegador —una URL del servicio push del proveedor y sus claves
+          de entrega— con tu ajuste de idioma y sin datos de nacimiento, para
+          poder enviar la nota. Puedes desactivar las notificaciones en
+          cualquier momento.
         </p>
       )}
 
-      <h2>Almacenamiento del navegador</h2>
+      <h2>Páginas públicas de People</h2>
       <p>
-        No usamos cookies publicitarias ni de seguimiento. Utilizamos
-        almacenamiento propio para las funciones que solicitas: cartas
-        guardadas, datos de sesión limitados de Aura, una dirección de Aura
-        recordada de forma opcional, preferencias del sitio y, si inicias
-        sesión, un token de acceso. No se usa para seguirte por otros sitios.
+        El directorio People usa nombres, fechas y lugares de nacimiento
+        públicos, fechas vitales, disciplinas y retratos con licencia
+        procedentes de registros revisados de Wikidata, Wikipedia y
+        Wikimedia Commons. La carta se calcula a partir de esos datos
+        documentados y describe el cielo registrado y su incertidumbre; no
+        afirma nada sobre la salud, la conducta, las relaciones, las finanzas
+        ni la vida privada de una persona. Los perfiles de personas vivas no se
+        envían a los buscadores. Para solicitar una corrección, una ocultación
+        o una eliminación, escribe a <a href="mailto:people@zodiacs.org">people@zodiacs.org</a>.
+        Atendemos la solicitud de eliminación de la persona a la que se refiere
+        un perfil aunque la fuente pública de origen siga sin cambios.
+      </p>
+
+      <h2>The Race</h2>
+      <p>
+        Si te unes a un equipo en The Race, guardamos un código unidireccional
+        derivado de la cookie de The Race, junto con tu equipo, la temporada,
+        cuándo te uniste y tus check-ins semanales. Para limitar las
+        inscripciones repetidas, también conservamos un código unidireccional
+        derivado de tu dirección IP, que se borra después del día UTC
+        siguiente. No interviene ningún nombre, dirección de correo, cuenta ni
+        billetera.
+      </p>
+
+      <h2>Copias de seguridad</h2>
+      <p>
+        Una vez a la semana copiamos la base de datos, que contiene las cuentas,
+        las cartas sincronizadas y los demás registros almacenados que describe
+        esta página. La copia se cifra con AES-256 antes de guardarse en GitHub,
+        y cada copia se elimina a los 90 días. Borrar tu cuenta la elimina de la
+        base de datos activa; puede permanecer en una copia de seguridad hasta
+        que esa copia caduque.
+      </p>
+
+      <h2>Alojamiento, registros y analítica</h2>
+      <p>
+        El sitio está alojado en <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>.
+        Como todos los servicios de alojamiento web, sus servidores procesan las
+        solicitudes que hace tu navegador y pueden conservar registros técnicos
+        de corta duración (como la dirección IP y el tipo de navegador) para
+        servir el sitio y protegerlo de abusos. No mostramos publicidad y no
+        usamos cookies de seguimiento entre sitios ni píxeles de marketing de
+        terceros.
+      </p>
+      {accountSyncV2Enabled ? (
+        <p>
+          La analítica de terceros está desactivada en toda la versión
+          preliminar de sincronización cifrada con acceso controlado. Así se
+          evita que un script de analítica comparta el mismo contexto de página
+          que el almacenamiento privado de cartas del navegador.
+        </p>
+      ) : (
+        <p>
+          Contamos las visitas a páginas y el uso anónimo de funciones con
+          Plausible, un servicio de analítica sin cookies. Para no contar varias
+          veces el mismo dispositivo durante un día, Plausible procesa
+          brevemente la dirección IP y el agente de usuario para derivar un
+          identificador limitado a este sitio, dispositivo y día. La IP y el
+          agente de usuario originales no se almacenan; la sal usada para ese
+          identificador rota y se elimina cada 24 horas. Plausible no recibe
+          ningún dato de nacimiento, dirección pública, identificador de carta,
+          identificador de cuenta conectada ni la lista exacta de signos que se
+          poseen. Tampoco recibe ningún identificador entre sitios.
+          Los eventos de Aura solo llevan categorías permitidas, como un
+          resultado y un rango aproximado del número de signos que se poseen;
+          los demás eventos registran de forma similar «se guardó una carta»,
+          nunca de quién.
+        </p>
+      )}
+      {webAnalyticsEnabled && !accountSyncV2Enabled && (
+        <p>
+          También contamos las visitas a páginas con Vercel Web Analytics, el
+          contador sin cookies integrado en nuestra plataforma de alojamiento.
+          Solo registra la ruta de la página (las cadenas de consulta y los
+          fragmentos se eliminan antes de enviar nada), distingue los
+          dispositivos dentro de un mismo día mediante un hash derivado de la
+          solicitud que se descarta pasado ese día, y no recibe ninguno de los
+          datos de eventos descritos arriba.
+        </p>
+      )}
+
+      <h2>Cookies</h2>
+      <p>
+        No usamos cookies publicitarias ni de seguimiento. Por diseño, se envían
+        a nuestro servidor tres cookies propias: la cookie de sesión de Guide,
+        hasta que termina la sesión del navegador; la cookie de The Race,
+        durante un máximo de un año; y una cookie de invitación, durante un
+        máximo de 14 días mientras usas una invitación de compatibilidad. El
+        resto es almacenamiento propio del navegador para las funciones que
+        usas: lo que guardas (cartas, comparaciones, momentos de Living Chart,
+        progreso de aprendizaje), el estado de trabajo de las herramientas que
+        usas (como la conversación de Guide y los cálculos en caché), datos de
+        sesión limitados de Aura, una dirección de Aura recordada de forma
+        opcional, preferencias del sitio, copias de los propios archivos del
+        sitio para usarlo sin conexión y, si inicias sesión, un token de
+        acceso. Aparte de estas cookies y de lo que describen las secciones
+        anteriores, este almacenamiento permanece en tu dispositivo, y nada de
+        ello se usa para seguirte por otros sitios.
+      </p>
+
+      <h2>Menores</h2>
+      <p>
+        El sitio está pensado para un público general y no está dirigido a
+        menores de 13 años. No recopilamos a sabiendas su información
+        personal.
       </p>
 
       <h2>Tus opciones</h2>
       <ul>
-        <li>Usar las calculadoras sin cuenta ni almacenamiento fuera del dispositivo.</li>
-        <li>Probar el ejemplo de Aura sin carta, dirección, conexión o compra.</li>
-        <li>Pegar una dirección pública en lugar de conectar una billetera externa.</li>
-        <li>Dejar desmarcada la opción «Recordar» y borrar los datos de Aura cuando quieras.</li>
-        <li>Volver a la vista de ejemplo del Shelf y recargar la página para borrar su caché temporal.</li>
-        <li>Borrar cartas locales desde el navegador.</li>
-        <li>Pedir que eliminemos una cuenta escribiendo a <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.</li>
+        <li>Usar todas las calculadoras sin cuenta; nada de lo que introduces se almacena fuera de tu dispositivo, salvo que inicies sesión, compartas una carta o te suscribas a su calendario.</li>
+        <li>Usar el ejemplo de Aura sin carta, dirección, conexión de billetera ni compra.</li>
+        <li>Pegar una dirección pública en lugar de conectar software de billetera de terceros.</li>
+        <li>Dejar desmarcada la opción «Recordar» de Aura y borrar sus datos del navegador cuando quieras.</li>
+        <li>Eliminar las cartas guardadas borrando los datos de este sitio en tu navegador.</li>
+        {accountSyncV2Enabled
+          ? <li>Exportar o eliminar una cuenta desde la página de perfil; elegir por separado si también se borran los datos de este navegador.</li>
+          : <li>Eliminar una cuenta y sus datos sincronizados escribiéndonos un correo.</li>}
+        {weeklyDigestEnabled && <li>Desactivar el correo semanal con un clic, en cualquier momento.</li>}
+        <li>Retirar una invitación de compatibilidad desde tu perfil antes de que se use.</li>
+        <li>Solicitar la corrección, la ocultación o la eliminación de un perfil de People.</li>
       </ul>
+
+      <h2>Cambios</h2>
+      <p>
+        Si cambiamos la forma en que tratamos los datos, actualizaremos esta
+        página y su fecha. Los cambios importantes en las funciones de cuenta o
+        de correo se reflejarán aquí antes de que entren en vigor.
+      </p>
+
+      <h2>Contacto</h2>
+      <p>
+        Las solicitudes de privacidad y de eliminación pueden enviarse a
+        Zodiacs LLC a la dirección{' '}
+        <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+      </p>
 
       <p class="method-updated mono">Última actualización: {updated}</p>
     </div>

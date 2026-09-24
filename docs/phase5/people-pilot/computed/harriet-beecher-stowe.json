@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/New_York",
     "civilTime": "12:00",
-    "utcInstant": "1811-06-14T16:56:02.000Z",
-    "utcOffsetMinutesAtBirth": -296.0333,
-    "civilDayStartUtc": "1811-06-14T04:56:02.000Z",
-    "civilDayEndUtc": "1811-06-15T04:56:02.000Z",
+    "utcInstant": "1811-06-14T16:52:46.000Z",
+    "utcOffsetMinutesAtBirth": -292.7667,
+    "civilDayStartUtc": "1811-06-14T04:52:46.000Z",
+    "civilDayEndUtc": "1811-06-15T04:52:46.000Z",
     "latitude": 41.747222222222,
     "longitude": -73.189722222222,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "gemini",
     "signName": "Gemini",
-    "degree": 22.66
+    "degree": 22.65
   },
   "moon": {
     "sign": "aries",
     "signName": "Aries",
-    "degree": 5.51,
+    "degree": 5.48,
     "uncertain": true,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "aries"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 21.982,
-    "degreesToNextBoundaryAtWindowEnd": 7.0632
+    "degreesInsideAtWindowStart": 22.1761,
+    "degreesToNextBoundaryAtWindowEnd": 6.8691
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.955,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 22.66,
+      "degree": 22.65,
       "retrograde": false,
       "speedPerDay": 0.9548,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 5.51,
+      "degree": 5.48,
       "retrograde": false,
-      "speedPerDay": 13.8999,
+      "speedPerDay": 13.9002,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Gemini",
       "degree": 5.36,
       "retrograde": false,
-      "speedPerDay": 0.1188,
+      "speedPerDay": 0.1186,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -268,14 +268,14 @@
       "a": "Moon",
       "b": "Mercury",
       "type": "sextile",
-      "orb": 0.15,
+      "orb": 0.12,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Neptune",
       "type": "trine",
-      "orb": 3.97,
+      "orb": 4,
       "applying": true
     }
   ],

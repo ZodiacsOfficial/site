@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:27.09",
+        "sun-degree:27.08",
         "decan:cancer:third"
       ],
       "text": "The Sun's position resolves to 27.1° Cancer — deep enough in the third decan (20°–30°) that Jupiter, its traditional sub-ruler, colours the reading."
@@ -24,16 +24,16 @@
       "title": "The fast planets",
       "facts": [
         "personal:Mercury:Cancer:17.6°",
-        "personal:Venus:Gemini:19.3°",
+        "personal:Venus:Gemini:19.2°",
         "personal:Mars:Libra:2.7°"
       ],
-      "text": "Closer in, Mercury stands at 17.6° Cancer; Venus stands at 19.3° Gemini; Mars stands at 2.7° Libra. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort aimed through strategy and words from Mars."
+      "text": "Closer in, Mercury stands at 17.6° Cancer; Venus stands at 19.2° Gemini; Mars stands at 2.7° Libra. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort aimed through strategy and words from Mars."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Neptune:square:0.57",
+        "aspect:Mars:Neptune:square:0.58",
         "aspect:Jupiter:Pluto:sextile:0.94",
         "aspect:Uranus:Neptune:conjunction:1.26"
       ],
@@ -76,7 +76,7 @@
         "moon-band:13.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.8°."
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.7°."
     }
   ],
   "birthdayLink": {
@@ -89,12 +89,12 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Neptune:square",
-    "sun-degree:27.09",
+    "sun-degree:27.08",
     "decan:cancer:third",
     "personal:Mercury:Cancer:17.6°",
-    "personal:Venus:Gemini:19.3°",
+    "personal:Venus:Gemini:19.2°",
     "personal:Mars:Libra:2.7°",
-    "aspect:Mars:Neptune:square:0.57",
+    "aspect:Mars:Neptune:square:0.58",
     "aspect:Jupiter:Pluto:sextile:0.94",
     "aspect:Uranus:Neptune:conjunction:1.26",
     "figure:t-square:Mars-Pluto:apex-Uranus",

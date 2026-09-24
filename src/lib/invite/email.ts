@@ -63,7 +63,7 @@ export function renderCompatibilityInviteCompletionEmail(
     '',
     'The link has closed, and the positions it carried are deleted.',
     '',
-    "There's nothing to show you here, and that's on purpose — the reading never touched us. On their result there's a button that sends it back: a picture of the reading and a private link that carries chart positions only. Ask them for it.",
+    "There's nothing to show you here, and that's on purpose — the reading never touched us. On their result there's a button that sends it back: a picture of the reading and a private link that carries chart positions and labels, with no birth details. Ask them for it.",
     '',
     `Open the compatibility page: ${compatibilityUrl}`,
     '',
@@ -94,7 +94,7 @@ export function renderCompatibilityInviteCompletionEmail(
         <tr><td style="padding:12px 24px 28px;color:#EEF1F7;font:22px/1.55 Georgia,'Times New Roman',serif;">
           <p style="margin:0 0 20px;">The invitation carrying your side as ${safe} was opened, and the reading happened just now — on their device, where it stays.</p>
           <p style="margin:0 0 20px;">The link has closed, and the positions it carried are deleted.</p>
-          <p style="margin:0;">There&#39;s nothing to show you here, and that&#39;s on purpose — the reading never touched us. On their result there&#39;s a button that sends it back: a picture of the reading and a private link that carries chart positions only. Ask them for it.</p>
+          <p style="margin:0;">There&#39;s nothing to show you here, and that&#39;s on purpose — the reading never touched us. On their result there&#39;s a button that sends it back: a picture of the reading and a private link that carries chart positions and labels, with no birth details. Ask them for it.</p>
         </td></tr>
         <tr><td style="padding:0 24px 28px;">
           <a href="${compatibilityUrl}" style="display:block;padding:15px 18px;border-radius:999px;background:#EEF1F7;color:#10131A;font:600 15px/1.2 Arial,Helvetica,sans-serif;text-align:center;text-decoration:none;">Open the compatibility page</a>

@@ -7,14 +7,14 @@
   "identity": "Geologist and lawyer · United Kingdom · 1797–1875",
   "title": "Charles Lyell's birth chart",
   "metaDescription": "Charles Lyell's chart, computed from a sourced birth date: Sun at 22.7° Scorpio. Birth time unknown, so no houses or rising sign.",
-  "lede": "The chart's headline is a conjunction: Mercury and Neptune within 0.1°, thinking wired to imagination. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "lede": "The chart's headline is a conjunction: Mercury and Neptune within 0.0°, thinking wired to imagination. A conjunction concentrates rather than balances — the pair burns one fuel line.",
   "ledeFact": "aspect:Mercury:Neptune:conjunction",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:22.66",
+        "sun-degree:22.67",
         "decan:scorpio:third"
       ],
       "text": "Measured rather than labelled, the Sun holds 22.7° Scorpio: the third decan, whose classical sub-ruler is the Moon. A water sign, read here in its third face."
@@ -23,21 +23,21 @@
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Scorpio:10.8°",
+        "personal:Mercury:Scorpio:10.9°",
         "personal:Venus:Capricorn:4.5°",
         "personal:Mars:Libra:19.3°"
       ],
-      "text": "For the fast movers, Mercury was at 10.8° Scorpio, Venus was at 4.5° Capricorn, Mars was at 19.3° Libra. Read together: a mind that absorbs before it argues; taste for the substantial and the lasting; drive that argues its way forward."
+      "text": "For the fast movers, Mercury was at 10.9° Scorpio, Venus was at 4.5° Capricorn, Mars was at 19.3° Libra. Read together: a mind that absorbs before it argues; taste for the substantial and the lasting; drive that argues its way forward."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Neptune:conjunction:0.05",
+        "aspect:Mercury:Neptune:conjunction:0.04",
         "aspect:Saturn:Neptune:trine:0.78",
-        "aspect:Mercury:Saturn:trine:0.83"
+        "aspect:Mercury:Saturn:trine:0.82"
       ],
-      "text": "Mercury to Neptune is the closest call of the day, a conjunction within 0.1°. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn trine Neptune at 0.8°, and Mercury trine Saturn at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "Mercury to Neptune is the closest call of the day, a conjunction within 0.0°. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn trine Neptune at 0.8°, and Mercury trine Saturn at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
@@ -88,14 +88,14 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Neptune:conjunction",
-    "sun-degree:22.66",
+    "sun-degree:22.67",
     "decan:scorpio:third",
-    "personal:Mercury:Scorpio:10.8°",
+    "personal:Mercury:Scorpio:10.9°",
     "personal:Venus:Capricorn:4.5°",
     "personal:Mars:Libra:19.3°",
-    "aspect:Mercury:Neptune:conjunction:0.05",
+    "aspect:Mercury:Neptune:conjunction:0.04",
     "aspect:Saturn:Neptune:trine:0.78",
-    "aspect:Mercury:Saturn:trine:0.83",
+    "aspect:Mercury:Saturn:trine:0.82",
     "figure:t-square:Venus-Saturn:apex-Jupiter",
     "figure:unaspected:Moon",
     "dignity:Mars:detriment",

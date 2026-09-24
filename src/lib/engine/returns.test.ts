@@ -5,6 +5,7 @@
  * mid-1961 births.
  */
 import { describe, expect, it } from 'vitest';
+import { computeChart } from './full';
 import { groupIntoSeasons, saturnReturns } from './returns';
 import type { Crossing } from './returns';
 import independentCases from './fixtures/swiss-eight-cases.fixture.json';
@@ -110,4 +111,27 @@ describe('saturnReturns', () => {
       expect(c.at.toISOString().slice(0, 4)).toBe('2020');
     }
   }, 120_000);
+});
+
+describe('natal Saturn direction', () => {
+  // Saturn stations retrograde on 2026-07-26. The chart's speed changes sign
+  // at 19:57:36.9Z; a ±1-day difference changes sign at 19:56:57.1Z, so for
+  // 40 s the Saturn page and the chart used to disagree.
+  it.each([
+    '2026-07-26T19:57:16.990Z',
+    '2026-07-26T19:57:26.921Z',
+    '2026-07-26T19:57:46.921Z',
+    '2026-07-26T19:56:40.000Z',
+    '1990-02-01T12:00:00.000Z',
+  ])('agrees with the chart at %s', (iso) => {
+    const utc = new Date(iso);
+    const chart = computeChart({ utc, latitude: 0, longitude: 0, houseSystem: 'whole', timeKnown: true });
+    const saturn = chart.bodies.find(({ body }) => body === 'Saturn')!;
+    expect(saturnReturns(utc).natalRetrograde).toBe(saturn.retrograde);
+  });
+
+  it('is direct just before the chart\'s station and retrograde just after', () => {
+    expect(saturnReturns(new Date('2026-07-26T19:57:26.921Z')).natalRetrograde).toBe(false);
+    expect(saturnReturns(new Date('2026-07-26T19:57:46.921Z')).natalRetrograde).toBe(true);
+  });
 });

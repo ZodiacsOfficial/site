@@ -103,6 +103,19 @@ and the actions, not the person's email or postal address.
    removed slug ever reappears in a generated surface. A later ingestion
    pass cannot silently reinstate a removed person.
 
+## Migrations
+
+A migration changes many records at once for a reason about the method,
+not about any one subject. Each is approved by the owner, named, bounded
+to the records it lists, and recorded here beside the corrections:
+
+- `2026-09-23-reference-instants.json`: the owner-delegated recompute of
+  the noon reference instants, so every page keeps the instant the birth
+  chart calculator gives for its place and date. 218 records moved, the
+  text changed on 102, and no sign changed. `tools/compute-astro.mjs`
+  recomputed the charts, and `tools/migrate-reference-instants.mjs`
+  carried only their chart-derived fields into the manifest.
+
 ## Current state
 
 No requests have been received. Phase 5A publishes nothing: there is no

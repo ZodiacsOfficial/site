@@ -6,7 +6,7 @@
   "displayName": "Jane Austen",
   "identity": "Writer · United Kingdom · 1775–1817",
   "title": "Jane Austen's birth chart",
-  "metaDescription": "Jane Austen's chart, computed from a sourced birth date: Sun at 24.4° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Jane Austen's chart, computed from a sourced birth date: Sun at 24.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
   "lede": "Mars and Saturn sit 0.4° from an exact square — near enough that the tradition reads drive and structure as a single working part. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
   "ledeFact": "aspect:Mars:Saturn:square",
   "blocks": [
@@ -14,10 +14,10 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:24.45",
+        "sun-degree:24.46",
         "decan:sagittarius:third"
       ],
-      "text": "The Sun's exact place is 24.4° Sagittarius. That falls in the third decan, 20°–30°, sub-ruled by the Sun in the classical scheme — a fire sign read through a mutable season."
+      "text": "The Sun's exact place is 24.5° Sagittarius. That falls in the third decan, 20°–30°, sub-ruled by the Sun in the classical scheme — a fire sign read through a mutable season."
     },
     {
       "key": "personal",
@@ -33,7 +33,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mars:Saturn:square:0.39",
+        "aspect:Mars:Saturn:square:0.38",
         "aspect:Sun:Neptune:square:0.43",
         "aspect:Neptune:Pluto:trine:0.47"
       ],
@@ -91,12 +91,12 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Saturn:square",
-    "sun-degree:24.45",
+    "sun-degree:24.46",
     "decan:sagittarius:third",
     "personal:Mercury:Sagittarius:5.5°",
     "personal:Venus:Scorpio:9.1°",
     "personal:Mars:Capricorn:19.2°",
-    "aspect:Mars:Saturn:square:0.39",
+    "aspect:Mars:Saturn:square:0.38",
     "aspect:Sun:Neptune:square:0.43",
     "aspect:Neptune:Pluto:trine:0.47",
     "figure:unaspected:Moon",

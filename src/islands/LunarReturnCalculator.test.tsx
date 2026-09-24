@@ -91,8 +91,8 @@ beforeEach(async () => {
 });
 
 const Result = () => null;
-const returned = () => ({ chart: { input: { utc: new Date('2026-03-20T12:00:00Z') } }, referenceUtc: '2026-03-01T00:00:00.000Z', natalTimeFlags: [] });
-const modules = () => [{ computeLunarReturn: harness.compute }, { LunarReturnResult: Result }, { StaticWheel: () => null }];
+const returned = () => ({ chart: { input: { utc: new Date('2026-03-20T12:00:00Z') } }, referenceUtc: '2026-03-01T00:00:00.000Z', natalTimeFlags: [], natalLocalMeanTime: false });
+const modules = () => [{ computeLunarReturn: harness.compute, prepareLocalTime: async () => {} }, { LunarReturnResult: Result }, { StaticWheel: () => null }];
 const fields = () => nodes(render(lunar)).find((node) => node.type === BirthFields)!.props;
 const fill = () => { fields().onDateChange('1990-02-01'); fields().onTimeChange('12:00'); fields().onCityChange(city); };
 const resultNode = () => nodes(render(lunar)).find((node) => node.type === Result);

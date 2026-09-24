@@ -2,8 +2,8 @@
 export const ASSISTANT_CONTEXT = `SITE CONTEXT — ZODIACS.ORG
 
 Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation.
-Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The public Guide sends chat messages to OpenAI and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.
-Historical civil time uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so historical coverage and tzdb version depend on that host. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and flags uncertainty if the Moon changes signs during that local date.
+Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync, which starts when a person signs in, uploads their saved charts, including birth details, to that person’s account. The public Guide sends chat messages to OpenAI and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it never attaches the saved name, birth date, time, place, or coordinates.
+Historical civil time from 1970 on uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so for those dates historical coverage and tzdb version depend on that host; before 1970 it comes from a pinned tzdb release (2025c) with its backzone records, which tzdb’s maintainers consider less reliable than the rest. A birth from before its place adopted a legal time uses the birthplace’s own local mean time, from its longitude, with the date each place adopted a legal time taken from the same release. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and marks the Moon’s sign as unverified, because the Moon can change sign during that local date.
 The site has English pages and partial Spanish translations. The inventory below lists English routes once; do not invent an English or Spanish page that is not listed.
 
 CANONICAL LABELS
@@ -21,7 +21,7 @@ Use these labels from docs/STRATEGY.md §4 when they fit:
 
 TOOLS AND UTILITIES
 These lines use each live page’s meta description to state what it computes or provides:
-- /ask/ — Ask Guide about birth charts, astrology, or Zodiacs.org tools and guides. Signed-out conversations stay in the browser session.
+- /ask/ — Ask Guide about birth charts, astrology, or Zodiacs.org tools and guides. Signed-out conversations are not stored by Zodiacs.org.
 - /baby-zodiac/ — Enter a due date: the near-certain sun sign (cusp caveats computed, not guessed), the week's possible moon signs, and what has to wait for the birth minute. Free.
 - /birth-chart/ — Calculate your free birth chart: sun, moon, rising, planets, houses, and what they mean — computed privately, in your browser.
 - /birthday/ — Choose your birthday for a date-specific reading of character, relationships, work, and growth, with an exact Sun-sign answer when the birth year matters.
@@ -34,7 +34,7 @@ These lines use each live page’s meta description to state what it computes or
 - /moon-sign/ — Find your moon sign free, in seconds — how you feel, what soothes you, and what you need to feel safe. No signup.
 - /numerology/ — Free numerology calculator: Life Path, Birthday, Expression, Soul Urge, Personality, Maturity, and Personal Year from your name and birth date, computed in your browser.
 - /profile/ — Open your saved birth charts, see what is active today, and keep the people and patterns you return to in one place.
-- /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions computed exactly.
+- /retrogrades/ — Which planets are retrograde right now, and when the next windows run: Mercury through Pluto for 2026–2027, station dates and positions for each window.
 - /rising-sign/ — Find your rising sign free with your birth time and place — how people first read you, plus the planet that rules your chart.
 - /saturn-return/ — Find your exact Saturn return dates free: every crossing, retrograde passes included, computed from Saturn's real motion on your device. Just needs your birth date.
 - /solar-return/ — See the themes shaping your personal year with a solar return chart for any year and location. Free and private by default.

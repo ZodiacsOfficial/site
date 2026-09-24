@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:7.22",
+        "sun-degree:7.21",
         "decan:pisces:first"
       ],
       "text": "The Sun sits at 7.2° Pisces — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Saturn:opposition:1.49",
         "aspect:Saturn:Pluto:opposition:1.5",
-        "aspect:Sun:Pluto:conjunction:1.85"
+        "aspect:Venus:Saturn:opposition:1.51",
+        "aspect:Sun:Pluto:conjunction:1.84"
       ],
-      "text": "Closest first: Venus to Saturn, an opposition with 1.5° of slack. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Saturn opposition Pluto at 1.5°, and the Sun conjunction Pluto at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "Closest first: Saturn to Pluto, an opposition with 1.5° of slack. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Venus opposition Saturn at 1.5°, and the Sun conjunction Pluto at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
@@ -75,7 +75,7 @@
         "moon-band:13.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.8°."
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.6°."
     }
   ],
   "birthdayLink": {
@@ -88,14 +88,14 @@
   },
   "substantiveFacts": [
     "stellium:pisces:4",
-    "sun-degree:7.22",
+    "sun-degree:7.21",
     "decan:pisces:first",
     "personal:Mercury:Pisces:25.1°",
     "personal:Venus:Pisces:2.4°",
     "personal:Mars:Aquarius:0.7°",
-    "aspect:Venus:Saturn:opposition:1.49",
     "aspect:Saturn:Pluto:opposition:1.5",
-    "aspect:Sun:Pluto:conjunction:1.85",
+    "aspect:Venus:Saturn:opposition:1.51",
+    "aspect:Sun:Pluto:conjunction:1.84",
     "figure:unaspected:Moon",
     "dignity:Mercury:fall",
     "dignity:Venus:exaltation",

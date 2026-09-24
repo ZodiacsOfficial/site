@@ -3,6 +3,8 @@ import { solarReturnChart, solarReturnInstant } from '../../lib/engine/solar-ret
 import type { Chart, HouseSystem } from '../../lib/engine/types';
 import { resolveLocalToUtc } from '../../lib/time/localToUtc';
 
+export { prepareLocalTime } from '../../lib/time/localToUtc';
+
 export interface SolarReturnPlace {
   name: string;
   lat: number;
@@ -52,6 +54,7 @@ export function computeSolarReturn(input: SolarReturnComputeInput, now = new Dat
       input.birthDate,
       input.timeKnown && input.birthTime ? input.birthTime : '12:00',
       input.birthplace.tz,
+      { longitude: input.birthplace.lon },
     );
     const natal = computeChart({
       utc: resolved.utc,

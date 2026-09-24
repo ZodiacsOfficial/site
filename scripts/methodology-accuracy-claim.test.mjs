@@ -24,8 +24,9 @@
  * mutations, and the ones that suggested themselves while fixing them, fail
  * here.
  */
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { DeltaT_EspenakMeeus } from 'astronomy-engine';
 import { describe, expect, it } from 'vitest';
 
 const root = process.cwd();
@@ -180,6 +181,24 @@ describe('the accuracy claim on /methodology/', () => {
     expect(Number(claimed[1])).toBeLessThan(observed);
   });
 
+  it('states today\'s ΔT error from the IERS value, not as a convention', () => {
+    const deltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-23/values.json'));
+    const today = deltaT.values.find((row) => row.date === '2026-09-22');
+    expect(prose).not.toContain('Neither extrapolation is wrong');
+    const stated = /on 22 September 2026 it reads ([\d.]+) seconds where the IERS value is ([\d.]+), which on its own moves the Moon about ([\d.]+) arcseconds/u
+      .exec(prose);
+    expect(stated, 'the page must give both values and the Moon displacement').toBeTruthy();
+    expect(stated[1]).toBe(tenth(today.formulaSeconds));
+    expect(stated[2]).toBe(tenth(today.observedSeconds));
+    expect(stated[3]).toBe(tenth(today.moonArcseconds));
+    // The formula value is the installed library's, at that instant.
+    const installed = JSON.parse(read('node_modules/astronomy-engine/package.json')).version;
+    expect(deltaT.formula).toEqual({ function: 'DeltaT_EspenakMeeus', package: 'astronomy-engine', version: installed });
+    const days = (Date.parse('2026-09-22T00:00:00Z') - Date.UTC(2000, 0, 1, 12)) / 86_400_000;
+    expect(DeltaT_EspenakMeeus(days)).toBeCloseTo(today.formulaSeconds, 3);
+    expect(today.moonArcseconds).toBeCloseTo(today.differenceSeconds * deltaT.moonArcsecondsPerSecond, 2);
+  });
+
   it('says what agreement with another implementation does not establish', () => {
     expect(prose).toContain('descend from JPL development ephemerides');
     expect(prose).toContain('two implementations agreeing, not a check against observation');
@@ -199,7 +218,13 @@ describe('the accuracy claim on /methodology/', () => {
     // The Moon does not go through the light-time and aberration pass the
     // planets do: @zodiacs/engine calls EclipticGeoMoon, astronomy-engine's
     // own lunar path, which applies nutation and nothing else of the three.
-    const engineSource = read('node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js');
+    // Every emitted file, not one hashed chunk: a new engine build renames
+    // its chunks, and the test must follow the code rather than the name.
+    const engineDist = 'node_modules/@zodiacs/engine/dist';
+    const engineSource = readdirSync(resolve(root, engineDist))
+      .filter((name) => name.endsWith('.js'))
+      .map((name) => read(`${engineDist}/${name}`))
+      .join('\n');
     expect(engineSource).toMatch(/EclipticGeoMoon\(/u);
     expect(engineSource).toMatch(/GeoVector\(body, time, true\)/u);
     expect(prose).toMatch(/The Moon is the exception/u);
@@ -255,5 +280,39 @@ describe('the same figures on /developers/engine/', () => {
     expect(core, 'the core must stay offline').not.toMatch(/globalThis\.fetch|createGeoNamesClient/u);
     expect(enginePage).toMatch(/GeoNames place-lookup client/u);
     expect(enginePage).toMatch(/makes\s+HTTP requests/u);
+  });
+});
+
+describe('the every-tenth-day comparison, 1800 to 2199', () => {
+  // Statistics only: the per-instant Swiss values stay out of the repository.
+  const dense = JSON.parse(read('docs/platform/evidence/swiss-benchmark/multiyear-1800-2199.json'));
+  const upTo2026 = dense.allBodiesLongitude.sameUt['1800-2026'];
+  const moonSameTt = dense.sameTt.Moon.lon.byEra['2150-2199'];
+  const moonSameUt = dense.sameUt.Moon.lon.byEra['2150-2199'];
+  const worstYear = upTo2026.maxAt.slice(0, 4);
+
+  it('was measured on the engine the site runs, with every call answered from the Swiss data files', () => {
+    const installed = JSON.parse(read('node_modules/@zodiacs/engine/package.json')).version;
+    expect(dense.engine, 'a new engine needs the run again: tools/multiyear-zodiacs.mjs').toBe(installed);
+    expect(dense.swissBackendsObserved).toEqual(['SWIEPH']);
+    expect([dense.instants, dense.cadenceDays, dense.from, dense.to]).toEqual([14610, 10, '1800-01-01', '2199-12-31']);
+    expect(upTo2026.n).toBe(8291 * 11);
+  });
+
+  it('gives the page its worst case up to 2026, and the width of sign edge that follows from it', () => {
+    expect(prose).toContain(`Up to 2026 that is ${upTo2026.n.toLocaleString('en-US')} comparisons,`
+      + ` with a median of ${tenth(upTo2026.p50)} arcseconds and a largest of ${tenth(upTo2026.max)} arcseconds`
+      + ` — ${upTo2026.maxBody} in ${worstYear}`);
+    expect(prose).toContain(`changes a sign only for a body within ${Math.round(upTo2026.max)} arcseconds of its edge`);
+    expect(enginePage).toContain(`the median is ${tenth(upTo2026.p50)} arcseconds and the largest`
+      + ` ${tenth(upTo2026.max)} arcseconds (${upTo2026.maxBody}, ${worstYear})`);
+  });
+
+  it('shows the far-future Moon is the clock: small at the same TT, large at the same UT', () => {
+    expect(moonSameTt.max).toBeLessThan(10);
+    expect(moonSameUt.max).toBeGreaterThan(120);
+    expect(prose).toContain(`the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199,`
+      + ` where at the same UT it reaches ${tenth(moonSameUt.max)} arcseconds`);
+    expect(enginePage).toContain(`Terrestrial Time the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199`);
   });
 });

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Shanghai",
     "civilTime": "12:00",
-    "utcInstant": "1893-01-27T03:54:17.000Z",
-    "utcOffsetMinutesAtBirth": 485.7167,
-    "civilDayStartUtc": "1893-01-26T15:54:17.000Z",
-    "civilDayEndUtc": "1893-01-27T15:54:17.000Z",
+    "utcInstant": "1893-01-27T03:54:07.000Z",
+    "utcOffsetMinutesAtBirth": 485.8833,
+    "civilDayStartUtc": "1893-01-26T15:54:07.000Z",
+    "civilDayEndUtc": "1893-01-27T15:54:07.000Z",
     "latitude": 31.2325,
     "longitude": 121.46916666666667,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.3324,
-    "degreesToNextBoundaryAtWindowEnd": 21.652
+    "degreesInsideAtWindowStart": 6.9896,
+    "degreesToNextBoundaryAtWindowEnd": 21.9947
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.016,

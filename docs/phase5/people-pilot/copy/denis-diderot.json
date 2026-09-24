@@ -34,7 +34,7 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Saturn:Neptune:trine:0.22",
-        "aspect:Mars:Jupiter:square:0.25",
+        "aspect:Mars:Jupiter:square:0.26",
         "aspect:Neptune:Pluto:trine:0.82"
       ],
       "text": "The tightest geometry in the chart puts Saturn a third of the circle apart from Neptune, 0.2° off exact. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars square Jupiter at 0.3°, and Neptune trine Pluto at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
@@ -76,7 +76,7 @@
         "moon-uncertain:aries:taurus"
       ],
       "uncertain": true,
-      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
     }
   ],
   "birthdayLink": {
@@ -95,7 +95,7 @@
     "personal:Venus:Leo:29.4°",
     "personal:Mars:Sagittarius:3.9°",
     "aspect:Saturn:Neptune:trine:0.22",
-    "aspect:Mars:Jupiter:square:0.25",
+    "aspect:Mars:Jupiter:square:0.26",
     "aspect:Neptune:Pluto:trine:0.82",
     "figure:t-square:Venus-Jupiter:apex-Mars",
     "figure:unaspected:Sun",

@@ -3,7 +3,14 @@ import { h } from 'preact';
 import {
   type ChartPreviewModel,
   previewModel,
+  previewPlacementsFromToken,
 } from './chart-preview-model.js';
+import {
+  parsePreviewQuery,
+  PREVIEW_QUERY_KEYS,
+  type PreviewPlacements,
+  previewQuery,
+} from '../lib/share-preview.js';
 
 export const PREVIEW_KICKER = 'Your chart signature';
 export const CHART_PREVIEW_ROUTE_KEY = '__zodiacs_og_route';
@@ -66,11 +73,25 @@ function errorResponse(status: number): Response {
   });
 }
 
-function strictPreviewValue(request: Request): string | null {
-  const url = new URL(request.url);
-  const values = url.searchParams.getAll('p');
-  const allowedKeys = [...url.searchParams.keys()].every((key) => key === 'p');
-  return allowedKeys && values.length === 1 ? values[0] : null;
+/** A positions code in the fragment of the receiver, as the chart links write it. */
+const FRAGMENT_CODE = '^#p=2\\.[A-Za-z0-9_-]{1,254}$';
+
+interface PreviewRequest {
+  placements: PreviewPlacements;
+  /** The code of a link made before the code moved to the fragment. */
+  legacyCode: string | null;
+}
+
+function previewRequest(request: Request): PreviewRequest | null {
+  const params = new URL(request.url).searchParams;
+  const keys = [...params.keys()];
+  if (keys.length === 1 && keys[0] === 'p') {
+    const legacyCode = params.get('p') ?? '';
+    const placements = previewPlacementsFromToken(legacyCode);
+    return placements ? { placements, legacyCode } : null;
+  }
+  const placements = parsePreviewQuery(params);
+  return placements ? { placements, legacyCode: null } : null;
 }
 
 function previewCard(model: ChartPreviewModel, brandIcon: string) {
@@ -112,19 +133,27 @@ function previewCard(model: ChartPreviewModel, brandIcon: string) {
 
 export async function handleChartLinkRequest(request: Request): Promise<Response> {
   if (request.method !== 'GET') return errorResponse(405);
-  const value = strictPreviewValue(request);
-  const model = value === null ? null : previewModel(value);
-  if (!model || value === null) return errorResponse(400);
+  const parsed = previewRequest(request);
+  if (!parsed) return errorResponse(400);
+  const model = previewModel(parsed.placements);
 
   const url = new URL(request.url);
-  const receiver = `${url.origin}/birth-chart/#p=${encodeURIComponent(value)}`;
-  const imageUrl = `${url.origin}/api/og/chart-image?p=${encodeURIComponent(value)}`;
+  const receiverBase = `${url.origin}/birth-chart/`;
+  // A link with a preview keeps the full code in its fragment, which only the
+  // browser sees; the script hands it to the receiver. An older link carried
+  // the code in the query, and it is handed on the way it always was.
+  const receiver = parsed.legacyCode === null
+    ? receiverBase
+    : `${receiverBase}#p=${encodeURIComponent(parsed.legacyCode)}`;
+  const imageUrl = `${url.origin}/api/og/chart-image?${previewQuery(parsed.placements)}`;
   const escapedReceiver = htmlEscape(receiver);
   const escapedImage = htmlEscape(imageUrl);
-  const redirectScript = `location.replace(${JSON.stringify(receiver)})`;
+  const redirectScript = parsed.legacyCode === null
+    ? `var h=location.hash;location.replace(${JSON.stringify(receiverBase)}+(new RegExp(${JSON.stringify(FRAGMENT_CODE)}).test(h)?h:''))`
+    : `location.replace(${JSON.stringify(receiver)})`;
   const description = model.placements.some((placement) => placement.label === 'Rising')
-    ? 'Sun, Moon and Rising positions — birth details not included.'
-    : 'Reference Sun and Moon positions — birth details not included.';
+    ? 'Sun, Moon and Rising positions, to the whole degree.'
+    : 'Reference Sun and Moon positions, to the whole degree.';
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta property="og:title" content="A shared birth chart"><meta property="og:description" content="${description}"><meta property="og:type" content="website"><meta property="og:image" content="${escapedImage}"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${escapedImage}"><title>A shared birth chart</title></head><body><p><a href="${escapedReceiver}">Open the shared chart</a></p><script nonce="chart-preview">${redirectScript}</script><noscript><meta http-equiv="refresh" content="0;url=${escapedReceiver}"></noscript></body></html>`;
   return new Response(html, {
     status: 200,
@@ -138,9 +167,9 @@ export async function handleChartLinkRequest(request: Request): Promise<Response
 
 export async function handleChartImageRequest(request: Request): Promise<Response> {
   if (request.method !== 'GET') return errorResponse(405);
-  const value = strictPreviewValue(request);
-  const model = value === null ? null : previewModel(value);
-  if (!model) return errorResponse(400);
+  const parsed = previewRequest(request);
+  if (!parsed) return errorResponse(400);
+  const model = previewModel(parsed.placements);
 
   try {
     const { ImageResponse } = await import('@vercel/og');
@@ -182,12 +211,16 @@ function requestOrigin(req: any): string {
   return `${trusted.startsWith('localhost') ? 'http' : 'https'}://${trusted}`;
 }
 
-function strictNodeValue(req: any, route: ChartPreviewRoute): string | null {
+function strictNodeQuery(req: any, route: ChartPreviewRoute): URLSearchParams | null {
   const query = req.query && typeof req.query === 'object' ? req.query : {};
-  const keys = Object.keys(query);
-  if (!keys.every((key) => key === 'p' || key === CHART_PREVIEW_ROUTE_KEY)) return null;
-  if (query[CHART_PREVIEW_ROUTE_KEY] !== route || typeof query.p !== 'string') return null;
-  return query.p;
+  if (query[CHART_PREVIEW_ROUTE_KEY] !== route) return null;
+  const params = new URLSearchParams();
+  for (const [key, value] of Object.entries(query)) {
+    if (key === CHART_PREVIEW_ROUTE_KEY) continue;
+    if ((key !== 'p' && !PREVIEW_QUERY_KEYS.includes(key)) || typeof value !== 'string') return null;
+    params.set(key, value);
+  }
+  return params;
 }
 
 async function writeNodeResponse(res: any, response: Response): Promise<void> {
@@ -201,14 +234,14 @@ export async function handleChartPreviewNodeRequest(
   res: any,
   route: ChartPreviewRoute,
 ): Promise<void> {
-  const value = strictNodeValue(req, route);
-  if (value === null) {
+  const params = strictNodeQuery(req, route);
+  if (params === null) {
     await writeNodeResponse(res, errorResponse(400));
     return;
   }
   const path = route === 'link' ? '/api/og/chart' : '/api/og/chart-image';
   const request = new Request(
-    `${requestOrigin(req)}${path}?p=${encodeURIComponent(value)}`,
+    `${requestOrigin(req)}${path}?${params.toString()}`,
     { method: typeof req.method === 'string' ? req.method : 'GET' },
   );
   const response = route === 'link'

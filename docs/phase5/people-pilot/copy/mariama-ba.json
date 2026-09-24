@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:26.98",
+        "sun-degree:27.02",
         "decan:aries:third"
       ],
       "text": "27.0° of Aries is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -23,21 +23,21 @@
       "key": "personal",
       "title": "The fast planets",
       "facts": [
-        "personal:Mercury:Aries:26.8°",
+        "personal:Mercury:Aries:26.9°",
         "personal:Venus:Taurus:1.6°",
         "personal:Mars:Cancer:16.6°"
       ],
-      "text": "For the fast movers, Mercury was at 26.8° Aries, Venus was at 1.6° Taurus, Mars was at 16.6° Cancer. Read together: thought that arrives already in motion; attraction that grows by reliability; effort that surges when it matters."
+      "text": "For the fast movers, Mercury was at 26.9° Aries, Venus was at 1.6° Taurus, Mars was at 16.6° Cancer. Read together: thought that arrives already in motion; attraction that grows by reliability; effort that surges when it matters."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Mercury:conjunction:0.19",
-        "aspect:Mars:Jupiter:sextile:0.26",
-        "aspect:Mars:Pluto:conjunction:0.35"
+        "aspect:Sun:Mercury:conjunction:0.14",
+        "aspect:Mars:Jupiter:sextile:0.25",
+        "aspect:Mars:Pluto:conjunction:0.37"
       ],
-      "text": "Start where the chart is tightest — the Sun conjunction Mercury, 0.2° of separation. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mars sextile Jupiter at 0.3°, and Mars conjunction Pluto at 0.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+      "text": "Start where the chart is tightest — the Sun conjunction Mercury, 0.1° of separation. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mars sextile Jupiter at 0.3°, and Mars conjunction Pluto at 0.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
     },
     {
       "key": "figures",
@@ -77,7 +77,7 @@
         "moon-band:13.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 8.8°."
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 9.4°."
     }
   ],
   "birthdayLink": {
@@ -90,14 +90,14 @@
   },
   "substantiveFacts": [
     "dignity:Sun:exaltation",
-    "sun-degree:26.98",
+    "sun-degree:27.02",
     "decan:aries:third",
-    "personal:Mercury:Aries:26.8°",
+    "personal:Mercury:Aries:26.9°",
     "personal:Venus:Taurus:1.6°",
     "personal:Mars:Cancer:16.6°",
-    "aspect:Sun:Mercury:conjunction:0.19",
-    "aspect:Mars:Jupiter:sextile:0.26",
-    "aspect:Mars:Pluto:conjunction:0.35",
+    "aspect:Sun:Mercury:conjunction:0.14",
+    "aspect:Mars:Jupiter:sextile:0.25",
+    "aspect:Mars:Pluto:conjunction:0.37",
     "figure:grand-trine:Sun-Saturn-Neptune",
     "dignity:Sun:exaltation",
     "dignity:Venus:domicile",

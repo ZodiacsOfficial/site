@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1857-08-08T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1857-08-07T23:50:39.000Z",
-    "civilDayEndUtc": "1857-08-08T23:50:39.000Z",
+    "utcInstant": "1857-08-08T11:50:44.000Z",
+    "utcOffsetMinutesAtBirth": 9.2667,
+    "civilDayStartUtc": "1857-08-07T23:50:44.000Z",
+    "civilDayEndUtc": "1857-08-08T23:50:44.000Z",
     "latitude": 48.8867,
     "longitude": 2.3153,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 15.3373,
-    "degreesToNextBoundaryAtWindowEnd": 13.7038
+    "degreesInsideAtWindowStart": 15.3311,
+    "degreesToNextBoundaryAtWindowEnd": 13.7099
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.959,

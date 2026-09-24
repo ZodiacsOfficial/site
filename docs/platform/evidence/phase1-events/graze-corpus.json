@@ -1,0 +1,110 @@
+{
+ "note": "counts = cases where the solver returned the reference number of crossings",
+ "res": {
+  "Mercury": {
+   "cases": 1701,
+   "refCount": 3402,
+   "current": 1203,
+   "split": 0,
+   "turning": 1701,
+   "turningTouches": 0,
+   "evals": {
+    "current": 197226,
+    "split": 0,
+    "turning": 241548
+   }
+  },
+  "Venus": {
+   "cases": 351,
+   "refCount": 702,
+   "current": 247,
+   "split": 0,
+   "turning": 351,
+   "turningTouches": 0,
+   "evals": {
+    "current": 26598,
+    "split": 0,
+    "turning": 36062
+   }
+  },
+  "Mars": {
+   "cases": 270,
+   "refCount": 540,
+   "current": 209,
+   "split": 0,
+   "turning": 270,
+   "turningTouches": 0,
+   "evals": {
+    "current": 21372,
+    "split": 0,
+    "turning": 26923
+   }
+  },
+  "Jupiter": {
+   "cases": 486,
+   "refCount": 972,
+   "current": 378,
+   "split": 0,
+   "turning": 486,
+   "turningTouches": 0,
+   "evals": {
+    "current": 28836,
+    "split": 0,
+    "turning": 38772
+   }
+  },
+  "Saturn": {
+   "cases": 513,
+   "refCount": 1026,
+   "current": 354,
+   "split": 0,
+   "turning": 513,
+   "turningTouches": 0,
+   "evals": {
+    "current": 22122,
+    "split": 0,
+    "turning": 37184
+   }
+  },
+  "Uranus": {
+   "cases": 540,
+   "refCount": 960,
+   "current": 400,
+   "split": 60,
+   "turning": 540,
+   "turningTouches": 0,
+   "evals": {
+    "current": 21720,
+    "split": 0,
+    "turning": 35023
+   }
+  },
+  "Neptune": {
+   "cases": 540,
+   "refCount": 960,
+   "current": 416,
+   "split": 60,
+   "turning": 540,
+   "turningTouches": 0,
+   "evals": {
+    "current": 22488,
+    "split": 0,
+    "turning": 34258
+   }
+  },
+  "Pluto": {
+   "cases": 540,
+   "refCount": 920,
+   "current": 420,
+   "split": 80,
+   "turning": 540,
+   "turningTouches": 0,
+   "evals": {
+    "current": 21720,
+    "split": 0,
+    "turning": 33160
+   }
+  }
+ },
+ "misses": []
+}

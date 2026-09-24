@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1830-12-05T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1830-12-05T00:01:15.000Z",
-    "civilDayEndUtc": "1830-12-06T00:01:15.000Z",
+    "utcInstant": "1830-12-05T12:00:31.000Z",
+    "utcOffsetMinutesAtBirth": -0.5167,
+    "civilDayStartUtc": "1830-12-05T00:00:31.000Z",
+    "civilDayEndUtc": "1830-12-06T00:00:31.000Z",
     "latitude": 51.507222222222,
     "longitude": -0.1275,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "leo",
     "signName": "Leo",
-    "degree": 23.96,
+    "degree": 23.95,
     "uncertain": true,
     "signAtCivilDayStart": "leo",
     "signAtCivilDayEnd": "virgo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 12.399,
-    "degreesToNextBoundaryAtWindowEnd": 16.5855
+    "degreesInsideAtWindowStart": 12.3993,
+    "degreesToNextBoundaryAtWindowEnd": 16.5851
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.016,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "leo",
       "signName": "Leo",
-      "degree": 23.96,
+      "degree": 23.95,
       "retrograde": false,
-      "speedPerDay": 12.9621,
+      "speedPerDay": 12.9623,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true

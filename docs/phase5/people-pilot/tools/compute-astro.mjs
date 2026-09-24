@@ -9,13 +9,25 @@
  * Conventions are taken from the live birth-chart engine so a People page
  * and the calculator never disagree:
  *   - unknown time  → 12:00 civil time at the birthplace's IANA zone,
- *     resolved through the full tzdb history (Intl), exactly as
- *     ChartCalculator does (`effectiveTime = timeKnown ? time : '12:00'`).
+ *     resolved by src/lib/time/localToUtc.ts with the birthplace's
+ *     longitude, exactly as ChartCalculator does
+ *     (`effectiveTime = timeKnown ? time : '12:00'`): the birthplace's own
+ *     local mean time before its zone's mean-time era ended, the pinned
+ *     tzdb release with backzone before 1970, and the host's history after.
+ *     The civil-day bounds (both local midnights) resolve the same way.
  *   - ecliptic longitudes → GeoVector + Rotation_EQJ_ECT, as
  *     src/lib/engine/server-ephemeris.ts computes them.
  *   - aspects/orbs → @zodiacs/engine/internal/math, the site's own table.
  *
- *   node docs/phase5/people-pilot/tools/compute-astro.mjs
+ * The resolver is TypeScript that loads its tables on demand, so this runs
+ * under vite-node:
+ *
+ *   npx vite-node docs/phase5/people-pilot/tools/compute-astro.mjs
+ *   npx vite-node docs/phase5/people-pilot/tools/compute-astro.mjs --slug=a,b
+ *
+ * Until 2026-09-23 the instants came from Intl alone (the host's history and
+ * the zone reference city's mean time); corrections/2026-09-23-reference-
+ * instants.json records the migration of the 218 records that moved.
  */
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -23,6 +35,7 @@ import { reviewedEvidence } from './source-reviews.mjs';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { findAspects } from '@zodiacs/engine/internal/math';
+import { prepareLocalTime, resolveLocalToUtc } from '../../../../src/lib/time/localToUtc.ts';
 
 const require = createRequire(import.meta.url);
 const Astronomy = require('astronomy-engine');
@@ -101,31 +114,15 @@ function signOf(lon) {
   return { slug: SIGNS[index], name: SIGN_NAMES[SIGNS[index]], degree: norm(lon) - index * 30 };
 }
 
-/** UTC offset in minutes east for an IANA zone at a UTC instant (LMT-precise). */
-function offsetMinutes(timeZone, utcMs) {
-  const parts = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'longOffset' })
-    .formatToParts(utcMs);
-  const name = parts.find((part) => part.type === 'timeZoneName')?.value ?? 'GMT';
-  const match = name.match(/GMT([+-])?(\d{1,2})?(?::(\d{2}))?(?::(\d{2}))?/u);
-  if (!match) return 0;
-  const sign = match[1] === '-' ? -1 : 1;
-  return sign * (Number(match[2] ?? 0) * 60 + Number(match[3] ?? 0) + Number(match[4] ?? 0) / 60);
-}
-
-/** Civil wall time at the birthplace → UTC instant, two-pass like localToUtc.ts. */
-function civilToUtc(dateIso, hhmm, timeZone) {
-  const [hour, minute] = hhmm.split(':').map(Number);
-  const naive = Date.UTC(
-    Number(dateIso.slice(0, 4)), Number(dateIso.slice(5, 7)) - 1, Number(dateIso.slice(8, 10)),
-    hour, minute, 0, 0,
-  );
-  let guess = naive - offsetMinutes(timeZone, naive) * 60_000;
-  for (let pass = 0; pass < 3; pass += 1) {
-    const next = naive - offsetMinutes(timeZone, guess) * 60_000;
-    if (next === guess) break;
-    guess = next;
-  }
-  return { utc: new Date(guess), offsetMinutes: offsetMinutes(timeZone, guess) };
+/**
+ * Civil wall time at the birthplace → UTC instant and the offset applied
+ * (minutes east), through the calculator's own resolver and the
+ * birthplace's longitude.
+ */
+async function civilToUtc(dateIso, hhmm, timeZone, longitude) {
+  await prepareLocalTime(dateIso, timeZone);
+  const { utc, offsetMinutes } = resolveLocalToUtc(dateIso, hhmm, timeZone, { longitude });
+  return { utc, offsetMinutes };
 }
 
 function nextCivilDate(dateIso) {
@@ -170,12 +167,12 @@ function julianToGregorian(iso) {
  * resolvable the record is excluded anyway, so the UTC window is a safe
  * fallback for the screening record.
  */
-function cuspCheck(gregorianIso, timeZone) {
+async function cuspCheck(gregorianIso, timeZone, longitude) {
   const start = timeZone
-    ? civilToUtc(gregorianIso, '00:00', timeZone).utc
+    ? (await civilToUtc(gregorianIso, '00:00', timeZone, longitude)).utc
     : new Date(`${gregorianIso}T00:00:00.000Z`);
   const end = timeZone
-    ? civilToUtc(nextCivilDate(gregorianIso), '00:00', timeZone).utc
+    ? (await civilToUtc(nextCivilDate(gregorianIso), '00:00', timeZone, longitude)).utc
     : new Date(`${gregorianIso}T23:59:59.999Z`);
   const startSign = Math.floor(norm(longitudeOf(Astronomy.Body.Sun, start)) / 30);
   const endSign = Math.floor(norm(longitudeOf(Astronomy.Body.Sun, end)) / 30);
@@ -251,10 +248,14 @@ if (EXPANSION) {
 await mkdir(join(PILOT, COMPUTED_DIR), { recursive: true });
 
 let screening = [];
+let screeningOrder = null;
 if (requestedSet.size > 0) {
   const existingScreening = JSON.parse(
     await readFile(join(PILOT, SCREENING_FILE), 'utf8'),
   );
+  // A re-screened row keeps its place in the log, so a rerun reads as the
+  // rows it changed rather than as rows moved to the end.
+  screeningOrder = new Map(existingScreening.candidates.map((row, index) => [row.slug, index]));
   screening = existingScreening.candidates.filter((row) => !requestedSet.has(row.slug));
 }
 for (const candidate of candidates) {
@@ -329,7 +330,8 @@ for (const candidate of candidates) {
 
   // 5. Cusp determinability, measured on the birthplace's own civil day —
   // which is why it waits for the zone above.
-  const cusp = cuspCheck(gregorianDate, timeZone);
+  const longitude = evidence.birthPlace.coordinates.longitude;
+  const cusp = await cuspCheck(gregorianDate, timeZone, longitude);
   if (cusp.ambiguous) {
     reasons.push(`cusp-ambiguous: solar ingress ${cusp.fromSign}→${cusp.toSign} at ${cusp.boundaryUtc}`);
   }
@@ -351,9 +353,9 @@ for (const candidate of candidates) {
   }
 
   // ── Accepted: compute the chart at noon civil time at the birthplace ──
-  const { utc: noonUtc, offsetMinutes: noonOffset } = civilToUtc(gregorianDate, '12:00', timeZone);
-  const dayStart = civilToUtc(gregorianDate, '00:00', timeZone).utc;
-  const dayEnd = civilToUtc(nextCivilDate(gregorianDate), '00:00', timeZone).utc;
+  const { utc: noonUtc, offsetMinutes: noonOffset } = await civilToUtc(gregorianDate, '12:00', timeZone, longitude);
+  const dayStart = (await civilToUtc(gregorianDate, '00:00', timeZone, longitude)).utc;
+  const dayEnd = (await civilToUtc(nextCivilDate(gregorianDate), '00:00', timeZone, longitude)).utc;
 
   const noon = positions(noonUtc);
   const early = positions(dayStart);
@@ -530,6 +532,14 @@ for (const candidate of candidates) {
     cusp,
     reasons: [],
   });
+}
+
+if (screeningOrder) {
+  const placeOf = (row) => screeningOrder.get(row.slug) ?? Number.MAX_SAFE_INTEGER;
+  screening = screening
+    .map((row, index) => ({ row, index }))
+    .sort((a, b) => placeOf(a.row) - placeOf(b.row) || a.index - b.index)
+    .map(({ row }) => row);
 }
 
 await writeFile(

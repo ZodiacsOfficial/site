@@ -1,0 +1,479 @@
+{
+  "ranAt": "2026-09-22T16:31:35.635Z",
+  "pack": {
+    "path": "/tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/D.v2.zeph",
+    "digest": "4cc6f85af54c98a890c1dd1022d5c13496df7d1d06d145c1c0bbbe1b94069764"
+  },
+  "node": "v22.22.2",
+  "preprocessingMs": 19.888152,
+  "caseConstruction": "DEFLECTION-EVALUATION.md section 8, unchanged: 300-day windows from 1975-01-01, 900 days apart per body, target longitude from the reference at the window midpoint",
+  "note": "Phases say what KIND of work a unit was. Labels say WHY the search was doing it. Both are the same partition of the same run, charged through the same spend() the budget counts.",
+  "rows": [
+    {
+      "id": "F2",
+      "why": "Moon, budget exhausted in the recorded run",
+      "body": "Moon",
+      "windowIso": [
+        "1977-06-19T00:00:00Z",
+        "1978-04-15T00:00:00Z"
+      ],
+      "windowTdbSec": [
+        -711201530.816,
+        -685281530.816
+      ],
+      "targetDeg": 298.813118,
+      "status": "budget-exhausted",
+      "established": false,
+      "found": 2,
+      "excludedRuns": 1,
+      "unresolvedRuns": 2,
+      "evaluations": 4000001,
+      "cells": 157818,
+      "ofDateEvaluations": 269422,
+      "ratioToOfDate": 14.846601242660213,
+      "bareMs": 51686.402654,
+      "bareMs2": 51427.532118,
+      "ofDateMs": 3110.410885,
+      "probedMs": 56018.148574,
+      "instrumentationOverheadPct": 8.926379056002276,
+      "bareRunSpreadPct": -0.500848429582013,
+      "instrumentationChangedTheAnswer": false,
+      "phases": {
+        "unattributed": {
+          "evaluations": 0,
+          "cells": 157818,
+          "ms": 0
+        },
+        "observer-enclosure": {
+          "evaluations": 819667,
+          "cells": 0,
+          "ms": 9833.865002
+        },
+        "light-time": {
+          "evaluations": 2049111,
+          "cells": 0,
+          "ms": 22920.47795
+        },
+        "target-enclosure": {
+          "evaluations": 723453,
+          "cells": 0,
+          "ms": 8791.363743
+        },
+        "sun-enclosure": {
+          "evaluations": 407770,
+          "cells": 0,
+          "ms": 5966.626505
+        },
+        "domain-test": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 38.553773
+        },
+        "deflection": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 851.63358
+        },
+        "aberration": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 182.83625
+        },
+        "frame": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 6449.950152
+        }
+      },
+      "labels": {
+        "seed": {
+          "evaluations": 63,
+          "cells": 3,
+          "ms": 0
+        },
+        "loose-enclosure": {
+          "evaluations": 42244,
+          "cells": 2047,
+          "ms": 0
+        },
+        "domain-boundary": {
+          "evaluations": 3957694,
+          "cells": 155768,
+          "ms": 0
+        }
+      }
+    },
+    {
+      "id": "A2",
+      "why": "Moon antipode, budget exhausted in the recorded run",
+      "body": "Moon",
+      "windowIso": [
+        "1977-06-19T00:00:00Z",
+        "1978-04-15T00:00:00Z"
+      ],
+      "windowTdbSec": [
+        -711201530.816,
+        -685281530.816
+      ],
+      "targetDeg": 118.813118,
+      "status": "budget-exhausted",
+      "established": false,
+      "found": 3,
+      "excludedRuns": 1,
+      "unresolvedRuns": 2,
+      "evaluations": 4000001,
+      "cells": 157818,
+      "ofDateEvaluations": 269422,
+      "ratioToOfDate": 14.846601242660213,
+      "bareMs": 56498.605125,
+      "bareMs2": 56279.837783,
+      "ofDateMs": 3691.053726,
+      "probedMs": 59562.044091,
+      "instrumentationOverheadPct": 5.83193988698992,
+      "bareRunSpreadPct": -0.3872083948196397,
+      "instrumentationChangedTheAnswer": false,
+      "phases": {
+        "unattributed": {
+          "evaluations": 0,
+          "cells": 157818,
+          "ms": 0
+        },
+        "observer-enclosure": {
+          "evaluations": 819667,
+          "cells": 0,
+          "ms": 10492.286517
+        },
+        "light-time": {
+          "evaluations": 2049111,
+          "cells": 0,
+          "ms": 24334.06404
+        },
+        "target-enclosure": {
+          "evaluations": 723453,
+          "cells": 0,
+          "ms": 9292.116827
+        },
+        "sun-enclosure": {
+          "evaluations": 407770,
+          "cells": 0,
+          "ms": 5893.494519
+        },
+        "domain-test": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 46.511862
+        },
+        "deflection": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 928.366944
+        },
+        "aberration": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 210.723657
+        },
+        "frame": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 7316.154877
+        }
+      },
+      "labels": {
+        "seed": {
+          "evaluations": 63,
+          "cells": 3,
+          "ms": 0
+        },
+        "loose-enclosure": {
+          "evaluations": 42244,
+          "cells": 2047,
+          "ms": 0
+        },
+        "domain-boundary": {
+          "evaluations": 3957694,
+          "cells": 155768,
+          "ms": 0
+        }
+      }
+    },
+    {
+      "id": "F3",
+      "why": "Mercury, the most expensive case that finished (831x the of-date rung)",
+      "body": "Mercury",
+      "windowIso": [
+        "1979-12-06T00:00:00Z",
+        "1980-10-01T00:00:00Z"
+      ],
+      "windowTdbSec": [
+        -633441530.816,
+        -607521530.816
+      ],
+      "targetDeg": 33.035194,
+      "status": "finished",
+      "established": false,
+      "found": 1,
+      "excludedRuns": 5,
+      "unresolvedRuns": 10,
+      "evaluations": 1917153,
+      "cells": 74085,
+      "ofDateEvaluations": 2307,
+      "ratioToOfDate": 831.0156046814044,
+      "bareMs": 29116.592841,
+      "bareMs2": 29279.926275,
+      "ofDateMs": 35.936807,
+      "probedMs": 30850.019096,
+      "instrumentationOverheadPct": 5.362352371565178,
+      "bareRunSpreadPct": 0.5609634166055484,
+      "instrumentationChangedTheAnswer": false,
+      "phases": {
+        "unattributed": {
+          "evaluations": 0,
+          "cells": 74085,
+          "ms": 0
+        },
+        "observer-enclosure": {
+          "evaluations": 364407,
+          "cells": 0,
+          "ms": 5165.029698
+        },
+        "light-time": {
+          "evaluations": 1040265,
+          "cells": 0,
+          "ms": 14120.279444
+        },
+        "target-enclosure": {
+          "evaluations": 330333,
+          "cells": 0,
+          "ms": 4887.673265
+        },
+        "sun-enclosure": {
+          "evaluations": 182148,
+          "cells": 0,
+          "ms": 2767.537505
+        },
+        "deflection": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 419.729992
+        },
+        "domain-test": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 21.68467
+        },
+        "aberration": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 85.924674
+        },
+        "frame": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 2927.679526
+        }
+      },
+      "labels": {
+        "seed": {
+          "evaluations": 285,
+          "cells": 13,
+          "ms": 0
+        },
+        "loose-enclosure": {
+          "evaluations": 1002,
+          "cells": 46,
+          "ms": 0
+        },
+        "domain-boundary": {
+          "evaluations": 1915866,
+          "cells": 74026,
+          "ms": 0
+        }
+      }
+    },
+    {
+      "id": "F7",
+      "why": "Saturn, a slow body whose window contains one conjunction (61x)",
+      "body": "Saturn",
+      "windowIso": [
+        "1989-10-14T00:00:00Z",
+        "1990-08-10T00:00:00Z"
+      ],
+      "windowTdbSec": [
+        -322401530.816,
+        -296481530.816
+      ],
+      "targetDeg": 293.142503,
+      "status": "finished",
+      "established": false,
+      "found": 2,
+      "excludedRuns": 1,
+      "unresolvedRuns": 2,
+      "evaluations": 63960,
+      "cells": 3978,
+      "ofDateEvaluations": 1051,
+      "ratioToOfDate": 60.85632730732635,
+      "bareMs": 882.254959,
+      "bareMs2": 926.278369,
+      "ofDateMs": 17.273062,
+      "probedMs": 939.926038,
+      "instrumentationOverheadPct": 1.4733874239915399,
+      "bareRunSpreadPct": 4.989873907866582,
+      "instrumentationChangedTheAnswer": false,
+      "phases": {
+        "unattributed": {
+          "evaluations": 0,
+          "cells": 3978,
+          "ms": 0
+        },
+        "observer-enclosure": {
+          "evaluations": 19992,
+          "cells": 0,
+          "ms": 239.962299
+        },
+        "light-time": {
+          "evaluations": 25013,
+          "cells": 0,
+          "ms": 274.50505
+        },
+        "target-enclosure": {
+          "evaluations": 8968,
+          "cells": 0,
+          "ms": 110.638269
+        },
+        "sun-enclosure": {
+          "evaluations": 9987,
+          "cells": 0,
+          "ms": 127.067946
+        },
+        "domain-test": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 0.973685
+        },
+        "deflection": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 19.430559
+        },
+        "aberration": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 4.085926
+        },
+        "frame": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 142.63224
+        }
+      },
+      "labels": {
+        "seed": {
+          "evaluations": 724,
+          "cells": 12,
+          "ms": 0
+        },
+        "domain-boundary": {
+          "evaluations": 63236,
+          "cells": 3966,
+          "ms": 0
+        }
+      }
+    },
+    {
+      "id": "F6",
+      "why": "Jupiter, an ordinary window with no conjunction (1.75x) -- the control",
+      "body": "Jupiter",
+      "windowIso": [
+        "1987-04-28T00:00:00Z",
+        "1988-02-22T00:00:00Z"
+      ],
+      "windowTdbSec": [
+        -400161530.816,
+        -374241530.816
+      ],
+      "targetDeg": 27.653017,
+      "status": "finished",
+      "established": true,
+      "found": 2,
+      "excludedRuns": 0,
+      "unresolvedRuns": 0,
+      "evaluations": 2106,
+      "cells": 55,
+      "ofDateEvaluations": 1205,
+      "ratioToOfDate": 1.7477178423236515,
+      "bareMs": 32.612314,
+      "bareMs2": 32.967763,
+      "ofDateMs": 18.443633,
+      "probedMs": 31.518602,
+      "instrumentationOverheadPct": -4.395691027019324,
+      "bareRunSpreadPct": 1.0899226592752669,
+      "instrumentationChangedTheAnswer": false,
+      "phases": {
+        "unattributed": {
+          "evaluations": 0,
+          "cells": 55,
+          "ms": 0
+        },
+        "observer-enclosure": {
+          "evaluations": 659,
+          "cells": 0,
+          "ms": 6.631341
+        },
+        "light-time": {
+          "evaluations": 910,
+          "cells": 0,
+          "ms": 9.275688
+        },
+        "target-enclosure": {
+          "evaluations": 215,
+          "cells": 0,
+          "ms": 2.133896
+        },
+        "sun-enclosure": {
+          "evaluations": 322,
+          "cells": 0,
+          "ms": 3.116859
+        },
+        "domain-test": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 0.026321
+        },
+        "deflection": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 0.664369
+        },
+        "aberration": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 0.211032
+        },
+        "frame": {
+          "evaluations": 0,
+          "cells": 0,
+          "ms": 8.372642
+        }
+      },
+      "labels": {
+        "seed": {
+          "evaluations": 227,
+          "cells": 11,
+          "ms": 0
+        },
+        "domain-boundary": {
+          "evaluations": 1396,
+          "cells": 42,
+          "ms": 0
+        },
+        "not-yet-monotone": {
+          "evaluations": 483,
+          "cells": 2,
+          "ms": 0
+        }
+      }
+    }
+  ],
+  "anyInstrumentationChangedTheAnswer": false
+}

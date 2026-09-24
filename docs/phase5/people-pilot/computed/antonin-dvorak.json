@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Prague",
     "civilTime": "12:00",
-    "utcInstant": "1841-09-08T11:02:16.000Z",
-    "utcOffsetMinutesAtBirth": 57.7333,
-    "civilDayStartUtc": "1841-09-07T23:02:16.000Z",
-    "civilDayEndUtc": "1841-09-08T23:02:16.000Z",
+    "utcInstant": "1841-09-08T11:02:48.000Z",
+    "utcOffsetMinutesAtBirth": 57.2,
+    "civilDayStartUtc": "1841-09-07T23:02:48.000Z",
+    "civilDayEndUtc": "1841-09-08T23:02:48.000Z",
     "latitude": 50.261558136958,
     "longitude": 14.298891773244,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "gemini",
     "signName": "Gemini",
-    "degree": 13.87,
+    "degree": 13.88,
     "uncertain": false,
     "signAtCivilDayStart": "gemini",
     "signAtCivilDayEnd": "gemini"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 15.1288,
-    "degreesToNextBoundaryAtWindowEnd": 13.8988
+    "degreesInsideAtWindowStart": 15.0902,
+    "degreesToNextBoundaryAtWindowEnd": 13.9375
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.972,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 13.87,
+      "degree": 13.88,
       "retrograde": false,
-      "speedPerDay": 13.8063,
+      "speedPerDay": 13.8064,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -180,16 +180,16 @@
       "applying": true
     },
     {
-      "a": "Sun",
-      "b": "Mercury",
-      "type": "conjunction",
+      "a": "Moon",
+      "b": "Neptune",
+      "type": "trine",
       "orb": 0.99,
       "applying": true
     },
     {
-      "a": "Moon",
-      "b": "Neptune",
-      "type": "trine",
+      "a": "Sun",
+      "b": "Mercury",
+      "type": "conjunction",
       "orb": 0.99,
       "applying": true
     },

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Chicago",
     "civilTime": "12:00",
-    "utcInstant": "1862-07-16T17:50:36.000Z",
-    "utcOffsetMinutesAtBirth": -350.6,
-    "civilDayStartUtc": "1862-07-16T05:50:36.000Z",
-    "civilDayEndUtc": "1862-07-17T05:50:36.000Z",
+    "utcInstant": "1862-07-16T17:57:47.000Z",
+    "utcOffsetMinutesAtBirth": -357.7833,
+    "civilDayStartUtc": "1862-07-16T05:57:47.000Z",
+    "civilDayEndUtc": "1862-07-17T05:57:47.000Z",
     "latitude": 34.7733,
     "longitude": -89.4464,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "aries",
     "signName": "Aries",
-    "degree": 1.03,
+    "degree": 1.09,
     "uncertain": true,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "aries"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 23.1505,
-    "degreesToNextBoundaryAtWindowEnd": 5.8956
+    "degreesInsideAtWindowStart": 23.3875,
+    "degreesToNextBoundaryAtWindowEnd": 5.6585
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.954,
-    "Moon": 12.877,
+    "Moon": 12.875,
     "Mercury": 0.183,
     "Venus": 1.168,
     "Mars": 0.493,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 1.03,
+      "degree": 1.09,
       "retrograde": false,
-      "speedPerDay": 12.8669,
+      "speedPerDay": 12.8649,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Cancer",
       "degree": 7.25,
       "retrograde": false,
-      "speedPerDay": 0.1848,
+      "speedPerDay": 0.1853,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -103,7 +103,7 @@
       "body": "Venus",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 17.63,
+      "degree": 17.64,
       "retrograde": false,
       "speedPerDay": 1.1683,
       "dignity": null,
@@ -116,7 +116,7 @@
       "signName": "Aries",
       "degree": 5.69,
       "retrograde": false,
-      "speedPerDay": 0.4928,
+      "speedPerDay": 0.4927,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -149,7 +149,7 @@
       "signName": "Gemini",
       "degree": 18.67,
       "retrograde": false,
-      "speedPerDay": 0.0509,
+      "speedPerDay": 0.0508,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -189,21 +189,21 @@
       "a": "Sun",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 1.01,
+      "orb": 1.02,
       "applying": false
     },
     {
       "a": "Venus",
       "b": "Uranus",
       "type": "conjunction",
-      "orb": 1.04,
+      "orb": 1.03,
       "applying": true
     },
     {
       "a": "Venus",
       "b": "Saturn",
       "type": "square",
-      "orb": 1.04,
+      "orb": 1.03,
       "applying": true
     },
     {
@@ -217,14 +217,14 @@
       "a": "Mars",
       "b": "Neptune",
       "type": "conjunction",
-      "orb": 1.83,
+      "orb": 1.84,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Neptune",
       "type": "conjunction",
-      "orb": 2.83,
+      "orb": 2.77,
       "applying": true
     },
     {
@@ -252,7 +252,7 @@
       "a": "Venus",
       "b": "Jupiter",
       "type": "square",
-      "orb": 5.22,
+      "orb": 5.21,
       "applying": true
     }
   ],
@@ -261,28 +261,28 @@
       "a": "Moon",
       "b": "Mars",
       "type": "conjunction",
-      "orb": 4.66,
+      "orb": 4.6,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "square",
-      "orb": 6.23,
+      "orb": 6.16,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Moon",
       "type": "trine",
-      "orb": 7.17,
+      "orb": 7.22,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "opposition",
-      "orb": 8.18,
+      "orb": 8.24,
       "applying": false
     }
   ],

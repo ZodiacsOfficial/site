@@ -1,4 +1,5 @@
 import { decodePositionsLink } from '../lib/share-positions.js';
+import { previewPlacements, type PreviewPlacements } from '../lib/share-preview.js';
 
 const HUES: Record<string, string> = {
   aries: '#DE8E79', taurus: '#B9D4BE', gemini: '#B29DD0', cancer: '#B6D4E4',
@@ -24,34 +25,33 @@ export interface ChartPreviewModel {
   settings: string;
 }
 
-function roundedPlacement(label: ChartPreviewPlacement['label'], longitude: number): ChartPreviewPlacement {
-  const totalMinutes = Math.round((((longitude % 360) + 360) % 360) * 60) % 21600;
-  const rounded = totalMinutes / 60;
-  const sign = SIGNS[Math.floor(rounded / 30)];
-  const within = totalMinutes % 1800;
+function wholeDegreePlacement(label: ChartPreviewPlacement['label'], longitude: number): ChartPreviewPlacement {
+  const sign = SIGNS[Math.floor(longitude / 30)];
   return {
     label,
     sign: sign[0],
     hue: HUES[sign[1]],
-    degree: `${Math.floor(within / 60)} deg ${String(within % 60).padStart(2, '0')} min`,
+    degree: `${longitude % 30} deg`,
   };
 }
 
-export function previewModel(value: string): ChartPreviewModel | null {
+/** The preview placements of a positions code, for a preview link made before the code moved to the fragment. */
+export function previewPlacementsFromToken(value: string): PreviewPlacements | null {
   const chart = decodePositionsLink(value);
-  if (!chart) return null;
-  const sun = chart.bodies.find((body) => body.body === 'Sun');
-  const moon = chart.bodies.find((body) => body.body === 'Moon');
-  if (!sun || !moon) return null;
-  const placements = [
-    roundedPlacement('Sun', sun.lon),
-    roundedPlacement('Moon', moon.lon),
+  return chart ? previewPlacements(chart) : null;
+}
+
+/** The image shows the Sun, the Moon and the Rising sign to the whole degree. */
+export function previewModel(placements: PreviewPlacements): ChartPreviewModel {
+  const rows = [
+    wholeDegreePlacement('Sun', placements.sun),
+    wholeDegreePlacement('Moon', placements.moon),
   ];
-  if (chart.angles) placements.push(roundedPlacement('Rising', chart.angles.asc));
+  if (placements.rising !== null) rows.push(wholeDegreePlacement('Rising', placements.rising));
   return {
-    placements,
-    settings: chart.angles
-      ? `${chart.houseSystem === 'whole' ? 'Whole sign' : 'Placidus'} / Tropical`
+    placements: rows,
+    settings: placements.rising !== null && placements.houses !== null
+      ? `${placements.houses === 'whole' ? 'Whole sign' : 'Placidus'} / Tropical`
       : 'Reference positions / No houses / Tropical',
   };
 }

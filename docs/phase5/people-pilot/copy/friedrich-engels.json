@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:6.20",
+        "sun-degree:6.22",
         "decan:sagittarius:first"
       ],
       "text": "The Sun sits at 6.2° Sagittarius — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
@@ -24,16 +24,16 @@
       "title": "Closer to the ground",
       "facts": [
         "personal:Mercury:Sagittarius:22.3°",
-        "personal:Venus:Libra:25.2°",
+        "personal:Venus:Libra:25.3°",
         "personal:Mars:Sagittarius:17.6°"
       ],
-      "text": "Closer in, Mercury stands at 22.3° Sagittarius; Venus stands at 25.2° Libra; Mars stands at 17.6° Sagittarius. The tradition reads a mind that decides at speaking speed from Mercury, taste led by wit and proportion from Venus, drive that ignites on contact from Mars."
+      "text": "Closer in, Mercury stands at 22.3° Sagittarius; Venus stands at 25.3° Libra; Mars stands at 17.6° Sagittarius. The tradition reads a mind that decides at speaking speed from Mercury, taste led by wit and proportion from Venus, drive that ignites on contact from Mars."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Saturn:trine:0.68",
+        "aspect:Sun:Saturn:trine:0.66",
         "aspect:Uranus:Pluto:square:1",
         "aspect:Uranus:Neptune:conjunction:2.03"
       ],
@@ -56,7 +56,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:fall"
       ],
-      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Sagittarius at 22.3° is in detriment — the planet opposite its home, working against the grain; Venus in Libra at 25.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 14.1° is in domicile; Saturn in Aries at 6.9° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Sagittarius at 22.3° is in detriment — the planet opposite its home, working against the grain; Venus in Libra at 25.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 14.1° is in domicile; Saturn in Aries at 6.9° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
     },
     {
       "key": "shape",
@@ -77,7 +77,7 @@
         "moon-band:11.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 15.2°."
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 15.4°."
     }
   ],
   "birthdayLink": {
@@ -90,12 +90,12 @@
   },
   "substantiveFacts": [
     "stellium:sagittarius:5",
-    "sun-degree:6.20",
+    "sun-degree:6.22",
     "decan:sagittarius:first",
     "personal:Mercury:Sagittarius:22.3°",
-    "personal:Venus:Libra:25.2°",
+    "personal:Venus:Libra:25.3°",
     "personal:Mars:Sagittarius:17.6°",
-    "aspect:Sun:Saturn:trine:0.68",
+    "aspect:Sun:Saturn:trine:0.66",
     "aspect:Uranus:Pluto:square:1",
     "aspect:Uranus:Neptune:conjunction:2.03",
     "figure:t-square:Moon-Jupiter:apex-Mars",

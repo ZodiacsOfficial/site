@@ -101,6 +101,26 @@ them as covered, remove the three files from the working tree, and keep
 them only in the local research directory. Nothing else in the project
 depends on which is chosen, and no external enquiry has been sent.
 
+*Correction, 2026-09-23.* The three files are not the only Swiss output in
+the tree. The engine audit (`../engine-audit-2026-09-22/LEDGER.md`,
+data-toolchain-packaging-6) and a search on 2026-09-23 find it in these
+tracked files too, each a frozen measurement or test oracle and none a
+fitting target:
+
+- `src/lib/engine/fixtures/swiss-node-polar.fixture.json` and
+  `swiss-eight-cases.fixture.json`: Swiss values for the node-and-polar and
+  eight-case packs;
+- `src/lib/engine/fixtures/swiss-lunar-returns.fixture.json`,
+  `swiss-lunar-returned-charts.fixture.json` and
+  `transit-window-independent.json`: return instants, charts and crossing
+  roots from Swiss scans;
+- differences from Swiss, from which Swiss's values can be recovered with
+  the engine's: the per-row `../swiss-benchmark/report-*.json` and
+  `../events-vs-swiss-2026-09-23/deltas.json` (290 event times, added on
+  2026-09-23).
+
+The owner decision above covers these as well.
+
 ## What this does not block
 
 The runtime, the synthetic fixtures, the local compiler and the developer

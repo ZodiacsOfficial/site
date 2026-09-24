@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "owner-requested-phone-runway-and-top-bar-2026-09-24",
-  "baseCommit": "2d10102417abd4709740081283fb271ebd3da883",
+  "baseCommit": "3f31ba1708dafd7380b079d68f9b72bbc643cb9d",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",

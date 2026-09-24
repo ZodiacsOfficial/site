@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1811-10-22T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1811-10-21T22:54:39.000Z",
-    "civilDayEndUtc": "1811-10-22T22:54:39.000Z",
+    "utcInstant": "1811-10-22T10:53:52.000Z",
+    "utcOffsetMinutesAtBirth": 66.1333,
+    "civilDayStartUtc": "1811-10-21T22:53:52.000Z",
+    "civilDayEndUtc": "1811-10-22T22:53:52.000Z",
     "latitude": 47.566111111111,
     "longitude": 16.531388888889,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 25.86,
+    "degree": 25.85,
     "uncertain": true,
     "signAtCivilDayStart": "sagittarius",
     "signAtCivilDayEnd": "capricorn"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.7008,
-    "degreesToNextBoundaryAtWindowEnd": 1.3025
+    "degreesInsideAtWindowStart": 27.655,
+    "degreesToNextBoundaryAtWindowEnd": 1.3483
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.997,
-    "Moon": 13.159,
+    "Moon": 13.158,
     "Mercury": 1.452,
     "Venus": 1.253,
     "Mars": 0.706,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 25.86,
+      "degree": 25.85,
       "retrograde": false,
-      "speedPerDay": 13.1627,
+      "speedPerDay": 13.1626,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -94,7 +94,7 @@
       "signName": "Libra",
       "degree": 11.55,
       "retrograde": false,
-      "speedPerDay": 1.4536,
+      "speedPerDay": 1.4535,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -189,7 +189,7 @@
       "a": "Mars",
       "b": "Pluto",
       "type": "sextile",
-      "orb": 0.86,
+      "orb": 0.85,
       "applying": false
     },
     {
@@ -217,7 +217,7 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 3.24,
+      "orb": 3.23,
       "applying": false
     },
     {
@@ -231,7 +231,7 @@
       "a": "Venus",
       "b": "Jupiter",
       "type": "trine",
-      "orb": 5.45,
+      "orb": 5.46,
       "applying": true
     },
     {
@@ -254,14 +254,14 @@
       "a": "Sun",
       "b": "Moon",
       "type": "sextile",
-      "orb": 2.29,
+      "orb": 2.3,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "sextile",
-      "orb": 4.94,
+      "orb": 4.95,
       "applying": true
     }
   ],

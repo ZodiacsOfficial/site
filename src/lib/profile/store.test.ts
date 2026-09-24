@@ -1,9 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import * as engine from '../engine/full';
 import { ENGINE_VERSION } from '../engine/types';
 import type { Chart, HouseSystem } from '../engine/types';
+import { signForLongitude } from '../signs';
 import { PROFILE_DELETIONS_KEY, loadChartDeletions } from './deletions';
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
-import type { SavedChart, SavedChartRelationship } from './schema';
+import type { SavedChart, SavedChartRelationship, SavedPlace } from './schema';
 import {
   deleteChart,
   getPrimarySelfChart,
@@ -14,8 +16,20 @@ import {
   replaceProfile,
   saveChart,
   setProfileSunSign,
+  updateChartSummaries,
 } from './store';
+import { refreshSavedChartSummaries } from './refresh';
 import { resolveSavedChart, type SavedChartEngineLoader } from './resolve';
+
+const sync = vi.hoisted(() => ({ scheduleCloudSync: vi.fn() }));
+vi.mock('./sync', () => sync);
+// The birthplace clock's tables load only through prepareLocalTime.
+const time = vi.hoisted(() => ({ prepareLocalTime: vi.fn() }));
+vi.mock('../time/localToUtc', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../time/localToUtc')>();
+  time.prepareLocalTime.mockImplementation(actual.prepareLocalTime);
+  return { ...actual, prepareLocalTime: time.prepareLocalTime };
+});
 
 const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
 const NOW = '2026-07-10T12:00:00.000Z';
@@ -107,11 +121,14 @@ beforeEach(() => {
   vi.stubGlobal('window', { dispatchEvent: vi.fn() });
   vi.useFakeTimers();
   vi.setSystemTime(new Date(NOW));
+  sync.scheduleCloudSync.mockClear();
+  time.prepareLocalTime.mockClear();
 });
 
 afterEach(() => {
   vi.useRealTimers();
   vi.unstubAllGlobals();
+  vi.unstubAllEnvs();
 });
 
 describe('saveChart', () => {
@@ -421,6 +438,126 @@ describe('resolveSavedChart', () => {
     });
   });
 
+  function buffalo1870(utcISO: string): SavedChart {
+    const chart = makeChart('buffalo', { date: '1870-06-01', time: '12:00' });
+    return {
+      ...chart,
+      birth: {
+        ...chart.birth,
+        place: { name: 'Buffalo', admin1: 'New York', country: 'US', lat: 42.886, lon: -78.878, tz: 'America/New_York' },
+      },
+      summary: { ...chart.summary, utcISO },
+    };
+  }
+
+  it('keeps a current summary before standard time while its instant matches the birthplace clock', async () => {
+    let loads = 0;
+    const loader: SavedChartEngineLoader = async () => {
+      loads += 1;
+      throw new Error('must stay lazy');
+    };
+    const chart = buffalo1870('1870-06-01T17:15:31.000Z');
+
+    await expect(resolveSavedChart(chart, loader)).resolves.toMatchObject({ summary: chart.summary });
+    expect(loads).toBe(0);
+  });
+
+  it('recomputes a current summary saved on the zone reference city clock', async () => {
+    let received: Chart['input'] | null = null;
+    const loader: SavedChartEngineLoader = async () => ({
+      computeChart(input) {
+        received = input;
+        return {
+          input,
+          bodies: [{ body: 'Sun', lon: 70, lat: 0, speed: 1, retrograde: false }],
+          angles: { asc: 150, mc: 60, dsc: 330, ic: 240 },
+          houses: null,
+          aspects: [],
+          flags: input.flags ?? [],
+          engineVersion: ENGINE_VERSION,
+        };
+      },
+    });
+
+    // New York's mean time, 4 h 56 min 2 s behind Greenwich, as saved before
+    // 2026-09; Buffalo's own is 5 h 15 min 31 s behind.
+    const resolved = await resolveSavedChart(buffalo1870('1870-06-01T16:56:02.000Z'), loader);
+
+    expect(received!.utc.toISOString()).toBe('1870-06-01T17:15:31.000Z');
+    expect(received!.flags).toEqual(['lmt']);
+    expect(resolved.summary).toMatchObject({ utcISO: '1870-06-01T17:15:31.000Z', flags: ['lmt'] });
+    expect(resolved.bodies).toEqual([{ body: 'Sun', lon: 70 }]);
+    expect(resolved.asc).toBe(150);
+  });
+
+  it('recomputes a current summary from 1954 to 1970 saved on the browser\'s zone history', async () => {
+    let received: Chart['input'] | null = null;
+    const loader: SavedChartEngineLoader = async () => ({
+      computeChart(input) {
+        received = input;
+        return {
+          input,
+          bodies: [{ body: 'Sun', lon: 99, lat: 0, speed: 1, retrograde: false }],
+          angles: { asc: 200, mc: 110, dsc: 20, ic: 290 },
+          houses: null,
+          aspects: [],
+          flags: input.flags ?? [],
+          engineVersion: ENGINE_VERSION,
+        };
+      },
+    });
+    const chart = makeChart('oslo', { date: '1960-07-01', time: '12:00' });
+    // Browsers give Oslo Berlin's history, +1:00 in July 1960; Norway kept
+    // summer time that year, +2:00, which the pinned history has.
+    const saved: SavedChart = {
+      ...chart,
+      birth: {
+        ...chart.birth,
+        place: { name: 'Oslo', admin1: 'Oslo', country: 'NO', lat: 59.913, lon: 10.75, tz: 'Europe/Oslo' },
+      },
+      summary: { ...chart.summary, utcISO: '1960-07-01T11:00:00.000Z' },
+    };
+
+    const resolved = await resolveSavedChart(saved, loader);
+
+    expect(received!.utc.toISOString()).toBe('1960-07-01T10:00:00.000Z');
+    expect(resolved.summary).toMatchObject({ utcISO: '1960-07-01T10:00:00.000Z' });
+  });
+
+  it('recomputes a current summary from 1947 saved on Berlin\'s summer time', async () => {
+    let received: Chart['input'] | null = null;
+    const loader: SavedChartEngineLoader = async () => ({
+      computeChart(input) {
+        received = input;
+        return {
+          input,
+          bodies: [{ body: 'Sun', lon: 98, lat: 0, speed: 1, retrograde: false }],
+          angles: { asc: 187, mc: 100, dsc: 7, ic: 280 },
+          houses: null,
+          aspects: [],
+          flags: input.flags ?? [],
+          engineVersion: ENGINE_VERSION,
+        };
+      },
+    });
+    const chart = makeChart('stockholm', { date: '1947-07-01', time: '12:00' });
+    // Browsers give Stockholm Berlin's history, +2:00 in July 1947; Sweden
+    // kept +1:00 all year, which the pinned history has.
+    const saved: SavedChart = {
+      ...chart,
+      birth: {
+        ...chart.birth,
+        place: { name: 'Stockholm', admin1: 'Stockholm', country: 'SE', lat: 59.33, lon: 18.07, tz: 'Europe/Stockholm' },
+      },
+      summary: { ...chart.summary, utcISO: '1947-07-01T10:00:00.000Z' },
+    };
+
+    const resolved = await resolveSavedChart(saved, loader);
+
+    expect(received!.utc.toISOString()).toBe('1947-07-01T11:00:00.000Z');
+    expect(resolved.summary).toMatchObject({ utcISO: '1947-07-01T11:00:00.000Z' });
+  });
+
   it('falls back to the stored summary when stale recomputation fails', async () => {
     const loader: SavedChartEngineLoader = async () => {
       throw new Error('offline');
@@ -433,5 +570,194 @@ describe('resolveSavedChart', () => {
       timeKnown: true,
       summary: chart.summary,
     });
+  });
+});
+
+describe('refreshSavedChartSummaries', () => {
+  const STOCKHOLM: SavedPlace = { name: 'Stockholm', admin1: 'Stockholm', country: 'SE', lat: 59.33, lon: 18.07, tz: 'Europe/Stockholm' };
+  const OSLO: SavedPlace = { name: 'Oslo', admin1: 'Oslo', country: 'NO', lat: 59.913, lon: 10.75, tz: 'Europe/Oslo' };
+  const NEW_YORK: SavedPlace = { name: 'New York', admin1: 'New York', country: 'US', lat: 40.7128, lon: -74.006, tz: 'America/New_York' };
+
+  /** A noon birth as the real engine saved it at `utcISO`, on whichever clock gave that instant. */
+  function savedAt(id: string, place: SavedPlace, date: string, utcISO: string, options: ChartOptions = {}): SavedChart {
+    const chart = makeChart(id, { ...options, date, time: '12:00' });
+    const result = engine.computeChart({
+      utc: new Date(utcISO),
+      latitude: place.lat,
+      longitude: place.lon,
+      houseSystem: 'whole',
+      timeKnown: true,
+      flags: [],
+    });
+    return {
+      ...chart,
+      birth: { ...chart.birth, place },
+      summary: {
+        engineVersion: result.engineVersion,
+        utcISO,
+        houseSystem: 'whole',
+        bodies: result.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })),
+        angles: { asc: result.angles!.asc, mc: result.angles!.mc },
+        flags: result.flags,
+      },
+    };
+  }
+
+  // Browsers read Stockholm on Berlin's summer time in July 1947 (10:00Z for
+  // a noon birth); Sweden kept +1:00, so the birth was at 11:00Z.
+  const staleStockholm = (id = 'stockholm', options: ChartOptions = {}) =>
+    savedAt(id, STOCKHOLM, '1947-07-01', '1947-07-01T10:00:00.000Z', options);
+  const moon = (summary: SavedChart['summary']) => summary.bodies.find((body) => body.body === 'Moon')!.lon;
+
+  it('rewrites a stale 1947 Stockholm summary on the real engine: the ASC moves from Virgo to Libra', async () => {
+    const saved = staleStockholm();
+    seedProfile([saved]);
+    expect(saved.summary.angles!.asc).toBeCloseTo(177.91, 2);
+    expect(signForLongitude(saved.summary.angles!.asc).slug).toBe('virgo');
+    expect(moon(saved.summary)).toBeCloseTo(256.61, 2);
+    const loader = vi.fn<SavedChartEngineLoader>(async () => engine);
+
+    await expect(refreshSavedChartSummaries(loader)).resolves.toBe(1);
+
+    const [refreshed] = loadProfile().charts;
+    expect(refreshed.summary.utcISO).toBe('1947-07-01T11:00:00.000Z');
+    expect(refreshed.summary.engineVersion).toBe(ENGINE_VERSION);
+    expect(refreshed.summary.angles!.asc).toBeCloseTo(187.38, 2);
+    expect(signForLongitude(refreshed.summary.angles!.asc).slug).toBe('libra');
+    expect(moon(refreshed.summary)).toBeCloseTo(257.10, 2);
+    expect({ ...refreshed, summary: saved.summary }).toEqual(saved);
+    expect(loader).toHaveBeenCalledOnce();
+  });
+
+  it('changes only placed charts dated up to 1970, keeping id, createdAt and updatedAt', async () => {
+    const stockholm = staleStockholm('stockholm', {
+      createdAt: '2025-01-01T00:00:00.000Z',
+      updatedAt: '2025-02-01T00:00:00.000Z',
+    });
+    const newest = makeChart('bangkok-1990', { updatedAt: '2026-06-01T00:00:00.000Z' });
+    const placeless = { ...makeChart('placeless-1947', { date: '1947-07-01', place: false }), summary: stockholm.summary };
+    const bangkok1971 = makeChart('bangkok-1971', { date: '1971-01-01', lat: 14 });
+    seedProfile([newest, stockholm, placeless, bangkok1971]);
+
+    await expect(refreshSavedChartSummaries(async () => engine)).resolves.toBe(1);
+
+    const [first, refreshed, ...rest] = loadProfile().charts;
+    expect(first).toEqual(newest);
+    expect(rest).toEqual([placeless, bangkok1971]);
+    expect(refreshed).toEqual({ ...stockholm, summary: refreshed.summary });
+    expect(refreshed.summary.utcISO).toBe('1947-07-01T11:00:00.000Z');
+  });
+
+  it('writes one profile event and one sync for the batch; a second run does nothing and loads nothing', async () => {
+    vi.stubEnv('PUBLIC_SUPABASE_URL', 'https://sync.example');
+    // Oslo kept summer time in 1960, which browsers miss (the stale 11:00Z);
+    // New York's July 1960 clock was EDT either way, so its summary stands.
+    seedProfile([
+      staleStockholm(),
+      savedAt('oslo', OSLO, '1960-07-01', '1960-07-01T11:00:00.000Z', { lat: 1 }),
+      savedAt('new-york', NEW_YORK, '1960-07-01', '1960-07-01T16:00:00.000Z', { lat: 2 }),
+    ]);
+    const first = vi.fn<SavedChartEngineLoader>(async () => engine);
+
+    await expect(refreshSavedChartSummaries(first)).resolves.toBe(2);
+    await vi.dynamicImportSettled();
+
+    expect(loadProfile().charts.map((chart) => chart.summary.utcISO)).toEqual([
+      '1947-07-01T11:00:00.000Z',
+      '1960-07-01T10:00:00.000Z',
+      '1960-07-01T16:00:00.000Z',
+    ]);
+    expect(time.prepareLocalTime).toHaveBeenCalledTimes(3);
+    expect(window.dispatchEvent).toHaveBeenCalledOnce();
+    expect(vi.mocked(window.dispatchEvent).mock.calls[0][0].type).toBe('zodiacs:profile');
+    expect(sync.scheduleCloudSync).toHaveBeenCalledOnce();
+
+    const stored = storage.getItem(PROFILE_KEY);
+    time.prepareLocalTime.mockClear();
+    const second = vi.fn<SavedChartEngineLoader>(async () => engine);
+
+    await expect(refreshSavedChartSummaries(second)).resolves.toBe(0);
+    await vi.dynamicImportSettled();
+
+    expect(second).not.toHaveBeenCalled();
+    expect(time.prepareLocalTime).not.toHaveBeenCalled();
+    expect(storage.getItem(PROFILE_KEY)).toBe(stored);
+    expect(window.dispatchEvent).toHaveBeenCalledOnce();
+    expect(sync.scheduleCloudSync).toHaveBeenCalledOnce();
+  });
+
+  it('leaves a chart saved again while its summary was recomputed', async () => {
+    seedProfile([staleStockholm()]);
+    // The same birth saved again from the calculator, on the corrected clock.
+    const resaved = savedAt('recalculated', STOCKHOLM, '1947-07-01', '1947-07-01T11:00:00.000Z');
+    const loader = vi.fn<SavedChartEngineLoader>(async () => {
+      expect(saveChart(resaved)).toBe('updated');
+      return engine;
+    });
+
+    await expect(refreshSavedChartSummaries(loader)).resolves.toBe(0);
+
+    expect(loader).toHaveBeenCalledOnce();
+    expect(loadProfile().charts).toEqual([{ ...resaved, id: 'stockholm', name: 'stockholm', updatedAt: NOW }]);
+    // The save's own write; the refresh adds none.
+    expect(window.dispatchEvent).toHaveBeenCalledOnce();
+  });
+
+  it('never loads the engine or the time tables for a chart after 1970 or without a place', async () => {
+    seedProfile([
+      makeChart('bangkok-1990', { engineVersion: 'old' }),
+      makeChart('placeless-1947', { date: '1947-07-01', place: false, engineVersion: 'old' }),
+    ]);
+    const loader = vi.fn<SavedChartEngineLoader>(async () => engine);
+
+    await expect(refreshSavedChartSummaries(loader)).resolves.toBe(0);
+    await vi.dynamicImportSettled();
+
+    expect(loader).not.toHaveBeenCalled();
+    expect(time.prepareLocalTime).not.toHaveBeenCalled();
+    expect(window.dispatchEvent).not.toHaveBeenCalled();
+  });
+
+  it('checks a chart again on the next run after its recomputation could not load', async () => {
+    seedProfile([staleStockholm()]);
+
+    await expect(refreshSavedChartSummaries(async () => {
+      throw new Error('offline');
+    })).resolves.toBe(0);
+    expect(loadProfile().charts[0].summary.utcISO).toBe('1947-07-01T10:00:00.000Z');
+
+    await expect(refreshSavedChartSummaries(async () => engine)).resolves.toBe(1);
+    expect(loadProfile().charts[0].summary.utcISO).toBe('1947-07-01T11:00:00.000Z');
+  });
+});
+
+describe('updateChartSummaries', () => {
+  it('replaces a summary only while the stored chart keeps the instant it was recomputed from', () => {
+    const kept = makeChart('kept', { lat: 1 });
+    const resaved = makeChart('resaved', { lat: 2 });
+    seedProfile([kept, resaved]);
+    const summary = { ...kept.summary, utcISO: '1990-01-01T06:00:00.000Z', angles: { asc: 27, mc: 117 } };
+
+    expect(updateChartSummaries([
+      { id: 'kept', utcISO: kept.summary.utcISO, summary },
+      { id: 'resaved', utcISO: '1990-01-01T04:00:00.000Z', summary },
+      { id: 'deleted', utcISO: kept.summary.utcISO, summary },
+    ])).toEqual(['kept']);
+
+    expect(loadProfile().charts).toEqual([{ ...kept, summary }, resaved]);
+    expect(window.dispatchEvent).toHaveBeenCalledOnce();
+  });
+
+  it('writes nothing when no stored chart still matches', () => {
+    const chart = makeChart('chart');
+    seedProfile([chart]);
+    const stored = storage.getItem(PROFILE_KEY);
+
+    expect(updateChartSummaries([
+      { id: 'chart', utcISO: '1990-01-01T04:00:00.000Z', summary: chart.summary },
+    ])).toEqual([]);
+
+    expect(storage.getItem(PROFILE_KEY)).toBe(stored);
+    expect(window.dispatchEvent).not.toHaveBeenCalled();
   });
 });

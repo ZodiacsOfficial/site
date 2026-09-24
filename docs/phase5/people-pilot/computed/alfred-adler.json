@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Vienna",
     "civilTime": "12:00",
-    "utcInstant": "1870-02-07T10:54:39.000Z",
-    "utcOffsetMinutesAtBirth": 65.35,
-    "civilDayStartUtc": "1870-02-06T22:54:39.000Z",
-    "civilDayEndUtc": "1870-02-07T22:54:39.000Z",
+    "utcInstant": "1870-02-07T10:54:41.000Z",
+    "utcOffsetMinutesAtBirth": 65.3167,
+    "civilDayStartUtc": "1870-02-06T22:54:41.000Z",
+    "civilDayEndUtc": "1870-02-07T22:54:41.000Z",
     "latitude": 48.1903,
     "longitude": 16.3289,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.063,
-    "degreesToNextBoundaryAtWindowEnd": 10.9247
+    "degreesInsideAtWindowStart": 18.0171,
+    "degreesToNextBoundaryAtWindowEnd": 10.9706
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.012,

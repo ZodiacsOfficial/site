@@ -8,18 +8,13 @@
  * Lives beside full.ts and is only ever lazy-loaded with it — the
  * ephemeris stays out of every eager bundle.
  */
-import { bodyLongitude } from './full.js';
+import { bodyLongitude, longitudeSpeed } from './full.js';
 import { findLongitudeCrossingsWith } from './longitude-crossings.js';
+import { clipToReferenceSpan } from './reference-span.js';
 import type { LongitudeCrossing } from './longitude-crossings';
 import type { BodyName } from './types';
 
 const DAY = 86400_000;
-
-/** Signed shortest angular distance a→b, degrees (−180, 180]. */
-function delta(a: number, b: number): number {
-  const d = (((b - a) % 360) + 360) % 360;
-  return d > 180 ? d - 360 : d;
-}
 
 export type Crossing = LongitudeCrossing;
 
@@ -34,8 +29,13 @@ export interface ReturnSeason {
 /**
  * Every instant in (from, to] when `body` sits exactly on `targetLon`.
  * Coarse scan at `stepDays`, then 24-iteration bisection per crossing.
- * The default 5-day step is safe for Saturn (≤0.13°/day → ≤0.65°/step
- * against a 360° lap; a triple pass spans months, never 5 days).
+ * A 5-day grid by itself cannot see a pair of passes closer together than
+ * one step: for Saturn that is any station within 0.0103° (37″) of the
+ * natal degree, for Jupiter 0.0205°. The shared solver re-examines every
+ * sampled turn within reach of the target, so such grazing pairs are kept:
+ * 4,941 of 4,941 station-graze cases 2020–2030 matched a fine-step reference
+ * (docs/platform/evidence/phase1-events/). That is a tested property of the
+ * corpus, not a proof of completeness.
  */
 export function findLongitudeCrossings(
   body: BodyName,
@@ -72,6 +72,10 @@ export interface SaturnReturnResult {
   natalLon: number;
   natalRetrograde: boolean;
   seasons: ReturnSeason[];
+  /** True when the scan stopped at the end of 2199, so later passes are not shown. */
+  rangeClipped: boolean;
+  /** The window actually searched, or null when none of it was in range. */
+  searched: { from: Date; to: Date } | null;
 }
 
 /**
@@ -80,21 +84,23 @@ export interface SaturnReturnResult {
  */
 export function saturnReturns(birthUtc: Date): SaturnReturnResult {
   const natalLon = bodyLongitude('Saturn', birthUtc);
-  const speed =
-    delta(
-      bodyLongitude('Saturn', new Date(birthUtc.getTime() - DAY)),
-      bodyLongitude('Saturn', new Date(birthUtc.getTime() + DAY)),
-    ) / 2;
+  // The chart's own speed, so the two never disagree about the direction
+  // near a station.
+  const speed = longitudeSpeed('Saturn', birthUtc);
 
   // Scan +26y..+92y: the first return can't land before ~28y, but a
   // retrograde first pass can lead the exact-age mark by many months.
-  const from = new Date(birthUtc.getTime() + 26 * 365.25 * DAY);
-  const to = new Date(birthUtc.getTime() + 92 * 365.25 * DAY);
-  const crossings = findLongitudeCrossings('Saturn', natalLon, from, to);
+  const window = clipToReferenceSpan(
+    new Date(birthUtc.getTime() + 26 * 365.25 * DAY),
+    new Date(birthUtc.getTime() + 92 * 365.25 * DAY),
+  );
+  const crossings = window ? findLongitudeCrossings('Saturn', natalLon, window.from, window.to) : [];
 
   return {
     natalLon,
     natalRetrograde: speed < 0,
     seasons: groupIntoSeasons(crossings),
+    rangeClipped: !window || window.clipped,
+    searched: window ? { from: window.from, to: window.to } : null,
   };
 }

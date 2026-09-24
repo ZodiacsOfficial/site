@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:13.90",
+        "sun-degree:13.89",
         "decan:capricorn:second"
       ],
       "text": "13.9° of Capricorn is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -34,10 +34,10 @@
       "title": "The angles that hold",
       "facts": [
         "aspect:Uranus:Pluto:opposition:1.12",
-        "aspect:Jupiter:Uranus:square:1.44",
-        "aspect:Venus:Pluto:conjunction:1.54"
+        "aspect:Jupiter:Uranus:square:1.43",
+        "aspect:Venus:Pluto:conjunction:1.56"
       ],
-      "text": "The day's firmest angle joins Uranus and Pluto — an opposition holding at 1.1°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Jupiter square Uranus at 1.4°, and Venus conjunction Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+      "text": "The day's firmest angle joins Uranus and Pluto — an opposition holding at 1.1°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Jupiter square Uranus at 1.4°, and Venus conjunction Pluto at 1.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
     },
     {
       "key": "figures",
@@ -75,7 +75,7 @@
         "moon-band:12.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 23.0°."
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.9°."
     }
   ],
   "birthdayLink": {
@@ -88,14 +88,14 @@
   },
   "substantiveFacts": [
     "modality:fixed:6",
-    "sun-degree:13.90",
+    "sun-degree:13.89",
     "decan:capricorn:second",
     "personal:Mercury:Capricorn:8.8°",
     "personal:Venus:Aquarius:20.5°",
     "personal:Mars:Aquarius:14.2°",
     "aspect:Uranus:Pluto:opposition:1.12",
-    "aspect:Jupiter:Uranus:square:1.44",
-    "aspect:Venus:Pluto:conjunction:1.54",
+    "aspect:Jupiter:Uranus:square:1.43",
+    "aspect:Venus:Pluto:conjunction:1.56",
     "figure:t-square:Venus-Uranus:apex-Jupiter",
     "figure:unaspected:Moon",
     "dignity:Saturn:fall",

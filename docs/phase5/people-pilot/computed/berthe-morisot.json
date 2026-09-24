@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1841-01-14T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1841-01-13T23:50:39.000Z",
-    "civilDayEndUtc": "1841-01-14T23:50:39.000Z",
+    "utcInstant": "1841-01-14T11:50:25.000Z",
+    "utcOffsetMinutesAtBirth": 9.5833,
+    "civilDayStartUtc": "1841-01-13T23:50:25.000Z",
+    "civilDayEndUtc": "1841-01-14T23:50:25.000Z",
     "latitude": 47.083611111111,
     "longitude": 2.3955555555556,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 23.91,
+    "degree": 23.9,
     "uncertain": true,
     "signAtCivilDayStart": "libra",
     "signAtCivilDayEnd": "scorpio"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 23.7303,
-    "degreesToNextBoundaryAtWindowEnd": 5.2513
+    "degreesInsideAtWindowStart": 23.7235,
+    "degreesToNextBoundaryAtWindowEnd": 5.2581
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.018,
@@ -81,7 +81,7 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 23.91,
+      "degree": 23.9,
       "retrograde": false,
       "speedPerDay": 12.653,
       "dignity": null,
@@ -189,7 +189,7 @@
       "a": "Moon",
       "b": "Mars",
       "type": "conjunction",
-      "orb": 2.19,
+      "orb": 2.18,
       "applying": false
     },
     {
@@ -240,14 +240,14 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 3.64,
+      "orb": 3.65,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "opposition",
-      "orb": 5.94,
+      "orb": 5.93,
       "applying": false
     }
   ],

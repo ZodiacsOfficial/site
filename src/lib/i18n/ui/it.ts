@@ -140,7 +140,7 @@ const it = {
   cardError:
     "Non è stato possibile creare l’immagine in questo browser — puoi anche acquisire una schermata della ruota qui sopra.",
   shareNote:
-    "Il link contiene i dati di nascita che hai inserito — non ci viene inviato nulla, quindi può aprirlo solo chi lo riceve da te. L’immagine 1080×1350 viene creata sul tuo dispositivo.",
+    "Il link contiene i dati di nascita che hai inserito. Non ci vengono inviati, ma chiunque abbia il link può aprirlo, anche chi lo riceve inoltrato. L’immagine 1080×1350 viene creata sul tuo dispositivo.",
   needsBirthTime: "Serve l’ora di nascita",
   yourMoonSign: "Il tuo segno lunare",
   yourRisingSign: "Il tuo ascendente",
@@ -315,7 +315,7 @@ const it = {
   contextHelpCue: "Tocca i termini sottolineati con puntini per una spiegazione semplice.",
   editorialHow: "standard editoriali",
   dstGapNotice:
-    "Quell’ora cadeva nel salto dell’ora legale, quindi non è mai esistita davvero — l’abbiamo spostata in avanti oltre quel salto, secondo la convenzione standard.",
+    "Quell’ora è stata saltata quando gli orologi sono stati spostati in avanti, quindi non è mai esistita davvero — l’abbiamo spostata in avanti oltre quel salto, secondo la convenzione standard.",
   dstFoldNotice:
     "Nel tuo luogo di nascita quell’ora si è ripetuta; abbiamo usato il primo passaggio. Se sai che era il secondo, il tema cambia appena — la Luna si muove di circa mezzo grado all’ora.",
   lmtNotice:

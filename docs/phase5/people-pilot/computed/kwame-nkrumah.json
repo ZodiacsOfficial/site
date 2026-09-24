@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Africa/Accra",
     "civilTime": "12:00",
-    "utcInstant": "1909-09-21T12:16:08.000Z",
-    "utcOffsetMinutesAtBirth": -16.1333,
-    "civilDayStartUtc": "1909-09-21T00:16:08.000Z",
-    "civilDayEndUtc": "1909-09-22T00:16:08.000Z",
+    "utcInstant": "1909-09-21T12:09:17.000Z",
+    "utcOffsetMinutesAtBirth": -9.2833,
+    "civilDayStartUtc": "1909-09-21T00:09:17.000Z",
+    "civilDayEndUtc": "1909-09-22T00:09:17.000Z",
     "latitude": 4.9638888888889,
     "longitude": -2.3222222222222,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "virgo",
     "signName": "Virgo",
-    "degree": 27.86
+    "degree": 27.85
   },
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 13.27,
+    "degree": 13.22,
     "uncertain": false,
     "signAtCivilDayStart": "sagittarius",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 27.3593,
-    "degreesToNextBoundaryAtWindowEnd": 1.6622
+    "degreesInsideAtWindowStart": 27.3656,
+    "degreesToNextBoundaryAtWindowEnd": 1.6559
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.978,
-    "Moon": 12.355,
+    "Moon": 12.353,
     "Mercury": 0.757,
     "Venus": 1.19,
     "Mars": 0.292,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 27.86,
+      "degree": 27.85,
       "retrograde": false,
       "speedPerDay": 0.9785,
       "dignity": null,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 13.27,
+      "degree": 13.22,
       "retrograde": false,
-      "speedPerDay": 12.357,
+      "speedPerDay": 12.3556,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Libra",
       "degree": 23.85,
       "retrograde": false,
-      "speedPerDay": 0.7556,
+      "speedPerDay": 0.7559,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 5.36,
+      "degree": 5.35,
       "retrograde": false,
       "speedPerDay": 1.1897,
       "dignity": "detriment",
@@ -197,7 +197,7 @@
       "a": "Sun",
       "b": "Jupiter",
       "type": "conjunction",
-      "orb": 2.25,
+      "orb": 2.24,
       "applying": false
     },
     {
@@ -211,28 +211,28 @@
       "a": "Mercury",
       "b": "Saturn",
       "type": "opposition",
-      "orb": 2.41,
+      "orb": 2.4,
       "applying": false
     },
     {
       "a": "Mercury",
       "b": "Pluto",
       "type": "trine",
-      "orb": 3.03,
+      "orb": 3.04,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Mars",
       "type": "opposition",
-      "orb": 3.7,
+      "orb": 3.71,
       "applying": true
     },
     {
       "a": "Saturn",
       "b": "Uranus",
       "type": "square",
-      "orb": 4.32,
+      "orb": 4.33,
       "applying": true
     },
     {
@@ -246,7 +246,7 @@
       "a": "Mercury",
       "b": "Neptune",
       "type": "square",
-      "orb": 4.79,
+      "orb": 4.78,
       "applying": false
     },
     {

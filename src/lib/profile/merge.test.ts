@@ -91,6 +91,34 @@ describe('mergeSyncState', () => {
     expect(result.profile.charts[0].name).toBe('new remote');
   });
 
+  it('keeps a corrected local summary over a stale remote copy with the same updatedAt', () => {
+    // A refreshed summary keeps its chart's updatedAt, so a device that has
+    // not refreshed yet uploads a copy that ties, and a tie keeps local.
+    const saved = chart('stockholm', '2026-07-01T10:00:00.000Z');
+    const stale: SavedChart = {
+      ...saved,
+      birth: {
+        date: '1947-07-01',
+        time: '12:00',
+        timeKnown: true,
+        place: { name: 'Stockholm', admin1: 'Stockholm', country: 'SE', lat: 59.33, lon: 18.07, tz: 'Europe/Stockholm' },
+      },
+      summary: { ...saved.summary, utcISO: '1947-07-01T10:00:00.000Z', angles: { asc: 177.91, mc: 86.96 } },
+    };
+    const corrected: SavedChart = {
+      ...stale,
+      summary: { ...stale.summary, utcISO: '1947-07-01T11:00:00.000Z', angles: { asc: 187.38, mc: 100.78 } },
+    };
+    const result = mergeSyncState({
+      localProfile: profile([corrected]),
+      remoteSettings: null,
+      remoteCharts: [{ id: stale.id, payload: stale, updatedAt: stale.updatedAt }],
+      localDeletions: [],
+      remoteDeletions: [],
+    });
+    expect(result.profile.charts).toEqual([corrected]);
+  });
+
   it('uses remote updated_at when it is newer than the payload timestamp', () => {
     const local = chart('chart-a', '2026-07-02T10:00:00.000Z', 'old local');
     const remote = chart('chart-a', '2026-07-01T10:00:00.000Z', 'new remote');

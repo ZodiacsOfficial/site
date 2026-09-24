@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Toronto",
     "civilTime": "12:00",
-    "utcInstant": "1892-04-08T17:17:32.000Z",
-    "utcOffsetMinutesAtBirth": -317.5333,
-    "civilDayStartUtc": "1892-04-08T05:17:32.000Z",
-    "civilDayEndUtc": "1892-04-09T05:17:32.000Z",
+    "utcInstant": "1892-04-08T17:17:33.000Z",
+    "utcOffsetMinutesAtBirth": -317.55,
+    "civilDayStartUtc": "1892-04-08T05:17:33.000Z",
+    "civilDayEndUtc": "1892-04-09T05:17:33.000Z",
     "latitude": 43.670277777778,
     "longitude": -79.386666666667,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 18.6208,
-    "degreesToNextBoundaryAtWindowEnd": 10.398
+    "degreesInsideAtWindowStart": 18.8372,
+    "degreesToNextBoundaryAtWindowEnd": 10.1817
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.981,

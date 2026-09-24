@@ -15,6 +15,7 @@ import {
   type PublishedEventDescriptor,
 } from '../src/lib/events/publication';
 import type { HoroscopeProgram } from '../src/lib/horoscope-program';
+import { resolveSavedChart, type SavedChartEngineLoader } from '../src/lib/profile/resolve';
 import type { SavedChart } from '../src/lib/profile/schema';
 import {
   assertLiveDailyEmailEdition,
@@ -336,6 +337,24 @@ async function loadProductionRecipients({
   };
 }
 
+/**
+ * A synced chart carries the summary its device computed, which can predate
+ * the current engine or birthplace clock or keep the legacy polar ASC. Each
+ * chart recipient is read the way the site reads it, recomputed from the
+ * birth input when needed, so a subscriber who never returns still gets the
+ * current chart. A chart that cannot be recomputed keeps its stored summary.
+ */
+export async function resolveChartRecipients(
+  recipients: readonly DailyEmailRecipient[],
+  loadEngine: SavedChartEngineLoader = () => import('../src/lib/engine/full'),
+): Promise<DailyEmailRecipient[]> {
+  return Promise.all(recipients.map(async (recipient) => {
+    if (recipient.tier !== 'chart') return recipient;
+    const { summary } = await resolveSavedChart(recipient.chart, loadEngine);
+    return { ...recipient, chart: { ...recipient.chart, summary } };
+  }));
+}
+
 export function dailyRecipientUnsubscribeClaim(
   recipient: DailyEmailRecipient,
   hashSecret: string,
@@ -418,6 +437,7 @@ export async function runDailyEmail({
       options.to,
     );
   }
+  recipients = await resolveChartRecipients(recipients);
   for (const diagnostic of diagnostics) log(`daily-email: held — ${diagnostic}`);
 
   const nearbyEvents = selectDailyEmailNearbyEvents(futurePublishedEvents(

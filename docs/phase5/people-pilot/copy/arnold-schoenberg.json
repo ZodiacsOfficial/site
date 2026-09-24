@@ -35,9 +35,9 @@
       "facts": [
         "aspect:Jupiter:Saturn:trine:0.94",
         "aspect:Venus:Saturn:square:2.05",
-        "aspect:Mars:Neptune:trine:2.15"
+        "aspect:Mars:Neptune:trine:2.16"
       ],
-      "text": "Nothing in the geometry sits closer than Jupiter and Saturn: 0.9° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Venus square Saturn at 2.0°, and Mars trine Neptune at 2.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+      "text": "Nothing in the geometry sits closer than Jupiter and Saturn: 0.9° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Venus square Saturn at 2.0°, and Mars trine Neptune at 2.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
     },
     {
       "key": "figures",
@@ -96,7 +96,7 @@
     "personal:Mars:Leo:28.3°",
     "aspect:Jupiter:Saturn:trine:0.94",
     "aspect:Venus:Saturn:square:2.05",
-    "aspect:Mars:Neptune:trine:2.15",
+    "aspect:Mars:Neptune:trine:2.16",
     "figure:unaspected:Moon",
     "dignity:Mercury:exaltation",
     "dignity:Venus:detriment",

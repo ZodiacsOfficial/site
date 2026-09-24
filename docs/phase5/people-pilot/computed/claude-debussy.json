@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1862-08-22T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1862-08-21T23:50:39.000Z",
-    "civilDayEndUtc": "1862-08-22T23:50:39.000Z",
+    "utcInstant": "1862-08-22T11:51:38.000Z",
+    "utcOffsetMinutesAtBirth": 8.3667,
+    "civilDayStartUtc": "1862-08-21T23:51:38.000Z",
+    "civilDayEndUtc": "1862-08-22T23:51:38.000Z",
     "latitude": 48.896388888889,
     "longitude": 2.0905555555556,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "cancer",
     "signName": "Cancer",
-    "degree": 24.88,
+    "degree": 24.89,
     "uncertain": true,
     "signAtCivilDayStart": "cancer",
     "signAtCivilDayEnd": "leo"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 28.6044,
-    "degreesToNextBoundaryAtWindowEnd": 0.4309
+    "degreesInsideAtWindowStart": 28.5988,
+    "degreesToNextBoundaryAtWindowEnd": 0.4365
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.965,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 24.88,
+      "degree": 24.89,
       "retrograde": false,
-      "speedPerDay": 12.3218,
+      "speedPerDay": 12.3219,
       "dignity": "domicile",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -233,28 +233,28 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 2.35,
+      "orb": 2.36,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 4.56,
+      "orb": 4.55,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "conjunction",
-      "orb": 6.47,
+      "orb": 6.46,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "square",
-      "orb": 6.49,
+      "orb": 6.5,
       "applying": false
     }
   ],
