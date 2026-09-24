@@ -145,6 +145,15 @@ owns that page.
   (immutable Registry lot cards derived from the established v2 editorial
   plate plus the canonical 1024px pastel icon and gold sculpture sources;
   never overwrite the cached v2 family)
+- `public/assets/og/astrofolio/v5/faces.jpg` ← `node
+  scripts/build-astrofolio-share-card.mjs` (Astrofolio's one evergreen share
+  card, owner-chosen 2026-09-24: Chromium paints the twelve sign frames of
+  `public/assets/fomo/fomo-film-av1.mp4` around the wordmark band. A JPEG
+  under a 300 KB budget because it is a photograph; `verify-og-cards`
+  checks it, and it is not in the drift job because Chromium's decode is not
+  byte-stable across platforms. The seasonal `og/astrofolio/v4/{sign}.png`
+  cards stay published for links already shared; the season stamp no longer
+  rewrites the page's share image)
 - `public/assets/pulse.json` / `distribution.json` ← weekly cron workflows
 - `docs/phase5/people-pilot/index-demand.json` ← `node
   scripts/build-people-index-demand.mjs --refresh` (pinned twelve-month

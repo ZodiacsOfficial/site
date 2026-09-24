@@ -9,13 +9,14 @@ const bagRegion = (html) => html.slice(
 );
 
 describe('Astrofolio build-season stamp', () => {
-  it('selects one seasonal identity package across icons, manifest, lockup, runway, and share card', () => {
+  it('selects one seasonal identity package across icons, manifest, lockup and runway, and keeps the evergreen share card', () => {
+    const card = 'https://zodiacs.org/assets/og/astrofolio/v5/faces.jpg';
     const source = [
       '<link rel="icon" href="/assets/astrofolio/v1/leo/favicon.svg" />',
       '<link rel="manifest" href="/assets/astrofolio/v1/leo/astrofolio.webmanifest" />',
-      '<meta property="og:image" content="https://zodiacs.org/assets/astrofolio/v1/leo/og-1200x630.png" />',
-      '<meta name="twitter:image" content="https://zodiacs.org/assets/og/astrofolio/v4/leo.png" />',
-      '<script type="application/ld+json">{"image":"https://zodiacs.org/assets/og/astrofolio/v4/leo.png"}</script>',
+      `<meta property="og:image" content="${card}" />`,
+      `<meta name="twitter:image" content="${card}" />`,
+      `<script type="application/ld+json">{"image":"${card}"}</script>`,
       '<img src="/assets/astrofolio/v1/leo/icon-192.png" alt="">',
       '<img src="/assets/astrofolio/v2/zodiac-ring-192.png" alt="">',
       '<strong data-astrofolio-season-name style="--season-hue:#E0A9B4">Leo</strong> Season',
@@ -26,7 +27,8 @@ describe('Astrofolio build-season stamp', () => {
     const stamped = stampAstrofolioSeason(source, 'virgo');
     expect(stamped).not.toContain('/leo/');
     expect(stamped.match(/\/assets\/astrofolio\/v2\/virgo\//gu)).toHaveLength(3);
-    expect(stamped.match(/\/assets\/og\/astrofolio\/v4\/virgo\.png/gu)).toHaveLength(3);
+    expect(stamped.split(card)).toHaveLength(4);
+    expect(stamped).not.toContain('/assets/og/astrofolio/v4/');
     expect(stamped).toContain('/assets/astrofolio/v2/zodiac-ring-192.png');
     expect(stamped).toContain('style="--season-hue:#B7D9B0">Virgo</strong> Season');
     expect(stamped).toContain('<article class="campaign-look" data-static-sign="leo"');
@@ -36,7 +38,7 @@ describe('Astrofolio build-season stamp', () => {
     const restamped = stampAstrofolioSeason(stamped, 'libra');
     expect(restamped).not.toContain('/virgo/');
     expect(restamped.match(/\/assets\/astrofolio\/v2\/libra\//gu)).toHaveLength(3);
-    expect(restamped.match(/\/assets\/og\/astrofolio\/v4\/libra\.png/gu)).toHaveLength(3);
+    expect(restamped.split(card)).toHaveLength(4);
     expect(restamped).toContain('style="--season-hue:#D3A9DE">Libra</strong> Season');
     expect(restamped).toContain('<article class="campaign-look is-season" data-static-sign="libra"');
     expect(restamped.match(/campaign-look is-season/gu)).toHaveLength(1);

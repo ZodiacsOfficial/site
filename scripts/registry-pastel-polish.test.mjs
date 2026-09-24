@@ -214,11 +214,18 @@ describe('registry pastel polish', () => {
     // Reduced motion also keeps the film still and the runway unpinned.
     const stack = campaign.slice(campaign.indexOf('/* Phones: as the page moves on, the film stays in place and dims'), campaign.indexOf('@media (min-width: 601px) and (max-width: 900px)'));
     expect(stack).toContain('.campaign-stack > .campaign-hero { position: sticky; top: 0; z-index: 0; }');
-    expect(stack).toContain('opacity: calc(var(--stack, 0) * .78);');
-    expect(stack).toContain('opacity: calc(1 - var(--stack, 0) * 1.7);');
-    expect(stack).toContain('transform: translateY(calc(var(--stack, 0) * -26vh));');
+    expect(stack).toContain('opacity: calc(min(1, var(--stack, 0) * 1.8) * .9);');
+    expect(stack).toContain('opacity: calc(1 - var(--stack, 0) * 2.6);');
+    expect(stack).toContain('transform: translateY(calc(var(--stack, 0) * -30vh));');
     expect(stack).not.toContain('scale(calc(1 - var(--stack');
-    expect(stack).toContain('.campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(120px); }');
+    expect(stack).not.toContain('data-rise');
+    // The looks rise with the scroll as solid cards, the next a beat behind,
+    // and only when motion is welcome.
+    const rise = stack.slice(stack.indexOf('@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {'), stack.indexOf('@media (max-width: 900px) and (prefers-reduced-motion: reduce) {'));
+    expect(rise).toContain('--look-rise: clamp(0, calc((var(--rise, 1) - .3 - min(var(--rise-order, 0), 2) * .07) / .5), 1);');
+    expect(rise).toContain('transform: translateY(calc((1 - var(--look-rise)) * (1 - var(--look-rise)) * (1 - var(--look-rise)) * 48vh));');
+    expect(rise).toContain('.campaign-stack > .campaign-runway .campaign-runway__dots { opacity: clamp(0, calc((var(--rise, 1) - .55) / .3), 1); }');
+    expect(rise).not.toContain('.campaign-look { opacity');
     expect(stack).toContain('@media (max-width: 900px) and (prefers-reduced-motion: reduce) {\n      .campaign-stack .campaign-hero__caption { transform: none; }\n      .campaign-discover__cue { animation: none; }');
     const stillFilm = campaign.slice(campaign.indexOf('@media (min-width: 901px) and (prefers-reduced-motion: reduce)'));
     expect(stillFilm).toContain('.campaign-hero { height: auto; }');
