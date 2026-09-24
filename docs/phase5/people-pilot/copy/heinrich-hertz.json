@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:3.83",
+        "sun-degree:3.84",
         "decan:pisces:first"
       ],
       "text": "At the noon reference the Sun sits 3.8° into Pisces — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
@@ -24,9 +24,9 @@
       "title": "The personal registers",
       "facts": [
         "personal:Mercury:Aquarius:7.1°",
-        "personal:Venus:Aries:20.1°"
+        "personal:Venus:Aries:20.2°"
       ],
-      "text": "Day to day the chart speaks through Mercury in Aquarius (7.1°), Venus in Aries (20.1°): thought that travels by comparison, attraction declared rather than implied."
+      "text": "Day to day the chart speaks through Mercury in Aquarius (7.1°), Venus in Aries (20.2°): thought that travels by comparison, attraction declared rather than implied."
     },
     {
       "key": "geometry",
@@ -53,7 +53,7 @@
         "dignity:Venus:detriment",
         "dignity:Saturn:detriment"
       ],
-      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Venus in Aries at 20.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 7.5° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Venus in Aries at 20.2° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 7.5° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
     },
     {
       "key": "shape",
@@ -75,7 +75,7 @@
         "moon-band:13.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.1°."
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.2°."
     }
   ],
   "birthdayLink": {
@@ -88,10 +88,10 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Pluto:sextile",
-    "sun-degree:3.83",
+    "sun-degree:3.84",
     "decan:pisces:first",
     "personal:Mercury:Aquarius:7.1°",
-    "personal:Venus:Aries:20.1°",
+    "personal:Venus:Aries:20.2°",
     "aspect:Sun:Pluto:sextile:0.09",
     "aspect:Uranus:Neptune:sextile:1.78",
     "aspect:Mercury:Pluto:square:3.21",

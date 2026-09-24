@@ -153,11 +153,12 @@ export default function SolarReturnCalculator() {
     const isCurrent = () => mounted.current && request === revision.current
       && accessGeneration === profileAccessGeneration.current;
     try {
-      const [{ computeSolarReturn }, view, wheel] = await loadModule(() => Promise.all([
+      const [{ computeSolarReturn, prepareLocalTime }, view, wheel] = await loadModule(() => Promise.all([
         import('./solar-return/compute'),
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
       ]));
+      await prepareLocalTime(input.birthDate, input.birthplace?.tz ?? 'UTC');
       if (!isCurrent()) return;
       const resultData = computeSolarReturn(input);
       if (!isCurrent()) return;
@@ -222,7 +223,7 @@ export default function SolarReturnCalculator() {
                 <option value="current">Current return</option>
                 <option value="custom">Choose a year</option>
               </select>
-              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2200" required value={customYear} onInput={(event) => { invalidateResult(); setCustomYear((event.target as HTMLInputElement).value); }} />}
+              {yearMode === 'custom' && <input aria-label="Custom return year" class="field__input" type="number" min="1800" max="2199" required value={customYear} onInput={(event) => { invalidateResult(); setCustomYear((event.target as HTMLInputElement).value); }} />}
             </div>
 
             {effectiveTimeKnown && !(saved && !saved.birth.place) && (

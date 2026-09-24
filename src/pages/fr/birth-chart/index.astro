@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: 'Quelle est la précision de ce calculateur ?',
-    a: 'Les positions planétaires sont calculées avec un moteur astronomique et comparées aux données de référence du JPL de la NASA, avec une marge de quelques centièmes de degré. Les changements d’heure historiques, y compris l’heure moyenne locale avant 1922 lorsqu’elle est disponible, sont traités avec l’historique IANA fourni par le navigateur ou le système de l’appareil.',
+    a: 'Les positions planétaires sont calculées avec un moteur astronomique et comparées aux données de référence du JPL de la NASA, avec une marge de quelques centièmes de degré. Les changements d’heure historiques depuis 1970 sont traités avec l’historique IANA fourni par le navigateur ou le système de l’appareil, et les plus anciens avec une version figée de la base de données IANA, y compris les anciens enregistrements qu’elle conserve à part pour les lieux dont l’heure s’est ensuite alignée sur celle d’une autre ville, que ses responsables jugent moins fiables. Pour une naissance antérieure à l’adoption d’une heure légale dans le lieu, nous utilisons l’heure moyenne locale du lieu de naissance lui-même.',
   },
   {
     q: 'Que deviennent mes données de naissance ?',

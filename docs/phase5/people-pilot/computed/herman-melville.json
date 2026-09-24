@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/New_York",
     "civilTime": "12:00",
-    "utcInstant": "1819-08-01T16:56:02.000Z",
-    "utcOffsetMinutesAtBirth": -296.0333,
-    "civilDayStartUtc": "1819-08-01T04:56:02.000Z",
-    "civilDayEndUtc": "1819-08-02T04:56:02.000Z",
+    "utcInstant": "1819-08-01T16:55:59.000Z",
+    "utcOffsetMinutesAtBirth": -295.9833,
+    "civilDayStartUtc": "1819-08-01T04:55:59.000Z",
+    "civilDayEndUtc": "1819-08-02T04:55:59.000Z",
     "latitude": 40.728333333333,
     "longitude": -73.994166666667,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.8543,
-    "degreesToNextBoundaryAtWindowEnd": 21.1887
+    "degreesInsideAtWindowStart": 8.051,
+    "degreesToNextBoundaryAtWindowEnd": 20.9919
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.957,

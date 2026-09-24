@@ -1,0 +1,1439 @@
+{
+  "base": "http://127.0.0.1:8797/",
+  "what": "one synthetic pack, one domain plan per case, three engines",
+  "pack": {
+    "bytes": 198055,
+    "sha256": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+    "builtBy": "node make-pack.mjs, once",
+    "builtOn": "v22.22.2"
+  },
+  "runtimes": [
+    {
+      "runtime": "node v22.22.2",
+      "engine": "node",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "ms": 659
+    },
+    {
+      "runtime": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+      "engine": "chromium",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "ms": 438
+    },
+    {
+      "runtime": "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0",
+      "engine": "firefox",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "ms": 272
+    }
+  ],
+  "eventsCompared": 10,
+  "agreement": [
+    {
+      "id": "P1",
+      "found": 1,
+      "answerIdenticalAcrossRuntimes": true,
+      "evaluationsByRuntime": {
+        "node": 2921,
+        "chromium": 2921,
+        "firefox": 2921
+      },
+      "evaluationSpread": 0
+    },
+    {
+      "id": "P2",
+      "found": 3,
+      "answerIdenticalAcrossRuntimes": true,
+      "evaluationsByRuntime": {
+        "node": 3813,
+        "chromium": 3813,
+        "firefox": 3813
+      },
+      "evaluationSpread": 0
+    },
+    {
+      "id": "P3",
+      "found": 3,
+      "answerIdenticalAcrossRuntimes": true,
+      "evaluationsByRuntime": {
+        "node": 3813,
+        "chromium": 3813,
+        "firefox": 3813
+      },
+      "evaluationSpread": 0
+    },
+    {
+      "id": "P4",
+      "found": 0,
+      "answerIdenticalAcrossRuntimes": true,
+      "evaluationsByRuntime": {
+        "node": 2417,
+        "chromium": 2417,
+        "firefox": 2417
+      },
+      "evaluationSpread": 0
+    },
+    {
+      "id": "P5",
+      "found": 3,
+      "answerIdenticalAcrossRuntimes": true,
+      "evaluationsByRuntime": {
+        "node": 3918,
+        "chromium": 3918,
+        "firefox": 3918
+      },
+      "evaluationSpread": 0
+    }
+  ],
+  "runs": [
+    {
+      "runtime": "node v22.22.2",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "bytes": 198055,
+      "ms": 659,
+      "rows": [
+        {
+          "id": "P1",
+          "body": "Mars",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Mars|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 1,
+          "roots": [
+            "-1319099.2487177253"
+          ],
+          "brackets": [
+            [
+              "-1319099.2487579584",
+              "-1319099.2486774921"
+            ]
+          ],
+          "eligibility": [
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 1816,
+          "planCells": 76,
+          "searchEvaluations": 2921,
+          "evaluations": 2921,
+          "cells": 76
+        },
+        {
+          "id": "P2",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01326064984",
+            "23017.982078557543",
+            "83497.97674305446"
+          ],
+          "brackets": [
+            [
+              "-37462.01328715106",
+              "-37462.01323414862"
+            ],
+            [
+              "23017.982032705913",
+              "23017.982124409173"
+            ],
+            [
+              "83497.97671201522",
+              "83497.9767740937"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P3",
+          "body": "Venus",
+          "targetDeg": 317,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-67702.01101469793",
+            "-7222.015302744694",
+            "53257.97970487329"
+          ],
+          "brackets": [
+            [
+              "-67702.01104119915",
+              "-67702.01098819671"
+            ],
+            [
+              "-7222.015331033617",
+              "-7222.015274455771"
+            ],
+            [
+              "53257.97967383405",
+              "53257.97973591252"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P4",
+          "body": "Sun",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Sun|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": true,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 0,
+          "roots": [],
+          "brackets": [],
+          "eligibility": [],
+          "positionFrom": [],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 0,
+          "planCells": 0,
+          "searchEvaluations": 2417,
+          "evaluations": 2417,
+          "cells": 76
+        },
+        {
+          "id": "P5",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|5|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "5",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-70985.7421875"
+            ],
+            [
+              "-69113.671875",
+              "-10399.21875"
+            ],
+            [
+              "-8527.1484375",
+              "50179.39453125"
+            ],
+            [
+              "52069.921875",
+              "86400"
+            ]
+          ],
+          "excluded": [
+            [
+              "-70787.98828125",
+              "-69316.69921875"
+            ],
+            [
+              "-10201.46484375",
+              "-8730.17578125"
+            ],
+            [
+              "50398.2421875",
+              "51843.1640625"
+            ]
+          ],
+          "boundary": [
+            [
+              "-70985.7421875",
+              "-70787.98828125"
+            ],
+            [
+              "-69316.69921875",
+              "-69113.671875"
+            ],
+            [
+              "-10399.21875",
+              "-10201.46484375"
+            ],
+            [
+              "-8730.17578125",
+              "-8527.1484375"
+            ],
+            [
+              "50179.39453125",
+              "50398.2421875"
+            ],
+            [
+              "51843.1640625",
+              "52069.921875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01325972161",
+            "23017.982088092776",
+            "83497.97674025504"
+          ],
+          "brackets": [
+            [
+              "-37462.013287062655",
+              "-37462.01323238056"
+            ],
+            [
+              "23017.982041359573",
+              "23017.98213482598"
+            ],
+            [
+              "83497.97670828266",
+              "83497.97677222741"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "167165.33203125",
+          "excludedSec": "4387.5",
+          "boundarySec": "1247.16796875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 19401,
+          "planCells": 4664,
+          "searchEvaluations": 3918,
+          "evaluations": 3918,
+          "cells": 79
+        }
+      ]
+    },
+    {
+      "runtime": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.0.0 Safari/537.36",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "bytes": 198055,
+      "ms": 438,
+      "rows": [
+        {
+          "id": "P1",
+          "body": "Mars",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Mars|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 1,
+          "roots": [
+            "-1319099.2487177253"
+          ],
+          "brackets": [
+            [
+              "-1319099.2487579584",
+              "-1319099.2486774921"
+            ]
+          ],
+          "eligibility": [
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 1816,
+          "planCells": 76,
+          "searchEvaluations": 2921,
+          "evaluations": 2921,
+          "cells": 76
+        },
+        {
+          "id": "P2",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01326064984",
+            "23017.982078557543",
+            "83497.97674305446"
+          ],
+          "brackets": [
+            [
+              "-37462.01328715106",
+              "-37462.01323414862"
+            ],
+            [
+              "23017.982032705913",
+              "23017.982124409173"
+            ],
+            [
+              "83497.97671201522",
+              "83497.9767740937"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P3",
+          "body": "Venus",
+          "targetDeg": 317,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-67702.01101469793",
+            "-7222.015302744694",
+            "53257.97970487329"
+          ],
+          "brackets": [
+            [
+              "-67702.01104119915",
+              "-67702.01098819671"
+            ],
+            [
+              "-7222.015331033617",
+              "-7222.015274455771"
+            ],
+            [
+              "53257.97967383405",
+              "53257.97973591252"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P4",
+          "body": "Sun",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Sun|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": true,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 0,
+          "roots": [],
+          "brackets": [],
+          "eligibility": [],
+          "positionFrom": [],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 0,
+          "planCells": 0,
+          "searchEvaluations": 2417,
+          "evaluations": 2417,
+          "cells": 76
+        },
+        {
+          "id": "P5",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|5|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "5",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-70985.7421875"
+            ],
+            [
+              "-69113.671875",
+              "-10399.21875"
+            ],
+            [
+              "-8527.1484375",
+              "50179.39453125"
+            ],
+            [
+              "52069.921875",
+              "86400"
+            ]
+          ],
+          "excluded": [
+            [
+              "-70787.98828125",
+              "-69316.69921875"
+            ],
+            [
+              "-10201.46484375",
+              "-8730.17578125"
+            ],
+            [
+              "50398.2421875",
+              "51843.1640625"
+            ]
+          ],
+          "boundary": [
+            [
+              "-70985.7421875",
+              "-70787.98828125"
+            ],
+            [
+              "-69316.69921875",
+              "-69113.671875"
+            ],
+            [
+              "-10399.21875",
+              "-10201.46484375"
+            ],
+            [
+              "-8730.17578125",
+              "-8527.1484375"
+            ],
+            [
+              "50179.39453125",
+              "50398.2421875"
+            ],
+            [
+              "51843.1640625",
+              "52069.921875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01325972161",
+            "23017.982088092776",
+            "83497.97674025504"
+          ],
+          "brackets": [
+            [
+              "-37462.013287062655",
+              "-37462.01323238056"
+            ],
+            [
+              "23017.982041359573",
+              "23017.98213482598"
+            ],
+            [
+              "83497.97670828266",
+              "83497.97677222741"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "167165.33203125",
+          "excludedSec": "4387.5",
+          "boundarySec": "1247.16796875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 19401,
+          "planCells": 4664,
+          "searchEvaluations": 3918,
+          "evaluations": 3918,
+          "cells": 79
+        }
+      ],
+      "engine": "chromium",
+      "offOrigin": [],
+      "errors": []
+    },
+    {
+      "runtime": "Mozilla/5.0 (X11; Linux x86_64; rv:151.0) Gecko/20100101 Firefox/151.0",
+      "digestSeen": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestExpected": "d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d",
+      "digestMatches": true,
+      "bytes": 198055,
+      "ms": 272,
+      "rows": [
+        {
+          "id": "P1",
+          "body": "Mars",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Mars|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 1,
+          "roots": [
+            "-1319099.2487177253"
+          ],
+          "brackets": [
+            [
+              "-1319099.2487579584",
+              "-1319099.2486774921"
+            ]
+          ],
+          "eligibility": [
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 1816,
+          "planCells": 76,
+          "searchEvaluations": 2921,
+          "evaluations": 2921,
+          "cells": 76
+        },
+        {
+          "id": "P2",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01326064984",
+            "23017.982078557543",
+            "83497.97674305446"
+          ],
+          "brackets": [
+            [
+              "-37462.01328715106",
+              "-37462.01323414862"
+            ],
+            [
+              "23017.982032705913",
+              "23017.982124409173"
+            ],
+            [
+              "83497.97671201522",
+              "83497.9767740937"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P3",
+          "body": "Venus",
+          "targetDeg": 317,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-71845.3125"
+            ],
+            [
+              "-68175",
+              "-11264.0625"
+            ],
+            [
+              "-7593.75",
+              "49232.8125"
+            ],
+            [
+              "53071.875",
+              "86400"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [
+            [
+              "-71845.3125",
+              "-68175"
+            ],
+            [
+              "-11264.0625",
+              "-7593.75"
+            ],
+            [
+              "49232.8125",
+              "53071.875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-67702.01101469793",
+            "-7222.015302744694",
+            "53257.97970487329"
+          ],
+          "brackets": [
+            [
+              "-67702.01104119915",
+              "-67702.01098819671"
+            ],
+            [
+              "-7222.015331033617",
+              "-7222.015274455771"
+            ],
+            [
+              "53257.97967383405",
+              "53257.97973591252"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "161620.3125",
+          "excludedSec": "0",
+          "boundarySec": "11179.6875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 5305,
+          "planCells": 1140,
+          "searchEvaluations": 3813,
+          "evaluations": 3813,
+          "cells": 72
+        },
+        {
+          "id": "P4",
+          "body": "Sun",
+          "targetDeg": 95,
+          "windowTdbSec": [
+            "-3283200",
+            "3283200"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Sun|tdb|-3283200|3283200|60|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "60",
+          "deflectorIsTarget": true,
+          "admissible": [
+            [
+              "-3283200",
+              "3283200"
+            ]
+          ],
+          "excluded": [],
+          "boundary": [],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 0,
+          "roots": [],
+          "brackets": [],
+          "eligibility": [],
+          "positionFrom": [],
+          "overRequest": true,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": false,
+          "isExactTotalOverRequest": true,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "6566400",
+          "excludedSec": "0",
+          "boundarySec": "0",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 0,
+          "planCells": 0,
+          "searchEvaluations": 2417,
+          "evaluations": 2417,
+          "cells": 76
+        },
+        {
+          "id": "P5",
+          "body": "Venus",
+          "targetDeg": 137,
+          "windowTdbSec": [
+            "-86400",
+            "86400"
+          ],
+          "planContract": "zodiacs-domain-partition/1",
+          "planKey": "zodiacs-domain-partition/1|zodiacs-deflected-of-date/1|d4fc4e9a2a1a6330c779cc68b57fb72174f5946162090aba831e175d8a5d865d|2004f6f27589e950|0,0,0,0,0,0|Venus|tdb|-86400|86400|5|8|6|0.000001",
+          "identityStrength": "digest",
+          "planStatus": "finished",
+          "boundaryToleranceSec": "5",
+          "deflectorIsTarget": false,
+          "admissible": [
+            [
+              "-86400",
+              "-70985.7421875"
+            ],
+            [
+              "-69113.671875",
+              "-10399.21875"
+            ],
+            [
+              "-8527.1484375",
+              "50179.39453125"
+            ],
+            [
+              "52069.921875",
+              "86400"
+            ]
+          ],
+          "excluded": [
+            [
+              "-70787.98828125",
+              "-69316.69921875"
+            ],
+            [
+              "-10201.46484375",
+              "-8730.17578125"
+            ],
+            [
+              "50398.2421875",
+              "51843.1640625"
+            ]
+          ],
+          "boundary": [
+            [
+              "-70985.7421875",
+              "-70787.98828125"
+            ],
+            [
+              "-69316.69921875",
+              "-69113.671875"
+            ],
+            [
+              "-10399.21875",
+              "-10201.46484375"
+            ],
+            [
+              "-8730.17578125",
+              "-8527.1484375"
+            ],
+            [
+              "50179.39453125",
+              "50398.2421875"
+            ],
+            [
+              "51843.1640625",
+              "52069.921875"
+            ]
+          ],
+          "unprocessed": [],
+          "searchContract": "zodiacs-partitioned-search/1",
+          "found": 3,
+          "roots": [
+            "-37462.01325972161",
+            "23017.982088092776",
+            "83497.97674025504"
+          ],
+          "brackets": [
+            [
+              "-37462.013287062655",
+              "-37462.01323238056"
+            ],
+            [
+              "23017.982041359573",
+              "23017.98213482598"
+            ],
+            [
+              "83497.97670828266",
+              "83497.97677222741"
+            ]
+          ],
+          "eligibility": [
+            "established",
+            "established",
+            "established"
+          ],
+          "positionFrom": [
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date",
+            "validated-retarded-aberrated-deflected-of-date"
+          ],
+          "overRequest": false,
+          "exhaustiveOverAdmissible": true,
+          "mayHoldUnfoundSupportedEvents": true,
+          "isExactTotalOverRequest": false,
+          "isExactTotalOverAdmissible": true,
+          "coversRequestExactly": true,
+          "admissibleSec": "167165.33203125",
+          "excludedSec": "4387.5",
+          "boundarySec": "1247.16796875",
+          "unprocessedSec": "0",
+          "notSearchedSec": "0",
+          "admissibleNotFullyExaminedSec": "0",
+          "planImported": false,
+          "restsOnImportedPlan": false,
+          "planReused": true,
+          "planEvaluations": 19401,
+          "planCells": 4664,
+          "searchEvaluations": 3918,
+          "evaluations": 3918,
+          "cells": 79
+        }
+      ],
+      "engine": "firefox",
+      "offOrigin": [],
+      "errors": []
+    }
+  ],
+  "problems": [],
+  "passed": true
+}

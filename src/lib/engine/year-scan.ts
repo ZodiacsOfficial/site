@@ -7,6 +7,7 @@
  * (the returns.ts precedent); the phrasing layer in ../year-ahead.ts is
  * engine-free.
  */
+import { clipToReferenceSpan } from './reference-span';
 import { findLongitudeCrossings, groupIntoSeasons, saturnReturns } from './returns';
 import type { BodyName } from './types';
 
@@ -27,6 +28,8 @@ export interface YearScanResult {
   aspects: ScanAspectEvent[];
   /** Saturn-return seasons for the whole chart (not window-clipped). */
   saturnSeasons: { index: number; from: string; to: string }[];
+  /** True when the year or the Saturn scan stopped at the end of 2199. Absent in older caches. */
+  rangeClipped?: boolean;
 }
 
 const ASPECT_OFFSETS: { aspect: ScanAspectEvent['aspect']; offsets: number[] }[] = [
@@ -45,7 +48,10 @@ export function yearScan(
   from: Date,
   to: Date,
 ): YearScanResult {
-  const solarReturns = findLongitudeCrossings('Sun', natal.sunLon, from, to, 1)
+  const window = clipToReferenceSpan(from, to);
+  const scan = (body: BodyName, lon: number, step?: number) =>
+    (window ? findLongitudeCrossings(body, lon, window.from, window.to, step) : []);
+  const solarReturns = scan('Sun', natal.sunLon, 1)
     .map((c) => c.at.toISOString());
 
   const points: { name: ScanAspectEvent['natal']; lon: number }[] = [
@@ -60,7 +66,7 @@ export function yearScan(
       for (const { aspect, offsets } of ASPECT_OFFSETS) {
         const crossings = offsets
           .flatMap((off) =>
-            findLongitudeCrossings(body as BodyName, (point.lon + off) % 360, from, to))
+            scan(body, (point.lon + off) % 360))
           .sort((a, b) => a.at.getTime() - b.at.getTime());
         // Re-passes of one station loop belong to one event; two squares
         // from opposite sides of the chart stay separate via the gap.
@@ -79,11 +85,12 @@ export function yearScan(
   }
   aspects.sort((a, b) => a.from.localeCompare(b.from));
 
-  const saturnSeasons = saturnReturns(natal.birthUtc).seasons.map((s) => ({
+  const saturn = saturnReturns(natal.birthUtc);
+  const saturnSeasons = saturn.seasons.map((s) => ({
     index: s.index,
     from: s.first.toISOString(),
     to: s.last.toISOString(),
   }));
 
-  return { solarReturns, aspects, saturnSeasons };
+  return { solarReturns, aspects, saturnSeasons, rangeClipped: !window || window.clipped || saturn.rangeClipped };
 }

@@ -6,7 +6,7 @@
   "displayName": "Francisco Goya",
   "identity": "Painter · Spain · 1746–1828",
   "title": "Francisco Goya's birth chart",
-  "metaDescription": "Francisco Goya's chart, computed from a sourced birth date: Sun at 9.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "metaDescription": "Francisco Goya's chart, computed from a sourced birth date: Sun at 9.6° Aries. Birth time unknown, so no houses or rising sign.",
   "lede": "Four of the ten placements whose signs are settled stand in Aries — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
   "ledeFact": "stellium:aries:4",
   "blocks": [
@@ -14,30 +14,30 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:9.65",
+        "sun-degree:9.64",
         "decan:aries:first"
       ],
-      "text": "The Sun sits at 9.7° Aries — the first decan, 0°–10°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
+      "text": "The Sun sits at 9.6° Aries — the first decan, 0°–10°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
     },
     {
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Aries:12.7°",
+        "personal:Mercury:Aries:12.6°",
         "personal:Venus:Aries:8.8°",
         "personal:Mars:Aries:22.8°"
       ],
-      "text": "Mercury holds 12.7° Aries, Venus holds 8.8° Aries, Mars holds 22.8° Aries — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+      "text": "Mercury holds 12.6° Aries, Venus holds 8.8° Aries, Mars holds 22.8° Aries — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that ignites on contact."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Uranus:sextile:0.25",
+        "aspect:Venus:Uranus:sextile:0.24",
         "aspect:Sun:Venus:conjunction:0.89",
-        "aspect:Sun:Uranus:sextile:1.14"
+        "aspect:Sun:Uranus:sextile:1.13"
       ],
-      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.3° from an exact sextile. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun conjunction Venus at 0.9°, and the Sun sextile Uranus at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.2° from an exact sextile. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun conjunction Venus at 0.9°, and the Sun sextile Uranus at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
@@ -59,7 +59,7 @@
         "dignity:Jupiter:domicile",
         "dignity:Saturn:exaltation"
       ],
-      "text": "Six planets here sit in a sign the classical scheme scores. The Sun in Aries at 9.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 12.7° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 8.8° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 22.8° is in domicile; Jupiter in Sagittarius at 15.1° is in domicile; Saturn in Libra at 11.2° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+      "text": "Six planets here sit in a sign the classical scheme scores. The Sun in Aries at 9.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 12.6° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 8.8° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 22.8° is in domicile; Jupiter in Sagittarius at 15.1° is in domicile; Saturn in Libra at 11.2° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
     },
     {
       "key": "shape",
@@ -80,7 +80,7 @@
         "moon-band:13.0"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.7°."
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.6°."
     }
   ],
   "birthdayLink": {
@@ -93,14 +93,14 @@
   },
   "substantiveFacts": [
     "stellium:aries:4",
-    "sun-degree:9.65",
+    "sun-degree:9.64",
     "decan:aries:first",
-    "personal:Mercury:Aries:12.7°",
+    "personal:Mercury:Aries:12.6°",
     "personal:Venus:Aries:8.8°",
     "personal:Mars:Aries:22.8°",
-    "aspect:Venus:Uranus:sextile:0.25",
+    "aspect:Venus:Uranus:sextile:0.24",
     "aspect:Sun:Venus:conjunction:0.89",
-    "aspect:Sun:Uranus:sextile:1.14",
+    "aspect:Sun:Uranus:sextile:1.13",
     "figure:t-square:Sun-Saturn:apex-Neptune",
     "figure:unaspected:Mars",
     "dignity:Sun:exaltation",

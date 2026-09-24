@@ -1489,6 +1489,9 @@ function buildResult(r) {
   if (a.allIntervalsAccountedFor && a.unresolved.length > 0) {
     fail("unsupported-option", "a result cannot claim every interval was accounted for while reporting unresolved ones");
   }
+  if (a.allIntervalsAccountedFor && (a.excluded?.length ?? 0) > 0) {
+    fail("unsupported-option", `a result cannot claim every interval was accounted for while excluding ${a.excluded.length} of them as outside the supported domain`);
+  }
   if (!Array.isArray(c.conditionalOn)) fail("unsupported-option", "completeness.conditionalOn must be an array");
   if (!Array.isArray(out.assumptions)) fail("unsupported-option", "assumptions must be an array");
   if (c.support === "conditional" && c.conditionalOn.length === 0) {

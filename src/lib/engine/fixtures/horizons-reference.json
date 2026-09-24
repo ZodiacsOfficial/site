@@ -1,0 +1,28 @@
+{
+  "source": "JPL Horizons apparent geocentric true-of-date ecliptic longitudes (QUANTITIES='31', CENTER='500@399'), fetched 2026-07-05; the engine audit re-fetched them on 2026-09-22 (API version 1.2, DE441) and found six of seven 2020 values byte-identical and Neptune 0.004 arcseconds different.",
+  "epochs": [
+    {
+      "utc": "2020-01-01T00:00:00Z",
+      "longitudes": {
+        "Sun": 280.0094920,
+        "Moon": 346.1383767,
+        "Mercury": 274.3833145,
+        "Venus": 314.4094923,
+        "Mars": 238.3846079,
+        "Jupiter": 276.6703386,
+        "Saturn": 291.3949664,
+        "Uranus": 32.6940395,
+        "Neptune": 346.2645218,
+        "Pluto": 292.3855818
+      }
+    },
+    {
+      "utc": "1907-07-06T15:07:00Z",
+      "longitudes": {
+        "Sun": 103.3759585,
+        "Moon": 59.7147970,
+        "Mars": 283.3944410
+      }
+    }
+  ]
+}

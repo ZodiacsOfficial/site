@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1815-12-10T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1815-12-10T00:01:15.000Z",
-    "civilDayEndUtc": "1815-12-11T00:01:15.000Z",
+    "utcInstant": "1815-12-10T12:00:31.000Z",
+    "utcOffsetMinutesAtBirth": -0.5167,
+    "civilDayStartUtc": "1815-12-10T00:00:31.000Z",
+    "civilDayEndUtc": "1815-12-11T00:00:31.000Z",
     "latitude": 51.507222222222,
     "longitude": -0.1275,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "aries",
     "signName": "Aries",
-    "degree": 5.16,
+    "degree": 5.15,
     "uncertain": true,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "aries"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 17.1201,
-    "degreesToNextBoundaryAtWindowEnd": 11.8631
+    "degreesInsideAtWindowStart": 17.1205,
+    "degreesToNextBoundaryAtWindowEnd": 11.8627
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.017,
@@ -86,9 +86,9 @@
       "body": "Moon",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 5.16,
+      "degree": 5.15,
       "retrograde": false,
-      "speedPerDay": 12.1289,
+      "speedPerDay": 12.1288,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -252,14 +252,14 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 3.41,
+      "orb": 3.42,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "trine",
-      "orb": 4.69,
+      "orb": 4.68,
       "applying": false
     },
     {

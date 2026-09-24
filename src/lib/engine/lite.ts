@@ -1,8 +1,9 @@
 /**
  * Dependency-free low-precision Sun/Moon — the homepage's entire
- * astronomy budget. Meeus-style truncated series:
- *   Sun ±0.01°, Moon ±0.3° — plenty for a ticker and a moon-phase dial,
- *   never used for charts (the calculators load the full engine).
+ * astronomy budget. Meeus-style truncated series, within 0.016° (Sun) and
+ * 0.365° (Moon) of the full engine from 1900 to 2100, sampled every 0.37
+ * day: plenty for a ticker and a moon-phase dial, never used for charts
+ * (the calculators load the full engine).
  */
 
 const DEG = Math.PI / 180;
@@ -21,7 +22,7 @@ export function sunLongitude(date: Date): number {
   return norm(L + 1.915 * Math.sin(g) + 0.020 * Math.sin(2 * g));
 }
 
-/** Low-precision geocentric lunar ecliptic longitude, degrees (±0.3°). */
+/** Low-precision geocentric lunar ecliptic longitude, degrees (within about 0.4°). */
 export function moonLongitude(date: Date): number {
   const n = daysSinceJ2000(date);
   const Lp = 218.316 + 13.176396 * n;      // mean longitude

@@ -24,10 +24,10 @@
       "title": "Closer to the ground",
       "facts": [
         "personal:Mercury:Libra:20.3°",
-        "personal:Venus:Leo:27.0°",
+        "personal:Venus:Leo:27.1°",
         "personal:Mars:Cancer:0.4°"
       ],
-      "text": "Closer in, Mercury stands at 20.3° Libra; Venus stands at 27.0° Leo; Mars stands at 0.4° Cancer. The tradition reads a mind at home in argument and pattern from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that moves on certainty and current from Mars."
+      "text": "Closer in, Mercury stands at 20.3° Libra; Venus stands at 27.1° Leo; Mars stands at 0.4° Cancer. The tradition reads a mind at home in argument and pattern from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that moves on certainty and current from Mars."
     },
     {
       "key": "geometry",
@@ -75,7 +75,7 @@
         "moon-band:12.7"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.5°."
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.6°."
     }
   ],
   "birthdayLink": {
@@ -91,7 +91,7 @@
     "sun-degree:2.21",
     "decan:libra:first",
     "personal:Mercury:Libra:20.3°",
-    "personal:Venus:Leo:27.0°",
+    "personal:Venus:Leo:27.1°",
     "personal:Mars:Cancer:0.4°",
     "aspect:Uranus:Neptune:trine:0.92",
     "aspect:Venus:Jupiter:square:0.99",

@@ -1,0 +1,373 @@
+{
+  "area": "angles-houses-aspects",
+  "summary": "The house/angle geometry in @zodiacs/engine 0.1.1-rc.6 is formula-correct: fed Swiss's own ARMC and true obliquity, the engine's ASC/MC agree with swe.houses_ex to 1e-5 arcsec and its Placidus iteration agrees to 0.004 arcsec over 8,456 cases with zero convergence failures below 66 deg, and its polar ASC quadrant rule matches Swiss on 1,152 sweep points from 66.6 to 89.9 deg in both hemispheres. What is wrong is the input pairing: computeChart feeds computeAngles the MEAN obliquity while using apparent sidereal time and true-of-date body longitudes (chunk-GBH7JIYF.js:129-134, receipt convention \"gast-and-mean-obliquity\"), so the nutation in obliquity (up to 9.7\") is missing from the horizon geometry. Measured against Swiss over 3,128 cases (1800-2200, lat 0-66): ASC p50 2.4\", p95 22\", max 512\" (0.142 deg); at |lat|>=63 p95 76\"; MC <=3.9\"; Placidus cusps inherit the same error. That single fix (use astronomy-engine's e_tilt().tobl, whose nutation matches Swiss to 0.03\") collapses the ASC residual to 6.9\" against an ERFA IAU-2006/2000A arbiter, and the engine's sidereal time is already closer to that arbiter (0.19\") than Swiss's default long-term model is (1.9\" outside 1850-2050) - a concrete path to exceeding Swiss on angles. Two other defects are shipped behaviour returning wrong answers: the aspect \"applying\" flag is false for every applying aspect whose orb is below 0.01 x relative speed (the last ~13 minutes before every exact Moon aspect; 510 of 236,910 aspects in a 30-min 2024 scan; synthetic Moon 0.10 deg before exact conjunction reports separating), and the Placidus refusal at |lat|>66 is a hard constant where Swiss computes to 90-eps = 66.56, so Rovaniemi (66.50 N) gets a whole-sign chart flagged polar-fallback while Swiss returns Placidus. Beyond those, the stack is far below Swiss in coverage: 2 house systems against Swiss's 25 codes, no house position with latitude (2.75% of placements differ, Pluto 12.75%), no Vertex/East Point/co-ascendant, no cusp speeds, no azimuth/altitude, no minor or angle or node aspects, and declination only on the site with mean (or fixed J2000) obliquity. The site-level tables (dignities, composite midpoints, aspect patterns) are correct and tested; chart-shape leaves two deliberate but undocumented dead zones (even spreads of 122-148 and 182-223 deg classify as nothing). The three things that matter most: switch the angle frame to true obliquity and re-test at 60-66 deg, replace the finite-step applying test with a sign test on the relative rate, and adopt a per-system polar policy (dynamic 90-eps limit, named fallback system) as the foundation for adding Koch/Regiomontanus/Campanus/Equal/Porphyry with closed forms and stated convergence guarantees.",
+  "findings": [
+    {
+      "id": "angles-houses-aspects-1",
+      "severity": "major",
+      "title": "ASC and Placidus cusps use mean obliquity with apparent sidereal time and true-of-date longitudes: up to 512\" (0.14 deg) error, 22\" p95",
+      "claim": "computeChart builds the angle input with obliquity = meanObliquity(centuriesSinceJ2000(utc)) but gastHours = SiderealTime (apparent, includes nutation in RA) and body longitudes in the true ecliptic of date (Rotation_EQJ_ECT). The missing nutation in obliquity (up to 9.67\" in the grid) propagates into the ASC with a latitude-dependent gain, reaching 8.5 arcminutes at |lat| = 66 and 16\" at |lat| <= 45; Placidus intermediate cusps inherit the same error. Swiss (and IAU practice) pairs apparent sidereal time with the true obliquity.",
+      "evidence": "Code: node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js:129-134 (angleInput: gastHours: SiderealTime(MakeTime(input.utc)), obliquity: meanObliquity(centuriesSinceJ2000(input.utc))); chunk-H7RJKCBO.js:9-13 (meanObliquity, IAU2006 polynomial, no nutation term), :25-39 (computeAngles); dist/receipt.js:143 (angles: \"gast-and-mean-obliquity\"). Measurement (3,128 cases: years 1800..2200 step 25, hours 0..21 step 3, lat 0, +/-10..+/-66, lon 0; Swiss 2.10.03 swe.houses_ex 'P', SWIEPH confirmed, plus ERFA gst06a/obl06/nut06a arbiter): shipped ASC vs Swiss p50 2.41\" p95 22.4\" max 512.5\"; |lat|<=45: max 16.2\"; 50-60: p95 20.0\" max 26.4\"; >=63: p95 76.2\" max 512.5\"; MC p95 3.0\" max 3.9\". Isolation: same engine formula with Swiss ARMC + Swiss true obliquity -> ASC max 1.0e-5\", cusps max 0.0041\" (formula is exact); Swiss ARMC + engine mean obliquity -> max 504.8\" (reproduces the defect); engine GAST + Swiss true obliquity -> max 70.9\" (the remainder is Swiss's own sidereal-time model, see finding 11) and 6.9\" against the ERFA arbiter. dObl(engine mean vs Swiss true) p50 6.09\" max 9.67\"; dObl(astronomy-engine e_tilt().tobl vs Swiss true) max 0.030\" so the fix is available in the already-bundled dependency. Concrete: 1950-03-21T18:00Z lat -66 lon 0: engine ASC 135.62994 vs Swiss 135.48915 (506.8\"), MC agrees to 0.005\"; cusp11 92.9015 vs 92.8913, cusp12 98.6118 vs 98.5862. Artifacts: <audit>/angles-houses-aspects/engine-vs-swiss.json (summaryA, worstAsc), gridA-rows.json, swiss.json; scripts swiss_dump.py + engine_grid.mjs. Compute: 1.6 s + 0.9 s.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "node_modules/@zodiacs/engine/dist/receipt.js",
+        "src/lib/engine/engine.test.ts",
+        "docs/engine-validation/README.md"
+      ],
+      "reproduction": "cd <worktree>; node -e \"import('./node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js').then(m=>{const c=m.computeChart({utc:new Date('1950-03-21T18:00:00Z'),latitude:-66,longitude:0,houseSystem:'placidus',timeKnown:true});console.log(c.angles.asc,c.angles.mc)})\"  -> 135.6299, 88.7894. Swiss: <swisslab>/venv/bin/python -c \"import swisseph as s;s.set_ephe_path('<swisslab>/ephe');print(s.houses_ex(s.julday(1950,3,21,18.0),-66,0,b'P',0)[1][:2])\" -> 135.4892, 88.7894. Full grid: python swiss_dump.py && node engine_grid.mjs in the audit scratch directory.",
+      "impact": "At Nordic/Alaskan/Baltic latitudes (55-66) the ASC is systematically 10-30\" off and up to 8.5' within a degree of the polar circle, which is 30-3000x the 0.16\" residual the DE440s prototype achieves for positions; the engine.test.ts 0.1 deg ASC gate would fail at lat 66 if a vector existed there. The documented '1.57\" worst angle' is not representative. Cannot exceed Swiss on angles until fixed.",
+      "fix": "In ephemeris.ts computeChart, set obliquity to the true obliquity of date: e_tilt(MakeTime(utc)).tobl from astronomy-engine (or meanObliquity + deps/3600), and use the same value in placidusCusps. Rename the receipt convention to 'gast-and-true-obliquity' and bump the receipt schema. Add Swiss houses_ex vectors at lat 63, 65, 66 (both hemispheres, 1800/1950/2200) to engine.test.ts with gates of 5\" not 0.1 deg. Re-run docs/engine-validation and replace the '1.57\" worst angle' row with the grid distribution.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-2",
+      "severity": "blocking",
+      "title": "Aspect 'applying' flag is wrong whenever orb < 0.01 x relative speed (the last ~13 minutes before every exact Moon aspect)",
+      "claim": "findAspects decides applying by stepping both bodies 0.02 day forward and asking whether the new orb is smaller than the current one (chunk-INI453VG.js:57-64). When the pair will pass exactness within half that step, the stepped orb is larger although the aspect is applying now, so every applying aspect with orb < 0.01 x |relative speed| (about 0.11-0.15 deg for Moon pairs) is reported as separating. The retrograde, 180-degree-wrap and near-station cases are otherwise handled correctly.",
+      "evidence": "Code: chunk-INI453VG.js:57 (const stepDays = 0.02), :64 (applying: Math.abs(nextSeparation - angle) < match.orb). Synthetic (real dist findAspects): Moon 99.90 / Sun 100.00 (Moon 13.2 deg/d, orb 0.10, approaching) -> applying:false, reference true; Moon 9.95 square Mars 100.0 (orb 0.05) -> false; Moon 179.85 opposition Sun 359.90 (orb 0.05, wrap) -> false; Moon 159.99 sextile Saturn (orb 0.01) -> false; Moon 0.13 before trine -> true (just above the threshold); retrograde Mercury 101.0 (-1.0 deg/d) vs Sun 100.0 -> true (correct); both retrograde Mars/Jupiter square -> true (correct); exact orb 0 moving apart -> false (correct). Year scan 2024 every 30 min with computeBodies + findAspects: 236,910 aspects, 510 misclassified (0.22%), every one with orb <= 0.01 x relSpeed (max misclassified orb 0.148 deg), all involving the Moon (e.g. 2024-01-04T03:30Z Sun-Moon square orb 0.0031 engine false, reference true). Artifact: .../audit/angles-houses-aspects/aspects-applying.json (script aspects_applying.mjs, 25 s).",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+        "src/lib/engine/aspects.ts"
+      ],
+      "reproduction": "node -e \"import('<worktree>/node_modules/@zodiacs/engine/dist/internal-math.js').then(m=>console.log(m.findAspects([{body:'Moon',lon:99.9,lat:0,speed:13.2},{body:'Sun',lon:100,lat:0,speed:0.98}])))\" -> [{type:'conjunction', orb:0.1, applying:false}] although the Moon reaches exact conjunction in 11 minutes. Or run node aspects_applying.mjs in the audit scratch directory.",
+      "impact": "A shipped boolean is wrong in a well-defined, reproducible window; any consumer (transit alerts, MCP, receipts) reading 'separating' for a Moon aspect minutes before exactness is misled. Swiss has no aspect API, so fixing it costs nothing in parity and is required for the 'more advanced' claim.",
+      "fix": "Replace the finite step with a sign test: applying = (signedSeparation(a,b) - angle) * d(separation)/dt < 0 where d/dt is derived from the signed relative speed (sign of (a.lon - b.lon) wrapped to (-180,180] times (a.speed - b.speed)); treat |rate| < 1e-9 as 'stationary' (a third state, or false with a flag). Add unit tests for orb < 0.01 x relSpeed, wrap at 0/180, both-retrograde, and speed 0.",
+      "effortDays": 0.25
+    },
+    {
+      "id": "angles-houses-aspects-3",
+      "severity": "major",
+      "title": "Placidus refused at a hard |lat| > 66 while Swiss computes to 90 - eps (66.56): Rovaniemi gets a whole-sign fallback chart",
+      "claim": "placidusCusps returns null for |lat| > 66 (chunk-H7RJKCBO.js:46) and computeHouses substitutes whole-sign cusps flagged 'polar-fallback' (:91-107). Swiss computes Placidus for |lat| < 90 - eps_true (about 66.56 deg today) and only then fails to Porphyry. The band 66.0 < |lat| <= 66.56 (Rovaniemi 66.50 N, Salekhard 66.53 N, Grimsey 66.54 N) therefore gets a different house system from Swiss although the engine's own iteration converges there. The fallback is confirmed to be whole sign and flagged; it is not Porphyry, so even above 66.56 a Swiss-comparing user sees a different chart.",
+      "evidence": "Fine grid 5,616 cases (|lat| 55.0..66.6 step 0.1, both hemispheres, 1800/2000/2200, hours 0..21 step 3): engine null 288 (all at |lat| >= 66.1), Swiss failure 48 (all at |lat| = 66.6, its minimum failing latitude), 240 cases where the engine refused but Swiss returned Placidus; whole-sign fallback vs Swiss Placidus cusps max 108.7 deg (66.1) to 146.4 deg (66.5). fallbackIsWholeAndFlagged = true for all 288. No engine null at |lat| <= 66.0 and the |arg| >= 1 bail-out (:56) is unreachable there (tan(phi) tan(delta) < tan(phi) tan(eps) < 1 iff |phi| < 90 - eps). Concrete: 1995-06-15T12:00Z Rovaniemi 66.5034 N 25.7294 E: engine houses.system 'whole', flags ['polar-fallback'], cusps 180,210,...; Swiss houses_ex 'P' status 0, cusp11 147.039, cusp12 172.825. Swiss per-system polar table (swiss.json 'systems'): P, K, G, i fail within the polar circle (pyswisseph raises 'within polar circle, switched to Porphyry'); O, R, C, E, A, W, V, X, H, T, B, M, U, Y, L, Q, I, D, F, N, S all compute at 69.65 and 85 deg; R, C, T, Y, I flip the MC by 180 deg at polar latitude when it is below the horizon (mc 72.911 vs 252.911 at Tromso 2001-12-21T09:30Z). Artifacts: engine-vs-swiss.json (summaryB, byLat_66plus), gridB-rows.json, swiss.json.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "src/lib/engine/houses.ts",
+        "docs/engine-validation/README.md"
+      ],
+      "reproduction": "node -e \"import('<worktree>/node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js').then(m=>{const c=m.computeChart({utc:new Date('1995-06-15T12:00:00Z'),latitude:66.5034,longitude:25.7294,houseSystem:'placidus',timeKnown:true});console.log(c.houses.system,c.flags)})\" -> whole ['polar-fallback']; Swiss: python -c \"import swisseph as s;s.set_ephe_path('<swisslab>/ephe');print(s.houses_ex(s.julday(1995,6,15,12.0),66.5034,25.7294,b'P',0)[0][10:12])\" -> (147.039, 172.825).",
+      "impact": "Users inside the 66.0-66.56 band receive a chart Swiss-based software will not reproduce, and the README's '66 deg' wording misstates Swiss's limit (90 - eps). A per-system, obliquity-aware polar policy is the prerequisite for adding Koch/Gauquelin (which share the limit) and for an explicit fallback contract that can exceed Swiss's silent Porphyry substitution.",
+      "fix": "Replace the constant with |lat| >= 90 - obliquityTrue (strict, in degrees) computed from the same obliquity used for the cusps; return {houses, fellBack, fallbackSystem} and add a 'porphyry' system so the fallback can be Swiss-compatible (Porphyry is a closed form of ASC/MC); document the policy per system; add fine-grid tests at 66.0-66.6 against the Swiss P and O arrays already frozen in swiss-node-polar.fixture.json (placidusRequest arrays).",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-4",
+      "severity": "note",
+      "title": "Placidus iteration and angle formulas are numerically equivalent to Swiss when given the same inputs (0.004\" cusps, 1e-5\" angles) with no convergence failures",
+      "claim": "Given Swiss's ARMC and true obliquity, the engine's computeAngles reproduces swe.houses_ex ASC/MC to 1.03e-5\" max and the 30/60/120/150 x (1/3, 2/3) fixed-point Placidus iteration (64 iterations, 1e-9 deg tolerance) reproduces all twelve Swiss cusps to 0.0041\" max over 8,456 cases including 5,328 at 55-66 deg; convergence never failed below the polar circle. This is the documented-convergence path the owner wants: the iteration contracts because |d(AD)/d(RA)| x multiplier < 1 for |phi| < 90 - eps.",
+      "evidence": "engine-vs-swiss.json summaryA.all.asc_swissArmc_trueObl max 1.03e-5\", mc 4.2e-8\", cusp_formula_check p95 0.00064\" max 0.0041\"; summaryB.formulaCheck_as max 0.0034\" (n 5,328), engineNull_lat_le_66 = 0; the 0.004\" floor is Swiss's own ~1e-9 deg stopping tolerance. Code: chunk-H7RJKCBO.js:45-90.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js"
+      ],
+      "reproduction": "node engine_grid.mjs in the audit scratch directory; read summaryA.all.cusp_formula_check and summaryB.formulaCheck_as.",
+      "impact": "Positive: the geometry core is sound, so the angle fixes are input fixes, not rewrites. To exceed Swiss, publish the contraction bound and a proven iteration count (Swiss documents neither), and expose cusp speeds (houses_ex2) which follow from differentiating the same closed forms.",
+      "fix": "Add a docs note with the contraction argument and a test that asserts iteration count <= N(phi) on the 55-66.5 grid; expose iterations and residual in a debug receipt field.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-5",
+      "severity": "minor",
+      "title": "House placement ignores ecliptic latitude: differs from Swiss house_pos in 2.75% of placements (Pluto 12.75%, Moon 3.25%)",
+      "claim": "houseOf brackets a body's longitude between cusp longitudes (chunk-H7RJKCBO.js:108-120): start-inclusive, end-exclusive, wrap-safe, degenerate zero span returns that house. This is consistent with Swiss house_pos for zero latitude in every sampled case, but Swiss's Placidus house_pos uses the body's ecliptic latitude (semi-arc position), and the two disagree for bodies with latitude near a cusp.",
+      "evidence": "400 random charts (1850-2150, |lat| <= 60), 4,400 placements of Sun..Pluto + true node with Swiss lon/lat and Swiss 'P' cusps: engine bracketing vs swe.house_pos(armc, lat, eps_true, (lon, lat), 'P') differs in 121 (2.75%): Pluto 51/400, Moon 13, Venus 12, Saturn 10, Mars 9, Mercury 8, Neptune 8, Jupiter 5, Uranus 5, Sun 0, Node 0; vs house_pos with latitude 0: 0/4,400 differ. Example 1910-04-20T04:22Z lat 39.56: Pluto lon 85.155 lat -6.758 -> engine house 6, Swiss house_pos 5.996 (house 5). Artifact: swiss.json 'housepos' (swiss_dump.py, part of the 1.6 s run).",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "src/lib/engine/houses.ts"
+      ],
+      "reproduction": "python swiss_dump.py in the audit scratch directory; read housepos.per_body and housepos.examples in swiss.json.",
+      "impact": "Not an error (longitude bracketing is the dominant chart-drawing convention) but a capability Swiss has and the engine lacks; a body 'in house 6' by longitude that is in house 5 by semi-arc is exactly the kind of disagreement practitioners notice.",
+      "fix": "Add housePosition(system, armc, lat, eps, lon, bodyLat) returning a fractional house (Swiss-compatible semantics for P/K/R/C, longitude for W/E/O), keep houseOf as the default, and flag bodies within 1 deg of a cusp with the signed distance.",
+      "effortDays": 1
+    },
+    {
+      "id": "angles-houses-aspects-6",
+      "severity": "minor",
+      "title": "Declination derived with mean obliquity (or fixed J2000 23.4392911 when no instant is known): up to 44.5\" (1900) / 8.4\" error; the transformation formula itself is correct",
+      "claim": "declinationOf(lon, lat, eps) implements sin(dec) = sin(b) cos(eps) + cos(b) sin(eps) sin(l) correctly (ecliptic3d.ts:129-139). EclipticView passes meanObliquity(julianCenturies(utcMs)) (EclipticView.tsx:226-228) and DepthFigure the same or OBLIQUITY when utcMs is null (DepthFigure.astro:104); findDeclinationAspects defaults to OBLIQUITY (declination.ts:72). Mean obliquity omits nutation in obliquity; the fixed constant additionally omits the secular drift (46.8\"/century).",
+      "evidence": "36 Swiss rows (Sun, Moon, Pluto at 1900/1950/2050, Jan/Apr/Jul/Oct, Swiss lon/lat as input, Swiss FLG_EQUATORIAL declination as reference): fixed-J2000 error max 44.46\" (Moon 1900-01-01), 43.26\" (Pluto 1900-04-01), 31.2\" (1950), 29.9\" (2050); mean-of-date error max 8.37\" (Sun 1950-07-01), Moon 8.10\", Pluto 6.08\"; true-of-date error 0.000\" on every row (proves the formula). Artifact: swiss.json 'declination' (formula replicated verbatim in Python; the TS module could not be imported under strip-types because of extensionless imports, the Python port is line-identical). Orbs: DECLINATION_ORB 1 deg, luminary 1.5 deg (declination.ts:24-25).",
+      "files": [
+        "src/lib/declination.ts",
+        "src/lib/wheel/ecliptic3d.ts",
+        "src/islands/chart3d/EclipticView.tsx",
+        "src/components/DepthFigure.astro"
+      ],
+      "reproduction": "python swiss_dump.py; python -c \"import json;[print(d['utc'],d['body'],round(d['err_j2000_arcsec'],2),round(d['err_mean_of_date_arcsec'],2)) for d in json.load(open('swiss.json'))['declination']]\".",
+      "impact": "At a 1 deg orb the 8\" mean-obliquity error flips no verdicts, but the engine package exposes no declination or equatorial coordinates at all while Swiss returns them natively (FLG_EQUATORIAL) with true obliquity; parallels/contraparallels exist only as a site drawing feature.",
+      "fix": "Have the engine emit declination and right ascension per body from astronomy-engine's equatorial-of-date vector (no formula needed, true obliquity implicit), move findDeclinationAspects into the package with those values, and drop the OBLIQUITY default path (require an obliquity or an instant).",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-7",
+      "severity": "major",
+      "title": "Capability gap: 2 house systems, no house position, no Vertex/East Point/co-ascendants, no cusp speeds, no azimuth/altitude, no minor/angle/node/declination aspects in the package",
+      "claim": "HOUSE_SYSTEMS = ['whole','placidus'] (chunk-H7RJKCBO.js:8; validateBirthSettings rejects anything else, chunk-K5MRTCWE.js:4-6; HouseSystem type src/lib/engine/types.ts:10). Swiss 2.10.03 offers 25 house codes with swe.houses_ex2 cusp speeds, ascmc[2..7] (ARMC, Vertex, equatorial ascendant, co-ascendants Koch and Munkasey, polar ascendant), swe.house_pos, swe.houses_armc and swe.azalt. The aspect set is 5 majors with fixed orbs (8/4/7/7/8, luminary 10/5/8/8/10, chunk-INI453VG.js:9-15) over ten bodies only (ASPECT_BODIES :17-28 excludes nodes; angles are never aspected); no quincunx/semisextile/semisquare/sesquiquadrate/quintile, no configurable orbs.",
+      "evidence": "Swiss inventory measured with swe.house_name on this machine (swiss.json 'systems'): P Placidus, K Koch, O Porphyry, R Regiomontanus, C Campanus, E/A equal, W whole sign, V Vehlow, X Meridian, H horizon/azimuthal, T Polich/Page topocentric, B Alcabitius, M Morinus, U Krusinski, G Gauquelin sectors, Y APC, L Pullen SD, Q Pullen SR, I Sunshine, i Sunshine alt, D equal(MC), F Carter poli-equatorial, N equal 1=Aries, S Sripati; each computed at 66.3, 66.9, 69.65 and 85 deg with status recorded. Grep of src/ for koch|regiomontanus|porphyry|campanus finds only tests and Swiss fixtures, no implementation. Houses that dominate practice and are missing: Koch, Equal, Porphyry, Regiomontanus, Campanus.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "node_modules/@zodiacs/engine/dist/chunk-K5MRTCWE.js",
+        "node_modules/@zodiacs/engine/dist/chunk-INI453VG.js",
+        "src/lib/engine/types.ts"
+      ],
+      "reproduction": "grep -n HOUSE_SYSTEMS node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js; python -c \"import swisseph as s;print([ (c,s.house_name(c.encode())) for c in 'PKORCEAWVXHTBMUGYLQIiDFNS'])\".",
+      "impact": "Materially below Swiss for any practitioner: Koch and Equal are the second and third most requested systems, Porphyry is the polar fallback everyone else uses, Regiomontanus/Campanus are standard in horary and traditional work. Without house_pos and angle aspects the engine cannot claim to be 'more advanced'.",
+      "fix": "Implement, in this order, with closed forms and unit tests against swe.houses_ex/ex2 on the grid used here: Equal (ASC + 30k), Porphyry (trisection of quadrants), Koch (closed form via the MC's oblique ascension, polar limit 90 - eps), Regiomontanus and Campanus (closed forms on the celestial equator and prime vertical; valid at all latitudes with Swiss's MC-flip convention documented), Alcabitius, Morinus, Meridian, Vehlow, Topocentric; add ascmc extras (Vertex, East Point, co-ascendants), cusp speeds by analytic differentiation, house position with latitude (finding 5), azimuth/altitude with optional refraction, and an aspect configuration (aspect set, per-pair orbs, angle and node aspects).",
+      "effortDays": 6
+    },
+    {
+      "id": "angles-houses-aspects-8",
+      "severity": "minor",
+      "title": "Chart-shape thresholds leave dead zones: even 10-planet spreads of 122-148 deg and 182-223 deg classify as nothing",
+      "claim": "measureChartShape declares bundle span <= 120, bowl 150-180, locomotive 225-255 (chart-shape.ts:62,67,68) with a +/-2 deg band; a spread between 120 and 150 or between 180 and 225 that is not a bucket or seesaw returns status 'no-clear', reason 'outside-conventions'. Jones's scheme treats bundle <= 120 and bowl <= 180 as contiguous, so 130-140 deg charts are bowls in the literature.",
+      "evidence": "Run of the real TS module (node --experimental-strip-types): even spreads span 110 -> bundle clear; 121 -> near-threshold; 130 and 140 -> outside-conventions (no candidate at all); 149/151/179/181 -> near-threshold bowl; 200 -> outside-conventions; 224/226/254/256 -> near-threshold locomotive; 300 -> near-threshold splash. The 150 lower bound is asserted in chart-shape.test.ts:57 (['bowl',150,false]) so the hole is deliberate but undocumented outside the test. Artifact: command output in this audit's transcript (script inline).",
+      "files": [
+        "src/lib/chart-shape.ts",
+        "src/lib/chart-shape.test.ts"
+      ],
+      "reproduction": "cd <worktree>; node --experimental-strip-types -e \"import('./src/lib/chart-shape.ts').then(s=>{const l=Array.from({length:10},(_,i)=>i*140/9);console.log(s.measureChartShape(l.map((lon,i)=>({body:s.SHAPE_BODIES[i],lon})),true).status)})\" -> no-clear / outside-conventions.",
+      "impact": "Not a Swiss comparison (Swiss has no chart shapes) but an 'advanced' feature that silently declines a large fraction of real charts; the CONTEXT_CONVENTION string should either document the holes or close them.",
+      "fix": "Either extend bowl to 120-180 (with the band) and locomotive to 180-255 per Jones, or state the two excluded ranges in the convention text and the UI 'absence' copy; add tests at 135 and 200 deg.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-9",
+      "severity": "note",
+      "title": "Classical dignity table is correct against the Ptolemaic scheme but stops at domicile/exaltation/detriment/fall",
+      "claim": "All 28 cells in dignities.ts:18-26 match the standard table (Sun Leo/Aries/Aquarius/Libra; Moon Cancer/Taurus/Capricorn/Scorpio; Mercury Gemini+Virgo/Virgo/Sagittarius+Pisces/Pisces; Venus Taurus+Libra/Pisces/Scorpio+Aries/Virgo; Mars Aries+Scorpio/Capricorn/Libra+Taurus/Cancer; Jupiter Sagittarius+Pisces/Cancer/Gemini+Virgo/Capricorn; Saturn Capricorn+Aquarius/Libra/Cancer+Leo/Aries). Precedence exaltation > fall > domicile > detriment is documented (:36-41). Missing: triplicity rulers, Egyptian/Ptolemaic terms (bounds), faces (decans), exaltation degrees, peregrine and mutual reception, and outer-planet policy is explicitly 'none'.",
+      "evidence": "Table read line by line; runtime check with the TS module: dignityFor('Mercury','virgo') = exaltation, dignitiesFor = [domicile, exaltation]; ('Mercury','pisces') = fall; ('Pluto','scorpio') = null; ('Sun','aries') = exaltation. Tests exist (dignities.test.ts, 5 cases).",
+      "files": [
+        "src/lib/dignities.ts",
+        "src/lib/dignities.test.ts"
+      ],
+      "reproduction": "node --experimental-strip-types -e \"import('<worktree>/src/lib/dignities.ts').then(d=>console.log(d.dignityFor('Mercury','virgo'),d.dignitiesFor('Mercury','pisces')))\".",
+      "impact": "No deviation to fix; Swiss has no dignity model, so a complete essential-dignity scheme (five dignities with a documented scoring convention and mutual reception) is a clean way to exceed it.",
+      "fix": "Add triplicities (day/night/participating), Ptolemaic and Egyptian terms, faces, exaltation degrees, peregrine and mutual reception with a selectable table and tests per cell.",
+      "effortDays": 1.5
+    },
+    {
+      "id": "angles-houses-aspects-10",
+      "severity": "note",
+      "title": "Finite-difference speed (+/-0.25 day) places planetary stations 1-4 minutes from Swiss's analytic speed; retrograde flag correct outside that window",
+      "claim": "longitudeSpeed is a central difference over +/-6 h (chunk-GBH7JIYF.js:74-82) and retrograde = speed < 0. Around a station the average speed over 12 h differs from the instantaneous speed, shifting the sign change.",
+      "evidence": "Swiss station instants by bisection on swe.calc_ut speed (FLG_SPEED, SWIEPH): Mercury 2024-04-01T22:14Z, Mars 2024-12-06T23:33Z, Venus 2025-03-02T00:36Z. Engine sign change by bisection on longitudeSpeed: -0.90 min, +0.84 min, -3.79 min respectively; engine speed at the Swiss station instant -7.4e-5, +7.9e-6, -1.07e-4 deg/day. Artifacts: stations-swiss.json, stations-engine.json.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js"
+      ],
+      "reproduction": "Run the Python/Node station snippet recorded in the audit transcript (writes stations-*.json).",
+      "impact": "Below Swiss's analytic speeds by a few minutes at stations only; affects the applying test's inputs too. Easy to exceed: astronomy-engine already returns state vectors.",
+      "fix": "Compute d(lon)/dt analytically from the geocentric state vector rotated to the ecliptic of date (GeoMoonState / BaryState-derived velocity), keeping the finite difference only as a test oracle.",
+      "effortDays": 0.5
+    },
+    {
+      "id": "angles-houses-aspects-11",
+      "severity": "note",
+      "title": "The engine's sidereal time is closer to the IAU 2006/2000A standard than Swiss's default: 0.19\" vs 1.9\" in RAMC outside 1850-2050; obliquity time argument (UTC vs TT) is negligible",
+      "claim": "Engine RAMC (astronomy-engine SiderealTime, 5-term nutation) vs ERFA gst06a: max 0.188\" across 1800-2200. Swiss swe.houses_ex ARMC vs the same arbiter: <= 0.001\" from 1850 to 2025 but 1.908\" at 2050, 1.79\" at 2100, 0.68\" at 2200 and 0.35\" at 1800, consistent with Swiss switching to its long-term sidereal-time model outside 1850-2050. Using UTC instead of TT in centuriesSinceJ2000 for the mean obliquity changes it by at most 6.6e-6\" (year 2200, deltaT 442 s).",
+      "evidence": "gridA-rows.json per-year maxima (arcsec): 1800 swiss-erfa 0.353 engine-erfa 0.033; 1850-2025 swiss-erfa <= 0.001, engine-erfa 0.017-0.188; 2050 1.908 vs 0.076; 2100 1.793 vs 0.154; 2200 0.680 vs 0.070. e_tilt nutation in obliquity vs Swiss max 0.030\" (summaryA.all.dObl_aeTrue_swissTrue). oblTT table in engine-vs-swiss.json: dObl 2.0e-7\" (1800) .. 6.6e-6\" (2200). astronomy-engine iau2000b carries 5 terms (esm/astronomy.js:1303-1349).",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js",
+        "node_modules/astronomy-engine/esm/astronomy.js"
+      ],
+      "reproduction": "node -e \"const A=require('./gridA-rows.json');...\" as in the transcript, or re-run engine_grid.mjs and inspect dRamc_* per year.",
+      "impact": "Once finding 1 is fixed, the engine's angles would sit within ~7\" of the IAU arbiter across 1800-2200 (0.36\" for |lat| <= 45) while Swiss's default departs by up to 68\" at lat 66 after 2050. This is a measurable, honest 'exceeds Swiss' claim for angles, provided DUT1 (not applied by either; <= 0.9 s = 13.5\" of RAMC) is either applied from IERS data or disclosed.",
+      "fix": "Keep the IAU 2006 GMST + equation of equinoxes path; optionally upgrade to the full 77-term IAU 2000B (or the alpha's nutation module) for a sub-0.05\" RAMC; add an optional IERS DUT1 table (finals2000A, compact) to convert UTC to UT1 for the sidereal time, with a receipt flag.",
+      "effortDays": 1
+    },
+    {
+      "id": "angles-houses-aspects-12",
+      "severity": "minor",
+      "title": "docs/engine-validation/README.md overstates angle validation ('1.57\" worst angle, cusps exact') and misstates Swiss's polar limit as 66 deg",
+      "claim": "The summary table row 'Angles and houses | Swiss houses_ex, polar and ordinary | 1.57\" worst angle, cusps exact' and section 2 ('Above 66 deg absolute latitude Swiss returns C status -1') generalise three polar whole-sign cases and five Placidus cases with 0.1/0.2 deg gates (engine.test.ts:386-406). The measured worst angle across the supported latitude range is 512\" and Swiss's limit is 90 - eps (66.56 deg), measured here as first failing at 66.6.",
+      "evidence": "docs/engine-validation/README.md table row and section '2. Angles and houses'; engine.test.ts:400-404 gates 0.1 and 0.2 deg; engine-vs-swiss.json summaryA.all.asc_shipped.max 512.5\"; summaryB.swissFail_min_abs_lat 66.6, engine refused 240 cases where Swiss succeeded.",
+      "files": [
+        "docs/engine-validation/README.md",
+        "src/lib/engine/engine.test.ts"
+      ],
+      "reproduction": "Compare the README row with engine-vs-swiss.json summaryA and summaryB.",
+      "impact": "A reader of the honest-summary page concludes angles are validated to the arcsecond everywhere; they are validated to 0.1 deg at five latitudes <= 60.2 and not at all at 60-66.",
+      "fix": "Replace the row with the grid distribution (p50/p95/max per latitude band), state the 90 - eps limit, and link the new 63-66 deg vectors once finding 1 is fixed.",
+      "effortDays": 0.25
+    },
+    {
+      "id": "angles-houses-aspects-13",
+      "severity": "note",
+      "title": "Polar ASC quadrant rule matches Swiss on 1,152 sweep points; exact pole and DUT1 remain out of scope",
+      "claim": "computeAngles' rule 'if normalize(asc - mc) >= 180 then asc += 180' (chunk-H7RJKCBO.js:34) selects the rising intersection exactly as swe.houses_ex does at 66.6, 70, 78.22, 85 and 89.9 deg in both hemispheres across a full sidereal day; at exactly +/-90 the ASC degenerates to 0/180 and whole-sign cusps differ from Swiss in 35 of 96 steps because a 1e-6\" difference flips the sign boundary.",
+      "evidence": "Grid C (2001-12-21, 96 x 15 min, lon 15.6267, 'W'): ASC max residual 15.5\" (66.6, obliquity effect of finding 1), 0.60\" (70), 0.13\" (78.22), 0.044\" (85), 9e-7\" (90); MC max 0.029\"; ASC formula residual with Swiss inputs <= 1.6e-9\"; engineAscEastOfMc and swissAscEastOfMc true for every latitude; swappedVsSwiss 0; wholeMismatch 0 except 35 at +/-90. Artifacts: engine-vs-swiss.json summaryC, gridC-rows.json.",
+      "files": [
+        "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js",
+        "src/lib/engine/engine.test.ts"
+      ],
+      "reproduction": "node engine_grid.mjs; read summaryC.",
+      "impact": "Confirms the polar angle behaviour; the remaining gap to a stronger-than-Swiss polar story is an explicit, per-system documented policy (which intersection, MC flip or not, fallback system) instead of one silent rule plus one flag.",
+      "fix": "Document the rising-intersection choice and the exact-pole degeneracy in the receipt CONVENTIONS block; reject |lat| = 90 with a clear error or return angles with a 'degenerate-horizon' flag.",
+      "effortDays": 0.25
+    },
+    {
+      "id": "angles-houses-aspects-14",
+      "severity": "minor",
+      "title": "Site horizon drawing uses mean sidereal time while the engine uses apparent: 0.005 deg internal inconsistency",
+      "claim": "DepthFigure.astro:113 computes the zenith from ramcOf({ gastHours: gmstHours(utcMs) }) - Greenwich MEAN sidereal time - while the chart's ASC comes from astronomy-engine's apparent sidereal time; the comment in ecliptic3d.ts:196-201 acknowledges the ~1.1 s (0.005 deg) offset.",
+      "evidence": "src/components/DepthFigure.astro:104,113; src/lib/wheel/ecliptic3d.ts:196-206 (gmstHours) and its comment; equation of the equinoxes measured in the grid as up to 1.98\" of RAMC difference between apparent and mean-based paths.",
+      "files": [
+        "src/components/DepthFigure.astro",
+        "src/lib/wheel/ecliptic3d.ts"
+      ],
+      "reproduction": "Read the two files; compare gmstHours(utcMs) with SiderealTime(MakeTime(new Date(utcMs))) for any instant (difference = equation of the equinoxes, ~1 s).",
+      "impact": "Drawing-only, invisible at screen resolution, but it is a second sidereal-time implementation in the codebase that will drift from the engine's conventions.",
+      "fix": "Pass the engine's gastHours (already on the chart input) into DepthFigure instead of recomputing GMST.",
+      "effortDays": 0.1
+    }
+  ],
+  "measurements": [
+    {
+      "name": "Angle grid: engine vs Swiss vs ERFA (3,128 cases, lat 0-66, 1800-2200)",
+      "method": "swiss_dump.py (pyswisseph 2.10.03, SWIEPH confirmed via returned flags; swe.houses_ex 'P'; swe.calc_ut ECL_NUT for true/mean obliquity; ERFA gst06a/obl06/nut06a as third arbiter with UT1:=UTC and TT from swe.deltat) then engine_grid.mjs running the vendored dist internal-math.js + astronomy-engine SiderealTime/e_tilt with five input variants to decompose the residual",
+      "result": "Shipped ASC p50 2.41\" p95 22.4\" max 512.5\"; MC max 3.94\"; formula-only (Swiss ARMC + true obliquity) ASC max 1.0e-5\"; obliquity pairing alone reproduces max 504.8\"; engine GAST + true obliquity max 70.9\" vs Swiss and 6.9\" vs ERFA; RAMC engine-ERFA max 0.19\", Swiss-ERFA max 1.91\"",
+      "artifactPath": "<audit>/angles-houses-aspects/engine-vs-swiss.json",
+      "computeMinutes": 0.05
+    },
+    {
+      "name": "Placidus fine latitude ladder 55.0-66.6 both hemispheres (5,616 cases)",
+      "method": "Same scripts, grid B: 2000-06-21/1800/2200, hours 0..21 step 3; engine placidusCusps and computeHouses vs swe.houses_ex 'P' (Swiss failures caught, Porphyry and whole arrays recorded)",
+      "result": "Engine null only at |lat| >= 66.1 (288), Swiss fails only at 66.6 (48), 240 cases engine-refused/Swiss-ok, fallback whole-sign vs Swiss Placidus up to 146.4 deg; cusp residual with Swiss inputs max 0.0034\"; shipped cusp residual max 396.9\" at 66.0",
+      "artifactPath": "<audit>/angles-houses-aspects/gridB-rows.json",
+      "computeMinutes": 0.03
+    },
+    {
+      "name": "Polar ASC sweep (1,152 cases at 66.6/70/78.22/85/89.9/90 deg, +/-)",
+      "method": "Grid C: 2001-12-21, 96 x 15 min, whole-sign; engine computeAngles/wholeSignCusps vs swe.houses_ex 'W' ascmc and cusps",
+      "result": "Quadrant rule matches Swiss everywhere (no 180-degree swaps); ASC max 15.5\" at 66.6, 0.60\" at 70, 0.13\" at 78.22, 0.044\" at 85; whole-sign cusps identical except 35/96 at exactly 90 deg (sign-boundary degeneracy)",
+      "artifactPath": "<audit>/angles-houses-aspects/gridC-rows.json",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Swiss house-system inventory and per-system polar behaviour",
+      "method": "swe.house_name for 25 codes; swe.houses_ex and houses_ex2 at 66.3, 66.9, 69.65 (Tromso) and 85 deg, 2001-12-21T09:30Z, recording status, error text, ASC/MC and first cusps",
+      "result": "P, K, G, i fail inside the polar circle ('switched to Porphyry'); 21 systems compute; R, C, T, Y, I flip the MC by 180 deg at polar latitude (mc 72.911 vs 252.911)",
+      "artifactPath": "<audit>/angles-houses-aspects/swiss.json",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "House placement: longitude bracketing vs swe.house_pos (400 charts, 4,400 placements)",
+      "method": "Random charts 1850-2150, |lat| <= 60 (seed 20260922); Swiss lon/lat for Sun..Pluto + true node; verbatim Python port of houseOf vs swe.house_pos 'P' with real latitude and with latitude 0",
+      "result": "121/4,400 (2.75%) differ with latitude (Pluto 51/400, Moon 13/400); 0/4,400 differ at latitude 0",
+      "artifactPath": "<audit>/angles-houses-aspects/swiss.json",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Declination from lon/lat with fixed J2000, mean-of-date and true-of-date obliquity (36 rows)",
+      "method": "Swiss lon/lat and FLG_EQUATORIAL declination for Sun/Moon/Pluto at 1900/1950/2050 x 4 months; declinationOf formula replicated verbatim",
+      "result": "Fixed 23.4392911: max 44.46\" (1900), 31.2\" (1950), 29.9\" (2050); mean of date: max 8.37\"; true of date: 0.000\" (formula exact)",
+      "artifactPath": "<audit>/angles-houses-aspects/swiss.json",
+      "computeMinutes": 0.01
+    },
+    {
+      "name": "Aspect applying flag: synthetic cases + 2024 scan every 30 min",
+      "method": "aspects_applying.mjs: dist findAspects on 10 synthetic pairs and on computeBodies output for 17,568 instants; reference = sign of d|sep - angle|/dt with a 1e-6 day step",
+      "result": "510 of 236,910 aspects misclassified (0.22%), all applying-reported-as-separating with orb <= 0.01 x relative speed (max 0.148 deg), all Moon pairs; synthetic Moon 0.10 deg before exact conjunction -> applying:false",
+      "artifactPath": "<audit>/angles-houses-aspects/aspects-applying.json",
+      "computeMinutes": 0.4
+    },
+    {
+      "name": "Station instants: engine finite-difference speed vs Swiss analytic speed",
+      "method": "Bisection on swe.calc_ut speed (Mercury 2024-04, Mars 2024-12, Venus 2025-03) then bisection on the dist longitudeSpeed sign change within +/-1 day",
+      "result": "Offsets -0.90 min, +0.84 min, -3.79 min",
+      "artifactPath": "<audit>/angles-houses-aspects/stations-engine.json",
+      "computeMinutes": 0.02
+    },
+    {
+      "name": "Chart-shape classification of even 10-planet spreads",
+      "method": "node --experimental-strip-types importing src/lib/chart-shape.ts; spans 110..300",
+      "result": "130 and 140 deg and 200 deg -> status no-clear, reason outside-conventions (no candidate); 121/149/151/179/181/224/226/254/256 -> near-threshold",
+      "artifactPath": "transcript (inline script)",
+      "computeMinutes": 0.01
+    }
+  ],
+  "swissGap": [
+    {
+      "capability": "ASC/MC accuracy (frame consistency)",
+      "swiss": "Apparent sidereal time with true obliquity of date; long-term sidereal model outside 1850-2050 (1.9\" RAMC departure from IAU 2006/2000A)",
+      "zodiacs": "Apparent sidereal time with MEAN obliquity: ASC p95 22\", max 512\" vs Swiss over lat 0-66; RAMC within 0.19\" of the IAU arbiter",
+      "exceedPath": "Switch to true obliquity (e_tilt().tobl, matches Swiss nutation to 0.03\"): projected ASC residual vs the IAU arbiter ~7\" worst (0.36\" at |lat| <= 45) against Swiss's 68\" at lat 66 after 2050; add optional IERS DUT1 for UT1 and disclose it in the receipt",
+      "evidence": "engine-vs-swiss.json summaryA (asc_shipped, asc_engineGast_trueObl_vs_erfa, asc_swiss_vs_erfa, dRamc_*)"
+    },
+    {
+      "capability": "House systems",
+      "swiss": "25 codes (Placidus, Koch, Porphyry, Regiomontanus, Campanus, Equal x4 variants, Whole, Vehlow, Meridian, Horizon, Topocentric, Alcabitius, Morinus, Krusinski, Gauquelin, APC, Pullen SD/SR, Sunshine x2, Carter, Sripati)",
+      "zodiacs": "Whole sign and Placidus only; everything else rejected by validateBirthSettings",
+      "exceedPath": "Implement Equal, Porphyry, Koch, Regiomontanus, Campanus, Alcabitius, Morinus, Meridian, Vehlow, Topocentric with closed forms (only Placidus/topocentric iterate), publish the contraction bound and iteration count for the iterative ones, validate each on the 55-66.6 ladder against houses_ex",
+      "evidence": "swiss.json 'systems'; chunk-H7RJKCBO.js:8; engine-vs-swiss.json summaryB.formulaCheck_as (0.0034\" Placidus equivalence)"
+    },
+    {
+      "capability": "Polar policy",
+      "swiss": "Placidus/Koch/Gauquelin/Sunshine-alt fail at |lat| >= 90 - eps and silently return Porphyry (status -1, wrapper raises); Regiomontanus/Campanus/Topocentric/APC/Sunshine flip the MC by 180 deg when below the horizon; others compute",
+      "zodiacs": "Placidus refused at a constant |lat| > 66 (0.56 deg short of Swiss), falls back to whole sign with a 'polar-fallback' flag; rising-intersection ASC rule matches Swiss at 66.6-89.9",
+      "exceedPath": "Dynamic 90 - eps_true limit, named fallbackSystem in the result (Porphyry or whole, caller's choice), per-system documented MC/ASC conventions, explicit degenerate-horizon handling at |lat| = 90",
+      "evidence": "engine-vs-swiss.json summaryB (engineRefused_swissOk 240, swissFail_min_abs_lat 66.6), summaryC; Rovaniemi reproduction"
+    },
+    {
+      "capability": "House position of a body",
+      "swiss": "swe.house_pos with ecliptic latitude for any system (fractional house, Gauquelin 36 sectors)",
+      "zodiacs": "Longitude-only cusp bracketing (houseOf); consistent with Swiss at latitude 0",
+      "exceedPath": "Add housePosition with latitude (semi-arc for P/K/R/C) alongside the longitude convention, plus a near-cusp flag with signed distance; measured disagreement 2.75% (Pluto 12.75%)",
+      "evidence": "swiss.json 'housepos'"
+    },
+    {
+      "capability": "Additional angles and cusp speeds",
+      "swiss": "ascmc[2..7]: ARMC, Vertex, equatorial ascendant, co-ascendant (Koch), co-ascendant (Munkasey), polar ascendant; houses_ex2 cusp and angle speeds; houses_armc entry point",
+      "zodiacs": "ASC/MC/DSC/IC only; ramcOf/placidusCusps exported from internal math but no public ARMC-based API, no speeds",
+      "exceedPath": "Expose the ARMC path publicly, add Vertex/East Point/co-ascendants (closed forms) and analytic cusp speeds derived from the same formulas",
+      "evidence": "chunk-H7RJKCBO.js:25-39; internal-math.js exports"
+    },
+    {
+      "capability": "Aspects",
+      "swiss": "None (Swiss computes no aspects)",
+      "zodiacs": "5 majors, fixed orbs, ten bodies, no angle/node aspects, applying flag wrong for orb < 0.01 x relative speed",
+      "exceedPath": "Fix the applying sign test, add configurable aspect sets and orbs, angle and node aspects, exact-aspect timing from analytic relative speed",
+      "evidence": "aspects-applying.json; chunk-INI453VG.js:9-28,57-64"
+    },
+    {
+      "capability": "Declination / equatorial coordinates",
+      "swiss": "FLG_EQUATORIAL returns RA/declination of date with true obliquity for every body",
+      "zodiacs": "Engine emits none; site derives declination with mean obliquity (8.4\" error) or fixed J2000 (44\") for drawing-level parallels",
+      "exceedPath": "Emit RA/dec from astronomy-engine's equatorial-of-date vector, move parallels/contraparallels and out-of-bounds into the package",
+      "evidence": "swiss.json 'declination'"
+    },
+    {
+      "capability": "Azimuth/altitude and refraction",
+      "swiss": "swe.azalt / azalt_rev with optional refraction",
+      "zodiacs": "Drawing-only altitudeOf in ecliptic3d.ts (mean sidereal time, no refraction)",
+      "exceedPath": "Add topocentric azimuth/altitude with standard refraction, sharing the engine's GAST",
+      "evidence": "src/lib/wheel/ecliptic3d.ts; DepthFigure.astro:113"
+    },
+    {
+      "capability": "Speed / stations",
+      "swiss": "Analytic speeds with FLG_SPEED",
+      "zodiacs": "Central difference over +/-0.25 day; stations 1-4 min off",
+      "exceedPath": "Analytic dlon/dt from state vectors",
+      "evidence": "stations-engine.json"
+    },
+    {
+      "capability": "Essential dignities, composites, shapes, patterns",
+      "swiss": "None",
+      "zodiacs": "Correct 4-column dignity table, midpoint composites, Jones shapes with dead zones, four aspect patterns; all tested",
+      "exceedPath": "Complete the five-dignity scheme with reception, composite angles, close or document the 122-148/182-223 shape holes",
+      "evidence": "dignities.ts:18-26; chart-shape.ts:62-68; transcript runs"
+    }
+  ],
+  "notExamined": [
+    "JPL Horizons was not queried: it computes no ascendant or houses, so ERFA (IAU 2006/2000A) served as the independent arbiter for angles instead",
+    "Actual IERS UT1-UTC values for any date (only the 0.9 s bound was used); both engine and Swiss were run with UTC as UT1",
+    "Koch, Regiomontanus, Campanus and the other Swiss systems numerically (nothing in the stack implements them, so only their existence and polar behaviour were measured)",
+    "Sidereal (ayanamsa) houses, topocentric planet positions and Gauquelin sectors",
+    "The precision alpha (examples/precision-alpha) - it has no house or aspect code",
+    "Dates outside 1800-2200 and latitudes between 66.6 and 89.9 other than the six sweep latitudes",
+    "src/lib/compat.ts content (sign-pair prose; no computation to audit beyond pairSlug)",
+    "Aspect-pattern detection numerics beyond code reading (tests exist in src/lib/engine/aspect-patterns.test.ts); the TS modules with extensionless imports (declination.ts, composite.ts) could not be executed directly and were verified by verbatim formula ports and their committed tests",
+    "Synastry and composite behaviour beyond code reading and the wrap arithmetic (no Swiss counterpart)",
+    "MCP tool surface (src/mcp/*.ts) and how it exposes house/aspect results",
+    "Returns, progressions and transit angles (other auditors' areas) except the station-speed probe",
+    "The frozen swiss-node-polar fixture bytes were not re-hashed; docs/engine-validation/swiss-node-polar/README.md was read and its conventions cross-checked against the live Swiss behaviour measured here"
+  ]
+}

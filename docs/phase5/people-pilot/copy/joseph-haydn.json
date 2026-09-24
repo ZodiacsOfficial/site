@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:10.97",
+        "sun-degree:10.96",
         "decan:aries:second"
       ],
       "text": "At the noon reference the Sun sits 11.0° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
@@ -76,7 +76,7 @@
         "moon-band:13.2"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 19.5°."
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 19.4°."
     }
   ],
   "birthdayLink": {
@@ -89,7 +89,7 @@
   },
   "substantiveFacts": [
     "dignity:Sun:exaltation",
-    "sun-degree:10.97",
+    "sun-degree:10.96",
     "decan:aries:second",
     "personal:Mercury:Aries:1.1°",
     "personal:Venus:Taurus:15.4°",

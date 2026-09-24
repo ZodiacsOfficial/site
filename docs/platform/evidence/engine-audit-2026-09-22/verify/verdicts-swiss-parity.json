@@ -1,0 +1,59 @@
+{
+  "area": "swiss-parity",
+  "verdicts": [
+    {
+      "id": "swiss-parity-1",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/deltat_cmp.out",
+      "evidence": "Own run (deltat_ae.mjs + deltat_cmp.py): astronomy-engine 2.1.19 MakeTime gives TT-UT = 75.50 s at 2026-09-22T17:00Z, Swiss deltat_ex(FLG_SWIEPH) 68.82 s, difference +6.68 s; +2.75 s at 2020-12-21, +11.95 s at 2038-01-19, +27.86 s at 2055-06-06, all matching the claim. Independent ground truth fetched from IERS finals2000A.daily (USNO mirror; datacenter.iers.org reset the connection): UT1-UTC = -0.0114 s at MJD 61305 (2026-09-22, flag I = observed), so the true Delta-T is 32.184+37+0.0114 = 69.195 s: astronomy-engine is +6.30 s wrong, Swiss -0.37 s, and the Horizons clock implied from the cached Moon_UT vs Moon requests (horizons_dt.py: +0.364 s vs Swiss at D4) is 69.18 s, within 0.01 s of IERS. astronomy-engine already sits outside the observed band [68.28,70.08] from about 2018 (71.85 s at 2020-07-01). Moon rate at the instant is 12.31 deg/day = 0.513 arcsec/s, so 6.3 s is 3.2 arcsec; the shipped engine's c_raw Moon at D4 is +3.64 arcsec from Swiss (auditor: 3.505 vs Horizons UT), consistent. Code path verified: node_modules/@zodiacs/engine/dist/chunk-GBH7JIYF.js imports MakeTime from astronomy-engine (line 20); astronomy-engine esm/astronomy.js:1131 `let DeltaT = DeltaT_EspenakMeeus`. Note for the fix: astronomy-engine exports SetDeltaTFunction (astronomy.js:1132), so an IERS-table Delta-T can be injected without forking. The receipt CONVENTIONS declare no Delta-T model and the public methodology page attributes Delta-T disagreement only to far-future extrapolation (2100), so the present-day error is undocumented. Major is earned: a current-epoch accuracy gap that keeps the production Moon below Swiss and below Swiss's Moshier fallback; not blocking because no documented guarantee is falsified."
+    },
+    {
+      "id": "swiss-parity-2",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/compare_corpus.out",
+      "evidence": "Independent rerun with Swiss as the instrument rather than Horizons (swiss_corpus.py, engine_corpus.mjs, compare_corpus.py over the auditor's 24 preregistered instants; every SWIEPH call returned retflag 258 and every Moshier call 260, checked): @zodiacs/engine 0.1.1-rc.6 with its clock pinned to Swiss Delta-T is max 18.85 arcsec / p50 2.07 arcsec in longitude from Swiss .se1 (per body max: Neptune 18.85, Pluto 14.31, Venus 12.64, Uranus 12.07, Saturn 10.27, Mercury 7.97, Jupiter 7.74, Mars 4.41, Moon 3.88, Sun 1.35) and max 19.03 arcsec in latitude (Saturn, p50 8.19; Uranus 16.42; Neptune 9.71). Swiss with no data files (set_ephe_path to a nonexistent dir, FLG_MOSEPH, retflag 260) is max 2.82 arcsec (Pluto), Neptune 2.05, Moon 1.25, Sun 0.066 from the .se1 answer. All numbers within the claim. The ratio of overall maxima is 6.7x (inside the stated 4-10x); per body it runs from 3x (Moon) to over 100x (Mercury), so the headline understates for inner bodies. Cause check: the Saturn latitude residual is +4.4 arcsec at C1 and +17.6 at C4 with Saturn at nearly the same longitude (249.9 vs 249.7 deg), so it is not an ecliptic-frame tilt; consistent with truncated VSOP87 latitude series as the auditor states. Severity: major, not blocking; src/pages/methodology/index.astro:88-90 and developers/engine/index.astro:162-163 already publish 'worst 18.6 arcsec vs Swiss', so no documented claim is falsified, but the gap versus every Swiss configuration including zero-data Moshier is real."
+    },
+    {
+      "id": "swiss-parity-3",
+      "verdict": "adjusted",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/de441_test.out",
+      "evidence": "Facts confirmed: sha256 sepl_18.se1 = ca1393ceab3a44fb..., semo_18.se1 = 1ca07bd67c24374d..., matching docs/platform/evidence/swiss-benchmark/CONFIGURATION.md line 14; both file headers read 'Created for Astrodienst in Switzerland 2026/05/26, based on JPL Ephemeris DE441.'; RESULTS.md line 231 says 'Swiss's semo_18.se1 is a fit to DE431' and 346-347 'The DE431-vs-DE440 hypothesis'. Auditor's a-b (Swiss .se1 vs Swiss on the DE440 JPL binary) Moon max 0.0104 arcsec reproduced from their swiss.json. I went further on attribution using only cached Horizons data (Moon source DE441), cancelling the common IAU76/80 frame residual by subtracting the Sun's residual at each instant: Swiss .se1 Moon vs Horizons DE441 Moon rms 0.0018 / max 0.0042 arcsec, alpha-on-DE440s Moon vs Horizons rms 0.0043 / max 0.0103 arcsec, correlation of (a-b) with the DE440 residual -0.865, and a-b is V-shaped in time (0.0104 at 1851, under 0.001 over 1933-2012, 0.0085 at 2148) - the signature of DE440/DE441 lunar divergence away from the LLR span. So the 0.0107 arcsec Moon residual is the DE440-vs-DE441 difference, now measured rather than asserted. What is wrong is the severity and framing: RESULTS.md itself hedges at lines 232-233 ('a hypothesis consistent with the data, not a proven attribution') and 346-347 ('unexplained... not tested'); the rest of the tree correctly records DE441 (docs/engine-validation/README.md:33-34, swiss-node-polar/README.md:18, src/lib/engine/fixtures/swiss-eight-cases-policy.json:44); and no owner-facing tree document claims a DE440-over-DE431 advantage (FOUR-CONFIGURATIONS.md:36 explicitly disclaims superiority). The refuted 'premise' comes from the audit brief, not from the tree. One wrong factual parenthetical in a hedged evidence record, 0.2 days to fix, nothing shipped or claimed depending on it, is a minor defect by the rules, not a major unsupported claim.",
+      "correctedClaim": "docs/platform/evidence/precision-2026-09-20/numerics/RESULTS.md lines 231 and 346-347 name DE431 as the source of Swiss's semo_18.se1; the pinned files (hashes in CONFIGURATION.md, headers dated 2026/05/26) are DE441-based, as the tree's own engine-validation READMEs and fixtures already state. The Moon's epoch-dependent 0.0107 arcsec residual is measured here to be the DE440-vs-DE441 lunar difference (Swiss .se1 agrees with Horizons's DE441 Moon to 0.002 arcsec rms once the frame term is cancelled; the DE440s alpha differs by up to 0.010 arcsec, correlated -0.87 with the .se1-vs-DE440 difference). No tree document asserts an ephemeris-generation advantage over Swiss; the correction is to the one record's parenthetical and hypothesis wording.",
+      "correctedSeverity": "minor"
+    },
+    {
+      "id": "swiss-parity-10",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/swiss_caps.out",
+      "evidence": "src/lib/engine/types.ts lines 5-8: BodyName is exactly Sun..Pluto plus 'North Node' | 'South Node'; chunk-GBH7JIYF.js PLANETS array and node handling (lines 27-111) cover the same set with a true node only; examples/precision-alpha/src/core/reduce.mjs CONTRACT.bodies is the ten Sun..Pluto. grep -i 'chiron|lilith|apogee|mean node' over src/lib and src/mcp non-test .ts returns only src/lib/analytics.ts:81, an analytics event name 'chiron_toggle' with no computation behind it; the public pages disclose the gap (src/pages/methodology/index.astro:240 'Chiron and the asteroids aren't included yet', src/pages/developers/engine/index.astro:199 'No Chiron, no asteroids'), and src/data/glossary.ts:710 says the same. Swiss side tested on local pyswisseph 2.10.03: MEAN_NODE, TRUE_NODE, MEAN_APOG, OSCU_APOG, INTP_APOG, INTP_PERG all compute with retflag 258 (SWIEPH) from the main .se1 files alone; CHIRON, PHOLUS, CERES, PALLAS, JUNO, VESTA raise 'seas_18.se1 not found' (the library refuses rather than silently falling back - capability present, asteroid file not installed here), and fixstar2_ut needs sefstars.txt, also absent locally. So the Swiss breadth is a library capability requiring its standard data files, which the finding's fix estimate already implies. Major is earned as a documented but material breadth gap."
+    },
+    {
+      "id": "swiss-parity-11",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/swiss_caps.out",
+      "evidence": "node_modules/@zodiacs/engine/dist/chunk-H7RJKCBO.js:8 `var HOUSE_SYSTEMS = [\"whole\", \"placidus\"]`; src/lib/engine/types.ts:10 `HouseSystem = 'whole' | 'placidus'`; placidusCusps returns null for |latitude| > 66 (chunk line 47) and computeHouses then emits system 'whole' with wholeSignCusps (lines 93-98), with the 'polar-fallback' ChartFlag in types.ts:12. Swiss side tested on local pyswisseph: all 25 letters P K O R C A E V W X H T B M U G Y F D N I i L Q S succeed in houses_ex at London 2026-09-22 and map to 24 distinct house_name values (A and E are both 'equal'), so '24 systems' is exact; houses_ex2, houses_armc_ex2, house_pos and gauquelin_sector all exist. One nuance: Swiss itself refuses Placidus inside the polar circle ('within polar circle, switched to Porphyry' at lat 70 and 80), so the polar fallback per se is not a gap versus Swiss - the count of systems is. Major earned."
+    },
+    {
+      "id": "swiss-parity-12",
+      "verdict": "confirmed",
+      "reproductionRan": true,
+      "artifactPath": "<audit>/verify/swiss-parity/swiss_caps.out",
+      "evidence": "node_modules/@zodiacs/engine/dist/receipt.js:139 CONVENTIONS `zodiac: \"tropical\"`; no ayanamsa or sidereal-zodiac code in src/lib, src/mcp, the engine dist or examples/precision-alpha/src. pyswisseph 2.10.03 exposes exactly 48 SIDM_ constants (47 predefined from SIDM_FAGAN_BRADLEY through SIDM_LAHIRI_ICRC, plus SIDM_USER), FLG_SIDEREAL and get_ayanamsa_ex_ut; tested at 2026-09-22 17:00 UT: Lahiri 24.232917, Fagan-Bradley 25.116124, Krishnamurti 24.136064, Raman 22.786615, True Citra 24.211669, Lahiri ICRC 24.232613, Galactic Centre 0 Sag 27.227188 deg, all retflag 2. One inaccuracy in the auditor's reproduction text: the grep is not silent - it matches four comment lines about sidereal TIME in src/lib/wheel/ecliptic3d.ts (lines 200-261), which are not a sidereal zodiac, so the finding stands unchanged. Major earned as a capability gap excluding sidereal practice."
+    }
+  ],
+  "unverified": [
+    "swiss-parity-4",
+    "swiss-parity-5",
+    "swiss-parity-6",
+    "swiss-parity-7",
+    "swiss-parity-8",
+    "swiss-parity-9",
+    "swiss-parity-13"
+  ],
+  "notes": "All scripts and outputs are under <audit>/verify/swiss-parity/ (deltat_cmp.out, compare_corpus.out, de441_test.out, swiss_caps.out, horizons_dt.out, finals2000A.daily.txt, verdicts.json). The worktree at 39b7a127 was read only (git status clean at the end). Zero new Horizons requests were made; all Horizons evidence was recomputed from the phase-1 cache. One external fetch: IERS finals2000A.daily from the USNO mirror after datacenter.iers.org reset the connection. Swiss backend flags were checked on every call (258 SWIEPH, 260 MOSEPH). Cross-cutting observations: (a) the true Delta-T on 2026-09-22 is 69.195 s (IERS), so the production error is 6.30 s against observation and 6.68 s against Swiss, which is itself 0.37 s low; (b) astronomy-engine's SetDeltaTFunction makes the Delta-T fix injectable without replacing the ephemeris; (c) the Swiss asteroid (seas_18.se1) and fixed-star (sefstars.txt) files are not installed locally, so finding 10's Swiss-side Chiron/asteroid/star claims rest on library capability plus standard data files rather than a local run; (d) the DE440-vs-DE441 lunar attribution in finding 3 is now measured, but the finding's severity is reduced to minor because the record already hedges and nothing in the tree claims the advantage it refutes."
+}

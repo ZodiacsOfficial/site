@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Shanghai",
     "civilTime": "12:00",
-    "utcInstant": "1895-09-04T03:54:17.000Z",
-    "utcOffsetMinutesAtBirth": 485.7167,
-    "civilDayStartUtc": "1895-09-03T15:54:17.000Z",
-    "civilDayEndUtc": "1895-09-04T15:54:17.000Z",
+    "utcInstant": "1895-09-04T04:37:39.000Z",
+    "utcOffsetMinutesAtBirth": 442.35,
+    "civilDayStartUtc": "1895-09-03T16:37:39.000Z",
+    "civilDayEndUtc": "1895-09-04T16:37:39.000Z",
     "latitude": 27.90669,
     "longitude": 110.5893,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "virgo",
     "signName": "Virgo",
-    "degree": 11.35
+    "degree": 11.38
   },
   "moon": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 10.44,
+    "degree": 10.8,
     "uncertain": false,
     "signAtCivilDayStart": "pisces",
     "signAtCivilDayEnd": "pisces"
@@ -43,15 +43,15 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 11.1917,
-    "degreesToNextBoundaryAtWindowEnd": 17.8388
+    "degreesInsideAtWindowStart": 10.894,
+    "degreesToNextBoundaryAtWindowEnd": 18.1367
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.969,
-    "Moon": 11.796,
-    "Mercury": 1.648,
-    "Venus": 0.24,
-    "Mars": 0.642,
+    "Moon": 11.797,
+    "Mercury": 1.647,
+    "Venus": 0.241,
+    "Mars": 0.643,
     "Jupiter": 0.193,
     "Saturn": 0.088,
     "Uranus": 0.034,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 11.35,
+      "degree": 11.38,
       "retrograde": false,
       "speedPerDay": 0.9693,
       "dignity": null,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 10.44,
+      "degree": 10.8,
       "retrograde": false,
-      "speedPerDay": 11.7951,
+      "speedPerDay": 11.7954,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -86,9 +86,9 @@
       "body": "Mercury",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 26.33,
+      "degree": 26.38,
       "retrograde": false,
-      "speedPerDay": 1.6471,
+      "speedPerDay": 1.6465,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,9 +97,9 @@
       "body": "Venus",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 3.28,
+      "degree": 3.27,
       "retrograde": true,
-      "speedPerDay": -0.2406,
+      "speedPerDay": -0.2418,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -108,7 +108,7 @@
       "body": "Mars",
       "sign": "virgo",
       "signName": "Virgo",
-      "degree": 23.51,
+      "degree": 23.53,
       "retrograde": false,
       "speedPerDay": 0.6425,
       "dignity": null,
@@ -119,9 +119,9 @@
       "body": "Jupiter",
       "sign": "cancer",
       "signName": "Cancer",
-      "degree": 29.88,
+      "degree": 29.89,
       "retrograde": false,
-      "speedPerDay": 0.1927,
+      "speedPerDay": 0.1926,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -130,7 +130,7 @@
       "body": "Saturn",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 3.48,
+      "degree": 3.49,
       "retrograde": false,
       "speedPerDay": 0.0884,
       "dignity": null,
@@ -176,28 +176,35 @@
       "a": "Sun",
       "b": "Moon",
       "type": "opposition",
-      "orb": 0.91,
+      "orb": 0.58,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Pluto",
       "type": "square",
-      "orb": 1.4,
+      "orb": 1.37,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 1.95,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Mars",
       "type": "conjunction",
-      "orb": 2.82,
+      "orb": 2.85,
       "applying": false
     },
     {
       "a": "Venus",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 3.39,
+      "orb": 3.38,
       "applying": true
     },
     {
@@ -218,59 +225,52 @@
       "a": "Mars",
       "b": "Neptune",
       "type": "square",
-      "orb": 5.53,
+      "orb": 5.55,
       "applying": false
     },
     {
       "a": "Sun",
       "b": "Neptune",
       "type": "square",
-      "orb": 6.63,
+      "orb": 6.6,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Venus",
       "type": "conjunction",
-      "orb": 6.95,
+      "orb": 6.89,
       "applying": true
     }
   ],
   "aspectsAtNoonOnly": [
     {
-      "a": "Moon",
-      "b": "Pluto",
-      "type": "square",
-      "orb": 2.31,
-      "applying": true
-    },
-    {
       "a": "Mercury",
       "b": "Jupiter",
       "type": "sextile",
-      "orb": 3.55,
+      "orb": 3.51,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 6.14,
+      "orb": 5.78,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 7.19,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 6.96,
+      "orb": 7.31,
       "applying": false
-    },
-    {
-      "a": "Moon",
-      "b": "Neptune",
-      "type": "square",
-      "orb": 7.54,
-      "applying": true
     }
   ],
   "patterns": {

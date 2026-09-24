@@ -7,14 +7,14 @@
   "identity": "Composer · Brazil · 1887–1959",
   "title": "Heitor Villa-Lobos's birth chart",
   "metaDescription": "Heitor Villa-Lobos's chart, computed from a sourced birth date: Sun at 14.8° Pisces. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Moon stands at 16.7° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "lede": "The Moon stands at 16.6° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Moon:domicile",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:14.76",
+        "sun-degree:14.75",
         "decan:pisces:second"
       ],
       "text": "The Sun's position resolves to 14.8° Pisces — deep enough in the second decan (10°–20°) that the Moon, its traditional sub-ruler, colours the reading."
@@ -33,11 +33,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Mercury:Pluto:sextile:0.74",
-        "aspect:Mars:Neptune:sextile:0.82",
-        "aspect:Sun:Saturn:trine:0.95"
+        "aspect:Mercury:Pluto:sextile:0.73",
+        "aspect:Mars:Neptune:sextile:0.81",
+        "aspect:Sun:Saturn:trine:0.96"
       ],
-      "text": "Mercury to Pluto is the closest call of the day, a sextile within 0.7°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mars sextile Neptune at 0.8°, and the Sun trine Saturn at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "Mercury to Pluto is the closest call of the day, a sextile within 0.7°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mars sextile Neptune at 0.8°, and the Sun trine Saturn at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -55,7 +55,7 @@
         "dignity:Venus:detriment",
         "dignity:Saturn:detriment"
       ],
-      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Moon in Cancer at 16.7° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 6.7° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 15.7° is in detriment. Dignity is a statement about conditions, not about worth."
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Moon in Cancer at 16.6° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 6.7° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 15.7° is in detriment. Dignity is a statement about conditions, not about worth."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:13.9"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 16.7°."
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 16.6°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "dignity:Moon:domicile",
-    "sun-degree:14.76",
+    "sun-degree:14.75",
     "decan:pisces:second",
     "personal:Mercury:Aries:2.9°",
     "personal:Venus:Aries:6.7°",
     "personal:Mars:Pisces:26.1°",
-    "aspect:Mercury:Pluto:sextile:0.74",
-    "aspect:Mars:Neptune:sextile:0.82",
-    "aspect:Sun:Saturn:trine:0.95",
+    "aspect:Mercury:Pluto:sextile:0.73",
+    "aspect:Mars:Neptune:sextile:0.81",
+    "aspect:Sun:Saturn:trine:0.96",
     "figure:unaspected:Jupiter",
     "dignity:Moon:domicile",
     "dignity:Venus:detriment",

@@ -6,6 +6,7 @@
  * the same frame the engine computes. Fetched 2026-07-05.
  */
 import { describe, expect, it } from 'vitest';
+import horizonsReference from './fixtures/horizons-reference.json';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
@@ -19,7 +20,7 @@ import { computeBodies, computeChart } from './full';
 import { computeAngles, meanObliquity, placidusCusps, wholeSignCusps, houseOf, norm } from './houses';
 import { findAspects, separation } from './aspects';
 import { sunLongitude, moonLongitude, moonPhaseAngle } from './lite';
-import { resolveLocalToUtc } from '../time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../time/localToUtc';
 import { formatLongitude, signForLongitude } from '../signs';
 import type { BodyPosition } from './types';
 import independentSwiss from './fixtures/swiss-node-polar.fixture.json';
@@ -199,21 +200,16 @@ const SWISS_HOUSE_VECTORS = [
 ] as const;
 
 // ── 1. Modern vector: JPL Horizons, 2020-01-01 00:00 UTC ─────────────
-const HORIZONS_2020: Record<string, number> = {
-  Sun: 280.0094920,
-  Moon: 346.1383767,
-  Mercury: 274.3833145,
-  Venus: 314.4094923,
-  Mars: 238.3846079,
-  Jupiter: 276.6703386,
-  Saturn: 291.3949664,
-  Uranus: 32.6940395,
-  Neptune: 346.2645218,
-  Pluto: 292.3855818,
-};
+// The literals live in fixtures/horizons-reference.json, which
+// scripts/claims-bindings.test.mjs also reads for the published figure.
+const [HORIZONS_2020_EPOCH, HORIZONS_1907_EPOCH] = (horizonsReference as {
+  epochs: { utc: string; longitudes: Record<string, number> }[];
+}).epochs;
+const HORIZONS_2020 = HORIZONS_2020_EPOCH.longitudes;
+const HORIZONS_1907 = HORIZONS_1907_EPOCH.longitudes;
 
 describe('ephemeris vs JPL Horizons (2020-01-01)', () => {
-  const bodies = computeBodies(new Date('2020-01-01T00:00:00Z'));
+  const bodies = computeBodies(new Date(HORIZONS_2020_EPOCH.utc));
   for (const [name, expected] of Object.entries(HORIZONS_2020)) {
     it(`${name} within tolerance`, () => {
       const tol = name === 'Moon' ? 0.15 : 0.05;
@@ -225,17 +221,17 @@ describe('ephemeris vs JPL Horizons (2020-01-01)', () => {
 // ── 2. Historic vector: Horizons, 1907-07-06 15:07 UTC ───────────────
 // (Frida Kahlo's birth instant ± half a minute — 08:30 LMT Coyoacán.)
 describe('ephemeris vs JPL Horizons (1907-07-06)', () => {
-  const bodies = computeBodies(new Date('1907-07-06T15:07:00Z'));
+  const bodies = computeBodies(new Date(HORIZONS_1907_EPOCH.utc));
   it('Sun 13° Cancer', () => {
-    expect(angleDiff(lonOf(bodies, 'Sun'), 103.3759585)).toBeLessThan(0.05);
+    expect(angleDiff(lonOf(bodies, 'Sun'), HORIZONS_1907.Sun)).toBeLessThan(0.05);
     expect(signForLongitude(lonOf(bodies, 'Sun')).slug).toBe('cancer');
   });
   it('Moon 29° Taurus', () => {
-    expect(angleDiff(lonOf(bodies, 'Moon'), 59.7147970)).toBeLessThan(0.2);
+    expect(angleDiff(lonOf(bodies, 'Moon'), HORIZONS_1907.Moon)).toBeLessThan(0.2);
     expect(signForLongitude(lonOf(bodies, 'Moon')).slug).toBe('taurus');
   });
   it('Mars 13° Capricorn', () => {
-    expect(angleDiff(lonOf(bodies, 'Mars'), 283.3944410)).toBeLessThan(0.05);
+    expect(angleDiff(lonOf(bodies, 'Mars'), HORIZONS_1907.Mars)).toBeLessThan(0.05);
   });
 });
 
@@ -460,8 +456,11 @@ describe('aspects', () => {
 });
 
 // ── 8. The full pipeline: Frida Kahlo fixture ────────────────────────
+await prepareLocalTime('1907-07-06', 'America/Mexico_City');
 describe('Frida Kahlo chart (the demo fixture)', () => {
-  const resolved = resolveLocalToUtc('1907-07-06', '08:30', 'America/Mexico_City');
+  // Coyoacán's own mean time, 6 h 36 min 38 s behind Greenwich, as the
+  // calculator resolves this birth from its city index.
+  const resolved = resolveLocalToUtc('1907-07-06', '08:30', 'America/Mexico_City', { longitude: -99.16 });
   const chart = computeChart({
     utc: resolved.utc,
     latitude: 19.35,   // Coyoacán

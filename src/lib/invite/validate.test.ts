@@ -49,7 +49,8 @@ describe('Phase 4 invite validation', () => {
       positions: {
         h: 'w',
         v: 'zodiacs-1.0.0',
-        a: [124.5, 30.25],
+        // ASC 124.5° and MC 30.25° go to the invitee as the middle of their whole degree.
+        a: [124.5, 30.5],
       },
     });
     expect(result?.positions.b).toHaveLength(12);

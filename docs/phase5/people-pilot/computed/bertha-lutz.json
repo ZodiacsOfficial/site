@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Sao_Paulo",
     "civilTime": "12:00",
-    "utcInstant": "1894-08-02T15:06:28.000Z",
-    "utcOffsetMinutesAtBirth": -186.4667,
-    "civilDayStartUtc": "1894-08-02T03:06:28.000Z",
-    "civilDayEndUtc": "1894-08-03T03:06:28.000Z",
+    "utcInstant": "1894-08-02T15:06:32.000Z",
+    "utcOffsetMinutesAtBirth": -186.5333,
+    "civilDayStartUtc": "1894-08-02T03:06:32.000Z",
+    "civilDayEndUtc": "1894-08-03T03:06:32.000Z",
     "latitude": -23.550394444444,
     "longitude": -46.633947222222,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 9.6503,
-    "degreesToNextBoundaryAtWindowEnd": 19.3919
+    "degreesInsideAtWindowStart": 9.7744,
+    "degreesToNextBoundaryAtWindowEnd": 19.2678
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.958,
@@ -83,7 +83,7 @@
       "signName": "Leo",
       "degree": 26.01,
       "retrograde": false,
-      "speedPerDay": 14.9784,
+      "speedPerDay": 14.9783,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true

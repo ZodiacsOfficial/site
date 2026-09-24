@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Dublin",
     "civilTime": "12:00",
-    "utcInstant": "1874-02-15T12:25:21.000Z",
-    "utcOffsetMinutesAtBirth": -25.35,
-    "civilDayStartUtc": "1874-02-15T00:25:21.000Z",
-    "civilDayEndUtc": "1874-02-16T00:25:21.000Z",
+    "utcInstant": "1874-02-15T12:27:33.000Z",
+    "utcOffsetMinutesAtBirth": -27.55,
+    "civilDayStartUtc": "1874-02-15T00:27:33.000Z",
+    "civilDayEndUtc": "1874-02-16T00:27:33.000Z",
     "latitude": 52.94333333,
     "longitude": -6.88694444,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "aquarius",
     "signName": "Aquarius",
-    "degree": 8.89,
+    "degree": 8.92,
     "uncertain": false,
     "signAtCivilDayStart": "aquarius",
     "signAtCivilDayEnd": "aquarius"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 26.1826,
-    "degreesToNextBoundaryAtWindowEnd": 2.8079
+    "degreesInsideAtWindowStart": 26.2019,
+    "degreesToNextBoundaryAtWindowEnd": 2.7886
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.01,
-    "Moon": 14.681,
+    "Moon": 14.682,
     "Mercury": 1.839,
     "Venus": 1.253,
     "Mars": 0.755,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 8.89,
+      "degree": 8.92,
       "retrograde": false,
-      "speedPerDay": 14.6939,
+      "speedPerDay": 14.6944,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -183,21 +183,21 @@
       "a": "Sun",
       "b": "Neptune",
       "type": "sextile",
-      "orb": 0.47,
+      "orb": 0.48,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 1.14,
+      "orb": 1.16,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Saturn",
       "type": "conjunction",
-      "orb": 1.27,
+      "orb": 1.3,
       "applying": false
     },
     {
@@ -262,7 +262,7 @@
       "a": "Moon",
       "b": "Mars",
       "type": "sextile",
-      "orb": 4.17,
+      "orb": 4.19,
       "applying": false
     }
   ],

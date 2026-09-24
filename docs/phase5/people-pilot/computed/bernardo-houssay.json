@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Argentina/Buenos_Aires",
     "civilTime": "12:00",
-    "utcInstant": "1887-04-10T15:53:48.000Z",
-    "utcOffsetMinutesAtBirth": -233.8,
-    "civilDayStartUtc": "1887-04-10T03:53:48.000Z",
-    "civilDayEndUtc": "1887-04-11T03:53:48.000Z",
+    "utcInstant": "1887-04-10T15:53:32.000Z",
+    "utcOffsetMinutesAtBirth": -233.5333,
+    "civilDayStartUtc": "1887-04-10T03:53:32.000Z",
+    "civilDayEndUtc": "1887-04-11T03:53:32.000Z",
     "latitude": -34.599722222222,
     "longitude": -58.381944444444,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "scorpio",
     "signName": "Scorpio",
-    "degree": 24.28,
+    "degree": 24.27,
     "uncertain": true,
     "signAtCivilDayStart": "scorpio",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 19.8032,
-    "degreesToNextBoundaryAtWindowEnd": 9.2164
+    "degreesInsideAtWindowStart": 19.9622,
+    "degreesToNextBoundaryAtWindowEnd": 9.0575
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.98,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "scorpio",
       "signName": "Scorpio",
-      "degree": 24.28,
+      "degree": 24.27,
       "retrograde": false,
-      "speedPerDay": 14.4969,
+      "speedPerDay": 14.497,
       "dignity": "fall",
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -196,7 +196,7 @@
       "a": "Moon",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 1.88,
+      "orb": 1.89,
       "applying": true
     },
     {
@@ -240,7 +240,7 @@
       "a": "Moon",
       "b": "Venus",
       "type": "opposition",
-      "orb": 3.45,
+      "orb": 3.44,
       "applying": false
     },
     {

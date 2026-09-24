@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/London",
     "civilTime": "12:00",
-    "utcInstant": "1797-08-30T12:01:15.000Z",
-    "utcOffsetMinutesAtBirth": -1.25,
-    "civilDayStartUtc": "1797-08-30T00:01:15.000Z",
-    "civilDayEndUtc": "1797-08-31T00:01:15.000Z",
+    "utcInstant": "1797-08-30T12:00:32.000Z",
+    "utcOffsetMinutesAtBirth": -0.5333,
+    "civilDayStartUtc": "1797-08-30T00:00:32.000Z",
+    "civilDayEndUtc": "1797-08-31T00:00:32.000Z",
     "latitude": 51.53111111111111,
     "longitude": -0.13166666666666668,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 22.16,
+    "degree": 22.15,
     "uncertain": false,
     "signAtCivilDayStart": "sagittarius",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.0163,
-    "degreesToNextBoundaryAtWindowEnd": 22.0152
+    "degreesInsideAtWindowStart": 7.0166,
+    "degreesToNextBoundaryAtWindowEnd": 22.0148
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.969,
-    "Moon": 12.114,
+    "Moon": 12.115,
     "Mercury": 1.505,
     "Venus": 1.223,
     "Mars": 0.636,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 22.16,
+      "degree": 22.15,
       "retrograde": false,
-      "speedPerDay": 12.1063,
+      "speedPerDay": 12.1064,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Virgo",
       "degree": 28.03,
       "retrograde": false,
-      "speedPerDay": 1.5045,
+      "speedPerDay": 1.5046,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true

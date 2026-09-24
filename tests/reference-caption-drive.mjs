@@ -32,7 +32,7 @@ import { moonPhaseName } from './src/lib/engine/lite';
 import { resolveLocalToUtc } from './src/lib/time/localToUtc';
 import { prepareChartCard, downloadPreparedChartCard, chartSheetSettings, chartSheetProvenanceLines, shareCardTimeNotes } from './src/lib/share-card';
 import { encodePositionsLink } from './src/lib/share-positions';
-import { previewModel } from './src/server/chart-preview-model';
+import * as chartPreview from './src/server/chart-preview-model';
 import en from './src/lib/i18n/ui/en';import es from './src/lib/i18n/ui/es';import fr from './src/lib/i18n/ui/fr';import it from './src/lib/i18n/ui/it';import pt from './src/lib/i18n/ui/pt';import ru from './src/lib/i18n/ui/ru';
 import { RUSSIAN_RUNTIME } from './src/lib/i18n/ru-runtime/server';
 const catalogs={en,es,fr,it,pt,ru};let pending=null,prepared=null;
@@ -54,7 +54,7 @@ window.fixture={city:null,canvasText:[],
   const details={date:'2000-01-15',time:known?'08:30':'12:00',timeKnown:known,city:'',country:'',timezone:'Africa/Khartoum'};
   const token=encodePositionsLink({bodies:chart.bodies,angles:chart.angles,houseSystem:'whole',engineVersion:chart.engineVersion});
   window.fixture.canvasText=[];prepared=await prepareChartCard(chart,{locale,variant,referenceTime:!known,moonAmbiguous:!known,hideBirthDetails:false,birthDetails:details});
-  const snapshot={chart:JSON.stringify(chart),token,preview:previewModel(token),settings:chartSheetSettings(chart),provenance:chartSheetProvenanceLines(chart,details,false),notes:shareCardTimeNotes(locale,{referenceTime:!known}),canvasText:[...window.fixture.canvasText],filename:prepared.filename};
+  const snapshot={chart:JSON.stringify(chart),token,preview:chartPreview.previewPlacementsFromToken?chartPreview.previewModel(chartPreview.previewPlacementsFromToken(token)):chartPreview.previewModel(token),settings:chartSheetSettings(chart),provenance:chartSheetProvenanceLines(chart,details,false),notes:shareCardTimeNotes(locale,{referenceTime:!known}),canvasText:[...window.fixture.canvasText],filename:prepared.filename};
   document.getElementById('image-download').disabled=false;return snapshot;
  }};
 const originalFill=CanvasRenderingContext2D.prototype.fillText;

@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Caracas",
     "civilTime": "12:00",
-    "utcInstant": "1853-12-22T16:27:44.000Z",
-    "utcOffsetMinutesAtBirth": -267.7333,
-    "civilDayStartUtc": "1853-12-22T04:27:44.000Z",
-    "civilDayEndUtc": "1853-12-23T04:27:44.000Z",
+    "utcInstant": "1853-12-22T16:27:39.000Z",
+    "utcOffsetMinutesAtBirth": -267.65,
+    "civilDayStartUtc": "1853-12-22T04:27:39.000Z",
+    "civilDayEndUtc": "1853-12-23T04:27:39.000Z",
     "latitude": 10.50611111111111,
     "longitude": -66.91444444444444,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 0.1198,
-    "degreesToNextBoundaryAtWindowEnd": 28.8612
+    "degreesInsideAtWindowStart": 0.3092,
+    "degreesToNextBoundaryAtWindowEnd": 28.6718
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.019,

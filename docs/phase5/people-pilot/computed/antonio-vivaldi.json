@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Rome",
     "civilTime": "12:00",
-    "utcInstant": "1678-03-04T11:10:04.000Z",
-    "utcOffsetMinutesAtBirth": 49.9333,
-    "civilDayStartUtc": "1678-03-03T23:10:04.000Z",
-    "civilDayEndUtc": "1678-03-04T23:10:04.000Z",
+    "utcInstant": "1678-03-04T11:10:40.000Z",
+    "utcOffsetMinutesAtBirth": 49.3333,
+    "civilDayStartUtc": "1678-03-03T23:10:40.000Z",
+    "civilDayEndUtc": "1678-03-04T23:10:40.000Z",
     "latitude": 45.439722222222,
     "longitude": 12.331944444444,
     "coordinateEscalationSteps": 0,
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 13.8179,
-    "degreesToNextBoundaryAtWindowEnd": 15.1832
+    "degreesInsideAtWindowStart": 13.7837,
+    "degreesToNextBoundaryAtWindowEnd": 15.2174
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.999,
     "Moon": 11.844,
-    "Mercury": 0.3,
+    "Mercury": 0.299,
     "Venus": 0.716,
     "Mars": 0.785,
     "Jupiter": 0.242,
@@ -189,7 +189,7 @@
       "a": "Moon",
       "b": "Venus",
       "type": "square",
-      "orb": 1.83,
+      "orb": 1.84,
       "applying": false
     },
     {
@@ -254,14 +254,14 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "sextile",
-      "orb": 4.04,
+      "orb": 4.03,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 6.86,
+      "orb": 6.85,
       "applying": true
     }
   ],

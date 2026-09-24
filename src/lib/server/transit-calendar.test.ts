@@ -3,7 +3,8 @@ import handler, {
   buildTransitCalendar,
   handleTransitCalendar,
 } from '../../../api/calendar/transits';
-import { calendarWebcalUrl } from '../../islands/CalendarSubscribe';
+import { calendarToken, calendarWebcalUrl } from '../../islands/CalendarSubscribe';
+import { decodePositionsLink, encodePositionsLink, POSITION_BODY_ORDER } from '../share-positions';
 
 const CRLF = '\r\n';
 const PINNED_TOKEN = '2.eyJiIjpbMCwwLDAsMCwwLDAsMCwwLDAsMCwwLDBdLCJhIjpbMCw5MF0sImgiOiJ3IiwidiI6IjEuMC4wIn0';
@@ -46,6 +47,54 @@ describe('subscribable transit calendar', () => {
     ]) {
       expect(first.toLowerCase()).not.toContain(forbidden.toLowerCase());
     }
+  });
+
+  it('takes ASC and MC to the whole degree and gives their contacts to the minute, not as exact', () => {
+    // The pinned token carries ASC 0° and MC 90°; the feed uses 0.5° and 90.5°.
+    const exactAngles = buildTransitCalendar(PINNED_TOKEN, {
+      ...WINDOW,
+      generatedAt: '2026-03-19T12:00:00Z',
+    });
+    const roundedToken = encodePositionsLink({
+      bodies: POSITION_BODY_ORDER.map((body) => ({ body, lon: 0 })),
+      angles: { asc: 0.5, mc: 90.5 },
+      houseSystem: 'whole',
+      engineVersion: '1.0.0',
+    })!;
+    expect(buildTransitCalendar(roundedToken, {
+      ...WINDOW,
+      generatedAt: '2026-03-19T12:00:00Z',
+    })).toBe(exactAngles);
+
+    const events = exactAngles.replace(/\r\n[ \t]/g, '').split('BEGIN:VEVENT').slice(1);
+    const angleEvents = events.filter((event) => /SUMMARY:[^\r]* natal (?:ASC|MC)\r\n/.test(event));
+    const planetEvents = events.filter((event) => !angleEvents.includes(event));
+    expect(angleEvents.length).toBeGreaterThan(0);
+    expect(planetEvents.length).toBeGreaterThan(0);
+    for (const event of angleEvents) {
+      expect(event).not.toContain('(exact)');
+      expect(event).toMatch(/DTSTART:\d{8}T\d{4}00Z/);
+      expect(event).toMatch(/UID:transit-\d{8}T\d{4}00Z-/);
+      expect(event).toContain('DESCRIPTION:Tropical transit contact. Natal angle to the whole degree. Time:');
+    }
+    expect(events.some((event) => event.includes('SUMMARY:Transiting Sun conjunction natal ASC\r\n'))).toBe(true);
+    for (const event of planetEvents) {
+      expect(event).toMatch(/SUMMARY:[^\r]* \(exact\)\r\n/);
+      expect(event).toContain('DESCRIPTION:Exact tropical transit contact. Time:');
+    }
+  });
+
+  it('mints the feed code with ASC and MC to the whole degree and every body to 0.001°', () => {
+    const token = calendarToken({
+      bodies: POSITION_BODY_ORDER.map((body, index) => ({ body, lon: index * 30.0123 })),
+      angles: { asc: 245.678, mc: 159.999 },
+      houseSystem: 'placidus',
+      engineVersion: '1.0.0',
+    });
+    const decoded = decodePositionsLink(token!);
+    expect(decoded?.angles).toEqual({ asc: 245.5, mc: 159.5 });
+    expect(decoded?.bodies[1]).toEqual({ body: 'Moon', lon: 30.012 });
+    expect(decoded?.houseSystem).toBe('placidus');
   });
 
   it('builds webcal URLs with only the existing positions token', () => {

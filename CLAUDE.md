@@ -115,6 +115,16 @@ owns that page.
   keep byte-identical)
 - `public/data/cities/` ← `node scripts/build-cities.mjs` (GeoNames, CC-BY)
 - `src/data/sky.json` ← `node scripts/build-sky.mjs`
+- `src/data/tz-lmt.json` ← `node scripts/build-tz-lmt.mjs` (when each IANA
+  zone's local mean time era ended, from a pinned tzdb release including
+  backzone; loaded on demand by `src/lib/time/localToUtc.ts`. Refresh only
+  when the pinned release changes)
+- `src/data/tz-history/<release>/` ← `node scripts/build-tz-history.mjs`
+  (each zone name's offsets before 1970 from the same pinned release with
+  backzone, compiled by zic, in 64 name-hashed files plus `excluded.json`;
+  loaded on demand by `src/lib/time/tz-history-load.ts`. Needs zic; refresh
+  with tz-lmt.json. `--check` re-derives both from the release; CI runs it in
+  site-check.yml's `tz-data-drift` job, not the offline drift job)
 - `src/data/ingresses.json` ← `node scripts/build-ingresses.mjs` (refresh
   yearly with sky.json)
 - `src/data/eclipses.json` ← `node scripts/build-eclipses.mjs` (refresh
@@ -228,8 +238,14 @@ sides — the exact import allowlist AND a marker check that no browser
 chunk ever carries astronomy-engine/createRequire; a CI parity test pins
 server and browser ephemeris to 1e-12 agreement.
 Accuracy is gated by `vitest` test vectors; run `npm test` after any engine
-change. Timezone conversion (`src/lib/time/localToUtc.ts`) resolves historical
-offsets via `Intl` — never hand-roll offsets.
+change. Timezone conversion (`src/lib/time/localToUtc.ts`) resolves legal
+offsets via `Intl` from 1970 on, and before 1970 (for a birthplace, i.e. with
+a longitude) from the generated `src/data/tz-history/` — never hand-roll
+offsets. The one computed clock is a birthplace's own local mean time (240 s
+per degree of longitude) before its zone's local mean time era ended, per the
+generated `src/data/tz-lmt.json`; any caller that passes a longitude must
+`await prepareLocalTime(date, timeZone)` first with the same date and zone
+(`src/lib/time/localToUtc-callers.test.ts` checks the call sites).
 
 ## Checks
 

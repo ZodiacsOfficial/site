@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:10.07",
+        "sun-degree:10.11",
         "decan:capricorn:second"
       ],
       "text": "10.1° of Capricorn is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -23,21 +23,21 @@
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Capricorn:24.6°",
-        "personal:Venus:Scorpio:29.5°",
+        "personal:Mercury:Capricorn:24.7°",
+        "personal:Venus:Scorpio:29.6°",
         "personal:Mars:Pisces:15.4°"
       ],
-      "text": "The personal planets sit Mercury at 24.6° Capricorn, Venus at 29.5° Scorpio, Mars at 15.4° Pisces. Mercury in an earth sign reads as thought with its feet on the ground; Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
+      "text": "The personal planets sit Mercury at 24.7° Capricorn, Venus at 29.6° Scorpio, Mars at 15.4° Pisces. Mercury in an earth sign reads as thought with its feet on the ground; Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Pluto:opposition:0.09",
+        "aspect:Sun:Pluto:opposition:0.05",
         "aspect:Uranus:Pluto:trine:0.28",
-        "aspect:Sun:Uranus:sextile:0.37"
+        "aspect:Sun:Uranus:sextile:0.33"
       ],
-      "text": "Start where the chart is tightest — the Sun opposition Pluto, 0.1° of separation. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Uranus trine Pluto at 0.3°, and the Sun sextile Uranus at 0.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+      "text": "Start where the chart is tightest — the Sun opposition Pluto, 0.1° of separation. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Uranus trine Pluto at 0.3°, and the Sun sextile Uranus at 0.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
     },
     {
       "key": "figures",
@@ -55,7 +55,7 @@
         "dignity:Venus:detriment",
         "dignity:Saturn:exaltation"
       ],
-      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Scorpio at 29.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 19.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Scorpio at 29.6° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 19.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
     },
     {
       "key": "shape",
@@ -76,7 +76,7 @@
         "moon-band:13.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.3°."
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.8°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Pluto:opposition",
-    "sun-degree:10.07",
+    "sun-degree:10.11",
     "decan:capricorn:second",
-    "personal:Mercury:Capricorn:24.6°",
-    "personal:Venus:Scorpio:29.5°",
+    "personal:Mercury:Capricorn:24.7°",
+    "personal:Venus:Scorpio:29.6°",
     "personal:Mars:Pisces:15.4°",
-    "aspect:Sun:Pluto:opposition:0.09",
+    "aspect:Sun:Pluto:opposition:0.05",
     "aspect:Uranus:Pluto:trine:0.28",
-    "aspect:Sun:Uranus:sextile:0.37",
+    "aspect:Sun:Uranus:sextile:0.33",
     "figure:grand-trine:Mars-Jupiter-Pluto",
     "figure:unaspected:Venus",
     "dignity:Venus:detriment",

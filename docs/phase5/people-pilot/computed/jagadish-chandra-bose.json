@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Asia/Dhaka",
     "civilTime": "12:00",
-    "utcInstant": "1858-11-30T05:58:20.000Z",
-    "utcOffsetMinutesAtBirth": 361.6667,
-    "civilDayStartUtc": "1858-11-29T17:58:20.000Z",
-    "civilDayEndUtc": "1858-11-30T17:58:20.000Z",
+    "utcInstant": "1858-11-30T05:57:48.000Z",
+    "utcOffsetMinutesAtBirth": 362.2,
+    "civilDayStartUtc": "1858-11-29T17:57:48.000Z",
+    "civilDayEndUtc": "1858-11-30T17:57:48.000Z",
     "latitude": 23.55,
     "longitude": 90.55,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.5376,
-    "degreesToNextBoundaryAtWindowEnd": 21.4481
+    "degreesInsideAtWindowStart": 7.2826,
+    "degreesToNextBoundaryAtWindowEnd": 21.7032
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.014,
@@ -77,7 +77,7 @@
       "signName": "Libra",
       "degree": 8.59,
       "retrograde": false,
-      "speedPerDay": 12.9168,
+      "speedPerDay": 12.9169,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -262,7 +262,7 @@
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 4.1,
+      "orb": 4.11,
       "applying": true
     },
     {
@@ -276,14 +276,14 @@
       "a": "Mars",
       "b": "Pluto",
       "type": "square",
-      "orb": 6.66,
+      "orb": 6.65,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 7.42,
+      "orb": 7.41,
       "applying": false
     },
     {

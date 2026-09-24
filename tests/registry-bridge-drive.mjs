@@ -71,7 +71,7 @@ try {
     assert.match(await bridge.innerText(), /Explore the Capricorn Registry →/);
     assert.deepEqual(await events(page, 'registry_bridge_impression'), [{
       name: 'registry_bridge_impression',
-      props: { sign: 'capricorn', surface: 'birth_chart', locale: 'en' },
+      props: { surface: 'birth_chart', locale: 'en' },
     }]);
 
     await page.locator('#birth-date').fill('2026-03-20');
@@ -87,7 +87,7 @@ try {
     assert.equal(await bridge.locator('a').getAttribute('href'), '/registry/aries/');
     assert.deepEqual((await events(page, 'registry_bridge_impression')).at(-1), {
       name: 'registry_bridge_impression',
-      props: { sign: 'aries', surface: 'birth_chart', locale: 'en' },
+      props: { surface: 'birth_chart', locale: 'en' },
     });
 
     await bridge.locator('a').evaluate((link) => {
@@ -99,7 +99,7 @@ try {
     ));
     assert.deepEqual(await events(page, 'registry_bridge_click'), [{
       name: 'registry_bridge_click',
-      props: { sign: 'aries', surface: 'birth_chart', locale: 'en' },
+      props: { surface: 'birth_chart', locale: 'en' },
     }]);
     await chartRun.context.close();
 

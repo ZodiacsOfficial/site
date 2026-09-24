@@ -8,6 +8,7 @@ import { deleteChart, renameChart } from '../lib/profile/store';
 import { deletePair, loadPairs, pairSideLabels, prunePairs } from '../lib/profile/pairs';
 import type { SavedPair } from '../lib/profile/pairs';
 import type { SavedChart } from '../lib/profile/schema';
+import { useEngine } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
 import { signForLongitude, formatLongitude, signName } from '../lib/signs';
 import { profileChartHandoffFragment } from '../lib/chart-handoff';
@@ -244,6 +245,7 @@ export default function ProfileManager({
 }: ProfileManagerProps) {
   const locale = normalizeCatalogLocale(rawLocale);
   const showDailyEmail = dailyEmailEnabled && locale === 'en';
+  const loadEngine = useEngine();
   const { profile, ready: profileReady } = useProfile();
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState('');
@@ -344,6 +346,11 @@ export default function ProfileManager({
 
   useEffect(() => {
     let unsubscribe = () => {};
+    // Stale saved summaries are rewritten before this page's first sync
+    // uploads them. A refresh that cannot load leaves them as stored.
+    const refreshed = import('../lib/profile/refresh')
+      .then(({ refreshSavedChartSummaries }) => refreshSavedChartSummaries(loadEngine))
+      .catch(() => 0);
     if (!HAS_PROFILE_SYNC || accountSyncV2Enabled) return () => unsubscribe();
     import('../lib/profile/sync')
       .then(async (api) => {
@@ -353,6 +360,7 @@ export default function ProfileManager({
         setSession(current);
         if (current) {
           setSyncState('syncing');
+          await refreshed;
           await api.syncNow();
           setDigestOptInState(await api.getDigestOptIn());
           setSyncState('synced');

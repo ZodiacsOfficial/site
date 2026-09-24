@@ -37,7 +37,7 @@ import {
 } from '../lib/scene/types';
 import { formatLongitude, signBySlug, signForLongitude, signName } from '../lib/signs';
 import { bigThree } from '../lib/interpretations';
-import { resolveLocalToUtc } from '../lib/time/localToUtc';
+import { prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseNameFromAngle } from '../lib/engine/lite';
@@ -356,6 +356,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [city, setCity] = useState<City | null>(null);
   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
   const [chart, setChart] = useState<Chart | null>(null);
+  // Read on a local mean time even when its offset is whole minutes, which
+  // the receipt's `lmt` flag (sub-minute offsets only) does not show.
+  const [onMeanTime, setOnMeanTime] = useState(false);
   const resultOwnerRef = useRef<ChartResultOwner | null>(null);
   const [receiptExport, setReceiptExport] = useState<ChartReceiptExport | null>(null);
   const receiptExportRef = useRef<ChartReceiptExport | null>(null);
@@ -455,6 +458,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     clearPostChartContext();
     shareRuntimeRef.current.primary = undefined;
     setChart(null);
+    setOnMeanTime(false);
     setComputedInput(null);
     setShareInput(null);
     setSignature(null);
@@ -1297,7 +1301,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setMineHandoff(input.mine ?? null);
     if (mode === 'full' && !chartActionDockModule) requestChartControls();
     try {
+      // Early dates also download the local mean time table and the zone's
+      // pinned history; the downloads run together. A rejection is observed
+      // by the loader itself.
+      const localTimeReady = prepareLocalTime(input.date, input.city.tz);
       const engine = await loadEngine();
+      if (!runIsCurrent()) return;
+      await localTimeReady;
       if (!runIsCurrent()) return;
       let receiptModule: Awaited<ReturnType<typeof loadCalculatorReceipt>> | null = null;
       if (mode === 'full') {
@@ -1310,7 +1320,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         if (!runIsCurrent()) return;
       }
       const effectiveTime = input.timeKnown ? input.time : '12:00';
-      const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
+      const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz, { longitude: input.city.lon });
       if (!input.timeKnown) {
         try {
           if (assessLocalDateReference(input.date, resolved.utc, input.city.tz).referenceStatus !== 'member') throw localDateReferenceFailure;
@@ -1350,6 +1360,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       };
       resultOwnerRef.current = owner;
       setChart(result);
+      setOnMeanTime(resolved.localMeanTime !== undefined);
       if (portable) {
         const captured: ChartReceiptExport = {
           ...owner, envelopeJson: portable.envelopeJson,
@@ -1992,8 +2003,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (!chart || !registryRecord || mode !== 'full' || sharedReceiver) return;
     if (registryBridgeImpressionChartRef.current === chart) return;
     registryBridgeImpressionChartRef.current = chart;
+    // No sign: here it is the visitor's own Sun sign, and analytics receive no
+    // birth data. Sign guides and birthday pages send the page's sign.
     trackAnalytics('registry_bridge_impression', {
-      sign: registryRecord.slug,
       surface: 'birth_chart',
       locale,
     });
@@ -2137,8 +2149,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {chart.flags.includes('dst-fold') && (
             <p class="notice" role="status">{t(locale, 'dstFoldNotice')}</p>
           )}
-          {chart.flags.includes('lmt') && (
-            <p class="notice" role="status">{t(locale, 'lmtNotice')} ({city?.tz}). <a href={localizePath(locale, '/methodology/')}>{t(locale, 'howWeCompute')}</a>.</p>
+          {(chart.flags.includes('lmt') || onMeanTime) && (
+            <p class="notice" role="status">{t(locale, 'lmtNotice')} <a href={localizePath(locale, '/methodology/')}>{t(locale, 'howWeCompute')}</a>.</p>
           )}
           {chart.flags.includes('polar-fallback') && (
             <p class="notice" role="status">{t(locale, 'polarNotice')}</p>
@@ -2632,7 +2644,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 href={`/registry/${registryRecord.slug}/`}
                 title={russianCopy?.chart.englishOnlyTitle}
                 onClick={() => trackAnalytics('registry_bridge_click', {
-                  sign: registryRecord.slug,
                   surface: 'birth_chart',
                   locale,
                 })}

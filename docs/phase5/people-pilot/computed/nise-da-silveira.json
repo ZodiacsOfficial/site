@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Maceio",
     "civilTime": "12:00",
-    "utcInstant": "1905-02-15T14:22:52.000Z",
-    "utcOffsetMinutesAtBirth": -142.8667,
-    "civilDayStartUtc": "1905-02-15T02:22:52.000Z",
-    "civilDayEndUtc": "1905-02-16T02:22:52.000Z",
+    "utcInstant": "1905-02-15T14:22:56.000Z",
+    "utcOffsetMinutesAtBirth": -142.9333,
+    "civilDayStartUtc": "1905-02-15T02:22:56.000Z",
+    "civilDayEndUtc": "1905-02-16T02:22:56.000Z",
     "latitude": -9.6658333333333,
     "longitude": -35.735,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 25.6569,
-    "degreesToNextBoundaryAtWindowEnd": 3.3337
+    "degreesInsideAtWindowStart": 25.7572,
+    "degreesToNextBoundaryAtWindowEnd": 3.2335
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.009,

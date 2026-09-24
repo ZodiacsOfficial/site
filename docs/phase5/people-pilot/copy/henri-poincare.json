@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:8.81",
+        "sun-degree:8.80",
         "decan:taurus:first"
       ],
       "text": "At the noon reference the Sun sits 8.8° into Taurus — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
@@ -25,9 +25,9 @@
       "facts": [
         "personal:Mercury:Aries:13.3°",
         "personal:Venus:Pisces:23.2°",
-        "personal:Mars:Virgo:0.4°"
+        "personal:Mars:Virgo:0.3°"
       ],
-      "text": "Day to day the chart speaks through Mercury in Aries (13.3°), Venus in Pisces (23.2°), Mars in Virgo (0.4°): thought that arrives already in motion, attraction that works by atmosphere, effort banked steadily until it tells."
+      "text": "Day to day the chart speaks through Mercury in Aries (13.3°), Venus in Pisces (23.2°), Mars in Virgo (0.3°): thought that arrives already in motion, attraction that works by atmosphere, effort banked steadily until it tells."
     },
     {
       "key": "geometry",
@@ -87,11 +87,11 @@
   },
   "substantiveFacts": [
     "element:earth:5",
-    "sun-degree:8.81",
+    "sun-degree:8.80",
     "decan:taurus:first",
     "personal:Mercury:Aries:13.3°",
     "personal:Venus:Pisces:23.2°",
-    "personal:Mars:Virgo:0.4°",
+    "personal:Mars:Virgo:0.3°",
     "aspect:Mars:Saturn:square:1.38",
     "aspect:Mars:Pluto:trine:2.03",
     "aspect:Uranus:Neptune:sextile:2.97",

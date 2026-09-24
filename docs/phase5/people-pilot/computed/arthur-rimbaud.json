@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Paris",
     "civilTime": "12:00",
-    "utcInstant": "1854-10-20T11:50:39.000Z",
-    "utcOffsetMinutesAtBirth": 9.35,
-    "civilDayStartUtc": "1854-10-19T23:50:39.000Z",
-    "civilDayEndUtc": "1854-10-20T23:50:39.000Z",
+    "utcInstant": "1854-10-20T11:41:07.000Z",
+    "utcOffsetMinutesAtBirth": 18.8833,
+    "civilDayStartUtc": "1854-10-19T23:41:07.000Z",
+    "civilDayEndUtc": "1854-10-20T23:41:07.000Z",
     "latitude": 49.772479,
     "longitude": 4.7200227,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 26.78
+    "degree": 26.77
   },
   "moon": {
     "sign": "libra",
     "signName": "Libra",
-    "degree": 9.52,
+    "degree": 9.44,
     "uncertain": false,
     "signAtCivilDayStart": "libra",
     "signAtCivilDayEnd": "libra"
@@ -43,13 +43,13 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 26.2844,
-    "degreesToNextBoundaryAtWindowEnd": 2.7199
+    "degreesInsideAtWindowStart": 26.2714,
+    "degreesToNextBoundaryAtWindowEnd": 2.7329
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.996,
-    "Moon": 13.126,
-    "Mercury": 1.277,
+    "Moon": 13.124,
+    "Mercury": 1.278,
     "Venus": 1.25,
     "Mars": 0.726,
     "Jupiter": 0.11,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 26.78,
+      "degree": 26.77,
       "retrograde": false,
       "speedPerDay": 0.9957,
       "dignity": "fall",
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 9.52,
+      "degree": 9.44,
       "retrograde": false,
-      "speedPerDay": 13.133,
+      "speedPerDay": 13.1311,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Scorpio",
       "degree": 19.07,
       "retrograde": false,
-      "speedPerDay": 1.277,
+      "speedPerDay": 1.2772,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -97,7 +97,7 @@
       "body": "Venus",
       "sign": "libra",
       "signName": "Libra",
-      "degree": 13.4,
+      "degree": 13.39,
       "retrograde": false,
       "speedPerDay": 1.2502,
       "dignity": "domicile",
@@ -108,7 +108,7 @@
       "body": "Mars",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 6.99,
+      "degree": 6.98,
       "retrograde": false,
       "speedPerDay": 0.7259,
       "dignity": null,
@@ -197,21 +197,21 @@
       "a": "Venus",
       "b": "Saturn",
       "type": "trine",
-      "orb": 2.04,
+      "orb": 2.05,
       "applying": true
     },
     {
       "a": "Mercury",
       "b": "Uranus",
       "type": "opposition",
-      "orb": 3.68,
+      "orb": 3.67,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "conjunction",
-      "orb": 3.87,
+      "orb": 3.95,
       "applying": true
     },
     {
@@ -232,28 +232,28 @@
       "a": "Sun",
       "b": "Pluto",
       "type": "opposition",
-      "orb": 6.07,
+      "orb": 6.08,
       "applying": true
     },
     {
       "a": "Venus",
       "b": "Jupiter",
       "type": "square",
-      "orb": 6.36,
+      "orb": 6.37,
       "applying": true
     },
     {
       "a": "Mars",
       "b": "Neptune",
       "type": "square",
-      "orb": 6.52,
+      "orb": 6.53,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Jupiter",
       "type": "square",
-      "orb": 7.02,
+      "orb": 7.01,
       "applying": false
     }
   ],
@@ -262,14 +262,14 @@
       "a": "Moon",
       "b": "Mars",
       "type": "sextile",
-      "orb": 2.54,
+      "orb": 2.46,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 5.91,
+      "orb": 6,
       "applying": true
     }
   ],

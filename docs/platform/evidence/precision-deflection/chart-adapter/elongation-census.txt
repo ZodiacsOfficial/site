@@ -1,0 +1,17 @@
+days with at least one body inside the floor: 24014 of 73050, 32.873 per cent
+  0 bodies inside: 49036 days (67.127 per cent)
+  1 bodies inside: 20377 days (27.895 per cent)
+  2 bodies inside: 3277 days (4.486 per cent)
+  3 bodies inside: 326 days (0.446 per cent)
+  4 bodies inside: 28 days (0.038 per cent)
+  5 bodies inside: 6 days (0.008 per cent)
+body       days<5deg   of      percent   min elongation
+Mercury        9449    73050   12.935%  0.0487 deg
+Venus          4959    73050    6.789%  0.0245 deg
+Mars           3339    73050    4.571%  0.0598 deg
+Jupiter        2386    73050    3.266%  0.1162 deg
+Saturn         2119    73050    2.901%  0.0307 deg
+Uranus         2107    73050    2.884%  0.0520 deg
+Neptune        2053    73050    2.810%  0.0186 deg
+Pluto           377    73050    0.516%  0.2422 deg
+Moon           1262    73050    1.728%  0.2300 deg

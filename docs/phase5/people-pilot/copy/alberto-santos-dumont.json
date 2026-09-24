@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:27.88",
+        "sun-degree:27.87",
         "decan:cancer:third"
       ],
       "text": "27.9° of Cancer is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
@@ -24,18 +24,18 @@
       "title": "The fast planets",
       "facts": [
         "personal:Mercury:Leo:24.1°",
-        "personal:Venus:Gemini:12.4°",
+        "personal:Venus:Gemini:12.3°",
         "personal:Mars:Scorpio:8.4°"
       ],
-      "text": "Closer in, Mercury stands at 24.1° Leo; Venus stands at 12.4° Gemini; Mars stands at 8.4° Scorpio. The tradition reads thought that arrives already in motion from Mercury, attraction that begins as conversation from Venus, effort that surges when it matters from Mars."
+      "text": "Closer in, Mercury stands at 24.1° Leo; Venus stands at 12.3° Gemini; Mars stands at 8.4° Scorpio. The tradition reads thought that arrives already in motion from Mercury, attraction that begins as conversation from Venus, effort that surges when it matters from Mars."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Neptune:square:0.66",
+        "aspect:Sun:Neptune:square:0.67",
         "aspect:Saturn:Neptune:square:0.98",
-        "aspect:Sun:Saturn:opposition:1.63"
+        "aspect:Sun:Saturn:opposition:1.64"
       ],
       "text": "Start where the chart is tightest — the Sun square Neptune, 0.7° of separation. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Saturn square Neptune at 1.0°, and the Sun opposition Saturn at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
     },
@@ -76,7 +76,7 @@
         "moon-band:12.8"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 14.1°."
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 14.0°."
     }
   ],
   "birthdayLink": {
@@ -89,14 +89,14 @@
   },
   "substantiveFacts": [
     "aspect:Sun:Neptune:square",
-    "sun-degree:27.88",
+    "sun-degree:27.87",
     "decan:cancer:third",
     "personal:Mercury:Leo:24.1°",
-    "personal:Venus:Gemini:12.4°",
+    "personal:Venus:Gemini:12.3°",
     "personal:Mars:Scorpio:8.4°",
-    "aspect:Sun:Neptune:square:0.66",
+    "aspect:Sun:Neptune:square:0.67",
     "aspect:Saturn:Neptune:square:0.98",
-    "aspect:Sun:Saturn:opposition:1.63",
+    "aspect:Sun:Saturn:opposition:1.64",
     "figure:t-square:Sun-Saturn:apex-Neptune",
     "dignity:Mars:domicile",
     "dignity:Jupiter:detriment",

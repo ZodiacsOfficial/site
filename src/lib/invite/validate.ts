@@ -1,6 +1,7 @@
 import {
   decodePositionsLink,
   encodePositionsLink,
+  encodeSharedPositionsLink,
   POSITION_BODY_ORDER,
   type PositionsShareChart,
 } from '../share-positions.js';
@@ -151,7 +152,12 @@ export function positionsFromStored(value: unknown): PositionsShareChart | null 
   return token ? decodePositionsLink(token) : null;
 }
 
-/** Derives the invitation payload from an RLS-owned synchronized chart row. */
+/**
+ * Derives the invitation payload from an RLS-owned synchronized chart row.
+ * The invitee receives these positions, so ASC and MC are kept only to the
+ * whole degree, as in every other code that leaves the device. Invitations
+ * stored before this change keep their angles until they expire.
+ */
 export function deriveInviteChartFromSyncedPayload(value: unknown): InviteDerivedChart | null {
   const chart = record(value);
   const summary = record(chart?.summary);
@@ -171,8 +177,8 @@ export function deriveInviteChartFromSyncedPayload(value: unknown): InviteDerive
     angles: timeKnown ? summary.angles : null,
     houseSystem: summary.houseSystem,
     engineVersion: summary.engineVersion,
-  } as Parameters<typeof encodePositionsLink>[0];
-  const token = encodePositionsLink(input);
+  } as Parameters<typeof encodeSharedPositionsLink>[0];
+  const token = encodeSharedPositionsLink(input);
   const positions = token ? decodePositionsLink(token) : null;
   const sun = positions?.bodies.find((body) => body.body === 'Sun');
   if (!label || !positions || !sun || (timeKnown !== (positions.angles !== null))) return null;

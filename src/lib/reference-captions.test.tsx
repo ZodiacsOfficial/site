@@ -10,7 +10,7 @@ import { shareCardText } from './share-card-copy';
 import { buildSceneModel } from './scene/build';
 import { decodePositionsLink, encodePositionsLink } from './share-positions';
 import { t, type CatalogLocale } from './i18n';
-import { previewModel } from '../server/chart-preview-model';
+import { previewModel, previewPlacementsFromToken } from '../server/chart-preview-model';
 import en from './i18n/ui/en'; import es from './i18n/ui/es'; import fr from './i18n/ui/fr';
 import itUi from './i18n/ui/it'; import pt from './i18n/ui/pt'; import ru from './i18n/ui/ru';
 
@@ -69,11 +69,11 @@ describe('reference caption output contracts', () => {
     const decoded = decodePositionsLink(token)!;
     expect(Object.keys(decoded)).toEqual(['bodies', 'angles', 'houseSystem', 'engineVersion']);
     expect(decoded.angles).toBeNull();
-    const model = previewModel(token)!;
+    const model = previewModel(previewPlacementsFromToken(token)!);
     expect(model.settings).toBe('Reference positions / No houses / Tropical');
     expect(model.placements).toEqual([
-      { label: 'Sun', sign: 'Capricorn', hue: '#C0DEA8', degree: '24 deg 33 min' },
-      { label: 'Moon', sign: 'Taurus', hue: '#B9D4BE', degree: '5 deg 25 min' },
+      { label: 'Sun', sign: 'Capricorn', hue: '#C0DEA8', degree: '24 deg' },
+      { label: 'Moon', sign: 'Taurus', hue: '#B9D4BE', degree: '5 deg' },
     ]);
   });
 

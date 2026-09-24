@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import * as actualEngine from '../lib/engine/full';
 import * as actualReceipt from '../lib/engine/calculator-receipt';
-import { localDateContainsUtc, resolveLocalToUtc } from '../lib/time/localToUtc';
+import { localDateContainsUtc, prepareLocalTime, resolveLocalToUtc } from '../lib/time/localToUtc';
 import { assessLocalDateReference } from '../lib/time/local-date-reference';
 import { moonCandidates, moonIsUncertain, moonLabel } from '../lib/moon-certainty';
 import { signForLongitude } from '../lib/signs';
@@ -54,7 +54,7 @@ function capture(value: ReturnType<typeof input>, mode = 'full', fallback = fals
     resolved: ReturnType<typeof resolveLocalToUtc>; nextMoonAmbiguous: boolean; nextRegistryRecordSlug: string | null; calls: typeof calls };
 }
 function reference(value: ReturnType<typeof input>) {
-  const resolved = resolveLocalToUtc(value.date, value.timeKnown ? value.time : '12:00', value.city.tz);
+  const resolved = resolveLocalToUtc(value.date, value.timeKnown ? value.time : '12:00', value.city.tz, { longitude: value.city.lon });
   return actualReceipt.computeCalculatorReceipt({ utc: resolved.utc, latitude: value.city.lat, longitude: value.city.lon,
     houseSystem: 'whole', timeKnown: value.timeKnown, flags: resolved.flags }, {
     date: value.date, time: value.timeKnown ? value.time : '12:00', timeZone: value.city.tz,
@@ -74,6 +74,9 @@ const controls = [
 ] as const;
 
 describe('ChartCalculator reference confidence', () => {
+  // The calculator awaits this before its calculation block, which runs here alone.
+  beforeAll(() => Promise.all(['America/Toronto', 'America/Juneau', 'Pacific/Apia', 'Asia/Bangkok', 'Europe/London', 'Australia/Lord_Howe']
+    .map((zone) => prepareLocalTime('1800-01-01', zone))));
   it.each(['complete', 'unavailable', 'failed'] as const)('keeps reference receipt bytes and unverified signs with %s date coverage', state => {
     const value = input('1990-06-15', 'UTC'), expected = reference(value);
     const provider = state === 'unavailable' ? null : {
@@ -142,6 +145,19 @@ describe('ChartCalculator reference confidence', () => {
     expect(signForLongitude(actualEngine.bodyLongitude('Moon', new Date(instant))).slug).toBe(memberSign);
     expect(signForLongitude(actual.result.bodies.find(row => row.body === 'Moon')!.lon).slug).toBe(referenceSign);
     expect(moonCandidates(actual.result)).toEqual([]);
+  });
+
+  it.each([
+    ['1867-10-18', 'America/Juneau', '1867-10-17T20:57:41.000Z', ['lmt']],
+    ['1892-07-04', 'Pacific/Apia', '1892-07-03T23:26:56.000Z', ['dst-fold', 'lmt']],
+  ])('keeps the zone clock for %s in %s, hours from the synthetic longitude', (date, zone, instant, flags) => {
+    // Toronto's longitude is outside the bound on a birthplace's departure
+    // from the zone's mean time, so these controls keep the zone's clock.
+    const actual = capture(input(date, zone));
+    expect(actual.resolved).toEqual(resolveLocalToUtc(date, '12:00', zone));
+    expect(actual.resolved.utc.toISOString()).toBe(instant);
+    expect(actual.resolved.flags).toEqual(flags);
+    expect(actual.resolved.localMeanTime).toBeUndefined();
   });
 
   it.each(['full', 'moon', 'rising'])('preserves known-time numerical, receipt and confidence behavior in %s mode', mode => {

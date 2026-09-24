@@ -35,7 +35,8 @@ const CONSUMER = `// A consumer that has only the published archive: no reposito
 // tree, no dev dependencies. Every import is by package specifier.
 import { openPackFromBytes, isProven } from '@zodiacs/precision-alpha';
 import {
-  experimental, EXPERIMENTAL, ABERRATED_CONTRACT, OF_DATE_CONTRACT, OF_DATE_MODEL_RANGE_TDB_SEC,
+  experimental, EXPERIMENTAL, ABERRATED_CONTRACT, OF_DATE_CONTRACT, DEFLECTED_CONTRACT,
+  OF_DATE_MODEL_RANGE_TDB_SEC, PARTITION_CONTRACT_ID, PARTITION_DEFAULTS,
 } from '@zodiacs/precision-alpha/experimental';
 import { buildSyntheticPack, SYNTHETIC } from '@zodiacs/precision-alpha/examples/synthetic-pack.mjs';
 
@@ -51,12 +52,49 @@ const aberrated = x.searchRetardedAberrated(spec);
 // measured from a different origin, so the same number asks a different
 // question -- which is the point of reporting both frames below.
 const ofDate = x.searchRetardedAberratedOfDate(spec);
+// The deflected rung, twice. Once on a window that never approaches the
+// Sun, where it answers completely, and once on a one-day window round the
+// fixture's fast companion, which crosses the five-degree floor three
+// times. A consumer that can only see the first has not seen the thing
+// this rung does differently from every rung below it.
+const deflected = x.searchRetardedAberratedDeflectedOfDate(spec);
+const declining = x.searchRetardedAberratedDeflectedOfDate({
+  body: SYNTHETIC.longCase.body, targetDeg: SYNTHETIC.longCase.targetDeg,
+  fromTdbSec: -86400, toTdbSec: 86400,
+});
+// The partitioned path, through the archive: plan once, answer two
+// longitudes over the same plan, and refuse a plan that is not about this
+// request. A consumer that can install the package but cannot reach the
+// plan has not got the thing this rung added.
+const plan = x.planDeflectedDomain({
+  body: SYNTHETIC.longCase.body, fromTdbSec: -86400, toTdbSec: 86400,
+});
+const overPlanA = x.searchRetardedAberratedDeflectedOfDateOverPlan({
+  body: SYNTHETIC.longCase.body, targetDeg: SYNTHETIC.longCase.targetDeg,
+  fromTdbSec: -86400, toTdbSec: 86400, plan,
+});
+const overPlanB = x.searchRetardedAberratedDeflectedOfDateOverPlan({
+  body: SYNTHETIC.longCase.body, targetDeg: (SYNTHETIC.longCase.targetDeg + 180) % 360,
+  fromTdbSec: -86400, toTdbSec: 86400, plan,
+});
+let wrongPlanCode = null;
+try {
+  x.searchRetardedAberratedDeflectedOfDateOverPlan({
+    body: SYNTHETIC.longCase.body, targetDeg: SYNTHETIC.longCase.targetDeg,
+    fromTdbSec: -86400, toTdbSec: 43200, plan,
+  });
+} catch (error) { wrongPlanCode = error.code; }
+
 let afterDispose = null;
 let afterDisposeOfDate = null;
+let afterDisposeDeflected = null;
+let afterDisposePlan = null;
 x.dispose();
 rt.dispose();
 try { x.searchRetardedAberrated(spec); } catch (error) { afterDispose = error.code; }
 try { x.searchRetardedAberratedOfDate(spec); } catch (error) { afterDisposeOfDate = error.code; }
+try { x.searchRetardedAberratedDeflectedOfDate(spec); } catch (error) { afterDisposeDeflected = error.code; }
+try { x.planDeflectedDomain({ body: 'Mars', fromTdbSec: -86400, toTdbSec: 86400 }); } catch (error) { afterDisposePlan = error.code; }
 process.stdout.write(JSON.stringify({
   modes: EXPERIMENTAL.modes,
   resultContract: aberrated.contract,
@@ -95,6 +133,80 @@ process.stdout.write(JSON.stringify({
     externalTimeModelBounded: ofDate.uncertainty.timeScale.externalTimeModel.bounded,
     notAppliedCount: ofDate.diagnostics.notApplied.length,
     afterDispose: afterDisposeOfDate,
+  },
+  deflected: {
+    mode: deflected.mode,
+    frame: deflected.request.frame,
+    contractFrame: DEFLECTED_CONTRACT.frame,
+    declaredFloorDeg: EXPERIMENTAL.restrictedDomain.floor,
+    floorRad: x.deflectionMinElongationRad,
+    // Away from the Sun: complete, and the deflection applied.
+    established: deflected.completeness.established,
+    isProvenNarrows: isProven(deflected),
+    found: deflected.eventCount.found,
+    isExactTotal: deflected.eventCount.isExactTotal,
+    excluded: deflected.accounting.excluded.length,
+    appliedToThisBody: deflected.diagnostics.deflection.appliedToThisBody,
+    everyCellEvaluationDeflected: deflected.diagnostics.deflection.everyCellEvaluationDeflected,
+    widestDeflectionArcsec: deflected.diagnostics.deflection.widestDeflectionArcsec,
+    widestIsAnEnclosureUpperBound:
+      deflected.diagnostics.deflection.widestDeflectionIsAnEnclosureUpperBound,
+    deflectionShiftSec: deflected.events[0] && ofDate.events[0]
+      ? deflected.events[0].tdbSec - ofDate.events[0].tdbSec : null,
+    notAppliedCount: deflected.diagnostics.notApplied.length,
+    afterDispose: afterDisposeDeflected,
+    // Across the floor: a lower bound, and it must say so in three places.
+    declining: {
+      established: declining.completeness.established,
+      isProvenNarrows: isProven(declining),
+      found: declining.eventCount.found,
+      isExactTotal: declining.eventCount.isExactTotal,
+      excluded: declining.accounting.excluded.length,
+      unresolved: declining.accounting.unresolved.length,
+      decidedSpans: (declining.interval.decidedTdbSec ?? []).length,
+      decidedFraction: declining.interval.decidedFraction,
+      allIntervalsAccountedFor: declining.accounting.allIntervalsAccountedFor,
+    },
+  },
+  partitioned: {
+    declaredPlanContract: EXPERIMENTAL.partitioned.planContract,
+    declaredSearchContract: EXPERIMENTAL.partitioned.searchContract,
+    defaultBoundaryToleranceSec: PARTITION_DEFAULTS.boundaryToleranceSec,
+    planContract: plan.contract,
+    planContractId: PARTITION_CONTRACT_ID,
+    // Without a digest a plan must SAY its identity is the weaker kind.
+    identityStrength: plan.request.identityStrength,
+    planEvaluations: plan.execution.evaluations,
+    admissible: plan.admissible.length,
+    excluded: plan.excluded.length,
+    boundary: plan.boundary.length,
+    unprocessed: plan.unprocessed.length,
+    searchContract: overPlanA.contract,
+    mode: overPlanA.mode,
+    // The same plan, two longitudes: reused both times, and it cost
+    // nothing the second time.
+    reusedA: overPlanA.execution.partitionReused,
+    reusedB: overPlanB.execution.partitionReused,
+    partitionEvaluationsA: overPlanA.execution.partitionEvaluations,
+    partitionEvaluationsB: overPlanB.execution.partitionEvaluations,
+    foundA: overPlanA.events.length,
+    foundB: overPlanB.events.length,
+    // The two claims, which are different claims.
+    overRequest: overPlanA.completeness.overRequest,
+    overRequestWhyNot: overPlanA.completeness.overRequestWhyNot,
+    exhaustiveOverAdmissible: overPlanA.completeness.exhaustiveOverAdmissible,
+    mayHoldUnfoundSupportedEvents: overPlanA.completeness.mayHoldUnfoundSupportedEvents,
+    isExactTotalOverRequest: overPlanA.eventCount.isExactTotalOverRequest,
+    coversRequestExactly: overPlanA.accounting.coversRequestExactly,
+    eligibilities: [...new Set(overPlanA.events.map((e) => e.eligibility))].sort(),
+    positionsFrom: [...new Set(overPlanA.events.map((e) => e.positionFrom))].sort(),
+    // A plan handed to a different request must be refused, not recomputed.
+    wrongPlanCode,
+    afterDispose: afterDisposePlan,
+    // The migration note is part of the surface: a consumer swapping to
+    // this contract needs to be told which fields moved.
+    migrationFieldsThatMove: EXPERIMENTAL.partitioned.migration.fieldsThatMove.length,
+    migrationNewPerEventFields: EXPERIMENTAL.partitioned.migration.newPerEventFields.length,
   },
 }));
 `;
@@ -155,6 +267,60 @@ if (o.timeScaleKeys.join(',') !== 'conversionApproximation,externalTimeModel,imp
 if (o.externalTimeModelBounded !== false) problems.push('the external time model is reported as bounded, which it is not');
 if (!(o.conversionInducedLongitudeArcsec > 0)) problems.push('the conversion contribution is not reported in longitude');
 if (o.afterDispose !== 'disposed') problems.push(`after dispose the of-date error code was ${o.afterDispose}`);
+
+// The deflected rung, and specifically the part of it no earlier rung has:
+// a restricted domain, and a result that must say so rather than hand back
+// a short list as if it were a total.
+const g = c.deflected;
+if (g.mode !== 'validated-retarded-aberrated-deflected-of-date') problems.push(`deflected mode is ${g.mode}`);
+if (g.frame !== g.contractFrame) problems.push('the deflected result frame and the exported contract disagree');
+if (g.frame !== o.frame) problems.push('the deflection moved the frame, which it must not');
+if (Math.abs(g.floorRad - (5 * Math.PI) / 180) > 1e-15) problems.push(`the floor reads ${g.floorRad} rad`);
+if (g.established !== true || g.isProvenNarrows !== true) problems.push('the deflected rung did not establish completeness away from the Sun');
+if (g.isExactTotal !== true || g.found !== 1 || g.excluded !== 0) problems.push(`away from the Sun: found ${g.found}, exact ${g.isExactTotal}, excluded ${g.excluded}`);
+if (g.appliedToThisBody !== true) problems.push('the deflection was not applied to a body that is not the Sun');
+if (g.everyCellEvaluationDeflected !== true) problems.push('some cell evaluations in the deflected run were not deflected');
+if (!(g.widestDeflectionArcsec > 0)) problems.push('the deflected run reports no deflection at all');
+if (g.widestIsAnEnclosureUpperBound !== true) problems.push('the widest deflection is not labelled as an enclosure bound');
+if (!(Math.abs(g.deflectionShiftSec) > 0)) problems.push('the deflection moved the crossing by nothing, so nothing was demonstrated');
+if (g.afterDispose !== 'disposed') problems.push(`after dispose the deflected error code was ${g.afterDispose}`);
+
+const dec = g.declining;
+if (!(dec.excluded > 0)) problems.push('the conjunction-crossing window excluded nothing, so the restricted domain never fired through the archive');
+if (dec.established !== false) problems.push('a window with excluded spans claimed established completeness');
+if (dec.isProvenNarrows !== false) problems.push('isProven narrowed a result that excluded part of its request');
+if (dec.isExactTotal !== false) problems.push('a window with excluded spans claimed an exact total');
+if (dec.allIntervalsAccountedFor !== false) problems.push('a window with excluded spans claimed every interval was accounted for');
+if (!(dec.found > 0)) problems.push('the declining window found nothing, so its lower bound demonstrates nothing');
+if (!(dec.decidedSpans > 1)) problems.push(`the declining window reports ${dec.decidedSpans} decided span(s); the part the event list IS exhaustive over must be published`);
+if (!(dec.decidedFraction > 0 && dec.decidedFraction < 1)) problems.push(`decidedFraction is ${dec.decidedFraction}, which does not describe a partly decided window`);
+
+// The partitioned path, which is a DIFFERENT contract and must not be
+// readable as if it were the released one.
+const pt = c.partitioned;
+if (pt.planContract !== pt.declaredPlanContract) problems.push(`the plan returns ${pt.planContract} and the surface declares ${pt.declaredPlanContract}`);
+if (pt.planContract !== pt.planContractId) problems.push('the exported contract id and the plan disagree');
+if (pt.searchContract !== pt.declaredSearchContract) problems.push(`the partitioned search returns ${pt.searchContract} and the surface declares ${pt.declaredSearchContract}`);
+if (pt.searchContract === c.resultContract) problems.push('the partitioned result claims the released search contract, which a consumer would then read with the wrong fields');
+if (pt.mode !== `${g.mode}-over-partition`) problems.push(`the partitioned mode is ${pt.mode}`);
+if (pt.identityStrength !== 'structure-only') problems.push(`a plan built without a pack digest reports identityStrength ${pt.identityStrength}, which overstates what it can tell apart`);
+if (!(pt.defaultBoundaryToleranceSec > 0)) problems.push('the boundary tolerance default is not published');
+if (!(pt.admissible > 0)) problems.push('the plan proved nothing admissible, so nothing was demonstrated');
+if (!(pt.boundary > 0)) problems.push('the plan left no boundary span on a window that crosses the floor three times');
+if (pt.unprocessed !== 0) problems.push(`the plan left ${pt.unprocessed} unprocessed span(s) on a request it finished`);
+if (pt.reusedA !== true || pt.reusedB !== true) problems.push('a supplied plan was rebuilt instead of reused');
+if (pt.partitionEvaluationsA !== 0 || pt.partitionEvaluationsB !== 0) problems.push('a reused plan was charged for partitioning');
+if (!(pt.foundA > 0)) problems.push('the partitioned search found nothing, so its claims demonstrate nothing');
+if (pt.overRequest !== false) problems.push('a request with a boundary span claimed completeness over the request');
+if (typeof pt.overRequestWhyNot !== 'string' || pt.overRequestWhyNot.length === 0) problems.push('a result that declines completeness does not say why');
+if (pt.isExactTotalOverRequest !== false) problems.push('a request with a boundary span claimed an exact total over the request');
+if (pt.mayHoldUnfoundSupportedEvents !== true) problems.push('a result with boundary spans did not warn that supported events may still be unfound');
+if (pt.coversRequestExactly !== true) problems.push('the four classes do not tile the request');
+if (pt.wrongPlanCode !== 'unsupported-option') problems.push(`a plan for a different window was answered with ${pt.wrongPlanCode} instead of a refusal`);
+if (pt.afterDispose !== 'disposed') problems.push(`after dispose the plan error code was ${pt.afterDispose}`);
+if (!(pt.migrationFieldsThatMove >= 4)) problems.push('the migration note does not name the fields that move');
+if (!(pt.migrationNewPerEventFields >= 2)) problems.push('the migration note does not name the new per-event fields');
+
 record.passed = problems.length === 0;
 record.problems = problems;
 

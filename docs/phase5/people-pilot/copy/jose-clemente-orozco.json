@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:1.17",
+        "sun-degree:1.18",
         "decan:sagittarius:first"
       ],
       "text": "The Sun's position resolves to 1.2° Sagittarius — deep enough in the first decan (0°–10°) that Jupiter, its traditional sub-ruler, colours the reading."
@@ -32,11 +32,11 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Venus:Mars:trine:0.31",
-        "aspect:Mercury:Pluto:opposition:0.46",
-        "aspect:Sun:Pluto:opposition:0.96"
+        "aspect:Venus:Mars:trine:0.32",
+        "aspect:Mercury:Pluto:opposition:0.44",
+        "aspect:Sun:Pluto:opposition:0.97"
       ],
-      "text": "The day's firmest angle joins Venus and Mars — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mercury opposition Pluto at 0.5°, and the Sun opposition Pluto at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+      "text": "The day's firmest angle joins Venus and Mars — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mercury opposition Pluto at 0.4°, and the Sun opposition Pluto at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
     },
     {
       "key": "figures",
@@ -86,13 +86,13 @@
   },
   "substantiveFacts": [
     "aspect:Venus:Mars:trine",
-    "sun-degree:1.17",
+    "sun-degree:1.18",
     "decan:sagittarius:first",
     "personal:Venus:Sagittarius:17.4°",
     "personal:Mars:Leo:17.1°",
-    "aspect:Venus:Mars:trine:0.31",
-    "aspect:Mercury:Pluto:opposition:0.46",
-    "aspect:Sun:Pluto:opposition:0.96",
+    "aspect:Venus:Mars:trine:0.32",
+    "aspect:Mercury:Pluto:opposition:0.44",
+    "aspect:Sun:Pluto:opposition:0.97",
     "figure:none",
     "dignity:none",
     "elements:fire4-air2-earth2",

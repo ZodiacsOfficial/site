@@ -31,7 +31,7 @@ export function renderAgentGuide(
     `- ${CONVENTIONS.signs}`,
     `- ${CONVENTIONS.engine}`,
     `- ${CONVENTIONS.versioning}`,
-    '- Coordinates are geocentric and tropical. There are no houses, no aspects to the Moon, no asteroids, and no birth-chart calculations here; those stay on the visitor\'s device in the calculators at ' + API_ORIGIN + '/tools/.',
+    '- Coordinates are geocentric and tropical. There are no houses, no aspects to the Moon, and no birth-chart calculations here; those stay on the visitor\'s device in the calculators at ' + API_ORIGIN + '/tools/. The site computes no asteroids.',
     '',
     '## Endpoints',
     '',

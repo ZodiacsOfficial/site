@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "America/Chihuahua",
     "civilTime": "12:00",
-    "utcInstant": "1896-12-29T19:04:20.000Z",
-    "utcOffsetMinutesAtBirth": -424.3333,
-    "civilDayStartUtc": "1896-12-29T07:04:20.000Z",
-    "civilDayEndUtc": "1896-12-30T07:04:20.000Z",
+    "utcInstant": "1896-12-29T19:04:18.000Z",
+    "utcOffsetMinutesAtBirth": -424.3,
+    "civilDayStartUtc": "1896-12-29T07:04:18.000Z",
+    "civilDayEndUtc": "1896-12-30T07:04:18.000Z",
     "latitude": 28.636944444444445,
     "longitude": -106.07694444444445,
     "coordinateEscalationSteps": 0,
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 7.8336,
-    "degreesToNextBoundaryAtWindowEnd": 21.1469
+    "degreesInsideAtWindowStart": 8.134,
+    "degreesToNextBoundaryAtWindowEnd": 20.8465
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.02,

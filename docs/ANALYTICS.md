@@ -132,8 +132,8 @@ New directive code uses the taxonomy above.
 | `today_view` | — | The today brief renders |
 | `calendar_subscribe` | — | A transit calendar is subscribed |
 | `wing_entry` | `source` | Legacy astrology-to-Registry click taxonomy |
-| `registry_bridge_impression` | `sign`, `surface`, `locale` | An eligible chart, birthday, or sign-guide Registry bridge renders |
-| `registry_bridge_click` | `sign`, `surface`, `locale` | A visitor follows that Registry bridge |
+| `registry_bridge_impression` | `sign`, `surface`, `locale` | An eligible chart, birthday, or sign-guide Registry bridge renders. The birth chart's bridge sends no `sign`: it is the visitor's own Sun sign |
+| `registry_bridge_click` | `sign`, `surface`, `locale` | A visitor follows that Registry bridge; again no `sign` from the birth chart |
 
 Registry bridge properties are closed, aggregate dimensions only: one of the
 twelve sign slugs, `birth_chart` / `birthday` / `sign_guide`, and a released UI

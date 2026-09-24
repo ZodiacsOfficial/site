@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:7.80",
+        "sun-degree:7.81",
         "decan:sagittarius:first"
       ],
       "text": "The Sun's position resolves to 7.8° Sagittarius — deep enough in the first decan (0°–10°) that Jupiter, its traditional sub-ruler, colours the reading."
@@ -33,7 +33,7 @@
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Saturn:Neptune:trine:0.51",
+        "aspect:Saturn:Neptune:trine:0.52",
         "aspect:Mars:Pluto:trine:0.68",
         "aspect:Jupiter:Saturn:square:0.99"
       ],
@@ -76,7 +76,7 @@
         "moon-band:12.5"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 9.9°."
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.0°."
     }
   ],
   "birthdayLink": {
@@ -89,12 +89,12 @@
   },
   "substantiveFacts": [
     "aspect:Mars:Pluto:trine",
-    "sun-degree:7.80",
+    "sun-degree:7.81",
     "decan:sagittarius:first",
     "personal:Mercury:Sagittarius:4.5°",
     "personal:Venus:Capricorn:22.1°",
     "personal:Mars:Libra:29.0°",
-    "aspect:Saturn:Neptune:trine:0.51",
+    "aspect:Saturn:Neptune:trine:0.52",
     "aspect:Mars:Pluto:trine:0.68",
     "aspect:Jupiter:Saturn:square:0.99",
     "figure:none",

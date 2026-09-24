@@ -379,6 +379,10 @@ proven barycentric Moon inside 0.2 km.
 - **Nothing about licensing.** JPL ephemerides are public-domain US Government
   work, but `swiss-benchmark/NEXT.md` gate 1 is unanswered and this track did
   not answer it. No coefficient data should ship until it is.
+  *Correction, 2026-09-23:* the first clause is wrong. NAIF grants a
+  permission with conditions and does not use the words "public domain";
+  `../RIGHTS.md` has the primary text (the engine audit,
+  data-toolchain-packaging-13).
 
 ## 12. The single highest-value next change
 

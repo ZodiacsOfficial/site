@@ -11,11 +11,11 @@ const faq = [
   },
   {
     q: 'Mi serve l’ora di nascita per conoscere il segno lunare?',
-    a: 'In genere no: la Luna resta circa due giorni e mezzo in ogni segno, quindi nella maggior parte delle giornate ne occupa uno solo. Tuttavia cambia segno ogni 60 ore circa; nei giorni di transizione l’ora conta. Il calcolatore ti avvisa chiaramente se la tua data cade in uno di questi giorni.',
+    a: 'In genere no: la Luna resta circa due giorni e mezzo in ogni segno, quindi nella maggior parte delle giornate ne occupa uno solo. Tuttavia cambia segno ogni 60 ore circa; nei giorni di transizione l’ora conta. Senza un’ora, questo calcolatore mostra un risultato di riferimento e segnala il segno lunare come non verificato invece di tirare a indovinare.',
   },
   {
     q: 'Perché un altro sito mi ha dato un segno lunare diverso?',
-    a: 'Quasi sempre dipende da un problema di fuso orario: alcuni calcolatori convertono male l’ora di nascita, soprattutto per date antiche o luoghi che hanno cambiato orario nel tempo. Qui usiamo la cronologia IANA disponibile nel browser o nel sistema del dispositivo, compresa l’ora locale precedente alla standardizzazione quando quei dati la includono, e mostriamo l’istante UTC calcolato perché tu possa verificarlo.',
+    a: 'Spesso la causa è una differenza di fuso orario, soprattutto per date antiche o luoghi che hanno cambiato orario nel tempo. Questo calcolatore usa una versione fissata della cronologia oraria IANA per le nascite prima del 1970 e, da allora, la cronologia IANA/ICU fornita dal browser o dal sistema del dispositivo, e mostra l’istante UTC calcolato perché tu possa verificarlo.',
   },
   {
     q: 'Sole, Luna e ascendente: qual è la differenza?',

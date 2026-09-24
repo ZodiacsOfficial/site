@@ -1,0 +1,49 @@
+{
+  "source": {
+    "file": "finals2000A.all",
+    "publisher": "IERS Rapid Service/Prediction Centre (Bulletin A, IAU 2000A)",
+    "retrieved": "2026-09-22",
+    "sha256": "c672540e026d3cd4840c0858d4ce2bc4a18c3bc9751f9636c3285e11950d58a1"
+  },
+  "taiMinusUtcSeconds": 37,
+  "formula": {
+    "function": "DeltaT_EspenakMeeus",
+    "package": "astronomy-engine",
+    "version": "2.1.19"
+  },
+  "moonArcsecondsPerSecond": 0.549,
+  "values": [
+    {
+      "date": "2017-08-21",
+      "ut1MinusUtcFlag": "I",
+      "observedSeconds": 68.844,
+      "formulaSeconds": 70.32,
+      "differenceSeconds": 1.476,
+      "moonArcseconds": 0.81
+    },
+    {
+      "date": "2020-01-01",
+      "ut1MinusUtcFlag": "I",
+      "observedSeconds": 69.361,
+      "formulaSeconds": 71.578,
+      "differenceSeconds": 2.216,
+      "moonArcseconds": 1.22
+    },
+    {
+      "date": "2024-04-08",
+      "ut1MinusUtcFlag": "I",
+      "observedSeconds": 69.2,
+      "formulaSeconds": 74.007,
+      "differenceSeconds": 4.807,
+      "moonArcseconds": 2.64
+    },
+    {
+      "date": "2026-09-22",
+      "ut1MinusUtcFlag": "P",
+      "observedSeconds": 69.196,
+      "formulaSeconds": 75.497,
+      "differenceSeconds": 6.301,
+      "moonArcseconds": 3.46
+    }
+  ]
+}

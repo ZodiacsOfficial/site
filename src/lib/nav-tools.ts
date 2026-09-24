@@ -211,7 +211,7 @@ export const TOOL_CATALOG: readonly ToolCatalogEntry[] = [
   },
   {
     href: '/void-of-course-moon/',
-    hub: { order: 19, title: 'Void-of-course Moon', promise: 'Every void this month and next, to the minute, with the aspect that starts it.', hue: 'var(--sign-cancer)', kind: 'moonphase', group: 'sky' },
+    hub: { order: 19, title: 'Void-of-course Moon', promise: 'Every void this month and the next two, to the minute, with the aspect that starts it.', hue: 'var(--sign-cancer)', kind: 'moonphase', group: 'sky' },
   },
   {
     href: '/full-moon-calendar/',

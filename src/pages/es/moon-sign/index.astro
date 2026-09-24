@@ -11,11 +11,11 @@ const faq = [
   },
   {
     q: '¿Necesito mi hora de nacimiento para saber mi signo lunar?',
-    a: 'Normalmente no: la Luna permanece unos dos días y medio en cada signo, así que la mayoría de los días solo ocupa uno. Sin embargo, cambia de signo aproximadamente cada 60 horas, por lo que la hora sí importa en los días de transición. La calculadora te avisa con claridad si tu fecha es una de esas.',
+    a: 'Normalmente no: la Luna permanece unos dos días y medio en cada signo, así que la mayoría de los días solo ocupa uno. Sin embargo, cambia de signo aproximadamente cada 60 horas, por lo que la hora sí importa en los días de transición. Sin una hora, esta calculadora muestra un resultado de referencia y marca el signo lunar como no verificado en lugar de adivinar.',
   },
   {
     q: '¿Por qué otra página me dio un signo lunar diferente?',
-    a: 'Casi siempre se debe a un problema de zona horaria: algunas calculadoras convierten mal la hora de nacimiento, sobre todo en fechas antiguas o lugares con cambios históricos de reloj. Aquí usamos el historial IANA disponible en el navegador o sistema del dispositivo, incluido el tiempo local anterior a la estandarización cuando esos datos lo incluyen, y mostramos el instante UTC calculado para que puedas comprobarlo.',
+    a: 'A menudo la causa es una diferencia de zona horaria, sobre todo en fechas antiguas o lugares con cambios históricos de reloj. Esta calculadora usa una versión fijada del historial horario IANA para los nacimientos anteriores a 1970 y, desde entonces, el historial IANA/ICU suministrado por el navegador o el sistema del dispositivo, y muestra el instante UTC calculado para que puedas comprobarlo.',
   },
   {
     q: 'Sol, Luna y ascendente: ¿cuál es la diferencia?',

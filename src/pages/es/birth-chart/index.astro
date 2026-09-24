@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: '¿Qué tan precisa es esta calculadora?',
-    a: 'Las posiciones planetarias se calculan con un motor astronómico y se comparan con datos de referencia de NASA JPL, con un margen de unas centésimas de grado. Los cambios horarios históricos, incluida la hora media local anterior a 1922 cuando está disponible, se resuelven con el historial IANA suministrado por el navegador o el sistema del dispositivo.',
+    a: 'Las posiciones planetarias se calculan con un motor astronómico y se comparan con datos de referencia de NASA JPL, con un margen de unas centésimas de grado. Los cambios horarios históricos desde 1970 se resuelven con el historial IANA suministrado por el navegador o el sistema del dispositivo, y los anteriores con una versión fijada de la base de datos IANA, incluidos los registros antiguos que guarda aparte para lugares cuyos relojes coincidieron después con los de otra ciudad, que sus responsables consideran menos fiables. Un nacimiento anterior a que su lugar adoptara una hora legal usa la hora media local del propio lugar de nacimiento.',
   },
   {
     q: '¿Qué ocurre con mis datos de nacimiento?',

@@ -14,7 +14,7 @@
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:26.78",
+        "sun-degree:26.77",
         "decan:libra:third"
       ],
       "text": "The Sun sits at 26.8° Libra — the third decan, 20°–30°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood."
@@ -76,7 +76,7 @@
         "moon-band:13.1"
       ],
       "uncertain": false,
-      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 9.5°."
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 9.4°."
     }
   ],
   "birthdayLink": {
@@ -89,7 +89,7 @@
   },
   "substantiveFacts": [
     "aspect:Mercury:Jupiter:sextile",
-    "sun-degree:26.78",
+    "sun-degree:26.77",
     "decan:libra:third",
     "personal:Mercury:Scorpio:19.1°",
     "personal:Venus:Libra:13.4°",

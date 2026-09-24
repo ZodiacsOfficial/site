@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Rome",
     "civilTime": "12:00",
-    "utcInstant": "1792-02-29T11:10:04.000Z",
-    "utcOffsetMinutesAtBirth": 49.9333,
-    "civilDayStartUtc": "1792-02-28T23:10:04.000Z",
-    "civilDayEndUtc": "1792-02-29T23:10:04.000Z",
+    "utcInstant": "1792-02-29T11:08:21.000Z",
+    "utcOffsetMinutesAtBirth": 51.65,
+    "civilDayStartUtc": "1792-02-28T23:08:21.000Z",
+    "civilDayEndUtc": "1792-02-29T23:08:21.000Z",
     "latitude": 43.91015,
     "longitude": 12.9133,
     "coordinateEscalationSteps": 0,
@@ -35,7 +35,7 @@
   "moon": {
     "sign": "gemini",
     "signName": "Gemini",
-    "degree": 6.78,
+    "degree": 6.77,
     "uncertain": false,
     "signAtCivilDayStart": "gemini",
     "signAtCivilDayEnd": "gemini"
@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 10.1659,
-    "degreesToNextBoundaryAtWindowEnd": 18.8321
+    "degreesInsideAtWindowStart": 10.1299,
+    "degreesToNextBoundaryAtWindowEnd": 18.868
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.002,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 6.78,
+      "degree": 6.77,
       "retrograde": false,
-      "speedPerDay": 11.935,
+      "speedPerDay": 11.9351,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -88,7 +88,7 @@
       "signName": "Aquarius",
       "degree": 19.46,
       "retrograde": false,
-      "speedPerDay": 1.4957,
+      "speedPerDay": 1.4956,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -130,7 +130,7 @@
       "body": "Saturn",
       "sign": "aries",
       "signName": "Aries",
-      "degree": 16.83,
+      "degree": 16.82,
       "retrograde": false,
       "speedPerDay": 0.1107,
       "dignity": "fall",
@@ -241,21 +241,21 @@
       "a": "Sun",
       "b": "Moon",
       "type": "square",
-      "orb": 3.85,
+      "orb": 3.86,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 4.99,
+      "orb": 4.97,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Venus",
       "type": "trine",
-      "orb": 5.73,
+      "orb": 5.71,
       "applying": false
     }
   ],

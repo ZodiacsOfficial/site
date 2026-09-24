@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Oslo",
     "civilTime": "12:00",
-    "utcInstant": "1888-03-04T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1888-03-03T23:06:32.000Z",
-    "civilDayEndUtc": "1888-03-04T23:06:32.000Z",
+    "utcInstant": "1888-03-04T11:34:18.000Z",
+    "utcOffsetMinutesAtBirth": 25.7,
+    "civilDayStartUtc": "1888-03-03T23:34:18.000Z",
+    "civilDayEndUtc": "1888-03-04T23:34:18.000Z",
     "latitude": 60.7025,
     "longitude": 6.423056,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "pisces",
     "signName": "Pisces",
-    "degree": 14.35
+    "degree": 14.37
   },
   "moon": {
     "sign": "sagittarius",
     "signName": "Sagittarius",
-    "degree": 5.51,
+    "degree": 5.78,
     "uncertain": true,
     "signAtCivilDayStart": "scorpio",
     "signAtCivilDayEnd": "sagittarius"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 13.8844,
-    "degreesToNextBoundaryAtWindowEnd": 15.1148
+    "degreesInsideAtWindowStart": 13.8665,
+    "degreesToNextBoundaryAtWindowEnd": 15.1326
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.001,
-    "Moon": 14.1,
+    "Moon": 14.094,
     "Mercury": 1.021,
     "Venus": 1.22,
     "Mars": 0,
@@ -70,7 +70,7 @@
       "body": "Sun",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 14.35,
+      "degree": 14.37,
       "retrograde": false,
       "speedPerDay": 1.0008,
       "dignity": null,
@@ -81,9 +81,9 @@
       "body": "Moon",
       "sign": "sagittarius",
       "signName": "Sagittarius",
-      "degree": 5.51,
+      "degree": 5.78,
       "retrograde": false,
-      "speedPerDay": 14.094,
+      "speedPerDay": 14.0882,
       "dignity": null,
       "stableAcrossDay": false,
       "retrogradeStableAcrossDay": true
@@ -92,7 +92,7 @@
       "body": "Mercury",
       "sign": "pisces",
       "signName": "Pisces",
-      "degree": 12.98,
+      "degree": 12.96,
       "retrograde": true,
       "speedPerDay": -1.0221,
       "dignity": "fall",
@@ -103,7 +103,7 @@
       "body": "Venus",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 11.41,
+      "degree": 11.44,
       "retrograde": false,
       "speedPerDay": 1.2195,
       "dignity": null,
@@ -116,7 +116,7 @@
       "signName": "Scorpio",
       "degree": 0.22,
       "retrograde": true,
-      "speedPerDay": -0.0002,
+      "speedPerDay": -0.0004,
       "dignity": "domicile",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": false
@@ -149,7 +149,7 @@
       "signName": "Libra",
       "degree": 16.46,
       "retrograde": true,
-      "speedPerDay": -0.034,
+      "speedPerDay": -0.0341,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -189,21 +189,21 @@
       "a": "Moon",
       "b": "Jupiter",
       "type": "conjunction",
-      "orb": 0.36,
-      "applying": true
+      "orb": 0.09,
+      "applying": false
     },
     {
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 1.36,
+      "orb": 1.4,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Pluto",
       "type": "opposition",
-      "orb": 2.41,
+      "orb": 2.68,
       "applying": false
     },
     {
@@ -231,7 +231,7 @@
       "a": "Venus",
       "b": "Uranus",
       "type": "trine",
-      "orb": 5.05,
+      "orb": 5.03,
       "applying": true
     },
     {
@@ -254,21 +254,21 @@
       "a": "Moon",
       "b": "Saturn",
       "type": "trine",
-      "orb": 5.28,
+      "orb": 5.56,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "square",
-      "orb": 7.47,
+      "orb": 7.18,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Neptune",
       "type": "opposition",
-      "orb": 8.04,
+      "orb": 8.31,
       "applying": false
     }
   ],

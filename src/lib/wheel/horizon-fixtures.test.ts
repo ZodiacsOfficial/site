@@ -45,7 +45,7 @@ const FIXTURES: Fixture[] = [
     sunLon: fridaSun.lon,
     sunLat: fridaSun.lat,
     daylight: true,
-    expectedSunAltitude: 40.1368,
+    expectedSunAltitude: 40.1445,
   },
   {
     name: 'Ada Lovelace, London',

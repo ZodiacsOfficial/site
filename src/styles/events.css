@@ -52,6 +52,7 @@
 
 /* ── Facts band (the quiet what/when card) ───────────────────────── */
 .event-facts__core {
+  margin: 0;
   padding: clamp(18px, 3.5vw, 26px);
   display: grid;
   gap: 14px 28px;
@@ -69,6 +70,12 @@
   letter-spacing: -0.005em;
 }
 .event-facts__item dd.mono { font-size: var(--text-sm); color: var(--text-2); }
+.event-facts__note {
+  margin: 0;
+  padding: 0 clamp(18px, 3.5vw, 26px) clamp(14px, 3vw, 20px);
+  font-size: var(--text-sm);
+  color: var(--muted);
+}
 
 /* ── Body sections ───────────────────────────────────────────────── */
 .event-section { margin-block: clamp(34px, 6vw, 56px); }

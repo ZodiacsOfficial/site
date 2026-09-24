@@ -13,10 +13,10 @@
     "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
     "timeZone": "Europe/Berlin",
     "civilTime": "12:00",
-    "utcInstant": "1777-04-30T11:06:32.000Z",
-    "utcOffsetMinutesAtBirth": 53.4667,
-    "civilDayStartUtc": "1777-04-29T23:06:32.000Z",
-    "civilDayEndUtc": "1777-04-30T23:06:32.000Z",
+    "utcInstant": "1777-04-30T11:17:55.000Z",
+    "utcOffsetMinutesAtBirth": 42.0833,
+    "civilDayStartUtc": "1777-04-29T23:17:55.000Z",
+    "civilDayEndUtc": "1777-04-30T23:17:55.000Z",
     "latitude": 52.269166666667,
     "longitude": 10.521111111111,
     "coordinateEscalationSteps": 0,
@@ -30,12 +30,12 @@
   "sun": {
     "sign": "taurus",
     "signName": "Taurus",
-    "degree": 10.36
+    "degree": 10.37
   },
   "moon": {
     "sign": "aquarius",
     "signName": "Aquarius",
-    "degree": 7.2,
+    "degree": 7.31,
     "uncertain": false,
     "signAtCivilDayStart": "aquarius",
     "signAtCivilDayEnd": "aquarius"
@@ -43,12 +43,12 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 9.9094,
-    "degreesToNextBoundaryAtWindowEnd": 19.1216
+    "degreesInsideAtWindowStart": 9.8811,
+    "degreesToNextBoundaryAtWindowEnd": 19.1499
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 0.969,
-    "Moon": 13.242,
+    "Moon": 13.245,
     "Mercury": 2.161,
     "Venus": 0.372,
     "Mars": 0.135,
@@ -64,7 +64,7 @@
       "body": "Sun",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 10.36,
+      "degree": 10.37,
       "retrograde": false,
       "speedPerDay": 0.9689,
       "dignity": null,
@@ -75,9 +75,9 @@
       "body": "Moon",
       "sign": "aquarius",
       "signName": "Aquarius",
-      "degree": 7.2,
+      "degree": 7.31,
       "retrograde": false,
-      "speedPerDay": 13.2472,
+      "speedPerDay": 13.2502,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -86,7 +86,7 @@
       "body": "Mercury",
       "sign": "taurus",
       "signName": "Taurus",
-      "degree": 14.28,
+      "degree": 14.3,
       "retrograde": false,
       "speedPerDay": 2.1609,
       "dignity": null,
@@ -97,9 +97,9 @@
       "body": "Venus",
       "sign": "gemini",
       "signName": "Gemini",
-      "degree": 17.44,
+      "degree": 17.45,
       "retrograde": false,
-      "speedPerDay": 0.3716,
+      "speedPerDay": 0.3714,
       "dignity": null,
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -110,7 +110,7 @@
       "signName": "Libra",
       "degree": 0.71,
       "retrograde": true,
-      "speedPerDay": -0.1346,
+      "speedPerDay": -0.1345,
       "dignity": "detriment",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -121,7 +121,7 @@
       "signName": "Cancer",
       "degree": 18.94,
       "retrograde": false,
-      "speedPerDay": 0.1378,
+      "speedPerDay": 0.1379,
       "dignity": "exaltation",
       "stableAcrossDay": true,
       "retrogradeStableAcrossDay": true
@@ -190,7 +190,7 @@
       "a": "Sun",
       "b": "Mercury",
       "type": "conjunction",
-      "orb": 3.92,
+      "orb": 3.93,
       "applying": false
     },
     {
@@ -213,42 +213,35 @@
       "a": "Moon",
       "b": "Uranus",
       "type": "trine",
-      "orb": 2.06,
+      "orb": 1.95,
       "applying": true
     },
     {
       "a": "Sun",
       "b": "Moon",
       "type": "square",
-      "orb": 3.16,
+      "orb": 3.06,
       "applying": true
     },
     {
       "a": "Moon",
       "b": "Mars",
       "type": "trine",
-      "orb": 6.49,
-      "applying": false
-    },
-    {
-      "a": "Moon",
-      "b": "Pluto",
-      "type": "conjunction",
-      "orb": 7.03,
+      "orb": 6.6,
       "applying": false
     },
     {
       "a": "Moon",
       "b": "Mercury",
       "type": "square",
-      "orb": 7.08,
+      "orb": 6.99,
       "applying": true
     },
     {
       "a": "Moon",
-      "b": "Saturn",
-      "type": "square",
-      "orb": 7.9,
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 7.14,
       "applying": false
     }
   ],

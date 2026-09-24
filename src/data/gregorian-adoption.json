@@ -1,0 +1,11 @@
+{
+  "purpose": "Where a country's civil calendar changed from the Julian to the Gregorian inside 1800–2199. Rows are added only with a citation. Countries whose earlier civil calendar was not the Julian are not listed; the site cannot convert from those.",
+  "rows": [
+    {
+      "country": "Russia",
+      "lastJulian": "1918-01-31",
+      "firstGregorian": "1918-02-14",
+      "source": "IANA tzdb 2025c, file 'calendars': \"Soviet Russia adopted the Gregorian calendar on 1918-02-14.\""
+    }
+  ]
+}

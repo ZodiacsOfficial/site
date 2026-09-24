@@ -469,7 +469,7 @@ async function runInvitationAndReturn(browser, baseURL) {
   await arrival.waitFor({ state: 'visible', timeout: 30_000 });
   check('ready arrival names the inviter and positions-only boundary',
     /Frida wants to read your charts together/.test(await arrival.textContent() ?? '')
-      && /chart positions only/.test(await arrival.textContent() ?? ''));
+      && /chart positions, with no birth details/.test(await arrival.textContent() ?? ''));
 
   await page.locator('#syn-b-source').selectOption(CHART_ID);
   await page.evaluate(() => { globalThis.__phase4TimeoutDelays = []; });

@@ -160,11 +160,13 @@ describe('technical audit remediation contracts', () => {
     expect(sitemap).toContain("const AUDIT_REMEDIATION_LASTMOD = '2026-08-23'");
     expect(sitemap).toContain("const LEGAL_IDENTITY_LASTMOD = '2026-08-29'");
     expect(sitemap).toContain("...['/', '/about/', '/privacy/', '/terms/'].map((loc) => [loc, LEGAL_IDENTITY_LASTMOD] as const)");
-    for (const page of [privacy, terms]) {
-      expect(page).toContain("const modifiedAt = '2026-08-29T00:00:00.000Z'");
-      expect(page).toContain('dateModified: modifiedAt');
-    }
-    expect(about).toContain("dateModified: '2026-08-29T00:00:00.000Z'");
+    expect(terms).toContain("const modifiedAt = '2026-08-29T00:00:00.000Z'");
+    // Revised again on 2026-09-23 (the claims ledger's corrections); the
+    // sitemap's ENGINE_PHASE1_LASTMOD carries the same date for both.
+    expect(privacy).toContain("const modifiedAt = '2026-09-23T00:00:00.000Z'");
+    for (const page of [privacy, terms]) expect(page).toContain('dateModified: modifiedAt');
+    expect(about).toContain("dateModified: '2026-09-23T00:00:00.000Z'");
+    expect(sitemap).toContain("const ENGINE_PHASE1_LASTMOD = '2026-09-23'");
     for (const [page, path, modified] of [
       [learn, '/learn/', '2026-09-05T00:00:00.000Z'],
       [houses, '/learn/houses/', '2026-08-23T00:00:00.000Z'],
