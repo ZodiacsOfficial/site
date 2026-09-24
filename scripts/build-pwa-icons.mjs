@@ -3,7 +3,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { SIGN_ORDER } from './sign-data.mjs';
-import { PWA_MANIFEST_EN } from '../src/strings/pwa.en.mjs';
+import { PWA_MANIFEST_EN, PWA_SHORTCUTS_EN } from '../src/strings/pwa.en.mjs';
 import { BRAND_ICON_BASE, BRAND_ICON_PATHS } from '../src/lib/brand-icons.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -170,6 +170,13 @@ export async function buildPwaIcons({ rootDirectory = root } = {}) {
         { src: BRAND_ICON_PATHS.icon512, sizes: '512x512', type: 'image/png', purpose: 'any' },
         { src: BRAND_ICON_PATHS.maskable512, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
       ],
+      shortcuts: PWA_SHORTCUTS_EN.map((shortcut) => ({
+        name: shortcut.name,
+        short_name: shortcut.shortName,
+        description: shortcut.description,
+        url: shortcut.url,
+        icons: [{ src: BRAND_ICON_PATHS.icon192, sizes: '192x192', type: 'image/png' }],
+      })),
     }, null, 2)}\n`, 'utf8'),
   ]);
   return outputs.length;

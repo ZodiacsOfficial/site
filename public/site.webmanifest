@@ -26,5 +26,33 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Your page",
+      "short_name": "Your page",
+      "description": "Your chart, your people, and the year ahead.",
+      "url": "/profile/",
+      "icons": [
+        {
+          "src": "/assets/app-icons/v3/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Today",
+      "short_name": "Today",
+      "description": "Today’s sky and your daily reading.",
+      "url": "/today/",
+      "icons": [
+        {
+          "src": "/assets/app-icons/v3/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
   ]
 }

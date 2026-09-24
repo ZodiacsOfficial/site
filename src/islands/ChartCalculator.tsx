@@ -2708,7 +2708,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             && firstReading.status !== 'in_progress'
             && <p class="calc__saved">{t(locale, 'saveYearAheadNote')}</p>}
           {mode !== 'full' && saveError && <p class="calc__error" role="alert">{saveError}</p>}
-          {saved === 'saved' && <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>}
+          {saved === 'saved' && (subjectMode === 'self' && locale === 'en'
+            ? <p class="calc__saved" data-your-page-ready>Saved as your chart. <a href="/profile/">Open your page</a> — it’s at zodiacs.org/me whenever you come back.</p>
+            : <p class="calc__saved">{t(locale, 'chartSavedBeforeLink')} <a href={localizePath(locale, '/profile/')}>{t(locale, 'chartSavedLink')}</a> {t(locale, 'chartSavedAfterLink')}</p>)}
           {mode === 'full' && shareInput && (
             <details class="calc__more" data-chart-more>
               <summary class="calc__more-summary">
