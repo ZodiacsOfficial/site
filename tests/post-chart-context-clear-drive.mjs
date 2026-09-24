@@ -15,9 +15,10 @@ const root=resolve(import.meta.dirname,'..');
 const out=resolve(process.env.OUT_DIR??resolve(root,'tests/visual/artifacts/post-chart-context-clear'));
 await mkdir(out,{recursive:true});
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
-const paths=['src/lib/profile/post-chart-context.ts','src/islands/PostChartDailyBrief.tsx','src/components/EmailCaptureEnhancement.astro'];
+const paths=['src/lib/profile/post-chart-context.ts','src/islands/PostChartDailyBrief.tsx','src/components/EmailCaptureEnhancement.astro','src/lib/email/capture-enhancement.js'];
 const identity=await Promise.all(paths.map(async path=>({path,sha256:sha(await readFile(resolve(root,path)))})));
-const enhancement=(await readFile(resolve(root,paths[2]),'utf8')).match(/<script>([\s\S]*?)<\/script>/)?.[1];assert.ok(enhancement);
+const enhancement=(await readFile(resolve(root,paths[2]),'utf8')).match(/<script[^>]*>([\s\S]*?)<\/script>/)?.[1];assert.ok(enhancement);
+const enhancementModule=await readFile(resolve(root,paths[3]),'utf8');
 const ID='10000000-0000-4000-8000-000000000001';
 const entry=`
 import {h,render} from 'preact';
@@ -41,6 +42,7 @@ addEventListener('zodiacs:chart-context-cleared',event=>window.fixture.clearEven
 const nativeFrame=requestAnimationFrame;
 window.requestAnimationFrame=callback=>window.fixture.holdFocus&&callback.toString().includes('focus')?(window.fixture.focusFrames.push(callback),-1):nativeFrame(callback);
 window.fixture.mount();
+const enhancementUrl='/capture-enhancement.js';
 ${enhancement}
 `;
 const compilation=await build({absWorkingDir:root,stdin:{contents:entry,resolveDir:root,loader:'tsx'},bundle:true,write:false,outfile:resolve(out,'fixture.js'),platform:'browser',format:'iife',target:'es2022',jsx:'automatic',jsxImportSource:'preact',define:{'import.meta.env':'{}'},metafile:true,
@@ -58,7 +60,7 @@ await writeFile(resolve(out,'fixture.js'),bundle);await writeFile(resolve(out,'e
 await writeFile(resolve(out,'build.json'),JSON.stringify({inputs,identity,bundleSha256:sha(bundle),metafile:compilation.metafile},null,2)+'\n');
 function capture(name,{managed=false,reveal=true}={}){return `<section data-email-capture-shell data-placement="${name}" ${reveal?'data-reveal-on-chart="true" hidden':''} ${managed?'data-post-chart-managed="true" data-daily-capture="true"':''} id="${name}">${managed?'<div id="controller"></div>':''}<div class="email-capture__copy"><h2 data-email-title data-default-title="Choose a brief" data-personal-title="For {sign}">Choose a brief</h2></div><form data-email-capture action="/api/email/subscribe" data-placement="${name}"><input type="email" name="email" required><button class="email-capture__submit" type="submit" data-label="Subscribe" data-busy-label="Working">Subscribe</button><div data-email-sign-summary data-summary-template="Using {sign}" hidden><span data-email-sign-summary-copy></span><button type="button" data-email-sign-change>Change sign</button></div><fieldset data-email-signs><legend>Sign</legend><label><input type="radio" name="sign" value="cancer" data-sign-name="Cancer">Cancer</label><label><input type="radio" name="sign" value="leo" data-sign-name="Leo">Leo</label></fieldset><p data-email-status></p><span hidden data-success-copy>Done</span><span hidden data-error-copy>Error</span><span hidden data-missing-sign-copy>Choose</span><span hidden data-invalid-email-copy>Invalid</span><p data-post-chart-device-note hidden>Local</p></form></section>`;}
 const html='<!doctype html><html data-daily-email-lifecycle><title>Post-chart context clear fixture</title><style>[hidden]{display:none!important}</style><input id="outside" value="unrelated">'+capture('managed',{managed:true})+capture('weekly')+capture('footer',{reveal:false})+'<script src="/fixture.js"></script></html>';
-const server=createServer((req,res)=>{if(req.url==='/fixture.js'){res.setHeader('Content-Type','text/javascript');res.end(bundle);}else{res.setHeader('Content-Type','text/html');res.end(req.url.includes('lifecycle=0')?html.replace('data-daily-email-lifecycle',''):html);}});
+const server=createServer((req,res)=>{if(req.url==='/capture-enhancement.js'){res.setHeader('Content-Type','text/javascript');res.end(enhancementModule);}else if(req.url==='/fixture.js'){res.setHeader('Content-Type','text/javascript');res.end(bundle);}else{res.setHeader('Content-Type','text/html');res.end(req.url.includes('lifecycle=0')?html.replace('data-daily-email-lifecycle',''):html);}});
 const empty={enabled:false,pending:false,paused:false,requiresConfirmation:false,chartId:null,timezone:null,confirmedAt:null,maskedEmail:null};
 const pending={...empty,pending:true,chartId:ID,timezone:'UTC',maskedEmail:'s…@example.com'};
 let browser,origin;const contexts=[],results=[];
@@ -76,7 +78,7 @@ async function setup(preference=empty,lifecycle=true){
   const body=url.pathname.endsWith('/subscribe')?{ok:true}:req.method()==='POST'?{ok:true,pending:true}:s.preference;
   await route.fulfill({status:gate?.status??200,contentType:'application/json',body:JSON.stringify(body)}).catch(()=>{});
  });
- await s.page.goto(origin+(lifecycle?'':'?lifecycle=0'));await s.page.waitForFunction(()=>!!window.fixture);await frames(s);return s;
+ await s.page.goto(origin+(lifecycle?'':'?lifecycle=0'));await s.page.waitForFunction(()=>!!window.fixture);await s.page.waitForFunction(()=>document.querySelector('#footer')?.dataset.signChooserEnhanced==='true');await frames(s);return s;
 }
 function gate(s,path,method,status=200){let started,release;const begun=new Promise(done=>started=done),wait=new Promise(done=>release=done);const value={path,method,status,started,release,wait,begun,used:false};s.gates.push(value);return value;}
 async function publish(s,id=1,sign='cancer'){await s.page.evaluate(({id,sign})=>window.fixture.publish(id,sign),{id,sign});await s.page.locator('#managed[data-post-chart-state]').waitFor({state:'visible'});await frames(s);}
@@ -166,6 +168,6 @@ try{
  await group('capture-markup-with-lifecycle-off',async s=>{await s.page.evaluate(()=>window.fixture.publish());await s.page.locator('#weekly').waitFor({state:'visible'});await s.page.locator('#weekly input[type=email]').fill('retained@example.com');await s.page.evaluate(()=>window.fixture.clear());const cleared=await observation(s);assert.equal(cleared.weeklyHidden,true);assert.equal(cleared.managedHidden,true);assert.equal(cleared.footerHidden,false);assert.equal(cleared.weeklyEmail,'retained@example.com');assert.equal(s.requests.length,0);await s.page.evaluate(()=>window.fixture.publish(2,'leo'));await s.page.locator('#weekly').waitFor({state:'visible'});assert.equal((await observation(s)).weeklySign,'leo');assert.equal(s.requests.length,0);return {markupPresent:true,lifecycleFlag:false,cleared};},false);
 }finally{
  for(const context of contexts)await context.close().catch(()=>{});const version=browser?.version();await browser?.close();await new Promise(done=>server.close(done));
- const report={node:process.version,browser:version,identity,finalIdentity:await Promise.all(paths.map(async path=>({path,sha256:sha(await readFile(resolve(root,path)))}))),driverSha256:sha(await readFile(new URL(import.meta.url))),results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length,qualification:'Actual island, context module, preference fetch client and extracted Astro enhancement script; synthetic structural DOM and controlled auth/store/endpoint responses. No production layout or real authentication/provider claim.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
+ const report={node:process.version,browser:version,identity,finalIdentity:await Promise.all(paths.map(async path=>({path,sha256:sha(await readFile(resolve(root,path)))}))),driverSha256:sha(await readFile(new URL(import.meta.url))),results,passed:results.filter(r=>r.passed).length,failed:results.filter(r=>!r.passed).length,qualification:'Actual island, context module, preference fetch client and actual deferred Astro loader plus enhancement module; synthetic structural DOM and controlled auth/store/endpoint responses. No production layout or real authentication/provider claim.',cleanup:{browserClosed:true,contextsClosed:true,serverClosed:true}};
  await writeFile(resolve(out,'result.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({passed:report.passed,failed:report.failed}));if(report.failed)process.exitCode=1;
 }
