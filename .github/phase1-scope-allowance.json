@@ -1,14 +1,12 @@
 {
   "version": 1,
-  "id": "owner-requested-astrofolio-campaign-2026-09-23",
-  "baseCommit": "25eaa205cc7d1fcff2dd43ed3c53e027791b5178",
+  "id": "owner-requested-astrofolio-phone-motion-2026-09-23",
+  "baseCommit": "4add52b11142aa41b49335ef9f787e524cba723b",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/technical/index.html",
     "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-gallery-band.test.mjs",
     "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ],
-  "authorization": "The owner reviewed the four Astrofolio redesign prototypes in docs/design/astrofolio-redesign/ and chose Option B, Campaign, for production: the Astrofolio film opening inside the wordmark, a runway of all twelve looks each carrying the existing Fomo buy control, a floating buy bar for the chosen sign, a Fomo app section, and a restyled Registry record. The technical page changes only because its shared style copy drops the retired vitrine rules. Preserve market data, addresses, flags, and transaction behavior."
+  "authorization": "The owner reviewed the live Campaign /astrofolio/ and asked, on every width, for the Capricorn Fomo notification to move off the phones in the app section so it stands on its own; desktop is otherwise unchanged. On phones only, the owner asked for the opening and its scroll to follow rolex.com's mobile homepage from a screen recording: the headline as a tracked line, the name Astrofolio, one Discover more with a moving arrow, the film dimming while the caption rises and fades, the looks popping up over the dimmed film, and the pastel zodiac discs following the swiped card. Preserve market data, addresses, flags, and transaction behavior."
 }

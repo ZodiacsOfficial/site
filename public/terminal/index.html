@@ -10065,6 +10065,10 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(4px); }
     }
+    @keyframes campaign-discover-cue {
+      0%, 100% { opacity: .45; transform: translateY(-2px); }
+      50% { opacity: 1; transform: translateY(4px); }
+    }
     .campaign-hero__caption {
       position: absolute;
       z-index: 3;
@@ -10099,6 +10103,10 @@
       color: var(--ink-2);
       font: 400 clamp(16px, 1.3vw, 19px)/1.55 var(--sans);
     }
+    /* The phone opening's name and Discover more; wide screens keep the
+       caption above. */
+    .campaign-hero__caption > .campaign-hero__name,
+    .campaign-discover { display: none; }
     .campaign-hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
     .campaign-button {
       min-height: 52px;
@@ -10524,20 +10532,39 @@
       transition: opacity 560ms ease;
     }
     .campaign-phone__screen[data-playing="true"] .campaign-phone__video { opacity: 1; }
-    .campaign-phone__alert {
-      position: absolute;
-      z-index: 2;
-      top: 7%;
-      left: -46%;
-      width: 104%;
-      transform: rotate(-3deg);
-      filter: drop-shadow(0 30px 40px rgba(0,0,0,.8));
-      pointer-events: none;
-    }
-    .campaign-phone__alert img { width: 100%; height: auto; display: block; }
     .campaign-phone figcaption { display: grid; gap: 5px; margin-top: 18px; }
     .campaign-phone figcaption strong { color: var(--ink); font: 400 24px/1.1 var(--serif); letter-spacing: -.01em; }
     .campaign-phone figcaption span { max-width: 32ch; color: var(--ink-dim); font: 400 14.5px/1.5 var(--sans); }
+    /* The Fomo alert has its own row after the phones, clear of every screen. */
+    .campaign-alert {
+      max-width: 1080px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: clamp(24px, 5vw, 72px);
+      align-items: center;
+      margin: clamp(48px, 7vw, 96px) auto 0;
+    }
+    /* The render's shadow is near-transparent above and below the card;
+       trimming it keeps the row about the card, not the empty shadow. */
+    .campaign-alert__render img {
+      width: 100%;
+      max-width: 560px;
+      height: auto;
+      aspect-ratio: 900 / 420;
+      display: block;
+      margin-inline: auto;
+      object-fit: cover;
+      object-position: 50% 52%;
+    }
+    .campaign-alert figcaption { display: grid; gap: 12px; }
+    .campaign-alert figcaption strong {
+      max-width: 15ch;
+      color: var(--ink);
+      font: 400 clamp(32px, 3.6vw, 52px)/1 var(--serif);
+      letter-spacing: -.02em;
+      text-wrap: balance;
+    }
+    .campaign-alert figcaption span { max-width: 40ch; color: var(--ink-2); font: 400 16.5px/1.6 var(--sans); }
 
     /* ── The record ──────────────────────────────────────────────── */
     .campaign-record__identity { margin-top: clamp(28px, 4vw, 44px); }
@@ -10637,7 +10664,14 @@
         transform: none;
       }
       .campaign-hero__poster img { object-position: 50% 38%; }
-      .campaign-hero__shade { background: linear-gradient(180deg, rgba(6,7,9,.46) 0%, rgba(6,7,9,.08) 18%, rgba(6,7,9,.34) 38%, rgba(6,7,9,.86) 62%, rgba(6,7,9,.96) 100%); }
+      /* Clear through the upper film. The dark band is measured from the
+         bottom, so it sits behind the caption (which starts about 330px up)
+         on any screen height and any frame of the film. */
+      .campaign-hero__shade {
+        background:
+          linear-gradient(180deg, rgba(6,7,9,.46) 0, rgba(6,7,9,0) 140px),
+          linear-gradient(0deg, rgba(6,7,9,.94) 0, rgba(6,7,9,.8) 190px, rgba(6,7,9,.62) 340px, rgba(6,7,9,.24) 430px, rgba(6,7,9,0) 520px);
+      }
       .campaign-hero__shade::after,
       .campaign-hero__word,
       .campaign-hero__foot { display: none; }
@@ -10650,11 +10684,59 @@
         transform: none;
         pointer-events: auto;
       }
-      .campaign-hero__caption { text-shadow: 0 1px 18px rgba(0,0,0,.55); }
-      .campaign-hero__caption h1 { font-size: clamp(40px, 12vw, 58px); }
-      .campaign-hero__caption > p { margin-top: 12px; font-size: 15.5px; }
-      .campaign-hero__actions { gap: 10px; margin-top: 18px; }
-      .campaign-button { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
+      /* The phone opening ends like a campaign page: a tracked line, the
+         name, and one Discover more with a moving cue. */
+      .campaign-hero__caption {
+        display: grid;
+        justify-items: center;
+        text-align: center;
+        text-shadow: 0 1px 18px rgba(0,0,0,.55);
+      }
+      .campaign-hero__caption .astrofolio-lockup,
+      .campaign-hero__caption .static-astrofolio-lockup,
+      .campaign-hero__caption > p:not(.campaign-hero__name),
+      .campaign-hero__actions,
+      .campaign-hero__stop { display: none; }
+      .campaign-hero__caption h1 {
+        max-width: none;
+        color: var(--ink);
+        font: 500 11.5px/1.4 var(--sans);
+        letter-spacing: .26em;
+        text-transform: uppercase;
+      }
+      .campaign-hero__caption > .campaign-hero__name {
+        display: block;
+        margin: 8px 0 0;
+        color: var(--ink);
+        font: 400 clamp(54px, 16vw, 72px)/.95 var(--serif);
+        letter-spacing: -.03em;
+      }
+      .campaign-discover {
+        display: grid;
+        justify-items: center;
+        gap: 2px;
+        margin-top: 18px;
+        color: var(--ink);
+        text-decoration: none;
+        text-shadow: none;
+      }
+      .campaign-discover__pill {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 24px;
+        border: 1px solid rgba(238,241,247,.2);
+        border-radius: 999px;
+        background: rgba(238,241,247,.14);
+        -webkit-backdrop-filter: blur(14px) saturate(1.5);
+        backdrop-filter: blur(14px) saturate(1.5);
+        font: 550 15px/1 var(--sans);
+        transition: background-color 180ms ease;
+      }
+      .campaign-discover:active .campaign-discover__pill { background: rgba(238,241,247,.24); }
+      .campaign-discover:focus-visible { outline: none; }
+      .campaign-discover:focus-visible .campaign-discover__pill { outline: 2px solid var(--ink); outline-offset: 3px; }
+      .campaign-discover__cue { width: 18px; height: 18px; animation: campaign-discover-cue 1.8s ease-in-out infinite; }
       .static-campaign__nav { padding-top: 14px; }
 
       .campaign-bag {
@@ -10697,7 +10779,8 @@
       .campaign-phone { flex: 0 0 min(70vw, 300px); scroll-snap-align: center; }
       .campaign-phone--main { order: -1; }
       .campaign-phone--side { margin-top: 0; }
-      .campaign-phone__alert { top: 6%; left: 4%; width: 92%; }
+      .campaign-alert { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 40px; }
+      .campaign-alert__render img { max-width: 460px; }
 
       .consumer-campaign .consumer-shop__copy { grid-template-columns: minmax(0, 1fr); }
       .consumer-campaign .consumer-shop__copy > h2,
@@ -10715,6 +10798,41 @@
         translate: 0 -78px;
         transition: opacity 180ms ease, transform 180ms ease, translate 320ms var(--ease);
       }
+    }
+    /* Phones: as the page moves on, the film stays in place and dims, the
+       caption rises and fades, and the looks pop up over the dimmed film.
+       The opening sticks only inside .campaign-stack, so it is the backdrop
+       of the runway and never of later sections. */
+    @media (max-width: 900px) {
+      .campaign-stack { position: relative; }
+      .campaign-stack > .campaign-hero { position: sticky; top: 0; z-index: 0; }
+      .campaign-stack > .campaign-runway { z-index: 1; }
+      /* Discover more lands the runway at the top, its heading clear of the
+         floating navigation. */
+      .consumer-registry .campaign-stack > .campaign-runway { scroll-margin-top: 0; }
+      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: 92px; }
+      .campaign-stack .campaign-hero__pin::after {
+        position: absolute;
+        z-index: 5;
+        inset: 0;
+        background: #060709;
+        opacity: calc(var(--stack, 0) * .78);
+        pointer-events: none;
+        content: "";
+      }
+      .campaign-stack .campaign-hero__caption {
+        opacity: calc(1 - var(--stack, 0) * 1.7);
+        transform: translateY(calc(var(--stack, 0) * -26vh));
+      }
+      .campaign-runway[data-rise="pending"] .campaign-look { opacity: 0; transform: translateY(120px); }
+      .campaign-runway[data-rise="rising"] .campaign-look {
+        transition: opacity 600ms ease, transform 900ms cubic-bezier(.16, 1, .3, 1), border-color 360ms var(--ease);
+        transition-delay: calc(var(--rise-order, 0) * 90ms);
+      }
+    }
+    @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+      .campaign-stack .campaign-hero__caption { transform: none; }
+      .campaign-discover__cue { animation: none; }
     }
     @media (min-width: 601px) and (max-width: 900px) {
       .campaign-bag { right: auto; left: 50%; width: min(560px, calc(100% - 24px)); transform: translateX(-50%); }
