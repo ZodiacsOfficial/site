@@ -2,6 +2,12 @@
 
 **Decision (2026-09-23):** the owner chose **B, Campaign**. It is built into the live page: `src/app.jsx` (the `Campaign*` components), `src/terminal/split-styles.css` (the "Astrofolio · Campaign" section), and the no-JavaScript shell in `public/astrofolio/index.html`. The prototypes below stay as the design record.
 
+**After launch (2026-09-23):** on every width, the Fomo price alert no longer sits on the phones; it has its own row after them, captioned as on `/fomo/`. Desktop is otherwise unchanged. On phones, the owner asked for the opening and its scroll to follow rolex.com's mobile homepage, from a screen recording:
+
+- The opening ends like a campaign page: the headline set as a tracked line ("THE TWELVE OFFICIAL ZODIACS"), the name "Astrofolio", and one frosted "Discover more" with a moving arrow. The two wide-screen buttons and the paragraph stay on desktop.
+- As the page moves on, the film stays in place and dims to about 78%, and the caption rises and fades. The runway comes up over the dimmed film with no sheet behind it, and its looks pop up from below as they reach the screen. Reduced motion keeps the dim and the fade, without the rise or the moving arrow.
+- Swiping the looks moves the pastel disc spotlight to the look in the centre. The bag and the address bar follow once the swipe rests. On the pinned desktop stage, passing looks still never changes the chosen sign.
+
 These are four working prototypes for `/astrofolio/`. Each is built only from assets already in this repository:
 
 - the twelve gold figures (`public/assets/sculptures/`)

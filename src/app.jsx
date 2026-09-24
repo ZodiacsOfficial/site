@@ -4696,6 +4696,7 @@
     const FOMO_APP_STORE_URL = 'https://apps.apple.com/us/app/fomo-never-miss-out/id6741115427';
     const FOMO_PLAY_URL = 'https://play.google.com/store/apps/details?id=family.fomo.app';
     const CAMPAIGN_WIDE_QUERY = '(min-width: 901px)';
+    const CAMPAIGN_PHONE_QUERY = '(max-width: 900px)';
     const CAMPAIGN_REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
     const CAMPAIGN_SPARK_DAYS = 14;
 
@@ -4846,6 +4847,15 @@
             hero.style.removeProperty('--hero-out');
             hero.style.removeProperty('--hero-caption');
             hero.dataset.caption = 'live';
+            // On phones the film stays behind the runway: it dims, and the
+            // caption rises and fades, as the runway comes up the screen.
+            const runway = document.getElementById('the-twelve');
+            if (runway && matchesMedia(CAMPAIGN_PHONE_QUERY)) {
+              const rise = clampUnit(1 - runway.getBoundingClientRect().top / Math.max(1, window.innerHeight));
+              hero.style.setProperty('--stack', rise.toFixed(3));
+            } else {
+              hero.style.removeProperty('--stack');
+            }
             return;
           }
           // The film opens from its place inside the wordmark until it
@@ -4929,7 +4939,7 @@
                   <small><strong style={{ color: season.hue }}>{season.name}</strong> Season</small>
                 </span>
               </div>
-              <h1 id="campaign-hero-title">The twelve official Zodiacs.</h1>
+              <h1 id="campaign-hero-title">The twelve official Zodiacs<span className="campaign-hero__stop">.</span></h1>
               <p>One for every sign, each with its own design and a public record. Find yours, then buy it in the Fomo app.</p>
               <div className="campaign-hero__actions">
                 <a className="campaign-button campaign-button--light" href="#the-twelve">
@@ -4937,6 +4947,11 @@
                 </a>
                 <a className="campaign-button" href="#buy"><span>How buying works</span></a>
               </div>
+              <p className="campaign-hero__name">Astro<em>folio</em></p>
+              <a className="campaign-discover" href="#the-twelve">
+                <span className="campaign-discover__pill">Discover more</span>
+                <svg className="campaign-discover__cue" width="18" height="18" viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M4 7l5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
+              </a>
             </div>
           </div>
         </section>
@@ -4982,7 +4997,7 @@
         <article
           className={'campaign-look' + (inSeason ? ' is-season' : '') + (active ? ' is-active' : '')}
           data-look={slug}
-          style={{ '--sign': item.hue }}
+          style={{ '--sign': item.hue, '--rise-order': Math.min(index, 3) }}
           aria-labelledby={`campaign-look-${slug}`}
           onFocus={(event) => {
             // Keyboard focus inside the pinned runway brings the look into
@@ -5093,10 +5108,41 @@
         return () => observer.disconnect();
       }, []);
 
+      const activeRef = useRef(active);
+      const steerRef = useRef(null);
+      const settleRef = useRef({ timer: 0, committed: active });
+      useEffect(() => {
+        activeRef.current = active;
+      }, [active]);
+
+      // On phones the looks pop up from below as they reach the screen, over
+      // the dimmed film.
+      useEffect(() => {
+        const section = sectionRef.current;
+        const track = trackRef.current;
+        if (!section || !track || !matchesMedia(CAMPAIGN_PHONE_QUERY) || matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY)
+            || !('IntersectionObserver' in window)) return undefined;
+        if (track.getBoundingClientRect().top < window.innerHeight) return undefined;
+        section.dataset.rise = 'pending';
+        let done = 0;
+        const observer = new IntersectionObserver(([entry]) => {
+          if (!entry?.isIntersecting) return;
+          observer.disconnect();
+          section.dataset.rise = 'rising';
+          done = window.setTimeout(() => { delete section.dataset.rise; }, 1500);
+        }, { threshold: 0.08 });
+        observer.observe(track);
+        return () => {
+          observer.disconnect();
+          window.clearTimeout(done);
+          delete section.dataset.rise;
+        };
+      }, []);
+
       // The count follows the runway: on the pinned stage it advances with
       // the page's progress (the first look at the start, the last at the
       // end); in the swipeable runway it is the look nearest the centre.
-      // Passing looks never changes the visitor's chosen sign.
+      // Passing looks on the pinned stage never changes the chosen sign.
       const pickLook = useCallback((progress = null) => {
         const track = trackRef.current;
         if (!track) return;
@@ -5117,7 +5163,44 @@
           });
         }
         if (best >= 0) setPosition(best);
+        return best;
       }, [order.length]);
+
+      // On phones a swipe moves the spotlight: the look that settles in the
+      // centre becomes the chosen sign, and the address bar follows once the
+      // swipe rests. A disc tap steering the runway is never overridden by
+      // the looks it passes on the way.
+      const followSwipe = useCallback((best) => {
+        if (stageRef.current.pinned || !matchesMedia(CAMPAIGN_PHONE_QUERY)) return;
+        const ticker = order[best]?.ticker;
+        if (!ticker) return;
+        const steer = steerRef.current;
+        if (steer) {
+          if (ticker !== steer.ticker && window.performance.now() < steer.until) return;
+          steerRef.current = null;
+          if (ticker === steer.ticker) return;
+        }
+        if (ticker !== activeRef.current) {
+          activeRef.current = ticker;
+          // A low-priority update, so a fast swipe stays smooth.
+          if (typeof React.startTransition === 'function') React.startTransition(() => setActive(ticker));
+          else setActive(ticker);
+        }
+        const settle = settleRef.current;
+        window.clearTimeout(settle.timer);
+        settle.timer = window.setTimeout(() => {
+          const chosen = SIGNS.find((item) => item.ticker === activeRef.current);
+          if (!chosen || chosen.ticker === settle.committed) return;
+          settle.committed = chosen.ticker;
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.set('sign', chosen.asset.sign);
+            window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`);
+          } catch { /* malformed URL: the choice still stands */ }
+          trackAnalytics('registry_sign_selected', { sign: chosen.asset.sign, source: 'consumer_swipe' });
+        }, 240);
+      }, [order, setActive]);
+      useEffect(() => () => window.clearTimeout(settleRef.current.timer), []);
 
       useEffect(() => {
         const section = sectionRef.current;
@@ -5161,7 +5244,7 @@
           schedule();
         };
         const onTrackScroll = () => {
-          if (!stageRef.current.pinned) window.requestAnimationFrame(() => pickLook());
+          if (!stageRef.current.pinned) window.requestAnimationFrame(() => followSwipe(pickLook()));
         };
         measure();
         paint();
@@ -5183,7 +5266,7 @@
           resizeObserver?.disconnect();
           motion?.removeEventListener?.('change', onResize);
         };
-      }, [pickLook]);
+      }, [pickLook, followSwipe]);
 
       const showLook = useCallback((ticker, behavior) => {
         const section = sectionRef.current;
@@ -5214,6 +5297,10 @@
         const next = SIGNS[Math.min(SIGNS.length - 1, Math.max(0, index))];
         if (!next) return;
         setActive(next.ticker);
+        activeRef.current = next.ticker;
+        settleRef.current.committed = next.ticker;
+        window.clearTimeout(settleRef.current.timer);
+        if (!stageRef.current.pinned) steerRef.current = { ticker: next.ticker, until: window.performance.now() + 1200 };
         showLook(next.ticker, matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY) ? 'instant' : 'smooth');
         try {
           const url = new URL(window.location.href);
@@ -5363,10 +5450,6 @@
               <figcaption><strong>Follow your friends</strong><span>Add the people you trust and see their buys and sells as they happen.</span></figcaption>
             </figure>
             <figure className="campaign-phone campaign-phone--main" ref={stageRef}>
-              <picture className="campaign-phone__alert">
-                <source srcSet="/assets/fomo/fomo-alert-900.avif" type="image/avif" />
-                <img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async" />
-              </picture>
               <div className="campaign-phone__screen" data-playing={playing ? 'true' : 'false'}>
                 <picture>
                   <source srcSet={CAMPAIGN_APP_FOOTAGE.posterAvif} type="image/avif" />
@@ -5399,6 +5482,13 @@
               <figcaption><strong>Write your thesis</strong><span>When you buy, say why. It posts with the trade, so followers get the reasoning.</span></figcaption>
             </figure>
           </div>
+          <figure className="campaign-alert">
+            <picture className="campaign-alert__render">
+              <source srcSet="/assets/fomo/fomo-alert-900.avif" type="image/avif" />
+              <img src="/assets/fomo/fomo-alert-900.webp" width="900" height="697" alt="A Fomo notification: Capricorn is up 5.98 percent, and 50 top traders bought $88,203.12." loading="lazy" decoding="async" />
+            </picture>
+            <figcaption><strong>Alerts when your sign moves</strong><span>Fomo sends price alerts like this one for the Zodiacs you watch, so you hear about a move without keeping a chart open.</span></figcaption>
+          </figure>
         </section>
       );
     }
@@ -7433,14 +7523,16 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <main id="main" className="zd consumer-registry consumer-campaign">
-            <CampaignHero />
-            <CampaignBag sign={sign} batch={consumerMarket} />
-            <CampaignRunway
-              anchorTicker={anchorTicker}
-              active={activeTicker}
-              setActive={setActiveTicker}
-              batch={consumerMarket}
-            />
+            <div className="campaign-stack">
+              <CampaignHero />
+              <CampaignBag sign={sign} batch={consumerMarket} />
+              <CampaignRunway
+                anchorTicker={anchorTicker}
+                active={activeTicker}
+                setActive={setActiveTicker}
+                batch={consumerMarket}
+              />
+            </div>
             <CampaignApp />
             <ConsumerStory />
             <ConsumerShop />
