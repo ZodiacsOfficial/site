@@ -3,7 +3,10 @@
  * someone can keep them on their own profile. The grammar wraps one v2
  * positions token (src/lib/share-positions.ts) with the name the sender
  * chose and the time-known bit, and nothing else — it has no field for a
- * birth date, time, place, coordinates, timezone, or account.
+ * birth date, time, place, coordinates, timezone, or account. A card leaves
+ * the device, so its token is made like every other code that does
+ * (encodeSharedPositionsLink): ASC and MC to the whole degree. The planets
+ * stay at 0.001°, so a card still gives the birth date and time.
  *
  * The token travels in the URL fragment (`/profile/#card=…`), which the
  * browser does not send to a server; the receiving page reads it, strips
@@ -12,7 +15,7 @@
 import type { BodyName } from '../engine/types';
 import {
   decodePositionsLink,
-  encodePositionsLink,
+  encodeSharedPositionsLink,
   type PositionsShareChart,
   type PositionsShareInput,
 } from '../share-positions';
@@ -66,7 +69,7 @@ function canonicalLabel(value: unknown): string | null {
 
 export function encodeCardLink(input: { chart: PositionsShareInput; label?: string | null }): string | null {
   if (!input?.chart) return null;
-  const positions = encodePositionsLink(input.chart);
+  const positions = encodeSharedPositionsLink(input.chart);
   if (!positions) return null;
   const label = input.label ? cleanDisplayName(input.label) ?? '' : '';
   const wire: CardWire = { p: positions, l: label, k: input.chart.angles !== null };
@@ -96,7 +99,9 @@ export function decodeCardLink(token: string): ChartCard | null {
     if (typeof wire.p !== 'string' || typeof wire.k !== 'boolean') return null;
     const label = canonicalLabel(wire.l);
     const chart = decodePositionsLink(wire.p);
-    if (label === null || !chart || (chart.angles !== null) !== wire.k) return null;
+    // Only what the encoder makes: angles already at the whole degree.
+    if (label === null || !chart || encodeSharedPositionsLink(chart) !== wire.p) return null;
+    if ((chart.angles !== null) !== wire.k) return null;
     return { chart, label, timeKnown: wire.k };
   } catch {
     return null;
@@ -119,10 +124,10 @@ export function positionsForChart(chart: Pick<SavedChart, 'birth' | 'summary'>):
   };
 }
 
-/** Whether a received card carries exactly this saved chart's positions. */
+/** Whether a received card carries this saved chart's positions, as a card would. */
 export function cardMatchesChart(card: ChartCard, chart: Pick<SavedChart, 'birth' | 'summary'>): boolean {
-  const own = encodePositionsLink(positionsForChart(chart));
-  return own !== null && own === encodePositionsLink(card.chart);
+  const own = encodeSharedPositionsLink(positionsForChart(chart));
+  return own !== null && own === encodeSharedPositionsLink(card.chart);
 }
 
 /** The full link for a card, on the profile page of whoever opens it. */

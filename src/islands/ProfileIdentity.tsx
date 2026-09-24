@@ -343,10 +343,10 @@ function SharePanel({ chart, name, hue, placements, onAddName, onClose }: {
           <h2 class="pf-share__title" id="pf-share-title">Send your card</h2>
           <p>
             {name
-              ? <>It carries the name <strong>{name}</strong> and your chart’s positions</>
-              : 'It carries your chart’s positions and no name'}
-            {' '}— not your birth date, time, or place, though the Sun’s position shows roughly when
-            your birthday falls.
+              ? <>It carries the name <strong>{name}</strong> and your chart’s positions.</>
+              : 'It carries your chart’s positions and no name.'}
+            {' '}It has no birth date, time, or place fields, but the planet positions still give your
+            birth date and time.
           </p>
           <p>
             It opens on their own Zodiacs.org page, where they can keep you with their people and send

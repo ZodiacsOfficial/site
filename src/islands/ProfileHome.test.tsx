@@ -69,6 +69,10 @@ describe('your page header', () => {
       'Sun Leo', 'Moon Gemini', 'Rising Leo',
     ]);
     expect(cardPlacements(received(false)).map((row) => row.label)).toEqual(['Sun']);
+    // A card's rising is good to the whole degree, so its title says no more.
+    const html = render(<PlacementList placements={cardPlacements(received(true))} linked={false} />);
+    expect(html).toContain('title="13° Leo"');
+    expect(html).toContain('title="21°18′ Leo"');
   });
 
   it('lists placements in the homepage grammar: mono labels beside sign chips', () => {

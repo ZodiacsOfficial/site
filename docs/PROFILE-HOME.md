@@ -91,14 +91,18 @@ and becomes their page:
 - **Only the explicit self chart is "you".** A friend's chart never becomes
   the header or the nav initial, however recently it was saved. An
   unclassified legacy chart is never listed as a person.
-- **No birth data in a card.** The `c1.` grammar wraps one v2 positions token
-  with a name and a time-known bit. It has no field for date, time, place,
-  coordinates or timezone.
+- **No birth-data fields in a card.** The `c1.` grammar wraps one v2
+  positions token with a name and a time-known bit. It has no field for
+  date, time, place, coordinates or timezone.
+  - A card leaves the device, so its token comes from
+    `encodeSharedPositionsLink`, like every other code that does: ASC and MC
+    to the whole degree, planets to 0.001°. The decoder refuses a card
+    whose angles are any finer.
+  - The planets still give the birth date and time. The share panel and the
+    privacy page say so (claims ledger `priv.chart-cards`).
   - Angles travel only when the birth time is known.
   - An automatic chart name ("Leo Sun · 1990-08-14") contains the birth
     date, so it is never used as a person's name or as a card label.
-  - The share panel says plainly that the Sun's position shows roughly when
-    a birthday falls.
 - **Received cards are never re-shared.** They can be compared and opened
   read-only (`/birth-chart/#p=`), but never made into a card.
 - **Unsettled placements are not shown as settled.** Without a birth time:

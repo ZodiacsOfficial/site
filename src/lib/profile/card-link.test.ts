@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { computeChart } from '../engine/full';
 import { ENGINE_VERSION } from '../engine/types';
+import { encodePositionsLink } from '../share-positions';
 import type { SavedChart } from './schema';
 import {
   cardMatchesChart,
@@ -57,6 +58,21 @@ describe('chart card links', () => {
     expect(Object.keys(wire).sort()).toEqual(['k', 'l', 'p']);
     expect(token).not.toContain('1992');
     expect(cardMatchesChart(card, chart)).toBe(true);
+  });
+
+  it('carries ASC and MC to the whole degree and every body to 0.001°', () => {
+    const chart = savedChart();
+    const token = encodeCardLink({ chart: positionsForChart(chart), label: 'Maya' })!;
+    const card = decodeCardLink(token)!;
+    const { asc, mc } = chart.summary.angles!;
+    expect(card.chart.angles).toEqual({ asc: Math.floor(asc) + 0.5, mc: Math.floor(mc) + 0.5 });
+    for (const row of card.chart.bodies) {
+      const exact = chart.summary.bodies.find((body) => body.body === row.body)!.lon;
+      expect(Math.abs(((row.lon - exact + 540) % 360) - 180)).toBeLessThanOrEqual(0.0005 + 1e-9);
+    }
+    // A card with exact angles is not one this site makes, so it is refused.
+    const wire = JSON.parse(Buffer.from(token.slice(3), 'base64url').toString('utf8'));
+    expect(decodeCardLink(reencode({ ...wire, p: encodePositionsLink(positionsForChart(chart)) }))).toBeNull();
   });
 
   it('gives no rising sign for a chart without a birth time', () => {
