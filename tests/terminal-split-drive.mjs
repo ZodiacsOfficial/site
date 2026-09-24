@@ -288,9 +288,12 @@ async function assertSignPicker(page, { width, height }) {
       }),
     };
   });
-  assert.equal(picker.columns, width <= 900 ? 6 : 12);
+  // Phones and tablets keep the twelve discs in one slim row (owner request,
+  // so a look fits one screen): 44px tall, at least 24px wide (WCAG 2.5.8).
+  assert.equal(picker.columns, 12);
   assert.equal(picker.choices.length, 12);
-  assert.ok(picker.choices.every((choice) => choice.width >= 44 && choice.height >= 44), `every sign remains touch-safe at ${width}x${height}`);
+  const minWidth = width <= 900 ? 24 : 44;
+  assert.ok(picker.choices.every((choice) => choice.width >= minWidth && choice.height >= 44), `every sign remains touch-safe at ${width}x${height}`);
   assert.ok(picker.choices.every((choice) => choice.left >= -1 && choice.right <= width + 1), `every sign is fully exposed at ${width}x${height}`);
   assert.ok(picker.choices.every(({ filter }) => filter === 'none'), 'all twelve discs stay pastel');
   const pressed = picker.choices.filter((choice) => choice.pressed === 'true');
@@ -375,10 +378,13 @@ try {
         overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
         left: box.left,
         right: box.right,
+        top: box.top,
         width: box.width,
+        searchRight: search?.getBoundingClientRect().right ?? 0,
+        chipLeft: chip?.getBoundingClientRect().left ?? 0,
         navBackground: navStyle.backgroundColor,
         navBackdrop: navStyle.backdropFilter,
-        navBorder: navStyle.borderTopWidth,
+        navBorderBottom: navStyle.borderBottomWidth,
         navRadius: navStyle.borderRadius,
         searchBackground: searchStyle?.backgroundColor,
         searchBorder: searchStyle?.borderTopWidth,
@@ -390,12 +396,16 @@ try {
       };
     });
     assert.ok(compactNav.overflow <= 0, 'the 320px navigation does not create horizontal overflow');
-    assert.ok(compactNav.left >= 0 && compactNav.right <= 320, 'the single glass capsule stays inside the 320px viewport');
-    assert.ok(compactNav.width <= 308, `the compact capsule leaves viewport breathing room (${compactNav.width}px)`);
+    // Phones: the navigation is a full-width bar flush to the top edge, in the
+    // same glass, with ZODIACS and search on the left and Astrofolio and the
+    // menu on the right.
+    assert.ok(compactNav.left === 0 && compactNav.right === 320, `the phone bar spans the viewport (${compactNav.left}–${compactNav.right})`);
+    assert.equal(Math.round(compactNav.top), 0, 'the phone bar sits at the top edge');
     assert.notEqual(compactNav.navBackground, 'rgba(0, 0, 0, 0)', 'the navigation keeps its liquid-glass tint');
     assert.notEqual(compactNav.navBackdrop, 'none', 'the navigation keeps its refractive or frosted backdrop');
-    assert.equal(compactNav.navBorder, '1px', 'the glass capsule keeps its optical hairline');
-    assert.equal(compactNav.navRadius, '999px', 'the navigation remains one capsule');
+    assert.equal(compactNav.navBorderBottom, '1px', 'the phone bar keeps its optical hairline along its foot');
+    assert.equal(compactNav.navRadius, '0px', 'the phone bar is flat, not a capsule');
+    assert.ok(compactNav.chipLeft - compactNav.searchRight >= 24, 'Astrofolio sits apart on the right, away from ZODIACS and search');
     assert.equal(compactNav.searchBackground, 'rgba(0, 0, 0, 0)', 'search has no separate circle background');
     assert.equal(compactNav.searchBorder, '0px', 'search has no separate circle border');
     assert.equal(compactNav.searchWidth, '44px', 'search keeps a 44px touch target inside the capsule');
@@ -432,23 +442,22 @@ try {
     assert.match(activeLookText, /Pisces/u);
     assert.match(activeLookText, /\$0\.000012[\s\S]*down 11\.50% today/u);
     assert.match(activeLookText, /February 19 to March 20/u);
+    // Phones: each look is the figure, its numeral and dates, the name and a
+    // one-line price. The whole look opens its page, and buying is the bag's
+    // job; the look's own buttons stay in the markup for wider screens.
     const exploreCta = activeLook.locator('.campaign-look__explore');
-    assert.equal(await exploreCta.innerText(), 'Explore Pisces');
+    assert.equal((await exploreCta.textContent()).trim(), 'Explore Pisces');
     assert.equal(await exploreCta.getAttribute('href'), '/registry/pisces/');
-    assert.ok((await exploreCta.boundingBox()).height >= 44, 'Explore keeps a touch-safe target');
+    const lookBox = await activeLook.boundingBox();
+    const exploreBox = await exploreCta.boundingBox();
+    assert.ok(Math.abs(exploreBox.width - lookBox.width) <= 2 && Math.abs(exploreBox.height - lookBox.height) <= 2, 'the whole look opens its page');
     const fomoCta = activeLook.locator('.btn--fomo');
     assert.equal(await fomoCta.getAttribute('href'), 'https://fomo.family/coin?address=3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE&chainId=1399811149');
     assert.equal(await fomoCta.getAttribute('aria-label'), 'Open Fomo to buy Pisces');
-    assert.equal(await fomoCta.locator('img[src="/assets/venues/fomo-official.svg"]').count(), 1);
-    assert.equal(await fomoCta.locator('.btn--fomo__copy small').textContent(), 'Pisces ♓️');
-    assert.equal(await fomoCta.locator('.btn--fomo__copy strong').innerText(), 'Buy with Fomo');
-    assert.doesNotMatch(await fomoCta.innerText(), /selected/iu);
-    assert.ok(Math.abs((await fomoCta.boundingBox()).height - 48) <= .5, 'the look keeps the 48px Fomo target');
-    assert.ok(await fomoCta.locator('strong').evaluate((node) => node.clientWidth > 0 && node.scrollWidth <= node.clientWidth), 'the complete Buy with Fomo label fits without clipping');
-    await assertFomoBranding(fomoCta);
-    assert.equal(await activeLook.locator('.vitrine-buy-options a').innerText(), 'Other ways to buy');
+    assert.equal(await fomoCta.isVisible(), false, 'on phones the look leaves buying to the bag');
+    assert.equal(await activeLook.locator('.vitrine-buy-options').isVisible(), false);
+    assert.equal(await activeLook.locator('.campaign-spark').isVisible(), false, 'the one-line price stands alone');
     assert.equal(await activeLook.locator('.vitrine-buy-options a').getAttribute('href'), '/astrofolio/how-to-buy/pisces/');
-    assert.ok(await activeLook.locator('.vitrine-buy-options a').evaluate((node) => node.getBoundingClientRect().height >= 32));
     const movementStyle = await activeLook.locator('.vitrine-price__movement').evaluate((node) => ({
       className: node.className,
       color: getComputedStyle(node).color,
@@ -546,9 +555,13 @@ try {
     await page.keyboard.press('Home');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('tabindex'), '0');
+    // Phones keep the twelve discs in one row, so Down has no row to move to
+    // and the arrows along the row move the choice.
     await page.keyboard.press('ArrowDown');
-    assert.equal(await page.locator('[data-consumer-sign="libra"]').getAttribute('aria-pressed'), 'true');
-    await page.keyboard.press('ArrowUp');
+    assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
+    await page.keyboard.press('ArrowRight');
+    assert.equal(await page.locator('[data-consumer-sign="taurus"]').getAttribute('aria-pressed'), 'true');
+    await page.keyboard.press('ArrowLeft');
     assert.equal(await page.locator('[data-consumer-sign="aries"]').getAttribute('aria-pressed'), 'true');
     const keyboardRingMotion = await page.locator('.campaign-dot').evaluateAll((nodes) => nodes.map((node) => getComputedStyle(node, '::after').transitionDuration));
     assert.ok(keyboardRingMotion.every((duration) => /^(?:0s|0ms)(?:, (?:0s|0ms))*$/u.test(duration)), 'keyboard selection is immediate for incoming and outgoing rings');
@@ -582,10 +595,14 @@ try {
     await page.locator('.campaign-runway__track').evaluate((node) => { node.scrollLeft = node.scrollWidth; });
     const lastLook = await page.locator('.campaign-runway__track > .campaign-look').last().getAttribute('data-look');
     await page.waitForFunction((sign) => document.querySelector(`[data-consumer-sign="${sign}"]`)?.getAttribute('aria-pressed') === 'true', lastLook);
+    // Looks are sized to the screen with svh, the small viewport that phones
+    // keep still while their toolbars move (pinned in registry-pastel-polish),
+    // so a shorter screen gets a shorter look that still fits whole.
     const lookHeightTall = await page.locator(`[data-look="${lastLook}"]`).evaluate((node) => node.getBoundingClientRect().height);
     await page.setViewportSize({ width: 390, height: 760 });
     const lookHeightShort = await page.locator(`[data-look="${lastLook}"]`).evaluate((node) => node.getBoundingClientRect().height);
-    assert.ok(Math.abs(lookHeightTall - lookHeightShort) <= 1, 'browser-chrome height changes do not resize the swipeable looks');
+    assert.ok(lookHeightShort <= lookHeightTall && lookHeightShort >= 360, `a shorter screen keeps the look whole (${Math.round(lookHeightTall)} → ${Math.round(lookHeightShort)})`);
+    assert.ok(lookHeightShort <= 760 - 160, 'the look leaves room for the disc row and the bag');
     await page.setViewportSize({ width: 390, height: 844 });
 
     // Phones: as the page moves on, the film stays in place and dims, the
@@ -624,14 +641,68 @@ try {
     assert.ok(Math.abs(stackTop.dim - 0.78) < 0.01, 'the runway leaves the film fully dimmed behind it');
     assert.equal(stackTop.captionOpacity, 0, 'the caption has faded away');
     assert.equal(await page.locator('#the-twelve').evaluate((node) => getComputedStyle(node).backgroundColor), 'rgba(0, 0, 0, 0)', 'the looks float over the dimmed film');
+    // The phone bar slid away on the way down, so the disc row has the top of
+    // the screen to itself.
+    await page.waitForFunction(() => document.querySelector('.wnav-wrap')?.classList.contains('is-away'));
+    await page.waitForTimeout(450);
     const cardHead = await page.locator('.campaign-runway__head').evaluate((node) => node.getBoundingClientRect().top);
     const navBottom = await page.locator('.wnav').first().evaluate((node) => node.getBoundingClientRect().bottom);
-    assert.ok(cardHead >= navBottom + 8, 'the risen card heading clears the floating navigation');
+    assert.ok(cardHead >= navBottom + 8, 'the disc row clears the navigation');
+    assert.equal(await page.locator('.wnav-wrap').evaluate((node) => getComputedStyle(node).opacity), '0', 'the bar has faded away');
+    // One look per screen: the look in view sits whole between the disc row
+    // and the bag, which stays up over the runway on phones.
+    const fit = await page.evaluate(() => {
+      const track = document.querySelector('.campaign-runway__track');
+      const bounds = track.getBoundingClientRect();
+      const centre = bounds.left + bounds.width / 2;
+      const look = [...track.children].sort((a, z) => (
+        Math.abs(a.getBoundingClientRect().left + a.getBoundingClientRect().width / 2 - centre)
+        - Math.abs(z.getBoundingClientRect().left + z.getBoundingClientRect().width / 2 - centre)))[0].getBoundingClientRect();
+      const dots = document.querySelector('.campaign-runway__dots').getBoundingClientRect();
+      const bag = document.querySelector('.campaign-bag');
+      return { top: look.top, bottom: look.bottom, dotsBottom: dots.bottom, bagTop: bag.getBoundingClientRect().top, bagHidden: bag.classList.contains('is-hidden') };
+    });
+    assert.equal(fit.bagHidden, false, 'the bag stays over the runway on phones');
+    assert.ok(fit.top >= fit.dotsBottom && fit.bottom <= fit.bagTop - 8, `the look fits one screen above the bag (${Math.round(fit.top)}–${Math.round(fit.bottom)}, bag ${Math.round(fit.bagTop)})`);
 
-    // The bag rests while the runway fills the screen and over the ending.
+    // The bag's sign opens a sheet of all twelve. A pick moves the bag, the
+    // discs, the runway and the address bar to that sign; the page stays put
+    // and focus returns to the bag.
+    const pickFrom = await page.evaluate(() => window.scrollY);
+    await page.locator('.campaign-bag__pick').click();
+    await page.waitForFunction(() => document.querySelector('.campaign-sheet')?.open === true);
+    assert.equal(await page.locator('.campaign-sheet__sign').count(), 12);
+    assert.equal(await page.locator('.campaign-sheet__sign[aria-pressed="true"]').count(), 1);
+    await page.waitForFunction(() => document.activeElement?.getAttribute('aria-pressed') === 'true');
+    assert.ok((await page.locator('.campaign-sheet__close').boundingBox()).height >= 44, 'the sheet closes from a 44px target');
+    await page.locator('.campaign-sheet__sign[data-sheet-sign="leo"]').click();
+    await page.waitForFunction(() => document.querySelector('.campaign-sheet')?.open === false);
+    await page.waitForFunction(() => document.querySelector('.campaign-bag')?.dataset.campaignBag === 'leo');
+    assert.equal(new URL(page.url()).searchParams.get('sign'), 'leo');
+    assert.equal(await page.locator('[data-consumer-sign="leo"][aria-pressed="true"]').count(), 1);
+    await page.waitForFunction(() => {
+      const track = document.querySelector('.campaign-runway__track');
+      if (!track) return false;
+      const bounds = track.getBoundingClientRect();
+      const centre = bounds.left + bounds.width / 2;
+      const nearest = [...track.children].map((look) => {
+        const rect = look.getBoundingClientRect();
+        return [look.dataset.look, Math.abs(rect.left + rect.width / 2 - centre)];
+      }).sort((a, z) => a[1] - z[1])[0];
+      return nearest?.[0] === 'leo';
+    });
+    assert.ok(Math.abs(await page.evaluate(() => window.scrollY) - pickFrom) <= 2, 'a pick never moves the page');
+    assert.ok(await page.evaluate(() => document.activeElement?.classList.contains('campaign-bag__pick')), 'focus returns to the bag');
+    await page.locator('.campaign-bag__pick').click();
+    await page.waitForFunction(() => document.querySelector('.campaign-sheet')?.open === true);
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => document.querySelector('.campaign-sheet')?.open === false);
+
+    // The bag stays over the runway on phones and rests over the ending.
     await page.locator('#the-twelve').evaluate((node) => node.scrollIntoView({ block: 'center', behavior: 'instant' }));
-    await page.waitForFunction(() => document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
-    assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), 'true');
+    await page.waitForTimeout(200);
+    assert.equal(await page.locator('.campaign-bag').evaluate((node) => node.classList.contains('is-hidden')), false);
+    assert.equal(await page.locator('.campaign-bag').getAttribute('aria-hidden'), null);
     await page.locator('#buy').evaluate((node) => node.scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForFunction(() => !document.querySelector('.campaign-bag')?.classList.contains('is-hidden'));
     await assertAlertStandsAlone(page, '390px');
@@ -841,7 +912,7 @@ try {
       /^Virgo artwork unavailable; .+ symbol shown$/u,
     );
     assert.equal(await failedArtworkPage.locator('[data-look="virgo"] h3').innerText(), 'Virgo');
-    assert.equal(await failedArtworkPage.locator('[data-look="virgo"] .btn--fomo').isVisible(), true, 'a missing artwork never removes the way to buy');
+    assert.equal(await failedArtworkPage.locator('.campaign-bag[data-campaign-bag="virgo"] .btn--fomo').isVisible(), true, 'a missing artwork never removes the way to buy');
     await failedArtwork.close();
 
     const reduced = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
@@ -971,20 +1042,25 @@ try {
     assert.equal(await noJsPage.locator('#market-layer .consumer-market-leaderboard__identity strong').first().innerText(), 'Gemini');
     const seasonLook = noJsPage.locator(`#the-twelve [data-static-sign="${expectedSeason.sign}"]`);
     await seasonLook.scrollIntoViewIfNeeded();
+    // Phones: the no-JavaScript looks match the hydrated ones. The whole look
+    // opens its page, and the static bag carries the season's Fomo action.
     const staticLookGeometry = await seasonLook.evaluate((node) => {
-      const fomo = node.querySelector('.btn--fomo');
+      const fomo = document.querySelector('.campaign-bag--static .btn--fomo');
       const explore = node.querySelector('.campaign-look__explore')?.getBoundingClientRect();
       const logo = fomo?.querySelector('img')?.getBoundingClientRect();
       const label = fomo?.querySelector('strong');
       return {
+        lookFomoShown: getComputedStyle(node.querySelector('.btn--fomo')).display !== 'none',
+        lookHeight: node.getBoundingClientRect().height,
         fomoHeight: fomo?.getBoundingClientRect().height,
         exploreHeight: explore?.height,
         logoWidth: logo?.width,
         labelFits: Boolean(label && label.clientWidth > 0 && label.scrollWidth <= label.clientWidth),
       };
     });
+    assert.equal(staticLookGeometry.lookFomoShown, false, 'the no-JavaScript look leaves buying to the bag on phones');
+    assert.ok(Math.abs(staticLookGeometry.exploreHeight - staticLookGeometry.lookHeight) <= 2, 'the whole no-JavaScript look opens its page');
     assert.ok(Math.abs(staticLookGeometry.fomoHeight - 48) <= .5, 'the no-JavaScript Fomo action keeps its 48px target');
-    assert.ok(staticLookGeometry.exploreHeight >= 44, 'the no-JavaScript Explore link stays touch-safe');
     assert.ok(staticLookGeometry.labelFits, 'the no-JavaScript Buy with Fomo label fits without clipping');
     assert.equal(staticLookGeometry.logoWidth, 34);
     const staticTrack = await noJsPage.locator('#the-twelve .campaign-runway__track').evaluate((node) => ({
