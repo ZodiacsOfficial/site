@@ -18,6 +18,7 @@ export const PHASE1_TEMPLATE_SOURCE_PATHS = Object.freeze([
   'tsconfig.json',
   'scripts/phase1-acceptance-evidence.test.mjs',
   'src/lib/email/config.ts',
+  'src/lib/email/capture-enhancement.js',
   'src/lib/email/daily-capture-copy.ts',
   'src/lib/email/daily-config.ts',
   'src/lib/email/daily-segment-id.ts',

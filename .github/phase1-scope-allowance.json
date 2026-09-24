@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "owner-requested-zodiacs-org-links-2026-09-24",
-  "baseCommit": "f59b176d08b4ad0fd208c834de30718c78e5c72a",
+  "baseCommit": "3b957e87743f118a0af3171d05d0cbfd6e6e7f2f",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/technical/index.html",
