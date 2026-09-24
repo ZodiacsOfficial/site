@@ -12,6 +12,25 @@ original token registry preserved as the "Collect" wing. Strategy:
 }
 ```
 
+## Repositories and hosting
+
+The code lives under the `zodiacs-org` GitHub account: `zodiacs-org/site`
+(this repo), `zodiacs-org/sdk`, `zodiacs-org/engine` and `zodiacs-org/app`.
+`site` and `sdk` moved there from the `ZodiacsOfficial` GitHub organization on
+2026-09-24. Vercel deploys production from `zodiacs-org/site` `main` (project
+`zodiacs-org`) and the SDK site from `zodiacs-org/sdk` (project `sdk-zodia`).
+The Vercel team slug is still `zodiacsofficial`, so preview hostnames keep
+`-zodiacsofficial.vercel.app`. That is correct; don't "fix" it.
+
+**Standing owner request:** never delete the `ZodiacsOfficial` organization,
+and never create a repository named `site` or `sdk` in it. GitHub's redirects
+from the old addresses keep older links working. Those links are in dated
+records (`docs/`, `PLAN.md`, thesis evidence), in the immutable archives'
+packed metadata, and anywhere else the old name was published. A new
+repository with either name would take over its old address and break them.
+New links use zodiacs-org. The site-check "stale repo" grep fails on old-org
+GitHub URLs in the SDK and Registry pages.
+
 ## One design system, two content registers
 
 Since the Part-Q retheme (owner-directed), the WHOLE site — Astro pages in

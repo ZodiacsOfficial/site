@@ -64,7 +64,7 @@ jobs:
 
       - name: Check for stale repo or bridge wording
         run: |
-          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|zodiacs-org/sdk' public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
+          ! grep -RInE 'Symbiosis|ZodiacS(DK)|diasmal[[:digit:]]{3}|github\.com/ZodiacsOfficial' public/sdk public/registry README.md CLAUDE.md DESIGNER_HANDOFF.md
 
       - name: Wing language stays in the wing
         # The source-aware gate checks rendered strings across Astro, TS/TSX,

@@ -57,7 +57,7 @@ Official links (use everywhere, consistently):
 - TikTok: `https://tiktok.com/@astrofolio`
 - Telegram: `https://t.me/astrofoliosol`
 - Astrofolio: `https://zodiacs.org/astrofolio/` (`https://astrofolio.xyz/` is a redirect alias)
-- GitHub: `https://github.com/ZodiacsOfficial`
+- GitHub: `https://github.com/zodiacs-org`
 - Per-sign share image (1200×630): `https://zodiacs.org/assets/og/{sign}.png`
 - Icon (square-ish PNG): `https://zodiacs.org/assets/icons/{sign}.png`
 

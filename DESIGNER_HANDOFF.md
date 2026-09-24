@@ -22,7 +22,7 @@ Zodiacs.org is live at:
 
 Repository:
 
-- https://github.com/ZodiacsOfficial/site
+- https://github.com/zodiacs-org/site
 
 Production is deployed through Vercel from the `main` branch.
 

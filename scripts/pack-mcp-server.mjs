@@ -54,7 +54,7 @@ export async function manifestFor(file, bytes, artifactCommit) {
     bytes: bytes.length,
     sha256: sha256(bytes),
     artifactCommit,
-    artifactRepository: 'https://github.com/ZodiacsOfficial/site',
+    artifactRepository: 'https://github.com/zodiacs-org/site',
     artifactPath: `public/examples/${file}`,
     engine: { package: candidate.bundled.engine.package, version: candidate.bundled.engine.version },
     dependencies: candidate.dependencies,

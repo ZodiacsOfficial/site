@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "id": "owner-requested-astrofolio-phone-motion-2026-09-23",
-  "baseCommit": "4add52b11142aa41b49335ef9f787e524cba723b",
+  "id": "owner-requested-zodiacs-org-links-2026-09-24",
+  "baseCommit": "3b957e87743f118a0af3171d05d0cbfd6e6e7f2f",
   "protectedPaths": [
     "public/assets/app.js",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
+    "public/registry/technical/index.html",
+    "public/sdk/engine/index.html",
+    "public/sdk/index.html",
     "src/app.jsx"
   ],
-  "authorization": "The owner reviewed the live Campaign /astrofolio/ and asked, on every width, for the Capricorn Fomo notification to move off the phones in the app section so it stands on its own; desktop is otherwise unchanged. On phones only, the owner asked for the opening and its scroll to follow rolex.com's mobile homepage from a screen recording: the headline as a tracked line, the name Astrofolio, one Discover more with a moving arrow, the film dimming while the caption rises and fades, the looks popping up over the dimmed film, and the pastel zodiac discs following the swiped card. Preserve market data, addresses, flags, and transaction behavior."
+  "authorization": "The owner moved the site and SDK repositories from the ZodiacsOfficial GitHub organization to the zodiacs-org account and asked for the whole site to be under zodiacs-org, then approved a pull request that repoints the site's links. This allowance covers only swapping github.com/ZodiacsOfficial repository links and labels for their zodiacs-org equivalents on the SDK pages, the Registry technical page and the Registry application, plus the regenerated bundle. Preserve market data, addresses, flags, and transaction behavior."
 }

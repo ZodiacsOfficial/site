@@ -357,8 +357,8 @@ describe('examples page artifact identity', () => {
     const changedStarter = { ...metadata, version: '8.7.6-rc.5', file: 'zodiacs-platform-starter-8.7.6-rc.5.tgz', sha256: 'b'.repeat(64), artifactCommit: 'a'.repeat(40) };
     const changedCandidate = { ...candidate, package: '@example/engine', version: '9.8.7-rc.6', status: 'Unpublished test candidate' };
     const changed = render(changedStarter, changedCandidate);
-    expect(changed.links).toContain(`https://raw.githubusercontent.com/ZodiacsOfficial/site/${changedStarter.artifactCommit}/public/examples/${changedStarter.file}`);
-    expect(changed.links).toContain(`https://github.com/ZodiacsOfficial/site/blob/${changedStarter.artifactCommit}/examples/platform/README.md`);
+    expect(changed.links).toContain(`https://raw.githubusercontent.com/zodiacs-org/site/${changedStarter.artifactCommit}/public/examples/${changedStarter.file}`);
+    expect(changed.links).toContain(`https://github.com/zodiacs-org/site/blob/${changedStarter.artifactCommit}/examples/platform/README.md`);
     expect(changed.setup).toBe(original.setup.replaceAll(metadata.file, changedStarter.file)
       .replaceAll(metadata.sha256, changedStarter.sha256).replaceAll(metadata.artifactCommit, changedStarter.artifactCommit));
     for (const value of [changedStarter.file, changedStarter.sha256, changedStarter.artifactCommit]) expect(changed.setup).toContain(value);
