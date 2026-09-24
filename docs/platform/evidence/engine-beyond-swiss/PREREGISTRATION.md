@@ -57,9 +57,9 @@ Each step names its rule's source. Baselines are the shipped engine,
 - **Baseline.** On its own positions the shipped engine finds 236,910 aspects
   in the scan and misclassifies 486 (0.205 %): every applying aspect whose orb
   is under 0.01 × the relative speed (ledger angles-houses-aspects-2).
-- **Verdict: NOT RUN.** A package change. It is written on a local rc.7
-  branch of the SDK, kept as patches in `rc7-phase1/` until that branch can
-  be pushed. There the scan gave 0 of 236,932. The scan runs on Swiss's
+- **Verdict: NOT RUN.** A package change, in the engine's rc.7 pull request,
+  [zodiacs-org/engine#1](https://github.com/zodiacs-org/engine/pull/1), and
+  in `rc7-phase1/` as patch `0001`. There the scan gave 0 of 236,932. The scan runs on Swiss's
   positions, which are named by digest and not committed, so the figure
   cannot be checked from this repository alone.
 
@@ -80,8 +80,9 @@ Each step names its rule's source. Baselines are the shipped engine,
   of the mean one gives p50 0.065″, p95 0.240″, max 6.36″ and 0.36″ for
   |lat| ≤ 45, inside the rule's ERFA gates. `scripts/angles-grid.test.mjs`
   pins both, and is written to fail when rc.7 lands.
-- **Verdict: NOT RUN.** See amendment A1. The change is written on the local rc.7
-  branch as patch `0004` in `rc7-phase1/`, where twelve anchors from the ERFA
+- **Verdict: NOT RUN.** See amendment A1. The change is in
+  [zodiacs-org/engine#1](https://github.com/zodiacs-org/engine/pull/1) and in
+  `rc7-phase1/` as patch `0004`, where twelve anchors from the ERFA
   arbiter pass the rule's gates. The verdict on the full grid waits for rc.7
   to be vendored.
 
@@ -137,8 +138,9 @@ Each step names its rule's source. Baselines are the shipped engine,
   3.4″/day (swiss-parity-7); station instants 1–4 min from Swiss's
   (angles-houses-aspects-10).
 - **Verdict: PARTIAL.** Natal Saturn's direction now comes from the chart's
-  own speed (1.8c, landed). The speeds themselves are a package change on the
-  local rc.7 branch, kept as patches in `rc7-phase1/`. See amendment A3.
+  own speed (1.8c, landed). The speeds themselves are a package change, in
+  [zodiacs-org/engine#1](https://github.com/zodiacs-org/engine/pull/1) and in
+  `rc7-phase1/` as patch `0002`. See amendment A3.
 
 ### 1.9 Placidus polar limit (version 1, rule 1h)
 
@@ -153,8 +155,9 @@ Each step names its rule's source. Baselines are the shipped engine,
   obliquity of date, runs from 66.533° to 66.589° over the ladder's dates;
   it allows Placidus on 320 of the 336 cases, the count Swiss computes, and
   the shipped engine refuses all 336 (`scripts/angles-grid.test.mjs`).
-- **Verdict: NOT RUN.** The limit is written on the local rc.7 branch as
-  patch `0005` in `rc7-phase1/`. Measured there against Swiss on Swiss's own
+- **Verdict: NOT RUN.** The limit is in
+  [zodiacs-org/engine#1](https://github.com/zodiacs-org/engine/pull/1) and in
+  `rc7-phase1/` as patch `0005`. Measured against Swiss on Swiss's own
   inputs, the status agrees on 336 of 336 cases and the cusps are within
   0.0085″, inside the rule. The verdict waits for rc.7 to be vendored.
   Patch `0006` adds the rest of the rule. The owner delegated the fallback

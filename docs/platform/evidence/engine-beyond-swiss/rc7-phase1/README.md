@@ -1,9 +1,10 @@
 # The package half of Phase 1, as patches
 
-Six commits for `@zodiacs/engine` in the `ZodiacsOfficial/sdk` repository,
-written for rc.7. They are kept here because pushing a branch to that
-repository waits for the owner's permission, and a local branch does not
-survive this session's container.
+Six commits for `@zodiacs/engine`, written for rc.7 while the engine lived in
+the SDK repository. The engine now has its own repository,
+`zodiacs-org/engine`, where these commits are the rc.7 pull request,
+[zodiacs-org/engine#1](https://github.com/zodiacs-org/engine/pull/1). This
+folder keeps them as patches until rc.7 is vendored here.
 
 | patch | step | what it does |
 | --- | --- | --- |
@@ -22,6 +23,9 @@ Each commit message gives the tests and figures in full.
   `57934371219b9222d2a2a878e37126519668b66c`, which is the local branch
   `rc7-phase1` exactly.
 - **Tests:** `vitest run` in `packages/engine` passes 510 of 510.
+- **In the engine repository:** the same six commits sit on `main` there,
+  which is rc.6 with its history plus the setup to build on its own. Apart
+  from that setup the tree is the one above, and the 510 tests pass.
 
 The package version is still `0.1.1-rc.6`. The version bump, the release
 artifacts and the site's re-vendoring belong to the rc.7 release. The owner
@@ -39,4 +43,4 @@ git switch -c <branch> ac27761e6dea138842e6ef5c2c69129ead7af636
 git am path/to/rc7-phase1/*.patch
 ```
 
-Once the branch is pushed to the SDK repository, this folder can be removed.
+Once rc.7 is vendored here, this folder can be removed.
