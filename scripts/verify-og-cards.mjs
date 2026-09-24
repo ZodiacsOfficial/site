@@ -13,6 +13,10 @@ import { dirname, resolve } from 'node:path';
 import sharp from 'sharp';
 import { HOROSCOPE_OG_SURFACES, OG_EN } from '../src/strings/seo.en.mjs';
 import {
+  ASTROFOLIO_SHARE_CARD_MAX_BYTES,
+  ASTROFOLIO_SHARE_CARD_PATH,
+} from './build-astrofolio-share-card.mjs';
+import {
   RU_OG_COPY_DIGEST_INPUT,
   RU_OG_REQUIRED_CARDS,
   RU_OG_ROUTE_CARDS,
@@ -132,10 +136,25 @@ for (const slug of signSlugs) {
 }
 
 for (const relativePath of expected) await validatePng(relativePath);
-const expectedAstrofolioPath = '/assets/og/astrofolio/v4/leo.png';
 const expectedTerminalPath = '/assets/og/v6/terminal.png';
-if (OG_EN.astrofolio.image !== expectedAstrofolioPath) {
-  failures.push(`Astrofolio image: expected ${expectedAstrofolioPath}, received ${OG_EN.astrofolio.image}`);
+if (OG_EN.astrofolio.image !== ASTROFOLIO_SHARE_CARD_PATH) {
+  failures.push(`Astrofolio image: expected ${ASTROFOLIO_SHARE_CARD_PATH}, received ${OG_EN.astrofolio.image}`);
+}
+// Astrofolio's evergreen share card is a photograph, so it is the one JPEG
+// card, held under a byte budget that chat-app previews accept.
+try {
+  const bytes = await readFile(resolve(root, `public${ASTROFOLIO_SHARE_CARD_PATH}`));
+  const metadata = await sharp(bytes).metadata();
+  if (metadata.format !== 'jpeg' || metadata.width !== 1200 || metadata.height !== 630) {
+    failures.push(
+      `${ASTROFOLIO_SHARE_CARD_PATH}: expected 1200x630 JPEG, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
+    );
+  }
+  if (bytes.length > ASTROFOLIO_SHARE_CARD_MAX_BYTES) {
+    failures.push(`${ASTROFOLIO_SHARE_CARD_PATH}: ${bytes.length} bytes, over the ${ASTROFOLIO_SHARE_CARD_MAX_BYTES}-byte budget`);
+  }
+} catch {
+  failures.push(`${ASTROFOLIO_SHARE_CARD_PATH}: missing`);
 }
 if (OG_EN.terminal.image !== expectedTerminalPath) {
   failures.push(`Terminal image: expected ${expectedTerminalPath}, received ${OG_EN.terminal.image}`);
@@ -242,7 +261,7 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Astrofolio seasonal v4 and Terminal v6 identities are distinct; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Astrofolio on its evergreen Faces card (the seasonal v4 cards kept for shared links) and Terminal on v6; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
 
 // Registry catalogue cards live outside the frozen v2 bundle. Keep their
 // source, geometry, manifest, route metadata, and size contracts in the same

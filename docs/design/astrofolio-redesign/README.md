@@ -13,6 +13,8 @@
 
 **Headline, explainer and card rise, 2026-09-24:** the headline reads "Twelve signs. Twelve tokens." on every width, in place of "The twelve official Zodiacs.", so a newcomer learns from the first screen that these are tokens. Under the runway, a new section, "What is Astrofolio?", gives three short answers before the page turns to Fomo: what the tokens are, why the zodiac, and how to get one, with a one-line risk note. The middle answer links to the thesis. On phones, the looks now rise with the scroll in two beats, after rolex.com. First the film falls nearly black (to 90%) and the caption lifts away. Then the looks come up from below the screen as solid cards, the next a beat behind, and settle as the runway reaches the top. Reduced motion keeps the dim and the fade, without the rise.
 
+**Share card, 2026-09-24:** from six directions (Film, Cabinet, Season, Faces, Clock and Cosmic eye), the owner chose **Faces** for the image a shared link shows. It is one evergreen card: the twelve portraits of the glyph film, one per sign, in two rows around a band with the wordmark and "Twelve signs. Twelve tokens." `scripts/build-astrofolio-share-card.mjs` renders it from the film. It replaces the seasonal card, and the seasonal cards stay published for links already shared.
+
 These are four working prototypes for `/astrofolio/`. Each is built only from assets already in this repository:
 
 - the twelve gold figures (`public/assets/sculptures/`)
