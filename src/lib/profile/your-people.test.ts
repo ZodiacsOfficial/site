@@ -85,7 +85,18 @@ describe('your people', () => {
     expect(people.map((person) => person.name)).toEqual(['Ben', 'Cleo', 'Anna']);
     expect(people[0].next).toMatchObject({ kind: 'birthday', days: 8 });
     expect(people[1].next!.kind).toBe('sun-return');
-    expect(people.find((person) => person.name === 'Cleo')!.mark.timeKnown).toBe(false);
+    const cleo = people.find((person) => person.name === 'Cleo')!;
+    expect(cleo).toMatchObject({ personalName: 'Cleo', sunHue: '#D3A9DE' });
+  });
+
+  it('draws initials only from names people chose, and colours them by a settled Sun', () => {
+    const automatic = { ...chart('Dan', '1992-03-03', 'other'), name: 'Libra Sun · 1992-03-03' };
+    const cusp = { ...chart('Eve', '1992-03-04', 'other') };
+    cusp.summary = { ...cusp.summary, bodies: [{ body: 'Sun', lon: 180.4, retrograde: false }] };
+    const people = buildPeople([automatic, cusp], [card('c0000000-0000-4000-8000-000000000002', '', 40)], NOW);
+    expect(people.find((person) => person.id === 'Dan')).toMatchObject({ name: 'Libra Sun', personalName: null });
+    expect(people.find((person) => person.id === 'Eve')).toMatchObject({ personalName: 'Eve', sunHue: null });
+    expect(people.find((person) => person.kind === 'card')).toMatchObject({ personalName: null, sunHue: '#B9D4BE' });
   });
 
   it('trims a saved chart name to its handle', () => {

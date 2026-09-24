@@ -6,13 +6,9 @@ import {
   isAutomaticChartName,
   loadMe,
   parseMe,
-  removePhoto,
   resolvedDisplayName,
   saveMe,
 } from './me';
-import { centreSquare, isStorablePhoto } from './avatar';
-
-const PHOTO = 'data:image/webp;base64,UklGRhYAAABXRUJQVlA4IAoAAAAQAgCdASoBAAEAAQAcJaQAA3AA/v3AgAA=';
 
 class MemoryStorage {
   values = new Map<string, string>();
@@ -73,10 +69,11 @@ describe('stored settings', () => {
     expect(parsed).toEqual({ ...DEFAULT_ME, displayName: 'Maya' });
   });
 
-  it('keeps a valid photo and falls back to the mark when the photo is missing', () => {
-    expect(parseMe(JSON.stringify({ version: 1, avatar: 'photo', photo: PHOTO })).avatar).toBe('photo');
-    expect(parseMe(JSON.stringify({ version: 1, avatar: 'sign' })).avatar).toBe('sign');
-    expect(parseMe(JSON.stringify({ version: 1, avatar: 'selfie' })).avatar).toBe('mark');
+  it('keeps no picture: fields from an earlier preview are dropped on read', () => {
+    const photo = 'data:image/webp;base64,UklGRhYAAABXRUJQVlA4IAoAAAAQAgCdASoBAAEAAQAcJaQAA3AA/v3AgAA=';
+    const parsed = parseMe(JSON.stringify({ version: 1, displayName: 'Maya', avatar: 'photo', photo }));
+    expect(parsed).toEqual({ ...DEFAULT_ME, displayName: 'Maya' });
+    expect(JSON.stringify(parsed)).not.toContain('data:image');
   });
 
   it('writes, announces, and removes nothing it was not given', () => {
@@ -87,28 +84,9 @@ describe('stored settings', () => {
     expect(loadMe()).toEqual({ ...DEFAULT_ME, displayName: 'Maya', keepCloseDismissed: true });
   });
 
-  it('refuses to select a photo it does not hold', () => {
-    expect(saveMe({ avatar: 'photo' })).toBe(false);
+  it('clears back to nothing stored when the name is removed', () => {
+    expect(saveMe({ displayName: 'Maya' })).toBe(true);
+    expect(saveMe({ displayName: '   ' })).toBe(true);
     expect(storage.getItem(ME_KEY)).toBeNull();
-  });
-
-  it('forgets a photo entirely and returns to the chart mark', () => {
-    expect(saveMe({ avatar: 'photo', photo: PHOTO })).toBe(true);
-    expect(removePhoto()).toBe(true);
-    expect(storage.getItem(ME_KEY)).toBeNull();
-  });
-});
-
-describe('photos', () => {
-  it('stores only small base64 image data URLs', () => {
-    expect(isStorablePhoto(PHOTO)).toBe(true);
-    expect(isStorablePhoto('data:image/svg+xml;base64,PHN2Zz4=')).toBe(false);
-    expect(isStorablePhoto('https://example.com/me.jpg')).toBe(false);
-    expect(isStorablePhoto(`data:image/jpeg;base64,${'A'.repeat(200_000)}`)).toBe(false);
-  });
-
-  it('crops the centred square of any shape', () => {
-    expect(centreSquare(400, 300)).toEqual({ sx: 50, sy: 0, side: 300 });
-    expect(centreSquare(300, 401)).toEqual({ sx: 0, sy: 51, side: 300 });
   });
 });

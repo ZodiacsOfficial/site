@@ -1,7 +1,7 @@
 /**
  * The people on your profile: saved charts that are not yours, plus cards
- * other people sent you. Each gets a mark, a way to compare with your own
- * chart, and the next date worth knowing — a birthday for a saved chart
+ * other people sent you. Each gets an initial, a way to compare with your
+ * own chart, and the next date worth knowing — a birthday for a saved chart
  * (its birth date is on this device), or the Sun's return to its birth
  * position for a card (a card carries positions, not a birth date).
  *
@@ -10,7 +10,8 @@
  * profile never loads the ephemeris for this list.
  */
 import { sunLongitude } from '../engine/lite';
-import type { ChartMarkSource } from '../chart-mark/common';
+import { isAutomaticChartName } from './me';
+import { settledSunHue } from './settled-signs';
 import type { SavedChart } from './schema';
 import type { CircleEntry } from './circle';
 
@@ -23,8 +24,12 @@ export interface PersonRow {
   kind: 'saved' | 'card';
   /** Saved-chart id or circle-entry id. */
   id: string;
+  /** The label shown; empty for a card sent without a name. */
   name: string;
-  mark: ChartMarkSource;
+  /** The name an initial comes from; null for an automatic chart name or a nameless card. */
+  personalName: string | null;
+  /** The settled Sun sign's hue, else null. */
+  sunHue: string | null;
   next: { kind: UpcomingKind; at: Date; days: number } | null;
 }
 
@@ -96,29 +101,18 @@ export function nextSunReturn(sunLon: number, now: Date): Date | null {
   return null;
 }
 
-function markFromSaved(chart: SavedChart): ChartMarkSource {
-  return {
-    bodies: chart.summary.bodies.map(({ body, lon }) => ({ body, lon })),
-    asc: chart.birth.timeKnown ? chart.summary.angles?.asc ?? null : null,
-    timeKnown: chart.birth.timeKnown === true,
-  };
-}
-
-export function markFromCircle(entry: Pick<CircleEntry, 'chart' | 'timeKnown'>): ChartMarkSource {
-  return {
-    bodies: entry.chart.bodies,
-    asc: entry.timeKnown ? entry.chart.angles?.asc ?? null : null,
-    timeKnown: entry.timeKnown,
-  };
-}
-
-export function selfMarkSource(chart: SavedChart | null): ChartMarkSource | null {
-  return chart ? markFromSaved(chart) : null;
-}
-
 /** First part of a saved chart's name, the way compact labels trim it. */
 export function chartHandle(name: string): string {
   return name.split('·')[0].trim() || name;
+}
+
+/** A saved chart's name as a person's name, or null when it is automatic (it carries the birth date). */
+export function personalChartName(name: string): string | null {
+  return isAutomaticChartName(name) ? null : chartHandle(name);
+}
+
+export function savedChartSunHue(chart: SavedChart): string | null {
+  return settledSunHue(chart.summary.bodies, chart.birth.timeKnown === true);
 }
 
 /**
@@ -141,7 +135,8 @@ export function buildPeople(
       kind: 'saved',
       id: chart.id,
       name: chartHandle(chart.name),
-      mark: markFromSaved(chart),
+      personalName: personalChartName(chart.name),
+      sunHue: savedChartSunHue(chart),
       next: at ? { kind: 'birthday', at, days: daysUntil(at, now) } : null,
     });
   }
@@ -153,7 +148,8 @@ export function buildPeople(
       kind: 'card',
       id: entry.id,
       name: entry.name,
-      mark: markFromCircle(entry),
+      personalName: entry.name || null,
+      sunHue: settledSunHue(entry.chart.bodies, entry.timeKnown),
       next: at ? { kind: 'sun-return', at, days: daysUntil(at, now) } : null,
     });
   }

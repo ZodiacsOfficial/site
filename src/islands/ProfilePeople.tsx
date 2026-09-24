@@ -7,7 +7,7 @@
  * offered for re-sharing.
  */
 import { useMemo, useState } from 'preact/hooks';
-import ChartMark from '../components/ChartMark';
+import Initial from '../components/Initial';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useCircle } from '../lib/hooks/useMe';
 import { explicitSelfChart } from '../lib/profile/read-store';
@@ -99,7 +99,7 @@ export default function ProfilePeople({ accountBound = false }: { accountBound?:
               const soon = person.next !== null && person.next.days <= SOON_DAYS;
               return (
                 <li class="pf-row pf-person" key={person.key} data-person-kind={person.kind}>
-                  <ChartMark source={person.mark} size={48} label={`${label}’s chart mark`} />
+                  <Initial name={person.personalName} hue={person.sunHue} size={40} />
                   <div class="pf-row__text">
                     <strong>{label}</strong>
                     <small>

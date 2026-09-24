@@ -2,57 +2,36 @@
    /profile/ as your page: the header, a card arriving, your people, and
    the keep-it-close line. This sheet leans on the shared primitives —
    .btn + .orb, .next-action, .shell/.core, .chip, .field, .kicker — and
-   only adds layout, the chart mark, and the hairline rows. The twelve
+   only adds layout, the initial, and the hairline rows. The twelve
    pastel hues reach it through --sign; nothing else carries colour.
    Focus rings are the site's own (base.css :focus-visible).
    ──────────────────────────────────────────────────────────────────── */
 
-/* ── Chart marks ── */
-.chart-mark {
-  display: block;
+/* ── A person's initial: their Sun sign's colour, EB Garamond, void ink.
+   A sibling of the sign icons. Size comes from --size, set inline or by
+   the surrounding layout; the colour from --sign, set inline. ── */
+.initial {
+  width: var(--size, 40px);
+  height: var(--size, 40px);
   flex: none;
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  /* EB Garamond capitals sit a touch high in their box. */
+  padding-top: calc(var(--size, 40px) * 0.05);
   border-radius: 50%;
+  background: var(--sign);
+  color: var(--void-0);
+  font-family: var(--font-serif);
+  font-size: calc(var(--size, 40px) * 0.5);
+  font-weight: 500;
+  line-height: 1;
+  user-select: none;
 }
-.chart-mark--photo,
-.chart-mark--sign {
-  display: inline-block;
-  overflow: hidden;
-  line-height: 0;
-}
-.chart-mark.chart-mark--fluid {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.chart-mark--photo img,
-.chart-mark--sign img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.chart-mark--photo { box-shadow: inset 0 0 0 1px var(--hair-2); }
-
-/* The header mark draws itself in once: planets settle into their lanes,
-   then the aspect lines appear between them. */
-@media (prefers-reduced-motion: no-preference) {
-  .chart-mark--reveal .chart-mark__planet {
-    transform-box: fill-box;
-    transform-origin: center;
-    animation: pf-planet-in 560ms var(--ease-soft) both;
-    animation-delay: calc(var(--i, 0) * 45ms + 80ms);
-  }
-  .chart-mark--reveal .chart-mark__lines {
-    animation: pf-lines-in 720ms var(--ease-soft) 460ms both;
-  }
-}
-@keyframes pf-planet-in {
-  from { opacity: 0; transform: scale(0.3); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes pf-lines-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+/* No chosen name: the colour stays as a ring rather than a guessed letter. */
+.initial--unnamed {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px color-mix(in oklab, var(--sign) 75%, transparent);
 }
 
 /* ── The quiet text action (the .next-action__quiet link, as a button) ── */
@@ -128,14 +107,21 @@
   gap: clamp(18px, 4vw, 36px);
   align-items: center;
 }
-.pf-me__mark {
-  width: clamp(96px, 22vw, 148px);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px var(--hair-1),
-    0 18px 50px -24px color-mix(in oklab, var(--sign, var(--accent)) 45%, transparent);
+.pf-me__initial { --size: clamp(76px, 16vw, 112px); }
+/* With no name yet, the disc is where you add one. */
+.pf-me__add-name {
+  --sign: var(--ink-2);
+  padding: 0;
+  border: 1.5px dashed var(--sign);
+  box-shadow: none;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: calc(var(--size) * 0.34);
+  font-weight: 300;
+  cursor: pointer;
+  transition: color var(--dur-1) var(--ease), border-color var(--dur-1) var(--ease);
 }
+.pf-me__add-name:hover { --sign: var(--ink-0); color: var(--text); }
 .pf-me__text {
   min-width: 0;
   display: grid;
@@ -166,72 +152,6 @@
 /* Focus lands on the panel itself only to carry it past the row it replaced. */
 .pf-me__panel:focus { outline: none; }
 .pf-me__name { max-width: 360px; }
-.pf-me__pictures {
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  display: grid;
-  gap: 10px;
-}
-.pf-me__pictures legend {
-  padding: 0;
-  margin-bottom: 4px;
-}
-.pf-me__picture-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
-}
-.pf-me__picture {
-  position: relative;
-  width: 92px;
-  display: grid;
-  justify-items: center;
-  gap: 9px;
-  color: var(--muted);
-  font-size: 13px;
-  text-align: center;
-  cursor: pointer;
-  transition: color var(--dur-1) var(--ease);
-}
-.pf-me__picture-disc {
-  width: 80px;
-  height: 80px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  box-shadow: 0 0 0 1px var(--hair-2);
-  transition: box-shadow var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
-}
-.pf-me__picture-disc--add {
-  box-shadow: none;
-  border: 1px dashed var(--hair-3);
-  color: var(--muted);
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 1;
-}
-.pf-me__picture:hover { color: var(--text-2); }
-.pf-me__picture:hover .pf-me__picture-disc { box-shadow: 0 0 0 1px var(--hair-3); }
-.pf-me__picture:hover .pf-me__picture-disc--add {
-  box-shadow: none;
-  border-color: var(--ink-2);
-  color: var(--text);
-}
-.pf-me__picture:has(input:checked) { color: var(--text); }
-.pf-me__picture:has(input:checked) .pf-me__picture-disc {
-  box-shadow: 0 0 0 2px var(--void-0), 0 0 0 3.5px var(--ink-0);
-}
-/* The radio is visually hidden; its focus ring moves to the disc. */
-.pf-me__picture:focus-visible { outline: none; }
-.pf-me__picture:has(input:focus-visible) .pf-me__picture-disc,
-.pf-me__picture:focus-visible .pf-me__picture-disc {
-  outline: 1.5px solid var(--accent);
-  outline-offset: 5px;
-}
-.pf-me__picture:active .pf-me__picture-disc { transform: scale(0.97); }
-.pf-me__picture:disabled { cursor: progress; }
 
 /* Sending your card: what travels, and a picture of it. */
 .pf-share__layout {
@@ -547,14 +467,9 @@ a.pf-chart__action { text-decoration: none; }
   grid-template-columns: auto minmax(0, 1fr) auto;
   column-gap: clamp(20px, 3vw, 36px);
 }
-.pf-inbox__mark {
-  width: clamp(76px, 12vw, 112px);
-  aspect-ratio: 1;
+.pf-inbox__initial {
+  --size: clamp(60px, 9vw, 84px);
   align-self: start;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px var(--hair-1),
-    0 16px 44px -22px color-mix(in oklab, var(--sign, var(--accent)) 50%, transparent);
 }
 .pf-inbox .next-action__title {
   overflow-wrap: anywhere;
@@ -577,7 +492,7 @@ a.pf-chart__action { text-decoration: none; }
     row-gap: 0;
   }
   .pf-me__text { display: contents; }
-  .pf-me__mark { grid-area: mark; }
+  .pf-me__initial { grid-area: mark; }
   .pf-me__text .kicker {
     grid-area: kicker;
     align-self: end;
@@ -640,8 +555,7 @@ a.pf-chart__action { text-decoration: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pf-me__picture,
-  .pf-me__picture-disc,
+  .pf-me__add-name,
   .pf-quiet,
   .pf-keep__close { transition: none; }
 }

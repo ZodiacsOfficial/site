@@ -6,7 +6,7 @@
  * unless they add it, and nothing is sent anywhere either way.
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import ChartMark from '../components/ChartMark';
+import Initial from '../components/Initial';
 import PlacementList, { cardPlacements } from '../components/PlacementList';
 import { useProfile } from '../lib/hooks/useProfile';
 import { explicitSelfChart } from '../lib/profile/read-store';
@@ -18,9 +18,7 @@ import {
   type ChartCard,
 } from '../lib/profile/card-link';
 import { MAX_CIRCLE, addCard, type AddCardResult } from '../lib/profile/circle';
-import { markFromCircle } from '../lib/profile/your-people';
-import { settledSignIndex } from '../lib/chart-mark/common';
-import { SIGNS } from '../lib/signs';
+import { settledSunHue } from '../lib/profile/settled-signs';
 import { announceInboxPrimary, useProfileSurface } from '../lib/profile/surface-gate';
 
 type Arrival =
@@ -84,8 +82,7 @@ export default function ProfileCardInbox({ accountBound = false }: { accountBoun
   const { card, result } = arrival;
   const who = card.label || 'Someone';
   const own = ready && self !== null && cardMatchesChart(card, self);
-  const sunIndex = settledSignIndex('Sun', card.chart.bodies.find((row) => row.body === 'Sun')?.lon ?? Number.NaN, card.timeKnown);
-  const hue = sunIndex === null ? 'var(--accent)' : SIGNS[sunIndex].hue;
+  const hue = settledSunHue(card.chart.bodies, card.timeKnown);
   const added = result === 'added' || result === 'updated';
   const dismiss = () => setArrival({ ...arrival, dismissed: true });
 
@@ -123,13 +120,13 @@ export default function ProfileCardInbox({ accountBound = false }: { accountBoun
   return (
     <section
       class="pf-inbox next-action shell tinted"
-      style={`--sign:${hue}`}
+      style={hue ? `--sign:${hue}` : undefined}
       aria-labelledby="pf-inbox-title"
       data-card-inbox
     >
       <div class="next-action__core core tinted pf-inbox__core">
-        <div class="pf-inbox__mark">
-          <ChartMark source={markFromCircle(card)} size={112} fluid reveal label={`${who}’s chart mark`} />
+        <div class="pf-inbox__initial">
+          <Initial name={card.label || null} hue={hue} />
         </div>
         <div class="next-action__copy">
           <p class="next-action__cue mono">{copy.cue}</p>

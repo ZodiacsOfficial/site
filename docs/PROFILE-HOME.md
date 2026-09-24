@@ -10,33 +10,32 @@ Once a saved chart is marked as theirs, `/profile/` stops being a generic list
 and becomes their page:
 
 - **Header** (`ProfileIdentity`). It shows:
+  - their initial (see **Initials** below);
   - their name, or "Your chart";
-  - their picture;
   - their Sun, Moon and rising (see §3 for when these are withheld);
   - the site's usual trio of actions: one white primary ("Open my full
     daily brief"), one ghost ("Send your card"), and a quiet link ("Edit
-    name and picture"). Editing and sending open in place of that row, so
-    the header never shows two primaries.
+    your name"). Editing and sending open in place of that row, so the
+    header never shows two primaries. While you type a name, the header
+    shows it and its initial live.
 
   Before hydration, and on any profile without an explicit self chart, it
   renders the page's existing introduction and H1 unchanged. When charts
   exist but none is marked as theirs, it asks which one is. It shows names
-  and marks only, never birth details. The choice goes through the existing
-  `markPrimarySelfChart`.
-- **Picture.** There are three options:
-  - the **chart mark**, the default: a constellation drawn from the chart's
-    own longitudes. Planets sit at their positions (rising sign at nine
-    o'clock), each tinted by its sign's pastel hue, with hairlines for major
-    aspects;
-  - their **Sun sign disc**;
-  - a **photo**. It is cropped and resized in the browser to 256px, which
-    also strips its metadata, and kept only in this browser. It is never
-    uploaded.
-
-  Below 44px the mark shows the Sun sign disc.
+  and initials only, never birth details. The choice goes through the
+  existing `markPrimarySelfChart`.
+- **Initials** (`Initial`). Everyone on the page, you included, is shown by
+  the first letter of the name they chose, in EB Garamond on their Sun
+  sign's pastel colour: a sibling of the sign icons. There are no pictures
+  and no photo upload (an earlier preview had a drawn chart mark, the Sun
+  sign disc, and a device-only photo; the owner chose the initial alone).
+  - No chosen name (an automatic chart name, or a card sent without one)
+    means no letter: the colour stays as a ring. Your own header shows a
+    dashed ring with "+" that opens "Add your name".
+  - A Sun sign the chart cannot settle (see §3) takes neutral ink.
 - **Your people** (`ProfilePeople`). This lists charts explicitly saved for
   someone else, plus received chart cards. Each gets:
-  - a mark;
+  - an initial;
   - the next date: a birthday for a saved chart, or the Sun's return for a
     card;
   - Compare, via the existing `?a=&b=` link or, for cards, a saved
@@ -65,10 +64,10 @@ and becomes their page:
   - The web app manifest gains shortcuts to Your page and Today, generated
     by `scripts/build-pwa-icons.mjs` from `src/strings/pwa.en.mjs`.
   - On `/profile/` the tab title becomes the person's name, and the tab
-    icon becomes their Sun sign disc or photo. A bookmark made there is
-    personal.
-  - The nav's Saved charts link shows their picture sitewide once a chart is
-    marked as theirs. The label stays for screen readers.
+    icon becomes their initial, drawn in the browser. A bookmark made there
+    is personal.
+  - The nav's Saved charts link shows their initial sitewide once a chart
+    is marked as theirs and named. The label stays for screen readers.
 - **Onboarding.** Saving your own chart on the English calculator now
   confirms "Saved as your chart. Open your page — it's at zodiacs.org/me…".
 
@@ -76,21 +75,21 @@ and becomes their page:
 
 | Piece | File |
 |---|---|
-| Chart-mark geometry (pure, no ephemeris) | `src/lib/chart-mark/common.ts`, `constellation.ts` |
-| Picture component | `src/components/ChartMark.tsx` |
-| Name/picture store (`zodiacs.me.v1`) | `src/lib/profile/me.ts`, `avatar.ts`, `page-keys.ts` |
+| Settled signs (pure, no ephemeris) | `src/lib/profile/settled-signs.ts` |
+| Initials | `src/lib/profile/initial.ts`, `src/components/Initial.tsx` |
+| Name store (`zodiacs.me.v1`) | `src/lib/profile/me.ts`, `page-keys.ts` |
 | Card codec (`c1.`) | `src/lib/profile/card-link.ts` |
 | Received cards (`zodiacs.circle.v1`) | `src/lib/profile/circle.ts` |
 | People, dates, compare | `src/lib/profile/your-people.ts`, `people-compare.ts` |
 | v2 account gate signal | `src/lib/profile/surface-gate.ts` |
 | Islands | `src/islands/ProfileIdentity.tsx`, `ProfileCardInbox.tsx`, `ProfilePeople.tsx`, `ProfileKeepClose.tsx` |
 | Styles | `src/styles/profile-home.css` |
-| Nav picture | `src/components/SiteNav.astro`. This is a classic inline script, because the processed nav script is ~4 KB and must stay under Vite's inline limit, or every zero-JS page would gain a nav chunk. |
+| Nav initial | `src/components/SiteNav.astro`. This is a classic inline script, because the processed nav script is ~4 KB and must stay under Vite's inline limit, or every zero-JS page would gain a nav chunk. |
 
 ## 3. Rules this follows
 
 - **Only the explicit self chart is "you".** A friend's chart never becomes
-  the header or the nav picture, however recently it was saved. An
+  the header or the nav initial, however recently it was saved. An
   unclassified legacy chart is never listed as a person.
 - **No birth data in a card.** The `c1.` grammar wraps one v2 positions token
   with a name and a time-known bit. It has no field for date, time, place,
@@ -103,8 +102,8 @@ and becomes their page:
 - **Received cards are never re-shared.** They can be compared and opened
   read-only (`/birth-chart/#p=`), but never made into a card.
 - **Unsettled placements are not shown as settled.** Without a birth time:
-  - the Moon is drawn in quiet ink;
-  - a Sun within a day's motion of a cusp gets no sign colour or disc;
+  - the Moon gets no sign;
+  - a Sun within a day's motion of a cusp gets no sign or sign colour;
   - there is no rising sign.
 - **Storage stays inside the account boundary.**
   - `zodiacs.me.v1` and `zodiacs.circle.v1` are read and written only
@@ -124,7 +123,7 @@ and becomes their page:
   - Sun, Moon and rising use the homepage's `.wb__three` grammar: mono
     labels beside the site's sign chips (`PlacementList`).
   - A received card is the shared `.next-action` card, with the sender's
-    mark beside it.
+    initial beside it.
   - Your people, and the "which chart is yours" question, are hairline rows
     inside one bezel card. Row actions keep the saved-charts pills, with a
     44px hit area.
@@ -137,9 +136,9 @@ and becomes their page:
 
 1. Build, then preview. Save your own chart on `/birth-chart/` using "Save my
    chart", then open `/profile/`. Check the header, the tab title and icon,
-   the nav picture, and the keep-close note.
-2. Choose "Edit name and picture". Set a name and try all three pictures,
-   including a phone photo. Reload; the photo stays. Remove the photo.
+   the nav initial, and the keep-close note.
+2. Choose "Add your name" (or "Edit your name"). Type a name and watch the
+   header's initial follow it; save, reload, and check the nav.
 3. Choose "Send your card" and copy the link. Open it in a private window:
    the card shows at the top of the page, the address bar loses `#card=`,
    and "Add to your people" adds it. Open your own link on your device: it reports "This is your own
@@ -195,9 +194,9 @@ So the proposal below needs explicit owner decisions before any code:
   version and copy. It may not reuse `chart_sync`.
   - Withdrawal deletes the card and all links.
   - Account deletion cascades.
-- **Never on the server:** photos (they stay device-only, so there is no
-  moderation surface or storage bucket), birth inputs, or other people's
-  saved charts.
+- **Never on the server:** pictures of any kind (people are shown by
+  initials, so there is no moderation surface or storage bucket), birth
+  inputs, or other people's saved charts.
 - **Privacy page.** A new section, gated by the same flag.
 - **Where it would live.** On the account-sync v2 foundation, once that is
   deployed. The live v1 sync stores birth data in plain text, and

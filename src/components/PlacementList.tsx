@@ -7,7 +7,7 @@
  * birth time the Moon is unsettled and there is no rising sign, and a Sun
  * on the edge of a sign on that day is left out rather than guessed.
  */
-import { settledSignIndex, signIndexForMark } from '../lib/chart-mark/common';
+import { settledSignIndex, signIndexOf } from '../lib/profile/settled-signs';
 import { SIGNS, formatLongitude } from '../lib/signs';
 import type { SavedChart } from '../lib/profile/schema';
 import type { PositionsShareChart } from '../lib/share-positions';
@@ -32,7 +32,7 @@ function settle(
   ];
   return rows.flatMap(({ label, lon, rising }) => {
     if (lon === undefined || !Number.isFinite(lon)) return [];
-    const index = rising ? signIndexForMark(lon) : settledSignIndex(label, lon, timeKnown);
+    const index = rising ? signIndexOf(lon) : settledSignIndex(label, lon, timeKnown);
     if (index === null) return [];
     const sign = SIGNS[index];
     return [{ label, lon, slug: sign.slug, name: sign.name, hue: sign.hue }];

@@ -1,49 +1,38 @@
 /**
  * The head of /profile/: who this page belongs to. Before hydration, or
  * with no chart marked as yours, it is the page's plain introduction. Once
- * a chart is marked as yours it becomes your page — your name, your chart
- * mark (or a Sun sign disc, or a photo that stays in this browser), your
- * Sun, Moon and rising, and the site's usual trio of actions: one white
- * primary, one ghost, one quiet link. Editing and sending your card open in
- * place of that row, so the header never shows two primaries at once; and
- * while a received card waits at the top of the page, the card holds the
- * white action and the header's steps down to a ghost.
+ * a chart is marked as yours it becomes your page — your initial on your
+ * Sun sign's colour, your name, your Sun, Moon and rising, and the site's
+ * usual trio of actions: one white primary, one ghost, one quiet link.
+ * Editing your name and sending your card open in place of that row, so
+ * the header never shows two primaries at once; and while a received card
+ * waits at the top of the page, the card holds the white action and the
+ * header's steps down to a ghost.
  *
  * Only the explicit self chart can become "you"; a friend's chart never
  * does, however recently it was saved. Everything here reads and writes
  * this browser's storage through the guarded profile stores.
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import ChartMark from '../components/ChartMark';
+import Initial from '../components/Initial';
+import PlacementList, { chartPlacements, type Placement } from '../components/PlacementList';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useMe } from '../lib/hooks/useMe';
 import { explicitSelfChart } from '../lib/profile/read-store';
 import { markPrimarySelfChart } from '../lib/profile/store';
-import {
-  DISPLAY_NAME_MAX,
-  cleanDisplayName,
-  removePhoto,
-  resolvedDisplayName,
-  saveMe,
-} from '../lib/profile/me';
-import { preparePhoto, type AvatarKind, type PhotoResult } from '../lib/profile/avatar';
+import { DEFAULT_ME, DISPLAY_NAME_MAX, cleanDisplayName, resolvedDisplayName, saveMe } from '../lib/profile/me';
 import { OPEN_CARD_EVENT, cardUrl, encodeCardLink, positionsForChart } from '../lib/profile/card-link';
-import { chartHandle, selfMarkSource } from '../lib/profile/your-people';
-import { settledSunSlug, type ChartMarkSource } from '../lib/chart-mark/common';
-import PlacementList, { chartPlacements, type Placement } from '../components/PlacementList';
-import { SIGNS } from '../lib/signs';
+import { chartHandle, personalChartName, savedChartSunHue } from '../lib/profile/your-people';
+import { initialIcon, initialOf } from '../lib/profile/initial';
 import { t } from '../lib/i18n';
 import type { SavedChart } from '../lib/profile/schema';
 import { useInboxHoldsPrimary, useProfileSurface } from '../lib/profile/surface-gate';
 
 type Panel = 'edit' | 'share' | null;
 
-const PHOTO_ERRORS: Record<Exclude<PhotoResult, { ok: true }>['reason'] | 'storage', string> = {
-  type: 'That file isn’t a photo this browser can read. Try a JPEG, PNG, or WebP.',
-  size: 'That photo is too large. Try one under 15 MB.',
-  decode: 'This browser couldn’t open that photo. Try another one.',
-  storage: 'This browser wouldn’t keep it. Private browsing or a full disk can do that.',
-};
+const STORAGE_ERROR = 'This browser wouldn’t keep it. Private browsing or a full disk can do that.';
+/** --ink-1: the disc's colour when the chart cannot settle a Sun sign. */
+const NEUTRAL_HUE = '#C6CCDA';
 
 function Intro() {
   return (
@@ -69,7 +58,7 @@ function SelfChooser({ charts }: { charts: SavedChart[] }) {
         <ul class="pf-rows">
           {recent.map((chart) => (
             <li class="pf-row" key={chart.id}>
-              <ChartMark source={selfMarkSource(chart)} size={36} />
+              <Initial name={personalChartName(chart.name)} hue={savedChartSunHue(chart)} size={36} />
               <span class="pf-row__text"><strong>{chartHandle(chart.name)}</strong></span>
               <span class="pf-row__actions">
                 <button class="pf-chart__action" type="button" onClick={() => setError(!markPrimarySelfChart(chart.id))}>
@@ -88,18 +77,35 @@ function SelfChooser({ charts }: { charts: SavedChart[] }) {
   );
 }
 
-function useDocumentIdentity(chart: SavedChart | null, name: string | null, icon: string | null) {
+/** Your name in the tab title and your initial as the tab icon, while this page is open. */
+function useDocumentIdentity(chart: SavedChart | null, name: string | null, hue: string | null) {
+  const [icon, setIcon] = useState<string | null>(null);
+  const letter = initialOf(name);
+
+  useEffect(() => {
+    setIcon(null);
+    if (!chart || !letter) return;
+    let alive = true;
+    const family = getComputedStyle(document.documentElement).getPropertyValue('--font-serif').trim() || 'serif';
+    const draw = () => {
+      if (alive) setIcon(initialIcon(letter, hue ?? NEUTRAL_HUE, family));
+    };
+    // Draw once the serif face is ready, so the tab shows the page's letter.
+    (document.fonts?.load(`500 36px ${family}`) ?? Promise.resolve()).then(draw, draw);
+    return () => {
+      alive = false;
+    };
+  }, [chart?.id, letter, hue]);
+
   useEffect(() => {
     if (!chart) return;
     const title = document.title;
     document.title = `${name ?? 'Your page'} | Zodiacs.org`;
     const links = icon ? Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]')) : [];
     const previous = links.map((link) => [link.getAttribute('href'), link.getAttribute('type')] as const);
-    const type = icon?.startsWith('data:image/webp') ? 'image/webp'
-      : icon?.startsWith('data:image/jpeg') ? 'image/jpeg' : 'image/png';
     for (const link of links) {
       link.setAttribute('href', icon!);
-      link.setAttribute('type', type);
+      link.setAttribute('type', 'image/png');
     }
     return () => {
       document.title = title;
@@ -119,10 +125,11 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
   const ready = profileReady && surface;
   const me = useMe();
   const self = useMemo(() => (ready ? explicitSelfChart(profile.charts) : null), [ready, profile.charts]);
-  const source: ChartMarkSource | null = useMemo(() => selfMarkSource(self), [self]);
-  const name = resolvedDisplayName(me, self?.name ?? null);
-  const sunSlug = settledSunSlug(source);
+  const savedName = resolvedDisplayName(me, self?.name ?? null);
+  const hue = self ? savedChartSunHue(self) : null;
   const [panel, setPanel] = useState<Panel>(null);
+  // While you type a new name, the header shows it (and its initial) live.
+  const [draft, setDraft] = useState<string | null>(null);
   const headRef = useRef<HTMLElement>(null);
   const editButton = useRef<HTMLButtonElement>(null);
   const shareButton = useRef<HTMLButtonElement>(null);
@@ -130,9 +137,7 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
   // A card waiting at the top of the page holds the one white action.
   const inboxHoldsPrimary = useInboxHoldsPrimary();
 
-  const icon = me.avatar === 'photo' && me.photo ? me.photo
-    : sunSlug ? `/assets/zodiac-icons/128/${sunSlug}.png` : null;
-  useDocumentIdentity(self, name, icon);
+  useDocumentIdentity(self, savedName, hue);
 
   useEffect(() => {
     const open = () => {
@@ -145,12 +150,13 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
 
   // Closing a panel hands focus back to the action that opened it.
   useEffect(() => {
+    if (panel !== 'edit') setDraft(null);
     if (panel !== null || closedPanel.current === null) return;
     (closedPanel.current === 'edit' ? editButton : shareButton).current?.focus();
     closedPanel.current = null;
   }, [panel]);
 
-  if (!ready || !self || !source) {
+  if (!ready || !self) {
     return (
       <>
         <Intro />
@@ -159,7 +165,9 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
     );
   }
 
-  const sunHue = sunSlug ? SIGNS.find((sign) => sign.slug === sunSlug)!.hue : 'var(--accent)';
+  const name = draft === null
+    ? savedName
+    : cleanDisplayName(draft) ?? resolvedDisplayName(DEFAULT_ME, self.name);
   const placements = chartPlacements(self);
   const close = () => {
     closedPanel.current = panel;
@@ -167,18 +175,16 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
   };
 
   return (
-    <header class="pf-me" style={`--sign:${sunHue}`} ref={headRef} data-profile-identity>
+    <header class="pf-me" style={hue ? `--sign:${hue}` : undefined} ref={headRef} data-profile-identity>
       <div class="pf-me__id">
-        <div class="pf-me__mark">
-          <ChartMark
-            source={source}
-            size={144}
-            fluid
-            reveal
-            avatar={me.avatar}
-            photo={me.photo}
-            label={me.avatar === 'photo' && me.photo ? 'Your photo' : 'Your chart mark, drawn from your placements'}
-          />
+        <div class="pf-me__initial">
+          {name === null ? (
+            <button class="initial initial--unnamed pf-me__add-name" type="button" onClick={() => setPanel('edit')} aria-label="Add your name">
+              <span aria-hidden="true">+</span>
+            </button>
+          ) : (
+            <Initial name={name} hue={hue} />
+          )}
         </div>
         <div class="pf-me__text">
           <em class="kicker">Your page</em>
@@ -196,27 +202,18 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
             <span>Send your card</span><span class="orb" aria-hidden="true">↗</span>
           </button>
           <button class="pf-quiet" type="button" ref={editButton} onClick={() => setPanel('edit')}>
-            Edit name and picture
+            {savedName ? 'Edit your name' : 'Add your name'}
           </button>
         </div>
       )}
       {panel === 'edit' && (
-        <EditPanel
-          source={source}
-          initialName={me.displayName ?? name ?? ''}
-          initialAvatar={me.avatar}
-          photo={me.photo}
-          canUseSign={sunSlug !== null}
-          onClose={close}
-        />
+        <EditPanel initialName={me.displayName ?? savedName ?? ''} onDraft={setDraft} onClose={close} />
       )}
       {panel === 'share' && (
         <SharePanel
           chart={self}
-          source={source}
-          name={name}
-          avatar={me.avatar}
-          photo={me.photo}
+          name={savedName}
+          hue={hue}
           placements={placements}
           onAddName={() => setPanel('edit')}
           onClose={close}
@@ -226,20 +223,13 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
   );
 }
 
-function EditPanel({ source, initialName, initialAvatar, photo, canUseSign, onClose }: {
-  source: ChartMarkSource;
+function EditPanel({ initialName, onDraft, onClose }: {
   initialName: string;
-  initialAvatar: AvatarKind;
-  photo: string | null;
-  canUseSign: boolean;
+  onDraft: (name: string) => void;
   onClose: () => void;
 }) {
   const [draftName, setDraftName] = useState(initialName);
-  const [avatar, setAvatar] = useState<AvatarKind>(initialAvatar);
-  const [draftPhoto, setDraftPhoto] = useState<string | null>(photo);
   const [message, setMessage] = useState('');
-  const [busy, setBusy] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -250,54 +240,23 @@ function EditPanel({ source, initialName, initialAvatar, photo, canUseSign, onCl
     else formRef.current?.focus({ preventScroll: true });
   }, []);
 
-  async function onPhoto(event: Event) {
-    const input = event.currentTarget as HTMLInputElement;
-    const file = input.files?.[0];
-    input.value = '';
-    if (!file) return;
-    setBusy(true);
-    setMessage('');
-    const result = await preparePhoto(file);
-    setBusy(false);
-    if (!result.ok) {
-      setMessage(PHOTO_ERRORS[result.reason]);
-      return;
-    }
-    setDraftPhoto(result.dataUrl);
-    setAvatar('photo');
+  function onInput(event: Event) {
+    const value = (event.currentTarget as HTMLInputElement).value;
+    setDraftName(value);
+    onDraft(value);
   }
 
   function onSubmit(event: Event) {
     event.preventDefault();
-    const saved = saveMe({
-      displayName: cleanDisplayName(draftName),
-      avatar: avatar === 'photo' && !draftPhoto ? 'mark' : avatar,
-      photo: draftPhoto,
-    });
-    if (!saved) {
-      setMessage(PHOTO_ERRORS.storage);
+    if (!saveMe({ displayName: cleanDisplayName(draftName) })) {
+      setMessage(STORAGE_ERROR);
       return;
     }
     onClose();
   }
 
-  function onRemovePhoto() {
-    if (!removePhoto() && photo) {
-      setMessage(PHOTO_ERRORS.storage);
-      return;
-    }
-    setDraftPhoto(null);
-    if (avatar === 'photo') setAvatar('mark');
-  }
-
-  const options: { kind: AvatarKind; title: string }[] = [
-    { kind: 'mark', title: 'Chart mark' },
-    ...(canUseSign ? [{ kind: 'sign' as const, title: 'Sun sign' }] : []),
-    ...(draftPhoto ? [{ kind: 'photo' as const, title: 'Photo' }] : []),
-  ];
-
   return (
-    <form class="pf-me__panel" id="pf-me-edit" ref={formRef} tabIndex={-1} onSubmit={onSubmit} aria-label="Name and picture">
+    <form class="pf-me__panel" id="pf-me-edit" ref={formRef} tabIndex={-1} onSubmit={onSubmit} aria-label="Edit your name">
       <div class="field pf-me__name">
         <label class="field__label" for="pf-me-name">Your name</label>
         <input
@@ -309,54 +268,13 @@ function EditPanel({ source, initialName, initialAvatar, photo, canUseSign, onCl
           maxLength={DISPLAY_NAME_MAX}
           autoComplete="given-name"
           placeholder="A first name or nickname"
-          onInput={(event) => setDraftName((event.currentTarget as HTMLInputElement).value)}
+          onInput={onInput}
         />
-        <p class="field__help">Shown on this page and on any card you send.</p>
+        <p class="field__help">Shown on this page and on any card you send. Its first letter is your initial.</p>
       </div>
-      <fieldset class="pf-me__pictures">
-        <legend class="field__label">Picture</legend>
-        <div class="pf-me__picture-row">
-          {options.map((option) => (
-            <label class="pf-me__picture" key={option.kind}>
-              <input
-                class="sr-only"
-                type="radio"
-                name="pf-me-picture"
-                value={option.kind}
-                checked={avatar === option.kind}
-                onChange={() => setAvatar(option.kind)}
-              />
-              <span class="pf-me__picture-disc">
-                <ChartMark source={source} size={80} fluid avatar={option.kind} photo={draftPhoto} />
-              </span>
-              <span class="pf-me__picture-name">{option.title}</span>
-            </label>
-          ))}
-          {!draftPhoto && (
-            <button class="pf-me__picture" type="button" onClick={() => fileRef.current?.click()} disabled={busy}>
-              <span class="pf-me__picture-disc pf-me__picture-disc--add" aria-hidden="true">+</span>
-              <span class="pf-me__picture-name">{busy ? 'Preparing…' : 'Photo'}</span>
-            </button>
-          )}
-        </div>
-        <p class="field__help">
-          A photo is cropped and resized here, then kept in this browser. It is never uploaded.
-          {draftPhoto && (
-            <>
-              {' '}
-              <button class="pf-quiet pf-quiet--inline" type="button" onClick={() => fileRef.current?.click()} disabled={busy}>
-                Choose another
-              </button>
-              {' · '}
-              <button class="pf-quiet pf-quiet--inline" type="button" onClick={onRemovePhoto}>Remove photo</button>
-            </>
-          )}
-        </p>
-      </fieldset>
-      <input ref={fileRef} class="sr-only" type="file" accept="image/*" tabIndex={-1} onChange={onPhoto} aria-hidden="true" />
       {message && <p class="field__error" role="alert">{message}</p>}
       <div class="pf-me__panel-actions">
-        <button class="btn btn--primary" type="submit" disabled={busy}>
+        <button class="btn btn--primary" type="submit">
           <span>Save</span><span class="orb" aria-hidden="true">✓</span>
         </button>
         <button class="pf-quiet" type="button" onClick={onClose}>Cancel</button>
@@ -367,12 +285,10 @@ function EditPanel({ source, initialName, initialAvatar, photo, canUseSign, onCl
 
 type CopyState = 'idle' | 'copied' | 'manual' | 'shared';
 
-function SharePanel({ chart, source, name, avatar, photo, placements, onAddName, onClose }: {
+function SharePanel({ chart, name, hue, placements, onAddName, onClose }: {
   chart: SavedChart;
-  source: ChartMarkSource;
   name: string | null;
-  avatar: AvatarKind;
-  photo: string | null;
+  hue: string | null;
   placements: Placement[];
   onAddName: () => void;
   onClose: () => void;
@@ -382,8 +298,6 @@ function SharePanel({ chart, source, name, avatar, photo, placements, onAddName,
   const panelRef = useRef<HTMLDivElement>(null);
   const token = useMemo(() => encodeCardLink({ chart: positionsForChart(chart), label: name }), [chart, name]);
   const url = token ? cardUrl(window.location.origin, token) : null;
-  // A card carries positions, never a photo: the preview shows what travels.
-  const cardAvatar: AvatarKind = avatar === 'photo' ? 'mark' : avatar;
 
   useEffect(() => {
     setCanShare(typeof navigator.share === 'function');
@@ -448,10 +362,10 @@ function SharePanel({ chart, source, name, avatar, photo, placements, onAddName,
             </p>
           )}
         </div>
-        {/* A picture of what the copy above says travels; the photo never does. */}
+        {/* A picture of what the copy beside it says travels. */}
         <figure class="pf-share__preview" aria-hidden="true">
           <div class="pf-share__card">
-            <ChartMark source={source} size={64} avatar={cardAvatar} photo={null} />
+            <Initial name={name} hue={hue} size={56} />
             <div class="pf-share__card-text">
               <strong>{name ?? 'A chart card'}</strong>
               <PlacementList placements={placements} linked={false} />

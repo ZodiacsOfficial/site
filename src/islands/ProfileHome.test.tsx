@@ -91,7 +91,8 @@ describe('your people', () => {
     kind: 'saved',
     id: 'id',
     name,
-    mark: { bodies: [], asc: null, timeKnown: false },
+    personalName: name || null,
+    sunHue: null,
     next: { kind, at: new Date(2026, 9, 12), days },
   });
 

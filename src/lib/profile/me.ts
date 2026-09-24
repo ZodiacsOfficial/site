@@ -1,9 +1,8 @@
 /**
- * "Your page" settings: the name and picture the profile shows for the
- * chart marked as yours. A sibling store to the saved-charts profile (the
- * schema there stays untouched): nothing here is a chart, and none of it
- * is sent anywhere. The photo is a small data URL resized in the browser
- * and kept in this browser's storage only.
+ * "Your page" settings: the name the profile shows for the chart marked as
+ * yours (its initial stands in for a picture). A sibling store to the
+ * saved-charts profile (the schema there stays untouched): nothing here is
+ * a chart, and none of it is sent anywhere.
  *
  * Every write dispatches `zodiacs:me` on window (the `zodiacs:profile`
  * convention) so the page header and the navigation stay in step. Reads
@@ -11,7 +10,6 @@
  * and the key rides the account hand-off with them.
  */
 import { profileAccessAllowed } from '../account-v2/profile-access-reader';
-import { isStorablePhoto, type AvatarKind } from './avatar';
 import { ME_KEY } from './page-keys';
 
 export { ME_KEY };
@@ -22,9 +20,6 @@ export interface MeSettings {
   version: 1;
   /** The name shown on your page and on a card you send; null means none chosen. */
   displayName: string | null;
-  avatar: AvatarKind;
-  /** Kept until removed, so switching pictures and back needs no new upload. */
-  photo: string | null;
   /** The keep-this-page-close note was dismissed on this device. */
   keepCloseDismissed: boolean;
 }
@@ -32,12 +27,8 @@ export interface MeSettings {
 export const DEFAULT_ME: MeSettings = Object.freeze({
   version: 1,
   displayName: null,
-  avatar: 'mark',
-  photo: null,
   keepCloseDismissed: false,
 }) as MeSettings;
-
-const AVATARS: readonly AvatarKind[] = ['mark', 'sign', 'photo'];
 
 /**
  * Names are free text from this device or from someone else's link. Drop
@@ -63,13 +54,9 @@ export function parseMe(raw: string | null): MeSettings {
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return { ...DEFAULT_ME };
     const record = parsed as Record<string, unknown>;
     if (record.version !== 1) return { ...DEFAULT_ME };
-    const photo = isStorablePhoto(record.photo) ? record.photo : null;
-    const avatar = AVATARS.includes(record.avatar as AvatarKind) ? record.avatar as AvatarKind : 'mark';
     return {
       version: 1,
       displayName: cleanDisplayName(record.displayName),
-      avatar: avatar === 'photo' && !photo ? 'mark' : avatar,
-      photo,
       keepCloseDismissed: record.keepCloseDismissed === true,
     };
   } catch {
@@ -96,7 +83,6 @@ export function saveMe(patch: Partial<Omit<MeSettings, 'version'>>): boolean {
     version: 1,
     displayName: patch.displayName === undefined ? current.displayName : cleanDisplayName(patch.displayName),
   }));
-  if (patch.avatar === 'photo' && next.avatar !== 'photo') return false;
   try {
     const isDefault = JSON.stringify(next) === JSON.stringify(DEFAULT_ME);
     if (isDefault) localStorage.removeItem(ME_KEY);
@@ -106,12 +92,6 @@ export function saveMe(patch: Partial<Omit<MeSettings, 'version'>>): boolean {
   } catch {
     return false; // storage full / private mode — callers surface a notice
   }
-}
-
-/** Forget the photo entirely and return to the chart mark. */
-export function removePhoto(): boolean {
-  const current = loadMe();
-  return saveMe({ photo: null, avatar: current.avatar === 'photo' ? 'mark' : current.avatar });
 }
 
 /** Automatic chart names end in the birth date; they are labels, not names. */

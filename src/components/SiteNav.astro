@@ -96,7 +96,7 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
           ) : l.label}
         </a>
       ))}
-      <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph><span class="nav__avatar" data-profile-avatar hidden></span><span class="nav__saved-label">{t(locale, 'navSavedCharts')}</span></a>
+      <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph><span class="nav__avatar" data-profile-avatar aria-hidden="true" hidden></span><span class="nav__saved-label">{t(locale, 'navSavedCharts')}</span></a>
     </div>
 
     {locale === 'ru' ? null : locale === 'en' ? (
@@ -187,7 +187,7 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
       {hasDailyReading && <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/today/')}>{todayLabel}</a>}
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 1 : 0}`} href={localizePath(locale, '/learn/')} hreflang={englishOnlyHref('/learn/') ? 'en' : undefined} title={englishOnlyHref('/learn/') ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{englishOnlyHref('/learn/') ? englishOnly?.suffix : ''}</a>
       <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 2 : 1}`} href={localizePath(locale, '/horoscopes/')} hreflang={englishOnlyHref('/horoscopes/') ? 'en' : undefined} title={englishOnlyHref('/horoscopes/') ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{englishOnlyHref('/horoscopes/') ? englishOnly?.suffix : ''}</a>
-      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 3 : 2}`} href={localizePath(locale, '/profile/')}><span class="nav__avatar" data-profile-avatar hidden></span>{t(locale, 'navSavedCharts')}</a>
+      <a class="mobile-menu__link" style={`--i:${hasDailyReading ? 3 : 2}`} href={localizePath(locale, '/profile/')}><span class="nav__avatar" data-profile-avatar aria-hidden="true" hidden></span>{t(locale, 'navSavedCharts')}</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
@@ -399,26 +399,27 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
   .nav__saved.has-saves { color: var(--accent); }
   .nav__saved.has-saves:hover { color: var(--accent); }
 
-  /* Once a chart is marked as yours, your picture stands in for the label
-     in the desktop row (the label stays for screen readers) and sits beside
-     it in the menu. Nothing renders until the inline script finds one. */
+  /* Once a chart is marked as yours and named, your initial stands in for
+     the label in the desktop row (the label stays for screen readers) and
+     sits beside it in the menu. Nothing renders until the inline script
+     finds one. */
   .nav__avatar {
-    display: inline-block;
+    display: inline-grid;
+    place-items: center;
     flex: none;
+    box-sizing: border-box;
     width: 22px;
     height: 22px;
-    overflow: hidden;
+    padding-top: 1px;
     border-radius: 50%;
-    box-shadow: 0 0 0 1px var(--hair-2);
-    line-height: 0;
+    background: var(--sign, var(--ink-1));
+    color: var(--void-0);
+    font-family: var(--font-nav-serif);
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1;
   }
   .nav__avatar[hidden] { display: none; }
-  .nav__avatar :global(img) {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
   .nav__saved.has-avatar { justify-self: start; padding: 4px 11px; }
   .nav__saved.has-avatar .nav__saved-label {
     position: absolute;
@@ -955,17 +956,18 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
 </script>
 
 <script is:inline>
-  /* Your picture beside Saved charts once exactly one chart is marked as
-     yours: a photo kept in this browser, else the Sun sign's disc when the
-     chart settles that sign (src/lib/chart-mark/common.ts; the photo rule is
-     src/lib/profile/avatar.ts). Classic and inline on purpose: the processed
-     nav script above must stay small enough for Astro to inline it. */
+  /* Your initial beside Saved charts once exactly one chart is marked as
+     yours and you have a name on it: its first letter on your Sun sign's
+     colour, neutral ink when the chart cannot settle that sign. The same
+     rules as src/lib/profile/initial.ts and settled-signs.ts; a unit test
+     keeps these copies in step. Classic and inline on purpose: the
+     processed nav script above must stay small enough for Astro to inline. */
   (function () {
     var slots = document.querySelectorAll('[data-profile-avatar]');
     if (!slots.length) return;
-    var signs = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
-    function picture() {
+    var hues = ['#DE8E79', '#B9D4BE', '#B29DD0', '#B6D4E4', '#E0A9B4', '#B7D9B0',
+      '#D3A9DE', '#B9DCE8', '#E0B080', '#C0DEA8', '#AE8FC9', '#A9D4C4'];
+    function you() {
       var access = window.zodiacsProfileAccess;
       if (document.documentElement.hasAttribute('data-account-sync-v2')
         && !(access && access.canRead && access.canRead() === true)) return null;
@@ -975,46 +977,39 @@ const toolNeedsEnglishCue = (tool: NavTool): boolean => englishOnlyHref(tool.hre
         : [];
       if (own.length !== 1) return null;
       var me = JSON.parse(localStorage.getItem('zodiacs.me.v1') || 'null');
-      if (me && me.version === 1 && me.avatar === 'photo' && typeof me.photo === 'string'
-        && me.photo.length <= 180000
-        && /^data:image\/(?:webp|jpeg|png);base64,[A-Za-z0-9+/]+={0,2}$/.test(me.photo)) return me.photo;
+      var name = me && me.version === 1 && typeof me.displayName === 'string' ? me.displayName : '';
+      // An automatic chart name ends in the birth date; it is not a name.
+      if (!name && typeof own[0].name === 'string' && !/·\s*\d{4}-\d{2}-\d{2}\s*$/.test(own[0].name)) {
+        name = own[0].name.split('·')[0];
+      }
+      var first = Array.from(name.replace(new RegExp('[\\p{Cc}\\p{Cf}]', 'gu'), '').normalize('NFC').trim())[0];
+      if (!first || !new RegExp('^[\\p{L}\\p{N}]$', 'u').test(first)) return null;
+      var letter = first.toUpperCase();
+      if (Array.from(letter).length !== 1) letter = first;
       var bodies = own[0].summary && Array.isArray(own[0].summary.bodies) ? own[0].summary.bodies : [];
       var sun = bodies.filter(function (row) { return row && row.body === 'Sun'; })[0];
       var lon = sun ? Number(sun.lon) : NaN;
-      if (!isFinite(lon)) return null;
-      lon = ((lon % 360) + 360) % 360;
-      var index = Math.min(11, Math.floor(lon / 30));
-      var within = lon - index * 30;
-      var timeKnown = Boolean(own[0].birth && own[0].birth.timeKnown === true);
-      // Without a birth time, a Sun within a day's motion of a cusp is unsettled.
-      if (!timeKnown && (within < 1.02 || 30 - within < 1.02)) return null;
-      return '/assets/zodiac-icons/48/' + signs[index] + '.webp';
+      var hue = '';
+      if (isFinite(lon)) {
+        lon = ((lon % 360) + 360) % 360;
+        var index = Math.min(11, Math.floor(lon / 30));
+        var within = lon - index * 30;
+        var timeKnown = Boolean(own[0].birth && own[0].birth.timeKnown === true);
+        // Without a birth time, a Sun within a day's motion of a cusp is unsettled.
+        if (timeKnown || !(within < 1.02 || 30 - within < 1.02)) hue = hues[index];
+      }
+      return { letter: letter, hue: hue };
     }
     function render() {
-      var src = null;
-      try { src = picture(); } catch (error) { src = null; }
+      var mark = null;
+      try { mark = you(); } catch (error) { mark = null; }
       for (var i = 0; i < slots.length; i += 1) {
         var slot = slots[i];
-        var link = slot.parentElement;
-        var current = slot.firstChild;
-        if (!src) {
-          if (current) slot.removeChild(current);
-          slot.hidden = true;
-          if (link) link.classList.remove('has-avatar');
-          continue;
-        }
-        if (!current || current.getAttribute('src') !== src) {
-          var image = document.createElement('img');
-          image.src = src;
-          image.alt = '';
-          image.width = 22;
-          image.height = 22;
-          image.decoding = 'async';
-          if (current) slot.replaceChild(image, current);
-          else slot.appendChild(image);
-        }
-        slot.hidden = false;
-        if (link) link.classList.add('has-avatar');
+        slot.textContent = mark ? mark.letter : '';
+        if (mark && mark.hue) slot.style.setProperty('--sign', mark.hue);
+        else slot.style.removeProperty('--sign');
+        slot.hidden = !mark;
+        if (slot.parentElement) slot.parentElement.classList.toggle('has-avatar', Boolean(mark));
       }
     }
     render();
