@@ -9,15 +9,14 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useEngine } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
+import { todayReading } from '../lib/profile/today-reading';
 import { explicitSelfChart } from '../lib/profile/read-store';
 import { livingChartCaptureEnabled } from '../lib/living-chart/feature-flags';
-import { findInterAspects } from '../lib/engine/synastry';
-import { TRANSIT_ORB, transitLine } from '../lib/transits';
+import { transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import CalculationReload, { calculationError } from './CalculationReload';
 import { loadModule } from '../lib/module-load';
-import { houseLine, wholeSignHouseFromAsc, type DailyBody } from '../lib/daily';
 import { type EclipseRecord } from '../lib/upcoming';
 import {
   YEAR_AHEAD_CACHE_KEY,
@@ -46,7 +45,6 @@ import ingressesData from '../data/ingresses.json';
 
 interface Props { locale?: Locale }
 
-const MOVERS = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn']);
 const ECLIPSES = (eclipsesData as { eclipses: EclipseRecord[] }).eclipses;
 const INGRESSES = (ingressesData as { windows: IngressWindow[] }).windows;
 const YEAR_MS = 366 * 86400_000;
@@ -177,27 +175,7 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
       .catch(() => {});
   }, []);
 
-  const today = useMemo(() => {
-    if (!chart) return null;
-    const natal = chart.summary.bodies.map(({ body, lon }) => ({ body, lon }));
-    const sky = daily.bodies.filter((b) => MOVERS.has(b.body)).map(({ body, lon }) => ({ body, lon }));
-    const hits = findInterAspects(sky, natal)
-      .filter((a) => a.orb <= TRANSIT_ORB)
-      .sort((x, y) => x.orb - y.orb)
-      .slice(0, 4);
-
-    // Real natal houses (whole sign from the ascendant) when the birth
-    // time is known — the Sun and Moon read from YOUR rooms, not solar ones.
-    let houseLines: ReturnType<typeof houseLine>[] = [];
-    const asc = chart.summary.angles?.asc;
-    if (chart.birth.timeKnown && asc != null && chart.summary.houseSystem === 'whole') {
-      const ascSign = signForLongitude(asc).slug;
-      houseLines = daily.bodies
-        .filter((b) => b.body === 'Sun' || b.body === 'Moon')
-        .map((b) => houseLine(b as DailyBody, wholeSignHouseFromAsc(b.sign, ascSign)));
-    }
-    return { hits, houseLines };
-  }, [chart]);
+  const today = useMemo(() => (chart ? todayReading(chart) : null), [chart]);
 
   // The merged twelve-month timeline: engine-scanned events from the
   // cache, plus ingresses and eclipse hits from committed data.

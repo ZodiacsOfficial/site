@@ -2,8 +2,9 @@
  * The head of /profile/: who this page belongs to. Before hydration, or
  * with no chart marked as yours, it is the page's plain introduction. Once
  * a chart is marked as yours it becomes your page — your initial on your
- * Sun sign's colour, your name, your Sun, Moon and rising, and the site's
- * usual trio of actions: one white primary, one ghost, one quiet link.
+ * Sun sign's colour, your name, your Sun, Moon and rising, one line from
+ * today's reading (so the page is new each day), and the site's usual trio
+ * of actions: one white primary, one ghost, one quiet link.
  * Editing your name and sending your card open in place of that row, so
  * the header never shows two primaries at once; and while a received card
  * waits at the top of the page, the card holds the white action and the
@@ -24,7 +25,9 @@ import { DEFAULT_ME, DISPLAY_NAME_MAX, cleanDisplayName, resolvedDisplayName, sa
 import { OPEN_CARD_EVENT, cardUrl, encodeCardLink, positionsForChart } from '../lib/profile/card-link';
 import { chartHandle, personalChartName, savedChartSunHue } from '../lib/profile/your-people';
 import { initialIcon, initialOf } from '../lib/profile/initial';
+import { todayLead } from '../lib/profile/today-reading';
 import { t } from '../lib/i18n';
+import { moonPhaseLabel } from '../lib/i18n/astrology';
 import type { SavedChart } from '../lib/profile/schema';
 import { useInboxHoldsPrimary, useProfileSurface } from '../lib/profile/surface-gate';
 
@@ -169,6 +172,7 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
     ? savedName
     : cleanDisplayName(draft) ?? resolvedDisplayName(DEFAULT_ME, self.name);
   const placements = chartPlacements(self);
+  const lead = todayLead(self);
   const close = () => {
     closedPanel.current = panel;
     setPanel(null);
@@ -192,6 +196,16 @@ export default function ProfileIdentity({ accountBound = false }: { accountBound
           <PlacementList placements={placements} />
         </div>
       </div>
+
+      {lead && (
+        <p class="pf-me__today" data-today-lead>
+          <span class="mono mono--label">
+            <time dateTime={lead.date}>{lead.date}</time>
+            {' · '}{moonPhaseLabel('en', lead.phase)}
+          </span>
+          <span class="pf-me__today-line">{lead.text}</span>
+        </p>
+      )}
 
       {panel === null && (
         <div class="pf-me__actions">
