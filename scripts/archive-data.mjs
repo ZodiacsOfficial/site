@@ -438,7 +438,7 @@ export const PRESS_KIT = {
     { label: 'Sign icons · /assets/icons/{sign}.png', url: '/assets/icons/libra.png' },
     { label: 'Zodiac designs · /assets/nuggets/{sign}.png', url: '/assets/nuggets/libra.png' },
     { label: 'Registry JSON · machine-readable', url: '/registry/zodiacs.registry.json' },
-    { label: 'SDK · GitHub', url: 'https://github.com/ZodiacsOfficial/sdk' }
+    { label: 'SDK · GitHub', url: 'https://github.com/zodiacs-org/sdk' }
   ],
   contact:
     'For press: direct message @astrofoliosol on X, or write in the ' +

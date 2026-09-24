@@ -7,7 +7,7 @@
 // Consumer Organization identity only. Registry channels remain contained on
 // the Registry's own static surfaces and must not enter consumer JSON-LD.
 export const SOCIAL_PROFILES = Object.freeze([
-  'https://github.com/ZodiacsOfficial/sdk',
+  'https://github.com/zodiacs-org/sdk',
 ]);
 
 // English-only build descriptors for the Phase 1 route family. Keeping this

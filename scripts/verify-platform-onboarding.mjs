@@ -229,7 +229,7 @@ async function main(args) {
   requireValue(info.isFile() && info.size > 0 && info.size <= 64 * 1024, 'Setup must be a nonempty regular file under 64 KiB');
   const setup = readFileSync(setupFile, 'utf8');
   const verified = verifyPlatformStarter();
-  const archiveUrl = `https://raw.githubusercontent.com/ZodiacsOfficial/site/${verified.metadata.artifactCommit}/public/examples/${verified.metadata.file}`;
+  const archiveUrl = `https://raw.githubusercontent.com/zodiacs-org/site/${verified.metadata.artifactCommit}/public/examples/${verified.metadata.file}`;
   requireValue(setup.includes(archiveUrl) && setup.split(verified.metadata.sha256).length === 2, 'Setup must identify the current immutable starter URL and exactly one expected SHA-256');
   const directories = [...setup.matchAll(/^mkdir ([A-Za-z0-9_-]+)\r?$/gm)];
   requireValue(directories.length === 1, 'Expected one literal relative mkdir target in the rendered setup');
