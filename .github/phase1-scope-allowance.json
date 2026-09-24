@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "owner-delegated-copy-corrections-2026-09-23",
-  "baseCommit": "69d15523fc44f961012e4b6ab34894e559bd770d",
+  "baseCommit": "3b957e87743f118a0af3171d05d0cbfd6e6e7f2f",
   "protectedPaths": [
     "src/content/learn/rising/aquarius.mdx",
     "src/content/learn/rising/aries.mdx",
