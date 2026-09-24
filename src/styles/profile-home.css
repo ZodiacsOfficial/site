@@ -134,6 +134,22 @@
   line-height: 1.02;
   overflow-wrap: anywhere;
 }
+/* One line from today's reading: the page is new each day. */
+.pf-me__today {
+  max-width: 44rem;
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair-1);
+  display: grid;
+  gap: 8px;
+}
+.pf-me__today-line {
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: var(--text-xl);
+  line-height: 1.25;
+  text-wrap: pretty;
+}
 .pf-me__actions,
 .pf-me__panel-actions {
   display: flex;

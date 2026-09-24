@@ -13,6 +13,12 @@ and becomes their page:
   - their initial (see **Initials** below);
   - their name, or "Your chart";
   - their Sun, Moon and rising (see §3 for when these are withheld);
+  - one line from today's reading (`todayLead` in
+    `src/lib/profile/today-reading.ts`, the same computation as the Today
+    card): the Moon's house when the birth time is known and the houses are
+    whole sign, else today's closest aspect, under the edition's date and
+    Moon phase. The house lines say "today", so the line is left out
+    whenever the committed edition is not the current UTC day;
   - the site's usual trio of actions: one white primary ("Open my full
     daily brief"), one ghost ("Send your card"), and a quiet link ("Edit
     your name"). Editing and sending open in place of that row, so the
