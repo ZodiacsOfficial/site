@@ -5,12 +5,14 @@ site. The standalone starter keeps its separate engine `0.1.1-rc.3` pin and
 immutable project archive. The optional ownership SDK remains separate.
 
 - Package: `@zodiacs/engine@0.1.1-rc.6` (unpublished candidate)
-- Source repository: `https://github.com/ZodiacsOfficial/sdk`
+- Source repository: `https://github.com/zodiacs-org/sdk` (moved from
+  `ZodiacsOfficial/sdk` on 2026-09-24; the packed `package.json` keeps the
+  address it was packed with)
 - Source package: `packages/engine`
 - Source commit: `fb57af7a2cd7c30983cc8fb655183d5a11f9cf30`
 - Artifact carrier commit: `51129a197cd3f2a2a8c966fb797ea4da1e147b3d`
 - Artifact SHA-256: `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`
-- [Immutable anonymous download](https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz)
+- [Immutable anonymous download](https://raw.githubusercontent.com/zodiacs-org/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz)
 - Archive: 23 files, 36,591 packed bytes, 122,552 unpacked bytes.
 
 The public SDK archive was downloaded without credentials and checked against

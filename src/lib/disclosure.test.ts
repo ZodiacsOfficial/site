@@ -225,7 +225,7 @@ describe('registry disclosure contract', () => {
     expect(economic.evidence).toContain('median of 27.2%');
     expect(economic.evidence).toContain('checked against the published snapshots and public chain records');
     expect(economic.links.map((link) => link.href)).toEqual([
-      'https://github.com/ZodiacsOfficial/site/commits/main/public/assets/distribution.json',
+      'https://github.com/zodiacs-org/site/commits/main/public/assets/distribution.json',
     ]);
     for (const row of [operator, economic]) {
       const text = `${row.statement} ${row.evidence}`;

@@ -4481,9 +4481,9 @@
               <span className="res__v">@zodiacs/sdk</span>
               <span className="res__arr" aria-hidden="true">↗</span>
             </a>
-            <a className="res__item" href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">
+            <a className="res__item" href="https://github.com/zodiacs-org/sdk" rel="noopener noreferrer">
               <span className="res__k">GitHub</span>
-              <span className="res__v">ZodiacsOfficial/sdk</span>
+              <span className="res__v">zodiacs-org/sdk</span>
               <span className="res__arr" aria-hidden="true">↗</span>
             </a>
             <a className="res__item" href="/registry/zodiacs.registry.json">
@@ -7035,7 +7035,7 @@
             </p>
             <nav aria-label="Registry record resources">
               <a href="/registry/zodiacs.registry.json">Open registry JSON</a>
-              <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">View the SDK source</a>
+              <a href="https://github.com/zodiacs-org/sdk" rel="noopener noreferrer">View the SDK source</a>
               <a href="/disclosure/#origin">Read provenance</a>
             </nav>
           </div>
@@ -7268,7 +7268,7 @@
           const destination = href.startsWith('/sdk/')
             ? 'docs'
             : href.includes('npmjs.com/package/@zodiacs/sdk') ? 'npm'
-              : href.includes('github.com/ZodiacsOfficial/sdk') ? 'github' : null;
+              : href.includes('github.com/zodiacs-org/sdk') ? 'github' : null;
           if (destination) trackAnalytics('sdk_click', { source: 'registry', destination });
         };
         document.addEventListener('click', onClick);

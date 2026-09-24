@@ -137,9 +137,9 @@ Canonical resources:
 - Identity receipt preview: https://zodiacs.org/sdk/#receipt-preview
 - Core ownership and verification API: https://zodiacs.org/sdk/#core-api
 - Astrofolio relationship: https://zodiacs.org/sdk/#astrofolio
-- GitHub source: https://github.com/ZodiacsOfficial/sdk
+- GitHub source: https://github.com/zodiacs-org/sdk
 - npm package: https://www.npmjs.com/package/@zodiacs/sdk
-- Symbolic resonance guidance: https://github.com/ZodiacsOfficial/sdk/blob/main/docs/symbolic-resonance.md
+- Symbolic resonance guidance: https://github.com/zodiacs-org/sdk/blob/main/docs/symbolic-resonance.md
 
 Current documented API names include `getRepresentationByAddress`, `isOfficialZodiacAddress`, `getSolanaZodiacsOwnership`, `getBaseZodiacsOwnership`, `getCrossChainZodiacsOwnership`, `getZodiacIdentityContext`, `getIdentityReceiptData`, `useIdentityReceiptData`, `useZodiacIdentityContext`, `IdentityReceiptCard`, `ProfileSummaryCard`, `getZodiacIconAsset`, and `getAllZodiacIconAssets`.
 
@@ -172,9 +172,9 @@ Check the consumed payload before calling it current: `date` is the UTC edition 
 
 `@zodiacs/engine` candidate version 0.1.1-rc.6 is the pure-TypeScript calculation sibling. It is browser-first, Node-compatible, ESM-only, synchronous, side-effect-free, and tree-shakeable. The core entry makes no network request. It computes apparent geocentric tropical positions, natal charts, transits, synastry, lunar phase, and Saturn-return seasons. Whole-sign and Placidus houses are supported; Placidus falls back to whole sign above 66° absolute latitude and returns the `polar-fallback` flag.
 
-Current candidate API guide: https://github.com/ZodiacsOfficial/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/packages/engine/README.md
+Current candidate API guide: https://github.com/zodiacs-org/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/packages/engine/README.md
 
-Optional `@zodiacs/engine/receipt` validates a Zodiacs-owned draft natal envelope from a fresh full public Chart. It preserves requested versus actual houses, unknown-time reference instants and supplied provenance; it does not authenticate claims or recalculate positions. The site saved-chart/account format is unchanged, and the standalone starter retains its separately pinned engine rc.3. Draft specification: https://github.com/ZodiacsOfficial/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/docs/platform/receipt-draft-v1.md
+Optional `@zodiacs/engine/receipt` validates a Zodiacs-owned draft natal envelope from a fresh full public Chart. It preserves requested versus actual houses, unknown-time reference instants and supplied provenance; it does not authenticate claims or recalculate positions. The site saved-chart/account format is unchanged, and the standalone starter retains its separately pinned engine rc.3. Draft specification: https://github.com/zodiacs-org/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/docs/platform/receipt-draft-v1.md
 
 Product page, with what it computes, the measured bundle cost, the measured agreement with Swiss Ephemeris, and a digest-verified install: https://zodiacs.org/developers/engine/
 

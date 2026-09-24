@@ -391,7 +391,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
               var href = link.getAttribute('href') || '';
               var destination = href.indexOf('/sdk/') === 0 ? 'docs'
                 : href.indexOf('npmjs.com/package/@zodiacs/sdk') !== -1 ? 'npm'
-                : href.indexOf('github.com/ZodiacsOfficial/sdk') !== -1 ? 'github' : '';
+                : href.indexOf('github.com/zodiacs-org/sdk') !== -1 ? 'github' : '';
               if (destination) window.zodiacsAnalytics.track('sdk_click', {
                 source: 'astrology', destination: destination
               });
