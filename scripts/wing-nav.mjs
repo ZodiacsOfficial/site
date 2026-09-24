@@ -266,7 +266,8 @@ export function wingNavScript() {
       setMobile(false);
       if(restore) restore.focus();
     });
-  })();`;
+  })();
+  ${WING_PHONE_BAR_SCRIPT}`;
 }
 
 // Canonical nav CSS — mirrors SiteNav.astro, inlined with literal token values
@@ -361,5 +362,60 @@ export function wingNavCss() {
   .wnav-menu__sign:last-child { border-bottom: 0; }
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .wnav-tools, .wnav-signs, .wnav__burger, .wnav__dropdown-btn svg, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }`;
+  @media (prefers-reduced-motion: reduce) { .wnav-tools, .wnav-signs, .wnav__burger, .wnav__dropdown-btn svg, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+${WING_PHONE_BAR_CSS}`;
 }
+
+// Phones: the pill becomes a full-width bar at the top edge, in the same
+// colour (owner request, after rolex.com): the menu on the left, the
+// ZODIACS | ASTROFOLIO lockup on the centre line, search on the right. It
+// slides away as the page scrolls down and returns as it scrolls up. Both
+// words share one size and tracking; the mark leads with the 0.2em that
+// trails the last letter, and the hairline gets 13px either side. The two
+// word tracks are reserved from EB Garamond's measured advances at 0.2em
+// tracking (ZODIACS 5.697em, ASTROFOLIO 8.265em), never from the text, so
+// the words sit still while the page and the face load. The same
+// block and script sit in the hand-kept wing pages (thesis, SDK, Terminal
+// markets) and the hub SPA shell; the SPA's Header sets .is-away itself.
+export const WING_PHONE_BAR_CSS = `@media (max-width: 599.5px) {
+    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }
+    .wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
+    .wnav-wrap.is-away .wnav { pointer-events: none; }
+    /* html body … outranks the hub's lens and frost pill rules. The two outer tracks match, so the lockup centres on the bar. */
+    html body .wnav-wrap .wnav { --wnav-lockup: clamp(12px, 3.8vw, 15px); display: grid; grid-template-areas: 'menu . mark chip . search'; grid-template-columns: 44px minmax(0,1fr) calc(var(--wnav-lockup) * 5.7 + 13px) calc(var(--wnav-lockup) * 8.27 + 13px) minmax(0,1fr) 44px; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) 6px 0; gap: 0; border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+    .wnav__burger { grid-area: menu; border-color: transparent; }
+    .wnav__burger-line { width: 20px; }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:first-child { transform: translate(-50%, calc(-50% - 3.5px)); }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:nth-child(2) { opacity: 0; }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:last-child { transform: translate(-50%, calc(-50% + 3.5px)); }
+    .wnav__mark { grid-area: mark; min-height: 44px; gap: 0; padding: 0 calc(13px - 0.2em) 0 0.2em; font-size: var(--wnav-lockup); }
+    .wnav__name { font-size: 1em; letter-spacing: 0.2em; }
+    .wnav__chip { grid-area: chip; position: relative; padding: 0 0 0 13px; border-left: 0; font-size: var(--wnav-lockup); letter-spacing: 0.2em; line-height: 1; }
+    .wnav__chip::before { content: ''; position: absolute; left: 0; top: 50%; width: 1px; height: 15px; background: rgba(198,204,218,0.28); transform: translateY(-50%); }
+    .wnav__search { grid-area: search; }
+  }
+  @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }`;
+
+// It always shows near the top, while a menu is open, and while it holds
+// keyboard focus.
+export const WING_PHONE_BAR_SCRIPT = `(function(){
+    var nav = document.querySelector('[data-wnav]');
+    var wrap = nav ? nav.parentElement : null;
+    var root = document.documentElement;
+    if(!wrap || !window.matchMedia) return;
+    var phone = window.matchMedia('(max-width: 599.5px)');
+    var last = Math.max(0, window.scrollY), away = false, frame = 0;
+    function set(next){ if(next === away) return; away = next; wrap.classList.toggle('is-away', next); }
+    function held(){ return root.style.overflow === 'hidden' || !!document.querySelector('[data-wnav-burger][aria-expanded="true"]') || !!wrap.querySelector(':focus-visible'); }
+    function tick(){
+      frame = 0;
+      var y = Math.max(0, window.scrollY);
+      if(!phone.matches || y < 64 || held()){ set(false); last = y; return; }
+      if(Math.abs(y - last) < 8) return;
+      set(y > last);
+      last = y;
+    }
+    window.addEventListener('scroll', function(){ if(!frame) frame = window.requestAnimationFrame(tick); }, { passive: true });
+    if(phone.addEventListener) phone.addEventListener('change', tick);
+    wrap.addEventListener('focusin', function(){ set(false); });
+  })();`;

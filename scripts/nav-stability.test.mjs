@@ -94,6 +94,20 @@ describe('navigation first-paint reservation', () => {
     }
   });
 
+  it('reserves the phone bar lockup before the chip or the face arrives', () => {
+    // The centred ZODIACS | ASTROFOLIO pair must not be sized by its text: a
+    // content-sized track re-centres the mark when the chip streams in after
+    // first paint, which Lighthouse measured as layout shift on the homepage.
+    const phone = css.split('@media (max-width: 599.5px) {')[1].split('\n  }\n')[0];
+    const bar = rule('.nav-wrap .nav', phone);
+    const tracks = value(bar, 'grid-template-columns');
+    expect(tracks).not.toMatch(/\bauto\b|content/u);
+    expect(tracks).toBe('44px minmax(0, 1fr) calc(var(--nav-lockup) * 5.7 + 13px) calc(var(--nav-lockup) * 8.27 + 13px) minmax(0, 1fr) 44px');
+    expect(value(bar, '--nav-lockup')).toBe('clamp(12px, 3.8vw, 15px)');
+    expect(value(rule('.nav__mark', phone), 'font-size')).toBe('var(--nav-lockup)');
+    expect(value(rule('.nav__chip', phone), 'font-size')).toBe('var(--nav-lockup)');
+  });
+
   it('pins desktop link starts and provides a sixth localized Today track without truncation', () => {
     expect(value(rule('.nav__links'), 'grid-template-columns')).toBe('74px 74px 64px 62px 102px minmax(0, 1fr)');
     expect(value(rule('.nav--localized .nav__links'), 'grid-template-columns'))

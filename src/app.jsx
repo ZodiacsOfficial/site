@@ -1631,6 +1631,10 @@
     // Sub-components
     // ──────────────────────────────────────────────────────────────
 
+    // Phones: the navigation is a full-width bar at the top edge that slides
+    // away as the page scrolls down (the wing pages' shared rule).
+    const PHONE_BAR_QUERY = '(max-width: 599.5px)';
+
     function Header() {
       const [menuOpen, setMenuOpen] = useState(false);
       const [signsOpen, setSignsOpen] = useState(false);
@@ -1689,6 +1693,61 @@
         document.addEventListener('keydown', onKey);
         return () => { document.removeEventListener('click', onDoc); document.removeEventListener('keydown', onKey); };
       }, [toolsOpen]);
+      // On phones the bar slides away as the page scrolls down and returns as
+      // it scrolls up. It always shows near the top, while a menu or sheet is
+      // open, and while it holds keyboard focus.
+      const wrapRef = useRef(null);
+      const menusRef = useRef(false);
+      menusRef.current = menuOpen || signsOpen || toolsOpen;
+      useEffect(() => {
+        const wrap = wrapRef.current;
+        if (!wrap) return undefined;
+        let phone = null;
+        try {
+          phone = window.matchMedia(PHONE_BAR_QUERY);
+        } catch {
+          return undefined;
+        }
+        const root = document.documentElement;
+        let last = Math.max(0, window.scrollY);
+        let away = false;
+        let frame = 0;
+        const set = (next) => {
+          if (next === away) return;
+          away = next;
+          wrap.classList.toggle('is-away', next);
+        };
+        const held = () => menusRef.current
+          || root.style.overflow === 'hidden'
+          || root.classList.contains('has-campaign-sheet')
+          || document.body.classList.contains('registry-trade-open')
+          || !!wrap.querySelector(':focus-visible');
+        const tick = () => {
+          frame = 0;
+          const y = Math.max(0, window.scrollY);
+          if (!phone.matches || y < 64 || held()) {
+            set(false);
+            last = y;
+            return;
+          }
+          if (Math.abs(y - last) < 8) return;
+          set(y > last);
+          last = y;
+        };
+        const onScroll = () => {
+          if (!frame) frame = window.requestAnimationFrame(tick);
+        };
+        const onFocus = () => set(false);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        phone.addEventListener?.('change', tick);
+        wrap.addEventListener('focusin', onFocus);
+        return () => {
+          window.cancelAnimationFrame(frame);
+          window.removeEventListener('scroll', onScroll);
+          phone.removeEventListener?.('change', tick);
+          wrap.removeEventListener('focusin', onFocus);
+        };
+      }, []);
       const NAV_SIGNS = [
         { slug: 'aries', name: 'Aries', glyph: '♈', dates: 'Mar 21 – Apr 19', hue: '#DE8E79' },
         { slug: 'taurus', name: 'Taurus', glyph: '♉', dates: 'Apr 20 – May 20', hue: '#B9D4BE' },
@@ -1720,7 +1779,7 @@
       };
       return (
         <>
-          <div className="wnav-wrap">
+          <div className="wnav-wrap" ref={wrapRef}>
             <nav className="wnav" aria-label="Primary" data-wnav="">
                 <a className="wnav__mark" href="/">
                   <span className="wnav__name">Zodiacs<span className="wnav__sep">·</span><span className="wnav__dim">org</span></span>
@@ -4711,6 +4770,23 @@
       }
     }
 
+    function useMediaMatch(query) {
+      const [matches, setMatches] = useState(() => matchesMedia(query));
+      useEffect(() => {
+        let list = null;
+        try {
+          list = window.matchMedia(query);
+        } catch {
+          return undefined;
+        }
+        const update = () => setMatches(list.matches);
+        update();
+        list.addEventListener?.('change', update);
+        return () => list.removeEventListener?.('change', update);
+      }, [query]);
+      return matches;
+    }
+
     // The scroll-driven stage (pinned hero and runway) runs only on wide
     // screens with motion allowed. Everywhere else the same markup reads as
     // a still film, a swipeable runway, and ordinary sections.
@@ -5111,9 +5187,25 @@
       const activeRef = useRef(active);
       const steerRef = useRef(null);
       const settleRef = useRef({ timer: 0, committed: active });
+      // A sign chosen outside the runway (the bag's picker) brings its look
+      // to the middle of the swipeable runway without moving the page. Disc
+      // taps and swipes update activeRef first, so they never land here.
       useEffect(() => {
+        if (active === activeRef.current) return;
         activeRef.current = active;
-      }, [active]);
+        settleRef.current.committed = active;
+        window.clearTimeout(settleRef.current.timer);
+        const track = trackRef.current;
+        const look = track?.children[order.findIndex((item) => item.ticker === active)];
+        if (stageRef.current.pinned || !track || !look) return;
+        const bounds = track.getBoundingClientRect();
+        const inView = bounds.bottom > 0 && bounds.top < window.innerHeight;
+        steerRef.current = { ticker: active, until: window.performance.now() + 1200 };
+        track.scrollTo({
+          left: look.offsetLeft - (track.clientWidth - look.offsetWidth) / 2,
+          behavior: inView && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY) ? 'smooth' : 'instant',
+        });
+      }, [active, order]);
 
       // On phones the looks pop up from below as they reach the screen, over
       // the dimmed film.
@@ -5493,12 +5585,17 @@
       );
     }
 
-    // The bag follows the selected sign from the first screen. It rests
-    // only while the runway (where every look has its own button) fills the
-    // screen, and over the page's closing notice and footer.
-    function CampaignBag({ sign, batch }) {
+    // The bag follows the selected sign from the first screen. On wide
+    // screens it rests while the runway (where every look has its own
+    // button) fills the screen; on phones the looks carry no buttons, so the
+    // bag stays over the runway, follows the look in view, and its sign opens
+    // a sheet of all twelve. It rests over the closing notice and footer.
+    function CampaignBag({ sign, batch, onPick }) {
       const seasonTicker = useCurrentSeason()?.sign.ticker ?? '';
       const [shown, setShown] = useState(true);
+      const phone = useMediaMatch(CAMPAIGN_PHONE_QUERY);
+      const sheetRef = useRef(null);
+      const openerRef = useRef(null);
       useEffect(() => {
         let frame = 0;
         const paint = () => {
@@ -5508,7 +5605,7 @@
           const runway = document.getElementById('the-twelve');
           const ending = document.querySelector('.consumer-campaign > .ftr') ?? document.querySelector('#main ~ .zfooter');
           let next = true;
-          if (runway) {
+          if (runway && !matchesMedia(CAMPAIGN_PHONE_QUERY)) {
             const rect = runway.getBoundingClientRect();
             const covering = stage
               ? rect.top < viewport * 0.85 && rect.bottom > viewport * 0.15
@@ -5530,34 +5627,113 @@
           window.removeEventListener('resize', schedule);
         };
       }, []);
+      // The sheet closes itself if the bag rests (the footer came into view).
+      useEffect(() => {
+        if (!shown && sheetRef.current?.open) sheetRef.current.close();
+      }, [shown]);
+      const openSheet = () => {
+        const sheet = sheetRef.current;
+        if (!sheet || sheet.open || typeof sheet.showModal !== 'function') return;
+        sheet.showModal();
+        document.documentElement.classList.add('has-campaign-sheet');
+        window.requestAnimationFrame(() => {
+          sheet.querySelector('.campaign-sheet__sign[aria-pressed="true"]')?.focus({ preventScroll: true });
+        });
+      };
+      const closeSheet = () => sheetRef.current?.close();
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const change = quote ? toFiniteNumber(quote.priceChange24h) : null;
       const direction = change === null ? 'flat' : change > 0 ? 'up' : change < 0 ? 'down' : 'flat';
-      return (
-        <aside
-          className={'campaign-bag' + (shown ? '' : ' is-hidden')}
-          aria-label={`Buy ${sign.name}`}
-          aria-hidden={shown ? undefined : 'true'}
-          inert={shown ? undefined : ''}
-          data-campaign-bag={sign.asset.sign}
-          style={{ '--sign': sign.hue }}
-        >
-          <span className="campaign-bag__who">
-            <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
-            <span>
-              <strong>{sign.name}</strong>
-              <small>
-                {quote ? (
-                  <>
-                    <span>{formatPriceUsd(quote.priceUsd)}</span>
-                    {change !== null && <span className={`campaign-bag__move is-${direction}`}>{formatPercent(change)}</span>}
-                  </>
-                ) : <span>{sign.ticker === seasonTicker ? 'In season now' : consumerSignDateLabel(sign)}</span>}
-              </small>
-            </span>
+      const who = (
+        <>
+          <img src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`} width="40" height="40" alt="" decoding="async" />
+          <span>
+            {phone ? (
+              <span className="campaign-bag__name">
+                <strong>{sign.name}</strong>
+                <svg className="campaign-bag__caret" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+                  <path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            ) : <strong>{sign.name}</strong>}
+            <small>
+              {quote ? (
+                <>
+                  <span>{formatPriceUsd(quote.priceUsd)}</span>
+                  {change !== null && <span className={`campaign-bag__move is-${direction}`}>{formatPercent(change)}</span>}
+                </>
+              ) : <span>{sign.ticker === seasonTicker ? 'In season now' : consumerSignDateLabel(sign)}</span>}
+            </small>
           </span>
-          <FomoBuyButton item={sign} source="bag" />
-        </aside>
+        </>
+      );
+      return (
+        <>
+          <aside
+            className={'campaign-bag' + (shown ? '' : ' is-hidden')}
+            aria-label={`Buy ${sign.name}`}
+            aria-hidden={shown ? undefined : 'true'}
+            inert={shown ? undefined : ''}
+            data-campaign-bag={sign.asset.sign}
+            style={{ '--sign': sign.hue }}
+          >
+            {phone ? (
+              <button
+                ref={openerRef}
+                type="button"
+                className="campaign-bag__who campaign-bag__pick"
+                aria-haspopup="dialog"
+                aria-label={`${sign.name}. Change sign`}
+                onClick={openSheet}
+              >
+                {who}
+              </button>
+            ) : <span className="campaign-bag__who">{who}</span>}
+            <FomoBuyButton item={sign} source="bag" />
+          </aside>
+          {phone && (
+            <dialog
+              ref={sheetRef}
+              className="campaign-sheet"
+              aria-labelledby="campaign-sheet-title"
+              onClick={(event) => { if (event.target === event.currentTarget) closeSheet(); }}
+              onClose={() => {
+                document.documentElement.classList.remove('has-campaign-sheet');
+                openerRef.current?.focus({ preventScroll: true });
+              }}
+            >
+              <div className="campaign-sheet__panel">
+                <div className="campaign-sheet__head">
+                  <h2 id="campaign-sheet-title">Choose a sign</h2>
+                  <button type="button" className="campaign-sheet__close" aria-label="Close" onClick={closeSheet}>
+                    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false">
+                      <path d="M3 3l8 8M11 3l-8 8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="campaign-sheet__grid">
+                  {SIGNS.map((item) => (
+                    <button
+                      key={item.ticker}
+                      type="button"
+                      className="campaign-sheet__sign"
+                      data-sheet-sign={item.asset.sign}
+                      aria-pressed={item.ticker === sign.ticker}
+                      style={{ '--sign': item.hue }}
+                      onClick={() => {
+                        onPick(item.ticker);
+                        closeSheet();
+                      }}
+                    >
+                      <img src={`/assets/zodiac-icons/128/${item.asset.sign}.webp`} width="44" height="44" alt="" loading="lazy" decoding="async" />
+                      <span>{item.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </dialog>
+          )}
+        </>
       );
     }
 
@@ -7255,6 +7431,19 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
+      // The bag's sheet chooses a sign from anywhere on the page; the runway
+      // follows it without moving the page.
+      const pickFromBag = useCallback((ticker) => {
+        const next = SIGNS.find((item) => item.ticker === ticker);
+        if (!next) return;
+        setActiveTicker(next.ticker);
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set('sign', next.asset.sign);
+          window.history.replaceState(null, '', `${url.pathname}?${url.searchParams}${url.hash}`);
+        } catch { /* malformed URL: the choice still stands */ }
+        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_bag' });
+      }, []);
       const proMarket = useTwelveQuotes(pro);
       const consumerMarket = useTwelveQuotes(!technical && !pro);
 
@@ -7525,7 +7714,7 @@
           <main id="main" className="zd consumer-registry consumer-campaign">
             <div className="campaign-stack">
               <CampaignHero />
-              <CampaignBag sign={sign} batch={consumerMarket} />
+              <CampaignBag sign={sign} batch={consumerMarket} onPick={pickFromBag} />
               <CampaignRunway
                 anchorTicker={anchorTicker}
                 active={activeTicker}

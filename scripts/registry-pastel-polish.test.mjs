@@ -228,6 +228,40 @@ describe('registry pastel polish', () => {
     expect(source).toContain('return matchesMedia(CAMPAIGN_WIDE_QUERY) && !matchesMedia(CAMPAIGN_REDUCED_MOTION_QUERY);');
   });
 
+  it('fits one look per phone screen and changes sign from the bag', async () => {
+    const campaign = await read('src/terminal/split-styles.css');
+    const phone = campaign.slice(campaign.indexOf('/* Phones: one look per screen, after rolex.com'), campaign.indexOf('/* The bag\'s sign opens a sheet of all twelve (phones). */'));
+    expect(phone).toContain('@media (max-width: 900px) {');
+    // The heading stays for screen readers; the discs take one slim row.
+    expect(phone).toContain('.campaign-runway__head > div:first-child {');
+    expect(phone).toContain('clip-path: inset(50%);');
+    expect(phone).toContain('.campaign-runway__dots { --campaign-dot-columns: 12; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0; }');
+    expect(phone).toContain('.campaign-dot { height: 44px; border-radius: 12px; }');
+    // Each look is sized to the screen, above the bag.
+    expect(phone).toContain('--look-top: 92px;');
+    expect(phone).toContain('--look-room: calc(var(--look-top) + 44px + 24px + 92px + env(safe-area-inset-bottom, 0px));');
+    // The phone top bar slides away on the way down, so the runway keeps no
+    // clearance for it there.
+    expect(phone).toContain('@media (max-width: 599.5px) {\n      .campaign-runway { --look-top: max(16px, env(safe-area-inset-top, 0px)); }\n      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: var(--look-top); }');
+    expect(phone).toContain('height: clamp(360px, calc(100svh - var(--look-room)), 640px);');
+    expect(phone).toContain('.campaign-look h3 { order: 2;');
+    // Buying is the bag's job; the whole look opens its page.
+    expect(phone).toContain('.campaign-look__actions > .btn--fomo,\n      .campaign-look > .vitrine-buy-options { display: none; }');
+    expect(phone).toContain('.campaign-look__explore {\n        position: absolute;\n        z-index: 3;\n        inset: 0;');
+    expect(phone).toContain('.campaign-look .campaign-spark { display: none; }');
+    const sheet = campaign.slice(campaign.indexOf('/* The bag\'s sign opens a sheet of all twelve (phones). */'), campaign.indexOf('@media (min-width: 601px) and (max-width: 900px)'));
+    expect(sheet).toContain('.campaign-bag__pick {\n      min-height: 48px;');
+    // The caret rides beside the name and steps aside for a long one, so
+    // neither the name nor the status line gives up width to it.
+    expect(sheet).toContain('.campaign-bag__name { min-width: 0; height: 20px; display: flex; flex-wrap: wrap; align-items: center; column-gap: 6px; overflow: hidden; }');
+    expect(sheet).toContain('.campaign-sheet__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }');
+    expect(sheet).toContain('.campaign-sheet__sign {\n      min-height: 84px;');
+    expect(sheet).toContain('.campaign-sheet__close {\n      width: 44px;\n      height: 44px;');
+    expect(sheet).toContain('.campaign-sheet[open] .campaign-sheet__panel { animation: campaign-sheet-up 420ms cubic-bezier(.16, 1, .3, 1); }');
+    expect(sheet).toContain('html.has-campaign-sheet { overflow: hidden; }');
+    expect(sheet).toContain('@media (prefers-reduced-motion: reduce) {\n      .campaign-sheet[open] .campaign-sheet__panel,\n      .campaign-sheet[open]::backdrop { animation: none; }');
+  });
+
   it('uses deliberate hierarchy hairlines and one editorial market gateway', async () => {
     const [source, css] = await Promise.all([
       read('src/app.jsx'),
@@ -284,6 +318,43 @@ describe('registry pastel polish', () => {
       read('src/app.jsx'),
       read('src/components/SiteNav.astro'),
     ]);
+
+    // Phones: every copy turns the pill into a full-width bar at the top edge
+    // that slides away on the way down: the menu on the left, the
+    // ZODIACS | ASTROFOLIO lockup on the centre line, search on the right.
+    // The static pages carry the shared script; the hub SPA's Header sets
+    // .is-away itself.
+    for (const value of [wingNav, astrofolio, terminal, markets, thesis, sdk, technical]) {
+      expect(value).toContain('@media (max-width: 599.5px) {\n    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }');
+      expect(value).toContain('.wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }');
+      expect(value).toContain("html body .wnav-wrap .wnav { --wnav-lockup: clamp(12px, 3.8vw, 15px); display: grid; grid-template-areas: 'menu . mark chip . search'; grid-template-columns: 44px minmax(0,1fr) calc(var(--wnav-lockup) * 5.7 + 13px) calc(var(--wnav-lockup) * 8.27 + 13px) minmax(0,1fr) 44px; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px));");
+      expect(value).toContain('border-width: 0 0 1px; border-radius: 0; box-shadow: none; }');
+      expect(value).toContain('.wnav__burger { grid-area: menu; border-color: transparent; }');
+      expect(value).toContain(".wnav__burger:not([aria-expanded='true']) .wnav__burger-line:nth-child(2) { opacity: 0; }");
+      expect(value).toContain('.wnav__mark { grid-area: mark; min-height: 44px; gap: 0; padding: 0 calc(13px - 0.2em) 0 0.2em; font-size: var(--wnav-lockup); }');
+      expect(value).toContain('.wnav__chip { grid-area: chip; position: relative; padding: 0 0 0 13px; border-left: 0; font-size: var(--wnav-lockup); letter-spacing: 0.2em; line-height: 1; }');
+      expect(value).toContain(".wnav__chip::before { content: ''; position: absolute; left: 0; top: 50%; width: 1px; height: 15px;");
+      expect(value).toContain('.wnav__search { grid-area: search; }');
+      expect(value).toContain('@media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }');
+    }
+    for (const value of [wingNav, markets, thesis, sdk]) {
+      expect(value).toContain("var phone = window.matchMedia('(max-width: 599.5px)');");
+      expect(value).toContain("if(!phone.matches || y < 64 || held()){ set(false); last = y; return; }");
+      expect(value).toContain("wrap.classList.toggle('is-away', next);");
+    }
+    expect(source).toContain("const PHONE_BAR_QUERY = '(max-width: 599.5px)';");
+    expect(source).toContain('<div className="wnav-wrap" ref={wrapRef}>');
+    const header = source.slice(source.indexOf('function Header() {'), source.indexOf('\n    function ', source.indexOf('function Header() {')));
+    expect(header).toContain("wrap.classList.toggle('is-away', next);");
+    expect(header).toContain("|| root.classList.contains('has-campaign-sheet')");
+    expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav-wrap.is-away { transform: translateY(-100%); opacity: 0; }");
+    expect(siteNav).toContain("grid-template-areas: 'menu . mark chip . search';");
+    expect(siteNav).toContain("grid-template-areas: 'menu . mark chip . .';");
+    expect(siteNav).toContain('grid-template-columns: 44px minmax(0, 1fr) calc(var(--nav-lockup) * 5.7 + 13px) calc(var(--nav-lockup) * 8.27 + 13px) minmax(0, 1fr) 44px;');
+    expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav__chip::before {");
+    expect(siteNav).toContain(":global(html:not([data-chart-share-receiver])) .nav__burger:not([aria-expanded='true']) .nav__burger-line:nth-child(2) { opacity: 0; }");
+    expect(siteNav).toContain("var phone = window.matchMedia('(max-width: 599.5px)');");
+    expect(siteNav).toContain("if (!wrap || !window.matchMedia || root.hasAttribute('data-chart-share-receiver')) return;");
 
     for (const value of [wingNav, astrofolio, terminal, markets, thesis, sdk, technical]) {
       expect(value).toContain('height: 52px; padding: 0 10px 0 20px;');

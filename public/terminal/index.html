@@ -658,6 +658,24 @@
   .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
   @keyframes wnav-turn { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+  @media (max-width: 599.5px) {
+    .wnav-wrap { top: 0; padding-top: 0; transition: transform 360ms cubic-bezier(0.22,1,0.36,1), opacity 260ms ease; }
+    .wnav-wrap.is-away { transform: translateY(-100%); opacity: 0; }
+    .wnav-wrap.is-away .wnav { pointer-events: none; }
+    /* html body … outranks the hub's lens and frost pill rules. The two outer tracks match, so the lockup centres on the bar. */
+    html body .wnav-wrap .wnav { --wnav-lockup: clamp(12px, 3.8vw, 15px); display: grid; grid-template-areas: 'menu . mark chip . search'; grid-template-columns: 44px minmax(0,1fr) calc(var(--wnav-lockup) * 5.7 + 13px) calc(var(--wnav-lockup) * 8.27 + 13px) minmax(0,1fr) 44px; box-sizing: border-box; width: 100%; height: calc(52px + env(safe-area-inset-top, 0px)); padding: env(safe-area-inset-top, 0px) 6px 0; gap: 0; border-width: 0 0 1px; border-radius: 0; box-shadow: none; }
+    .wnav__burger { grid-area: menu; border-color: transparent; }
+    .wnav__burger-line { width: 20px; }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:first-child { transform: translate(-50%, calc(-50% - 3.5px)); }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:nth-child(2) { opacity: 0; }
+    .wnav__burger:not([aria-expanded='true']) .wnav__burger-line:last-child { transform: translate(-50%, calc(-50% + 3.5px)); }
+    .wnav__mark { grid-area: mark; min-height: 44px; gap: 0; padding: 0 calc(13px - 0.2em) 0 0.2em; font-size: var(--wnav-lockup); }
+    .wnav__name { font-size: 1em; letter-spacing: 0.2em; }
+    .wnav__chip { grid-area: chip; position: relative; padding: 0 0 0 13px; border-left: 0; font-size: var(--wnav-lockup); letter-spacing: 0.2em; line-height: 1; }
+    .wnav__chip::before { content: ''; position: absolute; left: 0; top: 50%; width: 1px; height: 15px; background: rgba(198,204,218,0.28); transform: translateY(-50%); }
+    .wnav__search { grid-area: search; }
+  }
+  @media (max-width: 599.5px) and (prefers-reduced-motion: reduce) { .wnav-wrap { transition: none; } }
 
     /* ── Liquid glass — SVG filter defs container. On Chromium the hero
        CTAs AND the nav pill refract the footage behind them (.zdx-lens is
@@ -10833,6 +10851,163 @@
     @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
       .campaign-stack .campaign-hero__caption { transform: none; }
       .campaign-discover__cue { animation: none; }
+    }
+    /* Phones: one look per screen, after rolex.com's cards. The heading
+       stays for screen readers, the twelve discs take one slim row, and each
+       look is sized to the screen: numeral and dates, the figure, the name
+       and a one-line price. Buying is the bag's job (it stays over the
+       runway on phones); the whole look opens its sign's page. */
+    @media (max-width: 900px) {
+      .campaign-runway {
+        /* Pin top, disc row, track padding and the bag's clearance. */
+        --look-top: 92px;
+        --look-room: calc(var(--look-top) + 44px + 24px + 92px + env(safe-area-inset-bottom, 0px));
+      }
+      .campaign-runway__head > div:first-child {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+      .campaign-runway__dots { --campaign-dot-columns: 12; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0; }
+      .campaign-dot { height: 44px; border-radius: 12px; }
+      .campaign-dot img { width: min(26px, 6.6vw); height: min(26px, 6.6vw); }
+      .campaign-dot::after { width: calc(min(26px, 6.6vw) + 8px); height: calc(min(26px, 6.6vw) + 8px); }
+      .campaign-runway__track { padding-block: 12px; }
+      .campaign-look {
+        height: clamp(360px, calc(100svh - var(--look-room)), 640px);
+        max-height: none;
+        grid-template-rows: auto minmax(0, 1fr) auto auto;
+        padding: 18px 18px 16px;
+      }
+      .campaign-look__art { order: 1; padding: 0; }
+      .campaign-look__figure { max-height: none; }
+      .campaign-look h3 { order: 2; margin: 4px 0 0; font-size: clamp(34px, 10.5vw, 44px); }
+      .campaign-look__stats { order: 3; display: block; margin-top: 8px; padding-top: 10px; }
+      .campaign-look .campaign-spark { display: none; }
+      .campaign-look .vitrine-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+      .campaign-look__actions { display: contents; }
+      .campaign-look__actions > .btn--fomo,
+      .campaign-look > .vitrine-buy-options { display: none; }
+      .campaign-look__explore {
+        position: absolute;
+        z-index: 3;
+        inset: 0;
+        min-height: 0;
+        border-radius: inherit;
+        color: transparent;
+        font-size: 0;
+        text-decoration: none;
+      }
+      .campaign-look__explore:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+      /* The notes start below the bag, so a look on screen has nothing
+         behind the bag but the page. */
+      .campaign-runway__note { margin-top: calc(96px + env(safe-area-inset-bottom, 0px)); }
+      .campaign-runway__note > span:nth-child(2) { display: none; }
+    }
+    /* On phones the top bar slides away as the page scrolls down, so the
+       runway keeps no clearance for it. */
+    @media (max-width: 599.5px) {
+      .campaign-runway { --look-top: max(16px, env(safe-area-inset-top, 0px)); }
+      .campaign-stack > .campaign-runway .campaign-runway__pin { padding-top: var(--look-top); }
+    }
+    /* The bag's sign opens a sheet of all twelve (phones). */
+    .campaign-bag__pick {
+      min-height: 48px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .campaign-bag__pick:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    /* The caret rides beside the name, so the status line keeps its width.
+       Where a long name needs the room, the caret wraps onto a clipped
+       second line instead of cutting the name short. */
+    .campaign-bag__name { min-width: 0; height: 20px; display: flex; flex-wrap: wrap; align-items: center; column-gap: 6px; overflow: hidden; }
+    .campaign-bag__caret { flex: 0 0 12px; color: var(--ink-dim); }
+    .campaign-sheet {
+      width: min(100%, 560px);
+      max-width: 100%;
+      max-height: 100%;
+      margin: auto auto 0;
+      padding: 0;
+      overflow: visible;
+      border: 0;
+      background: none;
+      color: var(--ink);
+    }
+    .campaign-sheet::backdrop {
+      background: rgba(6,7,9,.62);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+    .campaign-sheet__panel {
+      padding: 16px 14px calc(18px + env(safe-area-inset-bottom, 0px));
+      border: 1px solid var(--hair-2);
+      border-bottom: 0;
+      border-radius: 26px 26px 0 0;
+      background: #0c0e14;
+      box-shadow: 0 -24px 60px -24px rgba(0,0,0,.9);
+    }
+    .campaign-sheet[open] .campaign-sheet__panel { animation: campaign-sheet-up 420ms cubic-bezier(.16, 1, .3, 1); }
+    .campaign-sheet[open]::backdrop { animation: campaign-sheet-fade 300ms ease; }
+    @keyframes campaign-sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+    @keyframes campaign-sheet-fade { from { opacity: 0; } to { opacity: 1; } }
+    .campaign-sheet__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 4px 10px;
+    }
+    .campaign-sheet__head h2 { margin: 0; color: var(--ink); font: 400 26px/1.1 var(--serif); letter-spacing: -.01em; }
+    .campaign-sheet__close {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 50%;
+      background: none;
+      color: var(--ink-2);
+      cursor: pointer;
+    }
+    .campaign-sheet__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+    .campaign-sheet__sign {
+      min-height: 84px;
+      display: grid;
+      justify-items: center;
+      align-content: center;
+      gap: 6px;
+      padding: 8px 2px;
+      border: 1px solid transparent;
+      border-radius: 16px;
+      background: none;
+      color: var(--ink-2);
+      font: 500 12.5px/1.2 var(--sans);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .campaign-sheet__sign img { width: 44px; height: 44px; display: block; border-radius: 50%; }
+    .campaign-sheet__sign[aria-pressed="true"] {
+      border-color: color-mix(in srgb, var(--sign) 60%, transparent);
+      background: color-mix(in srgb, var(--sign) 10%, transparent);
+      color: var(--ink);
+    }
+    .campaign-sheet__sign:focus-visible,
+    .campaign-sheet__close:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    html.has-campaign-sheet { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      .campaign-sheet[open] .campaign-sheet__panel,
+      .campaign-sheet[open]::backdrop { animation: none; }
     }
     @media (min-width: 601px) and (max-width: 900px) {
       .campaign-bag { right: auto; left: 50%; width: min(560px, calc(100% - 24px)); transform: translateX(-50%); }
