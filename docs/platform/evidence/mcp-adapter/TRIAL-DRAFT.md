@@ -11,8 +11,8 @@ constraint that draft set.
 **Availability — passed.** `https://zodiacs.org/developers/mcp/` returns 200 in
 production and publishes a pinned archive whose digest matches what the page
 prints. The install instructions point at something real. Every expected value
-below was measured against **0.1.0-rc.6**. Before sending, check that the page
-still advertises rc.6; if a later archive has shipped, re-measure steps 2 to 4
+below was measured against **0.1.0-rc.7**. Before sending, check that the page
+still advertises rc.7; if a later archive has shipped, re-measure steps 2 to 4
 against whatever it names, because the `reproduced` wording and the withholding
 have both changed between candidates before.
 
@@ -119,12 +119,12 @@ Ask your assistant, in your own words:
 Synthetic: round public coordinates for New York, on a date chosen for what it
 exercises. Nobody's birth details.
 
-Checks, on rc.6 with engine 0.1.1-rc.6 — `get_capabilities` will tell you what
+Checks, on rc.7 with engine 0.1.1-rc.7 — `get_capabilities` will tell you what
 you actually have:
 
 - twelve bodies, four angles, twelve cusps;
 - Sun longitude `0.8733370932176285` — Aries, 0°52′;
-- ascendant `274.04690998258377` — Capricorn;
+- ascendant `274.04403943096713` — Capricorn;
 - `houses` reads `{ requested: "placidus", actual: "placidus", absenceReason: null }`;
 - the result contains neither `1988-03-21` nor `40.7128`. The summary returns the
   chart, not your inputs read back at you. Search the raw output and confirm that
@@ -176,7 +176,7 @@ comparison as `left` and `right`.
   "houseSystem": "whole", "output": "record" }
 ```
 
-A correct answer, in full — this is what rc.6 returns:
+A correct answer, in full — this is what rc.7 returns:
 
 - `identical: false`, and
   `counts: { differences: 15, substantive: 15, displayOnly: 0, explanations: 1 }`.
@@ -188,14 +188,14 @@ A correct answer, in full — this is what rc.6 returns:
   the tool is wrong.
 - The three metadata rows keep their values. The twelve cusp rows do not: each
   carries `"valuesWithheld": true` and its `delta`, and `cusp-1`'s delta is
-  `-4.04690998258377`. That is the default, and it is minimisation rather than
+  `-4.044039430967132`. That is the default, and it is minimisation rather than
   anonymisation — it shortens what travels onward and hides nothing from the
   assistant, which already received both records as arguments.
 - Exactly one explanation, `id: "house-system"`, `evidence: "reproduced"`,
   covering all fifteen rows:
 
   > Each chart's own recorded values were reproduced from its own declared inputs
-  > on engine 0.1.1-rc.6, and changing only the house system turns each one into
+  > on engine 0.1.1-rc.7, and changing only the house system turns each one into
   > the other, in both directions.
 
   Read that sentence for what it claims and what it does not. It says the engine
@@ -219,9 +219,9 @@ Then ask for the values, which is an explicit choice rather than the default:
 > Compare them again with output: "full".
 
 - Every cusp row now carries `left` and `right`, and `withheld` is gone.
-- `cusp-1` is left `274.046910`, right `270.000000`.
+- `cusp-1` is left `274.044039`, right `270.000000`.
 - **You can check the right-hand value without trusting us.** A whole-sign first
-  cusp is 0° of the sign the ascendant falls in; the ascendant is 274.046910°;
+  cusp is 0° of the sign the ascendant falls in; the ascendant is 274.044039°;
   that is Capricorn; so 270.000000 is the only correct answer — and the other
   eleven follow at exact thirty-degree steps: 300, 330, 0, 30, 60, 90, 120, 150,
   180, 210, 240.
@@ -348,3 +348,12 @@ same `cusp-1` delta, same `reproduced` sentence, same two limits, same refusal
 text, and `npm run verify` still prints seventeen check lines. What rc.6 changed
 is not exercised by this protocol — a refusal hint for a mistake step 4 does not
 make, because it names the `record` field rather than passing the whole reply.
+
+They were measured again against `zodiacs-mcp-server-0.1.0-rc.7.tgz` (sha256
+`44c19b81…`), from a clean extraction of that archive before it shipped. Its
+engine, 0.1.1-rc.7, builds the angles on the true obliquity, so three things
+moved: the ascendant in step 2 (from `274.04690998258377`), `cusp-1`'s delta
+and left value in step 4 (from `-4.04690998258377` and `274.046910`), and the
+engine the `reproduced` sentence names. Everything else came back unchanged:
+the Sun, the counts, the fifteen rows, the whole-sign cusps, the two limits,
+the refusal text, fourteen installed packages and seventeen verifier lines.

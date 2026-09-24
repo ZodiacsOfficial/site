@@ -9,7 +9,7 @@
  *
  *   node docs/platform/evidence/swiss-benchmark/tools/multiyear-zodiacs.mjs > multiyear-zodiacs.jsonl
  *
- * It reads the installed @zodiacs/engine, the vendored rc.6 the site runs,
+ * It reads the installed @zodiacs/engine, the vendored version the site runs,
  * writes nothing into the repository and makes no network request.
  */
 import { ENGINE_VERSION } from '@zodiacs/engine';

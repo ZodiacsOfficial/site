@@ -6,7 +6,8 @@ import { engineInstallBlock } from '../../../lib/engine-install-block';
 import { ENGINE_DEMO_SOURCE, ENGINE_DEMO_OUTPUT } from '../../../lib/engine-demo';
 
 const install = engineInstallBlock(candidate);
-const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
+// The package sits at the root of its repository from rc.7 (packages/engine of the SDK before).
+const sourceTree = `${candidate.sourceRepository}/tree/${candidate.sourceCommit}${candidate.sourcePackagePath ? `/${candidate.sourcePackagePath}` : ''}`;
 
 const title = 'Zodiacs Engine — Local TypeScript Chart Engine | Zodiacs.org';
 // A plain literal, not a template: scripts/build-assistant-context.mjs reads
@@ -105,7 +106,7 @@ const jsonLd = [{
     </dl>
     <div class="prose">
       <p>
-        Whole-sign and Placidus houses; the five major aspects with separate
+        Whole-sign, Placidus and Porphyry houses; the five major aspects with separate
         luminary orbs. Two optional entry points ship beside the core:{' '}
         <code>@zodiacs/engine/geo</code> resolves a local wall time and IANA
         zone to an instant, and <code>@zodiacs/engine/receipt</code> validates
@@ -209,10 +210,10 @@ const jsonLd = [{
       <ul>
         <li>Tropical only. No sidereal mode, no ayanamsha, no topocentric parallax.</li>
         <li>Sun through Pluto and the true nodes. No Chiron, no asteroids.</li>
-        <li>Placidus is undefined near the poles; above 66° absolute latitude it falls back to whole sign and flags it.</li>
+        <li>Placidus is undefined inside the polar circle; where the absolute latitude is 90° minus the obliquity or more (66.53° to 66.59° over 1800–2200) it falls back to whole sign and flags it. Porphyry is defined there too.</li>
         <li>Event searches cap ephemeris evaluations, so they can miss an event between samples. That is a sampling bound, not a guarantee of complete discovery.</li>
         <li>No input-date bound, and no warning outside the range anyone has checked. See the caveat under accuracy.</li>
-        <li>The manifest declares Node 18 and newer. What has actually been executed is Node 22.23.2, Node 24.19.0 and Chrome 152 — narrower than the declaration.</li>
+        <li>The manifest declares Node 18 and newer. What has actually been executed for this candidate is Node 22.22.2 and Node 24.21.0, and the site's Chromium browser checks — narrower than the declaration.</li>
         <li>No interpretation. The engine returns geometry; what it means is your problem, and not an astronomical claim.</li>
       </ul>
       <p>
@@ -226,8 +227,8 @@ const jsonLd = [{
     <h2 id="source">Source and licence</h2>
     <div class="prose">
       <p>
-        MIT, in <a href={sourceRoot}>{candidate.sourcePackagePath}</a> of the
-        Zodiacs SDK repository at commit{' '}
+        MIT, in the <a href={sourceTree}>Zodiacs engine repository</a> at
+        commit{' '}
         <code>{candidate.sourceCommit.slice(0, 12)}</code>. Keep the packaged
         {' '}<code>LICENSE</code> and <code>NOTICE</code> when you redistribute:
         the NOTICE carries Astronomy Engine's MIT notice and the CC BY 4.0

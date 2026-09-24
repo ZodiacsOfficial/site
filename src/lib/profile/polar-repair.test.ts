@@ -57,6 +57,12 @@ describe('legacy polar saved-chart repair', () => {
     expect(currentSavedCalculation(repaired.summary.engineVersion)).toBe(false);
   });
 
+  // The frozen 0.1.0 records carry angles on the mean obliquity. Since
+  // 0.1.1-rc.7 the engine uses the true obliquity of date, which moves these
+  // angles by at most 0.18″ (ASC) and 0.025″ (MC) over the two days below. The
+  // repair corrects the 180° axis error; the obliquity is not its concern.
+  const arcsecondsApart = (a: number, b: number) => Math.abs(((a - b + 540) % 360) - 180) * 3600;
+
   it.each([78.2232, -78.2232])('matches the current natal/transit engine throughout a day at %s°', (latitude) => {
     let repairedCount = 0;
     for (let hour = 0; hour < 24; hour += 1) {
@@ -64,8 +70,8 @@ describe('legacy polar saved-chart repair', () => {
       const repaired = repairLegacyPolarChart(saved);
       const current = freshChart(saved, 'placidus');
       if (repaired !== saved) repairedCount += 1;
-      expect(repaired.summary.angles!.asc).toBeCloseTo(current.angles!.asc, 10);
-      expect(repaired.summary.angles!.mc).toBeCloseTo(current.angles!.mc, 10);
+      expect(arcsecondsApart(repaired.summary.angles!.asc, current.angles!.asc)).toBeLessThan(0.5);
+      expect(arcsecondsApart(repaired.summary.angles!.mc, current.angles!.mc)).toBeLessThan(0.05);
       expect(repaired.summary.bodies).toEqual(current.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })));
       expect(repaired.summary.houseSystem).toBe(current.houses!.system);
       expect(repaired.summary.flags).toEqual(current.flags);

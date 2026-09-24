@@ -128,13 +128,15 @@ const jsonLd = [
       <h2>Angles and houses</h2>
       <p>
         The ascendant and midheaven are computed from Greenwich apparent
-        sidereal time, your birthplace coordinates, and the mean obliquity of
-        the ecliptic (IAU 2006). We offer <strong>whole sign</strong> houses (the
+        sidereal time, your birthplace coordinates, and the true obliquity of
+        the ecliptic of date: the mean obliquity (IAU 2006) plus the nutation in
+        obliquity, the same model the sidereal time uses. We offer <strong>whole sign</strong> houses (the
         oldest system — each house is one complete sign) and{' '}
         <strong>Placidus</strong> (the most common modern system, computed by
         iterative semi-arc division). Placidus is mathematically undefined
-        near the poles; above 66° latitude we fall back to whole sign and say
-        so on the chart.
+        inside the polar circle; where the latitude is 90° minus the obliquity
+        or more, about 66.56°, we fall back to whole sign and say so on the
+        chart.
       </p>
 
       <h2 id="natal-aspect-policy">Natal aspects and orbs</h2>
@@ -162,12 +164,11 @@ const jsonLd = [
         </table>
       </div>
       <p>
-        Applying and separating labels use the bodies’ computed daily
-        longitude speeds. The engine advances both positions by 0.02 day
-        (28.8 minutes): if the distance from the exact aspect is smaller after
-        that step, the aspect is applying; otherwise it is separating. The
-        displayed orb is the current absolute distance from exact, not the
-        forward-step distance. Fixed-chart synastry and composite aspects do
+        Applying and separating labels use the bodies’ computed longitude
+        speeds. An aspect is applying while its distance from exact is
+        shrinking, judged from the two bodies’ relative speed at that moment,
+        and separating when it is exact or growing. The displayed orb is the
+        current absolute distance from exact. Fixed-chart synastry and composite aspects do
         not receive applying or separating labels.
       </p>
 

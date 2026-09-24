@@ -237,3 +237,7 @@ The sample's 18.64″ was not the worst up to 2026: Venus reaches 22.96″ in
 1878. Beyond 2026 the same-UT figures are mostly the clock: at the same TT the
 Moon stays within 7.15″ from 2150 to 2199, where at the same UT it reaches
 183.12″. The file has each body by half-century.
+
+Run again on 2026-09-24 with 0.1.1-rc.7, which changed no positions: all
+14,610 position lines matched rc.6's byte for byte, the statistics came out
+identical, and the file now names rc.7 and that dump's digest.

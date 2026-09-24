@@ -73,12 +73,18 @@ export function bodyLongitude(body: BodyName, date: Date): number {
   return eclipticLongitude(planet.body, date);
 }
 
-/** Longitude speed in degrees/day by central difference (±6h). */
+/**
+ * Longitude speed in degrees/day, the way @zodiacs/engine 0.1.1-rc.7 takes it:
+ * a central difference over ±0.001 day for the planets and the Moon, and
+ * ±0.25 day for the true node, whose short-period noise dominates a shorter
+ * step. server-ephemeris.test.ts holds the two to 12 decimal places.
+ */
 export function longitudeSpeed(body: BodyName, date: Date): number {
-  const before = bodyLongitude(body, new Date(date.getTime() - 0.25 * DAY));
-  const after = bodyLongitude(body, new Date(date.getTime() + 0.25 * DAY));
+  const stepDays = body === 'North Node' || body === 'South Node' ? 0.25 : 0.001;
+  const before = bodyLongitude(body, new Date(date.getTime() - stepDays * DAY));
+  const after = bodyLongitude(body, new Date(date.getTime() + stepDays * DAY));
   let difference = after - before;
   if (difference > 180) difference -= 360;
   if (difference < -180) difference += 360;
-  return difference / 0.5;
+  return difference / (2 * stepDays);
 }

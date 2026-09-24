@@ -14,6 +14,7 @@ import {
 } from '@zodiacs/engine/internal/math';
 import type { AngleInput } from '@zodiacs/engine/internal/math';
 
+import { siteHouses } from './chart-adapter';
 import type { Angles, Houses, HouseSystem } from './types';
 
 export type { AngleInput };
@@ -39,7 +40,8 @@ export function computeHouses(
   input: AngleInput,
   angles: Angles,
 ): { houses: Houses; fellBack: boolean } {
-  return engineComputeHouses(system, input, angles);
+  const result = engineComputeHouses(system, input, angles);
+  return { ...result, houses: siteHouses(result.houses) };
 }
 
 /** House index (1–12) of an ecliptic longitude given cusp longitudes. */

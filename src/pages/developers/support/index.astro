@@ -2,8 +2,11 @@
 import Base from '../../../layouts/Base.astro';
 import candidate from '../../../data/platform-engine-candidate.json';
 
-const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}`;
-const receiptSpec = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`;
+// The package sits at the root of its repository from rc.7 (packages/engine of the SDK before).
+const sourceRoot = `${candidate.sourceRepository}/blob/${candidate.sourceCommit}${candidate.sourcePackagePath ? `/${candidate.sourcePackagePath}` : ''}`;
+// The draft envelope specification stays in the SDK repository, as written for
+// rc.3 to rc.6; rc.7's second conventions set is in the candidate changelog.
+const receiptSpec = 'https://github.com/zodiacs-org/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/docs/platform/receipt-draft-v1.md';
 const evidenceUrl = (path: string) => `${candidate.evidenceRepository}/blob/${candidate.evidenceCommit}/${path}`;
 const description = 'Current Zodiacs developer support: local engine candidate, public sky data, hosted widgets, planned chart API, runtime checks, calculation limits, privacy, and licenses.';
 const engineRows = [
@@ -11,7 +14,7 @@ const engineRows = [
   ['Recorded runtime checks', 'The linked reports record this candidate’s tested runtimes, package consumers and TypeScript declarations. They identify the exact artifact and validation scope; they do not certify every browser or all Node versions allowed by the manifest.'],
   ['Zodiac and positions', 'Tropical ecliptic of date; apparent geocentric positions in degrees. Sun, Moon, Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, and true North/South Moon nodes. No sidereal mode or topocentric parallax.'],
   ['Calculations', 'Positions, natal charts, transit snapshots, synastry, Moon phase, and Saturn-return seasons. The same public API supplies calculation metadata; interpretation is separate from astronomical accuracy.'],
-  ['Houses and unknown time', 'Whole-sign and Placidus houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign above 66° absolute latitude or on nonconvergence, with polar-fallback. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
+  ['Houses and unknown time', 'Whole-sign, Placidus and Porphyry houses. Known time and coordinates are required for angles/houses. timeKnown: false sets both to null and adds no-time. Placidus falls back to whole-sign inside the polar circle, where the absolute latitude is 90° minus the obliquity or more, or on nonconvergence, with polar-fallback. Porphyry is defined wherever the angles are. Exact geographic poles and degenerate horizon intersections are outside verified angle scope.'],
   ['Resolved instant input', 'A valid Date, finite epoch milliseconds, or validated ISO date/time. Date-times require Z or an explicit numeric offset; date-only YYYY-MM-DD means midnight UTC. Invalid ISO calendar dates, unresolved local date-times, leap seconds, and more than three fractional-second digits are rejected. A Date already normalized by its caller cannot reveal that earlier rollover. Outputs normalize to Date and do not preserve the original offset or local timezone.'],
   ['Portable natal records', 'Optional @zodiacs/engine/receipt validates a Zodiacs draft envelope from a fresh full public Chart, preserving requested/actual houses and captured time provenance. Validation does not authenticate imported claims or recalculate positions. The site saved-chart/account format is unchanged; the standalone starter uses its separately pinned candidate.'],
   ['Local-time resolution', 'Optional @zodiacs/engine/geo accepts a local YYYY-MM-DD date, HH:mm time, and explicit IANA timezone. Folds select the earlier instant; gaps shift forward, with flags. Historical offsets depend on the host Intl/ICU data. No place records or timezone database are bundled.'],
@@ -77,7 +80,7 @@ const engineRows = [
         <code>@zodiacs/engine/geo</code> and <code>@zodiacs/engine/receipt</code> entry points. The{' '}
         <code>/internal</code> entry points are site compatibility boundaries.
         Use the <a href={`${sourceRoot}/README.md`}>current candidate API guide</a>,{' '}
-        <a href={receiptSpec}>draft receipt specification</a>, and{' '}
+        <a href={receiptSpec}>draft receipt specification</a> (written for rc.3 to rc.6), and{' '}
         <a href={`${sourceRoot}/CHANGELOG.md`}>candidate changelog</a>. The{' '}
         <a href="/sdk/engine/">archived rc.1 API reference</a> describes the earlier candidate.
       </p>

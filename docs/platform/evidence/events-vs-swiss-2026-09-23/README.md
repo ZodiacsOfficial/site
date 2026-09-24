@@ -52,3 +52,26 @@ these limits where it shows the times.
 `scripts/claims-bindings.test.mjs` holds the copy on the events hub, the
 full-moon calendar and the event pages to these figures, and fails if the
 catalog's instants change without a new measurement.
+
+## Addition, 2026-09-24: the station speed step
+
+`@zodiacs/engine` 0.1.1-rc.7 takes speeds over ±0.001 day instead of
+±0.25 day (step 1.4). `tools/station-step.mjs` finds the 92 stations with both
+steps and adds the shift to each station's difference from Swiss above. No
+station moves by more than 66 seconds, and no planet's RMS difference moves by
+more than 0.07 minute:
+
+| Planet | Largest, ±0.25 day | Largest, ±0.001 day | RMS, ±0.25 day | RMS, ±0.001 day |
+| --- | ---: | ---: | ---: | ---: |
+| Mercury | 5.63 min | 6.16 min | 2.77 min | 2.73 min |
+| Venus | 6.46 | 6.65 | 3.70 | 3.70 |
+| Mars | 2.77 | 2.90 | 2.45 | 2.44 |
+| Jupiter | 4.93 | 4.89 | 2.64 | 2.64 |
+| Saturn | 13.56 | 13.58 | 6.26 | 6.27 |
+| Uranus | 15.86 | 15.76 | 8.76 | 8.72 |
+| Neptune | 36.43 | 36.33 | 18.42 | 18.35 |
+| Pluto | 40.99 | 40.97 | 21.81 | 21.82 |
+
+The positions set the limit, not the step. So `sky.json` and the monthly
+transit files (`scripts/build-transits.mjs`) keep the ±0.25-day step and name
+the same instant for each station, and the figures above stand.
