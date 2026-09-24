@@ -66,7 +66,7 @@ jobs:
         run: npm run editorial:daily:verify -- --date "$(date -u +%F)"
 
       - name: Enforce test-list-only release state
-        if: vars.DAILY_EMAIL_ENABLED == '1' && (github.event_name == 'schedule' || inputs.dry_run == false)
+        if: (vars.DAILY_EMAIL_ENABLED == '1' || (github.event_name == 'workflow_dispatch' && inputs.canary == true)) && (github.event_name == 'schedule' || inputs.dry_run == false)
         env:
           DAILY_EMAIL_COHORT: test
         run: |
@@ -76,15 +76,17 @@ jobs:
           fi
 
       - name: Require the exact edition in production before real delivery
-        if: vars.DAILY_EMAIL_ENABLED == '1' && (github.event_name == 'schedule' || inputs.dry_run == false)
+        if: (vars.DAILY_EMAIL_ENABLED == '1' || (github.event_name == 'workflow_dispatch' && inputs.canary == true)) && (github.event_name == 'schedule' || inputs.dry_run == false)
         run: npm run editorial:daily:verify-live
 
       - name: Run eligible cohort
-        if: vars.DAILY_EMAIL_ENABLED == '1' || (github.event_name == 'workflow_dispatch' && inputs.dry_run == true)
+        if: vars.DAILY_EMAIL_ENABLED == '1' || (github.event_name == 'workflow_dispatch' && (inputs.dry_run == true || inputs.canary == true))
         env:
-          DAILY_EMAIL_ENABLED: ${{ vars.DAILY_EMAIL_ENABLED }}
+          # A manual canary enables only this invocation; the schedule stays gated.
+          DAILY_EMAIL_ENABLED: ${{ (github.event_name == 'workflow_dispatch' && inputs.canary == true) && '1' || vars.DAILY_EMAIL_ENABLED }}
           DAILY_EMAIL_COHORT: test
-          DAILY_EMAIL_TEST_ALLOWLIST: ${{ secrets.DAILY_EMAIL_TEST_ALLOWLIST }}
+          # Canary selection and its temporary test allowlist name the same one recipient.
+          DAILY_EMAIL_TEST_ALLOWLIST: ${{ (github.event_name == 'workflow_dispatch' && inputs.canary == true) && secrets.DAILY_EMAIL_CANARY_TO || secrets.DAILY_EMAIL_TEST_ALLOWLIST }}
           DAILY_EMAIL_RECIPIENT_HASH_SECRET: ${{ secrets.DAILY_EMAIL_RECIPIENT_HASH_SECRET }}
           DAILY_EMAIL_UNSUBSCRIBE_SECRET: ${{ secrets.DAILY_EMAIL_UNSUBSCRIBE_SECRET }}
           DAILY_EMAIL_FROM: ${{ vars.DAILY_EMAIL_FROM || 'Zodiacs.org <hello@zodiacs.org>' }}
