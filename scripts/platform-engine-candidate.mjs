@@ -15,6 +15,18 @@ const commit = (value) => matches(value, /^[a-f0-9]{40}$/u) && value.length === 
 // The SDK and site repositories moved from ZodiacsOfficial to zodiacs-org on
 // 2026-09-24; GitHub serves the same commits, and so the same bytes, at both.
 const OWNER = 'zodiacs-org';
+// Where each source repository keeps the package, and where an artifact
+// repository carries packed archives. Up to rc.6 the engine was packages/engine
+// of the SDK; from rc.7 it is the root of its own repository.
+const SOURCE_PACKAGE_PATHS = new Map([
+  [`https://github.com/${OWNER}/sdk`, 'packages/engine'],
+  [`https://github.com/${OWNER}/engine`, ''],
+]);
+const ARTIFACT_DIRECTORIES = new Map([
+  [`https://github.com/${OWNER}/site`, 'vendor'],
+  [`https://github.com/${OWNER}/sdk`, 'artifacts'],
+  [`https://github.com/${OWNER}/engine`, 'artifacts'],
+]);
 
 export function assertEngineCandidate(candidate) {
   const fail = () => { throw new Error('Invalid engine candidate metadata'); };
@@ -26,14 +38,14 @@ export function assertEngineCandidate(candidate) {
     || candidate.releaseLabel !== 'Unpublished candidate'
     || !matches(candidate.sha256, /^[a-f0-9]{64}$/u) || candidate.sha256.length !== 64
     || !commit(candidate.sourceCommit) || !commit(candidate.artifactCommit) || !commit(candidate.evidenceCommit)
-    || candidate.sourceRepository !== `https://github.com/${OWNER}/sdk`
-    || candidate.sourcePackagePath !== 'packages/engine'
+    || !SOURCE_PACKAGE_PATHS.has(candidate.sourceRepository)
+    || candidate.sourcePackagePath !== SOURCE_PACKAGE_PATHS.get(candidate.sourceRepository)
     || candidate.evidenceRepository !== `https://github.com/${OWNER}/site`
-    || ![`https://github.com/${OWNER}/site`, `https://github.com/${OWNER}/sdk`].includes(candidate.artifactRepository)) fail();
+    || !ARTIFACT_DIRECTORIES.has(candidate.artifactRepository)) fail();
   const file = `zodiacs-engine-${candidate.version}.tgz`;
   const repository = candidate.artifactRepository.split('/').at(-1);
   if (candidate.artifactPath !== `vendor/${file}`
-    || candidate.artifactRepositoryPath !== `${repository === 'sdk' ? 'artifacts' : 'vendor'}/${file}`
+    || candidate.artifactRepositoryPath !== `${ARTIFACT_DIRECTORIES.get(candidate.artifactRepository)}/${file}`
     || candidate.artifactUrl !== `https://raw.githubusercontent.com/${OWNER}/${repository}/${candidate.artifactCommit}/${candidate.artifactRepositoryPath}`) fail();
   if (!exactKeys(candidate.evidencePaths, ['ledger', 'node22', 'node24', 'publicConsumer'])) fail();
   for (const path of Object.values(candidate.evidencePaths)) {

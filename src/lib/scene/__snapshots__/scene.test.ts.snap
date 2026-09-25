@@ -3,14 +3,14 @@
 exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`] = `
 {
   "anchor": {
-    "lon": 143.5128292,
+    "lon": 143.5128205,
     "mode": "asc",
   },
   "angles": {
-    "asc": 143.5128292,
-    "dsc": 323.5128292,
-    "ic": 233.3283717,
-    "mc": 53.3283717,
+    "asc": 143.5128205,
+    "dsc": 323.5128205,
+    "ic": 233.328128,
+    "mc": 53.328128,
   },
   "aspects": [
     {
@@ -109,7 +109,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "cancer",
       "signDegree": 13.3755085,
-      "speed": 0.9536201,
+      "speed": 0.9536202,
     },
     {
       "aspects": [
@@ -123,7 +123,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "taurus",
       "signDegree": 29.7121096,
-      "speed": 12.0236443,
+      "speed": 12.023106,
     },
     {
       "aspects": [],
@@ -135,7 +135,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "leo",
       "signDegree": 6.3359479,
-      "speed": 0.3728324,
+      "speed": 0.3728539,
     },
     {
       "aspects": [
@@ -166,7 +166,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": true,
       "sign": "capricorn",
       "signDegree": 13.3962578,
-      "speed": -0.294293,
+      "speed": -0.2943013,
     },
     {
       "aspects": [],
@@ -178,7 +178,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "cancer",
       "signDegree": 20.4352203,
-      "speed": 0.2231618,
+      "speed": 0.223162,
     },
     {
       "aspects": [
@@ -194,7 +194,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "pisces",
       "signDegree": 27.4452316,
-      "speed": 0.0055653,
+      "speed": 0.0055654,
     },
     {
       "aspects": [
@@ -210,7 +210,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": true,
       "sign": "capricorn",
       "signDegree": 10.6122142,
-      "speed": -0.0404165,
+      "speed": -0.0404167,
     },
     {
       "aspects": [
@@ -226,7 +226,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "cancer",
       "signDegree": 12.3989849,
-      "speed": 0.0372234,
+      "speed": 0.0372235,
     },
     {
       "aspects": [
@@ -241,7 +241,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "retrograde": false,
       "sign": "gemini",
       "signDegree": 23.7467846,
-      "speed": 0.0224984,
+      "speed": 0.0224985,
     },
     {
       "aspects": [],
@@ -256,7 +256,7 @@ exports[`buildSceneModel parity > matches the committed Kahlo scene snapshot 1`]
       "speed": -0.0235342,
     },
   ],
-  "engineVersion": "0.1.1-rc.6",
+  "engineVersion": "0.1.1-rc.7",
   "flags": [
     "lmt",
   ],

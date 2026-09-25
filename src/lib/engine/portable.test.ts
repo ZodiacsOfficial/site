@@ -8,7 +8,7 @@ import {
   serializeNatalEnvelope,
   type NatalEnvelopeContext,
 } from '@zodiacs/engine/receipt';
-import { adaptChart } from './chart-adapter';
+import { adaptChart, siteHouseSystem } from './chart-adapter';
 import { computeChart } from './full';
 import { computePortableChart, PortableChartError } from './portable';
 import type { ChartInput } from './types';
@@ -262,6 +262,16 @@ describe('shared compact chart projection', () => {
     expect(projected.houses).toBe(native.houses);
     expect(projected.aspects).toBe(native.aspects);
     expect(projected.bodies.some((body) => 'sign' in body || 'degree' in body)).toBe(false);
+  });
+
+  it('refuses a house system the site does not offer instead of passing it on', () => {
+    const input: ChartInput = { utc: new Date(String(base.utc)), latitude: 51.5074, longitude: -0.1278,
+      houseSystem: 'placidus', timeKnown: true, flags: [] };
+    const porphyry = natalChart({ ...input, houseSystem: 'porphyry' });
+    expect(porphyry.houses?.system).toBe('porphyry');
+    expect(() => adaptChart(porphyry, input)).toThrow(RangeError);
+    expect(siteHouseSystem('whole')).toBe('whole');
+    expect(siteHouseSystem('placidus')).toBe('placidus');
   });
 
   it('keeps the new boundary optional and the shared adapter free of runtime dependencies', async () => {

@@ -15,9 +15,15 @@ const archive = readFileSync(resolve(root, candidate.artifactPath));
 const packed = (path) => execFileSync('tar', ['-xOf', resolve(root, candidate.artifactPath), `package/${path}`], { encoding: 'utf8' });
 const manifest = JSON.parse(packed('package.json'));
 // The SDK and site repositories moved from ZodiacsOfficial to zodiacs-org on
-// 2026-09-24. The archive's own manifest and the rc.6 evidence ledger were
-// written before the move and keep the address they were written with.
-const beforeMove = (url) => url.replace(/^https:\/\/(github\.com|raw\.githubusercontent\.com)\/zodiacs-org\//u, 'https://$1/ZodiacsOfficial/');
+// 2026-09-24. An archive packed from them, and the evidence ledger written for
+// it, keep the address they were written with. The engine repository was made
+// under zodiacs-org, so its addresses never changed.
+const beforeMove = (url) => url.replace(/^https:\/\/(github\.com|raw\.githubusercontent\.com)\/zodiacs-org\/(sdk|site)\//u, 'https://$1/ZodiacsOfficial/$2/');
+// The package directory in its source repository: packages/engine of the SDK up
+// to rc.6, the repository root from rc.7.
+const packagePrefix = candidate.sourcePackagePath ? `${candidate.sourcePackagePath}/` : '';
+// The draft envelope specification stays in the SDK repository, as written for rc.3 to rc.6.
+const RECEIPT_SPEC = 'https://github.com/zodiacs-org/sdk/blob/fb57af7a2cd7c30983cc8fb655183d5a11f9cf30/docs/platform/receipt-draft-v1.md';
 
 describe('developer candidate documentation', () => {
   it('identifies the installed public engine and exact archived package', () => {
@@ -53,7 +59,7 @@ describe('developer candidate documentation', () => {
   it('cross-checks source provenance and the linked packaged documents', () => {
     expect(candidate.sourceCommit).toMatch(/^[a-f0-9]{40}$/);
     expect(manifest.repository.url).toBe(`git+${beforeMove(candidate.sourceRepository)}.git`);
-    expect(manifest.repository.directory).toBe(candidate.sourcePackagePath);
+    expect(manifest.repository.directory ?? '').toBe(candidate.sourcePackagePath);
     const provenance = read('vendor/README.md');
     expect(provenance).toContain(`Source commit: \`${candidate.sourceCommit}\``);
     expect(provenance).toContain(`Artifact SHA-256: \`${candidate.sha256}\``);
@@ -141,8 +147,9 @@ describe('developer candidate documentation', () => {
   it('identifies current source documentation separately from the archived TypeDoc and starter', () => {
     const guide = read('public/llms-full.txt');
     expect(guide).toContain(`candidate version ${candidate.version}`);
-    expect(guide).toContain(`${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${candidate.sourcePackagePath}/README.md`);
-    expect(guide).toContain(`${candidate.sourceRepository}/blob/${candidate.sourceCommit}/docs/platform/receipt-draft-v1.md`);
+    expect(guide).toContain(`${candidate.sourceRepository}/blob/${candidate.sourceCommit}/${packagePrefix}README.md`);
+    expect(guide).toContain(RECEIPT_SPEC);
+    expect(read('src/pages/developers/support/index.astro')).toContain(RECEIPT_SPEC);
     expect(guide).toContain('Archived rc.1 typed API reference (earlier candidate)');
     expect(read('public/sdk/engine/index.html')).toContain('<title>@zodiacs/engine 0.1.1-rc.1</title>');
     const support = read('src/pages/developers/support/index.astro');

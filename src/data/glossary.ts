@@ -459,16 +459,16 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'placidus',
     term: 'Placidus',
-    definition: 'Placidus divides the houses through time-based semi-arcs, so its intermediate cusps vary with latitude and birth time. This site falls back to whole-sign houses above 66° absolute latitude, where its Placidus solver is undefined.',
-    receipt: 'Polar fallback: |latitude| > 66°',
+    definition: 'Placidus divides the houses through time-based semi-arcs, so its intermediate cusps vary with latitude and birth time. This site falls back to whole-sign houses inside the polar circle, where the absolute latitude is 90° minus the obliquity or more (about 66.56°) and the Placidus solver is undefined.',
+    receipt: 'Polar fallback: |latitude| ≥ 90° − ε (about 66.56°)',
     related: ['house-system', 'whole-sign-houses', 'polar-fallback'],
     link: { href: '/birth-chart/', label: 'Use Placidus houses' },
   },
   {
     slug: 'polar-fallback',
     term: 'Polar fallback',
-    definition: 'Polar fallback is the switch from Placidus to whole-sign houses where the Placidus cusp calculation cannot resolve. This site applies it above 66° absolute latitude and also if circumpolar cusp math degenerates.',
-    receipt: 'Fallback when |latitude| > 66° or cusp math is undefined',
+    definition: 'Polar fallback is the switch from Placidus to whole-sign houses where the Placidus cusp calculation cannot resolve. This site applies it inside the polar circle, where the absolute latitude is 90° minus the obliquity or more, and also if circumpolar cusp math degenerates.',
+    receipt: 'Fallback when |latitude| ≥ 90° − ε or cusp math is undefined',
     related: ['placidus', 'whole-sign-houses', 'house-system'],
     link: { href: '/birth-chart/', label: 'Read the house-system options' },
   },
@@ -683,7 +683,7 @@ const terms: GlossaryTerm[] = [
   {
     slug: 'applying',
     term: 'Applying aspect',
-    definition: 'An aspect is applying when the moving positions are drawing closer to the aspect’s exact angle. The natal engine advances both longitudes by 0.02 day (28.8 minutes) using their daily speeds and labels the aspect applying when the distance from exact decreases; fixed-chart synastry does not assign applying or separating status.',
+    definition: 'An aspect is applying when the moving positions are drawing closer to the aspect’s exact angle. The natal engine labels the aspect applying while its distance from exact is shrinking, judged from the two bodies’ relative speed at that moment; fixed-chart synastry does not assign applying or separating status.',
     related: ['separating', 'exact-aspect', 'aspect'],
   },
   {

@@ -1,19 +1,21 @@
 /**
- * Brief v1 rules 1b and 1h (engine brief steps 1.3 and 1.9), as the shipped
- * engine stands before them.
+ * Brief v1 rules 1b and 1h (engine brief steps 1.3 and 1.9), as the engine
+ * the site runs meets them.
  *
- * @zodiacs/engine 0.1.1-rc.6 builds the angles from apparent sidereal time
- * and the MEAN obliquity, and refuses Placidus above 66° absolute latitude.
- * This test pins what that gives on the preregistered corpus
+ * Since @zodiacs/engine 0.1.1-rc.7 the angles are built from apparent sidereal
+ * time and the TRUE obliquity of date, and Placidus is refused only inside the
+ * polar circle, |latitude| ≥ 90° − ε. This test holds the engine to the rules
+ * on the preregistered corpus
  * (docs/platform/evidence/engine-beyond-swiss/corpora/angle-grid-inputs.json)
  * against an ERFA arbiter rather than Swiss, whose output is not committed:
  * angle-grid-erfa.json beside it, made by tools/angle-arbiter.py on the
- * engine's own clock.
+ * engine's own clock. The ascendant is within 8″ of the arbiter everywhere and
+ * 0.5″ for |latitude| ≤ 45°, and Placidus is computed exactly where the
+ * arbiter's limit allows it.
  *
- * It is meant to fail when rc.7 moves the angles to the true obliquity and
- * the Placidus limit to 90° − ε. It is then rewritten as the rules: the
- * ascendant within 8″ of the arbiter everywhere and 0.5″ for |latitude| ≤ 45°,
- * and Placidus computed exactly where the arbiter's limit allows it.
+ * Under rc.6, with the mean obliquity and a 66° limit, the same corpus gave an
+ * ascendant up to 506.8″ from the arbiter (14.6″ within 45°), a midheaven up to
+ * 2.25″, and all 336 ladder cases refused.
  */
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
@@ -47,7 +49,7 @@ const ascendant = (gastHours, obliquity, latitude, longitude) => {
   return ((asc / RAD) % 360 + 360) % 360;
 };
 
-describe('the angles against the ERFA arbiter, as rc.6 computes them', () => {
+describe('the angles against the ERFA arbiter (rule 1b)', () => {
   const rows = corpus.A.map((row, i) => {
     const { angles } = chart(row);
     return {
@@ -66,43 +68,43 @@ describe('the angles against the ERFA arbiter, as rc.6 computes them', () => {
     expect([corpus.A.length, erfa.A.length, corpus.L.length, erfa.L.limitDegrees.length]).toEqual([3128, 3128, 336, 336]);
   });
 
-  it('puts the ascendant up to 507″ from the arbiter near 66°', () => {
+  it('keeps the ascendant within 8″ of the arbiter everywhere and 0.5″ within 45° of the equator', () => {
     const worst = rows.reduce((a, b) => (b.asc > a.asc ? b : a));
-    expect(worst.id).toBe('1950-03-21T18:00:00Z -66°');
-    expect(worst.asc).toBeCloseTo(506.81, 1);
-    expect(quantile(asc, 0.95)).toBeCloseTo(23.16, 1);
-    expect(quantile(asc, 0.5)).toBeCloseTo(2.12, 1);
-    // Rule 1b's own gates, which rc.6 fails: 8″ everywhere, 0.5″ to 45°.
-    expect(Math.max(...midLatitudes)).toBeCloseTo(14.63, 1);
-    expect(Math.max(...asc)).toBeGreaterThan(8);
-    expect(Math.max(...midLatitudes)).toBeGreaterThan(0.5);
+    expect(worst.id).toBe('2025-03-21T18:00:00Z -66°');
+    expect(worst.asc).toBeCloseTo(6.36, 1);
+    expect(quantile(asc, 0.95)).toBeCloseTo(0.24, 1);
+    expect(quantile(asc, 0.5)).toBeCloseTo(0.065, 2);
+    expect(Math.max(...midLatitudes)).toBeCloseTo(0.36, 1);
+    // Rule 1b's gates.
+    expect(Math.max(...asc)).toBeLessThan(8);
+    expect(Math.max(...midLatitudes)).toBeLessThan(0.5);
   });
 
-  it('keeps the midheaven within 2.3″, where the obliquity moves it far less than the ascendant', () => {
-    expect(Math.max(...rows.map((row) => row.mc))).toBeCloseTo(2.25, 1);
+  it('keeps the midheaven within 0.21″ of the arbiter', () => {
+    expect(Math.max(...rows.map((row) => row.mc))).toBeLessThan(0.21);
   });
 
-  it('meets rule 1b once the engine\'s own sidereal time is paired with its true obliquity', () => {
-    // The control for the fix in step 1.3: the same sidereal time the engine
-    // uses, with astronomy-engine's true obliquity in place of the mean one.
-    const fixed = corpus.A.map(([utc, latitude, longitude], i) => {
+  it('agrees with the arbiter\'s formula on the engine\'s own sidereal time and true obliquity', () => {
+    // The engine's angles are the arbiter's formula on astronomy-engine's
+    // sidereal time and true obliquity, so the two stay within 1e-6″.
+    const worst = Math.max(...corpus.A.map(([utc, latitude, longitude]) => {
       const time = MakeTime(new Date(utc));
-      return {
-        latitude,
-        asc: Math.abs(arcsec(ascendant(SiderealTime(time), e_tilt(time).tobl, latitude, longitude), erfa.A[i][0])),
-      };
-    });
-    expect(Math.max(...fixed.map((row) => row.asc))).toBeLessThan(8);
-    expect(Math.max(...fixed.filter((row) => Math.abs(row.latitude) <= 45).map((row) => row.asc))).toBeLessThan(0.5);
+      const expected = ascendant(SiderealTime(time), e_tilt(time).tobl, latitude, longitude);
+      return Math.abs(arcsec(chart([utc, latitude, longitude]).angles.asc, expected));
+    }));
+    expect(worst).toBeLessThan(1e-6);
   });
 });
 
-describe('Placidus near the polar circle, as rc.6 computes it', () => {
-  it('refuses all 336 ladder cases, where the arbiter\'s limit of 90° − ε allows 320', () => {
-    const refused = corpus.L.filter((row) => chart(row).flags.includes('polar-fallback')).length;
-    const allowed = corpus.L.filter((row, i) => Math.abs(row[1]) < erfa.L.limitDegrees[i]).length;
-    expect(refused).toBe(336);
-    expect(allowed).toBe(320);
+describe('Placidus near the polar circle (rule 1h)', () => {
+  it('computes the 320 ladder cases the arbiter\'s limit of 90° − ε allows, and refuses the other 16', () => {
+    const verdicts = corpus.L.map((row, i) => ({
+      refused: chart(row).flags.includes('polar-fallback'),
+      allowed: Math.abs(row[1]) < erfa.L.limitDegrees[i],
+    }));
+    expect(verdicts.filter((v) => v.refused === v.allowed)).toEqual([]);
+    expect(verdicts.filter((v) => !v.refused).length).toBe(320);
+    expect(verdicts.filter((v) => v.refused).length).toBe(16);
     expect([erfa.L.computable, erfa.L.refused]).toEqual([320, 16]);
   });
 });

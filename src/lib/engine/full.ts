@@ -20,7 +20,7 @@ export function bodyLongitude(name: BodyName, date: Date): number {
   return engineBodyLongitude(name, date);
 }
 
-/** Longitude speed in degrees/day by central difference (±6h). */
+/** Longitude speed in degrees/day by central difference: ±0.001 day, ±0.25 day for the true node. */
 export function longitudeSpeed(name: BodyName, date: Date): number {
   return engineLongitudeSpeed(name, date);
 }

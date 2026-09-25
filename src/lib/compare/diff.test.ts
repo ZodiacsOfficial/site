@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { natalChart, ENGINE_VERSION } from '@zodiacs/engine';
-import { parseNatalEnvelope } from '@zodiacs/engine/receipt';
+import { NATAL_RECEIPT_CONVENTION_SETS, parseNatalEnvelope } from '@zodiacs/engine/receipt';
 import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import { compareEnvelopes, type Evidence, type Replay } from './diff';
 import { replay as pageReplay } from './replay';
@@ -165,8 +165,8 @@ describe('comparing two calculation receipts', () => {
   });
 
   it('reads a receipt naming a different engine version of the same schema', () => {
-    // The developer starter pins engine 0.1.1-rc.3 while the site pins rc.6.
-    // Only rc.6 is vendored here, so this checks what can be checked offline:
+    // The developer starter pins engine 0.1.1-rc.3 while the site pins rc.7.
+    // Only rc.7 is installed here, so this checks what can be checked offline:
     // a receipt naming rc.3 parses, and the version difference is reported
     // rather than quietly ignored.
     const envelope = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
@@ -245,7 +245,9 @@ describe('regressions an adversarial review found', () => {
   it('does not call two records the same calculation when a body speed differs', () => {
     const left = buildEnvelope(ORDINARY);
     const tampered = JSON.parse(JSON.stringify(left));
-    for (const body of tampered.result.bodies) body.speed = body.speed < 0 ? -99 : 99;
+    // Doubling keeps every sign, so the retrograde flags, and each aspect's
+    // applying flag, which rc.7 derives from the relative speed, still follow.
+    for (const body of tampered.result.bodies) body.speed *= 2;
     const comparison = compareEnvelopes(left, accept(tampered), live);
 
     expect(comparison.identical).toBe(false);
@@ -331,7 +333,7 @@ describe('regressions an adversarial review found', () => {
   });
 
   it('will not call the house system reproduced when the angles and cusps did not move', () => {
-    // Above 66° Placidus is not computable, so both charts fall back to whole
+    // At 78° Placidus is not computable, so both charts fall back to whole
     // sign and end up with identical cusps. The requested system differs; that
     // difference explains nothing computed, and nothing was demonstrated.
     const polar = { utc: '1990-06-15T13:30:00Z', latitude: 78, longitude: 15, houseSystem: 'placidus' } as const;
@@ -743,6 +745,20 @@ describe('a summary never claims more agreement than the differences support', (
     return parsed.envelope;
   };
   const copy = (envelope: NatalEnvelope): any => JSON.parse(JSON.stringify(envelope));
+  /**
+   * The same record as rc.3 to rc.6 wrote it. Those versions judged applying by
+   * stepping both bodies ahead, which a reader of the record cannot re-derive,
+   * so two of their records can disagree about applying while every number
+   * agrees. From rc.7 the flag follows from the record's own speeds, and the
+   * parser refuses a record where it does not (tested below).
+   */
+  const RC3_CONVENTIONS = NATAL_RECEIPT_CONVENTION_SETS.find((set) => set.angles === 'gast-and-mean-obliquity');
+  const asRc6 = (envelope: NatalEnvelope): any => {
+    const record = copy(envelope);
+    record.receipt.engine.version = '0.1.1-rc.6';
+    record.receipt.conventions = { ...RC3_CONVENTIONS };
+    return record;
+  };
   const statementOf = (comparison: ReturnType<typeof compareEnvelopes>, id: string) =>
     comparison.explanations.find((item) => item.id === id)?.statement ?? null;
   const AGREES = /Every computed value agrees/;
@@ -758,12 +774,12 @@ describe('a summary never claims more agreement than the differences support', (
   it('does not say it when an aspect disagrees about applying', () => {
     // `applying` is a computed result stored as a boolean, so the numeric-only
     // view could not see it and the summary claimed agreement over it.
-    const flipped = accept(copy(asWritten('1990-06-15T14:30:00+01:00')), 'flipped-source');
+    const flipped = accept(asRc6(asWritten('1990-06-15T14:30:00+01:00')), 'flipped-source');
     const edited = copy(flipped);
     const aspect = edited.result.aspects[0];
     expect(aspect, 'the ordinary fixture must carry at least one aspect').toBeTruthy();
     aspect.applying = !aspect.applying;
-    const comparison = compareEnvelopes(asWritten(T), accept(edited, 'flipped-applying'), live);
+    const comparison = compareEnvelopes(accept(asRc6(asWritten(T)), 'rc.6 record'), accept(edited, 'flipped-applying'), live);
     expect(comparison.differences.some((row) => /-applying$/.test(row.id))).toBe(true);
     expect(statementOf(comparison, 'equivalent-instants')).not.toMatch(AGREES);
   });
@@ -777,11 +793,19 @@ describe('a summary never claims more agreement than the differences support', (
   });
 
   it('gives the same answer whichever record is passed first', () => {
+    const edited = asRc6(asWritten('1990-06-15T14:30:00+01:00'));
+    edited.result.aspects[0].applying = !edited.result.aspects[0].applying;
+    const left = accept(asRc6(asWritten(T)), 'rc.6 record');
+    const right = accept(edited, 'flipped-applying');
+    expect(statementOf(compareEnvelopes(left, right, live), 'equivalent-instants'))
+      .toBe(statementOf(compareEnvelopes(right, left, live), 'equivalent-instants'));
+  });
+
+  it('cannot be given an rc.7 record whose applying flag contradicts its own speeds', () => {
     const edited = copy(asWritten('1990-06-15T14:30:00+01:00'));
     edited.result.aspects[0].applying = !edited.result.aspects[0].applying;
-    const right = accept(edited, 'flipped-applying');
-    expect(statementOf(compareEnvelopes(asWritten(T), right, live), 'equivalent-instants'))
-      .toBe(statementOf(compareEnvelopes(right, asWritten(T), live), 'equivalent-instants'));
+    const parsed = parseNatalEnvelope(JSON.stringify(edited));
+    expect(parsed.ok ? 'accepted' : parsed.code).toBe('inconsistent_result');
   });
 
   /**
@@ -791,12 +815,12 @@ describe('a summary never claims more agreement than the differences support', (
    * from the implementation's own condition.
    */
   it('holds across every pair the corpus can build', () => {
-    const editedAspect = copy(asWritten('1990-06-15T14:30:00+01:00'));
+    const editedAspect = asRc6(asWritten('1990-06-15T14:30:00+01:00'));
     editedAspect.result.aspects[0].applying = !editedAspect.result.aspects[0].applying;
     const pairs: [NatalEnvelope, NatalEnvelope, string][] = [
       [asWritten(T), asWritten(T), 'identical'],
       [asWritten(T), asWritten('1990-06-15T14:30:00+01:00'), 'notation only'],
-      [asWritten(T), accept(editedAspect, 'applying'), 'notation plus applying'],
+      [accept(asRc6(asWritten(T)), 'rc.6 record'), accept(editedAspect, 'applying'), 'notation plus applying, rc.6 records'],
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, houseSystem: 'whole' }), 'house system'],
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }), 'different moment'],
       [buildEnvelope({ ...ORDINARY, utc: T }), buildEnvelope({ ...ORDINARY, utc: T, timeKnown: false }), 'unknown time'],

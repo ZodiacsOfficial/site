@@ -72,9 +72,10 @@ across ~90 samples and fails arbitrary routes on a contended runner; it cost
 ## Card 2 — Publish the engine to npm
 
 **What.** One authenticated publication of the prepared
-`@zodiacs/engine@0.1.1-rc.6` **archive** — the exact audited bytes, not a fresh
+`@zodiacs/engine@0.1.1-rc.7` **archive** — the exact audited bytes, not a fresh
 pack of a working tree — by a maintainer with npm 2FA, under an explicit `rc`
-dist-tag.
+dist-tag. Until 2026-09-24 this card named rc.6; the site has run rc.7 since,
+and rc.6 stays in `vendor/` only as a record.
 
 **Why it cannot be done here, and why no workflow fixes that.**
 
@@ -136,7 +137,7 @@ of them is how this card went wrong the first time:
 | `@zodiacs/engine` on the registry | **absent** — `npm view @zodiacs/engine version` → `E404` |
 
 Write access to the repository publishes nothing. Neither does hosting an
-archive in a repository: `vendor/zodiacs-engine-0.1.1-rc.6.tgz` and the pinned
+archive in a repository: `vendor/zodiacs-engine-0.1.1-rc.7.tgz` and the pinned
 `raw.githubusercontent` copy are a **candidate archive**, not an npm release,
 and no surface here may describe them as published. The single missing
 capability is an authenticated registry session, and it is missing on this
@@ -146,32 +147,30 @@ machine only — not denied to the owner.
 
 | | |
 | --- | --- |
-| package | `@zodiacs/engine` `0.1.1-rc.6` |
-| the bytes to publish | `vendor/zodiacs-engine-0.1.1-rc.6.tgz` in **this** repository, sha256 `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`. This is the archive the whole site is built and tested against — `package.json` depends on `file:vendor/…`. |
-| same bytes, immutably | `https://raw.githubusercontent.com/ZodiacsOfficial/sdk/51129a197cd3f2a2a8c966fb797ea4da1e147b3d/artifacts/zodiacs-engine-0.1.1-rc.6.tgz` |
-| source | `ZodiacsOfficial/sdk`, `packages/engine`, at commit `fb57af7a2cd7c30983cc8fb655183d5a11f9cf30` — reachable from branch `codex/platform-time-seconds`, which also carries the artifact commit `51129a19`. |
-| **an earlier row here was wrong** | This card previously named branch `codex/platform-release-integration-sdk` at its then-head `f747be50`. That branch's `packages/engine` tree is byte-identical (`e655e5c5…`) so nothing built from it would differ, but `f747be50` is a moving branch head and is not the commit [the candidate record](../../src/data/platform-engine-candidate.json) pins. The pinned commits above are the authoritative ones. |
-| **not on `main`** | sdk `main` (`b49e0f14`) contains only `packages/sdk`. The engine has to land on `main` first, or be published from the archive deliberately. |
-| manifest | already correct: `repository` points at `sdk/packages/engine`, `publishConfig.access` is `public`, `engines.node` is `>=18` |
-| publish workflow | none exists. sdk `main` has `app-ci.yml` and `ci.yml`; neither references `npm publish`, a token, or `id-token`. |
+| package | `@zodiacs/engine` `0.1.1-rc.7` |
+| the bytes to publish | `vendor/zodiacs-engine-0.1.1-rc.7.tgz` in **this** repository, sha256 `49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90`. This is the archive the whole site is built and tested against — `package.json` depends on `file:vendor/…`. |
+| same bytes, immutably | `https://raw.githubusercontent.com/zodiacs-org/engine/f37dcdd628b637e5d3785a288a2bc89ceebb9e6a/artifacts/zodiacs-engine-0.1.1-rc.7.tgz` |
+| source | `zodiacs-org/engine`, the repository root, at commit `6e14f3f7c5e3475fefce973a65ce4fc5d846ad85`. Both it and the artifact commit `f37dcdd6` are on `main`, merged in engine #2. Up to rc.6 the engine was `packages/engine` of `ZodiacsOfficial/sdk`. |
+| manifest | already correct: `repository` points at `zodiacs-org/engine`, `publishConfig.access` is `public`, `engines.node` is `>=18` |
+| publish workflow | none exists. engine `main` has `ci.yml`, which references no `npm publish`, token or `id-token`. |
 
 **Publish the archive, not a directory.** This is the single most important
 correction to this card. `npm publish <path-to-.tgz>` streams that file from
 disk and base64s it into the upload unchanged — pacote's file fetcher is a plain
 read stream, and none of `prepack`, `prepublishOnly`, `publish` or `postpublish`
-runs, because those are gated on a *directory* spec. `npm publish` from
-`packages/engine` instead repacks the working tree, and that package's manifest
-declares `"prepack": "npm run build"`, so it would rebuild `dist/` and upload an
-archive that is not the one every gate in this repository has been run against.
+runs, because those are gated on a *directory* spec. `npm publish` from an
+engine checkout instead repacks the working tree, and its manifest declares
+`"prepack": "npm run build"`, so it would rebuild `dist/` and upload an archive
+that is not the one every gate in this repository has been run against.
 
 **The order that works.**
 
-1. Land `packages/engine` on sdk `main`, or decide to publish the archive from
-   the pinned commit deliberately. (Publishing the archive does not require a
-   checkout at all — step 1 below is the only thing that has to be true.)
+1. Done for rc.7: its source and archive are on `zodiacs-org/engine` `main`.
+   (Publishing the archive does not require a checkout at all — step 1 below
+   is the only thing that has to be true.)
 2. Publish, per the commands below.
 3. Configure the trusted publisher on the now-existing package's npmjs.com
-   settings page, pointing at a workflow in `ZodiacsOfficial/sdk`.
+   settings page, pointing at a workflow in `zodiacs-org/engine`.
 4. Add the publish workflow with `id-token: write` and no stored token, so every
    release after the first needs no credential at all.
 
@@ -186,21 +185,21 @@ archive that is not the one every gate in this repository has been run against.
 npm --version
 
 # 1. Confirm the bytes are the audited bytes, before anything else.
-sha256sum vendor/zodiacs-engine-0.1.1-rc.6.tgz
-# must equal 09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e
+sha256sum vendor/zodiacs-engine-0.1.1-rc.7.tgz
+# must equal 49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90
 
 # 2. Note the two values npm WILL report for this archive. Both are already
 #    committed and test-enforced, so there is nothing to trust here:
 #    package-lock.json records the sha512 (scripts/platform-candidate-docs.test.mjs
 #    asserts it equals sha512 of the archive), and the sha1 recomputes locally.
-#      integrity: sha512-W3zxJPAjG699AP/9xLXf5iKxSg9o+DMSUQzyLf5yrCjlubr/mWGIO4SOOHfx1VKFC9k+s5bqt34kMi4E2j5n5g==
-#      shasum:    5075b286acc1ce76c44f40fda4eb699f432eb0c6
-echo "integrity: sha512-$(openssl dgst -sha512 -binary vendor/zodiacs-engine-0.1.1-rc.6.tgz | openssl base64 -A)"
-echo "shasum:    $(openssl dgst -sha1 -r vendor/zodiacs-engine-0.1.1-rc.6.tgz | awk '{print $1}')"
+#      integrity: sha512-UA4hYCZa87JEk/43Sx+pfSuDtSU4DEIi6REWFvwx3RcSgApOar8+HVLw4p1Gh6IJlz1/NtEGZNMjW806m29ntg==
+#      shasum:    b1041d908a1b86261a1d5652a0e39639f088c419
+echo "integrity: sha512-$(openssl dgst -sha512 -binary vendor/zodiacs-engine-0.1.1-rc.7.tgz | openssl base64 -A)"
+echo "shasum:    $(openssl dgst -sha1 -r vendor/zodiacs-engine-0.1.1-rc.7.tgz | awk '{print $1}')"
 
 # 3. Read the archive's file list without touching the registry. --json is not
 #    optional: the human-readable output truncates the integrity value.
-npm pack --dry-run --json ./vendor/zodiacs-engine-0.1.1-rc.6.tgz
+npm pack --dry-run --json ./vendor/zodiacs-engine-0.1.1-rc.7.tgz
 
 # 4. Authenticate. 2FA/OTP at the prompt. Nobody needs to send that OTP anywhere.
 npm login
@@ -208,13 +207,13 @@ npm whoami
 
 # 5. Dry run. This does make one read-only registry request (a packument fetch
 #    for the version-collision and implicit-tag checks). It cannot publish.
-npm publish ./vendor/zodiacs-engine-0.1.1-rc.6.tgz --tag rc --access public --dry-run
+npm publish ./vendor/zodiacs-engine-0.1.1-rc.7.tgz --tag rc --access public --dry-run
 
 # 6. Publish. `--tag rc` is mandatory, not stylistic: without it npm 10 silently
-#    makes 0.1.1-rc.6 the `latest` tag, and a bare `npm install @zodiacs/engine`
+#    makes 0.1.1-rc.7 the `latest` tag, and a bare `npm install @zodiacs/engine`
 #    starts resolving to a release candidate. (npm >= 11 errors instead. `--force`
 #    and a `publishConfig.tag` both disable that guard; this archive has neither.)
-npm publish ./vendor/zodiacs-engine-0.1.1-rc.6.tgz --tag rc --access public
+npm publish ./vendor/zodiacs-engine-0.1.1-rc.7.tgz --tag rc --access public
 ```
 
 **Check afterwards.** An earlier version of this card said to run
@@ -227,16 +226,16 @@ failing. Use these instead:
 
 ```bash
 npm dist-tag ls @zodiacs/engine
-# expect exactly:  rc: 0.1.1-rc.6        and no `latest:` line
+# expect exactly:  rc: 0.1.1-rc.7        and no `latest:` line
 
-npm view @zodiacs/engine@0.1.1-rc.6 dist.integrity   # == the sha512 from step 2
-npm view @zodiacs/engine@0.1.1-rc.6 dist.shasum      # == the sha1 from step 2
+npm view @zodiacs/engine@0.1.1-rc.7 dist.integrity   # == the sha512 from step 2
+npm view @zodiacs/engine@0.1.1-rc.7 dist.shasum      # == the sha1 from step 2
 npm access get status @zodiacs/engine                # expect: public
 
 # The SHA-256 this repository records can only be checked by fetching and hashing.
-curl -sSL "$(npm view @zodiacs/engine@0.1.1-rc.6 dist.tarball)" -o /tmp/served.tgz
-sha256sum /tmp/served.tgz   # must equal 09c3e634…
-cmp /tmp/served.tgz vendor/zodiacs-engine-0.1.1-rc.6.tgz && echo "byte-identical"
+curl -sSL "$(npm view @zodiacs/engine@0.1.1-rc.7 dist.tarball)" -o /tmp/served.tgz
+sha256sum /tmp/served.tgz   # must equal 49b2b03f…
+cmp /tmp/served.tgz vendor/zodiacs-engine-0.1.1-rc.7.tgz && echo "byte-identical"
 
 # And prove a bare install does NOT pick up the candidate. Written as a test,
 # not as a command to eyeball: `npm view @zodiacs/engine@latest version` looks
@@ -259,7 +258,7 @@ being true:
 
 - `src/data/platform-engine-candidate.json` and `examples/mcp-server/candidate.json`
   carry `releaseStatus: "unpublished-candidate"`.
-- `scripts/platform-engine-candidate.mjs:22-23` rejects any other value, and
+- `scripts/platform-engine-candidate.mjs:37-38` rejects any other value, and
   `scripts/platform-candidate-docs.test.mjs` asserts it, along with the archive
   README's "not a published release".
 - `src/mcp/tools.ts` reports that status through `get_capabilities`, with
@@ -271,11 +270,11 @@ being true:
   [the engine release record](evidence/engine-release/README.md) records the
   registry state directly — `npm view @zodiacs/engine versions` → 404.
 
-**To undo.** `npm unpublish @zodiacs/engine@0.1.1-rc.6` is allowed within 72
+**To undo.** `npm unpublish @zodiacs/engine@0.1.1-rc.7` is allowed within 72
 hours of publication **only if** no package in the public registry depends on it.
 After 72 hours it needs all three of: no dependents, under 300 downloads in the
 last week, and a single owner. Two things are permanent either way: the exact
-string `@zodiacs/engine@0.1.1-rc.6` can never be published again, and
+string `@zodiacs/engine@0.1.1-rc.7` can never be published again, and
 unpublishing the *whole* package locks the name for 24 hours. Choose the version
 number with that in mind — the string is spent the moment it is used.
 ---

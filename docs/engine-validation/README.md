@@ -36,10 +36,10 @@ Ephemeris* for the Moon. Zodiacs did not write those models.
 | Positions | Swiss 2.10.03 / DE441, 8 epoch and station cases | inside frozen gates (a pass, not a residual) | [`swiss-eight-cases/`](swiss-eight-cases/) |
 | Positions | Swiss 2.10.03 / `.se1`, 180-measurement distribution | 18.64″ within 1801–2026 | [`../platform/evidence/swiss-benchmark/`](../platform/evidence/swiss-benchmark/) |
 | Positions | Swiss 2.10.03 / `.se1`, every tenth day 1800–2199, ten bodies and the true node | 22.96″ to 2026 at the same UT (Venus, 1878); 29.12″ to 2199 at the same TT (Pluto) | [`multiyear-1800-2199.json`](../platform/evidence/swiss-benchmark/multiyear-1800-2199.json) |
-| Angles and houses | Swiss `houses_ex`: three polar cases and five Placidus cases in the suite; the audit's latitude grid | 1.57″ worst angle and exact whole-sign cusps in the polar cases; ascendant up to 512″ near 66° on the grid | [`swiss-node-polar/`](swiss-node-polar/), [audit](../platform/evidence/engine-audit-2026-09-22/LEDGER.md) |
+| Angles and houses | Swiss `houses_ex`: three polar cases and five Placidus cases in the suite; the audit's latitude grid | 1.58″ worst angle and exact whole-sign cusps in the polar cases; ascendant within 6.4″ of an ERFA arbiter on the grid since rc.7 (up to 512″ near 66° before) | [`swiss-node-polar/`](swiss-node-polar/), [audit](../platform/evidence/engine-audit-2026-09-22/LEDGER.md) |
 | Local time | host IANA/ICU, two Node majors and a browser | no disagreement in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 | Event search | Swiss hourly scans, independent roots | one contract **failed-incomplete** | [`transit-windows/`](transit-windows/), [`swiss-lunar-return/`](swiss-lunar-return/) |
-| Runtime support | Node 22.23.2, Node 24.19.0, Chrome 152 | parity in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
+| Runtime support | Node 22.22.2 and Node 24.21.0 for rc.7; Node 22.23.2, Node 24.19.0 and Chrome 152 for rc.6 | parity in the cases run (a pass, not a residual) | [`../platform/evidence/site-engine-rc7/`](../platform/evidence/site-engine-rc7/), [`../platform/evidence/site-engine-rc6/`](../platform/evidence/site-engine-rc6/) |
 
 ## 1. Positions
 
@@ -138,19 +138,23 @@ flag. Nothing here says anything about those.
 ## 2. Angles and houses
 
 Swiss `swe.houses_ex(jdUT1, lat, lon, b'W', 0)` at Tromsø, Longyearbyen and
-Longyearbyen's southern mirror: measured angle residual 0.000434825° (1.57″),
+Longyearbyen's southern mirror: measured angle residual 0.000439812° (1.58″)
+with rc.7 and 0.000434825° (1.57″) with engine 0.1.0 when the pack was frozen,
 and every whole-sign cusp matched exactly. The suite's five Placidus cases, at
 latitudes up to 60.2°, pass gates of 0.1° for ASC/MC and 0.2° for cusps. The
-2026-09-22 audit measured more widely: on its latitude grid the ascendant is
+2026-09-22 audit measured more widely: on its latitude grid the ascendant was
 up to 512″ off near 66° and 22″ at the 95th percentile, because the engine
-pairs apparent sidereal time with the mean obliquity (finding
-angles-houses-aspects-1; step 1.3 of the engine brief).
+paired apparent sidereal time with the mean obliquity (finding
+angles-houses-aspects-1; step 1.3 of the engine brief). Since 0.1.1-rc.7 it
+uses the true obliquity of date. On the preregistered 3,128-case grid against
+an ERFA arbiter the ascendant is within 6.36″, 0.24″ at the 95th percentile and
+0.36″ within 45° of the equator (`scripts/angles-grid.test.mjs`).
 
-Placidus is where the two programs deliberately differ. Above 90° minus the
-obliquity, about 66.56° absolute latitude, Swiss returns C status −1 and its
-conventional Porphyry fallback array; this engine falls back to **whole sign**
-above 66° and sets `polar-fallback`, so from 66° to about 66.56° the two
-differ by design.
+Placidus is where the two programs deliberately differ. At 90° minus the
+obliquity or more, about 66.56° absolute latitude, Swiss returns C status −1
+and its conventional Porphyry fallback array. Since rc.7 this engine refuses
+Placidus at the same limit, but falls back to **whole sign** and sets
+`polar-fallback`; up to rc.6 it fell back above 66°.
 Both behaviours are compared against the same Swiss `W` tuples, so the
 fallback is checked rather than excused.
 

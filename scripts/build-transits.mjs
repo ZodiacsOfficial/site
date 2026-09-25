@@ -14,7 +14,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { degreeInSign, normalizeLongitude, signForLongitude } from '@zodiacs/engine';
-import { bodyLongitude, longitudeSpeed } from '@zodiacs/engine/internal';
+import { bodyLongitude } from '@zodiacs/engine/internal';
 
 const month = process.argv[2];
 if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month ?? '')) {
@@ -60,8 +60,23 @@ function lonAt(body, date) {
   return bodyLongitude(body, date);
 }
 
+/**
+ * Direction and stations use a central difference over ±0.25 day, the step
+ * build-sky.mjs uses for the retrograde windows, so these catalogs and sky.json
+ * name the same instant for a station. The engine's own speed has used
+ * ±0.001 day since 0.1.1-rc.7; measured against Swiss Ephemeris on the 92
+ * published stations, the finer step changes each planet's RMS error by less
+ * than 0.1 minute, because the positions set the limit
+ * (docs/platform/evidence/events-vs-swiss-2026-09-23/README.md).
+ */
+const STATION_STEP_DAYS = 0.25;
+
 function speedAt(body, date) {
-  return longitudeSpeed(body, date);
+  const step = STATION_STEP_DAYS * 86400_000;
+  let difference = lonAt(body, new Date(date.getTime() + step)) - lonAt(body, new Date(date.getTime() - step));
+  if (difference > 180) difference -= 360;
+  if (difference < -180) difference += 360;
+  return difference / (2 * STATION_STEP_DAYS);
 }
 
 /** Bisect a boolean predicate flip between lo (false) and hi (true). */

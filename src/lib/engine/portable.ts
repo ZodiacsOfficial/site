@@ -9,7 +9,7 @@ import {
   type NatalEnvelope,
   type NatalEnvelopeContext,
 } from '@zodiacs/engine/receipt';
-import { adaptChart } from './chart-adapter';
+import { adaptChart, siteHouseSystem } from './chart-adapter';
 import type { Chart, ChartFlag, HouseSystem } from './types';
 
 /** Canonical replay request. A string instant cannot be changed by Date setters. */
@@ -67,7 +67,7 @@ export function computePortableChart(
     const { receipt } = envelope;
     const inputSnapshot: PortableInputSnapshot = freezeJson({
       utc: receipt.instant,
-      houseSystem: receipt.houses.requested,
+      houseSystem: siteHouseSystem(receipt.houses.requested),
       timeKnown: receipt.timeKnown,
       flags: [...receipt.inputFlags],
       ...(receipt.coordinates === null ? {} : { ...receipt.coordinates }),

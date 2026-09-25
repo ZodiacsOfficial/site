@@ -2,7 +2,7 @@
   "type": "named end-user host interoperability: the host launched the adapter and connected to it. Separate from the official-SDK protocol drive, and separate from the model-driven demonstration recorded by hand in host-interop.md.",
   "host": {
     "name": "Claude Code CLI",
-    "version": "2.1.276 (Claude Code)",
+    "version": "2.1.282 (Claude Code)",
     "mechanism": "claude mcp add/list/get/remove, stdio"
   },
   "notTested": [
@@ -16,36 +16,36 @@
   },
   "server": {
     "path": "examples/mcp-server/server.mjs",
-    "sha256": "a06c69da573fcd0d08c52a41344de8e168164f94c755dba911793cc3ec090331"
+    "sha256": "df96c08a2b2d516492b854ffc4de5a2a110633bf7472aeccf4c32db4a7b43993"
   },
-  "completedAt": "2026-09-18T13:10:22.687Z",
+  "completedAt": "2026-09-24T20:28:32.168Z",
   "checks": 7,
   "passed": 7,
   "results": [
     {
       "name": "the host accepts the server through its documented add command",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/tz-tree/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-DCUokz/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-DCUokz/project]"
     },
     {
       "name": "the registration landed in the throwaway config, not the real one",
       "ok": true,
-      "detail": "Added stdio MCP server zodiacs with command: node /home/user/site/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
+      "detail": "Added stdio MCP server zodiacs with command: node /tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/tz-tree/examples/mcp-server/server.mjs to local config\nFile modified: /tmp/zodiacs-mcp-host-DCUokz/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-DCUokz/project]"
     },
     {
       "name": "the host launches the server and reports it connected",
       "ok": true,
-      "detail": "Checking MCP server health…\n\nzodiacs: node /home/user/site/examples/mcp-server/server.mjs - √ Connected"
+      "detail": "Checking MCP server health…\n\nzodiacs: node /tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/tz-tree/examples/mcp-server/server.mjs - √ Connected"
     },
     {
       "name": "the host reports it as a connected stdio server",
       "ok": true,
-      "detail": "zodiacs:\n  Scope: Local config (private to you in this project)\n  Status: √ Connected\n  Type: stdio\n  Command: node\n  Args: /home/user/site/examples/mcp-server/server.mjs\n  Environment:\n\nTo remove this server, run: claude mcp remove zodiacs -s local"
+      "detail": "zodiacs:\n  Scope: Local config (private to you in this project)\n  Status: √ Connected\n  Type: stdio\n  Command: node\n  Args: /tmp/claude-0/-home-user-site/25475091-052a-53d7-9cd4-cf04ce09dc68/scratchpad/tz-tree/examples/mcp-server/server.mjs\n  Environment:\n\nTo remove this server, run: claude mcp remove zodiacs -s local"
     },
     {
       "name": "the documented removal command removes it",
       "ok": true,
-      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-bdPp95/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-bdPp95/project]"
+      "detail": "Removed MCP server zodiacs from local config\nFile modified: /tmp/zodiacs-mcp-host-DCUokz/claude-config/.claude.json [project: /tmp/zodiacs-mcp-host-DCUokz/project]"
     },
     {
       "name": "nothing is left configured after removal",
@@ -56,8 +56,8 @@
       "name": "the machine's own Claude Code configuration is byte-identical throughout",
       "ok": true,
       "detail": {
-        "before": "ec9853368011f32381e3d1e20584e9124053f37438664bc3f5e3aaf96b38d85a",
-        "after": "ec9853368011f32381e3d1e20584e9124053f37438664bc3f5e3aaf96b38d85a"
+        "before": "481c66a21edb41d1754af50904a58de7242258d0cef4c0f9ed7097c87b3916ec",
+        "after": "481c66a21edb41d1754af50904a58de7242258d0cef4c0f9ed7097c87b3916ec"
       }
     }
   ]
