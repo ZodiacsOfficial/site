@@ -1,14 +1,58 @@
 {
   "schema": "zodiacs.registry-research-feed.v1",
-  "generatedAt": "2026-09-24T00:08:01.280Z",
+  "generatedAt": "2026-09-25T00:09:10.614Z",
   "publisher": "Zodiacs.org Research System",
   "window": {
     "previousDays": 30,
     "futureDays": 7,
-    "startsAt": "2026-08-25T00:00:00.000Z",
-    "endsBefore": "2026-10-02T00:00:00.000Z"
+    "startsAt": "2026-08-26T00:00:00.000Z",
+    "endsBefore": "2026-10-03T00:00:00.000Z"
   },
   "items": [
+    {
+      "id": "zrx-event-brief-aspect-2026-10-02t22-25-53-877z-mars-trine-neptune",
+      "slug": "event-brief-aspect-2026-10-02t22-25-53-877z-mars-trine-neptune",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-25T12:00:00.000Z",
+      "visibleAt": "2026-10-02T22:25:53.877Z",
+      "title": "Mars Trine Neptune · event brief",
+      "summary": "Mars Trine Neptune becomes exact at 2026-10-02T22:25:53.877Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-10-02t22-25-53-877z-mars-trine-neptune/",
+      "signs": [
+        "aries",
+        "leo"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-event-brief-aspect-2026-10-02t20-43-00-330z-mercury-square-pluto",
+      "slug": "event-brief-aspect-2026-10-02t20-43-00-330z-mercury-square-pluto",
+      "kind": "event-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-25T12:00:00.000Z",
+      "visibleAt": "2026-10-02T20:43:00.330Z",
+      "title": "Mercury Square Pluto · event brief",
+      "summary": "Mercury Square Pluto becomes exact at 2026-10-02T20:43:00.330Z. Its symbolic reading and later market observations remain separate.",
+      "url": "/terminal/research/event-brief-aspect-2026-10-02t20-43-00-330z-mercury-square-pluto/",
+      "signs": [
+        "scorpio",
+        "aquarius"
+      ],
+      "topics": [
+        "calendar",
+        "astrology",
+        "aspect"
+      ],
+      "status": "scheduled"
+    },
     {
       "id": "zrx-event-brief-ingress-2026-09-30t11-44-42-403z-mercury-scorpio",
       "slug": "event-brief-ingress-2026-09-30t11-44-42-403z-mercury-scorpio",
@@ -139,6 +183,67 @@
       "status": "scheduled"
     },
     {
+      "id": "zrx-daily-market-brief-2026-09-25",
+      "slug": "daily-market-brief-2026-09-25",
+      "kind": "daily-market-brief",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-25T12:00:00.000Z",
+      "visibleAt": "2026-09-25T12:00:00.000Z",
+      "title": "Sun in Libra · daily market brief",
+      "summary": "Sun in Libra leads the disclosed symbolic index; Libra market measures are recorded separately.",
+      "url": "/terminal/research/daily-market-brief-2026-09-25/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "daily-sky",
+        "occupancy"
+      ],
+      "status": "scheduled"
+    },
+    {
+      "id": "zrx-market-check-2026-09-24-observation-24h",
+      "slug": "market-check-2026-09-24-observation-24h",
+      "kind": "observation-update",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-25T00:09:10.614Z",
+      "visibleAt": "2026-09-25T00:09:10.614Z",
+      "title": "Libra 24-hour observation update",
+      "summary": "24-hour follow-up using the first qualifying archived snapshot (24.02 actual hours elapsed).",
+      "url": "/terminal/research/market-check-2026-09-24-observation-24h/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "observation-update"
+      ],
+      "status": "published"
+    },
+    {
+      "id": "zrx-market-check-2026-09-25",
+      "slug": "market-check-2026-09-25",
+      "kind": "market-check",
+      "sourceType": "zodiacs-research",
+      "publisher": "Zodiacs.org Research System",
+      "publishedAt": "2026-09-25T00:09:10.614Z",
+      "visibleAt": "2026-09-25T00:09:10.614Z",
+      "title": "Libra market check · 2026-09-25",
+      "summary": "Libra price, market cap, liquidity, volume, and collection medians at one archived observation.",
+      "url": "/terminal/research/market-check-2026-09-25/",
+      "signs": [
+        "libra"
+      ],
+      "topics": [
+        "markets",
+        "market-check"
+      ],
+      "status": "published"
+    },
+    {
       "id": "zrx-daily-market-brief-2026-09-24",
       "slug": "daily-market-brief-2026-09-24",
       "kind": "daily-market-brief",
@@ -157,7 +262,7 @@
         "daily-sky",
         "occupancy"
       ],
-      "status": "scheduled"
+      "status": "published"
     },
     {
       "id": "zrx-market-check-2026-09-17-observation-168h",
