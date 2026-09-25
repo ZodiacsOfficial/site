@@ -1,0 +1,64 @@
+name: ΔT monitor
+
+# Once a week, compares the engine's frozen ΔT table (model zodiacs-deltat/1)
+# with IERS's finals2000A.all, and opens or comments on the issue
+# "ΔT table needs a refresh" when the model has drifted from IERS or its
+# predictions are about to run out. It commits nothing: a refresh is an
+# engine release that the site takes through a normal pull request. The rule
+# and its replay over 2025–2026: docs/platform/evidence/deltat-2026-09-25/README.md §6.
+
+on:
+  schedule:
+    - cron: "23 6 * * 5" # Fridays 06:23 UTC, the day after Bulletin A
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deltat-monitor
+  cancel-in-progress: false
+
+jobs:
+  monitor:
+    name: Compare the ΔT table with IERS
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compare with IERS
+        id: monitor
+        run: node scripts/deltat-monitor.mjs --issue-body "$RUNNER_TEMP/deltat-issue.md"
+
+      - name: Open or update the refresh issue
+        if: steps.monitor.outputs.status != 'quiet'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TITLE="ΔT table needs a refresh"
+          NUMBER=$(gh issue list --state open --search "in:title \"$TITLE\"" --json number,title \
+            --jq '.[] | select(.title == "ΔT table needs a refresh") | .number' | head -n 1)
+          if [ -n "$NUMBER" ]; then
+            gh issue comment "$NUMBER" --body-file "$RUNNER_TEMP/deltat-issue.md"
+          else
+            gh issue create --title "$TITLE" --body-file "$RUNNER_TEMP/deltat-issue.md"
+          fi
+
+      - name: Mark the run failed when IERS could not be read
+        if: steps.monitor.outputs.status == 'failed'
+        run: |
+          echo "No mirror gave a valid finals2000A.all; the issue carries the reasons." >&2
+          exit 1

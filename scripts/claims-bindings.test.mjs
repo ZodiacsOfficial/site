@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { eventsCatalog } from '../src/lib/events/catalog.ts';
@@ -11,7 +12,7 @@ import { prepareLocalTime, resolveLocalToUtc } from '../src/lib/time/localToUtc.
  * the figure it states still covers what was measured.
  */
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
-const evidence = JSON.parse(read('docs/platform/evidence/events-vs-swiss-2026-09-23/deltas.json'));
+const evidence = JSON.parse(read('docs/platform/evidence/events-vs-swiss-2026-09-25/deltas.json'));
 const MINUTE = 60;
 const HOUR = 3600;
 
@@ -95,13 +96,22 @@ describe('the NASA JPL Horizons figure', () => {
   });
 });
 
-describe('today\'s ΔT on the developer engine page', () => {
-  it('states the measured 2026-09-22 values', () => {
+describe('ΔT on the developer engine page', () => {
+  it('states the measured 2026-09-22 values of the formula rc.8 replaced', () => {
     const deltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-23/values.json'));
     const today = deltaT.values.find((row) => row.date === '2026-09-22');
     const page = read('src/pages/developers/engine/index.astro').replace(/\s+/g, ' ');
-    expect(page).toContain(`it reads ${today.formulaSeconds.toFixed(1)} seconds where the IERS value is ${today.observedSeconds.toFixed(1)}`);
-    expect(page).toContain(`moves the Moon about ${today.moonArcseconds.toFixed(1)} arcseconds`);
+    expect(page).toContain(`it read ${today.formulaSeconds.toFixed(1)} seconds where the IERS value is ${today.observedSeconds.toFixed(1)}`);
+    expect(page).toContain(`moved the Moon about ${today.moonArcseconds.toFixed(1)} arcseconds`);
+  });
+
+  it('bounds the observed ΔT the engine uses by the worst day measured', () => {
+    const gate = JSON.parse(read('docs/platform/evidence/deltat-2026-09-25/outputs/gate1.json'));
+    const page = read('src/pages/developers/engine/index.astro').replace(/\s+/g, ' ');
+    const stated = /from 1962 on it is within ([\d.]+) seconds of the IERS value on every day/u.exec(page);
+    expect(stated).toBeTruthy();
+    expect(Number(stated[1])).toBeGreaterThanOrEqual(gate.everyObservedDay.maxAbs);
+    expect(gate.everyObservedDay.from).toBe('1962-01-01');
   });
 });
 
@@ -151,9 +161,21 @@ describe('the famous-people pages', () => {
   });
 });
 
+describe('the Moon ingresses on the void-of-course calendar', () => {
+  it('are within about 5 seconds of Swiss Ephemeris, measured on the table the site publishes', () => {
+    const measured = JSON.parse(read('docs/platform/evidence/events-vs-swiss-2026-09-25/moon-ingresses.json'));
+    const bytes = readFileSync(new URL('../src/data/aura-moon-ingresses.json', import.meta.url));
+    // A regenerated table needs docs/platform/evidence/events-vs-swiss-2026-09-25/tools/moon-ingresses.py run again.
+    expect(measured.rc8.tableSha256).toBe(createHash('sha256').update(bytes).digest('hex'));
+    expect(measured.rc8.maxAbsSeconds).toBeLessThan(5);
+    expect(read('src/pages/void-of-course-moon/index.astro').replace(/\s+/g, ' '))
+      .toContain('falls within about 5 seconds of Swiss Ephemeris');
+  });
+});
+
 describe('the Moon\'s disagreement with Swiss Ephemeris on the methodology page', () => {
   it('states the in-span maximum as the ceiling, and the median beside it', () => {
-    const report = JSON.parse(read('docs/platform/evidence/swiss-benchmark/report-measure.json'));
+    const report = JSON.parse(read('docs/platform/evidence/swiss-benchmark/report-measure-rc8.json'));
     const moon = report.rows.filter((row) => row.body === 'Moon' && row.stratum !== 'future')
       .map((row) => Math.abs(row.dLonArcsec)).sort((a, b) => a - b);
     const median = (moon[moon.length / 2 - 1] + moon[moon.length / 2]) / 2;

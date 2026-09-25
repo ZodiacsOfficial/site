@@ -10,6 +10,7 @@ import horizonsReference from './fixtures/horizons-reference.json';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
+import '../../../scripts/lib/deltat-install.mjs';
 import {
   Body, Observer, SearchHourAngle, SearchRiseSet, MakeTime, SiderealTime,
 } from 'astronomy-engine';

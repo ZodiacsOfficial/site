@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "id": "owner-requested-astrofolio-headline-explainer-and-card-rise-2026-09-24",
-  "baseCommit": "85f84f0b915d03adb76ef001e303cd25151e2a57",
+  "id": "owner-delegated-engine-rc8-observed-deltat-2026-09-25",
+  "baseCommit": "34ac8efae6b893842b2705c61f29f43af9917063",
   "protectedPaths": [
-    "public/assets/app.js",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
-    "src/app.jsx"
+    "scripts/build-aura-moon-ingresses.mjs",
+    "scripts/registry-outlook.test.mjs",
+    "scripts/registry-research-lib.mjs",
+    "scripts/registry-research.test.mjs",
+    "src/data/aura-moon-ingresses.json"
   ],
-  "authorization": "The owner compared /astrofolio/ with rolex.com on a phone and asked for three changes: that the cards rise as the page scrolls, as on rolex.com (built as two beats on phones: the film dims and the caption lifts away, then the looks come up from below as solid cards, the next a beat behind); that a plain explanation of what Astrofolio is sit below the cards, since a newcomer would be confused (they chose three short answers titled What is Astrofolio?, with a one-line risk note); and that the hero line be more accurate but still marketable (they chose Twelve signs. Twelve tokens.). Preserve market data, addresses, flags, and transaction behavior."
+  "authorization": "On 2026-09-25 the owner delegated the pending engine work (\"stop asking me for permissions, just get it done\"). Engine 0.1.1-rc.8 computes on observed ΔT, which moves every computed instant by seconds, and five Registry files follow from that alone: build-aura-moon-ingresses.mjs imports scripts/lib/deltat-install.mjs so its direct astronomy-engine calls run on the engine's clock (one line); aura-moon-ingresses.json is that script's output, the same 481 ingresses and signs, each 5.93 to 7.47 s later; registry-research-lib.mjs keeps one brief per event when a recomputed catalog moves a published event, so no brief is published twice, with registry-research.test.mjs holding it to that; registry-outlook.test.mjs pins the regenerated Mercury ingress. No Registry copy, market data, address, flag or transaction behavior changes."
 }

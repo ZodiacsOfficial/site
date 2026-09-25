@@ -72,7 +72,7 @@ describe('Registry symbolic outlook', () => {
       expect.objectContaining({
         kind: 'ingress',
         label: 'Mercury enters Leo',
-        at: '2026-08-09T16:28:10.070Z',
+        at: '2026-08-09T16:28:16.308Z',
         tonePoints: 0,
         source: 'src/data/transits-2026-08.json',
       }),

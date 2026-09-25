@@ -27,12 +27,15 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { DeltaT_EspenakMeeus } from 'astronomy-engine';
+import { deltaTAt } from '@zodiacs/engine/deltat';
 import { describe, expect, it } from 'vitest';
 
 const root = process.cwd();
 const read = (p) => readFileSync(resolve(root, p), 'utf8');
 
-const report = JSON.parse(read('docs/platform/evidence/swiss-benchmark/report-measure.json'));
+// The 180 measurements as run again on 2026-09-25 with engine 0.1.1-rc.8, whose
+// clock is observed ΔT; report-measure.json beside it is rc.6's run.
+const report = JSON.parse(read('docs/platform/evidence/swiss-benchmark/report-measure-rc8.json'));
 const corpus = read('docs/platform/evidence/swiss-benchmark/tools/corpus.mjs');
 
 /**
@@ -87,6 +90,9 @@ function spanOf(rows) {
   return `from ${Math.min(...years)} to ${Math.max(...years)}`;
 }
 
+/** The year a corpus case is dated in. */
+const yearOf = (id) => Number(new RegExp(`c\\('${id}',[^)]*'(\\d{4})-`, 'u').exec(corpus)[1]);
+
 /**
  * Every sentence on the page that may mention an arcminute, in full. A new one
  * fails until it is added here deliberately, which is the only guard that
@@ -95,8 +101,8 @@ function spanOf(rows) {
 const ARCMINUTE_SENTENCES = [
   'It is designed to stay within one arcminute of NOVAS — that is the library\'s own target,'
   + ' not a measurement of this site, and what we measured is in the next section.',
-  'The other 20 measurements are the far-future cases, and two of them exceed one arcminute —'
-  + ' both the Moon: 64.8 arcseconds at 2100 and 159.4 arcseconds at 2190.',
+  'The other 20 measurements are the far-future cases, and none of them reaches one arcminute:'
+  + ' the largest is 24.8 arcseconds, Pluto at 2190, where the two ephemerides differ.',
 ];
 
 describe('the accuracy claim on /methodology/', () => {
@@ -149,43 +155,67 @@ describe('the accuracy claim on /methodology/', () => {
     expect(Number(stated[1])).toBe(30);
   });
 
-  it('binds each far-future outlier to its own epoch', () => {
-    expect(overArcminute).toHaveLength(2);
+  it('binds the far-future cases to their bodies and epochs, none over an arcminute', () => {
+    expect(overArcminute).toHaveLength(0);
     expect(farFuture).toHaveLength(report.rows.length - withinRecord.length);
-    expect(prose).toContain(`The other ${farFuture.length} measurements are the far-future cases`);
-    for (const row of overArcminute) {
-      expect(row.body, 'the page attributes both to the Moon').toBe('Moon');
-      const year = new RegExp(`c\\('${row.id}',[^)]*'(\\d{4})-`, 'u').exec(corpus)[1];
-      // Value and epoch together: swapping them has to fail.
-      expect(prose, `${row.id} must be reported as its own value at its own year`)
-        .toContain(`${tenth(Math.abs(row.dLonArcsec))} arcseconds at ${year}`);
-    }
-    expect(prose).toContain('both the Moon');
+    const worst = farFuture.reduce((a, b) => (Math.abs(b.dLonArcsec) > Math.abs(a.dLonArcsec) ? b : a));
+    expect(prose).toContain(`The other ${farFuture.length} measurements are the far-future cases, and none of them`
+      + ` reaches one arcminute: the largest is ${tenth(Math.abs(worst.dLonArcsec))} arcseconds,`
+      + ` ${worst.body} at ${yearOf(worst.id)}`);
+    // Each Moon value with its own epoch: swapping them has to fail.
+    const moons = farFuture.filter((row) => row.body === 'Moon').sort((a, b) => yearOf(a.id) - yearOf(b.id));
+    expect(moons.map((row) => row.id)).toEqual(['future-01', 'future-02']);
+    expect(prose).toContain(`it measured ${tenth(Math.abs(moons[0].dLonArcsec))} arcseconds from Swiss`
+      + ` at ${yearOf(moons[0].id)} and ${tenth(Math.abs(moons[1].dLonArcsec))} arcseconds at ${yearOf(moons[1].id)}`);
   });
 
   it('shows the delta-T arithmetic it relies on, and gets it right', () => {
-    const stated = /Swiss reads ΔT at (\d{4}) as ([\d.]+) seconds where this engine reads ([\d.]+), a gap of ([\d.]+) seconds/u
+    const stated = /Swiss reads ΔT at (\d{4}) as ([\d.]+) seconds, and this engine as ([\d.]+) seconds with a one-sigma uncertainty of ([\d.]+) seconds, a gap of ([\d.]+) seconds/u
       .exec(prose);
-    expect(stated, 'the page must name both values, not only the gap').toBeTruthy();
-    const [, epoch, swiss, engine, gap] = stated;
-    expect(Number(engine) - Number(swiss)).toBeCloseTo(Number(gap), 1);
+    expect(stated, 'the page must name both values and the band, not only the gap').toBeTruthy();
+    const [, epoch, swiss, engine, sigma, gap] = stated;
     expect(epoch).toBe('2100');
-    // The share of the 2100 residual the gap accounts for, at the Moon's rate.
+    // Swiss's value is committed with the tool that read it; the engine's is the
+    // installed engine's own, at the instant the 2100 case was measured.
+    const swissDeltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-25/outputs/swiss-deltat.json'));
+    expect(swiss).toBe(tenth(swissDeltaT.seconds['2100-01-01T00:00Z']));
+    const utc = /c\('future-01',\s*'future',\s*'([^']+)'/u.exec(corpus)[1];
+    expect(utc).toBe('2100-01-01T00:00:00Z');
+    const model = deltaTAt((Date.parse(utc) - Date.UTC(2000, 0, 1, 12)) / 86_400_000);
+    expect(engine).toBe(tenth(model.seconds));
+    expect(sigma).toBe(tenth(model.sigma));
+    const exactGap = swissDeltaT.seconds['2100-01-01T00:00Z'] - model.seconds;
+    expect(gap).toBe(tenth(exactGap));
+    // What the gap alone does to the Moon, at its mean rate, against what was measured.
     const rate = 0.549;
-    const accounted = Number(gap) * rate;
-    const observed = Math.abs(overArcminute.find((r) => r.id === 'future-01').dLonArcsec);
-    const claimed = /accounts for about (\d+) of those ([\d.]+) arcseconds/u.exec(prose);
-    expect(claimed, 'the page must say how much of the residual the clock explains').toBeTruthy();
-    expect(Number(claimed[1])).toBeCloseTo(accounted, -1);
-    expect(Number(claimed[2])).toBeCloseTo(observed, 1);
-    expect(Number(claimed[1])).toBeLessThan(observed);
+    const claimed = /so the gap alone moves it about ([\d.]+) arcseconds/u.exec(prose);
+    expect(claimed, 'the page must say what the clock alone does').toBeTruthy();
+    expect(claimed[1]).toBe(tenth(exactGap * rate));
+    const observed = Math.abs(farFuture.find((r) => r.id === 'future-01' && r.body === 'Moon').dLonArcsec);
+    expect(Math.abs(Number(claimed[1]) - observed)).toBeLessThan(1);
   });
 
-  it('states today\'s ΔT error from the IERS value, not as a convention', () => {
+  it('states the observed ΔT the engine uses, with its measured agreement', () => {
+    const gate = JSON.parse(read('docs/platform/evidence/deltat-2026-09-25/outputs/gate1.json'));
+    expect(gate.everyObservedDay.from).toBe('1962-01-01');
+    const stated = /From 1962 on it is within ([\d.]+) seconds of the IERS value on every day/u.exec(prose);
+    expect(stated, 'the page must bound the agreement it claims').toBeTruthy();
+    // A bound, so never below the worst day measured, and no looser than a hundredth over it.
+    expect(Number(stated[1])).toBeGreaterThanOrEqual(gate.everyObservedDay.maxAbs);
+    expect(Number(stated[1]) - gate.everyObservedDay.maxAbs).toBeLessThan(0.01);
+    expect(enginePage).toContain(`from 1962 on it is within ${stated[1]} seconds of the IERS value on every day`);
+    // It is the installed engine's model, and every chart names it.
+    const model = deltaTAt((Date.parse('2026-09-22T00:00:00Z') - Date.UTC(2000, 0, 1, 12)) / 86_400_000);
+    expect(model.model).toBe('zodiacs-deltat/1');
+    expect(model.tableDigest).toBe(gate.tableDigest);
+    expect(prose).toContain('each chart records the value it used and its uncertainty');
+  });
+
+  it('states the ΔT error of the formula it replaced from the IERS value, not as a convention', () => {
     const deltaT = JSON.parse(read('docs/platform/evidence/deltat-2026-09-23/values.json'));
     const today = deltaT.values.find((row) => row.date === '2026-09-22');
     expect(prose).not.toContain('Neither extrapolation is wrong');
-    const stated = /on 22 September 2026 it reads ([\d.]+) seconds where the IERS value is ([\d.]+), which on its own moves the Moon about ([\d.]+) arcseconds/u
+    const stated = /on 22 September 2026 read ([\d.]+) seconds where the IERS value is ([\d.]+), and which on its own moved the Moon about ([\d.]+) arcseconds/u
       .exec(prose);
     expect(stated, 'the page must give both values and the Moon displacement').toBeTruthy();
     expect(stated[1]).toBe(tenth(today.formulaSeconds));
@@ -202,7 +232,8 @@ describe('the accuracy claim on /methodology/', () => {
   it('says what agreement with another implementation does not establish', () => {
     expect(prose).toContain('descend from JPL development ephemerides');
     expect(prose).toContain('two implementations agreeing, not a check against observation');
-    expect(prose).toContain('disagreement about the clock rather than the ephemeris');
+    expect(prose).toContain('where the two ephemerides differ');
+    expect(prose).toContain('For the Moon the clock matters more');
   });
 
   it('names the reference configuration that produced the figures', () => {
@@ -244,11 +275,10 @@ describe('the same figures on /developers/engine/', () => {
     expect(enginePage).toContain(`the largest is ${tenth(abs[abs.length - 1])} arcseconds`);
   });
 
-  it('binds each far-future outlier to its own epoch', () => {
-    for (const row of overArcminute) {
-      const year = new RegExp(`c\\('${row.id}',[^)]*'(\\d{4})-`, 'u').exec(corpus)[1];
-      expect(enginePage).toContain(`${tenth(Math.abs(row.dLonArcsec))} arcseconds at ${year}`);
-    }
+  it('binds each far-future Moon case to its own epoch', () => {
+    const moons = farFuture.filter((row) => row.body === 'Moon').sort((a, b) => yearOf(a.id) - yearOf(b.id));
+    expect(enginePage).toContain(`the Moon is ${tenth(Math.abs(moons[0].dLonArcsec))} arcseconds from Swiss`
+      + ` at ${yearOf(moons[0].id)} and ${tenth(Math.abs(moons[1].dLonArcsec))} arcseconds at ${yearOf(moons[1].id)}`);
   });
 
   it('says the package does not bound its input date, because it does not', () => {
@@ -260,6 +290,9 @@ describe('the same figures on /developers/engine/', () => {
       + read('node_modules/@zodiacs/engine/dist/index.d.ts');
     expect(packaged, 'if the package ever gains a range, this claim must change').not.toMatch(/2199/u);
     expect(read('src/lib/share.ts'), 'the site is where the bound lives').toMatch(/year > 2199/u);
+    // What the package does instead since rc.8: it flags a chart outside its reference span.
+    expect(packaged).toMatch(/outside-reference-span/u);
+    expect(enginePage).toContain('outside 1800–2200 it carries the outside-reference-span flag');
   });
 
   it('says what agreement with another implementation does not establish', () => {
@@ -308,11 +341,14 @@ describe('the every-tenth-day comparison, 1800 to 2199', () => {
       + ` ${tenth(upTo2026.max)} arcseconds (${upTo2026.maxBody}, ${worstYear})`);
   });
 
-  it('shows the far-future Moon is the clock: small at the same TT, large at the same UT', () => {
+  it('gives the far-future Moon at the same TT and at the same UT, each with its own figure', () => {
+    // At the same TT the clock is out and only the positions remain; at the same
+    // UT the two programs' extrapolated clocks come back in.
     expect(moonSameTt.max).toBeLessThan(10);
-    expect(moonSameUt.max).toBeGreaterThan(120);
+    expect(moonSameUt.max).toBeGreaterThan(moonSameTt.max);
     expect(prose).toContain(`the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199,`
-      + ` where at the same UT it reaches ${tenth(moonSameUt.max)} arcseconds`);
-    expect(enginePage).toContain(`Terrestrial Time the Moon stays within ${tenth(moonSameTt.max)} arcseconds from 2150 to 2199`);
+      + ` and at the same UT within ${tenth(moonSameUt.max)} arcseconds`);
+    expect(enginePage).toContain(`Terrestrial Time, which takes the clock out, it stays within ${tenth(moonSameTt.max)}`
+      + ' arcseconds from 2150 to 2199');
   });
 });

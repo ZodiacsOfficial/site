@@ -11,8 +11,8 @@ constraint that draft set.
 **Availability — passed.** `https://zodiacs.org/developers/mcp/` returns 200 in
 production and publishes a pinned archive whose digest matches what the page
 prints. The install instructions point at something real. Every expected value
-below was measured against **0.1.0-rc.7**. Before sending, check that the page
-still advertises rc.7; if a later archive has shipped, re-measure steps 2 to 4
+below was measured against **0.1.0-rc.8**. Before sending, check that the page
+still advertises rc.8; if a later archive has shipped, re-measure steps 2 to 4
 against whatever it names, because the `reproduced` wording and the withholding
 have both changed between candidates before.
 
@@ -119,12 +119,12 @@ Ask your assistant, in your own words:
 Synthetic: round public coordinates for New York, on a date chosen for what it
 exercises. Nobody's birth details.
 
-Checks, on rc.7 with engine 0.1.1-rc.7 — `get_capabilities` will tell you what
+Checks, on rc.8 with engine 0.1.1-rc.8 — `get_capabilities` will tell you what
 you actually have:
 
 - twelve bodies, four angles, twelve cusps;
-- Sun longitude `0.8733370932176285` — Aries, 0°52′;
-- ascendant `274.04403943096713` — Capricorn;
+- Sun longitude `0.8733377803906706` — Aries, 0°52′;
+- ascendant `274.0440394309899` — Capricorn;
 - `houses` reads `{ requested: "placidus", actual: "placidus", absenceReason: null }`;
 - the result contains neither `1988-03-21` nor `40.7128`. The summary returns the
   chart, not your inputs read back at you. Search the raw output and confirm that
@@ -176,7 +176,7 @@ comparison as `left` and `right`.
   "houseSystem": "whole", "output": "record" }
 ```
 
-A correct answer, in full — this is what rc.7 returns:
+A correct answer, in full — this is what rc.8 returns:
 
 - `identical: false`, and
   `counts: { differences: 15, substantive: 15, displayOnly: 0, explanations: 1 }`.
@@ -188,14 +188,14 @@ A correct answer, in full — this is what rc.7 returns:
   the tool is wrong.
 - The three metadata rows keep their values. The twelve cusp rows do not: each
   carries `"valuesWithheld": true` and its `delta`, and `cusp-1`'s delta is
-  `-4.044039430967132`. That is the default, and it is minimisation rather than
+  `-4.044039430989869`. That is the default, and it is minimisation rather than
   anonymisation — it shortens what travels onward and hides nothing from the
   assistant, which already received both records as arguments.
 - Exactly one explanation, `id: "house-system"`, `evidence: "reproduced"`,
   covering all fifteen rows:
 
   > Each chart's own recorded values were reproduced from its own declared inputs
-  > on engine 0.1.1-rc.7, and changing only the house system turns each one into
+  > on engine 0.1.1-rc.8, and changing only the house system turns each one into
   > the other, in both directions.
 
   Read that sentence for what it claims and what it does not. It says the engine
@@ -357,3 +357,18 @@ and left value in step 4 (from `-4.04690998258377` and `274.046910`), and the
 engine the `reproduced` sentence names. Everything else came back unchanged:
 the Sun, the counts, the fifteen rows, the whole-sign cusps, the two limits,
 the refusal text, fourteen installed packages and seventeen verifier lines.
+
+And again against `zodiacs-mcp-server-0.1.0-rc.8.tgz` (sha256 `7887a662…`), from
+a clean extraction of that archive before it shipped. Its engine, 0.1.1-rc.8,
+takes ΔT from an observed model rather than astronomy-engine's 2004 polynomial,
+so positions moved by the change in ΔT: the Sun in step 2 (from
+`0.8733370932176285`), the ascendant (from `274.04403943096713`), and `cusp-1`'s
+delta in step 4 (from `-4.044039430967132`). The `reproduced` sentence names
+the new engine. Everything else came back unchanged: the Sun's sign and degree,
+the ascendant and `cusp-1` at six decimals, the counts, the fifteen rows, the
+whole-sign cusps, the two limits, the refusal text, fourteen installed packages
+and seventeen verifier lines. Two things rc.8 changed are not exercised by
+these checks: the chart summary's `engine` field now also names the ephemeris,
+`astronomy-engine` 2.1.19, and the comparison now lists and explains
+differences in ΔT, which two records of one instant, each taking ΔT from the
+engine's model, do not have.

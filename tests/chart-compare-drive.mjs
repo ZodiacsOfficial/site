@@ -50,6 +50,19 @@ function record(utc, houseSystem, edit) {
   return text;
 }
 
+/**
+ * Rewrites the instant a record declares, and the ΔT that goes with it. From
+ * engine 0.1.1-rc.8 a record carries the ΔT it was computed with and the
+ * parser checks a modelled one against the declared instant, so the instant
+ * alone is refused. The model is public, so the second edit is no obstacle to
+ * anyone, and the values still come from the other moment.
+ */
+const declaring = (utc) => (o) => {
+  o.receipt.instant = new Date(utc).toISOString();
+  o.receipt.sourceInstant = utc;
+  o.result.deltaT = JSON.parse(record(utc, 'placidus')).result.deltaT;
+};
+
 const asFile = (name, text) => ({ name, mimeType: 'application/json', buffer: Buffer.from(text, 'utf8') });
 
 /** Import two records and read the verdict and the evidence badges back. */
@@ -134,10 +147,7 @@ await withPreview({ port: Number(process.env.COMPARE_DRIVE_PORT ?? 4437) }, asyn
         JSON.stringify([...foreign.evidence].sort()) === JSON.stringify([...foreignReversed.evidence].sort()),
         { forward: foreign.evidence, reverse: foreignReversed.evidence });
 
-      const drifted = record(T2, 'placidus', (o) => {
-        o.receipt.instant = new Date(T1).toISOString();
-        o.receipt.sourceInstant = T1;
-      });
+      const drifted = record(T2, 'placidus', declaring(T1));
       const baseline = await compareInBrowser(page, drifted, genuineRight);
       check(`${viewport.name}: a record whose values do not follow from its own inputs is not reproduced`,
         !baseline.evidence.includes('reproduced'), baseline.evidence);
@@ -150,10 +160,7 @@ await withPreview({ port: Number(process.env.COMPARE_DRIVE_PORT ?? 4437) }, asyn
       // an AI review found a cusps-only baseline promoting this pair to the
       // strongest verdict while sixty-five rows sat unresolved. Driven here as
       // well as in the unit suite because this is the surface a person reads.
-      const quantised = record(T2, 'whole', (o) => {
-        o.receipt.instant = new Date(T1).toISOString();
-        o.receipt.sourceInstant = T1;
-      });
+      const quantised = record(T2, 'whole', declaring(T1));
       const drift = await compareInBrowser(page, quantised, genuineLeft);
       check(`${viewport.name}: a rewritten instant hidden behind quantised cusps is not reproduced`,
         !drift.evidence.includes('reproduced'), drift.evidence);

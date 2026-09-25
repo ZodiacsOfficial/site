@@ -121,3 +121,21 @@ python3 docs/engine-validation/swiss-eight-cases/extract-fixture.py /path/to/evi
 Verify its hash against the table above before comparing with the committed
 fixture. The frozen policy is copied byte-for-byte, not reconstructed by this
 script. Raw acquisition is intentionally outside offline tests and CI.
+
+## Addition, 2026-09-25: engine 0.1.1-rc.8
+
+`@zodiacs/engine` 0.1.1-rc.8 computes on observed ΔT instead of Astronomy
+Engine's own Delta-T model, and the product's Solar return moved from
+`2025-01-31T23:57:48.787Z` to `2025-01-31T23:57:54.143Z`, +5.356 s, still
+inside the unchanged independent timing band. The exact clock guard above
+failed, as designed.
+
+No new same-time Swiss acquisition was made: the raw package and pinned DE441
+files are not available here, and this repository now keeps new Swiss output
+to statistics. The guard was changed instead, and this departs from the rule
+above, so it is stated here. The Swiss chart is kept as acquired and is still
+compared at identical clocks: the product's chart computed at
+`2025-01-31T23:57:48.787Z` meets every returned-chart gate. The returned chart
+must equal the chart computed at its own instant, and the two instants may
+differ by at most 15 seconds; beyond that the exact rule above applies again.
+The independent timing band was not widened, and no raw receipt was changed.

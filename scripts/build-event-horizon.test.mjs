@@ -49,15 +49,15 @@ describe('Phase 2 five-year event horizon', () => {
     expect(sky.retrogrades).toHaveLength(47);
     expect(sky.moons.find((moon) => moon.type === 'full' && moon.at.startsWith('2026-07-29'))).toEqual({
       type: 'full',
-      at: '2026-07-29T14:35:36.043Z',
+      at: '2026-07-29T14:35:42.223Z',
     });
     expect(sky.retrogrades.find((window) => window.planet === 'Mercury'
       && window.from.startsWith('2026-06-29'))).toEqual({
       planet: 'Mercury',
-      from: '2026-06-29T17:37:12.860Z',
-      to: '2026-07-23T22:56:19.394Z',
-      preShadowStart: '2026-06-13T00:54:34.390Z',
-      postShadowEnd: '2026-08-07T03:36:54.018Z',
+      from: '2026-06-29T17:37:19.453Z',
+      to: '2026-07-23T22:56:25.985Z',
+      preShadowStart: '2026-06-13T00:54:40.572Z',
+      postShadowEnd: '2026-08-07T03:37:00.197Z',
     });
 
     expect({ from: eclipses.from, to: eclipses.to }).toEqual({
@@ -70,7 +70,7 @@ describe('Phase 2 five-year event horizon', () => {
     expect(eclipses.eclipses.find((event) => event.peak.startsWith('2026-08-12'))).toMatchObject({
       type: 'solar',
       kind: 'total',
-      peak: '2026-08-12T17:45:46.794Z',
+      peak: '2026-08-12T17:45:53.037Z',
       sign: 'leo',
       degree: 20,
     });

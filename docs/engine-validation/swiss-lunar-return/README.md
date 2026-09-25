@@ -168,3 +168,20 @@ of their approved inputs. The compact fixture SHA-256 values are respectively
 and `daa41662758d7c1f4dfa234e2dfbd33a884d11b343d94af605b28a537c18b410`.
 All preparatory source receipts, failed-loader log, successful retry, product
 preflights and actual-clock acquisition records remain separate evidence.
+
+## Addition, 2026-09-25: engine 0.1.1-rc.8
+
+`@zodiacs/engine` 0.1.1-rc.8 computes on observed ΔT instead of Astronomy
+Engine's own Delta-T model, so each product return instant moved: L-modern-a
++6.042 s (both charts), L-modern-b +6.009 s, L-wrap +6.027 s, L-year-boundary
+−0.182 s, L-range-start −0.116 s and L-range-end +10.571 s. Every independent
+event-time band above still holds, unchanged, and no fixture or gate was
+edited.
+
+The returned-chart supplement was acquired at the rc.7 instants, and the raw
+package and pinned DE441 files it came from are not available here, so it was
+not re-acquired. The test now holds the product to it in three parts: the
+returned chart is exactly the chart computed at its own instant; the product's
+chart at the supplement's recorded clock meets every returned-chart gate; and
+the two instants differ by at most 15 seconds. A solver change beyond that
+still needs a new acquisition, with the original evidence retained.

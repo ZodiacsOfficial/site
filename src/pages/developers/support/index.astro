@@ -99,10 +99,12 @@ const engineRows = [
     </div>
     <div class="prose">
       <p>
-        Each longitude-crossing search caps ephemeris evaluations at 10,000. Sampling
-        can miss events between steps; interior tangencies are omitted, and
-        direction at a window endpoint uses one-sided evidence. This is not a
-        guarantee of complete event discovery or a wall-clock time limit.
+        A longitude-crossing search has no sample budget unless you give it one:
+        <code>searchLongitudeCrossings</code> takes an optional budget and refuses
+        the whole search, rather than throwing, when it would be exceeded.
+        Sampling can miss events between steps, and direction at a window
+        endpoint uses one-sided evidence. This is not a guarantee of complete
+        event discovery.
       </p>
       <p>
         The <a href={evidenceUrl(candidate.evidencePaths.ledger)}>candidate evidence ledger</a>{' '}

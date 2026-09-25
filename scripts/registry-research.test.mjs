@@ -246,6 +246,43 @@ describe('Registry Research deterministic publication', () => {
     expect(pilotSecond.items.find((item) => item.id === pilotBrief.id).artifactHash).not.toBe(pilotBrief.artifactHash);
   });
 
+  it('keeps one brief per event when a recomputed catalog moves a published event by seconds', async () => {
+    const fixture = withFixtureEvent(withPilotEndedBefore(await controlledInputs()));
+    const first = buildRegistryResearchLedger(fixture.inputs);
+    const brief = first.items.find((item) => item.kind === 'event-brief' && item.visibleAt === fixture.at);
+    expect(brief).toBeDefined();
+
+    // A new engine clock moves the same ingress 6.2 s later, so it returns
+    // under a new instant and a new id. The published brief stands alone.
+    const moved = deepClone(fixture.inputs);
+    const ingress = moved.transitMonths[0].ingresses.find((event) => event.at === fixture.at);
+    ingress.at = new Date(Date.parse(fixture.at) + 6_200).toISOString();
+    const replay = buildRegistryResearchLedger({ ...moved, existingLedger: first });
+    const briefs = replay.items.filter((item) => item.kind === 'event-brief' && item.slug.includes('mercury-libra'));
+    expect(briefs).toEqual([brief]);
+
+    // An ingress of the same planet into the same sign more than an hour away
+    // is a different event and gets its own brief.
+    const distinct = deepClone(fixture.inputs);
+    distinct.transitMonths[0].ingresses.push({
+      ...ingress,
+      at: new Date(Date.parse(fixture.at) + 3_600_001).toISOString(),
+    });
+    const both = buildRegistryResearchLedger({ ...distinct, existingLedger: first });
+    expect(both.items.filter((item) => item.kind === 'event-brief' && item.slug.includes('mercury-libra'))).toHaveLength(2);
+
+    // During the pilot, with nothing approved, nothing is frozen: the moved
+    // event replaces its unpublished draft.
+    const pilot = withFixtureEvent(await controlledInputs());
+    const pilotFirst = buildRegistryResearchLedger(pilot.inputs);
+    const pilotMoved = deepClone(pilot.inputs);
+    pilotMoved.transitMonths[0].ingresses.find((event) => event.at === pilot.at).at = ingress.at;
+    const pilotReplay = buildRegistryResearchLedger({ ...pilotMoved, existingLedger: pilotFirst });
+    const drafts = pilotReplay.items.filter((item) => item.kind === 'event-brief' && item.slug.includes('mercury-libra'));
+    expect(drafts).toHaveLength(1);
+    expect(drafts[0].visibleAt).toBe(ingress.at);
+  });
+
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
     const fixture = withFixtureEvent(await controlledInputs());
     const inputs = fixture.inputs;
