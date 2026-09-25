@@ -1,0 +1,234 @@
+{
+ "step": "1.9",
+ "title": "Placidus polar limit",
+ "rule": "Version 1, rule 1h: on the 336-case 66.05–66.55 ladder, status agrees with Swiss 336/336; cusps ≤ 0.02″ given Swiss inputs.",
+ "engine": "0.1.1-rc.7",
+ "verdict": "PASS",
+ "gates": [
+  {
+   "gate": "Status agrees with Swiss, end to end through the site's computeChart",
+   "agree": 336,
+   "of": 336,
+   "pass": true
+  },
+  {
+   "gate": "Status agrees with Swiss, on Swiss's own ARMC and true obliquity",
+   "agree": 336,
+   "of": 336,
+   "pass": true
+  },
+  {"gate": "Placidus cusps ≤ 0.02″ given Swiss's inputs", "measured": 0.008515, "limit": 0.02, "pass": true}
+ ],
+ "note": "Statistics only: counts, quantiles and a few named worst cases with the difference there. Swiss Ephemeris readings are not committed; provenance.json names each by SHA-256.",
+ "ladder": {
+  "name": "L of corpora/angle-grid-inputs.json",
+  "cases": 336,
+  "latitudes": [-66.55, -66.5, -66.4, -66.3, -66.2, -66.1, -66.05, 66.05, 66.1, 66.2, 66.3, 66.4, 66.5, 66.55],
+  "dates": ["1800-06-21", "2000-06-21", "2200-06-21"],
+  "hoursUtc": [0, 3, 6, 9, 12, 15, 18, 21],
+  "longitudes": [0]
+ },
+ "swissReadings": {
+  "kept": 336,
+  "discarded": 0,
+  "returnFlags": {"sun": [258], "moon": [258], "eclNut": [2]},
+  "housesArmcReproducesHousesExArcsec": 1.5e-8,
+  "computes": 320,
+  "refuses": 16,
+  "howPyswissephRefuses": ["swisseph.houses_ex: error"],
+  "cLibraryUnderneath": {
+   "returnCodes": [-1, 0],
+   "message": ["within polar circle, switched to Porphyry"],
+   "filledCuspsMinusHousesExPorphyryMaxArcsec": 0
+  },
+  "pyswissephAndCLibraryAgree": true,
+  "refusesExactlyWhereLatitudeReaches90MinusItsTrueObliquity": true
+ },
+ "refusedCases": {
+  "byEngineSwissAndErfaAlike": 16,
+  "cases": ["1800-06-21T00:00:00Z 66.55", "1800-06-21T00:00:00Z -66.55", "1800-06-21T03:00:00Z 66.55", "1800-06-21T03:00:00Z -66.55", "1800-06-21T06:00:00Z 66.55", "1800-06-21T06:00:00Z -66.55", "1800-06-21T09:00:00Z 66.55", "1800-06-21T09:00:00Z -66.55", "1800-06-21T12:00:00Z 66.55", "1800-06-21T12:00:00Z -66.55", "1800-06-21T15:00:00Z 66.55", "1800-06-21T15:00:00Z -66.55", "1800-06-21T18:00:00Z 66.55", "1800-06-21T18:00:00Z -66.55", "1800-06-21T21:00:00Z 66.55", "1800-06-21T21:00:00Z -66.55"]
+ },
+ "status": {
+  "endToEndAgree": 336,
+  "engineComputesEndToEnd": 320,
+  "onSwissInputsAgree": 336,
+  "erfaLimitAgreesWithSwiss": 336,
+  "computeHousesFellBackToWholeSign": 16,
+  "placidusPolarFallback": "whole",
+  "closestCaseToItsLimitDeg": {"engine": 0.01203, "swiss": 0.01204, "erfa": 0.01204}
+ },
+ "cuspsOnSwissInputs": {
+  "what": "placidusCusps (@zodiacs/engine/internal/math) on Swiss's ARMC and ECL_NUT true obliquity, against Swiss's houses_ex cusps; |difference| in arcseconds",
+  "cases": 320,
+  "maxAll12": 0.008515,
+  "worst": {"utc": "1800-06-21T00:00:00Z", "lat": 66.5, "value": 0.008515},
+  "maxIntermediate": 0.008515,
+  "maxAsc": 1.3e-8,
+  "maxMc": 4.1e-10
+ },
+ "endToEndForInformation": {
+  "what": "the site's computeChart against Swiss's houses_ex; not part of the rule; |difference| in arcseconds",
+  "cases": 320,
+  "maxCusp": 44.552,
+  "worst": {"utc": "2200-06-21T12:00:00Z", "lat": -66.4, "value": 44.552},
+  "maxIntermediate": 2.102,
+  "maxAsc": 44.552,
+  "maxRamc": 0.6912,
+  "maxTrueObliquity": 0.0291,
+  "byLatitude": {
+   "-66.55": {
+    "swissComputes": 16,
+    "engineComputes": 16,
+    "maxCuspOnSwissInputs": 0.006384,
+    "maxCuspEndToEnd": 18.233,
+    "maxAscEndToEnd": 18.233
+   },
+   "-66.5": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.006642,
+    "maxCuspEndToEnd": 35.765,
+    "maxAscEndToEnd": 35.765
+   },
+   "-66.4": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.003663,
+    "maxCuspEndToEnd": 44.552,
+    "maxAscEndToEnd": 44.552
+   },
+   "-66.3": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.002666,
+    "maxCuspEndToEnd": 39.778,
+    "maxAscEndToEnd": 39.778
+   },
+   "-66.2": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.003833,
+    "maxCuspEndToEnd": 33.743,
+    "maxAscEndToEnd": 33.743
+   },
+   "-66.1": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.003302,
+    "maxCuspEndToEnd": 28.74,
+    "maxAscEndToEnd": 28.74
+   },
+   "-66.05": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.00373,
+    "maxCuspEndToEnd": 26.668,
+    "maxAscEndToEnd": 26.668
+   },
+   "66.05": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.003863,
+    "maxCuspEndToEnd": 19.851,
+    "maxAscEndToEnd": 19.851
+   },
+   "66.1": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.003247,
+    "maxCuspEndToEnd": 20.399,
+    "maxAscEndToEnd": 20.399
+   },
+   "66.2": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.004175,
+    "maxCuspEndToEnd": 21.001,
+    "maxAscEndToEnd": 21.001
+   },
+   "66.3": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.004247,
+    "maxCuspEndToEnd": 20.19,
+    "maxAscEndToEnd": 20.19
+   },
+   "66.4": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.004027,
+    "maxCuspEndToEnd": 16.57,
+    "maxAscEndToEnd": 16.57
+   },
+   "66.5": {
+    "swissComputes": 24,
+    "engineComputes": 24,
+    "maxCuspOnSwissInputs": 0.008515,
+    "maxCuspEndToEnd": 8.823,
+    "maxAscEndToEnd": 8.823
+   },
+   "66.55": {
+    "swissComputes": 16,
+    "engineComputes": 16,
+    "maxCuspOnSwissInputs": 0.007983,
+    "maxCuspEndToEnd": 6.361,
+    "maxAscEndToEnd": 6.361
+   }
+  },
+  "byEpochAgainstErfaInputs": {
+   "1800": {
+    "cases": 96,
+    "engineMinusSwissAsc": 15.84,
+    "engineMinusSwissIntermediate": 1.288,
+    "engineMinusErfaInputsAsc": 3.234,
+    "engineMinusErfaInputsIntermediate": 0.534,
+    "swissMinusErfaInputsAsc": 18.178,
+    "swissMinusErfaInputsIntermediate": 1.068
+   },
+   "2000": {
+    "cases": 112,
+    "engineMinusSwissAsc": 7.134,
+    "engineMinusSwissIntermediate": 1.84,
+    "engineMinusErfaInputsAsc": 6.57,
+    "engineMinusErfaInputsIntermediate": 1.809,
+    "swissMinusErfaInputsAsc": 1.496,
+    "swissMinusErfaInputsIntermediate": 0.037
+   },
+   "2200": {
+    "cases": 112,
+    "engineMinusSwissAsc": 44.552,
+    "engineMinusSwissIntermediate": 2.102,
+    "engineMinusErfaInputsAsc": 1.034,
+    "engineMinusErfaInputsIntermediate": 0.292,
+    "swissMinusErfaInputsAsc": 44.337,
+    "swissMinusErfaInputsIntermediate": 2.021
+   }
+  },
+  "ascGainsByLatitude": {
+   "66.05": {"n": 48, "maxGainRamc": 45.4, "maxGainEps": 59.4},
+   "66.1": {"n": 48, "maxGainRamc": 50.2, "maxGainEps": 66.8},
+   "66.2": {"n": 48, "maxGainRamc": 63.9, "maxGainEps": 84.2},
+   "66.3": {"n": 48, "maxGainRamc": 87.9, "maxGainEps": 123.6},
+   "66.4": {"n": 48, "maxGainRamc": 141.4, "maxGainEps": 189.6},
+   "66.5": {"n": 48, "maxGainRamc": 366.1, "maxGainEps": 261.7},
+   "66.55": {"n": 32, "maxGainRamc": 1637.6, "maxGainEps": 1626.1}
+  }
+ },
+ "refusedCasesForInformation": {
+  "cases": 16,
+  "enginePorphyryOnSwissInputsMinusSwissSubstituteMaxArcsec": 1.6e-9,
+  "engineWholeSignMinusSwissPorphyryMaxDeg": 77.28
+ },
+ "rc6Control": {"what": "the vendored rc.6 on the ladder: the preregistered baseline", "cases": 336, "refused": 336},
+ "siteTest": {
+  "file": "scripts/angles-grid.test.mjs",
+  "passed": 5,
+  "of": 5,
+  "tests": [
+   {
+    "test": "Placidus near the polar circle (rule 1h) > computes the 320 ladder cases the arbiter's limit of 90° − ε allows, and refuses the other 16",
+    "pass": true
+   }
+  ]
+ }
+}

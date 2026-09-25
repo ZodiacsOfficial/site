@@ -1,0 +1,1258 @@
+{
+ "record": "S15 (2016) to 1940, USNO 1941\u20131961, IERS 1962\u20132026, on 1 January",
+ "slopeBeyond10": {
+  "rule": "smallest slope, rounded up to 0.01 s/yr, with \u03c3(10) + slope\u00b7(h \u2212 10) \u2265 the model rule's p68 at every whole-year horizon from 20 to 100 years in every launch window",
+  "sigmaAt10": 3.7947332,
+  "required": 0.6028,
+  "bindingWindow": "1851-2025",
+  "bindingHorizon": 42,
+  "bindingLaunches": 134,
+  "bindingP68": 23.083,
+  "slope": 0.61,
+  "constant": 2.3052668,
+  "sigmaBeyond10": "0.61\u00b7h \u2212 2.3052668",
+  "tabulatedHorizonsOnly": {
+   "required": 0.571,
+   "window": "1851-2025",
+   "horizon": 50,
+   "slope": 0.58,
+   "wholeYearHorizonsBelowP68WithThatSlope": {
+    "1851-2025": [
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49
+    ]
+   }
+  },
+  "coverage": {
+   "1851-2025": {
+    "horizons": [
+     1,
+     100
+    ],
+    "minSigmaOverP68": 1.01,
+    "at": 42,
+    "horizonsBelowP68": []
+   },
+   "1955-2025": {
+    "horizons": [
+     1,
+     71
+    ],
+    "minSigmaOverP68": 1.13,
+    "at": 46,
+    "horizonsBelowP68": []
+   },
+   "1700-2025": {
+    "horizons": [
+     1,
+     100
+    ],
+    "minSigmaOverP68": 1.627,
+    "at": 30,
+    "horizonsBelowP68": []
+   }
+  }
+ },
+ "summary": {
+  "1851-2025": {
+   "sigmaOverRms20to100": [
+    1.196,
+    1.394
+   ],
+   "sigmaOverP68": {
+    "1": 1.364,
+    "2": 1.294,
+    "3": 1.305,
+    "5": 1.276,
+    "10": 1.409,
+    "20": 1.273,
+    "30": 1.186,
+    "50": 1.059,
+    "75": 1.205,
+    "100": 1.147
+   },
+   "tauVariantsMaxRelativeRmsChange": 0.054,
+   "bestRuleByHorizon": {
+    "1": "last slope",
+    "2": "last slope",
+    "3": "last slope",
+    "5": "damped \u03c4=15 + curve (model)",
+    "10": "damped \u03c4=15 + curve (model)",
+    "20": "damped \u03c4=15 + curve (model)",
+    "30": "damped \u03c4=15 + curve (model)",
+    "50": "damped \u03c4=15 + curve (model)",
+    "75": "damped \u03c4=15 + curve (model)",
+    "100": "damped \u03c4=15 + curve (model)"
+   }
+  },
+  "1955-2025": {
+   "sigmaOverRms20to100": [
+    1.462,
+    1.555
+   ],
+   "sigmaOverP68": {
+    "1": 1.446,
+    "2": 1.372,
+    "3": 1.345,
+    "5": 1.316,
+    "10": 1.366,
+    "20": 2.214,
+    "30": 1.36,
+    "50": 1.183
+   },
+   "tauVariantsMaxRelativeRmsChange": 0.238,
+   "bestRuleByHorizon": {
+    "1": "last slope",
+    "2": "last slope",
+    "3": "last slope",
+    "5": "last slope",
+    "10": "last slope",
+    "20": "last slope",
+    "30": "last slope",
+    "50": "last slope"
+   }
+  },
+  "1700-2025": {
+   "sigmaOverRms20to100": [
+    1.519,
+    2.126
+   ],
+   "sigmaOverP68": {
+    "1": 2.143,
+    "2": 2.306,
+    "3": 2.144,
+    "5": 1.914,
+    "10": 1.875,
+    "20": 1.834,
+    "30": 1.627,
+    "50": 1.933,
+    "75": 1.887,
+    "100": 2.198
+   },
+   "tauVariantsMaxRelativeRmsChange": 0.044,
+   "bestRuleByHorizon": {
+    "1": "last slope",
+    "2": "last slope",
+    "3": "last slope",
+    "5": "damped \u03c4=15 + curve (model)",
+    "10": "damped \u03c4=15 + curve (model)",
+    "20": "damped \u03c4=15 + curve (model)",
+    "30": "damped \u03c4=15 + curve (model)",
+    "50": "damped \u03c4=15 + curve (model)",
+    "75": "damped \u03c4=15 + curve (model)",
+    "100": "damped \u03c4=15 + curve (model)"
+   }
+  }
+ },
+ "launchWindows": {
+  "1851-2025": {
+   "1": {
+    "launches": 175,
+    "sigma": 0.12,
+    "sigmaOverModelRms": 1.19,
+    "rules": {
+     "hold": {
+      "rms": 0.657,
+      "p68": 0.655
+     },
+     "last slope": {
+      "rms": 0.101,
+      "p68": 0.09
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.101,
+      "p68": 0.088
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.101,
+      "p68": 0.088
+     },
+     "slope + parabola": {
+      "rms": 0.101,
+      "p68": 0.089
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.103,
+      "p68": 0.09
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.101,
+      "p68": 0.09
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.101,
+      "p68": 0.089
+     }
+    }
+   },
+   "2": {
+    "launches": 174,
+    "sigma": 0.339,
+    "sigmaOverModelRms": 1.18,
+    "rules": {
+     "hold": {
+      "rms": 1.314,
+      "p68": 1.336
+     },
+     "last slope": {
+      "rms": 0.285,
+      "p68": 0.259
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.287,
+      "p68": 0.262
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.287,
+      "p68": 0.264
+     },
+     "slope + parabola": {
+      "rms": 0.286,
+      "p68": 0.264
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.296,
+      "p68": 0.278
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.284,
+      "p68": 0.245
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.283,
+      "p68": 0.241
+     }
+    }
+   },
+   "3": {
+    "launches": 173,
+    "sigma": 0.624,
+    "sigmaOverModelRms": 1.14,
+    "rules": {
+     "hold": {
+      "rms": 1.968,
+      "p68": 1.932
+     },
+     "last slope": {
+      "rms": 0.546,
+      "p68": 0.485
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.546,
+      "p68": 0.478
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.547,
+      "p68": 0.487
+     },
+     "slope + parabola": {
+      "rms": 0.548,
+      "p68": 0.48
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.566,
+      "p68": 0.513
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.54,
+      "p68": 0.469
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.538,
+      "p68": 0.457
+     }
+    }
+   },
+   "5": {
+    "launches": 171,
+    "sigma": 1.342,
+    "sigmaOverModelRms": 1.1,
+    "rules": {
+     "hold": {
+      "rms": 3.26,
+      "p68": 3.301
+     },
+     "last slope": {
+      "rms": 1.242,
+      "p68": 1.092
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 1.219,
+      "p68": 1.052
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 1.222,
+      "p68": 1.061
+     },
+     "slope + parabola": {
+      "rms": 1.246,
+      "p68": 1.12
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 1.269,
+      "p68": 1.098
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 1.206,
+      "p68": 1.003
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 1.205,
+      "p68": 1.004
+     }
+    }
+   },
+   "10": {
+    "launches": 166,
+    "sigma": 3.795,
+    "sigmaOverModelRms": 1.16,
+    "rules": {
+     "hold": {
+      "rms": 6.389,
+      "p68": 6.749
+     },
+     "last slope": {
+      "rms": 3.446,
+      "p68": 3.181
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 3.261,
+      "p68": 2.693
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 3.279,
+      "p68": 2.707
+     },
+     "slope + parabola": {
+      "rms": 3.459,
+      "p68": 3.151
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 3.436,
+      "p68": 3.055
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 3.217,
+      "p68": 2.601
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 3.222,
+      "p68": 2.819
+     }
+    }
+   },
+   "20": {
+    "launches": 156,
+    "sigma": 9.895,
+    "sigmaOverModelRms": 1.2,
+    "rules": {
+     "hold": {
+      "rms": 12.237,
+      "p68": 13.099
+     },
+     "last slope": {
+      "rms": 9.528,
+      "p68": 9.116
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 8.27,
+      "p68": 7.773
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 8.376,
+      "p68": 8.079
+     },
+     "slope + parabola": {
+      "rms": 9.548,
+      "p68": 9.519
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 8.678,
+      "p68": 8.539
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 8.175,
+      "p68": 7.879
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 8.259,
+      "p68": 8.24
+     }
+    }
+   },
+   "30": {
+    "launches": 146,
+    "sigma": 15.995,
+    "sigmaOverModelRms": 1.2,
+    "rules": {
+     "hold": {
+      "rms": 17.409,
+      "p68": 20.09
+     },
+     "last slope": {
+      "rms": 16.872,
+      "p68": 19.135
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 13.309,
+      "p68": 13.481
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 13.605,
+      "p68": 14.006
+     },
+     "slope + parabola": {
+      "rms": 16.802,
+      "p68": 18.615
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 13.805,
+      "p68": 14.942
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 13.225,
+      "p68": 13.602
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 13.496,
+      "p68": 13.956
+     }
+    }
+   },
+   "50": {
+    "launches": 126,
+    "sigma": 28.195,
+    "sigmaOverModelRms": 1.27,
+    "rules": {
+     "hold": {
+      "rms": 26.259,
+      "p68": 30.459
+     },
+     "last slope": {
+      "rms": 32.205,
+      "p68": 34.225
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 22.187,
+      "p68": 26.635
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 23.308,
+      "p68": 28.445
+     },
+     "slope + parabola": {
+      "rms": 30.873,
+      "p68": 34.526
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 22.618,
+      "p68": 27.819
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 22.168,
+      "p68": 25.38
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 22.769,
+      "p68": 23.949
+     }
+    }
+   },
+   "75": {
+    "launches": 101,
+    "sigma": 43.445,
+    "sigmaOverModelRms": 1.39,
+    "rules": {
+     "hold": {
+      "rms": 37.034,
+      "p68": 41.568
+     },
+     "last slope": {
+      "rms": 48.445,
+      "p68": 51.417
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 31.172,
+      "p68": 36.058
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 33.88,
+      "p68": 38.429
+     },
+     "slope + parabola": {
+      "rms": 43.963,
+      "p68": 45.647
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 31.855,
+      "p68": 34.908
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 30.849,
+      "p68": 36.919
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 31.052,
+      "p68": 37.818
+     }
+    }
+   },
+   "100": {
+    "launches": 76,
+    "sigma": 58.695,
+    "sigmaOverModelRms": 1.39,
+    "rules": {
+     "hold": {
+      "rms": 49.501,
+      "p68": 57.128
+     },
+     "last slope": {
+      "rms": 74.728,
+      "p68": 80.656
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 42.212,
+      "p68": 51.152
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 46.625,
+      "p68": 54.874
+     },
+     "slope + parabola": {
+      "rms": 69.471,
+      "p68": 75.459
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 42.78,
+      "p68": 48.621
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 41.986,
+      "p68": 53.082
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 42.444,
+      "p68": 56.61
+     }
+    }
+   }
+  },
+  "1955-2025": {
+   "1": {
+    "launches": 71,
+    "sigma": 0.12,
+    "sigmaOverModelRms": 1.41,
+    "rules": {
+     "hold": {
+      "rms": 0.629,
+      "p68": 0.744
+     },
+     "last slope": {
+      "rms": 0.084,
+      "p68": 0.076
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.085,
+      "p68": 0.083
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.085,
+      "p68": 0.082
+     },
+     "slope + parabola": {
+      "rms": 0.084,
+      "p68": 0.077
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.087,
+      "p68": 0.087
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.084,
+      "p68": 0.087
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.084,
+      "p68": 0.083
+     }
+    }
+   },
+   "2": {
+    "launches": 70,
+    "sigma": 0.339,
+    "sigmaOverModelRms": 1.56,
+    "rules": {
+     "hold": {
+      "rms": 1.264,
+      "p68": 1.509
+     },
+     "last slope": {
+      "rms": 0.213,
+      "p68": 0.208
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.218,
+      "p68": 0.247
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.219,
+      "p68": 0.246
+     },
+     "slope + parabola": {
+      "rms": 0.214,
+      "p68": 0.209
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.231,
+      "p68": 0.278
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.214,
+      "p68": 0.232
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.212,
+      "p68": 0.22
+     }
+    }
+   },
+   "3": {
+    "launches": 69,
+    "sigma": 0.624,
+    "sigmaOverModelRms": 1.54,
+    "rules": {
+     "hold": {
+      "rms": 1.903,
+      "p68": 2.266
+     },
+     "last slope": {
+      "rms": 0.39,
+      "p68": 0.423
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.404,
+      "p68": 0.464
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.406,
+      "p68": 0.461
+     },
+     "slope + parabola": {
+      "rms": 0.394,
+      "p68": 0.394
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.435,
+      "p68": 0.509
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.394,
+      "p68": 0.431
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.388,
+      "p68": 0.398
+     }
+    }
+   },
+   "5": {
+    "launches": 67,
+    "sigma": 1.342,
+    "sigmaOverModelRms": 1.51,
+    "rules": {
+     "hold": {
+      "rms": 3.189,
+      "p68": 3.685
+     },
+     "last slope": {
+      "rms": 0.853,
+      "p68": 0.833
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.889,
+      "p68": 1.02
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.895,
+      "p68": 1.027
+     },
+     "slope + parabola": {
+      "rms": 0.865,
+      "p68": 0.805
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.978,
+      "p68": 1.069
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.858,
+      "p68": 0.897
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.84,
+      "p68": 0.887
+     }
+    }
+   },
+   "10": {
+    "launches": 62,
+    "sigma": 3.795,
+    "sigmaOverModelRms": 1.53,
+    "rules": {
+     "hold": {
+      "rms": 6.458,
+      "p68": 7.031
+     },
+     "last slope": {
+      "rms": 2.307,
+      "p68": 2.374
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 2.473,
+      "p68": 2.779
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 2.516,
+      "p68": 2.848
+     },
+     "slope + parabola": {
+      "rms": 2.356,
+      "p68": 2.174
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 2.826,
+      "p68": 3.155
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 2.328,
+      "p68": 2.507
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 2.233,
+      "p68": 2.461
+     }
+    }
+   },
+   "20": {
+    "launches": 52,
+    "sigma": 9.895,
+    "sigmaOverModelRms": 1.56,
+    "rules": {
+     "hold": {
+      "rms": 13.001,
+      "p68": 15.5
+     },
+     "last slope": {
+      "rms": 5.775,
+      "p68": 6.727
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 6.363,
+      "p68": 4.47
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 6.588,
+      "p68": 4.839
+     },
+     "slope + parabola": {
+      "rms": 6.142,
+      "p68": 7.142
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 7.487,
+      "p68": 6.588
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 5.779,
+      "p68": 4.011
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 5.317,
+      "p68": 4.444
+     }
+    }
+   },
+   "30": {
+    "launches": 42,
+    "sigma": 15.995,
+    "sigmaOverModelRms": 1.52,
+    "rules": {
+     "hold": {
+      "rms": 19.17,
+      "p68": 23.522
+     },
+     "last slope": {
+      "rms": 10.418,
+      "p68": 11.467
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 10.542,
+      "p68": 11.758
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 11.094,
+      "p68": 12.484
+     },
+     "slope + parabola": {
+      "rms": 11.789,
+      "p68": 13.192
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 12.359,
+      "p68": 14.907
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 9.468,
+      "p68": 9.426
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 8.559,
+      "p68": 7.768
+     }
+    }
+   },
+   "50": {
+    "launches": 22,
+    "sigma": 28.195,
+    "sigmaOverModelRms": 1.46,
+    "rules": {
+     "hold": {
+      "rms": 30.483,
+      "p68": 32.606
+     },
+     "last slope": {
+      "rms": 17.815,
+      "p68": 19.546
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 19.282,
+      "p68": 23.843
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 21.187,
+      "p68": 25.801
+     },
+     "slope + parabola": {
+      "rms": 21.733,
+      "p68": 23.519
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 21.952,
+      "p68": 26.132
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 17.221,
+      "p68": 21.877
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 14.694,
+      "p68": 18.859
+     }
+    }
+   }
+  },
+  "1700-2025": {
+   "1": {
+    "launches": 326,
+    "sigma": 0.12,
+    "sigmaOverModelRms": 1.52,
+    "rules": {
+     "hold": {
+      "rms": 0.518,
+      "p68": 0.434
+     },
+     "last slope": {
+      "rms": 0.079,
+      "p68": 0.063
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.079,
+      "p68": 0.056
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.079,
+      "p68": 0.057
+     },
+     "slope + parabola": {
+      "rms": 0.079,
+      "p68": 0.062
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.081,
+      "p68": 0.055
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.079,
+      "p68": 0.057
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.078,
+      "p68": 0.058
+     }
+    }
+   },
+   "2": {
+    "launches": 325,
+    "sigma": 0.339,
+    "sigmaOverModelRms": 1.51,
+    "rules": {
+     "hold": {
+      "rms": 1.035,
+      "p68": 0.87
+     },
+     "last slope": {
+      "rms": 0.224,
+      "p68": 0.168
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.225,
+      "p68": 0.147
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.225,
+      "p68": 0.146
+     },
+     "slope + parabola": {
+      "rms": 0.224,
+      "p68": 0.167
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.232,
+      "p68": 0.156
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.223,
+      "p68": 0.154
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.222,
+      "p68": 0.161
+     }
+    }
+   },
+   "3": {
+    "launches": 324,
+    "sigma": 0.624,
+    "sigmaOverModelRms": 1.45,
+    "rules": {
+     "hold": {
+      "rms": 1.547,
+      "p68": 1.311
+     },
+     "last slope": {
+      "rms": 0.43,
+      "p68": 0.328
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.43,
+      "p68": 0.291
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.431,
+      "p68": 0.289
+     },
+     "slope + parabola": {
+      "rms": 0.431,
+      "p68": 0.319
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 0.446,
+      "p68": 0.301
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.426,
+      "p68": 0.3
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.424,
+      "p68": 0.31
+     }
+    }
+   },
+   "5": {
+    "launches": 322,
+    "sigma": 1.342,
+    "sigmaOverModelRms": 1.39,
+    "rules": {
+     "hold": {
+      "rms": 2.554,
+      "p68": 2.135
+     },
+     "last slope": {
+      "rms": 0.986,
+      "p68": 0.821
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 0.966,
+      "p68": 0.701
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 0.968,
+      "p68": 0.696
+     },
+     "slope + parabola": {
+      "rms": 0.989,
+      "p68": 0.773
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 1.004,
+      "p68": 0.731
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 0.957,
+      "p68": 0.71
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 0.956,
+      "p68": 0.727
+     }
+    }
+   },
+   "10": {
+    "launches": 317,
+    "sigma": 3.795,
+    "sigmaOverModelRms": 1.44,
+    "rules": {
+     "hold": {
+      "rms": 4.946,
+      "p68": 4.194
+     },
+     "last slope": {
+      "rms": 2.82,
+      "p68": 2.424
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 2.63,
+      "p68": 2.024
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 2.644,
+      "p68": 2.044
+     },
+     "slope + parabola": {
+      "rms": 2.828,
+      "p68": 2.278
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 2.745,
+      "p68": 2.005
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 2.608,
+      "p68": 2.098
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 2.624,
+      "p68": 2.177
+     }
+    }
+   },
+   "20": {
+    "launches": 307,
+    "sigma": 9.895,
+    "sigmaOverModelRms": 1.52,
+    "rules": {
+     "hold": {
+      "rms": 9.23,
+      "p68": 8.759
+     },
+     "last slope": {
+      "rms": 7.728,
+      "p68": 7.407
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 6.515,
+      "p68": 5.396
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 6.587,
+      "p68": 5.431
+     },
+     "slope + parabola": {
+      "rms": 7.774,
+      "p68": 7.209
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 6.742,
+      "p68": 5.55
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 6.498,
+      "p68": 5.402
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 6.627,
+      "p68": 5.853
+     }
+    }
+   },
+   "30": {
+    "launches": 297,
+    "sigma": 15.995,
+    "sigmaOverModelRms": 1.57,
+    "rules": {
+     "hold": {
+      "rms": 12.952,
+      "p68": 13.104
+     },
+     "last slope": {
+      "rms": 13.262,
+      "p68": 12.562
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 10.215,
+      "p68": 9.828
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 10.408,
+      "p68": 10.028
+     },
+     "slope + parabola": {
+      "rms": 13.404,
+      "p68": 13.026
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 10.49,
+      "p68": 9.462
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 10.225,
+      "p68": 9.676
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 10.52,
+      "p68": 9.798
+     }
+    }
+   },
+   "50": {
+    "launches": 277,
+    "sigma": 28.195,
+    "sigmaOverModelRms": 1.72,
+    "rules": {
+     "hold": {
+      "rms": 19.15,
+      "p68": 22.008
+     },
+     "last slope": {
+      "rms": 23.948,
+      "p68": 19.407
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 16.425,
+      "p68": 14.589
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 17.093,
+      "p68": 15.06
+     },
+     "slope + parabola": {
+      "rms": 24.228,
+      "p68": 22.832
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 16.711,
+      "p68": 15.048
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 16.439,
+      "p68": 14.082
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 16.921,
+      "p68": 13.848
+     }
+    }
+   },
+   "75": {
+    "launches": 252,
+    "sigma": 43.445,
+    "sigmaOverModelRms": 1.97,
+    "rules": {
+     "hold": {
+      "rms": 25.395,
+      "p68": 24.391
+     },
+     "last slope": {
+      "rms": 35.107,
+      "p68": 30.791
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 22.036,
+      "p68": 23.027
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 23.494,
+      "p68": 24.004
+     },
+     "slope + parabola": {
+      "rms": 36.13,
+      "p68": 36.921
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 22.403,
+      "p68": 25.406
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 21.921,
+      "p68": 19.778
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 22.259,
+      "p68": 20.282
+     }
+    }
+   },
+   "100": {
+    "launches": 227,
+    "sigma": 58.695,
+    "sigmaOverModelRms": 2.13,
+    "rules": {
+     "hold": {
+      "rms": 30.905,
+      "p68": 25.793
+     },
+     "last slope": {
+      "rms": 50.823,
+      "p68": 37.574
+     },
+     "damped \u03c4=15 + curve (model)": {
+      "rms": 27.604,
+      "p68": 26.704
+     },
+     "damped \u03c4=15, no curve": {
+      "rms": 29.705,
+      "p68": 26.052
+     },
+     "slope + parabola": {
+      "rms": 55.146,
+      "p68": 60.75
+     },
+     "damped \u03c4=10 + curve": {
+      "rms": 27.742,
+      "p68": 26.934
+     },
+     "damped \u03c4=20 + curve": {
+      "rms": 27.685,
+      "p68": 25.78
+     },
+     "damped \u03c4=30 + curve": {
+      "rms": 28.394,
+      "p68": 25.421
+     }
+    }
+   }
+  }
+ }
+}

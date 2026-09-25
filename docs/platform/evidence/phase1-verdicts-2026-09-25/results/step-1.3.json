@@ -1,0 +1,573 @@
+{
+ "step": "1.3",
+ "title": "True obliquity for angles and Placidus",
+ "rule": "Version 1, rule 1b: 3,128-case grid vs Swiss houses_ex: ASC p95 ≤ 3″, max ≤ 75″; vs the ERFA arbiter: max ≤ 8″, and ≤ 0.5″ for |lat| ≤ 45. The step also adds Swiss vectors at 63, 65 and 66° in both hemispheres with 5″ gates. Amendment A1 (adopted 2026-09-25) sets those gates to 5″ at 63° and 65° and 8″ at 66°, against Swiss from 1850-01-01 0h UT up to 2050-01-01 0h UT and against ERFA outside.",
+ "engine": "0.1.1-rc.7",
+ "verdict": {"asFirstWritten": "PARTIAL", "underA1": "PASS"},
+ "gates": [
+  {
+   "gate": "Against Swiss houses_ex: ASC p95 ≤ 3″",
+   "measured": 2.2185,
+   "measuredSiteQuantile": 2.2189,
+   "limit": 3,
+   "pass": true
+  },
+  {"gate": "Against Swiss houses_ex: ASC max ≤ 75″", "measured": 71.333, "limit": 75, "pass": true},
+  {"gate": "Against the ERFA arbiter: ASC max ≤ 8″", "measured": 6.3616, "limit": 8, "pass": true},
+  {
+   "gate": "Against the ERFA arbiter, |lat| ≤ 45: ASC max ≤ 0.5″",
+   "measured": 0.3587,
+   "limit": 0.5,
+   "pass": true
+  },
+  {"gate": "Added vectors at ±63, ±65 and ±66°: 5″ against Swiss", "exceeding": 45, "of": 816, "pass": false},
+  {
+   "gate": "Amendment A1: added vectors 5″ at 63° and 65°, 8″ at 66°; Swiss from 1850-01-01 0h UT up to 2050-01-01 0h UT, ERFA outside",
+   "exceeding": 0,
+   "of": 816,
+   "pass": true,
+   "amendment": "A1"
+  }
+ ],
+ "note": "Statistics only: counts, quantiles and a few named worst cases with the difference there. Swiss Ephemeris readings are not committed; provenance.json names each by SHA-256.",
+ "grid": {
+  "name": "A of corpora/angle-grid-inputs.json",
+  "cases": 3128,
+  "years": [1800, 1825, 1850, 1875, 1900, 1925, 1950, 1975, 2000, 2025, 2050, 2075, 2100, 2125, 2150, 2175, 2200],
+  "latitudes": [-66, -65, -63, -60, -55, -50, -45, -40, -30, -20, -10, 0, 10, 20, 30, 40, 45, 50, 55, 60, 63, 65, 66],
+  "hoursUtc": [0, 3, 6, 9, 12, 15, 18, 21],
+  "path": "site computeChart (src/lib/engine/full.ts) over @zodiacs/engine/internal computeChart; Placidus; time known",
+  "siteMinusPackageMismatches": 0
+ },
+ "swissReadings": {
+  "kept": 3128,
+  "discarded": 0,
+  "returnFlags": {"sun": [258], "moon": [258], "eclNut": [2]},
+  "housesArmcReproducesHousesExArcsec": 9.2e-10
+ },
+ "quantiles": "p50 and p95 as the audit computed them, v[floor(p (n - 1))]; *_site as scripts/angles-grid.test.mjs, v[floor(p n)]; arcseconds",
+ "againstSwiss": {
+  "what": "|engine - Swiss 2.10.03 houses_ex|, UT taken as UTC",
+  "asc": {"n": 3128, "p50": 0.2164, "p95": 2.2185, "max": 71.333, "p50_site": 0.2168, "p95_site": 2.2189},
+  "ascWorst": [
+   {"utc": "2050-03-21T18:00:00Z", "lat": -66, "value": 71.333},
+   {"utc": "2075-03-21T18:00:00Z", "lat": -66, "value": 67.2487},
+   {"utc": "2100-03-21T18:00:00Z", "lat": -66, "value": 63.6726}
+  ],
+  "ascByLatitude": {
+   "upTo45": {"n": 1496, "p50": 0.1934, "p95": 2.1458, "max": 3.8155, "p50_site": 0.1943, "p95_site": 2.1503},
+   "from50To60": {"n": 816, "p50": 0.2432, "p95": 2.1698, "max": 8.6641, "p50_site": 0.2476, "p95_site": 2.1785},
+   "from63": {"n": 816, "p50": 0.2168, "p95": 7.3529, "max": 71.333, "p50_site": 0.2188, "p95_site": 8.2732}
+  },
+  "ascInsideSwissSiderealWindow": {"n": 1472, "p50": 0.0735, "p95": 0.2623, "max": 6.3531, "p50_site": 0.0738, "p95_site": 0.2662},
+  "ascOutsideSwissSiderealWindow": {"n": 1656, "p50": 1.0961, "p95": 3.5521, "max": 71.333, "p50_site": 1.0966, "p95_site": 3.6764},
+  "mc": {"n": 3128, "p50": 0.1849, "p95": 1.9783, "max": 2.1613, "p50_site": 0.1855, "p95_site": 1.9783},
+  "mcWorst": [
+   {"utc": "2050-03-21T12:00:00Z", "lat": 0, "value": 2.1613}
+  ],
+  "placidusCuspsAll12": {"n": 3128, "p50": 0.3522, "p95": 3.5223, "max": 71.333, "p50_site": 0.3522, "p95_site": 3.5266},
+  "placidusIntermediateCusps": {"n": 3128, "p50": 0.2753, "p95": 2.8266, "max": 5.5291, "p50_site": 0.2775, "p95_site": 2.8337},
+  "swissMinusErfa": {
+   "asc": {"n": 3128, "p50": 0.1909, "p95": 2.0969, "max": 68.1627, "p50_site": 0.1919, "p95_site": 2.1036},
+   "ramcInsideWindow": {"n": 1472, "p50": 0.0006, "p95": 0.0012, "max": 0.0014, "p50_site": 0.0006, "p95_site": 0.0012},
+   "ramcOutsideWindow": {"n": 1656, "p50": 1.4285, "p95": 1.9083, "max": 1.9083, "p50_site": 1.4285, "p95_site": 1.9083},
+   "trueObliquity": {"n": 3128, "p50": 0.0004, "p95": 0.0008, "max": 0.0008, "p50_site": 0.0004, "p95_site": 0.0008}
+  }
+ },
+ "againstErfa": {
+  "what": "|engine - the committed ERFA arbiter| (corpora/angle-grid-erfa.json, rebuilt byte for byte from its tools)",
+  "asc": {"n": 3128, "p50": 0.0647, "p95": 0.2404, "max": 6.3616, "p50_site": 0.0647, "p95_site": 0.2404},
+  "ascWorst": [
+   {"utc": "2025-03-21T18:00:00Z", "lat": -66, "value": 6.3616},
+   {"utc": "2150-03-21T18:00:00Z", "lat": -66, "value": 4.8625},
+   {"utc": "2025-03-21T06:00:00Z", "lat": 66, "value": 4.5152}
+  ],
+  "ascUpTo45": {"n": 1496, "p50": 0.0722, "p95": 0.1751, "max": 0.3587, "p50_site": 0.0722, "p95_site": 0.1756},
+  "ascUpTo45Worst": [
+   {"utc": "2025-03-21T18:00:00Z", "lat": -45, "value": 0.3587}
+  ],
+  "mc": {"n": 3128, "p50": 0.0759, "p95": 0.1714, "max": 0.2008, "p50_site": 0.0765, "p95_site": 0.1714},
+  "mcWorst": [
+   {"utc": "2025-03-21T12:00:00Z", "lat": 0, "value": 0.2008}
+  ],
+  "ascFormulaOnEngineInputsMaxArcsec": 5.5e-9,
+  "engineInputsMinusErfa": {
+   "ramc": {"n": 3128, "p50": 0.0745, "p95": 0.1788, "max": 0.1877, "p50_site": 0.0748, "p95_site": 0.1788},
+   "trueObliquity": {"n": 3128, "p50": 0.0143, "p95": 0.028, "max": 0.0297, "p50_site": 0.0147, "p95_site": 0.028},
+   "nutationInLongitude": {"n": 3128, "p50": 0.0789, "p95": 0.1948, "max": 0.2044, "p50_site": 0.0792, "p95_site": 0.1948},
+   "nutationInObliquity": {"n": 3128, "p50": 0.0143, "p95": 0.028, "max": 0.0297, "p50_site": 0.0147, "p95_site": 0.028},
+   "equationOfEquinoxesComplementaryTerms": {"n": 3128, "p50": 0.0017, "p95": 0.0026, "max": 0.0026, "p50_site": 0.0017, "p95_site": 0.0026},
+   "gmst": {"n": 3128, "p50": 0, "p95": 0, "max": 0, "p50_site": 0, "p95_site": 0},
+   "meanObliquity": {"n": 3128, "p50": 0, "p95": 0, "max": 0, "p50_site": 0, "p95_site": 0}
+  },
+  "arbiterRebuild": {"byteIdentical": true, "sha256": "5d471b247c371106f473da4f90c53a283d9d64da614ec60a8bb899dbf617c5dd"}
+ },
+ "addedVectors": {
+  "what": "grid A's cases at ±63, ±65 and ±66° (17 epochs × 8 hours × 6 latitudes), and the 1800/1950/2200 subset the ledger named",
+  "gridA": {
+   "cases": 816,
+   "maxAbs": {"engineMinusSwiss": 71.333, "engineMinusErfa": 6.362, "swissMinusErfa": 68.163},
+   "byLatitude": {
+    "63": {
+     "engVsSwiss_inside": 1.343,
+     "engVsSwiss_outside": 14.425,
+     "engVsErfa_inside": 1.344,
+     "engVsErfa_outside": 1.081,
+     "swissVsErfa_inside": 0.007,
+     "swissVsErfa_outside": 13.862,
+     "mcEngVsSwiss": 2.161,
+     "cuspsEngVsSwiss_inside": 0.46,
+     "cuspsEngVsSwiss_outside": 4.418
+    },
+    "65": {
+     "engVsSwiss_inside": 2.769,
+     "engVsSwiss_outside": 30.101,
+     "engVsErfa_inside": 2.771,
+     "engVsErfa_outside": 2.229,
+     "swissVsErfa_inside": 0.012,
+     "swissVsErfa_outside": 28.887,
+     "mcEngVsSwiss": 2.161,
+     "cuspsEngVsSwiss_inside": 0.535,
+     "cuspsEngVsSwiss_outside": 5.019
+    },
+    "66": {
+     "engVsSwiss_inside": 6.353,
+     "engVsSwiss_outside": 71.333,
+     "engVsErfa_inside": 6.362,
+     "engVsErfa_outside": 4.862,
+     "swissVsErfa_inside": 0.029,
+     "swissVsErfa_outside": 68.163,
+     "mcEngVsSwiss": 2.161,
+     "cuspsEngVsSwiss_inside": 0.601,
+     "cuspsEngVsSwiss_outside": 5.529
+    }
+   },
+   "gates": {
+    "asFirstWritten": {
+     "what": "As first written: 5″ against Swiss at every vector.",
+     "cases": 816,
+     "exceeding": 45,
+     "perLatitude": {
+      "63": {"n": 136, "maxVsOracle": 14.29, "gate": 5, "exceed": 6},
+      "65": {"n": 136, "maxVsOracle": 28.727, "gate": 5, "exceed": 8},
+      "66": {"n": 136, "maxVsOracle": 53.904, "gate": 5, "exceed": 8},
+      "-66": {"n": 136, "maxVsOracle": 71.333, "gate": 5, "exceed": 9},
+      "-65": {"n": 136, "maxVsOracle": 30.101, "gate": 5, "exceed": 8},
+      "-63": {"n": 136, "maxVsOracle": 14.425, "gate": 5, "exceed": 6}
+     },
+     "exceedingByGroup": [
+      {
+       "latitude": "±63",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 12,
+       "years": [2050, 2075, 2100, 2125, 2150, 2175],
+       "engineMinusSwissAbs": [8.403, 14.425],
+       "engineMinusErfaAbsMax": 1.081,
+       "swissMinusErfaAbs": [7.878, 13.862]
+      },
+      {
+       "latitude": "±65",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 16,
+       "years": [1800, 2050, 2075, 2100, 2125, 2150, 2175, 2200],
+       "engineMinusSwissAbs": [5.221, 30.101],
+       "engineMinusErfaAbsMax": 2.229,
+       "swissMinusErfaAbs": [4.835, 28.887]
+      },
+      {
+       "latitude": "±66",
+       "swissSiderealTime": "inside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 1,
+       "years": [2025],
+       "engineMinusSwissAbs": [6.353, 6.353],
+       "engineMinusErfaAbsMax": 6.362,
+       "swissMinusErfaAbs": [0.009, 0.009]
+      },
+      {
+       "latitude": "±66",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 16,
+       "years": [1800, 2050, 2075, 2100, 2125, 2150, 2175, 2200],
+       "engineMinusSwissAbs": [7.353, 71.333],
+       "engineMinusErfaAbsMax": 4.862,
+       "swissMinusErfaAbs": [6.895, 68.163]
+      }
+     ]
+    },
+    "underA1": {
+     "what": "A1 as adopted: 5″ at 63° and 65°, 8″ at 66°; against Swiss from 1850-01-01 0h UT up to 2050-01-01 0h UT, against ERFA outside.",
+     "cases": 816,
+     "exceeding": 0,
+     "perLatitude": {
+      "63": {"n": 136, "maxVsOracle": 1.282, "gate": 5, "exceed": 0},
+      "65": {"n": 136, "maxVsOracle": 2.531, "gate": 5, "exceed": 0},
+      "66": {"n": 136, "maxVsOracle": 4.498, "gate": 8, "exceed": 0},
+      "-66": {"n": 136, "maxVsOracle": 6.353, "gate": 8, "exceed": 0},
+      "-65": {"n": 136, "maxVsOracle": 2.769, "gate": 5, "exceed": 0},
+      "-63": {"n": 136, "maxVsOracle": 1.343, "gate": 5, "exceed": 0}
+     },
+     "exceedingByGroup": []
+    },
+    "A1AtSixtySixOnly": {
+     "what": "A1's gates, with ERFA replacing Swiss outside the window at 66° only.",
+     "cases": 816,
+     "exceeding": 28,
+     "perLatitude": {
+      "63": {"n": 136, "maxVsOracle": 14.29, "gate": 5, "exceed": 6},
+      "65": {"n": 136, "maxVsOracle": 28.727, "gate": 5, "exceed": 8},
+      "66": {"n": 136, "maxVsOracle": 4.498, "gate": 8, "exceed": 0},
+      "-66": {"n": 136, "maxVsOracle": 6.353, "gate": 8, "exceed": 0},
+      "-65": {"n": 136, "maxVsOracle": 30.101, "gate": 5, "exceed": 8},
+      "-63": {"n": 136, "maxVsOracle": 14.425, "gate": 5, "exceed": 6}
+     },
+     "exceedingByGroup": [
+      {
+       "latitude": "±63",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 12,
+       "years": [2050, 2075, 2100, 2125, 2150, 2175],
+       "engineMinusSwissAbs": [8.403, 14.425],
+       "engineMinusErfaAbsMax": 1.081,
+       "swissMinusErfaAbs": [7.878, 13.862]
+      },
+      {
+       "latitude": "±65",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 16,
+       "years": [1800, 2050, 2075, 2100, 2125, 2150, 2175, 2200],
+       "engineMinusSwissAbs": [5.221, 30.101],
+       "engineMinusErfaAbsMax": 2.229,
+       "swissMinusErfaAbs": [4.835, 28.887]
+      }
+     ]
+    },
+    "erfaEverywhere5": {
+     "what": "ERFA at every vector, 5″.",
+     "cases": 816,
+     "exceeding": 1,
+     "perLatitude": {
+      "63": {"n": 136, "maxVsOracle": 1.284, "gate": 5, "exceed": 0},
+      "65": {"n": 136, "maxVsOracle": 2.536, "gate": 5, "exceed": 0},
+      "66": {"n": 136, "maxVsOracle": 4.515, "gate": 5, "exceed": 0},
+      "-66": {"n": 136, "maxVsOracle": 6.362, "gate": 5, "exceed": 1},
+      "-65": {"n": 136, "maxVsOracle": 2.771, "gate": 5, "exceed": 0},
+      "-63": {"n": 136, "maxVsOracle": 1.344, "gate": 5, "exceed": 0}
+     },
+     "exceedingByGroup": [
+      {
+       "latitude": "±66",
+       "swissSiderealTime": "inside 1850-01-01..2050-01-01",
+       "judgedAgainst": "ERFA",
+       "gateArcsec": 5,
+       "cases": 1,
+       "years": [2025],
+       "engineMinusSwissAbs": [6.353, 6.353],
+       "engineMinusErfaAbsMax": 6.362,
+       "swissMinusErfaAbs": [0.009, 0.009]
+      }
+     ]
+    },
+    "erfaEverywhereA1Gates": {
+     "what": "ERFA at every vector, A1's gates.",
+     "cases": 816,
+     "exceeding": 0,
+     "perLatitude": {
+      "63": {"n": 136, "maxVsOracle": 1.284, "gate": 5, "exceed": 0},
+      "65": {"n": 136, "maxVsOracle": 2.536, "gate": 5, "exceed": 0},
+      "66": {"n": 136, "maxVsOracle": 4.515, "gate": 8, "exceed": 0},
+      "-66": {"n": 136, "maxVsOracle": 6.362, "gate": 8, "exceed": 0},
+      "-65": {"n": 136, "maxVsOracle": 2.771, "gate": 5, "exceed": 0},
+      "-63": {"n": 136, "maxVsOracle": 1.344, "gate": 5, "exceed": 0}
+     },
+     "exceedingByGroup": []
+    }
+   }
+  },
+  "insideWindowCase": [
+   {
+    "utc": "2025-03-21T18:00:00Z",
+    "lat": -66,
+    "engineMinusSwiss": 6.353,
+    "engineMinusErfa": 6.362,
+    "swissMinusErfa": 0.009,
+    "ascGainPerArcsecOfRamc": 36.93,
+    "ascGainPerArcsecOfObliquity": -32.51,
+    "engineMinusErfaInputs": {
+     "ramc": 0.1868,
+     "trueObliquity": 0.0165,
+     "ascFromRamc": 6.899,
+     "ascFromObliquity": -0.537,
+     "nutationInLongitude": 0.2035,
+     "nutationInObliquity": 0.0165,
+     "equationOfEquinoxesComplementaryTerms": -0.00013,
+     "gmst": 0
+    },
+    "swissMinusErfaInputs": {
+     "ramc": 0.0001,
+     "trueObliquity": -0.0002,
+     "ascFromRamc": 0.002,
+     "ascFromObliquity": 0.006,
+     "ramcFromTheClocks": -0.00001
+    },
+    "mc": {"engineMinusSwiss": 0.171, "engineMinusErfa": 0.171},
+    "intermediateCuspsEngineMinusSwissMax": 0.474
+   }
+  ],
+  "ledgerYears": {
+   "cases": 144,
+   "maxAbs": {"engineMinusSwiss": 18.053, "engineMinusErfa": 2.344, "swissMinusErfa": 19.991},
+   "gates": {
+    "asFirstWritten": {
+     "cases": 144,
+     "exceeding": 8,
+     "exceedingByGroup": [
+      {
+       "latitude": "±65",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 4,
+       "years": [1800, 2200],
+       "engineMinusSwissAbs": [5.221, 8.89],
+       "engineMinusErfaAbsMax": 1,
+       "swissMinusErfaAbs": [4.835, 9.891]
+      },
+      {
+       "latitude": "±66",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 4,
+       "years": [1800, 2200],
+       "engineMinusSwissAbs": [7.353, 18.053],
+       "engineMinusErfaAbsMax": 1.938,
+       "swissMinusErfaAbs": [6.895, 19.991]
+      }
+     ]
+    },
+    "underA1": {"cases": 144, "exceeding": 0, "exceedingByGroup": []},
+    "A1AtSixtySixOnly": {
+     "cases": 144,
+     "exceeding": 4,
+     "exceedingByGroup": [
+      {
+       "latitude": "±65",
+       "swissSiderealTime": "outside 1850-01-01..2050-01-01",
+       "judgedAgainst": "Swiss",
+       "gateArcsec": 5,
+       "cases": 4,
+       "years": [1800, 2200],
+       "engineMinusSwissAbs": [5.221, 8.89],
+       "engineMinusErfaAbsMax": 1,
+       "swissMinusErfaAbs": [4.835, 9.891]
+      }
+     ]
+    },
+    "erfaEverywhere5": {"cases": 144, "exceeding": 0, "exceedingByGroup": []},
+    "erfaEverywhereA1Gates": {"cases": 144, "exceeding": 0, "exceedingByGroup": []}
+   }
+  },
+  "mcAndIntermediateCusps": {
+   "n": 816,
+   "intermediateCusps": {
+    "over5VsSwiss": 13,
+    "over5VsSwissInsideWindow": 0,
+    "over5VsErfaCusps": 0,
+    "maxVsSwissInsideWindow": 0.601,
+    "maxVsSwissOutsideWindow": 5.529,
+    "maxVsErfaCusps": 0.601
+   },
+   "mc": {"over5VsSwiss": 0, "maxVsSwiss": 2.161}
+  }
+ },
+ "byEpoch": {
+  "1800": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [0.3532, 0.3533],
+   "engineMinusErfaRamc": [-0.0325, -0.0229],
+   "swissMinusErfaTrueObliquity": [0.0003, 0.00036],
+   "engineMinusErfaTrueObliquity": [-0.0076, -0.0003]
+  },
+  "1825": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [0.2524, 0.2529],
+   "engineMinusErfaRamc": [0.0827, 0.0841],
+   "swissMinusErfaTrueObliquity": [0.00041, 0.00049],
+   "engineMinusErfaTrueObliquity": [0.0005, 0.0025]
+  },
+  "1850": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0006, -0.0006],
+   "engineMinusErfaRamc": [0.1232, 0.1307],
+   "swissMinusErfaTrueObliquity": [0.00024, 0.00028],
+   "engineMinusErfaTrueObliquity": [-0.0191, -0.0093]
+  },
+  "1875": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0002, -0.0001],
+   "engineMinusErfaRamc": [0.0229, 0.0389],
+   "swissMinusErfaTrueObliquity": [0.00021, 0.00022],
+   "engineMinusErfaTrueObliquity": [-0.0174, -0.0137]
+  },
+  "1900": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0004, -0.0003],
+   "engineMinusErfaRamc": [0.104, 0.1185],
+   "swissMinusErfaTrueObliquity": [0.00011, 0.00016],
+   "engineMinusErfaTrueObliquity": [-0.0173, -0.0156]
+  },
+  "1925": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0009, -0.0006],
+   "engineMinusErfaRamc": [0.0494, 0.064],
+   "swissMinusErfaTrueObliquity": [-0.00027, -0.00022],
+   "engineMinusErfaTrueObliquity": [0.0007, 0.0013]
+  },
+  "1950": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.001, -0.0008],
+   "engineMinusErfaRamc": [0.0771, 0.0921],
+   "swissMinusErfaTrueObliquity": [-0.00027, -0.00024],
+   "engineMinusErfaTrueObliquity": [-0.0086, -0.0065]
+  },
+  "1975": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0014, -0.001],
+   "engineMinusErfaRamc": [0.1161, 0.125],
+   "swissMinusErfaTrueObliquity": [-0.00052, -0.00043],
+   "engineMinusErfaTrueObliquity": [-0.0179, -0.0147]
+  },
+  "2000": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [-0.0008, -0.0004],
+   "engineMinusErfaRamc": [0.0124, 0.0167],
+   "swissMinusErfaTrueObliquity": [-0.00019, -0.00008],
+   "engineMinusErfaTrueObliquity": [-0.0052, -0.0046]
+  },
+  "2025": {
+   "insideSwissSiderealWindow": true,
+   "swissMinusErfaRamc": [0, 0.0002],
+   "engineMinusErfaRamc": [0.1766, 0.1877],
+   "swissMinusErfaTrueObliquity": [-0.0003, -0.00017],
+   "engineMinusErfaTrueObliquity": [0.0078, 0.018]
+  },
+  "2050": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.9083, -1.9082],
+   "engineMinusErfaRamc": [0.074, 0.0756],
+   "swissMinusErfaTrueObliquity": [-0.00084, -0.00071],
+   "engineMinusErfaTrueObliquity": [-0.0182, -0.0129]
+  },
+  "2075": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.8803, -1.88],
+   "engineMinusErfaRamc": [0.0271, 0.045],
+   "swissMinusErfaTrueObliquity": [-0.00067, -0.00066],
+   "engineMinusErfaTrueObliquity": [-0.0231, -0.02]
+  },
+  "2100": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.7934, -1.7928],
+   "engineMinusErfaRamc": [0.1219, 0.1541],
+   "swissMinusErfaTrueObliquity": [-0.00076, -0.00063],
+   "engineMinusErfaTrueObliquity": [0.0254, 0.0294]
+  },
+  "2125": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.6443, -1.6442],
+   "engineMinusErfaRamc": [0.0135, 0.0425],
+   "swissMinusErfaTrueObliquity": [-0.00047, -0.00033],
+   "engineMinusErfaTrueObliquity": [0.0175, 0.027]
+  },
+  "2150": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.4287, -1.4284],
+   "engineMinusErfaRamc": [0.129, 0.1514],
+   "swissMinusErfaTrueObliquity": [-0.00047, -0.00041],
+   "engineMinusErfaTrueObliquity": [-0.0151, -0.0026]
+  },
+  "2175": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-1.1089, -1.1082],
+   "engineMinusErfaRamc": [0.0639, 0.0728],
+   "swissMinusErfaTrueObliquity": [-0.00062, -0.00033],
+   "engineMinusErfaTrueObliquity": [-0.0297, -0.0206]
+  },
+  "2200": {
+   "insideSwissSiderealWindow": false,
+   "swissMinusErfaRamc": [-0.6808, -0.6802],
+   "engineMinusErfaRamc": [-0.0705, -0.0654],
+   "swissMinusErfaTrueObliquity": [-0.00055, -0.00049],
+   "engineMinusErfaTrueObliquity": [-0.0052, 0.0084]
+  }
+ },
+ "swissSiderealTimeSwitch": {
+  "what": "jump in swe.sidtime minus ERFA gst06a (UT1 taken as UTC, Swiss ΔT for TT) across each switch, arcseconds of RA",
+  "at18500101": -0.09728,
+  "at20500101": -1.90797
+ },
+ "placidusCuspsEndToEnd": {
+  "engineMinusSwissAsc": 71.333,
+  "engineMinusSwissIntermediate": 5.529,
+  "engineMinusErfaInputsAsc": 6.362,
+  "engineMinusErfaInputsIntermediate": 0.601,
+  "swissMinusErfaInputsAsc": 68.163,
+  "swissMinusErfaInputsIntermediate": 5.33
+ },
+ "ascGainsByLatitude": {
+  "0": {"n": 136, "maxGainRamc": 1.1, "maxGainEps": 0.2},
+  "10": {"n": 272, "maxGainRamc": 1.2, "maxGainEps": 0.4},
+  "20": {"n": 272, "maxGainRamc": 1.3, "maxGainEps": 0.6},
+  "30": {"n": 272, "maxGainRamc": 1.5, "maxGainEps": 0.8},
+  "40": {"n": 272, "maxGainRamc": 1.7, "maxGainEps": 1.2},
+  "45": {"n": 272, "maxGainRamc": 1.9, "maxGainEps": 1.5},
+  "50": {"n": 272, "maxGainRamc": 2.3, "maxGainEps": 1.9},
+  "55": {"n": 272, "maxGainRamc": 2.9, "maxGainEps": 2.3},
+  "60": {"n": 272, "maxGainRamc": 4.4, "maxGainEps": 2.7},
+  "63": {"n": 272, "maxGainRamc": 7.3, "maxGainEps": 3.6},
+  "65": {"n": 272, "maxGainRamc": 15.3, "maxGainEps": 15},
+  "66": {"n": 272, "maxGainRamc": 37.7, "maxGainEps": 54}
+ },
+ "rc6Control": {
+  "what": "the vendored rc.6 on the same Swiss readings: the preregistered baseline",
+  "ascAgainstSwiss": {"n": 3128, "p50": 2.409, "p95": 22.406, "max": 512.529},
+  "ascWorst": {"utc": "2100-03-21T06:00:00Z", "lat": 66, "value": 512.529},
+  "mcAgainstSwiss": {"n": 3128, "p50": 0.951, "p95": 2.999, "max": 3.941}
+ },
+ "javascriptRecount": {"agreesWithPython": true},
+ "siteTest": {
+  "file": "scripts/angles-grid.test.mjs",
+  "passed": 5,
+  "of": 5,
+  "tests": [
+   {
+    "test": "the angles against the ERFA arbiter (rule 1b) > runs on the preregistered corpus, and the arbiter on the same one",
+    "pass": true
+   },
+   {
+    "test": "the angles against the ERFA arbiter (rule 1b) > keeps the ascendant within 8″ of the arbiter everywhere and 0.5″ within 45° of the equator",
+    "pass": true
+   },
+   {
+    "test": "the angles against the ERFA arbiter (rule 1b) > keeps the midheaven within 0.21″ of the arbiter",
+    "pass": true
+   },
+   {
+    "test": "the angles against the ERFA arbiter (rule 1b) > agrees with the arbiter's formula on the engine's own sidereal time and true obliquity",
+    "pass": true
+   }
+  ]
+ }
+}
