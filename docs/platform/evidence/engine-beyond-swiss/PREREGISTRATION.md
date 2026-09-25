@@ -421,6 +421,136 @@ seen.
   is the engine's five-term Δψ (+0.2035″ at 2025-03-21T18Z) times the
   ascendant's gain of 36.9; it goes with the nutation model, which M2
   replaces.
+- **A2, adopted (rule 1c, 2026-09-25).** On 2026-09-25 the owner delegated
+  the pending decisions: "stop asking me for permissions, just get it done".
+  On that basis A2 is adopted as below. The proposal of 2026-09-23 above
+  stays as written. The model is fixed here and in
+  `../deltat-2026-09-25/README.md` before any engine code; the reference
+  implementation is `../deltat-2026-09-25/tools/deltat-reference.ts` (sha256
+  `3dea107e…`), and the engine's `src/deltat.ts` is that file.
+  - *Model "zodiacs-deltat/1".* ΔT = TT − UT1 in seconds, the instant read as
+    UT1. Before −720, the integral of Stephenson, Morrison & Hohenkerk 2016
+    (SMH) eq. (5.1), lod = 1.78t − 4.0 sin(2πt/15) ms. From −720 to 1941,
+    SMH's Table S15 as its C2 spline through 32 knots. From 1941, whole-year
+    knots: USNO `historic_deltat.data` to 1961, IERS 20 C04 to 1972, IERS
+    finals2000A rows flagged I after, then a knot at the last observed day
+    and four knots from Bulletin A's predictions to the last predicted day.
+    After that, the prediction window's slope damped with τ = 15 years plus
+    the curvature of the eq. (5.1) curve. This release's table: IERS files of
+    2026-09-24, digest `6371988c510a1c6c`, last predicted day 2027-10-02.
+  - *Band.* After the last observed day σ depends only on h, the years since
+    then: 0.03 + 0.09·h^0.75 s to one year, 0.12·h^1.5 s to ten, then 0.61 s
+    a year more (0.61·h − 2.3052668 s); continuous and never decreasing.
+    0.61 s a year is the smallest slope, in steps of 0.01, for which σ is at
+    least the p68 error of the extrapolation rule's hindcast (README,
+    section 4) at every whole-year horizon from 20 to 100 years; the
+    42-year horizon for launches 1851–2025 needs 0.6028. Observed: 0.03 s.
+    From 1620 to 1956, at least the largest of three measured indicators:
+    0.46 s (Table S15 against IERS, RMS over 1962–1971), SMH's own
+    occultation data about the curve, and the authors' 2016-to-2020
+    revision; before 1620, at least the revision and 0.6·t² s (SMH eq. 4.1,
+    32.5 ± 0.6 s/cy²). Before 1620 σ is an estimate, not a calibrated 1-σ.
+  - *Sources.* Only CC BY 4.0 and public data ship: SMH 2016 and its
+    electronic supplement (PMC5247521), USNO (US Government work) and IERS
+    (free with citation). The 2020 addendum's Table S15.2020 has no
+    established licence and is used only to measure the revision: 0.423 s at
+    most over 1800–1900, none over 1900–1941, 184.9 s near 962. HMNAO's web
+    pages are not used. Rule 1c's "IERS/USNO table 1620–present" is read as
+    SMH 2016 (which covers 1620) to 1941, USNO to 1961 and IERS after, since
+    USNO's older reduction differs from SMH 2016 by an RMS of 6.4 s over
+    1700–1800. Rule 1c's "DE440 tidal acceleration" is not applied: no
+    primary source states DE440's value (Park et al. 2021 give it as implicit
+    in the integration), and SMH say their values go with DE430 or
+    −25.82″/cy², which is kept.
+  - *Refresh.* Rule 1c's "weekly refresh via the existing cron" becomes:
+    the table lives only in the engine package; it is refreshed at every
+    engine release and at least once a year, with the yearly sky-data
+    refresh, and reaches the site as an engine release through a normal pull
+    request with full CI. A weekly workflow monitors it and commits nothing.
+    It fetches finals2000A (USNO, with the IERS data centre as mirror) and
+    opens or updates one issue when |ΔT_model − ΔT_IERS| on the run date at
+    0h UTC exceeds max(0.1 s, σ_model) there, or when the table's last
+    predicted day is fewer than 90 days away, or when the fetch or its
+    validation fails. Replayed over the 89 weekly Bulletin A issues from
+    2025-01-09 to 2026-09-17, with the table refreshed each January it would
+    have fired on 13 runs (12 for the 90-day window, 1 for the value), and
+    the largest |model − IERS| on a run date was 0.1055 s (2026-09-18).
+    Weekly table commits were rejected. A weekly table would have changed ΔT
+    in the site's 2026–2030 event span by 1 ms or more in 81 of the 89 weeks
+    (median largest change 0.0115 s, largest 0.0772 s). The site's generated
+    data hold those instants to the millisecond, and the prebuild matches
+    them exactly (`verify-events-publication.ts`,
+    `verify-horoscope-program.ts`, the fixed goldens of
+    `replay-daily-publication.ts`), as do
+    `phase1-acceptance-evidence.test.mjs` (its hash covers two transit
+    files) and `daily-snapshot-lib.test.mjs`. `publish-through-pr.sh` merges
+    before it dispatches Site Check. Each weekly change would have
+    regenerated published data or broken the build after merge.
+  - *Receipts.* The rc.8 conventions set adds `deltaT`; rc.7's set is frozen
+    as `CONVENTIONS_RC7`; sets match on exact key sets; rc.3's set is read
+    only from engines rc.3 to rc.6, rc.7's only from rc.7, the rc.8 set only
+    from rc.8 on. `result.deltaT` is `{seconds, sigma, model, table,
+    tableDigest, segment}`: model `zodiacs-deltat/1` with the table's version
+    and digest, or `pinned` for a caller's value (`ChartInput.deltaT`,
+    `BirthInput.deltaT`, finite) with sigma, table and tableDigest null;
+    |seconds| and σ at most 1e10 s. The table is deep-frozen. A receipt made
+    with this engine's table must carry the model's value at its instant; a
+    value from another release's table is a claim. A replay pins ΔT only
+    when the receipt records a caller's pin, which was part of the request;
+    a modelled value is not pinned, so a replay on the same engine version is
+    exact, and one across versions is a different calculation, as now.
+  - *Budget.* The model is inline in the eager engine chunk, with no build
+    transform of astronomy-engine. Measured on a copy of the site: 25,997 B
+    gzipped with the model on engine b457204, 24,519 B without it, 24,253 B
+    for rc.7; the model and its wiring cost 1,478 B. The `engine-chunk`
+    budget in `budgets.json` goes from 25 KB to 26 KB (26,624 B), which
+    leaves 627 B. No route budget changes.
+  - *Gates, restated.* Gate 1: |ΔT − IERS| ≤ 0.2 s at 1962-03-15,
+    1969-09-15, 1977-03-15, 1984-09-15, 1992-03-15, 1999-09-15, 2007-03-15,
+    2014-09-15, 2017-08-21, 2020-01-01, 2024-04-08 and 2026-09-22, 0h UTC,
+    with IERS values from 20 C04 through 1973-01-01 and finals2000A I rows
+    after (`../deltat-2026-09-25/iers-12.json`); and M3's band rule, σ at
+    least the IERS formal error on every observed and predicted row from
+    1962. Gate 2: the receipt carries the model, the value, the band, the
+    table and its digest, and the engine's and the site's receipt tests
+    pass. Gate 3, all against Swiss 2.10.03 (`sepl_18.se1`, `semo_18.se1`)
+    as an instrument, the returned flag read on every call, statistics only;
+    gap = p50 of |engine − Swiss| at the same UT minus p50 at the engine's
+    TT, p50 the ⌊n/2⌋-th sorted value: (a) on the §5 corpus's 18 MEASURE
+    cases |gap| ≤ 0.3″; (b) on the multi-year fixture, |gap| ≤ 0.3″ in each
+    of 1800–1849, 1850–1899, 1900–1949, 1950–1999 and 2000–2026; (c) in each
+    of those eras the paired clock contribution, per instant |(engine −
+    Swiss(UT)) − (engine − Swiss(TT))|, has p95 ≤ 0.3″. After 2026 the gaps
+    are reported without a gate; both clocks are extrapolations there.
+    Before 1962, gate 3 mostly checks that the engine and Swiss use the same
+    reconstruction, both Table S15 of 2016. It does not check accuracy: both
+    sides take ΔT from that table, and from 1800 to 1961 Swiss's ΔT is within
+    0.29 s of the model (RMS 0.10 s), so the gate would pass just as well if
+    the table were wrong. Accuracy before 1956 is what σ states, and nothing
+    independent measures it; from 1962 it is gate 1's job.
+  - *Holdout.* `zodiacs-holdout/1.4` is drawn by the rule in "Fresh
+    holdouts" after the code commit, in the order fixed in
+    `../deltat-2026-09-25/tools/holdout.ts`, and opened once. Its positions
+    are scored per era up to 2026 with the paired p95 ≤ 0.3″ (the p50 gap
+    reported), and with gate 1 at its instants from 1962-01-01 to the last
+    observed IERS day. Its events part runs: 50 events drawn from the
+    regenerated 2026–2035 catalog, each event's shift from rc.7 and its
+    difference from Swiss reported per event class, without a gate. Its time
+    part does not apply to this step.
+  - *Said before the result.* On the reference implementation the gates
+    read: gate 1 at most 0.0306 s (rc.7 6.302 s); every IERS day since 1962
+    within 0.0834 s; gate 3 (a) +0.022″ (rc.7 +0.314″), (b) −0.070, −0.022,
+    −0.009, +0.006 and −0.009″ (rc.7 −1.891, −1.028, −0.166, −0.003,
+    +0.178″), (c) 0.103, 0.044, 0.119, 0.118 and 0.100″ (rc.7 2.838, 1.671,
+    0.609, 0.075, 3.233″). Worse: without rc.7's ΔT error partly offsetting
+    the analytic Moon's own error, the production-path Moon against Swiss at
+    the same UT goes from a p50 of 2.808″ to 3.708″ over 1800–1954, and
+    against Horizons before 1962 from 1.914″ to 2.443″ (9 instants), until
+    M2. Better: 0.714″ to 0.527″ against Swiss over 2000–2026, and 2.642″ to
+    0.671″ over 2000–2049. Today's Moon moves back 3.41″ and new and full
+    moons of 2026–2030 come 5.93 to 8.49 s later than with rc.7. ΔT at 2100
+    becomes 78.93 ± 42.39 s, where rc.7 gives 202.65 s. The verdicts are
+    recorded on the vendored rc.8, beside the NOT RUN above.
 - **A3, adopted.** Rule 1g's Moon gate is ≤ 1.5″ a day at perigee and
   apogee, and the speed is "the derivative of the reported longitude" in
   place of "state vectors"; version 2's Phase 1 table reads the same way.
@@ -434,7 +564,14 @@ seen.
   kernel (its light-time path steps the apparent longitude by about 0.7
   mas), so the instrument is good to about 0.2″ a day here. The gate returns
   to 1″ a day or tighter when the DE backend replaces the analytic Moon.
-- **A4, adopted.** Rule 1d's 2 s gate runs again once step 1.4 lands, and
-  the result is recorded as a second verdict beside the FAIL above.
-- **A2** is adopted with step 1.4's model, written below before any of its
-  code.
+- **A4, adopted (rule 1d, 2026-09-25).** Adopted on the same delegation.
+  The FAIL above stands. When step 1.4 has landed, the same 2 s gate is run
+  again with the same denominator, all 124 committed lunations of 2026–2030
+  against Swiss 2.10.03 with
+  `../events-vs-swiss-2026-09-23/tools/compare.py` on the regenerated
+  catalog, statistics only, and recorded as a new verdict beside it. The
+  Swiss-free projection, the committed deltas plus each lunation's shift
+  (`../deltat-2026-09-25/tools/lunations-a4.mjs`), must agree with it to
+  1 ms. Said before the result: the projection gives 80 of 124 within 2 s,
+  largest 5.15 s (the new moon of 2030-05-02), against 1 of 124 now; the
+  expected verdict is FAIL, on the Moon's geometry, which is M2's work.

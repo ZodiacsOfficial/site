@@ -1,0 +1,162 @@
+{
+ "table": "6371988c510a1c6c",
+ "argument": "y = 2000 + ut/365.25 (Julian years)",
+ "rows": [
+  {
+   "year": -3000,
+   "seconds": 75361.694,
+   "sigma": 1396.837,
+   "segment": "long-term"
+  },
+  {
+   "year": -2000,
+   "seconds": 46838.689,
+   "sigma": 877.837,
+   "segment": "long-term"
+  },
+  {
+   "year": -1000,
+   "seconds": 25812.285,
+   "sigma": 478.837,
+   "segment": "long-term"
+  },
+  {
+   "year": -720,
+   "seconds": 20550.59,
+   "sigma": 388.621,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 0,
+   "seconds": 10574.29,
+   "sigma": 199.837,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 500,
+   "seconds": 5599.739,
+   "sigma": 105.337,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1000,
+   "seconds": 1467.65,
+   "sigma": 197.647,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1500,
+   "seconds": 292.64,
+   "sigma": 6.337,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1600,
+   "seconds": 89.38,
+   "sigma": 22.636,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1620,
+   "seconds": 67.065,
+   "sigma": 20.455,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1700,
+   "seconds": 14.587,
+   "sigma": 6.225,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1750,
+   "seconds": 16.183,
+   "sigma": 1.95,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1800,
+   "seconds": 18.71,
+   "sigma": 1.5,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1850,
+   "seconds": 9.32,
+   "sigma": 0.46,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1900,
+   "seconds": -1.98,
+   "sigma": 0.46,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1941,
+   "seconds": 24.82,
+   "sigma": 0.46,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1950,
+   "seconds": 29.15,
+   "sigma": 0.46,
+   "segment": "reconstructed"
+  },
+  {
+   "year": 1956,
+   "seconds": 31.35,
+   "sigma": 0.03,
+   "segment": "observed"
+  },
+  {
+   "year": 2000,
+   "seconds": 63.83,
+   "sigma": 0.03,
+   "segment": "observed"
+  },
+  {
+   "year": 2026,
+   "seconds": 69.11,
+   "sigma": 0.03,
+   "segment": "observed"
+  },
+  {
+   "year": 2027,
+   "seconds": 69.305,
+   "sigma": 0.064,
+   "segment": "predicted"
+  },
+  {
+   "year": 2030,
+   "seconds": 69.602,
+   "sigma": 0.71,
+   "segment": "extrapolated"
+  },
+  {
+   "year": 2050,
+   "seconds": 71.451,
+   "sigma": 11.89,
+   "segment": "extrapolated"
+  },
+  {
+   "year": 2100,
+   "seconds": 78.927,
+   "sigma": 42.39,
+   "segment": "extrapolated"
+  },
+  {
+   "year": 2150,
+   "seconds": 96.054,
+   "sigma": 72.89,
+   "segment": "extrapolated"
+  },
+  {
+   "year": 2199,
+   "seconds": 125.498,
+   "sigma": 102.78,
+   "segment": "extrapolated"
+  }
+ ]
+}
