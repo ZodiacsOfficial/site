@@ -1,0 +1,179 @@
+{
+ "step": "1.2",
+ "title": "Applying and separating",
+ "rule": "Version 1, rule 1a: 0 misclassifications over the 2024 30-min Swiss-position scan (236,932 aspects) and the synthetic sweep; 0 false positives; wrap and retrograde cases pass.",
+ "engine": "0.1.1-rc.7",
+ "verdict": "PASS",
+ "gates": [
+  {
+   "gate": "Scan: 0 misclassified, against the orb's rate from Swiss's speeds",
+   "misclassified": 0,
+   "of": 236932,
+   "pass": true
+  },
+  {
+   "gate": "Scan: 0 misclassified, against the orb's motion under Swiss over ±1 s",
+   "misclassified": 0,
+   "of": 236931,
+   "pass": true
+  },
+  {"gate": "0 false positives, scan and sweeps", "falsePositives": 0, "pass": true},
+  {"gate": "Synthetic sweeps: 0 misclassified", "misclassified": 0, "of": 1048251, "pass": true},
+  {"gate": "Wrap and retrograde cases pass", "failed": 0, "of": 28, "pass": true}
+ ],
+ "note": "Statistics only: counts, quantiles and a few named worst cases with the difference there. Swiss Ephemeris readings are not committed; provenance.json names each by SHA-256.",
+ "scan": {
+  "what": "Every 30 minutes of 2024 UTC, ten bodies, the engine's five aspects and orbs, on Swiss's positions and speeds (calc_ut with FLG_SWIEPH|FLG_SPEED); rc.7 findAspects, the function computeChart calls.",
+  "instants": 17568,
+  "instantsDiscarded": 0,
+  "swissCalls": 527490,
+  "swissCallsWithoutSWIEPH": 0,
+  "swissCallsWithoutSPEED": 0,
+  "aspects": 236932,
+  "aspectsByType": {"trine": 53814, "square": 56973, "sextile": 57055, "opposition": 25091, "conjunction": 43999},
+  "rc6FindsTheSameAspects": true,
+  "truths": {
+   "orbRate": "the sign of d(orb)/dt = sign(|s| - A) * sign(s) * (vA - vB), s = wrap(lonA - lonB), from Swiss's speeds; |rate| < 1e-9 set aside",
+   "motion": "orb(t + 1 s) < orb(t - 1 s), from Swiss's positions at t ± 1 s; set aside when exactness falls inside the stencil"
+  },
+  "rc7": {
+   "orbRate": {"judged": 236932, "misclassified": 0, "falsePositives": 0, "falseNegatives": 0},
+   "motion": {"judged": 236931, "misclassified": 0, "falsePositives": 0, "falseNegatives": 0},
+   "stationary": 0,
+   "flaggedApplying": 118635
+  },
+  "setAside": {
+   "orbRate": 0,
+   "motion": 1,
+   "motionCases": [
+    {
+     "utc": "2024-02-01T02:00:00Z",
+     "pair": "Moon–Mars",
+     "aspect": "square",
+     "rc7": "separating",
+     "why": "exact within the ±1 s stencil"
+    }
+   ]
+  },
+  "truthsDisagree": 0,
+  "subsets": {
+   "oneRetrograde": {"aspects": 99286, "rc7Misclassified": 0, "rc6Misclassified": 152},
+   "bothRetrograde": {"aspects": 14288, "rc7Misclassified": 0, "rc6Misclassified": 0},
+   "rawDifferenceWraps": {"aspects": 100306, "rc7Misclassified": 0, "rc6Misclassified": 190},
+   "oppositions": {"aspects": 25091, "rc7Misclassified": 0, "rc6Misclassified": 57},
+   "withinOneDegree": {"aspects": 30235, "rc7Misclassified": 0, "rc6Misclassified": 506},
+   "within0_15Degree": {"aspects": 4025, "rc7Misclassified": 0, "rc6Misclassified": 505}
+  },
+  "rc6Control": {
+   "what": "the vendored rc.6 findAspects (0.02-day step) on the same positions",
+   "orbRate": {"judged": 236932, "misclassified": 506, "falsePositives": 0, "falseNegatives": 506},
+   "motion": {"judged": 236931, "misclassified": 506, "falsePositives": 0, "falseNegatives": 506},
+   "latestErrorMinutesBeforeExact": 14.36,
+   "errorsWithoutTheMoon": 83
+  }
+ },
+ "sweeps": {
+  "engineTest": {
+   "what": "the engine's own seeded sweep (aspects.test.ts): 400,000 pairs, linear-motion truth",
+   "cases": 400000,
+   "rc7Misclassified": 0,
+   "rc7FalsePositives": 0,
+   "steppedRuleMisclassified": 769,
+   "rc6Misclassified": 769
+  },
+  "planners": {
+   "what": "the Phase 1 planners' sweep: 400,000 cases, luminary orbs, 1 % tiny orbs, fast and slow speeds",
+   "cases": 400000,
+   "rc7AspectMotionMisclassified": 0,
+   "rc7FindAspectsMisclassified": 0,
+   "rc7FalsePositives": 0,
+   "rc6Misclassified": 44541,
+   "ties": 0,
+   "skipped": 0
+  },
+  "auditVerifier": {
+   "what": "the audit verifier's sweep: a Moon–Sun conjunction 0.5 to 30 minutes before exact, and Jupiter–Saturn 10 minutes before",
+   "cases": 11,
+   "rc7Misclassified": 0,
+   "rc6Misclassified": 7
+  },
+  "timeToExact": {
+   "what": "every aspect, four pairs (fast, slow, one retrograde, both retrograde), 0.001 to 60 minutes either side of exact, across the 0/360 seam and away from it",
+   "cases": 48240,
+   "rc7Misclassified": 0,
+   "rc7FalsePositives": 0,
+   "rc6Misclassified": 21000,
+   "rc6FalsePositives": 0,
+   "rc6LatestErrorMinutesBeforeExact": 14.355
+  },
+  "wrapAndRetrograde": {
+   "what": "200,000 pairs within 15° of 0°, every mix of direct, retrograde and stationary bodies, oppositions across ±180°",
+   "cases": 200000,
+   "rc7Misclassified": 0,
+   "rc7FalsePositives": 0,
+   "rc6Misclassified": 709,
+   "zeroRelativeSpeed": 22168,
+   "zeroRelativeSpeedStationaryAndNotApplying": 22168,
+   "rawDifferenceWraps": 86215,
+   "oppositions": 40000,
+   "byMotion": {
+    "retro/zero": {"cases": 22285, "rc7Wrong": 0},
+    "zero/direct": {"cases": 22168, "rc7Wrong": 0},
+    "direct/zero": {"cases": 22171, "rc7Wrong": 0},
+    "direct/retro": {"cases": 22421, "rc7Wrong": 0},
+    "zero/zero": {"cases": 22168, "rc7Wrong": 0},
+    "retro/direct": {"cases": 22231, "rc7Wrong": 0},
+    "direct/direct": {"cases": 22097, "rc7Wrong": 0},
+    "zero/retro": {"cases": 22115, "rc7Wrong": 0},
+    "retro/retro": {"cases": 22344, "rc7Wrong": 0}
+   }
+  }
+ },
+ "namedCases": {
+  "what": "wrap and retrograde cases written out in s12/synthetic.mjs, each expectation also re-derived from linear motion",
+  "cases": 28,
+  "passed": 28,
+  "bySource": {
+   "engine test": {"cases": 13, "passed": 13},
+   "planner": {"cases": 6, "passed": 6},
+   "audit": {"cases": 5, "passed": 5},
+   "this run": {"cases": 4, "passed": 4}
+  }
+ },
+ "engineOwnPositions": {
+  "what": "the same scan on the engine's own positions through computeChart, judged by the orb's motion in its own longitudes over ±1 s; no Swiss input",
+  "every30Minutes": {
+   "instants": 17568,
+   "aspects": 236910,
+   "judged": 236909,
+   "setAside": 1,
+   "setAsideCases": [
+    {
+     "utc": "2024-12-09T04:00:00.000Z",
+     "pair": "Moon–Uranus",
+     "aspect": "sextile",
+     "secondsFromExact": 0.33,
+     "rc7": "separating"
+    }
+   ],
+   "rc7Misclassified": 0,
+   "rc7FalsePositives": 0,
+   "stationary": 0,
+   "rc6StepOnRc7SpeedsMisclassified": 510,
+   "natalChartChecked": 182,
+   "natalChartMismatches": 0
+  },
+  "every10Minutes": {
+   "instants": 52704,
+   "aspects": 710786,
+   "closedForm": {
+    "judged": 710786,
+    "rc7Misclassified": 0,
+    "rc7FalsePositives": 0,
+    "stationarySkipped": 0,
+    "rc6StepMisclassified": 1626
+   },
+   "motion": {"judged": 710783, "rc7Misclassified": 0, "rc7FalsePositives": 0, "setAside": 3}
+  }
+ }
+}

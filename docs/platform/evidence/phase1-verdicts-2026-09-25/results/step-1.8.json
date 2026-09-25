@@ -1,0 +1,758 @@
+{
+ "step": "1.8",
+ "title": "Speeds",
+ "rule": "Version 1, rule 1g: Moon speed vs Swiss ≤ 1″/day at perigee and apogee; station-flag agreement at ±1 h. Amendment A3 (adopted 2026-09-25): ≤ 1.5″/day, and \"the derivative of the reported longitude\" in place of \"state vectors\".",
+ "engine": "0.1.1-rc.7",
+ "verdict": {"asFirstWritten": "PARTIAL", "underA3": "PASS"},
+ "gates": [
+  {
+   "gate": "Moon speed vs Swiss ≤ 1″/day at perigee and apogee",
+   "measured": 1.3971,
+   "over": 8,
+   "of": 417,
+   "limit": 1,
+   "pass": false
+  },
+  {"gate": "Station-flag agreement at ±1 h", "agree": 108, "of": 108, "agreeSameUT": 108, "pass": true},
+  {
+   "gate": "Amendment A3: Moon speed vs Swiss ≤ 1.5″/day at perigee and apogee, the speed being the derivative of the reported longitude",
+   "measured": 1.4059,
+   "limit": 1.5,
+   "pass": true,
+   "amendment": "A3"
+  }
+ ],
+ "note": "Statistics only: counts, quantiles and a few named worst cases with the difference there. Swiss Ephemeris readings are not committed; provenance.json names each by SHA-256.",
+ "moonSpeed": {
+  "samples": {
+   "a3": {
+    "what": "A3's own instants: astronomy-engine SearchLunarApsis from 2024-01-01T00Z to 2027-01-01T00Z, each apsis at 0, ±6 and ±12 h UTC, plus 2024-10-15T00Z to 2024-10-19T00Z every 6 h",
+    "apsides": 80,
+    "samples": 417
+   },
+   "swissApsides": {
+    "what": "apsides chosen independently: sign changes of Swiss's geocentric distance rate on a 0.25-day TT grid, bisected, each at 0, ±6 and ±12 h TT",
+    "apsides": 80,
+    "perigees": 40,
+    "apogees": 40,
+    "samples": 400
+   }
+  },
+  "swissCalls": {"apsides": 9265, "apsidesAllSWIEPHandSPEED": true, "speeds": 3268, "samplesDiscarded": 0},
+  "rootApiSpotChecks": 33,
+  "definitions": {
+   "unit": "arcsec/day",
+   "residual": "chart speed (computeChart) minus Swiss FLG_SPEED at the engine's own TT: the rule's comparison",
+   "residualSameUT": "the same with Swiss at the same UT (Swiss's ΔT)",
+   "method": "chart speed minus a ±1e-4-day difference of the engine's own longitude",
+   "series": "rate of (engine longitude minus Swiss longitude) over ±0.001 day",
+   "swissSelf": "Swiss's own ±0.001-day longitude difference minus its analytic speed; residual = series + swissSelf"
+  },
+  "bySet": {
+   "a3": {
+    "residual": {
+     "n": 417,
+     "p50": 0.2669,
+     "p95": 0.7802,
+     "max": 1.3971,
+     "over1": 8,
+     "over1_5": 0,
+     "worst": {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 6,
+      "utc": "2025-12-04T17:07:51.536Z",
+      "value": -1.3971
+     }
+    },
+    "residualSameUT": {
+     "n": 417,
+     "p50": 0.2649,
+     "p95": 0.7748,
+     "max": 1.4059,
+     "over1": 8,
+     "over1_5": 0,
+     "worst": {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 6,
+      "utc": "2025-12-04T17:07:51.536Z",
+      "value": -1.4059
+     }
+    },
+    "atTheApsisItself": {
+     "residual": {
+      "n": 80,
+      "p50": 0.2918,
+      "p95": 0.7802,
+      "max": 1.3821,
+      "over1": 2,
+      "over1_5": 0,
+      "worst": {
+       "apsis": "perigee",
+       "anchor": "2025-12-04T11:07:51.536Z",
+       "offsetHours": 0,
+       "utc": "2025-12-04T11:07:51.536Z",
+       "value": -1.3821
+      }
+     },
+     "residualSameUT": {
+      "n": 80,
+      "p50": 0.2889,
+      "p95": 0.7748,
+      "max": 1.3781,
+      "over1": 2,
+      "over1_5": 0,
+      "worst": {
+       "apsis": "perigee",
+       "anchor": "2025-12-04T11:07:51.536Z",
+       "offsetHours": 0,
+       "utc": "2025-12-04T11:07:51.536Z",
+       "value": -1.3781
+      }
+     }
+    },
+    "byGroup": {
+     "apogee": {
+      "residual": {
+       "n": 200,
+       "p50": 0.2862,
+       "p95": 0.6979,
+       "max": 0.8542,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "apogee",
+        "anchor": "2026-06-28T07:11:22.513Z",
+        "offsetHours": 12,
+        "utc": "2026-06-28T19:11:22.513Z",
+        "value": -0.8542
+       }
+      },
+      "residualSameUT": {
+       "n": 200,
+       "p50": 0.2881,
+       "p95": 0.6969,
+       "max": 0.8493,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "apogee",
+        "anchor": "2026-06-28T07:11:22.513Z",
+        "offsetHours": 12,
+        "utc": "2026-06-28T19:11:22.513Z",
+        "value": -0.8493
+       }
+      }
+     },
+     "perigee": {
+      "residual": {
+       "n": 200,
+       "p50": 0.2609,
+       "p95": 0.9032,
+       "max": 1.3971,
+       "over1": 8,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "perigee",
+        "anchor": "2025-12-04T11:07:51.536Z",
+        "offsetHours": 6,
+        "utc": "2025-12-04T17:07:51.536Z",
+        "value": -1.3971
+       }
+      },
+      "residualSameUT": {
+       "n": 200,
+       "p50": 0.2615,
+       "p95": 0.9046,
+       "max": 1.4059,
+       "over1": 8,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "perigee",
+        "anchor": "2025-12-04T11:07:51.536Z",
+        "offsetHours": 6,
+        "utc": "2025-12-04T17:07:51.536Z",
+        "value": -1.4059
+       }
+      }
+     },
+     "perigee-2024-10-17-window": {
+      "residual": {
+       "n": 17,
+       "p50": 0.1707,
+       "p95": 0.5565,
+       "max": 0.5565,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "perigee-2024-10-17-window",
+        "anchor": "2024-10-17",
+        "offsetHours": null,
+        "utc": "2024-10-19T00:00:00.000Z",
+        "value": 0.5565
+       }
+      },
+      "residualSameUT": {
+       "n": 17,
+       "p50": 0.1386,
+       "p95": 0.4928,
+       "max": 0.4928,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {
+        "apsis": "perigee-2024-10-17-window",
+        "anchor": "2024-10-17",
+        "offsetHours": null,
+        "utc": "2024-10-19T00:00:00.000Z",
+        "value": 0.4928
+       }
+      }
+     }
+    },
+    "split": {
+     "method": {
+      "n": 417,
+      "p50": 0.0003,
+      "p95": 0.0008,
+      "max": 0.0015,
+      "over1": 0,
+      "over1_5": 0,
+      "worst": {
+       "apsis": "perigee",
+       "anchor": "2025-12-04T11:07:51.536Z",
+       "offsetHours": 12,
+       "utc": "2025-12-04T23:07:51.536Z",
+       "value": -0.0015
+      }
+     },
+     "series": {
+      "n": 417,
+      "p50": 0.2717,
+      "p95": 0.7868,
+      "max": 1.4041,
+      "over1": 10,
+      "over1_5": 0,
+      "worst": {
+       "apsis": "perigee",
+       "anchor": "2025-12-04T11:07:51.536Z",
+       "offsetHours": 6,
+       "utc": "2025-12-04T17:07:51.536Z",
+       "value": -1.4041
+      }
+     },
+     "swissSelf": {
+      "n": 417,
+      "p50": 0.0067,
+      "p95": 0.009,
+      "max": 0.3584,
+      "over1": 0,
+      "over1_5": 0,
+      "worst": {
+       "apsis": "perigee",
+       "anchor": "2025-12-04T11:07:51.536Z",
+       "offsetHours": -12,
+       "utc": "2025-12-03T23:07:51.536Z",
+       "value": 0.3584
+      }
+     },
+     "maxAbsDecompositionError": 1.02e-7
+    },
+    "signedMeanResidual": 0.0117,
+    "samplesOver1": [
+     {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": -6,
+      "utc": "2025-12-04T05:07:51.536Z",
+      "residual": -1.2351,
+      "residualSameUT": -1.2184,
+      "series": -1.241,
+      "method": -0.00021
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 0,
+      "utc": "2025-12-04T11:07:51.536Z",
+      "residual": -1.3821,
+      "residualSameUT": -1.3781,
+      "series": -1.3886,
+      "method": -0.00011
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 6,
+      "utc": "2025-12-04T17:07:51.536Z",
+      "residual": -1.3971,
+      "residualSameUT": -1.4059,
+      "series": -1.4041,
+      "method": -0.00007
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 12,
+      "utc": "2025-12-04T23:07:51.536Z",
+      "residual": -1.2761,
+      "residualSameUT": -1.2977,
+      "series": -1.2836,
+      "method": -0.00145
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2026-06-14T23:20:04.294Z",
+      "offsetHours": -12,
+      "utc": "2026-06-14T11:20:04.294Z",
+      "residual": -1.2205,
+      "residualSameUT": -1.1992,
+      "series": -1.2285,
+      "method": 0.0004
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2026-06-14T23:20:04.294Z",
+      "offsetHours": -6,
+      "utc": "2026-06-14T17:20:04.294Z",
+      "residual": -1.2034,
+      "residualSameUT": -1.1952,
+      "series": -1.2118,
+      "method": -0.00052
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2026-06-14T23:20:04.294Z",
+      "offsetHours": 0,
+      "utc": "2026-06-14T23:20:04.294Z",
+      "residual": -1.0866,
+      "residualSameUT": -1.0915,
+      "series": -1.0953,
+      "method": -0.00009
+     },
+     {
+      "apsis": "perigee",
+      "anchor": "2026-11-25T21:02:00.293Z",
+      "offsetHours": 12,
+      "utc": "2026-11-26T09:02:00.293Z",
+      "residual": 1.0825,
+      "residualSameUT": 1.0479,
+      "series": 1.0738,
+      "method": -0.00005
+     }
+    ]
+   },
+   "swissApsides": {
+    "residual": {
+     "n": 400,
+     "p50": 0.273,
+     "p95": 0.7859,
+     "max": 1.3962,
+     "over1": 8,
+     "over1_5": 0,
+     "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 6, "value": -1.3962}
+    },
+    "residualSameUT": {
+     "n": 400,
+     "p50": 0.2739,
+     "p95": 0.7741,
+     "max": 1.4053,
+     "over1": 8,
+     "over1_5": 0,
+     "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 6, "value": -1.4053}
+    },
+    "atTheApsisItself": {
+     "residual": {
+      "n": 80,
+      "p50": 0.2911,
+      "p95": 0.7793,
+      "max": 1.3835,
+      "over1": 2,
+      "over1_5": 0,
+      "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 0, "value": -1.3835}
+     },
+     "residualSameUT": {
+      "n": 80,
+      "p50": 0.2896,
+      "p95": 0.7741,
+      "max": 1.3797,
+      "over1": 2,
+      "over1_5": 0,
+      "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 0, "value": -1.3797}
+     }
+    },
+    "byGroup": {
+     "apogee": {
+      "residual": {
+       "n": 200,
+       "p50": 0.2861,
+       "p95": 0.7,
+       "max": 0.8519,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {"apsis": "apogee", "date": "2026-06-28", "offsetHours": 12, "value": -0.8519}
+      },
+      "residualSameUT": {
+       "n": 200,
+       "p50": 0.2896,
+       "p95": 0.6952,
+       "max": 0.8471,
+       "over1": 0,
+       "over1_5": 0,
+       "worst": {"apsis": "apogee", "date": "2026-06-28", "offsetHours": 12, "value": -0.8471}
+      }
+     },
+     "perigee": {
+      "residual": {
+       "n": 200,
+       "p50": 0.2653,
+       "p95": 0.9038,
+       "max": 1.3962,
+       "over1": 8,
+       "over1_5": 0,
+       "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 6, "value": -1.3962}
+      },
+      "residualSameUT": {
+       "n": 200,
+       "p50": 0.2632,
+       "p95": 0.9092,
+       "max": 1.4053,
+       "over1": 8,
+       "over1_5": 0,
+       "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 6, "value": -1.4053}
+      }
+     }
+    },
+    "split": {
+     "method": {
+      "n": 400,
+      "p50": 0.0003,
+      "p95": 0.0008,
+      "max": 0.0012,
+      "over1": 0,
+      "over1_5": 0,
+      "worst": {"apsis": "perigee", "date": "2026-04-19", "offsetHours": 0, "value": 0.0012}
+     },
+     "series": {
+      "n": 400,
+      "p50": 0.2766,
+      "p95": 0.7847,
+      "max": 1.4032,
+      "over1": 8,
+      "over1_5": 0,
+      "worst": {"apsis": "perigee", "date": "2025-12-04", "offsetHours": 6, "value": -1.4032}
+     },
+     "swissSelf": {
+      "n": 400,
+      "p50": 0.0067,
+      "p95": 0.1583,
+      "max": 0.3618,
+      "over1": 0,
+      "over1_5": 0,
+      "worst": {"apsis": "perigee", "date": "2024-10-17", "offsetHours": -6, "value": 0.3618}
+     },
+     "maxAbsDecompositionError": 1.02e-7
+    },
+    "signedMeanResidual": 0.0097,
+    "samplesOver1": [
+     {
+      "apsis": "perigee",
+      "date": "2025-12-04",
+      "offsetHours": -6,
+      "residual": -1.2387,
+      "residualSameUT": -1.2223,
+      "series": -1.2447,
+      "method": -0.00091
+     },
+     {
+      "apsis": "perigee",
+      "date": "2025-12-04",
+      "offsetHours": 0,
+      "residual": -1.3835,
+      "residualSameUT": -1.3797,
+      "series": -1.39,
+      "method": 0.00031
+     },
+     {
+      "apsis": "perigee",
+      "date": "2025-12-04",
+      "offsetHours": 6,
+      "residual": -1.3962,
+      "residualSameUT": -1.4053,
+      "series": -1.4032,
+      "method": -0.00058
+     },
+     {
+      "apsis": "perigee",
+      "date": "2025-12-04",
+      "offsetHours": 12,
+      "residual": -1.2727,
+      "residualSameUT": -1.2945,
+      "series": -1.2802,
+      "method": -0.00011
+     },
+     {
+      "apsis": "perigee",
+      "date": "2026-06-14",
+      "offsetHours": -12,
+      "residual": -1.22,
+      "residualSameUT": -1.1985,
+      "series": -1.228,
+      "method": 0.0008
+     },
+     {
+      "apsis": "perigee",
+      "date": "2026-06-14",
+      "offsetHours": -6,
+      "residual": -1.2045,
+      "residualSameUT": -1.196,
+      "series": -1.2129,
+      "method": 0.00043
+     },
+     {
+      "apsis": "perigee",
+      "date": "2026-06-14",
+      "offsetHours": 0,
+      "residual": -1.0895,
+      "residualSameUT": -1.0942,
+      "series": -1.0983,
+      "method": 0.00037
+     },
+     {
+      "apsis": "perigee",
+      "date": "2026-11-25",
+      "offsetHours": 12,
+      "residual": 1.0864,
+      "residualSameUT": 1.0516,
+      "series": 1.0777,
+      "method": -0.00004
+     }
+    ]
+   }
+  },
+  "rc6Baseline": {
+   "what": "rc.6's ±0.25-day difference of the same longitude, against Swiss at the engine's TT",
+   "swissApsides": {
+    "all": {"n": 400, "max": 8.9441, "over1": 381},
+    "perigee": {"n": 200, "max": 8.9441, "over1": 197},
+    "apogee": {"n": 200, "max": 3.9808, "over1": 184}
+   },
+   "a3": {
+    "all": {"n": 417, "max": 8.9453, "over1": 398},
+    "perigee": {"n": 200, "max": 8.9453, "over1": 197},
+    "apogee": {"n": 200, "max": 3.9808, "over1": 184}
+   }
+  },
+  "stateVectorRoute": {
+   "what": "GeoMoonState velocity rotated to the ecliptic of date, with and without the frame rate, against Swiss at the engine's TT; shipped = the chart speed",
+   "swissApsides": {
+    "withFrameRate": {"n": 400, "max": 1.4004, "over1": 8, "over1_5": 0},
+    "noFrameRate": {"n": 400, "max": 1.67, "over1": 15, "over1_5": 4},
+    "shipped": {"n": 400, "max": 1.3962, "over1": 8, "over1_5": 0}
+   },
+   "a3": {
+    "withFrameRate": {"n": 417, "max": 1.3968, "over1": 8, "over1_5": 0},
+    "noFrameRate": {"n": 417, "max": 1.6662, "over1": 15, "over1_5": 4},
+    "shipped": {"n": 417, "max": 1.3971, "over1": 8, "over1_5": 0}
+   }
+  },
+  "arbiter": {
+   "what": "the DE440s kernel (jplephem) rotated with ERFA pnm06a and obl06 + nut06a Δε; rates over ±0.001 day at the engine's TT (TDB taken as TT)",
+   "kernel": "de440s.bsp",
+   "pyerfa": "2.0.1.5",
+   "jplephem": "2.24",
+   "numpy": "2.4.6",
+   "bySet": {
+    "a3": {
+     "engineMinusKernel": {"n": 417, "p50": 0.2722, "p95": 0.7779, "max": 1.3914, "over1": 9, "over1_5": 0},
+     "swissApparentMinusKernelWithLightTime": {"n": 417, "p50": 0.0124, "p95": 0.0607, "max": 0.1898, "over1": 0, "over1_5": 0},
+     "swissTrueposMinusKernel": {"n": 417, "p50": 0.0064, "p95": 0.0092, "max": 0.011, "over1": 0, "over1_5": 0},
+     "engineMinusSwiss": {"n": 417, "p50": 0.2669, "p95": 0.7802, "max": 1.3971, "over1": 8, "over1_5": 0},
+     "atWorstEngineMinusSwiss": {
+      "apsis": "perigee",
+      "anchor": "2025-12-04T11:07:51.536Z",
+      "offsetHours": 6,
+      "utc": "2025-12-04T17:07:51.536Z",
+      "engineMinusKernel": -1.3747,
+      "swissApparentMinusKernelWithLightTime": 0.0206,
+      "swissTrueposMinusKernel": -0.0084,
+      "engineMinusSwiss": -1.3971
+     }
+    },
+    "swissApsides": {
+     "engineMinusKernel": {"n": 400, "p50": 0.2705, "p95": 0.7857, "max": 1.3922, "over1": 9, "over1_5": 0},
+     "swissApparentMinusKernelWithLightTime": {"n": 400, "p50": 0.0122, "p95": 0.0501, "max": 0.0694, "over1": 0, "over1_5": 0},
+     "swissTrueposMinusKernel": {"n": 400, "p50": 0.0063, "p95": 0.0092, "max": 0.0113, "over1": 0, "over1_5": 0},
+     "engineMinusSwiss": {"n": 400, "p50": 0.273, "p95": 0.7859, "max": 1.3962, "over1": 8, "over1_5": 0},
+     "atWorstEngineMinusSwiss": {
+      "apsis": "perigee",
+      "date": "2025-12-04",
+      "offsetHours": 6,
+      "engineMinusKernel": -1.3736,
+      "swissApparentMinusKernelWithLightTime": 0.0209,
+      "swissTrueposMinusKernel": -0.0087,
+      "engineMinusSwiss": -1.3962
+     }
+    }
+   }
+  },
+  "instrument": {
+   "what": "Swiss's apparent Moon at the sample where its own ±0.001-day longitude difference departs most from its analytic speed",
+   "sample": {"apsis": "perigee", "date": "2024-10-17", "offsetHours": -6},
+   "maxAbsSecondDifferenceOnA10sGridMas": 0.704,
+   "differenceMinusAnalyticSpeed": {"NONUT": 0.3623, "TRUEPOS": 0.0083, "J2000": 0.3623, "NOABERR": 0.3619, "default": 0.3618}
+  }
+ },
+ "selfDerivative": {
+  "what": "chart speed minus a ±1e-4-day difference of the engine's own reported longitude, every 6 h of 2024–2026, ten bodies; no Swiss input",
+  "instants": 4384,
+  "bodyInstants": 43840,
+  "retrogradeFlagNotSignOfSpeed": 0,
+  "unit": "arcsec/day",
+  "maxAbs": {
+   "Sun": {"max": 0.00012, "utc": "2024-09-19T18:00:00.000Z"},
+   "Moon": {"max": 0.00125, "utc": "2026-08-06T12:00:00.000Z"},
+   "Mercury": {"max": 0.00288, "utc": "2026-01-15T00:00:00.000Z"},
+   "Venus": {"max": 0.00026, "utc": "2025-04-07T18:00:00.000Z"},
+   "Mars": {"max": 0.00014, "utc": "2025-01-22T18:00:00.000Z"},
+   "Jupiter": {"max": 0.00003, "utc": "2024-04-25T18:00:00.000Z"},
+   "Saturn": {"max": 0.00001, "utc": "2026-02-13T06:00:00.000Z"},
+   "Uranus": {"max": 0.00052, "utc": "2024-02-27T18:00:00.000Z"},
+   "Neptune": {"max": 0.00028, "utc": "2025-08-01T12:00:00.000Z"},
+   "Pluto": {"max": 0, "utc": "2026-01-14T12:00:00.000Z"}
+  }
+ },
+ "stations": {
+  "swiss": {
+   "what": "sign changes of Swiss's longitude speed for Mercury to Pluto, 2024–2026: 1-day grid and 60 bisections, in TT and in UT; every call SWIEPH|SPEED or the run stops",
+   "stations": 54,
+   "byBody": {"Mercury": 19, "Venus": 4, "Mars": 2, "Jupiter": 5, "Saturn": 6, "Uranus": 6, "Neptune": 6, "Pluto": 6},
+   "calls": 25328,
+   "allCallsSWIEPHandSPEED": true
+  },
+  "flagsAnHourEitherSide": {
+   "sameTT": {"flags": 108, "agree": 108},
+   "sameUT": {"flags": 108, "agree": 108}
+  },
+  "flagsCloser": {
+   "sameTT": {
+    "60 min": {"flags": 108, "agree": 108, "disagreements": []},
+    "45 min": {"flags": 108, "agree": 108, "disagreements": []},
+    "30 min": {
+     "flags": 108,
+     "agree": 107,
+     "disagreements": [
+      {"body": "Pluto", "station": "direct-station", "side": "after"}
+     ]
+    },
+    "20 min": {
+     "flags": 108,
+     "agree": 104,
+     "disagreements": [
+      {"body": "Neptune", "station": "direct-station", "side": "before"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "direct-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "after"}
+     ]
+    },
+    "10 min": {
+     "flags": 108,
+     "agree": 97,
+     "disagreements": [
+      {"body": "Uranus", "station": "direct-station", "side": "before"},
+      {"body": "Uranus", "station": "retrograde-station", "side": "after"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "before"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "after"},
+      {"body": "Neptune", "station": "direct-station", "side": "before"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "before"},
+      {"body": "Pluto", "station": "direct-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "direct-station", "side": "before"}
+     ]
+    },
+    "5 min": {
+     "flags": 108,
+     "agree": 85,
+     "disagreements": [
+      {"body": "Mercury", "station": "direct-station", "side": "before"},
+      {"body": "Mercury", "station": "retrograde-station", "side": "before"},
+      {"body": "Venus", "station": "retrograde-station", "side": "before"},
+      {"body": "Venus", "station": "direct-station", "side": "before"},
+      {"body": "Saturn", "station": "direct-station", "side": "after"},
+      {"body": "Saturn", "station": "retrograde-station", "side": "before"},
+      {"body": "Saturn", "station": "direct-station", "side": "before"},
+      {"body": "Uranus", "station": "direct-station", "side": "before"},
+      {"body": "Uranus", "station": "retrograde-station", "side": "after"},
+      {"body": "Uranus", "station": "direct-station", "side": "after"},
+      {"body": "Uranus", "station": "retrograde-station", "side": "before"},
+      {"body": "Uranus", "station": "direct-station", "side": "before"},
+      {"body": "Uranus", "station": "retrograde-station", "side": "after"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "before"},
+      {"body": "Neptune", "station": "direct-station", "side": "after"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "after"},
+      {"body": "Neptune", "station": "direct-station", "side": "before"},
+      {"body": "Neptune", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "before"},
+      {"body": "Pluto", "station": "direct-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "retrograde-station", "side": "after"},
+      {"body": "Pluto", "station": "direct-station", "side": "before"}
+     ]
+    }
+   },
+   "sameUT": "the same as sameTT, case for case"
+  },
+  "chartStationMinusSwissMinutes": {
+   "what": "the chart speed's own sign change, bisected, minus Swiss's, on the engine's clock pinned to Swiss's TT",
+   "medianAbs": 3.46,
+   "maxAbs": 37.7,
+   "maxAbsByBody": {
+    "Mercury": 6.16,
+    "Venus": 6.55,
+    "Mars": 1.05,
+    "Jupiter": 3.73,
+    "Saturn": 7.63,
+    "Uranus": 15.7,
+    "Neptune": 26.45,
+    "Pluto": 37.7
+   },
+   "worst": [
+    {"body": "Pluto", "station": "direct-station", "date": "2024-10-12", "minutes": 37.7},
+    {"body": "Neptune", "station": "retrograde-station", "date": "2026-07-07", "minutes": 26.45},
+    {"body": "Pluto", "station": "retrograde-station", "date": "2025-05-04", "minutes": 23.41},
+    {"body": "Neptune", "station": "direct-station", "date": "2025-12-10", "minutes": -22.93},
+    {"body": "Pluto", "station": "direct-station", "date": "2026-10-16", "minutes": -16.8}
+   ],
+   "namedByTheAudit": [
+    {"body": "Mercury", "station": "retrograde-station", "date": "2024-04-01", "minutes": -1.32},
+    {"body": "Mars", "station": "retrograde-station", "date": "2024-12-06", "minutes": 1.05},
+    {"body": "Venus", "station": "retrograde-station", "date": "2025-03-02", "minutes": -3.46}
+   ]
+  },
+  "saturnNatalDirection": {"checked": 12, "agreeWithChart": 12, "agreeWithSwiss": 12},
+  "hourly": {
+   "what": "the chart's retrograde flag every hour of 2024–2026 for Mercury to Pluto, against the sign of Swiss's speed at the engine's TT",
+   "instants": 26304,
+   "flags": 210432,
+   "discarded": 0,
+   "moreThanAnHourFromAStation": {"flags": 210324, "agree": 210324},
+   "withinAnHourOfAStation": {
+    "flags": 108,
+    "agree": 104,
+    "disagreements": [
+     {"body": "Pluto", "date": "2024-10-12", "chartRetrograde": true},
+     {"body": "Mars", "date": "2025-02-24", "chartRetrograde": true},
+     {"body": "Saturn", "date": "2025-07-13", "chartRetrograde": true},
+     {"body": "Neptune", "date": "2026-07-07", "chartRetrograde": false}
+    ]
+   },
+   "chartFlagChanges": {
+    "total": 54,
+    "byBody": {"Mercury": 19, "Venus": 4, "Mars": 2, "Jupiter": 5, "Saturn": 6, "Uranus": 6, "Neptune": 6, "Pluto": 6},
+    "sameAsSwissStationsByBody": true
+   }
+  }
+ }
+}
