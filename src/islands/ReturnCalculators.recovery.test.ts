@@ -66,7 +66,7 @@ vi.mock('../lib/module-load', async (importOriginal) => {
 import SaturnReturnCalculator from './SaturnReturnCalculator';
 import SolarReturnCalculator from './SolarReturnCalculator';
 import TransitTracker from './TransitTracker';
-import { BirthFields } from './BirthFields';
+import { BirthDateField, BirthFields } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import CalculationReload, { calculationLoadMessage } from './CalculationReload';
 
@@ -113,14 +113,16 @@ describe('return calculator file recovery', () => {
     harness.returnsImport.mockRejectedValueOnce(new Error('warm-up offline'))
       .mockRejectedValueOnce(new Error('still offline'))
       .mockResolvedValue({ saturnReturns: () => ({ natalLon: 90, natalRetrograde: false, seasons: [] }) });
-    const input = nodes(render(saturn)).find((node) => node.props.id === 'sr-date')!;
-    input.props.onInput({ target: { value: '1990-01-01' } });
+    // The date input is the shared birth date field's, with its calendar control.
+    const input = nodes(render(saturn)).find((node) => node.type === BirthDateField)!;
+    expect(input.props.id).toBe('sr-date');
+    input.props.onDateChange('1990-01-01');
     input.props.onFocus();
     await new Promise((resolve) => setTimeout(resolve, 0));
     await submit(saturn);
     expect(error(saturn)).toBe(calculationLoadMessage('en'));
     expect(nodes(render(saturn)).find((node) => node.type === CalculationReload)?.props.error).toBe(calculationLoadMessage('en'));
-    expect(nodes(render(saturn)).find((node) => node.props.id === 'sr-date')?.props.value).toBe('1990-01-01');
+    expect(nodes(render(saturn)).find((node) => node.type === BirthDateField)?.props.date).toBe('1990-01-01');
     await submit(saturn);
     expect(error(saturn)).toBeUndefined();
     expect(nodes(render(saturn)).some((node) => node.props.class === 'calc__result')).toBe(true);
@@ -129,7 +131,8 @@ describe('return calculator file recovery', () => {
 
   it('does not report a Saturn calculation rejection as a missing module', async () => {
     harness.returnsImport.mockResolvedValue({ saturnReturns: () => { throw new RangeError('invalid date'); } });
-    nodes(render(saturn)).find((node) => node.props.id === 'sr-date')!.props.onInput({ target: { value: 'bad-date' } });
+    // A date the reader accepts, so the rejection comes from the calculation itself.
+    nodes(render(saturn)).find((node) => node.type === BirthDateField)!.props.onDateChange('1990-01-01');
     await submit(saturn);
     expect(error(saturn)).toBeTruthy();
     expect(error(saturn)).not.toBe(calculationLoadMessage('en'));

@@ -9,7 +9,7 @@
  *   'rising' — rising-focused result view (time required)
  */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import AstroTerm from './AstroTerm';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -91,10 +91,14 @@ interface RunInput {
   name?: string;
   subjectMode?: SubjectMode;
   mine?: MineHandoff | null;
+  /** The entered Old Style date beside the Gregorian `date`, as one line for the result. */
+  oldStyle?: string;
 }
 
 interface FormFieldErrors {
   date?: 'required' | 'range';
+  /** A date that does not exist in its calendar, or cannot be read as a date. */
+  calendar?: string;
   time?: boolean;
   place?: boolean;
 }
@@ -354,6 +358,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [time, setTime] = useState('');
   const [timeKnown, setTimeKnown] = useState(true);
   const [city, setCity] = useState<City | null>(null);
+  // The calendar the date was written in; a date filled in from a link or a
+  // saved chart is Gregorian.
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
+  // That date, which was already charted: it gets no calendar note, which
+  // could send it through the Old Style conversion a second time.
+  const [storedDate, setStoredDate] = useState('');
   const [houseSystem, setHouseSystem] = useState<HouseSystem>('whole');
   const [chart, setChart] = useState<Chart | null>(null);
   // Read on a local mean time even when its offset is whole minutes, which
@@ -602,6 +612,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     advanceInputRevision();
     clearResult();
     setDate('');
+    setCalendar('gregorian');
+    setStoredDate('');
     setTime('');
     setTimeKnown(true);
     setCity(null);
@@ -1107,6 +1119,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       clearFragment();
       if (!handoff) return;
       setDate(handoff.date);
+      setCalendar('gregorian');
       setTime(handoff.time ?? '');
       setTimeKnown(handoff.time !== null);
       queueMicrotask(() => formRef.current?.querySelector<HTMLElement>('#place')?.focus());
@@ -1150,6 +1163,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           primaryProfileChartIdRef.current = profileChartId;
           mineProfileOriginRef.current = false;
           setDate(input.date);
+          setCalendar('gregorian');
+          setStoredDate(input.date);
           setTime(input.time);
           setTimeKnown(input.timeKnown);
           setCity(linkCity);
@@ -1232,6 +1247,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       lat: decoded.lat, lon: decoded.lon, tz: decoded.tz, pop: 0,
     };
     setDate(decoded.date);
+    setCalendar('gregorian');
+    setStoredDate(decoded.date);
     setTime(decoded.time ?? '');
     setTimeKnown(decoded.timeKnown);
     setCity(linkCity);
@@ -1559,19 +1576,32 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       return;
     }
     if (!city) return;
-    invalidateProfileHandoff();
-    setFromLink(false);
-    if (subjectMode === 'self') setLinkName(null);
-    runChart({
-      date,
-      time,
-      timeKnown,
-      city,
-      houseSystem,
-      subjectMode,
-      mine: mineHandoff,
-      ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
-    }, true);
+    const start = (entry: { date: string; oldStyle?: string }) => {
+      invalidateProfileHandoff();
+      setFromLink(false);
+      if (subjectMode === 'self') setLinkName(null);
+      runChart({
+        date: entry.date,
+        oldStyle: entry.oldStyle,
+        time,
+        timeKnown,
+        city,
+        houseSystem,
+        subjectMode,
+        mine: mineHandoff,
+        ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
+      }, true);
+    };
+    if (!calendarInPlay(date, calendar)) return start({ date });
+    // A date before 1924 is read in its calendar first; an edit meanwhile wins.
+    const revision = inputRevisionRef.current;
+    void birthDateForChart(locale, date, calendar).then((entry) => {
+      if (revision !== inputRevisionRef.current) return;
+      if ('error' in entry) {
+        setFieldErrors({ calendar: entry.error });
+        formRef.current?.querySelector<HTMLElement>('#birth-date')?.focus();
+      } else start(entry);
+    }, () => setError(calculationLoadMessage(locale)));
   }
 
   function requestChartControls(returnFocus = false) {
@@ -2034,8 +2064,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               onDateChange={(value) => {
                 invalidateProfileHandoff();
                 setDate(value);
-                setFieldErrors((current) => current.date ? { ...current, date: undefined } : current);
+                setFieldErrors((current) => current.date || current.calendar ? { ...current, date: undefined, calendar: undefined } : current);
               }}
+              calendar={calendar}
+              onCalendarChange={(value) => {
+                invalidateProfileHandoff();
+                setCalendar(value);
+                setFieldErrors((current) => current.calendar ? { ...current, calendar: undefined } : current);
+              }}
+              charted={date === storedDate}
               onTimeChange={(value) => {
                 invalidateProfileHandoff();
                 setTime(value);
@@ -2059,9 +2096,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   : t(locale, 'chartTimeHelp')
                 : undefined}
               placeHelp={t(locale, 'searchGeo')}
-              dateError={fieldErrors.date === 'range'
+              dateError={fieldErrors.calendar ?? (fieldErrors.date === 'range'
                 ? t(locale, 'birthDateRange')
-                : fieldErrors.date ? t(locale, 'birthDateRequired') : undefined}
+                : fieldErrors.date ? t(locale, 'birthDateRequired') : undefined)}
               timeError={fieldErrors.time ? t(locale, 'birthTimeRequired') : undefined}
               placeError={fieldErrors.place ? t(locale, 'placePickHint') : undefined}
             />
@@ -2143,6 +2180,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 : t(locale, 'birthChart')}
           </h2>
           {/* Notices */}
+          {computedInput?.oldStyle && (
+            <p class="notice" role="status" data-old-style-date>
+              {t(locale, 'birthDate')}{locale === 'fr' ? '\u202f:' : ':'} {computedInput.oldStyle}
+            </p>
+          )}
           {chart.flags.includes('dst-gap') && (
             <p class="notice" role="status">{t(locale, 'dstGapNotice')}</p>
           )}

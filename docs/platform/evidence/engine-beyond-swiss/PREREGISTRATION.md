@@ -220,10 +220,16 @@ Each step names its rule's source. Baselines are the shipped engine,
 
 - **Rule.** Julian↔Gregorian agrees with `swe_julday`/`swe_revjul` exactly;
   Petrograd 1917-10-25 O.S. yields the 1917-11-07 chart.
-- **Verdict: PASS for the library (1.13a).** 0 of 255,675 Julian dates from
-  1500 to 2199 differ from Swiss 2.10.03 (`julian-vs-swiss.json`); the
-  Petrograd chart is a test (`src/lib/time/calendar.test.ts`). Putting the
-  calendar in the form (1.13b) has not landed.
+- **Verdict: PASS, for the library (1.13a) and the forms (1.13b).** 0 of
+  255,675 Julian dates from 1500 to 2199 differ from Swiss 2.10.03
+  (`julian-vs-swiss.json`). The Petrograd chart is a test of the library
+  (`src/lib/time/calendar.test.ts`) and of the birth chart form's own path,
+  from the Old Style date as typed to the calculator's calculation block
+  (`src/islands/ChartCalculator.calendar.test.ts`): the same instant, receipt
+  and positions as typing 1917-11-07. The birth forms offer the Julian
+  calendar for a date written before 1924 and note when the birthplace's
+  country changed calendars, one cited date per country
+  (`src/data/gregorian-adoption.ts`, 42 countries).
 
 ### 1.14 Claims ledger (version 2)
 

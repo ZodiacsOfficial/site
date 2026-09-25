@@ -4,6 +4,7 @@
  * alone is enough — time and place refine dates by days, never years.
  */
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { BirthDateField, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import SignChip from './SignChip';
 import { SATURN_RETURN } from '../lib/interpretations';
@@ -31,6 +32,7 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
   const statusLabel = { past: t(locale, 'complete'), active: t(locale, 'underwayNow'), upcoming: t(locale, 'aheadOfYou') } as const;
   const fmt = (d: Date) => formatShortDate(locale, d);
   const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
   const [time, setTime] = useState('');
   const [city, setCity] = useState<City | null>(null);
   const [showDetail, setShowDetail] = useState(false);
@@ -54,11 +56,22 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
     setBusy(true);
     setError('');
     try {
-      const [returns] = await Promise.all([loadReturns(), showDetail && city ? prepareLocalTime(date, city.tz) : null]);
+      let day = date;
+      if (calendarInPlay(date, calendar)) {
+        // A date before 1924 is read in its calendar; the return uses the Gregorian date.
+        const entry = await birthDateForChart(locale, date, calendar);
+        if (run !== generation.current) return;
+        if ('error' in entry) {
+          setError(entry.error);
+          return;
+        }
+        day = entry.date;
+      }
+      const [returns] = await Promise.all([loadReturns(), showDetail && city ? prepareLocalTime(day, city.tz) : null]);
       if (run !== generation.current) return;
       const utc = showDetail && city
-        ? resolveLocalToUtc(date, time || '12:00', city.tz, { longitude: city.lon }).utc
-        : new Date(`${date}T12:00:00Z`);
+        ? resolveLocalToUtc(day, time || '12:00', city.tz, { longitude: city.lon }).utc
+        : new Date(`${day}T12:00:00Z`);
       setResult(returns.saturnReturns(utc));
     } catch (err) {
       if (run !== generation.current) return;
@@ -90,18 +103,12 @@ export default function SaturnReturnCalculator({ locale: rawLocale = 'en' }: { l
       <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
         <div class="core calc__core">
           <div class="calc__fields">
-            <div class="field">
-              <label class="field__label" for="sr-date">{t(locale, 'birthDate')}</label>
-              <input
-                id="sr-date" class="field__input" type="date" required
-                min="1800-01-01" max="2199-12-31" value={date}
-                onFocus={() => { void loadReturns(); }}
-                onInput={(e) => setDate((e.target as HTMLInputElement).value)}
-              />
-              <p class="field__help">
-                {t(locale, 'saturnDateHelp')}
-              </p>
-            </div>
+            <BirthDateField
+              locale={locale} id="sr-date" date={date} city={showDetail ? city : null}
+              onDateChange={setDate} calendar={calendar} onCalendarChange={setCalendar}
+              onFocus={() => { void loadReturns(); }}
+              help={<p class="field__help">{t(locale, 'saturnDateHelp')}</p>}
+            />
           </div>
 
           {!showDetail ? (
