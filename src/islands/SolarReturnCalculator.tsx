@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { ComponentType } from 'preact';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
@@ -34,6 +34,7 @@ export default function SolarReturnCalculator() {
   const [source, setSource] = useState<'saved' | 'manual'>('manual');
   const [savedId, setSavedId] = useState('');
   const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
   const [time, setTime] = useState('');
   const [timeKnown, setTimeKnown] = useState(true);
   const [city, setCity] = useState<City | null>(null);
@@ -158,6 +159,16 @@ export default function SolarReturnCalculator() {
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
       ]));
+      if (!selected && calendarInPlay(input.birthDate, calendar)) {
+        // A date before 1924 is read in its calendar; the return uses the Gregorian date.
+        const entry = await birthDateForChart('en', input.birthDate, calendar);
+        if (!isCurrent()) return;
+        if ('error' in entry) {
+          setError(entry.error);
+          return;
+        }
+        input.birthDate = entry.date;
+      }
       await prepareLocalTime(input.birthDate, input.birthplace?.tz ?? 'UTC');
       if (!isCurrent()) return;
       const resultData = computeSolarReturn(input);
@@ -204,6 +215,8 @@ export default function SolarReturnCalculator() {
                 locale="en" dateId="sr-date" timeId="sr-time" placeId="sr-place"
                 date={date} time={time} timeKnown={timeKnown} city={city}
                 onDateChange={(value) => { invalidateResult(); setDate(value); }}
+                calendar={calendar}
+                onCalendarChange={(value) => { invalidateResult(); setCalendar(value); }}
                 onTimeChange={(value) => { invalidateResult(); setTime(value); }}
                 onTimeKnownChange={(known) => { invalidateResult(); setTimeKnown(known); if (!known) { setDifferentPlace(false); setCastCity(null); } }}
                 onCityChange={(value) => { invalidateResult(); setCity(value); }}

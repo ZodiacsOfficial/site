@@ -1,0 +1,49 @@
+/* The birth date's calendar choice (engine brief step 1.13b). Loaded with
+   the control, only once a date before 1924 is entered. Quiet, in the
+   register of the "I don't know it" toggle beside the time label. */
+.birth-calendar { display: grid; min-width: 0; container-type: inline-size; }
+.birth-calendar__choice {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+/* Floated beside the options, so an option that wraps lines up under the
+   first one rather than under the legend. */
+.birth-calendar__legend {
+  float: left;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  margin-right: 16px;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--muted);
+}
+.birth-calendar__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+  min-width: 0;
+}
+.birth-calendar__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--faint);
+  cursor: pointer;
+}
+.birth-calendar__option:has(input:checked) { color: var(--text-2); }
+.birth-calendar__option input { flex: none; margin: 0; accent-color: var(--accent); }
+.birth-calendar__note { line-height: 1.5; }
+.birth-calendar__note:not(:empty) { margin-top: 4px; }
+/* Too narrow for the longest legend and option side by side (Russian needs
+   285px): the legend goes above the options. */
+@container (max-width: 288px) {
+  .birth-calendar__legend { float: none; min-height: 24px; margin-right: 0; }
+}

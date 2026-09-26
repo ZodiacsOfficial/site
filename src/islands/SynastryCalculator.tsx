@@ -5,7 +5,7 @@
  * the engine the same way the chart calculator does.
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, type CalendarChoice } from './BirthFields';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
@@ -33,7 +33,7 @@ import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 
-interface SlotState {
+export interface SlotState {
   source: 'saved' | 'form' | 'link' | 'positions';
   savedId: string;
   name: string;
@@ -41,6 +41,10 @@ interface SlotState {
   time: string;
   timeKnown: boolean;
   city: City | null;
+  /** The calendar the form's date was written in; absent is Gregorian. */
+  calendar?: CalendarChoice;
+  /** Set on the copy a comparison reads: the Old Style date beside the Gregorian one. */
+  oldStyle?: string;
   /** Chart carried by value — locked, clearable. `received` means it
    *  arrived in someone else's invite link (never re-shared); without it
    *  the side was restored from a saved comparison. */
@@ -65,6 +69,8 @@ interface Person {
   depth: { body: string; lon: number; lat: number; retrograde?: boolean }[] | null;
   /** Privacy-safe shape used by the positions-only send-back codec. */
   positions: PositionsShareInput;
+  /** The Old Style date entered beside the Gregorian one, as one line. */
+  oldStyle?: string;
 }
 
 type WheelModule = typeof import('./synastry/RelationshipWheel');
@@ -324,7 +330,23 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
       houseSystem: result.input.houseSystem,
       engineVersion: result.engineVersion,
     },
+    oldStyle: slot.oldStyle,
   };
+}
+
+/**
+ * Each form side with its date read in its calendar, so the chart, a saved
+ * comparison and an invitation all carry the Gregorian date; or the first
+ * date that cannot be read, named by its side.
+ */
+export async function readSlotDates(slots: [SlotState, string][], locale: Locale): Promise<SlotState[] | string> {
+  const read: SlotState[] = [];
+  for (const [slot, label] of slots) {
+    const entry = slot.source === 'form' ? await birthDateForChart(locale, slot.date, slot.calendar ?? 'gregorian') : null;
+    if (entry && 'error' in entry) return `${label}${locale === 'fr' ? '\u202f:' : ':'} ${entry.error}`;
+    read.push(entry ? { ...slot, date: entry.date, oldStyle: entry.oldStyle } : slot);
+  }
+  return read;
 }
 
 function resolvePositions(
@@ -450,6 +472,8 @@ function SlotForm({
             timeKnown={slot.timeKnown}
             city={slot.city}
             onDateChange={(date) => setSlot((s) => ({ ...s, date }))}
+            calendar={slot.calendar ?? 'gregorian'}
+            onCalendarChange={(calendar) => setSlot((s) => ({ ...s, calendar }))}
             onTimeChange={(time) => setSlot((s) => ({ ...s, time }))}
             onTimeKnownChange={(timeKnown) => setSlot((s) => ({ ...s, timeKnown }))}
             onCityChange={(city) => setSlot((s) => ({ ...s, city }))}
@@ -1098,14 +1122,17 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     const timeKnown = slotB.timeKnown && slotB.time !== '';
     const accessGeneration = profileAccessGeneration.current;
     try {
-      const [{ prepareLocalTime, resolveLocalToUtc }, { saveChart }] = await Promise.all([
+      const [{ prepareLocalTime, resolveLocalToUtc }, { saveChart }, read] = await Promise.all([
         import('../lib/time/localToUtc'),
         import('../lib/profile/store'),
+        readSlotDates([[slotB, '']], locale),
       ]);
-      await prepareLocalTime(slotB.date, slotB.city.tz);
+      if (typeof read === 'string') return false;
+      const own = read[0];
+      await prepareLocalTime(own.date, slotB.city.tz);
       if (accessGeneration !== profileAccessGeneration.current) return false;
       const resolved = resolveLocalToUtc(
-        slotB.date,
+        own.date,
         timeKnown ? slotB.time : '12:00',
         slotB.city.tz,
         { longitude: slotB.city.lon },
@@ -1117,7 +1144,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
         createdAt: now,
         updatedAt: now,
         birth: {
-          date: slotB.date,
+          date: own.date,
           time: timeKnown ? slotB.time : null,
           timeKnown,
           place: {
@@ -1251,14 +1278,24 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     setError('');
     const accessGeneration = profileAccessGeneration.current;
     try {
+      const read = await readSlotDates([
+        [slotA, slotA.name.trim() || t(locale, 'personA')],
+        [slotB, slotB.name.trim() || t(locale, 'personB')],
+      ], locale);
+      if (!requestIsCurrent(request, accessGeneration)) return;
+      if (typeof read === 'string') {
+        setError(read);
+        return;
+      }
+      const [sideA, sideB] = read;
       const resolve = (slot: SlotState, fallback: string) =>
         slot.source === 'saved' ? resolveSaved(charts.find((c) => c.id === slot.savedId)!, loadEngine)
           : slot.source === 'link' ? resolveLink(slot.link!, loadEngine)
           : slot.source === 'positions' ? Promise.resolve(resolvePositions(slot.positions!))
           : resolveForm(slot, fallback, loadEngine);
       const [a, b, mod, { summarizePair }] = await Promise.all([
-        resolve(slotA, t(locale, 'personA')),
-        resolve(slotB, t(locale, 'personB')),
+        resolve(sideA, t(locale, 'personA')),
+        resolve(sideB, t(locale, 'personB')),
         wheelMod ? Promise.resolve(wheelMod) : loadModule(() => import('./synastry/RelationshipWheel')),
         loadModule(() => import('../lib/engine/synastry')),
       ]);
@@ -1273,10 +1310,10 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       setMeetingSettled(resultSource === 'invite-restored');
       setResult({
         a, b, summary, at: Date.now(),
-        sides: [sideFromSlot(slotA, a.label), sideFromSlot(slotB, b.label)],
+        sides: [sideFromSlot(sideA, a.label), sideFromSlot(sideB, b.label)],
         source: resultSource,
       });
-      setInvite(inviteFromSlot(slotA));
+      setInvite(inviteFromSlot(sideA));
       setInviteState('idle');
       setInvitePanelExpanded(false);
       setPairSave('idle');
@@ -1472,6 +1509,11 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               {' '}{t(locale, 'moonMiddayEstimate')}
             </p>
           )}
+          {[result.a, result.b].map((person, index) => person.oldStyle && (
+            <p class="notice" role="status" key={index} data-old-style-date>
+              {person.label}{locale === 'fr' ? '\u202f:' : ':'} {person.oldStyle}
+            </p>
+          ))}
           <div class="syn__people">
             <PersonCard person={result.a} locale={locale} />
             <span class="syn__vs mono">×</span>

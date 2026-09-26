@@ -6,7 +6,7 @@
  * chart exists to draw. The transiting side is live engine math.
  */
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import type { MinimalBody } from '../lib/engine/synastry';
 import type { Chart } from '../lib/engine/types';
 import type { SavedChart } from '../lib/profile/schema';
@@ -52,6 +52,8 @@ interface SlotState {
   time: string;
   timeKnown: boolean;
   city: City | null;
+  /** The calendar the form's date was written in; absent is Gregorian. */
+  calendar?: CalendarChoice;
 }
 
 interface NatalWheel {
@@ -273,6 +275,16 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     const isCurrent = () => mounted.current && accessGeneration === profileAccessGeneration.current
       && revision === inputRevision.current;
     try {
+      if (capturedSlot.source === 'form' && calendarInPlay(capturedSlot.date, capturedSlot.calendar ?? 'gregorian')) {
+        // A date before 1924 is read in its calendar; the natal chart uses the Gregorian date.
+        const entry = await birthDateForChart(locale, capturedSlot.date, capturedSlot.calendar ?? 'gregorian');
+        if (!isCurrent()) return;
+        if ('error' in entry) {
+          setError(entry.error);
+          return;
+        }
+        capturedSlot.date = entry.date;
+      }
       const [engine, mod] = await Promise.all([
         loadEngine(),
         ringMod ? Promise.resolve(ringMod) : loadModule(() => import('./transit/TransitRing')),
@@ -402,6 +414,8 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
                   timeKnown={slot.timeKnown}
                   city={slot.city}
                   onDateChange={(date) => changeSlot((s) => ({ ...s, date }))}
+                  calendar={slot.calendar ?? 'gregorian'}
+                  onCalendarChange={(calendar) => changeSlot((s) => ({ ...s, calendar }))}
                   onTimeChange={(time) => changeSlot((s) => ({ ...s, time }))}
                   onTimeKnownChange={(timeKnown) => changeSlot((s) => ({ ...s, timeKnown }))}
                   onCityChange={(city) => changeSlot((s) => ({ ...s, city }))}

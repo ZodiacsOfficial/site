@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import type { ComponentType } from 'preact';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import { useProfile } from '../lib/hooks/useProfile';
 import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
@@ -30,6 +30,7 @@ export default function LunarReturnCalculator() {
   const [source, setSource] = useState<'saved' | 'manual'>('manual');
   const [savedId, setSavedId] = useState('');
   const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
   const [time, setTime] = useState('');
   const [timeKnown, setTimeKnown] = useState(true);
   const [city, setCity] = useState<City | null>(null);
@@ -120,6 +121,13 @@ export default function LunarReturnCalculator() {
       const [{ computeLunarReturn, prepareLocalTime }, view, wheel] = await loadModule(() => Promise.all([
         import('./lunar-return/compute'), import('./lunar-return/LunarReturnResult'), import('./transit/TransitRing'),
       ]));
+      if (!saved && calendarInPlay(input.birthDate, calendar)) {
+        // A date before 1924 is read in its calendar; the return uses the Gregorian date.
+        const entry = await birthDateForChart('en', input.birthDate, calendar);
+        if (!isCurrent()) return;
+        if ('error' in entry) { setError(entry.error); return; }
+        input.birthDate = entry.date;
+      }
       await prepareLocalTime(input.birthDate, input.birthplace?.tz ?? 'UTC');
       if (!isCurrent()) return;
       const data = computeLunarReturn(input, after);
@@ -153,6 +161,7 @@ export default function LunarReturnCalculator() {
             <BirthFields locale="en" dateId="lr-date" timeId="lr-time" placeId="lr-place"
               date={date} time={time} timeKnown={timeKnown} city={city}
               onDateChange={(value) => { invalidateResult(); setDate(value); }}
+              calendar={calendar} onCalendarChange={(value) => { invalidateResult(); setCalendar(value); }}
               onTimeChange={(value) => { invalidateResult(); setTime(value); }}
               onTimeKnownChange={(value) => { invalidateResult(); setTimeKnown(value); setDifferentPlace(false); setCastCity(null); }}
               onCityChange={(value) => { invalidateResult(); setCity(value); }} requireKnownTime
