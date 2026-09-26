@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, calendarInPlay, type CalendarChoice } from './BirthFields';
 import type { City } from '../lib/geo/search';
 import { preloadIndex } from '../lib/geo/search';
 import { useEngine } from '../lib/hooks/useEngine';
@@ -41,6 +41,7 @@ function track(name: string, props: Record<string, string>): void {
 export default function BigThreeQuick() {
   const loadEngine = useEngine();
   const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
   const [time, setTime] = useState('');
   const [city, setCity] = useState<City | null>(null);
   const [busy, setBusy] = useState(false);
@@ -99,8 +100,21 @@ export default function BigThreeQuick() {
     setCardState('idle');
     setCardError('');
     try {
-      await prepareLocalTime(date, city.tz);
-      const resolution = resolveLocalToUtc(date, time, city.tz, { longitude: city.lon });
+      let day = date;
+      if (calendarInPlay(date, calendar)) {
+        // A date before 1924 is read in its calendar; the chart and the handoff use the Gregorian date.
+        const entry = await birthDateForChart('en', date, calendar);
+        if (run !== generation.current) return;
+        if ('error' in entry) {
+          setError(entry.error);
+          setPlacements(null);
+          setHandoff('');
+          return;
+        }
+        day = entry.date;
+      }
+      await prepareLocalTime(day, city.tz);
+      const resolution = resolveLocalToUtc(day, time, city.tz, { longitude: city.lon });
       const engine = await loadEngine();
       if (run !== generation.current) return;
       const chart: Chart = engine.computeChart({
@@ -122,7 +136,7 @@ export default function BigThreeQuick() {
         { kind: 'rising', title: TITLES.rising, lon: chart.angles.asc },
       ]);
       setHandoff(`/birth-chart/#${chartHandoffFragment({
-        date,
+        date: day,
         time,
         timeKnown: true,
         lat: city.lat,
@@ -203,6 +217,8 @@ export default function BigThreeQuick() {
           timeKnown={true}
           city={city}
           onDateChange={setDate}
+          calendar={calendar}
+          onCalendarChange={setCalendar}
           onTimeChange={setTime}
           onTimeKnownChange={() => {}}
           onCityChange={setCity}

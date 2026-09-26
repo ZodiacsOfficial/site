@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest';
-import adoption from '../../data/gregorian-adoption.json';
+import { GREGORIAN_ADOPTION, gregorianAdoption } from '../../data/gregorian-adoption';
 import cityIndex from '../../../public/data/cities/index.json';
+import { CATALOG_LOCALES, LOCALE_META } from '../i18n';
 import { computeChart } from '../engine/full';
 import { gregorianToJulian, julianToGregorian, parseJulianDate } from './calendar';
 import { parseCivilDate } from './civil-date';
@@ -96,13 +97,43 @@ describe('an Old Style birth', () => {
 describe('the Gregorian adoption table', () => {
   it('cites every row and joins the city index by country', () => {
     const countries = new Set(cityIndex.countries);
-    for (const row of adoption.rows) {
+    const codes = GREGORIAN_ADOPTION.map((row) => row.code);
+    expect(codes).toEqual([...codes].sort());
+    expect(new Set(codes).size).toBe(codes.length);
+    for (const row of GREGORIAN_ADOPTION) {
+      expect(row.code, row.country).toMatch(/^[A-Z]{2}$/);
       expect(countries.has(row.country), row.country).toBe(true);
-      expect(row.source.length).toBeGreaterThan(20);
+      expect(gregorianAdoption(row.country)).toBe(row);
+      expect(row.sources.length, row.country).toBeGreaterThan(0);
+      for (const source of row.sources) expect(['wikipedia', 'tzdb', 'lv', 'fi']).toContain(source);
+      // A New Style day between the reform and the birth forms' last Old Style year.
+      expect(parseCivilDate(row.firstGregorian), row.country).not.toBeNull();
+      expect(row.firstGregorian >= '1582-10-15' && row.firstGregorian < '1924-01-01', row.country).toBe(true);
+      // Every locale that renders the forms can name the country.
+      for (const locale of CATALOG_LOCALES) {
+        expect(new Intl.DisplayNames(LOCALE_META[locale].intlLocale, { type: 'region' }).of(row.code), `${locale} ${row.code}`)
+          .not.toBe(row.code);
+      }
+      if (row.lastJulian === undefined) continue;
       // The last Old Style day is the day before the first New Style one.
       const next = new Date(`${julianToGregorian(row.lastJulian)}T00:00:00Z`);
       next.setUTCDate(next.getUTCDate() + 1);
-      expect(next.toISOString().slice(0, 10)).toBe(row.firstGregorian);
+      expect(next.toISOString().slice(0, 10), row.country).toBe(row.firstGregorian);
     }
+  });
+
+  it.each([
+    ['RU', '1918-02-14'], ['BY', '1918-02-14'], ['UA', '1918-03-01'], ['EE', '1918-03-01'], ['LV', '1918-02-14'],
+    ['LT', '1915-05-25'], ['GE', '1918-05-01'], ['GR', '1923-03-01'], ['BG', '1916-04-14'], ['RO', '1919-04-14'],
+    ['RS', '1919-01-28'], ['TR', '1917-03-01'], ['GB', '1752-09-14'], ['US', '1752-09-14'], ['CA', '1752-09-14'],
+    ['SE', '1753-03-01'], ['FI', '1753-03-01'], ['DE', '1700-03-01'], ['NL', '1701-05-12'], ['CH', '1798-12-25'],
+    ['JP', '1873-01-01'], ['CN', '1912-01-01'], ['KR', '1896-01-01'], ['EG', '1875-09-11'], ['FR', '1582-12-20'],
+  ])('gives %s its first New Style day, %s', (code, first) => {
+    expect(GREGORIAN_ADOPTION.find((row) => row.code === code)?.firstGregorian).toBe(first);
+  });
+
+  it('marks exactly the countries whose calendar before was not the Julian', () => {
+    expect(GREGORIAN_ADOPTION.filter((row) => row.lastJulian === undefined).map((row) => row.code))
+      .toEqual(['CN', 'EG', 'JP', 'KP', 'KR']);
   });
 });

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import EvidenceDisclosure from './EvidenceDisclosure';
-import { BirthFields } from './BirthFields';
+import { BirthFields, birthDateForChart, type CalendarChoice } from './BirthFields';
 import type { City } from '../lib/geo/search';
 import { pairSlug } from '../lib/compat';
 import { decodeChartLink, NAME_MAX, type ShareChartInput } from '../lib/share';
@@ -164,6 +164,8 @@ export default function SomeoneElseChart() {
   const [name, setName] = useState('');
   const [consent, setConsent] = useState(false);
   const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState<CalendarChoice>('gregorian');
+  const [dateError, setDateError] = useState('');
   const [time, setTime] = useState('');
   const [timeKnown, setTimeKnown] = useState(true);
   const [city, setCity] = useState<City | null>(null);
@@ -247,10 +249,16 @@ export default function SomeoneElseChart() {
     </label>
   );
 
-  function fullDetailsInput(): ShareChartInput | null {
+  /** Their details for the handoff, with a date before 1924 read in its calendar first. */
+  async function fullDetailsInput(): Promise<ShareChartInput | null> {
     if (!consent || !date || !city || (timeKnown && !time)) return null;
+    const entry = await birthDateForChart('en', date, calendar);
+    if ('error' in entry) {
+      setDateError(entry.error);
+      return null;
+    }
     return {
-      date,
+      date: entry.date,
       time: timeKnown ? time : null,
       timeKnown,
       lat: city.lat,
@@ -262,9 +270,9 @@ export default function SomeoneElseChart() {
     };
   }
 
-  function openFullChart(event: Event) {
+  async function openFullChart(event: Event) {
     event.preventDefault();
-    const input = fullDetailsInput();
+    const input = await fullDetailsInput();
     if (!input) return;
     go(`/birth-chart/#${chartHandoffFragment(input, {
       subjectMode: 'other',
@@ -273,8 +281,8 @@ export default function SomeoneElseChart() {
     })}`);
   }
 
-  function compareFullChart() {
-    const input = fullDetailsInput();
+  async function compareFullChart() {
+    const input = await fullDetailsInput();
     if (!input) return;
     go(compatibilityHandoffPath(input, comparisonMine));
   }
@@ -385,7 +393,10 @@ export default function SomeoneElseChart() {
                 time={time}
                 timeKnown={timeKnown}
                 city={city}
-                onDateChange={setDate}
+                onDateChange={(value) => { setDate(value); setDateError(''); }}
+                calendar={calendar}
+                onCalendarChange={(value) => { setCalendar(value); setDateError(''); }}
+                dateError={dateError || undefined}
                 onTimeChange={setTime}
                 onTimeKnownChange={setTimeKnown}
                 onCityChange={setCity}
