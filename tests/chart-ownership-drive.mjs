@@ -27,34 +27,67 @@ const ts = createRequire(resolve(root, 'package.json'))('typescript');
  * what identifies it; the chunk it lands in is the bundler's business, and it
  * moves as soon as a second island imports the engine and the shared code is
  * split out. Pinning a chunk name measured the bundler, not the site.
+ *
+ * Since engine 0.1.1-rc.8 the calculation sets its ΔT clock and hands the
+ * input to a builder, chartAt(input, pin), which returns the chart. The
+ * calculation is then the one-argument function that returns that builder's
+ * chart of its own input. A builder is any served function whose return value
+ * (the last operand of a comma expression included) is the chart with its
+ * first argument passed through as input.
  */
 const chunkDir = resolve(dist, '_astro');
 const natalCandidates = [];
+const nestedFunction = (node) => ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)
+  || ts.isArrowFunction(node) || ts.isMethodDeclaration(node) || ts.isGetAccessorDeclaration(node)
+  || ts.isSetAccessorDeclaration(node) || ts.isConstructorDeclaration(node);
+function returnedExpressions(fn) {
+  const expressions = [];
+  (function walk(node) {
+    if (ts.isReturnStatement(node) && node.expression) expressions.push(node.expression);
+    if (!nestedFunction(node)) ts.forEachChild(node, walk);
+  })(fn.body);
+  return expressions;
+}
+function lastOperand(expression) {
+  let current = expression;
+  while (ts.isParenthesizedExpression(current)
+    || (ts.isBinaryExpression(current) && current.operatorToken.kind === ts.SyntaxKind.CommaToken)) {
+    current = ts.isParenthesizedExpression(current) ? current.expression : current.right;
+  }
+  return current;
+}
 for (const file of (await readdir(chunkDir)).filter((name) => name.endsWith('.js'))) {
   const source = (await readFile(resolve(chunkDir, file))).toString();
   const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true);
-  (function walk(node) {
-    if (ts.isFunctionDeclaration(node) && node.parameters.length === 1 && node.name) {
-      const parameter = node.parameters[0].name.getText(ast);
-      const returned = node.body?.statements.find((statement) => ts.isReturnStatement(statement));
-      const expression = returned?.expression;
-      if (expression && ts.isObjectLiteralExpression(expression)) {
-        const properties = new Map(expression.properties.filter(ts.isPropertyAssignment)
-          .map((property) => [property.name.getText(ast), property.initializer.getText(ast)]));
-        if (properties.get('input') === parameter
-          && properties.has('bodies') && properties.has('engineVersion')) {
-          natalCandidates.push({ file, function: node.name.text });
-        }
-      }
-    }
-    ts.forEachChild(node, walk);
+  const functions = [];
+  (function collect(node) {
+    if (ts.isFunctionDeclaration(node) && node.name && node.body && node.parameters.length >= 1) functions.push(node);
+    ts.forEachChild(node, collect);
   })(ast);
+  const builders = new Set(functions.filter((fn) => {
+    const input = fn.parameters[0].name.getText(ast);
+    return returnedExpressions(fn).some((expression) => {
+      const returned = lastOperand(expression);
+      if (!ts.isObjectLiteralExpression(returned)) return false;
+      const properties = new Map(returned.properties.filter(ts.isPropertyAssignment)
+        .map((property) => [property.name.getText(ast), property.initializer.getText(ast)]));
+      return properties.get('input') === input && properties.has('bodies') && properties.has('engineVersion');
+    });
+  }).map((fn) => fn.name.text));
+  for (const fn of functions) {
+    if (fn.parameters.length !== 1) continue;
+    const input = fn.parameters[0].name.getText(ast);
+    const delegates = returnedExpressions(fn).some((expression) => ts.isCallExpression(expression)
+      && ts.isIdentifier(expression.expression) && expression.expression.text !== fn.name.text
+      && builders.has(expression.expression.text) && expression.arguments[0]?.getText(ast) === input);
+    if (builders.has(fn.name.text) || delegates) natalCandidates.push({ file, function: fn.name.text });
+  }
 }
 assert.equal(natalCandidates.length, 1, `expected exactly one served natal calculation, found ${JSON.stringify(natalCandidates)}`);
 const nativeFile = natalCandidates[0].file;
 const nativeBytes = await readFile(resolve(chunkDir, nativeFile));
 const nativeFunctions = [natalCandidates[0].function];
-const nativeIdentity = { file: nativeFile, sha256: sha(nativeBytes), function: nativeFunctions[0], mapping: 'One-argument function returning its exact input plus bodies and engineVersion; parsed from actual served chunk.' };
+const nativeIdentity = { file: nativeFile, sha256: sha(nativeBytes), function: nativeFunctions[0], mapping: 'One-argument function returning its exact input plus bodies and engineVersion, itself or through the chart builder it passes that input to; parsed from actual served chunk.' };
 const served = {}, requests = [], results = [], contexts = [], releases = [];
 const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp', '.woff2': 'font/woff2', '.ico': 'image/x-icon', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.webm': 'video/webm' };
 const server = createServer(async (req, res) => {
