@@ -128,7 +128,26 @@ Each step names its rule's source. Baselines are the shipped engine,
 - **Baseline.** On 2026-09-22 the engine's ΔT is 75.497 s where the IERS
   value is 69.196 s, which moves the Moon 3.46″
   (`../deltat-2026-09-23/values.json`).
-- **Verdict: NOT RUN.** See amendment A2.
+- **Verdict: PASS under amendment A2** (2026-09-26), on the vendored rc.8
+  (`vendor/zodiacs-engine-0.1.1-rc.8.tgz`, sha256 `3b934376…`); not run
+  before it. The shipped `dist/deltat.js` is the preregistered model, within
+  1.5e-11 s and the same segment at 18,384 points of the reference
+  implementation.
+  - Gate 1. At most 0.0306 s from IERS on the twelve dates (2024-04-08; rc.7
+    6.302 s). Every IERS day from 1962-01-01 to 2026-09-24 is within 0.0834 s,
+    RMS 0.0223 s. σ is at least 15 times IERS's formal error on observed rows
+    and 4.8 times on predicted rows.
+  - Gate 2. The receipt carries the model, value, band, table and digest, and
+    it round-trips. The site's 5,954 tests pass, and so do the engine's 608.
+  - Gate 3, against Swiss 2.10.03, gives the figures said before the result:
+    (a) +0.022″ (rc.7 +0.314″); (b) −0.070, −0.022, −0.009, +0.006 and
+    −0.009″; (c) 0.103, 0.044, 0.119, 0.118 and 0.100″.
+  - The holdout `zodiacs-holdout/1.4` was drawn once, at `ee37a83c`. Its
+    paired p95 per era runs from 0.041″ to 0.118″. Gate 1 at its 31 instants
+    from 1962 is at most 0.0554 s.
+
+  `../phase1-verdicts-2026-09-26/` has the tools, the holdout's events part
+  and the statistics.
 
 ### 1.5 Lunations in `sky.json` (version 1, rule 1d)
 
@@ -142,6 +161,12 @@ Each step names its rule's source. Baselines are the shipped engine,
   transits agree within 2 s (`scripts/sky-lunations.test.mjs`). Not part of
   the rule: the new moon of 2027-01-07 is within 5 s of Horizons (3.6 s).
   The record is `../lunations-2026-09-23/README.md`. See amendment A4.
+- **A4's re-run: FAIL** (2026-09-26, on the vendored rc.8), as A4 said it
+  would be. 80 of 124 are within 2 s, and the largest gap is 5.153 s (the
+  new moon of 2030-05-02); rc.7 gave 1 of 124 and 11.8 s. The Swiss-free
+  projection agrees with every lunation to 1 ms
+  (`../events-vs-swiss-2026-09-25/`). What remains is the analytic Moon,
+  which is M2's work.
 
 ### 1.6 Grazing return passes (version 1, rule 1f)
 
@@ -157,7 +182,12 @@ Each step names its rule's source. Baselines are the shipped engine,
 ### 1.7 Span flags (version 1, rule 1e)
 
 - **Rule.** Flag present for 2300 and 900; scans never exceed the span.
-- **Verdict: PARTIAL.** Scans: PASS on the site. Returns, year scans and the
+- **Verdict: PASS** (2026-09-26), on the vendored rc.8. `natalChart` flags
+  `outside-reference-span` at 2300 and at 900, and exactly outside
+  [1800, 2200). The receipt validator expects the flag there
+  (`../phase1-verdicts-2026-09-26/`). The scans stay inside the span as
+  before.
+- **Earlier: PARTIAL.** Scans: PASS on the site. Returns, year scans and the
   solar return stay inside 1800–2199 and say when they were clipped
   (`src/lib/engine/reference-span.test.ts`). The `outside-reference-span` flag
   belongs to the package and waits for rc.7; the site refuses a birth date
@@ -240,7 +270,15 @@ Each step names its rule's source. Baselines are the shipped engine,
 - **Baseline.** Two solvers ship with different semantics: the package's
   includes an exact lower endpoint and throws past 10,000 samples, the site's
   copy does neither (ledger production-event-search-5).
-- **Verdict: NOT RUN.**
+- **Verdict: PASS** (2026-09-26), on the vendored rc.8; not run before it.
+  The site's own solver is gone, and every scan calls
+  `@zodiacs/engine/crossings`. `scripts/crossings-s2.test.mjs` runs the
+  audit's s2 cases through the site's scan and through the package's root,
+  and both agree to the millisecond:
+  - no root at an exact `from`;
+  - 95 crossings for the Moon over 2,600 days at 0.25 days;
+  - 13 for Saturn from 1900 to 2100;
+  - no case throws, and a search bounded at 10,000 samples is refused whole.
 
 ### 1.11 Receipts (version 1, rule 1j)
 
@@ -248,7 +286,16 @@ Each step names its rule's source. Baselines are the shipped engine,
   identity.
 - **Baseline.** Receipts do not identify the ephemeris by default (ledger
   data-toolchain-packaging-8) and never carry a tzdb version (time-7).
-- **Verdict: NOT RUN.**
+- **Verdict: PASS** (2026-09-26), on the vendored rc.8; not run before it.
+  - The validator refuses a receipt under rc.8's conventions that lacks
+    `engine.ephemeris` (`invalid_shape`).
+  - It also refuses one that lacks `result.deltaT`, and one that names rc.7
+    under rc.8's conventions.
+  - Receipts made by rc.3 to rc.7, which predate the field, still parse by
+    design (A2, *Receipts*).
+
+  The rule covers the ephemeris only. Whether a receipt carries a tzdb
+  version (ledger time-7) is not part of it and is not judged here.
 
 ### 1.12 Zone history from a pinned tzdb with backzone (version 1, M3; version 2)
 
@@ -346,7 +393,10 @@ Each step names its rule's source. Baselines are the shipped engine,
 - The round-trip scan: PASS (see 1.1).
 - `time-5`'s six flag probes classify correctly: NOT RUN.
 - ΔT within 0.2 s of IERS 1962–present with the band ≥ the IERS formal
-  error: NOT RUN (step 1.4).
+  error: PASS (2026-09-26, step 1.4, on the vendored rc.8). Every IERS day
+  from 1962-01-01 to 2026-09-24 is within 0.0834 s. σ is at least 15 times
+  IERS's formal error on observed rows and 4.8 times on predicted rows.
+  Earlier: NOT RUN.
 
 ## Phase 0 items
 
