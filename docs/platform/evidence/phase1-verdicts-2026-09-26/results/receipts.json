@@ -1,0 +1,44 @@
+{
+ "engine": "0.1.1-rc.8",
+ "birth": {
+  "utc": "1990-06-15T18:30:00Z",
+  "timeKnown": true,
+  "latitude": 40.71,
+  "longitude": -74,
+  "houseSystem": "placidus"
+ },
+ "gate2": {
+  "conventionsDeltaT": "tt-minus-ut1;ut1-read-as-utc;value-in-result",
+  "engine": {
+   "ephemeris": {
+    "name": "astronomy-engine",
+    "version": "2.1.19"
+   },
+   "name": "@zodiacs/engine",
+   "version": "0.1.1-rc.8"
+  },
+  "resultDeltaT": {
+   "model": "zodiacs-deltat/1",
+   "seconds": 57.18223762263282,
+   "segment": "observed",
+   "sigma": 0.03,
+   "table": "2026-09-24",
+   "tableDigest": "6371988c510a1c6c"
+  },
+  "roundTrip": true
+ },
+ "altered": {
+  "engine.ephemeris removed": "refused: invalid_shape",
+  "engine.ephemeris.name emptied": "refused: unsupported_feature",
+  "engine.ephemeris.version changed to 2.1.18": "accepted",
+  "result.deltaT removed": "refused: invalid_shape",
+  "result.deltaT.model changed": "refused: unsupported_feature",
+  "result.deltaT.tableDigest changed": "accepted",
+  "engine.version set to 0.1.1-rc.7 with rc.8 conventions": "refused: inconsistent_result"
+ },
+ "legacy": {
+  "engine": "0.1.1-rc.7",
+  "hasEphemeris": false,
+  "parsedByRc8": "accepted"
+ }
+}

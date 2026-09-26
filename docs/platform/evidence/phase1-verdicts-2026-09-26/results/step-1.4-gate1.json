@@ -1,0 +1,243 @@
+{
+ "module": "deltat.js",
+ "tableDigest": "6371988c510a1c6c",
+ "tableVersion": "2026-09-24",
+ "gate1": {
+  "limit": 0.2,
+  "maxAbsResidual": 0.0306,
+  "worstDate": "2024-04-08",
+  "rc7MaxAbsResidual": 6.302,
+  "rc7WorstDate": "2026-09-22",
+  "values": [
+   {
+    "date": "1962-03-15",
+    "ttMinusUt1": 34.0957,
+    "model": 34.0939,
+    "sigma": 0.03,
+    "residual": -0.0018,
+    "rc7Residual": -0.031
+   },
+   {
+    "date": "1969-09-15",
+    "ttMinusUt1": 39.8714,
+    "model": 39.8902,
+    "sigma": 0.03,
+    "residual": 0.0188,
+    "rc7Residual": -0.012
+   },
+   {
+    "date": "1977-03-15",
+    "ttMinusUt1": 47.7263,
+    "model": 47.7226,
+    "sigma": 0.03,
+    "residual": -0.0037,
+    "rc7Residual": -0.002
+   },
+   {
+    "date": "1984-09-15",
+    "ttMinusUt1": 54.1646,
+    "model": 54.1777,
+    "sigma": 0.03,
+    "residual": 0.0131,
+    "rc7Residual": -0.018
+   },
+   {
+    "date": "1992-03-15",
+    "ttMinusUt1": 58.4903,
+    "model": 58.473,
+    "sigma": 0.03,
+    "residual": -0.0173,
+    "rc7Residual": -0.034
+   },
+   {
+    "date": "1999-09-15",
+    "ttMinusUt1": 63.7028,
+    "model": 63.7231,
+    "sigma": 0.03,
+    "residual": 0.0203,
+    "rc7Residual": 0.038
+   },
+   {
+    "date": "2007-03-15",
+    "ttMinusUt1": 65.2273,
+    "model": 65.2117,
+    "sigma": 0.03,
+    "residual": -0.0156,
+    "rc7Residual": 0.286
+   },
+   {
+    "date": "2014-09-15",
+    "ttMinusUt1": 67.5231,
+    "model": 67.5333,
+    "sigma": 0.03,
+    "residual": 0.0102,
+    "rc7Residual": 1.324
+   },
+   {
+    "date": "2017-08-21",
+    "ttMinusUt1": 68.844,
+    "model": 68.8316,
+    "sigma": 0.03,
+    "residual": -0.0124,
+    "rc7Residual": 1.476
+   },
+   {
+    "date": "2020-01-01",
+    "ttMinusUt1": 69.3612,
+    "model": 69.3598,
+    "sigma": 0.03,
+    "residual": -0.0014,
+    "rc7Residual": 2.216
+   },
+   {
+    "date": "2024-04-08",
+    "ttMinusUt1": 69.1999,
+    "model": 69.1693,
+    "sigma": 0.03,
+    "residual": -0.0306,
+    "rc7Residual": 4.807
+   },
+   {
+    "date": "2026-09-22",
+    "ttMinusUt1": 69.1954,
+    "model": 69.1993,
+    "sigma": 0.03,
+    "residual": 0.0039,
+    "rc7Residual": 6.302
+   }
+  ],
+  "verdictOnReference": "PASS"
+ },
+ "everyObservedDay": {
+  "days": 23643,
+  "from": "1962-01-01",
+  "to": "2026-09-24",
+  "maxAbs": 0.0834,
+  "maxAt": "1998-05-29",
+  "rms": 0.0223,
+  "withinSigma": 0.8301,
+  "minSigmaOverFormalError": 15.0,
+  "byDecade": {
+   "1960": {
+    "days": 2922,
+    "rms": 0.0172,
+    "maxAbs": 0.0479
+   },
+   "1970": {
+    "days": 3652,
+    "rms": 0.022,
+    "maxAbs": 0.0637
+   },
+   "1980": {
+    "days": 3653,
+    "rms": 0.0229,
+    "maxAbs": 0.0744
+   },
+   "1990": {
+    "days": 3652,
+    "rms": 0.0238,
+    "maxAbs": 0.0834
+   },
+   "2000": {
+    "days": 3653,
+    "rms": 0.0194,
+    "maxAbs": 0.0506
+   },
+   "2010": {
+    "days": 3652,
+    "rms": 0.0258,
+    "maxAbs": 0.0764
+   },
+   "2020": {
+    "days": 2459,
+    "rms": 0.0228,
+    "maxAbs": 0.0802
+   }
+  }
+ },
+ "predictedRows": {
+  "days": 373,
+  "to": "2027-10-02",
+  "maxAbs": 0.0196,
+  "maxAt": "2027-05-06",
+  "withinSigma": 1.0,
+  "minSigmaOverFormalError": 4.8
+ },
+ "s15Representation": {
+  "maxAbs": 0.0187,
+  "at": 1770.7,
+  "gridYears": 0.05
+ },
+ "joins": {
+  "-720": {
+   "year": -720,
+   "valueLeft": 20550.59,
+   "valueRight": 20550.59,
+   "valueStep": -0.0,
+   "sigmaLeft": 388.6215,
+   "sigmaRight": 388.6215,
+   "slopeLeft": -17.926,
+   "slopeRight": -18.9896,
+   "segments": [
+    "long-term",
+    "reconstructed"
+   ]
+  },
+  "1941": {
+   "year": 1941,
+   "valueLeft": 24.8339,
+   "valueRight": 24.82,
+   "valueStep": -0.0139,
+   "sigmaLeft": 0.46,
+   "sigmaRight": 0.46,
+   "slopeLeft": -0.9262,
+   "slopeRight": 0.48,
+   "segments": [
+    "reconstructed",
+    "reconstructed"
+   ]
+  },
+  "1956": {
+   "year": 1956,
+   "valueLeft": 31.35,
+   "valueRight": 31.35,
+   "valueStep": 0.0,
+   "sigmaLeft": 0.46,
+   "sigmaRight": 0.03,
+   "slopeLeft": 0.28,
+   "slopeRight": 0.33,
+   "segments": [
+    "reconstructed",
+    "observed"
+   ]
+  },
+  "observedTo": {
+   "year": 2026.72827,
+   "valueLeft": 69.2,
+   "valueRight": 69.2,
+   "valueStep": 0.0,
+   "sigmaLeft": 0.03,
+   "sigmaRight": 0.03,
+   "slopeLeft": 0.1236,
+   "slopeRight": 0.3917,
+   "segments": [
+    "observed",
+    "observed"
+   ]
+  },
+  "predictedTo": {
+   "year": 2027.74949,
+   "valueLeft": 69.33,
+   "valueRight": 69.33,
+   "valueStep": -0.0,
+   "sigmaLeft": 0.1238,
+   "sigmaRight": 0.1238,
+   "slopeLeft": -0.1958,
+   "slopeRight": 0.1273,
+   "segments": [
+    "predicted",
+    "predicted"
+   ]
+  }
+ }
+}
