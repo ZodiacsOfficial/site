@@ -11,7 +11,7 @@
   "sourceCommit": "82aad2fcc9b204a687e0b67f709681e62f9e889a",
   "sourcePackagePath": "",
   "evidenceRepository": "https://github.com/zodiacs-org/site",
-  "evidenceCommit": "ac7c241474592635c2888c56a05c952f5ec19889",
+  "evidenceCommit": "5df5567d4d70e9aff7b241d1393b9ba49edd69a6",
   "evidencePaths": {
     "ledger": "docs/platform/evidence/site-engine-rc9/README.md",
     "node22": "docs/platform/evidence/site-engine-rc9/node22-parity.json",
