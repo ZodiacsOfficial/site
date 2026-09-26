@@ -3,31 +3,31 @@
   "ingresses": [
     {
       "planet": "Venus",
-      "at": "2028-04-03T20:27:44.993Z",
+      "at": "2028-04-03T20:27:52.063Z",
       "sign": "gemini",
       "retrograde": false
     },
     {
       "planet": "Saturn",
-      "at": "2028-04-13T04:04:56.210Z",
+      "at": "2028-04-13T04:05:03.292Z",
       "sign": "taurus",
       "retrograde": false
     },
     {
       "planet": "Mercury",
-      "at": "2028-04-15T11:48:55.884Z",
+      "at": "2028-04-15T11:49:02.970Z",
       "sign": "taurus",
       "retrograde": false
     },
     {
       "planet": "Sun",
-      "at": "2028-04-19T13:09:31.358Z",
+      "at": "2028-04-19T13:09:38.448Z",
       "sign": "taurus",
       "retrograde": false
     },
     {
       "planet": "Mars",
-      "at": "2028-04-27T22:21:12.016Z",
+      "at": "2028-04-27T22:21:19.116Z",
       "sign": "taurus",
       "retrograde": false
     }
@@ -35,15 +35,15 @@
   "lunations": [
     {
       "type": "full",
-      "at": "2028-04-09T10:26:29.885Z",
+      "at": "2028-04-09T10:26:36.972Z",
       "sign": "libra",
-      "degree": 20.096564735698166
+      "degree": 20.096566728152766
     },
     {
       "type": "new",
-      "at": "2028-04-24T19:46:49.285Z",
+      "at": "2028-04-24T19:46:56.371Z",
       "sign": "taurus",
-      "degree": 5.146933360242656
+      "degree": 5.14693174987633
     }
   ],
   "stations": [],
@@ -53,143 +53,143 @@
       "b": "Neptune",
       "type": "conjunction",
       "orb": 0,
-      "at": "2028-04-04T01:01:50.109Z",
+      "at": "2028-04-04T01:01:57.195Z",
       "aSign": "aries",
-      "aDegree": 6.651262289313365,
+      "aDegree": 6.651262696227775,
       "bSign": "aries",
-      "bDegree": 6.651261051756478
+      "bDegree": 6.6512610597959565
     },
     {
       "a": "Mercury",
       "b": "Uranus",
       "type": "sextile",
       "orb": 0,
-      "at": "2028-04-04T05:52:28.048Z",
+      "at": "2028-04-04T05:52:35.135Z",
       "aSign": "aries",
-      "aDegree": 7.040877410686107,
+      "aDegree": 7.040877834583796,
       "bSign": "gemini",
-      "bDegree": 7.040876300740479
+      "bDegree": 7.040876309770738
     },
     {
       "a": "Mercury",
       "b": "Pluto",
       "type": "sextile",
       "orb": 0,
-      "at": "2028-04-05T00:36:04.580Z",
+      "at": "2028-04-05T00:36:11.666Z",
       "aSign": "aries",
-      "aDegree": 8.555839501714843,
+      "aDegree": 8.555839882157443,
       "bSign": "aquarius",
-      "bDegree": 8.555839468816202
+      "bDegree": 8.55583947187722
     },
     {
       "a": "Venus",
       "b": "Neptune",
       "type": "sextile",
       "orb": 0,
-      "at": "2028-04-12T07:19:43.995Z",
+      "at": "2028-04-12T07:19:51.081Z",
       "aSign": "gemini",
-      "aDegree": 6.958507882312347,
+      "aDegree": 6.958507940824461,
       "bSign": "aries",
-      "bDegree": 6.958507638908486
+      "bDegree": 6.9585076418238145
     },
     {
       "a": "Venus",
       "b": "Uranus",
       "type": "conjunction",
       "orb": 0,
-      "at": "2028-04-12T21:47:56.741Z",
+      "at": "2028-04-12T21:48:03.826Z",
       "aSign": "gemini",
-      "aDegree": 7.416711114380632,
+      "aDegree": 7.416711156002975,
       "bSign": "gemini",
-      "bDegree": 7.416710509253619
+      "bDegree": 7.416710511845565
     },
     {
       "a": "Venus",
       "b": "Pluto",
       "type": "trine",
       "orb": 0,
-      "at": "2028-04-14T14:48:55.133Z",
+      "at": "2028-04-14T14:49:02.219Z",
       "aSign": "gemini",
-      "aDegree": 8.684278545884638,
+      "aDegree": 8.68427857422546,
       "bSign": "aquarius",
-      "bDegree": 8.684278521077772
+      "bDegree": 8.684278521598799
     },
     {
       "a": "Mercury",
       "b": "Saturn",
       "type": "conjunction",
       "orb": 0,
-      "at": "2028-04-15T15:23:06.583Z",
+      "at": "2028-04-15T15:23:13.669Z",
       "aSign": "taurus",
-      "aDegree": 0.3141684256717099,
+      "aDegree": 0.31416847275147575,
       "bSign": "taurus",
-      "bDegree": 0.31416790621420887
+      "bDegree": 0.31416790915869797
     },
     {
       "a": "Mercury",
       "b": "Pluto",
       "type": "square",
       "orb": 0,
-      "at": "2028-04-19T15:32:20.047Z",
+      "at": "2028-04-19T15:32:27.133Z",
       "aSign": "taurus",
-      "aDegree": 8.735638787870528,
+      "aDegree": 8.735638698635682,
       "bSign": "aquarius",
-      "bDegree": 8.735637146982754
+      "bDegree": 8.735637146663294
     },
     {
       "a": "Sun",
       "b": "Saturn",
       "type": "conjunction",
       "orb": 0,
-      "at": "2028-04-20T12:06:35.012Z",
+      "at": "2028-04-20T12:06:42.099Z",
       "aSign": "taurus",
-      "aDegree": 0.9339202906713808,
+      "aDegree": 0.9339202463740435,
       "bSign": "taurus",
-      "bDegree": 0.933919719282926
+      "bDegree": 0.9339197136099529
     },
     {
       "a": "Mercury",
       "b": "Jupiter",
       "type": "trine",
       "orb": 0,
-      "at": "2028-04-24T07:18:42.363Z",
+      "at": "2028-04-24T07:18:49.530Z",
       "aSign": "taurus",
-      "aDegree": 18.118357999209252,
+      "aDegree": 18.118359580985725,
       "bSign": "virgo",
-      "bDegree": 18.118357848737674
+      "bDegree": 18.1183578006993
     },
     {
       "a": "Sun",
       "b": "Pluto",
       "type": "square",
       "orb": 0,
-      "at": "2028-04-28T13:49:16.694Z",
+      "at": "2028-04-28T13:49:23.780Z",
       "aSign": "taurus",
-      "aDegree": 8.798264246894007,
+      "aDegree": 8.798264063662884,
       "bSign": "aquarius",
-      "bDegree": 8.798263657767393
+      "bDegree": 8.798263656843346
     },
     {
       "a": "Venus",
       "b": "Jupiter",
       "type": "square",
       "orb": 0,
-      "at": "2028-04-30T20:18:05.557Z",
+      "at": "2028-04-30T20:18:12.643Z",
       "aSign": "gemini",
-      "aDegree": 17.797357991549916,
+      "aDegree": 17.79735791085875,
       "bSign": "virgo",
-      "bDegree": 17.797357845081706
+      "bDegree": 17.797357853941662
     },
     {
       "a": "Mars",
       "b": "Saturn",
       "type": "conjunction",
       "orb": 0,
-      "at": "2028-04-30T22:35:53.565Z",
+      "at": "2028-04-30T22:36:00.652Z",
       "aSign": "taurus",
-      "aDegree": 2.26156001799626,
+      "aDegree": 2.261559856527299,
       "bSign": "taurus",
-      "bDegree": 2.261559527684426
+      "bDegree": 2.2615595005551086
     }
   ]
 }

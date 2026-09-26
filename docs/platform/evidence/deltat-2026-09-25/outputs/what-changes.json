@@ -1,0 +1,123 @@
+{
+ "module": "deltat-reference.ts",
+ "table": "6371988c510a1c6c",
+ "rows": [
+  {
+   "utc": "1800-01-01T12:00:00Z",
+   "model": 18.708,
+   "sigma": 1.499,
+   "segment": "reconstructed",
+   "rc7": 13.772,
+   "difference": 4.935,
+   "moonArcsec": 2.55
+  },
+  {
+   "utc": "1850-01-01T12:00:00Z",
+   "model": 9.321,
+   "sigma": 0.46,
+   "segment": "reconstructed",
+   "rc7": 7.102,
+   "difference": 2.219,
+   "moonArcsec": 1.35
+  },
+  {
+   "utc": "1900-01-01T12:00:00Z",
+   "model": -1.977,
+   "sigma": 0.46,
+   "segment": "reconstructed",
+   "rc7": -2.757,
+   "difference": 0.78,
+   "moonArcsec": 0.47
+  },
+  {
+   "utc": "1950-01-01T12:00:00Z",
+   "model": 29.151,
+   "sigma": 0.46,
+   "segment": "reconstructed",
+   "rc7": 29.055,
+   "difference": 0.096,
+   "moonArcsec": 0.05
+  },
+  {
+   "utc": "2000-01-01T12:00:00Z",
+   "model": 63.83,
+   "sigma": 0.03,
+   "segment": "observed",
+   "rc7": 63.847,
+   "difference": -0.017,
+   "moonArcsec": -0.01
+  },
+  {
+   "utc": "2026-09-22T00:00:00Z",
+   "model": 69.199,
+   "sigma": 0.03,
+   "segment": "observed",
+   "rc7": 75.497,
+   "difference": -6.298,
+   "moonArcsec": -3.19
+  },
+  {
+   "utc": "2026-09-25T00:00:00Z",
+   "model": 69.201,
+   "sigma": 0.031,
+   "segment": "predicted",
+   "rc7": 75.502,
+   "difference": -6.301,
+   "moonArcsec": -3.41
+  },
+  {
+   "utc": "2027-06-01T00:00:00Z",
+   "model": 69.377,
+   "sigma": 0.098,
+   "segment": "predicted",
+   "rc7": 75.928,
+   "difference": -6.551,
+   "moonArcsec": -3.63
+  },
+  {
+   "utc": "2030-01-01T00:00:00Z",
+   "model": 69.602,
+   "sigma": 0.71,
+   "segment": "extrapolated",
+   "rc7": 77.59,
+   "difference": -7.988,
+   "moonArcsec": -4.86
+  },
+  {
+   "utc": "2050-01-01T00:00:00Z",
+   "model": 71.451,
+   "sigma": 11.89,
+   "segment": "extrapolated",
+   "rc7": 92.968,
+   "difference": -21.517,
+   "moonArcsec": -12.1
+  },
+  {
+   "utc": "2100-01-01T00:00:00Z",
+   "model": 78.927,
+   "sigma": 42.39,
+   "segment": "extrapolated",
+   "rc7": 202.652,
+   "difference": -123.725,
+   "moonArcsec": -72.23
+  },
+  {
+   "utc": "2150-01-01T00:00:00Z",
+   "model": 96.053,
+   "sigma": 72.889,
+   "segment": "extrapolated",
+   "rc7": 328.379,
+   "difference": -232.326,
+   "moonArcsec": -119.14
+  },
+  {
+   "utc": "2199-12-31T12:00:00Z",
+   "model": 126.246,
+   "sigma": 103.387,
+   "segment": "extrapolated",
+   "rc7": 441.984,
+   "difference": -315.738,
+   "moonArcsec": -158.14
+  }
+ ]
+}

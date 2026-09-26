@@ -7,8 +7,8 @@
  * the eight planets; the traditional Sun-to-Saturn set is available as an
  * option. All instants are UTC.
  */
+import { findLongitudeCrossingsWith, type BodyLongitudeAt } from '@zodiacs/engine/crossings';
 import { bodyLongitude } from './full';
-import { findLongitudeCrossingsWith, type BodyLongitudeAt } from './longitude-crossings';
 
 const DAY = 86_400_000;
 
@@ -73,6 +73,7 @@ function delta(a: number, b: number): number {
 /** Every Moon ingress in (from, to], in time order. */
 export function moonIngresses(from: Date, to: Date, longitudeAt: BodyLongitudeAt = bodyLongitude): MoonIngress[] {
   const out: MoonIngress[] = [];
+  if (!(to.getTime() > from.getTime())) return out;
   for (let signIndex = 0; signIndex < 12; signIndex += 1) {
     // Six-hour steps: the Moon covers at most about 4° in six hours, well
     // inside the crossing helper's ±90° wrap guard.

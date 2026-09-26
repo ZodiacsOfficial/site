@@ -1,0 +1,797 @@
+{
+ "note": "Raw sources are not committed; each is named here by SHA-256. DELTAT_SOURCES points the tools at a directory holding them.",
+ "sources": [
+  {
+   "file": "finals2000A.all",
+   "url": "https://maia.usno.navy.mil/ser7/finals2000A.all",
+   "retrieved": "2026-09-25",
+   "lastModified": "Thu, 24 Sep 2026 17:37:44 GMT",
+   "bytes": 3768836,
+   "sha256": "cc80680ec05c91b65e7d02c6068fe0d44dd0998dc880551975092d2d14aa8e18",
+   "licence": "IERS Rapid Service/Prediction Centre at USNO, Bulletin A columns (IAU 2000). The mirror https://datacenter.iers.org/data/9/finals2000A.all (Last-Modified 17:37:52) was byte-identical. US Government work (USNO), public domain in the United States; IERS product, free to use with citation of the IERS (https://www.iers.org/IERS/EN/Science/Publications/publications.html)",
+   "usedFor": "Observed (I) and predicted (P) UT1 − UTC from 1973-01-02; the table from 1973 and its prediction knot; gate 1 after 1972."
+  },
+  {
+   "file": "eopc04.1962-now",
+   "url": "https://hpiers.obspm.fr/iers/eop/eopc04/eopc04.1962-now",
+   "retrieved": "2026-09-25",
+   "lastModified": "Thu, 24 Sep 2026 13:21:06 GMT",
+   "bytes": 5171976,
+   "sha256": "7e39bb43bd1e1920517ed9316d3c5b14f898fe68afe9e0891bf18c4180b9d272",
+   "licence": "IERS EOP 20 C04 (Paris Observatory). IERS product, free to use with citation of the IERS (https://www.iers.org/IERS/EN/Science/Publications/publications.html)",
+   "usedFor": "UT1 − UTC 1962-01-01 to 1973-01-01 (per-era source rule); gate 1 before 1973."
+  },
+  {
+   "file": "tai-utc.dat",
+   "url": "https://maia.usno.navy.mil/ser7/tai-utc.dat",
+   "retrieved": "2026-09-25",
+   "lastModified": "Thu, 18 Jun 2026 17:26:25 GMT",
+   "bytes": 3321,
+   "sha256": "3524e1ae34d67e858873a89e59983bbc5bd100221da898e796c1b36036a310c3",
+   "licence": "US Government work (USNO), public domain in the United States",
+   "usedFor": "TAI − UTC, including the 1961–1971 drift formulas."
+  },
+  {
+   "file": "historic_deltat.data",
+   "url": "https://maia.usno.navy.mil/ser7/historic_deltat.data",
+   "retrieved": "2026-09-25",
+   "lastModified": "Thu, 18 Jun 2026 17:26:25 GMT",
+   "bytes": 30345,
+   "sha256": "9f43514119060601a00624a5d9287a91b0b1f5e12bec5209bbabda90b392b70b",
+   "licence": "US Government work (USNO), public domain in the United States",
+   "usedFor": "Whole-year knots 1941–1961; comparison with Table S15 (2016) in 1657–1984."
+  },
+  {
+   "file": "Table-S15.txt",
+   "url": "rspa20160404supp2.zip (below), member Table-S15.txt",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 5194,
+   "sha256": "b972e922e6a2b666c7fb4baa4014b84818066458a3c3d300d630d991621cd037",
+   "licence": "CC BY 4.0 (the article and its electronic supplementary material, PMC5247521)",
+   "usedFor": "Stephenson, Morrison & Hohenkerk 2016, Table S15: the reconstruction from −720 to 1941 (32 knots of its C2 spline)."
+  },
+  {
+   "file": "extract-lunarocc.dat",
+   "url": "rspa20160404supp2.zip (below), member extract-lunarocc.dat",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 13055292,
+   "sha256": "fb29fae0ea6c9a2e87de06b863fbd9a7888a0493b67b0674e265773534ca7277",
+   "licence": "CC BY 4.0 (the article and its electronic supplementary material, PMC5247521); derived by SMH from the IOTA/CDS archive VI/132B (Herald & Gault)",
+   "usedFor": "The lunar occultation ΔT values and weights SMH 2016 fitted; σ from 1620 to 1850 (decade scatter)."
+  },
+  {
+   "file": "rspa20160404supp2.zip",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5247521/supplementaryFiles (a zip of the article's supplementary files; this member's MD5 322c18c812171a2c0c959509e093faf4 equals the JATS record's)",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 1501355,
+   "sha256": "ae44da13701d36e4e449991c59391af5b0ab60d5068cc70f99ab6d24816fb860",
+   "licence": "CC BY 4.0 (the article and its electronic supplementary material, PMC5247521)",
+   "usedFor": "Container of Table-S15.txt and extract-lunarocc.dat."
+  },
+  {
+   "file": "rspa20160404supp1.pdf",
+   "url": "same Europe PMC zip, member rspa20160404supp1.pdf (MD5 44538a36f5bcf74db341d2ed1e69a907, as the JATS record)",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 343612,
+   "sha256": "81c91834caf8fc688921696710d0fa34a30afe0cc688b88d4a13371cb5b85f64",
+   "licence": "CC BY 4.0 (the article and its electronic supplementary material, PMC5247521)",
+   "usedFor": "Section S5: how Table S15 is evaluated."
+  },
+  {
+   "file": "PMC5247521.xml",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5247521/fullTextXML",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 142227,
+   "sha256": "543c1466ed45225a16eb4f5935dbb67658d37bfa25c7fab0d9db0cce99a715bd",
+   "licence": "CC BY 4.0 (the article and its electronic supplementary material, PMC5247521)",
+   "usedFor": "Eq. (4.1) parabola 32.5 ± 0.6 s/cy²; eq. (5.1) lod = 1.78t − 4.0 sin(2πt/15) ms; ṅ = −25.82″/cy²."
+  },
+  {
+   "file": "Table-S15.2020.txt",
+   "url": "https://web.archive.org/web/20220320003423/http://astro.ukho.gov.uk/nao/lvm/Table-S15.2020.txt",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "bytes": 5977,
+   "sha256": "cfcb7dfcac62484f7175b3ca3831ca0345a79b806e8a3ef218093ffd19e5e723",
+   "licence": "No licence established (HMNAO page Crown copyright; Crossref lists only a text-and-data-mining licence for the addendum, 10.1098/rspa.2020.0776). Used only to measure the 2016→2020 revision; nothing from it ships.",
+   "usedFor": "σ before 1850 (revision size)."
+  },
+  {
+   "file": "bulletin-a/",
+   "url": "https://datacenter.iers.org/data/6/<file>",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "count": 90,
+   "licence": "IERS product, free to use with citation of the IERS (https://www.iers.org/IERS/EN/Science/Publications/publications.html)",
+   "usedFor": "Weekly issues 2025-01-02 to 2026-09-17: the monitor replay and the weekly calibration.",
+   "members": [
+    {
+     "file": "bulletina-xxxix-001.txt",
+     "bytes": 33080,
+     "sha256": "4106dc99b89f6c7d3f4aee5e5e9f059ce062a5d5359cd3c8cf59fdd66e7ec4e1"
+    },
+    {
+     "file": "bulletina-xxxix-002.txt",
+     "bytes": 41812,
+     "sha256": "86e3b037ce2eea869e6a11159e0335ca184f9f63dcca03b93afa2836bf2ac125"
+    },
+    {
+     "file": "bulletina-xxxix-003.txt",
+     "bytes": 35479,
+     "sha256": "1dd9e76b23931018fa90a0eb14cf49948c91a432fa2d3507b76af46d2160d29e"
+    },
+    {
+     "file": "bulletina-xxxix-004.txt",
+     "bytes": 34669,
+     "sha256": "36b5f7ccbae5f4726a4561cc873e7a97481813d5cf1a17cd803081fd0cc28a4b"
+    },
+    {
+     "file": "bulletina-xxxix-005.txt",
+     "bytes": 34669,
+     "sha256": "b22b61e8904cd626962064125f7c2f0bb10aeb76d9af06ad06eacfef2899c7ae"
+    },
+    {
+     "file": "bulletina-xxxix-006.txt",
+     "bytes": 41878,
+     "sha256": "84134375f2b0aa3b2eea191d4765fe39d405c12821c8682746fc3bb4cbff49f9"
+    },
+    {
+     "file": "bulletina-xxxix-007.txt",
+     "bytes": 34669,
+     "sha256": "965396a72b20d314e563586f9b01be38d9758f10cbbbe0b1bce65a56defe230a"
+    },
+    {
+     "file": "bulletina-xxxix-008.txt",
+     "bytes": 33080,
+     "sha256": "b457d1632ff7558a995f9ecbc9f25380190e201a89da35cf78b5e7a7d7d259e0"
+    },
+    {
+     "file": "bulletina-xxxix-009.txt",
+     "bytes": 35074,
+     "sha256": "ffffdc301d6f6ab29cb9bbd2bebdc9df56141e7634241cb6bc5813b50a733d99"
+    },
+    {
+     "file": "bulletina-xxxix-010.txt",
+     "bytes": 42418,
+     "sha256": "0e3136f65684ba79eaed0e87fdc1cb5cececb1ae0edf4b930137479ff0c17372"
+    },
+    {
+     "file": "bulletina-xxxix-011.txt",
+     "bytes": 34669,
+     "sha256": "35be4b5fe48ce84c664661dd68a8dd457b9a3da7beb53ee85eedc1743af37cca"
+    },
+    {
+     "file": "bulletina-xxxix-012.txt",
+     "bytes": 33080,
+     "sha256": "97dd9f3abb55917a72603182f8c9b7125ec391768f67d09b88d28cfc49ff6015"
+    },
+    {
+     "file": "bulletina-xxxix-013.txt",
+     "bytes": 35614,
+     "sha256": "ebd85c37fdb7a9be988af56e0c55a0d2f3d59799a28d24f02cdd67edbc8611e1"
+    },
+    {
+     "file": "bulletina-xxxix-014.txt",
+     "bytes": 41354,
+     "sha256": "db07e6a069bf52610355a4c0f9a771f250da6c2d94504362e51a7ebf991c743b"
+    },
+    {
+     "file": "bulletina-xxxix-015.txt",
+     "bytes": 33080,
+     "sha256": "88507c365891aeae2b4f9865c3d044546ba227c9041b47a707a45276950c91e8"
+    },
+    {
+     "file": "bulletina-xxxix-016.txt",
+     "bytes": 34939,
+     "sha256": "cb1431d10fbd55d41024641f9569dc445e3cb8bf63b3c202fc1f03eb53884231"
+    },
+    {
+     "file": "bulletina-xxxix-017.txt",
+     "bytes": 35344,
+     "sha256": "37deb1c20e8c5b4cc2bb4db8b3975df78738b2613ed67c60a60aef567fb39c5c"
+    },
+    {
+     "file": "bulletina-xxxix-018.txt",
+     "bytes": 33080,
+     "sha256": "5c47e3676f9e30e923f67b35348a9be86078556faf2268f908e9640368f12c8a"
+    },
+    {
+     "file": "bulletina-xxxix-019.txt",
+     "bytes": 42958,
+     "sha256": "e62ccb5c5eca88a756c2a263f8d302cef96276e19179410da6457bdb19e879a0"
+    },
+    {
+     "file": "bulletina-xxxix-020.txt",
+     "bytes": 33859,
+     "sha256": "bcb4ca1c97c9982b6de6ac665c2788e85c49a2d306e3943e912dddd346c71135"
+    },
+    {
+     "file": "bulletina-xxxix-021.txt",
+     "bytes": 35344,
+     "sha256": "d48d8b496b905b316791ae287650a94f752b98f57803da9260141bd2161fa80a"
+    },
+    {
+     "file": "bulletina-xxxix-022.txt",
+     "bytes": 34669,
+     "sha256": "f1014ae51eccecfca18a718be0073153c49ac8107affb8e2dd39cdfa1363b9f4"
+    },
+    {
+     "file": "bulletina-xxxix-023.txt",
+     "bytes": 41812,
+     "sha256": "f2b03360edec7eec3edad70410950ae4f3fcd51efb030473a2f982116909cc77"
+    },
+    {
+     "file": "bulletina-xxxix-024.txt",
+     "bytes": 33311,
+     "sha256": "246862f04cb3f518f13036e67da79bf3994684be67ea5f4041a0fc0fda1445cc"
+    },
+    {
+     "file": "bulletina-xxxix-025.txt",
+     "bytes": 36115,
+     "sha256": "427650a0f68ae642db83b9770bf586fc5bb7427798d94c3b1fe0f61c9ec82825"
+    },
+    {
+     "file": "bulletina-xxxix-026.txt",
+     "bytes": 33311,
+     "sha256": "bef5d9ae917e21171216db0eb5a5417ec31458c3700143998e72aaab908380a7"
+    },
+    {
+     "file": "bulletina-xxxix-027.txt",
+     "bytes": 42418,
+     "sha256": "90b142fbe26f76bab828aa0bb3e9f3db21e759b8581c68d684263413a0d1a577"
+    },
+    {
+     "file": "bulletina-xxxix-028.txt",
+     "bytes": 34669,
+     "sha256": "7001d73bb82ef9061b8bdab271746b3eb0d758cc3840176a56cd30b82076b777"
+    },
+    {
+     "file": "bulletina-xxxix-029.txt",
+     "bytes": 34669,
+     "sha256": "4a169914090ee5204e24d81cd5afdf9ff99f43c42fc6d2c6cd7e0d281508bc7f"
+    },
+    {
+     "file": "bulletina-xxxix-030.txt",
+     "bytes": 35074,
+     "sha256": "81c1775f8bb71466d2129d215fb9debf1e119a0d9399848d8a3e88fb431fb2db"
+    },
+    {
+     "file": "bulletina-xxxix-031.txt",
+     "bytes": 34264,
+     "sha256": "d5915dd3f5e9b82fbbaab0b77021374425b2e2fc0b908c7bbbb0b6a62a379aea"
+    },
+    {
+     "file": "bulletina-xxxix-032.txt",
+     "bytes": 41677,
+     "sha256": "57b4617bd07b75b7507b902c3c37acb3b6b94254d38153bfdb87caae9de13640"
+    },
+    {
+     "file": "bulletina-xxxix-033.txt",
+     "bytes": 34669,
+     "sha256": "092be8ab267d805a2dd8e2c3f92bc550b9504b3a9bb26f7632ec8c8ac33935b1"
+    },
+    {
+     "file": "bulletina-xxxix-034.txt",
+     "bytes": 33080,
+     "sha256": "5d278de95ec16d91bb200f8a00f7f61c62ba0fe1b8424dfba82204ed807d3400"
+    },
+    {
+     "file": "bulletina-xxxix-035.txt",
+     "bytes": 35074,
+     "sha256": "a992584c105f8d63f4d70195ae03fe7ba00a7a674d4bdc69de2bdb12177c1be2"
+    },
+    {
+     "file": "bulletina-xxxix-036.txt",
+     "bytes": 41473,
+     "sha256": "3378b1fd1dd8edfeee8e88f0cba6357bba42f5811b18da16825161cf88cb95c5"
+    },
+    {
+     "file": "bulletina-xxxix-037.txt",
+     "bytes": 34669,
+     "sha256": "11aa0fbd2a603451c6b13870877854cb50602a7b4dc0da55bf6ac0896e7b893d"
+    },
+    {
+     "file": "bulletina-xxxix-038.txt",
+     "bytes": 33080,
+     "sha256": "6a23623f37af07c577f79c2dd6587d05dbb7593e9abd0c3ec028df3daba8398b"
+    },
+    {
+     "file": "bulletina-xxxviii-001.txt",
+     "bytes": 40088,
+     "sha256": "a9e9326c4d20d8524ab3a385529d250272d2332e141d740beb7953cd07891d81"
+    },
+    {
+     "file": "bulletina-xxxviii-002.txt",
+     "bytes": 35074,
+     "sha256": "cfd0933810677aaa798e3045c21bc6381c6216f973e58142a5743d49496dddd7"
+    },
+    {
+     "file": "bulletina-xxxviii-003.txt",
+     "bytes": 33080,
+     "sha256": "e72e9c70768a7d5ee52f7ae01a478e232cb6bb940593b33fb014a9db3f393afd"
+    },
+    {
+     "file": "bulletina-xxxviii-004.txt",
+     "bytes": 33080,
+     "sha256": "5980333906632c6e104b4d47b37202b0c205de47303e133edc87a21344ae6369"
+    },
+    {
+     "file": "bulletina-xxxviii-005.txt",
+     "bytes": 37099,
+     "sha256": "1f8143aae17b77da49b1fe0313d549e84fb286c0e2ff0682756b6bcc7cdfa378"
+    },
+    {
+     "file": "bulletina-xxxviii-006.txt",
+     "bytes": 40289,
+     "sha256": "078e5cb9f6c3252230a326a29e224691ed5b7f960dc81c7ea64f7d89713cc417"
+    },
+    {
+     "file": "bulletina-xxxviii-007.txt",
+     "bytes": 35614,
+     "sha256": "26b16d6cca7da3246f6c3419e04fb867f9433bc0307b070feda9f528ed2c3066"
+    },
+    {
+     "file": "bulletina-xxxviii-008.txt",
+     "bytes": 33080,
+     "sha256": "bf8ffdb5ac0f1a8f4a1041617cfa9986d30e73808e64e7dc25d84697078641a0"
+    },
+    {
+     "file": "bulletina-xxxviii-009.txt",
+     "bytes": 34669,
+     "sha256": "645b1eb182b262645d50462c657845d39f954cab459f5d770cc3b2fe6e48fafc"
+    },
+    {
+     "file": "bulletina-xxxviii-010.txt",
+     "bytes": 42823,
+     "sha256": "0901a5f195f7835b4f54c43c70cd6aef2ef48656778890d7704b4dea193e2bff"
+    },
+    {
+     "file": "bulletina-xxxviii-011.txt",
+     "bytes": 35074,
+     "sha256": "8a3125ff445e2c0fce2aaa3c15a9bdb282962f0c246578bed8fe6fc05909f8e5"
+    },
+    {
+     "file": "bulletina-xxxviii-012.txt",
+     "bytes": 34264,
+     "sha256": "8c451485e243dd6b464431362c1622445735497b52c573c5d09bd2508a48fad4"
+    },
+    {
+     "file": "bulletina-xxxviii-013.txt",
+     "bytes": 35074,
+     "sha256": "c45846f79d1f8bbbecce6bc55a5372d2dfbc5e74b2334ec1e8043d7656f879a3"
+    },
+    {
+     "file": "bulletina-xxxviii-014.txt",
+     "bytes": 40870,
+     "sha256": "168eab347d2232275d3f94e250b3e79cb7e454676482e2dcae7ca3a0e3250a95"
+    },
+    {
+     "file": "bulletina-xxxviii-015.txt",
+     "bytes": 34669,
+     "sha256": "f7323bd87e750b9efb89fa35c316f51355ec61a2f79fb7c68885af8eeec16d28"
+    },
+    {
+     "file": "bulletina-xxxviii-016.txt",
+     "bytes": 35074,
+     "sha256": "d0fd1eb96f66d10e0e6901b80807970b97d885260f91975cfec8e4df40aec9f9"
+    },
+    {
+     "file": "bulletina-xxxviii-017.txt",
+     "bytes": 34669,
+     "sha256": "8eca09ef9242a206866a59fd2def4b8adc96060c467d17a536cbf98c4df331e8"
+    },
+    {
+     "file": "bulletina-xxxviii-018.txt",
+     "bytes": 34264,
+     "sha256": "8b7dc914e6ea84950d60b8f77c627e4af4f3294679ab9b31cb8e509a7c841355"
+    },
+    {
+     "file": "bulletina-xxxviii-019.txt",
+     "bytes": 42013,
+     "sha256": "f8421bf6ac696ece0a66a711f5e9bb01455c6d1efe0fc358bd8cf741db6ee91f"
+    },
+    {
+     "file": "bulletina-xxxviii-020.txt",
+     "bytes": 34534,
+     "sha256": "fbe2a815cabe0bcb4bf8a66430930640ed7b522e652bcde964a1487f81b40d2a"
+    },
+    {
+     "file": "bulletina-xxxviii-021.txt",
+     "bytes": 34669,
+     "sha256": "3e3cafb9d703835f30e9973b6dce3e7822820963a54df9572e05da68345b275b"
+    },
+    {
+     "file": "bulletina-xxxviii-022.txt",
+     "bytes": 34669,
+     "sha256": "3af94d5e535af3b260f1462077dc542da34cb2b5811948b6e731bae307cf4c00"
+    },
+    {
+     "file": "bulletina-xxxviii-023.txt",
+     "bytes": 42622,
+     "sha256": "2e52190d3c72c5f5c39e0c92758d0350f6ebb5525da845b4746feb364f992b11"
+    },
+    {
+     "file": "bulletina-xxxviii-024.txt",
+     "bytes": 34129,
+     "sha256": "237284967aec43fd615e47d0a5980eb7dd3be1ab59c4dd59945ac78efc8ce05c"
+    },
+    {
+     "file": "bulletina-xxxviii-025.txt",
+     "bytes": 33160,
+     "sha256": "560ffa9b1e5334e580abd82bb343fe30985e221452decadab72903394c5f4967"
+    },
+    {
+     "file": "bulletina-xxxviii-026.txt",
+     "bytes": 35289,
+     "sha256": "df0851e95769e1b9c50d051f799ad5494304efe438e3fc9bbdcad9385b61806b"
+    },
+    {
+     "file": "bulletina-xxxviii-027.txt",
+     "bytes": 42132,
+     "sha256": "93921fab510ab72820161b715ff84ba06eafaed8e25c88ca32985926cf760354"
+    },
+    {
+     "file": "bulletina-xxxviii-028.txt",
+     "bytes": 34264,
+     "sha256": "140c747f90f57d087d9dbbec16a97878f78265797c7931f91e506a4b7a124d7f"
+    },
+    {
+     "file": "bulletina-xxxviii-029.txt",
+     "bytes": 34669,
+     "sha256": "a88f385a8491af5e738ed85a986c057c5df96711202286d5bc0dd990efefd029"
+    },
+    {
+     "file": "bulletina-xxxviii-030.txt",
+     "bytes": 34669,
+     "sha256": "d023ea8a46d84631ac6543c9bb33819777aceddbb87ccb82063744cfeaebb0c6"
+    },
+    {
+     "file": "bulletina-xxxviii-031.txt",
+     "bytes": 34129,
+     "sha256": "644b730d1941513a60b4d0e76b6aafbbcbed218f806ff5431db0352d6d266090"
+    },
+    {
+     "file": "bulletina-xxxviii-032.txt",
+     "bytes": 42622,
+     "sha256": "a7d51f33ec99f8d2c7c24108838cd0db8be5bd115ffb012e49c09363eb2d72bf"
+    },
+    {
+     "file": "bulletina-xxxviii-033.txt",
+     "bytes": 33080,
+     "sha256": "60406577f419533e0b8d105a795e31ec00182f0d68320276eef376138deea62d"
+    },
+    {
+     "file": "bulletina-xxxviii-034.txt",
+     "bytes": 35614,
+     "sha256": "6e88652729717d4add2a4f21ea97cccfbb8d0b6fe1b0b23a737ed7f99f992f11"
+    },
+    {
+     "file": "bulletina-xxxviii-035.txt",
+     "bytes": 34534,
+     "sha256": "7b422f6915b84da18fc18b7d5ec473f80642a912855ac049aaa631767618ca12"
+    },
+    {
+     "file": "bulletina-xxxviii-036.txt",
+     "bytes": 41608,
+     "sha256": "e6b67252a2b14be4788706879f1adf2f3ddbc19c92d12234cfd0567a24e0f04a"
+    },
+    {
+     "file": "bulletina-xxxviii-037.txt",
+     "bytes": 34669,
+     "sha256": "d908d8a356d5ec39c9c8da793e1610429432f80167abb399cce4b8691b61f2dd"
+    },
+    {
+     "file": "bulletina-xxxviii-038.txt",
+     "bytes": 35074,
+     "sha256": "b28ef52752c8505f690efeb8af5e102eea88a8052f79aa5ae6567ee9c1f53e34"
+    },
+    {
+     "file": "bulletina-xxxviii-039.txt",
+     "bytes": 34264,
+     "sha256": "1fdcc95e28c8b9168ef2246982d2e017310a09923f4cde82586c193ad94ae6d7"
+    },
+    {
+     "file": "bulletina-xxxviii-040.txt",
+     "bytes": 41878,
+     "sha256": "6e96b36f79da7c273fbcb771cd05742088f36aff71a8e3e258a07ab702443034"
+    },
+    {
+     "file": "bulletina-xxxviii-041.txt",
+     "bytes": 35074,
+     "sha256": "d8e85166c3b2d25bdb7fe3beb7b4f9b41d8f0360260c6ecb40f35c4684c25f46"
+    },
+    {
+     "file": "bulletina-xxxviii-042.txt",
+     "bytes": 34264,
+     "sha256": "cdbf5404ca7122dd5bbcc3515b9e576a64599d3384cd57a461e8d0cfa2aa5327"
+    },
+    {
+     "file": "bulletina-xxxviii-043.txt",
+     "bytes": 35074,
+     "sha256": "78baed19c6bd466bf6fdf9d7330cbd455c06e31f14ed3d3fca14ab1c537a9a5a"
+    },
+    {
+     "file": "bulletina-xxxviii-044.txt",
+     "bytes": 34264,
+     "sha256": "3ad6145ddfc99526ece355c0a050193c564176eafa39ef1113a5891bbcf2f163"
+    },
+    {
+     "file": "bulletina-xxxviii-045.txt",
+     "bytes": 41677,
+     "sha256": "600947e435fcb06fc83c7bd415c2a4eae3b93b4ca3abde22e04ed219d738b9ca"
+    },
+    {
+     "file": "bulletina-xxxviii-046.txt",
+     "bytes": 34129,
+     "sha256": "4bcd7fd8b04e28ff250bf8fd81105209bd8c8cea8230a4838f5c36b4b96f5ac4"
+    },
+    {
+     "file": "bulletina-xxxviii-047.txt",
+     "bytes": 34669,
+     "sha256": "522cb35f4c329634ec465108b51d41656b856d1dd85744bc5d25286513330824"
+    },
+    {
+     "file": "bulletina-xxxviii-048.txt",
+     "bytes": 35209,
+     "sha256": "1702db71ee1480edad03e62d41ffc4de3b68d4e9f67bb86de978b34e47e63c9f"
+    },
+    {
+     "file": "bulletina-xxxviii-049.txt",
+     "bytes": 42823,
+     "sha256": "a65aa70ee53ed49aa01577098553b4e55db5b8fae27ca6b3590729f62a75c755"
+    },
+    {
+     "file": "bulletina-xxxviii-050.txt",
+     "bytes": 34669,
+     "sha256": "b7b2a15deb2a4c66a115990d97f894dd7f2517b0f5a305ac9f77e2cda4ff367a"
+    },
+    {
+     "file": "bulletina-xxxviii-051.txt",
+     "bytes": 34669,
+     "sha256": "1102834d69ea8de4b47210540fe043c237de6e90431ded1f4b4720d154ec030e"
+    },
+    {
+     "file": "bulletina-xxxviii-052.txt",
+     "bytes": 34669,
+     "sha256": "452dab67ab2aaceb9cc101d5b00d8018e0fe4b05496a023e02e19ec281302f54"
+    }
+   ]
+  },
+  {
+   "file": "bulletin-a-quarterly/",
+   "url": "https://datacenter.iers.org/data/6/<file>",
+   "retrieved": "2026-09-25",
+   "lastModified": null,
+   "count": 44,
+   "licence": "IERS product, free to use with citation of the IERS (https://www.iers.org/IERS/EN/Science/Publications/publications.html)",
+   "usedFor": "Quarterly issues 2015–2025 (nos. 1, 13, 26, 39 of each volume): the calibration.",
+   "members": [
+    {
+     "file": "bulletina-xxix-001.txt",
+     "bytes": 40428,
+     "sha256": "5aefb832ffcc765a236c40bb0892c97752592c8e675ef1b28bf3bb43ec553ed6"
+    },
+    {
+     "file": "bulletina-xxix-013.txt",
+     "bytes": 35049,
+     "sha256": "d992979466ac1853c0b313a514460265b48eb2bcf06ffc51f19f71f13a1ea710"
+    },
+    {
+     "file": "bulletina-xxix-026.txt",
+     "bytes": 35605,
+     "sha256": "8fb211226afaf5b8a89a8da508fc1fc8b06751632c538467490d8e5b7d075227"
+    },
+    {
+     "file": "bulletina-xxix-039.txt",
+     "bytes": 35064,
+     "sha256": "c9347a253534b66061030fc9797075d177e15e2eab5a2a7978134284173a5300"
+    },
+    {
+     "file": "bulletina-xxviii-001.txt",
+     "bytes": 41304,
+     "sha256": "d7b52520e53452f0f2bb96c016907ead4f8a2dcb814edda19b2467f9d00df989"
+    },
+    {
+     "file": "bulletina-xxviii-013.txt",
+     "bytes": 35297,
+     "sha256": "eb4945dd7a554acc27ef0a64aa87f703be36c653d661df370713237ac529e9ca"
+    },
+    {
+     "file": "bulletina-xxviii-026.txt",
+     "bytes": 33726,
+     "sha256": "8e8519e44b8232132a75f8fab998d59f840c55e457f740e5e9db2421a917df64"
+    },
+    {
+     "file": "bulletina-xxviii-039.txt",
+     "bytes": 35049,
+     "sha256": "c5872e72574c4419546eee6ff257520970def61dee4eaa5919e1f1f67a8c7d05"
+    },
+    {
+     "file": "bulletina-xxx-001.txt",
+     "bytes": 42199,
+     "sha256": "9bc086c24501592c83b7ccd92d2f50c8e4711598d394700c633cf754827a162f"
+    },
+    {
+     "file": "bulletina-xxx-013.txt",
+     "bytes": 35357,
+     "sha256": "d3d702225d6fd6e6a857075fb84ceecf733b98c501127d4d942bb80591cef2fc"
+    },
+    {
+     "file": "bulletina-xxx-026.txt",
+     "bytes": 35227,
+     "sha256": "7d08943ed559b6a53f00decd0fcfef4678ac34d2fb56d98833ac68a102337df2"
+    },
+    {
+     "file": "bulletina-xxx-039.txt",
+     "bytes": 35922,
+     "sha256": "06a45578e2e8b9fef4306a78bde9b0693e004fec915c4cf25be0bb5d5c6d35a3"
+    },
+    {
+     "file": "bulletina-xxxi-001.txt",
+     "bytes": 45002,
+     "sha256": "9e96fc4b29e38a096dfcfc5dfbbdaa23c1b20e737f566030c28c47e9236e81a2"
+    },
+    {
+     "file": "bulletina-xxxi-013.txt",
+     "bytes": 36245,
+     "sha256": "8d057b7e790969bac38de477347b1e5e230073febe678c337dadf18d75e70472"
+    },
+    {
+     "file": "bulletina-xxxi-026.txt",
+     "bytes": 35465,
+     "sha256": "d4a5fea5cc887077e766e537e09a5b4d72ec1db4b440346ed289f75bf8e6860b"
+    },
+    {
+     "file": "bulletina-xxxi-039.txt",
+     "bytes": 35389,
+     "sha256": "1c456a08988e43db8c7d3ffa0793fd20be104be2a2eb44963d199cce60bad496"
+    },
+    {
+     "file": "bulletina-xxxii-001.txt",
+     "bytes": 42400,
+     "sha256": "7c9b31f62de7803dd19ba3db37ce4068af729d7ee6bf9d898ef84051aefe0815"
+    },
+    {
+     "file": "bulletina-xxxii-013.txt",
+     "bytes": 35852,
+     "sha256": "c07955854f106636e264b20599d961c7f1d77aec82659dfa399b60c953469050"
+    },
+    {
+     "file": "bulletina-xxxii-026.txt",
+     "bytes": 35832,
+     "sha256": "d5dc6f831ee5368558d3845cc2363a7d528a1364d151d252db13f0978ec296b8"
+    },
+    {
+     "file": "bulletina-xxxii-039.txt",
+     "bytes": 35466,
+     "sha256": "efaecfd81bd270db4bbc739c77b91da9d9af47c669169f2cd62c0e03425de6ad"
+    },
+    {
+     "file": "bulletina-xxxiii-001.txt",
+     "bytes": 44553,
+     "sha256": "de55f3659d8ee43a1f6b24d20c149faeaf88aaaa58af64442fef7ec196ba113f"
+    },
+    {
+     "file": "bulletina-xxxiii-013.txt",
+     "bytes": 39030,
+     "sha256": "53bce34c9931af5f86295d68ba68ed212e95cd78b856f4c5a47b5652a44b68ab"
+    },
+    {
+     "file": "bulletina-xxxiii-026.txt",
+     "bytes": 38855,
+     "sha256": "486d8953680314965b4adde36a6d78be3f0ceb9f201d5f144a32a9afbd3474f8"
+    },
+    {
+     "file": "bulletina-xxxiii-039.txt",
+     "bytes": 39491,
+     "sha256": "1fad97df87cefb2a30515cbd731eb95b751d899a42549f90bf5fddfc80562c3a"
+    },
+    {
+     "file": "bulletina-xxxiv-001.txt",
+     "bytes": 45091,
+     "sha256": "8a64c6fef208baaaa3a7d737f1b78e24ae0efaf3aa7be8bafd1c84e619414293"
+    },
+    {
+     "file": "bulletina-xxxiv-013.txt",
+     "bytes": 36698,
+     "sha256": "05790cccea266b4df558d48ca98da548ffa37956c82d4386ee4184d802cf21b0"
+    },
+    {
+     "file": "bulletina-xxxiv-026.txt",
+     "bytes": 36913,
+     "sha256": "6d9a4a251545c9b4dfa7dd0b020c53f68800bbef61b9538194ea09739787478c"
+    },
+    {
+     "file": "bulletina-xxxiv-039.txt",
+     "bytes": 37199,
+     "sha256": "3014cdc0f683d822e525f4b28dbc33e2b6e7e291842cbf182815b7d515fda669"
+    },
+    {
+     "file": "bulletina-xxxv-001.txt",
+     "bytes": 44747,
+     "sha256": "ba2db8f1224db2c63bd9c9a02472b46d71be8d2c20af7ab8fe00451ffa2cf889"
+    },
+    {
+     "file": "bulletina-xxxv-013.txt",
+     "bytes": 37518,
+     "sha256": "42f9d9e7da42bc2a4cd199a1e6c88c99ea874c494115e010fe2399f528bf0909"
+    },
+    {
+     "file": "bulletina-xxxv-026.txt",
+     "bytes": 34534,
+     "sha256": "67d88d349f377b929c33acacf7ef2a60f6c2707ef0e36aedf14894aca539c7b2"
+    },
+    {
+     "file": "bulletina-xxxv-039.txt",
+     "bytes": 34669,
+     "sha256": "665a52329c589ecfe9ef4f73fee9315d444a515535601ce18fe0d7c34383869a"
+    },
+    {
+     "file": "bulletina-xxxvi-001.txt",
+     "bytes": 41870,
+     "sha256": "234e8e78cf9fb8f0ee936ea786fcc05dbd4779cd843f286c4af63e3e8e1cdeb3"
+    },
+    {
+     "file": "bulletina-xxxvi-013.txt",
+     "bytes": 34457,
+     "sha256": "2f8fa68b10123419bdbbe0896c5505f3f76bd363efdb7962d0f42c78f97e8aa5"
+    },
+    {
+     "file": "bulletina-xxxvi-026.txt",
+     "bytes": 34592,
+     "sha256": "a48de36535f5a5663b99f33a324d17e6127b0ea934c8bcb166c8a547a19369c3"
+    },
+    {
+     "file": "bulletina-xxxvi-039.txt",
+     "bytes": 34187,
+     "sha256": "ed917d32eec9268ac606515d9d8366d094b7f990b22da6edc2b2f16a67975c3b"
+    },
+    {
+     "file": "bulletina-xxxvii-001.txt",
+     "bytes": 40011,
+     "sha256": "16c0ffe8e45e1b293abee0a6c1ba9427f9c08198980c70b67743b5872f4b5aa6"
+    },
+    {
+     "file": "bulletina-xxxvii-013.txt",
+     "bytes": 34052,
+     "sha256": "edfbc5f6a857191e6241d7f7435ac4362c7a2abacd183609b99e94c9cacd10d5"
+    },
+    {
+     "file": "bulletina-xxxvii-026.txt",
+     "bytes": 34997,
+     "sha256": "e1878ffe7d5a116c724e00ae652e16fd3440d4ae37e034c08cf31a1673cdde3b"
+    },
+    {
+     "file": "bulletina-xxxvii-039.txt",
+     "bytes": 35614,
+     "sha256": "5299dad438bec31f9ca92eaca4c1dfe62724d02e47fc311b5584df3d278fd95e"
+    },
+    {
+     "file": "bulletina-xxxviii-001.txt",
+     "bytes": 40088,
+     "sha256": "a9e9326c4d20d8524ab3a385529d250272d2332e141d740beb7953cd07891d81"
+    },
+    {
+     "file": "bulletina-xxxviii-013.txt",
+     "bytes": 35074,
+     "sha256": "c45846f79d1f8bbbecce6bc55a5372d2dfbc5e74b2334ec1e8043d7656f879a3"
+    },
+    {
+     "file": "bulletina-xxxviii-026.txt",
+     "bytes": 35289,
+     "sha256": "df0851e95769e1b9c50d051f799ad5494304efe438e3fc9bbdcad9385b61806b"
+    },
+    {
+     "file": "bulletina-xxxviii-039.txt",
+     "bytes": 34264,
+     "sha256": "1fdcc95e28c8b9168ef2246982d2e017310a09923f4cde82586c193ad94ae6d7"
+    }
+   ]
+  }
+ ]
+}

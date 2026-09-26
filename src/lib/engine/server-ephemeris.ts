@@ -8,10 +8,15 @@
  */
 import { createRequire } from 'node:module';
 import type * as AstronomyEngine from 'astronomy-engine';
+import { deltaT } from '@zodiacs/engine/deltat';
 import type { BodyName } from './types';
 
 const require = createRequire(import.meta.url);
 const Astronomy = require('astronomy-engine') as typeof AstronomyEngine;
+// This CommonJS instance of astronomy-engine is separate from the ESM one the
+// engine installs its clock in, so it gets the same observed ΔT here
+// (@zodiacs/engine/deltat imports nothing).
+Astronomy.SetDeltaTFunction(deltaT);
 const RAD = 180 / Math.PI;
 const DAY = 86_400_000;
 
@@ -74,7 +79,7 @@ export function bodyLongitude(body: BodyName, date: Date): number {
 }
 
 /**
- * Longitude speed in degrees/day, the way @zodiacs/engine 0.1.1-rc.7 takes it:
+ * Longitude speed in degrees/day, the way @zodiacs/engine takes it (since 0.1.1-rc.7):
  * a central difference over ±0.001 day for the planets and the Moon, and
  * ±0.25 day for the true node, whose short-period noise dominates a shorter
  * step. server-ephemeris.test.ts holds the two to 12 decimal places.

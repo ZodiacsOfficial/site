@@ -13,9 +13,10 @@ cannot do. The user-facing version of the same material is on the page itself.
 1. **Differences are read, not inferred.** Both files are parsed with the
    engine's own `parseNatalEnvelope` and its size, depth and node limits, and
    every field that disagrees becomes a row: inputs, conventions, provenance,
-   angles, house cusps, every field of every body (`lon`, `lat`, `speed`,
-   `degree`, `sign`, `retrograde`), and the aspect list keyed by pair and type
-   so a reordered list is not a difference.
+   every field of the ΔT each record was computed with (records carry it from
+   engine 0.1.1-rc.8), angles, house cusps, every field of every body (`lon`,
+   `lat`, `speed`, `degree`, `sign`, `retrograde`), and the aspect list keyed by
+   pair and type so a reordered list is not a difference.
 
 2. **Three kinds of row.** `numeric` (the values differ), `display` (the values
    differ below the six decimals these records print), `metadata` (a stated
@@ -60,8 +61,9 @@ cannot do. The user-facing version of the same material is on the page itself.
   reproduce what each file already says, from that file's own declared inputs.
   The codec checks a record's internal coherence, not that its result follows
   from its inputs — a genuine chart with its declared instant rewritten to
-  another time is accepted — so without this baseline the comparison called such
-  a pair reproduced while the house system explained none of it.
+  another time is accepted (from engine rc.8, once its ΔT is rewritten to match,
+  which the public model makes easy) — so without this baseline the comparison
+  called such a pair reproduced while the house system explained none of it.
 - **The verdict does not depend on argument order.** The controlled alternative
   is checked in both directions, and `sameVerdictWhenReversed` runs on every
   scenario in the synthetic corpus.
@@ -70,8 +72,9 @@ cannot do. The user-facing version of the same material is on the page itself.
   back to whole sign have identical cusps however they were requested; matching
   values neither file disputes demonstrates nothing.
 - **The replay reproduces the receipt's own conditions**, including whether the
-  birth time was known. A time-unknown receipt has no angles and no houses, and
-  is never replayed as though it had them.
+  birth time was known and, from engine rc.8, a ΔT its caller pinned. A
+  time-unknown receipt has no angles and no houses, and is never replayed as
+  though it had them; a pinned receipt is never replayed on the engine's model.
 - **Only the house system is re-run.** A different moment or place stays a
   hypothesis even when both records name the same engine.
 - **Agreement between two receipts from one engine is consistency**, not an

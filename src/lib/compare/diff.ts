@@ -59,6 +59,11 @@ export interface ReplayRequest {
   readonly longitude: number;
   readonly houseSystem: string;
   readonly timeKnown: boolean;
+  /**
+   * A ΔT (TT − UT1) the record's caller pinned, in seconds. Absent means the
+   * engine's own model, which is what a record without a pin was computed with.
+   */
+  readonly deltaT?: number;
 }
 export interface ReplayResult {
   readonly angles: Record<string, number> | null;
@@ -95,6 +100,24 @@ export interface CompareOptions {
 }
 
 const ANGLE_LABELS: Record<string, string> = { asc: 'Ascendant', mc: 'Midheaven', dsc: 'Descendant', ic: 'Imum coeli' };
+
+/** The fields of a record's ΔT (engine 0.1.1-rc.8 on), in the order they are listed. */
+const DELTA_T_LABELS: Record<string, string> = {
+  seconds: 'ΔT (TT − UT1), seconds',
+  sigma: 'ΔT band (1σ), seconds',
+  model: 'ΔT model',
+  table: 'ΔT table (last observed day)',
+  tableDigest: 'ΔT table digest',
+  segment: 'ΔT segment',
+};
+
+/** The ΔT rows that say where a value came from, which no difference in the moment can change. */
+const DELTA_T_SOURCE_ROWS = new Set(['delta-t-model', 'delta-t-table', 'delta-t-tableDigest']);
+
+function deltaTOf(envelope: NatalEnvelope): Record<string, unknown> | null {
+  const deltaT = (envelope.result as { deltaT?: unknown }).deltaT;
+  return deltaT !== null && typeof deltaT === 'object' ? deltaT as Record<string, unknown> : null;
+}
 
 function verdictKind(verdict: NumericVerdict): DifferenceKind | null {
   if (verdict === 'identical') return null;
@@ -220,7 +243,15 @@ function replayInputOf(envelope: NatalEnvelope): ReplayRequest | null {
   const { latitude, longitude } = receipt.coordinates ?? {};
   if (typeof receipt.instant !== 'string' || typeof latitude !== 'number' || typeof longitude !== 'number'
     || typeof receipt.houses?.requested !== 'string') return null;
-  return { utc: receipt.instant, latitude, longitude, houseSystem: receipt.houses.requested, timeKnown: receipt.timeKnown === true };
+  // A pinned ΔT is one of the inputs a record declares — the engine's own
+  // replay input carries it — so a replay without it recalculates a different
+  // chart and then blames the record for not matching.
+  const deltaT = deltaTOf(envelope);
+  const pinned = deltaT?.model === 'pinned' && typeof deltaT.seconds === 'number' ? { deltaT: deltaT.seconds } : {};
+  return {
+    utc: receipt.instant, latitude, longitude, houseSystem: receipt.houses.requested,
+    timeKnown: receipt.timeKnown === true, ...pinned,
+  };
 }
 
 /** Rows: every fact that differs, read from the two files and nothing else. */
@@ -245,6 +276,13 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
     if (typeof a !== 'number' || typeof b !== 'number') return text(id, area, label, a, b);
     const kind = verdictKind(compareAngles(a, b));
     if (kind) add(id, area, label, num(a), num(b), kind, circularDelta(a, b));
+  };
+  // A quantity in its own unit: judged like `scalar`, but with no `delta`,
+  // which the tables print in degrees.
+  const quantity = (id: string, area: string, label: string, a: unknown, b: unknown) => {
+    if (typeof a !== 'number' || typeof b !== 'number') return text(id, area, label, a, b);
+    const kind = verdictKind(compareScalars(a, b));
+    if (kind) add(id, area, label, num(a), num(b), kind);
   };
 
   const lr = left.receipt as Record<string, any>;
@@ -275,6 +313,24 @@ function collectDifferences(left: NatalEnvelope, right: NatalEnvelope): Differen
   text('schema', 'Provenance', 'Receipt schema', left.schema, right.schema);
   text('result-flags', 'Provenance', 'Result flags', JSON.stringify(lr.resultFlags ?? []), JSON.stringify(rr.resultFlags ?? []));
   text('input-flags', 'Provenance', 'Input flags', JSON.stringify(lr.inputFlags ?? []), JSON.stringify(rr.inputFlags ?? []));
+
+  // ΔT (TT − UT1), which records carry from engine 0.1.1-rc.8 on. Every field,
+  // as with a body row: two records of one instant can still differ here — one
+  // caller pinned it, or it came from another table — and that moves every
+  // position. A record from before rc.8 carries none, and that difference is
+  // already a conventions row: the parser requires the field exactly when the
+  // record declares the rc.8 conventions.
+  const ldt = deltaTOf(left);
+  const rdt = deltaTOf(right);
+  if (ldt && rdt) {
+    const extra = [...new Set([...Object.keys(ldt), ...Object.keys(rdt)])]
+      .filter((key) => !Object.hasOwn(DELTA_T_LABELS, key)).sort();
+    for (const key of [...Object.keys(DELTA_T_LABELS), ...extra]) {
+      const own = (source: Record<string, unknown>) => (Object.hasOwn(source, key) ? source[key] : null);
+      quantity(`delta-t-${key}`, 'Time scale', Object.hasOwn(DELTA_T_LABELS, key) ? DELTA_T_LABELS[key] : `ΔT ${key}`,
+        own(ldt), own(rdt));
+    }
+  }
 
   const la = (left.result as any).angles as Record<string, number> | null;
   const ra = (right.result as any).angles as Record<string, number> | null;
@@ -609,6 +665,19 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
     }
   }
 
+  // ΔT. The engine's model gives it as a function of the instant, so a
+  // different moment accounts for a different modelled value. It cannot
+  // account for a different source — a value a caller pinned, or another
+  // table — and at one instant nothing but the source can move ΔT at all.
+  const deltaTRows = differences
+    .filter((row) => row.area === 'Time scale' && row.kind !== 'display').map((row) => row.id);
+  const modelled = (envelope: NatalEnvelope) => {
+    const deltaT = deltaTOf(envelope);
+    return deltaT !== null && deltaT.model !== 'pinned';
+  };
+  const momentMovesDeltaT = has('instant') && modelled(left) && modelled(right)
+    && !deltaTRows.some((id) => DELTA_T_SOURCE_ROWS.has(id));
+
   if (has('instant') && computed.length > 0) {
     explanations.push({
       id: 'instant', evidence: 'hypothesis',
@@ -616,8 +685,26 @@ function explain(left: NatalEnvelope, right: NatalEnvelope, differences: Differe
       covers: [
         ...['instant', 'source-instant', 'reference', 'zone'].filter(has),
         ...downstream(['Positions', 'Angles', 'Houses', 'Aspects']),
+        ...(momentMovesDeltaT ? deltaTRows : []),
       ],
       detail: 'Positions change continuously with time, so a different instant is expected to change all of them.',
+    });
+  }
+
+  if (deltaTRows.length > 0 && !momentMovesDeltaT) {
+    // At one instant a different ΔT is the only thing here that moved the
+    // clock the positions are computed on, so it is a candidate for them. Across
+    // two instants the moment is, and this claims only its own rows.
+    const moved = has('instant') ? [] : downstream(['Positions', 'Angles', 'Houses', 'Aspects']);
+    explanations.push({
+      id: 'delta-t', evidence: moved.length > 0 ? 'hypothesis' : 'reported',
+      statement: moved.length > 0
+        ? 'The two charts were computed with different values of ΔT (TT − UT1), which moves the positions.'
+        : 'The two records state ΔT (TT − UT1) differently.',
+      covers: [...deltaTRows, ...moved],
+      detail: 'ΔT is the gap between the clock the instant is written in and the clock the positions are computed on. '
+        + 'A record takes it from the engine’s model at its instant unless its caller pinned it. A different value '
+        + 'moves every body, the Moon by about half an arcsecond per second of ΔT, and the angles far less. It is not re-run here.',
     });
   }
 

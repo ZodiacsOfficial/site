@@ -61,6 +61,9 @@ describe('legacy polar saved-chart repair', () => {
   // 0.1.1-rc.7 the engine uses the true obliquity of date, which moves these
   // angles by at most 0.18″ (ASC) and 0.025″ (MC) over the two days below. The
   // repair corrects the 180° axis error; the obliquity is not its concern.
+  // Since 0.1.1-rc.8 the engine's clock is observed ΔT, which on these days
+  // is within 0.01 s of the formula 0.1.0 used and moves a body by at most
+  // 0.005″ (the Moon); the repair keeps the recorded bodies.
   const arcsecondsApart = (a: number, b: number) => Math.abs(((a - b + 540) % 360) - 180) * 3600;
 
   it.each([78.2232, -78.2232])('matches the current natal/transit engine throughout a day at %s°', (latitude) => {
@@ -72,7 +75,9 @@ describe('legacy polar saved-chart repair', () => {
       if (repaired !== saved) repairedCount += 1;
       expect(arcsecondsApart(repaired.summary.angles!.asc, current.angles!.asc)).toBeLessThan(0.5);
       expect(arcsecondsApart(repaired.summary.angles!.mc, current.angles!.mc)).toBeLessThan(0.05);
-      expect(repaired.summary.bodies).toEqual(current.bodies.map(({ body, lon, retrograde }) => ({ body, lon, retrograde })));
+      expect(repaired.summary.bodies.map(({ body, retrograde }) => ({ body, retrograde })))
+        .toEqual(current.bodies.map(({ body, retrograde }) => ({ body, retrograde })));
+      repaired.summary.bodies.forEach(({ lon }, index) => expect(arcsecondsApart(lon, current.bodies[index].lon)).toBeLessThan(0.01));
       expect(repaired.summary.houseSystem).toBe(current.houses!.system);
       expect(repaired.summary.flags).toEqual(current.flags);
     }

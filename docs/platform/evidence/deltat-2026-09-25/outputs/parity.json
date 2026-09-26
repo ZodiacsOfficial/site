@@ -1,0 +1,8 @@
+{
+ "module": "deltat-reference.ts",
+ "points": 18384,
+ "maxSecondsDiff": 1.4551915228366852e-11,
+ "maxSigmaDiff": 2.220446049250313e-16,
+ "segmentMismatches": 0,
+ "tableDigest": "6371988c510a1c6c"
+}

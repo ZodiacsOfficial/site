@@ -107,8 +107,8 @@ describe('Moon phase reference result', () => {
   it('corrects the real January 16 boundary disagreement without changing full values', async () => {
     const actual = await capture({ date: '2024-01-16', time: '10:18', zone: null });
     expect(moonPhaseName(new Date('2024-01-16T10:18:00Z'))).toBe('Waxing Crescent');
-    expect(actual.result!.angle).toBe(67.50700818137483);
-    expect(actual.result!.lon).toBe(3.2722751872874483);
+    expect(actual.result!.angle).toBe(67.50628837199378);
+    expect(actual.result!.lon).toBe(3.271500028636467);
     expect(actual.result!.phase).toBe('First Quarter');
     expect(actual.result!.illum).toBe((1 - Math.cos((actual.result!.angle * Math.PI) / 180)) / 2);
   });

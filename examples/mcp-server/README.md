@@ -57,7 +57,7 @@ happen against the `.tgz` you still have:
 ```sh
 # from the directory holding the archive, against the SHA-256 on the page above
 node -e 'const e=process.argv[2];const a=require("crypto").createHash("sha256").update(require("fs").readFileSync(process.argv[1])).digest("hex");if(a!==e){console.error("Mismatch. Delete this copy and install again from the page.\n  expected "+e+"\n  got      "+a);process.exit(1)}console.log("Archive verified: "+a)' \
-  zodiacs-mcp-server-0.1.0-rc.7.tgz '<the SHA-256 published on the page>'
+  zodiacs-mcp-server-0.1.0-rc.8.tgz '<the SHA-256 published on the page>'
 ```
 
 Then, inside the extracted directory:
@@ -213,18 +213,19 @@ original: the cause stays a hypothesis and the limit is stated.
 ```
 
 ```json
-{ "engine": { "name": "@zodiacs/engine", "version": "0.1.1-rc.7" },
+{ "engine": { "name": "@zodiacs/engine", "version": "0.1.1-rc.8",
+              "ephemeris": { "name": "astronomy-engine", "version": "2.1.19" } },
   "timeKnown": true,
   "houses": { "requested": "placidus", "actual": "placidus", "absenceReason": null },
   "inputFlags": [], "resultFlags": [],
-  "bodies": [ { "body": "Sun", "lon": 84.18908508711235, "lat": -0.000018285232575792906,
-                "speed": 0.9551295319738529, "retrograde": false,
-                "sign": "gemini", "degree": 24.189085087112346 }, "…11 more" ],
-  "angles": { "asc": 191.2395868697238, "mc": 104.68854484639877,
-              "dsc": 11.23958686972378, "ic": 284.6885448463988 },
-  "cusps": [ 191.2395868697238, 216.40908450761725, "…10 more" ],
+  "bodies": [ { "body": "Sun", "lon": 84.18908525028257, "lat": -0.00001828523261306459,
+                "speed": 0.955129533139143, "retrograde": false,
+                "sign": "gemini", "degree": 24.189085250282574 }, "…11 more" ],
+  "angles": { "asc": 191.23958686972654, "mc": 104.68854484640235,
+              "dsc": 11.239586869726509, "ic": 284.68854484640235 },
+  "cusps": [ 191.23958686972654, 216.4090845076203, "…10 more" ],
   "aspects": [ { "a": "Moon", "b": "Jupiter", "type": "trine",
-                 "orb": 0.29105788801439303, "applying": false }, "…16 more" ] }
+                 "orb": 0.29106013758928384, "applying": false }, "…16 more" ] }
 ```
 
 **2. The same chart at 78° north, asking for Placidus.**
@@ -256,13 +257,13 @@ are separate fields, so a fallback is visible rather than silent.
     { "id": "houses-actual", "…": "same two values" },
     { "id": "houses-system", "…": "same two values" },
     { "id": "cusp-1", "area": "Houses", "label": "House 1 cusp",
-      "delta": -11.23958686972378, "kind": "numeric", "valuesWithheld": true },
+      "delta": -11.239586869726509, "kind": "numeric", "valuesWithheld": true },
     "…cusp-2 through cusp-12" ],
   "explanations": [
     { "id": "house-system", "evidence": "reproduced",
       "statement": "The different house system accounts for the house cusps.",
       "covers": [ "cusp-1", "…cusp-12", "houses-requested", "houses-actual", "houses-system" ],
-      "detail": "Each chart's own recorded values were reproduced from its own declared inputs on engine 0.1.1-rc.7, and changing only the house system turns each one into the other, in both directions." } ],
+      "detail": "Each chart's own recorded values were reproduced from its own declared inputs on engine 0.1.1-rc.8, and changing only the house system turns each one into the other, in both directions." } ],
   "limits": [
     "Only the house system is re-run here. A different moment or place is never promoted past a hypothesis, even when both records name the same engine.",
     "Both receipts name the same engine, so agreement between them would show consistency, not independent astronomical accuracy." ],
@@ -285,8 +286,8 @@ not settle, and it is worth reading even when everything else looks resolved.
 
 | | |
 | --- | --- |
-| adapter | `0.1.0-rc.7`, unpublished candidate |
-| engine | `@zodiacs/engine` `0.1.1-rc.7`, unpublished candidate, bundled into `server.mjs` |
+| adapter | `0.1.0-rc.8`, unpublished candidate |
+| engine | `@zodiacs/engine` `0.1.1-rc.8`, unpublished candidate, bundled into `server.mjs` |
 | ephemeris | `astronomy-engine` 2.1.19, inside the engine |
 | MCP SDK | `@modelcontextprotocol/server` 2.0.0, pinned exactly, installed from npm |
 | validation | `zod` 4.6.5, pinned exactly |

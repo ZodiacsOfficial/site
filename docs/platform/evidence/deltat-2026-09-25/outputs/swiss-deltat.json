@@ -1,0 +1,34 @@
+{
+ "swiss": "2.10.03",
+ "flag": "FLG_SWIEPH",
+ "seconds": {
+  "2026-09-22T00:00Z": 68.82,
+  "2050-01-01T00:00Z": 74.58,
+  "2100-01-01T00:00Z": 93.18
+ },
+ "before1962": {
+  "grid": "1800.0 to 1961.5 every half year",
+  "swissMinusS15_2016_1800to1940": {
+   "maxAbs": 0.189,
+   "at": 1800.0
+  },
+  "swissMinusS15_2016_at": {
+   "1800": 0.189,
+   "1850": 0.086,
+   "1900": 0.022
+  },
+  "swissMinusS15_2020_1800to1940": {
+   "maxAbs": 0.536,
+   "at": 1800.0
+  },
+  "swissMinusModel_1800to1961": {
+   "maxAbs": 0.291,
+   "at": 1945.0
+  },
+  "swissMinusModel_1800to1961_rms": 0.098
+ },
+ "at1000": {
+  "swissMinusS15_2016": 7.239,
+  "swissMinusS15_2020": -175.5
+ }
+}

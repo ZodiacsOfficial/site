@@ -11,10 +11,18 @@
  *
  * It reads the installed @zodiacs/engine, the vendored version the site runs,
  * writes nothing into the repository and makes no network request.
+ *
+ * Since engine 0.1.1-rc.8 the engine's clock is its own observed ΔT
+ * (@zodiacs/engine/deltat), which it installs in astronomy-engine before each
+ * of its calls. MakeTime runs before the engine here, so the clock is
+ * installed first; the TT written is then the engine's own.
  */
 import { ENGINE_VERSION } from '@zodiacs/engine';
+import { deltaT } from '@zodiacs/engine/deltat';
 import { computeBodies } from '@zodiacs/engine/internal';
-import { MakeTime } from 'astronomy-engine';
+import { MakeTime, SetDeltaTFunction } from 'astronomy-engine';
+
+SetDeltaTFunction(deltaT);
 
 const DAY = 86_400_000;
 const start = Date.UTC(1800, 0, 1, 12);

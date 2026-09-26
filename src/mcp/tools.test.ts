@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { ENGINE_VERSION } from '@zodiacs/engine';
+import { ENGINE_VERSION, REFERENCE_SPAN } from '@zodiacs/engine';
 import { parseNatalEnvelope } from '@zodiacs/engine/receipt';
+import { EPOCH_MAX_UTC, EPOCH_MIN_UTC } from './bounds';
 import {
   COMPARE_INPUT, NATAL_INPUT, PRIVACY, UNSUPPORTED,
   calculateNatalChart, compareCalculationRecords, describeCapabilities,
@@ -138,6 +139,18 @@ describe('calculate_natal_chart', () => {
   it('refuses one coordinate without the other, and a date outside the epoch', () => {
     expect(natal({ utc: LONDON.utc, latitude: 51.5 }).ok).toBe(false);
     expect(natal({ ...LONDON, utc: '1799-01-01T00:00:00Z' }).ok).toBe(false);
+  });
+
+  it('computes no chart outside the engine’s reference span, so none carries that flag', () => {
+    // From engine 0.1.1-rc.8 a chart before 1800-01-01T00:00Z or from
+    // 2200-01-01T00:00Z carries `outside-reference-span`. The epoch here is the
+    // same span, so the flag can reach this adapter only in a record passed in.
+    expect(EPOCH_MIN_UTC).toBe(REFERENCE_SPAN.from);
+    expect(Date.parse(EPOCH_MAX_UTC)).toBeLessThan(Date.parse(REFERENCE_SPAN.to));
+    for (const utc of [EPOCH_MIN_UTC, EPOCH_MAX_UTC]) {
+      const outcome = natal({ ...LONDON, utc });
+      expect(outcome.ok ? (outcome.value as Record<string, any>).resultFlags : outcome.refusal, utc).toEqual([]);
+    }
   });
 });
 

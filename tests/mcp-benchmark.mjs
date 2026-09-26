@@ -192,8 +192,15 @@ const recordFor = async (input) => (await structured('calculate_natal_chart', { 
  * instant is not the one its values came from, because it checks internal
  * coherence rather than that the result follows from the inputs. That is what
  * makes a missing baseline check reachable.
+ *
+ * From engine 0.1.1-rc.8 a record carries the ΔT it was computed with, and the
+ * parser checks a modelled one against the declared instant, so rewriting the
+ * instant alone is refused. The edit therefore also carries `deltaT`: the ΔT a
+ * genuine record of the declared instant has, read from the same server by the
+ * caller. The model is public, so that is no obstacle to anyone rewriting a
+ * record, and the values still come from the other moment.
  */
-function editClaims(record, edit) {
+function editClaims(record, edit, deltaT) {
   const parsed = JSON.parse(record);
   if (edit.engineVersion !== undefined) parsed.receipt.engine.version = edit.engineVersion;
   if (edit.buildMetadata !== undefined) {
@@ -202,6 +209,7 @@ function editClaims(record, edit) {
   if (edit.declaredInstant !== undefined) {
     parsed.receipt.instant = new Date(edit.declaredInstant).toISOString();
     parsed.receipt.sourceInstant = edit.declaredInstant;
+    if (deltaT !== undefined) parsed.result.deltaT = deltaT;
   }
   // The same drift reached through the place instead of the moment. The parser
   // accepts a rewritten coordinate for the same reason it accepts a rewritten
@@ -218,7 +226,9 @@ try {
     let left = await recordFor(scenario.left);
     let right = await recordFor(scenario.right);
     for (const edit of scenario.mutate ? [scenario.mutate].flat() : []) {
-      const patched = editClaims(edit.side === 'right' ? right : left, edit);
+      const deltaT = edit.declaredInstant === undefined ? undefined
+        : JSON.parse(await recordFor({ utc: edit.declaredInstant })).result.deltaT;
+      const patched = editClaims(edit.side === 'right' ? right : left, edit, deltaT);
       if (edit.side === 'right') right = patched; else left = patched;
     }
     // Most scenarios read the default response. A scenario whose assertions

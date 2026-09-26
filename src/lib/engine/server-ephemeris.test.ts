@@ -17,11 +17,18 @@ const BODIES: BodyName[] = [
 ];
 
 describe('serverless ephemeris boundary', () => {
+  // Both instances of astronomy-engine run on the engine's observed ΔT; were
+  // the server's left on the library's own polynomial, the Moon would differ by
+  // several arcseconds today and by minutes of arc at the span's ends.
   it('matches the browser SDK for every supported body across pinned instants', () => {
     for (const date of [
+      new Date('1800-06-01T00:00:00Z'),
+      new Date('1900-01-01T00:00:00Z'),
       new Date('1990-02-01T12:00:00Z'),
       new Date('2026-07-15T11:15:00Z'),
       new Date('2040-12-31T23:59:59Z'),
+      new Date('2100-06-01T00:00:00Z'),
+      new Date('2199-12-31T12:00:00Z'),
     ]) {
       for (const body of BODIES) {
         expect(serverBodyLongitude(body, date)).toBeCloseTo(browserBodyLongitude(body, date), 12);

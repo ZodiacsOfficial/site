@@ -1,0 +1,30 @@
+{
+ "what": "The Moon sign ingresses in src/data/aura-moon-ingresses.json against Swiss Ephemeris 2.10.03 (swe.mooncross_ut, FLG_SWIEPH): the site instant minus the Swiss instant, in seconds, statistics only.",
+ "rc8": {
+  "engine": "0.1.1-rc.8",
+  "from": "2026-01-01T00:00:00.000Z",
+  "to": "2029-01-01T00:00:00.000Z",
+  "n": 481,
+  "medianAbsSeconds": 0.861,
+  "maxAbsSeconds": 4.484,
+  "meanSeconds": 0.468,
+  "minSeconds": -2.865,
+  "maxSeconds": 4.484,
+  "swisseph": "2.10.03",
+  "tableSha256": "91e6ae8b62115da0b53d0844a82fce377931d376127789b12356fea894830916"
+ },
+ "rc7": {
+  "engine": "0.1.1-rc.7",
+  "source": "the same file as committed before rc.8",
+  "from": "2026-01-01T00:00:00.000Z",
+  "to": "2029-01-01T00:00:00.000Z",
+  "n": 481,
+  "medianAbsSeconds": 6.26,
+  "maxAbsSeconds": 10.252,
+  "meanSeconds": -6.201,
+  "minSeconds": -10.252,
+  "maxSeconds": -1.64,
+  "swisseph": "2.10.03",
+  "tableSha256": "560e7dcda645049db52e90a7d3dc050fbf9cacef44ee891f6de493879b579597"
+ }
+}

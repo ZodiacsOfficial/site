@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { natalChart, ENGINE_VERSION } from '@zodiacs/engine';
-import { NATAL_RECEIPT_CONVENTION_SETS, parseNatalEnvelope } from '@zodiacs/engine/receipt';
+import { NATAL_RECEIPT_CONVENTION_SETS, createNatalEnvelope, parseNatalEnvelope } from '@zodiacs/engine/receipt';
 import type { NatalEnvelope } from '@zodiacs/engine/receipt';
 import { compareEnvelopes, type Evidence, type Replay } from './diff';
 import { replay as pageReplay } from './replay';
-import { buildEnvelope, ORDINARY, PRESETS, presetEnvelopes } from './fixtures';
+import { buildEnvelope, ORDINARY, PRESETS, presetEnvelopes, type SyntheticInput } from './fixtures';
 
 /** The real engine, wired in the way the page wires it. */
 const replay: Replay = (request) => {
   const chart = natalChart({
     utc: request.utc, latitude: request.latitude, longitude: request.longitude, houseSystem: request.houseSystem,
+    ...(request.deltaT === undefined ? {} : { deltaT: request.deltaT }),
   } as Parameters<typeof natalChart>[0]) as {
     angles: Record<string, number> | null;
     bodies: { body: string; lon: number }[];
@@ -45,6 +46,38 @@ function withMovedNode(envelope: NatalEnvelope, lon: number): NatalEnvelope {
 
 const nodeLon = (envelope: NatalEnvelope): number =>
   (envelope.result.bodies.find((entry) => entry.body === 'North Node') as { lon: number }).lon;
+
+/**
+ * The same record as an older engine wrote it. rc.3 to rc.6 recorded the first
+ * conventions set and rc.7 the second; neither recorded a ΔT or named its
+ * ephemeris. From rc.8 the parser reads each set only from the versions that
+ * wrote it, so relabelling a current record's version alone is refused.
+ */
+const RC3_CONVENTIONS = NATAL_RECEIPT_CONVENTION_SETS.find((set) => set.angles === 'gast-and-mean-obliquity');
+const RC7_CONVENTIONS = NATAL_RECEIPT_CONVENTION_SETS
+  .find((set) => set.angles === 'gast-and-true-obliquity' && !('deltaT' in set));
+function asWrittenBy(envelope: NatalEnvelope, version: '0.1.1-rc.3' | '0.1.1-rc.6' | '0.1.1-rc.7'): any {
+  const record = JSON.parse(JSON.stringify(envelope));
+  record.receipt.engine = { name: record.receipt.engine.name, version };
+  record.receipt.conventions = { ...(version === '0.1.1-rc.7' ? RC7_CONVENTIONS : RC3_CONVENTIONS) };
+  delete record.result.deltaT;
+  return record;
+}
+
+/**
+ * `buildEnvelope`, with ΔT (TT − UT1) pinned by the caller instead of taken
+ * from the engine's model, which the engine accepts from rc.8. The record says
+ * so in `result.deltaT`, and the parser accepts it.
+ */
+function pinnedEnvelope(input: SyntheticInput, seconds: number): NatalEnvelope {
+  const envelope = createNatalEnvelope(natalChart({
+    utc: input.utc, latitude: input.latitude, longitude: input.longitude, houseSystem: input.houseSystem,
+    ...(input.timeKnown === false ? { timeKnown: false } : {}), deltaT: seconds,
+  } as Parameters<typeof natalChart>[0]), { sourceInstant: input.sourceInstant ?? input.utc });
+  const parsed = parseNatalEnvelope(JSON.stringify(envelope));
+  if (!parsed.ok) throw new Error(`the parser rejected a pinned fixture: ${parsed.code}`);
+  return parsed.envelope;
+}
 
 describe('comparing two calculation receipts', () => {
   it('reports no difference between two runs of the same calculation', () => {
@@ -165,12 +198,15 @@ describe('comparing two calculation receipts', () => {
   });
 
   it('reads a receipt naming a different engine version of the same schema', () => {
-    // The developer starter pins engine 0.1.1-rc.3 while the site pins rc.7.
-    // Only rc.7 is installed here, so this checks what can be checked offline:
-    // a receipt naming rc.3 parses, and the version difference is reported
-    // rather than quietly ignored.
-    const envelope = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
-    envelope.receipt.engine.version = '0.1.1-rc.3';
+    // The developer starter pins engine 0.1.1-rc.3 while the site pins rc.8.
+    // Only rc.8 is installed here, so this checks what can be checked offline:
+    // a receipt naming rc.3, written in rc.3's conventions, parses, and the
+    // version difference is reported rather than quietly ignored.
+    const relabelled = JSON.parse(JSON.stringify(buildEnvelope(ORDINARY)));
+    relabelled.receipt.engine.version = '0.1.1-rc.3';
+    const refused = parseNatalEnvelope(JSON.stringify(relabelled));
+    expect(refused.ok ? 'accepted' : refused.code, 'rc.8 conventions under an rc.3 label').toBe('inconsistent_result');
+    const envelope = asWrittenBy(buildEnvelope(ORDINARY), '0.1.1-rc.3');
     const reparsed = parseNatalEnvelope(JSON.stringify(envelope));
     expect(reparsed.ok).toBe(true);
     if (!reparsed.ok) return;
@@ -277,8 +313,12 @@ describe('regressions an adversarial review found', () => {
     // milliseconds apart, which is the realistic shape of "two programs
     // disagree slightly". One millisecond moves every body by less than the
     // sixth decimal, so every row prints the same and every row is rounding.
+    //
+    // The millisecond before, not the one after. The Moon covers 1.5e-7° in a
+    // millisecond, and under rc.8's ΔT its longitude at 13:30:00.000 sits that
+    // close below a sixth-decimal boundary, so the millisecond after crosses it.
     const base = buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.000Z' });
-    const oneMs = compareEnvelopes(base, buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.001Z' }), live);
+    const oneMs = compareEnvelopes(base, buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:29:59.999Z' }), live);
     const oneMsRows = oneMs.differences.filter((row) => row.id.endsWith('-lon'));
     expect(oneMsRows.length).toBeGreaterThan(0);
     for (const row of oneMsRows) {
@@ -292,8 +332,9 @@ describe('regressions an adversarial review found', () => {
 
     // Ten milliseconds moves the faster bodies across a rounding boundary while
     // the slower ones stay put, so one comparison carries both kinds at once —
-    // and the distance between the two is not what separates them. Mars moves
-    // 8e-8 and prints differently; the Sun moves further and prints the same.
+    // and the distance between the two is not what separates them. Mercury
+    // moves 2.0e-7 and prints differently; the lunar nodes move 5.3e-7 and
+    // print the same.
     const tenMs = compareEnvelopes(base, buildEnvelope({ ...ORDINARY, utc: '1990-06-15T13:30:00.010Z' }), live);
     const moved = tenMs.differences.filter((row) => row.id.endsWith('-lon') && row.kind === 'numeric');
     const still = tenMs.differences.filter((row) => row.id.endsWith('-lon') && row.kind === 'display');
@@ -427,17 +468,20 @@ describe('a cause never claims a row it could not have caused', () => {
   /** Which rows each explanation is physically capable of accounting for. */
   const CANNOT: Record<string, RegExp> = {
     // A different moment or place moves computed values; neither can change
-    // which house system the calculation was asked for.
-    instant: /^houses-(requested|actual|system)$/u,
-    location: /^houses-(requested|actual|system)$/u,
+    // which house system the calculation was asked for. A moment moves a
+    // modelled ΔT, but not where a ΔT came from, and a place moves neither.
+    instant: /^houses-(requested|actual|system)$|^delta-t-(model|table|tableDigest)$/u,
+    location: /^houses-(requested|actual|system)$|^delta-t-/u,
     // A house system moves the cusps and nothing else. Bodies are geocentric,
     // and the angles come from the time and the place — every system in this
     // engine derives from the same ascendant and midheaven, so a pair differing
     // only in house system has identical angles. Claiming an angle row is a
     // hypothesis a recalculation refutes, which is what this pattern forbids.
-    'house-system': /^(body-|angle-|aspect-)/u,
+    'house-system': /^(body-|angle-|aspect-|delta-t-)/u,
     // Writing the same instant two ways changes nothing computed at all.
-    'equivalent-instants': /^(body-|angle-|cusp-|aspect-)/u,
+    'equivalent-instants': /^(body-|angle-|cusp-|aspect-|delta-t-)/u,
+    // ΔT moves where things are, not what was asked for or whether it exists.
+    'delta-t': /^(houses-|cusps-shape$|angles-presence$|instant$|source-instant$|latitude$|longitude$|time-known$)/u,
   };
 
   // A synthetic input with no coordinates at all: the engine accepts it and
@@ -483,12 +527,24 @@ describe('a cause never claims a row it could not have caused', () => {
     { name: 'a missing place and a different house system at once',
       left: ORDINARY,
       right: { ...NO_PLACE, houseSystem: 'whole' } as const },
-  ];
+    // From rc.8 a record can carry a ΔT its caller pinned. At one instant that
+    // moves every position with nothing else differing; beside another cause
+    // it must claim only what it can move, and nothing may claim its rows but
+    // itself — or, for a modelled value, a different moment.
+    { name: 'a pinned ΔT against the engine’s model at one instant',
+      left: ORDINARY, right: ORDINARY, pinRight: 75.5 },
+    { name: 'a pinned ΔT and a different house system at once',
+      left: ORDINARY, right: { ...ORDINARY, houseSystem: 'whole' } as const, pinRight: 75.5 },
+    { name: 'a different moment against a pinned ΔT',
+      left: ORDINARY, right: { ...ORDINARY, utc: '1990-06-15T18:45:00Z' }, pinRight: 75.5 },
+  ] as { name: string; left: SyntheticInput; right: SyntheticInput; pinRight?: number }[];
 
   for (const scenario of cases) {
     it(`holds for ${scenario.name}`, () => {
       const comparison = compareEnvelopes(
-        buildEnvelope(scenario.left), buildEnvelope(scenario.right), live,
+        buildEnvelope(scenario.left),
+        scenario.pinRight === undefined ? buildEnvelope(scenario.right) : pinnedEnvelope(scenario.right, scenario.pinRight),
+        live,
       );
       for (const item of comparison.explanations) {
         const forbidden = CANNOT[item.id];
@@ -538,8 +594,32 @@ describe('what a local recalculation has to establish before it is a cause', () 
     change(copy);
     return copy;
   };
+  /**
+   * Rewrites the instant a record declares, and the ΔT that goes with it. From
+   * rc.8 the parser checks a modelled ΔT against the declared instant, so a
+   * rewritten instant alone is refused (tested below). The model is public, so
+   * the second edit is no obstacle to anyone, and the values still come from
+   * the other moment: this is the same counterexample under the rc.8 parser.
+   */
+  const declaring = (utc: string) => (o: any) => {
+    o.receipt.instant = new Date(utc).toISOString();
+    o.receipt.sourceInstant = utc;
+    o.result.deltaT = JSON.parse(JSON.stringify(at(utc, 'placidus').result.deltaT));
+  };
   const houseSystemEvidence = (left: NatalEnvelope, right: NatalEnvelope) =>
     compareEnvelopes(left, right, live).explanations.find((item) => item.id === 'house-system')?.evidence ?? null;
+
+  it('cannot be given a rewritten instant that keeps the old instant’s ΔT', () => {
+    const naive = edited(at(T2, 'placidus'), (o) => {
+      o.receipt.instant = new Date(T1).toISOString();
+      o.receipt.sourceInstant = T1;
+    });
+    const parsed = parseNatalEnvelope(JSON.stringify(naive));
+    expect(parsed.ok ? 'accepted' : parsed.code).toBe('inconsistent_result');
+    // …and with the ΔT rewritten too, the parser accepts it: it checks that a
+    // record is coherent with itself, not that its values follow from it.
+    expect(parseNatalEnvelope(JSON.stringify(edited(at(T2, 'placidus'), declaring(T1)))).ok).toBe(true);
+  });
 
   it('reproduces an ordinary house-system difference, which is the case that must keep working', () => {
     const comparison = compareEnvelopes(at(T1, 'placidus'), at(T1, 'whole'), live);
@@ -562,10 +642,7 @@ describe('what a local recalculation has to establish before it is a cause', () 
     const genuine = at(T1, 'placidus');
     expect(houseSystemEvidence(genuine, foreign)).toBe(houseSystemEvidence(foreign, genuine));
 
-    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
-      o.receipt.instant = new Date(T1).toISOString();
-      o.receipt.sourceInstant = T1;
-    }), 'drifted');
+    const drifted = accepted(edited(at(T2, 'placidus'), declaring(T1)), 'drifted');
     expect(houseSystemEvidence(drifted, at(T1, 'whole'))).toBe(houseSystemEvidence(at(T1, 'whole'), drifted));
   });
 
@@ -633,10 +710,7 @@ describe('what a local recalculation has to establish before it is a cause', () 
     // The premise, stated rather than assumed: these cusps really are identical.
     expect(replay({ ...ORDINARY, utc: T1, houseSystem: 'whole', timeKnown: true })?.cusps)
       .toEqual(replay({ ...ORDINARY, utc: T2, houseSystem: 'whole', timeKnown: true })?.cusps);
-    const drifted = accepted(edited(whole(T2), (o) => {
-      o.receipt.instant = new Date(T1).toISOString();
-      o.receipt.sourceInstant = T1;
-    }), 'drifted-whole');
+    const drifted = accepted(edited(whole(T2), declaring(T1)), 'drifted-whole');
     for (const comparison of [
       compareEnvelopes(drifted, at(T1, 'placidus'), live),
       compareEnvelopes(at(T1, 'placidus'), drifted, live),
@@ -687,10 +761,7 @@ describe('what a local recalculation has to establish before it is a cause', () 
     // values came from: it checks internal coherence, not that the result
     // follows from the inputs. Without a baseline the comparison called this
     // pair reproduced, while the house system explained none of it.
-    const drifted = accepted(edited(at(T2, 'placidus'), (o) => {
-      o.receipt.instant = new Date(T1).toISOString();
-      o.receipt.sourceInstant = T1;
-    }), 'drifted');
+    const drifted = accepted(edited(at(T2, 'placidus'), declaring(T1)), 'drifted');
     const comparison = compareEnvelopes(drifted, at(T1, 'whole'), live);
     expect(comparison.explanations.find((item) => item.id === 'house-system')?.evidence).toBe('hypothesis');
     expect(comparison.limits.join(' ')).toMatch(/could not be reproduced from the inputs it declares/);
@@ -752,13 +823,7 @@ describe('a summary never claims more agreement than the differences support', (
    * agrees. From rc.7 the flag follows from the record's own speeds, and the
    * parser refuses a record where it does not (tested below).
    */
-  const RC3_CONVENTIONS = NATAL_RECEIPT_CONVENTION_SETS.find((set) => set.angles === 'gast-and-mean-obliquity');
-  const asRc6 = (envelope: NatalEnvelope): any => {
-    const record = copy(envelope);
-    record.receipt.engine.version = '0.1.1-rc.6';
-    record.receipt.conventions = { ...RC3_CONVENTIONS };
-    return record;
-  };
+  const asRc6 = (envelope: NatalEnvelope): any => asWrittenBy(envelope, '0.1.1-rc.6');
   const statementOf = (comparison: ReturnType<typeof compareEnvelopes>, id: string) =>
     comparison.explanations.find((item) => item.id === id)?.statement ?? null;
   const AGREES = /Every computed value agrees/;
@@ -866,5 +931,110 @@ describe('a summary never claims more agreement than the differences support', (
         }
       }
     }
+  });
+});
+
+/**
+ * ΔT (TT − UT1), which records carry from engine 0.1.1-rc.8 on. Before this
+ * module read the field, a record whose caller pinned ΔT came back against a
+ * modelled one of the same chart as computed values that "nothing in either
+ * file accounts for" — while both files said exactly what it was — and a pinned
+ * record could never reproduce its own values, because the replay dropped the
+ * pin it declares.
+ */
+describe('ΔT, which records carry from engine 0.1.1-rc.8 on', () => {
+  const cause = (comparison: ReturnType<typeof compareEnvelopes>, id: string) =>
+    comparison.explanations.find((item) => item.id === id) ?? null;
+
+  it('names a pinned ΔT as the candidate for the positions it moved', () => {
+    const modelled = buildEnvelope(ORDINARY);
+    const pinned = pinnedEnvelope(ORDINARY, 75.5);
+    const comparison = compareEnvelopes(modelled, pinned, live);
+    // What the cause's detail says a different ΔT does: the Moon moves about
+    // half an arcsecond per second of it, and the angles far less — here not
+    // at all at the sixth decimal.
+    const moon = (envelope: NatalEnvelope) => envelope.result.bodies.find((row) => row.body === 'Moon')!.lon;
+    const perSecond = Math.abs(moon(pinned) - moon(modelled)) * 3600 / (75.5 - modelled.result.deltaT!.seconds);
+    expect(perSecond).toBeGreaterThan(0.4);
+    expect(perSecond).toBeLessThan(0.7);
+    expect(comparison.differences.some((row) => /^(angle-|cusp-)/.test(row.id) && row.kind !== 'display')).toBe(false);
+    const deltaT = cause(comparison, 'delta-t');
+    expect(deltaT?.evidence).toBe('hypothesis');
+    expect(deltaT?.covers).toEqual(expect.arrayContaining(['delta-t-seconds', 'delta-t-model', 'body-Moon-lon']));
+    expect(evidenceFor(comparison, 'unexplained')).toBeNull();
+    // Same instant, place, house system and engine: nothing else is offered.
+    expect(comparison.explanations.map((item) => item.id)).toEqual(['delta-t']);
+    // Seconds are not degrees, so the row carries no delta for a table to print as one.
+    expect(comparison.differences.find((row) => row.id === 'delta-t-seconds'))
+      .toMatchObject({ area: 'Time scale', kind: 'numeric', left: '57.181833', right: '75.500000', delta: null });
+  });
+
+  it('does not call two records the same when only the source of their ΔT differs', () => {
+    // Pinned at exactly the model's value: every position agrees to the printed
+    // precision, and the two records still say different things about ΔT.
+    const modelled = buildEnvelope(ORDINARY);
+    const comparison = compareEnvelopes(modelled, pinnedEnvelope(ORDINARY, modelled.result.deltaT!.seconds), live);
+    expect(comparison.identical).toBe(false);
+    expect(comparison.differences.some((row) => row.id === 'delta-t-seconds')).toBe(false);
+    expect(comparison.differences.find((row) => row.id === 'delta-t-model'))
+      .toMatchObject({ left: 'zodiacs-deltat/1', right: 'pinned' });
+    expect(comparison.differences.filter((row) => row.area !== 'Time scale').every((row) => row.kind === 'display'))
+      .toBe(true);
+    const deltaT = cause(comparison, 'delta-t');
+    expect(deltaT?.evidence).toBe('reported');
+    expect(deltaT?.covers.every((id) => id.startsWith('delta-t-'))).toBe(true);
+    expect(comparison.explanations.map((item) => item.id)).toEqual(['delta-t']);
+  });
+
+  it('lets a different moment account for a different modelled ΔT', () => {
+    const comparison = compareEnvelopes(
+      buildEnvelope(ORDINARY), buildEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }), live,
+    );
+    expect(comparison.differences.find((row) => row.id === 'delta-t-seconds')?.kind).toBe('numeric');
+    expect(cause(comparison, 'instant')?.covers).toContain('delta-t-seconds');
+    expect(cause(comparison, 'delta-t')).toBeNull();
+    expect(evidenceFor(comparison, 'unexplained')).toBeNull();
+  });
+
+  it('does not let a different moment account for a pinned ΔT, nor a pin for a different moment', () => {
+    const comparison = compareEnvelopes(
+      buildEnvelope(ORDINARY), pinnedEnvelope({ ...ORDINARY, utc: '1990-06-15T18:45:00Z' }, 75.5), live,
+    );
+    expect(cause(comparison, 'instant')?.covers.some((id) => id.startsWith('delta-t-'))).toBe(false);
+    const deltaT = cause(comparison, 'delta-t');
+    expect(deltaT?.evidence).toBe('reported');
+    expect(deltaT?.covers).toEqual(expect.arrayContaining(['delta-t-seconds', 'delta-t-model']));
+    // Five hours move the positions; eighteen seconds of ΔT are not offered for them.
+    expect(deltaT?.covers.some((id) => !id.startsWith('delta-t-'))).toBe(false);
+    expect(evidenceFor(comparison, 'unexplained')).toBeNull();
+  });
+
+  it('replays a pinned record with its own ΔT, so its values can reproduce', () => {
+    // Two records pinned at one value, differing only in house system. Replayed
+    // without the pin, neither reproduced its own positions, and the answer
+    // said their values described a different calculation from the one recorded.
+    const comparison = compareEnvelopes(
+      pinnedEnvelope(ORDINARY, 75.5), pinnedEnvelope({ ...ORDINARY, houseSystem: 'whole' }, 75.5), live,
+    );
+    expect(evidenceFor(comparison, 'house-system')).toBe('reproduced');
+    expect(comparison.limits.join(' ')).not.toMatch(/could not be reproduced/);
+    // The page's replay carries the pin through to the engine.
+    const request = { utc: ORDINARY.utc, latitude: ORDINARY.latitude, longitude: ORDINARY.longitude,
+      houseSystem: 'placidus', timeKnown: true };
+    const moon = (result: ReturnType<typeof pageReplay>) => result?.bodies.find((row) => row.body === 'Moon')?.lon;
+    const pinnedMoon = pinnedEnvelope(ORDINARY, 75.5).result.bodies.find((row) => row.body === 'Moon')?.lon;
+    expect(moon(pageReplay({ ...request, deltaT: 75.5 }))).toBe(pinnedMoon);
+    expect(moon(pageReplay(request))).not.toBe(pinnedMoon);
+  });
+
+  it('reads a record from before rc.8, which has no ΔT, without a row for the missing field', () => {
+    const older = parseNatalEnvelope(JSON.stringify(asWrittenBy(buildEnvelope(ORDINARY), '0.1.1-rc.7')));
+    expect(older.ok).toBe(true);
+    if (!older.ok) return;
+    const comparison = compareEnvelopes(older.envelope, buildEnvelope(ORDINARY), live);
+    expect(comparison.differences.some((row) => row.area === 'Time scale')).toBe(false);
+    // The difference is stated where the parser ties it, in the conventions.
+    expect(comparison.differences.find((row) => row.id === 'convention-deltaT')?.left).toBe('—');
+    expect(evidenceFor(comparison, 'conventions')).toBe('reported');
   });
 });

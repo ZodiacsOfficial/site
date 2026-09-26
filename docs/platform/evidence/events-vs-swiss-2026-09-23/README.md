@@ -75,3 +75,12 @@ more than 0.07 minute:
 The positions set the limit, not the step. So `sky.json` and the monthly
 transit files (`scripts/build-transits.mjs`) keep the ±0.25-day step and name
 the same instant for each station, and the figures above stand.
+
+## Addition, 2026-09-25: engine rc.8's clock
+
+`@zodiacs/engine` 0.1.1-rc.8 computes on observed ΔT, and the regenerated
+catalog moved every instant. The same comparison on it is
+[`../events-vs-swiss-2026-09-25/`](../events-vs-swiss-2026-09-25/README.md):
+new and full moons within 5.2 s of Swiss instead of 11.8 s, eclipse peaks
+within 10.5 s instead of 13.8 s, the slow events as above. This record stays
+as it was measured, on rc.7's catalog.

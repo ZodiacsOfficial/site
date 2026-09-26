@@ -13,8 +13,10 @@ describe('the homepage\'s low-precision Sun and Moon', () => {
       sun = Math.max(sun, Math.abs(wrap(sunLongitude(date) - bodyLongitude('Sun', date))));
       moon = Math.max(moon, Math.abs(wrap(moonLongitude(date) - bodyLongitude('Moon', date))));
     }
-    // The header says 0.016° and 0.365°; measured 0.0159° and 0.3644°.
-    expect(sun).toBeLessThan(0.016);
+    // The header says 0.017° and 0.365°; measured 0.0165° (2095) and 0.3643°
+    // on engine 0.1.1-rc.8, whose observed ΔT moved the full engine's Sun
+    // late in the century by a few arcseconds (0.0159° on rc.7).
+    expect(sun).toBeLessThan(0.017);
     expect(moon).toBeLessThan(0.365);
   }, 60_000);
 });

@@ -1,6 +1,7 @@
 /** Shared chart-engine types. Pure data — no ephemeris imports here. */
 
 export { ENGINE_VERSION } from '@zodiacs/engine/internal/math';
+import type { DeltaT } from '@zodiacs/engine';
 
 export type BodyName =
   | 'Sun' | 'Moon' | 'Mercury' | 'Venus' | 'Mars'
@@ -9,7 +10,9 @@ export type BodyName =
 
 export type HouseSystem = 'whole' | 'placidus';
 
-export type ChartFlag = 'dst-gap' | 'dst-fold' | 'lmt' | 'no-time' | 'polar-fallback';
+/** `outside-reference-span`: the instant is before 1800 or from 2200 (engine 0.1.1-rc.8 on). */
+export type ChartFlag =
+  | 'dst-gap' | 'dst-fold' | 'lmt' | 'no-time' | 'polar-fallback' | 'outside-reference-span';
 
 export interface ChartInput {
   /** Resolved UTC instant of birth. */
@@ -68,6 +71,8 @@ export interface Chart {
   aspects: Aspect[];
   flags: ChartFlag[];
   engineVersion: string;
+  /** The ΔT (TT − UT1) the engine computed the chart with, and its source (0.1.1-rc.8 on). */
+  deltaT?: DeltaT;
   /** Caller-verified Moon signs across an unknown-time local birth date.
    * One sign is settled; two are alternatives; absent with no angles is unverified.
    * Presentation metadata only: never changes positions or the share-token wire format. */

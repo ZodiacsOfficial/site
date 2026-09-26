@@ -1,5 +1,5 @@
 /** Serverless transit scanner that never enters the browser-only SDK graph. */
-import { findLongitudeCrossingsWith } from './longitude-crossings.js';
+import { findLongitudeCrossingsWith } from '@zodiacs/engine/crossings';
 import { bodyLongitude, longitudeSpeed } from './server-ephemeris.js';
 import { createTransitScanner } from './transit-scan-core.js';
 

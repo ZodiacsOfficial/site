@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import '../scripts/lib/deltat-install.mjs';
 import { SiderealTime } from 'astronomy-engine';
 import { ENGINE_VERSION } from '@zodiacs/engine';
 import { computeChart } from '@zodiacs/engine/internal';

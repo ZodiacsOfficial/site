@@ -1,0 +1,205 @@
+{
+ "what": "Versions and digests for the Phase 1 verdict runs of steps 1.2, 1.3, 1.8 and 1.9. Swiss Ephemeris readings are named here by SHA-256 and are not committed.",
+ "siteTree": {
+  "head": "982caca262147a25a125a9483248dff1e2c532ec",
+  "headSubject": "Run @zodiacs/engine 0.1.1-rc.7, and ship the MCP adapter 0.1.0-rc.7 on it (#578)",
+  "measuredInputs": ["src", "scripts/angles-grid.test.mjs", "vendor", "package.json", "package-lock.json", "docs/platform/evidence/engine-beyond-swiss/corpora"],
+  "measuredInputsMatchHead": true,
+  "gitStatusUnchangedByTheRun": true
+ },
+ "engine": {
+  "package": "@zodiacs/engine",
+  "packageVersion": "0.1.1-rc.7",
+  "ENGINE_VERSION": "0.1.1-rc.7",
+  "vendorTarball": "vendor/zodiacs-engine-0.1.1-rc.7.tgz",
+  "vendorTarballSha256": "49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90",
+  "vendorSha256File": "49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90  zodiacs-engine-0.1.1-rc.7.tgz",
+  "engineRepoArtifactSha256": "49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90",
+  "installedDistEqualsTarball": true,
+  "distSha256": {
+   "chunk-5AZABXZD.js": "477b146f31e3e60cc26cc5cb7b13b85ec4a9f44d1bf77f00133b05344c02ee3b",
+   "chunk-CPALRSPC.js": "9db1a3814ec9bd00a40d4bc295e348debd6108f62a322ed91d18610c81b9fb08",
+   "chunk-INKLEUMO.js": "f4e406b427c04b0854888bc0c4b409658b15ecff9d4ac924230e0c0b3678cfdc",
+   "chunk-NNR67TWT.js": "03fa0112b5f2d3efa9383e18119f42bf0fa7048882a591be65de2490e876d4be",
+   "chunk-PQMQRCPT.js": "6b7b0dac41e444dba8f8c1a9b7e5ffc45f8d67d038e3f2643273a8e1fe8fa4b8",
+   "geo.d.ts": "46c204c5ca06179f5b30ea5c9d45f978882b4ac5ab852c87df441b971d0282ba",
+   "geo.js": "d92b6d2fe8992c51d2dff47ddd9daa5b865012c8243b2b0d1caaf5b6be5307ae",
+   "index.d.ts": "43e748ad4dfcf01f2a4af81de9d11e9b8675bf60e59230cfe6074ddd4460082c",
+   "index.js": "d8e44085bd7051f95cf189c071fdcd9cdeeffb172dc99dd501b1912f2a7735f0",
+   "internal-math--X7he-Md.d.ts": "42310b669d9f343efbec1cd4dab3c1eafe1b58e0ea7a8ac7cc7991bcc03005c6",
+   "internal-math.d.ts": "02f2ae538558192ca819cd1db4503e3953d04f45405264367a1472fb2c3eab34",
+   "internal-math.js": "74486887ba3a8c194fde19ee564d0bfd4549405fd2863af95104a0f46933a655",
+   "internal.d.ts": "27665291e042fbb7eb199a4672c9a2c9e0023143de8ee2ab64b8570190f4e6d1",
+   "internal.js": "ac43b1edb1f11e05284a700f92eff4686177bfbece0e66b95c19a54b5841fdae",
+   "receipt.d.ts": "9daf08683e75817e21bfe6a96e4418937a09c457f21a51d2494d07bac4c9a260",
+   "receipt.js": "4645606b7ccad0fefcc168b411a8887f066b7f0a4a89803d112fca256d6a50c7",
+   "types-C331gNM8.d.ts": "eb30486e138bce9e7ebad484d8e8547627757b7b63b93ac4698a06fedd4b1b2a"
+  },
+  "placidusPolarFallback": "whole",
+  "houseSystems": ["whole", "placidus", "porphyry"],
+  "receiptConventions": {
+   "calendar": "proleptic-gregorian",
+   "zodiac": "tropical",
+   "planetPositions": "apparent-geocentric-ecliptic-of-date",
+   "moonPosition": "astronomy-engine-ecliptic-geo-moon",
+   "moonNodes": "instantaneous-geocentric-moon-orbit-plane",
+   "angles": "gast-and-true-obliquity",
+   "longitudeUnit": "degrees-[0,360)",
+   "speed": "degrees-per-day;central-difference-plus-minus-0.001-day;nodes-plus-minus-0.25-day",
+   "aspects": "major-aspects;sun-moon-eight-planets;no-nodes;applying-instantaneous-orb-rate"
+  }
+ },
+ "rc6Control": {
+  "vendorTarball": "vendor/zodiacs-engine-0.1.1-rc.6.tgz",
+  "vendorTarballSha256": "09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e",
+  "packageVersion": "0.1.1-rc.6",
+  "internalMathSha256": "187cbd31a74bd069dc413e6fb1ef33cc72a108e9a405a3b5095b64346def2422"
+ },
+ "sitePath": {
+  "src/lib/engine/full.ts": "2f34bf48efd52d47fa9771b2373d4d5f696616b4e3faf6a4ec784190782ae624",
+  "src/lib/engine/chart-adapter.ts": "674f02fdc07304a7fd5f8e1bc38e8ccdc19d3c2a12ca4bd82008d65677503b39",
+  "scripts/angles-grid.test.mjs": "2addf858709226d129ece3a32be4a5e11c68427a1e8815eb5c0b55738848fb65"
+ },
+ "corpora": {
+  "angle-grid-inputs.json": "82a5466caefb919df66060dd46861ac4f68a678ef9ce3c16bfc423a94042cd9d",
+  "angle-grid-erfa.json": "5d471b247c371106f473da4f90c53a283d9d64da614ec60a8bb899dbf617c5dd",
+  "tools/angle-arbiter.py": "5f04a678b54d97c10c1e78395e5f47b5e003c67756c65bc7e5bf29a5d9e684e3",
+  "tools/angle-clock.ts": "d55e66a4cf4a1a12391489655594315e063ea2f34f63cfb6cb134e39e2880a1b"
+ },
+ "node": {
+  "version": "v22.22.2",
+  "vite": "6.4.3",
+  "viteNode": "3.2.4",
+  "vitest": "3.2.7",
+  "astronomyEngine": {
+   "version": "2.1.19",
+   "esmSha256": "068f1445ed0c636c94818fe6d20d7d125120e605e0bab9fc4675c3d531be5ad7",
+   "cjsSha256": "729c0ce37cc1a8096034a689039a5f04585ee8184177c638e8c74dec4fa3185a"
+  }
+ },
+ "python": {
+  "version": "3.11.15",
+  "platform": "Linux-6.18.44-fc-v37-x86_64-with-glibc2.39",
+  "pyswisseph": "2.10.3.2",
+  "swissEphemeris": "2.10.03",
+  "swissSharedObjectSha256": "3911614ca013be4520e355306620a3fcd27a39374a960a2063b056cfbd093338",
+  "pyerfa": "2.0.1.5",
+  "erfa": "2.0.1",
+  "numpy": "2.4.6",
+  "jplephem": "2.24"
+ },
+ "swissEphemerisFiles": {
+  "sepl_18.se1": {
+   "sha256": "ca1393ceab3a44fbc895887cf789c68819ae6a1cbc9b22225872dbe4ccd99a66",
+   "file": "sepl_18.se1",
+   "jdStart": 2378496.5,
+   "jdEnd": 2597651.3591467496,
+   "jplEphemeris": 441
+  },
+  "semo_18.se1": {
+   "sha256": "1ca07bd67c24374d77226180c20a4f9996cba013697894810518e7eb582ca4f7",
+   "file": "semo_18.se1",
+   "jdStart": 2378487.555370702,
+   "jdEnd": 2597656.4574524714,
+   "jplEphemeris": 441
+  },
+  "astroModels": ["JPL eph. 441; tidal acc. Moon used by SE: -25.9360", "Swiss Ephemeris compressed files sepl*/semo*", "Delta T (long-term): Stephenson/Morrison/Hohenkerk 2016 (before 1955)", "Precession: Vondrák 2011", "Nutation: IAU 2000B (Mathews)", "Frame bias: IAU 2006", "Sid. time: IERS Convention 2010 + long-term extension by Astrodienst"]
+ },
+ "jplKernel": {"file": "de440s.bsp", "sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2"},
+ "swissReadings": {
+  "what": "written under WORK by the tools named, never committed; a re-run that matches these digests read the same values",
+  "s12/swiss-2024.json": {
+   "tool": "s12/swiss_scan_2024.py",
+   "bytes": 18982485,
+   "sha256": "0dc4b21fc5cbc9b45ad3b31cbbbc5330a2b23bd017bd13d60cdba3e682af3dc0",
+   "audit": "corpora/README.md names the audit's file by this digest"
+  },
+  "s12/swiss-2024-pm1s.json": {
+   "tool": "s12/swiss_scan_2024.py",
+   "bytes": 11126796,
+   "sha256": "9be5c526b82caaf6c966931899517c73213aac5e82832b184e26c44ee83dc633"
+  },
+  "s12/swiss-scan-summary.json": {
+   "tool": "s12/swiss_scan_2024.py",
+   "bytes": 726,
+   "sha256": "6393069b057c09912a5b20fa7a702bae9ffb2ff6d0a790f3e48595e0037b7695"
+  },
+  "s18/apsides-swiss.json": {
+   "tool": "s18/swiss_apsides.py",
+   "bytes": 7663,
+   "sha256": "5ba162521d2ea9194c0edf89a0194313aab10a21fc7c1d01c8e566b12576264c"
+  },
+  "s18/moon-swiss.json": {
+   "tool": "s18/moon_swiss.py",
+   "bytes": 173693,
+   "sha256": "9e4ff6a736684817e6b2e237686df848ffe85d8e6a2c24a7db8a016ebc74c8f4"
+  },
+  "s18/moon-arbiter.json": {
+   "tool": "s18/arbiter_moon.py",
+   "bytes": 105406,
+   "sha256": "7bd169dbec185c19a8426b92d59b05dcce7783a3cc7bb7ce27c1ce3e2b47d462",
+   "records": "the kernel's absolute path (kernel)",
+   "portableSha256": "32641b669f16f1d6bf1f30a6186dfac6b9013194df77f7c1dcb08c10df427c78",
+   "portableAs": "de440s.bsp"
+  },
+  "s18/stations-swiss.json": {
+   "tool": "s18/swiss_stations.py",
+   "bytes": 59759,
+   "sha256": "230f13d0ebca86f9e1f1127567411d311e7031eaac06d9b7ea9b978936dfde71"
+  },
+  "s18/flags-hourly-results.json": {
+   "tool": "s18/flags_hourly_swiss.py",
+   "bytes": 791,
+   "sha256": "8e79aaaa0923ab68d6824643dc2947291cfc5ab2856eda4583d2b61b3097b932"
+  },
+  "s18/probe/swiss-self-probe.log": {
+   "tool": "s18/swiss_self_probe.py",
+   "bytes": 1174,
+   "sha256": "01ce9b2e771bfb9b1d03868ac5877f73bc4c1ef1081f63177bdc20be413f50e0"
+  },
+  "s13/swiss-grids.json": {
+   "tool": "s13/swiss_grids.py",
+   "bytes": 5961623,
+   "sha256": "468e84a8cc2d978354630743a775a330bc7c59b7713224dc6ca7e37c1cda6d66",
+   "records": "the corpus's absolute path (corpus.path)",
+   "portableSha256": "0817e4ed3bd3dc9896f796f283465cfa4770707df1d1917056b23ec6a6f7bd7d",
+   "portableAs": "docs/platform/evidence/engine-beyond-swiss/corpora/angle-grid-inputs.json"
+  },
+  "s13/sidt-window-probe.json": {
+   "tool": "s13/sidt_window_probe.py",
+   "bytes": 847,
+   "sha256": "20f72af247a467f2cb3c333f2035ad62fbc6edfcd63366dae7868b58b32a0140"
+  }
+ },
+ "engineAndErfaDumps": {
+  "what": "written under WORK, not committed (size, or samples anchored on Swiss's apsides)",
+  "s13/engine-grids.json": {
+   "tool": "s13/engine_grids.mjs",
+   "bytes": 1987887,
+   "sha256": "833ea5032f9f5a18931b30213b3edf1c337d2ffa25fd51798369fd8130a49ffa",
+   "records": "the corpus's absolute path (corpus.path)",
+   "portableSha256": "0d18e2e8144835a183560fea03e8f2afc78ede072b119539b8260c82b4605c18",
+   "portableAs": "docs/platform/evidence/engine-beyond-swiss/corpora/angle-grid-inputs.json"
+  },
+  "s13/erfa-rebuild/angle-clock.json": {
+   "tool": "corpora/tools/angle-clock.ts",
+   "bytes": 103065,
+   "sha256": "3a90d7e24f520728c901cdabdc7b6d24e8b1fadb0562a77af2b66f418d65f3c6"
+  },
+  "s19/erfa-inputs.json": {
+   "tool": "s19/erfa_inputs.py",
+   "bytes": 258072,
+   "sha256": "11c146efacbf108b11dc9dc33b9719850f0f04a5528be5e7b0a1d72cede48879"
+  },
+  "s18/moon-engine.json": {
+   "tool": "s18/moon_engine.mjs",
+   "bytes": 366528,
+   "sha256": "7aa8b92c6133fb5be8f40f0035248373d4b3442d3f5375574db5c027deac0dbb"
+  },
+  "s18/flags-hourly-engine.json": {
+   "tool": "s18/flags_hourly_engine.mjs",
+   "bytes": 3084419,
+   "sha256": "eb289057314e783808990a52c01ba1077c54f9e546f36e9d0eceed3bb567c874"
+  }
+ }
+}

@@ -21,6 +21,7 @@
  * Refresh yearly alongside sky.json so the fast planets stay ahead of
  * the calendar.
  */
+import './lib/deltat-install.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';

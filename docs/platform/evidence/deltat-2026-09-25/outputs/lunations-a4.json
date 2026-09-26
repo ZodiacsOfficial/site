@@ -1,0 +1,35 @@
+{
+ "rule": "A4: all 124 committed lunations within 2 s of Swiss (rule 1d, first part)",
+ "lunations": 124,
+ "rc7SearchReproducesPublished": 124,
+ "model": {
+  "module": "deltat-reference.ts",
+  "table": "6371988c510a1c6c"
+ },
+ "rc7VsSwiss": {
+  "within2s": 1,
+  "within5s": 25,
+  "maxAbs": 11.79,
+  "mean": -6.9,
+  "min": -11.79,
+  "max": -1.17
+ },
+ "modelVsSwiss": {
+  "within2s": 80,
+  "within5s": 123,
+  "maxAbs": 5.15,
+  "mean": 0.29,
+  "min": -4.3,
+  "max": 5.15,
+  "worstEvent": "new-moon-2030-05-02"
+ },
+ "shiftModelMinusRc7Seconds": {
+  "within2s": 0,
+  "within5s": 0,
+  "maxAbs": 8.49,
+  "mean": 7.19,
+  "min": 5.93,
+  "max": 8.49
+ },
+ "displayedUtcMinuteChanges": 17
+}

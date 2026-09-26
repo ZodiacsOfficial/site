@@ -110,13 +110,13 @@ describe('Transit fact generation', () => {
       aspects: july.aspects.length,
     }).toEqual({ ingresses: 2, lunations: 2, stations: 3, aspects: 16 });
     expect(july.lunations.map(({ type, at, sign }) => ({ type, at, sign }))).toEqual([
-      { type: 'new', at: '2026-07-14T09:43:29.938Z', sign: 'cancer' },
-      { type: 'full', at: '2026-07-29T14:35:36.043Z', sign: 'aquarius' },
+      { type: 'new', at: '2026-07-14T09:43:36.119Z', sign: 'cancer' },
+      { type: 'full', at: '2026-07-29T14:35:42.223Z', sign: 'aquarius' },
     ]);
     expect(july.stations.map(({ planet, at, type }) => ({ planet, at, type }))).toEqual([
-      { planet: 'Neptune', at: '2026-07-07T11:21:04.854Z', type: 'retrograde' },
-      { planet: 'Mercury', at: '2026-07-23T22:56:18.734Z', type: 'direct' },
-      { planet: 'Saturn', at: '2026-07-26T19:57:36.929Z', type: 'retrograde' },
+      { planet: 'Neptune', at: '2026-07-07T11:21:11.034Z', type: 'retrograde' },
+      { planet: 'Mercury', at: '2026-07-23T22:56:24.913Z', type: 'direct' },
+      { planet: 'Saturn', at: '2026-07-26T19:57:43.191Z', type: 'retrograde' },
     ]);
 
     expect({
@@ -126,8 +126,8 @@ describe('Transit fact generation', () => {
       aspects: august.aspects.length,
     }).toEqual({ ingresses: 5, lunations: 2, stations: 0, aspects: 15 });
     expect(august.lunations.map(({ type, at, sign }) => ({ type, at, sign }))).toEqual([
-      { type: 'new', at: '2026-08-12T17:36:35.369Z', sign: 'leo' },
-      { type: 'full', at: '2026-08-28T04:18:24.894Z', sign: 'pisces' },
+      { type: 'new', at: '2026-08-12T17:36:41.548Z', sign: 'leo' },
+      { type: 'full', at: '2026-08-28T04:18:31.156Z', sign: 'pisces' },
     ]);
   });
 
@@ -145,13 +145,13 @@ describe('Transit fact generation', () => {
     expect(generated.ingresses.filter(({ planet }) => planet === 'Mercury')).toEqual([
       {
         planet: 'Mercury',
-        at: '1970-01-04T03:39:51.492Z',
+        at: '1970-01-04T03:39:51.468Z',
         sign: 'aquarius',
         retrograde: false,
       },
       {
         planet: 'Mercury',
-        at: '1970-01-04T12:44:14.275Z',
+        at: '1970-01-04T12:44:14.250Z',
         sign: 'capricorn',
         retrograde: true,
       },

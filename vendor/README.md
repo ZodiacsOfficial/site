@@ -1,30 +1,42 @@
 # Vendored @zodiacs/engine artifact
 
-`zodiacs-engine-0.1.1-rc.7.tgz` is the exact npm pack artifact consumed by this
+`zodiacs-engine-0.1.1-rc.8.tgz` is the exact npm pack artifact consumed by this
 site. The standalone starter keeps its separate engine `0.1.1-rc.3` pin and
 immutable project archive. The optional ownership SDK remains separate.
 
-- Package: `@zodiacs/engine@0.1.1-rc.7` (unpublished candidate)
+- Package: `@zodiacs/engine@0.1.1-rc.8` (unpublished candidate)
 - Source repository: `https://github.com/zodiacs-org/engine` (the package at the
   repository root; up to rc.6 it was `packages/engine` of `zodiacs-org/sdk`)
-- Source commit: `6e14f3f7c5e3475fefce973a65ce4fc5d846ad85`
-- Artifact carrier commit: `f37dcdd628b637e5d3785a288a2bc89ceebb9e6a`
-- Artifact SHA-256: `49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90`
-- [Immutable anonymous download](https://raw.githubusercontent.com/zodiacs-org/engine/f37dcdd628b637e5d3785a288a2bc89ceebb9e6a/artifacts/zodiacs-engine-0.1.1-rc.7.tgz)
-- Archive: 23 files, 39,252 packed bytes, 133,090 unpacked bytes.
+- Source commit: `352ea49d9e1d7b07975a050bb4877acc454f86f5`
+- Artifact carrier commit: `a5b7d1d19a1c79465b2970b9ae948a8b5721a7c4`
+- Artifact SHA-256: `3b934376fa53983cbdd7eb1a6ecf0eb0d50fbc49df01bc610b20c63bd5d12be6`
+- [Immutable anonymous download](https://raw.githubusercontent.com/zodiacs-org/engine/a5b7d1d19a1c79465b2970b9ae948a8b5721a7c4/artifacts/zodiacs-engine-0.1.1-rc.8.tgz)
+- Archive: 30 files, 51,748 packed bytes, 173,105 unpacked bytes.
 
 The public engine archive was downloaded without credentials and checked against
-the recorded SHA-256; a clean clone of the source commit rebuilds the same
-bytes. The candidate judges an aspect applying from its orb's rate, takes speeds
-as the derivative of the reported longitude, builds the angles on the true
-obliquity of date, puts the Placidus limit at the polar circle and adds Porphyry
-houses. Receipts record the new conventions; receipts from rc.3 to rc.6 keep
-theirs and stay readable. An imported receipt remains an untrusted claim.
+the recorded SHA-256. The candidate runs every calculation on observed ΔT with a
+1-σ band (model `zodiacs-deltat/1`, table of 2026-09-24), finds longitude
+crossings with one solver that refuses instead of throwing, flags charts outside
+1800–2200, and depends on exactly `astronomy-engine` 2.1.19. Receipts name the
+ephemeris and record ΔT under a new conventions set; receipts from rc.3 to rc.7
+keep theirs and stay readable. An imported receipt remains an untrusted claim.
 
-New checks of this artifact are recorded in [the rc.7 adoption evidence](../docs/platform/evidence/site-engine-rc7/README.md).
+New checks of this artifact are recorded in [the rc.8 adoption evidence](../docs/platform/evidence/site-engine-rc8/README.md).
 Earlier evidence and immutable artifacts retain their original identities.
 The site pin is not evidence of npm publication, production deployment,
 required human review, or external adoption.
+
+## Previous rc.7 site candidate
+
+`zodiacs-engine-0.1.1-rc.7.tgz` and its checksum remain unchanged. Source commit:
+`6e14f3f7c5e3475fefce973a65ce4fc5d846ad85` (root of `zodiacs-org/engine`);
+immutable artifact carrier: `f37dcdd628b637e5d3785a288a2bc89ceebb9e6a`; SHA-256:
+`49b2b03f50fea8a625d443d4fd0f6d03ffc22831e54009fd09c49d07c8698f90`. It judged
+an aspect applying from its orb's rate, took speeds as the derivative of the
+reported longitude, built the angles on the true obliquity of date, put the
+Placidus limit at the polar circle and added Porphyry houses, all kept in rc.8.
+Its original [rc.7 evidence](../docs/platform/evidence/site-engine-rc7/README.md)
+retains that package identity and does not certify rc.8.
 
 ## Previous rc.6 site candidate
 
@@ -34,7 +46,7 @@ required human review, or external adoption.
 `51129a197cd3f2a2a8c966fb797ea4da1e147b3d`; SHA-256:
 `09c3e63432f8ba2e9df05af137c42f65ab039740a207a89418d9e6470ea3db3e`.
 Its original [rc.6 evidence](../docs/platform/evidence/site-engine-rc6/README.md)
-retains that package identity and does not certify rc.7.
+retains that package identity and does not certify rc.7 or rc.8.
 
 ## Previous rc.5 site candidate
 
@@ -71,7 +83,8 @@ CC BY 4.0 attribution in `NOTICE`.
 The exported `@zodiacs/engine/internal` and
 `@zodiacs/engine/internal/math` subpaths are explicitly site-only compatibility
 boundaries. Public integrations use `@zodiacs/engine`, optional
-`@zodiacs/engine/geo`, and optional `@zodiacs/engine/receipt`.
+`@zodiacs/engine/geo`, optional `@zodiacs/engine/receipt`, and, from rc.8,
+optional `@zodiacs/engine/crossings` and `@zodiacs/engine/deltat`.
 
 The intermediate `0.1.1-rc.0` tarball is also retained unchanged (SHA-256
 `4b16eeac2e8c82e5fb3a5b3756b2ed31f8fec93a37728a722b9ef81ce8f5c20d`).
