@@ -1,0 +1,63 @@
+{
+ "engine": "0.1.1-rc.8",
+ "cases": [
+  {
+   "case": "Sun exact at from, [03-01, 03-03], step 1",
+   "crossings": [],
+   "root": [],
+   "audit": {
+    "rc6Package": [
+     "2026-03-01T00:00:00.000Z"
+    ],
+    "site": []
+   }
+  },
+  {
+   "case": "Moon 0° over 2100 days at step 0.25",
+   "count": 77,
+   "error": null,
+   "boundedAt10000": {
+    "status": "refused",
+    "samples": 10000
+   },
+   "audit": {
+    "rc6Package": "throws: Crossing search exceeds the 10,000-sample budget.",
+    "site2600": 95
+   }
+  },
+  {
+   "case": "Moon 0° over 2400 days at step 0.25",
+   "count": 88,
+   "error": null,
+   "boundedAt10000": {
+    "status": "refused",
+    "samples": 10000
+   },
+   "audit": {
+    "rc6Package": "throws: Crossing search exceeds the 10,000-sample budget.",
+    "site2600": 95
+   }
+  },
+  {
+   "case": "Moon 0° over 2600 days at step 0.25",
+   "count": 95,
+   "error": null,
+   "boundedAt10000": {
+    "status": "refused",
+    "samples": 0
+   },
+   "audit": {
+    "rc6Package": "throws: Crossing search exceeds the 10,000-sample budget.",
+    "site2600": 95
+   }
+  },
+  {
+   "case": "Saturn 0° 1900–2100 at step 5",
+   "count": 13,
+   "error": null,
+   "audit": {
+    "rc6Package": "throws: Crossing search exceeds the 10,000-sample budget."
+   }
+  }
+ ]
+}
